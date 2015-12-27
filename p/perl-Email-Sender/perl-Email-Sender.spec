@@ -1,49 +1,63 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Errno.pm) perl(Fcntl.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl-devel perl-podlators perl(MooX/Types/MooseLike/Base.pm)
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Email-Sender
 Version:        1.300021
-Release:        alt1
+Release:        alt1_1
 Summary:        A library for sending email
 License:        GPL+ or Artistic
-Group:          Development/Perl
+
 URL:            http://search.cpan.org/dist/Email-Sender/
-Source:        http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Capture/Tiny.pm)
+BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Config.pm)
 BuildRequires:  perl(Cwd.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Email/Abstract.pm)
 BuildRequires:  perl(Email/Address.pm)
 BuildRequires:  perl(Email/Simple.pm)
+BuildRequires:  perl(Errno.pm)
 BuildRequires:  perl(Exporter.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(Fcntl.pm)
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Path.pm)
+BuildRequires:  perl(File/Spec.pm)
 BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(IO/File.pm)
+BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(JSON.pm)
+BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(List/MoreUtils.pm)
-BuildRequires:  perl(Moose.pm)
-BuildRequires:  perl(Moose/Role.pm)
+BuildRequires:  perl(Module/Runtime.pm)
+BuildRequires:  perl(Moo.pm)
+BuildRequires:  perl(Moo/Role.pm)
+BuildRequires:  perl(MooX/Types/MooseLike/Base.pm)
 BuildRequires:  perl(Net/SMTP.pm)
 BuildRequires:  perl(Net/SMTP/SSL.pm)
 BuildRequires:  perl(Pod/Coverage/TrustPod.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Sub/Exporter.pm)
 BuildRequires:  perl(Sub/Exporter/Util.pm)
 BuildRequires:  perl(Sub/Override.pm)
+BuildRequires:  perl(Sys/Hostname.pm)
 BuildRequires:  perl(Test/MinimumVersion.pm)
 BuildRequires:  perl(Test/MockObject.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Pod.pm)
-BuildRequires:  perl(Test/Pod/Coverage.pm)
 BuildRequires:  perl(Throwable/Error.pm)
 BuildRequires:  perl(Try/Tiny.pm)
-Requires:       perl(Email/Abstract.pm) >= 3
+BuildRequires:  perl(warnings.pm)
+Requires:       perl(Email/Abstract.pm) >= 3.006
 Requires:       perl(Net/SMTP/SSL.pm)
-Requires:       perl(Throwable/Error.pm) >= 0.100.090
+Requires:       perl(Throwable/Error.pm) >= 0.200.003
 
-Patch: Email-Sender-1.300006-alt-fix.patch
+
 Source44: import.info
 
 %description
@@ -53,30 +67,27 @@ suitable for serious use, for a variety of reasons.
 
 %prep
 %setup -q -n Email-Sender-%{version}
-#sed -i -e 's,^"220 OK";,1;,' lib/Email/Sender/Simple.pm
-%patch -p1
-# pod coverage test fails
-#rm -f t/release-pod-coverage.t
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 RELEASE_TESTING=1 make test
 
 %files
-%doc Changes LICENSE README
-%{perl_vendor_privlib}/*
+%doc Changes README
+%doc LICENSE
+%{perl_vendor_privlib}/Email*
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.300021-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.300021-alt1
 - automated CPAN update
 
