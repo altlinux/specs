@@ -1,12 +1,13 @@
+Group: Text tools
+%global upstreamid 20110915
+
 Name: hyphen-sa
 Summary: Sanskrit hyphenation rules
-%define upstreamid 20110915
 Version: 0.%{upstreamid}
-Release: alt1_7
+Release: alt1_8
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-sa.tex?view=co
 Source: hyph-sa.tex
-Group: Text tools
 URL: http://tug.org/tex-hyphen
 License: LPPL
 BuildArch: noarch
@@ -39,6 +40,9 @@ cp -p hyph_sa_IN.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/hyph_sa_IN.dic
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.20110915-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20110915-alt1_7
 - update to new release by fcimport
 
