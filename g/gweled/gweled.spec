@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(gtk+-2.0) pkgconfig(librsvg-2.0)
 # END SourceDeps(oneline)
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_12.20130730git819bed
+Release:        alt2_13.20130730git819bed
 
 Summary:        Swapping gem game
 
@@ -28,6 +28,7 @@ BuildRequires:  libcroco-devel >= 0.3.0
 BuildRequires:  desktop-file-utils
 BuildRequires:	intltool libtool
 BuildRequires:	libSDL_mixer-devel
+Requires:	icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -116,11 +117,14 @@ EOF
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
-%_iconsdir/*/*/*/*
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
 %{_datadir}/%{name}/
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_13.20130730git819bed
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_12.20130730git819bed
 - update to new release by fcimport
 
