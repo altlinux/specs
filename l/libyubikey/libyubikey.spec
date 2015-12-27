@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libyubikey
-Version:        1.12
-Release:        alt1_3
+Version:        1.13
+Release:        alt1_1
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
 Group:          Development/C
@@ -47,7 +47,7 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{_bindir}/ykparse
 %{_bindir}/ykgenerate
 %{_libdir}/libyubikey.so.0
-%{_libdir}/libyubikey.so.0.1.6
+%{_libdir}/libyubikey.so.0.1.7
 %{_mandir}/man1/ykgenerate.1*
 %{_mandir}/man1/ykparse.1*
 %{_mandir}/man1/modhex.1*
@@ -57,6 +57,9 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{_libdir}/libyubikey.so
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_3
 - update to new release by fcimport
 
