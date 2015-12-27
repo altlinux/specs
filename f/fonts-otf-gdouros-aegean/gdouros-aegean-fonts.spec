@@ -7,15 +7,9 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-aegean
-Version:        8.00
-Release:        alt1_3
+Version:        8.01
+Release:        alt1_1
 Summary:        A font for ancient scripts in the greater Aegean vicinity
-
-# https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
-# "in lieu of a licence:
-# Fonts and documents in this site are not pieces of property or merchandise
-# items; they carry no trademark, copyright, license or other market tags;
-# they are free for any use. George Douros"
 License:        Public Domain
 URL:            http://users.teilar.gr/~g1951d/
 Source0:        http://users.teilar.gr/~g1951d/Aegean.zip
@@ -106,6 +100,9 @@ appstream-util validate-relax --nonet \
 %doc Aegean.pdf
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 8.01-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 8.00-alt1_3
 - update to new release by fcimport
 
