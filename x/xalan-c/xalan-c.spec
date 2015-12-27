@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%define power64 ppc64
 Name:           xalan-c
 Version:        1.11.0
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Xalan XSLT processor for C
 
 Group:          System/Libraries
@@ -52,7 +53,7 @@ chmod 644 NOTICE
 export XALANCROOT="${PWD}"
 export XERCESROOT=%{_includedir}/xercesc/
 COMMONARGS="-plinux -cgcc -xg++ -minmem"
-%ifarch alpha ppc64 s390x sparc64 x86_64 aarch64
+%ifarch alpha %{power64} s390x sparc64 x86_64 aarch64
 ./runConfigure ${COMMONARGS} -b64 -P %{_prefix} -C --libdir="%{_libdir}" -z '%{optflags}'
 %else
 ./runConfigure ${COMMONARGS} -b32 -P %{_prefix} -C --libdir="%{_libdir}" -z '%{optflags}'
@@ -83,6 +84,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_8
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_7
 - new version
 
