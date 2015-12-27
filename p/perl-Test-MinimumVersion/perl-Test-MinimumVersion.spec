@@ -1,16 +1,15 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-MinimumVersion
 Version:	0.101082
-Release:	alt1
+Release:	alt1_1
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-MinimumVersion/
-Source:	http://www.cpan.org/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
 
 BuildArch:	noarch
 
@@ -51,10 +50,14 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 make test
 
 %files
-%doc Changes LICENSE
+%doc Changes
+%doc LICENSE
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1
 - automated CPAN update
 
