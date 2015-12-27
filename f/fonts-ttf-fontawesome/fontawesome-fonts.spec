@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-fontawesome
 Version:	4.4.0
-Release:	alt1_1
+Release:	alt1_2
 
 Summary:	Iconic font set
 License:	OFL
@@ -27,14 +27,23 @@ Font Awesome gives you scalable vector icons that can instantly be
 customized a.. size, color, drop shadow, and anything that can be done with the
 power of CSS.
 
+This package contains OpenType and TrueType font files which are typically used
+locally.
+
 %package web
 Group: System/Fonts/True type
-License:	MIT
+License:	OFL and MIT
 Requires:	fonts-ttf-fontawesome = %{version}-%{release}
-Summary:	Web files for fontawesome
+Summary:	Iconic font set, web files
 
 %description web
-Web files for Font Awesome.
+Font Awesome gives you scalable vector icons that can instantly be
+customized a.. size, color, drop shadow, and anything that can be done with the
+power of CSS.
+
+This package contains CSS, SCSS and LESS style files as well as Web Open Font
+Format versions 1 and 2, Embedded OpenType and SVG font files which are
+typically used on the web.
 
 %prep
 %setup -q -n font-awesome-%{version}
@@ -45,7 +54,7 @@ ttembed fonts/*.ttf fonts/*.otf
 
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p fonts/*.ttf fonts/*.otf fonts/*.woff fonts/*.svg fonts/*.woff2 %{buildroot}%{_fontdir}
+install -m 0644 -p fonts/*.ttf fonts/*.otf fonts/*.woff fonts/*.svg fonts/*.woff2 fonts/*.eot %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
 		%{buildroot}%{_fontconfig_confdir}
@@ -102,6 +111,7 @@ fi
 %exclude %{_datadir}/fonts/fontawesome/fontawesome-webfont.svg
 %exclude %{_datadir}/fonts/fontawesome/fontawesome-webfont.woff
 %exclude %{_datadir}/fonts/fontawesome/fontawesome-webfont.woff2
+%exclude %{_datadir}/fonts/fontawesome/fontawesome-webfont.eot
 
 %doc README-Trademarks.txt
 
@@ -110,8 +120,12 @@ fi
 %{_datadir}/fonts/fontawesome/fontawesome-webfont.svg
 %{_datadir}/fonts/fontawesome/fontawesome-webfont.woff
 %{_datadir}/fonts/fontawesome/fontawesome-webfont.woff2
+%{_datadir}/fonts/fontawesome/fontawesome-webfont.eot
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1_1
 - update to new release by fcimport
 
