@@ -1,13 +1,13 @@
-%define debug_package %{nil}
-%define lang gu
-%define langrelease 0
+Group: Text tools
+%global debug_package %{nil}
+%global lang gu
+%global langrelease 0
 
 Name:           aspell-gu
 Version:        0.03
-Release:        alt2_12
+Release:        alt2_13
 Summary:        GNU Aspell Gujarati Dictionary Package
 
-Group:          Text tools
 License:        GPLv2
 URL:            http://aspell.net/
 Source0:        ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
@@ -39,18 +39,19 @@ mv Copyright.utf8 Copyright
 ./configure
 make %{?_smp_mflags}
 
-
 %install
 make install DESTDIR=%{buildroot}
 
-
 %files
-%doc COPYING Copyright
+%doc Copyright
+%doc COPYING
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
-
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_12
 - update to new release by fcimport
 
