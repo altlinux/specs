@@ -1,17 +1,23 @@
 Name: fastnetmon
 Version: 1.1.2
-Release: alt1
+Release: alt3
 Summary: A high performance DoS/DDoS load analyzer.
 Group: Networking/Other
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
 License: GPLv2
-Url: https://github.com/FastVPSEestiOu/fastnetmon
+Url: https://github.com/pavel-odintsov/fastnetmon
 Source0: %name-%version.tar
 
-BuildRequires: boost-devel cmake gcc-c++ liblog4cpp-devel libncurses-devel libpcap-devel
-BuildRequires: libpfring-devel
+# Automatically added by buildreq on Wed Dec 23 2015
+# optimized out: boost-devel boost-devel-headers cmake-modules libbson-devel libjson-c libsasl2-3 libstdc++-devel libtinfo-devel
+BuildRequires: boost-asio-devel boost-program_options-devel cmake gcc-c++ libhiredis-devel
+BuildRequires: libjson-c-devel liblog4cpp-devel libluajit-devel libmongoc-devel libnDPI-devel
+BuildRequires: libncurses-devel libpcap-devel
+
+# Temporary, while upstream fix
+ExclusiveArch: x86_64
 
 %description
 A high performance DoS/DDoS load analyzer built on top of multiple packet capture
@@ -37,18 +43,27 @@ install -m644 src/%name.service %buildroot%_unitdir/%name.service
 install -m644 src/%name.conf %buildroot%_sysconfdir/%name.conf
 install -m755 %name.init %buildroot%_initdir/%name
 
-mv docs/THANKS.md ./
-
 %files
 %_bindir/*
+%_sbindir/*
 %config %_initdir/%name
-%config(noreplace) %_sysconfdir/%name.conf
+%config(noreplace) %_sysconfdir/fastnetmon.conf
+%config(noreplace) %_sysconfdir/networks_list
+%config(noreplace) %_sysconfdir/networks_whitelist
 %_unitdir/*
 %_localstatedir/%name
-%doc README.md THANKS.md
+%doc README.md docs
+%_mandir/man1/*
 
 
 %changelog
+* Sun Dec 27 2015 Alexei Takaseev <taf@altlinux.org> 1.1.2-alt3
+- update to git:0f2be7279cc47473dab05f4f02daca60576d19e7
+- Build only x86_64
+
+* Wed Dec 23 2015 Alexei Takaseev <taf@altlinux.org> 1.1.2-alt2
+- update to git:fd3ddc7ca60c530318a735ebf10d731ed3660dc9
+
 * Wed Jun 03 2015 Alexei Takaseev <taf@altlinux.org> 1.1.2-alt1
 - 1.1.2
 
