@@ -2,7 +2,7 @@
 
 Name:     libgwenhywfar
 Version:  4.14.0
-Release:  alt1
+Release:  alt3
 
 Summary:  A multi-platform helper library for other libraries
 Group:    System/Libraries
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %origname-%version.tar.bz2
 Source1:  %name.watch
 Patch1:   %name-pthread.patch
+Patch2:   %name-gwen-gnutls.patch
 
 BuildRequires: gcc-c++ glibc-devel graphviz libcom_err-devel 
 BuildRequires: libgnutls-devel libssl-devel tzdata
@@ -62,6 +63,7 @@ compiling programs using Gwenhywfar.
 %prep
 %setup -q -n %origname-%version
 %patch1 -p2
+%patch2 -p1
 
 %build
 %autoreconf
@@ -107,11 +109,20 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/*.so
 %_includedir/gwenhywfar4/
 %_pkgconfigdir/*
+%_libdir/cmake/*
 %_datadir/%origname/typemaker2/*
 %_datadir/aclocal/gwenhywfar.m4
 %_libdir/cmake/gwenhywfar-*/gwenhywfar-config*.cmake
 
 %changelog
+* Sun Dec 27 2015 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt3
+- Update watch file after upstream site reconstruction
+- Fix build with new gnutls
+- Package cmake files
+
+* Mon Dec 21 2015 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt2
+- Do not use strict extension for man pages
+
 * Wed May 27 2015 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt1
 - new version 4.14.0
 
