@@ -1,11 +1,11 @@
 Name:		ftplib
-Version:	3.1
-Release:	alt2_14
+Version:	4.0
+Release:	alt1_1
 Summary:	Library of FTP routines
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://nbpfaus.net/~pfau/ftplib/
-Source0:	http://nbpfaus.net/~pfau/ftplib/%{name}-%{version}-1.tar.gz
+Source0:	http://nbpfaus.net/~pfau/ftplib/%{name}-%{version}.tar.gz
 Patch0:		ftplib-3.1-1-modernize.patch
 Source44: import.info
 
@@ -31,8 +31,8 @@ License:	GPLv2+
 Command line driven ftp file transfer program using ftplib.
 
 %prep
-%setup -q -n %{name}-%{version}-1
-%patch0 -p1
+%setup -q -n %{name}-%{version}
+%patch0 -p1 -b .modern
 
 %build
 cd src/
@@ -47,9 +47,9 @@ cd src/
 make DESTDIR=$RPM_BUILD_ROOT LIBDIR="%{_libdir}" install
 
 cd ${RPM_BUILD_ROOT}%{_libdir}
-chmod +x libftp.so.3.1
-ln -sf libftp.so.3.1 libftp.so.3
-ln -sf libftp.so.3 libftp.so
+chmod +x libftp.so.4.0
+ln -sf libftp.so.4.0 libftp.so.4
+ln -sf libftp.so.4 libftp.so
 
 cd ${RPM_BUILD_ROOT}%{_bindir}
 for f in ftpdir ftpget ftplist ftprm ftpsend; do
@@ -57,7 +57,8 @@ for f in ftpdir ftpget ftplist ftprm ftpsend; do
 done
 
 %files
-%doc CHANGES TODO NOTES
+%doc CHANGES
+%doc LICENSE
 %{_libdir}/libftp*.so.*
 
 %files devel
@@ -75,6 +76,9 @@ done
 %{_bindir}/qftp
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_14
 - update to new release by fcimport
 
