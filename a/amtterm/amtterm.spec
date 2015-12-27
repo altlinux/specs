@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(SOAP/Lite.pm)
+BuildRequires: /usr/bin/desktop-file-install perl(SOAP/Lite.pm)
 # END SourceDeps(oneline)
 Name:         amtterm
 License:      GPLv2+
-Version:      1.3
-Release:      alt2_10
+Version:      1.4
+Release:      alt1_1
 Summary:      Serial-over-lan (sol) client for Intel AMT
 Group:        Networking/WWW
 URL:          http://www.kraxel.org/blog/linux/amtterm/
@@ -43,6 +43,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ \
 %{_datadir}/applications/gamt.desktop
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_10
 - update to new release by fcimport
 
