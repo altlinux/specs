@@ -4,8 +4,8 @@
 Summary: English dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
-Version: 7.1
-Release: alt2_9
+Version: 2015.04.24
+Release: alt1_1
 License: MIT and BSD
 Group: Text tools
 URL: http://aspell.net/
@@ -38,6 +38,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 2015.04.24-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 7.1-alt2_9
 - update to new release by fcimport
 
