@@ -1,20 +1,19 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Scalar/Util.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-MockModule
 Version:        0.11
-Release:        alt1
+Release:        alt1_1
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Test-MockModule/
-Source:        http://www.cpan.org/authors/id/G/GF/GFRANKS/Test-MockModule-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/S/SI/SIMONFLK/Test-MockModule-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(CGI.pm)
-BuildRequires:  perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm)
-BuildRequires:  perl(Module/Build.pm) perl(SUPER.pm)
+BuildRequires:  perl(Test/More.pm), perl(Test/Pod.pm), perl(Test/Pod/Coverage.pm)
+BuildRequires:  perl(Module/Build.pm), perl(SUPER.pm)
 Source44: import.info
 
 %description
@@ -35,11 +34,14 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 ./Build test
 
 %files
-%doc Changes README*
+%doc Changes README.md
 %doc LICENSE
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
+- update to new release by fcimport
+
 * Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
