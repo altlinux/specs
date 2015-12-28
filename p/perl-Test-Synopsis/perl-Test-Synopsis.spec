@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(Test/CPAN/Meta/JSON.pm)
 # END SourceDeps(oneline)
 # noarch, but to avoid debug* files interfering with manifest test:
 %global debug_package %{nil}
 
 Name:		perl-Test-Synopsis
-Version:	0.11
-Release:	alt1_4
+Version:	0.12
+Release:	alt1
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Synopsis/
-Source0:	http://search.cpan.org/CPAN/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	perl
@@ -97,6 +98,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Dec 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_4
 - update to new release by fcimport
 
