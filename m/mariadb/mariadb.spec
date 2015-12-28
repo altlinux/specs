@@ -28,8 +28,8 @@
 %endif
 
 Name: mariadb
-Version: 10.1.9
-Release: alt5
+Version: 10.1.10
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 with exceptions
@@ -732,6 +732,11 @@ fi
 %endif
 
 %changelog
+* Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.10-alt1
+- 10.1.10
+- fix typo and cleanup sysv init script
+- removed a deprecated options from server.cnf
+
 * Tue Dec 22 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.9-alt5
 - snapshot of 10.1 branch (d58a77020)
 - drop mount --bind /run/systemd/notify to chroot
