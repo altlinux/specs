@@ -1,7 +1,7 @@
 %def_without python
 
 Name: libvirt-glib
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
@@ -10,7 +10,7 @@ URL: http://libvirt.org/
 Source: %name-%version.tar
 
 # From configure.ac
-%define libvirt_ver 0.10.2
+%define libvirt_ver 1.1.1
 %define glib_ver 2.36.0
 %define libxml2_ver 2.0.0
 
@@ -18,7 +18,7 @@ BuildRequires: intltool
 BuildRequires: libvirt-devel >= %libvirt_ver
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
-BuildRequires: gobject-introspection-devel >= 0.9.8
+BuildRequires: gobject-introspection-devel >= 1.36.0
 BuildRequires: vala-tools gtk-doc
 
 %description
@@ -222,6 +222,9 @@ intltoolize --force
 %endif
 
 %changelog
+* Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.3-alt1
+- 0.2.3
+
 * Tue Aug 25 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.2-alt1
 - 0.2.2
 
