@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(Test/Run/CmdLine/Iface.pm) perl(parent.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-String-Random
-Version:        0.28
-Release:        alt1_3
+Version:        0.29
+Release:        alt1
 Summary:        Perl module to generate random strings based on a pattern
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/String-Random/
-Source0:        http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/String-Random-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/S/SH/SHLOMIF/String-Random-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -47,6 +48,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %changelog
+* Mon Dec 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1_3
 - update to new release by fcimport
 
