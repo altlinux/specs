@@ -1,8 +1,8 @@
 %define libwbc_alternatives_version 0.12.0
 
 Name: sssd
-Version: 1.13.2
-Release: alt1.1
+Version: 1.13.3
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -444,7 +444,8 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_libexecdir/%name/sssd_autofs
 %_libexecdir/%name/sssd_ssh
 %_libexecdir/%name/sssd_sudo
-%attr(4710,root,%sssd_user) %_libexecdir/%name/p11_child
+%_libexecdir/%name/p11_child
+%_datadir/polkit-1/rules.d/*
 
 %dir %_libdir/%name
 %_libdir/%name/libsss_simple.so
@@ -628,6 +629,9 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_altdir/libwbclient-sss-devel
 
 %changelog
+* Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1.13.3-alt1
+- 1.13.3
+
 * Thu Dec 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.13.2-alt1.1
 - Rebuild with libldb-1.1.24
 
