@@ -5,13 +5,15 @@
 %def_disable 	appdata
 
 %def_disable	bsfilter
-%def_disable	tnef
+%def_enable 	tnef
 %def_enable 	gdata
 %def_enable 	archive
 
+%define _unpackaged_files_terminate_build 1
+
 Name:   	claws-mail
 Version:	3.13.1
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -813,6 +815,14 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Mon Dec 28 2015 Mikhail Efremov <sem@altlinux.org> 3.13.1-alt2
+- Enable tnef plugin.
+- Patches from upstream:
+  + fix bug 3584, 'After 3.13.1, characters in some Japanese codec
+    are never correctly converted to internal ones'.
+  + comment out the paragraphs which no longer apply.
+  + late, post-release pt_BR.po update.
+
 * Mon Dec 21 2015 Mikhail Efremov <sem@altlinux.org> 3.13.1-alt1
 - Use Russian translation from upstream.
 - Updated to 3.13.1.
