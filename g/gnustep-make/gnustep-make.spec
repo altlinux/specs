@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.6
-Release: alt17.svn20140202
+Release: alt18.svn20140202
 # http://svn.gna.org/svn/gnustep/tools/make/trunk
 Source: %name-%version-%release.tar
 License: GPLv3+
@@ -24,6 +24,7 @@ Summary: Files needed to develop applications with gnustep-make
 Group: Development/Objective-C
 BuildArch: noarch
 Requires: %name = %version-%release
+Requires: gcc-objc
 
 %description devel
 The makefile package is a simplistic, powerful and extensible way to
@@ -135,6 +136,9 @@ rm -f %buildroot%_infodir/*
 %_docdir/GNUstep
 
 %changelog
+* Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.6-alt18.svn20140202
+- Add gcc-objc requirement for gnustep-make-devel
+
 * Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.6-alt17.svn20140202
 - Use gcc as compiler instead of clang
 
