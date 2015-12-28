@@ -1,11 +1,12 @@
-%define SVNDATE 20150616
-%define SVNREV 17642
-%define TOOL_CHAIN_TAG GCC48
+%define SVNDATE 20151225
+%define SVNREV 19549
+%define TOOL_CHAIN_TAG GCC49
+%define openssl_ver 1.0.2e
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: %{SVNDATE}svn%{SVNREV}
-Release: alt2
+Version: %{SVNDATE}
+Release: alt1.svn%{SVNREV}
 Summary: EFI Development Kit II
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -14,13 +15,15 @@ Source: %name-%version.tar
 #Vcs-Git: https://github.com/tianocore/edk2-FatPkg.git
 Source1: FatPkg.tar
 
-Source2: https://www.openssl.org/source/openssl-1.0.2c.tar.gz
+Source2: https://www.openssl.org/source/openssl-%openssl_ver.tar.gz
+
+Patch1: %name-%version-%release.patch
 
 License: BSD
 Group: Emulators
 Url: http://www.tianocore.org
 
-BuildRequires: gcc-c++-x86_64-linux-gnu gcc4.8-c++
+BuildRequires: gcc-c++-x86_64-linux-gnu gcc-c++
 BuildRequires: iasl nasm
 BuildRequires: python-devel python-modules-sqlite3
 BuildRequires: libuuid-devel
@@ -70,6 +73,7 @@ Open Virtual Machine Firmware
 
 %prep
 %setup -q
+%patch1 -p1
 
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
@@ -85,8 +89,8 @@ rm -rf BaseTools/Bin \
 
 # add openssl
 tar -C CryptoPkg/Library/OpensslLib -xf %SOURCE2
-(cd CryptoPkg/Library/OpensslLib/openssl-1.0.2c;
- patch -p0 < ../EDKII_openssl-1.0.2c.patch)
+(cd CryptoPkg/Library/OpensslLib/openssl-%openssl_ver;
+ patch -p0 < ../EDKII_openssl-%openssl_ver.patch)
 (cd CryptoPkg/Library/OpensslLib; ./Install.sh)
 
 # add fat
@@ -94,10 +98,10 @@ tar -xf %SOURCE1
 
 # fix build target.txt
 sed -i \
-	"s|^TARGET[ ]*=.*|TARGET = RELEASE|; \
-	 s|^TOOL_CHAIN_TAG[ ]*=.*|TOOL_CHAIN_TAG = %TOOL_CHAIN_TAG|; \
-	 s|^TARGET_ARCH[ ]*=.*|TARGET_ARCH = IA32 X64|; \
-	 s|^ACTIVE_PLATFORM[[ ]*=.*|ACTIVE_PLATFORM = MdeModulePkg/MdeModulePkg.dsc|" \
+	"s|^TOOL_CHAIN_TAG[ ]*=.*|TOOL_CHAIN_TAG = %TOOL_CHAIN_TAG|; \
+	 s|^TARGET[ ]*=.*|TARGET = RELEASE|; \
+	 s|^ACTIVE_PLATFORM[[ ]*=.*|ACTIVE_PLATFORM = MdeModulePkg/MdeModulePkg.dsc|; \
+	 s|^TARGET_ARCH[ ]*=.*|TARGET_ARCH = IA32 X64|" \
 	 BaseTools/Conf/target.template
 
 sed -i \
@@ -110,7 +114,7 @@ sed -i \
 	 BaseTools/Conf/tools_def.template
 
 %build
-export GCC48_BIN=x86_64-linux-gnu-
+export GCC49_BIN=x86_64-linux-gnu-
 source ./edksetup.sh
 # prepare
 #cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
@@ -121,20 +125,15 @@ source ./edksetup.sh
 
 (cd UefiCpuPkg/ResetVector/Vtf0; python Build.py)
 
-#source ./edksetup.sh
-#%ifarch x86_64
-build -p FatPkg/FatPkg.dsc -m FatPkg/EnhancedFatDxe/Fat.inf -b RELEASE -a X64
-#%endif
-build -p FatPkg/FatPkg.dsc -m FatPkg/EnhancedFatDxe/Fat.inf -b RELEASE -a IA32
 mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
-#%ifarch x86_64
+source ./edksetup.sh
+
+build -p FatPkg/FatPkg.dsc -m FatPkg/EnhancedFatDxe/Fat.inf -b RELEASE -a IA32 -a X64
 cp -a Build/Fat/RELEASE_%{TOOL_CHAIN_TAG}/X64/Fat.efi FatBinPkg/EnhancedFatDxe/X64/Fat.efi
-#%endif
 cp -a Build/Fat/RELEASE_%{TOOL_CHAIN_TAG}/IA32/Fat.efi FatBinPkg/EnhancedFatDxe/Ia32/Fat.efi
-#%ifarch x86_64
-build -p OvmfPkg/OvmfPkgX64.dsc -D BUILD_NEW_SHELL -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a X64
-#%endif
-build -p OvmfPkg/OvmfPkgIa32.dsc -D BUILD_NEW_SHELL -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a IA32
+
+build -p OvmfPkg/OvmfPkgX64.dsc -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a X64
+build -p OvmfPkg/OvmfPkgIa32.dsc -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a IA32
 
 %install
 # install BaseTools
@@ -180,7 +179,7 @@ install \
 	%buildroot%_datadir/%name/Conf
 
 install \
-	Scripts/gcc4.9-ld-script \
+	Scripts/GccBase.lds \
 	%buildroot%_datadir/%name/Scripts
 
 cp -R Source/Python %buildroot%_datadir/%name/Python
@@ -227,6 +226,7 @@ install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildr
 %_bindir/TianoCompress
 %_bindir/VfrCompile
 %_bindir/VolInfo
+%_datadir/%name/BuildEnv
 %_datadir/%name/Conf
 %_datadir/%name/Scripts
 
@@ -248,9 +248,12 @@ install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildr
 %files ovmf
 #%doc FatBinPkg/License.txt
 %doc OvmfPkg/License.txt
-%_datadir/ovmf/*
+%_datadir/ovmf
 
 %changelog
+* Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 20151225-alt1.svn19549
+- build from branche UDK2015
+
 * Wed Jun 24 2015 Alexey Shabalin <shaba@altlinux.ru> 20150616svn17642-alt2
 - buils ovmf as noarch
 
