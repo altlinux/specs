@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.1q
+Version: 1.0.2e
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -21,31 +21,33 @@ Patch04: openssl-alt-fips_premain_dso.patch
 Patch05: openssl-gosta-pkcs12-fix.patch
 Patch06: openssl-rh-alt-soversion.patch
 Patch07: openssl-rh-enginesdir.patch
-Patch08: openssl-rh-rpath.patch
+Patch08: openssl-rh-no-rpath.patch
 Patch09: openssl-rh-test-use-localhost.patch
 Patch11: openssl-rh-pod2man-timezone.patch
 Patch12: openssl-rh-perlpath.patch
 Patch13: openssl-rh-default-paths.patch
-Patch14: openssl-rh-x509-issuer-hash.patch
+Patch14: openssl-rh-issuer-hash.patch
 Patch15: openssl-rh-X509_load_cert_file.patch
-Patch16: openssl-rh-version-engines.patch
+Patch16: openssl-rh-version-add-engines.patch
 Patch18: openssl-rh-ipv6-apps.patch
 Patch19: openssl-rh-env-zlib.patch
 Patch21: openssl-rh-algo-doc.patch
 Patch22: openssl-rh-apps-dgst.patch
-Patch23: openssl-rh-alt-xmpp-starttls.patch
+Patch23: openssl-rh-xmpp-starttls.patch
 Patch24: openssl-rh-chil-fixes.patch
 Patch25: openssl-rh-alt-secure-getenv.patch
 Patch27: openssl-rh-padlock64.patch
-Patch28: openssl-rh-SSL_DEFAULT_CIPHER_LIST.patch
+Patch28: openssl-rh-weak-ciphers.patch
 Patch30: openssl-rh-disable-sslv2v3.patch
-
-Patch84: openssl-rh-trusted-first.patch
+Patch84: openssl-rh-trusted-first-doc.patch
+Patch87: openssl-rh-cc-reqs.patch
+Patch90: openssl-rh-enc-fail.patch
+Patch92: openssl-rh-system-cipherlist.patch
 
 %define shlib_soversion 10
 %define openssldir /var/lib/ssl
 %define old_openssldir %_libdir/ssl
-%def_enable compat
+%def_disable compat
 %def_with krb
 
 BuildRequires: /usr/bin/pod2man bc zlib-devel
@@ -242,8 +244,10 @@ on the command line.
 %patch27 -p1
 %patch28 -p1
 %patch30 -p1
-
 %patch84 -p1
+%patch87 -p1
+%patch90 -p1
+%patch92 -p1
 
 find -type f -name \*.orig -delete
 
@@ -283,6 +287,7 @@ fi
 	--libdir=%_lib \
 	--openssldir=%openssldir \
 	--enginesdir=%_libdir/openssl/engines \
+	--system-ciphers-file=%_sysconfdir/openssl/cipher-list.conf \
 %if_with krb
 	--with-krb5-flavor=MIT \
 	--with-krb5-dir=%prefix \
@@ -343,7 +348,7 @@ mv %buildroot%_libdir/engines %buildroot%_libdir/openssl/
 # Relocate openssl.cnf from %%openssldir/ to %_sysconfdir/openssl/.
 mkdir -p %buildroot%_sysconfdir/openssl
 mv %buildroot%openssldir/openssl.cnf %buildroot%_sysconfdir/openssl/
-ln -s `relative %_sysconfdir/openssl/openssl.cnf %openssldir/openssl.cnf` %buildroot%openssldir/
+ln -s -r %buildroot%_sysconfdir/openssl/openssl.cnf %buildroot%openssldir/
 
 # Rename some man pages, fix references.
 for f in passwd.1 err.3 rand.3 threads.3 config.5; do
@@ -372,8 +377,7 @@ install -pDm644 %_sourcedir/Makefile.certificate \
 install -pDm644 %_sourcedir/make-dummy-cert \
 	%buildroot%openssldir/certs/make-dummy-cert
 
-# Install standard root certificates.
-ln -s ../../..%_datadir/ca-certificates/ca-bundle.crt \
+ln -s -r %buildroot%_datadir/ca-certificates/ca-bundle.crt \
 	%buildroot%openssldir/cert.pem
 
 mv %buildroot%openssldir/misc/CA{.sh,}
@@ -388,6 +392,10 @@ install -pm644 CHANGES* LICENSE NEWS README* engines/ccgost/README.gost \
 bzip2 -9 %buildroot%docdir/CHANGES*
 cp -a demos doc %buildroot%docdir/
 rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
+
+# Create default cipher-list.conf from SSL_DEFAULT_CIPHER_LIST
+sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
+	> %buildroot%_sysconfdir/openssl/cipher-list.conf
 
 %check
 LD_LIBRARY_PATH=%buildroot/%_lib make test
@@ -406,7 +414,8 @@ fi
 
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
-%config(noreplace) %_sysconfdir/openssl
+%config(noreplace) %_sysconfdir/openssl/openssl.cnf
+%dir %_sysconfdir/openssl/
 %dir %openssldir
 %openssldir/*.cnf
 %openssldir/*.pem
@@ -414,6 +423,8 @@ fi
 %docdir/[A-Z]*
 
 %files -n libssl%shlib_soversion
+%config(noreplace) %_sysconfdir/openssl/cipher-list.conf
+%dir %_sysconfdir/openssl/
 /%_lib/libssl*
 
 %files -n libssl-devel
@@ -447,6 +458,16 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Mon Dec 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2e-alt1
+- Updated to 1.0.2e.
+- Updated patches from Fedora openssl-1.0.2e-4.
+- Added support of system profile for default cipher list.
+- Disabled support of updating from openssl <= 0.9.6g-alt2.
+- Updated openssl-alt-config.patch:
+  + [ CA_default ] default_md = sha1 -> sha256.
+  + [ req ] default_md = sha1 -> sha256.
+  + [ tsa_config1 ] digests = md5, sha1 -> sha1, sha256, sha384, sha512.
+
 * Thu Dec 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.1q-alt1
 - Updated to 1.0.1q (CVE-2015-1788 CVE-2015-3196 CVE-2015-3195
   CVE-2015-3194).
