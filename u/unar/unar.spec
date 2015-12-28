@@ -1,11 +1,11 @@
 Name: unar
-Version: 1.8.1
+Version: 1.9.1
 Release: alt1
 Summary: Multi-format archive extractor
 License: LGPLv2+
 Group: Archiving/Compression
 Url: http://unarchiver.c3.cx/unarchiver/
-Source: http://theunarchiver.googlecode.com/files/unar%{version}_src.zip
+Source: %name-%version.tar.gz
 Patch: unar1.8.1-clang.patch
 # NB: source tree moved from "The Unarchiver" to unar-version
 
@@ -41,6 +41,9 @@ install -D Extra/unar.bash_completion %buildroot%_datadir/bash-completion/comple
 %_datadir/bash-completion/*
 
 %changelog
+* Mon Dec 28 2015 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
+- Autobuild version bump to 1.9.1
+
 * Mon Mar 03 2014 Fr. Br. George <george@altlinux.ru> 1.8.1-alt1
 - Autobuild version bump to 1.8.1
 - Switch to CLANG
