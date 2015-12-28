@@ -2,10 +2,10 @@
 %define dir		var/lib/clamav-db
 %define sys_clamav 	/var/lib/clamav
 %define sys_db		/var/lib/clamav-db
-%define checksum	5d3a26306f5b266f5902c7ea1047d9ed
+%define checksum	c0a9216b52bdab1ca58955a3479bb3d5
 
 Name:    clamav-db-%dbname
-Version: 20140625
+Version: 20151102
 Release: alt1
 
 Summary: Antivirus database for ClamAV (%dbname)
@@ -47,6 +47,12 @@ done
 %attr(664,mail,root) %config(noreplace) /%dir/%dbname.cvd
 
 %changelog
+* Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 20151102-alt1
+- Update database
+
+* Tue Jan 27 2015 Andrey Cherepanov <cas@altlinux.org> 20150105-alt1
+- Update database
+
 * Sun Nov 30 2014 Andrey Cherepanov <cas@altlinux.org> 20140625-alt1
 - Split clamav-db into undepended packages
 
