@@ -2,7 +2,7 @@
 
 Name: monotone
 Version: 1.2
-Release: alt2.dev.mtn20150211
+Release: alt3.dev.mtn20150211
 
 Summary: Distributed version control system
 License: GPL
@@ -56,6 +56,9 @@ DISABLE_NETWORK_TESTS=1 make check
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL ChangeLog notes/*
 
 %changelog
+* Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 1.2-alt3.dev.mtn20150211
+- Rebuild with new libbotan
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev.mtn20150211
 - New snapshot
 
