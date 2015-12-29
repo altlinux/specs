@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.25
+Version: %ver_major.26
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -29,7 +29,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.34
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.25
+%define goffice_ver 0.10.26
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
@@ -180,6 +180,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Tue Dec 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.26-alt1
+- 1.12.26
+
 * Sat Dec 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.25-alt1
 - 1.12.25
 
