@@ -1,5 +1,5 @@
 Name: man-pages
-Version: 4.03
+Version: 4.04
 Release: alt1
 
 Summary: Man (manual) pages from the Linux Documentation Project
@@ -113,6 +113,9 @@ find %buildroot%_mandir -type f -print0 |
 %_datadir/%name/
 
 %changelog
+* Tue Dec 29 2015 Dmitry V. Levin <ldv@altlinux.org> 4.04-alt1
+- 4.03 -> 4.04.
+
 * Sat Dec 05 2015 Dmitry V. Levin <ldv@altlinux.org> 4.03-alt1
 - 4.02 -> 4.03.
 - Packaged fd(4), iconv(1), locale(1), localedef(1), quotactl(2),
