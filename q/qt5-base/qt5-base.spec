@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.1
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -42,6 +42,8 @@ Patch2: qtbase-opensource-src-5.4.0-QTBUG-43057.patch
 Patch100: 0001-Fix-QWidget-setWindowRole.patch
 Patch101: 0005-Restore-documented-behavior-for-the-WA_X11NetWmWindo.patch
 Patch102: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
+Patch103: xcb-dont-crash-in-mapToNativemapFromNative-if-the-screen-is-null.patch
+Patch104: xcb-fix-yet-another-crash-when-screens-are-disconnected.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -331,6 +333,8 @@ EGL integration library for the Qt%major toolkit
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
+%patch103 -p1
+%patch104 -p1
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
@@ -727,6 +731,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Tue Dec 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt5
+- add patches against crashes when disconnect displays
+
 * Thu Dec 10 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt4
 - add qt5-qtbase-gui and qt5-qtbase compat packages
 
