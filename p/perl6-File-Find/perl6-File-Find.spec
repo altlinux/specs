@@ -1,6 +1,6 @@
 Name: perl6-File-Find
 Version: 0.1
-Release: alt1.cfc6865
+Release: alt2.d3e2be7
 Summary: File::Find Perl 6 module
 
 Group: Development/Other
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: rakudo
+BuildRequires: rakudo rpm-build-perl6
 
 BuildArch: noarch
 
@@ -27,17 +27,22 @@ File::Find - Get a lazy list of a directory tree
 %build
 
 %check
-perl6 -Ilib t/*.t
+%perl6_test
 
 %install
-mkdir -p %buildroot%_datadir/perl6/vendor/lib
-cp -r lib/* %buildroot%_datadir/perl6/vendor/lib
+%perl6_vendor_install
 
 %files
-%_datadir/perl6/vendor/lib/File/Find.pm
+%perl6_vendorlib/dist/*
+%perl6_vendorlib/sources/*
+%perl6_vendorlib/short/*
 %doc LICENSE README.md
 
 %changelog
+* Tue Dec 29 2015 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt2.d3e2be7
+- commit d3e2be7
+- install with rpm-build-perl6
+
 * Wed Oct 28 2015 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt1.cfc6865
 - commit cfc6865
 - initial build
