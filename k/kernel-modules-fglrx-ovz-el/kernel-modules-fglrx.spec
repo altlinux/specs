@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	15.301.1025
-%define module_release alt1
+%define module_release alt2
 
 %define flavour ovz-el
 BuildRequires(pre): kernel-headers-modules-ovz-el
@@ -65,6 +65,9 @@ install -pD -m 0644 {%ksname-%module_version/2.6.x,%buildroot%module_dir}/%modul
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %EVR
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Dec 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 15.301.1025-alt2
+- Bumped release.
 
 * Thu Dec 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:15.301.1025-alt1
 - Updated template for fglrx 15.301.1025.
