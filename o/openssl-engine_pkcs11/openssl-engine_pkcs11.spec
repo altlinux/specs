@@ -3,15 +3,17 @@
 
 Summary: PKCS#11 engine for OpenSSL
 Name: openssl-%oname
-Version: 0.1.8
-Release: alt2.qa2
+Version: 0.2.0
+Release: alt1
 License: BSD
 Group: System/Libraries
-Source0: http://www.opensc-project.org/files/%oname/%oname-%version.tar.gz
-Url: http://www.opensc-project.org/engine_pkcs11
+# https://github.com/OpenSC/engine_pkcs11.git
+Source: %name-%version.tar
+Url: https://github.com/OpenSC/engine_pkcs11.git
 
-BuildRequires: libp11-devel >= 0.2.5
-BuildRequires: libssl-devel >= 0.9.7
+BuildRequires: pkgconfig(p11-kit-1)
+BuildRequires: pkgconfig(libp11) >= 0.2.5
+BuildRequires: pkgconfig(libcrypto) >= 0.9.7 pkgconfig(openssl) >= 0.9.7
 
 
 %description
@@ -23,7 +25,7 @@ this engine was a part of OpenSC, until OpenSC was split into several small
 projects for improved flexibility.
 
 %prep
-%setup -q -n %oname-%version
+%setup
 cat > README.ALT <<EOF
 In ALTLinux, the engine file has been placed in the
 %_libdir/openssl/engines directory instead of the default
@@ -52,6 +54,7 @@ EOF
 chmod 0644 README.ALT
 
 %build
+%autoreconf
 %configure \
 	%{subst_enable static} \
 	--with-enginesdir=%_libdir/openssl/engines
@@ -59,15 +62,16 @@ chmod 0644 README.ALT
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install 
-mv doc/nonpersistent/wiki.out doc/wiki
+%make_install DESTDIR=%buildroot install
 
 %files
-%doc doc/README doc/wiki README.ALT NEWS
+%doc README.md README.ALT NEWS
 %_libdir/openssl/engines/*.so
-%exclude %_datadir/doc/engine_pkcs11
 
 %changelog
+* Tue Dec 29 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt1
+- 0.2.0
+
 * Fri Oct 30 2015 Michael Shigorin <mike@altlinux.org> 0.1.8-alt2.qa2
 - NMU: rebuilt against recent libp11
 
