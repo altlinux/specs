@@ -1,5 +1,5 @@
 Name: perl6-Panda
-Version: 2015.10
+Version: 2015.12
 Release: alt1
 Summary: Perl 6 module installer
 
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildPreReq: rakudo
+BuildPreReq: rakudo rpm-build-perl6
 BuildRequires: perl6-Shell-Command perl6-JSON-Fast perl6-File-Find
 
 BuildArch: noarch
@@ -33,20 +33,28 @@ AutoProv: noperl
 %build
 
 %install
-mkdir -p %buildroot%_datadir/perl6/vendor/lib
 mkdir -p %buildroot%_bindir
 cp bin/panda %buildroot%_bindir
-cp -r lib/* %buildroot%_datadir/perl6/vendor/lib
+%perl6_vendor_install
 
 %check
-perl6 -Ilib t/*.t
+%perl6_test
 
 %files
 %_bindir/panda
-%_datadir/perl6/vendor/lib/Panda*
-%doc LICENSE CONTRIBUTING.md README.md
+%perl6_vendorlib/dist/*
+%perl6_vendorlib/short/*
+%perl6_vendorlib/sources/*
+%doc LICENSE CONTRIBUTING.md README.md README.alt
 
 %changelog
+* Tue Dec 29 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.12-alt1
+- 2015.12
+- install with rpm-build-perl6
+
+* Mon Nov 30 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.11-alt0.1
+- git snapshot e9055fe
+
 * Tue Oct 27 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.10-alt1
 - initial build
 
