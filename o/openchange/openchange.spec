@@ -5,16 +5,19 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt2.zentyal16
+Release: alt3.zentyal16
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
 Url:     http://www.openchange.org/
 # VCS:   https://github.com/zentyal/openchange
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source:  %name-%version.tar
+Patch:   %name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-apache2
+BuildRequires(pre): apache2-common
+BuildRequires(pre): rpm-build-python
 BuildRequires: flex
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
@@ -35,6 +38,9 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libxslt
 BuildRequires: python-devel
 BuildRequires: zlib-devel
+BuildRequires: python-module-pylons
+BuildRequires: python-module-PasteScript
+BuildRequires: python-module-PasteDeploy
 
 %filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
 
@@ -149,6 +155,26 @@ Requires: sqlite3
 %description server
 This package provides the server elements for OpenChange.
 
+%package ocsmanager
+Summary: OpenChange - web services
+Group: Networking/Mail
+Requires: apache2-common
+Requires: python-module-pylons
+Requires: python-module-PasteScript
+
+%description ocsmanager
+This packages provides web services for OpenChange in the form of a Pylons
+application.
+
+%package rpcproxy
+Summary: OpenChange - RPC-over-HTTP proxy
+Group: Networking/Mail
+Requires: apache2-mod_wsgi
+
+%description rpcproxy
+This package contains a a RPC-over-HTTP python implementation
+for Samba, using wsgi.
+
 %prep
 %setup -q
 %patch -p1
@@ -200,6 +226,26 @@ rm -f %buildroot%_pkgconfigdir/libmapiserver.pc
 rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
+# ocsmanager
+install -Dm644 mapiproxy/services/ocsmanager/ocsmanager.ini %buildroot%_sysconfdir/ocsmanager/ocsmanager.ini
+install -dm750 %buildroot%_logdir/ocsmanager
+
+install -Dm644 mapiproxy/services/ocsmanager/ocsmanager-apache.conf %buildroot%apache2_mods_available/ocsmanager.conf
+install -Dm755 openchange-ocsmanager.init %buildroot%_initdir/openchange-ocsmanager
+install -dm700 %buildroot%_cachedir/ntlmauthhandler
+pushd mapiproxy/services/ocsmanager
+%python_install --prefix=/usr
+# HACK: fix wrong installed egg files on x86_64
+test "%python_sitelibdir" != "%python_sitelibdir_noarch" && mv %buildroot%python_sitelibdir_noarch/*.egg-* %buildroot%python_sitelibdir
+popd
+
+# rpcproxy
+install -Dm0644 mapiproxy/services/web/rpcproxy/rpcproxy.conf %buildroot%apache2_mods_available/rpcproxy.conf
+install -Dm0644 mapiproxy/services/web/rpcproxy/rpcproxy.wsgi %buildroot%_libexecdir/openchange/web/rpcproxy/rpcproxy.wsgi
+pushd mapiproxy/services/web/rpcproxy
+cp -a rpcproxy %buildroot%_libexecdir/openchange/web/rpcproxy
+popd
+
 %files -n libmapi
 %doc CHANGES.md COPYING IDL_LICENSE.txt README.md README.smbconf.md
 %doc apidocs/html/libmapi
@@ -246,7 +292,22 @@ rm -f %buildroot%_bindir/check_fasttransfer
 %_datadir/samba/setup/*
 %endif
 
+%files ocsmanager
+%config(noreplace) %_initdir/openchange-ocsmanager
+%config(noreplace) %_sysconfdir/ocsmanager/*
+%config(noreplace) %apache2_mods_available/ocsmanager.conf
+%python_sitelibdir/ocsmanager*
+%_logdir/ocsmanager
+%attr(0700, %apache2_name, %apache2_group) %_cachedir/ntlmauthhandler
+
+%files rpcproxy
+%config(noreplace) %apache2_mods_available/rpcproxy.conf
+%_libexecdir/openchange/web/rpcproxy
+
 %changelog
+* Thu Dec 24 2015 Andrey Cherepanov <cas@altlinux.org> 2.4-alt3.zentyal16
+- Package openchange-ocsmanager and openchange-rpcproxy
+
 * Wed Dec 09 2015 Andrey Cherepanov <cas@altlinux.org> 2.4-alt2.zentyal16
 - New version 2.4-zentyal16
 
