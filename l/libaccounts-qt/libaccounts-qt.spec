@@ -9,7 +9,7 @@ Group: System/Libraries
 Name:           libaccounts-qt
 Summary:        Accounts framework Qt bindings
 Version:        1.13
-Release:        alt1_1
+Release:        alt1_11
 
 License:        LGPLv2
 URL:            https://gitlab.com/accounts-sso/libaccounts-qt
@@ -38,51 +38,123 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    devel
 %{summary}.
 
+%package        -n libaccounts-qt5
+Group: System/Libraries
+Summary:        Accounts framework Qt5 bindings
+BuildRequires:  pkgconfig(Qt5Gui)
+Obsoletes:      libaccounts-qt-qt5 < 1.13-11
+%description    -n libaccounts-qt5
+%{summary}.
+
+%package        -n libaccounts-qt5-devel
+Group: System/Libraries
+Summary:        Development files for %{name}
+Obsoletes:      libaccounts-qt-qt5-devel < 1.13-11
+Requires:       libaccounts-qt5%{?_isa} = %{version}-%{release}
+%description    -n libaccounts-qt5-devel
+%{summary}.
+
+%package        doc
+Group: System/Libraries
+Summary:        User and developer documentation for %{name}
+Obsoletes:      libaccounts-qt5-doc < 1.13-10
+Provides:       libaccounts-qt5-doc = %{version}-%{release}
+BuildArch:      noarch
+%description    doc
+%{summary}.
+
 
 %prep
 %setup -q -n libaccounts-qt-%{version}-%{commit0}
+
+# See https://community.kde.org/KTp/Setting_up_KAccounts#libaccounts-qt
+# "Note that at this very day libaccounts-qt qmake does **NOT** support compiling the library outside the source directory"
 
 %patch1 -p1 -b .64bitarchs
 %patch102 -p1 -b .0002
 %patch105 -p1 -b .0005
 
+# See https://community.kde.org/KTp/Setting_up_KAccounts#libaccounts-qt
+# "Note that at this very day libaccounts-qt qmake does **NOT** support compiling the library outside the source directory"
+## HACK ##
+mkdir orig
+mv * orig/ ||:
+cp -a orig/ %{_target_platform}-qt4/
+cp -a orig/ %{_target_platform}-qt5/
+mv orig/* .
+
 
 %build
+pushd %{_target_platform}-qt4
 %{qmake_qt4} \
     QMF_INSTALL_ROOT=%{_prefix} \
     CONFIG+=release \
     accounts-qt.pro
 
 make %{?_smp_mflags}
+popd
+
+pushd %{_target_platform}-qt5
+%{qmake_qt5} \
+    QMF_INSTALL_ROOT=%{_prefix} \
+    CONFIG+=release \
+    accounts-qt.pro
+
+make %{?_smp_mflags}
+popd
 
 
 %install
-make install INSTALL_ROOT=%{buildroot}
+make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}-qt4
+make install INSTALL_ROOT=%{buildroot} -C %{_target_platform}-qt5
 
+# create/own dirs
+mkdir -p %{buildroot}%{_datadir}/accounts/{providers,services}
+
+## unpackaged files
 rm -fv %{buildroot}%{_datadir}/doc/accounts-qt/html/installdox
 
 #remove tests for now
 rm -rfv %{buildroot}%{_datadir}/libaccounts-qt-tests
 rm -fv %{buildroot}%{_bindir}/accountstest
 
-# move installed docs to include them in subpackage via %%doc magic
-rm -rf __tmp_doc ; mkdir __tmp_doc
-mv %{buildroot}%{_docdir}/accounts-qt __tmp_doc
-
 
 %files
 %doc COPYING
 %{_libdir}/libaccounts-qt.so.*
+%dir %{_datadir}/accounts/
+%dir %{_datadir}/accounts/providers/
+%dir %{_datadir}/accounts/services/
 
 %files devel
 %{_libdir}/libaccounts-qt.so
 %{_includedir}/accounts-qt/
 %{_libdir}/pkgconfig/accounts-qt.pc
 %{_libdir}/cmake/AccountsQt/
-%doc __tmp_doc/accounts-qt/*
+
+%files -n libaccounts-qt5
+%doc COPYING
+%{_libdir}/libaccounts-qt5.so.*
+%dir %{_datadir}/accounts/
+%dir %{_datadir}/accounts/providers/
+%dir %{_datadir}/accounts/services/
+
+
+%files -n libaccounts-qt5-devel
+%{_libdir}/libaccounts-qt5.so
+%{_includedir}/accounts-qt5/
+%{_libdir}/pkgconfig/accounts-qt5.pc
+%{_libdir}/cmake/AccountsQt5
+
+#%files doc
+#%{_docdir}/accounts-qt/
 
 
 %changelog
+* Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_11
+- update to new release by fcimport
+- disabled doc - quickfix for non-identical noarch packages
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_1
 - update to new release by fcimport
 
