@@ -1,27 +1,36 @@
 %add_findreq_skiplist *gdbmacros*
 %add_python_req_skip lldb
+%add_findreq_skiplist %_datadir/qtcreator/templates/wizards/classes/python/file.py
 
-Name: qt-creator
-Version: 3.0.1
+Name:    qt-creator
+Version: 3.6.0
 Release: alt1
-Summary: Lightweight and cross-platform IDE for Qt
+Summary: Cross-platform IDE for Qt
 
-Group: Development/Tools
-License: LGPLv2 with exceptions
-Url: http://qt.nokia.com/products/developer-tools
-Packager: Anatoly Lyutin <vostok@altlinux.org>
+Group:   Development/Tools
+License: LGPLv2 with exceptions or LGPLv3 with exceptions
+Url:     http://qt-project.org/wiki/Category:Tools::QtCreator
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-#Source: http://download.qtsoftware.com/qtcreator/%name-%version-src.tar.gz
-Source: %name-%version.tar
+Source:  %name-%version.tar
+# VCS:   git://code.qt.io/qt-creator/qt-creator.git
 Source1: qtcreator.desktop
+Source2: qtcreator.appdata.xml
 
-Patch: %name-%version-%release.patch
+Patch:   %name-%version-%release.patch
+Patch1:  qt-creator_ninja-build.patch
 
 Requires: %name-data = %version-%release
 
+BuildRequires(pre): qt5-base-devel >= 5.5.0
 BuildRequires: gcc-c++ 
-BuildRequires: libqt4-devel >= 4.8.0
-BuildRequires: libqt4-webkit >= 4.8.0
+BuildRequires: qt5-designer >= 5.5.0
+BuildRequires: qt5-script-devel >= 5.5.0
+BuildRequires: qt5-webkit-devel >= 5.5.0
+BuildRequires: qt5-x11extras-devel >= 5.5.0
+BuildRequires: qt5-xmlpatterns-devel >= 5.5.0
+BuildRequires: qt5-tools-devel >= 5.5.0
+BuildRequires: libbotan-devel
 
 %description
 Qt Creator (previously known as Project Greenhouse) is a new,
@@ -51,18 +60,21 @@ Data files for %name
 %prep
 %setup
 subst 's,tools\/qdoc3,bin,' doc/doc.pri
-subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
+#subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch -p1
+%patch1 -p1
 
 %build
-export QTDIR=%_qt4dir
-qmake-qt4 IDE_LIBRARY_BASENAME=%_lib
+export QTDIR=%_qt5_prefix
+export PATH="%{_qt5_bindir}:$PATH"
+%qmake_qt5 -r IDE_LIBRARY_BASENAME=%_lib USE_SYSTEM_BOTAN=1 CONFIG+=disable_rpath
 NPROCS=1
 %make_build
-%make_build docs
+%make_build qch_docs
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot%_prefix
+%install_qt5 INSTALL_ROOT=%buildroot/%_prefix
+
 mkdir -p %buildroot%_desktopdir
 install %SOURCE1 %buildroot%_desktopdir
 
@@ -76,25 +88,32 @@ for i in 16 24 32 48 64 128 256 512; do
 #    ln -s %_pixmapsdir/qtcreator_logo_${i}.png \
 #          %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
 done
-%make_install INSTALL_ROOT=%buildroot%_prefix install_docs
+
+install -Dpm0644 %SOURCE2 %buildroot%_datadir/appdata/qtcreator.appdata.xml
+
+%install_qt5 INSTALL_ROOT=%buildroot/%_prefix install_inst_qch_docs
 
 %files
-%doc README LICENSE.LGPL LGPL_EXCEPTION.TXT
+%doc README* LICENSE.LGPL* LGPL_EXCEPTION.TXT
 %_bindir/*
 %_libdir/qtcreator
+%_prefix/libexec/qtcreator
 %_iconsdir/hicolor/*/apps/QtProject-qtcreator.png
 %_desktopdir/qtcreator.desktop
+%_datadir/appdata/qtcreator.appdata.xml
 
 %files doc
-%_datadir/qtcreator/doc
+%_defaultdocdir/qtcreator
 
 %files data
-%dir %_datadir/qtcreator/translations
 %dir %_datadir/qtcreator
 %_datadir/qtcreator/*
-%exclude %_datadir/qtcreator/doc
 
 %changelog
+* Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
+- New version
+- Build with Qt5 (closes #31175)
+
 * Fri Feb 07 2014 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.1-alt1
 - update to newest version with multiple improvements
 
