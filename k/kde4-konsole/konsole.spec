@@ -7,7 +7,7 @@
 %define bugfix 3
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -15,6 +15,7 @@ Url: http://www.kde.org/
 License: GPLv2
 
 PreReq(post,preun): alternatives >= 0.2
+Requires: fonts-bitmap-terminus
 Provides: xvt, %_x11bindir/xvt
 Provides: kde4base-konsole = %version-%release
 Obsoletes: kde4base-konsole < %version-%release
@@ -24,6 +25,7 @@ Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdebase-4.8.0-alt-konsole-allow-sgid.patch
 Patch2: kdebase-4.10.0-alt-konsole-profiles.patch
 Patch3: kdebase-4.14.3-alt-no-transparency.patch
+Patch4: kdebase-4.14.3-alt-def-font.patch
 # Dmitry Prokoptsev
 Patch1000: BR59256fixed.diff
 # upstream
@@ -45,6 +47,7 @@ illustrated in the Konsole handbook, which can be accessed by browsing to
 %patch1 -p3
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1
 pushd src
 #%patch1000 -p0
 popd
@@ -88,6 +91,9 @@ __EOF__
 
 
 %changelog
+* Tue Dec 29 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt3
+- set Terminus font by default
+
 * Mon Jul 27 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
 - allow transparent backgroungs
 
