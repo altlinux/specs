@@ -1,7 +1,7 @@
 %def_without python3
 
 Name: openstack-keystone
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Identity Service
@@ -31,6 +31,7 @@ BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: python-devel
 BuildRequires: python-module-sphinx >= 1.0
 BuildRequires: python-module-oslosphinx >= 2.5.0
+BuildRequires: python-module-reno >= 0.1.1
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
@@ -74,12 +75,13 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx >= 1.0
 BuildRequires: python3-module-oslosphinx
+BuildRequires: python3-module-reno >= 0.1.1
 BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-pycadf >= 1.1.0
 BuildRequires: python3-module-passlib >= 1.6
-BuildRequires: python-module-webtest
+BuildRequires: python3-module-webtest
 BuildRequires: python3-module-SQLAlchemy >= 0.9.9
 BuildRequires: python3-module-migrate >= 0.9.6
 BuildRequires: python3-module-stevedore >= 1.5.0
@@ -106,7 +108,6 @@ BuildRequires: python3-module-eventlet >= 0.17.4
 BuildRequires: python3-module-jsonschema >= 2.0.0
 BuildRequires: python3-module-cryptography >= 1.0
 BuildRequires: python3-module-msgpack >= 0.4.4
-
 %endif
 
 
@@ -331,6 +332,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Tue Dec 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt1
+- 8.0.1
+
 * Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
 - 8.0.0 Liberty release
 

@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 3.0.26
+Version: 3.0.32
 Release: alt1
 Epoch: 1
 Group: Development/Python
@@ -153,6 +153,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Tue Dec 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1:3.0.32-alt1
+- 3.0.32
+
 * Mon Sep 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1:3.0.26-alt1
 - downgrade to 3.0.26
 
