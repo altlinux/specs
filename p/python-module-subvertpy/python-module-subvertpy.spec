@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 %define oname subvertpy
 Name: python-module-%oname
-Version: 0.9.0
-Release: alt2
+Version: 0.9.3
+Release: alt1
 
 %setup_python_module subvertpy
 
@@ -79,6 +79,9 @@ install -m0644 man/* %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Tue Dec 29 2015 Anatoly Kitaykin <cetus@altlinux.org> 0.9.3-alt1
+- 0.9.3 release
+
 * Wed Jan 23 2013 Anatoly Kitaikin <cetus@altlinux.org> 0.9.0-alt2
 - Import of original git repository, rebuild
 
