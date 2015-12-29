@@ -24,11 +24,12 @@ BuildRequires: mate-common
 
 Name:          mate-power-manager
 Version:       %{branch}.2
-Release:       alt1_1
+Release:       alt2
 #Release:       0.1%{?git_rel}%{?dist}
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
+Requires:	upower
 
 # for downloading the tarball use 'spectool -g -R mate-power-manager.spec'
 # Source for release-builds.
@@ -94,6 +95,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Tue Dec 29 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.2-alt2
+- requires: upower added (closes: #31672)
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
 - new version
 
