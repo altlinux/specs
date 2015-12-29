@@ -4,7 +4,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
-Version: 5.5.1
+Version: 5.5.2
 Release: alt1
 %K5init altplace
 
@@ -15,7 +15,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Source10: pam-kf5-screenlocker
-Patch1: alt-disable-screenlocker.patch
+Patch1: alt-def-screenlocker.patch
 
 # Automatically added by buildreq on Fri Dec 11 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glibc-devel-static kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs wayland-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -109,6 +109,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Tue Dec 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.2-alt1
+- new version
+
 * Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 

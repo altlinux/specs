@@ -1,7 +1,7 @@
 %define rname kwayland-integration
 
 Name: kf5-%rname
-Version: 5.5.1
+Version: 5.5.2
 Release: alt1
 %K5init altplace
 
@@ -36,6 +36,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 %_K5plug/kf5/*/*Wayland*.so
 
 %changelog
+* Tue Dec 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.2-alt1
+- new version
+
 * Thu Dec 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 
