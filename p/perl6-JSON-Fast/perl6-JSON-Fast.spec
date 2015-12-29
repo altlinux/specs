@@ -1,6 +1,6 @@
 Name: perl6-JSON-Fast
-Version: 0.2
-Release: alt1.e9e648e
+Version: 0.3
+Release: alt0.8ad8c77
 Summary: JSON::Fast Perl 6 module 
 
 Group: Development/Other
@@ -11,8 +11,7 @@ Source: %name-%version.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: rakudo
-
+BuildRequires: rakudo rpm-build-perl6
 BuildArch: noarch
 
 AutoReq: noperl
@@ -27,17 +26,22 @@ AutoProv: noperl
 %build
 
 %check
-perl6 -Ilib t/*.t
+%perl6_test
 
 %install
-mkdir -p %buildroot%_datadir/perl6/vendor/lib
-cp -r lib/* %buildroot%_datadir/perl6/vendor/lib
+%perl6_vendor_install
 
 %files
-%_datadir/perl6/vendor/lib/JSON/Fast.pm
+%perl6_vendorlib/dist/*
+%perl6_vendorlib/short/*
+%perl6_vendorlib/sources/*
 %doc LICENSE README.md
 
 %changelog
+* Tue Dec 29 2015 Vladimir Lettiev <crux@altlinux.ru> 0.3-alt0.8ad8c77
+- 0.3
+- install with rpm-build-perl6
+
 * Wed Oct 28 2015 Vladimir Lettiev <crux@altlinux.ru> 0.2-alt1.e9e648e
 - commit e9e648e
 - initial build
