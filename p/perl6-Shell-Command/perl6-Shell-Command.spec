@@ -1,6 +1,6 @@
 Name: perl6-Shell-Command
 Version: 0.1
-Release: alt1.8a6381c
+Release: alt2.1a7eafc
 Summary: Shell::Command Perl 6 module 
 
 Group: Development/Other
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: rakudo perl6-File-Find
+BuildRequires: rakudo perl6-File-Find rpm-build-perl6
 
 BuildArch: noarch
 
@@ -30,17 +30,23 @@ AutoProv: noperl
 %build
 
 %check
-perl6 -Ilib t/*.t
+%perl6_test
 
 %install
-mkdir -p %buildroot%_datadir/perl6/vendor/lib
-cp -r lib/* %buildroot%_datadir/perl6/vendor/lib
+%perl6_vendor_install
 
 %files
-%_datadir/perl6/vendor/lib/Shell/Command.pm
+%perl6_vendorlib/dist/*
+%perl6_vendorlib/sources/*
+%perl6_vendorlib/short/*
 %doc README LICENSE
 
 %changelog
+* Tue Dec 29 2015 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt2.1a7eafc
+- commit 1a7eafc
+- add rpm-build-perl6 macroses
+- fixed install
+
 * Wed Oct 28 2015 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt1.8a6381c
 - commit 8a6381c
 - initial build
