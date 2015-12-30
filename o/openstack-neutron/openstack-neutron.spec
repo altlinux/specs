@@ -5,8 +5,8 @@
 %def_enable mellanox
 
 Name: openstack-neutron
-Version: 7.0.0
-Release: alt2
+Version: 7.0.1
+Release: alt1
 Epoch: 1
 Provides: openstack-quantum = %EVR
 Obsoletes: openstack-quantum < 2013.2-0.4.b3
@@ -60,6 +60,7 @@ BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno >= 0.1.1
 BuildRequires: python-module-PasteDeploy
 BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-debtcollector >= 0.3.0
@@ -718,6 +719,9 @@ fi
 %_initdir/neutron-sriov-nic-agent
 
 %changelog
+* Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
+- 7.0.1
+
 * Mon Nov 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt2
 - fix systemd units and sysv scripts
 

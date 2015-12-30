@@ -1,7 +1,7 @@
 %define sname neutron-vpnaas
 
 Name: openstack-%sname
-Version: 7.0.0
+Version: 7.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking VPNaaS
@@ -91,6 +91,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-vpn-agent.service
 
 
 %changelog
+* Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
+- 7.0.1
+
 * Mon Nov 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt1
 - 7.0.0
 
