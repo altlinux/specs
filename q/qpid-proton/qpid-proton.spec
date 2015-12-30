@@ -4,8 +4,8 @@
 %define proton_datadir %_datadir/proton-%version
 
 Name: qpid-proton
-Version: 0.8
-Release: alt2.1
+Version: 0.11.1
+Release: alt1
 Summary: A high performance, lightweight messaging library
 Group: System/Libraries
 
@@ -13,8 +13,6 @@ License: ASL 2.0
 Url: http://qpid.apache.org/proton/
 
 Source: %name-%version.tar
-Patch0001: 0001-PROTON-731-Installing-Python-requires-Proton-be-inst.patch
-Patch0002: 0001-NO-JIRA-Perl-to-use-the-utils-module.patch
 
 BuildRequires: cmake >= 2.6
 
@@ -22,10 +20,11 @@ BuildRequires: swig
 BuildRequires: doxygen
 BuildRequires: libuuid-devel
 BuildRequires: libssl-devel
+BuildRequires: libsasl2-devel
 BuildRequires: python-devel
 BuildRequires: python-module-epydoc
 BuildRequires: perl-devel
-BuildRequires: perl-Test-Exception
+BuildRequires: perl-Test-Exception perl-Switch
 
 %description
 Proton is a high performance, lightweight messaging library. It can be used in
@@ -95,9 +94,6 @@ Perl language bindings for Qpid Proton
 %prep
 %setup
 
-%patch0001 -p1
-%patch0002 -p1
-
 %build
 %cmake \
     -DPYTHON_SITEARCH_PACKAGES=%python_sitelibdir \
@@ -112,13 +108,14 @@ Perl language bindings for Qpid Proton
 
 %install
 %cmakeinstall_std
+mkdir -p %buildroot%_defaultdocdir/%name-%version
+mv %buildroot%proton_datadir/examples %buildroot%_defaultdocdir/%name-%version/
 
 %files -n lib%name
 %dir %proton_datadir
 %doc %proton_datadir/LICENSE
-%doc %proton_datadir/README
+%doc %proton_datadir/README*
 %doc %proton_datadir/TODO
-%_bindir/proton
 %_bindir/proton-dump
 %_libdir/libqpid-proton.so.*
 %_man1dir/*
@@ -128,7 +125,7 @@ Perl language bindings for Qpid Proton
 %_libdir/libqpid-proton.so
 %_libdir/pkgconfig/libqpid-proton.pc
 %_libdir/cmake/Proton
-%_datadir/proton/examples
+%doc %_defaultdocdir/%name-%version/
 
 %if_with doc
 %files -n lib%name-devel-doc
@@ -138,7 +135,7 @@ Perl language bindings for Qpid Proton
 %files -n python-module-qpid-proton
 %python_sitelibdir/_cproton.so
 %python_sitelibdir/cproton.*
-%python_sitelibdir/proton.*
+%python_sitelibdir/proton
 
 
 %if_with doc
@@ -150,6 +147,9 @@ Perl language bindings for Qpid Proton
 %perl_vendor_archlib/*
 
 %changelog
+* Tue Dec 29 2015 Alexey Shabalin <shaba@altlinux.ru> 0.11.1-alt1
+- 0.11.1
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2.1
 - rebuild with new perl 5.22.0
 
