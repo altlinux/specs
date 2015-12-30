@@ -2,7 +2,7 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-cinder
-Version: 7.0.0
+Version: 7.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack Volume service
@@ -40,6 +40,7 @@ BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno >= 0.1.1
 BuildRequires: python-module-setuptools
 BuildRequires: graphviz
 
@@ -84,6 +85,7 @@ BuildRequires: python-module-stevedore >= 1.5.0
 BuildRequires: python-module-barbicanclient >= 3.3.0
 BuildRequires: python-module-glanceclient >= 0.18.0
 BuildRequires: python-module-novaclient >= 2.28.1
+BuildRequires: python-module-keystoneclient >= 1.6.0
 BuildRequires: python-module-swiftclient >= 2.2.0
 
 Requires: openstack-utils
@@ -293,6 +295,9 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %doc doc/build/html
 
 %changelog
+* Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
+- 7.0.1
+
 * Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.0-alt1
 - 7.0.0 Liberty release
 - add configs for run api over apache2
