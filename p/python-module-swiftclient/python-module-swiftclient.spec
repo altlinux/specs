@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-swiftclient
-Version: 2.4.0
+Version: 2.6.0
 Release: alt1
 Summary: Client Library for OpenStack Object Storage API
 License: ASL 2.0
@@ -9,16 +9,10 @@ Url: http://pypi.python.org/pypi/%name
 Source0: %name-%version.tar
 Group: Development/Python
 
-#
-# patches_base=2.1.0
-#
-Patch0001: 0001-Remove-builtin-requirements-handling.patch
-
 BuildArch: noarch
 
 Requires: python-module-futures
 Requires: python-module-requests
-Requires: python-module-simplejson
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
@@ -28,7 +22,6 @@ BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-futures >= 2.1.3
 BuildRequires: python-module-requests >= 1.1
-BuildRequires: python-module-simplejson >= 2.0.9
 BuildRequires: python-module-six >= 1.5.2
 
 %if_with python3
@@ -40,7 +33,6 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-d2to1
 BuildRequires: python3-module-requests >= 1.1
-BuildRequires: python3-module-simplejson >= 2.0.9
 BuildRequires: python3-module-six >= 1.5.2
 %endif
 
@@ -56,7 +48,6 @@ Object Storage API.
 Summary: Client Library for OpenStack Object Storage API
 Group: Development/Python3
 Requires: python3-module-requests
-Requires: python3-module-simplejson
 
 %description -n python3-module-swiftclient
 Client library and command line utility for interacting with Openstack
@@ -74,8 +65,6 @@ Object Storage API.
 
 %prep
 %setup
-
-%patch0001 -p1
 
 # Let RPM handle the dependencies
 rm -f test-requirements.txt requirements.txt
@@ -135,6 +124,9 @@ rm -fr doc/build/html/.doctrees doc/build/html/.buildinfo
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Tue Mar 31 2015 Alexey Shabalin <shaba@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
