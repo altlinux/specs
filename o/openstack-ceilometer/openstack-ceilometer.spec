@@ -2,7 +2,7 @@
 %def_without doc
 
 Name: openstack-ceilometer
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 Epoch: 1
 Summary: OpenStack measurement collection service
@@ -55,6 +55,7 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno >= 0.1.1
 BuildRequires: python-module-d2to1
 BuildRequires: python-module-eventlet >= 0.16.1
 BuildRequires: python-module-SQLAlchemy >= 0.9.9
@@ -481,6 +482,9 @@ crudini --set %ceilometer_conf database connection mongodb://localhost:27017/cei
 %config(noreplace) %_sysconfdir/sysconfig/openstack-ceilometer-polling
 
 %changelog
+* Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.1-alt1
+- 5.0.1
+
 * Mon Nov 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.0-alt1
 - 5.0.0 Liberty Release
 - add apache2 config for ceilometer-api
