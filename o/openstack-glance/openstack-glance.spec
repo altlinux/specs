@@ -1,7 +1,7 @@
 
 Name: openstack-glance
-Version: 11.0.0
-Release: alt2
+Version: 11.0.1
+Release: alt1
 Epoch: 1
 Summary: OpenStack Image Service
 
@@ -62,6 +62,7 @@ BuildRequires: python-module-webob
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-elasticsearch
+BuildRequires: python-module-reno >= 0.1.1
 
 Requires(pre): shadow-utils
 Requires: python-module-glance = %EVR
@@ -231,6 +232,9 @@ rm -rf %buildroot/usr/etc/glance
 %doc doc/build/html
 
 %changelog
+* Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.1-alt1
+- 11.0.1
+
 * Mon Nov 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.0-alt2
 - update systemd patch
 
