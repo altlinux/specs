@@ -1,18 +1,18 @@
 Name: fotoxx
-Version: 15.07
+Version: 15.12.1
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
 License: GPLv3+
 Group: Graphics
+Url: http://www.kornelix.com/%name/%name.html
 
-Url: http://www.kornelix.com/fotoxx.html
-Source: fotoxx-%version.tar.gz
+Source: http://www.kornelix.com/downloads/tarballs/%name-%version.tar.gz
 Source1: fotoxx.desktop
 Source2: fotoxx16.png
 Source3: fotoxx32.png
-Patch1: fotoxx-14.06-alt-install.patch
-Patch2: fotoxx-12.01-helpdir.patch
+#Patch1: fotoxx-14.06-alt-install.patch
+#Patch2: fotoxx-12.01-helpdir.patch
 
 Requires: %name-data = %version-%release
 
@@ -32,6 +32,7 @@ Obsoletes: fotox
 
 BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel liblcms2-devel
 BuildRequires: perl-Image-ExifTool ufraw xdg-utils
+BuildRequires: libappstream-glib-devel
 
 %description
 Fotox is a program for improving digital photos. Navigate through large image
@@ -53,15 +54,8 @@ This package provides noarch data needed for Fotox to work.
 
 %prep
 %setup
-#%patch1
-%patch2 -p1
 
 %build
-# build with docs (in fact, gui help) in program data directory
-subst 's|share/doc|share|' Makefile
-# verbose and with our optimization
-#subst 's/@ g++/g++/g; s/-O. /%optflags /' Makefile
-
 %make_build PREFIX=/usr CXXFLAGS="%optflags"
 
 %install
@@ -82,11 +76,15 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_miconsdir/*
 %_niconsdir/*
 %_liconsdir/*
-%_datadir/fotoxx/
+%_datadir/%name/
 %_man1dir/*
 %_datadir/appdata/%name.appdata.xml
+%doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Wed Dec 30 2015 Yuri N. Sedunov <aris@altlinux.org> 15.12.1-alt1
+- 15.12.1
+
 * Wed Jul 22 2015 Yuri N. Sedunov <aris@altlinux.org> 15.07-alt1
 - 15.07
 
