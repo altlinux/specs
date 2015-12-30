@@ -1,5 +1,5 @@
 Name: openstack-swift
-Version: 2.3.0
+Version: 2.5.0
 Release: alt1
 Summary: OpenStack Object Storage (Swift)
 
@@ -67,12 +67,17 @@ BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr
 BuildRequires: python-module-d2to1
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-eventlet >= 0.9.15
+BuildRequires: python-module-dns >= 1.9.4
+BuildRequires: python-module-eventlet >= 0.16.1
 BuildRequires: python-module-greenlet >= 0.3.1
 BuildRequires: python-module-netifaces >= 0.5
+BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-simplejson >= 2.0.9
-BuildRequires: python-module-pyxattr
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-pyxattr >= 0.4
+BuildRequires: python-module-pyeclib >= 1.0.7
+# for build doc
+BuildRequires: python-modules-sqlite3
 
 Requires(pre):    shadow-utils
 
@@ -153,16 +158,13 @@ This package contains documentation files for %name.
 %setup
 
 # Remove bundled egg-info
-rm -rf swift.egg-info
+#rm -rf swift.egg-info
 # let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
+#sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
 
 # Remove the requirements file so that pbr hooks don't add it
 # to distutils requires_dist config
 rm -rf {test-,}requirements.txt
-
-# Remove dependency on pbr and set version as per rpm
-sed -i 's/RPMVERSION/%{version}/; s/RPMRELEASE/%{release}/' swift/__init__.py
 
 %build
 %python_build
@@ -317,7 +319,7 @@ done
 %preun_service %name-container-reconciler
 
 %files
-%doc AUTHORS LICENSE README.md
+%doc LICENSE README.md
 %doc etc/dispersion.conf-sample etc/drive-audit.conf-sample etc/object-expirer.conf-sample
 %doc etc/swift.conf-sample
 %_man5dir/dispersion.conf.5*
@@ -342,6 +344,7 @@ done
 %_bindir/swift-get-nodes
 %_bindir/swift-init
 %_bindir/swift-ring-builder
+%_bindir/swift-ring-builder-analyzer
 %_bindir/swift-dispersion-populate
 %_bindir/swift-dispersion-report
 %_bindir/swift-recon*
@@ -354,6 +357,7 @@ done
 %python_sitelibdir/swift/common
 %python_sitelibdir/swift/account
 %python_sitelibdir/swift/obj
+%python_sitelibdir/swift/locale
 %python_sitelibdir/swift-%{version}*.egg-info
 
 %files account
@@ -419,6 +423,7 @@ done
 %_bindir/swift-object-replicator
 %_bindir/swift-object-server
 %_bindir/swift-object-updater
+%_bindir/swift-object-reconstructor
 
 %files proxy
 %doc etc/proxy-server.conf-sample etc/object-expirer.conf-sample
@@ -446,6 +451,9 @@ done
 %doc LICENSE doc/build/html
 
 %changelog
+* Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
+- 2.5.0 (OpenStack Liberty release)
+
 * Wed Sep 23 2015 Lenar Shakirov <snejok@altlinux.ru> 2.3.0-alt1
 - 2.3.0-alt1
 
