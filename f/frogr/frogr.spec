@@ -1,4 +1,4 @@
-%define ver_major 0.11
+%define ver_major 1.0
 %def_enable video
 
 Name: frogr
@@ -14,11 +14,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %{?_enable_video:Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav}
 
-%define gtk_ver 3.4.0
+%define gtk_ver 3.14.0
 
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: gnome-common intltool yelp-tools libjson-glib-devel
-BuildRequires: libsoup-devel libexif-devel libxml2-devel libgcrypt-devel
+BuildRequires: gnome-common intltool yelp-tools libappstream-glib-devel
+BuildRequires: libjson-glib-devel libsoup-devel libexif-devel libxml2-devel libgcrypt-devel
 %{?_enable_video:BuildRequires: gstreamer1.0-devel}
 
 %description
@@ -43,14 +43,18 @@ a flickr account from the desktop.
 %_desktopdir/%name.desktop
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/frogr.svg
-%_iconsdir/HighContrast/scalable/apps/frogr.svg
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
 %_datadir/appdata/%name.appdata.xml
 %_man1dir/%name.1.*
 %doc AUTHORS NEWS README
 
+%exclude %_datadir/pixmaps/%name.xpm
 
 %changelog
+* Wed Dec 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0
+
 * Fri Jan 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - first build for Sisyphus
 
