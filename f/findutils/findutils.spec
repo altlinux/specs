@@ -1,5 +1,5 @@
 Name: findutils
-Version: 4.5.19
+Version: 4.6.0
 Release: alt1
 
 Summary: The GNU versions of find utilities (find and xargs)
@@ -108,6 +108,9 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Mon Dec 28 2015 Dmitry V. Levin <ldv@altlinux.org> 4.6.0-alt1
+- 4.5.19 -> 4.6.0.
+
 * Mon Dec 28 2015 Dmitry V. Levin <ldv@altlinux.org> 4.5.19-alt1
 - Updated to v4.5.19.
 
