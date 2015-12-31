@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 1.12.8
-Release: alt1
+Version: 2.0.1
+Release: alt3
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -24,6 +24,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
 BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc liblua5-devel perl-Pod-Parser perl-devel
 BuildRequires: libgtk+3-devel
+BuildRequires: qt5-base-devel
 
 %package base
 Summary: Wireshark base package
@@ -42,6 +43,14 @@ Requires: url_handler
 Obsoletes: ethereal
 Obsoletes: ethereal-gtk+
 
+%package qt5
+Summary: QT5 GUI for Wireshark package
+Group: Monitoring
+Requires: %name-base = %version-%release
+Provides: %name = %version-%release
+Requires: url_handler
+Obsoletes: ethereal
+
 %package -n tshark
 Summary: Console GUI for Wireshark package
 Group: Monitoring
@@ -52,6 +61,7 @@ Obsoletes: tethereal
 Summary: Wireshark User's Guide
 Group: Documentation
 License: FDL
+BuildArch: noarch
 Conflicts: %name-base < %version-%release
 Conflicts: %name-base > %version-%release
 Obsoletes: ethereal-doc
@@ -83,10 +93,13 @@ most useful packet analyzer on any platform.
 This package lays base for libpcap, a packet capture and filtering
 library, contains command-line utilities, plugins and documentation
 for wireshark. A graphical user interface is packaged separately to
-GTK+ package.
+GTK+/QT5 packages.
 
 %description gtk+
 This package contains GTK+ GUI ie. the wireshark -- application.
+
+%description qt5
+This package contains QT5 GUI ie. the wireshark -- application.
 
 %description -n tshark
 This package contains console wireshark application.
@@ -112,8 +125,8 @@ This package contains development files needed to develop wiretap-based
 applications.
 
 %prep
-%setup -q
-%__unzip -qa %_sourcedir/wsug_html_chunked.zip
+%setup
+unzip -qa %_sourcedir/wsug_html_chunked.zip
 %patch -p1
 
 %build
@@ -123,12 +136,14 @@ applications.
 export ac_cv_path_HTML_VIEWER=url_handler.sh
 # Workaround for Lua 5.1 detection
 export ac_cv_lib_lualib_luaL_openlib=no
+
+chmod ugo+rx configure
 %configure \
    --sysconfdir=%_sysconfdir/%name \
    --disable-static \
    --enable-shared \
    --disable-warnings-as-errors \
-   --with-qt=no \
+   --with-qt=5 \
    --with-gtk3=yes \
    --enable-wireshark \
    --enable-tshark \
@@ -136,11 +151,11 @@ export ac_cv_lib_lualib_luaL_openlib=no
    --enable-capinfos \
    --enable-mergecap \
    --enable-text2pcap \
-   --disable-idl2wrs \
    --enable-dftest \
    --enable-randpkt \
    --enable-dumpcap \
    --enable-rawshark \
+   --disable-androiddump \
    --enable-ipv6 \
    --disable-setuid-install \
    \
@@ -150,8 +165,8 @@ export ac_cv_lib_lualib_luaL_openlib=no
    --with-gcrypt \
    --without-libsmi \
    --with-pcap \
+   --with-pcap-remote \
    --with-zlib \
-   --with-pcre \
    --with-lua \
    --with-portaudio \
    --with-libcap \
@@ -165,18 +180,31 @@ export ac_cv_lib_lualib_luaL_openlib=no
 
 %install
 %make_install install DESTDIR=%buildroot
-%__rm -f %buildroot%_libdir/%name/plugins/%version/*.la
+rm -f %buildroot%_libdir/%name/plugins/%version/*.la
 
-%__mkdir_p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir}
-%__cp -p wireshark.desktop %buildroot%_datadir/applications/%name.desktop
-%__cp -p image/hi16-app-wireshark.png %buildroot%_miconsdir/wireshark.png
-%__cp -p image/hi32-app-wireshark.png %buildroot%_niconsdir/wireshark.png
-%__cp -p image/hi48-app-wireshark.png %buildroot%_liconsdir/wireshark.png
+mkdir -p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir}
+cp -p wireshark.desktop %buildroot%_datadir/applications/%name-qt5.desktop
+cp -p image/hi16-app-wireshark.png %buildroot%_miconsdir/wireshark.png
+cp -p image/hi32-app-wireshark.png %buildroot%_niconsdir/wireshark.png
+cp -p image/hi48-app-wireshark.png %buildroot%_liconsdir/wireshark.png
 
-%__mkdir_p %buildroot%_includedir/wiretap
-%__install -p -m644 wiretap/wtap.h %buildroot%_includedir/wiretap/wtap.h
+mkdir -p %buildroot%_includedir/wiretap
+install -p -m644 wiretap/wtap.h %buildroot%_includedir/wiretap/wtap.h
 
-%__install -p -m755 %_sourcedir/%name.control %buildroot%_controldir/%name-capture
+install -p -m755 %_sourcedir/%name.control %buildroot%_controldir/%name-capture
+
+# Rename qt5 binary:
+mv -v %buildroot%_bindir/%name %buildroot%_bindir/%name-qt5
+
+# Make alternatives:
+mkdir -p %buildroot%_altdir
+cat <<'_EOF'_ > %buildroot%_altdir/%name-gtk
+%_bindir/%name	%_bindir/%name-gtk	10
+_EOF_
+
+cat <<'_EOF'_ > %buildroot%_altdir/%name-qt5
+%_bindir/%name	%_bindir/%name-qt5	20
+_EOF_
 
 %pre base
 %pre_control %name-capture
@@ -214,15 +242,22 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_libdir/%name/plugins/%version/*
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
-%_libdir/libfiletap.so.*
-
-%files gtk+
-%_bindir/wireshark
 %_man1dir/wireshark.*
-%_datadir/applications/%name.desktop
 %_miconsdir/wireshark.png
 %_niconsdir/wireshark.png
 %_liconsdir/wireshark.png
+%_xdgmimedir/packages/%name.xml
+
+%files gtk+
+%_altdir/%name-gtk
+%_bindir/wireshark-gtk
+%_datadir/applications/%name-gtk.desktop
+%_datadir/appdata/%name.appdata.xml
+
+%files qt5
+%_altdir/%name-qt5
+%_bindir/wireshark-qt5
+%_datadir/applications/%name-qt5.desktop
 
 %files -n tshark
 %_bindir/tshark
@@ -239,6 +274,18 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_libdir/libwiretap.so
 
 %changelog
+* Fri Jan  1 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.1-alt3
+- doc subpackage made noarch (thanks, repocop)
+- add alternatives support for gtk+/qt5
+- spec cleanup
+
+* Thu Dec 31 2015 Terechkov Evgenii <evg@altlinux.org> 2.0.1-alt2
+- Revive gtk+ subpackage
+
+* Thu Dec 31 2015 Terechkov Evgenii <evg@altlinux.org> 2.0.1-alt1
+- 2.0.1
+- %name-gtk+ obsoleted by %name-qt5
+
 * Sat Oct 17 2015 Anton Farygin <rider@altlinux.ru> 1.12.8-alt1
 - new version 1.12.8
 
