@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: xapian-core
-Version: 1.2.21
-Release: alt2
+Version: 1.2.22
+Release: alt1
 
 Summary: The Xapian Probabilistic Information Retrieval Library
 License: GPL
@@ -132,6 +132,9 @@ rm -f %buildroot%_libdir/libxapian.a
 %doc HACKING
 
 %changelog
+* Fri Jan 01 2016 Michael Shigorin <mike@altlinux.org> 1.2.22-alt1
+- new version (watch file uupdate)
+
 * Fri May 22 2015 Michael Shigorin <mike@altlinux.org> 1.2.21-alt2
 - added pkgconfig file (thx aris@)
 
