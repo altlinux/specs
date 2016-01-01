@@ -1,7 +1,7 @@
 Summary: This library provides functions to read, create, and modify mp4 files
 Name: libmp4v2-2
 Version: 1.9.1
-Release: alt2
+Release: alt3
 License: MPLv1.1
 Group: System/Legacy libraries
 Url: http://code.google.com/p/mp4v2/
@@ -29,9 +29,7 @@ due to a combination of the cessation of support of mpeg4ip and the usefulness o
 %autoreconf
 %configure --disable-static --disable-debug
 
-mkdir -p doc/articles/txt
 %make_build
-%make txt
 
 %install
 
@@ -42,6 +40,9 @@ mkdir -p doc/articles/txt
 %_libdir/*.so.*
 
 %changelog
+* Fri Jan  1 2016 Terechkov Evgenii <evg@altlinux.org> 1.9.1-alt3
+- Fix FTBFS
+
 * Sat Sep  5 2015 Terechkov Evgenii <evg@altlinux.org> 1.9.1-alt2
 - Rebuilt as compat package without subpackages (devel,utils)
 
