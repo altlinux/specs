@@ -3,7 +3,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.002
+Version: 0.003
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -41,6 +41,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/%module/headers-ignore/stdhead
 #%_man1dir/buildreq-*
 
 %changelog
+* Fri Jan 01 2016 Igor Vlasenko <viy@altlinux.ru> 0.003-alt1
+- bugfix release
+
 * Wed Dec 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.002-alt1
 - development release
 
