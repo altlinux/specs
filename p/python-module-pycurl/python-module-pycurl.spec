@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 7.19.5
+Version: 7.19.5.3
 Release: alt1
 
 Summary: Python bindings to libcurl
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 7.19.5.3-alt1
+- new version 7.19.5.3 (with rpmrb script)
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.19.5-alt1
 - Version 7.19.5
 - Added module for Python 3
