@@ -2,8 +2,8 @@
 %global pkgname ttystatus
 
 Name: python-module-ttystatus
-Version: 0.23
-Release: alt4
+Version: 0.26
+Release: alt1
 
 Summary: Progress and status updates on terminals for Python
 
@@ -73,6 +73,9 @@ make check
 %doc doc/_build/html/*
 
 %changelog
+* Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt1
+- new version 0.26 (with rpmrb script)
+
 * Thu Aug 13 2015 Vitaly Lipatov <lav@altlinux.ru> 0.23-alt4
 - human build for ALT Linux Sisyphus
 
