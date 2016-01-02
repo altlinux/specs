@@ -1,7 +1,7 @@
 
 Name: cmdtest
-Version: 0.8.3
-Release: alt2
+Version: 0.16
+Release: alt1
 
 Summary: Black-box testing for Unix command line tools
 
@@ -57,6 +57,9 @@ rm -rf build
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat Jan 02 2016 Vitaly Lipatov <lav@altlinux.ru> 0.16-alt1
+- new version 0.16 (with rpmrb script)
+
 * Thu Aug 13 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8.3-alt2
 - human build for ALT Linux Sisyphus
 
