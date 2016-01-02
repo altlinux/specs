@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.851
+Version: 0.852
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -58,7 +58,6 @@ mkdir -p %buildroot%_man1dir
 install -m 644 *.1 %buildroot%_man1dir/
 
 mkdir -p %buildroot%_datadir/srpmtools/hooks
-install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 
 %files
 %doc Changes
@@ -68,15 +67,15 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 #perl_vendor_man3dir/*
 %dir %_datadir/srpmtools
 %dir %_datadir/srpmtools/hooks
-%_datadir/srpmtools/data
-%_bindir/buildreq-*
-%_man1dir/buildreq-*
 
 #files -n hashertarbuild
 %_bindir/hashertarbuild
 %_man1dir/hashertarbuild*
 
 %changelog
+* Sat Jan 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.852-alt1
+- development release
+
 * Sat Jan 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.851-alt1
 - development release
 
