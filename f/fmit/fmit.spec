@@ -1,5 +1,5 @@
 Name: fmit
-Version: 0.99.5
+Version: 1.0.12
 Release: alt1
 
 Summary: Free Music Instrument Tuner
@@ -10,7 +10,8 @@ Url: http://home.gna.org/fmit/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://download.gna.org/fmit/%name-%version-Source.tar
+# Source-url: https://github.com/gillesdegottex/fmit/archive/v1.0.12.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Aug 03 2013
 # optimized out: cmake cmake-modules fontconfig libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -29,7 +30,7 @@ Discrete Fourier Transform view
 JACK, OSS, ALSA, Portaudio support
 
 %prep
-%setup -n %name-%version-Source
+%setup
 
 %build
 sed -i "s|share/mimelnk/application/|share/applications/|g" CMakeLists.txt
@@ -54,6 +55,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Jan 02 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.12-alt1
+- new version 1.0.12
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.99.5-alt1
 - new version 0.99.5 (with rpmrb script)
 
