@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 
 Summary: A platform-independent file locking module
@@ -70,18 +70,21 @@ popd
 %endif
 
 %files
-%doc ACKS LICENSE README RELEASE-NOTES doc/
+%doc ACKS LICENSE README.rst RELEASE-NOTES doc/
 %python_sitelibdir/%oname/
 %python_sitelibdir/%oname-%version-*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%doc ACKS LICENSE README RELEASE-NOTES doc/
+%doc ACKS LICENSE README.rst RELEASE-NOTES doc/
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version-*.egg-info
 %endif
 
 %changelog
+* Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
+- new version 0.11.0 (with rpmrb script)
+
 * Fri Aug 21 2015 Vitaly Lipatov <lav@altlinux.ru> 0.10.2-alt1
 - new version 0.10.2 (with rpmrb script)
 
