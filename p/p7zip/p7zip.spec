@@ -1,5 +1,5 @@
 Name: p7zip
-Version: 9.20.1
+Version: 15.09
 Release: alt1
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
@@ -7,7 +7,7 @@ License: Freely distributable
 Group: Archiving/Compression
 
 Url: http://p7zip.sourceforge.net/
-Source: http://downloads.sourceforge.net/p7zip/p7zip_%{version}_src_all.tar.bz2
+Source: %{name}_%{version}_src_all.tar.bz2
 
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: libstdc++-devel
@@ -56,7 +56,7 @@ mv -f %buildroot%_libdir/p7zip/{7z,7za} %buildroot%_bindir/
 #cp -a bin/Codecs %buildroot%_libdir/p7zip/
 
 %files
-%doc README ChangeLog DOCS
+%doc README ChangeLog DOC
 %_bindir/7z
 %dir %_libdir/p7zip
 %_libdir/p7zip/*.so
@@ -70,6 +70,9 @@ mv -f %buildroot%_libdir/p7zip/{7z,7za} %buildroot%_bindir/
 %_man1dir/7za.*
 
 %changelog
+* Sun Jan 03 2016 Fr. Br. George <george@altlinux.ru> 15.09-alt1
+- Autobuild version bump to 15.09
+
 * Sat Oct 08 2011 Michael Shigorin <mike@altlinux.org> 9.20.1-alt1
 - 9.20.1
 - minor spec cleanup
