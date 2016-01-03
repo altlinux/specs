@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.4
-Release: alt2
+Version: 3.6
+Release: alt1
 
 Summary: lex and yacc python implementation
 
@@ -67,16 +67,19 @@ popd
 
 %files -f %name.lang
 #%_bindir/*
-%doc CHANGES README TODO doc/*.html example/
+%doc CHANGES doc/*.html example/
 %python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc CHANGES README TODO doc/*.html
+%doc CHANGES doc/*.html
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 3.6-alt1
+- new version 3.6 (with rpmrb script)
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 
