@@ -1,9 +1,9 @@
 # TODO:fix build Python bindings
 %def_disable python
-%define  git_rev 4241505
+%define  git_rev a1c7f64
 
 Name: 	 gnucash
-Version: 2.6.9
+Version: 2.6.10
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -135,7 +135,7 @@ rm -rf %buildroot%_bindir/gnucash-valgrind \
 
 install -m755 %SOURCE7 %buildroot%_bindir/conv_gnucash2.sh
 
-test -f ChangeLog && bzip ChangeLog*
+tar cfj ChangeLog.tar.bz2 ChangeLog*
 
 rm -f %buildroot%_datadir/gnucash/gnome \
       %buildroot%_bindir/gnc-test-env \
@@ -157,7 +157,7 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 #%exclude %_libdir/%name/libgncmod-hbci*
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog.bz2 HACKING NEWS README
+%doc AUTHORS ChangeLog.tar.bz2 HACKING NEWS README*
 %doc doc/README.* doc/guile-hackers.txt
 %doc %_defaultdocdir/%name/
 %_bindir/*
@@ -177,6 +177,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Sat Jan 02 2016 Andrey Cherepanov <cas@altlinux.org> 2.6.10-alt1
+- New version
+
 * Mon Oct 12 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.9-alt1
 - New version
 
