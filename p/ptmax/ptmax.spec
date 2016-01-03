@@ -1,6 +1,6 @@
 Name: ptmax
 Version: 2015
-Release: alt1
+Release: alt2
 
 Summary: Maximize partition in partition table to include it's trailing unallocated space
 
@@ -56,6 +56,7 @@ See also http://habrahabr.ru/company/selectel/blog/139152/
 
 %prep
 %setup
+subst 's|^.*strip %name||g' Makefile
 
 %build
 %make_build
@@ -69,6 +70,9 @@ install %name -D %buildroot%_sbindir/%name
 %_sbindir/%name
 
 %changelog
+* Sun Jan  3 2016 Terechkov Evgenii <evg@altlinux.org> 2015-alt2
+- Build with debuginfo
+
 * Tue Dec  8 2015 Terechkov Evgenii <evg@altlinux.org> 2015-alt1
 - git-20151208
 
