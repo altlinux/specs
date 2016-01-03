@@ -1,5 +1,7 @@
+%def_disable static
+
 Name: SDL2
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -25,6 +27,7 @@ BuildRequires: libalsa-devel
 BuildRequires: libaudio-devel
 BuildRequires: libdbus-devel
 BuildRequires: libesd-devel
+BuildRequires: libibus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libudev-devel
 
@@ -55,6 +58,20 @@ multiple platforms.
 This is the libraries, include files and other resources you can use
 to develop SDL applications.
 
+%if_enabled static
+%package -n lib%name-devel-static
+Summary: Static libraries to develop SDL applications.
+Group: Development/C
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-devel-static
+This is the Simple DirectMedia Layer, a generic API that provides low
+level access to audio, keyboard, mouse, and display framebuffer across
+multiple platforms.
+
+This is the static libraries you can use to develop SDL applications.
+%endif
+
 %prep
 %setup
 
@@ -64,7 +81,7 @@ to develop SDL applications.
 
 %install
 %makeinstall_std
-%__rm -rf %buildroot%_libdir/*.a %buildroot%_libdir/*.la
+%__rm -rf %buildroot%_libdir/*.la
 
 %files -n lib%name
 %doc BUGS.txt COPYING.txt CREDITS.txt INSTALL.txt README*.txt TODO.txt WhatsNew.txt
@@ -75,10 +92,25 @@ to develop SDL applications.
 %dir %_includedir/%name
 %_includedir/%name/*.h
 %_libdir/lib%name.so
+%_libdir/cmake/%name/sdl2-config.cmake
 %_pkgconfigdir/sdl2.pc
 %_aclocaldir/sdl2.m4
 
+%if_enabled static
+%files -n lib%name-devel-static
+%_libdir/lib%name*.a
+%endif
+
 %changelog
+* Sun Jan 03 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1
+- Version 2.0.4
+
+* Thu Sep 25 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt0.M70P.1
+- Build for branch p7
+
+* Fri May 16 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt0.M70T.1
+- Build for branch t7
+
 * Sun Mar 23 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
