@@ -2,10 +2,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(HTML/Entities.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Warn.pm) perl(Text/ParseWords.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define module_version 4.23
+%define module_version 4.25
 %define module_name CGI
 Name: perl-CGI
-Version: 4.23
+Version: 4.25
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -49,7 +49,7 @@ with built-in support for mod_perl and mod_perl2 as well as FastCGI.
 
 %prep
 %setup -q -n %{module_name}-%{module_version}
-%patch0 -p1
+#patch0 -p1
 iconv -f iso8859-1 -t utf-8 < Changes > Changes.1
 mv Changes.1 Changes
 sed -i 's?usr/bin perl?usr/bin/perl?' t/init.t
@@ -67,6 +67,9 @@ chmod -c -x examples/*
 %perl_vendor_privlib/Fh.pm
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 4.25-alt1
+- automated CPAN update
+
 * Mon Dec 21 2015 Igor Vlasenko <viy@altlinux.ru> 4.23-alt1
 - automated CPAN update
 
