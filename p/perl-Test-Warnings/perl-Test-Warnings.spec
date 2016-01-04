@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
-Version:	0.023
-Release:	alt1_1
+Version:	0.024
+Release:	alt1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Warnings
-Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -82,6 +83,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
+- automated CPAN update
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.023-alt1_1
 - update to new release by fcimport
 
