@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-HasVersion
-Version:        0.012
-Release:        alt3_13
+Version:        0.014
+Release:        alt1
 Summary:        Check Perl modules have version numbers
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-HasVersion/
-Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Test-HasVersion-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Test-HasVersion-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(File/Find.pm)
@@ -54,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.012-alt3_13
 - update to new release by fcimport
 
