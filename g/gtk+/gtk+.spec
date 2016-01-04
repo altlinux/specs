@@ -1,6 +1,6 @@
 Name: gtk+
 Version: 1.2.10
-Release: alt21.1
+Release: alt22
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs for X
 License: LGPL
@@ -165,6 +165,7 @@ subst -p 's/az /az be /g' configure*
 
 %build
 %def_disable static
+%add_optflags -L/%_lib -lm
 export ac_cv_prog_INDENT=indent
 libtoolize --copy --force
 automake --foreign --include-deps --add-missing --copy
@@ -219,6 +220,9 @@ cp -a docs/{*.txt,html,text} %buildroot%pkgdocdir/devel
 %endif
 
 %changelog
+* Mon Jan 04 2016 Michael Shigorin <mike@altlinux.org> 1.2.10-alt22
+- fixed FTBFS (-lm)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.10-alt21.1
 - NMU: added BR: texinfo
 
