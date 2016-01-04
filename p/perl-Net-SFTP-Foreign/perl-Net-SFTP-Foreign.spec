@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Net::SFTP::Foreign
 
 Name: perl-Net-SFTP-Foreign
-Version: 1.79
+Version: 1.81
 Release: alt1
 
 Summary: SSH File Transfer Protocol client
@@ -45,6 +45,9 @@ chmod 644 samples/*
 %perl_vendor_privlib/Net/SFTP/Foreign*
 
 %changelog
+* Mon Jan 04 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.81-alt1
+- New version
+
 * Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.79-alt1
 - New version
 
