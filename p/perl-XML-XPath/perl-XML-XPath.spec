@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 %define dist XML-XPath
 Name: perl-%dist
-Version: 1.13
-Release: alt5
+Version: 1.18
+Release: alt1
 
 Summary: A set of modules for parsing and evaluating XPath statements
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: perl-XML-XPath-1.13-alt-fixes.patch
+Source: http://www.cpan.org/authors/id/M/MA/MANWAR/XML-XPath-%{version}.tar.gz
+Patch: perl-XML-XPath-1.18-alt-fixes.patch
 
 BuildArch: noarch
 
@@ -40,6 +41,9 @@ sed -i- '/EXE_FILES/d' Makefile.PL
 %perl_vendor_privlib/XML
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 1.13-alt5
 - specfile cleanup
 
