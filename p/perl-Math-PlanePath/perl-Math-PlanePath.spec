@@ -6,7 +6,7 @@ BuildRequires: perl(Math/NumSeq/Fibonacci.pm) perl(Math/NumSeq/FibonacciWord.pm)
 BuildRequires: perl(Wx/App.pm) perl(Wx/Event.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-PlanePath
-Version:        121
+Version:        122
 Release:        alt1
 Summary:        Mathematical paths through the 2-D plane
 License:        GPLv3+
@@ -73,6 +73,9 @@ make test
 %{perl_vendor_privlib}/Math*
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 122-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 121-alt1
 - automated CPAN update
 
