@@ -14,7 +14,7 @@
 
 Name: jmtpfs
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: FUSE based MTP filesystem
 License: GPLv3
@@ -49,16 +49,19 @@ but not USB Mass Storage.
 
 %install
 %makeinstall_std
-# udev rules (only for non-systemd)
-install -pDm644 %SOURCE1 %buildroot%_udevrulesdir/51-android.rules
+# udev rules (only for non-systemd; see also #31680)
+#install -pDm644 %SOURCE1 %buildroot%_udevrulesdir/51-android.rules
 install -pDm644 %SOURCE2 %buildroot%_man1dir/jmtpfs.1
 
 %files
 %doc AUTHORS COPYING NEWS README
 %_bindir/%name
-%_udevrulesdir/51-android.rules
+#_udevrulesdir/51-android.rules
 %_man1dir/jmtpfs.1*
 
 %changelog
+* Mon Jan 04 2016 Michael Shigorin <mike@altlinux.org> 0.5-alt2
+- dropped 51-android.rules on the floor (closes: #31680)
+
 * Sun Jan 03 2016 Michael Shigorin <mike@altlinux.org> 0.5-alt1
 - initial build for ALT Linux Sisyphus (based on openSUSE/Nux packages)
