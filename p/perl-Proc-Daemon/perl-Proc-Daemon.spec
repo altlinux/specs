@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Proc-Daemon
 Name: perl-%dist
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: Run Perl program as a daemon process
@@ -34,6 +34,9 @@ as a Unix daemon process.
 %perl_vendor_privlib/Proc
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
