@@ -1,16 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: libgmp-devel
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/GMP.pm) perl(overload.pm) perl(subs.pm)
 # END SourceDeps(oneline)
 #BuildRequires: perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/MPFR.pm)
-%define module_version 0.39
+%define module_version 0.41
 %define module_name Math-GMPf
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.39
-Release: alt1.1.1
+Version: 0.41
+Release: alt1
 Summary: perl interface to the GMP library's floating point (mpf) functions..
 Group: Development/Perl
 License: perl
@@ -43,6 +43,9 @@ A bigfloat module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1.1.1
 - rebuild with new perl 5.22.0
 
