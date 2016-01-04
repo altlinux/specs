@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Data-Dump-Streamer
 Name: perl-%dist
-Version: 2.38
-Release: alt2.1
+Version: 2.39
+Release: alt1
 
 Summary: Accurately serialize a data structure as Perl code
 License: GPL or Artistic
@@ -22,10 +23,6 @@ output correctly.
 
 %prep
 %setup -q -n %dist-%version
-# remove me when upstream produce the next release
-%define _without_test 1
-[ %version = 2.38 ] || exit 3
-# end remove
 
 %build
 %perl_vendor_build
@@ -39,6 +36,9 @@ output correctly.
 %perl_vendor_autolib/Data
 
 %changelog
+* Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 2.39-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.38-alt2.1
 - rebuild with new perl 5.22.0
 
