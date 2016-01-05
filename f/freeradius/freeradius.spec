@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 2.2.0
-Release: alt4.1.1
+Version: 2.2.9
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -12,10 +12,14 @@ Source100: freeradius-radiusd-init
 Source102: freeradius-logrotate
 Source103: freeradius-pam-conf
 Source104: freeradius-tmpfiles
+Source105: freeradius-service
 
 Patch1: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libmysqlclient-devel libcom_err-devel libgdbm-devel libldap-devel libltdl-devel libpam-devel libreadline-devel libstdc++-devel-static libunixODBC-devel mailx net-snmp-utils perl-DBI perl-devel postgresql-devel python-devel slocate libssl-devel perl-DBM
+
+# Server needs dicts to work:
+Requires: %name-common
 
 %description
 The FreeRADIUS Server Project is a high performance and highly configurable
@@ -32,6 +36,17 @@ more.  Using RADIUS allows authentication and authorization for a network to
 be centralized, and minimizes the amount of re-configuration which has to be
 done when adding or deleting new users.
 
+%package common
+Group: System/Servers
+Summary: FreeRADIUS common data
+# For now this subpackage contains only dicts (arch-independent):
+BuildArch: noarch
+# Alias for convience:
+Provides: %name-dictionary = %version-%release
+
+%description common
+The FreeRADIUS common data
+
 %package libs
 Group: System/Servers
 Summary: FreeRADIUS shared libraries
@@ -43,6 +58,8 @@ The FreeRADIUS shared library
 Group: System/Servers
 Summary: FreeRADIUS utilities
 Requires: %name-libs = %version-%release
+# Radius client(s) need dicts to work:
+Requires: %name-dictionary = %version-%release
 
 %description utils
 The FreeRADIUS server has a number of features found in other servers,
@@ -161,12 +178,15 @@ mkdir -p %buildroot%_logdir/radius/radacct
 touch %buildroot%_logdir/radius/{radutmp,radius.log}
 
 mkdir -p %buildroot%_runtimedir/radiusd
-mkdir -p %buildroot%_sysconfdir/{logrotate.d,pam.d,rc.d/init.d,tmpfiles.d}
+mkdir -p %buildroot%_sysconfdir/{logrotate.d,pam.d,rc.d/init.d}
+mkdir -p %buildroot%_tmpfilesdir
+mkdir -p %buildroot%_unitdir
 mkdir -p %buildroot%_localstatedir/radiusd
 install -m 755 %SOURCE100 %buildroot%_initdir/radiusd
 install -m 644 %SOURCE102 %buildroot%_sysconfdir/logrotate.d/radiusd
 install -m 644 %SOURCE103 %buildroot%_sysconfdir/pam.d/radiusd
-install -m 644 %SOURCE104 %buildroot%_sysconfdir/tmpfiles.d/radiusd.conf
+install -m 644 %SOURCE104 %buildroot%_tmpfilesdir/radiusd.conf
+install -m 644 %SOURCE105 %buildroot%_unitdir/radiusd.service
 
 # remove unneeded stuff
 rm %buildroot%_sbindir/rc.radiusd
@@ -198,7 +218,8 @@ fi
 %config(noreplace) %_sysconfdir/pam.d/radiusd
 %config(noreplace) %_sysconfdir/logrotate.d/radiusd
 %config(noreplace) %_initdir/radiusd
-%_sysconfdir/tmpfiles.d/radiusd.conf
+%_unitdir/radiusd.service
+%_tmpfilesdir/radiusd.conf
 %dir %attr(775,root,radiusd) %_localstatedir/radiusd
 # configs
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb
@@ -299,13 +320,11 @@ fi
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
-# dictionaries
-%_datadir/freeradius
 # logs
-%dir %attr(770,root,radiusd) %_logdir/radius/
-%dir %attr(770,root,radiusd) %_logdir/radius/radacct/
-%attr(664,root,radiusd) %_logdir/radius/radutmp
-%config(noreplace) %attr(660,root,radiusd) %_logdir/radius/radius.log
+%dir %attr(1770,root,radiusd) %_logdir/radius/
+%dir %attr(1770,root,radiusd) %_logdir/radius/radacct/
+%config(noreplace) %attr(664,root,radiusd) %_logdir/radius/radutmp
+%config(noreplace) %attr(660,radiusd,radiusd) %_logdir/radius/radius.log
 # RADIUS Loadable Modules
 %dir %_libdir/freeradius
 %_libdir/freeradius/rlm_acct_unique.so
@@ -405,6 +424,10 @@ fi
 %_libdir/freeradius/rlm_wimax.so
 %_libdir/freeradius/rlm_wimax-%version.so
 
+%files common
+# dictionaries
+%_datadir/freeradius
+
 %files utils
 %_bindir/*
 
@@ -454,6 +477,18 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Tue Jan  5 2016 Terechkov Evgenii <evg@altlinux.org> 2.2.9-alt1
+- 2.2.9
+
+* Tue Jan  5 2016 Terechkov Evgenii <evg@altlinux.org> 2.2.0-alt5
+- Change mode of /var/log/{radius,radius/radacct} to 1770 according to ALT Secure Packaging Policy
+- Change owner of /var/log/radius/radius.log
+- Do not rotate/replace radutmp (ALT#28653, RH#904578)
+- Move tmpfiles manifest in right place (Thanks, repocop!)
+- Send SIGHUP to radiusd after radius.log rotation (ALT#31044)
+- Separate %_datadir/freeradius to common noarch subpackage (ALT#28477)
+- Systemd unit file added (Thanks, repocop!)
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt4.1.1
 - rebuild with new perl 5.22.0
 
