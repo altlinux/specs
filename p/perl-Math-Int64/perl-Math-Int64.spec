@@ -3,8 +3,8 @@
 %define real_name Math-Int64
 
 Name: perl-Math-Int64
-Version: 0.53
-Release: alt1.1
+Version: 0.54
+Release: alt1
 
 Summary: Perl module to manipulate 64 bits integers
 
@@ -43,6 +43,9 @@ signed and unsigned, to Perl on 32-bit platforms.
 %perl_vendor_autolib/Math/Int64*
 
 %changelog
+* Tue Jan 05 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.54-alt1
+- New version
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1.1
 - rebuild with new perl 5.22.0
 
