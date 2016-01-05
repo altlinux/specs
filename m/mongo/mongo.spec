@@ -1,6 +1,6 @@
 Name: mongo
 Version: 3.2.0
-Release: alt1.rc4
+Release: alt2.rc4
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -167,7 +167,7 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %systemd_unitdir/mongod.service
 %_tmpfilesdir/mongod.conf
 %attr(0750,mongod,mongod) %dir %_localstatedir/%name
-%attr(0750,mongod,mongod) %dir %_logdir/%name
+%attr(1770,root,mongod) %dir %_logdir/%name
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %files server-mongos
@@ -180,10 +180,13 @@ install -p -D -m 644 mongod.tmpfile %buildroot%_tmpfilesdir/mongos.conf
 %_initdir/mongos
 %systemd_unitdir/mongos.service
 %_tmpfilesdir/mongos.conf
-%attr(0750,mongod,mongod) %dir %_logdir/%name
+%attr(1770,root,mongod) %dir %_logdir/%name
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Tue Jan  5 2016 Terechkov Evgenii <evg@altlinux.org> 3.2.0-alt2.rc4
+- Change mode/owner of /var/log/mongo to 1770/root:mongod according to ALT Secure Packaging Policy (ALT#31676)
+
 * Wed Dec 2 2015 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1.rc4
 - 3.2.0 rc4 (closes: #31540)
 
