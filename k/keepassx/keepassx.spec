@@ -4,8 +4,8 @@
 %define real_name    KeePassX
 
 Name:     keepassx
-Version:  0.4.3
-Release:  alt3
+Version:  0.4.4
+Release:  alt1
 
 Summary: KeePassX Password Safe - light-weight cross-platform password manager
 Summary(ru_RU.UTF-8): простой кросс-платформенный менеджер паролей KeePassX Password Safe
@@ -30,9 +30,10 @@ Source3: %name-48.png
 
 AutoReqProv: yes
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Thu Oct 18 2012
-# optimized out: fontconfig libX11-devel libXi-devel libXtst-devel libqt4-core libqt4-devel libqt4-gui libqt4-xml libstdc++-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ glibc-devel-static phonon-devel
+# Automatically added by buildreq on Tue Jan 05 2016
+# optimized out: fontconfig libX11-devel libXi-devel libXtst-devel libqt4-core libqt4-devel libqt4-gui libqt4-xml libstdc++-devel phonon-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ glibc-devel-static libqt4-webkit-devel
+
 BuildRequires: desktop-file-utils
 
 
@@ -113,6 +114,10 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Tue Jan 05 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.4-alt1
+- New version: security fixes
+- Fix CVE-2015-8378: Canceling XML export operation creates export as ".xml"
+
 * Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.3-alt3
 - Removing freedesktop-desktop-file-proposed-patch repocop patch
 
