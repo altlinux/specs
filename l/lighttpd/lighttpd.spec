@@ -13,7 +13,7 @@
 %define svnrev 2961
 
 Name: lighttpd
-Version: 1.4.38
+Version: 1.4.39
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -82,6 +82,7 @@ mod_rrdtool is used to monitor the traffic and load on the webserver.
 %package doc
 Summary: %name documentation
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation for %name.
@@ -201,6 +202,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Wed Jan 06 2016 Alexei Takaseev <taf@altlinux.org> 1.4.39-alt1
+- 1.4.39
+
 * Sun Dec 06 2015 Alexei Takaseev <taf@altlinux.org> 1.4.38-alt1
 - 1.4.38
 
