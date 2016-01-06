@@ -3,7 +3,7 @@
 
 Name: snmptt
 Version: 1.4
-Release: alt2
+Release: alt3
 Summary: An SNMP trap handler written in Perl
 
 Group: System/Servers
@@ -94,8 +94,8 @@ install -D -p -m 0644 snmptt.ini %buildroot%_sysconfdir/snmp/snmptt.ini
 install -D -p -m 0644 -p %SOURCE1 %buildroot%_unitdir/%name.service
 install -D -p -m 0755 -p %SOURCE2 %buildroot%_initdir/snmptt
 install -D -p -m 0644 snmptt.logrotate %buildroot%_logrotatedir/snmptt
-install -d -m 0775 %buildroot%_var/spool/snmptt
-install -d -m 0755 %buildroot%_logdir/snmptt
+install -d %buildroot%_var/spool/snmptt
+install -d %buildroot%_logdir/snmptt
 
 %pre
 /usr/sbin/groupadd -r -f snmptt ||:
@@ -119,7 +119,7 @@ install -d -m 0755 %buildroot%_logdir/snmptt
 %_datadir/%name
 %_unitdir/%name.service
 %attr(775,%name,root) %dir %_var/spool/%name/
-%attr(-,%name,%name) %dir %_logdir/%name/
+%attr(1770,root,%name) %dir %_logdir/%name/
 
 %doc ChangeLog COPYING README
 %doc contrib/ docs/ examples/
@@ -130,6 +130,9 @@ install -d -m 0755 %buildroot%_logdir/snmptt
 %files net-snmp
 
 %changelog
+* Wed Jan  6 2016 Terechkov Evgenii <evg@altlinux.org> 1.4-alt3
+- Change mode/owner of /var/log/snmptt to 1770/root:snmptt according to ALT Secure Packaging Policy
+
 * Wed Apr  8 2015 Evgenii Terechkov <evg@altlinux.org> 1.4-alt2
 - Change /var/spool/snmptt/ ownership to snmptt:root to work with buggy snmptrapd (ALT #30926)
 - Missed Requires: added to subpackages
