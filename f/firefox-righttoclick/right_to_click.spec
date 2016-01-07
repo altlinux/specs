@@ -1,14 +1,12 @@
 # SPEC file for the RightToClick Firefox extension
 
 %define rname	righttoclick
-%define version	2.9.5
-%define release	alt1.1
 %define cid	\{cd617375-6743-4ee8-bac4-fbf10f35729e\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	2.9.6
+Release:	alt1
 
 Summary:	RightToClick Firefox extension
 Summary(ru_RU.UTF-8):	расширение RightToClick для Firefox
@@ -56,6 +54,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.9.6-alt1
+- New version
+- Signed version to work with Firefox >= 43.x
+
 * Sun Nov 03 2013 Andrey Cherepanov <cas@altlinux.org> 2.9.5-alt1.1
 - Adapt for Firefox 24.x
 
