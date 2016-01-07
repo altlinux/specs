@@ -1,8 +1,8 @@
 # SPEC file for the BetterPrivacy Firefox extension
 
 %define rname	betterprivacy
-%define version	1.68
-%define release	alt1.1
+%define version	1.69
+%define release	alt1
 %define cid	\{d40f5e7b-d2cf-4856-b441-cc613eeffbe3\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -66,6 +66,9 @@ fi
 %ciddir
 
 %changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.69-alt1
+- New version
+
 * Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 1.68-alt1.1
 - Update maxVersion for Firefox 24.x and Seamonkey 2.22.x
 
