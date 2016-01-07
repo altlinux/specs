@@ -3,7 +3,7 @@
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	1.5.9
+Version:	1.5.13.1
 Release:	alt1
 Summary:	Firefox extension, which helps you to save Web pages and manage the collection
 
@@ -49,6 +49,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.13.1-alt1
+- New version 1.5.13.1
+- Signed version to work with Firefox >= 43.x
+
 * Sat Sep 20 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.9-alt1
 - New version 1.5.9
 
