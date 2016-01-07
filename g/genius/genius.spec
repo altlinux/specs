@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.20
+Version: %ver_major.21
 Release: alt1
 
 Summary: Genius Calculator
@@ -91,6 +91,9 @@ popd
 %exclude %_datadir/mime-info/genius.mime
 
 %changelog
+* Thu Jan 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.21-alt1
+- 1.0.21
+
 * Tue Mar 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.20-alt1
 - 1.0.20
 
