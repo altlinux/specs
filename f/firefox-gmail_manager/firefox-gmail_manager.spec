@@ -1,22 +1,21 @@
 # SPEC file for Gmail Manager extension
 
 %define rname	gmail_manager
-%define version 0.6.4.5
-%define release alt3
-%define cid 	\{582195F5-92E7-40a0-A127-DB71295901D7\}
+%define version 0.7.0.1
+%define release alt1
+%define cid 	\{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
 Version:	%version
 Release:	%release
 
-Summary:	Gmail Manager plugin for Firefox
+Summary:	Gmail Manager Community plugin for Firefox
 Summary(ru_RU.UTF-8):	расширение Gmail Manager для Firefox
 
 License:	%mpl 1.1 / %gpl2plus / %lgpl2plus
 Group:		Networking/WWW
-#URL:		http://www.longfocus.com/firefox/gmanager
-URL:		https://addons.mozilla.org/firefox/1320/
+URL:		https://addons.mozilla.org/en-US/firefox/addon/gmail-manager-community/
 BuildArch:	noarch
 
 Source0:	gmail_manager-%version.xpi
@@ -65,6 +64,11 @@ fi
 %_datadir/sounds/*.wav
 
 %changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.0.1-alt1
+- New version 0.7
+- Switching to the community fork
+- Signed version to work with Firefox >= 43.x
+
 * Wed Oct 30 2013 Andrey Cherepanov <cas@altlinux.org> 0.6.4.5-alt3
 - Adapt for Firefox 24.x
 
