@@ -5,7 +5,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -65,6 +65,9 @@ wxLocale библиотеки wxWindows.
 %_iconsdir/hicolor/scalable/*/*.svg
 
 %changelog
+* Thu Jan 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.6-alt1
+- 1.8.6
+
 * Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.8.5-alt1
 - 1.8.5
 
