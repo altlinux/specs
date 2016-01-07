@@ -15,7 +15,7 @@
 
 Name: neard
 Version: 0.15
-Release: alt2
+Release: alt3
 
 Summary: NFC for Linux
 License: GPLv2
@@ -79,9 +79,9 @@ install -pDm755 %SOURCE3 %buildroot%_initdir/neard
 %_unitdir/neard.service
 %_initdir/neard
 %_bindir/nfctool
-%doc %_man1dir/*.1.gz
-%doc %_man5dir/*.5.gz
-%doc %_man8dir/*.8.gz
+%_man1dir/*
+%_man5dir/*
+%_man8dir/*
 
 %files devel
 %_includedir/near/
@@ -92,6 +92,9 @@ install -pDm755 %SOURCE3 %buildroot%_initdir/neard
 %_libdir/%name/test/
 
 %changelog
+* Thu Jan 07 2016 Michael Shigorin <mike@altlinux.org> 0.15-alt3
+- mark compressed manpages properly
+
 * Sat Feb 28 2015 Michael Shigorin <mike@altlinux.org> 0.15-alt2
 - added initscript (adapted from yoctoproject's poky recipe)
 
