@@ -1,0 +1,66 @@
+# SPEC file for uBlock Origin extension
+
+%define rname	ublock_origin
+%define version 1.5.3
+%define release alt1
+%define cid 	uBlock0@raymondhill.net
+%define ciddir	%firefox_noarch_extensionsdir/%cid
+
+Name:		%firefox_name-%rname
+Version:	%version
+Release:	%release
+
+Summary:	uBlock Origin extension for Firefox
+Summary(ru_RU.UTF-8):	расширение uBlock Origin для Firefox
+
+License:	%gpl3only
+Group:		Networking/WWW
+# URL:		https://github.com/gorhill/uBlock
+URL:		https://addons.mozilla.org/ru/firefox/addon/ublock-origin/
+BuildArch:	noarch
+
+Source0:	%rname-%version.xpi
+
+Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
+
+BuildRequires(pre): rpm-build-firefox rpm-build-licenses
+BuildRequires:  unzip
+
+%description
+uBlock Origin Firefox plugin is a efficient general-purpose
+blocker, easy on CPU and memory.
+uBlock Origin is not only an ad blocker; it extends the syntax
+of the Adblock Plus filter syntax and is designed to work with
+custom rules and filters.
+Furthermore, advanced mode allows uBlock Origin to work in
+default-deny mode, which mode will cause all 3rd-party network
+requests to be blocked by default, unless allowed by the user.
+
+
+%description -l ru_RU.UTF-8
+Расширение uBlock Origin для Firefox - эффективный блокировщик
+(фильтр) запросов. Он не только блокирует рекламу на страницах,
+но также, использую синтаксис фильтров Adblock Plus, позволяет
+добавлять свои правила и фильтры.
+Кроме того, в продвинутом режиме uBlock Origin может работать
+в режиме запрета запросов всех сторонних по отношению к сайту
+ресурсов, если они специально не разрешены пользователем.
+
+%prep
+%setup -c
+
+%install
+mkdir -p --  %buildroot/%ciddir
+cp -r -- * %buildroot/%ciddir
+
+%postun
+if [ "$1" = 0 ]; then
+  [ ! -d "%ciddir" ] || rm -rf "%ciddir"
+fi
+
+%files
+%ciddir
+
+%changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.3-alt1
+- Initial build for ALTLinux Sisyphus
