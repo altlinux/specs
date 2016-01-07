@@ -1,14 +1,12 @@
 # SPEC file for Simple Calc extension
 
 %define rname	quicknote
-%define version 0.7.3
-%define release alt1.1
 %define cid 	\{C0CB8BA3-6C1B-47e8-A6AB-1FAB889562D9\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	0.7.5.1
+Release:	alt1
 
 Summary:	QuickNote plugin for Firefox
 Summary(ru_RU.UTF-8): расширение QuickNote для Firefox
@@ -51,6 +49,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.5.1-alt1
+- New version 0.7.5.1
+- Signed version to work with Firefox >= 43.x
+
 * Fri Nov 01 2013 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1.1
 - Adapt for Firefox/Thunderbird 24.x and Seamonkey 2.22.x
 
