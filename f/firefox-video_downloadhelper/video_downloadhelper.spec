@@ -1,7 +1,7 @@
 # SPEC file for Video DownloadHelper Firefox extension
 
 %define rname	video_downloadhelper
-%define version 4.9.23
+%define version 5.4.2
 %define release alt1
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -20,7 +20,6 @@ URL:		http://www.downloadhelper.net/
 BuildArch:      noarch
 
 Source0:	%rname.xpi
-Patch:		video_downloadhelper-set-maxver.patch
 
 Packager:	Nikolay A. Fetisov <naf@altlinux.ru>
 
@@ -39,7 +38,6 @@ sites.
 
 %prep
 %setup -c
-%patch -p2
 
 # RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
 rm -rf -- ./*
@@ -58,6 +56,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 5.4.2-alt1
+- New version
+- Signed version to work with Firefox >= 43.x
+
 * Mon Aug 11 2014 Andrey Cherepanov <cas@altlinux.org> 4.9.23-alt1
 - Nrw version 4.9.23
 
