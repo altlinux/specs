@@ -1,6 +1,6 @@
 Name: xcdroast
 Version: 0.98alpha16
-Release: alt1.qa4
+Release: alt1.qa5
 Serial: 6
 
 %define _xcdroastlibdir %_prefix/lib/%name
@@ -17,7 +17,6 @@ Requires: cdrecord >= 2.0-alt4, mkisofs >= 2.0-alt4, cdda2wav >= 2.0-alt4, readc
 Provides: %name-manual
 Obsoletes: %name-manual < 0.98alpha15
 
-# Automatically added by buildreq on Mon May 26 2008
 BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libcairo-devel libgtk+2-devel
 BuildRequires: libpango-devel pkg-config gdk-pixbuf-devel gtk+-devel
 
@@ -137,11 +136,14 @@ mkdir -p %buildroot%_xcdroastlibdir/{lang,xpms}
 %_docdir/%name/manual/xcdroast-manual.pdf
 %_docdir/%name/manual/README.txt
 %_datadir/%name/contrib/*
-%_mandir/man1/%name.1.gz
+%_man1dir/%name.1*
 
 #%doc README doc/DOCUMENTATION doc/README.AIX doc/README.HPUX doc/README.nonroot doc/README.setup-bulgarian.html doc/FAQ doc/README.atapi doc/README.MacOSX doc/README.ProDVD doc/TRANSLATION.HOWTO
 
 %changelog
+* Thu Jan 07 2016 Andrey Cherepanov <cas@altlinux.org> 6:0.98alpha16-alt1.qa5
+- Do not use strict extension for compressed man page
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6:0.98alpha16-alt1.qa4
 - NMU: rebuilt for updated dependencies.
 
