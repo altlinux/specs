@@ -1,14 +1,12 @@
 # SPEC file for FlashBlock extension
 
 %define rname	flashblock
-%define version 1.5.17
-%define release alt3
 %define cid 	\{3d7eb24f-2740-49df-8937-200b1cc08f8a\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	%version
-Release:	%release
+Version:	1.5.20
+Release:	alt1
 
 Summary:	FlashBlock plugin for Firefox
 Summary(ru_RU.UTF-8):	расширение FlashBlock для Firefox
@@ -19,7 +17,6 @@ URL:		http://flashblock.mozdev.org/
 BuildArch:	noarch
 
 Source0:	%rname-%version.xpi
-Patch:		flashblock-set-maxversion.patch
 
 Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
 
@@ -41,7 +38,6 @@ FlashBlock - расширение для браузеров семейства M
 
 %prep
 %setup -c
-%patch -p2
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -56,6 +52,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.20-alt1
+- New version
+- Signed version to work with Firefox >= 43.x
+
 * Tue Nov 24 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.17-alt3
 - Fix support new Firefox version by increase extension version (ALT #31323)
 - Support Firefox < 43.0
