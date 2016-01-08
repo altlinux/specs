@@ -1,5 +1,5 @@
 Name: purple-plugin-skypeweb
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: SkypeWeb Plugin for Pidgin
@@ -31,8 +31,11 @@ SkypeWeb Plugin for Pidgin
 %_pixmapsdir/pidgin/protocols/*/skype.png
 
 %changelog
+* Fri Jan 08 2016 Mikhail Kolchin <mvk@altlinux.org> 1.1-alt1
+- new version
+
 * Tue Nov 10 2015 Mikhail Kolchin <mvk@altlinux.org> 1.0-alt1
-- New version
+- new version
 
 * Tue Aug 25 2015 Mikhail Kolchin <mvk@altlinux.org> 0.1-alt1
-- Initial build for ALT Linux Sisyphus
+- initial build for ALT Linux Sisyphus
