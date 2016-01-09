@@ -5,15 +5,15 @@
 
 Summary: AVR libc
 Name: avr-libc
-Version: 1.8.0
-Release: alt5
+Version: 1.8.1
+Release: alt1
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
 Group: Development/Other
 URL: http://savannah.gnu.org/projects/avr-libc
 
-Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.gz
-Source1: avr8-headers-6.2.0.142.zip
+Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.bz2
+Source1: avr8-headers-3.5.0.1662.zip
 Patch0: 1.8.0.fix.patch
 
 # Automatically added by buildreq on Fri Feb 01 2013
@@ -52,7 +52,8 @@ Documentation for avr-libc in html, postscript and pdf formats.
 
 
 %prep
-%setup -q -n libc/avr-libc
+%setup -q
+# -n libc/avr-libc
 # patch0 -p1
 unzip %SOURCE1
 for i in avr/io*.h; do
@@ -99,6 +100,10 @@ done
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Thu Feb 12 2015 Grigory Milev <week@altlinux.ru> 1:1.8.1-alt1
+- new version released
+- update Atmel headers
+
 * Fri Mar 14 2014 Grigory Milev <week@altlinux.ru> 1:1.8.0-alt5
 - update Atmel headers to last version
 

@@ -6,7 +6,7 @@
 
 Summary: A GNU collection of binary utilities.
 Name: %cross_arch-binutils
-Version: 2.23.2
+Version: 2.25
 Release: alt1
 Serial: 2
 Copyright: GPL
@@ -20,9 +20,11 @@ Patch1: 30-binutils-2.20.1-avr-size.patch
 %define libavrdir %_libdir/%cross_arch
 %define includeavrdir %_includedir/%cross_arch
 
-# Automatically added by buildreq on Thu Mar 13 2014
-# optimized out: avr-binutils avr-gcc makeinfo
-BuildRequires: avr-gcc-c++ expect flex gcc-c++ glibc-devel-static libstdc++-devel ruby ruby-stdlibs zlib-devel
+BuildRequires: makeinfo
+
+# Automatically added by buildreq on Sat Jan 09 2016
+# optimized out: avr-gcc avr-gcc-c++ glibc-devel-static libncurses-devel libstdc++-devel libtinfo-devel makeinfo perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-devel python-modules xorg-xproto-devel zlib-devel
+BuildRequires: avr-binutils expect flex gcc-c++ imake libX11-devel libelf-devel libexpat-devel python-module-distribute python-module-fonttools python-module-google ruby ruby-stdlibs xorg-cf-files zlib-devel-static
 
 %description
 Avr-Binutils is a collection of binary utilities, including avr-ar (for
@@ -109,17 +111,25 @@ done
 %__ln_s %_libdir/%cross_arch %buildroot%_prefix/%cross_arch
 
 %__rm -f %buildroot/usr/lib64/lib64/libiberty.a
+%__rm -rf %buildroot/%_datadir/gdb
 
 %files
 %doc README
 %dir %libavrdir
 %dir %includeavrdir
+%dir %includeavrdir/libiberty
+%dir %includeavrdir/gdb
 %_bindir/*
 %_prefix/%cross_arch
+%includeavrdir/libiberty/*
+%includeavrdir/gdb/*
 %libavrdir/*
 %_man1dir/*
 
 %changelog
+* Sat Jan 09 2016 Grigory Milev <week@altlinux.ru> 2:2.25-alt1
+- New version from Atmel (Toolchain 3.5.0)
+
 * Thu Mar 13 2014 Grigory Milev <week@altlinux.ru> 2:2.23.2-alt1
 - New version released
 

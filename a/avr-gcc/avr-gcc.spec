@@ -7,14 +7,15 @@
 
 Summary: GNU Compiler for AVR (C language only).
 Name: %cross_arch-gcc
-Version: 4.8.1
+Version: 4.9.2
 Release: alt1
 
 Copyright: GPL
 Group: Development/Other
 URL: http://gcc.gnu.org
 
-Source0: avr-gcc-%version.tar.gz
+Source0: avr-gcc-%version.tar.bz2
+Source1: fix-device-specs.sh
 
 # Automatically added by buildreq on Thu Mar 13 2014
 # optimized out: avr-binutils avr-gcc avr-gcc-c++ libgmp-devel libmpfr-devel libstdc++-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage
@@ -52,10 +53,10 @@ contrib/gcc_update --touch
 #cd %_builddir/gcc-%version/gcc
 
 %build
-pushd gcc/config/avr/
-sh genopt.sh avr-mcus.def > avr-tables.opt
-cat avr-mcus.def | awk -f genmultilib.awk FORMAT="Makefile" > t-multilib
-popd
+#pushd gcc/config/avr/
+#sh genopt.sh avr-mcus.def > avr-tables.opt
+#cat avr-mcus.def | awk -f genmultilib.awk FORMAT="Makefile" > t-multilib
+#popd
 %__subst 's/m4_copy(\[AC_PREREQ\]/m4_copy_force(\[AC_PREREQ\]/g' ./config/override.m4
 %__subst 's/m4_copy(\[_AC_PREREQ\]/m4_copy_force(\[_AC_PREREQ\]/g' ./config/override.m4
 %__subst 's/  \[m4_fatal(\[Please use exactly Autoconf \]/  \[m4_errprintn(\[Please use exactly Autoconf \]/g' ./config/override.m4
@@ -81,6 +82,8 @@ CC="%__cc $RPM_OPT_FLAGS" \
 		--enable-languages="c,c++" \
 		--disable-nls \
 		--disable-libssp \
+		--disable-shared \
+		--disable-libada \
 		--prefix=%_prefix \
 		--mandir=%_mandir \
 		--infodir=%_infodir \
@@ -94,7 +97,8 @@ CC="%__cc $RPM_OPT_FLAGS" \
 		--with-ld=%_bindir/avr-ld \
 		--with-ar=%_bindir/avr-ar \
 		--with-nm=%_bindir/avr-nm \
-		--with-dwarf2
+		--with-dwarf2 \
+		--with-avrlibc=yes
 
 #		--includedir=%includeavrdir \
 #		--exec-prefix=%_libdir \
@@ -139,12 +143,15 @@ rename avr-avr avr %buildroot%_man1dir/*
 # Copy specs file to /usr/lib/avr/gcc/avr/*/
 %__cp %_builddir/%build_dir/obj-avr-%_target_platform/gcc/specs %buildroot%libavrdir/%version/
 
+%SOURCE1 %buildroot/%libavrdir/%version/device-specs
+
 %files
 %doc gcc/README* gcc/*ChangeLog*
 %dir %libavrexecdir
 %dir %libavrexecdir/%version
 %dir %libavrexecdir/%version/plugin
 %dir %libavrexecdir/%version/install-tools
+%dir %libavrdir/%version/device-specs
 
 %_bindir/*-cpp
 %_bindir/*-gcc*
@@ -154,6 +161,7 @@ rename avr-avr avr %buildroot%_man1dir/*
 %libavrdir/%version/include*
 %libavrdir/%version/libgcc.a
 %libavrdir/%version/libgcov.a
+%libavrdir/%version/device-specs/*
 %libavrdir/%version/specs
 %libavrdir/%version/install-tools*
 %libavrexecdir/%version/*.so*
@@ -174,6 +182,9 @@ rename avr-avr avr %buildroot%_man1dir/*
 %_man1dir/avr-g++.1*
 
 %changelog
+* Sat Jan 09 2016 Grigory Milev <week@altlinux.ru> 4.9.2-alt1
+- New version from Atmel (Toolchain 3.5.0)
+
 * Thu Mar 13 2014 Grigory Milev <week@altlinux.ru> 4.8.1-alt1
 - New version released
 
