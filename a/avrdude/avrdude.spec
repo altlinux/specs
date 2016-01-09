@@ -3,9 +3,11 @@
 
 %def_enable doc
 
+%set_verify_elf_method unresolved=relaxed
+
 Summary: AVRDUDE is software for programming Atmel AVR Microcontrollers.
 Name: avrdude
-Version: 6.1
+Version: 6.2
 Release: alt1
 License: GPL
 Group: Development/Other
@@ -13,7 +15,7 @@ URL: http://savannah.nongnu.org/projects/avrdude
 Source0: %name-%version.tar.gz
 Patch0: flip2.patch
 
-BuildRequires: gnu-config libtinfo-devel libusb-compat libusb-compat-devel libusb-devel ruby
+BuildRequires: gnu-config libtinfo-devel libusb-compat libusb-compat-devel libusb-devel ruby makeinfo texi2dvi
 BuildRequires: flex libelf-devel libftdi-devel libftdi1-devel libncurses-devel libreadline-devel ruby-stdlibs
 
 BuildRequires: flex libncurses-devel libreadline-devel libusb-compat-devel
@@ -39,7 +41,7 @@ Documentation for avrdude in html, postscript and pdf formats.
 
 %build
 %autoreconf
-%configure %{subst_enable doc} --enable-parport --enable-linuxgpio
+%configure %{subst_enable doc} --enable-parport --enable-linuxgpio LIBS="-lpthread -lusb -lftdi -lelf"
 %make
 
 %install
@@ -65,6 +67,9 @@ Documentation for avrdude in html, postscript and pdf formats.
 %endif
 
 %changelog
+* Sat Jan 09 2016 Grigory Milev <week@altlinux.ru> 6.2-alt1
+- new version released
+
 * Tue May 19 2015 Grigory Milev <week@altlinux.ru> 6.1-alt1
 - New version released
 - flip2 patch obsolete
