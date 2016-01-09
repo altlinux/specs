@@ -3,8 +3,8 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.4.7
-Release: alt2
+Version: 3.4.8
+Release: alt1
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -279,6 +279,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Sat Jan 09 2016 Mikhail Efremov <sem@altlinux.org> 3.4.8-alt1
+- Updated to 3.4.8.
+
 * Thu Dec 03 2015 Mikhail Efremov <sem@altlinux.org> 3.4.7-alt2
 - Use soname in the names of locale files.
 
