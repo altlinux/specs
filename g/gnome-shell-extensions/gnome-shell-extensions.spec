@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: gnome-shell >= 3.17.91
+Requires: gnome-shell >= 3.18.0
 
 BuildRequires: gnome-common intltool libgnome-desktop3-devel libgtop-devel
 
@@ -67,7 +67,6 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/convenience.js
 %_datadir/gnome-shell/extensions/alternate-tab@gnome-shell-extensions.%domain/prefs.js
 
-
 # windowsNavigator
 %dir %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.%domain/extension.js
@@ -98,7 +97,6 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/drive-menu@gnome-shell-extensions.%domain/convenience.js
-
 
 # apps-menu
 %dir %_datadir/gnome-shell/extensions/apps-menu@gnome-shell-extensions.%domain
@@ -172,6 +170,9 @@ See %_docdir/%name-%version/README for more information.
 %endif
 
 %changelog
+* Sat Jan 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
+- 3.18.3
+
 * Thu Nov 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
