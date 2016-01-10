@@ -4,7 +4,7 @@
 
 Name: perl-Dist-Zilla-Plugin-MetaProvides-Package
 Version: 2.003001
-Release: alt1
+Release: alt2
 
 Summary: Extract namespaces/version from traditional packages for provides
 
@@ -49,5 +49,8 @@ indexing it, which PAUSE in turn will take verbatim.
 %perl_vendor_privlib/Dist/Zilla/Plugin/MetaProvides/Package*
 
 %changelog
+* Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.003001-alt2
+- Bump release to override package from autoimports/Sisyphus repository
+
 * Sun Dec 20 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.003001-alt1
 - Initial build for ALT Linux Sisyphus
