@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: pcsx2
-Version: 1.2.2
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Playstation 2 console emulator
 License: GPLv3
@@ -19,21 +19,19 @@ Source: %name-%version.tar.gz
 BuildRequires: bzlib-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libGLES-devel
+BuildRequires: libGLEW-devel
 BuildRequires: libSDL-devel
-BuildRequires: libSDL2-devel
 BuildRequires: libXmu-devel
 BuildRequires: libaio-devel
 BuildRequires: libalsa-devel
 BuildRequires: libcggl-devel
-BuildRequires: libglew-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libjpeg-devel
+BuildRequires: liblzma-devel
+BuildRequires: libpng++-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libsoundtouch-devel
-BuildRequires: libsparsehash-devel
 BuildRequires: libwxGTK-devel
-BuildRequires: subversion
 
 %description
 PCSX2 is an emulator for the playstation 2 video game console. It is written mostly in C++, some part are in C and x86 assembly.
@@ -86,6 +84,14 @@ Requires: %name = %version-%release
 
 %description plugin-gsnull
 GSnull plugin for PCSX2
+
+%package plugin-lilypad
+Summary: LilyPad plugin for PCSX2
+Group: Emulators
+Requires: %name = %version-%release
+
+%description plugin-lilypad
+LilyPad plugin for PCSX2
 
 %package plugin-padnull
 Summary: PADnull plugin for PCSX2
@@ -143,14 +149,6 @@ Requires: %name = %version-%release
 %description plugin-zzogl
 zzogl plugin for PCSX2
 
-%package plugin-zzogl-cg
-Summary: zzogl-cg plugin for PCSX2
-Group: Emulators
-Requires: %name = %version-%release
-
-%description plugin-zzogl-cg
-zzogl-cg plugin for PCSX2
-
 %prep
 %setup
 
@@ -163,36 +161,35 @@ cmake .. \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
+	-DCMAKE_BUILD_STRIP:BOOL=TRUE \
+	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DPLUGIN_DIR:PATH=%_libdir/%name \
 	-DGAMEINDEX_DIR:PATH=%_datadir/%name \
 	-DPACKAGE_MODE:BOOL=TRUE \
-	-DCMAKE_BUILD_STRIP:BOOL=TRUE \
-	-DCMAKE_BUILD_PO:BOOL=TRUE \
-	-DREBUILD_SHADER:BOOL=TRUE \
-	-DBUILD_REPLAY_LOADERS:BOOL=TRUE \
 	-DXDG_STD:BOOL=TRUE \
-	-DSDL2_API:BOOL=TRUE \
-	-DGLESV2_INCLUDE_DIR:PATH=%_includedir/GLES2
+	-DSDL2_API:BOOL=FALSE \
+	-DWX28_API:BOOL=TRUE \
+	-DEXTRA_PLUGINS:BOOL=TRUE
 popd
 
 %make_build -C %_target_platform
 
 %install
 %makeinstall_std -C %_target_platform
-%__rm -rf %buildroot%_defaultdocdir/%name
+%__rm -rf %buildroot%_defaultdocdir/PCSX2
 %find_lang --output=%name.lang %{name}_{Iconized,Main}
 
 %files -f %name.lang
-%doc bin/docs/PCSX2_FAQ.pdf bin/docs/PCSX2_Readme.pdf
-%_bindir/%{name}*
+%doc bin/docs/PCSX2_*.pdf
+%_bindir/PCSX2*
 %dir %_libdir/%name
 %_libdir/%name/ps2hw.dat
-%_desktopdir/%name.desktop
-%_man1dir/%name.1.gz
+%_desktopdir/PCSX2.desktop
+%_man1dir/PCSX2.1.*
 %dir %_datadir/%name
 %_datadir/%name/GameIndex.dbf
 %_datadir/%name/cheats_ws.zip
-%_pixmapsdir/%name.xpm
+%_pixmapsdir/PCSX2.xpm
 
 %files plugin-cdvdiso
 %_libdir/%name/libCDVDiso.so
@@ -207,10 +204,13 @@ popd
 %_libdir/%name/libFWnull-0.7.0.so
 
 %files plugin-gsdx
-%_libdir/%name/libGSdx-0.1.16.so
+%_libdir/%name/libGSdx-1.0.0.so
 
 %files plugin-gsnull
 %_libdir/%name/libGSnull.so
+
+%files plugin-lilypad
+%_libdir/%name/libLilyPad-0.11.0.so
 
 %files plugin-padnull
 %_libdir/%name/libPADnull.so
@@ -233,10 +233,10 @@ popd
 %files plugin-zzogl
 %_libdir/%name/libzzogl-0.4.0.so
 
-%files plugin-zzogl-cg
-%_libdir/%name/libzzogl-cg-0.3.0.so
-
 %changelog
+* Mon Jan 11 2016 Nazarov Denis <nenderus@altlinux.org> 1.4.0-alt1
+- Version 1.4.0
+
 * Tue Nov 18 2014 Nazarov Denis <nenderus@altlinux.org> 1.2.2-alt2
 - Rebuild with libsoundtouch 1.8.0
 
