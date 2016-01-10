@@ -4,7 +4,7 @@
 
 Name: perl-Dist-Zilla-Plugin-MakeMaker-Awesome
 Version: 0.35
-Release: alt1
+Release: alt2
 
 Summary: a more awesome MakeMaker plugin for Dist::Zilla
 
@@ -50,5 +50,8 @@ we add additional customization hooks by subclassing it.
 %perl_vendor_privlib/Dist/Zilla/Plugin/MakeMaker/Awesome*
 
 %changelog
+* Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.35-alt2
+- Bump release to override package from the autoimports/Sisyphus repository
+
 * Sun Dec 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.35-alt1
 - Initial build for ALT Linux Sisyphus
