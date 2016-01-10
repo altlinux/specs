@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.0.0.0
-Release: alt1
+Release: alt1.1.c20fb
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -35,14 +35,13 @@ Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
 
-
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-# Automatically added by buildreq on Sun Jul 12 2015
+# Automatically added by buildreq on Sun Jan 10 2016
 # optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libpango-devel libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel python-modules-json unzip xorg-cf-files yasm zip
+BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-modules-json unzip xorg-cf-files yasm zip
 
 BuildRequires: autoconf_2.13
 BuildRequires: libpixman-devel
@@ -93,7 +92,6 @@ tar -xf %SOURCE2
 #popd
 popd
 
-
 #patch5  -p1
 %patch6  -p1
 #patch14 -p1
@@ -110,7 +108,6 @@ EOF
 
 echo %version > browser/config/version.txt
 
-
 %__subst s~'$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)'~'$(MOZ_APP_NAME)$(MOZ_APP_VERSION)'~g  ./config/baseconfig.mk
 #subst s~'Moonchild Productions'~'Moonchild_Productions'~g  ./build/application.ini
 #subst s~'Pale Moon'~'Pale_Moon'~g  ./build/application.ini
@@ -119,7 +116,6 @@ echo %version > browser/config/version.txt
 %__subst s~'"Pale Moon"'~'"Pale_Moon"'~g  ./build/application.ini
 
 cp -f %SOURCE4 .mozconfig
-
 
 %ifnarch %ix86 x86_64 armh
 echo "ac_add_options --disable-methodjit" >> .mozconfig
@@ -310,6 +306,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Jan 10 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:26.0.0.0-alt1.1.c20fb
+- Update from git
+
 * Tue Dec 22 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1:26.0.0.0-alt1
 - New Version
 
