@@ -7,8 +7,8 @@
 %def_without test
 
 Name: %_name%abiversion
-Version: 5.7.2
-Release: alt5.1.1
+Version: 5.7.3
+Release: alt1.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -27,7 +27,8 @@ Source10: snmpd.service
 Source11: snmptrapd.service
 
 Patch: %name-%version-%release.patch
-Patch6: net-snmp-5.7.2-systemd.patch
+Patch6: net-snmp-5.7.3-systemd.patch
+Patch7: net-snmp-5.7.3-snmptrapd-gid.patch
 
 %define persistentdir %_localstatedir/%_name
 
@@ -299,7 +300,8 @@ for run-time access to parsed MIB data.
 %prep
 %setup
 %patch -p1
-%patch6 -p0
+%patch6 -p1
+%patch7 -p1
 
 %__subst "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 #Fix for compile with lmsensors_v3
@@ -364,8 +366,8 @@ install -p -m644 -D %SOURCE3 %buildroot%_sysconfdir/logrotate.d/snmpd
 install -p -m755 -D %SOURCE4 %buildroot%_initdir/snmptrapd
 
 # systemd stuff
-install -m 755 -d %buildroot%_sysconfdir/tmpfiles.d/
-install -m 644 %SOURCE9 %buildroot%_sysconfdir/tmpfiles.d/net-snmp.conf
+install -m 755 -d %buildroot%_tmpfilesdir
+install -m 644 %SOURCE9 %buildroot%_tmpfilesdir/net-snmp.conf
 install -m 755 -d %buildroot%_unitdir
 install -m 644 %SOURCE10 %SOURCE11 %buildroot%_unitdir/
 
@@ -377,6 +379,11 @@ cat << EOF > %buildroot%_sysconfdir/sysconfig/snmpd
 
 EOF
 
+cat << EOF > %buildroot%_sysconfdir/sysconfig/snmptrapd
+#OPTIONS="-Ls DAEMON -Lf /dev/null -p /var/run/snmptrapd.pid -a -u snmp -g snmp"
+
+EOF
+
 bzip2 ChangeLog
 
 #Fix net-snmp-create-v3-user
@@ -384,9 +391,9 @@ bzip2 ChangeLog
 %__subst "s|/usr/share/snmp/snmpd.conf|%_sysconfdir/snmp/snmpd.conf|g" %buildroot%_bindir/net-snmp-create-v3-user
 
 
-find %buildroot%_datadir/snmp/mibs/ -name "*.txt" -type f | while read file; do mv "$file" "${file%.txt}"; done
+find %buildroot%_datadir/snmp/mibs/ -name "*.txt" -type f | while read file; do mv "$file" "${file%%.txt}"; done
 
-#tar MIBS for simle update
+#tar MIBS for simple update
 tar -cjf net-snmp-mibs.tar.bz2 -C %buildroot%_datadir/snmp mibs/
 rm -rf %buildroot%_datadir/snmp/mibs
 
@@ -430,9 +437,9 @@ echo "===== start test ====="
 %_man1dir/net-snmp-config.*
 
 %files -n %_name-snmpd
-%config(noreplace) %_sysconfdir/tmpfiles.d/net-snmp.conf
-%config(noreplace) %_initdir/snmpd
-%config(noreplace) %_unitdir/snmpd.service
+%_tmpfilesdir/net-snmp.conf
+%_initdir/snmpd
+%_unitdir/snmpd.service
 %config(noreplace) %_sysconfdir/sysconfig/snmpd
 %config(noreplace) %_sysconfdir/logrotate.d/snmpd
 %config(noreplace) %attr(0640,snmp,root) %_sysconfdir/snmp/snmpd.conf
@@ -446,8 +453,9 @@ echo "===== start test ====="
 %_man8dir/snmpd.*
 
 %files -n %_name-snmptrapd
-%config(noreplace) %_initdir/snmptrapd
-%config(noreplace) %_unitdir/snmptrapd.service
+%_initdir/snmptrapd
+%_unitdir/snmptrapd.service
+%config(noreplace) %_sysconfdir/sysconfig/snmptrapd
 %_sbindir/snmptrapd
 %_man5dir/snmptrapd.conf.*
 %_man8dir/snmptrapd.*
@@ -585,6 +593,18 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Sun Jan 10 2016 Terechkov Evgenii <evg@altlinux.org> 5.7.3-alt1.1
+- fix typo in spec
+
+* Sat Jan  9 2016 Terechkov Evgenii <evg@altlinux.org> 5.7.3-alt1
+- 5.7.3
+- add patch7 to fix group->gid resolving (ALT#30926)
+- source /etc/sysconfig/snmptrapd on sysv (just like on systemd) systemd (ALT#30927)
+- spec cleanup (ALT#29545)
+- patch6 (systemd) adapted to 5.7.3
+- remove bogus noreplace flag on sysv/systemd initscripts
+- move verndor-specific tmpfiles manifest to %%_tmpfilesdir
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 5.7.2-alt5.1.1
 - rebuild with new perl 5.22.0
 
