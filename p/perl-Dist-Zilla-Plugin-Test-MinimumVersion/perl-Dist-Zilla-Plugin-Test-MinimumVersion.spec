@@ -4,7 +4,7 @@
 
 Name: perl-Dist-Zilla-Plugin-Test-MinimumVersion
 Version: 2.000006
-Release: alt1
+Release: alt2
 
 Summary: Release tests for minimum required versions
 
@@ -44,5 +44,8 @@ test for the highest Perl version you want to require.
 %perl_vendor_privlib/Dist/Zilla/Plugin*
 
 %changelog
+* Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.000006-alt2
+- Bump release to override package from autoimports/Sisyphus repository
+
 * Sun Dec 20 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.000006-alt1
 - Initial build for ALT Linux Sisyphus
