@@ -4,7 +4,7 @@
 
 Name: perl-Dist-Zilla-Plugin-OurPkgVersion
 Version: 0.06
-Release: alt1
+Release: alt2
 
 Summary: Dist::Zilla plugin for package version management
 
@@ -50,5 +50,8 @@ specify your version.
 %perl_vendor_privlib/Dist/Zilla/Plugin/OurPkgVersion*
 
 %changelog
+* Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.06-alt2
+- Bump release to override package from autoimports/Sisyphus repository
+
 * Sun Dec 20 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.06-alt1
 - Initial build for ALT Linux Sisyphus
