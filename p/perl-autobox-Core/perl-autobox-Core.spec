@@ -3,7 +3,7 @@
 %define real_name autobox-Core
 
 Name: perl-autobox-Core
-Version: 1.30
+Version: 1.31
 Release: alt1
 
 Summary: Perl module with core functions to autoboxed scalars, arrays and hashes
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Tue Sep 23 2014
-# optimized out: perl-Scope-Guard
-BuildRequires: perl-autobox perl-devel
+# Automatically added by buildreq on Sun Jan 10 2016
+# optimized out: perl-Capture-Tiny perl-Data-OptList perl-Params-Util perl-Scope-Guard perl-Sub-Exporter perl-Sub-Install perl-devel perl-parent
+BuildRequires: perl-Encode perl-Test-Output perl-Want perl-autobox
 
 %description
 Perl module autobox promotes Perl's primitive types (literals
@@ -50,6 +50,9 @@ methods taken from Perl 6.
 %perl_vendor_privlib/autobox/Core*
 
 %changelog
+* Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.31-alt1
+- New version
+
 * Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.30-alt1
 - New version
 
