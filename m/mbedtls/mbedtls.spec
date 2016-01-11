@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Light-weight cryptographic and SSL/TLS library
@@ -115,6 +115,9 @@ popd
 %_libexecdir/%name/*
 
 %changelog
+* Mon Jan 11 2016 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt1
+- Version 2.2.1
+
 * Fri Dec 04 2015 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt1
 - Version 2.2.0
 
