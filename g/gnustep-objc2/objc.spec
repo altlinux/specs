@@ -1,11 +1,12 @@
 # need because asm used
 %set_verify_elf_method textrel=relaxed
+%def_without opts
 
 %define oname objc2
 
 Name: gnustep-%oname
 Version: 1.7.0
-Release: alt10.svn20140704
+Release: alt11.svn20140704
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -19,7 +20,7 @@ Patch: gnustep-objc2-1.6.1-alt-i586.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildPreReq: gnustep-make-devel gcc-c++ libstdc++-devel
-BuildPreReq: cmake llvm-devel-static clang-devel
+BuildPreReq: cmake
 
 %description
 The GNUstep Objective-C runtime is designed as a drop-in replacement for
@@ -53,6 +54,7 @@ recompilation.
 
 This package contains development files of GNUstep Objective-C Runtime.
 
+%if_with opts
 %package -n lib%name-opts
 Summary: Shared libraries of GNUstep Runtime Optimisations
 Group: System/Libraries
@@ -77,6 +79,7 @@ code compiled with old versions of GCC to be supported without requiring
 recompilation.
 
 This package contains development files of GNUstep Runtime Optimisations.
+%endif
 
 %prep
 %setup
@@ -102,9 +105,9 @@ cmake \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_ASM_FLAGS:STRING="%optflags" \
-	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/clang' \
-	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/clang' \
-	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/clang++' \
+	-DCMAKE_ASM_COMPILER:FILEPATH='%_bindir/cc' \
+	-DCMAKE_C_COMPILER:FILEPATH='%_bindir/cc' \
+	-DCMAKE_CXX_COMPILER:FILEPATH='%_bindir/g++' \
 	-DLLVM_DIR:PATH='%_datadir/CMake/Modules' \
 	-DCMAKE_STRIP:FILEPATH='/bin/echo' \
 	-DCPACK_STRIP_FILES:BOOL=OFF \
@@ -113,8 +116,8 @@ cmake \
 	-DINCLUDE_DIRECTORY:STRING=objc2 \
 	-DLEGACY_COMPAT:BOOL=ON \
 	-DLIBOBJC_NAME:STRING=objc2 \
-	-DLLVM_ON_UNIX:BOOL=ON \
-	-DLLVM_OPTS:BOOL=TRUE \
+	-DLLVM_ON_UNIX:BOOL=OFF \
+	-DLLVM_OPTS:BOOL=FALSE \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DTESTS:BOOL=OFF \
 	.
@@ -151,14 +154,19 @@ ln -s objc2 %buildroot%_includedir/objc
 %files -n lib%name
 %doc ANNOUNCE* API README
 %_libdir/*.so.*
+%if_with opts
 %exclude %_libdir/libGNUObjCRuntime.so.*
+%endif
 
 %files -n lib%name-devel
 %_includedir/*
 %exclude %_includedir/objc2/opts
 %_libdir/*.so
+%if_with opts
 %exclude %_libdir/libGNUObjCRuntime.so
+%endif
 
+%if_with opts
 %files -n lib%name-opts
 %doc opts/README
 %_libdir/libGNUObjCRuntime.so.*
@@ -166,8 +174,13 @@ ln -s objc2 %buildroot%_includedir/objc
 %files -n lib%name-opts-devel
 %_includedir/objc2/opts
 %_libdir/libGNUObjCRuntime.so
+%endif
 
 %changelog
+* Mon Jan 11 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt11.svn20140704
+- Build with gcc
+- Do not package -opts subpackages
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt10.svn20140704
 - New snapshot
 
