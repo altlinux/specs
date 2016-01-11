@@ -1,6 +1,6 @@
 Name:		cqrlog
 Version:	1.9.0
-Release:	alt3
+Release:	alt4
 Summary:	An amateur radio contact logging program
 
 Group:		Communications
@@ -10,6 +10,7 @@ Source0:	http://www.cqrlog.com/files/%{name}_%{version}/%{name}-%{version}.tar.g
 
 Patch0:		cqrlog-1.9.0-install.patch
 Patch1:		cqrlog.desktop.patch
+Patch2:		cqrlog-build-with-fpc-3.0.0.patch
 
 BuildRequires:	fpc >= 2.6.4
 BuildRequires:	lazarus
@@ -34,6 +35,7 @@ and strongly focused on easy operation and maintenance.
 %setup -q
 %patch0 -p1
 %patch1
+%patch2 -p2
 
 chmod -x src/*.pas \
          voice_keyer/voice_keyer.sh
@@ -61,6 +63,9 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Jan 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt4
+- Fix build with fpc-3.0.0
+
 * Thu Nov 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt3
 - Add trustedqsl in requirements
 
