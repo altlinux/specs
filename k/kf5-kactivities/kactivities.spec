@@ -1,7 +1,7 @@
 %define rname kactivities
 
 Name: kf5-%rname
-Version: 5.17.0
+Version: 5.18.0
 Release: alt1
 %K5init altplace
 
@@ -20,7 +20,8 @@ BuildRequires: boost-devel-headers extra-cmake-modules gcc-c++ qt5-declarative-d
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
-BuildRequires: kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel
+BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel
 
@@ -71,6 +72,7 @@ sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/co
 
 %files
 %_K5bin/kactivitymanagerd
+%_K5lib/libkactivitymanagerd_plugin.so
 %_K5plug/kactivitymanagerd/
 %_K5plug/*.so
 %_K5qml/org/kde/activities/
@@ -91,6 +93,9 @@ sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/co
 %_K5lib/libKF5Activities.so.*
 
 %changelog
+* Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt1
+- new version
+
 * Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
 - new version
 

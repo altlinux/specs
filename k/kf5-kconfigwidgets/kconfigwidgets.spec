@@ -1,7 +1,7 @@
 %define rname kconfigwidgets
 
 Name: kf5-%rname
-Version: 5.17.0
+Version: 5.18.0
 Release: alt1
 %K5init altplace
 
@@ -82,6 +82,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %_K5lib/libKF5ConfigWidgets.so.*
 
 %changelog
+* Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt1
+- new version
+
 * Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
 - new version
 

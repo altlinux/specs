@@ -1,7 +1,7 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.17.0
+Version: 5.18.0
 Release: alt1
 %K5init altplace
 
@@ -91,6 +91,7 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING.LIB README.md
+%_K5srvtyp/*
 
 %files
 %config(noreplace) %_K5xdgconf/*
@@ -103,7 +104,6 @@ KF5 library
 %_K5plug/*.so
 %_K5xdgapp/*.desktop
 %_K5srv/*
-%_K5srvtyp/*
 #%_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
 
@@ -127,6 +127,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt1
+- new version
+
 * Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
 - new version
 
