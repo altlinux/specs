@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.9.4
-Release: alt3
+Version: 6.10.0
+Release: alt1
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -10,10 +10,6 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-# Patch from upstream
-# http://roy.marples.name/projects/dhcpcd/info/ebdb4b447a516ed9
-# Drop it when new version will be released
-Patch1: dhcpcd-6.9.4-fix-routing-table.patch
 AutoReq: yes, noshell
 
 BuildRequires: rpm-build-licenses
@@ -33,7 +29,6 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
 
 %build
 %configure \
@@ -44,6 +39,7 @@ which it is running. It also tries to renew the lease time according to RFC2131.
         --serviceexists='[ -x %_initdir/"$1" ]' \
         --servicecmd='/sbin/service "$1" >/dev/null 2>&1' \
         --with-hook=ntp.conf \
+        --with-hook=lookup-hostname \
         --enable-ipv4 \
         --enable-ipv6 \
         --without-udev
@@ -70,12 +66,18 @@ fi
 /lib/%name/%name-hooks/*
 /lib/%name/%name-run-hooks
 
-# Do not package timezone hook:
-# it should use tzupdate but
-# what about configuration files?
-%exclude /lib/%name/%name-hooks/15-timezone
+# Ingnore all additional hooks:
+#   wpa_supplicant: wpa_supplicant should be handled by etcnet
+#   tzupdate: it should use tzupdate but what about configuration files?
+%exclude %_datadir/%name/
 
 %changelog
+* Mon Jan 11 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.0-alt1
+- Don't install additional hooks.
+- Drop obsoleted patch.
+- 50-ntp.conf: Don't return error if config doesn't exist.
+- Updated to 6.10.0.
+
 * Thu Dec 17 2015 Mikhail Efremov <sem@altlinux.org> 1:6.9.4-alt3
 - Fix routing table (patch from upstream).
 
