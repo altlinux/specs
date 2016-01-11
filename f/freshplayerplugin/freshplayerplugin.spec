@@ -1,7 +1,7 @@
 %define _libname libfreshwrapper-flashplayer
 
 Name: freshplayerplugin
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
@@ -13,9 +13,9 @@ Source: %name-%version.tar
 
 ExclusiveArch: %ix86 x86_64
 
-# Automatically added by buildreq on Thu Jun 18 2015 (-ba)
-# optimized out: cmake cmake-modules elfutils fontconfig fontconfig-devel glib2-devel libEGL-devel libGL-devel libX11-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: ctest gcc-c++ libGLES-devel libXcursor-devel libXrandr-devel libalsa-devel libavcodec-devel libconfig-devel libevent-devel libgtk+2-devel libpulseaudio-devel libssl-devel libv4l-devel libva-devel ragel
+# Automatically added by buildreq on Wed Dec 30 2015
+# optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libEGL-devel libGL-devel libX11-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libpango-devel libstdc++-devel libvdpau-devel libwayland-client libwayland-server pkg-config xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: cmake gcc-c++ libXcursor-devel libXrandr-devel libalsa-devel libavcodec-devel libdrm-devel libevent-devel libgtk+2-devel libpulseaudio-devel libssl-devel libv4l-devel libva-devel ragel
 
 %{?!_without_check:%{?!_disable_check:BuildPreReq: ctest}}
 
@@ -29,7 +29,7 @@ browser.
 
 %prep
 %setup
-sed -i 's|^pepperflash_path = .*|pepperflash_path = "%_libdir/pepper-plugins/libpepflashplayer.so"|' data/freshwrapper.conf.example
+sed -i 's|^#pepperflash_path = .*|pepperflash_path = "%_libdir/pepper-plugins/libpepflashplayer.so"|' data/freshwrapper.conf.example
 
 %build
 %cmake \
@@ -49,9 +49,12 @@ make -C BUILD check
 %files
 %doc COPYING LICENSE README.md
 %_libdir/browser-plugins/%_libname.so
-%config %_sysconfdir/freshwrapper.conf
+%config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Wed Dec 30 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.4-alt1
+- Updated to 0.3.4.
+
 * Wed Oct 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.3-alt1
 - Updated to 0.3.3.
 
