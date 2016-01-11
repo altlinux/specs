@@ -1,6 +1,6 @@
 Name: gptfdisk
-Version: 0.8.11
-Release: alt1.git20140329
+Version: 1.0.1
+Release: alt1
 
 Summary: GPT partitioning and MBR repair software
 License: GPLv2
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 # GIT: git://git.code.sf.net/p/gptfdisk/code
 
 BuildRequires(pre): rpm-macros-make
-BuildRequires: gcc-c++ libuuid-devel libpopt-devel libicu-devel ncurses-devel
+BuildRequires: gcc-c++ libuuid-devel libpopt-devel ncurses-devel
 BuildPreReq: libncursesw-devel
 
 %description
@@ -60,14 +60,9 @@ provides a few additional partition manipulation features.
 ./gdisk_test.sh
 
 %install
-install -D gdisk %buildroot%_sbindir/gdisk
-install -D sgdisk %buildroot%_sbindir/sgdisk
-install -D cgdisk %buildroot%_sbindir/cgdisk
-install -D fixparts %buildroot%_sbindir/fixparts
-install -D gdisk.8 %buildroot%_man8dir/gdisk.8
-install -D sgdisk.8 %buildroot%_man8dir/sgdisk.8
-install -D cgdisk.8 %buildroot%_man8dir/cgdisk.8
-install -D fixparts.8 %buildroot%_man8dir/fixparts.8
+mkdir -p %buildroot{%_sbindir,%_man8dir}
+install -pm755 [^u]*disk fixparts %buildroot%_sbindir/
+install -pm644 *.8 %buildroot%_man8dir/
 
 %files -n gdisk
 %doc NEWS COPYING README
@@ -85,8 +80,13 @@ install -D fixparts.8 %buildroot%_man8dir/fixparts.8
 %_sbindir/fixparts
 %_man8dir/fixparts*
 
-
 %changelog
+* Mon Jan 11 2016 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1
+- 1.0.1
+  + upstream dropped cgdisk
+- don't build with libicu (huge runtime deps, unneeded as of 0.8.9)
+- minor spec cleanup
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.11-alt1.git20140329
 - Version 0.8.11
 
