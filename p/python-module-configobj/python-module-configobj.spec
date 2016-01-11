@@ -1,7 +1,7 @@
 %define _name configobj
 
 Name: python-module-%_name
-Version: 5.0.5
+Version: 5.0.6
 Release: alt1
 
 Summary: a Python module for easy reading and writing of config files
@@ -66,6 +66,9 @@ popd
 %python3_sitelibdir/%_name-*.egg-info
 
 %changelog
+* Mon Jan 11 2016 Yuri N. Sedunov <aris@altlinux.org> 5.0.6-alt1
+- 5.0.6
+
 * Thu Jul 03 2014 Yuri N. Sedunov <aris@altlinux.org> 5.0.5-alt1
 - 5.0.5 (new upstream)
 - new python3 subpackage
