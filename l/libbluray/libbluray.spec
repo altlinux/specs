@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.9.0
+Version: 0.9.2
 Release: alt1
 Summary: BD library
 
@@ -9,8 +9,6 @@ Url: http://www.videolan.org/developers/libbluray.html
 
 Source: %name-%version-%release.tar
 
-BuildRequires: /proc
-BuildRequires: ant java-1.7.0-openjdk-devel
 BuildRequires: fontconfig-devel libfreetype-devel libxml2-devel
 
 %description
@@ -34,12 +32,10 @@ This package contains various utilities using libbluray library.
 
 %prep
 %setup
-#sed -i s,noinst_PROGRAMS,bin_PROGRAMS, Makefile.am
 
 %build
-export JDK_HOME=/usr/lib/jdk
 %autoreconf
-%configure --enable-bdjava --disable-static
+%configure --disable-bdjava --disable-static
 %make_build
 
 %install
@@ -47,7 +43,6 @@ export JDK_HOME=/usr/lib/jdk
 
 %files
 %_libdir/*.so.*
-%_datadir/java/libbluray*.jar
 
 %files devel
 %_includedir/*
@@ -58,6 +53,9 @@ export JDK_HOME=/usr/lib/jdk
 %_bindir/*
 
 %changelog
+* Mon Jan 11 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.2-alt1
+- 0.9.2 released
+
 * Tue Oct 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt1
 - 0.9.0 released
 
