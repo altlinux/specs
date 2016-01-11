@@ -1,6 +1,6 @@
 Name: nip2
-Version: 8.0
-Release: alt2
+Version: 8.2
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -54,7 +54,7 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 
 %files
 %_bindir/nip2
-%_bindir/run-nip2.sh
+#_bindir/run-nip2.sh
 %_man1dir/*
 %_datadir/nip2
 %_desktopdir/*.desktop
@@ -70,6 +70,10 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Mon Jan 11 2016 Michael Shigorin <mike@altlinux.org> 8.2-alt1
+- new version (watch file uupdate)
+  + NB: no more run-nip2.sh
+
 * Wed May 06 2015 Michael Shigorin <mike@altlinux.org> 8.0-alt2
 - rebuilt against libvips-8.0.2
 
