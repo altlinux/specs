@@ -1,11 +1,12 @@
 
 Name: rkward
 Version: 0.6.3
-Release: alt4
+Release: alt7
 Summary: Graphical frontend for R language
+Summary(fr):    Interface graphique pour le langage R
+Summary(ru_RU.UTF-8):    Интерфейс к языку программирования R
 License: GPL-2.0
 Group: Sciences/Mathematics
-Summary(fr):    Interface graphique pour le langage R
 
 Url: http://rkward.sourceforge.net/
 Packager: Konstantin Artyushkin <akv@altlinux.org>
@@ -21,9 +22,12 @@ BuildRequires: gcc-fortran
 BuildRequires: gcc-c++
 BuildRequires: gettext
 BuildRequires: qt4-devel
+BuildRequires: libqt4-devel
 BuildRequires: kde4libs-devel
+BuildRequires: rpm-macros-kde-common-devel
+BuildRequires: qt4-designer
 Requires: R-base
-Requires: libkde4base-runtime
+Requires: kde4base-runtime
 
 %description
 RKWard aims to provide an easily extensible, easy to use IDE/GUI for the
@@ -38,37 +42,52 @@ combiner la puissance du langage R et la (relative) simplicité d'utilisation
 des outils statistiques commerciaux. L'objectif à long terme est de voir son
 intégration dans les suites bureautiques.
 
+%description -l ru_RU.UTF-8
+RKWard интерфейс для языка R-rpoject. Предоставляет функционал IDE/GUI для 
+удобной работы с данными. Является приложением KDE4
+
 %prep
 %setup
 %patch0 -p1
 
 %build
-%cmake_insource
-
-%make_build
+%K4build
 
 %install
-%makeinstall_std
+%K4install
+
+#it is a same file like in kde4-kate-core
+rm %buildroot/%_kde4_prefix/apps/katepart/syntax/r.xml
+
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
-%_libdir/R/library/*
-%_libdir/kde4/libexec/%name.*
 %_desktopdir/kde4/*.desktop
-%_datadir/apps/katepart/syntax/r.xml
-%_datadir/apps/katepart/syntax/%name.xml
-%_datadir/apps/%name/*
-%_docdir/HTML/en/%name/*
-%_docdir/HTML/en/rkwardplugins/*
+%_libdir/R/library/*
 %_iconsdir/hicolor/*/apps/*
-%_datadir/kde4/services/%name.protocol
-%_man1dir/%name.1.gz
+%_K4exec/%name.*
+%_K4apps/katepart/syntax/%name.xml
+%_K4apps/%name/*
+%_K4doc/en/%name/*
+%_K4doc/en/rkwardplugins/*
+%_K4srv/%name.protocol
+%_man1dir/%name.1.*
 %_datadir/mime/packages/vnd.%name.r.xml
 # missed by find_lang
-%_datadir/locale/x-test/LC_MESSAGES/rkward.mo
+%_K4datadir/locale/x-test/LC_MESSAGES/rkward.mo
 
 %changelog
+* Mon Jan 11 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt7
+- add russian summary and description
+
+* Sun Jan 10 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt6
+- repack to _kde4_prefix with %K4build and %K4install macrosses
+- add conflicts to <= 0.6.3-alt5
+
+* Sat Sep 12 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt5
+-  rebuild with altlinux qt4 policy 
+
 * Wed Aug 19 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt4
 -  rebuild with %find_lang macro 
 
