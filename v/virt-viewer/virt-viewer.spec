@@ -1,5 +1,5 @@
 Name: virt-viewer
-Version: 3.0
+Version: 3.1
 Release: alt1
 
 Summary: Virtual Machine Viewer
@@ -58,6 +58,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Mon Jan 11 2016 Alexey Shabalin <shaba@altlinux.ru> 3.1-alt1
+- 3.1
+
 * Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 3.0-alt1
 - 3.0
 
