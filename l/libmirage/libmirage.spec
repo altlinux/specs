@@ -1,5 +1,7 @@
+%define soversion 10
+
 Name: libmirage
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: A CD-ROM image access library
@@ -32,10 +34,22 @@ The aim of libMirage is to provide uniform access to the data stored in
 different image formats, by creating a representation of disc stored in image 
 file, which is based on GObjects.
 
+%package -n %name%soversion
+Summary: A CD-ROM image access library
+Group: System/Libraries
+
+%description -n %name%soversion
+This is libMirage library, a CD-ROM image access library, and part of the 
+userspace-cdemu suite, a free, GPL CD/DVD-ROM device emulator for linux. It is
+written in C and based on GLib.
+
+The aim of libMirage is to provide uniform access to the data stored in 
+different image formats, by creating a representation of disc stored in image 
+file, which is based on GObjects.
+
 %package devel
 Summary: A CD-ROM image access library
 Group: Development/C
-Requires: %name = %version-%release
 Requires: glib2-devel
 
 %description devel
@@ -64,7 +78,7 @@ popd
 %install
 %makeinstall_std -C %_target_platform
 
-%files
+%files -n %name%soversion
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 %_libdir/libmirage.so.*
 %dir %_libdir/libmirage-3.0
@@ -84,6 +98,9 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Jan 11 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.4-alt1
+- Version 3.0.4
+
 * Sun Nov 30 2014 Nazarov Denis <nenderus@altlinux.org> 3.0.3-alt1
 - Version 3.0.3
 
