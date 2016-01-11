@@ -4,8 +4,8 @@
 %def_with glfs
 
 Name: scsitarget-utils
-Version: 1.0.55
-Release: alt3
+Version: 1.0.62
+Release: alt1
 
 Summary: The SCSI target daemon and utility programs
 
@@ -145,6 +145,9 @@ pushd usr
 %endif
 
 %changelog
+* Mon Jan 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.62-alt1
+- 1.0.62
+
 * Fri Mar 20 2015 Alexey Shabalin <shaba@altlinux.ru> 1.0.55-alt3
 - Obsoletes tgt
 
