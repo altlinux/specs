@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt19
+Release: alt20
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -25,6 +25,7 @@ Requires: kde5-dolphin
 %package -n kde5-small
 Summary: %summary
 Group: Graphical desktop/KDE
+Requires: icon-theme-breeze
 Requires: kde5-mini
 Requires: kde5-volume-control
 Requires: kde5-www-browser
@@ -71,7 +72,7 @@ Requires: kdenlive
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
-Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts
+Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
 
 %description
 %summary
@@ -99,6 +100,9 @@ Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts
 %files -n kde5-somedevel
 
 %changelog
+* Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt20
+- update requires
+
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt19
 - fix requires
 
