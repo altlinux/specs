@@ -2,7 +2,7 @@
 
 Name: ceph
 Version: 0.94.5
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -238,17 +238,17 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/rbd.8*
 %_mandir/man8/rbd-replay-prep.8*
 %_mandir/man8/rbd-replay.8*
-%_mandir/man8/rbd-replay-many.8.gz
+%_mandir/man8/rbd-replay-many.8*
 %_mandir/man8/ceph-rbdnamer.8*
 %_mandir/man8/ceph-authtool.8*
 %_mandir/man8/ceph-debugpack.8*
-%_mandir/man8/ceph-clsinfo.8.gz
-%_mandir/man8/ceph-create-keys.8.gz
-%_mandir/man8/librados-config.8.gz
+%_mandir/man8/ceph-clsinfo.8*
+%_mandir/man8/ceph-create-keys.8*
+%_mandir/man8/librados-config.8*
 %_mandir/man8/ceph-post-file.8*
 %_mandir/man8/ceph-rest-api.8*
-%_mandir/man8/ceph-disk.8.gz
-%_mandir/man8/ceph-deploy.8.bz2
+%_mandir/man8/ceph-disk.8*
+%_mandir/man8/ceph-deploy.8*
 %_localstatedir/ceph/
 /var/log/ceph/
 %_runtimedir/ceph/
@@ -300,6 +300,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Mon Jan 11 2016 Alexei Takaseev <taf@altlinux.org> 0.94.5-alt2
+- Fix loss man
+
 * Tue Oct 27 2015 Alexei Takaseev <taf@altlinux.org> 0.94.5-alt1
 - 0.94.5
 
