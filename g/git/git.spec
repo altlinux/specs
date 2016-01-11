@@ -1,6 +1,6 @@
 Name: git
 Version: 2.6.5
-Release: alt1
+Release: alt2
 
 Summary: Git core and tools
 License: GPLv2
@@ -498,6 +498,9 @@ popd
 %endif #emacs
 
 %changelog
+* Mon Jan 11 2016 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt2
+- Backported commit v2.7.0-rc2~9^2~11 (closes: #31665).
+
 * Mon Jan 04 2016 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt1
 - 2.6.4 -> 2.6.5.
 
