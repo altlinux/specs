@@ -17,8 +17,8 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.31.17
-Release: alt1.1
+Version: 1.32.0
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -38,7 +38,7 @@ BuildRequires: libgio-devel libgtk+2-devel
 BuildRequires: gtk-doc
 BuildRequires: gettext-tools
 BuildRequires: gobject-introspection-devel libgjs
-BuildRequires: cpio gperf perl-podlators perl-devel genisoimage xml-utils db4-utils zip unzip
+BuildRequires: cpio gperf genisoimage xml-utils db4-utils zip unzip
 # po4a 
 BuildRequires: qemu-kvm qemu-system
 BuildRequires: libncurses-devel libtinfo-devel libreadline-devel
@@ -74,7 +74,7 @@ BuildRequires: php5-devel
 BuildRequires: erlang-devel
 %endif
 %if_enabled perl
-BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex
+BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex perl-Module-Build perl-ExtUtils-CBuilder perl-devel
 %endif
 %if_enabled golang
 BuildRequires: golang
@@ -506,8 +506,11 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_bindir/virt-win-reg
 %_man1dir/virt-win-reg.1*
 %_man1dir/guestfs-faq.1*
+%_man1dir/guestfs-hacking.1*
+%_man1dir/guestfs-internals.1*
 %_man1dir/guestfs-performance.1*
 %_man1dir/guestfs-release-notes.1*
+%_man1dir/guestfs-security.1*
 
 %files -n virt-dib
 %_bindir/virt-dib
@@ -519,10 +522,12 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_bindir/virt-p2v-make-disk
 %_bindir/virt-p2v-make-kickstart
 %_bindir/virt-v2v
+%_bindir/virt-v2v-copy-to-local
 %_man1dir/virt-p2v.1*
 %_man1dir/virt-p2v-make-disk.1*
 %_man1dir/virt-p2v-make-kickstart.1*
-%_mandir/man1/virt-v2v.1*
+%_man1dir/virt-v2v.1*
+%_man1dir/virt-v2v-copy-to-local.1*
 %_datadir/virt-p2v
 #%_datadir/virt-tools
 
@@ -612,6 +617,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Mon Jan 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.32.0-alt1
+- 1.32.0
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.31.17-alt1.1
 - rebuild with new perl 5.22.0
 

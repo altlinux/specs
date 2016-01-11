@@ -1,6 +1,6 @@
 Name: rpm-build-guestfs
 Version: 0.2
-Release: alt4
+Release: alt5
 
 Summary: RPM helper post script for build guestfs appliance
 License: GPL
@@ -8,7 +8,7 @@ Group: Development/Other
 
 BuildArch: noarch
 Requires(pre):  make-initrd-guestfs
-Requires(pre):  kernel >= 4.2
+Requires(pre):  kernel >= 4.3
 
 %description
 RPM helper post script for build guestfs appliance
@@ -28,6 +28,9 @@ chmod 644 %_libdir/guestfs/*
 rm -rf %_libdir/guestfs
 
 %changelog
+* Mon Jan 11 2016 Alexey Shabalin <shaba@altlinux.ru> 0.2-alt5
+- rebuld with libguestfs-1.32.0
+
 * Tue Oct 20 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2-alt4
 - rebuild
 
