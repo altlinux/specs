@@ -1,6 +1,6 @@
 Name: linphone
 Version: 3.9.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -93,7 +93,7 @@ This package contains development files for %name.
 %exclude %_docdir/%name-%version
 %exclude %_datadir/gnome
 %exclude %_mandir/cs
-%exclude %_man1dir/sipomatic.1.gz
+%exclude %_man1dir/sipomatic.1*
 
 %files gui -f %name.lang
 %_bindir/linphone
@@ -101,7 +101,7 @@ This package contains development files for %name.
 %_desktopdir/audio-assistant.desktop
 %_pixmapsdir/%name
 %_iconsdir/hicolor/*/*/%{name}*.*
-%_man1dir/linphone.1.gz
+%_man1dir/linphone.1*
 %_datadir/sounds/%name
 %_datadir/%name
 %_datadir/appdata/%name.appdata.xml
@@ -112,8 +112,8 @@ This package contains development files for %name.
 %_bindir/linphonecsh
 %_bindir/lp-autoanswer
 %_bindir/lp-gen-wrappers
-%_man1dir/linphonec.1.gz
-%_man1dir/linphonecsh.1.gz
+%_man1dir/linphonec.1*
+%_man1dir/linphonecsh.1*
 
 %files devel
 %doc coreapi/help/doc/html/*
@@ -125,6 +125,9 @@ This package contains development files for %name.
 %_datadir/tutorials/%name
 
 %changelog
+* Mon Jan 11 2016 Alexei Takaseev <taf@altlinux.org> 3.9.1-alt2
+- Fix loss man pages
+
 * Tue Nov 17 2015 Alexei Takaseev <taf@altlinux.org> 3.9.1-alt1
 - 3.9.1
 
