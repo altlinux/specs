@@ -1,11 +1,11 @@
 %define oname msgpack
 Name: libmsgpack
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Binary-based efficient object serialization library
 
-License: ASL 2.0
+License: Boost Software License, Version 1.0
 Group: System/Libraries
 Url: http://msgpack.org
 
@@ -15,7 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 Patch: msgpack-fix-int-float-test.patch
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ >= 4.8
 
 # for %%check
 BuildRequires: libgtest-devel
@@ -56,7 +56,7 @@ make check
 %makeinstall_std
 
 %files
-%doc AUTHORS COPYING ChangeLog LICENSE NOTICE README README.md
+%doc AUTHORS COPYING ChangeLog LICENSE_1_0.txt NOTICE README README.md
 %_libdir/*.so.*
 
 %files devel
@@ -66,6 +66,9 @@ make check
 %_pkgconfigdir/msgpack.pc
 
 %changelog
+* Mon Jan 11 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Sun Nov 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - new version 1.2.0 (with rpmrb script)
 
