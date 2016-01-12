@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libldb
-Version: 1.1.24
+Version: 1.1.25
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -114,6 +114,9 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.25-alt1
+- 1.1.25
+
 * Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.24-alt1
 - 1.1.24
 - Security fixes:
