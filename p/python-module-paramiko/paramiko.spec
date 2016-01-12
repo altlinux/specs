@@ -1,5 +1,5 @@
 %define	version	1.16.0
-%define release alt1.git20150429
+%define release alt2
 %define source_version %version
 %define source_name  paramiko
 %setup_python_module paramiko
@@ -8,14 +8,14 @@
 
 Summary: SSH2 protocol for python
 Packager: Andriy Stepanov <stanv@altlinux.ru>
-Name: %packagename
+Name: python-module-paramiko
 Version: %version
 Release: %release
-Source: %modulename-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
 License: GPL
 Group: Development/Python
-Prefix: %_prefix
-%py_requires Crypto
 Url: http://www.lag.net/paramiko
 BuildArch: noarch
 
@@ -57,11 +57,12 @@ for secure (encrypted and authenticated) connections to remote machines. This
 package contain API documentation and examples for python-%modulename module.
 
 %prep
-%setup -q -n %source_name-%source_version
+%setup
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -106,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 12 2016 Alexey Shabalin <shaba@altlinux.ru> 1.16.0-alt2
+- 1.16.0 Release
+
 * Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.16.0-alt1.git20150429
 - Version 1.16.0
 
