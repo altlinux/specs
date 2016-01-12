@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-DocGenerator
 Version: 0.1
-Release: alt4.git20140227
+Release: alt5.git20140227
 Summary: Etoile Doc Generator
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/etoile/DocGenerator.git
 Source: %name-%version.tar
+Patch:  no-extensions.patch
 
 BuildPreReq: clang-devel gnustep-make-devel libgnustep-objc2-devel /proc
 BuildPreReq: gnustep-gui-devel gnustep-Etoile-devel
@@ -40,6 +41,7 @@ different other files (as specified by the page template):
 
 %prep
 %setup
+%patch -p1
 
 cp %_libdir/GNUstep/Etoile/* ~/RPM/
 
@@ -85,6 +87,9 @@ install -m755 objcrewriter.io %buildroot%_bindir/
 %_libdir/GNUstep
 
 %changelog
+* Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 0.1-alt5.git20140227
+- Fix build
+
 * Thu Apr 24 2014 Michael Shigorin <mike@altlinux.org> 0.1-alt4.git20140227
 - NMU: rebuilt against current libgraphviz
 
