@@ -1,7 +1,7 @@
 
 Name: rkward
 Version: 0.6.3
-Release: alt7
+Release: alt8
 Summary: Graphical frontend for R language
 Summary(fr):    Interface graphique pour le langage R
 Summary(ru_RU.UTF-8):    Интерфейс к языку программирования R
@@ -78,18 +78,20 @@ rm %buildroot/%_kde4_prefix/apps/katepart/syntax/r.xml
 %_K4datadir/locale/x-test/LC_MESSAGES/rkward.mo
 
 %changelog
+* Tue Jan 12 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt8
+- escaping rpm-mcaroses in chengelog
+
 * Mon Jan 11 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt7
 - add russian summary and description
 
 * Sun Jan 10 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt6
-- repack to _kde4_prefix with %K4build and %K4install macrosses
-- add conflicts to <= 0.6.3-alt5
+- repack to _kde4_prefix with %%K4build and %%K4install macrosses
 
 * Sat Sep 12 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt5
 -  rebuild with altlinux qt4 policy 
 
 * Wed Aug 19 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt4
--  rebuild with %find_lang macro 
+-  rebuild with %%find_lang macro 
 
 * Tue Aug 18 2015 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt3
 -  clean spec 
