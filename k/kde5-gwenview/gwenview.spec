@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 15.12.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -21,6 +21,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel
 BuildRequires: libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel zlib-devel
+BuildRequires: kde5-libkdcraw-devel kde5-libkipi-devel
+#BuildRequires: kde5-libkexiv2-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -30,7 +32,6 @@ BuildRequires: kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel 
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-baloo-devel kf5-kfilemetadata-devel
-#BuildRequires: kf5-kdcraw-devel kf5-kipi-devel
 
 
 %description
@@ -98,6 +99,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Tue Jan 12 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt2
+- build with libkipi
+
 * Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - new version
 
