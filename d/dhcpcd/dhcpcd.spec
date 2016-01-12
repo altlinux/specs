@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 6.10.0
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -10,6 +10,10 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+# Patch from upstream
+# http://roy.marples.name/projects/dhcpcd/info/e96b23400d
+# Drop it when new version will be released
+Patch1: dhcpcd-6.10.0-fix-segfault-interface-departure.patch
 AutoReq: yes, noshell
 
 BuildRequires: rpm-build-licenses
@@ -29,6 +33,7 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 %configure \
@@ -72,6 +77,10 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Tue Jan 12 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.0-alt2
+- Patch from upstream:
+  + Fix segfault when handling interface departure.
+
 * Mon Jan 11 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.0-alt1
 - Don't install additional hooks.
 - Drop obsoleted patch.
