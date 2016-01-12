@@ -1,7 +1,7 @@
 Summary: Utility to administer the Linux Virtual Server
 Name: ipvsadm
-Version: 1.26
-Release: alt2
+Version: 1.28
+Release: alt1
 License: GPL
 Url: http://www.LinuxVirtualServer.org/
 Group: System/Kernel and hardware
@@ -9,12 +9,12 @@ Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 Provides: %name-%version
 
-Source0: http://www.LinuxVirtualServer.org/software/ipvsadm-%version.tar.gz
+Source0: %name-%version.tar
 Source1: %name.init.alt
 #Patch0: ipvsadm-1.25-kernhdr-1.2.0.patch
 
 # Automatically added by buildreq on Sat May 16 2009
-BuildRequires: libnl1-devel libpopt-devel
+BuildRequires: libnl-devel libpopt-devel
 
 %description
 ipvsadm is a utility to administer the IP Virtual Server services
@@ -48,6 +48,9 @@ offered by the Linux kernel.
 %preun_service ipvsadm
 
 %changelog
+* Tue Jan 12 2016 Mikhail Efremov <sem@altlinux.org> 1.28-alt1
+- Updated to 1.28.
+
 * Tue Mar 26 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.26-alt2
 - Fix build
 
