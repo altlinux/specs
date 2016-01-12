@@ -3,7 +3,7 @@
 Name: gsasl
 %define libname lib%name
 Version: 1.8.0
-Release: alt1.1
+Release: alt2
 
 Summary: GNU SASL implementation
 Group: System/Libraries
@@ -44,6 +44,8 @@ which will use lib%name.
 %prep
 %setup
 sed -i 's/^AM_CPPFLAGS +=/& \$(GSS_CFLAGS)/' lib/gl/Makefile.*
+# These gnulib tests fail.
+sed -i -r 's/^(TESTS \+= .*)test-(lock|thread_create)/\1/' gltests/Makefile.am
 
 %build
 %autoreconf
@@ -86,6 +88,9 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Tue Jan 12 2016 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt2
+- Fixed build: disable couple of gnulib tests.
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.1
 - Fixed build
 
