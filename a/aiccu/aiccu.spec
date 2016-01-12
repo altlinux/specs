@@ -9,7 +9,7 @@
 Summary: AICCU - SixXS Automatic IPv6 Connectivity Client Utility
 Name: aiccu
 Version: 2007.01.15
-Release: alt2.qa1
+Release: alt3
 License: BSD
 Group: System/Configuration/Networking
 Url: http://www.sixxs.net/tools/aiccu
@@ -17,6 +17,7 @@ Url: http://www.sixxs.net/tools/aiccu
 Source: http://www.sixxs.net/archive/sixxs/aiccu/unix/aiccu_20070115.tar.gz
 Source2: aiccu-alt-initscript.init
 Patch1: aiccu-fix-linkage-as-needed.patch
+Patch2: debian-gnutls-cleanup.patch
 BuildRequires: libgnutls-devel
 
 %description
@@ -29,6 +30,7 @@ For more information about SixXS check http://www.sixxs.net
 %prep
 %setup -q -n %name
 %patch1 -p2
+%patch2 -p1
 # fix executable permissions on non-executable content
 # so debuginfo can pick them up properly
 find . -type f -not -name rules -and -not -name *init* -exec chmod a-x \{\} \;
@@ -63,6 +65,9 @@ install -pm755 %SOURCE2 %buildroot%_initdir/%name
 %attr(600, root,root) %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Jan 12 2016 Mikhail Efremov <sem@altlinux.org> 2007.01.15-alt3
+- Fix build with gnutls-3.4.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2007.01.15-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
