@@ -1,13 +1,15 @@
 
 Name:           hamlib
-Version:        3.0
-Release:        alt1.1.1
+Version:        3.0.1
+Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
 License:        GPLv2+ and LGPLv2+
 URL:            http://hamlib.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source1:	%name.watch
+
 # Install python and perl bindings into proper dirs
 Patch0:         hamlib-3.0-bindings.patch
 BuildRequires:  gcc-c++
@@ -177,6 +179,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl/Hamlib/hamlibtcl*
 
 %changelog
+* Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
+- New version
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1.1.1
 - NMU: added BR: texinfo
 
