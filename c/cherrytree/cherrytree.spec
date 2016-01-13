@@ -1,9 +1,9 @@
 Name: cherrytree
-Version: 0.35.9
+Version: 0.36.3
 Release: alt2
 
 Summary: Hierarchical note taking application
-Summary(ru_RU.UTF-8): Прикольная записнуля для заметок
+Summary(ru_RU.UTF-8):  Записная книжка иерархической структуры для заметок
 
 Group: Office
 License: GPLv2+
@@ -72,6 +72,9 @@ rm -rf %buildroot%python_sitelibdir_noarch/
 
 
 %changelog
+* Wed Jan 13 2016 Konstantin Artyushkin <akv@altlinux.org> 0.36.3-alt2
+- new version 0.36.3
+
 * Fri Aug 14 2015 Konstantin Artyushkin <akv@altlinux.org> 0.35.9-alt2
 - -- initial new version 0.35.9 
 
