@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.30
+Version: 1.31
 Release: alt1
 
 Summary: git.alt client utilities for NMU automation
@@ -50,6 +50,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed Jan 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
+- added buildfrom-rpm-marked opt to girar-nmu-sort-transaction
+
 * Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
 - added girar-nmu-helper-task-add-rebuild
 
