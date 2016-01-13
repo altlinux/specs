@@ -13,7 +13,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt6
+Release: alt7
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -34,7 +34,6 @@ Requires: kde5-kfind          = %EVR
 Source: %rname-%version.tar
 Patch100: alt-kfmclient-loop.patch
 Patch101: alt-passwd-len.patch
-Patch102: alt-kde5.patch
 
 # Automatically added by buildreq on Wed Sep 16 2015 (-bi)
 # optimized out: alternatives cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-svg libqt5-test libqt5-texttospeech libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -165,7 +164,6 @@ Various Plasma applets
 %setup -n %rname-%version
 %patch100 -p1
 %patch101 -p1
-%patch102 -p1
 
 %build
 %K5build
@@ -353,6 +351,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Wed Jan 13 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt7
+- update from frameworks branch
+
 * Thu Nov 26 2015 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt6
 - allow to replace konqueror
 
