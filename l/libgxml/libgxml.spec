@@ -1,18 +1,19 @@
 %define _name gxml
-%define ver_major 0.6
-%define api_ver %ver_major
+%define ver_major 0.8
+%define api_ver 0.6
 %def_disable docs
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
 Group: System/Libraries
-License: LGPLv2+
+License: LGPLv2.1+
 Url: http://live.gnome.org/XML
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+#Source: %_name-%version.tar
 
 %define glib_ver 2.32
 %define vala_ver 0.26
@@ -82,7 +83,7 @@ This package contains development documentation for GXml library.
 %check
 %make check
 
-%find_lang %_name
+%find_lang --output=%_name.lang %_name GXml
 
 %files -f %_name.lang
 %_libdir/%name-%api_ver.so.*
@@ -107,6 +108,9 @@ This package contains development documentation for GXml library.
 %endif
 
 %changelog
+* Wed Jan 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Thu Jul 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - first build for Sisyphus
 
