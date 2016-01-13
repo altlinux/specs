@@ -1,6 +1,6 @@
 Name: openssl10
 Version: 1.0.2e
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -57,7 +57,7 @@ Summary: OpenSSL libcrypto shared library
 Group: System/Libraries
 Provides: libcrypto = %version-%release
 # due to openssl.cnf
-Conflicts: libcrypto7 < 0.9.8o-alt3, libssl7 < 0.9.8o-alt3, libssl6 < 0.9.8d-alt6
+Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -458,6 +458,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Tue Jan 12 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2e-alt2
+- libcrypto10: added conflict: libcrypto7, libssl7
+  (due to openssl.cnf; ALT#31671).
+
 * Mon Dec 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2e-alt1
 - Updated to 1.0.2e.
 - Updated patches from Fedora openssl-1.0.2e-4.
