@@ -1,5 +1,5 @@
 Name: openssh
-Version: 6.7p1
+Version: 7.1p1
 Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
@@ -17,6 +17,8 @@ Source: %name-%version-%release.tar
 %def_with libaudit
 %def_with kerberos5
 %def_with selinux
+%def_with openssl
+%def_with ssh1
 
 %{expand: %%global _libexecdir %_libexecdir/openssh}
 %define _pamdir /etc/pam.d
@@ -181,7 +183,9 @@ export ac_cv_path_xauth_path=/usr/bin/xauth
 	--with-superuser-path=/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin \
 	%{subst_with kerberos5} \
 	%{subst_with libedit} \
+	%{subst_with openssl} \
 	%{subst_with selinux} \
+	%{subst_with ssh1} \
 	%{?_with_libaudit:--with-audit=linux} \
 	#
 %make_build
@@ -278,6 +282,11 @@ AuthorizedKeysFile for them using a Match block.
 EOF
 printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 
+%triggerin server -- openssh-server < 7.1p1-alt1
+sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTypes +ssh-dss,ssh-dss-cert-v01@openssh.com' \
+	%confdir/sshd_config
+/sbin/service sshd condreload ||:
+
 %files
 
 %files common
@@ -341,6 +350,9 @@ printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Jan 13 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1p1-alt1
+- Updated to 7.1p1.
+
 * Thu Nov 20 2014 Dmitry V. Levin <ldv@altlinux.org> 6.7p1-alt1
 - Updated to 6.7p1-29-g51b64e4.
 
