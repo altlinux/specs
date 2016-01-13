@@ -2,11 +2,12 @@
 # vim: set ft=spec:
 # vim600: set fdm=marker:
 
-%define patchlevel %nil
+#define patchlevel %nil
+%define patchlevel -P1
 
 Name: dhcp
 Version: 4.3.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -543,6 +544,9 @@ fi
 # }}}
 
 %changelog
+* Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 1:4.3.3-alt2
+- Update to 4.3.3-P1
+
 * Mon Dec 21 2015 Fr. Br. George <george@altlinux.ru> 1:4.3.3-alt1
 - Update to 4.3.3
 - Fix patches
