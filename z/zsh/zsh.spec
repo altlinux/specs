@@ -1,5 +1,5 @@
 Name: zsh
-Version: 5.1.1
+Version: 5.2
 Release: alt1
 Epoch: 1
 
@@ -16,7 +16,7 @@ Obsoletes: zsh-doc < %epoch:%version
 
 # Automatically added by buildreq on Thu Jan 16 2014
 # optimized out: gnu-config groff-base less libncurses-devel libtinfo-devel makeinfo
-BuildRequires: git-core libcap-devel libgdbm-devel libncursesw-devel libpcre-devel man yodl
+BuildRequires: git-core libcap-devel libgdbm-devel libncursesw-devel libpcre-devel man yodl makeinfo
 
 # For make check
 BuildPreReq: /dev/pts
@@ -97,9 +97,6 @@ rm -f %buildroot%_datadir/zsh/Completion/Linux/_rpmbuild
 make check
 
 %files
-# Completions that provided by upstream
-%exclude %_datadir/zsh/Completion/Unix/_systemd
-
 /bin/zsh
 %_bindir/zsh
 %_libdir/zsh/
@@ -111,6 +108,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 1:5.2-alt1
+- Autobuild version bump to 5.2
+
 * Fri Sep 25 2015 Fr. Br. George <george@altlinux.ru> 1:5.1.1-alt1
 - Autobuild version bump to 5.1.1
 
