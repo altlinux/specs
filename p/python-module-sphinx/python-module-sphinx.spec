@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt1.a0.git20150813
+Release: alt2.a0.git20150813
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -23,24 +23,24 @@ Source4: refcounting.py
 
 BuildArch: noarch
 
-BuildRequires(pre): python-module-objects.inv
-BuildPreReq: python-devel python-module-setuptools python-module-simplejson
+BuildRequires(pre): rpm-build-python python-module-objects.inv
+BuildRequires: python-devel python-module-setuptools python-module-simplejson
 # for docs
-#BuildPreReq: texlive-latex-extra 
-BuildPreReq: python-module-Pygments
-BuildPreReq: python-module-docutils python-module-jinja2 texlive-latex-base
+#BuildRequires: texlive-latex-extra 
+BuildRequires: python-module-Pygments
+BuildRequires: python-module-docutils python-module-jinja2 texlive-latex-base
 # for tests
-BuildPreReq:  python-module-nose python-modules-json
-BuildPreReq: python-module-snowballstemmer python-module-babel
-BuildPreReq: python-module-alabaster python-module-sphinx_rtd_theme
+BuildRequires:  python-module-nose python-modules-json
+BuildRequires: python-module-snowballstemmer python-module-babel
+BuildRequires: python-module-alabaster python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-module-objects.inv
 BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-Pygments python3-module-docutils
-BuildPreReq: python3-module-jinja2 python3-module-nose
-BuildPreReq: python-tools-2to3 python3-module-jinja2-tests
-BuildPreReq: python3-module-snowballstemmer python3-module-babel
-BuildPreReq: python3-module-alabaster python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-Pygments python3-module-docutils
+BuildRequires: python3-module-jinja2 python3-module-nose
+BuildRequires: python-tools-2to3 python3-module-jinja2-tests
+BuildRequires: python3-module-snowballstemmer python3-module-babel
+BuildRequires: python3-module-alabaster python3-module-sphinx_rtd_theme
 %endif
 
 %py_requires simplejson
@@ -67,7 +67,7 @@ Group: Development/Python3
 Requires: python3-module-%oname = %epoch:%version-%release
 #Requires: python3-module-%oname-pickles = %epoch:%version-%release
 Requires: python3-module-%oname-tests
-PreReq: rpm-macros-%{oname}3 >= %epoch:%version-%release
+Requires: rpm-macros-%{oname}3 >= %epoch:%version-%release
 Requires: python3-module-objects.inv
 Requires: python3-module-jinja2-tests
 
@@ -108,8 +108,8 @@ This packages contains tests for Sphinx.
 %package -n rpm-macros-%{oname}3
 Summary: RPM macros for build with Sphinx (Python 3)
 Group: Development/Python3
-Requires: rpm-build-python3 python3-module-objects.inv
-Requires: python3-module-%oname = %epoch:%version-%release
+#Requires: rpm-build-python3 python3-module-objects.inv
+#Requires: python3-module-%oname = %epoch:%version-%release
 
 %description -n rpm-macros-%{oname}3
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -124,7 +124,7 @@ Summary: Development package for Sphinx
 Group: Development/Python
 Requires: %name = %epoch:%version-%release
 Requires: %name-pickles = %epoch:%version-%release
-PreReq: rpm-macros-%oname >= %epoch:%version-%release
+Requires: rpm-macros-%oname >= %epoch:%version-%release
 Requires: python-module-objects.inv
 
 %description devel
@@ -137,8 +137,8 @@ This package destinated for development of Python modules.
 %package -n rpm-macros-%oname
 Summary: RPM macros for build with Sphinx
 Group: Development/Python
-Requires: rpm-build-python python-module-objects.inv
-Requires: %name = %epoch:%version-%release
+#Requires: rpm-build-python python-module-objects.inv
+#Requires: %name = %epoch:%version-%release
 
 %description -n rpm-macros-%oname
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -377,6 +377,9 @@ install -p -m644 conf.py.template \
 %endif
 
 %changelog
+* Wed Jan 13 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt2.a0.git20150813
+- spec cleanup: *PreReq -> Requires, dropped rpm-macros-* deps.
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4-alt1.a0.git20150813
 - New snapshot
 
