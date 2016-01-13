@@ -34,7 +34,7 @@
 
 Name: NetworkManager
 Version: 1.0.10
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -649,6 +649,14 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Jan 13 2016 Mikhail Efremov <sem@altlinux.org> 1.0.10-alt2
+- Patches from upstream:
+   + infiniband: take interface down to set transport mode.
+   + device: update @ip_iface only if IP interface exists.
+   + ppp-manager: clear @ppp_watch_id upon pppd termination.
+   + core: fix failure to configure routes due to wrong device-route
+     for IPv4 peer-addresses.
+
 * Thu Dec 24 2015 Mikhail Efremov <sem@altlinux.org> 1.0.10-alt1
 - Patch from upstream:
   + man: fix typos.
