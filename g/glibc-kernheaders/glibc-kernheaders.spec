@@ -1,4 +1,4 @@
-%define kernel_base_version 4.2
+%define kernel_base_version 4.4
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -12,6 +12,8 @@ Url: http://www.kernel.org/
 
 # git://git.altlinux.org/gears/g/%name.git
 Patch: %name-%version-%release.patch
+
+Patch2: 0001-Use-__u8-from-linux-types.h.patch
 
 BuildRequires: rpm-build-kernel
 BuildRequires: %kernel_source = 1.0.0
@@ -45,6 +47,7 @@ building most standard programs and are also needed to build glibc.
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
 %patch -p1
+%patch2 -p1
 
 %install
 %define hdr_dir %_includedir/linux-default
@@ -81,6 +84,9 @@ done
 %hdr_dir
 
 %changelog
+* Wed Jan 13 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.4-alt1
+- Updated to v4.4.
+
 * Wed Sep 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2-alt1
 - Updated to v4.2.
 - Added aarch64 support.
