@@ -3,7 +3,7 @@
 
 Name: %gtk2_prefix-%real_name
 Version: 1.4.6
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/GNOME
 Summary: Oxygen GTK2 theme
@@ -35,18 +35,24 @@ This is GTK2 port of default KDE4 Oxygen style.
 %setup -qn %{real_name}-%{version}
 
 %build
-%Kcmake
-%Kmake
+%Kbuild \
+    -DENABLE_DEMO=OFF \
+    #
 
 %install
 %Kinstall
 
 %files
-%_bindir/oxygen-gtk-*
 %_libdir/gtk-2.*/*/engines/*.so
 %_datadir/themes/%real_name
 
 %changelog
+* Wed Jan 13 2016 Sergey V Turchin <zerg@altlinux.org> 1.4.6-alt2
+- update from 1.4 branch (ALT#31703)
+
+* Mon Oct 27 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.6-alt0.M70P.1
+- built for M70P
+
 * Mon Oct 27 2014 Sergey V Turchin <zerg@altlinux.org> 1.4.6-alt1
 - new version
 
