@@ -1,5 +1,5 @@
 Name: pyclewn
-Version: 2.1
+Version: 2.2
 Release: alt1
 License: GPLv2
 Summary: Using vim as a front end to a debugger (supports gdb and pdb)
@@ -49,7 +49,7 @@ vim.main()
 %build
 export EDITOR=/usr/bin/vim
 %python_build
-vim -S lib/clewn/runtime/pyclewn-2.1.vmb +:q
+vim -S lib/clewn/runtime/pyclewn-%version.vmb +:q
 
 %install
 export EDITOR=/usr/bin/vim
@@ -69,6 +69,9 @@ install -D %name %buildroot%_bindir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 2.2-alt1
+- Autobuild version bump to 2.2
+
 * Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 2.1-alt1
 - Autobuild version bump to 2.1
 - fix installation
