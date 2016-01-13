@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo
-Version:      2.3.4
-Release:      alt2
+Version:      2.3.5
+Release:      alt1
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -356,6 +356,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.5-alt1
+- New version
+
 * Sat Dec 26 2015 Andrey Cherepanov <cas@altlinux.org> 2.3.4-alt2
 - Add metapackage task-sogo for completely install SOGo
 - Spec cleanup
