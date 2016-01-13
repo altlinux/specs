@@ -1,6 +1,6 @@
 Name: xvidcap
 Version: 1.1.7
-Release: alt11
+Release: alt12
 
 Summary: xvidcap is a screen capture tool
 Group: Video
@@ -68,6 +68,12 @@ convert -resize 48x48 %buildroot%_datadir/pixmaps/%name.png %buildroot%_liconsdi
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Wed Jan 13 2016 Michael Shigorin <mike@altlinux.org> 1.1.7-alt12
+- rebuilt against current libraries
+
+* Wed Jan 13 2016 Michael Shigorin <mike@altlinux.org> 1.1.7-alt11
+- 
+
 * Sat Jun  2 2012 Sergey Kurakin <kurakin@altlinux.org> 1.1.7-alt11
 - fixed build (-lX11)
 - build with system libav instead of bundled ffmpeg
