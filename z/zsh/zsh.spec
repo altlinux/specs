@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -108,6 +108,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 1:5.2-alt2
+- Temporary restore upstream _rpm completion (ALT one is broken for now)
+
 * Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 1:5.2-alt1
 - Autobuild version bump to 5.2
 
