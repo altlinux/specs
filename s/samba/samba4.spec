@@ -32,8 +32,8 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.3.3
-Release: alt2
+Version: 4.3.4
+Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1329,6 +1329,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.4-alt1
+- New version (https://www.samba.org/samba/history/samba-4.3.4.html)
+
 * Thu Dec 24 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.3-alt2
 - Change services type from notify to forking
 
