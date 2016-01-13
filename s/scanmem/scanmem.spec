@@ -1,6 +1,6 @@
 Summary: Simple debugging utility
 Name: scanmem
-Version: 0.15.2
+Version: 0.15.4
 Release: alt1
 Url: http://taviso.decsystem.org/
 Source: %name-%version.tar
@@ -17,24 +17,51 @@ used for the analysis or modification of a hostile process on a
 compromised machine, reverse engineering, or as a "pokefinder"
 to cheat at video games.
 
+%package -n gameconqueror
+Group: Development/Debuggers
+BuildArch: noarch
+Summary: CheatEngline-alike interface for scanmem
+Requires: %name = %version-%release
+
+%description -n gameconqueror
+GameConqueror aims to provide a CheatEngline-alike interface for
+scanmem, it's user-friendly and easy to use.
+GameConqueror is written in PyGTK.
+
 %prep
 %setup
 
 %build
 ./autogen.sh
-%configure
+%configure \
+	--enable-gui
 %make
 
 %install
-install -D -m 755 scanmem %buildroot%_sbindir/scanmem
-install -D -m 644 scanmem.1 %buildroot%_man1dir/scanmem.1
+%makeinstall_std
+
+%find_lang GameConqueror
 
 %files
-%_sbindir/scanmem
-%_man1dir/scanmem.1.gz
+%_bindir/scanmem
+%_man1dir/scanmem.1.*
+%_libdir/libscanmem.so*
 %doc ChangeLog COPYING NEWS README TODO
 
+%files -n gameconqueror -f GameConqueror.lang
+%_bindir/gameconqueror
+%_datadir/gameconqueror/
+%_datadir/applications/GameConqueror.desktop
+%_mandir/man1/gameconqueror.1*
+%_datadir/icons/hicolor/*/apps/GameConqueror.png
+%_datadir/polkit-1/actions/org.freedesktop.gameconqueror.policy
+%_datadir/appdata/GameConqueror.appdata.xml
+
 %changelog
+* Wed Jan 13 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.15.4-alt1
+- Updated to 0.15.4.
+- Packaged gameconqueror.
+
 * Mon Aug 31 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.2-alt1
 - New version
 
