@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2.beta2.git20130913
+Release: alt3.beta2.git20130913
 Summary: Allows for the dynamic alteration of images using the URL
 License: ASL
 Group: Development/Python
@@ -35,7 +35,7 @@ different designs.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%add_python_req_skip autodetect processors wsgi_handler
+%add_python_req_skip autodetect processors wsgi_handler settings
 
 %description tests
 Transmogrify is a Python-based image manipulator. It allows for dynamic
@@ -76,6 +76,9 @@ python setup.py test
 %python_sitelibdir/*/test*
 
 %changelog
+* Wed Jan 13 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.1-alt3.beta2.git20130913
+- remove erronous dependensy to python(settings)
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.beta2.git20130913
 - Set as archdep
 
