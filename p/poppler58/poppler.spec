@@ -36,7 +36,7 @@
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 39
+%define minor 40
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
@@ -395,6 +395,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Thu Jan 14 2016 Sergey V Turchin <zerg@altlinux.org> 0.40.0-alt1
+- new version
+
 * Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 0.39.0-alt1
 - new version
 
