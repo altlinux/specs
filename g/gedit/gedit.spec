@@ -11,7 +11,7 @@
 %{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -41,7 +41,7 @@ AutoReqProv: nopython
 # From configure.ac
 %define glib_ver 2.44.0
 %define gtk_ver 3.16
-%define gtksourceview_ver 3.17.5
+%define gtksourceview_ver 3.18.2
 %define peas_ver 1.7.0
 %define enchant_ver 1.2.0
 
@@ -220,6 +220,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Jan 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
+- 3.18.3
+
 * Thu Nov 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
