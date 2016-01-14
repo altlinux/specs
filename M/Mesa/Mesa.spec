@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 11.0.6
+Version: 11.1.1
 Release: alt1
 Epoch: 4
 License: MIT
@@ -223,6 +223,7 @@ framerate information to stdout
 	--enable-shared-glapi \
 	%{subst_enable egl} \
 	%{subst_enable gles2} \
+	--disable-gles1 \
 	--enable-texture-float \
 	--enable-glx-tls \
 	--enable-selinux \
@@ -384,6 +385,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Jan 14 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:11.1.1-alt1
+- 11.1.1
+
+* Wed Dec 16 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:11.1.0-alt1
+- 11.1.0
+
 * Mon Nov 23 2015 Valery Inozemtsev <shrek@altlinux.ru> 4:11.0.6-alt1
 - 11.0.6
 
