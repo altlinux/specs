@@ -1,19 +1,19 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 %define prog_name            postgresql
 %define postgresql_major     9
-%define postgresql_minor     4
-%define postgresql_subminor  5
-%define postgresql_altrel    3
+%define postgresql_minor     5
+%define postgresql_subminor  0
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
-%define libpq_minor          7
+%define libpq_minor          8
 
 # Look at: src/interfaces/ecpg/ecpglib/Makefile
 %define libecpg_major        6
-%define libecpg_minor        6
+%define libecpg_minor        7
 
 Name: %prog_name%postgresql_major.%postgresql_minor
 Version: %postgresql_major.%postgresql_minor.%postgresql_subminor
@@ -35,14 +35,12 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
 Source0: %name-%version.tar
 
-Patch1: 0001-9.4-Fix-searching-for-autoconf.patch
+Patch1: 0001-9.5-Fix-searching-for-autoconf.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
-Patch5: 0001-flex-2.6.0.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
-Patch9: 0008-ALT-SeLinux-user-name.patch
 
 Requires: libpq%libpq_major >= %version-%release
 
@@ -54,9 +52,7 @@ Conflicts: %{prog_name}9.0
 Conflicts: %{prog_name}9.1
 Conflicts: %{prog_name}9.2
 Conflicts: %{prog_name}9.3
-Conflicts: %{prog_name}9.5
-# 1C
-Conflicts: %{prog_name}9.4-1C
+Conflicts: %{prog_name}9.4
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel
@@ -87,8 +83,6 @@ Provides: libpq%libpq_major = %version-%release
 Conflicts: libpq%libpq_major < %version-%release
 Conflicts: libpq%libpq_major > %version-%release
 Obsoletes: libpq5.3 < 8.3.4-alt2
-# 1C
-Conflicts: libpq%libpq_major-1C
 
 %description -n %libpq_name
 C and C++ libraries to enable user programs to communicate with the
@@ -133,8 +127,6 @@ Provides: libecpg = %version-%release
 Provides: libecpg%libecpg_major = %version-%release
 Conflicts: libecpg%libecpg_major < %version-%release
 Conflicts: libecpg%libecpg_major > %version-%release
-# 1C
-Conflicts: libecpg%libecpg_major-1C
 
 %description -n %libecpg_name
 %libecpg_name is used by programs built with ecpg (Embedded PostgreSQL for C)
@@ -175,8 +167,6 @@ Development static library to %libecpg_name
 Summary: Extra documentation for PostgreSQL
 Group: Databases
 BuildArch: noarch
-# 1C
-Conflicts: %prog_name-1C-docs
 
 %description docs
 The postgresql-docs package includes the SGML source for the documentation
@@ -188,8 +178,6 @@ project, or if you want to generate printed documentation.
 Summary: Contributed source and binaries distributed with PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
-# 1C
-Conflicts: %prog_name-1C-contrib
 
 %description contrib
 The postgresql-contrib package includes the contrib tree distributed with
@@ -205,8 +193,6 @@ Requires: glibc-locales
 Provides: %prog_name-server = %version-%release
 Conflicts: %prog_name-server < %version-%release
 Conflicts: %prog_name-server > %version-%release
-# 1C
-Conflicts: %prog_name-1C-server
 
 %description server
 The postgresql-server package includes the programs needed to create
@@ -247,9 +233,6 @@ Summary: The PL/Tcl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release tcl >= 8.4.0-alt1
 Provides: postgresql-tcl
-# 1C
-Conflicts: %prog_name-1C-tcl
-
 
 %description tcl
 PostgreSQL is an advanced Object-Relational database management
@@ -261,8 +244,6 @@ Summary: The PL/Perl procedural language for PostgreSQL
 Group: Databases
 Requires: %name = %version-%release
 Provides: postgresql-perl = %version-%release
-# 1C
-Conflicts: %prog_name-1C-perl
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -273,8 +254,6 @@ language for the backend.
 Summary: Development module for Python code to access a PostgreSQL DB
 Group: Databases
 Requires: %name = %version-%release
-# 1C
-Conflicts: %prog_name-1C-python
 
 %description python
 PostgreSQL is an advanced Object-Relational database management
@@ -289,10 +268,8 @@ database.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
-%patch5 -p1
 %patch6 -p2
 %patch8 -p1
-#%%patch9 -p1
 
 %build
 %autoreconf
@@ -423,11 +400,25 @@ cp -a COPYRIGHT README README.git \
 %find_lang plpython-%postgresql_major.%postgresql_minor
 %find_lang pltcl-%postgresql_major.%postgresql_minor
 %find_lang pg_basebackup-%postgresql_major.%postgresql_minor
+%find_lang pg_rewind-%postgresql_major.%postgresql_minor
 
-cat psql-%postgresql_major.%postgresql_minor.lang pg_dump-%postgresql_major.%postgresql_minor.lang pgscripts-%postgresql_major.%postgresql_minor.lang pg_basebackup-%postgresql_major.%postgresql_minor.lang > main.lang
-cat postgres-%postgresql_major.%postgresql_minor.lang pg_resetxlog-%postgresql_major.%postgresql_minor.lang pg_controldata-%postgresql_major.%postgresql_minor.lang initdb-%postgresql_major.%postgresql_minor.lang pg_ctl-%postgresql_major.%postgresql_minor.lang plpgsql-%postgresql_major.%postgresql_minor.lang > server.lang
-cat pg_config-%postgresql_major.%postgresql_minor.lang> devel.lang
-cat ecpg-%postgresql_major.%postgresql_minor.lang ecpglib%libecpg_major-%postgresql_major.%postgresql_minor.lang > ecpg.lang
+cat psql-%postgresql_major.%postgresql_minor.lang \
+    pg_dump-%postgresql_major.%postgresql_minor.lang \
+    pgscripts-%postgresql_major.%postgresql_minor.lang \
+    pg_basebackup-%postgresql_major.%postgresql_minor.lang > main.lang
+
+cat postgres-%postgresql_major.%postgresql_minor.lang \
+    pg_resetxlog-%postgresql_major.%postgresql_minor.lang \
+    pg_controldata-%postgresql_major.%postgresql_minor.lang \
+    initdb-%postgresql_major.%postgresql_minor.lang \
+    pg_ctl-%postgresql_major.%postgresql_minor.lang \
+    plpgsql-%postgresql_major.%postgresql_minor.lang \
+    pg_rewind-%postgresql_major.%postgresql_minor.lang > server.lang
+
+cat pg_config-%postgresql_major.%postgresql_minor.lang > devel.lang
+
+cat ecpg-%postgresql_major.%postgresql_minor.lang \
+    ecpglib%libecpg_major-%postgresql_major.%postgresql_minor.lang > ecpg.lang
 
 # buildreq substitution rules.
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -613,10 +604,13 @@ fi
 %_libdir/pgsql/earthdistance.so
 %_libdir/pgsql/fuzzystrmatch.so
 %_libdir/pgsql/hstore.so
+%_libdir/pgsql/hstore_plperl.so
+%_libdir/pgsql/hstore_plpython2.so
 %_libdir/pgsql/insert_username.so
 %_libdir/pgsql/isn.so
 %_libdir/pgsql/lo.so
 %_libdir/pgsql/ltree.so
+%_libdir/pgsql/ltree_plpython2.so
 %_libdir/pgsql/moddatetime.so
 %_libdir/pgsql/uuid-ossp.so
 %_libdir/pgsql/pageinspect.so
@@ -633,20 +627,18 @@ fi
 %_libdir/pgsql/sslinfo.so
 %_libdir/pgsql/tablefunc.so
 %_libdir/pgsql/tcn.so
-%_libdir/pgsql/test_parser.so
 %_libdir/pgsql/timetravel.so
 %_libdir/pgsql/tsearch2.so
 %_libdir/pgsql/passwordcheck.so
 %_libdir/pgsql/unaccent.so
 %_libdir/pgsql/auth_delay.so
-%_libdir/pgsql/dummy_seclabel.so
 %_libdir/pgsql/file_fdw.so
 %_libdir/pgsql/sepgsql.so
 %_libdir/pgsql/postgres_fdw.so
-%_libdir/pgsql/worker_spi.so
 %_libdir/pgsql/pg_prewarm.so
 %_libdir/pgsql/test_decoding.so
-%_libdir/pgsql/test_shm_mq.so
+%_libdir/pgsql/tsm_system_rows.so
+%_libdir/pgsql/tsm_system_time.so
 
 %files -f libpq%libpq_major-%postgresql_major.%postgresql_minor.lang -n %libpq_name
 %_libdir/libpq.so.%libpq_major
@@ -670,6 +662,7 @@ fi
 %_bindir/postgres
 %_bindir/postmaster
 %_bindir/pg_upgrade
+%_bindir/pg_rewind
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
@@ -679,13 +672,14 @@ fi
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
 %_man1dir/postmaster.1*
+%_man1dir/pg_rewind.1*
+
 %dir %_libdir/%PGSQL
 %_libdir/%PGSQL/plpgsql.so
 %_libdir/%PGSQL/dict_snowball.so
 %_libdir/%PGSQL/*_and_*.so
 %_libdir/%PGSQL/euc2004_sjis2004.so
 %_libdir/%PGSQL/libpqwalreceiver.so
-%_libdir/pgsql/pg_upgrade_support.so
 %dir %_datadir/%PGSQL
 %dir %_datadir/%PGSQL/timezone
 %_datadir/%PGSQL/timezone/*
@@ -789,9 +783,8 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
-* Thu Jan 14 2016 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt3
-- Disable -devel
-- Add conflict with postgresql for 1C (ALT:#31531)
+* Thu Jan 14 2016 Alexei Takaseev <taf@altlinux.org> 9.5.0-alt1
+- 9.5.0
 
 * Mon Jan 11 2016 Alexei Takaseev <taf@altlinux.org> 9.4.5-alt2
 - Fix loss man pages
