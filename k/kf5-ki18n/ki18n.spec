@@ -1,7 +1,7 @@
 %define rname ki18n
 
 Name: kf5-%rname
-Version: 5.17.0
+Version: 5.18.0
 Release: alt1
 %K5init altplace
 
@@ -11,7 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: alt-fallback.diff
+Patch1: alt-fallback.patch
 
 # Automatically added by buildreq on Tue Feb 10 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-concurrent libqt5-core libqt5-script libqt5-test libstdc++-devel python-base python-modules qt5-base-devel ruby ruby-stdlibs
@@ -79,6 +79,9 @@ KF5 library
 %_K5plug/kf5/ktranscript.so
 
 %changelog
+* Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt1
+- new version
+
 * Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 5.17.0-alt1
 - new version
 
