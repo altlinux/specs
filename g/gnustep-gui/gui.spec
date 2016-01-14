@@ -4,7 +4,7 @@
 
 Name: gnustep-gui
 Version: 0.24.0
-Release: alt6.svn20140223
+Release: alt6.svn20140223.1
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -153,6 +153,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.24.0-alt6.svn20140223.1
+- NMU: Rebuild with libgnutls30.
+
 * Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.0-alt6.svn20140223
 - Fixed build
 

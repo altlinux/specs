@@ -2,7 +2,7 @@
 
 Name: gnustep-Switcher
 Version: 20140127
-Release: alt3.cvs20140127
+Release: alt3.cvs20140127.1
 Summary: Allow applications to appear when the icon is clicked on from another workspace
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -45,6 +45,9 @@ clicked on from another workspace.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 20140127-alt3.cvs20140127.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140127-alt3.cvs20140127
 - Built with clang
 

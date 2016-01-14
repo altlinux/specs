@@ -2,7 +2,7 @@
 
 Name: gnustep-DataBasin
 Version: 0.7
-Release: alt1
+Release: alt1.1
 Summary: Data access tool and for SalesForce.com based on the SOAP API interfaces
 License: GPL / LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -69,6 +69,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt1.1
+- NMU: Rebuild with libgnutls30.
+
 * Thu May 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
 - Version 0.7
 

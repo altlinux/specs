@@ -2,7 +2,7 @@
 
 Name: gnustep-GTAMSAnalyzer
 Version: 0.42
-Release: alt5
+Release: alt5.1
 Summary: GTAMS Analyzer is a complete coding and analysis package
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -82,6 +82,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Documentation/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.42-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.42-alt5
 - Built with clang
 

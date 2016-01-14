@@ -2,7 +2,7 @@
 
 Name: gnustep-Ghack
 Version: 0.2
-Release: alt4.git20140409
+Release: alt4.git20140409.1
 Summary: Graphical nethack
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt4.git20140409.1
+- NMU: Rebuild with libgnutls30.
+
 * Wed Apr 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt4.git20140409
 - New snapshot
 

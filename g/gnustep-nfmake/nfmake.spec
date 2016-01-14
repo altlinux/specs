@@ -2,7 +2,7 @@
 
 Name: gnustep-nfmake
 Version: 0.2
-Release: alt1.svn20111010
+Release: alt1.svn20111010.1
 Summary: Tool for building OpenStep projects on GNUstep
 License: LGPLv2
 Group: Graphical desktop/GNUstep
@@ -43,6 +43,9 @@ and using the PB.project file created by ProjectBuilder.
 %_bindir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt1.svn20111010.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.svn20111010
 - Snapshot from svn
 

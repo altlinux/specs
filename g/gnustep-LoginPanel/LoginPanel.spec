@@ -2,7 +2,7 @@
 
 Name: gnustep-LoginPanel
 Version: 20140127
-Release: alt5.cvs20140127
+Release: alt5.cvs20140127.1
 Summary: GNUstep login panel
 License: LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ GNUstep login panel.
 #_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 20140127-alt5.cvs20140127.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20140127-alt5.cvs20140127
 - Removed menu file
 

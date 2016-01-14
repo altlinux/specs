@@ -2,7 +2,7 @@
 
 Name: gnustep-silver.theme
 Version: 3.1
-Release: alt3
+Release: alt3.1
 Summary: Silver theme for GNUstep
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -45,6 +45,9 @@ people who want use GNUstep apps in desktops like Gnome, KDE, ...
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 3.1-alt3.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt3
 - Built with clang
 

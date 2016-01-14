@@ -2,7 +2,7 @@
 
 Name: gnustep-Paje
 Version: 1.98
-Release: alt3
+Release: alt3.1
 Summary: Paje is an interactive and scalable trace-based visualization tool
 License: GPLv2 / LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -160,6 +160,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Documentation/UserManual/*.ps Documentation/lang-paje/*.ps
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.98-alt3.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.98-alt3
 - Built with clang
 - Added menu file (thnx kostyalamer@)

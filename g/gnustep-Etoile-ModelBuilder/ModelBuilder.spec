@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-ModelBuilder
 Version: r6592
-Release: alt2.git20101126
+Release: alt2.git20101126.1
 Summary: Etoile's Model Builder
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -67,6 +67,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> r6592-alt2.git20101126.1
+- NMU: Rebuild with libgnutls30.
+
 * Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r6592-alt2.git20101126
 - Added menu file (thnx kostyalamer@)
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-MP3ToWav
 Version: 0.4.1
-Release: alt3
+Release: alt3.1
 Summary: MP3ToWav plugin for Burn.app
 License: Free
 Group: Graphical desktop/GNUstep
@@ -47,6 +47,9 @@ MP3ToWav plugin for Burn.app.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt3.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt3
 - Built with clang
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-Vindaloo
 Version: 0.2
-Release: alt3.svn20130128
+Release: alt3.svn20130128.1
 Summary: A PDF reader
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -64,6 +64,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/gnustep-Vindaloo
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt3.svn20130128.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt3.svn20130128
 - Don't break when zoom factor is 0
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-SystemConfig
 Version: 0.2
-Release: alt1.git20140217
+Release: alt1.git20140217.1
 Summary: Provides various a common way to set system specific preferences
 License: LGPLv2.1 / BSD
 Group: Graphical desktop/GNUstep
@@ -128,6 +128,9 @@ popd
 %_libdir/GNUstep/Frameworks/SystemConfig.framework/Versions/0/Headers
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt1.git20140217.1
+- NMU: Rebuild with libgnutls30.
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20140217
 - Initial build for Sisyphus
 

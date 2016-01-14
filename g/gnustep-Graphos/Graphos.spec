@@ -2,7 +2,7 @@
 
 Name: gnustep-Graphos
 Version: 0.5
-Release: alt3
+Release: alt3.1
 Summary: Vector editor for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -56,6 +56,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.5-alt3.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt3
 - Built with clang
 

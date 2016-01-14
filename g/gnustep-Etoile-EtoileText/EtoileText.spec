@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-EtoileText
 Version: 0.1
-Release: alt1.git20131205
+Release: alt1.git20131205.1
 Summary: EtoileText framework
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -123,6 +123,9 @@ cp -fRP Documentation/* %buildroot%_docdir/GNUstep/EtoileText/
 %_docdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.git20131205.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20131205
 - Initial build for Sisyphus
 
