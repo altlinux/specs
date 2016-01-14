@@ -4,8 +4,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
-Version: 5.5.2
-Release: alt2
+Version: 5.5.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -111,6 +111,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Thu Jan 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
+- new version
+
 * Wed Dec 30 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.2-alt2
 - fix lock screen (ALT#31661)
 
