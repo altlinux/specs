@@ -1,7 +1,7 @@
 %def_enable static
 
 Name: pcre2
-Version: 10.20
+Version: 10.21
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -122,6 +122,9 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %exclude %_docdir/%name
 
 %changelog
+* Fri Jan 15 2016 Yuri N. Sedunov <aris@altlinux.org> 10.21-alt1
+- 10.21
+
 * Wed Sep 30 2015 Yuri N. Sedunov <aris@altlinux.org> 10.20-alt1
 - first build for Sisyphus
 
