@@ -1,12 +1,11 @@
-%define _monodocdir    %_datadir/monodoc/sources
+%define _monodocdir %_datadir/monodoc/sources
 %define _monodir %_libexecdir/mono
 %define _monogacdir %_monodir/gac
-
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name: mono4
 Version: 4.3.1.1
-Release: alt1
+Release: alt4
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -21,14 +20,14 @@ Source: mono4-%version.tar
 Source2: mono.snk
 Source1: external.tar.gz
 
-BuildRequires: gcc-c++
-BuildRequires: gettext-devel
-BuildRequires: libicu-devel
-BuildRequires: libgdiplus-devel >= 2.10
-BuildRequires: pkg-config
-BuildRequires: valgrind-devel
-BuildRequires: zlib-devel
-BuildRequires: python-modules-json
+BuildRequires(pre): gcc-c++
+BuildRequires(pre): gettext-devel
+BuildRequires(pre): libicu-devel
+BuildRequires(pre): libgdiplus-devel >= 2.10
+BuildRequires(pre): pkg-config
+BuildRequires(pre): valgrind-devel
+BuildRequires(pre): zlib-devel
+BuildRequires(pre): python-modules-json
 
 # http://www.mono-project.com/docs/about-mono/releases/4.0.0/#npgsql
 #Obsoletes: mono-data-postgresql
@@ -47,7 +46,6 @@ BuildRequires: mono4-core >= 4.0
 %endif
 
 
-##define _use_internal_dependency_generator 0
 
 %description
 The Mono runtime implements a JIT engine for the ECMA CLI
@@ -61,6 +59,7 @@ Group: Development/Other
 Requires: libgdiplus
 Conflicts: mono < 3.0
 Conflicts: mono-mscorlib  < 3.0
+Conflicts: monodis < 3.0
 Conflicts: libmono < 3.0
 
 %description core
@@ -101,6 +100,36 @@ Requires: mono4-core = %version-%release
 %description dyndata
 This is dll needed for implementation of ASP.NET MVC and for web services too 
 
+%package full
+Summary: full runtime virtual package
+Group: Development/Other
+Requires: mono4-dyndata
+Requires: mono4-mvc
+Requires: mono4-extras
+Requires: mono4-winfx
+Requires: mono4-locale-extras
+Requires: mono4-reactive
+Requires: mono4-reactive-winforms
+Requires: mono4-wcf
+Requires: mono4-data-oracle
+Requires: mono4-data-sqlite
+Requires: mono4-ibm-data-db2
+Requires: mono4-monodoc
+
+%description full
+Virtual package containing all non-devel packages from mono
+
+%package devel-full
+Summary: full development virtual package
+Group:Development/Other
+Requires: mono4-devel
+Requires: mono4-reactive-devel
+Requires: mono4-web-devel
+Requires: mono4-mvc-devel
+Requires: mono4-monodoc-devel
+
+%description devel-full
+Virtual package containing all devel packages from mono
 
 %package devel
 Summary: Development tools for Mono
@@ -231,7 +260,7 @@ Requires: mono4-core = %version-%release
 This package contains the ADO.NET Data provider for the Oracle
 database.
 
-%package  ibm-data-db2
+%package   ibm-data-db2
 Summary: IBM DB2 database connectivity for Mono
 Group: Development/Other
 Requires: mono4-core = %version-%release
@@ -483,6 +512,11 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 
 %files dyndata
 %gac_dll System.Web.DynamicData
+
+%files full
+
+%files devel-full
+
 
 %files devel
 %_sysconfdir/pki/mono/
@@ -736,7 +770,7 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %files data-oracle
 %gac_dll System.Data.OracleClient
 
-%files ibm-data-db2
+%files  ibm-data-db2
 %gac_dll IBM.Data.DB2
 
 %files  monodoc
@@ -763,6 +797,15 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Fri Jan 15 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt4
+- Fixed dependence on mono4-full
+
+* Thu Jan 14 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt3
+- Virtual packages mono4-full and mono4-devel added
+
+* Sun Dec 27 2015 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt2
+- Self compile
+
 * Mon Dec 07 2015 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt1
 - Initial build of 4.* version (based on Fedora core spec)
 
