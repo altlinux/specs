@@ -3,7 +3,7 @@
 
 Name: telepathy-qt5
 Version: 0.9.6.1
-Release: alt2
+Release: alt3
 
 Summary: Telepathy framework - Qt5 connection manager library 
 License: GPLv2
@@ -12,8 +12,10 @@ Group: System/Libraries
 URL: http://telepathy.freedesktop.org/wiki/Telepathy%%20Qt
 
 Source: telepathy-qt-%version.tar
-# ALT
-Patch100: alt-fix-install.patch
+# FC
+Patch1: telepathy-qt-0.9.5-static_fPIC.patch
+Patch2: 0002-CMakeLists-Minimum-version-bumped-to-2.8.12.patch
+Patch3: 0021-Farstream-gst-gstconfig.h-can-be-in-LIBDIR-search-fo.patch
 
 BuildRequires(pre): qt5-base-devel qt5-tools
 BuildRequires: cmake doxygen gcc-c++ git-core graphviz phonon-devel
@@ -50,17 +52,14 @@ Static libraries for %name.
 
 %prep
 %setup -qn telepathy-qt-%version
-%patch100 -p1
-
-find -type f -name \*.pc.in | \
-while read f ; do
-    sed -i 's|${CMAKE_INSTALL_PREFIX}||g' $f
-done
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
 export QT_DOC_DIR=%_qt5_docdir
-%Kcmake \
+%cmake \
     -DDESIRED_QT_VERSION=5 \
     -DENABLE_FARSTREAM:BOOL=ON \
     -DENABLE_FARSIGHT:BOOL=OFF \
@@ -68,38 +67,20 @@ export QT_DOC_DIR=%_qt5_docdir
     -DENABLE_TESTS=OFF \
     -DENABLE_EXAMPLES=OFF \
     -DDISABLE_WERROR=ON \
-    -DDATA_INSTALL_DIR=%_datadir/telepathy \
     #
 
-# hack against broken gstreamer1.0-devel
-pushd BUILD-*
-if [ ! -e %_includedir/gstreamer-1.0/gst/gstconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gstconfig.h ]
-then
-    mkdir -p gst
-    [ -e gst/gstconfig.h ] || \
-	ln -s %_libdir/gstreamer-1.0/include/gst/gstconfig.h gst/gstconfig.h
-fi
-if [ ! -e %_includedir/gstreamer-1.0/gst/gl/gstglconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h ]
-then
-    mkdir -p gst/gl
-    [ -e gst/gl/gstglconfig.h ] || \
-	ln -s %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h gst/gl/gstglconfig.h
-fi
-popd
-
-%Kmake
-pushd BUILD*/
-make doxygen-doc
-popd
+%cmake_build
+%cmake_build doxygen-doc
 
 %install
-%Kinstall
+%make install DESTDIR=%buildroot -C BUILD
 
 %files -n lib%name
-%doc AUTHORS COPYING HACKING NEWS README BUILD*/doc/html
+%doc AUTHORS COPYING HACKING NEWS README
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
+%doc BUILD*/doc/html
 %_libdir/cmake/TelepathyQt5*/
 %_libdir/lib*.so
 %_pkgconfigdir/TelepathyQt5*.pc
@@ -109,6 +90,10 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Fri Jan 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt3
+- build fixed
+- move docs to devel subpackage
+
 * Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt2
 - fix data dir path
 
