@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt21
+Release: alt22
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -46,8 +46,9 @@ Requires: kde5-video-player
 #Requires: kde5-audio-player
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass kf5-oxygen
 Requires: kf5-systemsettings kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
-Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons
+Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
+Requires: kde5-kamera kde5-network-filesharing
 
 %package -n kde5-big
 Summary: %summary
@@ -66,7 +67,7 @@ Requires: kid3-ui-kde5
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-big
-Requires: kdenlive
+Requires: kde5-konqueror kdenlive
 
 %package -n kde5-somedevel
 Summary: %summary
@@ -74,6 +75,7 @@ Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-dolphin-plugins
 Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
+Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
 
 %description
 %summary
@@ -101,6 +103,9 @@ Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-komp
 %files -n kde5-somedevel
 
 %changelog
+* Fri Jan 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt22
+- update requires
+
 * Tue Jan 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt21
 - update requires
 
