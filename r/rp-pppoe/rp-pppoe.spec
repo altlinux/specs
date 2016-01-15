@@ -1,5 +1,5 @@
 Name: rp-pppoe
-Version: 3.11
+Version: 3.12
 Release: alt1
 
 License: %gpl2plus
@@ -184,6 +184,9 @@ EOF
 %post_control pppoe-wrapper
 
 %changelog
+* Tue Nov 17 2015 Mikhail Efremov <sem@altlinux.org> 3.12-alt1
+- Updated to 3.12.
+
 * Wed Aug 29 2012 Mikhail Efremov <sem@altlinux.org> 3.11-alt1
 - Updated to 3.11.
 
