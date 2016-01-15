@@ -4,7 +4,7 @@
 
 Name: telepathy-qt4
 Version: 0.9.6.1
-Release: alt2
+Release: alt3
 
 Summary: Telepathy framework - Qt4 connection manager library 
 License: GPLv2
@@ -16,8 +16,8 @@ Packager: Nazarov Denis <nenderus@altlinux.ru>
 Source: telepathy-qt-%version.tar
 # FC
 Patch20: telepathy-qt-0.9.5-static_fPIC.patch
-# ALT
-Patch100: alt-fix-install.patch
+Patch21: 0002-CMakeLists-Minimum-version-bumped-to-2.8.12.patch
+Patch22: 0021-Farstream-gst-gstconfig.h-can-be-in-LIBDIR-search-fo.patch
 
 # Automatically added by buildreq on Tue Apr 03 2012 (-bi)
 # optimized out: cmake-modules elfutils farstream farstream-devel fontconfig glib2-devel gstreamer-devel libdbus-devel libdbus-glib libdbus-glib-devel libgio-devel libqt4-clucene libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml xml-utils
@@ -58,55 +58,34 @@ Static libraries for %name.
 %prep
 %setup -qn telepathy-qt-%version
 %patch20 -p1
-%patch100 -p1
-
-find -type f -name \*.pc.in | \
-while read f ; do
-    sed -i 's|${CMAKE_INSTALL_PREFIX}||g' $f
-done
+%patch21 -p1
+%patch22 -p1
 
 %build
 export PATH=%_qt4dir/bin:$PATH
 export QT_DOC_DIR=%_docdir/qt-%qt4_ver
-%Kcmake \
+%cmake \
+    -DDESIRED_QT_VERSION=4 \
     -DENABLE_FARSTREAM:BOOL=ON \
     -DENABLE_FARSIGHT:BOOL=OFF \
-    -DQT_DOC_DIR=%_docdir/qt-%qt4_ver \
-    -DENABLE_EXAMPLES=OFF \
+    -DQT_DOC_DIR=%_qt5_docdir \
     -DENABLE_TESTS=OFF \
+    -DENABLE_EXAMPLES=OFF \
     -DDISABLE_WERROR=ON \
-    -DDATA_INSTALL_DIR=%_datadir/telepathy \
     #
 
-# hack against broken gstreamer1.0-devel
-pushd BUILD-*
-if [ ! -e %_includedir/gstreamer-1.0/gst/gstconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gstconfig.h ]
-then
-    mkdir -p gst
-    [ -e gst/gstconfig.h ] || \
-	ln -s %_libdir/gstreamer-1.0/include/gst/gstconfig.h gst/gstconfig.h
-fi
-if [ ! -e %_includedir/gstreamer-1.0/gst/gl/gstglconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h ]
-then
-    mkdir -p gst/gl
-    [ -e gst/gl/gstglconfig.h ] || \
-	ln -s %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h gst/gl/gstglconfig.h
-fi
-popd
-
-%Kmake
-pushd BUILD*/
-make doxygen-doc
-popd
+%cmake_build
+%cmake_build doxygen-doc
 
 %install
-%Kinstall
+%make install DESTDIR=%buildroot -C BUILD
 
 %files -n lib%name
-%doc AUTHORS COPYING HACKING NEWS README BUILD*/doc/html
+%doc AUTHORS COPYING HACKING NEWS README
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
+%doc BUILD*/doc/html
 %_libdir/cmake/TelepathyQt4/
 %_libdir/cmake/TelepathyQt4Farstream/
 %_libdir/cmake/TelepathyQt4Service/
@@ -118,6 +97,10 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Fri Jan 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt3
+- build fixed
+- move docs to devel subpackage
+
 * Tue Nov 03 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.6.1-alt2
 - fix data dir path
 
