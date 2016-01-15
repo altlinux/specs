@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt40
+Release:        alt41
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -137,18 +137,19 @@ Utilities for the JPackage Project <http://www.jpackage.org/>:
 It contains also the License, man pages, documentation, XSL files of general
 use with maven2, a header file for spec files etc.
 
-%package -n rpm-build-java
+%package -n rpm-build-java-maven-fragments
 Summary: RPM build helpers for Java packages
 Group: Development/Java
 BuildArch:      noarch
 #Requires:       jpackage-utils = %{epoch}:%{version}-%{release}
-Requires: 	rpm-macros-java = %{epoch}:%{version}-%{release}
+Requires: 	rpm-macros-java >= %{epoch}:%{version}-%{release}
 #Requires: rpm-build-java-osgi = %{epoch}:%{version}-%{release}
 # for maven_depmap.pl
 BuildRequires:  perl-XML-Simple
 Provides: javapackages-tools = %javapackagestoolsver
+Provides: rpm-build-java = %version
 
-%description -n rpm-build-java
+%description -n rpm-build-java-maven-fragments
 RPM build helpers for Java packages.
 
 %package -n rpm-build-java-osgi
@@ -420,9 +421,9 @@ cat > ${RPM_BUILD_ROOT}%_rpmmacrosdir/libjvm << EOF
 EOF
 
 mkdir -p ${RPM_BUILD_ROOT}/usr/lib/rpm/
-install -pm 755 rpm-build-java/maven.prov* ${RPM_BUILD_ROOT}/usr/lib/rpm/
-install -pm 755 rpm-build-java/maven.prov.files ${RPM_BUILD_ROOT}/usr/lib/rpm/maven.req.files
-install -pm 755 rpm-build-java/maven.req ${RPM_BUILD_ROOT}/usr/lib/rpm/
+install -pm 755 rpm-build-java/maven-fragments.prov* ${RPM_BUILD_ROOT}/usr/lib/rpm/
+install -pm 755 rpm-build-java/maven-fragments.prov.files ${RPM_BUILD_ROOT}/usr/lib/rpm/maven-fragments.req.files
+install -pm 755 rpm-build-java/maven-fragments.req ${RPM_BUILD_ROOT}/usr/lib/rpm/
 install -pm 755 rpm-build-java/osgi.prov* ${RPM_BUILD_ROOT}/usr/lib/rpm/
 pushd ${RPM_BUILD_ROOT}/usr/lib/rpm/
 # un/comment ln's below to enable/disable osgi.req
@@ -507,20 +508,22 @@ rm -f /etc/maven/maven2-depmap.xml
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-xmvn
 
-%files -n rpm-build-java
-/usr/lib/rpm/maven.*
+%files -n rpm-build-java-maven-fragments
+/usr/lib/rpm/maven-fragments.*
 
 %files -n rpm-build-java-osgi
 /usr/lib/rpm/osgi.*
 
 %files -n maven-local
 %{_sysconfdir}/maven/metadata-*.xml
-%{_bindir}/mvn-*
-#%_bindir/mvn-alias
-#%_bindir/mvn-build
-#%_bindir/mvn-config
-#%_bindir/mvn-file
-#%_bindir/mvn-package
+#%{_bindir}/mvn-*
+%_bindir/mvn-alias
+%_bindir/mvn-build
+%_bindir/mvn-config
+%_bindir/mvn-file
+%_bindir/mvn-local
+%_bindir/mvn-package
+%_bindir/mvn-rpmbuild
 %dir %{_datadir}/maven-effective-poms
 %{_datadir}/java-utils/xmvn_config_editor.sh
 %{_datadir}/xmvn/configuration*.xml
@@ -531,8 +534,10 @@ rm -f /etc/maven/maven2-depmap.xml
 ### END TODO drop maven remnants
 
 
-
 %changelog
+* Fri Jan 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt41
+- preparations for migration on javapackages-tools and maven-metadata
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt40
 - dropped filetrigger for jpackage maven
 - backported some xpath macros for rpm 4.0.4
