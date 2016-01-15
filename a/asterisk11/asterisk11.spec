@@ -4,7 +4,7 @@
 #============================================================================
 Name: asterisk11
 Summary: Open source PBX
-Version: 11.17.1
+Version: 11.20.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -25,7 +25,7 @@ BuildPreReq: libical-devel
 BuildPreReq: libbluez-devel
 BuildPreReq: libcap-devel
 BuildPreReq: libneon-devel
-BuildPreReq: libsrtp
+BuildPreReq: libsrtp-devel
 BuildPreReq: libnl-devel libsensors3-devel
 %if_with hoard
 BuildPreReq: libhoard-devel
@@ -59,6 +59,7 @@ BuildPreReq: dahdi-linux-headers
 BuildPreReq: libpri-devel
 BuildRequires: libmISDN-devel
 BuildPreReq: libspeex-devel
+BuildPreReq: libspeexdsp-devel
 BuildRequires: libcurl-devel
 BuildPreReq: libspandsp6-devel
 BuildRequires: libexpat-devel
@@ -72,6 +73,7 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %add_verify_elf_skiplist %_libdir/libasteriskssl11.so.1
 %def_with debug
 %def_enable debug
+%def_without            vpb
 %def_without		hoard
 %def_without 		addons
 %def_without 		corosync
@@ -272,6 +274,7 @@ Requires: %name-res_crypto = %version-%release
 SIP channel module for Asterisk
 
 
+%if_with vpb
 %package chan_vpb
 Summary: Voicetronix API channel driver
 Group: %group
@@ -279,6 +282,7 @@ Requires: %name = %version-%release
 
 %description chan_vpb
 Voicetronix API channel driver
+%endif
 
 %package codec_gsm
 Summary: Asterisk GSM 6.10 codec support
@@ -365,7 +369,9 @@ Requires: %name-cdr_sqlite   = %version-%release
 Requires: %name-sqlite3  = %version-%release
 Requires: %name-cdr_tds      = %version-%release
 Requires: %name-chan_console = %version-%release
+%if_with vpb
 Requires: %name-chan_vpb     = %version-%release
+%endif
 Requires: %name-jack         = %version-%release
 Requires: %name-ldap         = %version-%release
 Requires: %name-chan_alsa    = %version-%release
@@ -1068,8 +1074,10 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %astsample sip_notify
 %astsample udptl
 
+%if_with vpb
 %files chan_vpb
 %astmodule chan_vpb
+%endif
 
 %files codec_gsm
 %astmodule format_gsm
@@ -1268,6 +1276,9 @@ ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 %_libdir/libasteriskssl11.so.1
 
 %changelog
+* Fri Jan 15 2016 Denis Smirnov <mithraen@altlinux.ru> 11.20.0-alt1
+- new version 11.20.0
+
 * Sat Apr 11 2015 Denis Smirnov <mithraen@altlinux.ru> 11.17.1-alt1
 - new version 11.17.1
 
