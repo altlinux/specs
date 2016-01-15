@@ -2,7 +2,7 @@
 
 Name: gnustep-NeXTGo
 Version: 3.0
-Release: alt3
+Release: alt3.1
 Summary: NeXTGo is the classic Go game
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -56,6 +56,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 3.0-alt3.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt3
 - Built with clang
 - Added menu file (thnx kostyalamer@)

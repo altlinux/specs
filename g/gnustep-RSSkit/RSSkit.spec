@@ -2,7 +2,7 @@
 
 Name: gnustep-RSSkit
 Version: 0.4.0
-Release: alt4
+Release: alt4.1
 Summary: Simple library for reading the different types of RSS file formats
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -112,6 +112,9 @@ popd
 %doc Documentation/html/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt4.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt4
 - Built with clang
 

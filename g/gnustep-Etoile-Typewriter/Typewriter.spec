@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-Typewriter
 Version: 0.1
-Release: alt2.svn20130128
+Release: alt2.svn20130128.1
 Summary: General text editor for plain and rich format text
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -64,6 +64,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt2.svn20130128.1
+- NMU: Rebuild with libgnutls30.
+
 * Mon Mar 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.svn20130128
 - Added menu file (thnx kostyalamer@)
 

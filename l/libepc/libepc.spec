@@ -2,7 +2,7 @@
 
 Name: libepc
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 Summary: Easy Publish and Consume library
 
 Group: System/Libraries
@@ -100,6 +100,9 @@ This package provides development documentation for %name.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Aug 19 2011 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0 (gtk+3 build)
 

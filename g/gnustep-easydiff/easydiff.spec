@@ -2,7 +2,7 @@
 
 Name: gnustep-easydiff
 Version: 0.4.1
-Release: alt6.git20121210
+Release: alt6.git20121210.1
 Summary: GNUstep's implementation of the OPENSTEP FileMerge application
 License: GPLv2+ and GPLv3
 Group: File tools
@@ -52,6 +52,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt6.git20121210.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt6.git20121210
 - Built with clang
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-DictionaryReader
 Version: r7926
-Release: alt1.git20121130
+Release: alt1.git20121130.1
 Summary: DictionaryReader is a dictionary application
 License: MIT
 Group: Graphical desktop/GNUstep
@@ -66,6 +66,9 @@ install -p -D -m644 %SOURCE1 \
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> r7926-alt1.git20121130.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r7926-alt1.git20121130
 - Initial build for Sisyphus
 

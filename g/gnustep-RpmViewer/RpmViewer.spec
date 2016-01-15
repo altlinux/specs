@@ -2,7 +2,7 @@
 
 Name: gnustep-RpmViewer
 Version: 2001
-Release: alt4
+Release: alt4.1
 Summary: Contents Inspector to see the contents of rpm packages
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -44,6 +44,9 @@ RpmViewer is a contents Inspector to see the contents of rpm packages.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 2001-alt4.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2001-alt4
 - Built with clang
 

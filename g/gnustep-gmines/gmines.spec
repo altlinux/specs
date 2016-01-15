@@ -2,7 +2,7 @@
 
 Name: gnustep-gmines
 Version: 0.2
-Release: alt5
+Release: alt5.1
 Summary: The classic Minesweeper game 
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -48,6 +48,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt5
 - Built with clang
 

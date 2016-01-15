@@ -1,6 +1,6 @@
 Name: libxmlsec1
 Version: 1.2.20
-Release: alt1
+Release: alt1.1
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
 Group: System/Libraries
@@ -173,6 +173,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/libxmlsec1-nss.so
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.2.20-alt1.1
+- NMU: Rebuild with libgnutls30.
+
 * Mon Jun 09 2014 Fr. Br. George <george@altlinux.ru> 1.2.20-alt1
 - Autobuild version bump to 1.2.20
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-SimpleAgenda
 Version: 0.43
-Release: alt8
+Release: alt8.1
 Summary: Simple calendar and agenda application
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -59,6 +59,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.43-alt8.1
+- NMU: Rebuild with libgnutls30.
+
 * Tue Mar 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt8
 - Fixed build
 

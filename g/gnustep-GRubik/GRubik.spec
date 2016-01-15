@@ -2,7 +2,7 @@
 
 Name: gnustep-GRubik
 Version: 0.1
-Release: alt4
+Release: alt4.1
 Summary: GRubik is a virtual 3D Rubik's cube for you to solve
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -61,6 +61,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt4.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt4
 - Built with clang
 

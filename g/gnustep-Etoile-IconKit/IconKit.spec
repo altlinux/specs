@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-IconKit
 Version: 0.2
-Release: alt2.git20130801
+Release: alt2.git20130801.1
 Summary: Provides icon theming and various facilities to create icons at run-time
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -128,6 +128,9 @@ ln -s \
 %_libdir/GNUstep/Frameworks/IconKit.framework/Versions/0/Headers
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt2.git20130801.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2.git20130801
 - Added link for path to icons
 

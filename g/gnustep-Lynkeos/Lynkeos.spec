@@ -2,7 +2,7 @@
 
 Name: gnustep-Lynkeos
 Version: 1.2
-Release: alt5
+Release: alt5.1
 Summary: Tool to process planetary astronomical images for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -70,6 +70,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Docs/html/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.2-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Tue May 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt5
 - Fixed build
 

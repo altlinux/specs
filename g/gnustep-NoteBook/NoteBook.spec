@@ -2,7 +2,7 @@
 
 Name: gnustep-NoteBook
 Version: 0.3
-Release: alt6
+Release: alt6.1
 Summary: Application to store and organize your notes 
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -55,6 +55,9 @@ install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.3-alt6.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt6
 - Built with clang
 

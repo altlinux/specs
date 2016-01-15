@@ -2,7 +2,7 @@
 
 Name: gnustep-Innerspace
 Version: 1.0.0
-Release: alt1.svn20120120
+Release: alt1.svn20120120.1
 Summary: Innerspace is a screensaver
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
@@ -52,6 +52,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1.svn20120120.1
+- NMU: Rebuild with libgnutls30.
+
 * Thu Mar 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.svn20120120
 - Version 1.0.0
 

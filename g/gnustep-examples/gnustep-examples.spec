@@ -1,7 +1,7 @@
 Name:           gnustep-examples
 
 Version:        1.3.0
-Release:        alt5
+Release:        alt5.1
 
 Summary:        The GNUstep examples 
 License:        GPLv2+ and GPLv3+
@@ -48,6 +48,9 @@ cp gui/ExampleTheme/Rhea/COPYING .
 %doc README ChangeLog COPYING
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt5
 - Built with clang
 

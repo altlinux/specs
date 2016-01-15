@@ -2,7 +2,7 @@
 
 Name: gnustep-Stepbill
 Version: 2.4
-Release: alt4
+Release: alt4.1
 Summary: Get rid of those nasty Wingdows viruses
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -59,6 +59,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 2.4-alt4.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt4
 - Added menu file (thnx kostyalamer@)
 

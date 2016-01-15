@@ -2,7 +2,7 @@
 
 Name: gnustep-cddb.bundle
 Version: 0.2
-Release: alt6
+Release: alt6.1
 Summary: GNUstep bundle for cddb access
 License: GPLv2+ and LGPLv2+
 Group: Graphical desktop/GNUstep
@@ -63,6 +63,9 @@ ln -s %_libdir/GNUstep/Headers/Cddb \
 %_libdir/GNUstep/Headers
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt6.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt6
 - Built with clang
 

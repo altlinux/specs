@@ -2,7 +2,7 @@
 
 Name: gnustep-charsets
 Version: r29248
-Release: alt7.git20100109
+Release: alt7.git20100109.1
 Summary: Utilities for use with NSCharacterSet bitmap files
 License: LGPLv2+
 Group: Development/Tools
@@ -59,6 +59,9 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %_bindir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> r29248-alt7.git20100109.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt7.git20100109
 - Built with clang
 

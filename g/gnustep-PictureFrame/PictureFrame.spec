@@ -2,7 +2,7 @@
 
 Name: gnustep-PictureFrame
 Version: 1.1.3
-Release: alt6
+Release: alt6.1
 Summary: Software for a digital picture frame
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -80,6 +80,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt6.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt6
 - Built with clang
 

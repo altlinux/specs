@@ -2,7 +2,7 @@
 
 Name: gnustep-Yap
 Version: 0.2
-Release: alt3
+Release: alt3.1
 Summary: Yap.app PostScript/PDF previewer
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt3.1
+- NMU: Rebuild with libgnutls30.
+
 * Mon Feb 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt3
 - Added menu file (thnx kostyalamer@)
 

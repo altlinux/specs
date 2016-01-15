@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-PaneKit
 Version: 1.0
-Release: alt1.svn20140217
+Release: alt1.svn20140217.1
 Summary: Provides various features to build flexible pane window
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -138,6 +138,9 @@ popd
 %_libdir/GNUstep/Frameworks/PaneKit.framework/Versions/0/Headers
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.0-alt1.svn20140217.1
+- NMU: Rebuild with libgnutls30.
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.svn20140217
 - Initial build for Sisyphus
 

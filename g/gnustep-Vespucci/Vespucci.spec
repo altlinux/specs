@@ -2,7 +2,7 @@
 
 Name: gnustep-Vespucci
 Version: 0.1
-Release: alt4.cvs20140125
+Release: alt4.cvs20140125.1
 Summary: Vespucci is a navigator for the World Wide Web
 License: Free
 Group: Graphical desktop/GNUstep
@@ -62,6 +62,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt4.cvs20140125.1
+- NMU: Rebuild with libgnutls30.
+
 * Mon Feb 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt4.cvs20140125
 - Added menu file (thnx kostyalamer@)
 

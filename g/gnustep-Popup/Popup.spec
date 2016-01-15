@@ -2,7 +2,7 @@
 
 Name: gnustep-Popup
 Version: 0.5
-Release: alt4.pre1
+Release: alt4.pre1.1
 Summary: Spaced repetition learning system for pairs of words
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -59,6 +59,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.5-alt4.pre1.1
+- NMU: Rebuild with libgnutls30.
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt4.pre1
 - Added menu file (thnx kostyalamer@)
 

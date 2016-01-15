@@ -2,7 +2,7 @@
 
 Name: gnustep-Zillion
 Version: 0.1
-Release: alt5
+Release: alt5.1
 Summary: Zillion distributed computing Project
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -62,6 +62,9 @@ features are as follows:
 #_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt5
 - Removed menu file
 

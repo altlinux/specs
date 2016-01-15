@@ -2,7 +2,7 @@
 
 Name: gnustep-LapisPuzzle
 Version: 1.2
-Release: alt5
+Release: alt5.1
 Summary: Tetris-like game where each player is effected by the others game play
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.2-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt5
 - Built with clang
 

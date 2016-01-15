@@ -2,7 +2,7 @@
 
 Name: gnustep-nibtool
 Version: 0.1
-Release: alt1.svn20100602
+Release: alt1.svn20100602.1
 Summary: GNUstep nibtool
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -44,6 +44,9 @@ GNUstep nibtool.
 %_bindir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.svn20100602.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.svn20100602
 - Fixed build
 

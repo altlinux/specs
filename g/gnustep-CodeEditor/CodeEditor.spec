@@ -2,7 +2,7 @@
 
 Name: gnustep-CodeEditor
 Version: 0.4.4
-Release: alt5
+Release: alt5.1
 Summary: CodeEditor is a text and code editor
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -74,6 +74,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Sun Feb 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.4-alt5
 - Built with clang
 

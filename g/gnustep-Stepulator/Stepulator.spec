@@ -2,7 +2,7 @@
 
 Name: gnustep-Stepulator
 Version: 1.0
-Release: alt4
+Release: alt4.1
 Summary: Scientific calculator implementing RPN notation for GNUstep
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -51,6 +51,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.0-alt4.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4
 - Added menu file (thnx kostyalamer@)
 

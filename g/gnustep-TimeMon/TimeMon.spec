@@ -2,7 +2,7 @@
 
 Name: gnustep-TimeMon
 Version: 4.1
-Release: alt6.svn20130303
+Release: alt6.svn20130303.1
 Summary: CPU time usage monitor
 License: Permission to use, copy, modify, and distribute without fee
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 4.1-alt6.svn20130303.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt6.svn20130303
 - Snapshot from svn
 

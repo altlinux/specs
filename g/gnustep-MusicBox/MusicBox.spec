@@ -2,7 +2,7 @@
 
 Name: gnustep-MusicBox
 Version: 20030331
-Release: alt2.cvs20140130
+Release: alt2.cvs20140130.1
 Summary: MusicBox is a music manager based on GNUstep
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -116,6 +116,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_libdir/GNUstep/Headers
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 20030331-alt2.cvs20140130.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20030331-alt2.cvs20140130
 - Built with clang
 - Added menu file (thnx kostyalamer@)

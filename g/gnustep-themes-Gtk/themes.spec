@@ -1,6 +1,6 @@
 Name: gnustep-themes-Gtk
 Version: 1.0
-Release: alt6.svn20140115
+Release: alt6.svn20140115.1
 Summary: Gnome Theme for GNUstep
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
@@ -46,6 +46,9 @@ for drawing its widgets.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.0-alt6.svn20140115.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt6.svn20140115
 - Built with clang
 

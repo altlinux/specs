@@ -2,7 +2,7 @@
 
 Name: gnustep-Etoile-OgreKit
 Version: 1.2.1
-Release: alt1.svn20140213
+Release: alt1.svn20140213.1
 Summary: Regular expression library written in Objective-C in Cocoa
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -111,6 +111,9 @@ popd
 %_libdir/GNUstep/Frameworks/OgreKit.framework/Versions/1/Headers
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1.svn20140213.1
+- NMU: Rebuild with libgnutls30.
+
 * Thu Mar 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.svn20140213
 - Initial build for Sisyphus
 

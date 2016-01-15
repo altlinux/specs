@@ -2,7 +2,7 @@
 
 Name: gnustep-Wrapper
 Version: 0.1.0
-Release: alt5
+Release: alt5.1
 Summary: Create GNUstep app-wrappers of non-GNUstep applications
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -55,6 +55,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 make_services
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt5.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt5
 - Added menu file (thnx kostyalamer@)
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-Burn
 Version: 0.5.0
-Release: alt6.cvs20140123
+Release: alt6.cvs20140123.1
 Summary: Burn ist a front-end for Jorg Schilling's cdrtools, cdrdao, and cdparanoia
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -78,6 +78,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_includedir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt6.cvs20140123.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Mar 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt6.cvs20140123
 - Added Requires: cdrdao wodim genisoimage cdparanoia
 

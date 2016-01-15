@@ -2,7 +2,7 @@
 
 Name: gnustep-SGContentViewer
 Version: 2006
-Release: alt4
+Release: alt4.1
 Summary: A contents Inspector that can play music files
 License: LGPLv2.1
 Group: Graphical desktop/GNUstep
@@ -46,6 +46,9 @@ shorten, voc, midi, and mod files.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 2006-alt4.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2006-alt4
 - Built with clang
 

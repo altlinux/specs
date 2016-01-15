@@ -2,7 +2,7 @@
 
 Name: gnustep-EdenMath
 Version: 1.1.1
-Release: alt5.a
+Release: alt5.a.1
 Summary: Scientific calculator for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt5.a.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt5.a
 - Built with clang
 

@@ -4,7 +4,7 @@
 
 Name: gnustep-sudoku
 Version: 0.7
-Release: alt4
+Release: alt4.1
 Summary: Sudoku is a game for GNUstep
 License: GPL
 Group: Graphical desktop/GNUstep
@@ -49,6 +49,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt4.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt4
 - Built with clang
 

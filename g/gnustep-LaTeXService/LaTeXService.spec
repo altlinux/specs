@@ -2,7 +2,7 @@
 
 Name: gnustep-LaTeXService
 Version: 0.1
-Release: alt3
+Release: alt3.1
 Summary: LaTeX service for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -46,6 +46,9 @@ rendering.
 %_libdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt3.1
+- NMU: Rebuild with libgnutls30.
+
 * Sat Feb 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3
 - Built with clang
 

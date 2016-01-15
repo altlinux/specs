@@ -2,7 +2,7 @@
 
 Name: gnustep-gdl2
 Version: 0.12.0
-Release: alt5.svn20130819
+Release: alt5.svn20130819.1
 Summary: The GNUstep Database Library 2 (GDL2)
 License: LGPLv3
 Group: Graphical desktop/GNUstep
@@ -144,6 +144,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.12.0-alt5.svn20130819.1
+- NMU: Rebuild with libgnutls30.
+
 * Fri Feb 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt5.svn20130819
 - Built with clang
 

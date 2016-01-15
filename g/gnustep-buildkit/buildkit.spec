@@ -2,7 +2,7 @@
 
 Name: gnustep-buildkit
 Version: 0.1
-Release: alt2.git20110801
+Release: alt2.git20110801.1
 Summary: GNUstep BuildKit
 License: Free
 Group: Graphical desktop/GNUstep
@@ -42,6 +42,9 @@ GNUstep BuildKit.
 %_bindir/*
 
 %changelog
+* Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt2.git20110801.1
+- NMU: Rebuild with libgnutls30.
+
 * Wed Jan 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20110801
 - Added Requires: gnustep-back
 
