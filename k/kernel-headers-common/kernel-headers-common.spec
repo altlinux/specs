@@ -1,11 +1,11 @@
 Name: kernel-headers-common
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Common header files for the Linux kernel
 License: GPL
 Group: Development/Kernel
-ExclusiveArch: %ix86 x86_64 %arm aarch64
+ExclusiveArch: %ix86 x86_64 %arm aarch64 %e2k
 
 Source0: adjust_kernel_headers
 Source1: adjust_kernel_headers.8
@@ -119,6 +119,9 @@ done
 %ghost /var/run/kernel/*
 
 %changelog
+* Sat Jan 16 2016 Michael Shigorin <mike@altlinux.org> 1.2.6-alt1
+- Added e2k architecture support.
+
 * Mon Sep 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.5-alt1
 - Added aarch64 architecture support.
 
