@@ -1,29 +1,30 @@
 Name: mypaint
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: A simple paint program
 Group: Graphics
 License: GPLv2+
-Url: http://mypaint.info/
+Url: http://mypaint.org/
 
-Source: http://download.gna.org/%name/%name-%version.tar.bz2
+# VCS: https://github.com/mypaint/mypaint
+Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.xz
 
 Requires: %name-data = %version-%release
-# python.req bug?
-Requires: python-module-protobuf python-modules-json
-# A cause to modify rpm-build-gir -- both Gtk+{2,3} gir-packages provide typelib(Gtk)
-Requires: libgtk+2-gir
+Requires: python-module-pygobject3-pygtkcompat
 
-BuildRequires: gcc-c++ glib2-devel python-devel libnumpy-devel scons swig protobuf-compiler
-BuildRequires: libpng-devel libjson-devel python-modules-json liblcms2-devel libgtk+2-devel
-BuildRequires: python-module-pygobject-devel gobject-introspection-devel
+%add_python_compile_include %_datadir/%name %_datadir/lib%name
+
+BuildRequires: gcc-c++ libgomp-devel scons swig libgtk+3-devel
+BuildRequires: libXi-devel python-devel libnumpy-devel
+BuildRequires: libpng-devel libjson-devel python-modules-json liblcms2-devel
+BuildRequires: gobject-introspection-devel python-module-pygobject3-devel
 
 %description
-Mypaint is a fast and easy/simple painter program. It comes with a large
-brush collection including charcoal and ink to emulate real media, but the
-highly configurable brush engine allows you to experiment with your own
-brushes and with not-quite-natural painting.
+MyPaint is a simple drawing and painting program that works well with
+Wacom-style graphics tablets. Its main features are a highly configurable
+brush engine, speed, and a fullscreen mode which allows artists to fully
+immerse themselves in their work.
 
 %package data
 Summary: A simple paint program
@@ -54,9 +55,10 @@ with mypaint brush library.
 %add_python_lib_path %_datadir/%name
 
 %prep
-%setup -q
+%setup
 # fix libdir
 subst 's|lib\/mypaint|%_lib\/mypaint|' SConstruct SConscript mypaint.py
+subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 subst 's|prefix\/lib|prefix\/%_lib|' brushlib/SConscript
 # fix pkgconfig-file by preventing substitution
 subst 's|@LIBDIR@|%_libdir|' brushlib/pkgconfig.pc.in
@@ -66,17 +68,20 @@ scons
 
 %install
 scons prefix=%buildroot%_prefix install
-%find_lang %name
+%find_lang --output=%name.lang %name lib%name
 
 %files -f %name.lang
 %_bindir/*
-%_libdir/%name
+%_libdir/%name/
 
 %files data
-%_datadir/%name
-%_datadir/applications/*
+%_datadir/%name/
+%_datadir/lib%name/
+%_datadir/thumbnailers/%name-ora.thumbnailer
+%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*
-%doc README changelog
+%_datadir/appdata/mypaint.appdata.xml
+%doc README.md README_LINUX.md Changelog.md
 
 %if 0
 %files -n lib%name-devel-static
@@ -86,6 +91,9 @@ scons prefix=%buildroot%_prefix install
 %endif
 
 %changelog
+* Sat Jan 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
