@@ -1,14 +1,14 @@
 %define  oname PlayOnLinux
 
 Name:    playonlinux
-Version: 4.2.8
+Version: 4.2.10
 Release: alt1
 
 Summary: Play your Windows games on Linux
 License: GPLv3
 Group:   Games/Other
 Url:     http://www.playonlinux.com
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Packager: Denis Medvedev <nbr@altlinux.org> 
 
 Source: http://www.playonlinux.com/script_files/%oname/%version/%{oname}_%version.tar.gz
 Source1: playonlinux.sh
@@ -67,6 +67,9 @@ rm -f %buildroot%_datadir/%name/bin/smile
 %_datadir/desktop-directories/%oname.directory
 
 %changelog
+* Sat Jan 16 2016 Denis Medvedev <nbr@altlinux.org> 4.2.10-alt1
+- New version
+
 * Fri Jul 03 2015 Andrey Cherepanov <cas@altlinux.org> 4.2.8-alt1
 - New version
 - Fix conflict with python-module-wx3.0
