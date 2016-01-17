@@ -1,19 +1,14 @@
 Name: chrpath
-Version: 0.13
-Release: alt2
+Version: 0.16
+Release: alt1
 
 Summary: Dynamic library load path editor
-License: GPL
+License: GPLv2+
 Group: Development/Other
-Url: ftp://ftp.hungry.com/pub/hungry/chrpath/
+Url: https://alioth.debian.org/projects/chrpath/
 
-# ftp://ftp.hungry.com/pub/hungry/%name/%name-%version.tar.gz
-# http://www.tux.org/pub/X-Windows/ftp.hungry.com/%name/%name-%version.tar.gz
+# https://alioth.debian.org/frs/download.php/file/3979/%name-%version.tar.gz
 Source: %name-%version.tar
-
-Patch1: chrpath-rh-NULL-entry.patch
-Patch2: chrpath-rh-getopt_long.patch
-Patch3: chrpath-rh-help.patch
 
 %description
 chrpath changes, lists or removes the rpath or runpath setting in a
@@ -22,9 +17,6 @@ linker should look for the libraries needed for a program.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %{expand:%%add_optflags %(getconf LFS_CFLAGS)}
@@ -32,8 +24,7 @@ linker should look for the libraries needed for a program.
 %make_build
 
 %install
-%makeinstall
-rm -r %buildroot/usr/doc
+%makeinstall_std doc_DATA=
 
 %check
 %make_build check
@@ -41,9 +32,12 @@ rm -r %buildroot/usr/doc
 %files
 %_bindir/*
 %_mandir/man?/*
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS NEWS README
 
 %changelog
+* Sun Jan 17 2016 Dmitry V. Levin <ldv@altlinux.org> 0.16-alt1
+- 0.13 -> 0.16.
+
 * Fri Apr 19 2013 Dmitry V. Levin <ldv@altlinux.org> 0.13-alt2
 - Merged patches from Fedora.
 - Built with LFS support enabled.
