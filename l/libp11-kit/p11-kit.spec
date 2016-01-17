@@ -9,7 +9,7 @@
 #%%define trust_paths %_sysconfdir/pki/ca-trust/source:%_datadir/pki/ca-trust-source
 
 Name: lib%_name
-Version: 0.23.1
+Version: 0.23.2
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -142,6 +142,9 @@ EOF
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Sun Jan 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.23.2-alt1
+- 0.23.2
+
 * Wed Dec 02 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.1-alt1
 - 0.23.1 (ALT #31583)
 
