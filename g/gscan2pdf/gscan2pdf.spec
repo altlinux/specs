@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -28,6 +28,8 @@ BuildRequires: libdb4-devel perl-Archive-Tar perl-Config-General perl-Filesys-Df
 BuildPreReq: perl-Data-UUID perl-JSON-PP
 
 BuildPreReq: perl-Magick perl-Sane >= 0.05
+
+BuildPreReq: perl-devel
 
 # needs for backports
 BuildPreReq: perl-Try-Tiny
@@ -88,6 +90,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Sun Jan 17 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.6-alt1
+- new version 1.3.6 (with rpmrb script)
+
 * Sat Oct 10 2015 Vitaly Lipatov <lav@altlinux.ru> 1.3.5-alt1
 - new version 1.3.5 (with rpmrb script) (ALT bug #31341)
 - pack man pages
