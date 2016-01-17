@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.164
+Version: 0.165
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle compiled objects
@@ -112,6 +112,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-addr2line
 %_bindir/eu-ar
 %_bindir/eu-elfcmp
+%_bindir/eu-elfcompress
 %_bindir/eu-elflint
 %_bindir/eu-findtextrel
 %_bindir/eu-make-debug-archive
@@ -137,6 +138,7 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libasm.so
 %_libdir/libdw.so
 %_libdir/libebl.a
+%_pkgconfigdir/*.pc
 
 %if_enabled static
 %files devel-static
@@ -161,6 +163,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jan 14 2016 Dmitry V. Levin <ldv@altlinux.org> 0.165-alt1
+- 0.164-14-gf8443bd -> 0.165-3-g2d703bf.
+
 * Mon Nov 16 2015 Dmitry V. Levin <ldv@altlinux.org> 0.164-alt1
 - Updated to 0.164-14-gf8443bd.
 
