@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	38.5.0
+Version:	38.5.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -68,7 +68,6 @@ Provides:	mailclient
 Obsoletes:	thunderbird-calendar
 Obsoletes:	thunderbird-calendar-timezones
 
-Conflicts:	thunderbird
 Provides:	thunderbird-gnome-support = %version-%release
 Obsoletes:	thunderbird-gnome-support
 
@@ -104,7 +103,6 @@ Url: http://enigmail.mozdev.org/
 
 Provides: %name-enigmail = %engimail_version
 Requires: %name = %version-%release
-Conflicts: %r_name-enigmail
 
 Obsoletes: thunderbird-enigmail < 0.95.7-alt2
 
@@ -123,7 +121,6 @@ Url: http://www.mozilla.org/projects/calendar/lightning/
 
 Provides: %name-lightning = 1.9b1
 Requires: %name = %version-%release
-Conflicts: %r_name-lightning
 
 %description lightning
 An integrated calendar for Thunderbird.
@@ -137,7 +134,6 @@ Url: http://www.mozilla.org/projects/calendar/lightning/
 
 Requires: %name = %version-%release
 Requires: %name-lightning = %version-%release
-Conflicts: %r_name-google-calendar
 
 Provides: gdata-provider = %version-%release
 
@@ -149,7 +145,6 @@ Allows bidirectional access to Google Calendar
 Summary:	Thunderbird development kit.
 Group:		Development/C++
 Requires:	%name = %version-%release
-Conflicts:      %r_name-devel
 
 Requires:	python-base
 AutoReq:	yes, nopython
@@ -164,7 +159,6 @@ BuildArch:	noarch
 
 Requires:	mozilla-common-devel
 Requires:	rpm-build-mozilla.org
-Conflicts:      rpm-build-%r_name
 
 %description -n rpm-build-%name
 These helper macros provide possibility to rebuild
@@ -457,6 +451,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sun Jan 17 2016 Andrey Cherepanov <cas@altlinux.org> 38.5.1-alt1
+- New version
+
 * Sat Dec 26 2015 Andrey Cherepanov <cas@altlinux.org> 38.5.0-alt1
 - New version
 - Security fixes:
