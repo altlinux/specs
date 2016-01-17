@@ -1,15 +1,16 @@
 Name: hspell
-Version: 1.2
+Version: 1.3
 Release: alt1
 Summary: A Hebrew spell checker
-License: GPLv2
+License: AGPLv3
 Group: Text tools
 Url: http://hspell.ivrix.org.il/
 # http://hspell.ivrix.org.il/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch: hspell-1.2-alt-fixes.patch
+Patch: hspell-1.3-alt-fixes.patch
 Requires: lib%name = %version-%release
 BuildRequires: libhunspell-devel hunspell-utils zlib-devel
+%{?!_without_check:%{?!_disable_check:BuildRequires: aspell-he}}
 
 %description
 Hspell is a Hebrew SPELLer and morphological analyzer.  It provides a
@@ -68,22 +69,31 @@ Hebrew hunspell dictionaries.
 %prep
 %setup
 %patch -p1
-iconv -f hebrew -t utf8 -o WHATSNEW WHATSNEW
+iconv -f hebrew -t utf8 -o WHATSNEW.new WHATSNEW
+mv WHATSNEW.new WHATSNEW
 
 %build
 autoconf
 %configure --enable-fatverb --enable-linginfo --enable-shared
-make STRIP=:
+make
 make hunspell
 
 %install
-%makeinstall_std
+%makeinstall_std STRIP=:
 mkdir -p %buildroot%_datadir/myspell
 cp -p he.dic %buildroot%_datadir/myspell/he_IL.dic
 cp -p he.aff %buildroot%_datadir/myspell/he_IL.aff
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
 install -pm644 LICENSE README WHATSNEW %buildroot%docdir/
+
+%check
+LD_LIBRARY_PATH=%buildroot%_libdir make test &> test.log && rc= || rc=$?
+cat test.log
+if grep -F FAILED test.log | grep -v '^Test 1/aspell/[89] '; then
+	rc=1
+fi
+[ -z "$rc" ]
 
 %files
 %_bindir/*
@@ -107,6 +117,9 @@ install -pm644 LICENSE README WHATSNEW %buildroot%docdir/
 %_datadir/myspell/*
 
 %changelog
+* Sun Jan 17 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3-alt1
+- 1.2 -> 1.3.
+
 * Mon Apr 02 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2-alt1
 - Updated to 1.2.
 
