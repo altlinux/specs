@@ -1,55 +1,115 @@
 Name: quota
-Version: 4.00
+Version: 4.03
 Release: alt1
 Epoch: 2
 
+%def_disable rpcsetquota
+
+# quota_nld.c, quotaio_xfs.h:       GPLv2
+# bylabel.c copied from util-linux: GPLv2+
+# svc_socket.c copied from glibc:   LGPLv2+
+# doc/quotas.ms, quotaops.c, quot.c, quotaon.c, edquota.c, quot.h, quota.c,
+# quotaio_v1.c:                     BSD
+License: BSD and LGPLv2+ and GPLv2+
 Summary: System administration tools for monitoring users' disk usage
-License: BSD-style
 Group: System/Configuration/Other
 Url: http://sourceforge.net/projects/linuxquota/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # http://downloads.sourceforge.net/linuxquota/quota-%version.tar.gz
-Source: quota-%version.tar
+# git://linuxquota.git.sourceforge.net/gitroot/linuxquota/linuxquota
+# git://git.altlinux.org/gears/q/quota.git
+Source: %name-%version-%release.tar
 
 Requires: vitmp
-Provides: rquotad = %version
-
-# Automatically added by buildreq on Thu Aug 21 2003
-BuildRequires: libe2fs-devel libwrap-devel
+BuildRequires: libe2fs-devel
 
 %description
 This package contains system administration tools for monitoring
-and limiting users' and or groups' disk usage, per filesystem.
+and limiting user and or group disk usage per file system.
+
+%package rpc
+Group: Networking/Other
+Summary: RPC quota daemon
+Requires: %name = %EVR
+Provides: rquotad = %version
+
+%description rpc
+rpc.rquotad is an rpc(3) server which returns quotas for a user
+of a local filesystem which is mounted by a remote machine over the NFS.
+
+%package devel
+Group: Development/C
+Summary: Remote quota protocol header files and documentation
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description devel
+This package contains remote quota protocol header files and documentation.
 
 %prep
-%setup -q
+%setup -n %name-%version-%release
 
 %build
 %autoreconf
 %configure \
-	--enable-rootsbin \
+	--enable-ext2direct \
+	--enable-werror \
 	--disable-bsd_behaviour \
-	--disable-strip-binaries \
+	--disable-ldapmail \
+	--disable-libwrap \
+	--disable-netlink \
+	--disable-silent-rules \
+	--disable-xfs-roothack \
+	%{subst_enable rpcsetquota} \
 	#
 %make_build
 
 %install
-%make_install install ROOTDIR=%buildroot
-ln -s quotaon.8 %buildroot%_man8dir/quotaoff.8
-chmod 755 %buildroot/sbin/*
+%makeinstall_std
+mkdir %buildroot/sbin
+mv %buildroot%_sbindir/quota{on,off,check} %buildroot/sbin/
+install -Dpm644 rpc-rquotad.service %buildroot%_unitdir/rpc-rquotad.service
+install -Dpm644 rpc-rquotad.sysconfig %buildroot/etc/sysconfig/rpc-rquotad
+%define docdir %_docdir/%name
+gzip -9n %buildroot%docdir/*.eps
+gzip -c9n Changelog > %buildroot%docdir/Changelog.gz
 
 %find_lang %name
 
+%post rpc
+%post_service rpc.rquotad
+
+%preun rpc
+%preun_service rpc.rquotad
+
 %files -f %name.lang
-%config(noreplace) %_sysconfdir/*
+%config(noreplace) /etc/*quota*
 /sbin/*
 %_bindir/*
 %_sbindir/*
-#%_includedir/rpcsvc/* # conflicts with glibc
-%_mandir/man?/*
+%exclude %_sbindir/rpc.rquotad
+%_man1dir/*
+%_man5dir/*
+%_man8dir/*
+%exclude %_man8dir/rpc.rquotad.8*
+%doc %docdir/
+
+%files rpc
+%config(noreplace) /etc/sysconfig/rpc-rquotad
+%_unitdir/rpc-rquotad.service
+%_sbindir/rpc.rquotad
+%_man8dir/rpc.rquotad.8*
+
+%files devel
+%_includedir/rpcsvc/*
+%_man3dir/*
 
 %changelog
+* Mon Jan 18 2016 Dmitry V. Levin <ldv@altlinux.org> 2:4.03-alt1
+- v4.00 -> v4.03-3-g861154e.
+- Moved rpc.rquotad to %name-rpc subpackage.
+- Moved %_includedir/rpcsvc/* to %name-devel subpackage.
+
 * Tue Feb 15 2011 Anton Protopopov <aspsk@altlinux.org> 2:4.00-alt1
 - quotasync.c: use GNU implementation of basename(3)
 - Add epoch:2 to prevent version conflicts with quota from branches
