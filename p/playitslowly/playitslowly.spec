@@ -1,5 +1,5 @@
 Name: playitslowly
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: Play back audio files at a different speed or pitch
 Group: Sound
@@ -56,6 +56,9 @@ Python module for playing audio files at a different speed or pitch
 %python_sitelibdir_noarch/%{name}*
 
 %changelog
+* Thu Dec 24 2015 Fr. Br. George <george@altlinux.ru> 1.5.0-alt1
+- Autobuild version bump to 1.5.0
+
 * Tue Apr 17 2012 Fr. Br. George <george@altlinux.ru> 1.4.0-alt1
 - Autobuild version bump to 1.4.0
 - Closes: 26850
