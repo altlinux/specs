@@ -2,7 +2,7 @@
 
 Name: libcroco
 Version: %ver_major.11
-Release: alt1
+Release: alt2
 
 Summary: A CSS2 parsing library
 License: LGPL
@@ -14,13 +14,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.0
 %define libxml2_ver 2.4.23
 
+%def_with apidocs
+
 Requires: glib2 >= %glib_ver
 Requires: libxml2 >= %libxml2_ver
 
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
 
-BuildRequires: gtk-doc doxygen zlib-devel
+BuildRequires: zlib-devel
+%{?_with_apidocs:BuildRequires: gtk-doc doxygen}
 
 %description
 Libcroco is a standalone CSS2 parsing and manipulation library.
@@ -37,6 +40,7 @@ Requires: libxml2-devel >= %libxml2_ver
 This package provides the necessary development libraries and include
 files to develop with %name.
 
+%if_with apidocs
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
@@ -45,6 +49,7 @@ Conflicts: %name < %version
 
 %description devel-doc
 This package contains development documentation for %name
+%endif
 
 %package -n css-utils
 Summary: Command line CSS tools
@@ -62,7 +67,7 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %configure --disable-static
 
 %make_build
-%make_build apidoc
+%{?_with_apidocs:%make_build apidoc}
 
 %install
 %makeinstall
@@ -79,15 +84,22 @@ for detecting errors both in CSS code and in the CSS parser itself.
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
+%if_with apidocs
 %doc docs/{apis/html,examples}
+%endif
 
+%if_with apidocs
 %files devel-doc
 %_datadir/gtk-doc/html/%name/
+%endif
 
 %files -n css-utils
 %_bindir/csslint-%ver_major
 
 %changelog
+* Mon Jan 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.11-alt2
+- mike: conditional apidocs build via the added switch (for bootstrap)
+
 * Thu Dec 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.11-alt1
 - 0.6.11
 
