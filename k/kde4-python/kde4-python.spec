@@ -9,8 +9,8 @@
 
 %define rname pykde4
 Name: kde4-python
-Version: 4.14.0
-Release: alt2
+Version: 4.14.3
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -20,6 +20,8 @@ License: LGPLv2+
 Source: %rname-%version.tar
 # Debian
 Patch10: make_pykde4_respect_sip_flags.diff
+# FC
+Patch20: pykde4-4.14.3-missing_symbols.patch
 # ALT
 Patch100: pykde4-4.8.0-alt-mobile.patch
 Patch101: pykde4-4.10.1-alt-sip-install-dir.patch
@@ -29,7 +31,7 @@ Patch101: pykde4-4.10.1-alt-sip-install-dir.patch
 #BuildRequires: boost-devel-headers gcc-c++ glib2-devel kde4pimlibs-devel libqt3-devel python-module-PyQt4-devel python-module-sip-devel rpm-build-ruby soprano zlib-devel-static
 BuildRequires(pre): kde4libs-devel python-module-sip-devel >= 4.12 python-module-PyQt4-devel >= 4.9.5 rpm-build-python
 BuildRequires: boost-devel gcc-c++ glib2-devel kde4pimlibs-devel libqt4-devel zlib-devel
-BuildRequires: libsoprano-devel soprano soprano-backend-redland
+#BuildRequires: libsoprano-devel soprano soprano-backend-redland
 BuildRequires: python-devel
 BuildRequires: libqscintilla2-qt4-devel
 
@@ -58,6 +60,7 @@ Python bindings for KDE4
 %prep
 %setup -n %rname-%version
 %patch10 -p1
+%patch20 -p1
 #
 %if_enabled desktop
     %ifarch %arm
@@ -92,6 +95,9 @@ Python bindings for KDE4
 
 
 %changelog
+* Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt1
+- fix to build
+
 * Thu Oct 02 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
 - apply patch for mobile builds
 
