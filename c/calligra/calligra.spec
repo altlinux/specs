@@ -6,7 +6,7 @@
 %define koffice_ver 4:2.3.70
 
 Name: calligra
-Version: 2.9.9
+Version: 2.9.10
 Release: alt1
 Epoch: 0
 %define libname lib%name
@@ -45,7 +45,7 @@ Patch103: alt-disable-products.patch
 #BuildRequires: attica-devel boost-devel-headers cups-filters cvs eigen2 gcc-c++ git-core glib2-devel jdkgcj kde4-okular-devel kde4edu-devel kde4pimlibs-devel libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel libkdcraw4-devel liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel libqca2-devel libqt3-devel libsqlite3-devel libxbase-devel mercurial openexr-devel postgresql-devel pstoedit python-module-distribute rpm-build-ruby soprano sqlite3 subversion valgrind zlib-devel-static
 BuildRequires: attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python rpm-build-ruby
 BuildRequires: kde4-okular-devel kde4edu-devel kde4pimlibs-devel libkdcraw4-devel kde-common-devel kde4base-workspace-devel
-BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel libjpeg-devel libopenjpeg-devel libtiff-devel pstoedit
+BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libGLEW-devel libgsl-devel libicu-devel libjpeg-devel libopenjpeg-devel libtiff-devel pstoedit
 BuildRequires: liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel
 BuildRequires: libqca2-devel libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
 BuildRequires: libvisio-devel libwpg-devel libwpd10-devel libwps-devel libodfgen-devel libetonyek-devel libxml2-devel
@@ -694,6 +694,9 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.10-alt1
+- new version
+
 * Mon Nov 09 2015 Sergey V Turchin <zerg@altlinux.org> 0:2.9.9-alt1
 - new version
 
