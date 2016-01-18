@@ -12,8 +12,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.5.2
-Release: alt2
+Version: 5.5.3
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -171,6 +171,9 @@ KF5 library
 
 
 %changelog
+* Thu Jan 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
+- new version
+
 * Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.2-alt2
 - setup default window buttons
 
