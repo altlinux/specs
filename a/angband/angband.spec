@@ -1,12 +1,12 @@
 Name: angband
-Version: 3.5.1
+Version: 4.0.4
 Release: alt1
 
 Summary: Angband is a "graphical" dungeon adventure game
 Summary(ru_RU.UTF-8): 	Angband - приключенческая игра.
 License: Moria/Angband license
 Group: Games/Adventure
-Source: %name-v%version.tar.gz
+Source: %name-%version.tar.gz
 Url: http://rephial.org
 
 # Automatically added by buildreq on Fri Sep 21 2012
@@ -24,7 +24,7 @@ Angband - приключенческая игра. Для изображения
 Игра является прямым потомком игры moria.
 
 %prep
-%setup -n %name-v%version
+%setup
 
 cat > %name.desktop <<EOF
 [Desktop Entry]
@@ -41,6 +41,7 @@ Categories=Game;AdventureGame;
 EOF
 
 %build
+%autoreconf
 %configure --enable-x11 --enable-curses --disable-sdl
 %make_build
 
@@ -59,6 +60,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Jan 18 2016 Fr. Br. George <george@altlinux.ru> 4.0.4-alt1
+- Autobuild version bump to 4.0.4
+
 * Mon Feb 02 2015 Fr. Br. George <george@altlinux.ru> 3.5.1-alt1
 - Autobuild version bump to 3.5.1
 
