@@ -1,6 +1,6 @@
 Name: cvs
 Version: 1.11.23
-Release: alt5
+Release: alt6
 
 Summary: A version control system
 License: GPLv2+
@@ -51,8 +51,10 @@ Patch38: cvs-1.11.23-alt-config.patch
 Patch39: cvs-1.11.23-alt-format.patch
 Patch40: cvs-1.11.23-alt-testsuite-fixes.patch
 Patch41: cvs-1.11.23-alt-testsuite-sleep.patch
+Patch42: cvs-1.11.23-up-texinfo-39166.patch
 
 Requires: mktemp >= 1:1.3.1, vitmp
+BuildRequires: makeinfo
 
 # The cvsadmin group check must be disabled to run CVS test suit.
 %{?!_without_check:%{?!_disable_check:BuildRequires: groupdel-cvsadmin}}
@@ -154,6 +156,7 @@ unset r
 %patch39 -p1
 %patch40 -p1
 %patch41 -p1
+%patch42 -p1
 
 find -type f \( -size 0 -o -name \*~ -o -name \*.orig -o -name .cvsignore \) -delete
 sed -i 's|${TMPDIR}/cvs-serv|${TMPDIR:-/tmp}/cvs-serv|g' src/sanity.sh
@@ -247,6 +250,11 @@ install -pm644 \
 %_datadir/cvs
 
 %changelog
+* Mon Jan 18 2016 Michael Shigorin <mike@altlinux.org> 1.11.23-alt6
+- Applied patch for upstream bug #39166:
+  doc/cvs.texinfo is missing @sp argument.
+- BR: makeinfo.
+
 * Mon Dec 05 2011 Dmitry V. Levin <ldv@altlinux.org> 1.11.23-alt5
 - Worked around timestamp issues in test suite.
 
