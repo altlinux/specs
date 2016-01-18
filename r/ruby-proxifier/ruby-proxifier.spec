@@ -1,13 +1,13 @@
-%define  pkgname rspec-core
+%define  pkgname proxifier
  
 Name: 	 ruby-%pkgname
-Version: 3.4.1
+Version: 1.0.3 
 Release: alt1
  
-Summary: RSpec runner and formatters
+Summary: Proxifier adds support for HTTP or SOCKS proxies and lets you force TCPSocket to use proxies
 License: MIT/Ruby
 Group:   Development/Ruby
-Url:     https://github.com/rspec/rspec-core
+Url:     https://github.com/samuelkadolph/ruby-proxifier
  
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -18,9 +18,16 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
 %description
-rspec-core provides the structure for writing executable examples of how
-your code should behave, and an rspec command with tools to constrain
-which examples get run and tailor the output.
+This gem was created for 2 purposes.
+
+First is to enable ruby programmers to use HTTP or SOCKS proxies
+interchangeably when using TCPSockets. Either manually with
+Proxifier::Proxy#open or by require "proxifier/env".
+
+The second purpose is to use ruby code that doesn't use proxies for
+users that have to use proxies.  The pruby and pirb executables are
+simple wrappers for their respective ruby executables that support
+proxies from environment variables.
 
 %package doc
 Summary: Documentation files for %name
@@ -50,14 +57,12 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %files
 %doc README*
+%_bindir/*
 %ruby_sitelibdir/*
  
 %files doc
 %ruby_ri_sitedir/*
  
 %changelog
-* Mon Jan 18 2016 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
-- New version
-
-* Wed May 20 2015 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
+* Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
 - Initial build for ALT Linux
