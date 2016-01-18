@@ -1,7 +1,7 @@
 Summary: A program for benchmarking mail servers
 Name: postal
-Version: 0.70
-Release: alt6
+Version: 0.72
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -42,6 +42,9 @@ mkdir -p %buildroot%_man8dir
 %_docdir/%name
 
 %changelog
+* Mon Jan 18 2016 Denis Smirnov <mithraen@altlinux.ru> 0.72-alt1
+- 0.72
+
 * Mon Jun 18 2012 Denis Smirnov <mithraen@altlinux.ru> 0.70-alt6
 - fix build
 
