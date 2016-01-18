@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.5.6
+Version: 3.5.7
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Mon Jan 18 2016 Terechkov Evgenii <evg@altlinux.org> 3.5.7-alt1
+- 3.5.7 (Space Oddity)
+
 * Mon Jan 12 2015 Terechkov Evgenii <evg@altlinux.org> 3.5.6-alt1
 - 3.5.6 (For Those About To Rock)
 
