@@ -20,8 +20,8 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 15.08.2
-Release: alt2
+Version: 15.12.1
+Release: alt1
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -315,6 +315,9 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.2-alt2
 - fix build requires
 
