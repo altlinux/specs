@@ -2,7 +2,7 @@
 
 %define rname kolourpaint
 Name: kde4-kolourpaint
-Version: 4.14.0
+Version: 15.12.1
 Release: alt1
 
 Group: Graphics
@@ -19,7 +19,7 @@ Source: %rname-%version.tar
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqimageblitz-devel libqt3-devel zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel zlib-devel kde-common-devel libqimageblitz-devel
-BuildRequires: libwebp-devel
+BuildRequires: libwebp-devel libksane4-devel
 
 %description
 An easy-to-use paint program designed for everyday tasks like drawing
@@ -66,6 +66,9 @@ KDE 4 core library.
 
 
 %changelog
+* Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Thu Aug 14 2014 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
