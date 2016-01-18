@@ -1,6 +1,6 @@
 Name: iksemel
 Version: 1.4
-Release: alt4.1
+Release: alt5
 
 Summary: iksemel Jabber Library
 Group: Development/C
@@ -63,6 +63,10 @@ rmdir %buildroot%_infodir
 %exclude %_libdir/libiksemel.a
 
 %changelog
+* Mon Jan 18 2016 Denis Smirnov <mithraen@altlinux.ru> 1.4-alt5
+- Rebuild with new gnutls
+- https://github.com/meduketto/iksemel/issues/45
+
 * Tue Dec 31 2013 Terechkov Evgenii <evg@altlinux.org> 1.4-alt4.1
 - Patch from gentoo to really build with gnutls
 
