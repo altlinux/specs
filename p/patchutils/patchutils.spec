@@ -1,5 +1,5 @@
 Name: patchutils
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Patchutils is a small collection of programs that operate on patch files
@@ -63,7 +63,6 @@ This version contains:
 
 %prep
 %setup -n %name-%version-%release
-bzip2 -9k ChangeLog
 
 %build
 %autoreconf
@@ -74,14 +73,18 @@ bzip2 -9k ChangeLog
 %makeinstall_std
 
 %check
-%make_build -k check
+# SMP incompatible checks.
+make -k check
 
 %files
 %_bindir/*
 %_mandir/man?/*
-%doc AUTHORS BUGS ChangeLog.bz2 NEWS* TODO
+%doc AUTHORS BUGS NEWS* TODO
 
 %changelog
+* Mon Jan 18 2016 Dmitry V. Levin <ldv@altlinux.org> 0.3.4-alt1
+- v0.3.3-1-gc6325fb -> 0.3.4-21-g8ef3e6b.
+
 * Tue Apr 16 2013 Dmitry V. Levin <ldv@altlinux.org> 0.3.3-alt1
 - Updated to v0.3.3-1-gc6325fb.
 
