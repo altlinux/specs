@@ -2,13 +2,13 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 7213
+%define svn 7318
 %define xde kde4
 %define XDE KDE4
 %define xapp kde4
 Name: %xde-%rname
-Version: 15.9.0.%svn
-Release: alt3
+Version: 16.1.0.%svn
+Release: alt2
 
 %define qt_bin_dir %_qt4dir/bin
 %define configure_qmake %qmake_qt4
@@ -162,6 +162,12 @@ done
 
 
 %changelog
+* Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 16.1.0.7318-alt2
+- disable reminder
+
+* Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 16.1.0.7318-alt1
+- new version
+
 * Fri Nov 27 2015 Sergey V Turchin <zerg@altlinux.org> 15.9.0.7213-alt3
 - allow smplayer themes
 
