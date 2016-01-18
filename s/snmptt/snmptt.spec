@@ -3,7 +3,7 @@
 
 Name: snmptt
 Version: 1.4
-Release: alt3
+Release: alt4
 Summary: An SNMP trap handler written in Perl
 
 Group: System/Servers
@@ -16,6 +16,9 @@ Source2: %name.init
 BuildArch: noarch
 
 BuildRequires: perl-Text-Balanced perl-Config-IniFiles
+
+# Needed for precreated users/group "snmp":
+Requires: net-snmp-common
 
 %description
 SNMPTT (SNMP Trap Translator) is an SNMP trap handler written in Perl
@@ -118,7 +121,7 @@ install -d %buildroot%_logdir/snmptt
 %_sbindir/snmptthandler
 %_datadir/%name
 %_unitdir/%name.service
-%attr(775,%name,root) %dir %_var/spool/%name/
+%attr(775,%name,snmp) %dir %_var/spool/%name/
 %attr(1770,root,%name) %dir %_logdir/%name/
 
 %doc ChangeLog COPYING README
@@ -130,6 +133,9 @@ install -d %buildroot%_logdir/snmptt
 %files net-snmp
 
 %changelog
+* Mon Jan 18 2016 Terechkov Evgenii <evg@altlinux.org> 1.4-alt4
+- Rebuild for work with net-snmp-5.7.3 and up
+
 * Wed Jan  6 2016 Terechkov Evgenii <evg@altlinux.org> 1.4-alt3
 - Change mode/owner of /var/log/snmptt to 1770/root:snmptt according to ALT Secure Packaging Policy
 
