@@ -1,5 +1,5 @@
 Name: whois
-Version: 5.2.10
+Version: 5.2.11
 Release: alt1
 
 Summary: Intelligent WHOIS client
@@ -42,6 +42,9 @@ install -Dpm644 whois.conf %buildroot/etc/whois.conf
 %config(noreplace) /etc/whois.conf
 
 %changelog
+* Sun Jan 17 2016 Dmitry V. Levin <ldv@altlinux.org> 5.2.11-alt1
+- v5.2.10-2-g9a1578a -> v5.2.11.
+
 * Wed Nov 25 2015 Dmitry V. Levin <ldv@altlinux.org> 5.2.10-alt1
 - Updated to v5.2.10-2-g9a1578a.
 
