@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -424,9 +424,12 @@ install -D %name.alternative %buildroot%_altdir/%name
 %files ipptool
 %_bindir/ipptool
 %_datadir/cups/ipptool
-%_man1dir/ipptool.1.gz
+%_man1dir/ipptool.*
 
 %changelog
+* Mon Jan 18 2016 Fr. Br. George <george@altlinux.ru> 2.1.0-alt2
+- Fix build
+
 * Wed Nov 11 2015 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
 - Version up
 - Refresh patches
