@@ -5,7 +5,7 @@
 
 Name: mono4
 Version: 4.3.1.1
-Release: alt4
+Release: alt6
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -104,6 +104,7 @@ This is dll needed for implementation of ASP.NET MVC and for web services too
 Summary: full runtime virtual package
 Group: Development/Other
 Requires: mono4-dyndata
+Requires: mono4-data
 Requires: mono4-mvc
 Requires: mono4-extras
 Requires: mono4-winfx
@@ -797,6 +798,9 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Mon Jan 18 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt6
+- Added missing mono4-data to mono4-full
+
 * Fri Jan 15 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt4
 - Fixed dependence on mono4-full
 
