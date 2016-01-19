@@ -1,7 +1,7 @@
 %define module_name	acpi_call
 %define module_version	0.1
 
-%define module_release alt3
+%define module_release alt4
 
 %define flavour		std-pae
 BuildRequires(pre): rpm-build-kernel
