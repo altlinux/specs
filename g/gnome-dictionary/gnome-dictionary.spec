@@ -3,7 +3,7 @@
 %define api_ver 1.0
 
 Name: gnome-dictionary
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Gnome client for MIT dictionary server
@@ -119,6 +119,9 @@ Dictionary Library.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jan 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
