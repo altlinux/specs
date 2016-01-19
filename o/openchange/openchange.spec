@@ -5,7 +5,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt4.zentyal17
+Release: alt4.zentyal18
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -54,12 +54,14 @@ BuildRequires: python-module-PasteDeploy
 # Patch11: openchange-0.9-generate-xml-doc.patch
 
 %description
-OpenChange aims to provide a portable Open Source implementation of Microsoft Exchange Server and Exchange protocols.
-Exchange is a groupware server designed to work with Microsoft Outlook, and providing features such as
-a messaging server, shared calendars, contact databases, public folders, notes and tasks.
+OpenChange aims to provide a portable Open Source implementation of
+Microsoft Exchange Server and Exchange protocols.  Exchange is a
+groupware server designed to work with Microsoft Outlook, and providing
+features such as a messaging server, shared calendars, contact
+databases, public folders, notes and tasks.
 
-OpenChange provides libraries to access Microsoft Exchange servers
-using native protocols.
+OpenChange provides libraries to access Microsoft Exchange servers using
+native protocols.
 
 %package -n libmapi
 Summary: libmapi is a Main client-side library
@@ -67,10 +69,9 @@ Group: System/Libraries
 Requires: samba-DC-libs
 
 %description -n libmapi
-Main client-side library. libmapi closely reflects the underlying protocol
-operations (Exchange RPC) being performed between the client and the
-server. For more information, consult the API documentation (either
-build yourself, or online at
+Main client-side library. libmapi closely reflects the underlying
+protocol operations (Exchange RPC) being performed between the client
+and the server.
 
 %package -n libmapiadmin
 Summary: Administration client library for the MAPI (Exchange/Outlook) protocol
@@ -78,7 +79,8 @@ Group: System/Libraries
 Requires: libmapi = %version-%release
 
 %description -n libmapiadmin
-Library that allows remote administration of MAPI (Exchange/Outlook) servers.
+Library that allows remote administration of MAPI (Exchange/Outlook)
+servers.
 
 %package -n libmapiproxy
 Summary: Proxy library for the MAPI (Exchange/Outlook) protocol
@@ -86,7 +88,8 @@ Group: System/Libraries
 Requires: libmapi = %version-%release
 
 %description -n libmapiproxy
-This is a library that allows proxying of the MAPI (Exchange/Outlook) protocol.
+This is a library that allows proxying of the MAPI (Exchange/Outlook)
+protocol.
 
 %package -n libmapistore
 Summary: Storage library for MAPI objects
@@ -102,10 +105,10 @@ Group: System/Libraries
 Requires: libmapi = %version-%release
 
 %description -n libocpf
-Library that reads and runs files in the OCPF scripting language,
-a domain-specific language for the MAPI protocol.
-Currently implemented features include sending and receiving mail and
-enumerating the address book.
+Library that reads and runs files in the OCPF scripting language, a
+domain-specific language for the MAPI protocol.  Currently implemented
+features include sending and receiving mail and enumerating the address
+book.
 
 %package devel
 Summary: Developer tools for OpenChange libraries
@@ -120,9 +123,9 @@ Requires: libmapistore = %version-%release
 Requires: samba-DC-devel
 
 %description devel
-This package provides the development tools and headers for
-OpenChange, providing libraries to access Microsoft Exchange servers
-using native protocols.
+This package provides the development tools and headers for OpenChange,
+providing libraries to access Microsoft Exchange servers using native
+protocols.
 
 %package client
 Summary: User tools for OpenChange libraries
@@ -144,7 +147,8 @@ Group: Development/Python
 Requires: libmapi = %version-%release
 
 %description -n python-module-%name
-This module contains a wrapper that allows the use of OpenChange via Python.
+This module contains a wrapper that allows the use of OpenChange via
+Python.
 
 %package server
 Summary: Server-side modules for OpenChange
@@ -163,8 +167,8 @@ Requires: python-module-pylons
 Requires: python-module-PasteScript
 
 %description ocsmanager
-This packages provides web services for OpenChange in the form of a Pylons
-application.
+This packages provides web services for OpenChange in the form of a
+Pylons application.
 
 %package rpcproxy
 Summary: OpenChange - RPC-over-HTTP proxy
@@ -206,11 +210,10 @@ rm -rf %buildroot%_datadir/setup
 
 mkdir %buildroot%_mandir
 cp -r doc/man/man1 %buildroot%_mandir
-# cp -r apidocs/man/man3 %buildroot%_mandir
 
 # Avoid a file conflict with man-pages package.
 # Page is still reachable as "mapi_obj_bookmark".
-rm -f %buildroot%_man3dir/index.3.gz
+rm -f %buildroot%_man3dir/index.3*
 
 %if_disabled python
 rm -rf %buildroot%python_sitelibdir/openchange
@@ -220,8 +223,6 @@ rm -rf %buildroot%python_sitelibdir/openchange
 # XXX There is no configure switch to disable the server
 #     libraries in OpenChange 0.9, so just delete them.
 rm -f %buildroot%_libdir/libmapiserver.so*
-#rm -f %buildroot%_libdir/libmapistore.so*
-#rm -f %buildroot%_libdir/mapistore_backends/mapistore_sqlite3.so
 rm -f %buildroot%_pkgconfigdir/libmapiserver.pc
 rm -f %buildroot%_bindir/check_fasttransfer
 %endif
@@ -264,7 +265,6 @@ popd
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
-# %_man3dir/*
 
 %files client
 %_bindir/*
@@ -305,6 +305,10 @@ popd
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal18
+- New version
+- Spec cleanup
+
 * Wed Jan 13 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal17
 - New version
 
