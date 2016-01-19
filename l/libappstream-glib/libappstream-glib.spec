@@ -6,7 +6,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -150,6 +150,8 @@ the functionality of the installed %_name library.
 %_pkgconfigdir/%_name.pc
 %_datadir/aclocal/appstream-xml.m4
 %_datadir/aclocal/appdata-xml.m4
+%_datadir/gettext/its/appdata.its
+%_datadir/gettext/its/appdata.loc
 
 %files gir
 %_typelibdir/AppStreamGlib-%api_ver.typelib
@@ -190,6 +192,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Tue Jan 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1
+- 0.5.6
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
 - 0.5.5
 
