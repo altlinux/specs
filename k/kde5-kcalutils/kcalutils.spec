@@ -1,7 +1,7 @@
 %define rname kcalutils
 
 Name: kde5-%rname
-Version: 15.12.0
+Version: 15.12.1
 Release: alt1
 %K5init altplace
 
@@ -60,11 +60,13 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data kcalendar
 #find_lang %name --with-kde --all-name
 
 #files common -f %name.lang
 %files common
 %doc COPYING*
+%_K5data/kcalendar/
 
 %files devel
 %_K5inc/kcalutils_version.h
@@ -74,9 +76,13 @@ KF5 library
 %_K5archdata/mkspecs/modules/qt_KCalUtils.pri
 
 %files -n libkf5calendarutils
+%_libdir/grantlee/5.?/kcalendar_grantlee_plugin.so
 %_K5lib/libKF5CalendarUtils.so.*
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Mon Dec 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - new version
 

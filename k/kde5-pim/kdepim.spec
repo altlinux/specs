@@ -46,7 +46,7 @@
 %define libkf5gravatar libkf5gravatar%pim_sover
 
 Name: kde5-pim
-Version: 15.12.0
+Version: 15.12.1
 Release: alt1
 %K5init altplace
 
@@ -913,6 +913,9 @@ done
 %_K5lib/libKF5Gravatar.so.*
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Mon Dec 21 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - new version
 
