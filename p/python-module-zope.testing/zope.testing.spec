@@ -1,10 +1,12 @@
 %define oname zope.testing
 
 %def_with python3
+%def_without check
+%def_enable light_version
 
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt1.git20150825
+Release: alt2.git20150825
 Summary: Zope testing helpers
 License: ZPL
 Group: Development/Python
@@ -17,17 +19,24 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-zope.exceptions
 BuildPreReq: python-module-zope.interface
+%if_disabled light_version
 BuildPreReq: python-module-zope.testrunner
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-zope.exceptions
 BuildPreReq: python3-module-zope.interface
+%if_disabled light_version
 BuildPreReq: python3-module-zope.testrunner
 BuildPreReq: python-tools-2to3
 %endif
+%endif
 
-%py_requires zope.exceptions zope.interface zope.testrunner
+%py_requires zope.exceptions zope.interface 
+%if_disabled light_version
+%py_requires zope.testrunner
+%endif
 
 %description
 This package provides a number of testing frameworks. It includes a
@@ -37,7 +46,10 @@ flexible test runner, and supports both doctest and unittest.
 %package -n python3-module-%oname
 Summary: Zope testing helpers (Python 3)
 Group: Development/Python3
-%py3_requires zope.exceptions zope.interface zope.testrunner
+%py3_requires zope.exceptions zope.interface 
+%if_disabled light_version
+%py3_requires zope.testrunner
+%endif
 
 %description -n python3-module-%oname
 This package provides a number of testing frameworks. It includes a
@@ -99,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 19 2016 Sergey Alembekov <rt@altlinux.ru> 4.4.0-alt2.git20150825
+- Rebuild light version to break cycle
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1.git20150825
 - Version 4.4.0
 
