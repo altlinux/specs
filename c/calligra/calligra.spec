@@ -7,7 +7,7 @@
 
 Name: calligra
 Version: 2.9.10
-Release: alt2
+Release: alt3
 Epoch: 0
 %define libname lib%name
 
@@ -282,6 +282,11 @@ cp -ar %SOURCE1 cmake/modules/
 #mv %buildroot/%_K4srv/calligra/* %buildroot/%_K4srv/
 mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 #mv %buildroot/%_K4xdg_apps/calligra/* %buildroot/%_K4xdg_apps/
+
+# remove InitialPreference
+for f in %buildroot/%_K4xdg_apps/*.desktop ; do
+    sed -i '/^InitialPreference=/d' $f
+done
 
 
 %files
@@ -694,6 +699,9 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.10-alt3
+- remove InitialPreference from desktop-files
+
 * Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.10-alt2
 - rebuild with new okular
 
