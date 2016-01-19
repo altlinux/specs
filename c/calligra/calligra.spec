@@ -7,7 +7,7 @@
 
 Name: calligra
 Version: 2.9.10
-Release: alt1
+Release: alt2
 Epoch: 0
 %define libname lib%name
 
@@ -694,6 +694,9 @@ mv %buildroot/%_K4srv/ServiceMenus/calligra/* %buildroot/%_K4srv/ServiceMenus/
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.10-alt2
+- rebuild with new okular
+
 * Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.10-alt1
 - new version
 
