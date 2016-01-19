@@ -9,7 +9,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        43.0.4
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -28,7 +28,7 @@ Patch5:         firefox-duckduckgo.patch
 Patch6:         firefox3-alt-disable-werror.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
-#Patch17:       firefox-disable-installer.patch
+Patch17:        firefox-mediasource-crash.patch
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1220399
 Patch20:        mozilla-bug-1220399-building-with-libproxy-support-fails.patch
@@ -120,6 +120,7 @@ tar -xf %SOURCE2
 %patch6  -p1
 %patch14 -p1
 %patch16 -p1
+%patch17 -p2
 %patch20 -p1
 
 #echo firefox_version > browser/config/version.txt
@@ -299,6 +300,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Jan 19 2016 Alexey Gladkov <legion@altlinux.ru> 43.0.4-alt2
+- Fix crash in media source (thx: glebfm@).
+
 * Fri Jan 08 2016 Alexey Gladkov <legion@altlinux.ru> 43.0.4-alt1
 - New release (43.0.4).
 - Fixed:
