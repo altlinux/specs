@@ -5,7 +5,7 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt8jpp
+Release: alt9jpp
 
 Requires: activemq
 Requires: apache-commons-math
@@ -25,7 +25,7 @@ Requires: jboss-web
 Requires: jetty
 Requires: maven
 Requires: maven-ant-tasks
-Requires: maven-indexer
+#Requires: maven-indexer
 Requires: maven-jflex-plugin
 Requires: maven-site-plugin
 Requires: mojo-signatures
@@ -49,6 +49,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt9jpp
+- updated dependencies
+
 * Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt8jpp
 - updated dependencies
 
