@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.1.5
-Release: alt1.dev0.git20150602
+Release: alt2.dev0.git20150602
 Summary: Scalable persistent object containers
 License: ZPL
 Group: Development/Python
@@ -21,7 +21,6 @@ BuildPreReq: python-module-zope.interface python-module-persistent
 BuildPreReq: python-module-sphinx-devel
 BuildPreReq: python-module-repoze.sphinx.autointerface
 BuildPreReq: python-module-transaction
-BuildPreReq: python-module-ZODB
 BuildPreReq: python-module-nose
 BuildPreReq: python-module-coverage
 %if_with python3
@@ -30,7 +29,7 @@ BuildPreReq: python3-devel python3-module-setuptools
 BuildPreReq: python3-module-zope.interface python3-module-persistent
 %endif
 
-%py_requires zope.interface ZODB
+%py_requires zope.interface 
 
 %description
 BTrees: scalable persistent components.
@@ -176,6 +175,9 @@ exit 1
 %endif
 
 %changelog
+* Tue Jan 19 2016 Sergey Alembekov <rt@altlinux.ru> 4.1.5-alt2.dev0.git20150602
+- remove ZODB cyrcular dependency
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.5-alt1.dev0.git20150602
 - Version 4.1.5.dev0
 
@@ -190,4 +192,3 @@ exit 1
 
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt1
 - Initial build for Sisyphus
-
