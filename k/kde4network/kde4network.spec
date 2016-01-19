@@ -10,11 +10,11 @@
 
 %define rname kdenetwork
 %define major 15
-%define minor 08
-%define bugfix 0
+%define minor 12
+%define bugfix 1
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -54,7 +54,8 @@ Patch23: kdenetwork-4.10.2-alt-samba-sharing.patch
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ libqca2-devel libgmp-devel
 BuildRequires: libvncserver-devel libgpgme-devel libexpat-devel
-BuildRequires: soprano soprano-backend-redland libsoprano-devel
+#BuildRequires: soprano soprano-backend-redland libsoprano-devel
+#BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 BuildRequires: libortp-devel >= 0.13
 BuildRequires: libspeex-devel libalsa-devel libssl-devel
 BuildRequires: libmediastreamer-devel
@@ -69,7 +70,7 @@ BuildRequires: rpm-macros-browser-plugins
 BuildRequires: libktorrent-devel
 BuildRequires: kde4libs-devel kde4pimlibs-devel
 BuildRequires: kde4base-workspace-devel kde4base-devel
-BuildRequires: shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: shared-desktop-ontologies-devel
 BuildRequires: libtelepathy-qt4-devel kde4-ktp-common-internals-devel
 
 %description
@@ -87,7 +88,7 @@ Networking applications for the K Desktop Environment.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kde-common >= %major.%minor
+Requires: kde-common >= 4
 Conflicts: kdenetwork-common <= 3.5.12-alt1
 %description common
 %name common package
@@ -193,7 +194,7 @@ based on %name.
 %patch18 -p1
 %patch19 -p1
 #%patch20 -p1
-%patch21 -p1
+#%patch21 -p1
 %patch22 -p1
 %patch23 -p0
 
@@ -377,6 +378,12 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
+- fix requires
+
+* Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
