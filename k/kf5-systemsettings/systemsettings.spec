@@ -1,11 +1,11 @@
 %define rname systemsettings
 
 %define systemsettingsview_sover 3
-%define libsystemsettingsview libsystemsettingsview
+%define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: kf5-%rname
 Version: 5.5.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -50,6 +50,8 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
+Provides: libsystemsettingsview = %version-%release
+Obsoletes: libsystemsettingsview < %version-%release
 %description -n %libsystemsettingsview
 KF5 library
 
@@ -91,6 +93,9 @@ KF5 library
 %_K5lib/libsystemsettingsview.so.%systemsettingsview_sover
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt2
+- fix library package name
+
 * Thu Jan 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
 - new version
 
