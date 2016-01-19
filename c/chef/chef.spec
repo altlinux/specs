@@ -1,6 +1,6 @@
 
 Name:    chef
-Version: 12.5.1
+Version: 12.6.0
 Release: alt1
 
 Summary: Clients for the chef systems integration framework
@@ -38,8 +38,10 @@ BuildRequires: ruby-mixlib-shellout >= 2.0.0
 BuildRequires: ruby-net-ssh >= 2.6
 BuildRequires: ruby-net-ssh-multi >= 1.1
 BuildRequires: ruby-plist >= 3.1.0
+BuildRequires: ruby-proxifier >= 1.0
 BuildRequires: ruby-rack
 BuildRequires: ruby-rest-client
+BuildRequires: ruby-rspec-core ruby-rspec-expectations ruby-rspec-mocks
 BuildRequires: ruby-syslog-logger >= 1.6.0
 BuildRequires: ruby-ucf
 BuildRequires: ruby-ffi-yajl >= 2.2
@@ -149,6 +151,9 @@ getent group _chef  >/dev/null || groupadd -r _chef
 getent passwd _chef >/dev/null || useradd  -r -g _chef -d %_var/lib/chef -s /sbin/nologin -c "Opscode Chef Daemon" _chef
 
 %changelog
+* Mon Jan 18 2016 Andrey Cherepanov <cas@altlinux.org> 12.6.0-alt1
+- New version
+
 * Mon Oct 19 2015 Andrey Cherepanov <cas@altlinux.org> 12.5.1-alt1
 - New version
 - Package chef-config as separate package (need ro build ohai)
