@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	4.4
 %define kernel_sublevel	.0
@@ -545,6 +545,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Jan 19 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.0-alt2
+- CVE-2016-0728 fixed
+
 * Mon Jan 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.0-alt1
 - 4.4.0
 
