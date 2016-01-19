@@ -4,7 +4,7 @@
 %define lngg Kazakh
 
 Name: kde4-i18n-%lng
-Version: 15.08.3
+Version: 15.12.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -98,6 +98,9 @@ fi
 
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
