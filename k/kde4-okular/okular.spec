@@ -1,4 +1,5 @@
 %def_disable msits
+%def_disable activities
 
 %add_findpackage_path %_kde4_bindir
 
@@ -8,7 +9,7 @@ Name: kde4-okular
 %define minor 12
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Office
 Summary: KDE document viewer
@@ -31,7 +32,10 @@ BuildRequires: ebook-tools-devel gcc-c++ glib2-devel kde4libs-devel libdjvu-deve
 BuildRequires: libpoppler-qt4-devel libqca2-devel libqimageblitz-devel libspectre-devel zlib-devel
 BuildRequires: libkscreen-devel qjson-devel
 BuildRequires: libtiff-devel libjpeg-devel
-BuildRequires: kde-common-devel kde4-plasma-mobile-devel kde4-kactivities-devel libkexiv24-devel
+BuildRequires: kde-common-devel kde4-plasma-mobile-devel libkexiv24-devel
+%if_enabled activities
+BuildRequires: kde4-kactivities-devel
+%endif
 %if_enabled msits
 BuildRequires: libchm-devel
 %endif
@@ -132,6 +136,9 @@ Development files for %name
 
 
 %changelog
+* Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
+- build without activities support
+
 * Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
