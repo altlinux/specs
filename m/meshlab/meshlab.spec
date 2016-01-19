@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libGLU-devel libblas-devel libkyotocabinet-devel libode-d
 Summary:	A system for processing and editing unstructured 3D triangular meshes
 Name:		meshlab
 Version:	1.3.3
-Release:	alt2
+Release:	alt2.1
 URL:		http://meshlab.sourceforge.net/
 License:	GPLv2+ and BSD and Public Domain
 Group:		Graphics
@@ -215,6 +215,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/meshlab.desktop
 %{_datadir}/pixmaps/meshlab.png
 
 %changelog
+* Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt2.1
+- rebuild with new version of libmuparser
+
 * Fri May 16 2014 Dmitry Derjavin <dd@altlinux.org> 1.3.3-alt2
 - i586 build fixed.
 

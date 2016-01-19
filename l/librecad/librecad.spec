@@ -1,9 +1,9 @@
 Name:     librecad
-Version:  2.0.7
+Version:  2.0.9
 Release:  alt1
 
 Summary:  Computer-aided design (CAD) system
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Url: 	  http://www.librecad.org
 License:  GPLv2
@@ -17,9 +17,6 @@ Requires: librecad-data
 #Suggests:	librecad-doc
 #Suggests:	librecad-plugins
 
-# Removed manually: git-core glibc-devel-static 
-# Automatically added by buildreq on Sat Jun 02 2012
-# optimized out: fontconfig libfreetype-devel libqt4-clucene libqt4-core libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-sql libqt4-sql-sqlite libstdc++-devel
 BuildRequires: boost-devel-headers gcc-c++ libmuparser-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 phonon-devel
 
 %description
@@ -124,6 +121,12 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Mon Jan 18 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.9-alt1
+- New version
+
+* Thu Aug 27 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.8-alt1
+- New version
+
 * Fri Mar 06 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.7-alt1
 - New vesion
 
