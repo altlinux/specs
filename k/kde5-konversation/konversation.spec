@@ -2,7 +2,7 @@
 %define rname konversation
 Name: kde5-%rname
 Version: 1.6
-Release: alt1
+Release: alt2
 %define beta %nil
 %K5init altplace
 
@@ -63,5 +63,8 @@ and much more.
 
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 1.6-alt2
+- fix docs placement
+
 * Mon Jun 29 2015 Sergey V Turchin <zerg@altlinux.org> 1.6-alt1
 -  initial build
