@@ -1,6 +1,6 @@
 Name: bind
 Version: 9.9.8
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -450,6 +450,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 9.9.8-alt2
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.8-P2/bind-9.9.8-P3.tar.gz
+
 * Thu Dec 17 2015 Fr. Br. George <george@altlinux.ru> 9.9.8-alt1
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.8-P2/bind-9.9.8-P2.tar.gz
 
