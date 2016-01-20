@@ -1,12 +1,12 @@
 Name: gperftools
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Provides: google-perftools
 
 Summary: Performance tools for C++
 Group: Development/Other
-Url: http://code.google.com/p/gperftools/
+Url: http://github.com/gperftools
 License: BSD
 
 Source: %name-%version.tar.gz
@@ -52,13 +52,11 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 
 %install
 %make_install DESTDIR=%buildroot install
-#mkdir -p %buildroot%_man1dir
-#mv %buildroot%prefix/man/man1/* %buildroot%_man1dir
 
 %files
 %doc AUTHORS COPYING ChangeLog INSTALL NEWS README TODO doc/*.html doc/*.gif doc/*.png doc/*.txt doc/*.dot
 %_bindir/pprof
-%_man1dir/pprof.1.gz
+%_man1dir/pprof.*
 
 %files -n lib%name
 %_libdir/lib*.so.*
@@ -70,6 +68,9 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 2.4-alt2
+- Fix build
+
 * Mon Sep 14 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4-alt1
 - Updated to 2.4.
 
