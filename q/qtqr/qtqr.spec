@@ -1,6 +1,6 @@
 Name:		qtqr
 Version:	1.2
-Release:	alt2
+Release:	alt3
 Summary:	GUI that makes easy creating and decoding the QR Codes
 Summary(ru_RU.UTF8): Графическая оболочка для создания и распознавания QR-кодов
 LIcense:	GPLv3
@@ -50,7 +50,7 @@ for N in `grep -rl '^import Image' *`; do
 	sed -i 's/^import Image/from PIL import Image/g' "$N"
 done
 
-for N in 16 24 32 48 128; do convert logo_a_la_faenza.svg $N.png; done
+for N in 16 24 32 48 128; do convert logo_a_la_faenza.svg -resize ${N}x${N} $N.png; done
 
 cat > %name.desktop <<@@@
 [Desktop Entry]
@@ -102,6 +102,9 @@ install -D %name.sh %buildroot%_bindir/%name
 
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 1.2-alt3
+- Correct icons size
+
 * Mon Dec 22 2014 Fr. Br. George <george@altlinux.ru> 1.2-alt2
 - Fix translation
 - Fix new PIL import syntax
