@@ -1,6 +1,6 @@
 Name: xclipboard
 Version: 1.1.3
-Release: alt1
+Release: alt2
 Summary: X clipboard client
 Group: System/X11
 Url: http://xorg.freedesktop.org
@@ -39,10 +39,12 @@ window.
 %_bindir/xclipboard
 %_bindir/xcutsel
 %_x11appconfdir/XClipboard
-%_mandir/man1/xclipboard.1.gz
-%_mandir/man1/xcutsel.1.gz
+%_man1dir/*
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 1.1.3-alt2
+- Fix build
+
 * Mon Oct 14 2013 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
 - Autobuild version bump to 1.1.3
 
