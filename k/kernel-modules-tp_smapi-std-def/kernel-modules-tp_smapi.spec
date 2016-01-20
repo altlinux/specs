@@ -1,6 +1,6 @@
 %define module_name             tp_smapi
 %define module_version          0.41
-%define module_release alt2
+%define module_release alt3
 
 %define flavour		std-def
 BuildRequires(pre): rpm-build-kernel
@@ -68,6 +68,9 @@ cp -a {thinkpad_ec,tp_smapi,hdaps}.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 20 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.41-alt3
+- Bumped release.
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.41-alt2
 - new template
