@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.5.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Requires: %name-common = %version-%release
 
 Source: %rname-%version.tar
+Patch1: alt-fallback-kde4.patch
 
 # Automatically added by buildreq on Wed Mar 25 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
@@ -59,6 +60,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -97,6 +99,9 @@ KF5 library
 #%_K5lib/libkhelpcenter.so.*
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt2
+- add fallback to KDE4 docs
+
 * Thu Jan 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
 - new version
 
