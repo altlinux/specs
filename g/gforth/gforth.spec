@@ -1,7 +1,7 @@
 Name: gforth
 %define Name GNU Forth
 Version: 0.7.3
-Release: alt1
+Release: alt2
 License: %gpl3plus
 Group: Development/Other
 Summary: GNU implementation of the ANS Forth language
@@ -26,12 +26,13 @@ Patch10: 10-engine-subst.patch
 Patch11: 11-static-newline.patch
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Sun Apr 14 2013
-# optimized out: emacs-base emacs-common gnu-config libgpg-error libp11-kit tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base
-BuildRequires: emacs24-speedbar emacs-leim emacs-nox libffi-devel libltdl7-devel openssh-clients
-
-BuildRequires: %_bindir/emacs texlive-base
 Requires: %name-doc-txt
+
+# Automatically added by buildreq on Wed Jan 20 2016
+# optimized out: emacs-base emacs-common gnu-config libX11-locales libp11-kit perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
+BuildRequires: emacs-nox emacs24-speedbar libffi-devel libltdl7-devel makeinfo openssh-clients texi2dvi
+
+BuildRequires: texlive-latex-recommended
 
 %description
 %Name is a fast and portable implementation of the ANS Forth
@@ -378,6 +379,9 @@ cd %buildroot%_datadir/%name/%version
 %_emacslispdir/*.el
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 0.7.3-alt2
+- Fix build
+
 * Wed Aug 20 2014 Fr. Br. George <george@altlinux.ru> 0.7.3-alt1
 - Autobuild version bump to 0.7.3
 - Fix patch
