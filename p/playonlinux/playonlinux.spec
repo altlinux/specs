@@ -2,7 +2,7 @@
 
 Name:    playonlinux
 Version: 4.2.10
-Release: alt1
+Release: alt2
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -23,6 +23,7 @@ Requires: cabextract
 Requires: xterm
 Requires: binutils
 Requires: python-module-wx2.9
+Requires: icoutils
 
 %add_findreq_skiplist %_datadir/%name/bash/*
 %add_findreq_skiplist %_datadir/%name/lib/scripts.lib
@@ -57,6 +58,8 @@ cp %SOURCE2 %buildroot%_desktopdir/%oname.desktop
 cp etc/%name.png %buildroot%_pixmapsdir/%name.png
 cp etc/PlayOnLinux.directory %buildroot%_datadir/desktop-directories/%oname.directory
 rm -f %buildroot%_datadir/%name/bin/smile
+mkdir -p %buildroot%_libdir/%name
+ln -sf /lib/libldap-2.4.so.2 %buildroot%_libdir/%name/libldap-2.4.so.2
 
 %files
 %doc LICENCE CHANGELOG.md README.md TRANSLATORS
@@ -65,8 +68,12 @@ rm -f %buildroot%_datadir/%name/bin/smile
 %_desktopdir/%oname.desktop
 %_pixmapsdir/%name.png
 %_datadir/desktop-directories/%oname.directory
+%_libdir/%name/libldap-2.4.so.2
 
 %changelog
+* Tue Jan 19 2016 Denis Medvedev <nbr@altlinux.org> 4.2.10-alt2
+- icoutils and libldap dependency added for launcher of WoT
+
 * Sat Jan 16 2016 Denis Medvedev <nbr@altlinux.org> 4.2.10-alt1
 - New version
 
