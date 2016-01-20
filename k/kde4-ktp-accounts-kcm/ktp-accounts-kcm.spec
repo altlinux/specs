@@ -6,7 +6,7 @@
 %define rname ktp-accounts-kcm
 Name: kde4-ktp-accounts-kcm
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Configuration Module for Telepathy Instant Messaging Accounts
@@ -35,7 +35,7 @@ to manipulate the accounts.
 Summary: Common empty package for %rname
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kde-common
+Requires: kde-common kde4-ktp-common-internals-common
 %description common
 Common empty package for %rname
 
@@ -87,6 +87,12 @@ done
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
+- fix requires
+
+* Fri Oct 31 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt0.M70P.1
+- built for M70P
+
 * Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 
