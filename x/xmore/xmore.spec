@@ -1,11 +1,10 @@
 Name: xmore
 Version: 1.0.2
-Release: alt1.1
+Release: alt2
 Summary: Plain text display program for the X Window System
 Group: System/X11
 Source: %name-%version.tar.bz2
 License: MIT
-Packager: Fr. Br. George <george@altlinux.ru>
 
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel pkg-config xorg-xproto-devel
@@ -30,9 +29,12 @@ Xmore is a plain text display program for the X Window System.
 %files
 %_bindir/xmore
 %_x11appconfdir/XMore
-%_mandir/man1/xmore.1.gz
+%_mandir/man1/xmore.*
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 1.0.2-alt2
+- Fix build
+
 * Tue Apr 12 2011 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1.1
 - Recalculate buildreq
 
