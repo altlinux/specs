@@ -1,6 +1,6 @@
 Name: pekwm
 Version: 0.1.17
-Release: alt1
+Release: alt2
 Summary: Fast & lightweight window manager
 License: GPLv2
 Group: Graphical desktop/Other
@@ -47,10 +47,13 @@ install -D %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_sysconfdir/%name
 %_sysconfdir/X11/wmsession.d/*
 %_datadir/%name
-%_man1dir/%name.1.gz
+%_man1dir/%name.*
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 0.1.17-alt2
+- Fix build
+
 * Sun Sep 15 2013 Fr. Br. George <george@altlinux.ru> 0.1.17-alt1
 - Autobuild version bump to 0.1.17
 - Add selectwm icon
