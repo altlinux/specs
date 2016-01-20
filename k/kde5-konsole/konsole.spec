@@ -4,8 +4,8 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 15.12.0
-Release: alt2
+Version: 15.12.1
+Release: alt1
 %K5init
 
 Group: Terminals
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Fri Dec 25 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt2
 - fix default font
 

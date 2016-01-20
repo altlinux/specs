@@ -19,7 +19,7 @@
 
 
 Name: kde5-%rname
-Version: 15.12.0
+Version: 15.12.1
 Release: alt1
 %K5init altplace
 
@@ -181,6 +181,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - new version
 

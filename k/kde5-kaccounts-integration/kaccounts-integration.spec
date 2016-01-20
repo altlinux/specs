@@ -3,7 +3,7 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 15.12.0
+Version: 15.12.1
 Release: alt1
 %K5init altplace
 
@@ -93,6 +93,9 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %_K5srv/kded/accounts.desktop
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - new version
 

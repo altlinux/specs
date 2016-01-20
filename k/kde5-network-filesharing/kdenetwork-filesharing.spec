@@ -1,7 +1,8 @@
 %define rname kdenetwork-filesharing
+%define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 15.12.0
+Version: 15.12.1
 Release: alt1
 %K5init
 
@@ -9,6 +10,8 @@ Group: Graphical desktop/KDE
 Summary: Fileshare Konqueror Directory Properties Page
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+#Requires: %pkg_samba
 
 Source: %rname-%version.tar
 Patch1: alt-allow-guest.patch
@@ -33,7 +36,7 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 %build
 %K5build \
     -DSAMBA_INSTALL=OFF \
-    -DSAMBA_PACKAGE_NAME=samba \
+    -DSAMBA_PACKAGE_NAME=%pkg_samba \
     #
 
 %install
@@ -46,5 +49,8 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 %_K5srv/*shareplugin.desktop
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - initial build

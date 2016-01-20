@@ -1,7 +1,7 @@
 %define rname libkipi
 
 Name: kde5-%rname
-Version: 15.12.0
+Version: 15.12.1
 Release: alt1
 %K5init altplace
 
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
-
+#BuildRequires: kde5-libkexiv2-devel kde5-libkdcraw-devel
 
 %description
 KIPI Library (KDE Image Program Interface)
@@ -74,5 +74,8 @@ KF5 library
 %_K5lib/libKF5Kipi.so.*
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Wed Sep 30 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - initial build
