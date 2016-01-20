@@ -4,12 +4,14 @@
 %define rname ktp-approver
 Name: kde4-ktp-approver
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Channel Approver for Telepathy
 Url: https://projects.kde.org/projects/extragear/network/telepathy/%rname
 License: LGPLv2+
+
+Requires: kde4-ktp-common-internals-common
 
 Source0: %rname-%version.tar
 
@@ -23,27 +25,6 @@ BuildRequires: kde-common-devel
 %description
 %{summary}
 
-%package common
-Summary: Common empty package for %rname
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: kde-common
-%description common
-Common empty package for %rname
-
-%package -n libktpaccountskcminternal4
-Summary: %name library
-Group: System/Libraries
-Requires: %name-common >= %version-%release
-%description -n libktpaccountskcminternal4
-%name library.
-
-%package devel
-Group: Development/KDE and QT
-Summary: Development files for %name
-Requires: libtelepathy-qt4-devel
-%description devel
-%summary.
 
 %prep
 %setup -qn %rname-%version
@@ -63,11 +44,13 @@ Requires: libtelepathy-qt4-devel
 %_K4conf/ktp_approverrc
 %_K4dbus_services/org.freedesktop.Telepathy.Client.KTp.Approver.service
 
-#%files devel
-#%_K4link/lib*.so
-#%_K4includedir/KTp/
-
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
+- fix requires
+
+* Fri Oct 31 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt0.M70P.1
+- built for M70P
+
 * Tue Oct 21 2014 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 
