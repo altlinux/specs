@@ -1,6 +1,6 @@
 Name: oclock
 Version: 1.0.3
-Release: alt1
+Release: alt2
 Summary: Round X clock
 Group: System/X11
 Url: http://xorg.freedesktop.org
@@ -32,9 +32,12 @@ Oclock simply displays the current time on an analog display.
 %doc README
 %_bindir/oclock
 %_x11appconfdir/Clock-color
-%_mandir/man1/oclock.1.gz
+%_man1dir/*
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 1.0.3-alt2
+- Fix build
+
 * Thu Mar 01 2012 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 - BuildRequires updated
