@@ -1,6 +1,6 @@
 Name: xload
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Summary: System load average display for X
 Group: System/X11
 Url: http://xorg.freedesktop.org
@@ -36,9 +36,12 @@ load average.
 %doc README
 %_bindir/xload
 %_x11appconfdir/XLoad
-%_mandir/man1/xload.1.gz
+%_mandir/man1/xload.*
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 1.1.2-alt2
+- Fix build
+
 * Thu Aug 22 2013 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 
