@@ -1,7 +1,7 @@
 %define nam kobodl
 Name: KoboDeluxe
 Version: 0.5.1
-Release: alt4
+Release: alt5
 Summary: 3'rd person scrolling 2D shooter
 Group: Games/Arcade
 License: GPLv2+
@@ -58,12 +58,15 @@ install -p -m 644 %SOURCE1 \
 %doc README.xkobo TODO
 %attr(2711,root,games) %_bindir/%nam
 %_datadir/kobo-deluxe
-%_mandir/man6/%nam.6.gz
+%_man6dir/%nam.*
 %config(noreplace) %attr(0775,root,games) %_localstatedir/kobo-deluxe/scores
 %_desktopdir/%name.desktop
 %_niconsdir/%name.png
 
 %changelog
+* Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 0.5.1-alt5
+- Fix build
+
 * Tue Apr 05 2011 Fr. Br. George <george@altlinux.ru> 0.5.1-alt4
 - Forbidden requires eliminated
 
