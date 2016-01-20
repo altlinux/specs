@@ -2,8 +2,8 @@
 %define Name GParted
 
 Name: gparted
-Version: 0.24.0
-Release: alt2
+Version: 0.25.0
+Release: alt1
 
 Summary: %Name Partition Editor
 Summary(ru_RU.UTF-8): Редактор разделов %Name
@@ -13,7 +13,7 @@ Group: System/Configuration/Hardware
 URL: http://%name.sourceforge.net/
 
 #Source: %name-%version.tar
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: %name-pam
 Source2: %name-security
 
@@ -93,6 +93,9 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Jan 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
+- 0.25.0
+
 * Sun Nov 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt2
 - improved consolehelper support (ALT #31487)
 
