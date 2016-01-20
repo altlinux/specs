@@ -5,8 +5,10 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt9jpp
+Release: alt10jpp
 
+Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
+Provides: osgi(org.objectweb.asm) = 3.2.0
 Requires: activemq
 Requires: apache-commons-math
 Requires: arquillian-osgi
@@ -29,7 +31,7 @@ Requires: maven-ant-tasks
 Requires: maven-jflex-plugin
 Requires: maven-site-plugin
 Requires: mojo-signatures
-Requires: plexus-container-default
+#Requires: plexus-container-default
 Requires: springframework
 Requires: tomcat6
 Requires: weld-api
@@ -49,6 +51,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt10jpp
+- updated dependencies
+
 * Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt9jpp
 - updated dependencies
 
