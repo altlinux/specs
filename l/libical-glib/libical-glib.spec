@@ -4,7 +4,7 @@
 %def_enable gtk_doc
 
 Name: libical-glib
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An iCalendar library based on libical
@@ -106,6 +106,9 @@ This package contains development documentation for %name library.
 %endif
 
 %changelog
+* Wed Jan 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Sun May 03 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
