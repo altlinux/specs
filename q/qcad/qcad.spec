@@ -1,7 +1,7 @@
 Name: 	 qcad
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
-Version: 3.12.4.2
+Version: 3.12.4.9
 Release: alt1
 
 Url: 	 http://www.ribbonsoft.com/qcad.html
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: qcad-%version.tar
 Source1: qcad.desktop
+Patch:   %name-%version-%release.patch
 
 BuildRequires: gcc-c++ qt5-base-devel python
 BuildRequires: desktop-file-utils
@@ -45,6 +46,7 @@ QCad это профессиональная CAD система. С QCad вы м
 
 %prep
 %setup -q
+%patch -p1
 %qmake_qt5
 #lupdate-qt5 %name.pro
 
@@ -110,6 +112,10 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Jan 20 2016 Andrey Cherepanov <cas@altlinux.org> 3.12.4.9-alt1
+- New version
+- Disable debug output in runtime
+
 * Fri Dec 18 2015 Andrey Cherepanov <cas@altlinux.org> 3.12.4.2-alt1
 - New version
 
