@@ -1,6 +1,6 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 
-%define pkg_version 5.3
+%define pkg_version 5.3.1
 %define api_ver 0.6.4
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
@@ -23,7 +23,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1
+Release: alt2
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -395,6 +395,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
 %endif
 
 %changelog
+* Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 5.3.1-alt2
+- 5.3.1
+
 * Fri Dec 18 2015 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
 - 5.3
 
