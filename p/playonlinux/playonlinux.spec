@@ -2,7 +2,7 @@
 
 Name:    playonlinux
 Version: 4.2.10
-Release: alt2
+Release: alt3
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -60,6 +60,9 @@ cp etc/PlayOnLinux.directory %buildroot%_datadir/desktop-directories/%oname.dire
 rm -f %buildroot%_datadir/%name/bin/smile
 mkdir -p %buildroot%_libdir/%name
 ln -sf /lib/libldap-2.4.so.2 %buildroot%_libdir/%name/libldap-2.4.so.2
+ln -sf /usr/lib/alsa-lib/libasound_module_conf_pulse.so %buildroot%_libdir/%name/libasound_module_conf_pulse.so
+ln -sf /usr/lib/libpulse.so.0 %buildroot%_libdir/%name/libpulse.so.0
+ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 
 %files
 %doc LICENCE CHANGELOG.md README.md TRANSLATORS
@@ -68,9 +71,12 @@ ln -sf /lib/libldap-2.4.so.2 %buildroot%_libdir/%name/libldap-2.4.so.2
 %_desktopdir/%oname.desktop
 %_pixmapsdir/%name.png
 %_datadir/desktop-directories/%oname.directory
-%_libdir/%name/libldap-2.4.so.2
+%_libdir/%name/*
 
 %changelog
+* Thu Jan 21 2016 Denis Medvedev <nbr@altlinux.org> 4.2.10-alt3
+- Added i586 pulsaudio and nss libs for normal functioning of WoT
+
 * Tue Jan 19 2016 Denis Medvedev <nbr@altlinux.org> 4.2.10-alt2
 - icoutils and libldap dependency added for launcher of WoT
 
