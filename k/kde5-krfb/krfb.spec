@@ -4,8 +4,8 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: kde5-%rname
-Version: 15.12.0
-Release: alt2
+Version: 15.12.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -87,6 +87,9 @@ KF5 library
 %_K5lib/libkrfbprivate.so.*
 
 %changelog
+* Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Tue Jan 12 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt2
 - fix packaging
 
