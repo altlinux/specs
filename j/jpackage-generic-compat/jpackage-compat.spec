@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -10,7 +10,6 @@ Url: http://www.sisyphus.ru/packages/viy/srpms
 BuildPreReq: rpm-build-java /proc
 
 Requires: docbook-style-xsl
-#add_findreq_skiplist /usr/share/sgml/docbook/xsl-stylesheets
 
 # sun java requires it
 Requires: /proc
@@ -35,7 +34,7 @@ Group: Development/Java
 
 Requires(pre): java-devel = 1.5.0 java = 1.5.0
 # hack
-Conflicts: java-devel > 1.5.99 java > 1.5.99
+Conflicts: java-devel > 1.5.99 java > 1.5.99 java-headless > 1.5.99
 
 Requires: jpackage-generic-compat
 Obsoletes: jpackage-1.5.0-core < %version-%release
@@ -51,35 +50,47 @@ Group: Development/Java
 
 Requires(pre): java-devel = 1.6.0 java = 1.6.0
 # hack
-Conflicts: java-devel > 1.6.99 java > 1.6.99
+Conflicts: java-devel > 1.6.99 java > 1.6.99 java-headless > 1.6.99
 
 Requires: jpackage-generic-compat
 Obsoletes: jpackage-1.6.0-core < %version-%release
-
-#Provides: jpackage-1.5-compat = %version-%release
-#Provides: jpackage-1.4-compat = %version-%release
-#Provides: jpackage-compat = %version-%release
-#Obsoletes: jpackage-1.4-compat < %version
-#Obsoletes: jpackage-1.5-compat < %version
 
 %description -n jpackage-1.6.0-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
 Requires and BuildRequires for ALT to be build compatible with JPackage.
 Provides JPackage build environment with java-1.6.0.
 
-%package -n jpackage-1.7-compat
+%package -n jpackage-1.7.0-compat
 Summary: JPackage build environment with java-1.7.0.
 Group: Development/Java
 
 Requires(pre): java-devel = 1.7.0 java = 1.7.0
 # hack
-Conflicts: java-devel > 1.7.99 java > 1.7.99
+Conflicts: java-devel > 1.7.99 java > 1.7.99 java-headless > 1.7.99
+
+Requires: jpackage-generic-compat
+
+%description -n jpackage-1.7.0-compat
+JPackage compatibility package. the main goal is to provide all nessssary symlinks,
+Requires and BuildRequires for ALT to be build compatible with JPackage.
+Provides JPackage build environment with java-1.7.0.
+
+%package -n jpackage-1.8-compat
+Summary: JPackage build environment with java-1.8.0.
+Group: Development/Java
+
+# TODO: 1.8!!!
+#Requires(pre): java-devel >= 1.8.0 java >= 1.8.0
+Requires(pre): java-devel >= 1.7.0 java >= 1.7.0
+# hack
+Conflicts: java-devel > 1.8.99 java > 1.8.99 java-headless > 1.8.99
 
 Requires: jpackage-generic-compat
 Provides: jpackage-core = %version-%release
 Provides: jpackage-1.4-compat = %version-%release
 Provides: jpackage-1.5-compat = %version-%release
 Provides: jpackage-1.6-compat = %version-%release
+Provides: jpackage-1.7-compat = %version-%release
 Provides: jpackage-compat = %version-%release
 # arch dependent - fake provides
 Provides: jpackage-for-%_target_cpu
@@ -91,11 +102,12 @@ Obsoletes: jpackage-1.4-compat < %version
 Obsoletes: jpackage-1.5-compat < %version
 Obsoletes: jpackage-1.6-compat < %version
 Obsoletes: jpackage-1.6-core < %version
+Obsoletes: jpackage-1.7-compat < %version
 
-%description -n jpackage-1.7-compat
+%description -n jpackage-1.8-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
 Requires and BuildRequires for ALT to be build compatible with JPackage.
-Provides JPackage build environment with java-1.7.0.
+Provides JPackage build environment with java-1.8.0.
 
 %prep
 
@@ -104,22 +116,20 @@ Provides JPackage build environment with java-1.7.0.
 %install
 install -d $RPM_BUILD_ROOT%_javadir
 
-#install -d $RPM_BUILD_ROOT/usr/share/sgml/docbook/
-#ln -s /usr/share/xml/docbook/xsl-stylesheets $RPM_BUILD_ROOT/usr/share/sgml/docbook/xsl-stylesheets
-
-#post
-
 %files
-#/usr/share/sgml/docbook/xsl-stylesheets
-
 %ifarch %ix86 x86_64 
 %files -n jpackage-1.5.0-compat
 %files -n jpackage-1.6.0-compat
 %endif
 
-%files -n jpackage-1.7-compat
+%files -n jpackage-1.7.0-compat
+%files -n jpackage-1.8-compat
 
 %changelog
+* Thu Jan 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- preparation for java-1.8.0
+- TODO: set upper limits for java-1.8.0 when it will be released
+
 * Mon Mar 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - efficient arch hack (using arch-dependent provides)
 
