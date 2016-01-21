@@ -1,6 +1,6 @@
 Name: nfqfilter
 Version: 0.2
-Release: alt2
+Release: alt3
 Summary: Filtration system packages based on patterns
 Group: Networking/Other
 
@@ -51,6 +51,9 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Thu Jan 21 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt3
+- update to git:1a4aea56d49e7d43f7dcfc7cebdd9be947b52c15
+
 * Tue Dec 22 2015 Alexei Takaseev <taf@altlinux.org> 0.2-alt2
 - update to git:85992b9d957848d99b1192c2b6bad550ec49ed54
 
