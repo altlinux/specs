@@ -9,7 +9,7 @@ Name: kde4-okular
 %define minor 12
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Office
 Summary: KDE document viewer
@@ -90,6 +90,10 @@ Development files for %name
 %install
 %K4install
 
+find %buildroot/%_K4xdg_apps -type f -name \*.desktop | \
+while read f ; do
+    sed -i '/^Exec=/s/-caption[[:space:]]*%%c//' $f
+done
 
 
 %files common
@@ -136,6 +140,9 @@ Development files for %name
 
 
 %changelog
+* Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt3
+- remove captions from desktop-files Exec
+
 * Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
 - build without activities support
 
