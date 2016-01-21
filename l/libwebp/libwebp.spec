@@ -2,10 +2,10 @@
 %def_enable libwebpmux
 %def_enable libwebpdemux
 %def_enable libwebpdecoder
-%define soversion 5
+%define soversion 6
 
 Name: libwebp
-Version: 0.4.4
+Version: 0.5.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -120,6 +120,9 @@ images more efficiently.
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Thu Nov 26 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - 0.4.4
 
