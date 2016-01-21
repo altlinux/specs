@@ -1,5 +1,5 @@
 Name: liblensfun
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
@@ -8,10 +8,9 @@ License: LGPLv3 and CC-BY-SA
 Url: http://sourceforge.net/projects/lensfun/
 
 Source: http://downloads.sourceforge.net/lensfun/lensfun-%version.tar.gz
-Patch: lensfun-0.3.1-alt-mandir.patch
 
 BuildRequires: cmake gcc-c++ glib2-devel libpng-devel
-BuildRequires: doxygen rpm-build-python3 python3-module-docutils
+BuildRequires: doxygen rpm-build-python3 python3-module-setuptools python3-module-docutils
 
 %description
 A library to rectifying the defects introduced by your photographic equipment.
@@ -28,6 +27,7 @@ Development tools for programs which will use the lensfun library.
 Summary: Tools for managing lensfun data
 Group: Graphics
 License: LGPLv3
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description tools
@@ -36,7 +36,6 @@ adapters in lensfun.
 
 %prep
 %setup -n lensfun-%version
-%patch -p1
 subst 's/rst2man/py3_rst2man.py/g' docs/CMakeLists.txt
 subst 's/\t/      /' apps/lensfun-add-adapter
 
@@ -51,11 +50,14 @@ subst 's/\t/      /' apps/lensfun-add-adapter
 
 %install
 %cmakeinstall_std
+pushd BUILD/apps/
+%__python3 setup.py install --skip-build --root=%buildroot --prefix=%_prefix
+popd
 
 %files
 %_libdir/%name.so.*
 %_datadir/lensfun/
-%doc ChangeLog README
+%doc ChangeLog README.*
 
 %files devel
 %_includedir/lensfun/
@@ -67,10 +69,14 @@ subst 's/\t/      /' apps/lensfun-add-adapter
 %_bindir/g-lensfun-update-data
 %_bindir/lensfun-add-adapter
 %_bindir/lensfun-update-data
+%python3_sitelibdir_noarch/*
 %_man1dir/*
 
 
 %changelog
+* Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Fri May 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 

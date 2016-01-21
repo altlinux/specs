@@ -5,7 +5,7 @@
 
 Name: photivo
 Version: 0
-Release: alt12.%{rev}
+Release: alt13.%{rev}
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -113,6 +113,9 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %endif
 
 %changelog
+* Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0-alt13.66a8c1082d88
+- rebuilt against liblensfun.so.1
+
 * Mon Jun 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0-alt12.66a8c1082d88
 - rebuilt against libexiv2.so.14
 
