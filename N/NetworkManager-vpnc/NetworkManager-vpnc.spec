@@ -1,11 +1,15 @@
-%define nm_version 1.0.6
-%define nm_applet_version 1.0.6
+%define nm_version 1.1.90
+%define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20110510
 
+%def_with libnm_glib
+
+%define _unpackaged_files_terminate_build 1
+
 Name: NetworkManager-vpnc
-Version: 1.0.8
+Version: 1.1.90
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -17,14 +21,15 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: perl-XML-Parser
 BuildRequires: NetworkManager-devel >= %nm_version
+BuildRequires: libnm-devel >= %nm_version
+BuildRequires: libnma-devel >= %nm_applet_version
+%if_with libnm_glib
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
+%endif
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
-BuildRequires: libdbus-devel             >= 1.1
-BuildRequires: libpng-devel
 BuildRequires: intltool gettext
 
 Requires: NetworkManager-daemon   >= %nm_version
@@ -38,8 +43,6 @@ with NetworkManager and the GNOME desktop
 License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
-Requires: shared-mime-info >= 0.16
-Requires: gnome-keyring
 Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-vpnc = %version-%release
 
@@ -60,6 +63,9 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
+%if_without libnm_glib
+	--without-libnm-glib \
+%endif
 	--enable-more-warnings=yes
 %make_build
 
@@ -72,24 +78,29 @@ make check
 
 %files
 %doc AUTHORS
-%config(noreplace) %_sysconfdir/dbus-1/system.d/nm-vpnc-service.conf
-%config(noreplace) %_sysconfdir/NetworkManager/VPN/nm-vpnc-service.name
+%config %_sysconfdir/dbus-1/system.d/nm-vpnc-service.conf
 %_libexecdir/NetworkManager/nm-vpnc-service
 %_libexecdir/NetworkManager/nm-vpnc-service-vpnc-helper
+%if_with libnm_glib
+%config %_sysconfdir/NetworkManager/VPN/nm-vpnc-service.name
+%endif
+%config %_libexecdir/NetworkManager/VPN/nm-vpnc-service.name
 
 %files gtk -f %name.lang
-%_libdir/NetworkManager/lib*.so*
+%if_with libnm_glib
+%_libdir/NetworkManager/libnm-vpnc-properties.so
+%endif
 %_libexecdir/NetworkManager/nm-vpnc-auth-dialog
 %_datadir/gnome-vpn-properties/*
 %_desktopdir/nm-vpnc-auth-dialog.desktop
-#_datadir/applications/nm-vpnc.desktop
-
-# Seems unused.
-%exclude %_datadir/icons/hicolor/48x48/apps/gnome-mime-application-x-cisco-vpn-settings.png
+%_libdir/NetworkManager/libnm-vpn-plugin-vpnc.so
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Jan 21 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
+- Updated to 1.1.90.
+
 * Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
 - Updated to 1.0.8.
 

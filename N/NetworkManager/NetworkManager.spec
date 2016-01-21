@@ -33,8 +33,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.0.10
-Release: alt2%git_date
+Version: 1.1.90
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -49,6 +49,7 @@ Source7: 30-efw
 Source8: 80-etcnet-iface-scripts
 Source9: NetworkManager-prestart
 Source10: nm-dispatcher-sh-functions
+Source11: NetworkManager.init
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -108,10 +109,13 @@ Requires: openresolv >= %openresolv_version
 Requires: openresolv-dnsmasq >= %openresolv_version
 Requires: libshell
 
-Conflicts: NetworkManager-vpnc < 0.9.2
-Conflicts: NetworkManager-openvpn < 0.9.2
-Conflicts: NetworkManager-pptp < 0.9.2
-Conflicts: NetworkManager-gnome < 0.9.2
+Conflicts: NetworkManager-vpnc < 1.1.90
+Conflicts: NetworkManager-openvpn < 1.1.90
+Conflicts: NetworkManager-pptp < 1.1.90
+Conflicts: NetworkManager-openconnect < 1.1.90
+Conflicts: NetworkManager-l2tp < 1.1.0
+Conflicts: NetworkManager-ssh < 1.1.0
+Conflicts: NetworkManager-gnome < 1.1.90
 
 Conflicts: dhcpcd < %dhcpcd_version
 
@@ -452,7 +456,7 @@ ln -s ../80-etcnet-iface-scripts %buildroot%dispatcherdir/pre-up.d/80-etcnet-ifa
 ln -s ../80-etcnet-iface-scripts %buildroot%dispatcherdir/pre-down.d/80-etcnet-iface-scripts
 
 # Install initscript
-install -Dm0755 initscript/Alt/NetworkManager %buildroot%_initdir/NetworkManager
+install -Dm0755 %SOURCE11 %buildroot%_initrddir/NetworkManager
 
 # Install NetworkManager pre start script
 install -Dm0755 %SOURCE9 %buildroot%_sbindir/NetworkManager-prestart
@@ -649,6 +653,17 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jan 19 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
+- etcnet-alt: Fix tests build.
+- etcnet-alt: Fix build.
+- etcnet-alt: Drop unneeded include.
+- etcnet-alt: Remove hostname handling.
+- etcnet-alt: Use NMSettingsPluginInterface.
+- etcnet-alt: Add some includes to common.h.
+- etcnet-alt: Rename NMSystemConfigInterface to NMSettingsPlugin.
+- Updated "_nmconnect group" patch.
+- Updated to 1.1.90.
+
 * Wed Jan 13 2016 Mikhail Efremov <sem@altlinux.org> 1.0.10-alt2
 - Patches from upstream:
    + infiniband: take interface down to set transport mode.
