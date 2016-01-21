@@ -1,6 +1,9 @@
+
+%define _libexecdir %prefix/libexec
+
 Name: signon-ui
 Version: 0.17
-Release: alt0.2
+Release: alt0.3
 
 Group: System/Libraries
 Summary: Online Accounts Sign-on Ui
@@ -42,6 +45,7 @@ export PATH=%_qt5_bindir:$PATH
     QMF_INSTALL_ROOT=%prefix \
     CONFIG+=release \
     LIBDIR=%_libdir \
+    LIBEXECDIR=%_libexecdir \
     signon-ui.pro
 
 %make_build
@@ -59,6 +63,9 @@ mkdir -p %buildroot/%_sysconfdir/signon-ui/webkit-options.d
 %_sysconfdir/signon-ui
 
 %changelog
+* Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 0.17-alt0.3
+- redefine libexecdir
+
 * Thu Dec 24 2015 Sergey V Turchin <zerg@altlinux.org> 0.17-alt0.2
 - update to 0.17+15.10.20150810
 
