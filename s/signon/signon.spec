@@ -1,4 +1,5 @@
 
+%define _libexecdir %prefix/libexec
 %define sover 1
 %define libsignon_extension libsignon-extension%sover
 %define libsignon_plugins_common libsignon-plugins-common%sover
@@ -7,11 +8,11 @@
 
 Name: signon
 Version: 8.57
-Release: alt4
+Release: alt5
 
 Group: System/Servers
 Summary: Accounts framework for Linux and POSIX based platforms
-Url: https://code.google.com/p/accounts-sso
+Url: https://gitlab.com/accounts-sso/signond
 License: LGPLv2
 
 Requires: dbus
@@ -94,6 +95,7 @@ export PATH=%_qt5_bindir:$PATH
     PREFIX=%_prefix \
     QMF_INSTALL_ROOT=%_prefix \
     LIBDIR=%_libdir \
+    LIBEXECDIR=%_libexecdir \
     #
 %make_build
 
@@ -140,6 +142,9 @@ mkdir -p %buildroot/%_libdir/signon/extensions/
 %_libdir/libsignon-qt5.so.*
 
 %changelog
+* Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 8.57-alt5
+- redefine _libexecdir
+
 * Mon Nov 02 2015 Sergey V Turchin <zerg@altlinux.org> 8.57-alt4
 - fix .pc files
 
