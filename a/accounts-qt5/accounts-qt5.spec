@@ -1,20 +1,20 @@
 
+%define _libexecdir %prefix/libexec
 %define sover 1
 %define libname libaccounts-qt5%sover
 Name: accounts-qt5
 Version: 1.13
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Accounts framework Qt 5 bindings
-Url: http://code.google.com/p/accounts-sso/
+Url: https://gitlab.com/groups/accounts-sso
 License: LGPLv2
 
 # https://drive.google.com/#folders/0B8fX9XOwH_g4alFsYV8tZTI4VjQ
 # https://groups.google.com/forum/#!forum/accounts-sso-announce
 Source: %name-%version.tar
 # FC
-Patch1: libaccounts-qt-64bitarchs.patch
 Patch2: 0002-Fix-memory-leaks-found-by-valgrind.patch
 Patch3: 0005-Use-gboolean-instead-of-bool.patch
 
@@ -42,7 +42,6 @@ Headers, development libraries and documentation for %name.
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 sed -i '/^SUBDIRS/s|tests||'  accounts-qt.pro
@@ -51,6 +50,9 @@ sed -i '/^SUBDIRS/s|tests||'  accounts-qt.pro
 %qmake_qt5 \
     QMF_INSTALL_ROOT=%prefix \
     CONFIG+=release \
+    PREFIX=%_prefix \
+    LIBDIR=%_libdir \
+    LIBEXECDIR=%_libexecdir \
     accounts-qt.pro \
     #
 %make_build
@@ -70,14 +72,18 @@ mv %buildroot/%_docdir/accounts-qt/qch/accounts.qch %buildroot/%_qt5_docdir/
 %_libdir/libaccounts-qt5.so.*
 
 %files devel
-%_libdir/libaccounts-qt5.so
+%_qt5_libdir/libaccounts-qt5.so
+%_qt5_libdatadir/libaccounts-qt5.so
 %_includedir/accounts-qt5/
-%_libdir/pkgconfig/accounts-qt5.pc
+%_pkgconfigdir/accounts-qt5.pc
 %_libdir/cmake/AccountsQt5/
 %_qt5_docdir/accounts/
 %_qt5_docdir/accounts.qch
 
 %changelog
+* Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 1.13-alt4
+- clean build options
+
 * Thu Oct 29 2015 Sergey V Turchin <zerg@altlinux.org> 1.13-alt3
 - sync patches with FC
 
