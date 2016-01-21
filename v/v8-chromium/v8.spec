@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     4
-%define MINOR_VERSION     7
-%define BUILD_NUMBER      80
-%define PATCH_LEVEL       31
+%define MINOR_VERSION     8
+%define BUILD_NUMBER      271
+%define PATCH_LEVEL       17
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
@@ -21,9 +21,13 @@ Source2: icu.tar
 Source3: buildtools.tar
 Source4: gtest.tar
 Source5: gmock.tar
+Source6: swarming_client.tar
+
+Patch1:  v8-alt-fix-isolate-on-ia32.patch
 
 BuildPreReq: gcc-c++ gyp
 BuildRequires: python-modules-multiprocessing
+BuildRequires: python-modules-logging
 
 Provides: %libname
 
@@ -69,7 +73,9 @@ tar xf %SOURCE2
 tar xf %SOURCE3
 tar xf %SOURCE4
 tar xf %SOURCE5
+tar xf %SOURCE6
 sed -i 's|build/gyp/gyp|gyp|g' Makefile
+%patch1 -p1
 
 %build
 build/gyp_v8 \
@@ -121,6 +127,12 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Thu Jan 21 2016 Andrey Cherepanov <cas@altlinux.org> 4.8.271.17-alt1
+- New version for chromium-48.0.2564.82
+- Security fixes:
+  - High CVE-2016-1612: Bad cast in V8.
+- New remote source swarming_client
+
 * Thu Jan 14 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.80.31-alt1
 - New version for chromium-47.0.2526.111
 

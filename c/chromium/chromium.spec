@@ -10,7 +10,7 @@
 %def_disable v8_internal
 %def_disable libchromiumcontent
 
-%define v8_version 4.7.80.31
+%define v8_version 4.8.271.17
 
 %if_enabled debug
 %define buildtype Debug
@@ -19,7 +19,7 @@
 %endif
 
 Name:           chromium
-Version:        47.0.2526.111
+Version:        48.0.2564.97
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -28,8 +28,8 @@ Group:          Networking/WWW
 Url:            http://code.google.com/p/chromium/
 
 Source0:        %name-%version.tar.gz
-Source10:		depot_tools.tar
-Source11:		libchromiumcontent.tar
+Source10:       depot_tools.tar
+Source11:       libchromiumcontent.tar
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -174,7 +174,7 @@ BuildRequires:  usbids
 BuildRequires:  xdg-utils
 BuildRequires:  zlib-devel
 
-Provides: 		webclient, /usr/bin/xbrowser
+Provides:       webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
 PreReq(post,preun): alternatives >= 0.2
 
@@ -192,8 +192,8 @@ Group:          Networking/WWW
 Conflicts:      chromium-gnome
 Conflicts:      chromium-desktop-gnome
 Provides:       chromium-password = %version
-Provides:		chromium-desktop-kde = %version
-Obsoletes:		chromium-desktop-kde < %version
+Provides:       chromium-desktop-kde = %version
+Obsoletes:      chromium-desktop-kde < %version
 Requires:       chromium = %version
 Requires:       kde4base-runtime-core
 
@@ -211,8 +211,8 @@ Group:          Networking/WWW
 Conflicts:      chromium-desktop-kde
 Conflicts:      chromium-kde
 Provides:       chromium-password = %version
-Provides:		chromium-desktop-gnome = %version
-Obsoletes:		chromium-desktop-gnome < %version
+Provides:       chromium-desktop-gnome = %version
+Obsoletes:      chromium-desktop-gnome < %version
 Requires:       chromium = %version
 Requires:       gnome-keyring
 
@@ -266,101 +266,10 @@ mv -f src/third_party/libvpx/source/libvpx/vpx/{internal/,}vpx_codec_internal.h
 # Make sure that the requires legal files can be found
 cp -a src/AUTHORS src/LICENSE .
 
-# Remove most bundled libraries. Some are still needed.
 cd src
-#	'base/third_party/icu' \
-#	'third_party/ffmpeg' \
-#build/linux/unbundle/remove_bundled_libraries.py \
-#	'base/third_party/dmg_fp' \
-#	'base/third_party/dynamic_annotations' \
-#	'base/third_party/nspr' \
-#	'base/third_party/superfasthash' \
-#	'base/third_party/symbolize' \
-#	'base/third_party/valgrind' \
-#	'base/third_party/xdg_mime' \
-#	'base/third_party/xdg_user_dirs' \
-#	'breakpad/src/third_party/curl' \
-#	'chrome/third_party/mozilla_security_manager' \
-#	'courgette/third_party' \
-#	'crypto/third_party/nss' \
-#	'net/third_party/mozilla_security_manager' \
-#	'net/third_party/nss' \
-#	'third_party/WebKit' \
-#	'third_party/analytics' \
-#	'third_party/angle' \
-#	'third_party/angle/src/third_party/compiler' \
-#	'third_party/brotli' \
-#	'third_party/cacheinvalidation' \
-#	'third_party/cld_2' \
-#	'third_party/cros_system_api' \
-#	'third_party/cython/python_flags.py' \
-#	'third_party/dom_distiller_js' \
-#	'third_party/dom_distiller_js/dist/proto_gen/third_party/dom_distiller_js' \
-#	'third_party/fips181' \
-#	'third_party/flot' \
-#	'third_party/google_input_tools' \
-#	'third_party/google_input_tools/third_party/closure_library' \
-#	'third_party/google_input_tools/third_party/closure_library/third_party/closure' \
-#	'third_party/hunspell' \
-#	'third_party/iccjpeg' \
-#	'third_party/jstemplate' \
-#	'third_party/khronos' \
-#	'third_party/leveldatabase' \
-#	'third_party/libaddressinput' \
-#	'third_party/libjingle' \
-#	'third_party/libphonenumber' \
-#	'third_party/libsecret' \
-#	'third_party/libsrtp' \
-#	'third_party/libudev' \
-#	'third_party/libusb' \
-#	'third_party/libxml/chromium' \
-#	'third_party/libXNVCtrl' \
-#	'third_party/libyuv' \
-#	'third_party/lss' \
-#	'third_party/lzma_sdk' \
-#	'third_party/mesa' \
-#	'third_party/modp_b64' \
-#	'third_party/mojo' \
-#	'third_party/mt19937ar' \
-#	'third_party/npapi' \
-#	'third_party/openmax_dl' \
-#	'third_party/opus' \
-#	'third_party/ots' \
-#	'third_party/pdfium' \
-#	'third_party/pdfium/third_party/base' \
-#	'third_party/pdfium/third_party/bigint' \
-#	'third_party/pdfium/third_party/freetype' \
-#	'third_party/polymer' \
-#	'third_party/protobuf' \
-#	'third_party/qcms' \
-#	'third_party/readability' \
-#	'third_party/sfntly' \
-#	'third_party/skia' \
-#	'third_party/smhasher' \
-#	'third_party/sqlite' \
-#	'third_party/tcmalloc' \
-#	'third_party/trace-viewer' \
-#	'third_party/trace-viewer/third_party/components/polymer' \
-#	'third_party/trace-viewer/third_party/d3' \
-#	'third_party/trace-viewer/third_party/gl-matrix' \
-#	'third_party/trace-viewer/third_party/jszip' \
-#	'third_party/trace-viewer/third_party/tvcm' \
-#	'third_party/trace-viewer/third_party/tvcm/third_party/beautifulsoup/polymer_soup.py' \
-#	'third_party/undoview' \
-#	'third_party/usrsctp' \
-#	'third_party/web-animations-js' \
-#	'third_party/webdriver' \
-#	'third_party/webrtc' \
-#	'third_party/widevine' \
-#	'third_party/x86inc' \
-#	'third_party/zlib/google' \
-#	'url/third_party/mozilla' \
-#	'v8/src/third_party/fdlibm' \
-#	'v8/src/third_party/kernel' \
-#	'v8/src/third_party/valgrind' \
-#	--do-remove
 
-sed '16i#define WIDEVINE_CDM_VERSION_STRING "The Cake Is a Lie"' -i third_party/widevine/cdm/widevine_cdm_version.h
+# Set fake version for some components
+sed '11i#define WIDEVINE_CDM_VERSION_STRING "The Cake Is a Lie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
 echo > "third_party/adobe/flash/flapper_version.h"
 
 # Rebuild configuration of bundled ffmpeg
@@ -419,7 +328,7 @@ cd src
 %endif
 	-Ddisable_sse2=1 \
 	-Denable_plugin_installation=0 \
-    -Ddisable_newlib_untar=1 \
+	-Ddisable_newlib_untar=1 \
 %if_enabled clang
 	-Dclang=1 \
 %else
@@ -666,6 +575,20 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Thu Jan 28 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.97-alt1
+- New version
+
+* Thu Jan 28 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.82-alt1
+- New version
+- Security fixes:
+  - High CVE-2016-1613: Use-after-free in PDFium.
+  - Medium CVE-2016-1614: Information leak in Blink.
+  - Medium CVE-2016-1615: Origin confusion in Omnibox.
+  - Medium CVE-2016-1616: URL Spoofing.
+  - Medium CVE-2016-1617: History sniffing with HSTS and CSP.
+  - Medium CVE-2016-1618: Weak random number generator in Blink.
+  - Medium CVE-2016-1619: Out-of-bounds read in PDFium.
+
 * Thu Jan 14 2016 Andrey Cherepanov <cas@altlinux.org> 47.0.2526.111-alt1
 - New version
 
