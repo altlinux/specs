@@ -1,7 +1,7 @@
 %define rname ktp-send-file
 
 Name: kde5-%rname
-Version: 15.12.0
+Version: 15.12.1
 Release: alt1
 %K5init altplace
 
@@ -74,6 +74,9 @@ KF5 library
 #%_K5lib/libktp-send-file.so.*
 
 %changelog
+* Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 15.12.0-alt1
 - new version
 
