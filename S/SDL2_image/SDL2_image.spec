@@ -1,6 +1,6 @@
 Name: SDL2_image
-Version: 2.0.0
-Release: alt3
+Version: 2.0.1
+Release: alt1
 
 Summary: Simple DirectMedia Layer - Image library
 License: zlib
@@ -64,7 +64,7 @@ to develop SDL applications.
 %install
 %makeinstall_std
 %__rm -rf %buildroot%_libdir/lib%name.la
-chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
+chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 
 %files -n lib%name
 %doc CHANGES.txt COPYING.txt README.txt
@@ -77,6 +77,12 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %_libdir/lib%name.so
 
 %changelog
+* Fri Jan 22 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1
+- Version 2.0.1
+
+* Wed Feb 05 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2.M70T.1
+- Build for branch t7
+
 * Tue Jan 21 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt3
 - rebuilt against libwebp.so.5
 
