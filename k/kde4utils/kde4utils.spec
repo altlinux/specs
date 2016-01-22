@@ -6,8 +6,8 @@
 %define rname kdeutils
 Name: kde4utils
 %define major 15
-%define minor 4
-%define bugfix 3
+%define minor 12
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -312,6 +312,11 @@ done
 %install
 %K4install
 
+find %buildroot/%_K4xdg_apps -type f -name \*.desktop | \
+while read f ; do
+    sed -i '/^Exec=/s/-caption[[:space:]]*%%c//' $f
+done
+
 
 %files maxi
 %files
@@ -498,6 +503,10 @@ done
 
 
 %changelog
+* Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+- remove captions from desktop-files Exec
+
 * Tue Sep 15 2015 Sergey V Turchin <zerg@altlinux.org> 15.4.3-alt1
 - new version
 
