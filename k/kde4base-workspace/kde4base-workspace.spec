@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -964,6 +964,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jan 22 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt4
+- fix kdm Xstartup
+
 * Fri Sep 11 2015 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt3
 - don't set background color on kde start
 
