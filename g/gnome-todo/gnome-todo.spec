@@ -4,7 +4,7 @@
 
 Name: gnome-todo
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -19,7 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildRequires: intltool yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver evolution-data-server-devel >= %eds_ver
-BuildRequires: libgnome-online-accounts-devel libical-devel
+BuildRequires: libgnome-online-accounts-devel libical-devel libicu-devel
 
 %description
 GNOME Todo is a simple task management application designed to integrate
@@ -49,6 +49,9 @@ with GNOME.
 %doc NEWS README
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt2
+- rebuilt against libical.so.2
+
 * Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

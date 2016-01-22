@@ -3,7 +3,7 @@
 
 Name: bijiben
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Note editor for GNOME
 License: LGPLv3+
@@ -22,7 +22,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: tracker-devel >= %tracker_ver
 BuildRequires: libxml2-devel libclutter-gtk3-devel libwebkitgtk3-devel
 BuildRequires: libgnome-online-accounts-devel libzeitgeist2.0-devel libuuid-devel
-BuildRequires: evolution-data-server-devel >= %eds_ver
+BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel libicu-devel
 BuildRequires: rpm-build-xdg gnome-common intltool yelp-tools libappstream-glib-devel
 
 %description
@@ -59,6 +59,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt2
+- rebuilt against libical.so.2
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

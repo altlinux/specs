@@ -8,7 +8,7 @@
 
 Name: gnome-panel
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -60,7 +60,7 @@ BuildPreReq: libgweather-devel >= %gweather_ver
 BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildRequires: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel libxml2-devel
 BuildRequires: libdconf-devel >= %dconf_ver libpolkit-devel libSM-devel
-%{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver}
+%{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver} libicu-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -192,6 +192,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt2
+- rebuilt against libical.so.2
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 
