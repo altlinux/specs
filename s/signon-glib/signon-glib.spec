@@ -1,9 +1,10 @@
 
+%define _libexecdir %prefix/libexec
 %define sover 1
 %define libsignon_glib libsignon-glib%sover
 
 Name: signon-glib
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Group: System/Libraries
@@ -64,5 +65,11 @@ NOCONFIGURE=1 ./autogen.sh
 %_girdir/Signon-1.0.gir
 
 %changelog
+* Fri Jan 22 2016 Sergey V Turchin <zerg@altlinux.org> 1.13-alt1
+- new version
+
+* Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 1.12-alt2
+- redefine libexecdir
+
 * Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 1.12-alt1
 - initial build
