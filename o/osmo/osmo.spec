@@ -2,7 +2,7 @@
 %def_enable backup
 
 Name: osmo
-Version: 0.2.12
+Version: 0.2.14
 Release: alt1
 
 Summary: Personal organizer
@@ -12,7 +12,7 @@ Url: http://clayo.org/osmo/
 Source: http://downloads.sourceforge.net/%name-pim/%name-%version.tar.gz
 
 BuildRequires: libgtk+2-devel libgtkspell-devel libxml2-devel
-BuildRequires: libnotify-devel libical-devel libwebkitgtk2-devel
+BuildRequires: libnotify-devel libical-devel libicu-devel libwebkitgtk2-devel
 %{?_enable_backup:BuildRequires: libgringotts-devel libarchive-devel}
 
 %description
@@ -48,6 +48,9 @@ meet user preferences.
 %doc AUTHORS ChangeLog README TRANSLATORS
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt1
+- 0.2.14
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt1
 - 0.2.12
 
