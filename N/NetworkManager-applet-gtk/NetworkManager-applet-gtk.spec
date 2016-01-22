@@ -1,13 +1,13 @@
-%define nm_version 1.0.0
+%define nm_version 1.1.90
 #define git_date .git20151102
 %define git_date %nil
 
-%def_without bluetooth
-
 %define _unpackaged_files_terminate_build 1
 
+%def_without appindicator
+
 Name: NetworkManager-applet-gtk
-Version: 1.0.10
+Version: 1.1.90
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -19,7 +19,7 @@ Patch: nm-applet-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildPreReq: libdbus-devel libdbus-glib libGConf-devel libgtk+3-devel intltool libtool libpolkit1-devel
+BuildPreReq: libdbus-devel libdbus-glib libgtk+3-devel intltool libtool libpolkit1-devel
 
 BuildRequires: libwireless-devel
 BuildRequires: libnotify-devel
@@ -30,21 +30,15 @@ BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: NetworkManager-glib-gir-devel >= %nm_version
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnm-gir-devel >= %nm_version
-%{?_with_bluetooth:BuildRequires: libgnome-bluetooth-devel}
 BuildRequires: iso-codes-devel
 BuildRequires: gnome-common
 BuildRequires: libgudev-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel
-# For migration from libgnome-keyring to libsecret
-BuildRequires: libgnome-keyring-devel
-# For migration connections from gconf
-BuildRequires: libGConf-devel
+%{?_with_appindicator:BuildRequires: libappindicator-gtk3-devel}
 
 Requires: NetworkManager-daemon >= %nm_version
-Requires: libnm-gtk = %version-%release
-Requires: gnome-keyring gcr
 Requires: dbus-tools-gui
 Requires: mobile-broadband-provider-info
 Requires: polkit-gnome
@@ -60,16 +54,18 @@ NetworkManager, including a panel applet for wireless networks.
 %package -n libnm-gtk
 License: %gpl2plus
 Group: Graphical desktop/GNOME
-Summary: Private libraries for NetworkManager GUI support
+Summary: Private libraries for NetworkManager GUI support (libnm-glib version)
 
 %description -n libnm-gtk
 This package contains private libraries to be used only by nm-applet and
 the GNOME Control Center.
 
+This library will be obsolete by libnma in the future.
+
 %package -n libnm-gtk-devel
 License: %gpl2plus
 Group: Development/GNOME and GTK+
-Summary: Private header files for NetworkManager GUI support
+Summary: Private header files for NetworkManager GUI support (libnm-glib version)
 Requires: libnm-gtk = %version-%release
 Requires: libnm-util-devel >= %nm_version
 Requires: libnm-glib-devel >= %nm_version
@@ -79,6 +75,8 @@ Requires: libgtk+3-devel
 %description -n libnm-gtk-devel
 This package contains private header and pkg-config files to be used
 only by nm-applet and the GNOME control center.
+
+This library will be obsolete by libnma in the future.
 
 %package -n libnm-gtk-gir
 License: %gpl2plus
@@ -100,6 +98,47 @@ Requires: libnm-gtk-devel = %version-%release
 %description -n libnm-gtk-gir-devel
 GObject introspection devel data for the libnm-gtk.
 
+%package -n libnma
+License: %gpl2plus
+Group: Graphical desktop/GNOME
+Summary: Private libraries for NetworkManager GUI support (libnm version)
+
+%description -n libnma
+This package contains private libraries to be used only by nm-applet and
+the GNOME Control Center.
+
+%package -n libnma-devel
+License: %gpl2plus
+Group: Development/GNOME and GTK+
+Summary: Private header files for NetworkManager GUI support (libnm version)
+Requires: libnma = %version-%release
+Requires: libnm-devel >= %version-%release
+Requires: libgtk+3-devel
+
+%description -n libnma-devel
+This package contains private header and pkg-config files to be used
+only by nm-applet and the GNOME control center.
+
+%package -n libnma-gir
+License: %gpl2plus
+Group: System/Libraries
+Summary: GObject introspection data for the libnma
+Requires: libnma = %version-%release
+
+%description -n libnma-gir
+GObject introspection data for the libnma.
+
+%package -n libnma-gir-devel
+License: %gpl2plus
+Group: System/Libraries
+Summary: GObject introspection devel data for the libnma
+BuildArch: noarch
+Requires: libnma-gir = %version-%release
+Requires: libnma-devel = %version-%release
+
+%description -n libnma-gir-devel
+GObject introspection devel data for the libnma.
+
 %prep
 %setup -n nm-applet-%version
 %patch -p1
@@ -110,8 +149,8 @@ GObject introspection devel data for the libnm-gtk.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--with-modem-manager-1 \
-	%{subst_with bluetooth} \
+	--with-wwan \
+	%{subst_with appindicator} \
 	--enable-more-warnings=error
 
 %make_build
@@ -131,7 +170,6 @@ make check
 %_datadir/nm-applet
 %_iconsdir/hicolor/*/apps/*
 %_sysconfdir/xdg/autostart/nm-applet.desktop
-%_libexecdir/NetworkManager/nm-applet-migration-tool
 %_datadir/GConf/gsettings/nm-applet.convert
 %_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 %doc %_man1dir/*.*
@@ -140,18 +178,13 @@ make check
 %_datadir/appdata/*.appdata.xml
 %dir %_datadir/gnome-vpn-properties
 
-%if_with bluetooth
-%_libdir/gnome-bluetooth/plugins/*.so
-%exclude %_libdir/gnome-bluetooth/plugins/*.la
-%endif
-
 %files -n libnm-gtk
-%_libdir/*.so.*
+%_libdir/libnm-gtk.so.*
 %_datadir/libnm-gtk/
 
 %files -n libnm-gtk-devel
 %_includedir/libnm-gtk/
-%_libdir/*.so
+%_libdir/libnm-gtk.so
 %_pkgconfigdir/libnm-gtk.pc
 
 %files -n libnm-gtk-gir
@@ -160,7 +193,27 @@ make check
 %files -n libnm-gtk-gir-devel
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
+%files -n libnma
+%_libdir/libnma.so.*
+%_datadir/libnma/
+
+%files -n libnma-devel
+%_includedir/libnma/
+%_libdir/libnma.so
+%_pkgconfigdir/libnma.pc
+
+%files -n libnma-gir
+%_libdir/girepository-1.0/NMA-1.0.typelib
+
+%files -n libnma-gir-devel
+%_datadir/gir-1.0/NMA-1.0.gir
+
 %changelog
+* Tue Jan 19 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
+- Updated BR.
+- Updated gnome-keyring patch.
+- Updated to 1.1.90.
+
 * Thu Dec 24 2015 Mikhail Efremov <sem@altlinux.org> 1.0.10-alt1
 - Updated to 1.0.10.
 

@@ -1,11 +1,15 @@
-%define nm_version 0.9.10
-%define nm_applet_version 0.9.10
+%define nm_version 1.1.90
+%define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
-%define git_date %nil
-#define git_date .git20130405
+#define git_date %nil
+%define git_date .git20151024
+
+%def_with libnm_glib
+
+%define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-ssh
-Version: 0.9.4
+Version: 1.1.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -17,11 +21,14 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: perl-XML-Parser
 BuildRequires: intltool
 BuildRequires: NetworkManager-devel >= %nm_version
+BuildRequires: libnm-devel >= %nm_version
+BuildRequires: libnma-devel >= %nm_applet_version
+%if_with libnm_glib
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libnm-gtk-devel >= %nm_version
+BuildRequires: libnm-gtk-devel >= %nm_applet_version
+%endif
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
 
@@ -36,7 +43,6 @@ the OpenSSH server with NetworkManager.
 License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
-Requires: shared-mime-info >= 0.16
 Requires: %nm_applet_name >= %nm_applet_version
 Requires: %name = %version-%release
 
@@ -57,6 +63,9 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
+%if_without libnm_glib
+	--without-libnm-glib \
+%endif
 	--enable-more-warnings=error
 %make_build
 
@@ -70,18 +79,26 @@ make check
 %files
 %doc AUTHORS README README.md
 %_libexecdir/NetworkManager/nm-ssh-service
-%dir %_sysconfdir/NetworkManager/VPN
-%config(noreplace) %_sysconfdir/NetworkManager/VPN/nm-ssh-service.name
-%config(noreplace) %_sysconfdir/dbus-1/system.d/nm-ssh-service.conf
+%config %_sysconfdir/dbus-1/system.d/nm-ssh-service.conf
+%if_with libnm_glib
+%config %_sysconfdir/NetworkManager/VPN/nm-ssh-service.name
+%endif
+%config %_libexecdir/NetworkManager/VPN/nm-ssh-service.name
 
 %files gtk -f %name.lang
-%_libdir/NetworkManager/libnm-ssh-properties.so*
+%if_with libnm_glib
+%_libdir/NetworkManager/libnm-ssh-properties.so
+%endif
 %_libexecdir/NetworkManager/nm-ssh-auth-dialog
 %_datadir/gnome-vpn-properties/*
+%_libdir/NetworkManager/libnm-vpn-plugin-ssh.so
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Jan 21 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.git20151024
+- Upstream git snapshot (master branch).
+
 * Fri Jul 17 2015 Mikhail Efremov <sem@altlinux.org> 0.9.4-alt1
 - Updated BR.
 - Updated to 0.9.4.

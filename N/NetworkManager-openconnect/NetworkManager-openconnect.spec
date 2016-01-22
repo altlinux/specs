@@ -1,11 +1,14 @@
-%define nm_version 0.9.9.98
-%define nm_applet_version 0.9.9.98
+%define nm_version 1.1.90
+%define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
-%define gtkver 3
+
+%def_with libnm_glib
+
+%define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openconnect
-Version: 0.9.8.4
-Release: alt5.git.2e653d
+Version: 1.1.90
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
@@ -19,16 +22,17 @@ Requires: openconnect
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: libopenconnect-devel >= 3.02
-BuildRequires: perl-XML-Parser
 BuildRequires: NetworkManager-devel >= %nm_version
+BuildRequires: libnm-devel >= %nm_version
+BuildRequires: libnma-devel >= %nm_applet_version
+%if_with libnm_glib
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libgtk+%gtkver-devel
-BuildRequires: libdbus-glib-devel >= 0.74
-BuildRequires: libGConf-devel libgnome-keyring-devel
-BuildRequires: libssl-devel
+BuildRequires: libnm-gtk-devel >= %nm_applet_version
+%endif
+BuildRequires: libgtk+3-devel
+BuildRequires: libsecret-devel
 BuildRequires: intltool gettext
 BuildRequires: libxml2-devel
-
 
 %description
 This package contains software for integrating the openconnect VPN software
@@ -38,8 +42,6 @@ with NetworkManager and the GNOME desktop
 License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
-Requires: shared-mime-info >= 0.16
-Requires: GConf2
 Requires: %nm_applet_name >= %version
 Requires: NetworkManager-openconnect = %version-%release
 
@@ -58,12 +60,14 @@ NetworkManager panel applet.
 %autoreconf
 %configure \
     --disable-static \
-    --enable-more-warnings=yes \
     --libexecdir=%_libexecdir/NetworkManager \
     --localstatedir=%_var \
-    --with-gtkver=%gtkver
+%if_without libnm_glib
+	--without-libnm-glib \
+%endif
+    --enable-more-warnings=error
 
-%make_build
+%make_build
 
 %install
 %makeinstall_std
@@ -71,19 +75,29 @@ NetworkManager panel applet.
 
 %files
 %doc AUTHORS ChangeLog COPYING
-%config(noreplace) %_sysconfdir/dbus-1/system.d/nm-openconnect-service.conf
-%config(noreplace) %_sysconfdir/NetworkManager/VPN/nm-openconnect-service.name
+%config %_sysconfdir/dbus-1/system.d/nm-openconnect-service.conf
 %_libexecdir/NetworkManager/nm-openconnect-service
 %_libexecdir/NetworkManager/nm-openconnect-service-openconnect-helper
+%if_with libnm_glib
+%config %_sysconfdir/NetworkManager/VPN/nm-openconnect-service.name
+%endif
+%config %_libexecdir/NetworkManager/VPN/nm-openconnect-service.name
 
 %files gtk -f %name.lang
-%_libdir/NetworkManager/lib*.so*
+%if_with libnm_glib
+%_libdir/NetworkManager/libnm-openconnect-properties.so
+%endif
 %_libexecdir/NetworkManager/nm-openconnect-auth-dialog
 %_datadir/gnome-vpn-properties/openconnect
+%_libdir/NetworkManager/libnm-vpn-plugin-openconnect.so
 
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Thu Jan 21 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
+- Updated BR.
+- 1.1.90.
+
 * Tue Jun 24 2014 Mikhail Efremov <sem@altlinux.org> 0.9.8.4-alt5.git.2e653d
 - Update requires: NetworkManager -> NetworkManager-daemon.
 - Update BR: Use libnm-glib-vpn-devel.

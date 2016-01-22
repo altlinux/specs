@@ -1,11 +1,15 @@
-%define nm_version 1.0.0
-%define nm_applet_version 1.0.0
+%define nm_version 1.1.90
+%define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20111101
 
+%def_with libnm_glib
+
+%define _unpackaged_files_terminate_build 1
+
 Name: NetworkManager-openvpn
-Version: 1.0.8
+Version: 1.1.90
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -17,11 +21,14 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: perl-XML-Parser
 BuildRequires: intltool
 BuildRequires: NetworkManager-devel >= %nm_version
+BuildRequires: libnm-devel >= %nm_version
+BuildRequires: libnma-devel >= %nm_applet_version
+%if_with libnm_glib
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
+%endif
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
 
@@ -36,8 +43,6 @@ OpenVPN.
 License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
-Requires: shared-mime-info >= 0.16
-Requires: gnome-keyring
 Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-openvpn = %version-%release
 
@@ -58,6 +63,9 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
+%if_without libnm_glib
+	--without-libnm-glib \
+%endif
 	--enable-more-warnings=error
 %make_build
 
@@ -72,20 +80,28 @@ make check
 %doc AUTHORS README
 %_libexecdir/NetworkManager/nm-openvpn-service
 %_libexecdir/NetworkManager/nm-openvpn-service-openvpn-helper
-%dir %_sysconfdir/NetworkManager/VPN
-%_sysconfdir/NetworkManager/VPN/nm-openvpn-service.name
-%_sysconfdir/dbus-1/system.d/nm-openvpn-service.conf
+%config %_sysconfdir/dbus-1/system.d/nm-openvpn-service.conf
+%if_with libnm_glib
+%config %_sysconfdir/NetworkManager/VPN/nm-openvpn-service.name
+%endif
+%config %_libexecdir/NetworkManager/VPN/nm-openvpn-service.name
 
 %files gtk -f %name.lang
+%if_with libnm_glib
 %_libdir/NetworkManager/libnm-openvpn-properties.so*
+%endif
 %_libexecdir/NetworkManager/nm-openvpn-auth-dialog
-#_datadir/applications/nm-openvpn.desktop
 %_datadir/gnome-vpn-properties/*
-#_datadir/icons/hicolor/*/*/*.png
+%_libdir/NetworkManager/libnm-vpn-plugin-openvpn.so
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Jan 20 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
+- Updated BR.
+- Fix build on i586.
+- Updated to 1.1.90.
+
 * Mon Nov 30 2015 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
 - Updated to 1.0.8.
 

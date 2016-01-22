@@ -1,13 +1,17 @@
-%define nm_version 0.9.9.98
-%define nm_applet_version 0.9.9.98
+%define nm_version 1.1.90
+%define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
-#define git_date .git20120624
-%define git_date %nil
+%define git_date .git20150916
+#define git_date %nil
 %define ppp_version 2.4.7
 
+%def_with libnm_glib
+
+%define _unpackaged_files_terminate_build 1
+
 Name: NetworkManager-l2tp
-Version: 0.9.8.7
-Release: alt2%git_date
+Version: 1.1.0
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -18,21 +22,22 @@ Patch: %name-%version-%release.patch
 Requires: NetworkManager-daemon   >= %nm_version
 Requires: xl2tpd
 Requires: ppp = %ppp_version
-# No openswan in the Sisyphus
-# Uncomment this if it will be added
-# See ALT bug #30613 for details
-#Requires: openswan
+# NM-l2tp should support strongswan with patch
+# 948a6acaf52d "use strongswan instead of openswan and
+# add options for certificates, mru and mtu"
+Requires: strongswan
 
-# Automatically added by buildreq on Thu Aug 14 2008
 BuildRequires: libgnome-keyring-devel
 BuildRequires: ppp-devel
 BuildRequires: rpm-build-licenses
 BuildRequires: NetworkManager-devel >= %nm_version
+BuildRequires: libnm-devel >= %nm_version
+BuildRequires: libnma-devel >= %nm_applet_version
+%if_with libnm_glib
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
+BuildRequires: libnm-gtk-devel >= %nm_applet_version
+%endif
 BuildRequires: libgtk+3-devel
-BuildRequires: libdbus-devel             >= 1.1
-BuildRequires: libGConf-devel
-BuildRequires: libpng-devel
 BuildRequires: intltool gettext
 
 %description
@@ -43,8 +48,6 @@ with NetworkManager.
 License: %gpl2plus
 Summary: Applications for use %name with %nm_applet_name
 Group: Graphical desktop/GNOME
-Requires: shared-mime-info >= 0.16
-Requires: GConf2
 Requires: gnome-keyring
 Requires: %nm_applet_name >= %nm_applet_version
 Requires: NetworkManager-l2tp = %version-%release
@@ -68,6 +71,9 @@ sed -i '/m4/ d' Makefile.am
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
+%if_without libnm_glib
+	--without-libnm-glib \
+%endif
 	--enable-more-warnings=yes
 %make_build
 
@@ -77,20 +83,30 @@ sed -i '/m4/ d' Makefile.am
 
 %files
 %doc AUTHORS
-%config(noreplace) %_sysconfdir/dbus-1/system.d/nm-l2tp-service.conf
-%config(noreplace) %_sysconfdir/NetworkManager/VPN/nm-l2tp-service.name
+%config %_sysconfdir/dbus-1/system.d/nm-l2tp-service.conf
 %_libexecdir/NetworkManager/nm-l2tp-service
 %_libdir/pppd/%ppp_version/*.so
+%if_with libnm_glib
+%config %_sysconfdir/NetworkManager/VPN/nm-l2tp-service.name
+%endif
+%config %_libexecdir/NetworkManager/VPN/nm-l2tp-service.name
 
 %files gtk -f %name.lang
-%_libdir/NetworkManager/lib*.so*
+%if_with libnm_glib
+%_libdir/NetworkManager/libnm-l2tp-properties.so
+%endif
 %_libexecdir/NetworkManager/nm-l2tp-auth-dialog
 %_datadir/gnome-vpn-properties/l2tp
+%_libdir/NetworkManager/libnm-vpn-plugin-l2tp.so
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Jan 21 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.git20150916
+- Require strongswan again.
+- Upstream git snapshot (master branch) (closes: #30613).
+
 * Fri Jan 16 2015 Mikhail Efremov <sem@altlinux.org> 0.9.8.7-alt2
 - Rebuild with ppp-2.4.7.
 - Drop strongswan requires (see ALT bug #30613).
