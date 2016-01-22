@@ -21,7 +21,7 @@
 
 Name: efl
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -313,6 +313,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt2
+- rebuilt against libwebp.so.6
+
 * Fri Dec 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 
