@@ -5,7 +5,7 @@
 
 Name: libical-glib
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: An iCalendar library based on libical
 Group: System/Libraries
@@ -18,7 +18,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.32
 %define ical_ver 1.0
 
-BuildPreReq: libgio-devel >= %glib_ver libical-devel >= %ical_ver
+BuildPreReq: libgio-devel >= %glib_ver libical-devel >= %ical_ver libicu-devel
 BuildRequires: libxml2-devel gnome-common intltool gtk-doc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 # for check
@@ -106,6 +106,9 @@ This package contains development documentation for %name library.
 %endif
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt2
+- rebuilt against libical.so.2
+
 * Wed Jan 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
