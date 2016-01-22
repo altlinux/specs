@@ -1,6 +1,5 @@
 %set_automake_version 1.11
 
-%define _name abiword
 %define abi_ver 3.0
 %define ver_major 3.0
 %def_enable spell
@@ -11,16 +10,16 @@
 %def_with python
 %def_disable collabnet
 
-Name: %_name-%abi_ver
+Name: abiword
 Version: %ver_major.1
-Release: alt4
+Release: alt5
 
 Summary: Lean and fast full-featured word processor
 Group: Office
 License: GPL
 Url: http://www.abisource.com/
 
-Source: http://www.abisource.com/downloads/abiword/%version/source/%_name-%version.tar.gz
+Source: http://www.abisource.com/downloads/abiword/%version/source/%name-%version.tar.gz
 
 #fedora patches
 Source11: abiword.mime
@@ -34,7 +33,10 @@ Patch18: abiword-3.0.0-link-grammar-5.patch
 Patch19: abiword-3.0.0-link-grammar-5-second.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
-Conflicts: %_name %_name-light
+Obsoletes: %name-%abi_ver
+Provides: %name-%abi_ver = %version-%release
+Conflicts: %name-light
+
 Requires: %name-data = %version-%release
 
 BuildRequires: gcc-c++ boost-devel asio libreadline-devel flex
@@ -78,6 +80,8 @@ Windows and most Unix Systems. Features include:
 Summary: Arch independent files for AbiWord
 Group: Office
 BuildArch: noarch
+Obsoletes: %name-%abi_ver-data
+Provides: %name-%abi_ver-data = %version-%release
 
 %description data
 This package provides noarch data needed for AbiWord to work.
@@ -86,15 +90,19 @@ This package provides noarch data needed for AbiWord to work.
 Group: Development/C++
 Summary: Headers for Abiword plugins
 Requires: %name = %version-%release
+Obsoletes: %name-%abi_ver-devel
+Provides: %name-%abi_ver-devel = %version-%release
 
 %description devel
 Headers and pkgconfig support for  Abiword plugin building.
-Conflicts: %_name-devel %_name-light-devel
+Conflicts: %name-devel %name-light-devel
 
 %package gir
 Summary: GObject introspection data for the %name
 Group: System/Libraries
 Requires: %name = %version-%release
+Obsoletes: %name-%abi_ver-gir
+Provides: %name-%abi_ver-gir = %version-%release
 
 %description gir
 GObject introspection data for the %name
@@ -104,20 +112,22 @@ Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
 Requires: %name-gir = %version-%release
+Obsoletes: %name-%abi_ver-gir-devel
+Provides: %name-%abi_ver-gir-devel = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the AbiWord
 
-%package -n python-module-%_name
+%package -n python-module-%name
 Summary: Python bindings for developing with AbiWord
 Group: Development/Python
 Requires: %name-gir = %version-%release
 
-%description -n python-module-%_name
+%description -n python-module-%name
 Python bindings for developing with AbiWord library
 
 %prep
-%setup -n %_name-%version
+%setup
 
 # fedora patches
 %patch11 -p1 -b .desktop
@@ -153,19 +163,19 @@ install -p -m 0644 -D %SOURCE12 %buildroot%_datadir/mime-info/abiword.keys
 install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 
 %files
-%_bindir/%_name
-%_libdir/lib%_name-%ver_major.so
-%dir %_libdir/%_name-%ver_major
-%dir %_libdir/%_name-%ver_major/plugins
-%_libdir/%_name-%ver_major/plugins/*.so
+%_bindir/%name
+%_libdir/lib%name-%ver_major.so
+%dir %_libdir/%name-%ver_major
+%dir %_libdir/%name-%ver_major/plugins
+%_libdir/%name-%ver_major/plugins/*.so
 %exclude %_libdir/abiword-%ver_major/plugins/*.la
 %{?_enable_collabnet:%_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.AbiCollab.service}
 %{?_enable_collabnet:%_datadir/telepathy/clients/AbiCollab.client}
 
 %files data
-%_desktopdir/%_name.desktop
+%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*
-%_datadir/%_name-%ver_major/
+%_datadir/%name-%ver_major/
 %_datadir/mime-info/*
 %_datadir/mime/packages/*
 %_man1dir/*
@@ -180,10 +190,14 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %files gir-devel
 %_girdir/*.gir
 
-%files -n python-module-%_name
+%files -n python-module-%name
 %python_sitelibdir/gi/overrides/*
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt5
+- renamed to abiword
+- built against libical.so.2
+
 * Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt4
 - temporarily disabled abicollab.net support incompatible with gnutls > 3.4
 
