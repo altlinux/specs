@@ -25,7 +25,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.5.1
+Version: 1.5.3
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -47,12 +47,15 @@ ExclusiveArch: %go_arches
 
 AutoReq: nocpp
 
+BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 BuildRequires: libselinux-utils
 BuildRequires: libpcre-devel
 
 # for test suite
 %{?_enable_check:BuildRequires: /proc}
+
+Provides: go = %version-%release
 
 Provides:  golang-godoc = %version-%release
 Obsoletes: golang-godoc
@@ -240,10 +243,18 @@ for n in syscall regexp; do
 		xargs -0 mv -fvt %buildroot/%_datadir/%name/src/$n --
 done
 
+# ensure these exist and are owned
+mkdir -p -- \
+	%buildroot/%go_path/src/github.com \
+	%buildroot/%go_path/src/bitbucket.org \
+	%buildroot/%go_path/src/code.google.com/p \
+	%buildroot/%go_path/src/golang.org/x \
+#
 
 %files
 %_bindir/*
 %go_root
+%go_path
 
 %exclude %go_root/src/runtime/runtime-gdb.py*
 
@@ -268,6 +279,9 @@ done
 
 
 %changelog
+* Fri Jan 22 2016 Alexey Gladkov <legion@altlinux.ru> 1.5.3-alt1
+- New version (1.5.3).
+
 * Tue Sep 22 2015 Alexey Gladkov <legion@altlinux.ru> 1.5.1-alt1
 - New version (1.5.1).
 - The vet and cover tools have been moved to this package.
