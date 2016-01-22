@@ -1,7 +1,7 @@
 
 %define major 15
-%define minor 08
-%define bugfix 0
+%define minor 12
+%define bugfix 1
 
 Name: kde-common
 Version: %major.%minor.%bugfix
@@ -227,6 +227,9 @@ ln -s `relative %_libdir %_K4datadir/lib` %buildroot/%_K4datadir/lib
 
 
 %changelog
+* Fri Jan 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Mon Aug 31 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - bump version
 
