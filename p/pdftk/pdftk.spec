@@ -6,7 +6,7 @@ BuildRequires: gcc-java gcc-c++ /usr/bin/dos2unix java-1.5.0-gcj
 
 Name:		pdftk
 Version:	2.02
-Release:	alt1_2
+Release:	alt2_2
 Summary:	PDF Tool Kit
 License:	GPLv2+
 Group:		Publishing
@@ -62,6 +62,9 @@ install -Dpm 0644 pdftk.1 %{buildroot}%{_mandir}/man1/%{name}.1
 
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.02-alt2_2
+- rebuild
+
 * Tue Oct 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1_2
 - new version (closes: #31407)
 
