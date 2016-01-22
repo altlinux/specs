@@ -6,7 +6,7 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -119,6 +119,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt0.2
+- rebuilt against libwebp.so.6
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt0.1
 - 0.3.1_d03be6e2
 
