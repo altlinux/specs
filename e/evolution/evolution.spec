@@ -18,7 +18,7 @@
 
 Name: evolution
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
@@ -51,7 +51,7 @@ Provides: camel
 %define libsoup_ver 2.42.0
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.5.0
-%define ical_ver 0.43
+%define ical_ver 1.0.1
 %define gdata_ver 0.10.0
 %define champlain_ver 0.12
 %define pst_ver 0.6.54
@@ -76,7 +76,7 @@ BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
 BuildPreReq: libsoup-gnome-devel >= %libsoup_ver
 BuildPreReq: libnotify-devel >= %libnotify_ver
 BuildPreReq: libgweather-devel >= %gweather_ver
-BuildPreReq: libical-devel >= %ical_ver
+BuildPreReq: libical-devel >= %ical_ver libicu-devel
 BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libpst-devel >= %pst_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
@@ -315,6 +315,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt2
+- rebuilt against libical.so.2
+
 * Mon Jan 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt1
 - 3.18.4
 

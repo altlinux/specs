@@ -5,7 +5,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -119,7 +119,7 @@ BuildRequires: libcroco-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libpulseaudio-devel
 %{?_enable_gnome_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth}
-BuildRequires: evolution-data-server-devel >= %eds_ver
+BuildRequires: evolution-data-server-devel >= %eds_ver libicu-devel
 # for screencast recorder functionality
 BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api_ver-devel
 BuildRequires: libXfixes-devel
@@ -234,6 +234,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt2
+- rebuilt against libical.so.2
+
 * Wed Nov 18 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

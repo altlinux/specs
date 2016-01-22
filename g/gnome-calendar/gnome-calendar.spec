@@ -4,7 +4,7 @@
 
 Name: gnome-calendar
 Version: %ver_major.2.1
-Release: alt1
+Release: alt2
 
 Summary: Calendar application for GNOME
 License: %gpl2plus
@@ -22,7 +22,7 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 
 BuildPreReq: intltool yelp-tools itstool libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildPreReq: libical-devel >= %ical_ver
+BuildPreReq: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgnome-online-accounts-devel vala-tools
 BuildRequires: evolution-data-server-devel >= %eds_ver
 
@@ -55,6 +55,9 @@ Calendar is a calendar application for GNOME.
 %doc NEWS README
 
 %changelog
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2.1-alt2
+- rebuilt against libical.so.2
+
 * Thu Dec 24 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2.1-alt1
 - 3.18.2.1
 

@@ -1,19 +1,19 @@
-%def_with bdb
+%define _name libical
+%define soversion 1
 
-Name: libical
-Version: 2.0.0
-Release: alt1
+Name: %_name%soversion
+Version: 1.0.1
+Release: alt4
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
-License: LGPL2.1+/MPL-1.0
-Url: https://github.com/%name
+License: LGPL2.1+/MPL
+Url: https://github.com/%_name
 
-Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
-Patch: %name-1.0.1-alt-libdir.patch
+Source: %url/%_name/releases/download/v%version/%_name-%version.tar.gz
+Patch: %_name-1.0.1-alt-libdir.patch
 
-BuildRequires: cmake gcc-c++ ctest libicu-devel
-%{?_with_bdb:BuildRequires: libdb4-devel}
+BuildRequires: cmake gcc-c++ ctest
 
 %description
 Libical is an Open Source implementation of the IETF's iCalendar
@@ -21,24 +21,13 @@ Calendaring and Scheduling protocols (RFC 2445, 2446, and 2447).
 It parses iCal components and provides a C API for manipulating the
 component properties, parameters, and subcomponents
 
-%package devel
-Summary: Files for developing applications that use libical
-Requires: %name = %version-%release
-Group: Development/C
-
-%description devel
-The header files and libtool library  for developing applications that
-use libical.
-
 %prep
-%setup
+%setup -n %_name-%version
 %patch -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DSHARED_ONLY:BOOL=ON \
-	%{?_with_bdb:-DWITH_BDB:BOOL=ON}
-
+	-DSHARED_ONLY:BOOL=ON
 %cmake_build
 
 %install
@@ -51,17 +40,10 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %doc TODO TEST THANKS
 %_libdir/*.so.*
 
-%files devel
-%doc doc/UsingLibical*
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-%_libdir/cmake/LibIcal/
-
 
 %changelog
-* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
-- 2.0.0
+* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt4
+- compat library
 
 * Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt3
 - built with SHARED_ONLY=ON to prevent cmake search for the static libraries (ALT #31266)
