@@ -4,7 +4,7 @@
 
 Name: cca-spec-babel
 Version: 0.8.6
-Release: alt7.svn20090721
+Release: alt8.svn20090721
 Summary: The Common Component Architecture Specification for Babel
 License: LGPL
 Group: Sciences/Mathematics
@@ -195,6 +195,9 @@ done
 %_docdir/%name
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.6-alt8.svn20090721
+- NMU: rebuild with new babel
+
 * Fri Nov 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.6-alt7.svn20090721
 - Rebuilt with new babel
 
