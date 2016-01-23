@@ -3,7 +3,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 Summary: Language tool for high-performance scientific computing community
  
 License: LGPL v2.1
@@ -23,10 +23,10 @@ Requires: python-module-sidlx = %version-%release
 Conflicts: openbabel
 
 BuildRequires(pre): rpm-build-compat rpm-build-python
-BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel libltdl7-devel
-BuildPreReq: libxml2-devel w3c-libwww-devel libparsifal-devel
-BuildPreReq: jpackage-1.5-compat java-devel-default jpackage-utils gnu-getopt
-BuildPreReq: python-devel libnumpy-devel /proc chrpath
+BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel libltdl7-devel
+BuildRequires: libxml2-devel w3c-libwww-devel libparsifal-devel
+BuildRequires: jpackage-compat java-devel-default jpackage-utils gnu-getopt
+BuildRequires: python-devel libnumpy-devel /proc chrpath
 
 %description
   Babel is a language interoperability tool intended for use by
@@ -363,6 +363,9 @@ done
 %_docdir/%name
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1.1
+- NMU: clean-up of java deps
+
 * Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
 - Version 2.0.0
 
