@@ -1,6 +1,6 @@
 Name: repocop-report-distrodb
 Version: 0.18
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -39,6 +39,9 @@ ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 #%_man1dir/repocop-report-prometeus-*
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.18-alt3
+- bugfixes
+
 * Tue Nov 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.18-alt2
 - Perinci-CmdLine-Any-Lumped provides nothing good
 
