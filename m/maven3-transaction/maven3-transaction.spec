@@ -5,8 +5,9 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt12jpp
+Release: alt13jpp
 
+Provides: eclipse-swt
 Provides: eclipse-platform eclipse-rcp
 Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
 Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
@@ -53,6 +54,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt13jpp
+- updated dependencies
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt12jpp
 - updated dependencies
 
