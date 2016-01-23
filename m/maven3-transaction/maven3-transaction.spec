@@ -5,7 +5,7 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt10jpp
+Release: alt11jpp
 
 Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
 Provides: osgi(org.objectweb.asm) = 3.2.0
@@ -16,17 +16,17 @@ Requires: arquillian-osgi
 Requires: hibernate3
 Requires: hibernate-validator
 Requires: infinispan
-Requires: jaxb2-maven-plugin
-Requires: jbosgi-deployment
-Requires: jbosgi-framework
-Requires: jboss-metadata
-Requires: jboss-naming
-Requires: jboss-remoting
-Requires: jboss-web
+#Requires: jaxb2-maven-plugin
+#Requires: jbosgi-deployment
+#Requires: jbosgi-framework
+#Requires: jboss-metadata
+#Requires: jboss-naming
+#Requires: jboss-remoting
+#Requires: jboss-web
 #Requires: jersey
 Requires: jetty
 Requires: maven
-Requires: maven-ant-tasks
+#Requires: maven-ant-tasks
 #Requires: maven-indexer
 Requires: maven-jflex-plugin
 Requires: maven-site-plugin
@@ -35,7 +35,7 @@ Requires: mojo-signatures
 Requires: springframework
 Requires: tomcat6
 Requires: weld-api
-Requires: xnio
+#Requires: xnio
 
 %description
 Maven3 transaction unfinished files.
@@ -51,6 +51,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt11jpp
+- updated dependencies
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt10jpp
 - updated dependencies
 
