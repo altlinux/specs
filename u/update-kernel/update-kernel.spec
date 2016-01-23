@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Update kernel and modules
@@ -38,6 +38,9 @@ install -pm755 remove-old-kernels %buildroot%_sbindir/
 %_sbindir/remove-old-kernels
 
 %changelog
+* Sat Jan 23 2016 Terechkov Evgenii <evg@altlinux.org> 0.9.8-alt1
+- Add help/force/dry-run options to remove-old-kernels
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - check if we already have lastest kernel package (alt bug #26715)
 
