@@ -3,7 +3,7 @@
 %define real_name IO-Stream
 
 Name: perl-IO-Stream
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 
 Summary:  Perl module for non-blocking I/O streams based on EV
@@ -58,6 +58,9 @@ rm -f -- t/err-rw.t t/timeout-write-slowclient.t
 %perl_vendor_privlib/IO/Stream*
 
 %changelog
+* Sat Jan 23 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.10-alt1
+- New version
+
 * Sun Aug 30 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.9-alt1
 - New version
 
