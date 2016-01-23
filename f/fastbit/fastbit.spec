@@ -1,7 +1,7 @@
 Name: fastbit
 Epoch: 1
 Version: 2.0.1.9
-Release: alt1.svn20150305
+Release: alt2.svn20150305
 Summary: An Efficient Compressed Bitmap Index Technology
 License: LGPLv2.1+, GPLv2+
 Group: Development/Databases
@@ -11,8 +11,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://codeforge.lbl.gov/anonscm/fastbit/trunk
 Source: %name-%version.tar.gz
 
-BuildPreReq: java-devel-default flex gcc-c++ doxygen graphviz
-BuildPreReq: sharutils ant /proc
+BuildRequires: java-devel-default flex gcc-c++ doxygen graphviz
+BuildRequires: sharutils ant /proc
 
 %description
 FastBit is an open-source data processing library following the spirit
@@ -126,7 +126,7 @@ Group: Development/Databases
 BuildArch: noarch
 Requires: lib%name = %EVR
 Requires: libfastbitjni = %EVR
-Requires: jakarta-commons-logging junit log4j
+Requires: apache-commons-logging junit log4j
 
 %description j
 FastBit is an open-source data processing library following the spirit
@@ -231,6 +231,9 @@ gzip ChangeLog
 %_javadocdir/%name
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1.9-alt2.svn20150305
+- NMU: cleaned up dependencies for java
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.0.1.9-alt1.svn20150305
 - Version 2.0.1.9
 
