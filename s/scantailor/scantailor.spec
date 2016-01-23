@@ -1,11 +1,11 @@
 Name: scantailor
-Version: 0.9.11.1
-Release: alt2
+Version: 0.9.11.1git
+Release: alt1
 
 Summary: Scan processing software
 License: GPL
 Group: Graphics
-Url: http://scantailor.sf.net
+Url: https://github.com/knowledgejunkie/scantailor
 
 Packager: %packager
 Source: %name-%version.tar
@@ -49,11 +49,16 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_bindir/scantailor
 %dir %_datadir/%name
 %dir %_datadir/%name/translations
+%dir %_iconsdir/hicolor/scalable
+%dir %_iconsdir/hicolor/scalable/apps
 %_datadir/%name/translations/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jan 23 2016 Andrey Bergman <vkni@altlinux.org> 0.9.11.1git-alt1
+- Update to commit bd9ba..., Dec 5 2015, branch enhanced-working.
+
 * Tue Sep 04 2012 Andrey Bergman <vkni@altlinux.org> 0.9.11.1-alt2
 - Adjusted BuildRequires.
 
