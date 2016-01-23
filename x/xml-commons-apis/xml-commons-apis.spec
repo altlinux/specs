@@ -1,9 +1,11 @@
-%define oldname xml-commons-apis
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Name:          xml-commons-jaxp-1.4-apis
+Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt1_8jpp7
+Release:       alt1_14jpp7
 Summary:       APIs for DOM, SAX, and JAXP
 Group:         Development/Java
 License:       ASL 2.0 and W3C and Public Domain
@@ -13,8 +15,8 @@ URL:           http://xml.apache.org/commons/
 #   svn export http://svn.apache.org/repos/asf/xml/commons/tags/xml-commons-external-1_4_01/java/external/
 #   tar czf xml-commons-external-1.4.01-src.tar.gz external
 Source0:       xml-commons-external-%{version}-src.tar.gz
-Source1:       %{oldname}-MANIFEST.MF
-Source2:       %{oldname}-ext-MANIFEST.MF
+Source1:       %{name}-MANIFEST.MF
+Source2:       %{name}-ext-MANIFEST.MF
 Source3:       http://repo1.maven.org/maven2/xml-apis/xml-apis/2.0.2/xml-apis-2.0.2.pom
 Source4:       http://repo1.maven.org/maven2/xml-apis/xml-apis-ext/1.3.04/xml-apis-ext-1.3.04.pom
 
@@ -27,10 +29,24 @@ Requires:      jpackage-utils
 Requires(post):    jpackage-utils
 Requires(postun):  jpackage-utils
 
-#Obsoletes:     xml-commons < %{version}-%{release}
-#Provides:      xml-commons = %{version}-%{release}
+Obsoletes:     xml-commons < %{version}-%{release}
+Provides:      xml-commons = %{version}-%{release}
 
-Provides:      xml-commons-apis = %{version}-%{release}
+# TODO: Ugh, this next line should be dropped since it actually provides JAXP 1.4 now...
+Provides:      xml-commons-jaxp-1.3-apis = %{version}-%{release}
+Source44: import.info
+# jpackage deprecations
+Conflicts: xml-commons-apis12 < 0:1.2.05
+Obsoletes: xml-commons-apis12 < 0:1.2.05
+Conflicts: xml-commons-jaxp-1.1-apis < 0:1.3.05
+Obsoletes: xml-commons-jaxp-1.1-apis < 0:1.3.05
+Conflicts: xml-commons-jaxp-1.2-apis < 0:1.3.05
+Obsoletes: xml-commons-jaxp-1.2-apis < 0:1.3.05
+Conflicts: xml-commons-jaxp-1.3-apis < 0:1.3.05
+Obsoletes: xml-commons-jaxp-1.3-apis < 0:1.3.05
+Conflicts: xml-commons-jaxp-1.4-apis < %version-%release
+Obsoletes: xml-commons-jaxp-1.4-apis < %version-%release
+
 
 %description
 xml-commons-apis is designed to organize and have common packaging for
@@ -38,7 +54,7 @@ the various externally-defined standard interfaces for XML. This
 includes the DOM, SAX, and JAXP.
 
 %package manual
-Summary:       Manual for %{oldname}
+Summary:       Manual for %{name}
 Group:         Development/Java
 BuildArch: noarch
 
@@ -46,7 +62,7 @@ BuildArch: noarch
 %{summary}.
 
 %package javadoc
-Summary:       Javadoc for %{oldname}
+Summary:       Javadoc for %{name}
 Group:         Development/Java
 BuildArch: noarch
 
@@ -85,16 +101,17 @@ zip -u build/xml-apis-ext.jar META-INF/MANIFEST.MF
 # Jars
 install -pD -T build/xml-apis.jar %{buildroot}%{_javadir}/%{name}.jar
 install -pDm 644 xml-apis-[0-9]*.pom %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap xml-apis xml-apis %{version} JPP %{name}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap -a xerces:dom3-xml-apis
 
 install -pD -T build/xml-apis-ext.jar %{buildroot}%{_javadir}/%{name}-ext.jar
 install -pDm 644 xml-apis-ext*.pom %{buildroot}/%{_mavenpomdir}/JPP-%{name}-ext.pom
-%add_to_maven_depmap xml-apis xml-apis-ext %{version} JPP %{name}-ext
+%add_maven_depmap JPP-%{name}-ext.pom %{name}-ext.jar
 
 # for better interoperability with the jpp apis packages
-#ln -sf %{name}.jar %{buildroot}%{_javadir}/jaxp13.jar
-#ln -sf %{name}.jar %{buildroot}%{_javadir}/jaxp.jar
-#ln -sf %{name}.jar %{buildroot}%{_javadir}/xml-commons-jaxp-1.3-apis.jar
+ln -sf %{name}.jar %{buildroot}%{_javadir}/jaxp13.jar
+ln -sf %{name}.jar %{buildroot}%{_javadir}/jaxp.jar
+ln -sf %{name}.jar %{buildroot}%{_javadir}/xml-commons-jaxp-1.3-apis.jar
 
 # Javadocs
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
@@ -103,27 +120,9 @@ cp -pr build/docs/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 # prevent apis javadoc from being included in doc
 rm -rf build/docs/javadoc
 
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/xml-commons-apis_%{name}<<EOF
-%{_javadir}/xml-commons-apis.jar	%{_javadir}/%{name}.jar	10400
-EOF
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_%{name}<<EOF
-%{_javadir}/jaxp.jar	%{_javadir}/%{name}.jar	10400
-EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/dom_xml-%{name}<<EOF
-#%{_javadir}/dom.jar	%{_javadir}/%{name}.jar	10400
-#EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/sax2_xml-%{name}<<EOF
-#%{_javadir}/sax2.jar	%{_javadir}/%{name}.jar	10400
-#EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/sax_xml-%{name}<<EOF
-#%{_javadir}/sax.jar	%{_javadir}/%{name}.jar	10400
-#EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/xslt_%{name}<<EOF
-#%{_javadir}/xslt.jar	%{_javadir}/%{name}.jar	10400
-#EOF
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/xml-commons-apis-javadoc_%{name}-javadoc<<EOF
-%{_javadocdir}/xml-commons-apis	%{_javadocdir}/%{name}/	10400
-EOF
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %doc LICENSE NOTICE
@@ -134,17 +133,18 @@ EOF
 %{_mavendepmapfragdir}/%{name}
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/JPP-%{name}-ext.pom
-%_altdir/xml-commons-apis_%{name}
-%_altdir/jaxp_%{name}
 
 %files manual
 %doc build/docs/*
 
 %files javadoc
 %{_javadocdir}/*
-%_altdir/xml-commons-apis-javadoc_%{name}-javadoc
 
 %changelog
-* Sat Mar 30 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt1_8jpp7
-- new version
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt1_14jpp7
+- xml-commons replacement
+
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.01-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
 
