@@ -1,6 +1,6 @@
 Name: jicmp
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Databases
 Summary: Java interface to ICMP (ping)
@@ -9,7 +9,7 @@ URL: http://www.opennms.org/
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 # Automatically added by buildreq on Sat Mar 29 2008
-BuildRequires: /proc jpackage-1.6-compat
+BuildRequires: /proc jpackage-compat
 
 %define arch_arg --with-jvm-arch=32
 %ifarch x86_64
@@ -35,6 +35,9 @@ make
 %attr(644,root,root) %_datadir/java/*.jar
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.1
+- NMU: fixed deps
+
 * Sat Dec 31 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
