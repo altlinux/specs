@@ -7,7 +7,7 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher
 
 Name: docs-%variant
-Version: 7.0.1
+Version: 7.0.5
 Release: alt1
 
 Summary: %Variant documentation
@@ -43,6 +43,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Sat Jan 23 2016 Artem Zolochevskiy <azol@altlinux.org> 7.0.5-alt1
+- update to 7.0.5
+
 * Tue May 13 2014 Artem Zolochevskiy <azol@altlinux.ru> 7.0.1-alt1
 - switch to publican
 - fix screenshots
