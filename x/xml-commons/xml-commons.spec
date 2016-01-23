@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 #def_with gcj_support
 %bcond_with gcj_support
-%bcond_without repolib
+%bcond_with repolib
 
 %if %with gcj_support
 %define gcj_support 0
@@ -74,7 +74,7 @@ BuildRequires: jpackage-compat
 
 Name:           xml-commons
 Version:        1.3.04
-Release:        alt6_10jpp7
+Release:        alt7_10jpp7
 Summary:        Common code for XML projects
 Epoch:          0
 License:        ASL 2.0
@@ -929,6 +929,7 @@ fi
 %exclude %{_javadir}*/sax2.jar
 %exclude %{_javadir}*/sax.jar
 
+%if 0
 %files jaxp-1.1-apis-javadoc
 %_altdir/xml-commons-apis-javadoc_xml-commons-jaxp-1.1-apis-javadoc
 %{_javadocdir}/%{name}-jaxp-1.1-apis-%{version}
@@ -983,6 +984,7 @@ fi
 %files resolver11-javadoc
 %{_javadocdir}/%{name}-resolver11-%{version}
 %{_javadocdir}/%{name}-resolver11
+%endif
 
 %files jaxp-1.2-apis
 %_altdir/xslt_xml-commons-jaxp-1.2-apis
@@ -1049,6 +1051,7 @@ fi
 %files jaxp-1.3-apis-manual
 %{_docdir}/%{name}-jaxp-1.3-apis-%{version}
 
+%if 0
 %files which11
 %_altdir/xml-commons-which_xml-commons-which11
 %_altdir/xml-which_xml-commons-which11
@@ -1078,6 +1081,7 @@ fi
 %files resolver12-javadoc
 %{_javadocdir}/%{name}-resolver12-%{version}
 %{_javadocdir}/%{name}-resolver12
+%endif
 
 %if %with repolib
 %files repolib
@@ -1087,6 +1091,9 @@ fi
 %endif
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.04-alt7_10jpp7
+- moved resolver to xml-commons-resolver
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.04-alt6_10jpp7
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
