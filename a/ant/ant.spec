@@ -1,6 +1,6 @@
 Name: ant
 Version: 1.9.2
-Release: alt1
+Release: alt2
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -204,7 +204,7 @@ BuildRequires: junit junit4 junit3
 BuildRequires: log4j
 BuildRequires: xml-stylebook
 BuildRequires: xalan-j2 >= 2.0
-BuildRequires: xml-commons-resolver12
+BuildRequires: xml-commons-resolver
 BuildRequires: xerces-j2
 
 %description -n %{name}-optional
@@ -422,7 +422,7 @@ Swing support for ant, a platform-independent build tool for Java.
 Summary: XML Commons Resolver task support for Ant
 Group: Development/Java
 Requires: %name = %version
-Requires: xml-commons-resolver12
+Requires: xml-commons-resolver
 Provides: ant-xml-resolver = %version-%release
 Obsoletes: ant-xml-resolver < 1.8.0
 
@@ -525,7 +525,7 @@ bsf \
 commons-logging \
 commons-net \
 jsch \
-xml-commons-resolver12 \
+xml-commons-resolver \
 ; do
 %endif
 	CLASSPATH=$(build-classpath $jars):$CLASSPATH
@@ -799,7 +799,7 @@ ln -s nodeps %{buildroot}%{_sysconfdir}/%{name}.d/trax
 %if_without bootstrap
 echo "antlr %{name}/ant-antlr" > %{buildroot}%{_sysconfdir}/%{name}.d/antlr
 echo "bsf %{name}/ant-apache-bsf" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-bsf
-echo "xml-commons-resolver12 %{name}/ant-apache-resolver" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-resolver
+echo "xml-commons-resolver %{name}/ant-apache-resolver" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-resolver
 echo "apache-commons-logging %{name}/ant-commons-logging" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-logging
 echo "apache-commons-net %{name}/ant-commons-net" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-net
 echo "jai %{name}/ant-jai" > %{buildroot}%{_sysconfdir}/%{name}.d/jai
@@ -1087,6 +1087,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt2
+- use xml-commons-resolver
+
 * Fri Aug 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1
 - new version
 
