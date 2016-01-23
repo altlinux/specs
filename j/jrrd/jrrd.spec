@@ -2,7 +2,7 @@
 
 Name: jrrd
 Version: 1.0.5
-Release: alt1.1
+Release: alt1.2
 License: GPL
 Group: Databases
 Summary: Java interface to RRDTool
@@ -10,7 +10,7 @@ URL: http://www.opennms.org/
 Source: %name-%version.tar.gz
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
-BuildRequires: /proc jpackage-1.6-compat librrd-devel gcc
+BuildRequires: /proc jpackage-compat librrd-devel gcc
 
 %description
 A Java native interface (JNI) to RRDTool
@@ -39,6 +39,9 @@ make
 %_datadir/java/*.jar
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1.2
+- NMU: fixed java deps
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1.1
 - Fixed build
 
