@@ -16,7 +16,7 @@
 
 Name: brasero
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -159,7 +159,7 @@ GObject introspection devel data for the Brasero
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -197,7 +197,7 @@ GObject introspection devel data for the Brasero
 %_datadir/%name/*
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
-%_man1dir/%name.1.gz
+%_man1dir/%name.1.*
 %_datadir/mime/packages/%name.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.brasero.gschema.xml
 %_datadir/GConf/gsettings/brasero.convert
@@ -232,6 +232,9 @@ GObject introspection devel data for the Brasero
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt2
+- fixed files list
+
 * Tue Apr 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
 - 3.12.1
 
