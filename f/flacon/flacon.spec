@@ -1,6 +1,6 @@
 Name: flacon
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -56,11 +56,23 @@ popd
 %_liconsdir/%name.png
 %_niconsdir/%name.png
 %_datadir/%name
-%_man1dir/%name.1.gz
+%_man1dir/%name.1.*
 
 %changelog
+* Sun Jan 24 2016 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt2
+- Fix man file
+
+* Wed Sep 23 2015 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt0.M70P.1
+- Build for branch p7
+
+* Sun Sep 20 2015 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt0.M70T.1
+- Build for branch t7
+
 * Sat Sep 19 2015 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt1
 - Version 1.2.0
+
+* Tue Sep 09 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt0.M70P.1
+- Backport new version to p7 branch (ALT #30297)
 
 * Wed Aug 27 2014 Nazarov Denis <nenderus@altlinux.org> 1.0.1-alt0.M70T.1
 - Build for branch t7
