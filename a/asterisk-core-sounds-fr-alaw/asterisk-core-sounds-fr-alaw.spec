@@ -3,7 +3,7 @@
 
 Name: asterisk-core-sounds-fr-alaw
 Summary: sounds for Asterisk
-Version: 1.4.27
+Version: 1.5
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -49,6 +49,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Sun Jan 24 2016 Cronbuild Service <cronbuild@altlinux.org> 1.5-alt1
+- new version 1.5
+
 * Sun May 10 2015 Cronbuild Service <cronbuild@altlinux.org> 1.4.27-alt1
 - new version 1.4.27
 
