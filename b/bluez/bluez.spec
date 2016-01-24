@@ -3,7 +3,7 @@
 
 Name: bluez
 Version: 5.37
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -23,7 +23,7 @@ Obsoletes: obex-data-server < 0.4.6-alt3
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc
-%{?_enable_obex:BuildRequires: libical-devel}
+%{?_enable_obex:BuildRequires: libical-devel libicu-devel}
 
 %description
 Bluetooth protocol stack for Linux
@@ -126,6 +126,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 5.37-alt2
+- rebuilt against libical.so.2
+
 * Tue Dec 29 2015 Yuri N. Sedunov <aris@altlinux.org> 5.37-alt1
 - 5.37
 
