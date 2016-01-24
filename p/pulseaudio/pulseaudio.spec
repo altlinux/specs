@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 7.0
-Release: alt1.1
+Version: 8.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -14,11 +14,12 @@ BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel libwebrtc-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: liblirc-devel libltdl7-devel libsoxr-devel
-BuildRequires: libsndfile-devel libspeex-devel libssl-devel libwrap-devel
+BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel
+BuildRequires: libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libjson-c-devel libgtk+2-devel libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
-BuildRequires: libsystemd-devel xen-devel libspeexdsp-devel
+BuildRequires: libsystemd-devel xen-devel
 
 Requires: %name-utils = %version-%release
 Requires: %name-daemon = %version-%release
@@ -217,7 +218,6 @@ touch config.rpath
     --localstatedir=/var \
     --with-access-group=audio \
     --enable-per-user-esound-socket \
-    --with-bash-completion-dir=%_sysconfdir/bash_completion.d \
     --disable-static \
     #
 
@@ -233,7 +233,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-7.0
+%define pulselibdir %_libdir/pulse-8.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -244,7 +244,6 @@ find %buildroot%_libdir -name \*.la -delete
 %files
 
 %files daemon
-%_sysconfdir/bash_completion.d/*
 %_sysconfdir/xdg/autostart/pulseaudio.desktop
 
 %dir %_sysconfdir/pulse
@@ -261,8 +260,9 @@ find %buildroot%_libdir -name \*.la -delete
 
 %_datadir/pulseaudio
 %_datadir/zsh/site-functions/_pulseaudio
+%_datadir/bash-completion/completions/*
 
-%_libdir/libpulsecore-7.0.so
+%_libdir/pulseaudio/libpulsecore-8.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio.socket
@@ -372,7 +372,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-7.0.so
+%_libdir/pulseaudio/libpulsecommon-8.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -381,12 +381,14 @@ find %buildroot%_libdir -name \*.la -delete
 %_includedir/pulse
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
-%exclude %_libdir/libpulsecore-7.0.so
 
 %files -n lib%name-devel-doc
 %doc doxygen/html
 
 %changelog
+* Sun Jan 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.0-alt1
+- 8.0 released
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 7.0-alt1.1
 - NMU: added BR: libspeexdsp-devel
 
