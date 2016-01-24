@@ -3,7 +3,7 @@
 
 Name: %_name%soname
 Version: 0.82
-Release: alt2
+Release: alt3
 
 Summary: CD-ROM/CD-image access library
 License: GPLv3+
@@ -16,7 +16,7 @@ Source: %_name-%version.tar
 # git://git.altlinux.org/gears/l/libcdio.git
 Patch: %_name-0.82-alt-build.patch
 
-BuildRequires: gcc-c++ libcddb-devel libncurses-devel
+BuildRequires: gcc-c++ libcddb-devel libncurses-devel makeinfo
 
 %description
 This library is to encapsulate CD-ROM reading and control. Applications
@@ -34,6 +34,8 @@ These C++ libraries provide object-oriented wrappers to the libcdio APIs.
 %prep
 %setup -n %_name-%version
 %patch -p1
+# don't build broken and usless info-pages
+subst 's|\(SUBDIRS = \)doc|\1|' Makefile.am
 
 %build
 %autoreconf
@@ -56,6 +58,9 @@ These C++ libraries provide object-oriented wrappers to the libcdio APIs.
 
 
 %changelog
+* Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 0.82-alt3
+- fixed buildreqs
+
 * Mon Aug 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.82-alt2
 - exclude libudf
 
