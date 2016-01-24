@@ -1,4 +1,4 @@
-%define ver_major 3.2
+%define ver_major 3.3
 %define rev %nil
 %define gst_api_ver 1.0
 
@@ -13,8 +13,8 @@
 %def_enable soundcloud
 
 Name: rhythmbox
-Version: %ver_major.1
-Release: alt3%rev
+Version: %ver_major
+Release: alt1%rev
 
 Summary: Music Management Application
 License: GPL
@@ -275,6 +275,15 @@ Requires: %name = %version-%release
 A plugin to let you browse media content from various sources using
 Grilo.
 
+%package plugins-android
+Summary: Android plugin for Rhythmbox
+Group: Sound
+Requires: %name = %version-%release
+Requires: gvfs-backend-mtp
+
+%description plugins-android
+A plugin that supports Android 4.0+ devices (via MTP).
+
 %package plugins-python
 Summary: Python plugins for Rhythmbox
 Group: Sound
@@ -325,6 +334,7 @@ Requires: %name-plugins-notification = %version-%release
 Requires: %name-plugins-media-server = %version-%release
 Requires: %name-plugins-mpris = %version-%release
 %{?_enable_grilo:Requires: %name-plugins-grilo = %version-%release}
+Requires: %name-plugins-android = %version-%release
 Requires: %name-plugins-python = %version-%release
 
 %description plugins
@@ -452,6 +462,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/grilo/
 %endif
 
+%files plugins-android
+%_libdir/%name/plugins/android/
+
 %files -n lib%name-gir
 %_libdir/girepository-1.0/MPID-3.0.typelib
 %_libdir/girepository-1.0/RB-3.0.typelib
@@ -485,6 +498,10 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
+- 3.3
+- new -plugins-android subpackage
+
 * Sat Sep 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt3
 - rebuilt for gnome-3.18
 
