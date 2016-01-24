@@ -7,7 +7,7 @@
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Library for JavaScript Object Notation format
 Group: System/Libraries
@@ -15,6 +15,7 @@ License: LGPLv2+
 Url: http://live.gnome.org/JsonGlib
 
 Source: ftp://ftp.gnome.org/pub/GNOME/sources/%_name/%ver_major/%_name-%version.tar.xz
+Patch: %name-1.0.4-up-duplicate_testname.patch
 
 %define glib_ver 2.38.0
 %define gi_ver 0.10.5
@@ -54,6 +55,7 @@ GObject introspection devel data for the JSON-GLib library
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 %configure \
@@ -93,6 +95,9 @@ GObject introspection devel data for the JSON-GLib library
 %endif
 
 %changelog
+* Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt2
+- fixed build with glib >= 2.46
+
 * Mon Mar 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
