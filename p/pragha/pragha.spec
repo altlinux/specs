@@ -2,7 +2,7 @@
 
 Name: pragha
 Version: 1.3.3
-Release: alt1
+Release: alt2
 
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
@@ -54,13 +54,16 @@ light, and simultaneously complete without obstructing the daily work.
 %_bindir/*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*x*/apps/pragha.png
-%_man1dir/%name.1.gz
+%_man1dir/%name.1.*
 %_pixmapsdir/%name
 %_libdir/%name
 %doc ChangeLog FAQ NEWS README
 
 
 %changelog
+* Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt2
+- fixed files list
+
 * Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
 - 1.3.3
 
