@@ -1,6 +1,6 @@
 Name: miniupnpc
 Version: 1.9
-Release: alt1
+Release: alt2
 
 Summary: UPnP client library
 License: BSD
@@ -72,9 +72,15 @@ popd
 %dir %_includedir/%name
 %_includedir/%name/*.h
 %_libdir/lib%name.so
-%_man3dir/%name.3.gz
+%_man3dir/%name.3.*
 
 %changelog
+* Sun Jan 24 2016 Nazarov Denis <nenderus@altlinux.org> 1.9-alt2
+- Fix man file
+
+* Sat Feb 08 2014 Nazarov Denis <nenderus@altlinux.org> 1.9-alt0.M70T.1
+- Build for branch t7
+
 * Sat Feb 01 2014 Nazarov Denis <nenderus@altlinux.org> 1.9-alt1
 - Version 1.9
 
