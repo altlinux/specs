@@ -2,7 +2,7 @@
 
 Name: gnome-power-manager
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Power management tools
 License: %gpl2plus
@@ -63,7 +63,7 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
-%_man1dir/*.1.gz
+%_man1dir/*.1.*
 %_datadir/appdata/gnome-power-statistics.appdata.xml
 
 %doc --no-dereference COPYING
@@ -71,6 +71,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
+- fixed files list
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
