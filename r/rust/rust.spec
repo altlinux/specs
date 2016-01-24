@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -19,33 +19,42 @@ Source3: compiler-rt.tar
 Source4: hoedown.tar
 # Cloned from https://github.com/rust-lang/rust-installer
 Source5: rust-installer.tar
-# Prebuilt rust, downloaded from http://static.rust-lang.org/stage0-snapshots/
+# Cloned from https://github.com/rust-lang-nursery/libc
+Source6: liblibc.tar
 
+# Prebuilt rust, downloaded from http://static.rust-lang.org/stage0-snapshots/
 %ifarch x86_64 
-Source6: rust-stage0-2015-08-11-1af31d4-linux-x86_64-7df8ba9dec63ec77b857066109d4b6250f3d222f.tar.bz2
+Source7: rust-stage0-2015-08-11-1af31d4-linux-x86_64-7df8ba9dec63ec77b857066109d4b6250f3d222f.tar.bz2
 %endif
 
 %ifarch %ix86
-Source6: rust-stage0-2015-08-11-1af31d4-linux-i386-e2553bf399cd134a08ef3511a0a6ab0d7a667216.tar.bz2
+Source7: rust-stage0-2015-08-11-1af31d4-linux-i386-e2553bf399cd134a08ef3511a0a6ab0d7a667216.tar.bz2
 %endif
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildPreReq: /proc
 BuildRequires: curl gcc-c++ python-devel
-#ExclusiveArch: x86_64
 
 %description
 Rust is a systems programming language that runs blazingly fast, prevents
 segfaults, and guarantees thread safety.
 
+%package gdb
+Group: Development/Other
+Summary: run rust compiler under gdb
+Requires: %name = %version-%release
+
+%description gdb
+%summary
+
 %prep
-%setup -a1 -a2 -a3 -a4 -a5
-mv llvm jemalloc compiler-rt rust-installer src
+%setup -a1 -a2 -a3 -a4 -a5 -a6
+mv llvm jemalloc compiler-rt rust-installer liblibc src
 mv hoedown src/rt
 
 mkdir dl
-cp %SOURCE6 dl
+cp %SOURCE7 dl
 
 %build
 ./configure --disable-manage-submodules \
@@ -69,10 +78,10 @@ cp %SOURCE6 dl
 %files
 %doc COPYRIGHT LICENSE-APACHE LICENSE-MIT README.md
 %_bindir/rustc
-%_bindir/rust-*
 %_bindir/rustdoc
 %_libdir/lib*
 %_libdir/rustlib/*
+%exclude %_libdir/rustlib/etc/*
 %exclude %_libdir/rustlib/install.log
 %exclude %_libdir/rustlib/manifest-*
 %exclude %_libdir/rustlib/rust-installer-version
@@ -81,7 +90,15 @@ cp %SOURCE6 dl
 %_man1dir/rustc.*
 %_man1dir/rustdoc.*
 
+%files gdb
+%_bindir/rust-gdb
+%_libdir/rustlib/etc/*
+
 %changelog
+* Fri Jan 22 2016 Vladimir Lettiev <crux@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+- separated rust-gdb package
+
 * Fri Jan 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.5.0-alt1
 - initial build
 
