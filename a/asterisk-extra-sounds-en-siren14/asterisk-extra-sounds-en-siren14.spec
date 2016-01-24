@@ -3,7 +3,7 @@
 
 Name: asterisk-extra-sounds-en-siren14
 Summary: sounds for Asterisk
-Version: 1.4.15
+Version: 1.5
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -47,6 +47,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Sun Jan 24 2016 Cronbuild Service <cronbuild@altlinux.org> 1.5-alt1
+- new version 1.5
+
 * Thu Sep 11 2014 Cronbuild Service <cronbuild@altlinux.org> 1.4.15-alt1
 - new version 1.4.15
 
