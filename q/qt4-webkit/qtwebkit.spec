@@ -1,7 +1,7 @@
 
 Name: qt4-webkit
 Version: 2.3.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Group: System/Libraries
@@ -121,6 +121,9 @@ done
 %_pkgconfigdir/QtWebKit.pc
 
 %changelog
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt3
+- rebuild with new libwebp
+
 * Tue Dec 01 2015 Sergey V Turchin <zerg@altlinux.org> 1:2.3.4-alt2
 - provide libQtWebKit4
 
