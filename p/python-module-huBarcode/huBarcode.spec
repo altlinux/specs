@@ -1,10 +1,11 @@
 %define oname huBarcode
 
 %def_without python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2.git20140102
+Release: alt3.git20140102
 Summary: Generation of barcodes in Python
 License: BSD
 Group: Development/Python
@@ -15,17 +16,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Pillow python-module-coverage
+BuildRequires: python-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-Pillow python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-Pillow python3-module-coverage
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-Pillow python3-module-coverage
+BuildRequires: python3
 BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname hubarcode
-%py_requires PIL
+#%py_requires PIL
 
 %description
 huBarcode is a Python Library to generate 1D and 2D Barcodes.
@@ -35,7 +38,7 @@ huBarcode is a Python Library to generate 1D and 2D Barcodes.
 Summary: Generation of barcodes in Python
 Group: Development/Python3
 %py3_provides %oname hubarcode
-%py3_requires PIL
+#%py3_requires PIL
 
 %description -n python3-module-%oname
 huBarcode is a Python Library to generate 1D and 2D Barcodes.
@@ -87,6 +90,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.1-alt3.git20140102
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.git20140102
 - Fixed build
 
