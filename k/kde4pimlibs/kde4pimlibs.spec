@@ -7,7 +7,7 @@
 %define rname kdepimlibs
 Name: kde4pimlibs
 Version: 4.14.11
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -31,7 +31,7 @@ Patch12: kdepimlibs-4.4.2-alt-nepomuk-only-warn.patch
 
 BuildRequires(pre): akonadi-devel kde4libs-devel
 BuildRequires: boost-devel bzlib-devel gcc-c++ shared-mime-info xsltproc libxslt-devel
-BuildRequires: libgpg-error-devel libgpgme-devel libassuan-devel libpth-devel
+BuildRequires: libgpg-error-devel libgpgme-devel libassuan-devel libpth-devel libicu-devel
 BuildRequires: libldap-devel libstrigi-devel prison-devel qjson-devel
 BuildRequires: libgpgme-devel libsasl2-devel libical-devel >= %ical_req
 #BuildRequires: libsoprano-devel soprano-backend-redland soprano shared-desktop-ontologies-devel
@@ -416,6 +416,9 @@ mkdir -p %buildroot/%_datadir/akonadi/agents/
 %_K4libdir/libsyndication.so.*
 
 %changelog
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.11-alt6
+- update build requires
+
 * Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.11-alt5
 - update from 4.14 branch
 
