@@ -4,7 +4,7 @@
 
 Name: ocspd
 Version: 3.1.1
-Release: alt2.1
+Release: alt3.git20150326
 
 Summary: OCSP Responder
 Group: System/Servers
@@ -39,6 +39,7 @@ certificate (such as Mozilla/Firefox/Netscape7).
 %patch0 -p1
 
 %build
+cp src/global-vars.in src/global-vars
 %autoreconf
 %configure --with-ocspd-user=%{ocspduser} --with-ocspd-group=%{ocspduser}
 %make
@@ -80,6 +81,9 @@ mv %buildroot%_sysconfdir/%name/ca.d/* %buildroot%_sysconfdir/%name/ca-samples.d
 %_man3dir/*.3.*
 
 %changelog
+* Mon Jan 25 2016 Vladimir Didenko <cow@altlinux.ru> 3.1.1-alt3.git20150326
+- new version
+
 * Thu Jul 9 2015 Vladimir Didenko <cow@altlinux.ru> 3.1.1-alt2.1
 - pack doc files
 

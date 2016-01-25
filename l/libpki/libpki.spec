@@ -1,5 +1,5 @@
 Name: libpki
-Version: 0.8.8
+Version: 0.8.9
 Release: alt1
 
 Summary: Library for PKI enabled application development.
@@ -16,7 +16,7 @@ BuildRequires: libssl-devel
 BuildRequires: libxml2-devel
 BuildRequires: libldap-devel
 BuildRequires: libmysqlclient-devel
-BuildRequires: postgresql9.4-devel
+BuildRequires: postgresql-devel
 
 %description
 The LibPKI Project is aimed to provide an easy-to-use PKI library for PKI
@@ -88,5 +88,9 @@ rm -fr %buildroot%_includedir/%name/drivers/kmf
 %_libdir/*.a
 
 %changelog
+* Mon Jan 25 2016 Vladimir Didenko <cow@altlinux.ru> 0.8.9-alt1
+- New version
+- Fix build deps
+
 * Mon Jul 6 2015 Vladimir Didenko <cow@altlinux.ru> 0.8.8-alt1
 - Initial build
