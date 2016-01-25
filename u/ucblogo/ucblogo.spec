@@ -1,6 +1,6 @@
 Name: ucblogo
 Version: 6.0
-Release: alt2.qa3
+Release: alt3
 Summary: An interpreter for the Logo programming language
 Group: Development/Functional
 License: GPLv2+
@@ -8,11 +8,12 @@ Source: ftp://ftp.cs.berkeley.edu/pub/ucblogo/ucblogo-%version.tar.gz
 Source1: logo-mode.tar.gz
 Patch0: ucblogo-5.5-ospeed.patch
 Patch1: ucblogo-6.0-wx.patch
-#Patch2: ucblogo-tetexi2html.patch
+Patch2: ucblogo-6.0-gcc5math.patch
+Patch3: ucblogo-6.0-texi.patch
 Url: http://www.cs.berkeley.edu/~bh
 
 # Automatically added by buildreq on Fri Nov 05 2010
-BuildRequires: emacs-nox gcc-c++ ghostscript-utils libSM-devel libX11-devel libncurses-devel libwxGTK-devel texi2html texlive-base
+BuildRequires: emacs-nox gcc-c++ ghostscript-utils libSM-devel libX11-devel libncurses-devel libwxGTK-devel texi2html texlive-base makeinfo texi2dvi
 
 %description
 Berkeley Logo (ucblogo) is an interpreter for the Logo programming
@@ -37,7 +38,9 @@ Emacs mode for UCBLogo.
 %setup -q -a 1
 %patch0 -p1 -b .ospeed
 %patch1 -p1 -b .wx
-#patch2 -p0
+%patch2 -p1 -b .math
+%patch3 -p1
+
 sed -i 's|letter|a4|' docs/makefile
 
 sed -i 's|everything|all|g' makefile*
@@ -71,7 +74,7 @@ cp -f docs/html/*.html docs/usermanual/
 
 %build
 # build WX version
-rm config.cache
+rm -f config.cache
 %configure --x-includes=%_includedir --x-libraries=%_libdir --with-x --wx-enable --wx-config_path=/usr/bin/wx-config
 %make_build logo
 mv logo logo-wx
@@ -119,6 +122,9 @@ rm -f $RPM_BUILD_ROOT%_datadir/emacs/site-lisp/logo/*.el
 %_datadir/emacs/site-lisp/site-start.d
 
 %changelog
+* Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 6.0-alt3
+- Fix build
+
 * Thu Jan 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0-alt2.qa3
 - Fixed build
 
