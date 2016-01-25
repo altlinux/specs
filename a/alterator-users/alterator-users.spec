@@ -1,18 +1,23 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-users
-Version: 10.6
+Version: 10.9
 Release: alt1
 
-Source:%name-%version.tar
+Source: %name-%version.tar
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Summary: alterator module for system users administration
 License: GPL
 Group: System/Configuration/Other
+
 BuildArch: noarch
-Requires: alterator >= 4.10-alt5 alterator-sh-functions >= 0.12-alt1
+BuildPreReq: alterator >= 4.10-alt5
+
+Requires: alterator >= 4.10-alt5
+Requires: alterator-sh-functions >= 0.12
+Requires: autologin-sh-functions >= 0.2.1
 Requires: shadow-groups, coreutils, passwdqc-utils
 Conflicts: alterator-fbi < 5.16-alt1
 Conflicts: alterator-lookout < 2.1-alt1
@@ -20,13 +25,11 @@ Conflicts: alterator-lookout < 2.1-alt1
 Provides: alterator-backend-local_users = %version
 Obsoletes: alterator-backend-local_users
 
-BuildPreReq: alterator >= 4.10-alt5
-
 %description
 alterator module for system users administration
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -40,6 +43,15 @@ alterator module for system users administration
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Jan 25 2016 Andrey Cherepanov <cas@altlinux.org> 10.9-alt1
+- do not show autologin checkbox if system does not support it
+
+* Thu Dec 03 2015 Michael Shigorin <mike@altlinux.org> 10.8-alt1
+- full autologin support (closes: #30037)
+
+* Tue Oct 27 2015 Michael Shigorin <mike@altlinux.org> 10.7-alt1
+- initial autologin support
+
 * Thu Feb 07 2013 Michael Shigorin <mike@altlinux.org> 10.6-alt1
 - "video" added to default groups (e.g. UVC devices use it)
 
