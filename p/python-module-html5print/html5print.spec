@@ -1,10 +1,11 @@
 %define oname html5print
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20140927
+Release: alt2.git20140927
 Summary: HTML5, CSS, Javascript Pretty Print
 License: ASLv2.0
 Group: Development/Python
@@ -14,21 +15,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/berniey/html5print.git
 Source: %name-%version.tar
 BuildArch: noarch
+BuildRequires: python-module-chardet python-module-html5lib python-module-ndg-httpsclient python-module-ntlm python-module-setuptools-tests python-module-slimit
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-BeautifulSoup4 python-module-chardet
-BuildPreReq: python-module-html5lib python-module-requests
-BuildPreReq: python-module-slimit python-module-tinycss2
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-BeautifulSoup4 python-module-chardet
+#BuildPreReq: python-module-html5lib python-module-requests
+#BuildPreReq: python-module-slimit python-module-tinycss2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-BeautifulSoup4 python3-module-chardet
-BuildPreReq: python3-module-html5lib python3-module-requests
-BuildPreReq: python3-module-slimit python3-module-tinycss2
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-BeautifulSoup4 python3-module-chardet
+#BuildPreReq: python3-module-html5lib python3-module-requests
+#BuildPreReq: python3-module-slimit python3-module-tinycss2
+BuildRequires: python3-module-chardet python3-module-html5lib python3-module-setuptools-tests python3-module-slimit python3-module-urllib3
 %endif
 
 %py_provides %oname
-%py_requires bs4 chardet html5lib requests slimit tinycss2
+#%py_requires bs4 chardet html5lib requests slimit tinycss2
 
 %description
 This tool pretty print your HTML, CSS and JavaScript file. The package
@@ -41,7 +44,7 @@ comes with two parts:
 Summary: HTML5, CSS, Javascript Pretty Print
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires bs4 chardet html5lib requests slimit tinycss2
+#%py3_requires bs4 chardet html5lib requests slimit tinycss2
 
 %description -n python3-module-%oname
 This tool pretty print your HTML, CSS and JavaScript file. The package
@@ -104,6 +107,10 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.1-alt2.git20140927
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20140927
 - Initial build for Sisyphus
 
