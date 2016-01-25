@@ -1,10 +1,12 @@
 %define oname django-filter
 
 %def_with python3
+%def_disable check
+%def_enable light_version
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt1.git20140929
+Release: alt2.git20140929
 Summary: A generic system for filtering Django QuerySets based on user selections
 License: BSD
 Group: Development/Python
@@ -16,16 +18,20 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
+%if_disabled light_version
 BuildPreReq: python-module-django python-module-django-discover-runner
 BuildPreReq: python-module-mock python-module-coverage
 BuildPreReq: python-module-django-dbbackend-sqlite3
 BuildPreReq: python-module-sphinx-devel
+%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
+%if_disabled light_version
 BuildPreReq: python3-module-django python3-module-django-discover-runner
 BuildPreReq: python3-module-mock python3-module-coverage
 BuildPreReq: python3-module-django-dbbackend-sqlite3
+%endif
 %endif
 
 %py_provides django_filters
@@ -43,6 +49,7 @@ Group: Development/Python3
 Django-filter is a reusable Django application for allowing users to
 filter querysets dynamically.
 
+%if_disabled light_version
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python
@@ -63,6 +70,7 @@ Django-filter is a reusable Django application for allowing users to
 filter querysets dynamically.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
@@ -71,8 +79,10 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
+%if_disabled light_version
 %prepare_sphinx .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python_build_debug
@@ -92,11 +102,13 @@ pushd ../python3
 popd
 %endif
 
+%if_disabled light_version
 %make -C docs pickle
 %make -C docs html
+cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+%endif
 
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
@@ -111,13 +123,17 @@ popd
 %files
 %doc AUTHORS *.rst
 %python_sitelibdir/*
+%if_disabled light_version
 %exclude %python_sitelibdir/*/pickle
+%endif
 
+%if_disabled light_version
 %files pickles
 %python_sitelibdir/*/pickle
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %if_with python3
 %files -n python3-module-%oname
@@ -126,6 +142,10 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.7-alt2.git20140929
+- Rebuild with "def_disable check"
+- Light version with minimal build req
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20140929
 - Initial build for Sisyphus
 
