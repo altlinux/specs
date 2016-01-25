@@ -1,10 +1,11 @@
 %define oname aiogevent
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1
+Release: alt2
 Summary: asyncio API (PEP 3156) implemented on top of gevent
 License: ASLv2.0
 Group: Development/Python
@@ -100,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.2-alt2
+- rebuild without check
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1
 - Version 0.2
 
