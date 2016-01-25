@@ -1,10 +1,11 @@
 %define oname hglib
 
 %def_without python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.5
-Release: alt2
+Release: alt3
 Summary: Mercurial Python library
 License: MIT
 Group: Development/Python
@@ -14,14 +15,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: mercurial
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose
+#BuildPreReq: mercurial
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose
+BuildRequires: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python-tools-2to3
+BuildRequires: python3 python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -86,6 +89,10 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 1.5-alt3
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt2
 - Fixed build
 
