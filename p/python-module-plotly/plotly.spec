@@ -1,10 +1,11 @@
 %define oname plotly
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.6.6
-Release: alt1
+Release: alt2
 Summary: Python plotting library for collaborative, interactive, publication-quality graphs
 License: MIT
 Group: Development/Python
@@ -14,21 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-requests python-module-six
-BuildPreReq: python-module-pytz python-module-numpy
-BuildPreReq: python-module-matplotlib python-module-zmq ipython
-BuildPreReq: python-modules-json
+BuildRequires: python-module-html5lib python-module-notebook python-module-pytest
+
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-requests python-module-six
+#BuildPreReq: python-module-pytz python-module-numpy
+#BuildPreReq: python-module-matplotlib python-module-zmq ipython
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-requests python3-module-six
-BuildPreReq: python3-module-pytz python3-module-numpy
-BuildPreReq: python3-module-matplotlib python3-module-zmq ipython3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-requests python3-module-six
+#BuildPreReq: python3-module-pytz python3-module-numpy
+#BuildPreReq: python3-module-matplotlib python3-module-zmq ipython3
+BuildRequires: python3-module-html5lib python3-module-notebook
 %endif
 
 %py_provides %oname
-%py_requires requests six pytz json numpy matplotlib zmq IPython.html
+#%py_requires requests six pytz json numpy matplotlib zmq IPython.html
 
 %description
 Use this package to make collaborative, interactive, publication-quality
@@ -38,7 +42,7 @@ graphs from Python.
 Summary: Python plotting library for collaborative, interactive, publication-quality graphs
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires requests six pytz numpy matplotlib zmq IPython.html
+#%py3_requires requests six pytz numpy matplotlib zmq IPython.html
 
 %description -n python3-module-%oname
 Use this package to make collaborative, interactive, publication-quality
@@ -94,6 +98,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.6.6-alt2
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.6-alt1
 - Version 1.6.6
 
