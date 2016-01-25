@@ -1,9 +1,10 @@
 %global pypi_name fixtures
 %def_with python3
+%def_disable check
 
 Name:           python-module-%{pypi_name}
 Version:        1.3.1
-Release:        alt1
+Release:        alt2
 Summary:        Fixtures, reusable state for writing clean tests and more
 
 Group:		Development/Python
@@ -12,11 +13,12 @@ URL:            https://launchpad.net/python-fixtures
 Source0:        %{name}-%{version}.tar
 BuildArch:      noarch
 
-BuildRequires:  python-devel python-module-mock
-BuildRequires:  python-module-setuptools-tests
-BuildRequires:  python-module-mimeparse
+#BuildRequires:  python-devel python-module-mock
+#BuildRequires:  python-module-setuptools-tests
+#BuildRequires:  python-module-mimeparse
 
-Requires:       python-module-testtools
+#Requires:       python-module-testtools
+BuildRequires: python-module-mimeparse python-module-pbr python-module-pytest python-module-unittest2
 
 %description
 Fixtures defines a Python contract for reusable state / support logic,
@@ -31,10 +33,11 @@ Summary:        Fixtures, reusable state for writing clean tests and more
 Group:		Development/Python
 BuildArch:      noarch
 BuildRequires(pre):  rpm-build-python3
-BuildRequires:  python3-module-setuptools python3-module-mock
-BuildRequires:  python3-module-setuptools-tests
-BuildRequires:  python3-module-mimeparse
-Requires:       python3-module-testtools
+#BuildRequires:  python3-module-setuptools python3-module-mock
+#BuildRequires:  python3-module-setuptools-tests
+#BuildRequires:  python3-module-mimeparse
+#Requires:       python3-module-testtools
+BuildRequires: python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytest python3-module-unittest2
 
 %description -n python3-module-%{pypi_name}
 Fixtures defines a Python contract for reusable state / support logic,
@@ -92,6 +95,10 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 1.3.1-alt2
+- Rebuild with "def_disable check"
+- Clean buildreq
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
 - Version 1.3.1
 
