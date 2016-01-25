@@ -5,7 +5,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt4.zentyal18
+Release: alt4.zentyal18.1
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -29,6 +29,7 @@ BuildRequires: python-module-samba-DC
 BuildRequires: samba-DC-pidl
 BuildRequires: doxygen
 BuildRequires: libical-devel
+BuildRequires: libicu-devel
 BuildRequires: libmagic-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: libmemcached-devel >= 1.0.18
@@ -305,6 +306,9 @@ popd
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Mon Jan 25 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal18.1
+- Fix build
+
 * Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal18
 - New version
 - Spec cleanup
