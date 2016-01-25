@@ -4,7 +4,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt2
+Release: alt3
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -14,10 +14,10 @@ Source: cairo-dock-plug-ins-%version.tar.gz
 Patch1: netspeed.patch
 
 Requires: cairo-dock >= %version
-
+BuildPreReq: cmake rpm-macros-cmake
 # Automatically added by buildreq on Wed Sep 09 2015
 # optimized out: cmake-modules glib2-devel libGL-devel libGLU-devel libX11-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcurl-devel libdb4-devel libdbus-devel libdbus-glib libdbus-glib-devel libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnutls-devel libgpg-error libgpg-error-devel libgtk+3-devel libjavascriptcoregtk3-devel liblockfile-devel libpango-devel librsvg-devel libsasl2-3 libsasl2-devel libsoup-devel libstdc++-devel libwayland-client libwayland-client-devel libxml2-devel libzeitgeist-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email vala xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cairo-dock-devel cmake gcc4.6-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libetpan-devel libexif-devel libfftw3-devel libical-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel lsb-release mono-mcs ruby
+BuildRequires: cairo-dock-devel cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libetpan-devel libexif-devel libfftw3-devel libical-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel lsb-release mono-mcs ruby
 
 BuildRequires: cairo-dock-devel >= %version
 Requires: %packagename-common
@@ -963,6 +963,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Mon Jan 25 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt3
+- Rebuild with libicall-2.0.0. 
+
 * Wed Sep 16 2015 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt2
 - Small fix in spec
 - Add netspeed.patch
