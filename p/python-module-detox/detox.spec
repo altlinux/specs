@@ -1,10 +1,11 @@
 %define oname detox
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.9.4
-Release: alt1
+Release: alt2
 Summary: Distributing activities of the tox tool
 License: MIT
 Group: Development/Python
@@ -15,13 +16,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tox python-module-eventlet
-BuildPreReq: python-module-greenlet python-module-virtualenv
+#BuildPreReq: python-module-tox python-module-eventlet
+#BuildPreReq: python-module-greenlet 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tox python3-module-eventlet
-BuildPreReq: python3-module-greenlet python3-module-virtualenv
+#BuildPreReq: python3-module-tox python3-module-eventlet
+#BuildPreReq: python3-module-greenlet python3-module-virtualenv
 %endif
 
 %py_provides %oname
@@ -101,6 +102,10 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.9.4-alt2
+- Rebuild with "def_disable check"
+- Turn off some build dependencies
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1
 - Version 0.9.4
 
