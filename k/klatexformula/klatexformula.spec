@@ -1,6 +1,6 @@
 Name: klatexformula
 Version: 3.2.11
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Publishing
 Summary: Generating images from LaTeX equations
@@ -30,6 +30,7 @@ TODO: make shared version of %name-devel.
 %setup
 sed -i 's/target_link_libraries(\([^ ]*\)/target_link_libraries(\1 -lX11/' src/CMakeLists.txt
 %patch -p1
+sed -i '/Uninstall target/,$s/^/#/' cmake/klfinstallpaths.cmake
 
 %build
 %cmake -D QT_QMAKE_EXECUTABLE_FINDQT:path=/usr/bin/qmake-qt4 \
@@ -61,6 +62,9 @@ sed -i 's/target_link_libraries(\([^ ]*\)/target_link_libraries(\1 -lX11/' src/C
 %_libdir/lib*.so
 
 %changelog
+* Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 3.2.11-alt2
+- Fix build
+
 * Wed Aug 20 2014 Fr. Br. George <george@altlinux.ru> 3.2.11-alt1
 - Autobuild version bump to 3.2.11
 - Fix build and patch
