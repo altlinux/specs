@@ -2,7 +2,7 @@
 
 Name: amsynth
 Version: 1.6.3
-Release: alt1
+Release: alt2
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -18,7 +18,7 @@ Source4: vst-%name-plugin.metainfo.xml
 
 # Automatically added by buildreq on Mon Nov 23 2015
 # optimized out: fontconfig fontconfig-devel glib2-devel ladspa_sdk libX11-devel libalsa-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libdbus-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+2-devel libjack-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel libuuid-devel libxml2-devel pkg-config xorg-xproto-devel
-BuildRequires: dssi-devel gcc-c++ glibc-devel-static libxcb libgtkmm2-devel liblash-devel liblo-devel libsndfile-devel nvidia_glx_352.55
+BuildRequires: dssi-devel gcc-c++ glibc-devel-static libxcb libgtkmm2-devel liblash-devel liblo-devel libsndfile-devel
 
 BuildRequires: liblo-devel libsndfile-devel
 
@@ -142,6 +142,9 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
+* Mon Jan 25 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.3-alt2
+- Fix build
+
 * Mon Nov 23 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.3-alt1
 - Initial build to Sisyphus
 
