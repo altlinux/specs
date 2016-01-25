@@ -1,5 +1,5 @@
 Name: consolehelper
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Group: System/Configuration/Other
@@ -10,7 +10,7 @@ Source: %name-%version.tar
 
 Obsoletes: usermode
 
-BuildPreReq: glib-devel libgtk+2-devel libpam-devel pkgconfig
+BuildPreReq: libgtk+2-devel libpam-devel pkgconfig
 
 %define conshelpdir %_libexecdir/%name
 
@@ -68,6 +68,12 @@ popd
 %_man8dir/*
 
 %changelog
+* Mon Jan 25 2016 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
+- Return constant strings from svGetValue().
+- shvar: Simplify svGetValue().
+- shvar: Use read loop.
+- shvar: Get rid of glib dependence.
+
 * Thu Apr 18 2013 Dmitry V. Levin <ldv@altlinux.org> 0.3.1-alt1
 - Built with LFS support enabled.
 
