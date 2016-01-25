@@ -1,6 +1,6 @@
 Name: orage
 Version: 4.12.1
-Release: alt1
+Release: alt2
 
 Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
@@ -64,6 +64,9 @@ Xfce.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Jan 25 2016 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt2
+- Rebuid with libical-2.0.0.
+
 * Fri Apr 10 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
 - Updated to 4.12.1.
 
