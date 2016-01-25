@@ -3,7 +3,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -12,7 +12,7 @@ Url: https://launchpad.net/%name
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
-BuildRequires(pre): rpm-build-mono
+BuildRequires(pre): rpm-build-mono gcc
 BuildRequires: gtk-doc vala-tools
 BuildRequires: libdbus-glib-devel libdbusmenu-devel
 BuildRequires: libdbusmenu-gtk2-devel libdbusmenu-gtk3-devel
@@ -137,15 +137,16 @@ mv %name-%version %name-gtk3
 %define opts --disable-static --enable-gtk-doc --disable-dumper
 
 %autoreconf
+export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
 %configure  %opts --with-gtk=2
-#make_build
+make -j1 V=1
 %make
 
 pushd %name-gtk3
 %autoreconf
+export CFLAGS="%{optflags} $CFLAGS -Wno-deprecated-declarations"
 %configure %opts --with-gtk=3
-#make_build
-%make
+make -j1 V=1
 popd
 
 %install
@@ -229,6 +230,11 @@ popd
 %_pkgconfigdir/appindicator-sharp-0.1.pc
 
 %changelog
+* Mon Jan 25 2016 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt3
+- Fix build:
+  - enable single make build;
+  - enable CFLAGS -Wno-deprecated-declarations.
+
 * Tue Sep 22 2015 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt2
 - Updated requires.
 
