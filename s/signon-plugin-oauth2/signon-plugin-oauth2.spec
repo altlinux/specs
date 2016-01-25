@@ -1,5 +1,5 @@
 Name: signon-plugin-oauth2
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Group: System/Libraries
@@ -37,6 +37,7 @@ sed -i '/^SUBDIRS/s/example//' signon-oauth2.pro
 export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
     QMF_INSTALL_ROOT=%prefix \
+    PREFIX=%prefix \
     CONFIG+=release \
     LIBDIR=%_libdir \
     signon-oauth2.pro
@@ -46,7 +47,8 @@ export PATH=%_qt5_bindir:$PATH
 %install
 %install_qt5
 
-sed -i '/^libdir/s|=.*|=%%{prefix}/%_lib|' %buildroot/%_pkgconfigdir/signon-oauth2plugin.pc
+sed -i 's|/lib|/%_lib|' %buildroot/%_pkgconfigdir/signon-oauth2plugin.pc
+sed -i 's|^Version:.*|Version: %version|' %buildroot/%_pkgconfigdir/signon-oauth2plugin.pc
 
 %files
 %_libdir/signon/liboauth2plugin.so
@@ -56,5 +58,8 @@ sed -i '/^libdir/s|=.*|=%%{prefix}/%_lib|' %buildroot/%_pkgconfigdir/signon-oaut
 %_libdir/pkgconfig/signon-oauth2plugin.pc
 
 %changelog
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 0.22-alt1
+- new version
+
 * Thu Jul 09 2015 Sergey V Turchin <zerg@altlinux.org> 0.21-alt1
 - initial build
