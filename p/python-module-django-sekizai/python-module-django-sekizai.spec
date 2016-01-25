@@ -2,11 +2,12 @@
 
 %define modulename sekizai
 
+%def_disable check
 %def_with python3
 
 Name: python-module-django-%modulename
 Version: 0.7
-Release: alt3.git20140813
+Release: alt4.git20140813
 
 %setup_python_module %modulename
 
@@ -21,23 +22,26 @@ BuildArch: noarch
 # git://github.com/ojii/django-sekizai.git
 Source: %name-%version.tar
 
-Requires: Django >= 1.2.7
+#Requires: Django >= 1.2.7
 # see setup.py
-Requires: python-module-django-classy-tags >= 0.3.1
+#Requires: python-module-django-classy-tags >= 0.3.1
+
 
 BuildPreReq: rpm-build-licenses
-BuildPreReq: Django >= 1.2.7
-BuildPreReq: python-module-django-tests
-BuildPreReq: python-module-django-dbbackend-sqlite3 >= 1.2.7
-BuildPreReq: python-module-django-classy-tags >= 0.3.1
-BuildPreReq: python-module-setupdocs
-BuildPreReq: python-module-sphinx
+#BuildPreReq: Django >= 1.2.7
+#BuildPreReq: python-module-django-tests
+#BuildPreReq: python-module-django-dbbackend-sqlite3 >= 1.2.7
+#BuildPreReq: python-module-django-classy-tags >= 0.3.1
+#BuildPreReq: python-module-setupdocs
+#BuildPreReq: python-module-sphinx
+BuildPreReq: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python-module-setupdocs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-django-tests python3-devel
-BuildPreReq: python3-module-django-dbbackend-sqlite3
-BuildPreReq: python3-module-django-classy-tags
-BuildPreReq: python3-module-setupdocs
+#BuildPreReq: python3-module-django-tests python3-devel
+#BuildPreReq: python3-module-django-dbbackend-sqlite3
+#BuildPreReq: python3-module-django-classy-tags
+#BuildPreReq: python3-module-setupdocs
+BuildPreReq: python3-module-django python3-module-setupdocs
 %endif
 
 %description
@@ -115,6 +119,10 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.7-alt4.git20140813
+- Rebuild with "def_disable check"
+- Clean buildreq
+
 * Mon Sep 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt3.git20140813
 - New snapshot
 - Added module for Python 3
