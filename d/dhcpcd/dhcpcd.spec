@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.10.0
-Release: alt2
+Version: 6.10.1
+Release: alt1
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -11,9 +11,14 @@ URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 # Patch from upstream
-# http://roy.marples.name/projects/dhcpcd/info/e96b23400d
+# http://roy.marples.name/projects/dhcpcd/info/528541c4c619520e
 # Drop it when new version will be released
-Patch1: dhcpcd-6.10.0-fix-segfault-interface-departure.patch
+Patch1: dhcpcd-6.10.1-CVE-2014-7913.patch
+# Patch from upstream
+# http://roy.marples.name/projects/dhcpcd/info/f30603efca774b6a
+# Drop it when new version will be released
+Patch2: dhcpcd-6.10.1-blank-hostname.patch
+
 AutoReq: yes, noshell
 
 BuildRequires: rpm-build-licenses
@@ -34,6 +39,7 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %setup -q
 %patch0 -p1
 %patch1 -p0
+%patch2 -p0
 
 %build
 %configure \
@@ -77,6 +83,13 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Mon Jan 25 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.1-alt1
+- Patches from upstream:
+  + Don't allow blank hostname.
+  + Fix CVE-2014-7913.
+- Drop obsoleted patch.
+- Updated to 6.10.1.
+
 * Tue Jan 12 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.0-alt2
 - Patch from upstream:
   + Fix segfault when handling interface departure.
