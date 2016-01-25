@@ -1,10 +1,11 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 %define modulename mptt
+%def_disable check
 
 Name: python-module-django-%modulename
 Version: 0.5.5
-Release: alt3.git20130402
+Release: alt4.git20130402
 
 %setup_python_module %modulename
 
@@ -63,6 +64,9 @@ popd
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.5.5-alt4.git20130402
+- Rebuild with "def_disable check"
+
 * Wed Apr 03 2013 Aleksey Avdeev <solo@altlinux.ru> 0.5.5-alt3.git20130402
 - Version 0.5.5 (9068e148af4fb091275ea945542fc1fed896231a)
 
