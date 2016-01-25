@@ -3,7 +3,7 @@
 
 Name: qt5-imageformats
 Version: 5.5.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -66,6 +66,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
+- rebuild with new libwebp
+
 * Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 
