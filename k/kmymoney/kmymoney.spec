@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 4.7.2
-Release: alt1
+Release: alt2
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -35,6 +35,7 @@ BuildRequires: libgmp_cxx-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libgwenhywfar-devel >= 4.0.0
 BuildRequires: libical-devel
+BuildRequires: libicu-devel
 BuildRequires: libofx-devel >= 0.9.4
 BuildRequires: libspeex-devel
 BuildRequires: libxml++2-devel 
@@ -245,6 +246,9 @@ Internationalization and documentation for KMyMoney
 
 
 %changelog
+* Mon Jan 25 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.2-alt2
+- Fix build
+
 * Tue Apr 28 2015 Andrey Cherepanov <cas@altlinux.org> 4.7.2-alt1
 - New version
 
