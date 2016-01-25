@@ -2,7 +2,7 @@
 %define oname %mname.js.speakjs
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.dev0.git20130408
+Release: alt2.dev0.git20130408
 Summary: Text-to-Speech in JavaScript using eSpeak
 License: GPLv3
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/collective/collective.js.speakjs.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-setuptools-tests
 
 %py_provides %oname
 Requires: python-module-%mname.js = %EVR
@@ -64,6 +64,9 @@ python setup.py test
 %python_sitelibdir/%mname/js/__init__.py*
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.1-alt2.dev0.git20130408
+- remove Zope2-test from build deps
+
 * Sun Oct 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.dev0.git20130408
 - Initial build for Sisyphus
 
