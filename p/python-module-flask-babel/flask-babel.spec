@@ -1,10 +1,11 @@
 %define oname flask-babel
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.9
-Release: alt1.git20130729
+Release: alt2.git20130729
 Summary: Adds i18n/l10n support to Flask applications
 License: BSD
 Group: Development/Python
@@ -15,14 +16,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-flask python-module-babel
-BuildPreReq: python-module-speaklater python-module-jinja2
+BuildRequires: python-module-babel python-module-pytest
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-flask python-module-babel
+#BuildPreReq: python-module-speaklater python-module-jinja2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-flask python3-module-babel
-BuildPreReq: python3-module-speaklater python3-module-jinja2
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-flask python3-module-babel
+#BuildPreReq: python3-module-speaklater python3-module-jinja2
+BuildRequires: python3-module-babel python3-module-pytest
 %endif
 
 %py_provides flask_babel
@@ -86,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.9-alt2.git20130729
+- Rebuild with "def_disable check"
+- Cleanup bildreq
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.git20130729
 - Initial build for Sisyphus
-
