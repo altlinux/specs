@@ -1,10 +1,11 @@
 %define oname djangorestframework
 
+%def_disable check
 %def_with python3
 
 Name: python-module-%oname
 Version: 3.0.4
-Release: alt1.git20150128
+Release: alt2.git20150128
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python
@@ -15,26 +16,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-django-tests python-module-pytest-django
-BuildPreReq: python-module-pytest-cov python-module-flake8
-BuildPreReq: python-module-markdown python-module-yaml
-BuildPreReq: python-module-defusedxml python-module-django-guardian
-BuildPreReq: python-module-django-filter python-module-django-oauth-plus
-BuildPreReq: python-module-oauth2 python-module-django-oauth2-provider
-BuildPreReq: python-module-django-dbbackend-sqlite3 python-module-mkdocs
-BuildPreReq: python-module-argh
+BuildPreReq: python-module-defusedxml python-module-docutils python-module-flake8 python-module-html5lib python-module-httplib2 python-module-mkdocs python-module-pytest-cov python-module-pytest-django python-module-setuptools-tests
+
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-django-tests python-module-pytest-django
+#BuildPreReq: python-module-pytest-cov python-module-flake8
+#BuildPreReq: python-module-markdown python-module-yaml
+#BuildPreReq: python-module-defusedxml python-module-django-guardian
+#BuildPreReq: python-module-django-filter python-module-django-oauth-plus
+#BuildPreReq: python-module-oauth2 python-module-django-oauth2-provider
+#BuildPreReq: python-module-django-dbbackend-sqlite3 python-module-mkdocs
+#BuildPreReq: python-module-argh
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-django-tests python3-module-pytest-django
-BuildPreReq: python3-module-pytest-cov python3-module-flake8
-BuildPreReq: python3-module-markdown python3-module-yaml
-BuildPreReq: python3-module-defusedxml python3-module-django-guardian
-BuildPreReq: python3-module-django-filter python3-module-django-oauth-plus
-BuildPreReq: python3-module-oauth2 python3-module-django-oauth2-provider
-BuildPreReq: python3-module-django-dbbackend-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-django-tests python3-module-pytest-django
+#BuildPreReq: python3-module-pytest-cov python3-module-flake8
+#BuildPreReq: python3-module-markdown python3-module-yaml
+#BuildPreReq: python3-module-defusedxml python3-module-django-guardian
+#BuildPreReq: python3-module-django-filter python3-module-django-oauth-plus
+#BuildPreReq: python3-module-oauth2 python3-module-django-oauth2-provider
+#BuildPreReq: python3-module-django-dbbackend-sqlite3
+BuildRequires: python3-module-defusedxml python3-module-flake8 python3-module-html5lib python3-module-httplib2 python3-module-markdown python3-module-pytest-cov python3-module-pytest-django python3-module-setuptools-tests python3-module-sphinx
 %endif
+
 
 %py_provides rest_framework
 
@@ -145,6 +150,10 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 3.0.4-alt2.git20150128
+- Rebuild with "def_disable check"
+- Cleanup buildreqs
+
 * Wed Jan 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt1.git20150128
 - Version 3.0.4
 
