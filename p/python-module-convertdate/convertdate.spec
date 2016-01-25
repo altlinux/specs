@@ -1,10 +1,11 @@
 %define oname convertdate
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 2.0.3.1
-Release: alt1.git20141125
+Release: alt2.git20141125
 Summary: Utils for converting between date formats and calculating holidays
 License: MIT
 Group: Development/Python
@@ -16,11 +17,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-ephem python-module-pytz
+#BuildPreReq: python-module-ephem python-module-pytz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-ephem python3-module-pytz
+#BuildPreReq: python3-module-ephem python3-module-pytz
 %endif
 
 %py_provides %oname
@@ -88,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.3.1-alt2.git20141125
+- Rebuild with "def_disable check"
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3.1-alt1.git20141125
 - Initial build for Sisyphus
 
