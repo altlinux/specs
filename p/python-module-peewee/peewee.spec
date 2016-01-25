@@ -1,10 +1,11 @@
 %define oname peewee
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 2.6.0
-Release: alt1.git20150421
+Release: alt2.git20150421
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 License: MIT
 Group: Development/Python
@@ -14,18 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/coleifer/peewee.git
 Source: %name-%version.tar
 BuildArch: noarch
+BuildRequires: python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python-modules-sqlite3
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-sqlite3
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-modules-sqlite3
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-modules-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-modules-sqlite3
+BuildRequires: python3-module-pytest python3-modules-sqlite3
 %endif
 
 %py_provides %oname
-%py_requires sqlite3
+#%py_requires sqlite3
 
 %description
 Peewee is a simple and small ORM. It has few (but expressive) concepts,
@@ -53,7 +56,7 @@ This package contains tests for %oname.
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires sqlite3 pysqlcipher3
+#%py3_requires sqlite3 pysqlcipher3
 %add_python3_req_skip pysqlcipher
 
 %description -n python3-module-%oname
@@ -184,6 +187,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.6.0-alt2.git20150421
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.git20150421
 - Version 2.6.0
 
