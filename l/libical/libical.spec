@@ -3,7 +3,7 @@
 
 Name: libical
 Version: 2.0.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -26,8 +26,10 @@ component properties, parameters, and subcomponents
 
 %package devel
 Summary: Files for developing applications that use libical
-Requires: %name = %version-%release
 Group: Development/C
+Requires: %name = %version-%release
+# since 2.0.0
+Requires: libicu-devel
 
 %description devel
 The header files and libtool library  for developing applications that
@@ -90,6 +92,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %endif
 
 %changelog
+* Mon Jan 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt0.2
+- added libicu-devel as dependence for -devel subpackage
+
 * Mon Jan 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt0.1
 - updated to v2.0.0-5-g2402a36
 
