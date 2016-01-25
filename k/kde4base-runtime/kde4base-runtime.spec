@@ -7,11 +7,11 @@
 
 %define rname kdebase-runtime
 %define major 15
-%define minor 08
-%define bugfix 3
+%define minor 12
+%define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -28,7 +28,7 @@ Source11: search-altbugzilla.desktop
 # ALT
 Patch1001: kdebase-runtime-4.3.2-alt-compiz.patch
 Patch1002: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
-#
+Patch1003: kdebase-runtime-15.12.1-alt-perl-checks.patch
 Patch1004: kdebase-runtime-4.10.0-alt-def-trash.patch
 Patch1005: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 Patch1006: kdebase-runtime-4.9.3-alt-multimedia-player-chooser.patch
@@ -38,7 +38,7 @@ BuildRequires(pre): kde4pimlibs-devel attica-devel
 BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
 BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel libgcrypt-devel
 BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
-BuildRequires: libsoprano-devel libstrigi-devel
+BuildRequires: libstrigi-devel
 BuildRequires: kde4-kactivities-devel
 BuildRequires: libungif-devel libxkbfile-devel openexr-devel libwebp-devel
 BuildRequires: libcanberra-devel glib2-devel libpulseaudio-devel
@@ -104,7 +104,7 @@ Menu resources for the original KDE menu.
 #
 %patch1001 -p1
 %patch1002 -p1
-#
+%patch1003 -p1
 %patch1004 -p1
 %patch1005 -p1
 %patch1006 -p1
@@ -223,6 +223,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
+- fix to build
+
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 - update kde4 wrapper
