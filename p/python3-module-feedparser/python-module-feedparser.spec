@@ -1,9 +1,10 @@
 Name: python3-module-feedparser
 Version: 5.2.0
-Release: alt1.git20150416
+Release: alt2.git20150416
 
 %define sname feedparser
-%def_with doc
+%def_without doc
+%def_disable check
 
 Summary: Universal feed parser for Python
 Group: Development/Python3
@@ -72,6 +73,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 feedparsertest.py -v
 %endif
 
 %changelog
+* Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 5.2.0-alt2.git20150416
+- build without tests and docs
+
 * Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2.0-alt1.git20150416
 - Initial build for Sisyphus
 
