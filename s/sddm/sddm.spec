@@ -1,4 +1,5 @@
 
+%define _libexecdir %prefix/libexec
 %add_findreq_skiplist %_datadir/sddm/scripts/Xsession
 
 %define sddm_user sddm
@@ -6,9 +7,9 @@
 %define sddm_confdir %x11confdir/sddm
 
 Name: sddm
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
-%K5init no_altplace
+%K5init no_altplace man
 
 Group: Graphical desktop/KDE
 Summary: Lightweight QML-based display manager
@@ -64,6 +65,7 @@ ability to create smooth, animated user interfaces.
     -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir/sddm \
     -DLIBEXEC_INSTALL_DIR=%_libexecdir/sddm \
     -DSYSTEMD_SYSTEM_UNIT_DIR=%_unitdir \
+    -DENABLE_PAM:BOOL=ON \
     -DENABLE_JOURNALD=ON \
     -DMINIMUM_VT=1 \
     -DSESSION_COMMAND="/etc/X11/Xsession" \
@@ -120,6 +122,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt1
+- new version
+
 * Mon Sep 07 2015 Sergey V Turchin <zerg@altlinux.org> 0.12.0-alt1
 - new version
 - using /usr/share/xsessions
