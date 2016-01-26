@@ -1,10 +1,11 @@
 %define oname pycosat
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt2.git20140610
+Release: alt3.git20140610
 Summary: Bindings to picosat (a SAT solver)
 License: MIT
 Group: Development/Python
@@ -14,10 +15,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/ContinuumIO/pycosat.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests libpicosat-devel
+#BuildPreReq: python-devel python-module-setuptools-tests libpicosat-devel
+BuildRequires: libpicosat-devel python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-dev
 %endif
 
 %py_provides %oname
@@ -97,6 +100,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.6.1-alt3.git20140610
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.git20140610
 - Built with external PicoSAT
 
