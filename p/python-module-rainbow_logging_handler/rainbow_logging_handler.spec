@@ -1,10 +1,11 @@
 %define oname rainbow_logging_handler
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 2.2.2
-Release: alt1.git20140807
+Release: alt2.git20140807
 Summary: Ultimate Python colorized logger
 License: BSD
 Group: Development/Python
@@ -14,21 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/laysakura/rainbow_logging_handler.git
 Source: %name-%version.tar
 BuildArch: noarch
-
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-logutils python-module-colorama
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-nose-cov python-module-cov-core
+BuildRequires: python-module-coverage python-module-logutils python-module-nose-cov python-module-pytest
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-logutils python-module-colorama
+#BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-module-nose-cov python-module-cov-core
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-logutils python3-module-colorama
-BuildPreReq: python3-module-nose python3-module-coverage
-BuildPreReq: python3-module-nose-cov python3-module-cov-core
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-logutils python3-module-colorama
+#BuildPreReq: python3-module-nose python3-module-coverage
+#BuildPreReq: python3-module-nose-cov python3-module-cov-core
+BuildRequires: python3-module-coverage python3-module-logutils python3-module-nose-cov python3-module-pytest
 %endif
 
 %py_provides %oname
-%py_requires logutils colorama
+#%py_requires logutils colorama
 
 %description
 Ultimate Python colorized logger with user-custom color.
@@ -47,7 +49,7 @@ This package contains tests for %oname.
 Summary: Ultimate Python colorized logger
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires logutils colorama
+#%py3_requires logutils colorama
 
 %description -n python3-module-%oname
 Ultimate Python colorized logger with user-custom color.
@@ -116,6 +118,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.2.2-alt2.git20140807
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt1.git20140807
 - Initial build for Sisyphus
 
