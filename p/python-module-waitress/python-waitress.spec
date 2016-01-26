@@ -4,6 +4,7 @@
 %define oldname python-%modulename
 
 %def_with python3
+%def_disable check
 
 %if_with python3
 %define py3name python3-module-%modulename
@@ -12,7 +13,7 @@
 
 Name: python-module-waitress
 Version: 0.8.10
-Release: alt1.dev0
+Release: alt2.dev0
 
 %setup_python_module %modulename
 
@@ -28,11 +29,12 @@ BuildArch: noarch
 # git://github.com/Pylons/%modulename.git
 Source: %name-%version.tar
 Source44: import.info
+BuildRequires: python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-pytest
 
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-coverage
-BuildPreReq: python-module-sphinx
-BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-coverage
+#BuildPreReq: python-module-sphinx
+#BuildPreReq: python-module-setuptools-tests
 
 %description
 Waitress is meant to be a production-quality pure-Python WSGI server with
@@ -60,13 +62,13 @@ This package contains tests for Waitress.
 Summary: Waitress WSGI server
 Group: Development/Python
 BuildArch: noarch
-
+BuildRequires: python3-module-coverage python3-module-html5lib python3-module-nose python3-module-pytest python3-module-sphinx
 BuildPreReq: rpm-build-python3
-BuildPreReq: python3-module-distribute
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-coverage
-BuildPreReq: python3-module-sphinx
-BuildPreReq: python3-module-setuptools-tests
+#BuildPreReq: python3-module-distribute
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-module-coverage
+#BuildPreReq: python3-module-sphinx
+#BuildPreReq: python3-module-setuptools-tests
 
 %description -n %py3name
 Waitress is meant to be a production-quality pure-Python WSGI server with
@@ -164,6 +166,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.8.10-alt2.dev0
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.10-alt1.dev0
 - Version 0.8.10dev0
 
