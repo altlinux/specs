@@ -1,10 +1,11 @@
 %define oname unittest2
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.hg20150630
+Release: alt2.hg20150630
 
 Summary: Backport of Python 2.7 unittest module
 License: Same as Python
@@ -18,17 +19,19 @@ Url: http://pypi.python.org/pypi/unittest2
 Source: %name-%version.tar
 
 %setup_python_module %oname
+BuildRequires: python-module-pytest python-module-traceback2
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-traceback2 python-module-six
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-traceback2 python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-traceback2 python3-module-six
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-traceback2 python3-module-six
+BuildRequires: python3-module-pytest python3-module-traceback2
 BuildPreReq: python-tools-2to3
 %endif
 
-%py_requires traceback2 six
+#%py_requires traceback2 six
 
 %description
 unittest2 is a backport of the new features added to the unittest
@@ -39,7 +42,7 @@ testing framework in Python 2.7. It is tested to run on Python 2.4 -
 %package -n python3-module-%oname
 Summary: Port of Python 2.7 unittest module
 Group: Development/Python3
-%py3_requires traceback2 six
+#%py3_requires traceback2 six
 
 %description -n python3-module-%oname
 unittest2 is a port of the features added to the unittest testing
@@ -93,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.0-alt2.hg20150630
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.hg20150630
 - Version 1.1.0
 
