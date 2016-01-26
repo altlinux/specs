@@ -4,11 +4,13 @@
 %add_findreq_skiplist %_K4bindir/kdedoc
 %add_findreq_skiplist %_K4bindir/package_crystalsvg
 
+%def_disable kio_svn
+
 %define rname kdesdk
 Name: kde4sdk
 %define major 15
-%define minor 08
-%define bugfix 3
+%define minor 12
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -40,7 +42,11 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdesdk-4.0.2-alt-find-libsvn.patch
 
 BuildRequires(pre): kde4libs-devel
-BuildRequires: libsubversion-devel perl-XML-DOM perl-Switch libldap-devel libltdl-devel gcc-c++
+%if_enabled kio_svn
+BuildRequires: libsubversion-devel
+%endif
+BuildRequires: perl-XML-DOM perl-Switch libldap-devel libltdl-devel gcc-c++
+BuildRequires: rpm-build-python python-modules-encodings
 BuildRequires: libiberty-devel libjpeg-devel libxslt-devel bzlib-devel
 BuildRequires: gettext-tools
 BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
@@ -332,7 +338,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %files core
 %_K4bindir/cvsaskpass
 %_K4bindir/cvsservice
-%_K4bindir/kio_svn_helper
 %_K4bindir/kstartperf
 %_K4bindir/kpartloader
 %_K4libdir/libkdeinit4_cvsaskpass.so
@@ -509,26 +514,19 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4apps/cervisiapart/
 %_K4cfg/cervisiapart.kcfg
 %_K4iconsdir/*/*/apps/cervisia.*
-%_datadir/dbus-1/interfaces/org.kde.cervisia.cvsjob.xml
-%_datadir/dbus-1/interfaces/org.kde.cervisia.cvsloginjob.xml
-%_datadir/dbus-1/interfaces/org.kde.cervisia.cvsservice.xml
-%_datadir/dbus-1/interfaces/org.kde.cervisia.repository.xml
 %_K4libdir/libkdeinit4_cervisia.so
+%_K4libdir/kde4/cervisiapart.so
+%_K4srv/cvsservice.desktop
+%_K4srv/cervisiapart.desktop
+%_K4doc/*/cervisia
+%if_enabled kio_svn
+%_K4bindir/kio_svn_helper
 %_K4libdir/kde4/kded_ksvnd.so
 %_K4libdir/kde4/kio_svn.so
-%_K4libdir/kde4/cervisiapart.so
-%_K4srv/ServiceMenus/subversion.desktop
-%_K4srv/ServiceMenus/subversion_toplevel.desktop
-%_K4srv/cvsservice.desktop
+%_K4srv/svn*.protocol
+%_K4srv/ServiceMenus/subversion*.desktop
 %_K4srv/kded/ksvnd.desktop
-%_K4srv/svn+file.protocol
-%_K4srv/svn+http.protocol
-%_K4srv/svn+https.protocol
-%_K4srv/svn+ssh.protocol
-%_K4srv/svn.protocol
-%_K4srv/cervisiapart.desktop
-%_datadir/dbus-1/interfaces/org.kde.ksvnd.xml
-%_K4doc/*/cervisia
+%endif
 
 %files kompare
 %_K4bindir/kompare
@@ -577,9 +575,17 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4includedir/KDE/*
 %_K4link/*.so
 %_K4lib/plugins/designer/*.so
+%if_enabled kio_svn
+%_datadir/dbus-1/interfaces/org.kde.ksvnd.xml
+%endif
+%_datadir/dbus-1/interfaces/org.kde.cervisia.*.xml
 
 
 %changelog
+* Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+- temporary dont build kio-svn
+
 * Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.3-alt1
 - new version
 
