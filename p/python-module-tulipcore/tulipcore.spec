@@ -2,10 +2,11 @@
 
 %def_without python2
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.a2.git20140503
+Release: alt2.a2.git20140503
 Summary: An alternative Gevent core loop implementation with asyncio
 License: MIT
 Group: Development/Python
@@ -23,13 +24,14 @@ BuildPreReq: python-module-greenlet
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-gevent
-BuildPreReq: python3-module-greenlet
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-gevent
+#BuildPreReq: python3-module-greenlet
+BuildRequires: python3-module-cffi python3-module-greenlet python3-module-pytest
 %endif
 
 %py_provides %oname
-%py_requires asyncio gevent greenlet
+#%py_requires asyncio gevent greenlet
 
 %description
 tulipcore is an alternative gevent core loop. It is based on asyncio
@@ -40,7 +42,7 @@ run gevent code on top of asyncio.
 Summary: An alternative Gevent core loop implementation with asyncio
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio gevent greenlet
+#%py3_requires asyncio gevent greenlet
 
 %description -n python3-module-%oname
 tulipcore is an alternative gevent core loop. It is based on asyncio
@@ -99,6 +101,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.1.0-alt2.a2.git20140503
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Sun Jan 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.a2.git20140503
 - Initial build for Sisyphus
 
