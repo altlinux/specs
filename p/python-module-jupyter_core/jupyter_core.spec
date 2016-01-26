@@ -1,10 +1,11 @@
 %define oname jupyter_core
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt1
+Release: alt2
 Summary: Jupyter core package
 License: BSD
 Group: Development/Python
@@ -13,18 +14,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
+BuildRequires: python-module-objects.inv
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-traitlets python-module-mock ipython
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-traitlets python-module-mock ipython
 BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-traitlets python3-module-mock ipython3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-traitlets python3-module-mock ipython3
+BuildRequires: python3 python3-module-zope
 %endif
 
 %py_provides %oname
-%py_requires traitlets
+#%py_requires traitlets
 
 %description
 Jupyter core package. A base package on which Jupyter projects rely.
@@ -44,7 +47,7 @@ This package contains tests for %oname.
 Summary: Jupyter core package
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires traitlets
+#%py3_requires traitlets
 
 %description -n python3-module-%oname
 Jupyter core package. A base package on which Jupyter projects rely.
@@ -130,6 +133,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 4.0.4-alt2
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Fri Aug 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1
 - Initial build for Sisyphus
 
