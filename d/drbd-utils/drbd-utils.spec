@@ -2,7 +2,7 @@
 Name: drbd-utils
 Summary: DRBD user-land tools and scripts
 Version: 8.9.0
-Release: alt1
+Release: alt2
 Source0: http://oss.linbit.com/%{name}/%{name}-%{version}.tar.gz
 Source1: drbd.service
 Patch0: disable_drbd_checkin.patch
@@ -76,8 +76,8 @@ mv $RPM_BUILD_ROOT/etc/udev/rules.d/* $RPM_BUILD_ROOT/%{_udevrulesdir}/
 %config(noreplace) %{_sysconfdir}/drbd.conf
 %dir %{_sysconfdir}/drbd.d
 %config(noreplace) %{_sysconfdir}/drbd.d/global_common.conf
-%{_mandir}/man8/drbd*z*
-%{_mandir}/man5/drbd*bz2
+%{_mandir}/man8/drbd*
+%{_mandir}/man5/drbd*
 %doc scripts/drbd.conf.example
 %doc COPYING
 %doc ChangeLog
@@ -156,6 +156,9 @@ management utility.
 %preun_service drbd
 
 %changelog
+* Tue Jan 26 2016 Lenar Shakirov <snejok@altlinux.ru> 8.9.0-alt2
+- Fixed build (man page packaging)
+
 * Mon Sep 01 2014 Lenar Shakirov <snejok@altlinux.ru> 8.9.0-alt1
 - First build for ALT as separate package "%name" (based on Fedora 8.9.0-8.fc21.src)
 
