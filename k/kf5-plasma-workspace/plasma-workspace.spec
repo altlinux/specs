@@ -15,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.5.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -254,6 +254,9 @@ __EOF__
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Jan 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt2
+- fix XDG_*_DIRS variables for kstartupconfig5
+
 * Thu Jan 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
 - new version
 
