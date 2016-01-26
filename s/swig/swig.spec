@@ -1,7 +1,7 @@
 # vim:set ft=spec:
 Name: swig
 Epoch: 1
-Version: 3.0.7
+Version: 3.0.8
 Release: alt1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -156,7 +156,7 @@ subst 's/PY3LIBDIR="lib"/PY3LIBDIR="%_lib"/' configure
 # SMP incompatible
 # no `all' target
 %make_build
-%make docs
+#%make docs
 #%make runtime
 #pushd Runtime
 #%make
@@ -193,7 +193,7 @@ cp -a Examples Doc %buildroot%docdir/
 %files doc
 %dir %docdir
 %docdir/[A-Z][a-z]*
-%_man1dir/*
+#%_man1dir/*
 
 %files data
 %_datadir/%{name}
@@ -223,6 +223,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1:3.0.8-alt1
+- Version 3.0.8
+
 * Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.7-alt1
 - Version 3.0.7
 
