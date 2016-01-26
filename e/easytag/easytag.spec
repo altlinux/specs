@@ -1,5 +1,5 @@
 Name: easytag
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: Audio files tag viewer/editor
@@ -71,6 +71,9 @@ Monkey's звуковых файлов.
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Tue Jan 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Sat Aug 29 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
