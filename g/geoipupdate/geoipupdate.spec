@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: GeoIP Database Update program
@@ -36,6 +36,9 @@ binary databases.
 %doc README.* ChangeLog.*
 
 %changelog
+* Tue Jan 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
+- 2.2.2
+
 * Wed Apr 08 2015 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - first build for Sisyphus
 
