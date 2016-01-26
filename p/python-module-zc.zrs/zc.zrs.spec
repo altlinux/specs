@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.5.3
-Release: alt1.git20150216
+Release: alt2.git20150216
 Summary: ZODB Replicated Storage
 License: ZPLv2.1
 Group: Development/Python
@@ -14,28 +14,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/zc/zrs.git
 Source: %name-%version.tar
+BuildRequires: python-module-pbr python-module-pytest python-module-unittest2 python-module-zc.zkzeo
 
-BuildPreReq: python-module-setuptools-tests python-module-mock
-BuildPreReq: python-module-zope.testing python-module-zodbpickle
-BuildPreReq: python-module-zc.zk-tests python-modules-json
-BuildPreReq: python-module-ZODB3
-BuildPreReq: python-module-twisted-core
-BuildPreReq: python-module-ZEO-tests
-BuildPreReq: python-module-zc.zkzeo
+#BuildPreReq: python-module-setuptools-tests python-module-mock
+#BuildPreReq: python-module-zope.testing python-module-zodbpickle
+#BuildPreReq: python-module-zc.zk-tests python-modules-json
+#BuildPreReq: python-module-ZODB3
+#BuildPreReq: python-module-twisted-core
+#BuildPreReq: python-module-ZEO-tests
+#BuildPreReq: python-module-zc.zkzeo
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests python3-module-mock
-BuildPreReq: python3-module-zope.testing python3-module-zodbpickle
-BuildPreReq: python3-module-zc.zk-tests
-BuildPreReq: python3-module-ZODB3
-BuildPreReq: python3-module-twisted-core
-BuildPreReq: python3-module-ZEO-tests
+#BuildPreReq: python3-module-setuptools-tests python3-module-mock
+#BuildPreReq: python3-module-zope.testing python3-module-zodbpickle
+#BuildPreReq: python3-module-zc.zk-tests
+#BuildPreReq: python3-module-ZODB3
+#BuildPreReq: python3-module-twisted-core
+#BuildPreReq: python3-module-ZEO-tests
 BuildPreReq: python-tools-2to3
-BuildPreReq: python3-module-zc.zkzeo
+#BuildPreReq: python3-module-zc.zkzeo
+BuildRequires: python3
 %endif
 
 %py_provides %oname
-%py_requires zc ZODB3 twisted.python zope.interface zc.zkzeo json
+#%py_requires zc ZODB3 twisted.python zope.interface zc.zkzeo json
 
 %description
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -47,7 +49,7 @@ from the primary storage.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing zc.zk ZEO.tests zc.zk.testing mock
+#%py_requires zope.testing zc.zk ZEO.tests zc.zk.testing mock
 
 %description tests
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -61,7 +63,7 @@ This package contains tests for %oname.
 Summary: ZODB Replicated Storage
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires zc ZODB3 twisted.python zope.interface zc.zkzeo
+#%py3_requires zc ZODB3 twisted.python zope.interface zc.zkzeo
 
 %description -n python3-module-%oname
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -73,7 +75,7 @@ from the primary storage.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%py3_requires zope.testing zc.zk ZEO.tests zc.zk.testing mock
+#%py3_requires zope.testing zc.zk ZEO.tests zc.zk.testing mock
 
 %description -n python3-module-%oname-tests
 ZODB replicated storage (ZRS) provides database replication for ZODB.
@@ -163,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.5.3-alt2.git20150216
+- Cleanup buildreq
+
 * Sat Feb 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.3-alt1.git20150216
 - Version 2.5.3
 
