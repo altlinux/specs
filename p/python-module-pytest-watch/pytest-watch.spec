@@ -1,10 +1,11 @@
 %define oname pytest-watch
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20150206
+Release: alt2.git20150206
 Summary: Local continuous test runner with pytest and watchdog
 License: MIT
 Group: Development/Python
@@ -15,19 +16,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-docopt python-module-watchdog
-BuildPreReq: python-module-argh python-module-yaml
+BuildRequires: python-module-pytest python-module-watchdog
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-docopt python-module-watchdog
+#BuildPreReq: python-module-argh python-module-yaml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-docopt python3-module-watchdog
-BuildPreReq: python3-module-argh python3-module-yaml
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-docopt python3-module-watchdog
+#BuildPreReq: python3-module-argh python3-module-yaml
 BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-pytest python3-module-watchdog
 %endif
 
 %py_provides pytest_watch
-%py_requires docopt watchdog pytest
+#%py_requires docopt watchdog pytest
 
 %description
 pytest-watch a zero-config CLI tool that runs pytest, and reruns it when
@@ -37,7 +40,7 @@ a file in your project changes.
 Summary: Local continuous test runner with pytest and watchdog
 Group: Development/Python3
 %py3_provides pytest_watch
-%py3_requires docopt watchdog pytest
+#%py3_requires docopt watchdog pytest
 
 %description -n python3-module-%oname
 pytest-watch a zero-config CLI tool that runs pytest, and reruns it when
@@ -98,6 +101,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.0-alt2.git20150206
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Fri Feb 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150206
 - Version 1.0.0
 
