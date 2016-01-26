@@ -1,11 +1,11 @@
 %define oname watchdog
 
 %def_with python3
-#def_disable check
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.git20150727
+Release: alt2.git20150727
 Summary: Filesystem events monitoring
 License: ASLv2.0
 Group: Development/Python
@@ -16,22 +16,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-argh python-module-yaml
-BuildPreReq: python-module-pytest-timeout
-BuildPreReq: python-module-pytest-cov
-BuildPreReq: python-module-sphinx-devel python-module-pathtools
+BuildRequires: python-module-docutils python-module-html5lib python-module-objects.inv python-module-pathtools python-module-pytest-cov python-module-pytest-timeout python-module-setuptools-tests python-module-yaml
+BuildRequires: python-module-sphinx-devel
+
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-argh python-module-yaml
+#BuildPreReq: python-module-pytest-timeout
+#BuildPreReq: python-module-pytest-cov
+#BuildPreReq: python-module-sphinx-devel python-module-pathtools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pathtools
-BuildPreReq: python3-module-argh python3-module-yaml
-BuildPreReq: python3-module-pytest-timeout
-BuildPreReq: python3-module-pytest-cov
+BuildRequires: python3-module-pathtools python3-module-pytest-cov python3-module-pytest-timeout python3-module-setuptools-tests python3-module-yaml
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pathtools
+#BuildPreReq: python3-module-argh python3-module-yaml
+#BuildPreReq: python3-module-pytest-timeout
+#BuildPreReq: python3-module-pytest-cov
 %endif
 
 %py_provides %oname
-%py_requires pathtools argh yaml
+#%py_requires pathtools argh yaml
 %add_python_req_skip AppKit FSEvents _watchdog_fsevents
 
 %description
@@ -41,7 +45,7 @@ Python API and shell utilities to monitor file system events.
 Summary: Filesystem events monitoring
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires pathtools argh yaml
+#%py3_requires pathtools argh yaml
 %add_python3_req_skip AppKit FSEvents _watchdog_fsevents
 
 %description -n python3-module-%oname
@@ -136,6 +140,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.8.3-alt2.git20150727
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20150727
 - New snapshot
 
