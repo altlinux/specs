@@ -1,10 +1,11 @@
 %define oname manhole
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20150419
+Release: alt2.git20150419
 Summary: Debugging manhole for python applications 
 License: BSD
 Group: Development/Python
@@ -15,21 +16,25 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-process-tests python-module-signalfd
-BuildPreReq: python-module-gevent python-module-eventlet
-BuildPreReq: python-module-sphinx-devel /dev/pts /proc
-BuildPreReq: python-module-sphinxcontrib-napoleon
-BuildPreReq: python-module-sphinx_py3doc_enhanced_theme
+BuildRequires: python-module-dns python-module-docutils python-module-greenlet python-module-html5lib python-module-objects.inv python-module-psycopg2 python-module-pytest python-module-signalfd python-module-sphinx_py3doc_enhanced_theme python-module-sphinxcontrib-napoleon
+BuildPreReq: python-module-sphinx-devel
+
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-process-tests python-module-signalfd
+#BuildPreReq: python-module-gevent python-module-eventlet
+#BuildPreReq: python-module-sphinx-devel /dev/pts /proc
+#BuildPreReq: python-module-sphinxcontrib-napoleon
+#BuildPreReq: python-module-sphinx_py3doc_enhanced_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-process-tests python3-module-signalfd
-BuildPreReq: python3-module-gevent python3-module-eventlet
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-process-tests python3-module-signalfd
+#BuildPreReq: python3-module-gevent python3-module-eventlet
+BuildRequires: python3-module-cryptography python3-module-dns python3-module-greenlet python3-module-psycopg2 python3-module-pytest python3-module-signalfd
 %endif
 
 %py_provides %oname
-%py_requires signalfd eventlet gevent ctypes
+#%py_requires signalfd eventlet gevent ctypes
 
 %description
 Manhole is in-process service that will accept unix domain socket
@@ -45,7 +50,7 @@ id or root.
 Summary: Debugging manhole for python applications 
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires signalfd eventlet gevent ctypes
+#%py3_requires signalfd eventlet gevent ctypes
 
 %description -n python3-module-%oname
 Manhole is in-process service that will accept unix domain socket
@@ -167,6 +172,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.0-alt2.git20150419
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20150419
 - New snapshot
 
