@@ -1,6 +1,6 @@
 Name: screen
 Version: 4.0.3
-Release: alt11
+Release: alt12
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
@@ -14,8 +14,9 @@ Requires(post): libutempter >= 1.0.6, pam_tcb >= 0.9.7.1, coreutils
 
 BuildPreReq: libutempter-devel >= 1.0.6
 
-# Automatically added by buildreq on Wed Apr 18 2007
-BuildRequires: libncurses-devel libutempter-devel pam_userpass-devel
+# Automatically added by buildreq on Mon Jan 25 2016
+# optimized out: libpam-devel libtinfo-devel pam0_userpass perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore xz
+BuildRequires: libncurses-devel libutempter-devel makeinfo pam_userpass-devel
 
 %description
 The screen utility allows you to run interactive text-mode programs
@@ -57,7 +58,8 @@ autoconf
 #__perl -pi -e 's|.*#undef HAVE_BRAILLE.*|#define HAVE_BRAILLE 1|' config.h
 
 %make_build CFLAGS="%optflags"
-bzip2 -9kf doc/*.ps
+%make_build -C doc screen.info
+xz -kf doc/*.ps
 
 %install
 %makeinstall_std
@@ -115,6 +117,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc NEWS README FAQ doc/README.DOTSCREEN doc/*.ps.*
 
 %changelog
+* Mon Jan 25 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.3-alt12
+- Added BR: makeinfo.
+
 * Thu Sep 03 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.3-alt11
 - Fixed CVE-2015-6806.
 
