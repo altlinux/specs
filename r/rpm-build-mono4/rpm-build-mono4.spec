@@ -1,6 +1,6 @@
 Name: rpm-build-mono4
 Version: 0.1.1
-Release: alt2
+Release: alt3
 
 Summary: RPM helper macros and dependency utils to build Mono packages
 License: GPL
@@ -24,19 +24,23 @@ Based on rpm-build-mono, but for mono4.
 %setup
 
 %install
-install -pD -m644 rpm-build-mono.macros %buildroot%_rpmmacrosdir/mono
-install -pD -m755 mono.req %buildroot%_rpmlibdir/mono.req
-ln -s mono.req %buildroot%_rpmlibdir/monolib.req
-ln -s mono.req %buildroot%_rpmlibdir/mono.prov
-install -pD -m755 mono.req.files %buildroot%_rpmlibdir/mono.req.files
-ln -s mono.req.files %buildroot%_rpmlibdir/monolib.req.files
-install -pD -m755 mono.prov.files %buildroot%_rpmlibdir/mono.prov.files
+install -pD -m644 rpm-build-mono4.macros %buildroot%_rpmmacrosdir/mono4
+install -pD -m755 mono4.req %buildroot%_rpmlibdir/mono4.req
+ln -s mono4.req %buildroot%_rpmlibdir/monolib4.req
+ln -s mono4.req %buildroot%_rpmlibdir/mono4.prov
+install -pD -m755 mono4.req.files %buildroot%_rpmlibdir/mono4.req.files
+ln -s mono4.req.files %buildroot%_rpmlibdir/mono4lib.req.files
+install -pD -m755 mono4.prov.files %buildroot%_rpmlibdir/mono4.prov.files
 
 %files
-%_rpmmacrosdir/mono
-%_rpmlibdir/mono*
+%_rpmmacrosdir/mono4
+%_rpmlibdir/mono4*
+%_rpmlibdir/monolib4*
 
 %changelog
+* Tue Jan 26 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt3
+- move req to mono4
+
 * Sat Jan 16 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt2
 - requirement for monodis removed
 
