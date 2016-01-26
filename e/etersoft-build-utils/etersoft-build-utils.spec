@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.3
+Version: 2.4.5
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,8 +22,8 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 1.4
-Requires: eepm >= 1.5.0
+Requires: giter >= 1.7
+Requires: eepm >= 1.6.0
 Requires: erc >= 0.8
 
 Requires: rpm-build
@@ -70,6 +70,17 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Jan 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
+- detect MENV by current ALT Linux version
+- fix target repo transfer from rpmbp to rpmbsh
+
+* Mon Jan 25 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt1
+- rpmbph: add configure32 checking
+- introduce separate rpmbps (backport spec conversion)
+- introduce rpmbp (backport package without build)
+- rpmbph: fix using BINARYREPONAME
+- fix binary repo using (-b handling)
+
 * Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
 - rpmreqs: support locally resolved multiple provides
 - rpmbph: comment out -m64 removing for 32on64 (use configure32 instead)
