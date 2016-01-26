@@ -1,7 +1,7 @@
 
 Name: rofi
 Version: 0.15.7
-Release: alt2
+Release: alt3
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
 Group: Graphical desktop/Other
@@ -25,7 +25,10 @@ BuildRequires: libpango-devel
 Requires: xdg-utils
 
 %description
-A popup window switcher roughly based on superswitcher, requiring only xlib and pango. This version started off as a clone of simpleswitcher, the version from Sean Pringle. All credit for this great tool should go to him. Rofi developed extra features, like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, making it a very versatile tool.
+A popup window switcher roughly based on superswitcher, requiring only xlib and pango.
+This version started off as a clone of simpleswitcher, the version from Sean Pringle.
+All credit for this great tool should go to him. Rofi developed extra features,
+like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, making it a very versatile tool.
 
 %prep
 %setup
@@ -41,9 +44,12 @@ A popup window switcher roughly based on superswitcher, requiring only xlib and 
 %files
 %doc Changelog README.md COPYING
 %_bindir/rofi
-%_man1dir/%name.1.bz2
+%_man1dir/%name.*
 
 %changelog
+* Tue Jan 26 2016 Konstantin Artyushkin <akv@altlinux.org> 0.15.7-alt3
+- replace man file extension
+
 * Mon Sep 21 2015 Konstantin Artyushkin <akv@altlinux.org> 0.15.7-alt2
 - initial build for ALT Linux Sisyphus
 
