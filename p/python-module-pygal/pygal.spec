@@ -1,10 +1,11 @@
 %define oname pygal
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.6.1
-Release: alt1.git20141121
+Release: alt2.git20141121
 Summary: A python svg graph plotting library
 License: LGPLv3
 Group: Development/Python
@@ -15,18 +16,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-lxml python-module-cairosvg
-BuildPreReq: python-module-pyquery python-module-flask
+BuildRequires: python-module-cairosvg python-module-html5lib python-module-pyquery python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-lxml python-module-cairosvg
+#BuildPreReq: python-module-pyquery python-module-flask
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-lxml python3-module-cairosvg
-BuildPreReq: python3-module-pyquery python3-module-flask
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-lxml python3-module-cairosvg
+#BuildPreReq: python3-module-pyquery python3-module-flask
+BuildRequires: python3-module-cairosvg python3-module-html5lib python3-module-pyquery python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
-%py_requires lxml cairosvg pyquery flask
+#%py_requires lxml cairosvg pyquery flask
 
 %description
 pygal is a dynamic SVG charting library written in python. All the
@@ -36,7 +39,7 @@ documentation is on http://pygal.org
 Summary: A python svg graph plotting library
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires lxml cairosvg pyquery flask
+#%py3_requires lxml cairosvg pyquery flask
 
 %description -n python3-module-%oname
 pygal is a dynamic SVG charting library written in python. All the
@@ -46,7 +49,7 @@ documentation is on http://pygal.org
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires pytest
+#%py_requires pytest
 
 %description tests
 pygal is a dynamic SVG charting library written in python. All the
@@ -58,7 +61,7 @@ This package contains tests for %oname.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%py3_requires pytest
+#%py3_requires pytest
 
 %description -n python3-module-%oname-tests
 pygal is a dynamic SVG charting library written in python. All the
@@ -133,6 +136,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.6.1-alt2.git20141121
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Tue Jan 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.git20141121
 - Initial build for Sisyphus
 
