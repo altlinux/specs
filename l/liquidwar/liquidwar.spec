@@ -11,7 +11,7 @@
 
 Name: liquidwar
 Version: 5.6.4
-Release: alt5
+Release: alt6
 
 Group: Games/Arcade
 Summary: Liquid War is a unique multiplayer wargame
@@ -75,13 +75,7 @@ sed -i '/^liquidwar-mapgen:/,$s/EXTERN_LIBS)/EXTERN_LIBS) -lm/' src/Makefile.in
 
 %install
 perl -pi -e 's#install_custom_texture install_icon install_gpl#install_custom_texture #' Makefile
-%makeinstall gamedir=%buildroot/%_gamesbindir datadir=%buildroot/%_datadir docdir=%buildroot/%_docdir/%name-%version
-
-rm -rf %buildroot/%_bindir
-
-mkdir -p -m755 %buildroot/%_mandir/man6
-cp doc/man/%{name}.man %buildroot/%_mandir/man6/%name.6
-ln -s %name.6 %buildroot/%_mandir/man6/%name-server.6
+%makeinstall gamedir=%buildroot/%_gamesbindir datadir=%buildroot/%_datadir docdir=%buildroot/%_docdir/%name-%version V=1
 
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
@@ -124,6 +118,9 @@ install -m 644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 5.6.4-alt6
+- Fix build
+
 * Tue Mar 05 2013 Fr. Br. George <george@altlinux.ru> 5.6.4-alt5
 - Drop assembles code due to invalid -mtune= option: `generic'
 
