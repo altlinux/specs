@@ -1,10 +1,11 @@
 %define oname sed3
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 1.1.10
-Release: alt1
+Release: alt2
 Summary: 3D viewer and editor of color seeds
 License: MIT
 Group: Development/Python
@@ -15,25 +16,27 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
-BuildPreReq: python-module-matplotlib-qt4 python-module-yaml
-BuildPreReq: python-module-scipy python-module-nose
-BuildPreReq: python-module-mock python-module-PyQt4
-BuildPreReq: python-module-pytz python-module-pygobject3
-BuildPreReq: python-module-pycairo python-module-coverage
+BuildRequires: python-module-coverage python-module-matplotlib python-module-nose python-module-pbr python-module-pygobject3 python-module-pytest python-module-pytz python-module-scipy python-module-unittest2 python-module-yaml
+#BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
+#BuildPreReq: python-module-matplotlib-qt4 python-module-yaml
+#BuildPreReq: python-module-scipy python-module-nose
+#BuildPreReq: python-module-mock python-module-PyQt4
+#BuildPreReq: python-module-pytz python-module-pygobject3
+#BuildPreReq: python-module-pycairo python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-matplotlib-qt4 python3-module-yaml
-BuildPreReq: python3-module-scipy python3-module-nose
-BuildPreReq: python3-module-mock python3-module-PyQt4
-BuildPreReq: python3-module-pytz python3-module-pygobject3
-BuildPreReq: python3-module-pycairo python3-module-coverage
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-matplotlib-qt4 python3-module-yaml
+#BuildPreReq: python3-module-scipy python3-module-nose
+#BuildPreReq: python3-module-mock python3-module-PyQt4
+#BuildPreReq: python3-module-pytz python3-module-pygobject3
+#BuildPreReq: python3-module-pycairo python3-module-coverage
+BuildRequires: python3-module-coverage python3-module-html5lib python3-module-matplotlib python3-module-nose python3-module-pbr python3-module-pycairo python3-module-pygobject3 python3-module-pytest python3-module-pytz python3-module-scipy python3-module-unittest2 python3-module-yaml
 %endif
 
 %py_provides %oname
-%py_requires matplotlib yaml scipy PyQt4
-%py_requires matplotlib.backends.backend_qt4agg
+#%py_requires matplotlib yaml scipy PyQt4
+#%py_requires matplotlib.backends.backend_qt4agg
 
 %description
 3D viewer and editor of color seeds.
@@ -43,8 +46,8 @@ BuildPreReq: python3-module-pycairo python3-module-coverage
 Summary: 3D viewer and editor of color seeds
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires matplotlib yaml scipy PyQt4
-%py3_requires matplotlib.backends.backend_qt4agg
+#%py3_requires matplotlib yaml scipy PyQt4
+#%py3_requires matplotlib.backends.backend_qt4agg
 
 %description -n python3-module-%oname
 3D viewer and editor of color seeds.
@@ -97,6 +100,10 @@ popd
 %endif
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.10-alt2
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.10-alt1
 - Initial build for Sisyphus
 
