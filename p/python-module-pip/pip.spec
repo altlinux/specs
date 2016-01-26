@@ -1,19 +1,17 @@
-%define version 7.1.2
-%define release alt1
-%setup_python_module pip
 
 %def_with python3
 
 Summary: pip installs packages.  Python packages.  An easy_install replacement
-Name: %packagename
-Version: %version
-Release: %release
-Source0: %modulename.tar
+Name: python-module-pip
+Version: 8.0.2
+Release: alt1
+Source0: pip-%version.tar.gz
 Patch: pip-1.5.6-alt-python3.patch
 License: MIT
 Group: Development/Python
 BuildArch: noarch
-URL: http://www.pip-installer.org
+Url: http://www.pip-installer.org
+%setup_python_module pip
 
 BuildRequires: python-module-setuptools-tests
 BuildPreReq: python-module-sphinx-devel
@@ -52,7 +50,7 @@ Group: Development/Python3
 %summary
 
 %prep
-%setup -n %modulename
+%setup -n %modulename-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -113,6 +111,12 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Tue Jan 26 2016 Fr. Br. George <george@altlinux.ru> 8.0.2-alt1
+- Autobuild version bump to 8.0.2
+
+* Tue Jan 26 2016 Fr. Br. George <george@altlinux.ru> 7.1.2-alt2
+- New build scheme
+
 * Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.1.2-alt1
 - Version 7.1.2
 
