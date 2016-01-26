@@ -1,8 +1,10 @@
 %define mname hurry
 %define oname %mname.query
+%def_disable check
+
 Name: python-module-%oname
 Version: 1.1.2
-Release: alt1.dev0.git20141106
+Release: alt2.dev0.git20141106
 Summary: Higher level query system for the zope.catalog
 License: ZPLv2.1
 Group: Development/Python
@@ -12,18 +14,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/hurry.query.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-ZODB3
-BuildPreReq: python-module-zc.catalog
-BuildPreReq: python-module-zope.catalog
-BuildPreReq: python-module-zope.component
-BuildPreReq: python-module-zope.interface
-BuildPreReq: python-module-zope.intid
-BuildPreReq: python-module-zope.testing
+BuildRequires: python-module-pytest python-module-zc.catalog python-module-zope.testing
+
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-ZODB3
+#BuildPreReq: python-module-zc.catalog
+#BuildPreReq: python-module-zope.catalog
+#BuildPreReq: python-module-zope.component
+#BuildPreReq: python-module-zope.interface
+#BuildPreReq: python-module-zope.intid
+#BuildPreReq: python-module-zope.testing
 
 %py_provides %oname
-%py_requires %mname zc.catalog ZODB3 zope.catalog zope.component
-%py_requires zope.interface zope.intid
+#%py_requires %mname zc.catalog ZODB3 zope.catalog zope.component
+#%py_requires zope.interface zope.intid
 
 %description
 The hurry query system for the zope.catalog builds on its catalog
@@ -35,7 +39,7 @@ origin.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing
+#%py_requires zope.testing
 
 %description tests
 The hurry query system for the zope.catalog builds on its catalog
@@ -72,6 +76,10 @@ py.test -vv src/hurry/query/tests.py
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.2-alt2.dev0.git20141106
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1.dev0.git20141106
 - Initial build for Sisyphus
 
