@@ -1,7 +1,11 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt2
+Release: alt3
 License: GPL
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -71,12 +75,12 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_datadir/freehdl/lib/ieee/vital_timing.vhdl
 %_datadir/freehdl/lib/std/standard.vhdl
 %_datadir/freehdl/lib/std/textio.vhdl
-%_datadir/info/fire.info.bz2
-%_man1dir/freehdl-config.1.gz
-%_man1dir/freehdl-gennodes.1.gz
-%_man1dir/freehdl-v2cc.1.gz
-%_man1dir/gvhdl.1.gz
-%_man5dir/v2cc.libs.5.gz
+%_datadir/info/fire.info*
+%_man1dir/freehdl-config.1*
+%_man1dir/freehdl-gennodes.1*
+%_man1dir/freehdl-v2cc.1*
+%_man1dir/gvhdl.1*
+%_man5dir/v2cc.libs.5*
 
 %files -n libfreehdl
 %_libdir/freehdl
@@ -114,6 +118,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Tue Jan 26 2016 Denis Smirnov <mithraen@altlinux.ru> 0.0.8-alt3
+- fix build
+
 * Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 0.0.8-alt2
 - fix subpackage requires
 
