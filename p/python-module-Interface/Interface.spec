@@ -1,7 +1,9 @@
 %define oname Interface
+%def_disable check
+
 Name: python-module-%oname
 Version: 2.11.1
-Release: alt1
+Release: alt2
 Summary: Interface implementation
 License: ZPLv2.1
 Group: Development/Python
@@ -11,14 +13,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-zope.schema
-BuildPreReq: python-module-zope.interface
-BuildPreReq: python-module-zope.testing
+BuildRequires: python-module-pytest python-module-zope.schema python-module-zope.testing
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-zope.schema
+#BuildPreReq: python-module-zope.interface
+#BuildPreReq: python-module-zope.testing
 
 %py_provides %oname
-%py_requires zope.interface zope.schema
-%add_python_req_skip Basic Util
+#%py_requires zope.interface zope.schema
+#%add_python_req_skip Basic Util
 
 %description
 This package provides an interface implementation for Python as it was
@@ -29,7 +32,7 @@ probably want to use the more modern zope.interface package.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing
+#%py_requires zope.testing
 
 %description tests
 This package provides an interface implementation for Python as it was
@@ -63,6 +66,10 @@ py.test
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.11.1-alt2
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.11.1-alt1
 - Initial build for Sisyphus
 
