@@ -1,7 +1,9 @@
 %define oname numpy-stl
+%def_disable check
+
 Name: python-module-%oname
 Version: 1.3.6
-Release: alt1.git20141210
+Release: alt2.git20141210
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
 License: BSD
 Group: Development/Python
@@ -12,14 +14,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pytest libnumpy-devel
-BuildPreReq: python-module-argparse python-module-cov-core
-BuildPreReq: python-module-coverage python-module-docutils
-BuildPreReq: python-module-execnet python-tools-pep8 pyflakes
-BuildPreReq: python-module-pytest-cache python-module-pytest-cov
-BuildPreReq: python-module-pytest-flakes python-module-pytest-pep8
-BuildPreReq: python-module-sphinx-devel python-module-python_utils
+BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib python-module-objects.inv python-module-pytest-cov python-module-pytest-flakes python-module-pytest-pep8 python-module-setuptools-tests
+BuildRequires: python-module-sphinx-devel
+
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pytest libnumpy-devel
+#BuildPreReq: python-module-argparse python-module-cov-core
+#BuildPreReq: python-module-coverage python-module-docutils
+#BuildPreReq: python-module-execnet python-tools-pep8 pyflakes
+#BuildPreReq: python-module-pytest-cache python-module-pytest-cov
+#BuildPreReq: python-module-pytest-flakes python-module-pytest-pep8
+#BuildPreReq: python-module-sphinx-devel python-module-python_utils
 
 %py_provides stl
 
@@ -55,6 +60,10 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.3.6-alt2.git20141210
+- Rebuild with "def_disable check"
+- Cleanup buildreq
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1.git20141210
 - Version 1.3.6
 
