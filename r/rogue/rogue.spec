@@ -1,6 +1,6 @@
 Name: rogue
 Version: 5.4.4
-Release: alt1.qa3
+Release: alt2
 Packager: Fr. Br. George <george@altlinux.ru>
 Group: Games/Adventure
 License: BSD
@@ -35,9 +35,10 @@ make install DESTDIR=%buildroot
 desktop-file-install --dir %buildroot%_desktopdir --vendor "" %SOURCE1
 install -p -D -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 
+
 %files
 %attr(2711,games,games) %_gamesbindir/%name
-%_man6dir/%name.6.gz
+%_man6dir/%name.*
 %_desktopdir/%name.desktop
 %_niconsdir/%name.png
 %dir %attr(0775,games,games) %_gamesvar/roguelike
@@ -45,6 +46,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 %doc LICENSE.TXT %name.doc %name.html %name.me
 
 %changelog
+* Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 5.4.4-alt2
+- Fix build
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.4.4-alt1.qa3
 - NMU: rebuilt for debuginfo.
 
