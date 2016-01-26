@@ -1,4 +1,4 @@
-%define kernel_base_version 4.2
+%define kernel_base_version 4.4
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: hyperv-daemons
@@ -192,6 +192,9 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Tue Jan 26 2016 Alexey Shabalin <shaba@altlinux.ru> 4.4-alt1
+- build from kernel-source-4.4
+
 * Wed Sep 16 2015 Alexey Shabalin <shaba@altlinux.ru> 4.2-alt1
 - build from kernel-source-4.2
 
