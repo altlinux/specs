@@ -3,7 +3,7 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo
-Version:      2.3.6
+Version:      2.3.7
 Release:      alt1
 
 License:      GPL
@@ -54,6 +54,15 @@ The Web interface has been rewritten in an AJAX fashion to provided a
 faster UI for the users, consistency in look and feel with the Mozilla
 applications, and to reduce the load of the transactions on the server.
 
+%package apache2
+Summary: SOGo configuration for Apache2
+Group: System/Servers
+BuildArch: noarch
+Requires: sogo = %version-%release
+
+%description apache2
+SOGo configuration for Apache2
+
 %package -n task-sogo
 Summary: SOGo is a groupware server
 Group: System/Servers
@@ -62,6 +71,7 @@ Requires: sogo
 Requires: sogo-activesync
 Requires: sogo-tool
 Requires: sope-cards
+Requires: sogo-apache2
 Requires: apache2-base
 Requires: apache2-mod_ngobjweb
 Requires: memcached 
@@ -259,8 +269,6 @@ popd
 %config(noreplace) %attr(0640, root, %sogo_user) %_sysconfdir/sogo/sogo.conf
 %config(noreplace) %_logrotatedir/sogo
 %config(noreplace) %_sysconfdir/cron.d/sogo
-%config(noreplace) %apache2_sites_available/*.conf
-%ghost %apache2_sites_enabled/*.conf
 %config(noreplace) %_sysconfdir/sysconfig/sogo
 %_unitdir/sogo.service
 %_tmpfilesdir/sogo.conf
@@ -294,20 +302,24 @@ popd
 %_libdir/GNUstep/OCSTypeModels
 %_libdir/GNUstep/WOxElemBuilders-*
 
-%files -n sogo-tool
+%files apache2
+%config(noreplace) %apache2_sites_available/*.conf
+%ghost %apache2_sites_enabled/*.conf
+
+%files tool
 %{_sbindir}/sogo-tool
 
-%files -n sogo-ealarms-notify
+%files ealarms-notify
 %{_sbindir}/sogo-ealarms-notify
 
-%files -n sogo-slapd-sockd
+%files slapd-sockd
 %{_sbindir}/sogo-slapd-sockd
 
-%files -n sogo-activesync
+%files activesync
 %doc %_defaultdocdir/sogo-activesync-%version
 %_libdir/GNUstep/SOGo/ActiveSync.SOGo
 
-%files -n sogo-devel
+%files devel
 %_includedir/SOGo
 %_includedir/SOGoUI
 %_libdir/sogo/libSOGo.so
@@ -356,6 +368,10 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Jan 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.7-alt1
+- New version
+- Move apache bindings to package sogo-apache2
+
 * Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.6-alt1
 - New version
 - Move memcached requirement to task-sogo
