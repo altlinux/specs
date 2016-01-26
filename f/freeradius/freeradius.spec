@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 2.2.9
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -18,7 +18,7 @@ Patch1: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libmysqlclient-devel libcom_err-devel libgdbm-devel libldap-devel libltdl-devel libpam-devel libreadline-devel libstdc++-devel-static libunixODBC-devel mailx net-snmp-utils perl-DBI perl-devel postgresql-devel python-devel slocate libssl-devel perl-DBM
 
-# Server needs dicts to work:
+# Server needs dicts and /etc/raddb to work:
 Requires: %name-common
 
 %description
@@ -198,7 +198,7 @@ rm -r %buildroot%_sysconfdir/raddb/sql/oracle
 # remove unsupported config files
 rm %buildroot/%_sysconfdir/raddb/experimental.conf
 
-%pre
+%pre common
 /usr/sbin/groupadd -r -f radiusd
 /usr/sbin/useradd -r -n -g radiusd -d /dev/null -s /dev/null -c RADIUS radiusd >/dev/null 2>&1 ||:
 
@@ -222,9 +222,7 @@ fi
 %_tmpfilesdir/radiusd.conf
 %dir %attr(775,root,radiusd) %_localstatedir/radiusd
 # configs
-%dir %attr(750,root,radiusd) %_sysconfdir/raddb
 %defattr(-,root,radiusd)
-%config(noreplace) %_sysconfdir/raddb/dictionary
 %config(noreplace) %_sysconfdir/raddb/acct_users
 %config(noreplace) %_sysconfdir/raddb/attrs
 %config(noreplace) %_sysconfdir/raddb/attrs.access_challenge
@@ -425,6 +423,8 @@ fi
 %_libdir/freeradius/rlm_wimax-%version.so
 
 %files common
+%dir %attr(755,root,radiusd) %_sysconfdir/raddb
+%attr(644,root,root) %config(noreplace) %_sysconfdir/raddb/dictionary
 # dictionaries
 %_datadir/freeradius
 
@@ -477,6 +477,11 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Tue Jan 26 2016 Terechkov Evgenii <evg@altlinux.org> 2.2.9-alt2
+- Move /etc/raddb to common subpackage (radius clients needs /etc/raddb/dictionary)
+- Create user/group in common subpackage
+- Allow everyone run radius clients with packaged dicts
+
 * Tue Jan  5 2016 Terechkov Evgenii <evg@altlinux.org> 2.2.9-alt1
 - 2.2.9
 
