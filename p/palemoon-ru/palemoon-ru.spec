@@ -4,9 +4,14 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
+
+%define min_version	25.8.1
+%define max_version	26.*
+
+
 Name: palemoon-ru
 Version: 26.0
-Release: alt3
+Release: alt4
 Summary: Russian (RU) Language Pack for Pale Moon
 
 License: MPL/GPL/LGPL
@@ -63,8 +68,8 @@ cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
 	    <em:targetApplication>
 	      <Description>
 	        <em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>
-	        <em:minVersion>%version</em:minVersion>
-	        <em:maxVersion>%version.*</em:maxVersion>
+	        <em:minVersion>%min_version</em:minVersion>
+	        <em:maxVersion>%max_version.*</em:maxVersion>
 	      </Description>
 	    </em:targetApplication>
 	  </Description>
@@ -78,6 +83,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %cid_dict_dir
 
 %changelog
+* Wed Jan 27 2016 Hihin Ruslan <ruslandh@altlinux.ru> 26.0-alt4
+- Fix install.rdf
+
 * Sun Jan 24 2016 Hihin Ruslan <ruslandh@altlinux.ru> 26.0-alt3
 - Add translats
 
