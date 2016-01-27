@@ -1,11 +1,8 @@
-%define _monodocdir %_datadir/monodoc/sources
-%define _monodir %_libexecdir/mono
-%define _monogacdir %_monodir/gac
 %def_disable bootstrap
 
 Name: mono4
 Version: 4.3.1.1
-Release: alt6
+Release: alt8
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -16,10 +13,13 @@ Packager: Denis Medvedev <nbr@altlinux.org>
 Source: mono4-%version.tar
 # by running the following command:
 # sn -k mono.snk
-# Dec 2015 ALT 
+# Dec 2015 ALT
 Source2: mono.snk
 Source1: external.tar.gz
+Patch0: mono-4.0.0-ignore-reference-assemblies.patch
+# ALT: for packaging, manually pack all external/* subpackage stuff into external.tar.gz because those are submodules and cannot be added normally to git tree without losing history.
 
+BuildRequires(pre): rpm-build-mono4
 BuildRequires(pre): gcc-c++
 BuildRequires(pre): gettext-devel
 BuildRequires(pre): libicu-devel
@@ -98,7 +98,7 @@ Group: Development/Other
 Requires: mono4-core = %version-%release
 
 %description dyndata
-This is dll needed for implementation of ASP.NET MVC and for web services too 
+This is dll needed for implementation of ASP.NET MVC and for web services too
 
 %package full
 Summary: full runtime virtual package
@@ -297,8 +297,9 @@ Development file for monodoc
 
 %prep
 %setup -n mono4-%version
-tar xzf /usr/src/RPM/SOURCES/external.tar.gz 
 
+tar xzf /usr/src/RPM/SOURCES/external.tar.gz
+%patch0 -p1
 
 # bash autogen.sh --prefix=%_prefix
 
@@ -335,14 +336,21 @@ rm -rf mcs/class/lib/monolite/*
 
 %install
 #unpack external.tgz one more time. Its contents has been overwritten
-tar xvzf /usr/src/RPM/SOURCES/external.tar.gz 
+#tar xvzf /usr/src/RPM/SOURCES/external.tar.gz
+%if_enabled bootstrap
+# for bootstrap, keep monolite. Mono 2.10 is too old to compile Mono 4.0
+export PATH=$PATH:mcs/class/lib/monolite/
+%else
+rm -rf mcs/class/lib/monolite/*
+%endif
+
 %makeinstall_std
 
 # copy the mono.snk key into /etc/pki/mono
 mkdir -p %buildroot%_sysconfdir/pki/mono
 install -p -m0644 %SOURCE2 %buildroot%_sysconfdir/pki/mono/
 
-# C5 is not installed, see commit 0af35dd5 
+# C5 is not installed, see commit 0af35dd5
 
 # This was removed upstream:
 # remove .la files (they are generally bad news)
@@ -376,7 +384,7 @@ rm -f %buildroot%_bindir/nunit-console4
 rm -f %buildroot%_monodir/4.5/nunit*
 rm -Rf %buildroot%_monodir/gac/nunit*
 rm -f %buildroot%_pkgconfigdir/mono-nunit.pc
-mkdir -p  %buildroot%_sysconfdir/mono-2.0/
+#mkdir -p  %buildroot%_sysconfdir/mono-2.0/
 mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 
 %find_lang mcs
@@ -384,10 +392,10 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 
 %files core -f mcs.lang
 %doc AUTHORS COPYING.LIB ChangeLog NEWS README.md
-%_sysconfdir/mono-2.0/
+#%_sysconfdir/mono-2.0/
 %_sysconfdir/mono-4.5/
 %dir %_sysconfdir/mono/4.5/
-%dir %_libexecdir/mono/4.0/
+#%dir %_libexecdir/mono/4.0/
 %dir %_monodir/4.5
 %_bindir/mono
 %_bindir/mono-test-install
@@ -426,7 +434,7 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_man1dir/mprof-report.1*
 %_libdir/libMonoPosixHelper.so*
 %dir %_monodir
-%dir %_monodir/2.0/
+#%dir %_monodir/2.0/
 
 %dir %_monodir/gac
 %gac_dll Commons.Xml.Relaxng
@@ -458,9 +466,9 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %dir %_sysconfdir/mono
 %dir %_sysconfdir/mono/mconfig
 %config (noreplace) %_sysconfdir/mono/config
-%config (noreplace) %_sysconfdir/mono/2.0/machine.config
-%config (noreplace) %_sysconfdir/mono/2.0/settings.map
-%_libdir/libmono*-2.0.so.*
+#%config (noreplace) %_sysconfdir/mono/2.0/machine.config
+#%config (noreplace) %_sysconfdir/mono/2.0/settings.map
+#%_libdir/libmono*-2.0.so.*
 %_libdir/libmono-profiler-*.so.*
 %config (noreplace) %_sysconfdir/mono/4.5/settings.map
 %config (noreplace) %_sysconfdir/mono/4.0/DefaultWsdlHelpGenerator.aspx
@@ -468,7 +476,7 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %config (noreplace) %_sysconfdir/mono/4.5/machine.config
 %config (noreplace) %_sysconfdir/mono/4.5/web.config
 %dir %_sysconfdir/mono/4.0
-%dir %_sysconfdir/mono/2.0
+#%dir %_sysconfdir/mono/2.0
 %_bindir/dmcs
 %mono_bin ccrewrite
 %_man1dir/ccrewrite.1*
@@ -487,10 +495,9 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 
 %dir %_monodir/mono-configuration-crypto/
 %dir %_monodir/mono-configuration-crypto/4.5/
-%_monodir/2.0/*
-%_monodir/4.0/*
-%_monodir/mono-configuration-crypto/4.5/mono-config*
-%_monodir/mono-configuration-crypto/4.5/Mono.Configuration.Crypto.dll*
+#%_monodir/2.0/*
+#%_monodir/4.0/*
+%_monodir/mono-configuration-crypto/4.5/*
 %gac_dll CustomMarshalers
 %gac_dll I18N.West
 %gac_dll I18N
@@ -615,10 +622,12 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_libdir/libikvm-native.so
 %_libdir/libmono-profiler-*.so
 %_libdir/libmono*-2.0.so
+%_libdir/libmonosgen*
+%_libdir/libmonoboehm*
 %_pkgconfigdir/dotnet.pc
 %_pkgconfigdir/mono-cairo.pc
 %_pkgconfigdir/mono.pc
-%_pkgconfigdir/mono-2.pc
+#%_pkgconfigdir/mono-2.pc
 %_pkgconfigdir/monosgen-2.pc
 %_pkgconfigdir/cecil.pc
 %_pkgconfigdir/dotnet35.pc
@@ -718,7 +727,7 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %config (noreplace) %_sysconfdir/mono/4.5/Browsers/Compat.browser
 %config (noreplace) %_sysconfdir/mono/2.0/DefaultWsdlHelpGenerator.aspx
 %config (noreplace) %_sysconfdir/mono/mconfig/config.xml
-%config (noreplace) %_sysconfdir/mono/2.0/web.config
+#%config (noreplace) %_sysconfdir/mono/2.0/web.config
 
 %files web-devel
 %_pkgconfigdir/aspnetwebstack.pc
@@ -798,6 +807,12 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Sun Jan 24 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt8
+- Removing remains of mono2
+
+* Tue Jan 19 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt7
+- rpm-build-mono4 integration
+
 * Mon Jan 18 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt6
 - Added missing mono4-data to mono4-full
 
@@ -814,4 +829,4 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 - Initial build of 4.* version (based on Fedora core spec)
 
 
-
+:
