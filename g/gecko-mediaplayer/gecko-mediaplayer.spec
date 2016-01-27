@@ -4,14 +4,13 @@ Summary:	Gecko Media Player browser plugin
 Summary(ru_RU.UTF-8): Дополнение для браузера - Gecko Media Player
 Name:		gecko-mediaplayer
 Version:	1.0.9
-Release:	alt2
+Release:	alt3
 License:	GPLv2+
 Group:		Networking/WWW
 URL:		http://kdekorte.googlepages.com/gecko-mediaplayer
 Packager:	Radik Usupov <radik@altlinux.org>
 
 Source0:	http://gecko-mediaplayer.googlecode.com/files/%{name}-%{version}.tar.gz
-Source1: 	%name.watch
 Patch: 		Add-ru-and-tt-translations.patch
 Patch1: 	0001-nomozalloc.patch
 Patch2:		np_loadds.patch
@@ -56,6 +55,9 @@ rm -rf %buildroot%_docdir/%name
 %plugdir/*
 
 %changelog
+* Wed Jan 27 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt3
+- Remove watch file
+
 * Sun Apr 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt2
 - Fix build in Sisyphus (thanks Debian for patches)
 
