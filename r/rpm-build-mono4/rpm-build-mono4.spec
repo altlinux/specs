@@ -1,6 +1,6 @@
 Name: rpm-build-mono4
 Version: 0.1.1
-Release: alt4
+Release: alt5
 
 Summary: RPM helper macros and dependency utils to build Mono packages
 License: GPL
@@ -38,6 +38,9 @@ install -pD -m755 mono4.prov.files %buildroot%_rpmlibdir/mono4.prov.files
 %_rpmlibdir/monolib4*
 
 %changelog
+* Wed Jan 27 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt5
+- Fixed searching additional direcotory for mono.configuration.security
+
 * Wed Jan 27 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt4
 - Fixed bug in provides search
 
