@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.13.0
-Release: alt2
+Release: alt3
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -124,6 +124,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt3
+- add upstream fix for config reader (ALT#31737)
+
 * Wed Jan 27 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt2
 - fix crash on read config
 
