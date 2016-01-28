@@ -1,6 +1,6 @@
 Name: openssl10
-Version: 1.0.2e
-Release: alt2
+Version: 1.0.2f
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -458,6 +458,9 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Thu Jan 28 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2f-alt1
+- Updated to 1.0.2f (fixes CVE-2015-3197 CVE-2016-0701).
+
 * Tue Jan 12 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2e-alt2
 - libcrypto10: added conflict: libcrypto7, libssl7
   (due to openssl.cnf; ALT#31671).
