@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Dependency Management Utility
 Name:           jaranalyzer
 Version:        1.1
-Release:	alt3_2jpp5
+Release:	alt4_2jpp5
 Epoch:          0
 License:        BSD-style
 URL:            http://www.kirkk.com/main/Main/JarAnalyzer
@@ -46,9 +46,9 @@ Source0:        http://www.kirkk.com/main/zip/JarAnalyzer-src-1.1.zip
 Source1:        jaranalyzer-1.1.script
 Source2:        jaranalyzer-1.1.pom
 Patch0:         jaranalyzer-1.1-build_xml.patch
-BuildRequires: jpackage-utils >= 0:1.7.4
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit3
+BuildRequires: jpackage-utils
+BuildRequires: ant 
+BuildRequires: ant-junit
 BuildRequires: bcel
 BuildRequires: regexp
 
@@ -153,6 +153,9 @@ fi
 %doc %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt4_2jpp5
+- use junit 4
+
 * Fri Mar 29 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt3_2jpp5
 - explicitly use junit3
 
