@@ -1,5 +1,5 @@
 Name: quiterss
-Version: 0.18.2
+Version: 0.18.3
 Release: alt1
 
 Summary: RSS/Atom aggregator
@@ -56,6 +56,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/%name/lang
 
 %changelog
+* Thu Jan 28 2016 Michael Shigorin <mike@altlinux.org> 0.18.3-alt1
+- new version (watch file uupdate)
+
 * Wed Jul 15 2015 Michael Shigorin <mike@altlinux.org> 0.18.2-alt1
 - new version (watch file uupdate)
 
