@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 7.19.5.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings to libcurl
 
@@ -19,12 +19,16 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 #Source: http://dl.sf.net/%modulename/%modulename-%version.tar.bz2
 Source: http://pycurl.sourceforge.net/download/pycurl-%version.tar.bz2
 
-BuildRequires: libcurl-devel libssh2-devel python-devel
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils pkg-config python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: libcurl-devel libssl-devel python-devel python3-devel rpm-build-python3
 
-BuildPreReq: libssl-devel libidn-devel zlib-devel
+#BuildRequires: libcurl-devel libssh2-devel python-devel
+
+#BuildPreReq: libssl-devel libidn-devel zlib-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+#BuildPreReq: python3-devel
 %endif
 
 %description
@@ -74,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 7.19.5.3-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 7.19.5.3-alt1
 - new version 7.19.5.3 (with rpmrb script)
 

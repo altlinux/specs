@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20150204
+Release: alt1.git20150204.1
 Summary: Kids shell command call wrapper
 License: BSD
 Group: Development/Python
@@ -15,22 +15,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/0k/kids.sh.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests git
-BuildPreReq: python-module-d2to1 python-module-coverage
-BuildPreReq: python-module-nose python-module-kids.txt
-BuildPreReq: python-module-kids.test python-module-kids.cache
+#BuildPreReq: python-devel python-module-setuptools-tests git
+#BuildPreReq: python-module-d2to1 python-module-coverage
+#BuildPreReq: python-module-nose python-module-kids.txt
+#BuildPreReq: python-module-kids.test python-module-kids.cache
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests git
-BuildPreReq: python3-module-d2to1 python3-module-coverage
-BuildPreReq: python3-module-nose python3-module-kids.txt
-BuildPreReq: python3-module-kids.test python3-module-kids.cache
+#BuildPreReq: python3-devel python3-module-setuptools-tests git
+#BuildPreReq: python3-module-d2to1 python3-module-coverage
+#BuildPreReq: python3-module-nose python3-module-kids.txt
+#BuildPreReq: python3-module-kids.test python3-module-kids.cache
 %endif
 
 %py_provides %oname
 %py_requires %mname kids.txt
 # for tests:
 %py_requires kids.test kids.cache
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-kids python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-setuptools
+BuildRequires: git-core python-module-coverage python-module-d2to1 python-module-kids.cache python-module-kids.test python-module-kids.txt python-module-nose python-module-pytest python3-module-coverage python3-module-d2to1 python3-module-nose python3-module-pytest rpm-build-python3 time
 
 %description
 kids.sh is a Python library providing helpers when calling shell
@@ -112,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1.git20150204.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20150204
 - Initial build for Sisyphus
 

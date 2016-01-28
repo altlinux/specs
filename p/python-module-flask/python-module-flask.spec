@@ -5,7 +5,7 @@
 
 Name: python-module-%modname
 Version: 0.10.1
-Release: alt1
+Release: alt1.1
 Summary: A micro-framework for Python based on Werkzeug, Jinja 2 and good intentions
 
 Group: Development/Python
@@ -19,11 +19,15 @@ BuildArch: noarch
 Source: Flask-%version.tar
 Patch1: flask-0.9-alt-tests-in-usr-src.patch
 
-BuildRequires: python-module-setuptools-tests
-BuildRequires: python-module-jinja2 python-module-werkzeug python-module-simplejson
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-jinja2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
+
+#BuildRequires: python-module-setuptools-tests
+#BuildRequires: python-module-jinja2 python-module-werkzeug python-module-simplejson
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.10.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1
 - Version 0.10.1
 - Added module for Python 3

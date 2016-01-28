@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.2
-Release: alt1.git20150202
+Release: alt1.git20150202.1
 Summary: Kids caching library
 License: BSD
 Group: Development/Python
@@ -15,18 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/0k/kids.cache.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests git
-BuildPreReq: python-module-d2to1 python-module-nose
-BuildPreReq: python-module-cachetools
+#BuildPreReq: python-devel python-module-setuptools-tests git
+#BuildPreReq: python-module-d2to1 python-module-nose
+#BuildPreReq: python-module-cachetools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests git
-BuildPreReq: python3-module-d2to1 python3-module-nose
-BuildPreReq: python3-module-cachetools
+#BuildPreReq: python3-devel python3-module-setuptools-tests git
+#BuildPreReq: python3-module-d2to1 python3-module-nose
+#BuildPreReq: python3-module-cachetools
 %endif
 
 %py_provides %oname
 %py_requires %mname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: git-core python-module-d2to1 python-module-nose python-module-setuptools-tests python3-module-d2to1 python3-module-nose python3-module-setuptools-tests rpm-build-python3
 
 %description
 kids.cache is a Python library providing a cache decorator. It's part of
@@ -107,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.2-alt1.git20150202.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150202
 - Initial build for Sisyphus
 

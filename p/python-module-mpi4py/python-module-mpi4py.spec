@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt1.a0.git20150528
+Release: alt1.a0.git20150528.1
 Summary: MPI bindings for Python
 License: Public
 Group: Development/Python
@@ -17,11 +17,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python rpm-macros-make
-BuildPreReq: %mpiimpl-devel
-BuildPreReq: python-devel python-module-Cython libmpe2-devel
+#BuildPreReq: %mpiimpl-devel
+#BuildPreReq: python-devel python-module-Cython libmpe2-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-Cython
+BuildRequires(pre): rpm-macros-make
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils gcc-c++ libstdc++-devel openmpi python-base python-devel python-module-future python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-xml python3 python3-base
+BuildRequires: libmpe2-devel openmpi-devel python-module-Cython python3-devel python3-module-zope rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-Cython
 %endif
 %setup_python_module %oname
 
@@ -159,6 +164,9 @@ cp -fR docs/source %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1.a0.git20150528.1
+- NMU: Use buildreq for BR.
+
 * Fri May 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a0.git20150528
 - Version 2.0.0a0
 

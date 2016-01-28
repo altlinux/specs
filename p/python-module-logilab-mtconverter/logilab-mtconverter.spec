@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.4
-Release: alt2.hg20130321
+Release: alt2.hg20130321.1
 Summary: A library to convert from a MIME type to another
 
 Group: Development/Python
@@ -15,13 +15,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-devel python-module-logilab-common
-BuildPreReq: python-module-distribute python-module-epydoc
-BuildPreReq: graphviz
+#BuildPreReq: python-devel python-module-logilab-common
+#BuildPreReq: python-module-distribute python-module-epydoc
+#BuildPreReq: graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-logilab-common python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: fontconfig fonts-bitmap-misc libwayland-client libwayland-server python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-egenix-mx-base python-module-genshi python-module-jinja2 python-module-kerberos python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-setuptools
+BuildRequires: graphviz python-module-epydoc python-module-html5lib python-module-logilab-common python3-module-logilab-common rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-logilab-common python-tools-2to3
 %endif
 
 %description
@@ -142,6 +146,9 @@ rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt2.hg20130321.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt2.hg20130321
 - Added module for Python 3
 

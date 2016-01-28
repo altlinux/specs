@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt1.dev0.git20141229
+Release: alt1.dev0.git20141229.1
 Summary: Object life-cycle events
 License: ZPL
 Group: Development/Python
@@ -13,12 +13,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zope.event python-module-zope.component-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-zope.event python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.event python3-module-zope.component-tests
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-BTrees python-module-ZEO python-module-ZODB python-module-cffi python-module-cryptography python-module-enum34 python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-serial python-module-setuptools python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zc.lockfile python-module-zdaemon python-module-zope python-module-zope.component python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.interface python-module-zope.proxy python-module-zope.testing python-module-zope.testrunner python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-unittest2 python3-module-zope python3-module-zope.component python3-module-zope.configuration python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.schema python3-module-zope.testing python3-module-zope.testrunner
+BuildRequires: python-module-pytest python-module-zope.component-tests python3-module-html5lib python3-module-pytest python3-module-zope.component-tests rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zope.event python3-module-zope.component-tests
 %endif
 
 %py_requires zope.interface zope.component zope.event
@@ -141,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt1.dev0.git20141229.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20141229
 - Version 4.1.1.dev0
 - Enabled check

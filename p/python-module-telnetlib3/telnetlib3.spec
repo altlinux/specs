@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2.3
-Release: alt1.git20140629
+Release: alt1.git20140629.1
 Summary: Telnet server and client Protocol library using asyncio
 License: ISC
 Group: Development/Python
@@ -18,19 +18,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-pip
-BuildPreReq: python-module-pep257
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-pip
+#BuildPreReq: python-module-pep257
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-pip
-BuildPreReq: python3-module-pep257
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-pip
+#BuildPreReq: python3-module-pep257
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-OpenSSL python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-idna python3-module-lxml python3-module-ntlm python3-module-pluggy python3-module-py python3-module-pyasn1 python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-six
+BuildRequires: python3-module-asyncio python3-module-html5lib python3-module-pep257 python3-module-pip python3-module-setuptools-tests rpm-build-python3
 
 %description
 telnetlib3 is a Telnet Client and Server Protocol library for python.
@@ -108,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1.git20140629.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20140629
 - Initial build for Sisyphus
 

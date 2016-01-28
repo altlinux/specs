@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20140811
+Release: alt1.git20140811.1
 Summary: Async Web framework based on Tulip/asyncio
 License: BSD
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-enum34 python-module-asyncio-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-enum34 python-module-asyncio-tests
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-enum34 python3-module-asyncio-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-enum34 python3-module-asyncio-tests
 %endif
 
 %py_provides vase
 %py_requires enum34 asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-asyncio python3-module-pytest python3-module-setuptools
+BuildRequires: python3-module-asyncio-tests python3-module-enum34 python3-module-setuptools-tests rpm-build-python3
 
 %description
 Vase is a webframework for Tulip/asyncio.
@@ -103,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.git20140811.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20140811
 - Initial build for Sisyphus
 

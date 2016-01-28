@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.4
-Release: alt1.git20150127
+Release: alt1.git20150127.1
 Summary: Object-oriented URL from `urllib.parse` and `pathlib`
 License: PSFL
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pathlib python-module-webob
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pathlib python-module-webob
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pathlib python3-module-webob
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pathlib python3-module-webob
 %endif
 
 %py_provides %oname
 %py_requires pathlib webob
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python3-module-pathlib python3-module-pytest python3-module-webob rpm-build-python3 time
 
 %description
 urlpath provides URL manipulator class that extends pathlib.PurePath.
@@ -95,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1.git20150127.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1.git20150127
 - Version 1.0.4
 

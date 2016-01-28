@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2014.1
-Release: alt2.git20140706
+Release: alt2.git20140706.1
 Summary: Triangular and Tetrahedral Mesh Generator in Python
 License: MIT
 Group: Development/Python
@@ -16,14 +16,18 @@ Source: %oname-%version.tar
 # git://github.com/inducer/bpl-subset
 Source1: bpl-subset.tar
 
-BuildPreReq: boost-python-devel gcc-c++ python-module-setuptools
-BuildPreReq: libnumpy-devel python-module-epydoc
-BuildPreReq: doxygen graphviz
+#BuildPreReq: boost-python-devel gcc-c++ python-module-setuptools
+#BuildPreReq: libnumpy-devel python-module-epydoc
+#BuildPreReq: doxygen graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: boost-python3-devel python3-module-setuptools
-BuildPreReq: libnumpy-py3-devel
+#BuildPreReq: boost-python3-devel python3-module-setuptools
+#BuildPreReq: libnumpy-py3-devel
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libboost_python3-1.58.0 libstdc++-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base python3-dev python3-module-numpy
+BuildRequires: boost-python-devel boost-python3-devel gcc-c++ python-module-epydoc python-module-html5lib python-module-matplotlib python-module-numpy-testing python3-module-setuptools rpm-build-python3 time
 
 %description
 MeshPy offers quality triangular and tetrahedral mesh generation for
@@ -143,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2014.1-alt2.git20140706.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2014.1-alt2.git20140706
 - Added module for Python 3
 

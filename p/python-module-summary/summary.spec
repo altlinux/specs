@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20150209
+Release: alt1.git20150209.1
 Summary: Extractor to get main content from the web page
 License: MIT
 Group: Development/Python
@@ -15,21 +15,25 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-chardet python-module-lxml
-BuildPreReq: python-module-nltk python-module-numpy
-BuildPreReq: python-module-networkx
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-chardet python-module-lxml
+#BuildPreReq: python-module-nltk python-module-numpy
+#BuildPreReq: python-module-networkx
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-chardet python3-module-lxml
-BuildPreReq: python3-module-nltk python3-module-numpy
-BuildPreReq: python3-module-networkx
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-chardet python3-module-lxml
+#BuildPreReq: python3-module-nltk python3-module-numpy
+#BuildPreReq: python3-module-networkx
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires chardet lxml nltk numpy networkx
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cssselect python-module-future python-module-genshi python-module-lxml python-module-matplotlib python-module-mpmath python-module-numpy python-module-pyparsing python-module-pytest python-module-scipy python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cssselect python3-module-genshi python3-module-lxml python3-module-matplotlib python3-module-numpy python3-module-pyparsing python3-module-pytest python3-module-scipy python3-module-setuptools python3-module-yaml
+BuildRequires: python-module-chardet python-module-html5lib python-module-networkx-core python-module-nltk python-module-pydot python-module-pygraphviz python-module-setuptools-tests python3-module-chardet python3-module-html5lib python3-module-networkx-core python3-module-nltk python3-module-pydot python3-module-pygraphviz python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 A python script provides content extraction and summarization of the web
@@ -123,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1.git20150209.1
+- NMU: Use buildreq for BR.
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150209
 - Initial build for Sisyphus
 

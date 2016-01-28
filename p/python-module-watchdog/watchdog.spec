@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt2.git20150727
+Release: alt2.git20150727.1
 Summary: Filesystem events monitoring
 License: ASLv2.0
 Group: Development/Python
@@ -16,8 +16,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-docutils python-module-html5lib python-module-objects.inv python-module-pathtools python-module-pytest-cov python-module-pytest-timeout python-module-setuptools-tests python-module-yaml
-BuildRequires: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-coverage python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-coverage python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pathtools python-module-pytest-cov python-module-pytest-timeout python-module-setuptools-tests python-module-yaml python3-module-pathtools python3-module-pytest-cov python3-module-pytest-timeout python3-module-setuptools-tests python3-module-yaml rpm-build-python3 time
+
+#BuildRequires: python-module-docutils python-module-html5lib python-module-objects.inv python-module-pathtools python-module-pytest-cov python-module-pytest-timeout python-module-setuptools-tests python-module-yaml
+#BuildRequires: python-module-sphinx-devel
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-argh python-module-yaml
@@ -26,7 +31,7 @@ BuildRequires: python-module-sphinx-devel
 #BuildPreReq: python-module-sphinx-devel python-module-pathtools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pathtools python3-module-pytest-cov python3-module-pytest-timeout python3-module-setuptools-tests python3-module-yaml
+#BuildRequires: python3-module-pathtools python3-module-pytest-cov python3-module-pytest-timeout python3-module-setuptools-tests python3-module-yaml
 #BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-pathtools
 #BuildPreReq: python3-module-argh python3-module-yaml
@@ -140,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt2.git20150727.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.8.3-alt2.git20150727
 - Rebuild with "def_disable check"
 - Cleanup buildreq

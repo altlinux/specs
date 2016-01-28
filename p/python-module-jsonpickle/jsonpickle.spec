@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt1.git20150116
+Release: alt1.git20150116.1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD
 Group: Development/Python
@@ -15,22 +15,27 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-feedparser python-modules-json
-BuildPreReq: python-module-demjson python-module-jsonlib
-BuildPreReq: python-module-yajl python-module-ujson
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-sphinx-devel python-module-sphinxtogithub
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-feedparser python-modules-json
+#BuildPreReq: python-module-demjson python-module-jsonlib
+#BuildPreReq: python-module-yajl python-module-ujson
+#BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-module-sphinx-devel python-module-sphinxtogithub
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-demjson python3-module-jsonlib
-BuildPreReq: python3-module-yajl python3-module-ujson
-BuildPreReq: python3-module-nose python3-module-coverage
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-demjson python3-module-jsonlib
+#BuildPreReq: python3-module-yajl python3-module-ujson
+#BuildPreReq: python3-module-nose python3-module-coverage
 %endif
 
 %py_provides %oname
 %py_requires json demjson jsonlib yajl ujson
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cjson python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
+BuildRequires: python-module-alabaster python-module-coverage python-module-demjson python-module-docutils python-module-feedparser python-module-html5lib python-module-jsonlib python-module-nose python-module-objects.inv python-module-setuptools-tests python-module-sphinxtogithub python-module-ujson python-module-yajl python3-module-coverage python3-module-demjson python3-module-jsonlib python3-module-nose python3-module-setuptools-tests python3-module-ujson python3-module-yajl rpm-build-python3 time
 
 %description
 jsonpickle converts complex Python objects to and from JSON.
@@ -127,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1.git20150116.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20150116
 - Version 0.9.0
 

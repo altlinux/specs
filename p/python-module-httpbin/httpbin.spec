@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20140826
+Release: alt1.git20140826.1
 Summary: HTTP Request and Response Service
 License: MIT
 Group: Development/Python
@@ -16,23 +16,27 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-flask python-module-markupsafe
-BuildPreReq: python-module-decorator python-module-itsdangerous
-BuildPreReq: python-module-six python-module-gevent
-BuildPreReq: python-module-greenlet python-module-gunicorn
-BuildPreReq: python-module-jinja2 python-module-werkzeug
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-flask python-module-markupsafe
+#BuildPreReq: python-module-decorator python-module-itsdangerous
+#BuildPreReq: python-module-six python-module-gevent
+#BuildPreReq: python-module-greenlet python-module-gunicorn
+#BuildPreReq: python-module-jinja2 python-module-werkzeug
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-flask python3-module-markupsafe
-BuildPreReq: python3-module-decorator python3-module-itsdangerous
-BuildPreReq: python3-module-six python3-module-gevent
-BuildPreReq: python3-module-greenlet python3-module-gunicorn
-BuildPreReq: python3-module-jinja2 python3-module-werkzeug
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-flask python3-module-markupsafe
+#BuildPreReq: python3-module-decorator python3-module-itsdangerous
+#BuildPreReq: python3-module-six python3-module-gevent
+#BuildPreReq: python3-module-greenlet python3-module-gunicorn
+#BuildPreReq: python3-module-jinja2 python3-module-werkzeug
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-django python-module-dns python-module-enum34 python-module-greenlet python-module-jinja2 python-module-paste python-module-psycopg2 python-module-pyasn1 python-module-pycares python-module-pycurl python-module-setuptools python-module-yaml python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-django python3-module-dns python3-module-enum34 python3-module-greenlet python3-module-gunicorn python3-module-jinja2 python3-module-paste python3-module-psycopg2 python3-module-pycares python3-module-pycparser python3-module-setuptools python3-module-yaml python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-gunicorn python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 Testing an HTTP Library can become difficult sometimes. PostBin.org is
@@ -101,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1.git20140826.1
+- NMU: Use buildreq for BR.
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20140826
 - Initial build for Sisyphus
 

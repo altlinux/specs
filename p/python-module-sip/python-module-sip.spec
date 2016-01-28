@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.16.9
-Release: alt1
+Release: alt1.1
 Summary: Python bindings generator for C++ class libraries
 License: PSF
 Group: Development/Python
@@ -20,13 +20,17 @@ URL: http://www.riverbankcomputing.com/software/sip/
 Provides: %modulename = %version-%release
 Obsoletes: %modulename <= 4.1-alt2.1
 
-BuildPreReq: gcc-c++
-BuildPreReq: flex
+#BuildPreReq: gcc-c++
+#BuildPreReq: flex
 # for docs build
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libstdc++-devel python-base python-modules python-modules-compiler python3 python3-base
+BuildRequires: flex gcc-c++ python-devel python3-devel rpm-build-python3
+
+#BuildRequires: python3-devel
 %endif
 
 %description
@@ -139,6 +143,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.16.9-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.16.9-alt1
 - Version 4.16.9
 

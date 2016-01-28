@@ -5,7 +5,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        3.4.0.3
-Release:        alt1
+Release:        alt1.1
 Summary:        This library brings functools.singledispatch from Python 3.4 to Python 2.6-3.3
 Group:          Development/Python
 
@@ -14,18 +14,22 @@ URL:            http://docs.python.org/3/library/functools.html#functools.single
 Source0:        %{name}-%{version}.tar
 BuildArch:      noarch
 
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-six
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-ordereddict python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires:  python-devel
+#BuildRequires:  python-module-setuptools
+#BuildRequires:  python-module-six
 
 Requires:       python-module-six
 Requires:       python-module-ordereddict
-BuildRequires:  python-module-ordereddict
+#BuildRequires:  python-module-ordereddict
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-setuptools
-BuildRequires:  python3-module-six
+#BuildRequires:  python3-devel
+#BuildRequires:  python3-module-setuptools
+#BuildRequires:  python3-module-six
 %endif
 
 %description
@@ -94,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.4.0.3-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0.3-alt1
 - Version 3.4.0.3
 

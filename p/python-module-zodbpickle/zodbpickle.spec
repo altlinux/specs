@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt1.dev0.git20150414
+Release: alt1.dev0.git20150414.1
 Summary: Fork of Python 3 pickle module
 License: ZPL
 Group: Development/Python
@@ -15,17 +15,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zodbpickle.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-coverage
-BuildPreReq: python-test
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-coverage
+#BuildPreReq: python-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-coverage
-BuildPreReq: python3-test
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-module-coverage
+#BuildPreReq: python3-test
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -33,6 +33,10 @@ BuildPreReq: python-tools-2to3
 %add_findreq_skiplist %python_sitelibdir/%oname/pickle_3.py
 %add_findreq_skiplist %python_sitelibdir/%oname/pickletools_3.py
 %add_findreq_skiplist %python_sitelibdir/%oname/tests/pickletester_3.py
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
+BuildRequires: python-module-coverage python-module-nose python-module-setuptools-tests python-test python3-devel python3-module-coverage python3-module-nose python3-module-pytest rpm-build-python3 time
 
 %description
 This package presents a uniform pickling interface for ZODB.
@@ -127,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1.dev0.git20150414.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.dev0.git20150414
 - Version 0.6.1.dev0
 - Enabled check

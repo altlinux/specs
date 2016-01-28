@@ -4,7 +4,7 @@
 %define oname logilab-astng
 Name: python-module-%oname
 Version: 0.24.2
-Release: alt1.hg20130227
+Release: alt1.hg20130227.1
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -22,8 +22,12 @@ Source: %name-%version.tar
 %{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest}}
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute /usr/bin/pytest3
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base python3-module-setuptools
+BuildRequires: python-devel python-tools-2to3 python3-module-logilab-common rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute /usr/bin/pytest3
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -112,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.24.2-alt1.hg20130227.1
+- NMU: Use buildreq for BR.
+
 * Mon Apr 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.2-alt1.hg20130227
 - Version 0.24.2
 

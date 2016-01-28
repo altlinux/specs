@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1.git20140929
+Release: alt1.git20140929.1
 Summary: A library for converting a token stream into a data structure for use in web form posts
 License: BSD
 Group: Development/Python
@@ -15,14 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: pylons_sphinx_theme python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python3-module-setuptools rpm-build-python3 time
 
 %description
 A library for converting a token stream into a data structure comprised
@@ -149,6 +154,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5-alt1.git20140929.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.git20140929
 - Initial build for Sisyphus
 

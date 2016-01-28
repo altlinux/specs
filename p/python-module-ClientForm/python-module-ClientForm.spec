@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.10
-Release: alt4
+Release: alt4.1
 
 Summary: Python module for handling HTML forms on the client side
 
@@ -19,13 +19,17 @@ Source: http://wwwsearch.sourceforge.net/ClientForm/src/%oname-%version.tar.gz
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-compat >= 1.2
+#BuildPreReq: rpm-build-compat >= 1.2
 
-BuildRequires: python-module-setuptools
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %setup_python_module %oname
@@ -85,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.2.10-alt4.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.10-alt4
 - Added module for Python 3
 

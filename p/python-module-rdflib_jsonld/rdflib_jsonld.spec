@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.dev.git20141130
+Release: alt1.dev.git20141130.1
 Summary: rdflib extension adding JSON-LD parser and serializer
 License: BSD
 Group: Development/Python
@@ -16,18 +16,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-rdflib python-module-flake8
-BuildPreReq: python-module-nose python-module-simplejson
-BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-rdflib python-module-flake8
+#BuildPreReq: python-module-nose python-module-simplejson
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-rdflib python3-module-flake8
-BuildPreReq: python3-module-nose python3-module-simplejson
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-rdflib python3-module-flake8
+#BuildPreReq: python3-module-nose python3-module-simplejson
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: pyflakes python-base python-devel python-module-mccabe python-module-pyparsing python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-pep8 python3 python3-base python3-module-mccabe python3-module-pyparsing python3-module-pytest python3-module-setuptools python3-pyflakes python3-tools-pep8
+BuildRequires: python-module-flake8 python-module-nose python-module-pytest python-module-rdflib python3-module-flake8 python3-module-nose python3-module-rdflib rpm-build-python3
 
 %description
 This parser/serialiser will
@@ -90,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3-alt1.dev.git20141130.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.dev.git20141130
 - Initial build for Sisyphus
 

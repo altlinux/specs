@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.8.0
-Release: alt2
+Release: alt2.1
 Summary: extensions to the Python standard library's unit testing framework
 
 Group: Development/Python
@@ -16,18 +16,23 @@ Source: %name-%version.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools-tests git
-BuildRequires: python-module-unittest2 python-module-mimeparse
-BuildRequires: python-module-six python-module-argparse
-BuildRequires: python-module-pbr
-BuildRequires: python-module-sphinx-devel python-module-extras
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-linecache2 python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-traceback2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-linecache2 python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-six python3-module-traceback2
+BuildRequires: git-core python-module-alabaster python-module-docutils python-module-extras python-module-html5lib python-module-mimeparse python-module-objects.inv python-module-pbr python-module-pytest python-module-unittest2 python3-module-extras python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytest python3-module-unittest2 rpm-build-python3 time
+
+#BuildRequires: python-module-setuptools-tests git
+#BuildRequires: python-module-unittest2 python-module-mimeparse
+#BuildRequires: python-module-six python-module-argparse
+#BuildRequires: python-module-pbr
+#BuildRequires: python-module-sphinx-devel python-module-extras
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildRequires: python3-module-unittest2 python3-module-mimeparse
-BuildRequires: python3-module-six python3-module-argparse
-BuildPreReq: python3-module-extras
-BuildRequires: python3-module-pbr
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildRequires: python3-module-unittest2 python3-module-mimeparse
+#BuildRequires: python3-module-six python3-module-argparse
+#BuildPreReq: python3-module-extras
+#BuildRequires: python3-module-pbr
 %endif
 
 %py_requires mimeparse traceback2
@@ -143,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.8.0-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2
 - Fixed requirements
 

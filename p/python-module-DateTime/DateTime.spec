@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 4.0.2
-Release: alt1.dev.git20150614
+Release: alt1.dev.git20150614.1
 Summary: Encapsulation of date/time values
 License: ZPLv2.1
 Group: Development/Python
@@ -16,11 +16,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -106,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1:4.0.2-alt1.dev.git20150614.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:4.0.2-alt1.dev.git20150614
 - New snapshot
 

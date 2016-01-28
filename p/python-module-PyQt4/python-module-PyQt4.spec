@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.11.4
-Release: alt2
+Release: alt2.1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -14,22 +14,26 @@ Group: Development/Python
 Source0: PyQt-x11-gpl.tar
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
-BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
-BuildPreReq: %py_package_dependencies dbus-devel
+#BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
+#BuildPreReq: %py_package_dependencies dbus-devel
 
 %add_python_req_skip Compiler
 
-BuildRequires: gcc-c++ libqt4-devel lout
-BuildPreReq: python-module-qscintilla2-qt4-devel libqscintilla2-qt4-devel
-BuildRequires: python-module-sip-devel python-devel
-BuildPreReq: python-module-dbus-devel phonon-devel
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: elfutils fontconfig libGL-devel libX11-devel libXext-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-designer libqt4-devel libqt4-gui libqt4-help libqt4-location libqt4-multimedia libqt4-network libqt4-opengl libqt4-script libqt4-scripttools libqt4-sensors libqt4-sql libqt4-svg libqt4-test libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip
+BuildRequires: gcc-c++ libqt4-webkit-devel phonon-devel python-module-dbus-devel python-module-sip-devel python3-module-sip-devel rpm-build-python3
+
+#BuildRequires: gcc-c++ libqt4-devel lout
+#BuildPreReq: python-module-qscintilla2-qt4-devel libqscintilla2-qt4-devel
+#BuildRequires: python-module-sip-devel python-devel
+#BuildPreReq: python-module-dbus-devel phonon-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-sip-devel
-BuildPreReq: python3-module-dbus-devel
+#BuildRequires: python3-devel python3-module-sip-devel
+#BuildPreReq: python3-module-dbus-devel
 #BuildPreReq: python3-module-qscintilla2-qt4-devel
-BuildPreReq: python3-module-sip-devel
+#BuildPreReq: python3-module-sip-devel
 %endif
 
 %description
@@ -221,6 +225,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.11.4-alt2.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.11.4-alt2
 - Rebuilt with new SIP
 

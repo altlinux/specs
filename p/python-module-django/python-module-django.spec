@@ -19,7 +19,7 @@
 Summary: A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
 Name: python-module-%oname
 Version: %version
-Release: %release
+Release: %release.1
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python
@@ -31,29 +31,31 @@ Obsoletes: python-module-django1.5 <= 1.5.0-alt3
 Conflicts: python-module-django1.0 python-module-django1.1
 Conflicts: python-module-django1.2
 
-BuildPreReq: %py_dependencies setuptools
-BuildPreReq: python-module-memcached python-module-mock
+#BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: python-module-memcached python-module-mock
 
-# Automatically added by buildreq on Tue Jul 29 2008 (-ba)
-BuildRequires: python-module-setuptools python-modules-email
-BuildRequires: python-modules-encodings python-modules-sqlite3
-BuildRequires: python-modules-xml
-BuildRequires: python-modules-ctypes
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-funcsigs python-module-pbr python-module-setuptools python-module-six python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools tzdata
+BuildRequires: python-module-mock python-modules-sqlite3 python-modules-wsgiref python3-module-html5lib python3-module-pbr python3-module-unittest2 python3-modules-sqlite3 rpm-build-python3
+
+#BuildRequires: python-modules-encodings python-modules-sqlite3
+#BuildRequires: python-modules-xml
+#BuildRequires: python-modules-ctypes
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-distribute
-BuildPreReq: python3-module-memcached python3-module-mock
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-memcached python3-module-mock
+#BuildPreReq: python-tools-2to3
 
 %add_python3_req_skip hotshot StringIO
 %endif
 
 %if_with check
-BuildPreReq: python-modules-json
-BuildPreReq: python-modules-wsgiref
+#BuildPreReq: python-modules-json
+#BuildPreReq: python-modules-wsgiref
 %if_with python3
-BuildPreReq: python3-modules-sqlite3
+#BuildPreReq: python3-modules-sqlite3
 %endif
 %endif
 
@@ -383,6 +385,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.8.7-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Nov 27 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.7-alt1
 - 1.8.7
 - fixed CVE-2015-8213

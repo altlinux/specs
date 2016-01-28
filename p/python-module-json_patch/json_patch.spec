@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1
+Release: alt1.1
 Summary: Implementation of the json-patch spec
 License: Free
 Group: Development/Python
@@ -14,17 +14,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-json_pointer
+#BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-json_pointer
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-json_pointer
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-json_pointer
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Implementation of json-patch draft 04:
@@ -120,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 

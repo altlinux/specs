@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.0.3.1
-Release: alt2.git20141125
+Release: alt2.git20141125.1
 Summary: Utils for converting between date formats and calculating holidays
 License: MIT
 Group: Development/Python
@@ -16,16 +16,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-ephem python-module-pytz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-ephem python3-module-pytz
 %endif
 
 %py_provides %oname
 %py_requires ephem pytz
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 Converts between Gregorian dates and other calendar systems. Calendars
@@ -89,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.3.1-alt2.git20141125.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.3.1-alt2.git20141125
 - Rebuild with "def_disable check"
 

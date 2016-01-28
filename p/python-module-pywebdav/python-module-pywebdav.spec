@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        0.9.8
-Release:        alt1.1
+Release:        alt1.1.1
 Summary:        WebDAV library
 
 Group:          Development/Python
@@ -15,13 +15,17 @@ Source0:        http://pywebdav.googlecode.com/files/%srcname-%version.tar.gz
 
 BuildArch:      noarch
 BuildRequires(pre): rpm-build-python
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools-tests
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
+
+#BuildRequires:  python-devel
+#BuildRequires:  python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildRequires:  python3-devel
+#BuildRequires:  python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 Provides:       pywebdav = %version-%release
@@ -98,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.8-alt1.1.1
+- NMU: Use buildreq for BR.
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt1.1
 - Added module for Python 3
 

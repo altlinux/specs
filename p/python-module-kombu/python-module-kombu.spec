@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 3.0.32
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Group: Development/Python
 License: BSD License
@@ -12,14 +12,19 @@ Summary: Kombu is an AMQP messaging framework for Python
 URL: https://github.com/celery/kombu/
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools python-module-sphinx-devel
-BuildPreReq: python-module-django python-module-amqp
-BuildPreReq: python-module-anyjson python-module-boto
-BuildPreReq: python-module-pylibrabbitmq python-module-pymongo
+#BuildPreReq: python-module-setuptools python-module-sphinx-devel
+#BuildPreReq: python-module-django python-module-amqp
+#BuildPreReq: python-module-anyjson python-module-boto
+#BuildPreReq: python-module-pylibrabbitmq python-module-pymongo
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-amqp python-module-babel python-module-backports python-module-bson python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-ecdsa python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-psycopg2 python-module-pyasn1 python-module-pycrypto python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base
+BuildRequires: python-module-alabaster python-module-anyjson python-module-boto python-module-django python-module-docutils python-module-html5lib python-module-objects.inv python-module-pylibrabbitmq python-module-pymongo python3-module-setuptools rpm-build-python3 time
 
 %description
 AMQP is the Advanced Message Queuing Protocol, an open standard protocol
@@ -153,6 +158,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:3.0.32-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1:3.0.32-alt1
 - 3.0.32
 

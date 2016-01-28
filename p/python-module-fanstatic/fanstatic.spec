@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt2.a5
+Release: alt2.a5.1
 Summary: Flexible static resources for web applications
 License: BSD
 Group: Development/Python
@@ -14,12 +14,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires shutilwhich
@@ -155,6 +160,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0-alt2.a5.1
+- NMU: Use buildreq for BR.
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.a5
 - Added necessary requirements
 

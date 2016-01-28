@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 3.8.3
-Release: alt1
+Release: alt1.1
 Summary: iCalendar parser/generator
 License: GPLv2.1
 Group: Development/Python3
@@ -11,8 +11,12 @@ Source: %modulename-%version.tar.gz
 Url: http://pypi.python.org/pypi/icalendar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-jinja2-tests
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-module-jinja2-tests
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-jinja2
+BuildRequires: python3-module-setuptools rpm-build-python3
 
 %description
 iCalendar is a parser/generator of iCalendar files
@@ -48,6 +52,9 @@ This package contains tests for %modulename.
 %python3_sitelibdir/%modulename/tests
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 3.8.3-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.3-alt1
 - Initial build for Sisyphus
 

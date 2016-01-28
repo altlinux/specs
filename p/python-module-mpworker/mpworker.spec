@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1.git20150205
+Release: alt1.git20150205.1
 Summary: Easy to use asyncio compatible package for stateful multiprocessing
 License: MIT
 Group: Development/Python
@@ -18,18 +18,22 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
-BuildPreReq: python-modules-multiprocessing
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
+#BuildPreReq: python-modules-multiprocessing
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires asyncio multiprocessing
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base
+BuildRequires: rpm-build-python3 python3-module-pytest
 
 %description
 Easy to use stateful multiprocessing. Asyncio compatible.
@@ -125,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt1.git20150205.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20150205
 - Initial build for Sisyphus
 

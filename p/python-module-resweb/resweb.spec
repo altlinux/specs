@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.7
-Release: alt1.git20130813
+Release: alt1.git20130813.1
 Summary: Pyres web interface
 License: MIT
 Group: Development/Python
@@ -15,18 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pyres python-module-flask
-BuildPreReq: python-module-setproctitle python-module-simplejson
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pyres python-module-flask
+#BuildPreReq: python-module-setproctitle python-module-simplejson
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pyres python3-module-flask
-BuildPreReq: python3-module-setproctitle python3-module-simplejson
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pyres python3-module-flask
+#BuildPreReq: python3-module-setproctitle python3-module-simplejson
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-jinja2 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-jinja2 python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-flask python-module-pyres python-module-setproctitle python-module-setuptools-tests python3-module-flask python3-module-pyres python3-module-setproctitle python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Resweb originally started as part of the pyres project. However, I
@@ -100,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.7-alt1.git20130813.1
+- NMU: Use buildreq for BR.
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.7-alt1.git20130813
 - Initial build for Sisyphus
 

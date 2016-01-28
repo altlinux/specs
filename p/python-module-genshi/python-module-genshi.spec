@@ -1,7 +1,7 @@
 %def_with python3
 
 Version: 0.7
-Release: alt1
+Release: alt1.1
 %setup_python_module genshi
 
 Name: python-module-genshi
@@ -14,11 +14,15 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 Obsoletes: python-module-Genshi
 
-BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: %py_dependencies setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -145,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1
 - Version 0.7
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.git20150409
+Release: alt1.git20150409.1
 Summary: Freetype python bindings
 License: BSD
 Group: Development/Python
@@ -15,23 +15,28 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: lib%oname xvfb-run
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-numpy python-module-matplotlib
-BuildPreReq: python-module-OpenGL python-module-pygobject3
-BuildPreReq: python-module-Pillow python-module-pycairo
-BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
+#BuildPreReq: lib%oname xvfb-run
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-numpy python-module-matplotlib
+#BuildPreReq: python-module-OpenGL python-module-pygobject3
+#BuildPreReq: python-module-Pillow python-module-pycairo
+#BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy python3-module-matplotlib
-BuildPreReq: python3-module-OpenGL python3-module-pygobject3
-BuildPreReq: python3-module-Pillow python3-module-pycairo
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-numpy python3-module-matplotlib
+#BuildPreReq: python3-module-OpenGL python3-module-pygobject3
+#BuildPreReq: python3-module-Pillow python3-module-pycairo
 %endif
 
 %py_provides %oname
 Requires: lib%oname
 %py_requires ctypes
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: at-spi2-atk at-spi2-core colord dbus dbus-tools-gui fakeroot fontconfig fonts-bitmap-misc glib-networking gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libcap-ng libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl libwayland-server python-base python-devel python-module-OpenGL_accelerate python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib-gtk3 python-module-numpy python-module-pluggy python-module-py python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy python3-module-pluggy python3-module-py python3-module-pycparser python3-module-pyparsing python3-module-pytest python3-module-setuptools xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb xz
+BuildRequires: python-module-OpenGL python-module-Pillow python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-objects.inv python-module-pycairo python-module-pygobject3 python-module-setuptools-tests python3-module-cffi python3-module-matplotlib python3-module-pycairo python3-module-pygobject3 python3-module-setuptools-tests rpm-build-python3 time xvfb-run
 
 %description
 Freetype python provides bindings for the FreeType library. Only the
@@ -137,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1.git20150409.1
+- NMU: Use buildreq for BR.
+
 * Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20150409
 - Initial build for Sisyphus
 

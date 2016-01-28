@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.git20140722
+Release: alt1.git20140722.1
 Summary: Asyncio wrapper around dnspython3
 License: BSD
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-dns
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-dns
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-dns
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-dns
 %endif
 
 %py_provides %oname
 %py_requires asyncio dns
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python3-module-dns python3-module-setuptools-tests rpm-build-python3
 
 %description
 Python3 implementation of an asynchronous dns client using dnspython3
@@ -95,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1.git20140722.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20140722
 - Initial build for Sisyphus
 

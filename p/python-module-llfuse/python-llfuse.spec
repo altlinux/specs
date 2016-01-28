@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
 
 Name: python-module-llfuse
 Version: 0.40
-Release: alt1_4
+Release: alt1_4.1
 
 Summary: Python Bindings for the low-level FUSE API
 
@@ -26,13 +26,18 @@ Url: http://code.google.com/p/python-llfuse/
 Group: Development/Python
 License: LGPLv2+
 
-BuildRequires: libattr-devel
-BuildRequires: libfuse-devel >= 2.8.0
-BuildRequires: python-module-setuptools
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils pkg-config python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: libattr-devel libfuse-devel python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
+
+#BuildRequires: libattr-devel
+#BuildRequires: libfuse-devel >= 2.8.0
+#BuildRequires: python-module-setuptools
+#BuildRequires: python-devel
 %if 0%{?with_python3}
-BuildRequires: python3-devel
-BuildRequires: python3-module-distribute
+#BuildRequires: python3-devel
+#BuildRequires: python3-module-distribute
 %endif # if with_python3
 Source44: import.info
 %add_findprov_skiplist %python_sitelibdir/.*\.so$
@@ -97,6 +102,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.40-alt1_4.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 14 2015 Vitaly Lipatov <lav@altlinux.ru> 0.40-alt1_4
 - human build for ALT Linux Sisyphus
 

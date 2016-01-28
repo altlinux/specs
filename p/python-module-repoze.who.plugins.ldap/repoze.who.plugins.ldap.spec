@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1a1
-Release: alt2
+Release: alt2.1
 Summary: repoze.who.plugins.ldap -- LDAP Authentication for WSGI Applications
 License: BSD
 Group: Development/Python
@@ -13,15 +13,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-epydoc python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-epydoc python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires repoze.who.plugins repoze.who ldap zope.interface
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-epydoc python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
 
 %description
 repoze.who.plugins.ldap is an LDAP plugin for the identification and
@@ -195,6 +200,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1a1-alt2.1
+- NMU: Use buildreq for BR.
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1a1-alt2
 - Added module for Python 3
 

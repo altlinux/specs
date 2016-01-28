@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9.16
-Release: alt1.git20150404
+Release: alt1.git20150404.1
 Summary: Normal, default, ordered, chained, restricted, counter, and frozen dictionaries
 License: BSD
 Group: Development/Python
@@ -16,18 +16,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-parse python-module-Fabric
-BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-parse python-module-Fabric
+#BuildPreReq: python-module-nose python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-parse python3-module-Fabric
-BuildPreReq: python3-module-nose python3-module-coverage
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-parse python3-module-Fabric
+#BuildPreReq: python3-module-nose python3-module-coverage
 %endif
 
 %py_provides %oname
 %py_requires parse
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-ecdsa python-module-nose python-module-pycrypto python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-ecdsa python3-module-nose python3-module-pycrypto python3-module-setuptools
+BuildRequires: python-module-Fabric python-module-coverage python-module-parse python-module-pytest python3-module-Fabric python3-module-coverage python3-module-parse python3-module-pytest rpm-build-python3
 
 %description
 A collection of Python dictionary types that support attribute-style
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.16-alt1.git20150404.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.16-alt1.git20150404
 - Initial build for Sisyphus
 

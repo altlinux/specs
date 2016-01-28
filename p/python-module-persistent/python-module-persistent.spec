@@ -11,7 +11,7 @@
 
 Name: python-module-%modulename
 Version: 4.1.1
-Release: alt2
+Release: alt2.1
 
 %setup_python_module %modulename
 
@@ -25,22 +25,27 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 # git://github.com/zopefoundation/persistent.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-coverage
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-zope.interface
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-repoze.sphinx.autointerface
+#BuildPreReq: python-module-coverage
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-zope.interface
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-repoze.sphinx.autointerface
 
 %if_with python3
-BuildPreReq: rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-coverage
-BuildPreReq: python3-module-distribute
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-zope.interface
-BuildPreReq: python3-module-setuptools-tests
+#BuildPreReq: rpm-build-python3
+#BuildPreReq: python3-devel
+#BuildPreReq: python3-module-coverage
+#BuildPreReq: python3-module-distribute
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-module-zope.interface
+#BuildPreReq: python3-module-setuptools-tests
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zope.interface
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-repoze.sphinx.autointerface python-module-setuptools-tests python3-devel python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope rpm-build-python3 time
 
 %description
 This package contains a generic persistence implementation for Python.
@@ -157,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt2.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt2
 - Really version 4.1.1
 

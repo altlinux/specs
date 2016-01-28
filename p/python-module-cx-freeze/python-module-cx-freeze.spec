@@ -1,5 +1,5 @@
 Version: 5.0
-Release: alt1.hg20141226
+Release: alt1.hg20141226.1
 %setup_python_module cx_Freeze
 %define origname cx-freeze
 
@@ -16,10 +16,14 @@ Group: Development/Python
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python3-devel rpm-build-python3 time
+
+#BuildRequires: python3-devel python-tools-2to3
 %endif
 AutoReq: yes, nopython
 
@@ -166,6 +170,9 @@ rm -f $(find %buildroot -name 'windist*')
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 5.0-alt1.hg20141226.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.hg20141226
 - Version 5.0
 

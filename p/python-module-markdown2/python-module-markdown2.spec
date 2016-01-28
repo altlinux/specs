@@ -5,7 +5,7 @@
 
 Name: python-module-%modulename
 Version: 2.3.1
-Release: alt1.git20141222
+Release: alt1.git20141222.1
 
 Summary: Another implementation of Markdown in Python
 Group: Development/Python
@@ -17,19 +17,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %modulename-%version.zip
 
 BuildArch: noarch
-BuildPreReq: rpm-build-licenses unzip
+#BuildPreReq: rpm-build-licenses unzip
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Pygments
-BuildPreReq: python-modules-logging
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-Pygments
+#BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-Pygments
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-Pygments
 %endif
 
 %py_provides %modulename
 %py_requires logging pygments
+
+BuildRequires(pre): rpm-build-licenses
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel rpm-build-python3 unzip python3-module-pytest
 
 %description
 This project provides a converter written in Python that closely matches
@@ -124,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.3.1-alt1.git20141222.1
+- NMU: Use buildreq for BR.
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt1.git20141222
 - Version 2.3.1
 

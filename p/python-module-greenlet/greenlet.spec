@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.9
-Release: alt1.git20150830
+Release: alt1.git20150830.1
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
@@ -15,10 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools-tests gcc-c++
+#BuildPreReq: python-module-setuptools-tests gcc-c++
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libstdc++-devel python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: gcc-c++ python-module-setuptools-tests python3-devel python3-module-setuptools-tests rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -132,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.9-alt1.git20150830.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.9-alt1.git20150830
 - Version 0.4.9
 - Enabled check

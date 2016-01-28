@@ -1,6 +1,6 @@
 Name: python3-module-feedparser
 Version: 5.2.0
-Release: alt2.git20150416
+Release: alt2.git20150416.1
 
 %define sname feedparser
 %def_without doc
@@ -13,8 +13,12 @@ Url: http://feedparser.org/
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildRequires: python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-logging python3 python3-base python3-module-setuptools
+BuildRequires: python-modules-compiler python-modules-encodings python-tools-2to3 python3-module-pytest rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildRequires: python-tools-2to3
 %{?_with_doc:BuildRequires: python3-module-sphinx}
 
 # https://github.com/kurtmckee/feedparser.git
@@ -73,6 +77,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 feedparsertest.py -v
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 5.2.0-alt2.git20150416.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 5.2.0-alt2.git20150416
 - build without tests and docs
 

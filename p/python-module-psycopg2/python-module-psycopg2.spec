@@ -2,7 +2,7 @@
 %def_with python3
 
 Version: 2.7
-Release: alt1.dev0.git20150602
+Release: alt1.dev0.git20150602.1
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -12,10 +12,14 @@ Source0: psycopg2.tar
 License: GPL
 Group: Development/Python
 URL: http://www.psycopg.org/psycopg/
-BuildRequires: postgresql-devel
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: elfutils libpq-devel libsasl2-3 python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: postgresql-devel python-devel python3-devel rpm-build-python3
+
+#BuildRequires: postgresql-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
+#BuildRequires: python3-devel python-tools-2to3
 %endif
 
 Requires: python-modules-json
@@ -101,6 +105,9 @@ sed -i 's|_psycopg|%oname._psycopg|' \
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.7-alt1.dev0.git20150602.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.dev0.git20150602
 - Version 2.7.dev0
 

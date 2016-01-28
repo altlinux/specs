@@ -9,7 +9,7 @@
 
 Name: python-module-SQLObject
 Version: 2.0.0
-Release: alt1.a2dev.20141028
+Release: alt1.a2dev.20141028.1
 
 Summary: Object-Relational Manager, aka database wrapper for Python
 
@@ -21,14 +21,18 @@ Packager: Sergey Bolshakov <sbolshakov@altlinux.ru>
 Source: http://pypi.python.org/packages/source/S/%oname/%oname-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-devel python-modules-compiler python-modules-encodings
-BuildPreReq: python-module-distribute
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
+
+#BuildRequires: python-devel python-modules-compiler python-modules-encodings
+#BuildPreReq: python-module-distribute
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-tools-2to3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-distribute
+#BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel
+#BuildPreReq: python3-module-distribute
 %endif
 
 %setup_python_module sqlobject
@@ -138,6 +142,9 @@ popd
 %doc docs/*
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1.a2dev.20141028.1
+- NMU: Use buildreq for BR.
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.a2dev.20141028
 - Version 2.0.0a2dev-20141028
 

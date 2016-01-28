@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.5
-Release: alt1.dev0.git20150807
+Release: alt1.dev0.git20150807.1
 Summary: Transaction management for Python
 License: ZPLv2.1
 Group: Development/Python
@@ -15,16 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-repoze.sphinx.autointerface
-BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-repoze.sphinx.autointerface
+#BuildPreReq: python-module-nose python-module-coverage
 %py_requires zope.interface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-coverage
-BuildPreReq: python3-module-zope.interface
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zope.interface
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-repoze.sphinx.autointerface python-module-setuptools-tests python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose python3-module-coverage
+#BuildPreReq: python3-module-zope.interface
 %endif
 
 %description
@@ -187,6 +192,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt1.dev0.git20150807.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.5-alt1.dev0.git20150807
 - Version 1.4.5.dev0
 

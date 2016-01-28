@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.6
-Release: alt1.git20150215
+Release: alt1.git20150215.1
 Summary: Easily test your HTTP library against a local copy of httpbin
 License: MIT
 Group: Development/Python
@@ -16,19 +16,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-flask python-module-decorator
-BuildPreReq: python-module-httpbin python-module-six
-BuildPreReq: python-module-requests python-modules-wsgiref
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-flask python-module-decorator
+#BuildPreReq: python-module-httpbin python-module-six
+#BuildPreReq: python-module-requests python-modules-wsgiref
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-flask python3-module-decorator
-BuildPreReq: python3-module-httpbin python3-module-six
-BuildPreReq: python3-module-requests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-flask python3-module-decorator
+#BuildPreReq: python3-module-httpbin python3-module-six
+#BuildPreReq: python3-module-requests
 %endif
 
 %py_provides pytest_httpbin
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-jinja2 python-module-pyasn1 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-jinja2 python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-chardet python-module-ndg-httpsclient python-module-ntlm python-module-pytest python-modules-wsgiref python3-module-chardet python3-module-pytest python3-module-urllib3 rpm-build-python3
 
 %description
 httpbin is an amazing web service for testing HTTP libraries. It has
@@ -108,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.6-alt1.git20150215.1
+- NMU: Use buildreq for BR.
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20150215
 - Version 0.0.6
 

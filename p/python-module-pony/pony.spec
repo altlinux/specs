@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.6.1
-Release: alt2.git20150220
+Release: alt2.git20150220.1
 Summary: Pony Object-Relational Mapper
 License: AGPLv3
 Group: Development/Python
@@ -16,18 +16,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-sqlite3
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-modules-sqlite3
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-modules-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-modules-sqlite3
 %endif
 
 %py_provides %oname
 %py_requires sqlite3
 %add_python_req_skip cx_Oracle
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-google python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv rpm-build-python3 time
 
 %description
 Pony ORM is easy to use and powerful object-relational mapper for
@@ -185,6 +190,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt2.git20150220.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.git20150220
 - Version 0.6.1
 

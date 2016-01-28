@@ -5,7 +5,7 @@
 Summary: Abstract Syntax Notation One (ASN.1), Python implementation
 Name: python-module-%oname
 Version: 0.1.8
-Release: alt2
+Release: alt2.1
 %setup_python_module %oname
 Url: http://pyasn1.sourceforge.net/
 Source0: %modulename-%version.tar.gz
@@ -16,7 +16,11 @@ BuildArch: noarch
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python-modules-unittest python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -122,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.8-alt2.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.8-alt2
 - Version 0.1.8
 

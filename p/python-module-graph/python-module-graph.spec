@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.8.1
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: library for working with graphs in Python
 License: MIT
@@ -15,13 +15,17 @@ BuildArch: noarch
 
 Source: python-module-%modulename-%version.tar
 
-BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: %py_dependencies setuptools
 Provides: python-module-pygraph
 
 %setup_python_module %modulename
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -100,6 +104,9 @@ touch %buildroot%python3_sitelibdir/pygraph/__init__.py
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1.1.1
+- NMU: Use buildreq for BR.
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.8.1-alt1.1
 - Rebuild with Python-3.3
 

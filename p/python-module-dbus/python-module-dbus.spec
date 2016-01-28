@@ -5,7 +5,7 @@
 
 Name: python-module-dbus
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -24,11 +24,15 @@ Provides: %_name = %version-%release
 Provides: %name-data = %version-%release
 Obsoletes: %name-data < %version-%release
 
-BuildRequires: libdbus-devel >= 1.6 libdbus-glib-devel
-BuildRequires: python-devel python3-devel
-BuildRequires: python-module-pygobject3
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: dbus elfutils glib2-devel gnu-config gobject-introspection libcap-ng libdbus-devel libdbus-glib libgpg-error pkg-config python-base python-devel python-modules python-modules-compiler python-modules-encodings python-modules-logging python-modules-xml python3 python3-base rpm-build-gir
+BuildRequires: dbus-tools dbus-tools-gui libdbus-glib-devel python-module-pygobject3 python-modules-unittest python3-devel python3-module-pygobject3 rpm-build-python3
+
+#BuildRequires: libdbus-devel >= 1.6 libdbus-glib-devel
+#BuildRequires: python-devel python3-devel
+#BuildRequires: python-module-pygobject3
 # for python3
-BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3
+#BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3
 %{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata}
 
 %description
@@ -110,6 +114,9 @@ done
 %exclude %_docdir/dbus-python
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Nov 07 2013 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 - use automake_1.11

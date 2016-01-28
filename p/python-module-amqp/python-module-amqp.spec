@@ -5,20 +5,25 @@
 Name: python-module-%module_name
 Version: 1.4.6
 Epoch: 1
-Release: alt1
+Release: alt1.1
 Group: Development/Python
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
 URL: http://github.com/celery/py-amqp.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-sphinxcontrib-issuetracker
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-sphinxcontrib-issuetracker
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-docutils python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pytest python-module-pytz python-module-requests python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-urllib3 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-html5lib python-module-objects.inv python-module-setuptools-tests python-module-sphinxcontrib-issuetracker python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 This is a fork of amqplib_ which was originally written by Barry Pederson.
@@ -145,6 +150,9 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:1.4.6-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Sep 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.4.6-alt1
 - downgrade to 1.4.6
 

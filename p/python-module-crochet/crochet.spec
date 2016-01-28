@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.0
-Release: alt1.git20150505
+Release: alt1.git20150505.1
 Summary: Use Twisted anywhere!
 License: MIT
 Group: Development/Python
@@ -15,17 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests git
-BuildPreReq: python-module-twisted-core-test
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests git
+#BuildPreReq: python-module-twisted-core-test
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests git
-BuildPreReq: python3-module-twisted-core-test
+#BuildPreReq: python3-devel python3-module-setuptools-tests git
+#BuildPreReq: python3-module-twisted-core-test
 %endif
 
 %py_provides %oname
 %py_requires twisted.internet
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-pycparser python3-module-pygobject3 python3-module-pytest python3-module-serial python3-module-setuptools python3-module-zope python3-module-zope.interface
+BuildRequires: git-core python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python-module-twisted-core-test python-module-twisted-logger python3-module-setuptools-tests python3-module-twisted-core rpm-build-python3 time
 
 %description
 Crochet is an MIT-licensed library that makes it easier to use Twisted
@@ -195,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1.git20150505.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1.git20150505
 - Initial build for Sisyphus
 

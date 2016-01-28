@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: NTLM support, including an authentication handler for urllib2
 License: Free
@@ -16,14 +16,18 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %setup_python_module %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
 %description
 This package allows Python clients running on any operating
@@ -92,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Version 1.1.0
 

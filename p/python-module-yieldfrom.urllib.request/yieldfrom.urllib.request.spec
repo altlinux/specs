@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20141019
+Release: alt1.git20141019.1
 Summary: Asyncio port of urllib.request 
 License: PSFL
 Group: Development/Python
@@ -16,19 +16,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/rdbhost/yieldfromUrllib2.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python2
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
 %py_requires asyncio yieldfrom.http.client
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-setuptools-tests rpm-build-python3
 
 %description
 asyncio version of urllib.request (urllib2).
@@ -128,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1.git20141019.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141019
 - Initial build for Sisyphus
 

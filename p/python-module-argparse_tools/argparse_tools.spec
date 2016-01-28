@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.5
-Release: alt1.dev0.git20150126
+Release: alt1.dev0.git20150126.1
 Summary: Share a standardized set of argparse arguments within your codebase
 License: Free
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-test
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose python-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-test
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose python3-test
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-setuptools
+BuildRequires: python-module-nose python-module-pytest python3-module-nose python3-module-pytest rpm-build-python3 time
 
 %description
 This package wraps argparse to facilitate sharing a standardized set of
@@ -113,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt1.dev0.git20150126.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1.dev0.git20150126
 - Initial build for Sisyphus
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1.git20141212
+Release: alt1.git20141212.1
 Summary: URL routing library for asyncio 
 License: MIT
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-pathlib
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-pathlib
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-pathlib
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-pathlib
 %endif
 
 %py_provides aioroutes
 %py_requires asyncio pathlib
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python3-module-asyncio python3-module-pathlib python3-module-pytest rpm-build-python3 time
 
 %description
 Aio-routes is a URL routing library for web applications. It doesn't
@@ -153,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt1.git20141212.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20141212
 - Initial build for Sisyphus
 

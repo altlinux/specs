@@ -5,7 +5,7 @@
 Summary: Mustache in Python 
 Name: python-module-%sname
 Version: 0.5.4
-Release: alt1.git20121103
+Release: alt1.git20121103.1
 Source0: %name-%version.tar
 License: BSD
 Group: Development/Python
@@ -13,11 +13,15 @@ URL: https://github.com/defunkt/pystache
 Packager: Mikhail Pokidko <pma@altlinux.org>
 BuildArch: noarch
 
-BuildRequires: python-devel >= 2.6
-BuildRequires: python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python-devel >= 2.6
+#BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -121,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1.git20121103.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.4-alt1.git20121103
 - Version 0.5.4
 - Added module for Python 3

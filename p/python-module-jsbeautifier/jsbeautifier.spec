@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.5.4
-Release: alt1
+Release: alt1.1
 Summary: JavaScript unobfuscator and beautifier
 License: MIT
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-six
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3 python3-module-pytest
 
 %description
 Beautify, unpack or deobfuscate JavaScript. Handles popular online
@@ -126,6 +130,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.5.4-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.4-alt1
 - Initial build for Sisyphus
 

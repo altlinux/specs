@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.3
-Release: alt1.git20141109
+Release: alt1.git20141109.1
 Summary: Bash tab completion for argparse
 License: ASL v2.0
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-argparse
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-argparse
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-argparse
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-argparse
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Argcomplete provides easy, extensible command line tab completion of
@@ -105,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1.git20141109.1
+- NMU: Use buildreq for BR.
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1.git20141109
 - Version 0.8.3
 

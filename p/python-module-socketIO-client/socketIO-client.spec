@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt1.git20150216
+Release: alt1.git20150216.1
 Summary: A socket.io client library
 License: MIT
 Group: Development/Python
@@ -15,20 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-requests python-module-six
-BuildPreReq: python-module-websocket-client python-module-nose
-BuildPreReq: python-module-coverage
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-requests python-module-six
+#BuildPreReq: python-module-websocket-client python-module-nose
+#BuildPreReq: python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-requests python3-module-six
-BuildPreReq: python3-module-websocket-client python3-module-nose
-BuildPreReq: python3-module-coverage
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-requests python3-module-six
+#BuildPreReq: python3-module-websocket-client python3-module-nose
+#BuildPreReq: python3-module-coverage
 %endif
 
 %py_provides socketIO_client
 %py_requires requests six websocket
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-cryptography python-module-enum34 python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-enum34 python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-urllib3
+BuildRequires: python-module-coverage python-module-nose python-module-requests python-module-setuptools-tests python-module-websocket-client python3-module-coverage python3-module-nose python3-module-requests python3-module-setuptools-tests python3-module-websocket-client rpm-build-python3
 
 %description
 Here is a socket.io client library for Python. You can use it to write
@@ -123,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.5-alt1.git20150216.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5-alt1.git20150216
 - Initial build for Sisyphus
 

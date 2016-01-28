@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt2.a2.git20140503
+Release: alt2.a2.git20140503.1
 Summary: An alternative Gevent core loop implementation with asyncio
 License: MIT
 Group: Development/Python
@@ -18,16 +18,20 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-gevent
-BuildPreReq: python-module-greenlet
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-gevent
+#BuildPreReq: python-module-greenlet
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-asyncio python3-module-gevent
 #BuildPreReq: python3-module-greenlet
-BuildRequires: python3-module-cffi python3-module-greenlet python3-module-pytest
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pycparser python3-module-setuptools
+BuildRequires: python3-module-cffi python3-module-greenlet python3-module-pytest rpm-build-python3
+
+#BuildRequires: python3-module-cffi python3-module-greenlet python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -101,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt2.a2.git20140503.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.1.0-alt2.a2.git20140503
 - Rebuild with "def_disable check"
 - Cleanup buildreq

@@ -4,7 +4,7 @@
 
 Name: python-module-urwid
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Urwid is a console user interface library for Python.
 License: LGPL
@@ -13,12 +13,17 @@ Url: http://excess.org/urwid
 
 Source: %rname-%version.tar
 
-Buildrequires: python-modules-curses python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
+#Buildrequires: python-modules-curses python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel python3-module-setuptools rpm-build-python3 time
 
 %description
 Urwid is a console user interface library for Python. Urwid is released
@@ -224,6 +229,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%rname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1
 - Version 1.2.1
 - Added module for Python 3

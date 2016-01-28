@@ -4,7 +4,7 @@
 
 Name:		python-module-%{pypi_name}
 Version:	0.7.13
-Release:	alt1
+Release:	alt1.1
 Summary:	A pure Python network address representation and manipulation library
 
 Group:		Development/Python
@@ -13,8 +13,12 @@ URL:		http://github.com/drkjam/netaddr
 Source0:	%{name}-%{version}.tar
 
 BuildArch:	noarch
-BuildRequires:	python-devel >= 2.4
-BuildRequires:  python-module-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx_rtd_theme xz
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python3-module-html5lib python3-module-jinja2-tests python3-module-sphinx rpm-build-python3 time
+
+#BuildRequires:	python-devel >= 2.4
+#BuildRequires:  python-module-sphinx
 
 %description
 A pure Python network address representation and manipulation library.
@@ -49,8 +53,8 @@ API documentation for the latest release is available here :-
 Summary:        A pure Python network address representation and manipulation library
 Group:		Development/Python
 BuildArch:      noarch
-BuildRequires:  rpm-build-python3
-BuildRequires:  python3-module-sphinx
+#BuildRequires:  rpm-build-python3
+#BuildRequires:  python3-module-sphinx
 
 %description -n python3-module-%{pypi_name}
 A pure Python network address representation and manipulation library.
@@ -147,6 +151,9 @@ LANG=en_US.UTF-8 %{__python3} netaddr/tests/__init__.py
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.13-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.13-alt1
 - Version 0.7.13
 

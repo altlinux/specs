@@ -13,15 +13,19 @@ License:       LGPLv2
 
 # There's no versioning upstream, it's all about the Git hash
 Version:       0
-Release:       alt2_0.9.git%{shortcommit}
+Release:       alt2_0.9.git%{shortcommit}.1
 
 # There aren't any release yet, I'm downloading straight from the last commit
 Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
 
 BuildArch:     noarch
 
-BuildRequires: python-devel
-BuildRequires: python3-devel
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python3 python3-base
+BuildRequires: rpm-build-python3
+
+#BuildRequires: python-devel
+#BuildRequires: python3-devel
 
 # This will break at run time when libcanberra bumps its soname :(
 Requires:      libcanberra
@@ -66,6 +70,9 @@ install -p -m 0644 pycanberra.py %{buildroot}%{python3_sitelibdir_noarch}
 
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0-alt2_0.9.git88c53cd.1
+- NMU: Use buildreq for BR.
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.9.git88c53cd
 - update to new release by fcimport
 

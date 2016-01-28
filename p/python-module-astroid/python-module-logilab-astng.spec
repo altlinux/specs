@@ -4,7 +4,7 @@
 %define oname astroid
 Name: python-module-%oname
 Version: 1.3.8
-Release: alt1
+Release: alt1.1
 
 Summary: Python Abstract Syntax Tree New Generation
 License: LGPLv2.1+
@@ -24,16 +24,20 @@ Requires: python-module-logilab-common >= 0.60.0
 %setup_python_module %oname
 %python_module_declare %python_sitelibdir/logilab
 
-BuildRequires: python-module-logilab-common
-BuildPreReq: python-module-setuptools-tests python-module-six
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-egenix-mx-base python-module-kerberos python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools python3-module-six xz
+BuildRequires: python-module-logilab-common python-module-pytest python3-module-logilab-common python3-module-pytest rpm-build-python3 time
+
+#BuildRequires: python-module-logilab-common
+#BuildPreReq: python-module-setuptools-tests python-module-six
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /usr/bin/pytest}}
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildRequires: python3-module-logilab-common /usr/bin/pytest3
-BuildPreReq: python3-module-six
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildRequires: python3-module-logilab-common /usr/bin/pytest3
+#BuildPreReq: python3-module-six
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires logilab.common six
@@ -166,6 +170,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir pytest3 -vv
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3.8-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.8-alt1
 - Version 1.3.8
 

@@ -4,7 +4,7 @@
 
 Name: python-module-mailer
 Version: 0.7
-Release: alt1.hg20140606
+Release: alt1.hg20140606.1
 
 Summary: A module to send email simply in Python
 
@@ -21,15 +21,18 @@ Source: %name-%version.tar
 
 #setup_python_module %modulename
 
-# Automatically added by buildreq on Thu Mar 11 2010
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
 
-BuildPreReq: python-module-sphinx-devel
+#BuildRequires: python-module-setuptools
+
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -85,6 +88,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt1.hg20140606.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.hg20140606
 - Version 0.7
 - Added module for Python 3

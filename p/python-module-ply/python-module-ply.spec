@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.6
-Release: alt1
+Release: alt1.1
 
 Summary: lex and yacc python implementation
 
@@ -16,13 +16,15 @@ Source: http://www.dabeaz.com/ply/%oname-%version.tar.bz2
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Mar 24 2006
-BuildRequires: python-devel python-modules python-modules-compiler python-modules-encodings
-BuildPreReq: python-module-distribute
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+#BuildPreReq: python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -77,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.6-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 3.6-alt1
 - new version 3.6 (with rpmrb script)
 

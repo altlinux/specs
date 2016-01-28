@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.7
-Release: alt1
+Release: alt1.1
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
@@ -18,12 +18,17 @@ Source: %oname-%version.tar.gz
 Patch100: python-module-cvxopt-1.1.5-alt3-armh.patch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel liblapack-devel libgsl-devel
-BuildPreReq: libfftw3-devel libglpk4-devel libdsdp-devel
-BuildPreReq: python-module-sphinx-devel texlive-latex-recommended dvipng
+#BuildPreReq: python-devel liblapack-devel libgsl-devel
+#BuildPreReq: libfftw3-devel libglpk4-devel libdsdp-devel
+#BuildPreReq: python-module-sphinx-devel texlive-latex-recommended dvipng
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils fontconfig libopenblas-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
+BuildRequires: dvipng libdsdp-devel libfftw3-devel libglpk-devel libgsl-devel liblapack-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
+
+#BuildRequires: python3-devel
 %endif
 
 Conflicts: %name-pickles < %version-%release
@@ -180,6 +185,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.7-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.7-alt1
 - Verson 1.1.7
 

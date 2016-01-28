@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.8
-Release: alt1.git20120706
+Release: alt1.git20120706.1
 
 Summary: Python interface to Gnuplot
 
@@ -17,8 +17,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: libnumpy-py3-devel gnuplot xvfb-run
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: fakeroot fontconfig fonts-bitmap-misc gnuplot-common gnuplot-common-x11 libX11-locales libgdk-pixbuf libpdflib-lite libwayland-client libwayland-server python-base python-modules python3 python3-base python3-module-numpy xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb
+BuildRequires: gnuplot python3-module-numpy-testing rpm-build-python3 xvfb-run
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: libnumpy-py3-devel gnuplot xvfb-run
 
 %py3_provides Gnuplot
 Requires: gnuplot
@@ -83,6 +87,9 @@ xvfb-run python3 test.py -v
 %_docdir/%name
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.8-alt1.git20120706.1
+- NMU: Use buildreq for BR.
+
 * Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1.git20120706
 - Initial build.
 

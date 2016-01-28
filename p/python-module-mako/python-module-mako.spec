@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 Summary: template library written in Python
 
 Group: Development/Python
@@ -18,12 +18,16 @@ Packager: Vladimir Lettiev <crux@altlinux.ru>
 Requires: python-module-beaker
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools python-module-markupsafe
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python-module-setuptools python-module-markupsafe
 %if_with python3
-BuildRequires: /usr/bin/2to3
+#BuildRequires: /usr/bin/2to3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-markupsafe
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-markupsafe
 %endif
 
 %description
@@ -95,6 +99,9 @@ mv %buildroot%_bindir/mako-render %buildroot%_bindir/mako-render3
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
 - Version 1.0.1
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.7.6.0
-Release: alt1.git20141124
+Release: alt1.git20141124.1
 Summary: Compute positions of the planets and stars
 License: LGPL
 Group: Development/Python
@@ -15,14 +15,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/brandon-rhodes/pyephem.git
 Source: %name-%version.tar
 
-BuildPreReq: python-modules-json
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python3-devel rpm-build-python3 python3-module-pytest
 
 %description
 PyEphem provides an ephem Python package for performing high-precision
@@ -135,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.7.6.0-alt1.git20141124.1
+- NMU: Use buildreq for BR.
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.6.0-alt1.git20141124
 - Initial build for Sisyphus
 

@@ -1,7 +1,7 @@
 %define oname fonttools
 Name: python3-module-%oname
 Version: 2.5
-Release: alt1.git20140824
+Release: alt1.git20140824.1
 
 Summary: Converts OpenType and TrueType fonts to and from XML
 
@@ -16,8 +16,12 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: xorg-sdk python3-module-numpy 
+#BuildPreReq: python3-devel
+#BuildPreReq: xorg-sdk python3-module-numpy 
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base xz
+BuildRequires: rpm-build-python3
 
 %description
 TTX is a tool to convert OpenType and TrueType fonts to and from
@@ -45,6 +49,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.5-alt1.git20140824.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.git20140824
 - Initial build for Sisyphus
 

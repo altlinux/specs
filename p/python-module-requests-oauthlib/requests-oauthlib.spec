@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.git20140606
+Release: alt1.git20140606.1
 Summary: OAuthlib authentication support for Requests
 License: BSD
 Group: Development/Python
@@ -15,15 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-oauthlib
-BuildPreReq: python-module-requests
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-oauthlib
+#BuildPreReq: python-module-requests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires oauthlib.common requests.compat
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pycrypto python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-urllib3 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-oauthlib python-module-objects.inv python-module-requests python3-module-setuptools rpm-build-python3 time
 
 %description
 This project provides first-class OAuth library support for Requests.
@@ -108,6 +113,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1.git20140606.1
+- NMU: Use buildreq for BR.
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20140606
 - Initial build for Sisyphus
 

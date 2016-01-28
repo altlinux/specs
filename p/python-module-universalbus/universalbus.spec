@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.6
-Release: alt1.git20141116
+Release: alt1.git20141116.1
 Summary: Universal Bus over rabbitmq
 License: Free
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pika python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pika python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pika
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pika
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pyev python-module-pytest python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-pycares python3-module-pycparser python3-module-pyev python3-module-pygobject3 python3-module-pytest python3-module-serial python3-module-setuptools python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-pika python-module-setuptools-tests python3-module-pika python3-module-setuptools-tests rpm-build-python3
 
 %description
 Universal Bus over rabbitmq.
@@ -80,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.6-alt1.git20141116.1
+- NMU: Use buildreq for BR.
+
 * Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20141116
 - Version 0.0.6
 

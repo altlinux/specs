@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.0
-Release: alt4.a1.hg20150730
+Release: alt4.a1.hg20150730.1
 Summary: Cross-platform windowing and multimedia library
 
 Group: Development/Python
@@ -16,12 +16,17 @@ Source: %oname-%version.tar.gz
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-devel python-modules-ctypes python-module-docutils
-BuildPreReq: libGL-devel libX11-devel libXxf86vm-devel inkscape
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
+#BuildPreReq: python-devel python-modules-ctypes python-module-docutils
+#BuildPreReq: libGL-devel libX11-devel libXxf86vm-devel inkscape
+#BuildPreReq: python-module-sphinx-devel python-module-Pygments
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-docutils
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-bsddb python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python3-module-html5lib python3-module-sphinx rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-docutils
 %endif
 
 %add_python_req_skip Cocoa CoreFoundation LaunchServices Quartz
@@ -143,6 +148,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt4.a1.hg20150730.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt4.a1.hg20150730
 - Version 1.3.0a1
 

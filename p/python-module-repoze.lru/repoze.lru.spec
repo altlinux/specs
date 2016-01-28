@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt2.git20140202
+Release: alt2.git20140202.1
 Summary: Tiny LRU cache
 License: BSD
 Group: Development/Python
@@ -14,10 +14,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.lru.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %py_requires repoze
@@ -120,6 +124,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6-alt2.git20140202.1
+- NMU: Use buildreq for BR.
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.git20140202
 - Fixed version
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1.git20140914
+Release: alt1.git20140914.1
 Summary: Python module to provide a manhole in asyncio applications
 License: BSD
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python3-module-asyncio python3-module-pytest rpm-build-python3 time
 
 %description
 Manhole for accessing asyncio applications. This is useful for debugging
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1.git20140914.1
+- NMU: Use buildreq for BR.
+
 * Fri Jan 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20140914
 - Initial build for Sisyphus
 

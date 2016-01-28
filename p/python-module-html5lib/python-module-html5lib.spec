@@ -6,7 +6,7 @@
 Name: python-module-%module_name
 Epoch: 1
 Version: 0.999999
-Release: alt1
+Release: alt1.1
 
 Summary: Library for working with HTML5 documents
 
@@ -17,15 +17,20 @@ Url: https://github.com/html5lib/html5lib-python
 
 Source: %module_name-%version.tar
 
-BuildRequires: python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
+
+#BuildRequires: python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
 
 %setup_python_module %module_name
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -156,6 +161,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%module_name/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:0.999999-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.999999-alt1
 - Version 0.999999
 

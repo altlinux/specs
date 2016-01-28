@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0.2
-Release: alt1
+Release: alt1.1
 Summary: LBFGS and OWL-QN optimization algorithms
 License: MIT
 Group: Development/Python
@@ -13,16 +13,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose libnumpy-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose libnumpy-py3-devel
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose libnumpy-py3-devel
 %endif
 
 %py_provides %oname lbfgs
 %py_requires numpy
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-matplotlib python-module-numpy python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-numpy python3-module-pytest python3-module-setuptools xz
+BuildRequires: libnumpy-devel python-module-html5lib python-module-nose python-module-numpy-testing python-module-setuptools-tests python3-devel python3-module-nose python3-module-numpy-testing python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 This is a Python wrapper around Naoaki Okazaki (chokkan)'s liblbfgs
@@ -100,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.0.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0.2-alt1
 - Initial build for Sisyphus
 

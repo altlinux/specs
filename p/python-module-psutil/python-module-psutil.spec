@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: A process utilities module for Python
 
@@ -21,16 +21,20 @@ Source: %oname-%version.tar
 %add_python_req_skip _psutil_sunos _psutil_windows
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools-tests /proc
-BuildPreReq: python-module-mock
-BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests /proc
+#BuildPreReq: python-module-mock
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-mock
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-mock
 %endif
 
 %setup_python_module %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-pbr python-module-pytest python-module-unittest2 python3-devel python3-module-html5lib python3-module-pbr python3-module-pytest python3-module-unittest2 rpm-build-python3
 
 %description
 psutil is a module providing an interface for retrieving information on running
@@ -99,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.1.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1
 - Version 3.1.1
 

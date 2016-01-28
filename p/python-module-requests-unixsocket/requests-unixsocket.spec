@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.git20150203
+Release: alt1.git20150203.1
 Summary: Use requests to talk HTTP via a UNIX domain socket
 License: ASLv2.0
 Group: Development/Python
@@ -15,20 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests git
-BuildPreReq: python-module-pbr python-module-requests
-BuildPreReq: python-module-pytest-capturelog python-module-pytest-pep8
-BuildPreReq: python-module-waitress
+#BuildPreReq: python-devel python-module-setuptools-tests git
+#BuildPreReq: python-module-pbr python-module-requests
+#BuildPreReq: python-module-pytest-capturelog python-module-pytest-pep8
+#BuildPreReq: python-module-waitress
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pbr python3-module-requests
-BuildPreReq: python3-module-pytest-capturelog python3-module-pytest-pep8
-BuildPreReq: python3-module-waitress
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pbr python3-module-requests
+#BuildPreReq: python3-module-pytest-capturelog python3-module-pytest-pep8
+#BuildPreReq: python3-module-waitress
 %endif
 
 %py_provides requests_unixsocket
 %py_requires requests
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-cryptography python-module-enum34 python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pytest python-module-pytest-cache python-module-requests python-module-rlcompleter2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-pep8 python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ndg-httpsclient python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-pytest-cache python3-module-pytest-capturelog python3-module-pytest-pep8 python3-module-requests python3-module-setuptools python3-module-urllib3
+BuildRequires: git-core python-module-pbr python-module-pytest-capturelog python-module-pytest-pep8 python-module-setuptools-tests python-module-waitress python3-module-html5lib python3-module-pbr python3-module-setuptools-tests python3-module-waitress python3-tools-pep8 rpm-build-python3
 
 %description
 Use requests to talk HTTP via a UNIX domain socket.
@@ -127,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1.git20150203.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150203
 - Initial build for Sisyphus
 

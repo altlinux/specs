@@ -4,7 +4,7 @@
 
 Name: python-module-%pypi_name
 Version: 2.5.0
-Release: alt1
+Release: alt1.1
 Summary: OpenStack Oslo Utility library
 Group: Development/Python
 License: ASL 2.0
@@ -13,39 +13,43 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Provides: python-module-oslo-utils = %EVR
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-babel
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-iso8601 >= 0.1.9
-BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-netifaces >= 0.10.4
-BuildRequires: python-module-monotonic >= 0.3
-BuildRequires: python-module-pytz >= 2013.6
-BuildRequires: python-module-debtcollector
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: pyflakes python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-enum34 python-module-extras python-module-fixtures python-module-flake8 python-module-genshi python-module-hacking python-module-iso8601 python-module-jinja2 python-module-jinja2-tests python-module-linecache2 python-module-markupsafe python-module-mccabe python-module-mimeparse python-module-monotonic python-module-ndg-httpsclient python-module-netaddr python-module-netifaces python-module-ntlm python-module-oslo.i18n python-module-pbr python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-wrapt python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-pep8 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-cssselect python3-module-docutils python3-module-enum34 python3-module-flake8 python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-mccabe python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-yieldfrom.http.client python3-module-yieldfrom.urllib3 python3-pyflakes python3-tools-pep8
+BuildRequires: python-module-alabaster python-module-d2to1 python-module-debtcollector python-module-docutils python-module-html5lib python-module-oslosphinx python3-module-d2to1 python3-module-hacking python3-module-html5lib python3-module-jinja2-tests python3-module-mimeparse python3-module-netaddr python3-module-sphinx python3-module-unittest2 python3-module-wrapt python3-module-yieldfrom.requests rpm-build-python3 time
+
+#BuildRequires: python-devel
+#BuildRequires: python-module-setuptools
+#BuildRequires: python-module-pbr >= 1.6
+#BuildRequires: python-module-d2to1
+#BuildRequires: python-module-six >= 1.9.0
+#BuildRequires: python-module-babel
+#BuildRequires: python-module-sphinx
+#BuildRequires: python-module-oslosphinx
+#BuildRequires: python-module-oslo.i18n >= 1.5.0
+#BuildRequires: python-module-iso8601 >= 0.1.9
+#BuildRequires: python-module-netaddr >= 0.7.12
+#BuildRequires: python-module-netifaces >= 0.10.4
+#BuildRequires: python-module-monotonic >= 0.3
+#BuildRequires: python-module-pytz >= 2013.6
+#BuildRequires: python-module-debtcollector
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 0.6
-BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-oslo.i18n >= 1.3.0
-BuildRequires: python3-module-iso8601 >= 0.1.9
-BuildRequires: python3-module-netaddr >= 0.7.12
-BuildRequires: python3-module-netifaces >= 0.10.4
-BuildRequires: python3-module-monotonic >= 0.3
-BuildRequires: python3-module-pytz >= 2013.6
-BuildRequires: python3-module-debtcollector
+#BuildRequires: python3-devel
+#BuildRequires: python3-module-setuptools
+#BuildRequires: python3-module-pbr >= 0.6
+#BuildRequires: python3-module-d2to1
+#BuildRequires: python3-module-six >= 1.9.0
+#BuildRequires: python3-module-babel >= 1.3
+#BuildRequires: python3-module-sphinx
+#BuildRequires: python3-module-oslosphinx
+#BuildRequires: python3-module-oslo.i18n >= 1.3.0
+#BuildRequires: python3-module-iso8601 >= 0.1.9
+#BuildRequires: python3-module-netaddr >= 0.7.12
+#BuildRequires: python3-module-netifaces >= 0.10.4
+#BuildRequires: python3-module-monotonic >= 0.3
+#BuildRequires: python3-module-pytz >= 2013.6
+#BuildRequires: python3-module-debtcollector
 
 %endif
 
@@ -126,6 +130,9 @@ rm -fr doc/build/html/.buildinfo
 %doc doc/build/html LICENSE
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.5.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 

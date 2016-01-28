@@ -4,7 +4,7 @@
 %define oname logilab-common
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.hg20150708
+Release: alt1.hg20150708.1
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
@@ -24,12 +24,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %setup_python_module %oname
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc %py_dependencies mx.DateTime unittest2}}
-BuildPreReq: python-module-six python-module-pytz
+#BuildPreReq: python-module-six python-module-pytz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
-BuildPreReq: python3-module-six python3-module-pytz
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base xz
+BuildRequires: python-module-egenix-mx-base python-module-pytz python-module-unittest2 python3-module-pytz python3-module-setuptools python3-module-six rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-module-six python3-module-pytz
 %endif
 
 %description
@@ -133,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.hg20150708.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.hg20150708
 - Version 1.0.2
 

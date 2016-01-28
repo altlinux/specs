@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1
-Release: alt1.dev0.git20140928
+Release: alt1.dev0.git20140928.1
 Summary: Powerful image management for the Django web framework
 License: BSD
 Group: Development/Python
@@ -15,16 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-django-tests
-BuildPreReq: python-module-Pillow python-module-django-sortedm2m
-BuildPreReq: python-module-dj-queryset-manager python-module-south
-BuildPreReq: python-module-django-model-utils
-BuildPreReq: python-module-django-dbbackend-sqlite3
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-django-tests
+#BuildPreReq: python-module-Pillow python-module-django-sortedm2m
+#BuildPreReq: python-module-dj-queryset-manager python-module-south
+#BuildPreReq: python-module-django-model-utils
+#BuildPreReq: python-module-django-dbbackend-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-django python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-psycopg2 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python3 python3-base tzdata
+BuildRequires: python-module-Pillow python-module-alabaster python-module-django-dbbackend-sqlite3 python-module-django-model-utils python-module-django-sortedm2m python-module-docutils python-module-html5lib python-module-objects.inv python-module-south python3-module-setuptools rpm-build-python3 time
 
 %description
 A powerful image management and gallery application for the Django web
@@ -152,6 +157,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.1-alt1.dev0.git20140928.1
+- NMU: Use buildreq for BR.
+
 * Tue Sep 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1.dev0.git20140928
 - Initial build for Sisyphus
 

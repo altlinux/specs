@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20150207
+Release: alt1.git20150207.1
 Summary: asyncio client for kafka
 License: ASLv2.0
 Group: Development/Python
@@ -17,21 +17,25 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-kafka
-BuildPreReq: python-module-snappy python-module-flake8
-BuildPreReq: python-module-nose
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-kafka
+#BuildPreReq: python-module-snappy python-module-flake8
+#BuildPreReq: python-module-nose
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-kafka
-BuildPreReq: python3-module-snappy python3-module-flake8
-BuildPreReq: python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-kafka
+#BuildPreReq: python3-module-snappy python3-module-flake8
+#BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
 %py_requires asyncio kafka snappy
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python3 python3-base python3-module-mccabe python3-module-pytest python3-module-setuptools python3-module-snappy python3-pyflakes python3-tools-pep8
+BuildRequires: python3-module-flake8 python3-module-kafka python3-module-nose python3-module-setuptools-tests rpm-build-python3
 
 %description
 Kafka integration with asyncio.
@@ -103,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1.git20150207.1
+- NMU: Use buildreq for BR.
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20150207
 - New snapshot
 

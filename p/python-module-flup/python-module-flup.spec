@@ -9,7 +9,7 @@
 Summary: Random assortment of WSGI servers, middleware
 Name: python-module-%oname
 Version: %version
-Release: %release.%subrel
+Release: %release.%subrel.1
 # http://hg.saddi.com/flup-server
 Source0: %modulename.tar.bz2
 License: BSD
@@ -18,11 +18,16 @@ URL: http://www.saddi.com/software/flup/
 Packager: Python Development Team <python at packages.altlinux.org>
 
 BuildArch: noarch
-BuildPreReq: python-module-setuptools python-module-sphinx-devel
+#BuildPreReq: python-module-setuptools python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -107,6 +112,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir_noarch/%oname/
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt2.hg20120223.1
+- NMU: Use buildreq for BR.
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2.hg20120223
 - Use 'find... -exec...' instead of 'for ... $(find...'
 

@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.git20141228
+Release: alt1.git20141228.1
 Summary: Elasticsearch integration with asyncio
 License: BSD
 Group: Development/Python
@@ -18,21 +18,25 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-aiohttp
-BuildPreReq: python-module-nose pyflakes python-tools-pep8
-BuildPreReq: python-module-elasticsearch
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-aiohttp
+#BuildPreReq: python-module-nose pyflakes python-tools-pep8
+#BuildPreReq: python-module-elasticsearch
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-aiohttp
-BuildPreReq: python3-module-nose python3-pyflakes python3-tools-pep8
-BuildPreReq: python3-module-elasticsearch
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-aiohttp
+#BuildPreReq: python3-module-nose python3-pyflakes python3-tools-pep8
+#BuildPreReq: python3-module-elasticsearch
 %endif
 
 %py_provides %oname
 %py_requires asyncio aiohttp
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-django python3-module-dns python3-module-enum34 python3-module-greenlet python3-module-gunicorn python3-module-ndg-httpsclient python3-module-ntlm python3-module-paste python3-module-psycopg2 python3-module-pycares python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-yaml python3-module-zope python3-module-zope.interface
+BuildRequires: python3-module-nose python3-module-urllib3 python3-pyflakes python3-tools-pep8 rpm-build-python3
 
 %description
 aioes is a asyncio compatible library for working with ElasticSearch.
@@ -106,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1.git20141228.1
+- NMU: Use buildreq for BR.
+
 * Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20141228
 - Initial build for Sisyphus
 

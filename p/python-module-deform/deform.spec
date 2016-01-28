@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt2.a2.git20141001
+Release: alt2.a2.git20141001.1
 Summary: Another form generation library
 License: BSD
 Group: Development/Python
@@ -15,17 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
-BuildPreReq: python-module-colander python-module-peppercorn
-BuildPreReq: python-module-chameleon.core
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel pylons_sphinx_theme
+#BuildPreReq: python-module-colander python-module-peppercorn
+#BuildPreReq: python-module-chameleon.core
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
 %py_requires colander peppercorn chameleon.utils zope.deprecation
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-iso8601 python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-translationstring python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: pylons_sphinx_theme python-module-alabaster python-module-chameleon.core python-module-colander python-module-docutils python-module-html5lib python-module-objects.inv python-module-peppercorn python3-module-setuptools rpm-build-python3 time
 
 %description
 A Python HTML form library.
@@ -143,6 +148,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0-alt2.a2.git20141001.1
+- NMU: Use buildreq for BR.
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.a2.git20141001
 - Added necessary files
 

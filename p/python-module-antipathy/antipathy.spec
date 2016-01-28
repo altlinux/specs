@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.81.04
-Release: alt1
+Release: alt1.1
 Summary: oo view of file paths and names, subclassed from bytes/str/unicode
 License: BSD
 Group: Development/Python
@@ -15,13 +15,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 oo view of file paths and names, subclassed from bytes/str/unicode.
@@ -108,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.81.04-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.81.04-alt1
 - Version 0.81.04
 

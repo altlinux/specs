@@ -3,7 +3,7 @@
 
 Name: python-module-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python extension for emulating keypresses and getting the keyboard geometry from the xserver
 License: LGPLv3+
@@ -14,10 +14,14 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: http://launchpad.net/python-virtkey/%ver_major/%version/+download/%_name-%version.tar.gz
 
-BuildPreReq: python-devel python-module-setuptools rpm-build-python
-BuildRequires: libX11-devel libXtst-devel libxkbfile-devel libgtk+2-devel
+#BuildPreReq: python-devel python-module-setuptools rpm-build-python
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils fontconfig glib2-devel libX11-devel libXi-devel libcairo-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: libXtst-devel libgtk+2-devel libxkbfile-devel python3-devel rpm-build-python3
+
+#BuildRequires: libX11-devel libXtst-devel libxkbfile-devel libgtk+2-devel
 # for python3
-BuildRequires: rpm-build-python3 python3-devel
+#BuildRequires: rpm-build-python3 python3-devel
 
 %description
 virtkey is a python extension for emulating keypresses and
@@ -62,6 +66,9 @@ popd
 
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.63.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sat Oct 19 2013 Yuri N. Sedunov <aris@altlinux.org> 0.63.0-alt1
 - 0.63.0
 - new python3-module-virtkey subpackage

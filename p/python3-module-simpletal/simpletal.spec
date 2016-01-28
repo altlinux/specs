@@ -1,6 +1,6 @@
 Name: python3-module-simpletal
 Version: 5.1
-Release: alt1
+Release: alt1.1
 Summary: SimpleTAL is an independent implementation of TAL
 License: BSD-like
 Group: Development/Python3
@@ -9,7 +9,11 @@ Source: SimpleTAL-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base
+BuildRequires: rpm-build-python3
 
 %description
 SimpleTAL is a stand alone Python implementation
@@ -30,6 +34,9 @@ cp -r buildroot/* %buildroot
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 5.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt1
 - Initial build for Sisyphus
 

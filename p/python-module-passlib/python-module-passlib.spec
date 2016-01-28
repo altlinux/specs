@@ -6,7 +6,7 @@
 
 Name:		python-module-%oname
 Version:	1.7
-Release:	alt1.dev0.hg20131228
+Release:	alt1.dev0.hg20131228.1
 Summary:	Comprehensive password hashing framework supporting over 20 schemes
 Group:		Development/Python
 License:	BSD and Beerware and Copyright only
@@ -14,17 +14,22 @@ URL:		http://passlib.googlecode.com
 Source0:	%{name}-%{version}.tar.gz
 
 BuildArch:	noarch
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-sphinx-devel
 #BuildPreReq: python-module-cloud_sptheme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python3-module-nose python3-module-pytest rpm-build-python3
 
 %description
 Passlib is a password hashing library for Python 2 & 3, which provides
@@ -131,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7-alt1.dev0.hg20131228.1
+- NMU: Use buildreq for BR.
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.dev0.hg20131228
 - Version 1.7.dev0
 - Added module for Python 3

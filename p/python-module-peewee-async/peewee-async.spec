@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.0.2
-Release: alt1.git20141030
+Release: alt1.git20141030.1
 Summary: Asynchronous interface for peewee ORM powered by asyncio
 License: MIT
 Group: Development/Python
@@ -18,19 +18,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-peewee
-BuildPreReq: python-module-aiopg
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-peewee
+#BuildPreReq: python-module-aiopg
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-peewee
-BuildPreReq: python3-module-aiopg
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-peewee
+#BuildPreReq: python3-module-aiopg
 %endif
 
 %py_provides peewee_async
 %py_requires asyncio peewee aiopg
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-jinja2 python3-module-setuptools
+BuildRequires: python3-module-apsw python3-module-psycopg2 python3-module-pytest rpm-build-python3
 
 %description
 peewee-async is a library providing asynchronous interface powered by
@@ -98,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.2-alt1.git20141030.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20141030
 - Initial build for Sisyphus
 

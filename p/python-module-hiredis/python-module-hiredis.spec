@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python wrapper for hiredis
 
@@ -15,12 +15,16 @@ Url: https://github.com/redis/hiredis-py
 # Source-url: https://pypi.python.org/packages/source/s/sanction/sanction-0.4.tar.gz
 Source: %oname-%version.tar
 
-BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-distribute
-BuildRequires: libhiredis-devel
+#BuildPreReq: rpm-build-python
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python-devel python-module-distribute
+#BuildRequires: libhiredis-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %setup_python_module %oname
@@ -76,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Jun 29 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.0-alt1
 - 0.2.0
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.32.0
-Release: alt1
+Release: alt1.1
 Summary: WebSocket client for python. hybi13 is supported
 License: LGPLv2.1
 Group: Development/Python
@@ -16,17 +16,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-backports.ssl_match_hostname
-BuildPreReq: python-module-six
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-backports.ssl_match_hostname
+#BuildPreReq: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-six
 %endif
 
 %py_provides websocket
 %py_requires backports.ssl_match_hostname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 websocket-client module is WebSocket client for python. This provide the
@@ -133,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.32.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Sep 14 2015 Vladimir Didenko <cow@altlinux.org> 0.32.0-alt1
 - new version
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.git20141105
+Release: alt1.git20141105.1
 Summary: Greenlets for asyncio (PEP 3156)
 License: ASLv2.0
 Group: Development/Python
@@ -15,18 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-argparse python-module-greenlet
-BuildPreReq: python-module-trollius
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-argparse python-module-greenlet
+#BuildPreReq: python-module-trollius
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-argparse python3-module-greenlet
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-argparse python3-module-greenlet
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires greenlet trollius
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-greenlet python-module-setuptools-tests python3-module-asyncio python3-module-greenlet python3-module-setuptools-tests rpm-build-python3
 
 %description
 Greenlets support for asyncio (PEP 3156).
@@ -86,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1.git20141105.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20141105
 - Initial build for Sisyphus
 

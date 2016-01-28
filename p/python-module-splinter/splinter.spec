@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1.git20141109
+Release: alt1.git20141109.1
 Summary: splinter - python test framework for web applications
 License: BSD
 Group: Development/Python
@@ -15,25 +15,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-selenium python-module-zope.testbrowser
-BuildPreReq: python-module-lxml python-module-cssselect
-BuildPreReq: python-module-django python-module-flask
-BuildPreReq: python-module-coverage python-module-argparse
-BuildPreReq: python-module-mechanize
-BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-selenium python-module-zope.testbrowser
+#BuildPreReq: python-module-lxml python-module-cssselect
+#BuildPreReq: python-module-django python-module-flask
+#BuildPreReq: python-module-coverage python-module-argparse
+#BuildPreReq: python-module-mechanize
+#BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-selenium python3-module-zope.testbrowser
-BuildPreReq: python3-module-lxml python3-module-cssselect
-BuildPreReq: python3-module-django python3-module-flask
-BuildPreReq: python3-module-coverage python3-module-argparse
-BuildPreReq: python3-module-mechanize
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-selenium python3-module-zope.testbrowser
+#BuildPreReq: python3-module-lxml python3-module-cssselect
+#BuildPreReq: python3-module-django python3-module-flask
+#BuildPreReq: python3-module-coverage python3-module-argparse
+#BuildPreReq: python3-module-mechanize
 %endif
 
 %py_provides %oname
 %py_requires zope.testbrowser mechanize
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libgpg-error python-base python-devel python-module-BeautifulSoup4 python-module-PyStemmer python-module-Pygments python-module-WSGIProxy2 python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-dns python-module-enum34 python-module-genshi python-module-greenlet python-module-html5lib python-module-itsdangerous python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-mechanize python-module-ndg-httpsclient python-module-ntlm python-module-psycopg2 python-module-pyasn1 python-module-pytest python-module-pytz python-module-restkit python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-waitress python-module-webob python-module-webtest python-module-werkzeug python-module-yaml python-module-zope python-module-zope.cachedescriptors python-module-zope.event python-module-zope.exceptions python-module-zope.interface python-module-zope.schema python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base python3-module-cssselect python3-module-genshi python3-module-html5lib python3-module-jinja2 python3-module-paste python3-module-psycopg2 python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-waitress python3-module-webtest python3-module-wsgiproxy python3-module-yaml python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-alabaster python-module-coverage python-module-django python-module-docutils python-module-flask python-module-objects.inv python-module-selenium python-module-setuptools-tests python-module-zope.testbrowser python3-module-coverage python3-module-django python3-module-flask python3-module-setuptools-tests python3-module-zope.testbrowser rpm-build-python3 time
 
 %description
 splinter is a tool for test web applications with a simple for find
@@ -129,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1.git20141109.1
+- NMU: Use buildreq for BR.
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20141109
 - Initial build for Sisyphus
 

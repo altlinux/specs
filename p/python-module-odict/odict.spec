@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6.0
-Release: alt1.dev0.git20150103
+Release: alt1.dev0.git20150103.1
 Summary: Ordered dictionary
 License: Python
 Group: Development/Python
@@ -15,14 +15,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-interlude
+#BuildPreReq: python-module-setuptools-tests python-module-interlude
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
-BuildPreReq: python3-module-setuptools-tests python3-module-interlude
+#BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-module-setuptools-tests python3-module-interlude
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
+BuildRequires: python-module-interlude python-module-setuptools-tests python3-module-interlude python3-module-pytest rpm-build-python3 time
 
 %description
 Dictionary in which the insertion order of items is preserved (using an
@@ -121,6 +125,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1.dev0.git20150103.1
+- NMU: Use buildreq for BR.
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.dev0.git20150103
 - Version 1.6.0.dev0
 - Added module for Python 3

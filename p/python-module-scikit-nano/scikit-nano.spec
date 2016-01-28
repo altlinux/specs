@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt1.git20141208
+Release: alt1.git20141208.1
 Summary: Python toolkit for nanoscience
 License: BSD
 Group: Development/Python
@@ -17,21 +17,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-scipy libnumpy-devel
-BuildPreReq: python-module-nose python-module-six
-BuildPreReq: python-module-sphinx-devel ipython python-module-numpydoc
-BuildPreReq: python-module-matplotlib-sphinxext python-module-PyQt4
-BuildPreReq: python-module-sphinx-argparse
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-scipy libnumpy-devel
+#BuildPreReq: python-module-nose python-module-six
+#BuildPreReq: python-module-sphinx-devel ipython python-module-numpydoc
+#BuildPreReq: python-module-matplotlib-sphinxext python-module-PyQt4
+#BuildPreReq: python-module-sphinx-argparse
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-scipy libnumpy-py3-devel
-BuildPreReq: python3-module-nose python3-module-six
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-scipy libnumpy-py3-devel
+#BuildPreReq: python3-module-nose python3-module-six
 %endif
 
 %py_provides sknano
 %py_requires PyQt4
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: fontconfig ipython libnumpy-devel libqt4-core libqt4-gui python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-greenlet python-module-ipykernel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-mpmath python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-notebook python-module-numpy python-module-numpydoc python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-simplegeneric python-module-sip python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-numpy
+BuildRequires: libnumpy-py3-devel python-module-PyQt4 python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numpy-testing python-module-objects.inv python-module-scipy python-module-sphinx-argparse python3-module-numpy-testing python3-module-scipy python3-module-six rpm-build-python3 time
 
 %description
 scikit-nano is a python toolkit for generating and analyzing
@@ -177,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.6-alt1.git20141208.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20141208
 - Version 0.3.6
 

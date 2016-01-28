@@ -8,7 +8,7 @@
 
 Name: %packagename
 Version:%version
-Release: alt1.hg20131227
+Release: alt1.hg20131227.1
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -26,12 +26,16 @@ Conflicts: python-module.paste.deploy
 Obsoletes: python-module.paste.deploy
 %py_provides %oname
 
-BuildRequires: python-module-setuptools
-BuildPreReq: python-module-sphinx python-module-Pygments
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python3-module-html5lib python3-module-sphinx rpm-build-python3 time
+
+#BuildRequires: python-module-setuptools
+#BuildPreReq: python-module-sphinx python-module-Pygments
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-sphinx python3-module-Pygments
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-sphinx python3-module-Pygments
 %endif
 
 %description
@@ -91,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1:1.5.2-alt1.hg20131227.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5.2-alt1.hg20131227
 - Version 1.5.2
 

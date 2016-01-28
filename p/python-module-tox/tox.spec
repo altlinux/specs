@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt1
+Release: alt1.1
 Summary: virtualenv-based automation of test activities
 License: MIT
 Group: Development/Python
@@ -15,18 +15,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-virtualenv python-module-py
-BuildPreReq: python-module-pytest python-module-py
-BuildPreReq: python-module-sphinx-devel python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-virtualenv python-module-py
+#BuildPreReq: python-module-pytest python-module-py
+#BuildPreReq: python-module-sphinx-devel python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-virtualenv python3-module-py
-BuildPreReq: python3-module-pytest python3-module-py
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-virtualenv python3-module-py
+#BuildPreReq: python3-module-pytest python3-module-py
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python-module-virtualenv python3-module-setuptools-tests python3-module-virtualenv rpm-build-python3 time
 
 %description
 Tox as is a generic virtualenv management and test command line tool you
@@ -160,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1
 - Version 2.1.1
 

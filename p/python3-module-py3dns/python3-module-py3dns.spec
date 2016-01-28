@@ -2,7 +2,7 @@
 
 Summary: Python DNS library
 Version: 3.0.2
-Release: alt1.bzr20120722
+Release: alt1.bzr20120722.1
 
 %add_python3_req_skip winreg
 
@@ -17,8 +17,12 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 Provides: python3-module-pydns = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-distribute
+#BuildPreReq: python3-devel
+#BuildPreReq: python3-module-distribute
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base
+BuildRequires: rpm-build-python3
 
 %description
 PyDNS provides a module for performing DNS queries from python applications.
@@ -37,6 +41,9 @@ PyDNS provides a module for performing DNS queries from python applications.
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 3.0.2-alt1.bzr20120722.1
+- NMU: Use buildreq for BR.
+
 * Sat Mar 16 2013 Aleksey Avdeev <solo@altlinux.ru> 3.0.2-alt1.bzr20120722
 - 3.0.2 (bzr20120722)
 - Rename package to python3-module-py3dns

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20150211
+Release: alt1.git20150211.1
 Summary: Synchronization primitive RWLock for asyncio (PEP 3156) 
 License: ASLv2.0
 Group: Development/Python
@@ -17,19 +17,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-nose
-BuildPreReq: python-module-flake8
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-nose
+#BuildPreReq: python-module-flake8
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-nose
-BuildPreReq: python3-module-flake8
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-nose
+#BuildPreReq: python3-module-flake8
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: pyflakes python-base python-modules python3 python3-base python3-module-mccabe python3-module-pytest python3-module-setuptools python3-pyflakes python3-tools-pep8 xz
+BuildRequires: python3-module-asyncio python3-module-flake8 python3-module-nose python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Read write lock for asyncio . A RWLock maintains a pair of associated
@@ -127,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1.git20150211.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20150211
 - Version 0.3.0
 

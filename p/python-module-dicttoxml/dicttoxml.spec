@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.8
-Release: alt1.git20150106
+Release: alt1.git20150106.1
 Summary: Converts a Python dictionary or other native data type into a valid XML string
 License: GPLv2
 Group: Development/Python
@@ -15,13 +15,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 Converts a Python dictionary or other native data type into a valid XML
@@ -92,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.5.8-alt1.git20150106.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.8-alt1.git20150106
 - Initial build for Sisyphus
 

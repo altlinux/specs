@@ -4,7 +4,7 @@
 
 Name: python-module-%{oname}2
 Version: 2.0.0
-Release: alt1.git20150619
+Release: alt1.git20150619.1
 Summary: Lightweight markup language-based html5 slideshow generator
 License: ASLv2.0
 Group: Development/Python
@@ -16,21 +16,25 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-jinja2 python-module-markdown
-BuildPreReq: python-module-Pygments python-module-docutils
-BuildPreReq: python-module-six python-module-docopt
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-jinja2 python-module-markdown
+#BuildPreReq: python-module-Pygments python-module-docutils
+#BuildPreReq: python-module-six python-module-docopt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-jinja2 python3-module-markdown
-BuildPreReq: python3-module-Pygments python3-module-docutils
-BuildPreReq: python3-module-six python3-module-docopt
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-jinja2 python3-module-markdown
+#BuildPreReq: python3-module-Pygments python3-module-docutils
+#BuildPreReq: python3-module-six python3-module-docopt
 %endif
 
 %py_provides %oname
 Conflicts: python-module-%oname
 %py_requires jinja2 markdown pygments docutils six docopt
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-docutils python-module-html5lib python-module-markdown python-module-setuptools-tests python3-module-html5lib python3-module-markdown python3-module-setuptools-tests python3-module-sphinx rpm-build-python3 time
 
 %description
 Landslide takes your Markdown, ReST, or Textile file(s) and generates
@@ -106,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1.git20150619.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20150619
 - Initial build for Sisyphus
 

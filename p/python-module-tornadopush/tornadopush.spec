@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.7.2
-Release: alt1.git20150808
+Release: alt1.git20150808.1
 Summary: Push and presence server built with Tornado and Redis
 License: MIT
 Group: Development/Python
@@ -16,25 +16,29 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tornado python-module-redis-py
-BuildPreReq: python-module-itsdangerous python-module-yaml
-BuildPreReq: python-module-jsmin python-module-tornado-redis
-BuildPreReq: python-module-backports.ssl_match_hostname
-BuildPreReq: python-module-certifi python-module-toredis
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-tornado python-module-redis-py
+#BuildPreReq: python-module-itsdangerous python-module-yaml
+#BuildPreReq: python-module-jsmin python-module-tornado-redis
+#BuildPreReq: python-module-backports.ssl_match_hostname
+#BuildPreReq: python-module-certifi python-module-toredis
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tornado python3-module-redis-py
-BuildPreReq: python3-module-itsdangerous python3-module-yaml
-BuildPreReq: python3-module-jsmin python3-module-tornado-redis
-BuildPreReq: python3-module-backports.ssl_match_hostname
-BuildPreReq: python3-module-certifi python3-module-toredis
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-tornado python3-module-redis-py
+#BuildPreReq: python3-module-itsdangerous python3-module-yaml
+#BuildPreReq: python3-module-jsmin python3-module-tornado-redis
+#BuildPreReq: python3-module-backports.ssl_match_hostname
+#BuildPreReq: python3-module-certifi python3-module-toredis
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires itsdangerous yaml jsmin tornadoredis toredis
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pycares python-module-pycurl python-module-pytest python-module-setuptools python-module-tornado python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base python3-module-pycares python3-module-pytest python3-module-setuptools python3-module-tornado python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-setuptools-tests python-module-toredis python-module-yaml python3-module-setuptools-tests python3-module-toredis python3-module-yaml rpm-build-python3 time
 
 %description
 Push and presence server built with Tornado and Redis.
@@ -103,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1.git20150808.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.git20150808
 - Version 0.7.2
 

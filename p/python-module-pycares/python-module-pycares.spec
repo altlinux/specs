@@ -3,7 +3,7 @@
 
 Name: python-module-%module_name
 Version: 0.6.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python interface for c-ares
 License: MIT
@@ -12,10 +12,14 @@ Group: Development/Python
 Url: http://github.com/saghul/pycares
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-distribute
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
+BuildRequires: python-devel python3-devel rpm-build-python3
+
+#BuildRequires: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -68,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 13 2015 Vladimir Didenko <cow@altlinux.ru> 0.6.3-alt1
 - new version
 

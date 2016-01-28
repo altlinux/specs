@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0.1
-Release:        alt2
+Release:        alt2.1
 Summary:        The repoze.who SQLAlchemy plugin
 Group:          Development/Python
 License:        BSD-derived
@@ -12,18 +12,22 @@ URL:            http://pypi.python.org/pypi/repoze.who.plugins.sa/
 Source:         %oname-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-repoze.who python-module-SQLAlchemy
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-elixir python-module-pysqlite2
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-repoze.who python-module-SQLAlchemy
+#BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-module-elixir python-module-pysqlite2
 #BuildPreReq: texlive-latex-recommended gif2png
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires repoze.who SQLAlchemy
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-paste python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base
+BuildRequires: python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-pycrypto python-module-pysqlite2 python-module-repoze.who python3-module-setuptools rpm-build-python3
 
 %description
 This plugin provides one repoze.who authenticator and one metadata
@@ -156,6 +160,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2
 - Added module for Python 3
 

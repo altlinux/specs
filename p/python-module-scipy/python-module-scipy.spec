@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.17.0
-Release: alt1.git20150829
+Release: alt1.git20150829.1
 
 Summary: SciPy is the library of scientific codes
 
@@ -31,28 +31,34 @@ Requires: %python_noarch
 Source: %oname-%version.tar
 Source1: site.cfg
 
-BuildPreReq: python-module-sympy python-module-scipy git
-BuildPreReq: python-module-numpy python-module-matplotlib-sphinxext
-BuildPreReq: python-module-numdifftools
-BuildPreReq: libsuitesparse-devel swig /proc rpm-macros-make
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-Pygments
-BuildPreReq: python-module-matplotlib
-BuildPreReq: boost-python-devel
+#BuildPreReq: python-module-sympy python-module-scipy git
+#BuildPreReq: python-module-numpy python-module-matplotlib-sphinxext
+#BuildPreReq: python-module-numdifftools
+#BuildPreReq: libsuitesparse-devel swig /proc rpm-macros-make
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-Pygments
+#BuildPreReq: python-module-matplotlib
+#BuildPreReq: boost-python-devel
 %if_enabled docs
-BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
+#BuildPreReq: python-module-matplotlib-sphinxext python-module-numpydoc
 #BuildPreReq: %py_dependencies scikits.statsmodels.docs.sphinxext
 %endif
 
-BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
-BuildRequires: python-module-ctypes libnumpy-devel python-modules-curses
-BuildRequires: libsuitesparse-devel python-module-Cython
+BuildRequires(pre): rpm-macros-make
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils fontconfig ipython ipython3 libgfortran-devel libnumpy-devel libopenblas-devel libquadmath-devel libstdc++-devel python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-greenlet python-module-ipykernel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-mpmath python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-notebook python-module-numpy python-module-numpydoc python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-scipy python-module-setuptools python-module-simplegeneric python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-bsddb python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base python3-dev python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-greenlet python3-module-ipykernel python3-module-ipyparallel python3-module-ipython_genutils python3-module-jinja2 python3-module-jupyter_client python3-module-jupyter_core python3-module-markupsafe python3-module-matplotlib python3-module-nbconvert python3-module-nbformat python3-module-numpy python3-module-pexpect python3-module-ptyprocess python3-module-pycares python3-module-pycparser python3-module-pygobject3 python3-module-pyparsing python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx python3-module-terminado python3-module-tornado_xstatic python3-module-traitlets python3-module-xstatic python3-module-xstatic-term.js python3-module-yieldfrom.http.client python3-module-yieldfrom.requests python3-module-yieldfrom.urllib3 python3-module-zmq python3-module-zope python3-module-zope.interface sysvinit-utils
+BuildRequires: gcc-c++ gcc-fortran git-core liblapack-devel libnumpy-py3-devel python-module-Cython python-module-Pyrex python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-matplotlib-sphinxext python-module-numdifftools python-module-numpy-testing python-module-objects.inv python-module-sphinx-pickles python3-module-Cython python3-module-html5lib python3-module-jinja2-tests python3-module-notebook python3-module-numpy-testing rpm-build-python3 time vixie-cron
+
+#BuildRequires: gcc-c++ gcc-fortran liblapack-devel python-module-Pyrex
+#BuildRequires: python-module-ctypes libnumpy-devel python-modules-curses
+#BuildRequires: libsuitesparse-devel python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-Pygments libnumpy-py3-devel
-BuildPreReq: python-tools-2to3 python3-module-Cython
-BuildPreReq: boost-python3-devel
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-Pygments libnumpy-py3-devel
+#BuildPreReq: python-tools-2to3 python3-module-Cython
+#BuildPreReq: boost-python3-devel
 %endif
 
 %description
@@ -474,6 +480,9 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.17.0-alt1.git20150829.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.0-alt1.git20150829
 - Version 0.17.0
 

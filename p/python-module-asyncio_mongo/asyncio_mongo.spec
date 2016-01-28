@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.3
-Release: alt1.git20140401
+Release: alt1.git20140401.1
 Summary: Asynchronous Python 3.3+ driver for MongoDB
 License: ASLv2.0
 Group: Development/Python
@@ -16,17 +16,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-nose
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-nose
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-nose
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python3-devel python3-module-asyncio python3-module-nose python3-module-setuptools-tests rpm-build-python3
 
 %description
 An asynchronous Python driver for the Mongo database, based on Python's
@@ -94,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt1.git20140401.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20140401
 - Initial build for Sisyphus
 

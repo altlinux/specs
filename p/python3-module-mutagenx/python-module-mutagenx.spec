@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 1.24
-Release: alt1
+Release: alt1.1
 
 Summary: Python module to handle audio metadata
 License: GPLv2
@@ -13,8 +13,12 @@ Source: %modulename-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: faad flac liboggz python3-module-eyeD3 vorbis-tools
-BuildPreReq: python3-devel
+#BuildPreReq: faad flac liboggz python3-module-eyeD3 vorbis-tools
+#BuildPreReq: python3-devel
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base xz
+BuildRequires: rpm-build-python3
 
 %description
 Mutagen is a Python module to handle audio metadata. It supports FLAC,
@@ -64,6 +68,9 @@ export LC_ALL=en_US.UTF-8
 %_bindir/*
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.24-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.24-alt1
 - Initial build for Sisyphus
 

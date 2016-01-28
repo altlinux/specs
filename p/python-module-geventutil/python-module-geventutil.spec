@@ -4,7 +4,7 @@
 
 Name: python-module-geventutil
 Version: 0.0.1
-Release: alt1.hg20120114
+Release: alt1.hg20120114.1
 
 Summary: Random utilities for gevent
 
@@ -18,15 +18,19 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # hg clone https://bitbucket.org/denis/gevent-playground
 Source: %name-%version.tar
 
-BuildPreReq: rpm-build-python
+#BuildPreReq: rpm-build-python
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-devel python-tools-2to3
 %endif
 
 BuildArch: noarch
 
 %setup_python_module %modulename
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
 
 %description
 Random utilities for gevent.
@@ -73,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1.hg20120114.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.hg20120114
 - Snapshot from mercurial
 - Added module for Python 3

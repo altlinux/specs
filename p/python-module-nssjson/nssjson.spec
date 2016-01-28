@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt1.git20150807
+Release: alt1.git20150807.1
 Summary: Not So Simple JSON encoder/decoder
 License: MIT
 Group: Development/Python
@@ -15,13 +15,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # branch: nssjson
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-devel python3-module-pytest rpm-build-python3
 
 %description
 nssjson is a (not so) simple, fast, complete, correct and extensible
@@ -142,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt1.git20150807.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7-alt1.git20150807
 - Initial build for Sisyphus
 

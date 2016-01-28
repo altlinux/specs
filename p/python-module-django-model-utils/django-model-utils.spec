@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.3
-Release: alt1.a1.git20140922
+Release: alt1.a1.git20140922.1
 Summary: Django model mixins and utilities
 License: BSD
 Group: Development/Python
@@ -15,12 +15,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
 
 %description
 Django model mixins and utilities.
@@ -137,6 +142,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.3-alt1.a1.git20140922.1
+- NMU: Use buildreq for BR.
+
 * Tue Sep 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.a1.git20140922
 - Initial build for Sisyphus
 

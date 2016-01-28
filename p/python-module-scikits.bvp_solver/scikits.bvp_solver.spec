@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt2.git20120926
+Release: alt2.git20120926.1
 Summary: Python package for solving two-point boundary value problems
 License: BSD
 Group: Development/Python
@@ -15,18 +15,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/jsalvatier/scikits.bvp_solver.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-fortran
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose libnumpy-devel
-BuildPreReq: python-module-sphinx-devel python-module-numpydoc
+#BuildPreReq: gcc-fortran
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose libnumpy-devel
+#BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose libnumpy-py3-devel
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose libnumpy-py3-devel
 %endif
 
 %py_provides %oname
 %py_requires %mname numpy
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libgfortran-devel libnumpy-devel libquadmath-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-numpy python-module-numpydoc python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-dev python3-module-numpy python3-module-setuptools
+BuildRequires: gcc-fortran libnumpy-py3-devel python-module-alabaster python-module-html5lib python-module-nose python-module-numpy-testing python-module-objects.inv python-module-setuptools-tests python3-module-nose python3-module-numpy-testing python3-module-pytest rpm-build-python3 time
 
 %description
 scikits.bvp_solver is a python package for solving two point boundary
@@ -175,6 +180,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1-alt2.git20120926.1
+- NMU: Use buildreq for BR.
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.git20120926
 - Rebuilt with updated NumPy
 

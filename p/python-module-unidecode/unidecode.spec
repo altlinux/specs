@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.04.17
-Release: alt1.git20141218
+Release: alt1.git20141218.1
 Summary: ASCII transliterations of Unicode text
 License: GPLv2
 Group: Development/Python
@@ -15,13 +15,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python-modules-unittest rpm-build-python3
 
 %description
 It often happens that you have text data in Unicode, but you need to
@@ -82,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.04.17-alt1.git20141218.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.04.17-alt1.git20141218
 - Version 0.04.17
 

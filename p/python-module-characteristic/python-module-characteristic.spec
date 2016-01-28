@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 14.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python library that eases the chores of implementing attributes
 
@@ -16,11 +16,15 @@ Url: https://github.com/hynek/characteristic
 Source: %oname-%version.tar
 BuildArch: noarch
 
-BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-distribute python-module-setuptools-tests
+#BuildPreReq: rpm-build-python
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
+
+#BuildRequires: python-devel python-module-distribute python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
+#BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
 %endif
 
 %setup_python_module %oname
@@ -83,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 14.3.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Jun 29 2015 Vladimir Didenko <cow@altlinux.ru> 14.3.0-alt1
 - new version
 

@@ -5,7 +5,7 @@
 %def_disable check
 
 Version: 1.2.5
-Release: alt1
+Release: alt1.1
 Epoch: 1
 %setup_python_module %oname
 Name: %packagename
@@ -19,17 +19,19 @@ Url: http://sourceforge.net/projects/mysql-python
 
 Source: MySQL-python.tar
 
-# Automatically added by buildreq on Fri Jul 13 2007
-BuildRequires: libmysqlclient-devel python-module-setuptools zlib-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
+BuildRequires: libmysqlclient-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python3-devel python3-module-nose python3-module-pytest rpm-build-python3 time
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-nose
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python-tools-2to3
 %endif
 
 Obsoletes: MySQL-python <= 0.9.2-alt6
@@ -150,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1:1.2.5-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.5-alt1
 - Version 1.2.5
 - Added module for Python 3

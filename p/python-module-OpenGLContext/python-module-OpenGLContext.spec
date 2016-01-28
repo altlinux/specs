@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt1.b1
+Release: alt1.b1.1
 
 Summary: Demonstration and testing contexts for PyOpenGL
 
@@ -23,14 +23,18 @@ BuildArch: noarch
 
 %add_python_req_skip win32con win32ui FXPy
 
-BuildPreReq: python-module-setuptools python-devel
-BuildPreReq: python-modules-compiler python-modules-encodings
-BuildPreReq: libnumpy-devel
+#BuildPreReq: python-module-setuptools python-devel
+#BuildPreReq: python-modules-compiler python-modules-encodings
+#BuildPreReq: libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-devel
-BuildPreReq: libnumpy-py3-devel python-tools-2to3
+#BuildPreReq: python3-module-setuptools python3-devel
+#BuildPreReq: libnumpy-py3-devel python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy
+BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib python3-module-setuptools rpm-build-python3 time
 
 %description
 Demonstration and Testing Contexts for PyOpenGL
@@ -136,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 2.3.0-alt1.b1.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1.b1
 - Version 2.3.0b1
 - Added module for Python 3

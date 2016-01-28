@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt2.git20150825
+Release: alt2.git20150825.1
 Summary: Zope testing helpers
 License: ZPL
 Group: Development/Python
@@ -16,20 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.testing.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zope.exceptions
-BuildPreReq: python-module-zope.interface
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-zope.exceptions
+#BuildPreReq: python-module-zope.interface
 %if_disabled light_version
-BuildPreReq: python-module-zope.testrunner
+#BuildPreReq: python-module-zope.testrunner
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.exceptions
-BuildPreReq: python3-module-zope.interface
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-pytest python-module-zope.exceptions python3-module-pytest python3-module-zope.exceptions rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zope.exceptions
+#BuildPreReq: python3-module-zope.interface
 %if_disabled light_version
-BuildPreReq: python3-module-zope.testrunner
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-module-zope.testrunner
+#BuildPreReq: python-tools-2to3
 %endif
 %endif
 
@@ -111,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.4.0-alt2.git20150825.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 19 2016 Sergey Alembekov <rt@altlinux.ru> 4.4.0-alt2.git20150825
 - Rebuild light version to break cycle
 

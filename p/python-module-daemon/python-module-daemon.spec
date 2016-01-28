@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 2.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Library to implement a well-behaved Unix daemon process
 
@@ -16,13 +16,17 @@ Url: http://pypi.python.org/pypi/python-daemon/
 Source: python-%module_name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-lockfile > 0.10 python-module-json python-module-docutils
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-docutils python-module-html5lib python3-module-html5lib python3-module-sphinx rpm-build-python3
+
+#BuildRequires: python-module-setuptools
+#BuildRequires: python-module-lockfile > 0.10 python-module-json python-module-docutils
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-lockfile > 0.10 python3-module-simplejson python3-module-docutils
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-setuptools
+#BuildRequires: python3-module-lockfile > 0.10 python3-module-simplejson python3-module-docutils
+#BuildPreReq: python-tools-2to3
 %endif
 
 %setup_python_module %module_name
@@ -78,6 +82,9 @@ popd
 
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 19 2015 Terechkov Evgenii <evg@altlinux.org> 2.0.5-alt1
 - Update to 2.0.5
 

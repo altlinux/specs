@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt1.dev0.git20150225
+Release: alt1.dev0.git20150225.1
 Summary: Zope Configuration Markup Language (ZCML)
 License: ZPL
 Group: Development/Python
@@ -14,21 +14,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.configuration.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zope.i18nmessageid
-BuildPreReq: python-module-zope.schema
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-nosexcover
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-repoze.sphinx.autointerface
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-zope.i18nmessageid
+#BuildPreReq: python-module-zope.schema
+#BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-module-nosexcover
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.i18nmessageid
-BuildPreReq: python3-module-zope.schema
-BuildPreReq: python3-module-nose python3-module-coverage
-BuildPreReq: python3-module-nosexcover
-BuildPreReq: python-tools-2to3
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-nose python-module-pytest python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.event python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-nose python3-module-pytest python3-module-setuptools python3-module-zope python3-module-zope.event python3-module-zope.interface xz
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nosexcover python-module-objects.inv python-module-repoze.sphinx.autointerface python-module-setuptools-tests python-module-zope.i18nmessageid python-module-zope.schema python3-module-coverage python3-module-nosexcover python3-module-setuptools-tests python3-module-zope.i18nmessageid python3-module-zope.schema rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zope.i18nmessageid
+#BuildPreReq: python3-module-zope.schema
+#BuildPreReq: python3-module-nose python3-module-coverage
+#BuildPreReq: python3-module-nosexcover
+#BuildPreReq: python-tools-2to3
 %endif
 
 Requires: python-module-zope.i18nmessageid
@@ -195,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.0.4-alt1.dev0.git20150225.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1.dev0.git20150225
 - Version 4.0.4.dev0
 - Added documentation

@@ -8,7 +8,7 @@
 Summary: Werkzeug is one of the most advanced WSGI utility modules
 Name: %packagename
 Version: %version
-Release: %release
+Release: %release.1
 Source0: %modulename.tar
 Patch: werkzeug-alt-python3.patch
 License: BSD
@@ -16,10 +16,14 @@ Group: Development/Python
 BuildArch: noarch
 URL: http://werkzeug.pocoo.org/
 
-BuildRequires: python-module-setuptools-tests python-modules-json
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
+
+#BuildRequires: python-module-setuptools-tests python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %description
@@ -94,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.10.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1
 - Version 0.10.1
 

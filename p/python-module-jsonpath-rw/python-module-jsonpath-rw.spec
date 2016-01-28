@@ -3,7 +3,7 @@
 
 Name: python-module-%pkgname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 Summary: Extended implementation of JSONPath for Python
 Group: Development/Python
 
@@ -12,19 +12,23 @@ Url: https://github.com/kennknowles/python-jsonpath-rw
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-ply
-BuildRequires: python-module-decorator
-BuildRequires: python-module-six
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python-devel
+#BuildRequires: python-module-setuptools
+#BuildRequires: python-module-ply
+#BuildRequires: python-module-decorator
+#BuildRequires: python-module-six
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-ply
-BuildRequires: python3-module-decorator
-BuildRequires: python3-module-six
+#BuildRequires: python3-devel
+#BuildRequires: python3-module-setuptools
+#BuildRequires: python3-module-ply
+#BuildRequires: python3-module-decorator
+#BuildRequires: python3-module-six
 %endif
 
 %description
@@ -102,6 +106,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 - cleanup spec

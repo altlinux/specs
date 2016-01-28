@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.15.0
-Release: alt1.git20150725
+Release: alt1.git20150725.1
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python
@@ -16,13 +16,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-sphinx-devel
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-bootstrap-theme python-tools-2to3
+#BuildPreReq: python-devel python-module-sphinx-devel
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-bootstrap-theme python-tools-2to3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-Fabric python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-ecdsa python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-nose python-module-pycrypto python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python-module-sphinx-bootstrap-theme python3-module-pytest rpm-build-python3 time
 
 %description
 future is the missing compatibility layer between Python 3 and Python 2.
@@ -162,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.15.0-alt1.git20150725.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt1.git20150725
 - Version 0.15.0
 

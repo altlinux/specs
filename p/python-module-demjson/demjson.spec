@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.2.2
-Release: alt1.git20140625
+Release: alt1.git20140625.1
 Summary: encoder, decoder, and lint/validator for JSON compliant with RFC 7159
 License: LGPLv3.0
 Group: Development/Python
@@ -16,14 +16,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base python3-module-setuptools
+BuildRequires: python-devel python-tools-2to3 python3-module-pytest rpm-build-python3 time
 
 %description
 The "demjson" module, and the included "jsonlint" script, provide
@@ -113,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.2.2-alt1.git20140625.1
+- NMU: Use buildreq for BR.
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt1.git20140625
 - Initial build for Sisyphus
 

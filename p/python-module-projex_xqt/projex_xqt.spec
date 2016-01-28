@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.2
-Release: alt1.git20150111
+Release: alt1.git20150111.1
 Summary: Wrapper system for Qt to bridge the gap between PySide and PyQt4 syntaxes
 License: LGPLv3
 Group: Development/Python
@@ -15,18 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-projex python-module-PyQt4
-BuildPreReq: python-module-PySide
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-projex python-module-PyQt4
+#BuildPreReq: python-module-PySide
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-projex python3-module-PyQt4
-BuildPreReq: python3-module-PySide
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-projex python3-module-PyQt4
+#BuildPreReq: python3-module-PySide
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides xqt
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-pycrypto python-module-setuptools-tests python3-module-pycrypto python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 The xqt library is a wrapper system on top of the various Python Qt
@@ -112,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.2-alt1.git20150111.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.git20150111
 - Version 2.0.2
 

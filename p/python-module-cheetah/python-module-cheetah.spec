@@ -6,21 +6,22 @@
 Summary: Template engine and code-generator
 Name: %packagename
 Version: 2.4.4
-Release: alt2.git20121217
+Release: alt2.git20121217.1
 Source0: %origname-%version.tar.gz
 License: MIT
 Group: Development/Python
 URL: http://cheetahtemplate.org/
 #BuildArch: noarch
 
-# Automatically added by buildreq on Sat Apr 05 2008
-BuildRequires: python-devel
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-markdown python-module-setuptools python3-devel python3-module-markdown python3-module-setuptools rpm-build-python3 time
 
-BuildPreReq: python-module-markdown python-module-setuptools
+#BuildPreReq: python-module-markdown python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-markdown python-tools-2to3
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-markdown python-tools-2to3
 %endif
 
 %description
@@ -121,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.4.4-alt2.git20121217.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt2.git20121217
 - Snapshot from git
 

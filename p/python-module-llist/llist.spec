@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1.git20130101
+Release: alt1.git20130101.1
 Summary: Linked list data structures for Python
 License: MIT
 Group: Development/Python
@@ -14,14 +14,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/ajakubek/python-llist.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-pytest python3-devel rpm-build-python3 time python3-module-pytest
 
 %description
 llist is an extension module for CPython providing basic linked list
@@ -93,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4-alt1.git20130101.1
+- NMU: Use buildreq for BR.
+
 * Sat Nov 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20130101
 - Initial build for Sisyphus
 

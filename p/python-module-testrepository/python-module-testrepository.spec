@@ -4,7 +4,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        0.0.20
-Release:        alt1
+Release:        alt1.1
 Summary:        A repository of test results
 Group:          Development/Python
 
@@ -13,12 +13,16 @@ URL:            https://launchpad.net/testrepository
 Source0:        %{name}-%{version}.tar
 BuildArch:      noarch
 
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-fixtures
-buildRequires:  python-module-python-subunit
-BuildRequires:  python-module-testtools
-BuildRequires:  python-module-extras
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-numpy python-module-pyasn1 python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-mimeparse python-module-pbr python-module-unittest2 python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-unittest2 rpm-build-python3
+
+#BuildRequires:  python-devel
+#BuildRequires:  python-module-setuptools
+#BuildRequires:  python-module-fixtures
+#buildRequires:  python-module-python-subunit
+#BuildRequires:  python-module-testtools
+#BuildRequires:  python-module-extras
 
 Requires:       python-module-fixtures
 Requires:       python-module-python-subunit
@@ -37,12 +41,12 @@ TAP test suite and any pyunit compatible test suite.
 Summary:        A repository of test results
 Group:		Development/Python
 BuildArch:      noarch
-BuildRequires:  rpm-build-python3
-BuildRequires:  python3-module-setuptools
-BuildRequires:  python3-module-fixtures
-buildRequires:  python3-module-python-subunit
-BuildRequires:  python3-module-testtools
-BuildRequires:  python3-module-extras
+#BuildRequires:  rpm-build-python3
+#BuildRequires:  python3-module-setuptools
+#BuildRequires:  python3-module-fixtures
+#buildRequires:  python3-module-python-subunit
+#BuildRequires:  python3-module-testtools
+#BuildRequires:  python3-module-extras
 
 Requires:       python3-module-fixtures
 Requires:       python3-module-python-subunit
@@ -102,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.20-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.20-alt1
 - Version 0.0.20
 

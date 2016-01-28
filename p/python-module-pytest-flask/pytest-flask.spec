@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.git20141124
+Release: alt1.git20141124.1
 Summary: A set of py.test fixtures to test Flask applications
 License: MIT
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-flask python-module-werkzeug
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-flask python-module-werkzeug
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-flask python3-module-werkzeug
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-flask python3-module-werkzeug
 %endif
 
 %py_provides pytest_flask
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-jinja2 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-jinja2 python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-flask python-module-setuptools-tests python3-module-flask python3-module-setuptools-tests rpm-build-python3
 
 %description
 A set of py.test fixtures to test Flask extensions and applications.
@@ -96,6 +100,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1.git20141124.1
+- NMU: Use buildreq for BR.
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.git20141124
 - Version 0.6.0
 

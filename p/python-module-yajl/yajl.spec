@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt1.git20140530
+Release: alt1.git20140530.1
 Summary: A CPython module for Yet-Another-Json-Library
 License: BSD
 Group: Development/Python
@@ -14,16 +14,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/rtyler/py-yajl.git
 Source: %name-%version.tar
 
-BuildPreReq: libyajl1-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-cjson
+#BuildPreReq: libyajl1-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-cjson
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires cjson
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: libyajl1-devel python-module-cjson python-module-setuptools-tests python3-devel python3-module-pytest rpm-build-python3
 
 %description
 The yajl module provides a Python binding to the Yajl library originally
@@ -90,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.6-alt1.git20140530.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20140530
 - Initial build for Sisyphus
 

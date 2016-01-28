@@ -4,7 +4,7 @@
 
 Name: python-module-tagpy
 Version: 2013.1
-Release: alt2.git20130711.1.1
+Release: alt2.git20130711.1.1.1
 
 Summary: TagPy is a set of Python bindings for TagLib. 
 License: GPL2+
@@ -14,13 +14,17 @@ Url: http://mathema.tician.de/software/tagpy
 # http://git.tiker.net/trees/tagpy.git
 Source: %name-%version.tar
 
-Buildrequires: python-devel boost-python-devel libtag-devel gcc-c++
-Buildrequires: python-module-setuptools ctags
+#Buildrequires: python-devel boost-python-devel libtag-devel gcc-c++
+#Buildrequires: python-module-setuptools ctags
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel boost-python3-devel
-BuildPreReq: python3-module-setuptools
+#BuildPreReq: python3-devel boost-python3-devel
+#BuildPreReq: python3-module-setuptools
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: boost-python-headers elfutils libboost_python3-1.58.0 libstdc++-devel python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-dev
+BuildRequires: boost-devel-headers boost-python-devel boost-python3-devel gcc-c++ libtag-devel python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 TagPy is a set of Python bindings for Scott Wheeler's TagLib.
@@ -96,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2013.1-alt2.git20130711.1.1.1
+- NMU: Use buildreq for BR.
+
 * Wed May 20 2015 Sergey V Turchin <zerg@altlinux.org> 2013.1-alt2.git20130711.1.1
 - rebuild with gcc5
 

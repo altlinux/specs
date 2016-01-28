@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 Summary: Object-oriented filesystem paths
 License: MIT
 Group: Development/Python
@@ -14,15 +14,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-test
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-test
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-test
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python-module-pytest python-test python3-module-pytest python3-test rpm-build-python3 time
 
 %description
 pathlib offers a set of classes to handle filesystem paths. It offers
@@ -95,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
 

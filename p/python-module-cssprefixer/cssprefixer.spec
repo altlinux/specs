@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.2
-Release: alt1.git20130518
+Release: alt1.git20130518.1
 Summary: Rewrite your CSS files, adding vendor-prefixed versions of CSS3 rules
 License: ASLv2.0
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-cssutils
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-cssutils
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-cssutils
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-cssutils
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires cssutils
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-google python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-google python3-module-setuptools
+BuildRequires: python-module-cssutils python3-module-cssutils rpm-build-python3 time
 
 %description
 A tool that rewrites your CSS files, adding vendor-prefixed versions of
@@ -105,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1.git20130518.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1.git20130518
 - Initial build for Sisyphus
 

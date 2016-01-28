@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20150113
+Release: alt1.git20150113.1
 Summary: Makes it easy to respect rate limits
 License: MIT
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-decorator
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-decorator
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-decorator
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-decorator
 %endif
 
 %py_provides %oname
 %py_requires decorator
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Ratelim is a simple Python library that limits the number of times a
@@ -86,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.git20150113.1
+- NMU: Use buildreq for BR.
+
 * Wed Jan 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20150113
 - Initial build for Sisyphus
 

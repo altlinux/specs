@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.8.1
-Release: alt1.dev0.git20150202
+Release: alt1.dev0.git20150202.1
 Summary: An alternative implementation of RML
 License: ZPLv2.1
 Group: Development/Python
@@ -15,28 +15,32 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/z3c.rml.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Pygments python-module-lxml
-BuildPreReq: python-module-PyPDF2 python-module-Reportlab
-BuildPreReq: python-module-svg2rlg python-module-zope.interface
-BuildPreReq: python-module-zope.schema python-module-zope.pagetemplate
-BuildPreReq: python-module-Pillow python-module-coverage
-BuildPreReq: python-module-zope.testrunner
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-Pygments python-module-lxml
+#BuildPreReq: python-module-PyPDF2 python-module-Reportlab
+#BuildPreReq: python-module-svg2rlg python-module-zope.interface
+#BuildPreReq: python-module-zope.schema python-module-zope.pagetemplate
+#BuildPreReq: python-module-Pillow python-module-coverage
+#BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-Pygments python3-module-lxml
-BuildPreReq: python3-module-PyPDF2 python3-module-Reportlab
-BuildPreReq: python3-module-zope.interface
-BuildPreReq: python3-module-zope.schema python3-module-zope.pagetemplate
-BuildPreReq: python3-module-Pillow python3-module-coverage
-BuildPreReq: python3-module-zope.testrunner
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-Pygments python3-module-lxml
+#BuildPreReq: python3-module-PyPDF2 python3-module-Reportlab
+#BuildPreReq: python3-module-zope.interface
+#BuildPreReq: python3-module-zope.schema python3-module-zope.pagetemplate
+#BuildPreReq: python3-module-Pillow python3-module-coverage
+#BuildPreReq: python3-module-zope.testrunner
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires z3c lxml pyPdf reportlab zope.interface zope.schema
 %py_requires zope.pagetemplate
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-Reportlab python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zope.browser python-module-zope.component python-module-zope.configuration python-module-zope.contenttype python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.i18n python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.location python-module-zope.proxy python-module-zope.publisher python-module-zope.schema python-module-zope.security python-module-zope.tal python-module-zope.tales python-module-zope.testing python-module-zope.traversing python-module-zope.untrustedpython python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-Reportlab python3-module-babel python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-docutils python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytz python3-module-setuptools python3-module-snowballstemmer python3-module-transaction python3-module-unittest2 python3-module-zope python3-module-zope.browser python3-module-zope.component python3-module-zope.configuration python3-module-zope.contenttype python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18n python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.location python3-module-zope.proxy python3-module-zope.publisher python3-module-zope.schema python3-module-zope.security python3-module-zope.tal python3-module-zope.tales python3-module-zope.testing python3-module-zope.traversing
+BuildRequires: python-module-PyPDF2 python-module-coverage python-module-docutils python-module-html5lib python-module-pytest python-module-svg2rlg python-module-zope.pagetemplate python-module-zope.testrunner python3-module-PyPDF2 python3-module-coverage python3-module-html5lib python3-module-pytest python3-module-sphinx python3-module-zope.pagetemplate python3-module-zope.testrunner rpm-build-python3 time
 
 %description
 This is an alternative implementation of ReportLab's RML PDF generation
@@ -172,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.8.1-alt1.dev0.git20150202.1
+- NMU: Use buildreq for BR.
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.1-alt1.dev0.git20150202
 - Version 2.8.1.dev0
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20150226
+Release: alt1.git20150226.1
 Summary: Python3 Asyncio Utils
 License: ASLv2.0
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
+BuildRequires: python3-module-asyncio python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Python3 Asyncio implements an event loop, but in quite low level, it
@@ -119,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1.git20150226.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150226
 - Initial build for Sisyphus
 

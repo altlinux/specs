@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.2
-Release: alt1.git20150711
+Release: alt1.git20150711.1
 Summary: Provides methods to connect to multiple databases easily
 License: ASLv2.0
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-SQLAlchemy
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-SQLAlchemy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-SQLAlchemy
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-SQLAlchemy
 %endif
 
 %py_provides sqlalchemy_multidb
 %py_requires sqlalchemy
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Provides methods to load the database configurations from a config file
@@ -86,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1.git20150711.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20150711
 - Initial build for Sisyphus
 

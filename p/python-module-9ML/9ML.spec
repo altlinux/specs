@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt4
+Release: alt4.1
 
 Summary: A tool for reading, writing and generally working with 9ML files
 License: BSD
@@ -18,13 +18,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-sphinx-devel
-BuildPreReq: python-module-sphinxcontrib-spelling
-BuildPreReq: libenchant-devel
+#BuildPreReq: python-devel python-module-sphinx-devel
+#BuildPreReq: python-module-sphinxcontrib-spelling
+#BuildPreReq: libenchant-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-enchant python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base
+BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-spelling python3-module-setuptools rpm-build-gir rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %add_python_req_skip testing_utils
@@ -191,6 +195,9 @@ cp -fR doc/python_nineml_api/build/pickle \
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt4.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt4
 - Excluded examples from python3-module-%oname
 

@@ -6,7 +6,7 @@
 Summary: Restkit is an HTTP resource kit for Python
 Name: python-module-%sname
 Version: 4.2.2
-Release: alt2.git20140731
+Release: alt2.git20140731.1
 # http://github.com/benoitc/restkit
 Source0: %name-%version.tar
 #Source0: http://pypi.python.org/packages/source/r/%sname/%sname-%version.tar.gz
@@ -18,18 +18,22 @@ BuildArch: noarch
 
 #add_python_req_skip eventlet
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-http-parser python-module-socketpool
-BuildPreReq: python-module-nose python-module-webob
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-http-parser python-module-socketpool
+#BuildPreReq: python-module-nose python-module-webob
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-http-parser python3-module-socketpool
-BuildPreReq: python-tools-2to3 python3-module-nose python3-module-webob
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-http-parser python3-module-socketpool
+#BuildPreReq: python-tools-2to3 python3-module-nose python3-module-webob
 %endif
 
 %py_requires http_parser socketpool
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-cryptography python-module-dns python-module-greenlet python-module-nose python-module-psycopg2 python-module-pytest python-modules-wsgiref python3-module-cryptography python3-module-dns python3-module-greenlet python3-module-nose python3-module-psycopg2 python3-module-pytest rpm-build-python3 time
 
 %description
 Restkit is an HTTP resource kit for Python. 
@@ -100,6 +104,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.2.2-alt2.git20140731.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.2-alt2.git20140731
 - Added necessary requirements
 

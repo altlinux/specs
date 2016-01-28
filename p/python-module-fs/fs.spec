@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.2
-Release: alt1
+Release: alt1.1
 Summary: Filesystem abstraction layer
 License: BSD
 Group: Development/Python
@@ -15,21 +15,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-wx python-module-dexml
-BuildPreReq: python-module-django python-module-paramiko
-BuildPreReq: python-module-boto
-BuildPreReq: python-module-sphinx-devel libfuse
-BuildPreReq: python-module-sphinxcontrib-spelling
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-wx python-module-dexml
+#BuildPreReq: python-module-django python-module-paramiko
+#BuildPreReq: python-module-boto
+#BuildPreReq: python-module-sphinx-devel libfuse
+#BuildPreReq: python-module-sphinxcontrib-spelling
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-dexml
-BuildPreReq: python3-module-django python3-module-paramiko
-BuildPreReq: python3-module-boto
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-dexml
+#BuildPreReq: python3-module-django python3-module-paramiko
+#BuildPreReq: python3-module-boto
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-docutils python-module-enum34 python-module-genshi python-module-jinja2 python-module-numpy python-module-psycopg2 python-module-pyasn1 python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-chardet python3-module-psycopg2 python3-module-pytest python3-module-setuptools python3-module-yaml python3-module-yieldfrom.http.client python3-module-yieldfrom.urllib3
+BuildRequires: python-module-chardet python-module-django python-module-ecdsa python-module-html5lib python-module-ndg-httpsclient python-module-ntlm python-module-pycrypto python-module-setuptools-tests python-module-sphinxcontrib-spelling python-module-wx python3-module-django python3-module-ecdsa python3-module-pycrypto python3-module-setuptools-tests python3-module-yieldfrom.requests rpm-build-python3
 
 %description
 PyFilesystem is an abstraction layer for filesystems. In the same way
@@ -198,6 +203,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1
 - Version 0.5.2
 

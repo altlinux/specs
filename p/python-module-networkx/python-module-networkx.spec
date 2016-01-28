@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.10
-Release:        alt2
+Release:        alt2.1
 Epoch:          1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
@@ -17,16 +17,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildArch:      noarch
 
-BuildRequires: python-devel
-BuildPreReq: python-module-pygraphviz ipython libnumpy-devel
-BuildPreReq: python-module-pydot python-module-matplotlib
-BuildPreReq: python-module-yaml python-module-scipy python-module-pyparsing
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: graphviz python-module-setuptools python-module-decorator
-BuildPreReq: python-module-sphinx_rtd_theme
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: fontconfig fonts-bitmap-misc graphviz ipython libwayland-client libwayland-server python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-genshi python-module-greenlet python-module-ipykernel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-mpmath python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-notebook python-module-ntlm python-module-numpy python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-simplegeneric python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-wx3.0 python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python-modules-xml python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-html5lib python-module-ipyparallel python-module-numpy-testing python-module-objects.inv python-module-pydot python-module-pygraphviz python-module-scipy python-module-sphinx-pickles python-module-yaml python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python-devel
+#BuildPreReq: python-module-pygraphviz ipython libnumpy-devel
+#BuildPreReq: python-module-pydot python-module-matplotlib
+#BuildPreReq: python-module-yaml python-module-scipy python-module-pyparsing
+#BuildPreReq: python-module-sphinx-devel python-module-Pygments
+#BuildPreReq: graphviz python-module-setuptools python-module-decorator
+#BuildPreReq: python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3 python3-module-setuptools
+#BuildRequires: python3-devel python-tools-2to3 python3-module-setuptools
 %endif
 
 Requires: %name-drawing = %EVR
@@ -267,6 +272,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:1.10-alt2.1
+- NMU: Use buildreq for BR.
+
 * Wed Nov 11 2015 Alexey Shabalin <shaba@altlinux.ru> 1:1.10-alt2
 - fixed import optional modules
 

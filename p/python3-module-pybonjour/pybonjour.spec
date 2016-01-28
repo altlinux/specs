@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt1.git20131002
+Release: alt1.git20131002.1
 Summary: Pure-Python interface to Apple Bonjour and compatible DNS-SD libraries
 License: MIT
 Group: Development/Python3
@@ -18,9 +18,13 @@ BuildArch: noarch
 Requires: libavahi
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests libavahi
+#BuildPreReq: python3-devel python3-module-setuptools-tests libavahi
 
 %py3_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libgpg-error python-base python3 python3-base
+BuildRequires: libavahi rpm-build-python3
 
 %description
 pybonjour provides a pure-Python interface (via ctypes) to Apple Bonjour
@@ -48,6 +52,9 @@ python3 test_pybonjour.py -v
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1.git20131002.1
+- NMU: Use buildreq for BR.
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20131002
 - Initial build for Sisyphus
 

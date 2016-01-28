@@ -6,7 +6,7 @@
 Summary: Python library for working with CouchDB. 
 Name: python-module-%sname
 Version: 1.0.1
-Release: alt1.git20141116
+Release: alt1.git20141116.1
 # https://github.com/djc/couchdb-python.git
 Source0: %name-%version.tar
 License: BSD
@@ -14,14 +14,19 @@ Group: Development/Python
 URL: http://code.google.com/p/couchdb-python/
 BuildArch: noarch
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python3-module-pytest rpm-build-python3 time
+
+#BuildRequires: python-devel
+#BuildRequires: python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %add_findreq_skiplist %python_sitelibdir/%sname/util3.py
@@ -131,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1.git20141116.1
+- NMU: Use buildreq for BR.
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.git20141116
 - Version 1.0.1
 - Extracted tests into separate packages

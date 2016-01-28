@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.git20141121
+Release: alt1.git20141121.1
 Summary: Backup of Banyan Python module
 License: BSD
 Group: Development/Python
@@ -16,17 +16,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/pyannote/pyannote-banyan.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-UnittestRandGenState
+#BuildPreReq: gcc-c++
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-UnittestRandGenState
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-UnittestRandGenState
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-UnittestRandGenState
 %endif
 
 %py_provides %oname
 %py_provides %{oname}_c
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils libstdc++-devel python-base python-devel python-module-numpy python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-numpy python3-module-setuptools
+BuildRequires: gcc-c++ python-module-UnittestRandGenState python-module-pytest python3-devel python3-module-UnittestRandGenState python3-module-pytest rpm-build-python3
 
 %description
 Highly-optimized search trees (red-black, splay, and sorted-list) with
@@ -101,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt1.git20141121.1
+- NMU: Use buildreq for BR.
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20141121
 - Version 0.1.6
 

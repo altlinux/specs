@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.git20141122
+Release: alt1.git20141122.1
 Summary: NumPy array stored in database
 License: Free
 Group: Development/Python
@@ -16,17 +16,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: doxygen graphviz doxypy
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-leveldb python-module-lmdb libnumpy-devel
+#BuildPreReq: doxygen graphviz doxypy
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-leveldb python-module-lmdb libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-leveldb python3-module-lmdb
-BuildPreReq: libnumpy-py3-devel python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-leveldb python3-module-lmdb
+#BuildPreReq: libnumpy-py3-devel python-tools-2to3
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: fontconfig fonts-bitmap-misc libwayland-client libwayland-server python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy python3-module-setuptools
+BuildRequires: doxygen doxypy graphviz python-module-docutils python-module-html5lib python-module-matplotlib python-module-pytest python3-module-pytest rpm-build-python3 time
 
 %description
 DBArray is an 2D array stored in database. The purpose of this class is
@@ -106,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt1.git20141122.1
+- NMU: Use buildreq for BR.
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20141122
 - Initial build for Sisyphus
 

@@ -5,7 +5,7 @@
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python-module-%oname
 Version: 0.9.7.4
-Release: alt1.git20150203
+Release: alt1.git20150203.1
 # https://github.com/cannatag/ldap3.git
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -14,14 +14,19 @@ Group: Development/Python
 Url: https://pypi.python.org/pypi/ldap3/
 
 BuildRequires(pre): rpm-build-python
-BuildRequires: libsasl2-devel libldap-devel libssl-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pyasn1 python-modules-json
-BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pyasn1 python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
+
+#BuildRequires: libsasl2-devel libldap-devel libssl-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pyasn1 python-modules-json
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pyasn1
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pyasn1
 %endif
 
 %py_provides %oname
@@ -117,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.7.4-alt1.git20150203.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7.4-alt1.git20150203
 - Version 0.9.7.4
 

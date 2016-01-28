@@ -4,7 +4,7 @@
 
 Name: python-module-%pypi_name
 Version: 1.7.4
-Release: alt1
+Release: alt1.1
 Summary: OpenStack Client Configuration Library
 Group: Development/Python
 License: ASL 2.0
@@ -15,18 +15,22 @@ BuildArch: noarch
 
 Provides: os-client-config
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools python-module-setuptools-tests
-BuildRequires: python-module-pbr
-BuildRequires: python-module-fixtures
-BuildRequires: python-module-appdirs
-BuildRequires: python-module-oslotest
-BuildRequires: python-module-testtools python-module-testscenarios python-module-testrepository
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: pyflakes python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-docutils python-module-enum34 python-module-extras python-module-flake8 python-module-genshi python-module-hacking python-module-jinja2 python-module-jinja2-tests python-module-linecache2 python-module-markupsafe python-module-mccabe python-module-mimeparse python-module-ndg-httpsclient python-module-netaddr python-module-ntlm python-module-numpy python-module-oslo.config python-module-pbr python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-stevedore python-module-subunit python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-wrapt python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-tools-pep8 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-extras python3-module-genshi python3-module-linecache2 python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-subunit python3-module-testtools python3-module-traceback2 python3-module-unittest2
+BuildRequires: python-module-alabaster python-module-html5lib python-module-keystoneclient python-module-oslosphinx python-module-setuptools-tests python-module-testrepository python-module-tox python-module-yaml python3-module-html5lib python3-module-setuptools-tests python3-module-testrepository python3-module-yaml rpm-build-python3 time
+
+#BuildRequires: python-devel
+#BuildRequires: python-module-setuptools python-module-setuptools-tests
+#BuildRequires: python-module-pbr
+#BuildRequires: python-module-fixtures
+#BuildRequires: python-module-appdirs
+#BuildRequires: python-module-oslotest
+#BuildRequires: python-module-testtools python-module-testscenarios python-module-testrepository
 
 #>= 1.10.0
-BuildRequires: python-module-keystoneclient
+#BuildRequires: python-module-keystoneclient
 #>= 1.6.0
-BuildRequires: python-module-yaml
+#BuildRequires: python-module-yaml
 
 #Requires: python-module-setuptools
 #Requires: python-module-fixtures
@@ -51,8 +55,8 @@ have to know extra info to use OpenStack
 %package doc
 Summary: Documentation for OpenStack os-client-config library
 Group: Development/Documentation
-BuildRequires: python-module-sphinx
-BuildRequires: python-module-oslosphinx
+#BuildRequires: python-module-sphinx
+#BuildRequires: python-module-oslosphinx
 
 %description doc
 Documentation for the os-client-config library.
@@ -62,11 +66,11 @@ Documentation for the os-client-config library.
 Summary: OpenStack Client Configuation Library
 Group: Development/Python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools python3-module-setuptools-tests
-BuildRequires: python3-module-pbr
-BuildRequires: python3-module-yaml
-BuildRequires: python3-module-testtools python3-module-testscenarios python3-module-testrepository
+#BuildRequires: python3-devel
+#BuildRequires: python3-module-setuptools python3-module-setuptools-tests
+#BuildRequires: python3-module-pbr
+#BuildRequires: python3-module-yaml
+#BuildRequires: python3-module-testtools python3-module-testscenarios python3-module-testrepository
 
 #Requires: python3-module-setuptools
 #Requires: python3-module-fixtures
@@ -156,5 +160,8 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7.4-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt1
 - Initial packaging

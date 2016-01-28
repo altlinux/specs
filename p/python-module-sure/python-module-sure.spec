@@ -4,7 +4,7 @@
 Name: python-module-%modname
 
 Version: 1.2.12
-Release: alt2.git20150625
+Release: alt2.git20150625.1
 
 Summary: Assertion toolbox for python
 
@@ -18,13 +18,17 @@ BuildArch: noarch
 
 Source: %modname-%version.tar
 
-BuildRequires: python-module-setuptools python-module-nose
-BuildPreReq: python-module-six python-module-mock
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-funcsigs python-module-pbr python-module-setuptools python-module-six python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-mock python-module-nose python3-module-html5lib python3-module-nose python3-module-pbr python3-module-unittest2 rpm-build-python3 time
+
+#BuildRequires: python-module-setuptools python-module-nose
+#BuildPreReq: python-module-six python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-nose
-BuildPreReq: python3-module-six python3-module-mock
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-module-setuptools python3-module-nose
+#BuildPreReq: python3-module-six python3-module-mock
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -88,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt2.git20150625.1
+- NMU: Use buildreq for BR.
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.12-alt2.git20150625
 - Fixed for new mock
 

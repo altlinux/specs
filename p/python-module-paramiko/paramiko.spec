@@ -10,7 +10,7 @@ Summary: SSH2 protocol for python
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 Name: python-module-paramiko
 Version: %version
-Release: %release
+Release: %release.1
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -19,14 +19,18 @@ Group: Development/Python
 Url: http://www.lag.net/paramiko
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-ecdsa python-module-pycrypto
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-ecdsa python-module-pycrypto
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-ecdsa python3-module-pycrypto
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-ecdsa python3-module-pycrypto
+#BuildPreReq: python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-ecdsa python-module-pycrypto python-module-setuptools-tests python3-module-ecdsa python3-module-pycrypto python3-module-setuptools-tests rpm-build-python3
 
 %description
 paramiko is a module for python that implements the SSH2 protocol for secure
@@ -107,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 12 2016 Alexey Shabalin <shaba@altlinux.ru> 1.16.0-alt2
 - 1.16.0 Release
 

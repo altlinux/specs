@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20141218
+Release: alt1.git20141218.1
 Summary: This project is a Python version of the language-tags Javascript project
 License: MIT
 Group: Development/Python
@@ -15,19 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six python-module-nose
-BuildPreReq: python-module-pytest-cov
-BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-six python-module-nose
+#BuildPreReq: python-module-pytest-cov
+#BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six python3-module-nose
-BuildPreReq: python3-module-pytest-cov
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-six python3-module-nose
+#BuildPreReq: python3-module-pytest-cov
 %endif
 
 %py_provides language_tags
 %py_requires six
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-coverage python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-coverage python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest-cov python-module-setuptools-tests python3-module-nose python3-module-pytest-cov python3-module-setuptools-tests python3-module-six rpm-build-python3 time
 
 %description
 This Python API offers a way to validate and lookup languages tags.
@@ -133,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1.git20141218.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20141218
 - Initial build for Sisyphus
 

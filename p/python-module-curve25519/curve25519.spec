@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.1
-Release: alt1.git20141020
+Release: alt1.git20141020.1
 Summary: Implementations of a fast Elliptic-curve Diffie-Hellman primitive
 License: BSD
 Group: Development/Python
@@ -14,13 +14,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/agl/curve25519-donna.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python-module-pytest python3-devel python3-module-pytest rpm-build-python3 time
 
 %description
 curve25519 is an elliptic curve, developed by Dan Bernstein, for fast
@@ -128,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1.git20141020.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.git20141020
 - Initial build for Sisyphus
 

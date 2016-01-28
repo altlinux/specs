@@ -4,7 +4,7 @@
 Summary: WebSocket for Python (ws4py)
 Name: python-module-ws4py
 Version: 0.3.4
-Release: alt1
+Release: alt1.1
 Url: https://github.com/Lawouach/WebSocket-for-Python
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -12,11 +12,15 @@ License: ASL 2.0
 Group: Development/Python
 
 BuildArch: noarch
-BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-setupdocs python3-module-setupdocs rpm-build-python3
+
+#BuildRequires: python-dev python-module-setupdocs python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setupdocs python3-module-setuptools
+#BuildPreReq: python3-module-setupdocs python3-module-setuptools
 %endif
 
 %description
@@ -76,6 +80,9 @@ popd
 
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.4-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 30 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 0.3.4-alt1
 - Initla build for ALT
 

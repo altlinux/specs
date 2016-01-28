@@ -4,7 +4,7 @@
 
 Name: python-module-%_name
 Version: 6.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for BerkleyDB
 Group: Development/Python
@@ -13,10 +13,14 @@ Url: https://pypi.python.org/pypi/bsddb3/
 
 Source: https://pypi.python.org/packages/source/b/%_name/%_name-%version.tar.gz
 
-BuildRequires: libdb4-devel
-BuildRequires: python-devel
-BuildRequires: python3-devel rpm-build-python3
-BuildRequires: /proc
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-bsddb python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: libdb4-devel python-devel python3-devel rpm-build-python3
+
+#BuildRequires: libdb4-devel
+#BuildRequires: python-devel
+#BuildRequires: python3-devel rpm-build-python3
+#BuildRequires: /proc
 
 %description
 This package provides Python wrappers for Berkeley DB                                          .
@@ -73,6 +77,9 @@ popd
 %exclude %_includedir/python*/%_name/bsddb.h
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 6.0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Jul 06 2014 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
 - first build for Sisyphus
 

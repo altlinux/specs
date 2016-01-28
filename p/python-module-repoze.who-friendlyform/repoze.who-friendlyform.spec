@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        1.0.8
-Release:        alt5
+Release:        alt5.1
 Summary:        Collection of repoze.who friendly form plugins
 Group:          Development/Python
 License:        BSD-derived
@@ -12,19 +12,24 @@ URL:            http://pypi.python.org/pypi/repoze.who-friendlyform/
 Source:         %oname-%version.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel gif2png
-BuildPreReq: python-module-webob python-module-zope.interface
-BuildPreReq: python-module-repoze.who python-module-paste
-BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel gif2png
+#BuildPreReq: python-module-webob python-module-zope.interface
+#BuildPreReq: python-module-repoze.who python-module-paste
+#BuildPreReq: python-module-nose python-module-coverage
 #BuildPreReq: texlive-latex-recommended
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires repoze.who zope.interface webob
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-paste python-module-pytz python-module-repoze python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base
+BuildRequires: gif2png python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-repoze.who python3-module-setuptools rpm-build-python3 time
 
 %description
 repoze.who-friendlyform is a repoze.who plugin which provides a
@@ -135,6 +140,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt5.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt5
 - Added module for Python 3
 

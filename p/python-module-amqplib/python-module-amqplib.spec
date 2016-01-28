@@ -4,19 +4,23 @@
 
 Name: python-module-%module_name
 Version: 1.0.2
-Release: alt2
+Release: alt2.1
 Group: Development/Python
 License: GPLv2
 Summary: Python AMQP (Advanced Message Queuing Protocol) Client library
 URL: http://code.google.com/p/py-amqplib/
 Source: %module_name-%version.tgz
 
-BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 Python AMQP (Advanced Message Queuing Protocol) Client library.
@@ -68,6 +72,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt2.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt2
 - Added module for Python 3
 

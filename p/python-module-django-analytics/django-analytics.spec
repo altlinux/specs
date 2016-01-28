@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20110815
+Release: alt1.git20110815.1
 Summary: Django app facilitating tracking of arbitrary simple metrics
 License: BSD
 Group: Development/Python
@@ -16,18 +16,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-django-geckoboard
-BuildPreReq: python-module-django-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-django-geckoboard
+#BuildPreReq: python-module-django-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-django-geckoboard
-BuildPreReq: python3-module-django-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-django-geckoboard
+#BuildPreReq: python3-module-django-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides analytics
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-psycopg2 python-module-pytest python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base python3-module-psycopg2 python3-module-pytest python3-module-setuptools python3-module-yaml
+BuildRequires: python-module-django python-module-setuptools-tests python3-module-django python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 A basic Django app facilitating tracking of certain elementary metrics
@@ -125,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1.git20110815.1
+- NMU: Use buildreq for BR.
+
 * Wed Nov 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20110815
 - Initial build for Sisyphus
 

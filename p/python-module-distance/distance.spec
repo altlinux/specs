@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.git20131122
+Release: alt1.git20131122.1
 Summary: Utilities for comparing sequences
 License: GPLv2
 Group: Development/Python
@@ -14,13 +14,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/doukremt/distance.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python3-devel rpm-build-python3
 
 %description
 This package provides helpers for computing similarities between
@@ -78,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1.git20131122.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20131122
 - Initial build for Sisyphus
 

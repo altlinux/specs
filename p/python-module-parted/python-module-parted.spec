@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for libparted
 
@@ -16,13 +16,15 @@ Source: %_upstream-%version.tar.gz
 Provides: %_upstream
 
 
-# Automatically added by buildreq on Fri Feb 20 2009
-BuildRequires: libparted-devel python-devel
-BuildPreReq: python-module-decorator
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
+BuildRequires: libparted-devel python-devel python3-devel rpm-build-python3
+
+#BuildPreReq: python-module-decorator
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-decorator
+#BuildPreReq: python3-devel python3-module-decorator
 %endif
 
 %description
@@ -90,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.10.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Oct 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.0-alt1
 - Version 3.10.0 (ALT #30392)
 - Added module for Python 3

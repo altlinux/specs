@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.9
-Release: alt2
+Release: alt2.1
 Epoch: 1
 Summary: rdflib wrapper for Python
 License: BSD
@@ -15,11 +15,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
@@ -93,6 +97,9 @@ mv %buildroot%_bindir/sparql %buildroot%_bindir/sparql3
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1:0.2.9-alt2.1
+- NMU: Use buildreq for BR.
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.9-alt2
 - Use 'find... -exec...' instead of 'for ... $(find...'
 

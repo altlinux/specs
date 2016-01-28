@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.6
-Release: alt4
+Release: alt4.1
 Summary: Tool for expressing and solving convex optimization problems
 License: GPL v3 or higher
 Group: Development/Python
@@ -15,13 +15,17 @@ Source: http://cvxmod.net/dist/cvxmod-0.4.6.tar.gz
 BuildArch: noarch
 
 %setup_python_module %oname
-BuildPreReq: python-devel libatlas-devel liblapack-devel
-BuildPreReq: python-module-cvxopt
+#BuildPreReq: python-devel libatlas-devel liblapack-devel
+#BuildPreReq: python-module-cvxopt
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
-BuildPreReq: python3-module-cvxopt
+#BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-module-cvxopt
 %endif
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
 
 %description
 CVXMOD is a Python-based tool for expressing and solving convex
@@ -88,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.6-alt4.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6-alt4
 - Added module for Python 3
 

@@ -7,7 +7,7 @@
 %define oname BeautifulSoup4
 Name: python-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -21,14 +21,15 @@ BuildArch: noarch
 
 Source: BeautifulSoup-%version.tar.bz2
 
-# Automatically added by buildreq on Sat May 26 2007
-BuildRequires: python-devel python-modules-compiler python-modules-encodings
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3 time
 
-BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
-BuildPreReq: python3-module-setuptools-tests
+#BuildRequires: python3-devel python-tools-2to3
+#BuildPreReq: python3-module-setuptools-tests
 %endif
 
 %description
@@ -127,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 4.4.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.0-alt1
 - Version 4.4.0
 

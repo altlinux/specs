@@ -10,7 +10,7 @@ Name: python-module-%oname
 Summary: Python modules for Natural Language Processing (NLP)
 Group: Development/Python
 Version: %version
-Release: %release
+Release: %release.1
 License: Apache
 Url: http://www.nltk.org
 BuildRequires(pre): rpm-build-python
@@ -22,15 +22,16 @@ Source1: nltk_contrib-%version.tar
 
 Patch0: alt-setup.patch
 
-# Automatically added by buildreq on Mon Mar 02 2009
-BuildRequires: elinks python-devel python-module-numpy python-module-yaml python-modules-email python-modules-encodings python-modules-logging python-modules-sqlite3 python-modules-tkinter python-modules-xml
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: fontconfig python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-numpy
+BuildRequires: python-module-numpy-testing python-module-setuptools python-module-yaml python-modules-json python-modules-tkinter python3-module-numpy-testing python3-module-setuptools python3-module-yaml rpm-build-python3 time
 
-BuildPreReq: python-module-setuptools python-modules-json
+#BuildPreReq: python-module-setuptools python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-numpy
-BuildPreReq: python3-module-yaml
-BuildPreReq: python3-module-setuptools python-tools-2to3
+#BuildPreReq: python3-devel python3-module-numpy
+#BuildPreReq: python3-module-yaml
+#BuildPreReq: python3-module-setuptools python-tools-2to3
 %endif
 
 %add_python_req_skip MinEditDist Unitran Utils snow
@@ -183,6 +184,9 @@ mv nltk_contrib/doc nltk_contrib.doc
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 3.0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1
 - Version 3.0.1
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.4
-Release: alt1.git20140919
+Release: alt1.git20140919.1
 Summary: Geospatial extension to SQLAlchemy with PostGIS support
 License: MIT
 Group: Development/Python
@@ -15,19 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-SQLAlchemy python-module-flake8
-BuildPreReq: python-module-pytest-cov python-module-shapely
-BuildPreReq: python-module-sphinx-devel python-module-psycopg2
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-SQLAlchemy python-module-flake8
+#BuildPreReq: python-module-pytest-cov python-module-shapely
+#BuildPreReq: python-module-sphinx-devel python-module-psycopg2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-SQLAlchemy python3-module-flake8
-BuildPreReq: python3-module-pytest-cov python3-module-shapely
-BuildPreReq: python3-module-psycopg2
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-SQLAlchemy python3-module-flake8
+#BuildPreReq: python3-module-pytest-cov python3-module-shapely
+#BuildPreReq: python3-module-psycopg2
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: pyflakes python-base python-devel python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-coverage python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mccabe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-pep8 python3 python3-base python3-module-coverage python3-module-mccabe python3-module-pytest python3-module-setuptools python3-pyflakes python3-tools-pep8
+BuildRequires: python-module-alabaster python-module-docutils python-module-flake8 python-module-html5lib python-module-objects.inv python-module-psycopg2 python-module-pytest-cov python-module-setuptools-tests python3-module-flake8 python3-module-psycopg2 python3-module-pytest-cov python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 GeoAlchemy 2 is a Python toolkit for working with spatial databases. It
@@ -122,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.4-alt1.git20140919.1
+- NMU: Use buildreq for BR.
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1.git20140919
 - Initial build for Sisyphus
 

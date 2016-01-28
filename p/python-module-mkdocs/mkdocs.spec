@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.11.1
-Release: alt1
+Release: alt1.1
 Summary: Project documentation with Markdown
 License: BSD
 Group: Development/Python
@@ -14,20 +14,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-jinja2 python-module-markdown
-BuildPreReq: python-module-yaml python-module-watchdog
-BuildPreReq: ghp-import python-module-argh python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-jinja2 python-module-markdown
+#BuildPreReq: python-module-yaml python-module-watchdog
+#BuildPreReq: ghp-import python-module-argh python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-jinja2 python3-module-markdown
-BuildPreReq: python3-module-yaml python3-module-watchdog
-BuildPreReq: ghp-import.py3 python3-module-argh
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-jinja2 python3-module-markdown
+#BuildPreReq: python3-module-yaml python3-module-watchdog
+#BuildPreReq: ghp-import.py3 python3-module-argh
 %endif
 
 %py_provides %oname
 Requires: ghp-import
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-jinja2-tests python-module-markupsafe python-module-pathtools python-module-pytest python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-jinja2 python3-module-markupsafe python3-module-pathtools python3-module-pytest python3-module-setuptools python3-module-yaml
+BuildRequires: python-module-jinja2 python-module-markdown python-module-setuptools-tests python-module-watchdog python-modules-json python3-module-jinja2-tests python3-module-markdown python3-module-setuptools-tests python3-module-watchdog rpm-build-python3
 
 %description
 MkDocs is a fast, simple and downright gorgeous static site generator
@@ -143,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.11.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.1-alt1
 - Initial build for Sisyphus
 

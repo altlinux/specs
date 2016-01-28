@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.5
-Release: alt1.git20150209
+Release: alt1.git20150209.1
 Summary: Elasticsearch data layer for eve rest framework
 License: GPLv3
 Group: Development/Python
@@ -16,17 +16,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-elasticsearch python-module-arrow
-BuildPreReq: python-module-eve python-module-nose
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-elasticsearch python-module-arrow
+#BuildPreReq: python-module-eve python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-elasticsearch python3-module-arrow
-BuildPreReq: python3-module-eve python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-elasticsearch python3-module-arrow
+#BuildPreReq: python3-module-eve python3-module-nose
 %endif
 
 %py_provides eve_elastic
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-jinja2 python-module-pyasn1 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-jinja2 python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-ndg-httpsclient python-module-nose python-module-ntlm python-module-pytest python3-module-nose python3-module-pytest python3-module-urllib3 rpm-build-python3
 
 %description
 Eve-Elastic is elasticsearch data layer for eve REST framework.
@@ -99,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1.git20150209.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20150209
 - Version 0.2.5
 

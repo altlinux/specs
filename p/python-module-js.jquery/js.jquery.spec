@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.1
-Release: alt1
+Release: alt1.1
 Summary: fanstatic jQuery
 License: BSD
 Group: Development/Python
@@ -13,16 +13,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-fanstatic python-module-shutilwhich
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-fanstatic python-module-shutilwhich
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-fanstatic python3-module-shutilwhich
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-fanstatic python3-module-shutilwhich
 %endif
 
 %py_provides %oname
 %py_requires js fanstatic shutilwhich
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-module-shutilwhich python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-pytest python3-module-setuptools python3-module-webob
+BuildRequires: python-module-fanstatic python-module-setuptools-tests python3-module-fanstatic python3-module-setuptools-tests rpm-build-python3
 
 %description
 This library packages jQuery for fanstatic. It is aware of jQuery's
@@ -90,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1
 - Initial build for Sisyphus
 

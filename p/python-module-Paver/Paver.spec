@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.3
-Release: alt1.git20140810
+Release: alt1.git20140810.1
 Summary: Easy build, distribution and deployment scripting
 License: BSD
 Group: Development/Python
@@ -15,11 +15,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-sphinx-devel bzr
+#BuildPreReq: python-devel python-module-sphinx-devel bzr
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-devel python-tools-2to3
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-pbr python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: bzr python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv rpm-build-python3 time
 
 %description
 Paver is a Python-based build/distribution/deployment scripting tool
@@ -133,6 +138,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/paver/
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt1.git20140810.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt1.git20140810
 - Initial build for Sisyphus
 

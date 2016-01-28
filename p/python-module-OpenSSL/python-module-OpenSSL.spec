@@ -13,20 +13,22 @@ Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
 Name: %packagename
 Version: %version
-Release: %release
+Release: %release.1
 Source: %source_name-%source_version.tar.bz2
 License: LGPL
 Group: Development/Python
 Url: http://pyopenssl.sourceforge.net/
 Packager: Alexey Morozov <morozov@altlinux.org>
-BuildPreReq: rpm-build-python > 0.12-alt3
+#BuildPreReq: rpm-build-python > 0.12-alt3
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Jan 12 2004
-BuildRequires: python-devel python-module-distribute
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 Provides: %__python_module_prefix-pyOpenSSL
@@ -166,6 +168,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.15.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Apr 15 2015 Vladimir Didenko <cow@altlinux.org> 0.15.1-alt1
 - Version 0.15.1
 

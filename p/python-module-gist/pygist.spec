@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-build-python
 Name: python-module-%oname
 Version: 2.2.0
 %define cflags %optflags %optflags_shared -I%_builddir/%name-%version/src/gist
-Release: alt2.git20130422
+Release: alt2.git20130422.1
 Summary: Scientific graphics (plotting) library
 License: Free for non-commercial using
 Group: Development/Python
@@ -21,17 +21,21 @@ Source: pygist-%version.tar.gz
 Source1: http://hifweb.lbl.gov/public/software/gist/pygist.pdf
 Source2: sigfpe.h
 
-BuildPreReq: python-devel libX11-devel libreadline-devel
-BuildPreReq: libnumpy-devel liblapack-devel
-BuildPreReq: python-module-arrayfns
+#BuildPreReq: python-devel libX11-devel libreadline-devel
+#BuildPreReq: libnumpy-devel liblapack-devel
+#BuildPreReq: python-module-arrayfns
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
-BuildPreReq: libnumpy-py3-devel
+#BuildPreReq: python3-devel
+#BuildPreReq: libnumpy-py3-devel
 %endif
 
 %py_requires numpy
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-numpy xorg-xproto-devel
+BuildRequires: libX11-devel libnumpy-devel python-module-numpy-testing python3-devel python3-module-numpy-testing rpm-build-python3
 
 %description
 Gist is a scientific graphics library written by David H. Munro of
@@ -210,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.2.0-alt2.git20130422.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt2.git20130422
 - Added module for Python 3
 
