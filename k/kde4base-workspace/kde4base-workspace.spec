@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -130,7 +130,7 @@ BuildRequires: libqimageblitz-devel libraw1394-devel libsensors3-devel libgps-de
 BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
 BuildRequires: libalternatives-devel libudev-devel
 BuildRequires: polkit-qt-1-devel libpolkit-devel libdbusmenu-qt-devel
-BuildRequires: soprano soprano-backend-redland libsoprano-devel
+#BuildRequires: soprano soprano-backend-redland libsoprano-devel
 %if_enabled qalculate
 BuildRequires: libqalculate-devel
 %endif
@@ -645,7 +645,11 @@ __EOF__
 for d in `ls -1d %buildroot/%_kde4_iconsdir/Oxygen_*` ; do
     mv $d %buildroot/%_K4iconsdir/
 done
-
+# move icons
+if [ -d %buildroot/%_K4iconsdir/oxygen -a ! -d %buildroot/%_kde4_iconsdir/oxygen ] ; then
+    mkdir -p %buildroot/%_kde4_iconsdir
+    mv %buildroot/%_K4iconsdir/oxygen %buildroot/%_kde4_iconsdir/
+fi
 
 %if_enabled desktop
 # install kdm settings
@@ -862,7 +866,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %exclude %_K4dbus_sys_services/org.kde.kcontrol.kcmkdm.service
 %endif
 %python_sitelibdir/*
-%_K4iconsdir/oxygen/*/*/*
+%_kde4_iconsdir/oxygen/*/*/*
 %ifdef _kde_alternate_placement
 %_kde4_iconsdir/hicolor/*/*/*
 %else
@@ -964,6 +968,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt5
+- move oxygen icons to kde-specific place
+
 * Fri Jan 22 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt4
 - fix kdm Xstartup
 
