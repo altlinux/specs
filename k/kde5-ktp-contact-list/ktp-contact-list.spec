@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.12.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Requires: kde5-ktp-common-internals-core
 
 Source: %rname-%version.tar
+Patch1: alt-def-dont-group.patch
 
 # Automatically added by buildreq on Wed Jun 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-kcmutils-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libtelepathy-logger-qt5 libtelepathy-qt5 libtelepathy-qt5-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel telepathy-logger-qt5-devel
@@ -53,6 +54,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -81,6 +83,9 @@ sed -i 's|^Exec=.*|Exec=%_K5bin/ktp-contactlist|' %buildroot/%_K5dbus_srv/org.kd
 #%_K5lib/libktp-contact-list.so.*
 
 %changelog
+* Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
+- don't group contacts by default
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
