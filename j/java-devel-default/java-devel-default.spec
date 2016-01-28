@@ -1,8 +1,8 @@
-%define defjavaver 1.7.0
+%define defjavaver 1.8.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Name: java-devel-default
-Version: 1.6.0
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: chooser of default ALT Linux java compiler.
 Group: Development/Java
@@ -31,6 +31,9 @@ install -d $RPM_BUILD_ROOT/usr
 %files
 
 %changelog
+* Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
+- selected java8 as default
+
 * Mon Apr 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2
 - temporary selected java7 as default
 
