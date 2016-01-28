@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.25
+Version: 0.26
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -79,18 +79,16 @@ Provides JPackage build environment with java-1.7.0.
 Summary: JPackage build environment with java-1.8.0.
 Group: Development/Java
 
-# TODO: 1.8!!!
-#Requires(pre): java-devel >= 1.8.0 java >= 1.8.0
-Requires(pre): java-devel >= 1.7.0 java >= 1.7.0
+Requires(pre): java-devel >= 1.8.0 java >= 1.8.0
 # hack
 Conflicts: java-devel > 1.8.99 java > 1.8.99 java-headless > 1.8.99
 
 Requires: jpackage-generic-compat
 Provides: jpackage-core = %version-%release
-Provides: jpackage-1.4-compat = %version-%release
-Provides: jpackage-1.5-compat = %version-%release
-Provides: jpackage-1.6-compat = %version-%release
-Provides: jpackage-1.7-compat = %version-%release
+#Provides: jpackage-1.4-compat = %version-%release
+#Provides: jpackage-1.5-compat = %version-%release
+#Provides: jpackage-1.6-compat = %version-%release
+#Provides: jpackage-1.7-compat = %version-%release
 Provides: jpackage-compat = %version-%release
 # arch dependent - fake provides
 Provides: jpackage-for-%_target_cpu
@@ -126,6 +124,9 @@ install -d $RPM_BUILD_ROOT%_javadir
 %files -n jpackage-1.8-compat
 
 %changelog
+* Thu Jan 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- selected java8 as default
+
 * Thu Jan 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - preparation for java-1.8.0
 - TODO: set upper limits for java-1.8.0 when it will be released
