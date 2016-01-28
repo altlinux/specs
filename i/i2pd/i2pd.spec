@@ -4,13 +4,13 @@
 Name: i2pd
 Summary: Full C++ implementation of I2P router
 Version: 2.3.0
-Release: alt3
+Release: alt4
 License: BSD-3-Clause
 Group: System/Servers
 Url: https://github.com/PurpleI2P/i2pd
 
 Source0:%name-%version.tar
-Patch: %name-%version-alt.patch
+Patch: %name-%version-upstream.patch
 Source1: %name.service
 Source2: %name.logrotate
 Source3: i2p.conf
@@ -104,6 +104,9 @@ touch %buildroot%_logdir/%name/%name.log
 %_logdir/%name
 
 %changelog
+* Thu Jan 28 2016 Terechkov Evgenii <evg@altlinux.org> 2.3.0-alt4
+- git-20160128
+
 * Tue Jan 26 2016 Terechkov Evgenii <evg@altlinux.org> 2.3.0-alt3
 - Fix daemon logging (with patch)
 
