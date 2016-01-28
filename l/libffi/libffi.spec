@@ -1,8 +1,8 @@
 %define soname 6
 
 Name: libffi
-Version: 3.1
-Release: alt2
+Version: 3.2.1
+Release: alt1
 Epoch: 1
 
 Summary: Foreign Function Interface library
@@ -16,6 +16,10 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, gcc-c++, /proc, /dev/pts}}
+
+# Automatically added by buildreq on Mon Jan 25 2016
+# optimized out: perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore
+BuildRequires: makeinfo
 
 %description
 The libffi library provides a portable, high level programming
@@ -98,6 +102,9 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Mon Jan 25 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.2.1-alt1
+- Updated to 3.2.1.
+
 * Wed Aug 27 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.1-alt2
 - Fix pkgconfig.
 - Apply patch libffi-3.1-fix-exec-stack from fedora.
