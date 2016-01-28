@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt41
+Release:        alt42
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -272,10 +272,10 @@ install -dm 755 ${RPM_BUILD_ROOT}${_jvmcommonsysconfdir}
 install -dm 755 ${RPM_BUILD_ROOT}${_javadir}
 install -dm 755 ${RPM_BUILD_ROOT}${_javadir}-utils
 install -dm 755 ${RPM_BUILD_ROOT}${_javadir}-ext
-install -dm 755 ${RPM_BUILD_ROOT}${_javadir}-{1.4.2,1.5.0,1.6.0,1.7.0}
+install -dm 755 ${RPM_BUILD_ROOT}${_javadir}-{1.4.2,1.5.0,1.6.0,1.7.0,1.8.0}
 install -dm 755 ${RPM_BUILD_ROOT}${_jnidir}
 install -dm 755 ${RPM_BUILD_ROOT}${_jnidir}-ext
-install -dm 755 ${RPM_BUILD_ROOT}${_jnidir}-{1.4.2,1.5.0,1.6.0,1.7.0}
+install -dm 755 ${RPM_BUILD_ROOT}${_jnidir}-{1.4.2,1.5.0,1.6.0,1.7.0,1.8.0}
 install -dm 755 ${RPM_BUILD_ROOT}${_javajnidir}
 install -dm 755 ${RPM_BUILD_ROOT}${_javadocdir}
 install -dm 755 ${RPM_BUILD_ROOT}${_mavenpomdir}
@@ -535,6 +535,9 @@ rm -f /etc/maven/maven2-depmap.xml
 
 
 %changelog
+* Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt42
+- java 8 support
+
 * Fri Jan 15 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt41
 - preparations for migration on javapackages-tools and maven-metadata
 
