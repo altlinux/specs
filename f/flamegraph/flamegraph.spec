@@ -1,5 +1,5 @@
 Name: flamegraph
-Version: 20150915
+Version: 20160128
 Release: alt1
 
 Summary: Flame Graphs visualize profiled code-paths
@@ -18,15 +18,21 @@ Flame Graphs visualize profiled code-paths.
 %setup
 %install
 mkdir -p %buildroot%_bindir
-for file in *.pl *.awk dev/*.pl;do
+for file in *.pl *.awk dev/*.pl dev/*.py;do
 install -p -m755 $file %buildroot%_bindir/
 done
 
 %files
 %_bindir/*
-%doc README.md example-stacks.txt example.svg demos dev/README
+%doc README.md example* demos dev/README dev/*.d
 
 %changelog
+* Thu Jan 28 2016 Terechkov Evgenii <evg@altlinux.org> 20160128-alt1
+- git-20160128
+
+* Sat Nov 14 2015 Terechkov Evgenii <evg@altlinux.org> 20151114-alt1
+- git-20151114
+
 * Tue Sep 15 2015 Terechkov Evgenii <evg@altlinux.org> 20150915-alt1
 - git-20150915
 
