@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.95.0
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -288,6 +288,7 @@ cp -r xfce-settings/etcskel/.config %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.local %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.gconf %buildroot/etc/skel/
 cp -r xfce-settings/etcskel/.vimrc %buildroot/etc/skel/
+cp -r xfce-settings/etcskel/.gtkrc-2.0 %buildroot/etc/skel/
 
 install -m 644 xfce-settings/etcskel/.wm-select %buildroot/etc/skel/
 
@@ -397,6 +398,7 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /etc/skel/.local
 /etc/skel/.gconf
 /etc/skel/.vimrc
+/etc/skel/.gtkrc-2.0
 /usr/share/backgrounds/xfce/*
 
 %files slideshow
@@ -425,6 +427,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Fri Dec 25 2015 Mikhail Kolchin <mvk@altlinux.org> 7.95.0-alt3
+- xfce-settings: Add .gtkrc-2.0 for canberra support (closes: #30264).
+
 * Tue Apr 14 2015 Mikhail Efremov <sem@altlinux.org> 7.95.0-alt2
 - menu: Hide gmplayer in the SL menu.
 - xfce-settings: Cleanup gconf settings.
