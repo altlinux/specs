@@ -1,6 +1,5 @@
 Name: codeblocks
-%define revision 9158
-Version: 13.12
+Version: 16.01
 Release: alt1
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
@@ -11,14 +10,12 @@ Group: Development/C++
 Url: http://www.codeblocks.org
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-# http://svn.berlios.de/svnroot/repos/codeblocks/trunk 
-Source0: codeblocks_13.12-1.tar
+Source0: codeblocks_16.01.tar.gz
 Source1: %name-8.02-alt-icons.tar.bz2
 Source3: %name.desktop
 Source4: %name.po
 Source5: %name-default.conf
 
-Patch0: codeblocks-scriptedwizard-localization.patch
 Patch1: codeblocks-ebuild.conf.patch
 
 BuildPreReq: wxGTK-devel >= 2.8.12 gcc-c++ libgtk+2-devel zip sed grep coreutils bzip2 gettext-tools boost-devel libgamin-devel rpm-build-licenses libhunspell-devel wxGTK-contrib-gizmos-devel
@@ -66,20 +63,19 @@ SDK для создания собственных плагинов к сред�
 %define pkgdata %_datadir/%name
 
 %prep
-%setup -q -n %name-%version -a 1
+%setup -q -a 1 -n codeblocks-16.01.release
 cp %SOURCE3 src/mime/
 cp %SOURCE4 .
 
-# %patch0 -p1
 %patch1 -p1
 
 # Script update_revision.sh generates file revision.m4 that contains info about svn revision.
 # It takes data from .svn directory. Since we haven't this directory in %SOURCE0, we should remove
 # this script and create correct file revision.m4 instead.
-rm update_revision.sh
-echo "m4_define([SVN_REV], %{revision})" > revision.m4
-echo "m4_define([SVN_REVISION], %{version})" >> revision.m4
-echo "m4_define([SVN_DATE], `date +'%%F %%T'`)" >> revision.m4
+# rm update_revision.sh
+# echo "m4_define([SVN_REV], %{revision})" > revision.m4
+# echo "m4_define([SVN_REVISION], %{version})" >> revision.m4
+# echo "m4_define([SVN_DATE], `date +'%%F %%T'`)" >> revision.m4
 
 %build
 msgfmt %name.po -o %name.mo
@@ -94,7 +90,7 @@ install -m 644 -D alt-icons/32x32/%name.png %buildroot%_niconsdir/%name.png
 install -m 644 -D alt-icons/48x48/%name.png %buildroot%_liconsdir/%name.png
 install -m 644 -D alt-icons/64x64/%name.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
-install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
+install -m 644 -D %SOURCE5 %buildroot%_sysconfdir/skel/.config/codeblocks/default.conf
 
 %files
 %doc README COPYING AUTHORS BUGS COMPILERS TODO NEWS
@@ -104,7 +100,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
 %_mandir/man?/*
-%_sysconfdir/skel/.codeblocks
+%_sysconfdir/skel/.config/codeblocks
 %dir %pkgdata
 %{pkgdata}/abbreviations.zip
 %{pkgdata}/astyle.zip
@@ -152,7 +148,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 
 %files contrib
 %_bindir/cb_share_config
-%_bindir/codesnippets
+# %_bindir/codesnippets
 %_libdir/libwxsmithlib.so.*
 %_libdir/%{name}/wxContribItems
 %{pkgdata}/AutoVersioning.zip
@@ -182,6 +178,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{pkgdata}/occurrenceshighlighting.zip
 %{pkgdata}/openfileslist.zip
 %{pkgdata}/projectsimporter.zip
+%{pkgdata}/ProjectOptionsManipulator.zip
 %{pkgdata}/Profiler.zip
 %{pkgdata}/RegExTestbed.zip
 %{pkgdata}/ReopenEditor.zip
@@ -226,6 +223,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{_libdir}/%{name}/plugins/liboccurrenceshighlighting.*
 %{_libdir}/%{name}/plugins/libopenfileslist.*
 %{_libdir}/%{name}/plugins/libprojectsimporter.*
+%{_libdir}/%{name}/plugins/libProjectOptionsManipulator.*
 %{_libdir}/%{name}/plugins/libProfiler.*
 %{_libdir}/%{name}/plugins/libRegExTestbed.*
 %{_libdir}/%{name}/plugins/libReopenEditor.*
@@ -244,6 +242,9 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 28 2016 Denis Kirienko <dk@altlinux.org> 16.01-alt1
+- 16.01 release
+
 * Fri Jan 17 2014 Denis Kirienko <dk@altlinux.org> 13.12-alt1
 - 13.12 release
 
