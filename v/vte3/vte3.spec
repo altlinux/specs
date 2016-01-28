@@ -4,7 +4,7 @@
 
 Name: %{_name}3
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 %def_disable static
 %def_enable introspection
@@ -124,6 +124,8 @@ GObject introspection devel data for the %name library
 
 %install
 %makeinstall_std
+# fix permissions
+chmod 755 %buildroot%_sysconfdir/profile.d/vte.sh
 
 install -d -m755 %buildroot%pkgdocdir
 install -p -m644 AUTHORS MAINTAINERS NEWS README %buildroot%pkgdocdir/
@@ -175,6 +177,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Thu Jan 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt3
+- fised permissions for %%_sysconfdir/profile.d/vte.sh
+
 * Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt2
 - rebuilt against libgnutls.so.30
 
