@@ -3,8 +3,8 @@
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.3
+Release: alt1
 
 %def_disable static
 %def_enable introspection
@@ -177,6 +177,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Thu Jan 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.42.3-alt1
+- 0.42.3
+
 * Thu Jan 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt3
 - fised permissions for %%_sysconfdir/profile.d/vte.sh
 
