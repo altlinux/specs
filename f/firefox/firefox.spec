@@ -8,8 +8,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        43.0.4
-Release:        alt2
+Version:        44.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -42,7 +42,7 @@ BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend glibc-kernheaders
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
-BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
+BuildRequires: libcurl-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: zip unzip
 BuildRequires: bzlib-devel zlib-devel
@@ -300,6 +300,23 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Wed Jan 27 2016 Alexey Gladkov <legion@altlinux.ru> 44.0-alt1
+- New release (44.0).
+- Use GTK3.
+- Fixed:
+  + 2016-12 Lightweight themes on Firefox for Android do not verify a secure connection
+  + 2016-11 Application Reputation service disabled in Firefox 43
+  + 2016-10 Unsafe memory manipulation found through code inspection
+  + 2016-09 Addressbar spoofing attacks
+  + 2016-08 Delay following click events in file download dialog too short on OS X
+  + 2016-07 Errors in mp_div and mp_exptmod cryptographic functions in NSS
+  + 2016-06 Missing delay following user click events in protocol handler dialog
+  + 2016-05 Addressbar spoofing through stored data url shortcuts on Firefox for Android
+  + 2016-04 Firefox allows for control characters to be set in cookie names
+  + 2016-03 Buffer overflow in WebGL after out of memory allocation
+  + 2016-02 Out of Memory crash when parsing GIF format images
+  + 2016-01 Miscellaneous memory safety hazards (rv:44.0 / rv:38.6)
+
 * Tue Jan 19 2016 Alexey Gladkov <legion@altlinux.ru> 43.0.4-alt2
 - Fix crash in media source (thx: glebfm@).
 
