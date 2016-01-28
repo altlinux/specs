@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.13
-Release: alt1
+Release: alt2
 Summary: Python graphics package
 License: GPLv2+
 Group: Development/Python3
@@ -11,10 +11,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %oname-%version.tar
 
+
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel /usr/bin/tex /usr/bin/gs
 BuildPreReq: libkpathsea-devel python-module-imaging
-BuildPreReq: python-module-sphinx-devel
+BuildPreReq: python3-module-sphinx
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 PyX is a Python package for the creation of PostScript and PDF files. It
@@ -51,7 +53,6 @@ This package contains examples for PyX.
 %prep
 %setup
 
-%prepare_sphinx .
 ln -s ../objects.inv manual
 ln -s ../objects.inv faq
 
@@ -78,6 +79,11 @@ mv faq/_build/html faq/_build/faq
 %doc examples
 
 %changelog
+* Thu Jan 28 2016 Denis Medvedev <nbr@altlinux.org> 0.13-alt2
+- NMU make buildable
+
+
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt1
 - Version 0.13 (for Python 3)
 
