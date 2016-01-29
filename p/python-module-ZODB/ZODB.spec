@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt3.dev0.git20150714
+Release: alt4.dev0.git20150714
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
@@ -44,8 +44,8 @@ BuildRequires: python3-module-BTrees python3-module-pytest python3-module-transa
 %endif
 
 %py_provides %oname
-%py_requires transaction BTrees persistent zc.lockfile ZConfig zdaemon
-%py_requires zope.event zope.interface zope.proxy zodbpickle
+#%py_requires transaction BTrees persistent zc.lockfile ZConfig zdaemon
+#%py_requires zope.event zope.interface zope.proxy zodbpickle
 
 %description
 The Zope Object Database provides an object-oriented database for Python
@@ -58,7 +58,7 @@ interface, rich transaction support, and undo.
 Summary: Tests for Zope Object Database
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing
+#%py_requires zope.testing
 %add_python_req_skip fstest
 
 %description tests
@@ -88,8 +88,8 @@ This package contains documentation for Zope Object Database.
 Summary: Zope Object Database: object database and persistence
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires transaction BTrees persistent zc.lockfile ZConfig zdaemon
-%py3_requires zope.event zope.interface zope.proxy
+#%py3_requires transaction BTrees persistent zc.lockfile ZConfig zdaemon
+#%py3_requires zope.event zope.interface zope.proxy
 
 %description -n python3-module-%oname
 The Zope Object Database provides an object-oriented database for Python
@@ -102,7 +102,7 @@ interface, rich transaction support, and undo.
 Summary: Tests for Zope Object Database
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%py3_requires zope.testing
+#%py3_requires zope.testing
 %add_python3_req_skip fstest
 
 %description -n python3-module-%oname-tests
@@ -191,6 +191,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Sergey Alembekov <rt@altlinux.ru> 4.2.1-alt4.dev0.git20150714
+- remove useless requires
+
 * Fri Jan 29 2016 Sergey Alembekov <rt@altlinux.ru> 4.2.1-alt3.dev0.git20150714
 - remove useless build requires
 
