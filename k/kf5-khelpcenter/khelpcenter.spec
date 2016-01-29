@@ -1,8 +1,8 @@
 %define rname khelpcenter
 
 Name: kf5-%rname
-Version: 5.5.3
-Release: alt2
+Version: 5.5.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -99,6 +99,9 @@ KF5 library
 #%_K5lib/libkhelpcenter.so.*
 
 %changelog
+* Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
+- new version
+
 * Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt2
 - add fallback to KDE4 docs
 
