@@ -5,19 +5,19 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt15jpp
+Release: alt16jpp
 
 Provides: eclipse-swt = 4.0 i586-eclipse-swt = 4.0
 Provides: eclipse-platform eclipse-rcp
 Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
-Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
 Provides: osgi(org.objectweb.asm) = 3.2.0
+#Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
 Requires: activemq
 Requires: apache-commons-math
 Requires: arquillian-osgi
 #Requires: gshell
-Requires: hibernate3
-Requires: hibernate-validator
+#Requires: hibernate3
+#Requires: hibernate-validator
 Requires: infinispan
 #Requires: jaxb2-maven-plugin
 #Requires: jbosgi-deployment
@@ -54,6 +54,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt16jpp
+- updated dependencies
+
 * Mon Jan 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt15jpp
 - updated dependencies
 
