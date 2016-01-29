@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt1.git20150423
+Release: alt2.git20150423
 Summary: Specification-style output for nose
 License: MIT
 Group: Development/Python
@@ -15,16 +15,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
+BuildRequires: python-module-django python-module-nose python-module-pytest
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-module-six
-BuildPreReq: python-module-invoke python-module-invocations
-BuildPreReq: python-module-semantic_version
+BuildPreReq: python-module-six
+#BuildPreReq: python-module-invoke python-module-invocations
+#BuildPreReq: python-module-semantic_version
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-six
-BuildPreReq: python3-module-invoke python3-module-invocations
-BuildPreReq: python3-module-semantic_version
+BuildRequires: python3-module-django python3-module-nose python3-module-pytest
+BuildPreReq: python3-module-six
+#BuildPreReq: python3-module-invoke python3-module-invocations
+#BuildPreReq: python3-module-semantic_version
 %endif
 
 %py_provides %oname
@@ -94,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Sergey Alembekov <rt@altlinux.ru> 1.2.2-alt2.git20150423
+- Rebuild with fixed build requires
+
 * Fri Apr 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20150423
 - Version 1.2.2
 
