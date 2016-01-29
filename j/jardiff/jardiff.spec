@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jardiff
 Version:        0.2
-Release:	alt5_3jpp5
+Release:	alt6_3jpp5
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -57,10 +57,9 @@ Requires(postun): java-gcj-compat
 BuildArch:      noarch
 %endif
 
-BuildRequires: jpackage-utils >= 0:1.7.4
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit3
-BuildRequires: junit3
+BuildRequires: jpackage-utils 
+BuildRequires: ant 
+BuildRequires: ant-junit
 BuildRequires: asm2
 BuildRequires: apache-commons-cli
 
@@ -141,6 +140,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt6_3jpp5
+- use junit 4
+
 * Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt5_3jpp5
 - fixed build
 
