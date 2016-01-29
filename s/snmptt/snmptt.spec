@@ -3,7 +3,7 @@
 
 Name: snmptt
 Version: 1.4
-Release: alt4
+Release: alt5
 Summary: An SNMP trap handler written in Perl
 
 Group: System/Servers
@@ -133,6 +133,9 @@ install -d %buildroot%_logdir/snmptt
 %files net-snmp
 
 %changelog
+* Fri Jan 29 2016 Terechkov Evgenii <evg@altlinux.org> 1.4-alt5
+- Fix service stopping with systemd
+
 * Mon Jan 18 2016 Terechkov Evgenii <evg@altlinux.org> 1.4-alt4
 - Rebuild for work with net-snmp-5.7.3 and up
 
