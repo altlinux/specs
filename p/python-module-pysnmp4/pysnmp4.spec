@@ -2,8 +2,8 @@
 
 Summary: SNMP v1/v2c/v3 engine
 Name: python-module-pysnmp4
-Version: 4.2.6
-Release: alt1.rc1
+Version: 4.3.1
+Release: alt1
 %setup_python_module pysnmp
 Url: http://pysnmp.sourceforge.net/
 Source0: %modulename-%version.tar
@@ -34,8 +34,8 @@ implementation of v1/v2c/v3 SNMP engine.
 
 %if_with python3
 cp -fR . ../python3
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-	../python3/tools/libsmi2pysnmp
+#sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
+#	../python3/tools/libsmi2pysnmp
 %endif
 
 %build
@@ -57,15 +57,19 @@ popd
 %endif
 
 %files -f INSTALLED_FILES
-%doc CHANGES README THANKS TODO docs/*
+%doc docs/*
 
 %if_with python3
 %files -n python3-module-pysnmp4
-%doc CHANGES README THANKS TODO docs/*
+#%doc CHANGES README THANKS TODO docs/*
+%doc docs/*
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Fri Jan 29 2016 Sergey Alembekov <rt@altlinux.ru> 4.3.1-alt1
+- Build version 4.3.1
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.6-alt1.rc1
 - Version 4.2.6rc1
 
