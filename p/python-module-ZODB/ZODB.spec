@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt2.dev0.git20150714
+Release: alt3.dev0.git20150714
 Summary: Zope Object Database: object database and persistence
 License: ZPL
 Group: Development/Python
@@ -15,30 +15,32 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/ZODB.git
 Source: %name-%version.tar
 BuildArch: noarch
+BuildRequires: python-module-BTrees python-module-pytest python-module-transaction python-module-zc.lockfile python-module-zdaemon python-module-zope.testing
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Zope2-tests
-BuildPreReq: python-module-zope.interface python-module-persistent
-BuildPreReq: python-module-BTrees
-BuildPreReq: python-module-zconfig
-BuildPreReq: python-module-transaction
+#BuildPreReq: python-module-Zope2-tests
+#BuildPreReq: python-module-zope.interface python-module-persistent
+#BuildPreReq: python-module-BTrees
+#BuildPreReq: python-module-zconfig
+#BuildPreReq: python-module-transaction
 BuildPreReq: python-module-six
-BuildPreReq: python-module-zc.lockfile
-BuildPreReq: python-module-zdaemon
+#BuildPreReq: python-module-zc.lockfile
+#BuildPreReq: python-module-zdaemon
 BuildPreReq: python-module-zodbpickle
 BuildPreReq: python-module-manuel-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.interface python3-module-persistent
-BuildPreReq: python3-module-BTrees
-BuildPreReq: python3-module-zconfig
-BuildPreReq: python3-module-transaction
+#BuildPreReq: python3-module-zope.interface python3-module-persistent
+#BuildPreReq: python3-module-BTrees
+#BuildPreReq: python3-module-zconfig
+#BuildPreReq: python3-module-transaction
 BuildPreReq: python3-module-six
-BuildPreReq: python3-module-zc.lockfile
-BuildPreReq: python3-module-zdaemon
+#BuildPreReq: python3-module-zc.lockfile
+#BuildPreReq: python3-module-zdaemon
 BuildPreReq: python3-module-zodbpickle
 BuildPreReq: python3-module-manuel-tests
+BuildRequires: python3-module-BTrees python3-module-pytest python3-module-transaction python3-module-zc.lockfile python3-module-zdaemon python3-module-zope.testing
 %endif
 
 %py_provides %oname
@@ -189,6 +191,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Sergey Alembekov <rt@altlinux.ru> 4.2.1-alt3.dev0.git20150714
+- remove useless build requires
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2.dev0.git20150714
 - Enabled check
 
