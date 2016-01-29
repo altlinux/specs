@@ -1,19 +1,20 @@
 Name: kumir2
 Version: 2.1.0
-Release: alt2
+Release: alt4
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
 
 License: GPL
 Group: Education
-Url: http://lpm.org.ru/kumir
+Url: https://github.com/victor-yacovlev/kumir2
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-BuildPreReq: libqt4-devel gcc-c++ cmake python-modules python-modules-json boost-devel python3-dev
+BuildPreReq: libqt4-devel gcc-c++ cmake python-modules python-modules-json boost-devel
 Requires: libqt4-core
 
-Source: kumir2-2.1.0.tar
+Source: %name-%version.tar
+Patch1: kumir2-2.1.0-actor_umki.patch
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -21,7 +22,9 @@ Ershov. It has very simple syntax, also known as "Russian algorithmical
 language". Includes compiler, runtime, IDE and  modules "Robot", "Draw",
 "Turtle" and some others.
 
-This is a second generation of well-known Kumir system.
+This is a second generation of well-known Kumir system. ALT Linux
+package also supports a real world actor from the UMKI project:
+http://vinforika.ru/umki/
 
 %description -l ru_RU.UTF-8
 Кумир - это учебный язык программирования, описанный в учебнике
@@ -30,14 +33,19 @@ This is a second generation of well-known Kumir system.
 входят канонические исполнители Робот, Чертежник, Черепаха и другие,
 что делает Кумир очень удобным для начального обучения программированию.
 
-Пакет kumir2 содержит новую реализацию системы Кумир.
+Пакет kumir2 содержит новую реализацию системы Кумир. Версия пакета
+ALT Linux включает также поддержку исполнителя, являющегося объектом
+реального мира -- разработанного в рамках проекта УМКИ
+радиоуправляемого робота.
 
 %prep
-%setup -n kumir2-2.1.0
+%setup -q
 sed -i "s/^Categories=.*$/Categories=Education;Qt;ComputerScience;/" *.desktop
-rm kumir2-python.desktop
+
+%patch1 -p1
 
 %build
+rm -rf src/3rdparty/boost-1.54.0
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr ..
@@ -57,10 +65,19 @@ cd build
 %_iconsdir/*/*/*/*
 
 %changelog
-* Wed Nov 11 2015 Denis Kirienko <dk@altlinux.org> 2.1.0-alt2
+* Wed Jan 27 2016 Dmitry Derjavin <dd@altlinux.org> 2.1.0-alt4
+- using system boost;
+- URL fixed;
+- description fixed.
+
+* Wed Jan 27 2016 Dmitry Derjavin <dd@altlinux.org> 2.1.0-alt3
+- Moved to 2.1.0 release from github.com/victor-yacovlev/kumir2.
+- UMKI actor patch added from UMKI-1.8 codebase.
+
+* Wed Nov 11 2015 Denis Kirienko <dk at altlinux.org> 2.1.0-alt2
 - Increase release to alt2
 
-* Wed Nov 11 2015 Denis Kirienko <dk@altlinux.org> 2.1.0-alt1
+* Wed Nov 11 2015 Denis Kirienko <dk at altlinux.org> 2.1.0-alt1
 - Version 2.1.0
 
 * Sun Jun 15 2014 Denis Kirienko <dk@altlinux.org> 2.1.0-alt0.beta5
