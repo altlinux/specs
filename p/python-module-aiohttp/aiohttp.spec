@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.15.3
-Release: alt1.git20150425
+Release: alt2.git20150425
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -16,26 +16,31 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %if_with python2
+BuildRequires: python-module-objects.inv
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-trollius python-module-nose
-BuildPreReq: python-module-gunicorn python-module-chardet
-BuildPreReq: python-module-flake8 python-module-coverage
-BuildPreReq: python-module-path python-module-bumpversion
-BuildPreReq: python-module-Cython
+#BuildPreReq: python-module-trollius python-module-nose
+#BuildPreReq: python-module-gunicorn python-module-chardet
+#BuildPreReq: python-module-flake8 python-module-coverage
+#BuildPreReq: python-module-path 
+#python-module-bumpversion
+#BuildPreReq: python-module-Cython
 %endif
-BuildPreReq: python-module-sphinx-devel python-module-alabaster
+BuildPreReq: python-module-sphinx-devel
+#python-module-alabaster
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-Cython python3-module-aiohttp python3-module-flake8 python3-module-html5lib python3-module-nose python3-module-notebook
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-nose
-BuildPreReq: python3-module-gunicorn python3-module-chardet
-BuildPreReq: python3-module-flake8 python3-module-coverage
-BuildPreReq: python3-module-path python3-module-bumpversion
-BuildPreReq: python3-module-Cython
+#BuildPreReq: python3-module-asyncio python3-module-nose
+#BuildPreReq: python3-module-gunicorn python3-module-chardet
+#BuildPreReq: python3-module-flake8 python3-module-coverage
+#BuildPreReq: python3-module-path 
+#python3-module-bumpversion
+#BuildPreReq: python3-module-Cython
 %endif
 
 %py_provides %oname
-%py_requires trollius chardet
+#%py_requires trollius chardet
 
 %description
 http client/server for asyncio (PEP-3156).
@@ -54,7 +59,7 @@ This package contains tests for %oname.
 Summary: http client/server for asyncio
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio chardet
+#%py3_requires asyncio chardet
 
 %description -n python3-module-%oname
 http client/server for asyncio (PEP-3156).
@@ -181,6 +186,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Sergey Alembekov <rt@altlinux.ru> 0.15.3-alt2.git20150425
+- rebuild with cleaned build requires
+
 * Mon Apr 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.3-alt1.git20150425
 - Version 0.15.3
 
