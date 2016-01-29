@@ -19,7 +19,7 @@
 %define bugfix 10
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -1157,6 +1157,11 @@ based on kdepim.
 %install
 %K4install
 
+# move icons
+if [ -d %buildroot/%_K4iconsdir/oxygen -a ! -d %buildroot/%_kde4_iconsdir/oxygen ] ; then
+    mkdir -p %buildroot/%_kde4_iconsdir
+    mv %buildroot/%_K4iconsdir/oxygen %buildroot/%_kde4_iconsdir/
+fi
 
 %files
 %files environment-workstation
@@ -1195,7 +1200,7 @@ based on kdepim.
 %_K4xdg_apps/storageservicemanager.desktop
 %_K4iconsdir/locolor/*/*/*
 %_K4iconsdir/hicolor/*/*/*
-%_K4iconsdir/oxygen/*/*/*
+%_kde4_iconsdir/oxygen/*/*/*
 %_K4srv/kontact/
 #%_K4srv/kcmpimactivity.desktop
 #%_K4srv/grammar_link.desktop
@@ -1741,6 +1746,9 @@ based on kdepim.
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jan 29 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt5
+- move oxygen icons to kde-specific place
+
 * Mon Nov 16 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt4
 - update from 4.14 branch
 
