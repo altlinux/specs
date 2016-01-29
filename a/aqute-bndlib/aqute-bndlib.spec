@@ -1,82 +1,52 @@
+Name: aqute-bndlib
+Version: 2.4.1
+Summary: BND library
+License: ASL 2.0
+Url: http://www.aqute.biz/Bnd/Bnd
 Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: aqute-bndlib = 2.4.1-2.fc23
+Provides: mvn(biz.aQute.bnd:biz.aQute.bndlib) = 2.4.1
+Provides: mvn(biz.aQute.bnd:biz.aQute.bndlib:pom:) = 2.4.1
+Provides: mvn(biz.aQute.bnd:bndlib) = 2.4.1
+Provides: mvn(biz.aQute.bnd:bndlib:pom:) = 2.4.1
+Provides: mvn(biz.aQute:bndlib) = 2.4.1
+Provides: mvn(biz.aQute:bndlib:pom:) = 2.4.1
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.eclipse.osgi:org.eclipse.osgi)
+Requires: mvn(org.eclipse.osgi:org.eclipse.osgi.services)
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           aqute-bndlib
-Version:        1.50.0
-Release:        alt2_7jpp7
-Summary:        BND Library
-License:        ASL 2.0
-URL:            http://www.aQute.biz/Code/Bnd
-Source0:        http://repo1.maven.org/maven2/biz/aQute/bndlib/1.50.0/bndlib-1.50.0.jar
-Source1:        http://repo1.maven.org/maven2/biz/aQute/bndlib/1.50.0/bndlib-1.50.0.pom
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  maven-surefire-provider-junit4
-Source44: import.info
+Release: alt0.1jpp
+Source: aqute-bndlib-2.4.1-2.fc23.cpio
 
 %description
-The bnd tool helps you create and diagnose OSGi R4 bundles.
-The key functions are:
-- Show the manifest and JAR contents of a bundle
-- Wrap a JAR so that it becomes a bundle
-- Create a Bundle from a specification and a class path
-- Verify the validity of the manifest entries
-The tool is capable of acting as:
-- Command line tool
-- File format
-- Directives
-- Use of macros
+BND library.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -c
-
-# fixing incomplete source directory structure
-mkdir -p src/main/java target/classes
-mv -f OSGI-OPT/src/* src/main/java/
-
-# removing bundled classess & junk
-rm -rf OSGI-OPT
-rm -rf META-INF
-rm -rf src/main/java/aQute/bnd/test
-find . -iname '*.class' -delete
-find . -iname 'packageinfo' -delete
-
-# recycling all data files
-mv -f aQute target/classes
-mv -f org target/classes
-
-# for building with maven
-cp %{SOURCE1} pom.xml
-
-# CR+LF -> LF
-sed -i "s|\r||g" LICENSE
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-export LC_ALL=en_US.UTF-8
-%mvn_file :bndlib %{name}
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.50.0-alt2_7jpp7
 - new release
 

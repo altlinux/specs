@@ -1,110 +1,48 @@
+Name: apache-commons-codec
+Version: 1.10
+Summary: Implementations of common encoders and decoders
+License: ASL 2.0
+Url: http://commons.apache.org/codec/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global base_name codec
-%global short_name commons-%{base_name}
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-codec = 1.10-2.fc23
+Provides: mvn(commons-codec:commons-codec) = 1.10
+Provides: mvn(commons-codec:commons-codec:pom:) = 1.10
+Requires: java-headless
+Requires: jpackage-utils
 
-Name:          apache-%{short_name}
-Version:       1.8
-Release:       alt1_5jpp7
-Summary:       Implementations of common encoders and decoders
-Group:         Development/Java
-License:       ASL 2.0
-URL:           http://commons.apache.org/%{base_name}/
-
-Source0:       http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-# Data in DoubleMetaphoneTest.java originally has an inadmissible license.
-# The author gives MIT in e-mail communication.
-Source1:       aspell-mail.txt
-
-
-BuildArch:     noarch
-
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-Requires:      jpackage-utils
-
-# It looks like there are packages in F-18 that BR/R the short name
-Provides:      %{short_name} = %{version}-%{release}
-Obsoletes:     %{short_name} < %{version}-%{release}
-# Provide and obsolete jakarta-commons-codec to support installing this
-# package on RHEL 6, which still uses the old jakarta-commons-* package
-# naming scheme.
-Provides:      jakarta-%{short_name} = %{version}-%{release}
-Obsoletes:     jakarta-%{short_name} < %{version}-%{release}
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: apache-commons-codec-1.10-2.fc23.cpio
 
 %description
 Commons Codec is an attempt to provide definitive implementations of
 commonly used encoders and decoders. Examples include Base64, Hex,
 Phonetic and URLs.
 
-%package javadoc
-Summary:       API documentation for %{name}
-Group:         Development/Java
-Requires:      jpackage-utils
-Provides:      jakarta-%{short_name}-javadoc = %{version}-%{release}
-Obsoletes:     jakarta-%{short_name}-javadoc < %{version}-%{release}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
-cp %{SOURCE1} aspell-mail.txt
-sed -i 's/\r//' RELEASE-NOTES*.txt LICENSE.txt NOTICE.txt
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar \
-  %{buildroot}%{_javadir}/%{short_name}.jar
-ln -sf %{short_name}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# javadocs
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "%{short_name}:%{short_name}"
-# jakarta compat
-ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
-#ln -s %{short_name}.jar %buildroot%_javadir/apache-%{short_name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files
-%doc LICENSE.txt NOTICE.txt RELEASE-NOTES* aspell-mail.txt
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*
-%{_javadir}/*
-
-%files javadoc
-%doc LICENSE.txt NOTICE.txt aspell-mail.txt
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_5jpp7
 - new release
 

@@ -1,30 +1,20 @@
+Name: plexus-interpolation
+Version: 1.22
+Summary: Plexus Interpolation API
+License: ASL 2.0 and ASL 1.1 and MIT
+Url: https://github.com/codehaus-plexus/plexus-interpolation
 Epoch: 0
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           plexus-interpolation
-Version:        1.15
-Release:        alt3_7jpp7
-Summary:        Plexus Interpolation API
-
-Group:          Development/Java
-License:        ASL 2.0 and ASL 1.1 and MIT
-URL:            http://plexus.codehaus.org/plexus-components/plexus-interpolation
-Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.codehaus.plexus:plexus-interpolation) = 1.22
+Provides: mvn(org.codehaus.plexus:plexus-interpolation:pom:) = 1.22
+Provides: plexus-interpolation = 1.22-4.fc23
+Requires: java-headless
+Requires: jpackage-utils
 
 BuildArch: noarch
-
-BuildRequires: junit
-BuildRequires: maven-local
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-shared-reporting-impl
-BuildRequires: maven-doxia-sitetools
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: plexus-interpolation-1.22-4.fc23.cpio
 
 %description
 Plexus interpolator is the outgrowth of multiple iterations of development
@@ -32,29 +22,28 @@ focused on providing a more modular, flexible interpolation framework for
 the expression language style commonly seen in Maven, Plexus, and other
 related projects.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_file  : plexus/interpolation
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
 
-%files javadoc -f .mfiles-javadoc
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt3_7jpp7
 - new release
 

@@ -1,60 +1,52 @@
+Name: apache-commons-cli
+Version: 1.3.1
+Summary: Command Line Interface Library for Java
+License: ASL 2.0
+Url: http://commons.apache.org/cli/
 Epoch: 0
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global short_name      commons-cli
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-cli = 1.3.1-2.fc23
+Provides: mvn(commons-cli:commons-cli) = 1.3.1
+Provides: mvn(commons-cli:commons-cli:pom:) = 1.3.1
+Provides: mvn(org.apache.commons:commons-cli) = 1.3.1
+Provides: mvn(org.apache.commons:commons-cli:pom:) = 1.3.1
+Requires: java-headless
+Requires: java-headless
+Requires: jpackage-utils
+Requires: jpackage-utils
 
-Name:             apache-%{short_name}
-Version:          1.2
-Release:          alt2_11jpp7
-Summary:          Command Line Interface Library for Java
-Group:            Development/Java
-License:          ASL 2.0
-URL:              http://commons.apache.org/cli/
-Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
-BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-
-Requires:         jpackage-utils
-Source44: import.info
-Provides: jakarta-%{short_name} = 1:%{version}-%{release}
-Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
-Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: apache-commons-cli-1.3.1-2.fc23.cpio
+Provides: jakarta-commons-cli = %version
 
 %description
-The CLI library provides a simple and easy to use API for working with the 
+The CLI library provides a simple and easy to use API for working with the
 command line arguments and options.
 
-%package javadoc
-Summary:          Javadoc for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
-
-# Compatibility links
-%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
-%mvn_file :commons-cli %{short_name} %{name}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%files -f %name-list
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_11jpp7
 - new release
 

@@ -1,34 +1,19 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           jsoup
-Version:        1.7.2
-Release:        alt1_1jpp7
-Summary:        Java library for working with real-world HTML
-
-Group:          Development/Java
-License:        MIT
-
-URL:            http://%{name}.org/
-
-# https://github.com/jhy/jsoup/archive/jsoup-1.7.2.tar.gz
-Source0:        jsoup-jsoup-1.7.2.tar.gz
+Name: jsoup
+Version: 1.8.2
+Summary: Java library for working with real-world HTML
+License: MIT
+Url: http://jsoup.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jsoup = 1.8.2-2.fc23
+Provides: mvn(org.jsoup:jsoup) = 1.8.2
+Provides: mvn(org.jsoup:jsoup:pom:) = 1.8.2
+Requires: java-headless
+Requires: jpackage-utils
 
 BuildArch: noarch
-
-BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-install-plugin
-Requires: jpackage-utils
-Source44: import.info
-
+Group: Development/Java
+Release: alt0.1jpp
+Source: jsoup-1.8.2-2.fc23.cpio
 
 %description
 jsoup is a Java library for working with real-world HTML.
@@ -49,46 +34,28 @@ jsoup is designed to deal with all varieties of HTML found in the wild;
 from pristine and validating, to invalid tag-soup;
 jsoup will create a sensible parse tree.
 
-
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires: jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n jsoup-jsoup-%{version}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -dm 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%doc LICENSE README CHANGES
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc LICENSE
-%doc %{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.7.2-alt1_1jpp7
 - new release
 

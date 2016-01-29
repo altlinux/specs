@@ -1,85 +1,47 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           plexus-sec-dispatcher
-Version:        1.4
-Release:        alt2_11jpp7
-Summary:        Plexus Security Dispatcher Component
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://spice.sonatype.org
-#svn export http://svn.sonatype.org/spice/tags/plexus-sec-dispatcher-1.4/
-#tar jcf plexus-sec-dispatcher-1.4.tar.bz2 plexus-sec-dispatcher-1.4/
-Source0:        %{name}-%{version}.tar.bz2
-#Removed maven-compiler-plugin configuration version in the pom as annotations isn't available in version 1.4.
-Patch0:        %{name}-pom.patch
+Name: plexus-sec-dispatcher
+Version: 1.4
+Summary: Plexus Security Dispatcher Component
+License: ASL 2.0
+Url: https://github.com/codehaus-plexus/plexus-sec-dispatcher
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.sonatype.plexus:plexus-sec-dispatcher) = 1.4
+Provides: mvn(org.sonatype.plexus:plexus-sec-dispatcher:pom:) = 1.4
+Provides: plexus-sec-dispatcher = 1.4-20.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+Requires: mvn(org.sonatype.plexus:plexus-cipher)
 
 BuildArch: noarch
-
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: plexus-utils
-BuildRequires: plexus-cipher
-BuildRequires: plexus-containers-component-metadata
-BuildRequires: junit
-BuildRequires: forge-parent
-BuildRequires: spice-parent
-BuildRequires: maven-surefire-provider-junit
-
-Requires:       jpackage-utils
-Source44: import.info
+Group: Development/Java
+Release: alt3jpp
+Source: plexus-sec-dispatcher-1.4-20.fc23.cpio
 
 %description
 Plexus Security Dispatcher Component
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%patch0 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/plexus/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.plexus-%{name}.pom
 
-%add_maven_depmap JPP.plexus-%{name}.pom plexus/%{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}
-
-%files
-%{_javadir}/plexus/*
-%{_mavenpomdir}/JPP.plexus-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/plexus/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_11jpp7
 - new release
 

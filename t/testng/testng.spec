@@ -1,34 +1,24 @@
+Name: testng
+Version: 6.8.21
+Summary: Java-based testing framework
+License: ASL 2.0 and CPL
+Url: http://testng.org/
 Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.testng:testng) = 6.8.21
+Provides: mvn(org.testng:testng::jdk15:) = 6.8.21
+Provides: mvn(org.testng:testng:pom:) = 6.8.21
+Provides: mvn(org.testng:testng:pom:jdk15:) = 6.8.21
+Provides: testng = 6.8.21-2.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(com.beust:jcommander)
+Requires: mvn(org.beanshell:bsh)
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-
-%global group_id  org.testng
-
-Name:             testng
-Version:          6.8.7
-Release:          alt1_1jpp7
-Summary:          Java-based testing framework
-# org/testng/remote/strprotocol/AbstractRemoteTestRunnerClient.java is CPL
-License:          ASL 2.0 and CPL
-URL:              http://testng.org/
-Source0:          https://github.com/cbeust/testng/archive/%{name}-%{version}.tar.gz
-
-BuildArch:        noarch
-
-
-BuildRequires:    mvn(com.beust:jcommander) >= 1.27
-BuildRequires:    mvn(com.google.guava:guava)
-BuildRequires:    mvn(com.google.inject:guice)
-BuildRequires:    mvn(junit:junit)
-BuildRequires:    mvn(org.apache.ant:ant)
-BuildRequires:    mvn(org.beanshell:bsh)
-BuildRequires:    mvn(org.sonatype.oss:oss-parent)
-BuildRequires:    mvn(org.yaml:snakeyaml)
-
-BuildRequires:    maven-local
-BuildRequires:    maven-plugin-bundle
-Source44: import.info
+Release: alt0.1jpp
+Source: testng-6.8.21-2.fc23.cpio
 
 %description
 TestNG is a testing framework inspired from JUnit and NUnit but introducing
@@ -36,61 +26,28 @@ some new functionality, including flexible test configuration, and
 distributed test running.  It is designed to cover unit tests as well as
 functional, end-to-end, integration, etc.
 
-%package javadoc
-Group: Development/Java
-Summary:          API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-
-# build fix for new guice
-%pom_add_dep com.google.guava:guava::provided
-sed -i "s|com.google.inject.internal|com.google.common.collect|" \
-  src/main/java/org/testng/xml/XmlDependencies.java \
-  src/main/java/org/testng/xml/XmlGroups.java \
-  src/main/java/org/testng/xml/dom/TestNGTagFactory.java \
-  src/test/java/test/dependent/InstanceSkipSampleTest.java \
-  src/test/java/test/mustache/MustacheTest.java \
-  src/test/java/test/thread/B.java
-
-%pom_remove_plugin :maven-gpg-plugin
-%pom_remove_plugin :maven-source-plugin
-  
-# remove bundled stuff
-rm -rf spring
-rm -rf 3rdparty
-rm -rf lib-supplied
-rm -rf gigaspaces
-rm -f *.jar
-
-# convert to UTF-8
-native2ascii -encoding UTF-8 src/main/java/org/testng/internal/Version.java \
-  src/main/java/org/testng/internal/Version.java
-
-iconv --from-code=ISO-8859-2 --to-code=UTF-8 ANNOUNCEMENT.txt > ANNOUNCEMENT.txt.utf8
-mv -f ANNOUNCEMENT.txt.utf8 ANNOUNCEMENT.txt
-
-%mvn_file : %{name}
-# jdk15 classifier is used by some other packages
-%mvn_alias : :::jdk15:
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -- -Dmaven.local.debug=true
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt ANNOUNCEMENT.txt CHANGES.txt README
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%files -f %name-list
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.8.21-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.8.7-alt1_1jpp7
 - new release
 

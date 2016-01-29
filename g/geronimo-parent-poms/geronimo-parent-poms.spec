@@ -1,49 +1,49 @@
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:		geronimo-parent-poms
-Version:	1.6
-Release:	alt1_16jpp7
-Summary:	Parent POM files for geronimo-specs
-Group:		Development/Java
-License:	ASL 2.0
-URL:		http://geronimo.apache.org/
-BuildArch:	noarch
+Name: geronimo-parent-poms
+Version: 1.6
+Summary: Parent POM files for geronimo-specs
+License: ASL 2.0
+Url: http://geronimo.apache.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: geronimo-parent-poms = 1.6-20.fc23
+Provides: geronimo-specs = 1.6-20.fc23
+Provides: mvn(org.apache.geronimo.specs:specs-parent:pom:) = 1.6
+Provides: mvn(org.apache.geronimo.specs:specs:pom:) = 1.6
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.felix:maven-bundle-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-jar-plugin)
 
-# Following the parent chain all the way up ...
-Source0:	http://svn.apache.org/repos/asf/geronimo/specs/tags/specs-parent-%{version}/pom.xml
-Source1:	http://www.apache.org/licenses/LICENSE-2.0.txt
-
-BuildRequires:  maven-local
-BuildRequires:	jpackage-utils
-
-# Dependencies and plugins from the POM files
-Provides:       geronimo-specs = %{version}-%{release}
-Source44: import.info
-Conflicts: geronimo-specs < 0:1.2-alt9_16jpp6
+BuildArch: noarch
+Group: Development/Java
+Release: alt2jpp
+Source: geronimo-parent-poms-1.6-20.fc23.cpio
 
 %description
 The Project Object Model files for the geronimo-specs modules.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -c -T
-cp -p %{SOURCE0} .
-cp -p %{SOURCE1} LICENSE
-%pom_remove_parent
-# IDEA plugin is not really useful in Fedora
-%pom_remove_plugin :maven-idea-plugin
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_alias : org.apache.geronimo.specs:specs
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE
 
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_16jpp7
 - new release
 

@@ -1,71 +1,32 @@
+Provides: /etc/java/aqute-bnd.conf
+Name: aqute-bnd
+Version: 2.4.1
+Summary: BND Tool
+License: ASL 2.0
+Url: http://www.aqute.biz/Bnd/Bnd
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: aqute-bnd = 2.4.1-2.fc23
+Provides: mvn(biz.aQute.bnd:biz.aQute.bnd) = 2.4.1
+Provides: mvn(biz.aQute.bnd:biz.aQute.bnd:pom:) = 2.4.1
+Provides: mvn(biz.aQute.bnd:bnd) = 2.4.1
+Provides: mvn(biz.aQute.bnd:bnd:pom:) = 2.4.1
+Provides: mvn(biz.aQute:bnd) = 2.4.1
+Provides: mvn(biz.aQute:bnd:pom:) = 2.4.1
+Requires: /bin/bash
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(ant:ant)
+Requires: mvn(biz.aQute.bnd:biz.aQute.bndlib)
+Requires: mvn(org.eclipse.osgi:org.eclipse.osgi)
+Requires: mvn(org.eclipse.osgi:org.eclipse.osgi.services)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2008, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-Name:           aqute-bnd
-Version:        0.0.363
-Release:        alt2_14jpp7
-Summary:        BND Tool
-License:        ASL 2.0
-URL:            http://www.aQute.biz/Code/Bnd
-
-# NOTE : sources for 0.0.363 are no longer available
-# The following links would work for 0.0.370-0.0.401 version range, but
-# we need to stay by 0.0.363 to minimize problems during the 1.43.0 introduction
-Source0:        http://www.aqute.biz/repo/biz/aQute/bnd/%{version}/bnd-%{version}.jar
-Source1:        http://www.aqute.biz/repo/biz/aQute/bnd/%{version}/bnd-%{version}.pom
-Source2:        aqute-service.tar.gz
-
-# from Debian, add source compatibility with ant 1.9
-Patch0:         %{name}-%{version}-ant19.patch
-# fixing base64 class ambiguity
-Patch1:         %{name}-%{version}-ambiguous-base64.patch
-
-
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-BuildRequires:  ant
-BuildRequires:  felix-osgi-compendium
-BuildRequires:  felix-osgi-core
-BuildRequires:  junit
-Source44: import.info
-
+Release: alt0.1jpp
+Source: aqute-bnd-2.4.1-2.fc23.cpio
 
 %description
-The bnd tool helps you create and diagnose OSGi R4 bundles.
+The bnd tool helps you create and diagnose OSGi bundles.
 The key functions are:
 - Show the manifest and JAR contents of a bundle
 - Wrap a JAR so that it becomes a bundle
@@ -77,102 +38,31 @@ The tool is capable of acting as:
 - Directives
 - Use of macros
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -c
-
-mkdir -p target/site/apidocs/
-mkdir -p target/classes/
-mkdir -p src/main/
-mv OSGI-OPT/src src/main/java
-pushd src/main/java
-tar xfs %{SOURCE2}
-popd
-sed -i "s|import aQute.lib.filter.*;||g" src/main/java/aQute/bnd/make/ComponentDef.java
-sed -i "s|import aQute.lib.filter.*;||g" src/main/java/aQute/bnd/make/ServiceComponent.java
-
-# get rid of eclipse plugins which are not usable anyway and complicate
-# things
-rm -rf src/main/java/aQute/bnd/annotation/Test.java \
-       src/main/java/aQute/bnd/{classpath,jareditor,junit,launch,plugin} \
-       aQute/bnd/classpath/messages.properties
-
-# remove bundled stuff
-find aQute/ -type f -name "*.class" -delete
-
-%patch0 -p1 -b .ant19
-%patch1 -p1 -b .base64
-
-# Convert CR+LF to LF
-sed -i "s|\r||g" LICENSE
-mkdir temp
-(
-cd temp
-mkdir -p target/classes/
-mkdir -p src/main/
-%jar -xf ../aQute/bnd/test/aQute.runtime.jar
-mv OSGI-OPT/src src/main/java
-find aQute -type f -name "*.class" -delete
-)
-rm -rf aQute/bnd/test/aQute.runtime.jar
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-export LANG=en_US.utf8
-
-
-(
-cd temp
-%{javac} -d target/classes -target 1.5 -source 1.5 -classpath $(build-classpath junit felix/org.osgi.core felix/org.osgi.compendium) $(find src/main/java -type f -name "*.java")
-for f in $(find aQute/ -type f -not -name "*.class"); do
-    cp -p $f target/classes/$f
-done
-  (
-   cd target/classes
-   %jar cmf ../../META-INF/MANIFEST.MF ../../../aQute/bnd/test/aQute.runtime.jar *
-  )
-)
-rm -r temp
-export OPT_JAR_LIST=:
-export CLASSPATH=$(build-classpath ant)
-
-%{javac} -d target/classes -target 1.5 -source 1.5 $(find src/main/java -type f -name "*.java")
-%{javadoc} -d target/site/apidocs -sourcepath src/main/java aQute.lib.header aQute.lib.osgi aQute.lib.qtokens aQute.lib.filter
-cp -p LICENSE maven-dependencies.txt plugin.xml pom.xml target/classes
-for f in $(find aQute/ -type f -not -name "*.class"); do
-    cp -p $f target/classes/$f
-done
-pushd target/classes
-%{jar} cmf ../../META-INF/MANIFEST.MF ../%{name}-%{version}.jar *
-popd
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
+pushd %buildroot/usr/share/java
+ln -s aqute-bnd/biz.aQute.bnd.jar aqute-bnd.jar
+popd
 
-# pom
-install -Dm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap
-
-%files -f .mfiles
-%doc LICENSE
-
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{name}
+%files -f %name-list
+/usr/share/java/aqute-bnd.jar
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.363-alt2_14jpp7
 - new release
 

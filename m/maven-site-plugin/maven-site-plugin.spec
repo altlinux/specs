@@ -1,124 +1,74 @@
-BuildRequires: maven-plugin-plugin
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-site-plugin
-Version:        3.1
-Release:        alt4_2jpp7
-Summary:        Maven Site Plugin
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-site-plugin/
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-Patch0:         0001-Set-source-encoding-property-to-UTF8.patch
-Patch1:         0002-Port-to-jetty-8.x.patch
+Name: maven-site-plugin
+Version: 3.4
+Summary: Maven Site Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-site-plugin/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-site-plugin = 3.4-4.fc23
+Provides: mvn(org.apache.maven.plugins:maven-site-plugin) = 3.4
+Provides: mvn(org.apache.maven.plugins:maven-site-plugin:pom:) = 3.4
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-io:commons-io)
+Requires: mvn(commons-lang:commons-lang)
+Requires: mvn(javax.servlet:servlet-api)
+Requires: mvn(org.apache.maven.doxia:doxia-core)
+Requires: mvn(org.apache.maven.doxia:doxia-decoration-model)
+Requires: mvn(org.apache.maven.doxia:doxia-integration-tools)
+Requires: mvn(org.apache.maven.doxia:doxia-logging-api)
+Requires: mvn(org.apache.maven.doxia:doxia-module-apt)
+Requires: mvn(org.apache.maven.doxia:doxia-module-fml)
+Requires: mvn(org.apache.maven.doxia:doxia-module-markdown)
+Requires: mvn(org.apache.maven.doxia:doxia-module-xdoc)
+Requires: mvn(org.apache.maven.doxia:doxia-module-xhtml)
+Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
+Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-exec)
+Requires: mvn(org.apache.maven.wagon:wagon-provider-api)
+Requires: mvn(org.apache.maven:maven-archiver)
+Requires: mvn(org.apache.maven:maven-artifact)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-settings)
+Requires: mvn(org.apache.maven:maven-settings-builder)
+Requires: mvn(org.apache.velocity:velocity)
+Requires: mvn(org.codehaus.plexus:plexus-archiver)
+Requires: mvn(org.codehaus.plexus:plexus-i18n)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+Requires: mvn(org.codehaus.plexus:plexus-velocity)
 
 BuildArch: noarch
-
-BuildRequires: maven-local
-BuildRequires: maven-artifact-manager
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-doxia-tools
-BuildRequires: maven-project
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-shade-plugin
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: maven-wagon
-BuildRequires: maven-reporting-exec
-BuildRequires: plexus-containers-component-metadata
-BuildRequires: jetty >= 8.1.0-0.1.rc5
-BuildRequires: servlet3
-BuildRequires: plexus-archiver
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-i18n
-BuildRequires: plexus-velocity
-BuildRequires: plexus-utils
-BuildRequires: jetty-parent
-
-Requires: maven
-Requires: jetty >= 8.1.0-0.1.rc5
-Requires: jpackage-utils
-Requires: maven-artifact-manager
-Requires: maven-doxia-tools
-Requires: maven-project
-Requires: maven-shared-reporting-api
-Requires: maven-wagon
-Requires: maven-reporting-exec
-Requires: servlet3
-Requires: plexus-archiver
-Requires: plexus-containers-container-default
-Requires: plexus-i18n
-Requires: plexus-velocity
-Requires: plexus-utils
-Requires: jetty-parent
-
-Provides:       maven2-plugin-site = %{version}-%{release}
-Obsoletes:      maven2-plugin-site <= 0:2.0.8
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-site-plugin-3.4-4.fc23.cpio
 
 %description
 The Maven Site Plugin is a plugin that generates a site for the current project.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# skipping tests because we need to fix them first for jetty update
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        install javadoc:javadoc
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%doc LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc LICENSE NOTICE
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt4_2jpp7
 - rebuild with maven-local
 

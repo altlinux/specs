@@ -1,39 +1,24 @@
+Name: trilead-ssh2
+Version: 217
+Summary: SSH-2 protocol implementation in pure Java
+License: BSD and MIT
+Url: https://github.com/jenkinsci/trilead-ssh2
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           trilead-ssh2
-Version:        215
-Release:        alt1_1jpp7
-Summary:        SSH-2 protocol implementation in pure Java
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(com.trilead:trilead-ssh2) = build217.jenkins.8
+Provides: mvn(com.trilead:trilead-ssh2:pom:) = build217.jenkins.8
+Provides: mvn(org.jenkins-ci:trilead-ssh2) = build217.jenkins.8
+Provides: mvn(org.jenkins-ci:trilead-ssh2:pom:) = build217.jenkins.8
+Provides: mvn(org.tmatesoft.svnkit:trilead-ssh2) = build217.jenkins.8
+Provides: mvn(org.tmatesoft.svnkit:trilead-ssh2:pom:) = build217.jenkins.8
+Provides: trilead-ssh2 = 217-6.jenkins8.fc23
+Requires: java-headless
+Requires: jpackage-utils
 
-Group:          Development/Java
-License:        BSD
-URL:            http://www.trilead.com/Products/Trilead_SSH_for_Java/
-# Not working anymore...
-#http://www.trilead.com/DesktopModules/Releases/download_file.aspx?ReleaseId=4102
-Source0:        trilead-ssh2-build%{version}.zip
-Source1:        build.xml
-Source2:        http://repo1.maven.org/maven2/com/trilead/trilead-ssh2/1.0.0-build%{version}/trilead-ssh2-1.0.0-build%{version}.pom
-
-BuildRequires:  jpackage-utils
-BuildRequires:  ant
-Requires:       jpackage-utils
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
-
-# javadoc is gone in 215
-Provides:	%{name}-javadoc = %{version}-%{release}
-Obsoletes:	%{name}-javadoc <= 213-11
-
-BuildArch:      noarch
-Source44: import.info
-
-#Obsoletes:              ganymed-ssh2 <= 210
-
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: trilead-ssh2-217-6.jenkins8.fc23.cpio
 
 %description
 Trilead SSH-2 for Java is a library which implements the SSH-2 protocol in pure
@@ -43,51 +28,28 @@ and shell access), local and remote port forwarding, local stream forwarding,
 X11 forwarding and SCP. There are no dependencies on any JCE provider, as all
 crypto functionality is included.
 
-%package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for trilead-ssh2.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-build%{version}
-cp %{SOURCE1} .
-
-# change file encoding
-iconv -f ISO-8859-1 -t UTF-8 -o HISTORY.txt HISTORY.txt
-
-# delete the jars that are in the archive
-find . -name '*.jar' -delete
-
-# fixing wrong-file-end-of-line-encoding warnings
-sed -i 's/\r//' LICENSE.txt README.txt HISTORY.txt
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-ant
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jar
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-cp %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap org.tmatesoft.svnkit %{name} %{version} JPP %{name}
 
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/*
-%doc LICENSE.txt HISTORY.txt README.txt
-
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:217-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 0:215-alt1_1jpp7
 - update
 

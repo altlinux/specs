@@ -1,39 +1,46 @@
+Name: forge-parent
+Version: 38
+Summary: Sonatype Forge Parent Pom
+License: ASL 2.0
+Url: https://docs.sonatype.org/display/FORGE/Index
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: forge-parent = 38-4.fc23
+Provides: mvn(org.sonatype.forge:forge-parent:pom:) = 38
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.plugins:maven-source-plugin)
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           forge-parent
-Version:        31
-Release:        alt1_2jpp7
-Summary:        Sonatype Forge Parent Pom
-License:        ASL 2.0
-URL:            https://docs.sonatype.org/display/FORGE/Index
-Source0:        http://repo1.maven.org/maven2/org/sonatype/forge/%{name}/%{version}/%{name}-%{version}.pom
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-BuildArch:      noarch
-BuildRequires:  maven-local
-Source44: import.info
+Release: alt0.1jpp
+Source: forge-parent-38-4.fc23.cpio
 
 %description
-Sonatype Forge is an open-source community dedicated to the creation of the 
+Sonatype Forge is an open-source community dedicated to the creation of the
 next-generation of development tools and technologies.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -qcT
-cp -p %{SOURCE0} pom.xml
-cp -p %{SOURCE1} LICENSE
-# We don't have nexus-staging-maven-plugin in Fedora
-%pom_remove_plugin :nexus-staging-maven-plugin
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE
+
+%files -f %name-list
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 38-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 31-alt1_2jpp7
 - new release
 

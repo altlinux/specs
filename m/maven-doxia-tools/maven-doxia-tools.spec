@@ -1,98 +1,62 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:		maven-doxia-tools
-Version:	1.4
-Release:	alt3_12jpp7
-Summary:	Maven Doxia Integration Tools
+Name: maven-doxia-tools
+Version: 1.6
+Summary: Maven Doxia Integration Tools
+License: ASL 2.0
+Url: http://maven.apache.org/doxia/doxia-tools/
+Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-doxia-tools = 1.6-3.fc23
+Provides: mvn(org.apache.maven.doxia:doxia-integration-tools) = 1.6
+Provides: mvn(org.apache.maven.doxia:doxia-integration-tools:pom:) = 1.6
+Provides: mvn(org.apache.maven.shared:maven-doxia-tools) = 1.6
+Provides: mvn(org.apache.maven.shared:maven-doxia-tools:pom:) = 1.6
+Provides: mvn(org.apache.maven:doxia-integration-tools) = 1.6
+Provides: mvn(org.apache.maven:doxia-integration-tools:pom:) = 1.6
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-io:commons-io)
+Requires: mvn(org.apache.maven.doxia:doxia-decoration-model)
+Requires: mvn(org.apache.maven.doxia:doxia-logging-api)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven:maven-artifact)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.codehaus.plexus:plexus-component-annotations)
+Requires: mvn(org.codehaus.plexus:plexus-container-default)
+Requires: mvn(org.codehaus.plexus:plexus-i18n)
+Requires: mvn(org.codehaus.plexus:plexus-interpolation)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
 
-Group:		Development/Java
-License:	ASL 2.0
-URL:		http://maven.apache.org/shared/maven-doxia-tools/
-Source0:	http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:		%{name}-migration-to-component-metadata.patch
-
-BuildRequires:	apache-commons-io >= 1.4
-BuildRequires:	apache-commons-logging
-BuildRequires:	plexus-utils
-BuildRequires:	plexus-interpolation
-BuildRequires:	plexus-containers-container-default
-BuildRequires:	plexus-i18n
-BuildRequires:	maven-local
-BuildRequires:  maven-doxia-logging-api
-BuildRequires:	maven-doxia-sitetools
-BuildRequires:	maven-compiler-plugin
-BuildRequires:	maven-install-plugin
-BuildRequires:	maven-jar-plugin
-BuildRequires:	maven-javadoc-plugin
-BuildRequires:	maven-resources-plugin
-BuildRequires:	maven-surefire-plugin
-BuildRequires:	maven-plugin-testing-harness
-BuildRequires:	maven-shared-reporting-impl
-BuildRequires:	plexus-containers-component-metadata
-
-BuildArch:	noarch
-
-Requires:	apache-commons-io >= 1.4
-Requires:	plexus-utils
-Requires:	plexus-interpolation
-Requires:	plexus-containers-container-default
-Requires:	plexus-i18n
-Requires:       maven-doxia-logging-api
-Requires:	maven-doxia-sitetools
-
-Requires:	jpackage-utils
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-doxia-tools-1.6-3.fc23.cpio
 
 %description
 A collection of tools to help the integration of Doxia in Maven plugins.
 
-%package javadoc
-Summary:	Javadoc for %{name}
-Group:		Development/Java
-Requires:	jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%patch0 -b .sav
-%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild \
-	-Dmaven.test.skip=true \
-	install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -Dm 644 target/%{name}-%{version}.jar %{buildroot}/%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# javadoc
-install -d -m 755 %{buildroot}/%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}/%{_javadocdir}/%{name}
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a org.apache.maven.doxia:doxia-integration-tools
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE NOTICE DEPENDENCIES
-
-%files javadoc
-%doc %{_javadocdir}/*
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_12jpp7
 - new release
 

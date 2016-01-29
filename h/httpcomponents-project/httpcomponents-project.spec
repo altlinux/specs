@@ -1,49 +1,49 @@
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:              httpcomponents-project
-Summary:           Common POM file for HttpComponents
-Version:           6
-Release:           alt2_4jpp7
-Group:             Development/Java
-License:           ASL 2.0
-URL:               http://hc.apache.org/
-# svn export http://svn.apache.org/repos/asf/httpcomponents/project/tags/%{version} %{name}-%{version}
-# tar cJf %{name}-%{version}.tar.xz %{name}-%{version}
-Source:            %{name}-%{version}.tar.xz
-BuildArch:         noarch
+Name: httpcomponents-project
+Version: 7
+Summary: Common POM file for HttpComponents
+License: ASL 2.0
+Url: http://hc.apache.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: httpcomponents-project = 7-2.fc23
+Provides: mvn(org.apache.httpcomponents:project:pom:) = 7
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-jar-plugin)
+Requires: mvn(org.apache:apache:pom:)
 
-BuildRequires:     maven-local
-Source44: import.info
-
-Obsoletes: hc-project < 4.1.1-alt1_1jpp6
-Provides: hc-project = %version-%release
-
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: httpcomponents-project-7-2.fc23.cpio
 
 %description
 Common Maven POM  file for HttpComponents. This project should be
 required only for building dependant packages with Maven. Please don't
 use it as runtime requirement.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%pom_remove_plugin :buildnumber-maven-plugin
-%pom_remove_plugin :clirr-maven-plugin
-%pom_remove_plugin :docbkx-maven-plugin
-%pom_remove_plugin :maven-clover2-plugin
-%pom_remove_plugin :maven-notice-plugin
-%pom_xpath_remove pom:modules
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_file  : %{name}
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 6-alt2_4jpp7
 - new release
 

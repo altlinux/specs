@@ -1,31 +1,25 @@
+Provides: jakarta-commons-lang
+Name: apache-commons-lang
+Version: 2.6
+Summary: Provides a host of helper utilities for the java.lang API
+License: ASL 2.0
+Url: http://commons.apache.org/lang
 Epoch: 0
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-compat
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-lang = 2.6-17.fc23
+Provides: mvn(commons-lang:commons-lang) = 2.6
+Provides: mvn(commons-lang:commons-lang:pom:) = 2.6
+Provides: mvn(lang:lang) = 2.6
+Provides: mvn(lang:lang:pom:) = 2.6
+Provides: mvn(org.apache.commons:commons-lang) = 2.6
+Provides: mvn(org.apache.commons:commons-lang:pom:) = 2.6
+Requires: java-headless
+Requires: jpackage-utils
 
-%global base_name       lang
-%global short_name      commons-%{base_name}
-
-Name:           apache-%{short_name}
-Version:        2.6
-Release:        alt3_13jpp7
-Summary:        Provides a host of helper utilities for the java.lang API
-License:        ASL 2.0
-Group:          Development/Java
-URL:            http://commons.apache.org/%{base_name}
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Patch1:         0002-Fix-FastDateFormat-for-Java-7-behaviour.patch
-
-BuildArch:      noarch
-BuildRequires:  maven-local
-BuildRequires:  apache-commons-parent
-BuildRequires:  maven-surefire-provider-junit
-
-Provides:       jakarta-commons-lang = 0:%{version}-%{release}
-Obsoletes:      jakarta-commons-lang <= 0:2.4
-Source44: import.info
-Provides:       %{short_name} = %{epoch}:%{version}-%{release}
+BuildArch: noarch
+Group: Development/Java
+Release: alt4jpp
+Source: apache-commons-lang-2.6-17.fc23.cpio
 
 %description
 The standard Java libraries fail to provide enough methods for
@@ -39,45 +33,28 @@ exception structure that supports multiple types of nested-Exceptions
 and a series of utilities dedicated to help with building methods, such
 as hashCode, toString and equals.
 
-%package        javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-Obsoletes:      jakarta-%{short_name}-javadoc <= 0:2.4
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
-%patch1 -p1
-sed -i 's/\r//' *.txt *.html
-
-# "enum" is used as a Java identifier, which is prohibited in Java >= 1.5
-%pom_add_plugin org.apache.maven.plugins:maven-javadoc-plugin . "
-    <configuration><source>1.3</source></configuration>"
-
-
-%mvn_file  : %{name} %{short_name}
-%mvn_alias : org.apache.commons: %{base_name}:%{base_name}
-# this package needs to be compiled with -source 1.3 option
-%mvn_config buildSettings/compilerSource 1.3
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
-ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc PROPOSAL.html LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
-%{_javadir}/jakarta-%{short_name}.jar
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt4jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_13jpp7
 - new release
 

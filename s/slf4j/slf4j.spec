@@ -1,67 +1,24 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name: slf4j
+Version: 1.7.12
+Summary: Simple Logging Facade for Java
+License: MIT and ASL 2.0
+Url: http://www.slf4j.org/
+Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.slf4j:slf4j-api) = 1.7.12
+Provides: mvn(org.slf4j:slf4j-api:pom:) = 1.7.12
+Provides: mvn(org.slf4j:slf4j-nop) = 1.7.12
+Provides: mvn(org.slf4j:slf4j-nop:pom:) = 1.7.12
+Provides: mvn(org.slf4j:slf4j-simple) = 1.7.12
+Provides: mvn(org.slf4j:slf4j-simple:pom:) = 1.7.12
+Provides: slf4j = 0:1.7.12-2.fc23
+Requires: java-headless
+Requires: jpackage-utils
 
-Name:           slf4j
-Version:        1.7.5
-Release:        alt1_3jpp7
-Epoch:          0
-Summary:        Simple Logging Facade for Java
-Group:          Development/Java
-# the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
-License:        MIT and ASL 2.0
-URL:            http://www.slf4j.org/
-Source0:        http://www.slf4j.org/dist/%{name}-%{version}.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  ant-junit >= 0:1.6.5
-BuildRequires:  javassist >= 0:3.4
-BuildRequires:  junit >= 0:3.8.2
-BuildRequires:  maven-local
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  log4j
-BuildRequires:  apache-commons-logging
-BuildRequires:  cal10n
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: slf4j-1.7.12-2.fc23.cpio
 
 %description
 The Simple Logging Facade for Java or (SLF4J) is intended to serve
@@ -75,81 +32,28 @@ SLF4J interfaces directly, e.g. NLOG4J or SimpleLogger. Alternatively,
 it is possible (and rather easy) to write SLF4J adapters for the given
 API implementation, e.g. Log4jLoggerAdapter or JDK14LoggerAdapter..
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
-
-%package manual
-Group: Development/Java
-Summary:        Manual for %{name}
-BuildArch: noarch
-
-%description manual
-This package provides documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-find . -name "*.jar" | xargs rm
-cp -p %{SOURCE1} APACHE-LICENSE
-
-%pom_disable_module integration
-%pom_disable_module osgi-over-slf4j
-%pom_remove_plugin :maven-source-plugin
-
-# Because of a non-ASCII comment in slf4j-api/src/main/java/org/slf4j/helpers/MessageFormatter.java
-%pom_xpath_inject "pom:project/pom:properties" "
-    <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>"
-
-# Fix javadoc links
-%pom_xpath_remove "pom:links"
-%pom_xpath_inject "pom:plugin[pom:artifactId[text()='maven-javadoc-plugin']]/pom:configuration" "
-    <detectJavaApiLink>false</detectJavaApiLink>
-    <isOffline>false</isOffline>
-    <links><link>/usr/share/javadoc/java</link></links>"
-
-# dos2unix
-%{_bindir}/find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
-    %{_bindir}/xargs -t %{__perl} -pi -e 's/\r$//g'
-
-# The general pattern is that the API package exports API classes and does
-# not require impl classes. slf4j was breaking that causing "A cycle was
-# detected when generating the classpath slf4j.api, slf4j.nop, slf4j.api."
-# The API bundle requires impl package, so to avoid cyclic dependencies
-# during build time, it is necessary to mark the imported package as an
-# optional one.
-# Reported upstream: http://bugzilla.slf4j.org/show_bug.cgi?id=283
-sed -i "/Import-Package/s/.$/;resolution:=optional&/" slf4j-api/src/main/resources/META-INF/MANIFEST.MF
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# Compat symlinks
-(cd $RPM_BUILD_ROOT/%{_javadir}/%{name}; for jar in %{name}-*; do
-    ln -s $jar ${jar/%{name}-/}; done)
 
-# manual
-install -d -m 0755 $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
-rm -rf target/site/{.htaccess,apidocs}
-cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
-
-%files -f .mfiles
-%doc LICENSE.txt APACHE-LICENSE
-%{_javadir}/%{name}
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt APACHE-LICENSE
-
-%files manual
-%doc LICENSE.txt APACHE-LICENSE
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.12-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.5-alt1_3jpp7
 - new release
 

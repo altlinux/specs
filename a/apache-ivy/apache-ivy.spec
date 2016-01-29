@@ -1,36 +1,25 @@
+Name: apache-ivy
+Version: 2.4.0
+Summary: Java-based dependency manager
+License: ASL 2.0
+Url: http://ant.apache.org/ivy
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           apache-ivy
-Version:        2.3.0
-Release:        alt1_1jpp7
-Summary:        Java-based dependency manager
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-ivy = 2.4.0-4.fc23
+Provides: ivy = 2.4.0-4.fc23
+Provides: mvn(jayasoft:ivy) = 2.4.0.local.20150617001712
+Provides: mvn(jayasoft:ivy:pom:) = 2.4.0.local.20150617001712
+Provides: mvn(jayasoft:ivy:xml:) = 2.4.0.local.20150617001712
+Provides: mvn(org.apache.ivy:ivy) = 2.4.0.local.20150617001712
+Provides: mvn(org.apache.ivy:ivy:pom:) = 2.4.0.local.20150617001712
+Provides: mvn(org.apache.ivy:ivy:xml:) = 2.4.0.local.20150617001712
+Requires: java-headless
+Requires: jpackage-utils
 
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://ant.apache.org/ivy/
-Source0:        http://www.apache.org/dist/ant/ivy/%{version}/%{name}-%{version}-src.tar.gz
-BuildArch:      noarch
-
-Provides:       ivy = %{version}-%{release}
-
-BuildRequires:  ant
-BuildRequires:  jakarta-commons-httpclient
-BuildRequires:  jsch
-BuildRequires:  jakarta-oro
-BuildRequires:  jpackage-utils
-Requires:       jpackage-utils
-Requires:       jakarta-oro
-Requires:       jsch
-Requires:       ant
-Requires:       jakarta-commons-httpclient
-Source44: import.info
-AutoReqProv: yes,noosgi
-Obsoletes: ivy < 2
-Source45: ivy-2.2.0.pom
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: apache-ivy-2.4.0-4.fc23.cpio
 
 %description
 Apache Ivy is a tool for managing (recording, tracking, resolving and
@@ -40,81 +29,28 @@ tool, Apache Ivy works particularly well with Apache Ant providing a number
 of powerful Ant tasks ranging from dependency resolution to dependency
 reporting and publication.
 
-%package javadoc
-Summary:        API Documentation for ivy
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-JavaDoc documentation for %{name}
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-# Fix messed-up encodings
-for F in RELEASE_NOTES README LICENSE NOTICE CHANGES.txt
-do
-        sed 's/\r//' $F |iconv -f iso8859-1 -t utf8 >$F.utf8
-        touch -r $F $F.utf8
-        mv $F.utf8 $F
-done
-rm -fr src/java/org/apache/ivy/plugins/signer/bouncycastle
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# Remove prebuilt documentation
-rm -rf doc build/doc
-
-# How to properly disable a plugin?
-# we disable vfs plugin since commons-vfs is not available
-rm -rf src/java/org/apache/ivy/plugins/repository/vfs \
-        src/java/org/apache/ivy/plugins/resolver/VfsResolver.java
-sed '/vfs.*=.*org.apache.ivy.plugins.resolver.VfsResolver/d' -i \
-        src/java/org/apache/ivy/core/settings/typedef.properties
-
-# Craft class path
-mkdir -p lib
-build-jar-repository lib ant jakarta-commons-httpclient jakarta-oro jsch 
-
-# Build
-ant /localivy /offline -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.version=%{version} jar javadoc
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# Code
-install -d $RPM_BUILD_ROOT%{_javadir}
-install -p -m644 build/artifact/jars/ivy.jar $RPM_BUILD_ROOT%{_javadir}/ivy.jar
-
-# API Documentation
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp build/doc/reports/api/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
-echo "ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
-# poms
-mkdir -p %{buildroot}%_mavenpomdir
-cp -p %{SOURCE45} %{buildroot}%_mavenpomdir/JPP-%{name}.pom
-%add_to_maven_depmap org.apache.ivy ivy %{version} JPP %{name}
-# jpp symlink
-ln -s ivy.jar %buildroot%_javadir/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files
-%{_javadir}/*
-%{_sysconfdir}/ant.d/%{name}
-%doc RELEASE_NOTES CHANGES.txt LICENSE NOTICE README
-# jpp compat
-%_mavenpomdir/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%_javadir/%{name}.jar
-
-
-%files javadoc
-%{_javadocdir}/*
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.0-alt1_1jpp7
 - new version
 

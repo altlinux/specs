@@ -1,27 +1,28 @@
+Name: maven-reporting-impl
+Version: 2.3
+Summary: Abstract classes to manage report generation
+License: ASL 2.0
+Url: http://maven.apache.org/shared/maven-reporting-impl
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-reporting-impl = 2.3-2.fc23
+Provides: maven-shared-reporting-impl = 2.3-2.fc23
+Provides: mvn(org.apache.maven.reporting:maven-reporting-impl) = 2.3
+Provides: mvn(org.apache.maven.reporting:maven-reporting-impl:pom:) = 2.3
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-validator:commons-validator)
+Requires: mvn(org.apache.maven.doxia:doxia-core)
+Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
+Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven.shared:maven-shared-utils)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-project)
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
-Name:           maven-reporting-impl
-Version:        2.2
-Release:        alt1_5jpp7
-Summary:        Abstract classes to manage report generation
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-reporting-impl
-# svn export http://svn.apache.org/repos/asf/maven/shared/tags/maven-reporting-impl-2.2 maven-reporting-impl-2.2
-# tar caf maven-reporting-impl-2.2.tar.xz maven-reporting-impl-2.2/
-Source0:        %{name}-%{version}.tar.xz
-# ASL mandates that the licence file be included in redistributed source
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  maven-shared
-%{?fedora:BuildRequires: junit-addons}
-
-Obsoletes:      maven-shared-reporting-impl < %{version}-%{release}
-Provides:       maven-shared-reporting-impl = %{version}-%{release}
-Source44: import.info
+Release: alt0.1jpp
+Source: maven-reporting-impl-2.3-2.fc23.cpio
 
 %description
 Abstract classes to manage report generation, which can be run both:
@@ -31,31 +32,28 @@ Abstract classes to manage report generation, which can be run both:
 
 This is a replacement package for maven-shared-reporting-impl
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-    
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-cp -p %{SOURCE1} LICENSE.txt
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build %{!?fedora:-f}
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5jpp7
 - new release
 

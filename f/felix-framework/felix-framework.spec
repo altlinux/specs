@@ -1,85 +1,45 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Prevent brp-java-repack-jars from being run.
-%define __jar_repack %{nil}
-
-%global project felix
-%global bundle org.apache.felix.framework
-%global groupId org.apache.felix
-
-Name:           %{project}-framework
-Version:        4.2.1
-Release:        alt1_1jpp7
-Summary:        Apache Felix Framework
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://felix.apache.org
-Source0:        http://www.apache.org/dist/%{project}/%{bundle}-%{version}-source-release.tar.gz
-
-BuildArch:      noarch
-
-BuildRequires: jpackage-utils
-BuildRequires: felix-osgi-compendium
-BuildRequires: felix-osgi-core
-BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: apache-rat-plugin
-
-Requires: felix-osgi-compendium
-Requires: felix-osgi-core
+Name: felix-framework
+Version: 5.0.0
+Summary: Apache Felix Framework
+License: ASL 2.0
+Url: http://felix.apache.org
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: felix-framework = 5.0.0-1.fc23
+Provides: mvn(org.apache.felix:org.apache.felix.framework) = 5.0.0
+Provides: mvn(org.apache.felix:org.apache.felix.framework:pom:) = 5.0.0
+Requires: java-headless
 Requires: jpackage-utils
-Source44: import.info
+
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: felix-framework-5.0.0-1.fc23.cpio
 
 %description
 Apache Felix Framework Interfaces and Classes.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{bundle}-%{version}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}/%{project}
-install -m 644 target/%{bundle}-%{version}.jar \
-        %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
 
-%add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%doc LICENSE NOTICE
-%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom 
-%{_mavendepmapfragdir}/%{name} 
-%{_javadir}/%{project}/*
-
-%files javadoc
-%doc LICENSE NOTICE
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_1jpp7
 - new version
 

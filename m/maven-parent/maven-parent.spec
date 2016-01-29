@@ -1,38 +1,45 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-parent
-Version:        20
-Release:        alt1_5jpp7
-Summary:        Apache Maven parent POM
-License:        ASL 2.0
-URL:            http://maven.apache.org
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch:      noarch
+Name: maven-parent
+Version: 26
+Summary: Apache Maven parent POM
+License: ASL 2.0
+Url: http://maven.apache.org
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-parent = 26-2.fc23
+Provides: mvn(org.apache.maven:maven-parent:pom:) = 26
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache:apache:pom:)
 
-BuildRequires:  maven-local
-BuildRequires:  apache-parent
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-parent-26-2.fc23.cpio
 
 %description
 Apache Maven parent POM file used by other Maven projects.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
+
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 26-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 20-alt1_5jpp7
 - new release
 

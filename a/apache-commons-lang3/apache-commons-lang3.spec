@@ -1,26 +1,19 @@
+Name: apache-commons-lang3
+Version: 3.4
+Summary: Provides a host of helper utilities for the java.lang API
+License: ASL 2.0
+Url: http://commons.apache.org/lang
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-lang3 = 3.4-2.fc23
+Provides: mvn(org.apache.commons:commons-lang3) = 3.4
+Provides: mvn(org.apache.commons:commons-lang3:pom:) = 3.4
+Requires: java-headless
+Requires: jpackage-utils
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global base_name       lang
-%global short_name      commons-%{base_name}3
-
-Name:           apache-%{short_name}
-Version:        3.1
-Release:        alt2_7jpp7
-Summary:        Provides a host of helper utilities for the java.lang API
-License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.commons:commons-parent)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-%if 0%{?rhel} <= 0
-BuildRequires:  mvn(org.easymock:easymock)
-%endif
-Source44: import.info
+Release: alt3jpp
+Source: apache-commons-lang3-3.4-2.fc23.cpio
 
 %description
 The standard Java libraries fail to provide enough methods for
@@ -39,31 +32,28 @@ therefore created differently named artifact and jar files. This is
 the new version, while apache-commons-lang is the compatibility
 package.
 
-%package        javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
-%mvn_file : %{name} %{short_name}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build %{?rhel:-f}
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%files -f %name-list
 
 %changelog
+* Wed Jan 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_7jpp7
 - new release
 

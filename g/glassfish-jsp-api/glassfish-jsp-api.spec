@@ -1,99 +1,50 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global artifactId javax.servlet.jsp-api
-%global jspspec 2.2
+Name: glassfish-jsp-api
+Version: 2.3.2
+Summary: Glassfish J2EE JSP API specification
+License: (CDDL or GPLv2 with exceptions) and ASL 2.0
+Url: http://java.net/jira/browse/JSP
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: glassfish-jsp-api = 2.3.2-0.3.b01.fc23
+Provides: mvn(javax.servlet.jsp:javax.servlet.jsp-api) = 2.3.2.b01
+Provides: mvn(javax.servlet.jsp:javax.servlet.jsp-api:pom:) = 2.3.2.b01
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(javax.el:javax.el-api)
+Requires: mvn(javax.servlet:javax.servlet-api)
 
-
-Name:       glassfish-jsp-api
-Version:    2.2.1
-Release:    alt2_6jpp7
-Summary:    Glassfish J2EE JSP API specification
-
-Group:      Development/Java
-License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
-URL:        http://java.net/jira/browse/JSP
-Source0:    %{artifactId}-%{version}.tar.xz
-# no source releases, but this will generate tarball for you from an
-# SVN tag
-Source1:    generate_tarball.sh
-Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
-Source3:    http://hub.opensolaris.org/bin/download/Main/licensing/cddllicense.txt
-
-BuildArch:  noarch
-
-BuildRequires:  maven-local
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  jvnet-parent
-BuildRequires:  mvn(javax.servlet:javax.servlet-api)
-BuildRequires:  mvn(javax.el:javax.el-api)
-
-Requires:       jvnet-parent
-Requires:       mvn(javax.servlet:javax.servlet-api)
-Requires:       mvn(javax.el:javax.el-api)
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: glassfish-jsp-api-2.3.2-0.3.b01.fc23.cpio
 
 %description
 This project provides a container independent specification of JSP
 2.2. Note that this package doesn't contain implementation of this
 specification. See glassfish-jsp for one of implementations
 
-%package javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils >= 0:1.7.5
-BuildArch:      noarch
-
-%description javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{artifactId}-%{version}
-cp -p %{SOURCE2} LICENSE
-cp -p %{SOURCE3} cddllicense.txt
-
-# Submited upstream: http://java.net/jira/browse/JSP-31
-sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:javadoc
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
+ln -s glassfish-jsp-api/javax.servlet.jsp-api.jar %buildroot/usr/share/java/glassfish-jsp-api.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-
-install -m 644 target/%{artifactId}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap
-
-%files
-%doc LICENSE cddllicense.txt
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
-
-%files javadoc
-%doc LICENSE cddllicense.txt
-%{_javadocdir}/%{name}
-
+%files -f %name-list
+/usr/share/java/glassfish-jsp-api.jar
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_6jpp7
 - new release
 

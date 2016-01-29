@@ -1,45 +1,25 @@
+Name: parboiled
+Version: 1.1.6
+Summary: Java/Scala library providing parsing of input text based on PEGs
+License: ASL 2.0
+Url: http://parboiled.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.parboiled:parboiled-core) = 1.1.6
+Provides: mvn(org.parboiled:parboiled-core:pom:) = 1.1.6
+Provides: mvn(org.parboiled:parboiled-java) = 1.1.6
+Provides: mvn(org.parboiled:parboiled-java:pom:) = 1.1.6
+Provides: parboiled = 1.1.6-8.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.ow2.asm:asm)
+Requires: mvn(org.ow2.asm:asm-analysis)
+Requires: mvn(org.ow2.asm:asm-tree)
+Requires: mvn(org.ow2.asm:asm-util)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:          parboiled
-Version:       1.0.2
-Release:       alt2_6jpp7
-Summary:       Java/Scala library providing parsing of input text based on PEGs
-License:       ASL 2.0
-URL:           http://parboiled.org/
-Source0:       https://github.com/sirthias/parboiled/archive/%{version}.tar.gz
-# for build see https://github.com/sirthias/parboiled/wiki/Building-parboiled
-Source1:       http://repo1.maven.org/maven2/org/%{name}/%{name}-core/%{version}/%{name}-core-%{version}.pom
-Source2:       http://repo1.maven.org/maven2/org/%{name}/%{name}-java/%{version}/%{name}-java-%{version}.pom
-# customized aggregator pom
-Source3:       %{name}-%{version}-pom.xml
-
-
-BuildRequires: mvn(asm:asm)
-BuildRequires: mvn(asm:asm-analysis)
-BuildRequires: mvn(asm:asm-tree)
-BuildRequires: mvn(asm:asm-util)
-
-%if 0
-# TODO 
-BuildRequires: mvn(org.scala-lang:scala-library)
-# test deps
-BuildRequires: mvn(org.scalatest:scalatest_2.10)
-BuildRequires: mvn(org.testng:testng)
-
-# use https://github.com/davidB/scala-maven-plugin
-BuildRequires: scala-maven-plugin
-BuildRequires: maven-surefire-provider-testng
-%endif
-
-BuildRequires: maven-local
-
-
-BuildArch:     noarch
-Source44: import.info
+Release: alt0.1jpp
+Source: parboiled-1.1.6-8.fc23.cpio
 
 %description
 parboiled is a mixed Java/Scala library providing for lightweight and
@@ -47,46 +27,30 @@ easy-to-use, yet powerful and elegant parsing of arbitrary input text
 based on Parsing expression grammars (PEGs). PEGs are an alternative to
 context free grammars (CFGs) for formally specifying syntax, they
 make a good replacement for regular expressions and generally have quite
-a few advantages over the "traditional" way of building parsers via CFGs.
+a few advantages over the "traditional" way of building parser via CFGs.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-find . -name "*.class" -delete
-find . -name "*.jar" -delete
-
-cp -p %{SOURCE1} %{name}-core/pom.xml
-cp -p %{SOURCE2} %{name}-java/pom.xml
-#cp -p %%{SOURCE?} %%{name}-scala/pom.xml
-cp -p %{SOURCE3} pom.xml
-
-%mvn_file :%{name}-core %{name}/core
-%mvn_file :%{name}-java %{name}/java
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
-# test skipped unavailable dep org.scalatest scalatest_2.9.0 1.6.1
-%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
- 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc CHANGELOG LICENSE README.markdown
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Mon Jan 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_6jpp7
 - new release
 

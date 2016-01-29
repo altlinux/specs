@@ -1,75 +1,54 @@
+Name: maven-common-artifact-filters
+Version: 1.4
+Summary: Maven Common Artifact Filters
+License: ASL 2.0
+Url: http://maven.apache.org/shared/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-common-artifact-filters = 1.4-16.fc23
+Provides: maven-shared-common-artifact-filters = 1.4-16.fc23
+Provides: mvn(org.apache.maven.shared:maven-common-artifact-filters) = 1.4
+Provides: mvn(org.apache.maven.shared:maven-common-artifact-filters:pom:) = 1.4
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven:maven-artifact)
+Requires: mvn(org.apache.maven:maven-compat)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.codehaus.plexus:plexus-container-default)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:          maven-common-artifact-filters
-Version:       1.4
-Release:       alt3_11jpp7
-Summary:       Maven Common Artifact Filters
-License:       ASL 2.0
-Url:           http://maven.apache.org/shared/
-Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch:     noarch
-
-BuildRequires: maven-local
-BuildRequires: easymock3
-
-BuildRequires: maven-shared
-BuildRequires: maven-resources-plugin
-BuildRequires: plexus-containers-container-default
-BuildRequires: maven-test-tools
-BuildRequires: maven-plugin-testing-harness
-
-
-Provides:      maven-shared-common-artifact-filters = %{version}-%{release}
-Obsoletes:     maven-shared-common-artifact-filters < %{version}-%{release}
-Source44: import.info
+Release: alt4jpp
+Source: maven-common-artifact-filters-1.4-16.fc23.cpio
 
 %description
 A collection of ready-made filters to control inclusion/exclusion of artifacts
 during dependency resolution.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-# Maven 2 -> Maven 3
-%pom_remove_dep :maven-project
-%pom_add_dep org.apache.maven:maven-core
-%pom_add_dep org.apache.maven:maven-compat
-%pom_xpath_set "pom:dependency[pom:groupId[text()='org.apache.maven']]/pom:version" 3.0.4
-
-# Workaround for rhbz#911365
-%pom_add_dep aopalliance:aopalliance::test
-%pom_add_dep cglib:cglib::test
-
-# Migrate from easymock 1 to easymock 3
-%pom_remove_dep easymock:
-%pom_add_dep org.easymock:easymock:3.2:test
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# NoSuchMethodError: org.easymock.internal.ObjectMethodsFilter.<init>(Ljava/lang/reflect/InvocationHandler;)V
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_11jpp7
 - new release
 

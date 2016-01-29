@@ -1,167 +1,67 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global bootstrap 0
-
-Name:           maven-javadoc-plugin
-Version:        2.9.1
-Release:        alt1_2jpp7
-Summary:        Maven Javadoc Plugin
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-javadoc-plugin
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         reduce-exceptions.patch
-
-BuildRequires:  apache-commons-io
-BuildRequires:  apache-commons-lang
-BuildRequires:  apache-commons-logging
-BuildRequires:  httpcomponents-client
-BuildRequires:  log4j
-BuildRequires:  maven-local
-BuildRequires:  maven-archiver
-BuildRequires:  maven-artifact
-BuildRequires:  maven-artifact-manager
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-common-artifact-filters
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-doxia-sink-api
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-model
-BuildRequires:  maven-plugin-annotations
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  maven-project
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-settings
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-shared-invoker
-BuildRequires:  maven-shared-reporting-api
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-toolchain
-BuildRequires:  maven-wagon
-BuildRequires:  modello
-BuildRequires:  plexus-archiver
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-interactivity
-BuildRequires:  plexus-utils
-BuildRequires:  qdox
-%if ! %{bootstrap}
-BuildRequires:  maven-javadoc-plugin
-%endif        
-
-Requires:       apache-commons-io
-Requires:       apache-commons-lang
-Requires:       apache-commons-logging
-Requires:       httpcomponents-client
-Requires:       log4j
-Requires:       maven
-Requires:       maven-archiver
-Requires:       maven-artifact
-Requires:       maven-artifact-manager
-Requires:       maven-common-artifact-filters
-Requires:       maven-doxia-sink-api
-Requires:       maven-doxia-sitetools
-Requires:       maven-model
-Requires:       maven-plugin-annotations
-Requires:       maven-project
-Requires:       maven-settings
-Requires:       maven-shared-invoker
-Requires:       maven-shared-reporting-api
-Requires:       maven-toolchain
-Requires:       maven-wagon
-Requires:       plexus-archiver
-Requires:       plexus-containers-container-default
-Requires:       plexus-interactivity
-Requires:       plexus-utils
-Requires:       qdox
+Name: maven-javadoc-plugin
+Version: 2.10.3
+Summary: Maven Javadoc Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-javadoc-plugin
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-javadoc-plugin = 2.10.3-2.fc23
+Provides: mvn(org.apache.maven.plugins:maven-javadoc-plugin) = 2.10.3
+Provides: mvn(org.apache.maven.plugins:maven-javadoc-plugin:pom:) = 2.10.3
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-io:commons-io)
+Requires: mvn(commons-lang:commons-lang)
+Requires: mvn(commons-logging:commons-logging)
+Requires: mvn(log4j:log4j)
+Requires: mvn(org.apache.httpcomponents:httpclient)
+Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
+Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
+Requires: mvn(org.apache.maven.shared:maven-invoker)
+Requires: mvn(org.apache.maven.wagon:wagon-provider-api)
+Requires: mvn(org.apache.maven:maven-archiver)
+Requires: mvn(org.apache.maven:maven-artifact)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-settings)
+Requires: mvn(org.codehaus.plexus:plexus-archiver)
+Requires: mvn(org.codehaus.plexus:plexus-container-default)
+Requires: mvn(org.codehaus.plexus:plexus-interactivity-api)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
 
 BuildArch: noarch
-
-Obsoletes: maven2-plugin-javadoc <= 2.0.8
-Provides:  maven2-plugin-javadoc = %{version}-%{release}
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-javadoc-plugin-2.10.3-2.fc23.cpio
 
 %description
 The Maven Javadoc Plugin is a plugin that uses the javadoc tool for
 generating javadocs for the specified project.
- 
-%if ! %{bootstrap}
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       %{name} = %{version}-%{release}
-Requires:       jpackage-utils
-BuildArch: noarch
 
-%description javadoc
-API documentation for %{name}.
-%endif
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
-# Update source for use with newer doxia
-%patch0
-
-# Remove test dependencies because tests are skipped anyways.
-%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
-
-%pom_add_dep org.codehaus.plexus:plexus-interactivity-api pom.xml "
-<exclusions>
-    <exclusion>
-        <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-component-api</artifactId>
-    </exclusion>
-</exclusions>"
-
-sed -i -e "s|org.apache.maven.doxia.module.xhtml.decoration.render|org.apache.maven.doxia.sink.render|g" src/main/java/org/apache/maven/plugin/javadoc/JavadocReport.java
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        install
-%if ! %{bootstrap}
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        -Dproject.build.sourceEncoding=UTF-8 \
-       javadoc:javadoc
-%endif        
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%if ! %{bootstrap}
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-rm -rf target/site/api*
-%endif
-
-%files -f .mfiles
-%doc LICENSE NOTICE 
-
-%if ! %{bootstrap}
-%files javadoc
-%doc LICENSE NOTICE 
-%{_javadocdir}/%{name}
-%endif
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.10.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.9.1-alt1_2jpp7
 - new release
 

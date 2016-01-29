@@ -1,61 +1,57 @@
+Name: maven-filtering
+Version: 1.3
+Summary: Shared component providing resource filtering
+License: ASL 2.0
+Url: http://maven.apache.org/shared/maven-filtering/index.html
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-filtering = 1.3-2.fc23
+Provides: maven-shared-filtering = 1.0-99
+Provides: mvn(org.apache.maven.shared:maven-filtering) = 1.3
+Provides: mvn(org.apache.maven.shared:maven-filtering:pom:) = 1.3
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.shared:maven-shared-utils)
+Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model:2.2.1)
+Requires: mvn(org.apache.maven:maven-project)
+Requires: mvn(org.apache.maven:maven-settings:2.2.1)
+Requires: mvn(org.codehaus.plexus:plexus-interpolation)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+Requires: mvn(org.sonatype.plexus:plexus-build-api)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:             maven-filtering
-Version:          1.1
-Release:          alt1_2jpp7
-Summary:          Shared component providing resource filtering
-License:          ASL 2.0
-URL:              http://maven.apache.org/shared/%{name}/index.html
-Source0:          http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch:        noarch
-
-BuildRequires:    maven-local
-BuildRequires:    maven-shared
-BuildRequires:    plexus-build-api
-BuildRequires:    plexus-containers-component-metadata
-
-Provides:         maven-shared-filtering = 1.0-99
-Obsoletes:        maven-shared-filtering < 1.0-99 
-Source44: import.info
+Release: alt0.1jpp
+Source: maven-filtering-1.3-2.fc23.cpio
 
 %description
-These Plexus components have been built from the filtering process/code in 
-Maven Resources Plugin. The goal is to provide a shared component for all 
+These Plexus components have been built from the filtering process/code in
+Maven Resources Plugin. The goal is to provide a shared component for all
 plugins that needs to filter resources.
 
-%package javadoc
-Group: Development/Java
-Summary:          Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-# Replace plexus-maven-plugin with plexus-component-metadata
-%pom_xpath_set "pom:plugin[pom:artifactId[text()='plexus-maven-plugin']]//pom:goal[text()='descriptor']" generate-metadata
-%pom_xpath_set "pom:artifactId[text()='plexus-maven-plugin']" plexus-component-metadata
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# Tests use a package that is no longer present in plexus-build-api (v0.0.7)
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc DEPENDENCIES LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp7
 - new release
 

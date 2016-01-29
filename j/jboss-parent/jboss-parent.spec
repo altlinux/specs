@@ -1,45 +1,49 @@
+Name: jboss-parent
+Version: 11
+Summary: JBoss Parent POM
+License: Public Domain
+Url: http://www.jboss.org/
 Epoch: 0
-Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:                 jboss-parent
-Version:              11
-Release:              alt1_1jpp7
-Summary:              JBoss Parent POM
-License:              Public Domain
-URL:                  http://www.jboss.org/
-Source0:              https://github.com/jboss/jboss-parent-pom/archive/86bff326310a192ef657d893fa8e96ebd33e1ae4.tar.gz
-BuildArch:            noarch
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jboss-parent = 11-6.fc23
+Provides: mvn(org.jboss:jboss-parent:pom:) = 11
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(com.sun:tools)
+Requires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-source-plugin)
+Requires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 
-BuildRequires:        maven-local
-BuildRequires:        maven-install-plugin
-BuildRequires:        maven-javadoc-plugin
-BuildRequires:        maven-release-plugin
-BuildRequires:        maven-resources-plugin
-BuildRequires:        maven-enforcer-plugin
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt2jpp
+Source: jboss-parent-11-6.fc23.cpio
 
 %description
 The Project Object Model files for JBoss packages.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -n jboss-parent-pom-86bff326310a192ef657d893fa8e96ebd33e1ae4
-
-%pom_remove_plugin ":maven-clover2-plugin"
-%pom_remove_plugin ":findbugs-maven-plugin"
-%pom_remove_plugin ":sonar-maven-plugin"
-%pom_remove_plugin ":javancss-maven-plugin"
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc README.md
+
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:11-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:11-alt1_1jpp7
 - new release
 

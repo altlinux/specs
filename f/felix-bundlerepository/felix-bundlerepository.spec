@@ -1,93 +1,47 @@
+Name: felix-bundlerepository
+Version: 1.6.6
+Summary: Bundle repository service
+License: ASL 2.0 and MIT
+Url: http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: felix-bundlerepository = 1.6.6-18.fc23
+Provides: mvn(org.apache.felix:org.apache.felix.bundlerepository) = 1.6.6
+Provides: mvn(org.apache.felix:org.apache.felix.bundlerepository:pom:) = 1.6.6
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.felix:org.apache.felix.utils)
+Requires: mvn(org.osgi:org.osgi.core)
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
-%global site_name org.apache.felix.bundlerepository
-%global grp_name  felix
-
-Name:           felix-bundlerepository
-Version:        1.6.6
-Release:        alt2_15jpp7
-Summary:        Bundle repository service
-License:        ASL 2.0 and MIT
-URL:            http://felix.apache.org/site/apache-felix-osgi-bundle-repository.html
-
-Source0:        http://www.fightrice.com/mirrors/apache/felix/org.apache.felix.bundlerepository-%{version}-source-release.tar.gz
-Patch1:         0001-Unbundle-libraries.patch
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.sf.kxml:kxml2)
-BuildRequires:  mvn(org.apache.felix:felix-parent)
-BuildRequires:  mvn(org.apache.felix:org.apache.felix.shell)
-BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
-BuildRequires:  mvn(org.apache.felix:org.osgi.service.obr)
-BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
-BuildRequires:  mvn(org.osgi:org.osgi.compendium)
-BuildRequires:  mvn(org.osgi:org.osgi.core)
-BuildRequires:  mvn(xpp3:xpp3)
-%{?fedora:BuildRequires: mvn(org.easymock:easymock)}
-Source44: import.info
-
+Release: alt3jpp
+Source: felix-bundlerepository-1.6.6-18.fc23.cpio
 
 %description
 Bundle repository service
 
-%package javadoc
-Group: Development/Java
-Summary:          API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{site_name}-%{version}
-%patch1 -p1
-
-# Parent POM pulls in unneeded dependencies (mockito)
-%pom_remove_parent
-%pom_xpath_inject "pom:project" "<groupId>org.apache.felix</groupId>"
-%pom_add_dep junit:junit::test
-%if 0%{?fedora}
-  # easymock is test dependency
-  %pom_xpath_inject "pom:dependency[pom:artifactId[text()='easymock']]" "<scope>test</scope>"
-%else
-  %pom_remove_dep org.easymock:easymock
-%endif
-
-%if !0%{?fedora}
-  # These tests won't work without easymock3
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/RepositoryAdminTest.java
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/RepositoryImplTest.java
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/StaxParserTest.java
-  rm -f src/test/java/org/apache/felix/bundlerepository/impl/ResolverImplTest.java
-%endif
-
-# Add xpp3 dependency (upstream bundles this)
-%pom_add_dep "xpp3:xpp3:1.1.3.4.O" pom.xml "<optional>true</optional>"
-
-# Make felix utils mandatory dep
-%pom_xpath_remove "pom:dependency[pom:artifactId[text()='org.apache.felix.utils']]/pom:optional"
-
-# For compatibility reasons
-%mvn_file : felix/%{name}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE LICENSE.kxml2 NOTICE DEPENDENCIES
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE LICENSE.kxml2 NOTICE
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt3jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.6-alt2_15jpp7
 - new release
 

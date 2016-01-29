@@ -1,63 +1,49 @@
+Name: apache-commons-compress
+Version: 1.10
+Summary: Java API for working with compressed files and archivers
+License: ASL 2.0
+Url: http://commons.apache.org/compress/
 Epoch: 0
-BuildRequires: /proc
-BuildRequires: jpackage-compat maven-surefire-provider-junit4                  
-%global base_name       compress
-%global short_name      commons-%{base_name}
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-compress = 1.10-0.2.svn1684406.fc23
+Provides: mvn(commons:commons-compress) = 1.10.SNAPSHOT
+Provides: mvn(commons:commons-compress:pom:) = 1.10.SNAPSHOT
+Provides: mvn(org.apache.commons:commons-compress) = 1.10.SNAPSHOT
+Provides: mvn(org.apache.commons:commons-compress:pom:) = 1.10.SNAPSHOT
+Requires: java-headless
+Requires: jpackage-utils
 
-Name:           apache-%{short_name}
-Version:        1.5
-Release:        alt1_1jpp7
-Summary:        Java API for working with compressed files and archivers
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}/
-Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  javapackages-tools >= 0.10.0
-BuildRequires:  apache-commons-parent
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  xz-java
-
-Provides:       jakarta-%{short_name} = %{version}-%{release}
-Obsoletes:      jakarta-%{short_name} < 1.0-2
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt2jpp
+Source: apache-commons-compress-1.10-0.2.svn1684406.fc23.cpio
 
 %description
 The Apache Commons Compress library defines an API for working with
 ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200 and bzip2 files.
 
-
-%package javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-Provides:       jakarta-%{short_name}-javadoc = %{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc < 1.0-2
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_file  : %{short_name} %{name}
-%mvn_alias : commons:
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
-
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_1jpp7
 - new version
 

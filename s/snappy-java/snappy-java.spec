@@ -1,90 +1,46 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:             snappy-java
-Version:          1.0.4.1
-Release:          alt3_5jpp7
-Summary:          Fast compressor/decompresser
-Group:            Development/Java
-License:          ASL 2.0
-URL:              http://code.google.com/p/snappy-java
+Name: snappy-java
+Version: 1.0.5
+Summary: Fast compressor/decompresser
+License: ASL 2.0
+Url: http://xerial.org/snappy-java/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.xerial.snappy:snappy-java) = 1.0.5
+Provides: mvn(org.xerial.snappy:snappy-java:pom:) = 1.0.5
+Provides: snappy-java = 1.0.5-5.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: libsnappy
 
-# hg clone --insecure -r snappy-java-1.0.4.1 https://code.google.com/p/snappy-java/
-# cd snappy-java && hg archive -p snappy-java-1.0.4.1/ -X 'lib/*.jar' -t tgz ../snappy-java-1.0.4.1-CLEAN.tgz
-Source0:          snappy-java-%{version}-CLEAN.tgz
-
-Patch0:           snappy-java-%{version}-pom.patch
-
-BuildArch:        noarch
-
-BuildRequires:    felix-osgi-core
-BuildRequires:    jboss-logging
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-
-Requires:         felix-osgi-core
-Requires:         jboss-logging
-Requires:         jpackage-utils
-Source44: import.info
-Source2: depmap
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: snappy-java-1.0.5-5.fc23.cpio
 
 %description
 A Java port of the snappy, a fast compresser/decompresser written in C++.
 
-%package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-%patch0 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# no xerial package available
-mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE2} \
--Dmaven.test.skip=true install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# JAR
-install -pm 644 target/snappy-java-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-%doc LICENSE README NOTICE
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4.1-alt3_5jpp7
 - fixed build
 
