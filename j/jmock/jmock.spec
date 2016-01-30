@@ -1,67 +1,42 @@
+Name: jmock
+Version: 2.8.1
+Summary: Java library for testing code with mock objects
+License: BSD
+Url: http://www.jmock.org/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jmock
-%define version 2.5.1
-%global namedreltag %{nil}
-%global namedversion %{version}%{?namedreltag}
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jmock = 2.8.1-2.fc23
+Provides: mvn(org.jmock:jmock) = 2.8.1
+Provides: mvn(org.jmock:jmock-example) = 2.8.1
+Provides: mvn(org.jmock:jmock-example:pom:) = 2.8.1
+Provides: mvn(org.jmock:jmock-junit3) = 2.8.1
+Provides: mvn(org.jmock:jmock-junit3::tests:) = 2.8.1
+Provides: mvn(org.jmock:jmock-junit3:pom:) = 2.8.1
+Provides: mvn(org.jmock:jmock-junit4) = 2.8.1
+Provides: mvn(org.jmock:jmock-junit4:pom:) = 2.8.1
+Provides: mvn(org.jmock:jmock-legacy) = 2.8.1
+Provides: mvn(org.jmock:jmock-legacy:pom:) = 2.8.1
+Provides: mvn(org.jmock:jmock-parent:pom:) = 2.8.1
+Provides: mvn(org.jmock:jmock-script) = 2.8.1
+Provides: mvn(org.jmock:jmock-script::tests:) = 2.8.1
+Provides: mvn(org.jmock:jmock-script:pom:) = 2.8.1
+Provides: mvn(org.jmock:jmock-testjar) = 2.8.1
+Provides: mvn(org.jmock:jmock-testjar:pom:) = 2.8.1
+Provides: mvn(org.jmock:jmock::tests:) = 2.8.1
+Provides: mvn(org.jmock:jmock:pom:) = 2.8.1
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(cglib:cglib)
+Requires: mvn(junit:junit)
+Requires: mvn(org.beanshell:bsh)
+Requires: mvn(org.hamcrest:hamcrest-library)
+Requires: mvn(org.objenesis:objenesis)
+Requires: mvn(org.ow2.asm:asm)
 
-Name:          jmock
-Version:       2.5.1
-Release:       alt1_3jpp7
-Summary:       Java library for testing code with mock objects
-Group:         Development/Java
-License:       BSD
-Url:           http://www.jmock.org/
-# svn export http://svn.codehaus.org/jmock/tags/2.5.1 jmock-2.5.1
-# find jmock-2.5.1 -name "*.jar" -type f -delete
-# find jmock-2.5.1 -name "*.class" -delete
-# svn export http://svn.codehaus.org/jmock/tags/packaging-maven-2.5.1 jmock-2.5.1/maven
-# tar czf jmock-2.5.1-clean-src-svn.tar.gz jmock-2.5.1
-Source0:       %{name}-%{namedversion}-clean-src-svn.tar.gz
-Patch0:        %{name}-%{namedversion}-use_system_libraries.patch
-# build with cglib 2.2
-Patch1:        %{name}-%{namedversion}-cglib22.patch
-# patch for java6
-Patch2:        %{name}-%{namedversion}-DeterministicSchedule.patch
-# remove hamcrest classes
-Patch3:        %{name}-%{namedversion}-javadoc.patch
-# remove
-#    gmaven
-#    wagon-webdav 
-#    profile jmock1
-# change
-#   cglib cglib-nodep 2.1_3 -> net.sf.cglib cglib 2.2
-#   junit-dep -> junit
-Patch4:        %{name}-%{namedversion}-poms.patch
-# from Debian
-Patch5:        %{name}-%{namedversion}-hamcrest12.patch
-# build fix for java 7
-Patch6:        %{name}-%{namedversion}-name-clash.patch
-
-BuildRequires: jpackage-utils
-
-BuildRequires: ant
-BuildRequires: ant-junit
-BuildRequires: bsh
-BuildRequires: cglib
-BuildRequires: hamcrest12
-BuildRequires: junit4
-BuildRequires: objectweb-asm
-BuildRequires: objenesis
-
-Requires:      bsh
-Requires:      hamcrest12
-Requires:      junit4
-
-Requires:      objenesis
-Requires:      jpackage-utils
-BuildArch:     noarch
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: jmock-2.8.1-2.fc23.cpio
 
 %description
 Mock objects help you design and test the interactions between the objects in
@@ -75,82 +50,28 @@ The jMock library:
   * plugs into your favorite test framework
   * is easy to extend.
 
-%package javadoc
-Group:         Development/Java
-Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p1
-%patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p1
-%patch6 -p0
-
-# fix non ASCII chars
-for s in test/org/jmock/example/sniper/Money.java;do
-  native2ascii -encoding UTF8 ${s} ${s}
-done
-
-# TODO this test fails
-rm -r test/org/jmock/test/acceptance/ParameterMatchingAcceptanceTests.java \
-  test/org/jmock/test/acceptance/PrimitiveParameterTypesAcceptanceTests.java
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-
-ant \
-  -Dant.build.javac.source=1.5 \
-  -Dant.build.javac.target=1.5 \
- -Dversion=%{namedversion} \
- zip.jars javadoc
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 maven/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
-mkdir -p %{buildroot}%{_javadir}/%{name}
-for m in %{name} \
-  %{name}-junit3 \
-  %{name}-junit4 \
-  %{name}-legacy \
-  %{name}-script;do
-    install -m 644 build/%{name}-%{namedversion}/${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
-    install -pm 644 maven/${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-    %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
 
-sed -i 's|<version>x-SNAPSHOT</version>|<version>%{namedversion}</version>|'  maven/%{name}-core/pom.xml
-sed -i 's|<artifactId>%{name}-core</artifactId>|<artifactId>%{name}-tests</artifactId>|'  maven/%{name}-core/pom.xml
-sed -i 's|<name>jMock 1 Core</name>|<name>jMock 2 Tests</name>|' maven/%{name}-core/pom.xml
-install -m 644 build/%{name}-%{namedversion}/%{name}-tests-%{namedversion}.jar \
-  %{buildroot}%{_javadir}/%{name}/%{name}-tests.jar
-install -pm 644 maven/%{name}-core/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-tests.pom
-%add_maven_depmap JPP.%{name}-%{name}-tests.pom %{name}/%{name}-tests.jar
 
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/%{name}-%{namedversion}/doc/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*.jar
-%{_mavenpomdir}/JPP.%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE.txt README*
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc LICENSE.txt
+%files -f %name-list
 
 %changelog
+* Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5.1-alt1_3jpp7
 - new release
 
