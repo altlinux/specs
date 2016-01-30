@@ -1,5 +1,5 @@
 Name: libdxfrw
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 
 Summary: Library to read/write DXF files
@@ -51,6 +51,9 @@ Development files for libdxfrw.
 %_pkgconfigdir/libdxfrw0.pc
 
 %changelog
+* Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 0.6.3-alt1
+- new version 0.6.3 (with rpmrb script)
+
 * Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - initial build for ALT Linux Sisyphus
 
