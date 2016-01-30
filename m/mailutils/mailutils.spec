@@ -13,7 +13,7 @@ Name: mailutils
 %if %snapshot
 %define snapshotdate 20151110
 Version: %baseversion
-Release: alt0.%snapshotdate.1
+Release: alt0.%snapshotdate.2
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
@@ -55,6 +55,7 @@ BuildRequires: bzlib-devel emacs-git flex gcc-c++ glibc-devel libdb4-devel libgc
 
 BuildRequires: /dev/pts
 BuildRequires: emacs-X11
+BuildRequires: makeinfo
 
 %description
 GNU Mailutils contains a series of useful mail clients, servers, and
@@ -416,6 +417,9 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %endif
 
 %changelog
+* Sat Jan 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.99.99-alt0.20151110.2
+- Fixed FTBFS: added makeinfo to BuildRequires
+
 * Wed Nov 11 2015 Sergey Y. Afonin <asy@altlinux.ru> 2.99.99-alt0.20151110.1
 - New version
 - disabled sub package with Guile ( see http://bugzilla.altlinux.org/31466 )
