@@ -16,8 +16,8 @@
 # TODO: plugins/svg
 # wait for xstream
 Name: freemind
-Version: 0.9.0
-Release: alt5.2
+Version: 1.0.1
+Release: alt1
 
 Summary: A Program for creating and viewing Mindmaps
 
@@ -28,7 +28,7 @@ Url: http://freemind.sourceforge.net/wiki/index.php/Main_Page
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source: http://prdownloads.sf.net/%name/freemind-src-0.9.0_Beta_16_icon_butterfly.tar.bz2
-Source: http://prdownloads.sf.net/freemind/freemind-src-0.9.0.tar
+Source: http://prdownloads.sf.net/freemind/freemind-src-%version.tar
 
 Source1: %name.desktop
 Source2: %name.xml
@@ -47,7 +47,9 @@ BuildArch: noarch
 FreeMind is a premier free mind-mapping software written in Java.
 
 %prep
-%setup -q -n %name
+%setup -n %name
+chmod a+x check_for_duplicate_resources.sh
+subst "s|�|oe|g" freemind/main/XHTMLWriter.java freemind/main/FixedHTMLWriter.java
 # for build
 #set_system_jar lib/ lib/jibx/ lib/SimplyHTML/ plugins/svg/ plugins/latex/ plugins/help/ 
 #set_system_namejar xerces-j2 plugins/svg/xerces_2_5_0.jar
@@ -55,8 +57,9 @@ FreeMind is a premier free mind-mapping software written in Java.
 
 %build
 JAVA_HOME=%java_home
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 sed -i s,./doc/freemind.mm,%_docdir/freemind.mm, freemind.properties
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist browser
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dfile.encoding=UTF8 dist browser
 
 %install
 mkdir -p %buildroot/{%_datadir,%_bindir}
@@ -83,6 +86,9 @@ install -D -m644 images/FreeMindWindowIcon.png %buildroot%_pixmapsdir/%name.png
 %_pixmapsdir/*.png
 
 %changelog
+* Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Wed Jul 09 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt5.2
 - NMU: dropped dependencies, use pre-bundled jars
 
