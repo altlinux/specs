@@ -5,12 +5,13 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt16jpp
+Release: alt17jpp
 
+Provides: netty-tcnative mvn(io.netty:netty-tcnative)
 Provides: eclipse-swt = 4.0 i586-eclipse-swt = 4.0
 Provides: eclipse-platform eclipse-rcp
 Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
-Provides: osgi(org.objectweb.asm) = 3.2.0
+#Provides: osgi(org.objectweb.asm) = 3.2.0
 #Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
 Requires: activemq
 Requires: apache-commons-math
@@ -54,6 +55,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt17jpp
+- updated dependencies
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt16jpp
 - updated dependencies
 
