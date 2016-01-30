@@ -2,7 +2,7 @@
 
 Name:  vrrpd
 Version: 1.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: VRRPd is an implementation of Virtual Router Redundancy Protocol
@@ -45,11 +45,14 @@ install -pD -m644 %SOURCE2 vrrpd-etcnet.txt
 %files
 %_sbindir/%name
 %_sbindir/vrrpd_wrapper
-%_mandir/man8/%name.8.gz
+%_mandir/man8/%name.8.*
 
 %doc Changes FAQ TODO README doc/draft-ietf-vrrp-spec-v2-05.txt doc/draft-jou-duplicate-ip-address-02.txt doc/rfc2338.txt.vrrp vrrpd-etcnet.txt
 
 %changelog
+* Sat Jan 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:1.0-alt2
+- Fixed FTBFS: changed .gz to .* for man page file
+
 * Fri Jun 06 2014 Sergey Y. Afonin <asy@altlinux.ru> 1:1.0-alt1
 - New version (svn trunk 2008-10-17)
 - removed BuildArch definition
