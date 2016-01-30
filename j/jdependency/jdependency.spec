@@ -1,54 +1,53 @@
+Name: jdependency
+Version: 0.9
+Summary: This project provides an API to analyse class dependencies
+License: ASL 2.0
+Url: http://github.com/tcurdt/jdependency
 Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jdependency = 0.9-3.fc23
+Provides: mvn(org.vafer:jdependency) = 0.9
+Provides: mvn(org.vafer:jdependency:pom:) = 0.9
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-io:commons-io)
+Requires: mvn(org.ow2.asm:asm)
+Requires: mvn(org.ow2.asm:asm-analysis)
+Requires: mvn(org.ow2.asm:asm-commons)
+Requires: mvn(org.ow2.asm:asm-tree)
+Requires: mvn(org.ow2.asm:asm-util)
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           jdependency
-Version:        0.7
-Release:        alt1_9jpp7
-Summary:        This project provides an API to analyse class dependencies
-License:        ASL 2.0
-URL:            http://github.com/tcurdt/%{name}
-BuildArch:      noarch
-
-Source0:        http://github.com/tcurdt/%{name}/archive/%{name}-%{version}.tar.gz
-# Upstream uses different version of objectweb-asm than Fedora has.
-Patch0:         %{name}-asm.patch
-
-BuildRequires:  maven-local
-BuildRequires:  objectweb-asm
-BuildRequires:  apache-commons-io
-Source44: import.info
+Release: alt0.1jpp
+Source: jdependency-0.9-3.fc23.cpio
 
 %description
-%{name} is small library that helps you analyze class level
+jdependency is small library that helps you analyze class level
 dependencies, clashes and missing classes.
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-%patch0
-%mvn_file : %{name}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt README.md
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%files -f %name-list
 
 %changelog
+* Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7-alt1_9jpp7
 - new release
 

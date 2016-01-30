@@ -1,99 +1,47 @@
+Name: plexus-build-api
+Version: 0.0.7
+Summary: Plexus Build API
+License: ASL 2.0
+Url: https://github.com/sonatype/sisu-build-api
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           plexus-build-api
-Version:        0.0.7
-Release:        alt1_9jpp7
-Summary:        Plexus Build API
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            https://github.com/sonatype/sisu-build-api
-#Fetched from https://github.com/sonatype/sisu-build-api/tarball/plexus-build-api-0.0.7
-Source0:        sonatype-sisu-build-api-plexus-build-api-0.0.7-0-g883ea67.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-
-Patch0:         %{name}-migration-to-component-metadata.patch
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.sonatype.plexus:plexus-build-api) = 0.0.7
+Provides: mvn(org.sonatype.plexus:plexus-build-api:pom:) = 0.0.7
+Provides: plexus-build-api = 0.0.7-15.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.codehaus.plexus:plexus-utils)
 
 BuildArch: noarch
-
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia-sitetools
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-utils
-BuildRequires: forge-parent
-BuildRequires: spice-parent
-BuildRequires: junit
-BuildRequires: plexus-containers-component-metadata
-BuildRequires: maven-shared-reporting-impl
-BuildRequires: plexus-digest
-BuildRequires: maven-surefire-provider-junit4
-
-Requires: plexus-containers-container-default
-Requires: plexus-utils
-Requires: jpackage-utils
-Requires: spice-parent
-Source44: import.info
+Group: Development/Java
+Release: alt2jpp
+Source: plexus-build-api-0.0.7-15.fc23.cpio
 
 %description
 Plexus Build API
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n sonatype-sisu-build-api-f1f8849
-cp -p %{SOURCE1} .
-
-%patch0 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/plexus
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/plexus/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.plexus-%{name}.pom
 
-%add_maven_depmap JPP.plexus-%{name}.pom plexus/%{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
-
-%files
-%doc LICENSE-2.0.txt
-%{_javadir}/plexus/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc LICENSE-2.0.txt
-%{_javadocdir}/plexus/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt1_9jpp7
 - new release
 

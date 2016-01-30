@@ -1,78 +1,66 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-invoker-plugin
-Version:        1.8
-Release:        alt1_8jpp7
-Summary:        Maven Invoker Plugin
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-invoker-plugin/
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         pom-xml.patch
+Name: maven-invoker-plugin
+Version: 1.10
+Summary: Maven Invoker Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-invoker-plugin/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-invoker-plugin = 1.10-2.fc23
+Provides: mvn(org.apache.maven.plugins:maven-invoker-plugin) = 1.10
+Provides: mvn(org.apache.maven.plugins:maven-invoker-plugin:pom:) = 1.10
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-io:commons-io)
+Requires: mvn(org.apache.ant:ant)
+Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
+Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-impl)
+Requires: mvn(org.apache.maven.shared:maven-invoker)
+Requires: mvn(org.apache.maven.shared:maven-script-interpreter)
+Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model:2.2.1)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-project)
+Requires: mvn(org.apache.maven:maven-settings:2.2.1)
+Requires: mvn(org.beanshell:bsh)
+Requires: mvn(org.codehaus.groovy:groovy-all)
+Requires: mvn(org.codehaus.plexus:plexus-i18n)
+Requires: mvn(org.codehaus.plexus:plexus-interpolation)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+
 BuildArch: noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.beanshell:bsh)
-BuildRequires:  mvn(org.codehaus.groovy:groovy)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-
-Provides:       maven2-plugin-invoker = 1:%{version}-%{release}
-Obsoletes:      maven2-plugin-invoker <= 0:2.0.8
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-invoker-plugin-1.10-2.fc23.cpio
 
 %description
-The Maven Invoker Plugin is used to run a set of Maven projects. The plugin 
-can determine whether each project execution is successful, and optionally 
+The Maven Invoker Plugin is used to run a set of Maven projects. The plugin
+can determine whether each project execution is successful, and optionally
 can verify the output generated from a given project execution.
-  
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
-%patch0
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f 
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_8jpp7
 - new release
 

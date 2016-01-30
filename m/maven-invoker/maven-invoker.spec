@@ -1,35 +1,22 @@
+Name: maven-invoker
+Version: 2.2
+Summary: Fires a maven build in a clean environment
+License: ASL 2.0
+Url: http://maven.apache.org/shared/maven-invoker/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-invoker = 2.2-2.fc23
+Provides: maven-shared-invoker = 2.2-2.fc23
+Provides: mvn(org.apache.maven.shared:maven-invoker) = 2.2
+Provides: mvn(org.apache.maven.shared:maven-invoker:pom:) = 2.2
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.codehaus.plexus:plexus-component-annotations)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-invoker
-Version:        2.1.1
-Release:        alt2_6jpp7
-Summary:        Fires a maven build in a clean environment
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-invoker/
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         %{name}-MSHARED-278.patch
-Patch1:         %{name}-MSHARED-279.patch
-
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-BuildRequires:  junit
-BuildRequires:  maven-local
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-shared
-Requires:       jpackage-utils
-Requires:       maven-shared
-Requires:       plexus-containers-component-annotations
-Requires:       plexus-utils
-
-Obsoletes:      maven-shared-invoker < %{version}-%{release}
-Provides:       maven-shared-invoker = %{version}-%{release}
-Source44: import.info
+Release: alt0.1jpp
+Source: maven-invoker-2.2-2.fc23.cpio
 
 %description
 This API is concerned with firing a Maven build in a new JVM. It accomplishes
@@ -42,51 +29,28 @@ InvocationOutputHandlers.
 
 This is a replacement package for maven-shared-invoker
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-    
-%description javadoc
-API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild package javadoc:aggregate -Dmaven.test.failure.ignore
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# JAR
-install -Ddm 755 %{buildroot}/%{_javadir}
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# POM
-install -Ddm 755 %{buildroot}/%{_mavenpomdir}
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-# JavaDoc
-install -Ddm 755 %{buildroot}/%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%doc LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc LICENSE NOTICE
-%doc %{_javadocdir}/%{name}
-
+%files -f %name-list
 
 %changelog
+* Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2_6jpp7
 - new release
 

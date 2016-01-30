@@ -1,66 +1,56 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-resources-plugin
-Version:        2.6
-Release:        alt1_6jpp7
-Summary:        Maven Resources Plugin
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-resources-plugin
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Name: maven-resources-plugin
+Version: 2.7
+Summary: Maven Resources Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-resources-plugin
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-resources-plugin = 2.7-3.fc23
+Provides: mvn(org.apache.maven.plugins:maven-resources-plugin) = 2.7
+Provides: mvn(org.apache.maven.plugins:maven-resources-plugin:pom:) = 2.7
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.shared:maven-filtering)
+Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model:2.2.1)
+Requires: mvn(org.apache.maven:maven-monitor)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-project)
+Requires: mvn(org.apache.maven:maven-settings:2.2.1)
+Requires: mvn(org.codehaus.plexus:plexus-interpolation)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+
 BuildArch: noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-monitor)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.apache.maven:maven-settings)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-
-Provides:       maven2-plugin-resources = %{version}-%{release}
-Obsoletes:      maven2-plugin-resources <= 0:2.0.8
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-resources-plugin-2.7-3.fc23.cpio
 
 %description
 The Resources Plugin handles the copying of project resources
 to the output directory.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
 
-%files javadoc -f .mfiles-javadoc
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_6jpp7
 - new release
 

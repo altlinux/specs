@@ -1,48 +1,47 @@
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           apache-parent
-Version:        10
-Release:        alt2_13jpp7
-Summary:        Parent pom file for Apache projects
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://apache.org/
-Source0:        http://svn.apache.org/repos/asf/maven/pom/tags/apache-10/pom.xml
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-BuildArch:      noarch
+Name: apache-parent
+Version: 17
+Summary: Parent POM file for Apache projects
+License: ASL 2.0
+Url: http://apache.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-parent = 17-2.fc23
+Provides: mvn(org.apache:apache:pom:) = 17
+Provides: mvn(org.apache:apache) = 17
+Requires: apache-resource-bundles
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 
-BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
-BuildRequires:  apache-resource-bundles
-BuildRequires:  maven-remote-resources-plugin
-
-Requires:       apache-resource-bundles
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: apache-parent-17-2.fc23.cpio
 
 %description
 This package contains the parent pom file for apache projects.
 
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -n %{name}-%{version} -Tc
-
-# This simplifies work with child projects that can use generics
-cp %{SOURCE0} .
-sed -i 's:<source>1.4</source>:<source>1.5</source>:' pom.xml
-sed -i 's:<target>1.4</target>:<target>1.5</target>:' pom.xml
-
-cp %{SOURCE1} LICENSE
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE
+
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 17-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 10-alt2_13jpp7
 - new release
 

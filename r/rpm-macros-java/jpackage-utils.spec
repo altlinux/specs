@@ -1,4 +1,4 @@
-%define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 0
 %define javapackagestoolsver 0.15.0
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
@@ -37,7 +37,7 @@
 
 Name:           rpm-macros-java
 Version:        5.0.0
-Release:        alt42
+Release:        alt43
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -147,7 +147,7 @@ Requires: 	rpm-macros-java >= %{epoch}:%{version}-%{release}
 # for maven_depmap.pl
 BuildRequires:  perl-XML-Simple
 Provides: javapackages-tools = %javapackagestoolsver
-Provides: rpm-build-java = %version
+#Provides: rpm-build-java = %version
 
 %description -n rpm-build-java-maven-fragments
 RPM build helpers for Java packages.
@@ -480,6 +480,7 @@ install -pm 644 rpm-build-java/maven-remnants/empty-dep.jar ${RPM_BUILD_ROOT}%{_
 %post -n jpackage-utils
 rm -f /etc/maven/maven2-depmap.xml
 
+%if 0
 %files -n jpackage-utils -f jpackage-utils-%{version}.files
 %_bindir/build-classpath
 %_bindir/build-classpath-directory
@@ -507,6 +508,7 @@ rm -f /etc/maven/maven2-depmap.xml
 %_rpmmacrosdir/libjvm
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-xmvn
+%endif
 
 %files -n rpm-build-java-maven-fragments
 /usr/lib/rpm/maven-fragments.*
@@ -514,6 +516,7 @@ rm -f /etc/maven/maven2-depmap.xml
 %files -n rpm-build-java-osgi
 /usr/lib/rpm/osgi.*
 
+%if 0
 %files -n maven-local
 %{_sysconfdir}/maven/metadata-*.xml
 #%{_bindir}/mvn-*
@@ -532,9 +535,12 @@ rm -f /etc/maven/maven2-depmap.xml
 %{_datadir}/maven-fragments/empty-dep-hacks
 %{_datadir}/java/maven/empty-dep.jar
 ### END TODO drop maven remnants
-
+%endif
 
 %changelog
+* Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt43
+- migration on javapackages-tools
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt42
 - java 8 support
 

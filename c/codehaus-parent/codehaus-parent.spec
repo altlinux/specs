@@ -1,55 +1,46 @@
+Name: codehaus-parent
+Version: 4
+Summary: Parent pom file for codehaus projects
+License: ASL 2.0
+Url: http://codehaus.org/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           codehaus-parent
-Version:        4
-Release:        alt2_5jpp7
-Summary:        Parent pom file for codehaus projects
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: codehaus-parent = 4-9.fc23
+Provides: mvn(org.codehaus:codehaus-parent:pom:) = 4
+Provides: mvn(org.codehaus:codehaus-parent) = 4
+Requires: java-headless
+Requires: jpackage-utils
 
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://codehaus.org/
-#Next version with license is at https://github.com/sonatype/codehaus-parent/blob/master/pom.xml
-Source0:        http://repo1.maven.org/maven2/org/codehaus/codehaus-parent/%{version}/codehaus-parent-%{version}.pom
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Patch0:         %{name}-enforcer.patch
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-
-Requires:       jpackage-utils
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt3jpp
+Source: codehaus-parent-4-9.fc23.cpio
 
 %description
 This package contains the parent pom file for codehaus projects.
 
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -c -T
-cp -p %{SOURCE0} .
-cp -p %{SOURCE1} LICENSE
-%patch0
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 codehaus-parent-%{version}.pom \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%add_maven_depmap JPP-%{name}.pom 
 
-
-%files
-%doc LICENSE
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f %name-list
 
 %changelog
+* Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 0:4-alt3jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:4-alt2_5jpp7
 - new release
 

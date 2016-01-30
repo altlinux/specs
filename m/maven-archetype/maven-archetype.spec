@@ -1,38 +1,23 @@
+Name: maven-archetype
+Version: 2.3
+Summary: Maven project templating toolkit
+License: ASL 2.0
+Url: https://maven.apache.org/archetype/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-archetype
-Version:        2.2
-Release:        alt1_3jpp7
-Summary:        Maven project templating toolkit
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-archetype = 2.3-2.fc23
+Provides: mvn(org.apache.maven.archetype:archetype-models:pom:) = 2.3
+Provides: mvn(org.apache.maven.archetype:maven-archetype:pom:) = 2.3
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven:maven-parent:pom:)
+Requires: mvn(org.apache.rat:apache-rat-plugin)
+Requires: mvn(org.codehaus.plexus:plexus-component-metadata)
 
-Group:          Development/Java
-License:        ASL 2.0
-URL:            https://maven.apache.org/archetype/
-Source0:        http://repo.maven.apache.org/maven2/org/apache/maven/archetype/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-Patch1:         0002-Use-generics.patch
-Patch2:         0003-Add-Maven-3-compatibility.patch
-Patch3:         %{name}-fix-jetty-namespace.patch
-
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-# we added test dep skipping there
-BuildRequires:  maven-war-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-script-interpreter
-BuildRequires:  jchardet
-BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  maven-local
-Source44: import.info
-Provides: maven-archetype2 = %version
-Obsoletes: maven-archetype2 < %version
-
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-archetype-2.3-2.fc23.cpio
 
 %description
 Archetype is a Maven project templating toolkit. An archetype is
@@ -66,134 +51,28 @@ web services. Once these archetypes are created and deployed in your
 organization's repository they are available for use by all developers
 within your organization.
 
-
-%package javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
-%package catalog
-Summary:        Maven Archetype Catalog model
-Group:          Development/Java
-
-%description catalog
-%{summary}.
-
-%package descriptor
-Summary:        Maven Archetype Descriptor model
-Group:          Development/Java
-
-%description descriptor
-%{summary}.
-
-%package registry
-Summary:        Maven Archetype Registry model
-Group:          Development/Java
-
-%description registry
-%{summary}.
-
-%package common
-Summary:        Maven Archetype common classes
-Group:          Development/Java
-
-%description common
-%{summary}.
-
-%package packaging
-Summary:        Maven Archetype packaging configuration for archetypes
-Group:          Development/Java
-
-%description packaging
-%{summary}.
-
-%package -n %{name}-plugin
-Summary:        Maven Plugin for using archetypes
-Group:          Development/Java
-
-%description -n %{name}-plugin
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-%patch1 -p1
-%patch2 -p1
-%patch3
-
-# Add OSGI info to catalog and descriptor jars
-pushd archetype-models/archetype-catalog
-    %pom_xpath_remove "pom:project/pom:packaging"
-    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
-    %pom_xpath_inject "pom:build/pom:plugins" "
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <_nouses>true</_nouses>
-            <Export-Package>org.apache.maven.archetype.catalog.*</Export-Package>
-          </instructions>
-        </configuration>
-      </plugin>"
-popd
-pushd archetype-models/archetype-descriptor
-    %pom_xpath_remove "pom:project/pom:packaging"
-    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
-    %pom_xpath_inject "pom:build/pom:plugins" "
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <_nouses>true</_nouses>
-            <Export-Package>org.apache.maven.archetype.metadata.*</Export-Package>
-          </instructions>
-        </configuration>
-      </plugin>"
-popd
-
-
-# groovy is not really needed
-%pom_remove_dep org.codehaus.groovy:groovy maven-archetype-plugin/pom.xml
-
-%pom_disable_module archetype-testing
-%pom_remove_plugin org.apache.maven.plugins:maven-antrun-plugin archetype-common/pom.xml
-
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_package :archetype-models maven-archetype
-# we don't have cargo so skip tests for now
-%mvn_build -s -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files -f .mfiles-maven-archetype
-%doc LICENSE NOTICE
-
-%files catalog -f .mfiles-archetype-catalog
-
-%files descriptor -f .mfiles-archetype-descriptor
-
-%files registry -f .mfiles-archetype-registry
-
-%files common -f .mfiles-archetype-common
-
-%files packaging -f .mfiles-archetype-packaging
-
-%files -n %{name}-plugin -f .mfiles-maven-archetype-plugin
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_3jpp7
 - new release
 

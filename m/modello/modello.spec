@@ -1,41 +1,68 @@
+Provides: /etc/java/modello.conf
+Name: modello
+Version: 1.8.3
+Summary: Modello Data Model toolkit
+License: ASL 2.0 and BSD and MIT
+Url: http://modello.codehaus.org/
+Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: modello = 0:1.8.3-2.fc23
+Provides: modello-maven-plugin = 0:1.8.3-2.fc23
+Provides: mvn(org.codehaus.modello:modello-core) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-core:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-maven-plugin) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-maven-plugin:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-converters) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-converters:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-dom4j) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-dom4j:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-jackson) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-jackson:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-java) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-java:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-jdom) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-jdom:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-jsonschema) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-jsonschema:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-sax) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-sax:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-snakeyaml) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-snakeyaml:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-stax) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-stax:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xdoc) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xdoc:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xml) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xml:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xpp3) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xpp3:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xsd) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugin-xsd:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-plugins:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-test) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello-test:pom:) = 1.8.3
+Provides: mvn(org.codehaus.modello:modello:pom:) = 1.8.3
+Requires: /bin/bash
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(com.fasterxml.jackson.core:jackson-annotations)
+Requires: mvn(com.fasterxml.jackson.core:jackson-core)
+Requires: mvn(com.fasterxml.jackson.core:jackson-databind)
+Requires: mvn(junit:junit)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.codehaus.plexus:plexus-compiler-api)
+Requires: mvn(org.codehaus.plexus:plexus-compiler-javac)
+Requires: mvn(org.codehaus.plexus:plexus-container-default)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+Requires: mvn(org.sonatype.plexus:plexus-build-api)
+Requires: mvn(org.yaml:snakeyaml)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           modello
-Version:        1.7
-Release:        alt1_2jpp7
-Epoch:          0
-Summary:        Modello Data Model toolkit
-# The majority of files are under MIT license, but some of them are
-# ASL 2.0 or BSD-licensed.
-License:        ASL 2.0 and BSD and MIT
-URL:            http://modello.codehaus.org/
-Source0:        http://repo2.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-javac)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
-
-Provides:       modello-maven-plugin = %{epoch}:%{version}-%{release}
-Obsoletes:      modello-maven-plugin < 0:1.0-0.a8.3jpp
-Source44: import.info
+Release: alt0.1jpp
+Source: modello-1.8.3-2.fc23.cpio
 
 %description
 Modello is a Data Model toolkit in use by the Apache Maven Project.
@@ -46,43 +73,28 @@ architecture, various types of code and descriptors can be generated
 from the single model, including Java POJOs, XML
 marshallers/unmarshallers, XSD and documentation.
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
-cp -p %{SOURCE1} LICENSE
-# We don't generate site; don't pull extra dependencies.
-%pom_remove_plugin :maven-site-plugin
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# skip tests because we have too old xmlunit in Fedora now (1.0.8)
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%jpackage_script org.codehaus.modello.ModelloCli "" "" modello:plexus-containers/plexus-container-default:plexus/classworlds:plexus/utils:plexus/plexus-build-api:xbean/xbean-reflect:guava %{name} true
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
-touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
-
-%files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE
-%{_bindir}/*
-%config(noreplace,missingok) /etc/java/%{name}.conf
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%files -f %name-list
 
 %changelog
+* Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_2jpp7
 - new version
 

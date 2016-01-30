@@ -1,42 +1,47 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global short_name maven-plugins
+Name: maven-plugins-pom
+Version: 27
+Summary: Maven Plugins POM
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-plugins-pom = 27-3.fc23
+Provides: mvn(org.apache.maven.plugins:maven-plugins:pom:) = 27
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+Requires: mvn(org.apache.maven:maven-parent:pom:)
 
-Name:           %{short_name}-pom
-Version:        23
-Release:        alt3_7jpp7
-Summary:        Maven Plugins POM
-BuildArch:      noarch
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/
-Source:         http://repo.maven.apache.org/maven2/org/apache/maven/plugins/%{short_name}/%{version}/%{short_name}-%{version}-source-release.zip
-
-BuildRequires:  maven-local
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-plugins-pom-27-3.fc23.cpio
 
 %description
 This package provides Maven Plugins parent POM used by different
 Apache Maven plugins.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}
-# Enforcer plugin is used to ban plexus-component-api.
-%pom_remove_plugin :maven-enforcer-plugin
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
+
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 27-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 23-alt3_7jpp7
 - new release
 

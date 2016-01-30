@@ -1,81 +1,24 @@
+Name: velocity
+Version: 1.7
+Summary: Java-based template engine
+License: ASL 2.0
+Url: http://velocity.apache.org/
+Epoch: 1
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.apache.velocity:velocity) = 1.7
+Provides: mvn(org.apache.velocity:velocity:pom:) = 1.7
+Provides: mvn(velocity:velocity) = 1.7
+Provides: mvn(velocity:velocity:pom:) = 1.7
+Provides: velocity = 0:1.7-18.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-collections:commons-collections)
+Requires: mvn(commons-lang:commons-lang)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-Name:           velocity
-Version:        1.7
-Release:        alt1_9jpp7
-Epoch:          1
-Summary:        Java-based template engine
-License:        ASL 2.0
-URL:            http://velocity.apache.org/
-Source0:        http://www.apache.org/dist/%{name}/engine/%{version}/%{name}-%{version}.tar.gz
-Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-Patch0:         0001-Remove-avalon-logkit.patch
-Patch2:         0003-Use-system-jars.patch
-Patch3:         0004-JDBC-41-compat.patch
-Requires:       apache-commons-collections
-Requires:       apache-commons-logging
-Requires:       apache-commons-lang
-Requires:       servlet3
-Requires:       jakarta-oro
-Requires:       werken-xpath
-Requires:       junit
-Requires:       hsqldb
-Requires:       jdom
-Requires:       bcel
-Requires:       log4j
-
-BuildRequires:	werken-xpath
-BuildRequires:  ant
-BuildRequires:  antlr
-BuildRequires:  junit
-BuildRequires:	ant-junit
-BuildRequires:  hsqldb
-BuildRequires:  apache-commons-collections
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-commons-lang
-BuildRequires:  servlet3
-BuildRequires:  jakarta-oro
-BuildRequires:  jdom
-BuildRequires:  bcel
-BuildRequires:  log4j
-
-# It fails one of the arithmetic test cases with gcj
-BuildArch:      noarch
-Source44: import.info
+Release: alt2jpp
+Source: velocity-1.7-18.fc23.cpio
 
 %description
 Velocity is a Java-based template engine. It permits anyone to use the
@@ -98,125 +41,28 @@ template services for the Turbine web application framework.
 Velocity+Turbine provides a template service that will allow web
 applications to be developed according to a true MVC model.
 
-%package        manual
-Group: Development/Java
-Summary:        Manual for %{name}
-BuildArch: noarch
-
-%description    manual
-Documentation for %{name}.
-
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description    javadoc
-Javadoc for %{name}.
-
-%package        demo
-Group: Development/Java
-Summary:        Demo for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-
-%description    demo
-Demonstrations and samples for %{name}.
-
-# -----------------------------------------------------------------------------
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{version}
-
-# remove bundled libs/classes (except those used for testing)
-find . -name '*.jar' -o -name '*.class' -not -path '*test*' -print -delete
-
-# Remove dependency on avalon-logkit
-rm -f src/java/org/apache/velocity/runtime/log/AvalonLogChute.java
-rm -f src/java/org/apache/velocity/runtime/log/AvalonLogSystem.java
-rm -f src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
-
-# need porting to new servlet API. We would just add a lot of empty functions
-rm  src/test/org/apache/velocity/test/VelocityServletTestCase.java
-
-# This test doesn't work with new hsqldb
-rm src/test/org/apache/velocity/test/sql/DataSourceResourceLoaderTestCase.java
-
-cp %{SOURCE1} ./pom.xml
-
-# remove rest of avalon logkit refences
-%patch0 -p1
-
-# Use system jar files instead of downloading from net
-%patch2 -p1
-
-%patch3 -p1
-
-# -----------------------------------------------------------------------------
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-export CLASSPATH=$(build-classpath \
-antlr \
-apache-commons-collections \
-commons-lang \
-commons-logging \
-tomcat-servlet-api \
-junit \
-jakarta-oro \
-log4j \
-jdom \
-bcel \
-werken-xpath \
-hsqldb \
-junit)
-ant \
-  -buildfile build/build.xml \
-  -Dbuild.sysclasspath=first \
-  jar javadocs test
-
-# fix line-endings in generated files
-sed -i 's/\r//' docs/api/stylesheet.css docs/api/package-list
-
-# -----------------------------------------------------------------------------
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 bin/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
-
-# data
-install -d -m 755 %{buildroot}%{_datadir}/%{name}
-cp -pr examples test %{buildroot}%{_datadir}/%{name}
-
-# Maven metadata
-install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap -a "%{name}:%{name}"
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files
-%doc LICENSE NOTICE README.txt
-%{_javadir}/*.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
-
-%files manual
-%doc LICENSE NOTICE
-%doc docs/*
-
-%files javadoc
-%doc LICENSE NOTICE
-%{_javadocdir}/%{name}
-
-%files demo
-%doc LICENSE NOTICE
-%{_datadir}/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_9jpp7
 - new release
 

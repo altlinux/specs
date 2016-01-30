@@ -1,66 +1,55 @@
+Name: maven-archiver
+Version: 2.6
+Summary: Maven Archiver
+License: ASL 2.0
+Url: http://maven.apache.org/shared/maven-archiver/
+Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-archiver = 0:2.6-2.fc23
+Provides: maven-shared-archiver = 2.6-2.fc23
+Provides: mvn(org.apache.maven:maven-archiver) = 2.6
+Provides: mvn(org.apache.maven:maven-archiver:pom:) = 2.6
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.shared:maven-shared-utils)
+Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model:2.2.1)
+Requires: mvn(org.codehaus.plexus:plexus-archiver)
+Requires: mvn(org.codehaus.plexus:plexus-interpolation)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-archiver
-Version:        2.5
-Release:        alt2_8jpp7
-Epoch:          0
-Summary:        Maven Archiver
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-archiver/
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-shared-jar
-BuildRequires:  plexus-interpolation
-BuildRequires:  plexus-archiver >= 2.1-1
-BuildRequires:  plexus-utils
-BuildRequires:  apache-commons-parent
-
-Provides:       maven-shared-archiver = %{version}-%{release}
-Obsoletes:      maven-shared-archiver < %{version}-%{release}
-Source44: import.info
+Release: alt0.1jpp
+Source: maven-archiver-2.6-2.fc23.cpio
 
 %description
 The Maven Archiver is used by other Maven plugins
 to handle packaging
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%pom_add_dep org.apache.maven:maven-core
-# tests don't compile with maven 2.2.1
-rm -fr src/test/java/org/apache/maven/archiver/*.java
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt2_8jpp7
 - new release
 

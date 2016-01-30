@@ -1,36 +1,26 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
-%global base_name httpcomponents
+Name: httpcomponents-client
+Version: 4.5
+Summary: HTTP agent implementation based on httpcomponents HttpCore
+License: ASL 2.0
+Url: http://hc.apache.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: httpcomponents-client = 4.5-2.fc23
+Provides: mvn(org.apache.httpcomponents:httpclient) = 4.5
+Provides: mvn(org.apache.httpcomponents:httpclient:pom:) = 4.5
+Provides: mvn(org.apache.httpcomponents:httpcomponents-client:pom:) = 4.5
+Provides: mvn(org.apache.httpcomponents:httpmime) = 4.5
+Provides: mvn(org.apache.httpcomponents:httpmime:pom:) = 4.5
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-codec:commons-codec)
+Requires: mvn(commons-logging:commons-logging)
+Requires: mvn(org.apache.httpcomponents:httpcore)
+Requires: publicsuffix-list
 
-Name:              httpcomponents-client
-Summary:           HTTP agent implementation based on httpcomponents HttpCore
-Version:           4.2.5
-Release:           alt1_3jpp7
-Group:             Development/Java
-License:           ASL 2.0
-URL:               http://hc.apache.org/
-Source0:           http://archive.apache.org/dist/httpcomponents/httpclient/source/%{name}-%{version}-src.tar.gz
-
-BuildArch:         noarch
-
-BuildRequires:     maven-local
-BuildRequires:     mvn(commons-codec:commons-codec)
-BuildRequires:     mvn(commons-logging:commons-logging)
-BuildRequires:     mvn(org.apache.httpcomponents:httpcore)
-BuildRequires:     mvn(org.apache.httpcomponents:project)
-%if 0%{?fedora}
-# Test dependencies
-BuildRequires:     mvn(org.mockito:mockito-core)
-BuildRequires:     mvn(junit:junit)
-%endif
-Source44: import.info
-
-Obsoletes: hc-httpclient < 4.1.1
-Provides: hc-httpclient = %version
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: httpcomponents-client-4.5-2.fc23.cpio
 
 %description
 HttpClient is a HTTP/1.1 compliant HTTP agent implementation based on
@@ -40,99 +30,28 @@ management. HttpComponents Client is a successor of and replacement
 for Commons HttpClient 3.x. Users of Commons HttpClient are strongly
 encouraged to upgrade.
 
-%package        javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-# Remove optional build deps not available in Fedora
-%pom_disable_module httpclient-cache
-%pom_disable_module httpclient-osgi
-%pom_disable_module fluent-hc
-%pom_remove_plugin :maven-notice-plugin
-%pom_remove_plugin :docbkx-maven-plugin
-%pom_remove_plugin :clirr-maven-plugin
-%pom_remove_plugin :maven-clover2-plugin httpclient
-%if !0%{?fedora}
-%pom_remove_dep :mockito-core httpclient
-%endif
-
-# Add proper Apache felix bundle plugin instructions
-# so that we get a reasonable OSGi manifest.
-for module in httpclient httpmime; do
-    %pom_xpath_remove "pom:project/pom:packaging" $module
-    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" $module
-done
-
-# Make httpmime into bundle
-%pom_xpath_inject pom:build/pom:plugins "
-    <plugin>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>maven-bundle-plugin</artifactId>
-      <extensions>true</extensions>
-    </plugin>" httpmime
-
-# Make httpclient into bundle
-%pom_xpath_inject pom:reporting/pom:plugins "
-    <plugin>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>maven-bundle-plugin</artifactId>
-      <configuration>
-        <instructions>
-          <Export-Package>*</Export-Package>
-          <Private-Package></Private-Package>
-          <Import-Package>!org.apache.avalon.framework.logger,!org.apache.log,!org.apache.log4j,*</Import-Package>
-        </instructions>
-      </configuration>
-    </plugin>" httpclient
-%pom_xpath_inject pom:build/pom:plugins "
-    <plugin>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>maven-bundle-plugin</artifactId>
-      <extensions>true</extensions>
-      <configuration>
-        <instructions>
-          <Export-Package>org.apache.http.*,!org.apache.http.param</Export-Package>
-          <Private-Package></Private-Package>
-          <_nouses>true</_nouses>
-          <Import-Package>!org.apache.avalon.framework.logger,!org.apache.log,!org.apache.log4j,*</Import-Package>
-        </instructions>
-        <excludeDependencies>true</excludeDependencies>
-      </configuration>
-    </plugin>" httpclient
-
-
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_file ":{*}" httpcomponents/@1
-
-# Build with tests enabled on Fedora
-%if 0%{?fedora}
-%mvn_build
-%else
-%mvn_build -f
-%endif
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
-%doc README.txt RELEASE_NOTES.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 4.5-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt1_3jpp7
 - new release
 

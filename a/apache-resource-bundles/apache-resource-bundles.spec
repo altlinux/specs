@@ -1,87 +1,52 @@
-Provides: apache-jar-resource-bundle
+Name: apache-resource-bundles
+Version: 2
+Summary: Apache Resource Bundles
+License: ASL 2.0
+Url: http://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
 Epoch: 1
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global jar_version 1.4
-%global lh_version 1.1
-%global id_version 1.1
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-resource-bundles = 2-16.fc23
+Provides: mvn(org.apache:apache-incubator-disclaimer-resource-bundle) = 1.1
+Provides: mvn(org.apache:apache-incubator-disclaimer-resource-bundle:pom:) = 1.1
+Provides: mvn(org.apache:apache-jar-resource-bundle) = 1.4
+Provides: mvn(org.apache:apache-jar-resource-bundle:pom:) = 1.4
+Provides: mvn(org.apache:apache-license-header-resource-bundle) = 1.1
+Provides: mvn(org.apache:apache-license-header-resource-bundle:pom:) = 1.1
+Provides: mvn(org.apache:apache-resource-bundles:pom:) = 2
+Requires: java-headless
+Requires: jpackage-utils
 
-Name:		apache-resource-bundles
-Version:	2
-Release:	alt2_11jpp7
-Summary:	Apache Resource Bundles
-
-Group:		Development/Java
-License:	ASL 2.0
-URL:		http://repo1.maven.org/maven2/org/apache/apache-resource-bundles/
-Source0:	http://repo1.maven.org/maven2/org/apache/%{name}/%{version}/%{name}-%{version}.pom
-Source1:	http://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}-sources.jar
-Source2:	http://repo1.maven.org/maven2/org/apache/apache-jar-resource-bundle/%{jar_version}/apache-jar-resource-bundle-%{jar_version}.pom
-Source3:	http://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}-sources.jar
-Source4:	http://repo1.maven.org/maven2/org/apache/apache-license-header-resource-bundle/%{lh_version}/apache-license-header-resource-bundle-%{lh_version}.pom
-Source5:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}-sources.jar
-Source6:	http://repo1.maven.org/maven2/org/apache/apache-incubator-disclaimer-resource-bundle/%{id_version}/apache-incubator-disclaimer-resource-bundle-%{id_version}.pom
-
-BuildRequires:	maven-local
-BuildRequires:	maven-compiler-plugin
-BuildRequires:	maven-install-plugin
-BuildRequires:	maven-jar-plugin
-BuildRequires:	maven-remote-resources-plugin
-BuildRequires:	maven-resources-plugin
-BuildRequires:	maven-surefire-plugin
-BuildRequires:  maven-site-plugin
-
-BuildArch:	noarch
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt3jpp
+Source: apache-resource-bundles-2-16.fc23.cpio
 
 %description
 An archive which contains templates for generating the necessary license files
 and notices for all Apache releases.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -c -T
-cp %SOURCE0 ./pom.xml
-
-# jar
-mkdir -p apache-jar-resource-bundle
-pushd apache-jar-resource-bundle
-jar xvf %SOURCE1
-cp %SOURCE2 ./pom.xml
-mkdir -p src/main/resources
-mv META-INF src/main/resources
-popd
-
-# license-header
-mkdir -p apache-license-header-resource-bundle
-pushd apache-license-header-resource-bundle
-jar xvf %SOURCE3
-cp %SOURCE4 ./pom.xml
-mkdir -p src/main/resources
-mv META-INF src/main/resources
-popd
-
-# incubator-disclaimer
-mkdir -p apache-incubator-disclaimer-resource-bundle
-pushd apache-incubator-disclaimer-resource-bundle
-jar xvf %SOURCE5
-cp %SOURCE6 ./pom.xml
-mkdir -p src/main/resources
-mv META-INF src/main/resources
-popd
-
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_file :apache-jar-resource-bundle apache-resource-bundles/jar
-%mvn_file :apache-license-header-resource-bundle apache-resource-bundles/license-header
-%mvn_file :apache-incubator-disclaimer-resource-bundle apache-resource-bundles/incubator-disclaimer
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
+
+%files -f %name-list
 
 %changelog
+* Wed Jan 27 2016 Igor Vlasenko <viy@altlinux.ru> 1:2-alt3jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:2-alt2_11jpp7
 - fixed build
 

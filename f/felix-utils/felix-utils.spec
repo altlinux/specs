@@ -1,62 +1,47 @@
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global bundle org.apache.felix.utils
+Name: felix-utils
+Version: 1.8.0
+Summary: Utility classes for OSGi
+License: ASL 2.0
+Url: http://felix.apache.org
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: felix-utils = 1.8.0-2.fc23
+Provides: mvn(org.apache.felix:org.apache.felix.utils) = 1.8.0
+Provides: mvn(org.apache.felix:org.apache.felix.utils:pom:) = 1.8.0
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.osgi:org.osgi.compendium)
+Requires: mvn(org.osgi:org.osgi.core)
 
-Name:             felix-utils
-Version:          1.2.0
-Release:          alt1_3jpp7
-Summary:          Utility classes for OSGi
-License:          ASL 2.0
-Group:            Development/Java
-URL:              http://felix.apache.org
-Source0:          http://archive.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
-
-BuildArch:        noarch
-
-BuildRequires:    maven-local
-BuildRequires:    jpackage-utils
-BuildRequires:    felix-osgi-compendium
-BuildRequires:    felix-osgi-core
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    mockito
-Source44: import.info
-
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: felix-utils-1.8.0-2.fc23.cpio
 
 %description
 Utility classes for OSGi
 
-%package javadoc
-Group:            Development/Java
-Summary:          API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{bundle}-%{version}
-
-# Remove compiler plugin so default target of 1.5 is used
-%pom_remove_plugin :maven-compiler-plugin
-# Remove rat plugin that is not in Fedora
-%pom_remove_plugin org.codehaus.mojo:rat-maven-plugin
-
-%mvn_file :%{bundle} "felix/%{bundle}"
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# one of the tests fails in mock (local build is ok)
-%mvn_build -- -Dmaven.test.failure.ignore=true
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE DEPENDENCIES
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_3jpp7
 - new release
 

@@ -1,97 +1,55 @@
+Name: javacc-maven-plugin
+Version: 2.6
+Summary: JavaCC Maven Plugin
+License: ASL 2.0
+Url: http://mojo.codehaus.org/javacc-maven-plugin/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           javacc-maven-plugin
-Version:        2.6
-Release:        alt3_15jpp7
-Summary:        JavaCC Maven Plugin
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://mojo.codehaus.org/javacc-maven-plugin/
-#svn export http://svn.codehaus.org/mojo/tags/javacc-maven-plugin-2.6
-#tar cjf javacc-maven-plugin-2.6.tar.bz2 javacc-maven-plugin-2.6
-Source0:        javacc-maven-plugin-2.6.tar.bz2
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Patch0:         javacc-maven-plugin-pom.patch
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: javacc-maven-plugin = 2.6-20.fc23
+Provides: mvn(org.codehaus.mojo:javacc-maven-plugin) = 2.6
+Provides: mvn(org.codehaus.mojo:javacc-maven-plugin:pom:) = 2.6
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(net.java.dev.javacc:javacc)
+Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
+Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven.reporting:maven-reporting-impl)
+Requires: mvn(org.apache.maven:maven-model)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-project)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
 
 BuildArch: noarch
-
-BuildRequires: maven-local
-BuildRequires: javacc >= 5.0
-BuildRequires: plexus-utils
-BuildRequires: maven-doxia-sink-api
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-invoker-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: mojo-parent
-BuildRequires: plexus-containers-component-javadoc
-BuildRequires: junit
-Requires: javacc >= 5.0
-Requires: plexus-utils
-Requires: jpackage-utils
-Requires: mojo-parent
-Source44: import.info
+Group: Development/Java
+Release: alt4jpp
+Source: javacc-maven-plugin-2.6-20.fc23.cpio
 
 %description
 Maven Plugin for processing JavaCC grammar files.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
-%patch0 -b .sav
-cp -p %{SOURCE1} .
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild package javadoc:javadoc
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/%{name}*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%doc LICENSE-2.0.txt src/main/resources/NOTICE
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc LICENSE-2.0.txt src/main/resources/NOTICE
+%files -f %name-list
 
 %changelog
+* Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt4jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt3_15jpp7
 - new release
 

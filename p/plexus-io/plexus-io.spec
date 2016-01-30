@@ -1,69 +1,49 @@
+Name: plexus-io
+Version: 2.6
+Summary: Plexus IO Components
+License: ASL 2.0
+Url: https://github.com/codehaus-plexus/plexus-io
 Epoch: 0
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           plexus-io
-Version:        2.0.5
-Release:        alt1_8jpp7
-Summary:        Plexus IO Components
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.codehaus.plexus:plexus-io) = 2.6
+Provides: mvn(org.codehaus.plexus:plexus-io:pom:) = 2.6
+Provides: plexus-io = 2.6-2.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-io:commons-io)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
 
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://plexus.codehaus.org/plexus-components/plexus-io
-Source0:        https://github.com/sonatype/plexus-io/tarball/plexus-io-%{version}#/%{name}-%{version}.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch: noarch
-
-BuildRequires: jpackage-utils
-
-BuildRequires: plexus-utils
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-components-pom
-BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia-sitetools
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: plexus-io-2.6-2.fc23.cpio
 
 %description
 Plexus IO is a set of plexus components, which are designed for use
 in I/O operations.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n sonatype-plexus-io-1a0010b
-cp %{SOURCE1} .
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-export XMVN_COMPILER_SOURCE="1.5"
-%mvn_file  : plexus/io
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc NOTICE.txt LICENSE-2.0.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc NOTICE.txt LICENSE-2.0.txt
-
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt1_8jpp7
 - new release
 

@@ -1,66 +1,24 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: docbook-simple
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name: xmlunit
+Version: 1.6
+Summary: Provides classes to do asserts on xml
+License: BSD
+Url: http://xmlunit.sourceforge.net/
+Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(xmlunit:xmlunit) = 1.0
+Provides: mvn(xmlunit:xmlunit:pom:) = 1.0
+Provides: xmlunit = 0:1.6-2.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: jpackage-utils
+Requires: junit
+Requires: xalan-j2
+Requires: xml-commons-apis
 
-Name:           xmlunit
-Version:        1.4
-Release:        alt2_1jpp7
-Epoch:          0
-Summary:        Provides classes to do asserts on xml
-License:        BSD
-Source0:        http://downloads.sourceforge.net/project/xmlunit/xmlunit%%20for%%20Java/XMLUnit%%20for%%20Java%%201.4/xmlunit-1.4-src.zip
-Source1:        http://repo1.maven.org/maven2/xmlunit/xmlunit/1.0/xmlunit-1.0.pom
-URL:            http://xmlunit.sourceforge.net/
-BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  ant-junit
-BuildRequires:  ant-trax
-BuildRequires:  junit >= 0:3.8.1
-BuildRequires:  xalan-j2
-BuildRequires:  xerces-j2
-BuildRequires:  xml-commons-apis
-BuildRequires:  dblatex
-BuildRequires:  docbook5-style-xsl
-Requires:       junit >= 0:3.8
-Requires:       xalan-j2
-Requires:       xml-commons-apis
-Requires:       jpackage-utils
-Group:          Development/Java
-BuildArch:      noarch
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: xmlunit-1.6-2.fc23.cpio
 
 %description
 XMLUnit extends JUnit to simplify unit testing of XML. It compares a control
@@ -68,71 +26,28 @@ XML document to a test document or the result of a transformation, validates
 documents against a DTD, and (from v0.5) compares the results of XPath
 expressions.
 
-%package        javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description    javadoc
-Javadoc for %{name}
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
-# remove all binary libs and javadocs
-find . -name "*.jar" -exec rm -f {} \;
-rm -rf doc
-
-cat >build.properties <<EOF
-junit.lib=$(build-classpath junit)
-xmlxsl.lib=$(build-classpath xalan-j2 xalan-j2-serializer xerces-j2)
-test.report.dir=test
-EOF
-
-cat >docbook.properties <<EOF
-db5.xsl=%{_datadir}/sgml/docbook/xsl-ns-stylesheets
-EOF
-
-#Fix wrong-file-end-of-line-encoding
-sed -i 's/\r//g' README.txt LICENSE.txt
-# damn the net
-# TODO: why catalog does not work? it is ant xslt task
-sed -i 's,http://docbook.org/xml/simple/1.1b1/sdocbook.dtd,http://www.oasis-open.org/docbook/xml/simple/1.1/sdocbook.dtd,g' `grep -rl 'http://docbook.org/xml/simple/1.1b1/sdocbook.dtd' .`
-
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-export CLASSPATH=$(build-classpath xalan-j2-serializer)
-ant -Dbuild.compiler=modern -Dfailonerror=false jar javadocs
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-install -m 0644 build/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}/
-
-install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-# Javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/*
-%doc README.txt LICENSE.txt userguide/XMLUnit-Java.pdf 
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_1jpp7
 - bugfixes
 

@@ -1,89 +1,47 @@
+Name: aether
+Version: 1.0.2
+Summary: Library to resolve, install and deploy artifacts the Maven way
+License: EPL
+Url: http://eclipse.org/aether
+Epoch: 1
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: aether = 1:1.0.2-2.fc23
+Provides: mvn(org.eclipse.aether:aether:pom:) = 1.0.2.v20150114
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           aether
-Version:        1.13.1
-Release:        alt6_7jpp7
-Summary:        Sonatype library to resolve, install and deploy artifacts the Maven way
-
-License:        EPL or ASL 2.0
-URL:            https://docs.sonatype.org/display/AETHER/Home
-# git clone https://github.com/sonatype/sonatype-aether.git
-# git archive --prefix="aether-1.11/" --format=tar aether-1.11 | bzip2 > aether-1.11.tar.bz2
-Source0:        %{name}-%{version}.tar.bz2
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  plexus-containers-component-metadata >= 1.5.4-4
-BuildRequires:  forge-parent
-BuildRequires:  async-http-client >= 1.6.1
-Source44: import.info
-
+Release: alt0.1jpp
+Source: aether-1.0.2-2.fc23.cpio
 
 %description
-Aether is standalone library to resolve, install and deploy artifacts
-the Maven way developed by Sonatype
+Aether is a standalone library to resolve, install and deploy artifacts
+the Maven way.
 
-%package javadoc
-Group: Development/Java
-Summary:   API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-# last part will have to change every time
-%setup -q
-
-# we'd need org.sonatype.http-testing-harness so let's remove async
-# and wagon http tests (leave others enabled)
-for module in asynchttpclient wagon; do (
-    cd ./aether-connector-$module
-    rm -rf src/test
-    # Removes all dependencies with test scope
-    %pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
-) done
-
-# Remove clirr plugin
-%pom_remove_plugin :clirr-maven-plugin
-%pom_remove_plugin :clirr-maven-plugin aether-api
-%pom_remove_plugin :clirr-maven-plugin aether-spi
-
-for module in . aether-connector-wagon aether-util aether-api   \
-              aether-impl aether-connector-asynchttpclient      \
-              aether-connector-file aether-demo aether-test-util; do
-    %pom_remove_plugin :animal-sniffer-maven-plugin $module
-done
-
-# Tests would fail without cglib dependency
-%pom_xpath_inject pom:project "<dependencies/>"
-%pom_add_dep cglib:cglib:2.2:test
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_file ":%{name}-{*}" %{name}/@1
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
-for i in api connector-wagon impl spi util; do
-ln -s $i.jar $RPM_BUILD_ROOT%{_javadir}/aether/aether-$i.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
 
 
-%files -f .mfiles
-%doc README.md
-%dir %{_javadir}/%{name}
-%{_javadir}/aether/aether-*.jar
-
-%files javadoc -f .mfiles-javadoc
+%files -f %name-list
 
 %changelog
+* Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Sun Aug 24 2014 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt6_7jpp7
 - xmvn build
 

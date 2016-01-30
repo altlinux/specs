@@ -1,28 +1,20 @@
+Name: maven-shared-utils
+Version: 0.8
+Summary: Maven shared utility classes
+License: ASL 2.0
+Url: http://maven.apache.org/shared/maven-shared-utils
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-shared-utils = 0.8-1.fc23
+Provides: mvn(org.apache.maven.shared:maven-shared-utils) = 0.8
+Provides: mvn(org.apache.maven.shared:maven-shared-utils:pom:) = 0.8
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(com.google.code.findbugs:jsr305)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-shared-utils
-Version:        0.4
-Release:        alt1_2jpp7
-Summary:        Maven shared utility classes
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-shared-utils
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
-# Patching tests so that they are compatible with JUnit 4.11
-# (upstream bug http://jira.codehaus.org/browse/MSHARED-285)
-Patch0:         %{name}-tests.patch
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  apache-commons-lang3
-BuildRequires:  apache-rat
-BuildRequires:  maven-shared
-BuildRequires:  maven-shade-plugin
-Source44: import.info
+Release: alt0.1jpp
+Source: maven-shared-utils-0.8-1.fc23.cpio
 
 %description
 This project aims to be a functional replacement for plexus-utils in Maven.
@@ -31,32 +23,28 @@ It is not a 100% API compatible replacement though but a replacement with
 improvements: lots of methods got cleaned up, generics got added and we dropped
 a lot of unused code.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-    
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
-%patch0 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_2jpp7
 - new release
 

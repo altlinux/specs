@@ -1,72 +1,56 @@
+Name: maven-reporting-exec
+Version: 1.2
+Summary: Classes to manage report plugin executions with Maven 3
+License: ASL 2.0
+Url: http://maven.apache.org/shared/maven-reporting-exec/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-reporting-exec = 1.2-3.fc23
+Provides: mvn(org.apache.maven.reporting:maven-reporting-exec) = 1.2
+Provides: mvn(org.apache.maven.reporting:maven-reporting-exec:pom:) = 1.2
+Requires: java-headless
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
+Requires: mvn(org.apache.maven.shared:maven-shared-utils)
+Requires: mvn(org.apache.maven:maven-artifact)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-model)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-settings)
+Requires: mvn(org.apache.maven:maven-settings-builder)
+Requires: mvn(org.eclipse.aether:aether-util)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-reporting-exec
-Version:        1.1
-Release:        alt1_1jpp7
-BuildArch:      noarch
-Summary:        Classes to manage report plugin executions with Maven 3
-
-License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-reporting-exec/
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/reporting/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Source1:        maven-model-depmap.xml
-
-BuildRequires:  aether
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-local
-BuildRequires:  maven-invoker-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  plexus-containers-component-metadata
-Source44: import.info
-
+Release: alt0.1jpp
+Source: maven-reporting-exec-1.2-3.fc23.cpio
 
 %description
 Classes to manage report plugin executions with Maven 3. Contains classes for
 managing and configuring reports and their execution.
 
-%package javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-The API documentation of %{name}.
-
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -qn %{name}-%{version}
-# convert CR+LF to LF
-sed -i 's/\r//g' pom.xml src/main/java/org/apache/maven/reporting/exec/*
-
-# We have different sonatype groupId and java package name
-find -iname '*.java' -exec sed -i 's/org.eclipse.aether/org.sonatype.aether/g' '{}' ';'
-
-%pom_xpath_set "pom:groupId[text()='org.eclipse.aether']" org.sonatype.aether
-%pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# Test are skipped because there are errors with PlexusLogger
-# More info possibly here:
-# https://docs.sonatype.org/display/AETHER/Using+Aether+in+Maven+Plugins?focusedCommentId=10485782#comment-10485782
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE DEPENDENCIES
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1jpp7
 - new version
 

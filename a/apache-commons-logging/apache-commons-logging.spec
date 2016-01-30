@@ -1,44 +1,28 @@
+Name: apache-commons-logging
+Version: 1.2
+Summary: Apache Commons Logging
+License: ASL 2.0
+Url: http://commons.apache.org/logging
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-compat
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-logging = 1.2-4.fc23
+Provides: mvn(apache:commons-logging) = 1.2
+Provides: mvn(apache:commons-logging:pom:) = 1.2
+Provides: mvn(commons-logging:commons-logging) = 1.2
+Provides: mvn(commons-logging:commons-logging-api) = 1.1
+Provides: mvn(commons-logging:commons-logging-api:pom:) = 1.1
+Provides: mvn(commons-logging:commons-logging:pom:) = 1.2
+Provides: mvn(org.apache.commons:commons-logging) = 1.2
+Provides: mvn(org.apache.commons:commons-logging-api) = 1.1
+Provides: mvn(org.apache.commons:commons-logging-api:pom:) = 1.1
+Provides: mvn(org.apache.commons:commons-logging:pom:) = 1.2
+Requires: java-headless
+Requires: jpackage-utils
 
-%global base_name  logging
-%global short_name commons-%{base_name}
-
-Name:           apache-%{short_name}
-Version:        1.1.2
-Release:        alt1_2jpp7
-Summary:        Apache Commons Logging
-License:        ASL 2.0
-Group:          Development/Java
-URL:            http://commons.apache.org/%{base_name}
-Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{short_name}-api/1.1/%{short_name}-api-1.1.pom
-
-BuildArch:      noarch
-BuildRequires:  maven-local
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  avalon-framework >= 4.3
-BuildRequires:  avalon-logkit
-BuildRequires:  apache-commons-parent
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-failsafe-plugin
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  servlet
-
-Requires:       jpackage-utils >= 0:1.6
-
-# This should go away with F-17
-Provides:       jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} <= 0:1.0.4
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: apache-commons-logging-1.2-4.fc23.cpio
 
 %description
 The commons-logging package provides a simple, component oriented
@@ -51,97 +35,28 @@ commons-logging abstraction is meant to minimize the differences between
 the two, and to allow a developer to not tie himself to a particular
 logging implementation.
 
-%package        javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-
-Obsoletes:      jakarta-%{short_name}-javadoc <= 0:1.0.4
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
-# -----------------------------------------------------------------------------
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
-
-# Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
-%pom_remove_dep :avalon-framework
-%pom_add_dep avalon-framework:avalon-framework-api:4.3
-%pom_add_dep avalon-framework:avalon-framework-impl:4.3:test
-
-%pom_remove_plugin :cobertura-maven-plugin
-%pom_remove_plugin :maven-scm-publish-plugin
-
-# Upstream is changing Maven groupID and OSGi Bundle-SymbolicName back
-# and forth, even between minor releases (such as 1.1.1 and 1.1.2).
-# In case of Maven we can provide an alias, so that's not a big
-# problem.  But there is no alias mechanism for OSGi bundle names.
-#
-# I'll use Bundle-SymbolicName equal to "org.apache.commons.logging"
-# because that's what upstream decided to use in future and because
-# that's what most of Eclipse plugin are already using.  See also
-# rhbz#949842 and LOGGING-151.  mizdebsk, 9 Apr 2013
-%pom_xpath_set pom:commons.osgi.symbolicName org.apache.commons.logging
-
-sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
-
-# -----------------------------------------------------------------------------
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -p -m 644 target/%{short_name}-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-api.jar
-install -p -m 644 target/%{short_name}-adapters-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-adapters.jar
-
-pushd $RPM_BUILD_ROOT%{_javadir}
-for jar in %{name}*; do
-    ln -sf ${jar} `echo $jar| sed "s|apache-||g"`
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
-popd
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}.pom
-install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}-api.pom
-
-%add_to_maven_depmap org.apache.commons %{short_name} %{version} JPP %{short_name}
-%add_to_maven_depmap org.apache.commons %{short_name}-api %{version} JPP %{short_name}-api
-%add_to_maven_depmap org.apache.commons %{short_name}-adapters %{version} JPP %{short_name}-adapters
-
-# following lines are only for backwards compatibility. New packages
-# should use proper groupid org.apache.commons and also artifactid
-%add_to_maven_depmap %{short_name} %{short_name} %{version} JPP %{short_name}
-%add_to_maven_depmap %{short_name} %{short_name}-api %{version} JPP %{short_name}-api
-%add_to_maven_depmap %{short_name} %{short_name}-adapters %{version} JPP %{short_name}-adapters
 
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%doc LICENSE.txt NOTICE.txt
-%doc PROPOSAL.html RELEASE-NOTES.txt
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{short_name}.pom
-%{_mavenpomdir}/JPP-%{short_name}-api.pom
-%{_mavendepmapfragdir}/*
-
-
-%files javadoc
-%doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
-
-# -----------------------------------------------------------------------------
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_2jpp7
 - new version
 

@@ -1,28 +1,24 @@
+Name: jcip-annotations
+Version: 1
+Summary: Java annotations for multithreaded software
+License: CC-BY
+Url: http://www.jcip.net/
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           jcip-annotations
-Version:        1
-Release:        alt1_8.20060626jpp7
-Summary:        Java annotations for multithreaded software
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jcip-annotations = 1-17.20060626.fc23
+Provides: mvn(com.github.stephenc.jcip:jcip-annotations) = 1.0
+Provides: mvn(com.github.stephenc.jcip:jcip-annotations:pom:) = 1.0
+Provides: mvn(net.jcip:jcip-annotations) = 1.0
+Provides: mvn(net.jcip:jcip-annotations:pom:) = 1.0
+Requires: java-headless
+Requires: java-headless
+Requires: jpackage-utils
+Requires: jpackage-utils
 
-Group:          Development/Java
-License:        CC-BY
-URL:            http://www.jcip.net/
-Source0:        http://www.jcip.net/%{name}-src.jar
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/net/jcip/%{name}/1.0/%{name}-1.0.pom
-
-# There is no point in building native libraries, as the sources contain only
-# annotation definitions, so no code would be generated.
-BuildArch:      noarch
-BuildRequires:  jpackage-utils
-
-Requires:       jpackage-utils
-Source44: import.info
-
+BuildArch: noarch
+Group: Development/Java
+Release: alt2jpp
+Source: jcip-annotations-1-17.20060626.fc23.cpio
 
 %description
 This package provides class, field, and method level annotations for
@@ -35,56 +31,28 @@ may be able to verify that the code complies with the contract indicated by
 the annotation, such as verifying that a class annotated with @Immutable
 actually is immutable.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for jcip-annotations
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release} jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-Javadoc documentation for the jcip-annotations package.
-On systems where javadoc is sinjdoc, this package contains nothing useful
-since sinjdoc does not understand annotations.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -c
-
-# Get rid of the manifest created upstream with ant
-rm -fr META-INF
-
-# Fix DOS line endings
-sed -i 's/\r//' net/jcip/annotations/package.html
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mkdir classes
-find . -name '*.java' | xargs %javac -g -source 1.5 -target 1.5 -d classes
-cd classes
-%jar cf ../%{name}.jar net
-cd ..
-%javadoc -d docs -source 1.5 net.jcip.annotations
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-mv %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# install maven metadata
-mkdir -p %{buildroot}/%{_mavenpomdir}
-cp %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
 
-# install javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1:1-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1-alt1_8.20060626jpp7
 - new release
 

@@ -1,63 +1,47 @@
+Name: pegdown
+Version: 1.4.2
+Summary: Java library for Markdown processing
+License: ASL 2.0
+Url: http://pegdown.org
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.pegdown:pegdown) = 1.4.2
+Provides: mvn(org.pegdown:pegdown:pom:) = 1.4.2
+Provides: pegdown = 1.4.2-7.fc23
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.parboiled:parboiled-java)
+
+BuildArch: noarch
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:          pegdown
-Version:       1.1.0
-Release:       alt3_6jpp7
-Summary:       Java library for Markdown processing
-License:       ASL 2.0
-URL:           http://pegdown.org
-Source0:       https://github.com/sirthias/pegdown/archive/%{version}.tar.gz
-
-
-BuildRequires: parboiled
-# test deps
-BuildRequires: jtidy
-BuildRequires: testng
-
-BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-testng
-
-BuildArch:     noarch
-Source44: import.info
+Release: alt0.1jpp
+Source: pegdown-1.4.2-7.fc23.cpio
 
 %description
 A pure-Java Markdown processor based on a parboiled PEG parser
 supporting a number of extensions.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-find . -name "*.class" -delete
-find . -name "*.jar" -delete
-
-# these test fail
-rm src/test/java/org/pegdown/CustomParserTest.java
-rm src/test/java/org/pegdown/Markdown103Test.java
-rm src/test/java/org/pegdown/PegDownTest.java
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-
-%mvn_file :%{name} %{name}
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc CHANGELOG LICENSE NOTICE README.markdown
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Mon Jan 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_6jpp7
 - new release
 

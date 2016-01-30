@@ -1,33 +1,28 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:          fasterxml-oss-parent
-Version:       4
-Release:       alt2_3jpp7
-Summary:       FasterXML parent pom
-Group:         Development/Java
-License:       ASL 2.0
-URL:           http://fasterxml.com/
-# git clone git://github.com/FasterXML/oss-parent.git fasterxml-oss-parent-4
-# (cd fasterxml-oss-parent-4/ && git archive --format=tar --prefix=fasterxml-oss-parent-4/ oss-parent-4 | xz > ../fasterxml-oss-parent-4-src-git.tar.xz)
-Source0:       %{name}-%{version}-src-git.tar.xz
+Name: fasterxml-oss-parent
+Version: 18e
+Summary: FasterXML parent pom
+License: ASL 2.0 and LGPLv2+
+Url: http://fasterxml.com/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: fasterxml-oss-parent = 18e-2.fc23
+Provides: mvn(com.fasterxml:oss-parent:pom:) = 18
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.felix:maven-bundle-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-jar-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-scm-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-site-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
+Requires: mvn(org.apache.maven.scm:maven-scm-manager-plexus)
+Requires: mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
+Requires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
-# remove unavailable extension org.kathrynhuxtable.maven.wagon wagon-gitsite 0.3.1
-# fix javadoc configration, remove unavailable com.google.doclava doclava 1.0.3
-Patch0:        fasterxml-oss-parent-3-pom.patch
-
-BuildRequires: jpackage-utils
-
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-site-plugin
-
-Requires:      jpackage-utils
-BuildArch:     noarch
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: fasterxml-oss-parent-18e-2.fc23.cpio
 
 %description
 FasterXML is the business behind the Woodstox streaming XML parser,
@@ -39,31 +34,28 @@ and extension.
 
 This package contains the parent pom file for FasterXML.com projects.
 
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{version}
-%patch0 -p0
-
-%pom_remove_plugin org.sonatype.plugins:nexus-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:jdepend-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-# nothing to do
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
 %install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
 
-%check
-mvn-rpmbuild verify
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE NOTICE README.creole
+%files -f %name-list
 
 %changelog
+* Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 18e-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt2_3jpp7
 - new release
 

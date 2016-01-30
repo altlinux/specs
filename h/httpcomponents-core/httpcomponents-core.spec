@@ -1,36 +1,22 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global base_name httpcomponents
+Name: httpcomponents-core
+Version: 4.4.1
+Summary: Set of low level Java HTTP transport components for HTTP services
+License: ASL 2.0 and CC-BY
+Url: http://hc.apache.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: httpcomponents-core = 4.4.1-2.fc23
+Provides: mvn(org.apache.httpcomponents:httpcomponents-core:pom:) = 4.4.1
+Provides: mvn(org.apache.httpcomponents:httpcore) = 4.4.1
+Provides: mvn(org.apache.httpcomponents:httpcore-nio) = 4.4.1
+Provides: mvn(org.apache.httpcomponents:httpcore-nio:pom:) = 4.4.1
+Provides: mvn(org.apache.httpcomponents:httpcore:pom:) = 4.4.1
+Requires: java-headless
+Requires: jpackage-utils
 
-Name:              httpcomponents-core
-Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.2.4
-Release:           alt1_5jpp7
-Group:             Development/Java
-# The project is licensed under ASL 2.0, but it contains annotations
-# in the package org.apache.http.annotation which are derived
-# from JCIP-ANNOTATIONS project (CC-BY licensed)
-License:           ASL 2.0 and CC-BY
-URL:               http://hc.apache.org/
-Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
-BuildArch:         noarch
-
-BuildRequires:     maven-local
-BuildRequires:     httpcomponents-project
-BuildRequires:     jpackage-utils
-BuildRequires:     maven-surefire-provider-junit4
-BuildRequires:     apache-commons-logging
-BuildRequires:     junit
-%if 0%{?rhel} <= 0
-BuildRequires:     mockito
-%endif
-Source44: import.info
-
-Obsoletes: hc-httpcore < 4.1.1
-Provides: hc-httpcore = %version
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: httpcomponents-core-4.4.1-2.fc23.cpio
 
 %description
 HttpCore is a set of low level HTTP transport components that can be
@@ -45,69 +31,28 @@ appropriate for high latency scenarios where raw data throughput is
 less important than the ability to handle thousands of simultaneous
 HTTP connections in a resource efficient manner.
 
-%package        javadoc
-Summary:        API documentation for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description    javadoc
-%{summary}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-%pom_remove_plugin :maven-clover2-plugin httpcore-nio
-%pom_remove_plugin :maven-clover2-plugin httpcore
-%pom_remove_plugin :maven-notice-plugin
-%pom_remove_plugin :docbkx-maven-plugin
-
-# we don't need these artifacts right now
-%pom_disable_module httpcore-osgi
-%pom_disable_module httpcore-ab
-
-# OSGify modules
-for module in httpcore httpcore-nio; do
-    %pom_xpath_remove "pom:project/pom:packaging" $module
-    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" $module
-    %pom_xpath_inject "pom:build/pom:plugins" "
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <extensions>true</extensions>
-          <configuration>
-            <instructions>
-              <Export-Package>*</Export-Package>
-              <Private-Package></Private-Package>
-              <_nouses>true</_nouses>
-            </instructions>
-          </configuration>
-        </plugin>" $module
-done
-
-# install JARs to httpcomponents/ for compatibility reasons
-# several other packages expect to find the JARs there
-%mvn_file ":{*}" httpcomponents/@1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build \
-%if 0%{?rhel}
-    -f
-%endif
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%dir %{_javadir}/httpcomponents
-%doc LICENSE.txt NOTICE.txt
-%doc README.txt RELEASE_NOTES.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%files -f %name-list
 
 %changelog
+* Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt1_5jpp7
 - new release
 

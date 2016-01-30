@@ -1,60 +1,55 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip maven-shared-incremental maven-shared-utils
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-compiler-plugin
-Version:        3.0
-Release:        alt2_2jpp7
-Summary:        Maven Compiler Plugin
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-compiler-plugin
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Name: maven-compiler-plugin
+Version: 3.3
+Summary: Maven Compiler Plugin
+License: ASL 2.0
+Url: http://maven.apache.org/plugins/maven-compiler-plugin
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-compiler-plugin = 3.3-2.fc23
+Provides: mvn(org.apache.maven.plugins:maven-compiler-plugin) = 3.3
+Provides: mvn(org.apache.maven.plugins:maven-compiler-plugin:pom:) = 3.3
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(org.apache.maven.shared:maven-shared-incremental)
+Requires: mvn(org.apache.maven.shared:maven-shared-utils)
+Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
+Requires: mvn(org.apache.maven:maven-core)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-toolchain)
+Requires: mvn(org.codehaus.plexus:plexus-compiler-api)
+Requires: mvn(org.codehaus.plexus:plexus-compiler-javac)
+Requires: mvn(org.codehaus.plexus:plexus-compiler-manager)
+Requires: mvn(org.codehaus.plexus:plexus-container-default)
 
 BuildArch: noarch
-
-BuildRequires:  maven-local
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-shared-incremental
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  maven-toolchain
-BuildRequires:  plexus-compiler >= 2.0
-
-Provides:       maven2-plugin-compiler = %{version}-%{release}
-Obsoletes:      maven2-plugin-compiler <= 0:2.0.8
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: maven-compiler-plugin-3.3-2.fc23.cpio
 
 %description
 The Compiler Plugin is used to compile the sources of your project.
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q 
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%files -f %name-list
 
 %changelog
+* Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Sat Aug 23 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt2_2jpp7
 - rebuild with maven.req
 

@@ -1,95 +1,45 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           plexus-cipher
-Version:        1.7
-Release:        alt1_2jpp7
-Summary:        Plexus Cipher: encryption/decryption Component
-
-Group:          Development/Java
-License:        ASL 2.0
-# project moved to GitHub and it looks like there is no official website anymore
-URL:            https://github.com/sonatype/plexus-cipher
-# git clone https://github.com/sonatype/plexus-cipher.git
-# cd plexus-cipher/
-# note this is version 1.7 + our patches which were incorporated by upstream maintainer
-# git archive --format tar --prefix=plexus-cipher-1.7/ 0cff29e6b2e | gzip -9 > plexus-cipher-1.7.tar.gz
-Source0:        %{name}-%{version}.tar.gz
+Name: plexus-cipher
+Version: 1.7
+Summary: Plexus Cipher: encryption/decryption Component
+License: ASL 2.0
+Url: https://github.com/codehaus-plexus/plexus-cipher
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.sonatype.plexus:plexus-cipher) = 1.7
+Provides: mvn(org.sonatype.plexus:plexus-cipher:pom:) = 1.7
+Provides: plexus-cipher = 1.7-10.fc23
+Requires: java-headless
+Requires: jpackage-utils
 
 BuildArch: noarch
-
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia-sitetools
-BuildRequires: forge-parent
-BuildRequires: spice-parent
-BuildRequires: plexus-containers-component-metadata
-BuildRequires: junit
-BuildRequires: maven-shared-reporting-impl
-BuildRequires: plexus-digest
-BuildRequires: sisu-maven-plugin
-BuildRequires: sisu-inject-bean
-
-Requires: jpackage-utils
-Source44: import.info
-
+Group: Development/Java
+Release: alt2jpp
+Source: plexus-cipher-1.7-10.fc23.cpio
 
 %description
 Plexus Cipher: encryption/decryption Component
 
-%package javadoc
-Group:          Development/Java
-Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-# replace %{version}-SNAPSHOT with %{version}
-%pom_xpath_replace pom:project/pom:version "<version>%{version}</version>"
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild -Dmaven.test.failure.ignore=true \
-             install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jars
-install -Dm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/plexus/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.plexus-%{name}.pom
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
-
-%add_maven_depmap JPP.plexus-%{name}.pom plexus/%{name}.jar
-
-%files
-%doc LICENSE.txt NOTICE.txt
-%{_javadir}/plexus/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/plexus/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_2jpp7
 - new release
 
