@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.4.18
+Version: 2.5.2
 Release: alt1
 
 Summary: DAR - Disk ARchive tool
@@ -11,7 +11,7 @@ Url: http://dar.linux.free.fr/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
-Patch: %name-2.4.2.patch
+Patch: %name-2.5.2.patch
 
 Requires: lib%name = %version-%release
 
@@ -85,6 +85,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
+- new version 2.5.2 (with rpmrb script)
+
 * Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 2.4.18-alt1
 - new version 2.4.18 (with rpmrb script)
 
