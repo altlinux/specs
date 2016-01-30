@@ -1,5 +1,5 @@
 Name: dogtail
-Version: 0.9.0
+Version: 0.9.9
 Release: alt1
 
 Summary: GUI test tool and automation framework
@@ -50,10 +50,13 @@ find examples -type f -exec chmod 0644 \{\} \;
 %python_sitelibdir/%name-*.egg-info
 %_desktopdir/*
 %_datadir/%name/
-%_liconsdir/*
+#_liconsdir/*
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
+- new version 0.9.9 (with rpmrb script)
+
 * Sat Nov 08 2014 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - new version 0.9.0 (with rpmrb script)
 
