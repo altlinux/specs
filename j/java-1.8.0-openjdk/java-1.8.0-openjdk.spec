@@ -259,7 +259,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt1_1.b15jpp8
+Release: alt2_1.b15jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -481,7 +481,7 @@ Group:   Development/Java
 # Require /etc/pki/java/cacerts.
 Requires: ca-certificates
 # Require javapackages-tools for ownership of /usr/lib/jvm/
-Requires: maven-local
+#Requires: maven-local
 # Require zoneinfo data provided by tzdata-java subpackage.
 Requires: tzdata-java >= 2015d
 # libsctp.so.1 is being `dlopen`ed on demand
@@ -1416,6 +1416,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %endif
 
 %changelog
+* Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt2_1.b15jpp8
+- dropped dependency on maven-local
+
 * Wed Jan 27 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt1_1.b15jpp8
 - new version
 - TODO: add java8 support to tzdata and use system-wide tzdata-java
