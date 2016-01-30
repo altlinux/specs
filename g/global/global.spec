@@ -1,7 +1,7 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.3.3
-Release: alt1.1
+Version: 6.5.1
+Release: alt1
 
 Summary: Source code tag system
 
@@ -78,6 +78,9 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 6.5.1-alt1
+- new version 6.5.1 (with rpmrb script)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 6.3.3-alt1.1
 - NMU: added BR: texinfo
 
