@@ -1,5 +1,5 @@
 Name: rednotebook
-Version: 1.9.0
+Version: 1.11
 Release: alt1
 
 Summary: A desktop diary
@@ -43,7 +43,7 @@ and does so in style.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS CHANGELOG README
+%doc AUTHORS CHANGELOG README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/rednotebook.svg
@@ -51,6 +51,9 @@ and does so in style.
 %python_sitelibdir/%{name}*.egg-info
 
 %changelog
+* Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
+- new version 1.11 (with rpmrb script)
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - new version 1.9.0 (with rpmrb script)
 
