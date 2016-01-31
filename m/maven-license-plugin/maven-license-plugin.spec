@@ -1,62 +1,30 @@
+Name: maven-license-plugin
+Version: 1.8.0
+Summary: Maven plugin to update header licenses of source files
+License: ASL 2.0
+Url: http://code.google.com/p/maven-license-plugin
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           maven-license-plugin
-Version:        1.8.0
-Release:        alt4_15jpp7
-Summary:        Maven plugin to update header licenses of source files
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: maven-license-plugin = 1.8.0-18.fc23
+Provides: mvn(com.mycila.maven-license-plugin:maven-license-plugin) = 1.8.0
+Provides: mvn(com.mycila.maven-license-plugin:maven-license-plugin:pom:) = 1.8.0
+Requires: java-headless
+Requires: java-headless
+Requires: jpackage-utils
+Requires: jpackage-utils
+Requires: maven
+Requires: maven-shared
+Requires: mvn(com.mycila.xmltool:xmltool)
+Requires: mvn(org.apache.maven:maven-compat)
+Requires: mvn(org.apache.maven:maven-plugin-api)
+Requires: mvn(org.apache.maven:maven-project)
+Requires: mvn(org.codehaus.plexus:plexus-utils)
+Requires: xmltool
 
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://code.google.com/p/maven-license-plugin
-### upstream only provides binaries or source without build scripts
-# tar creation instructions
-# svn export http://maven-license-plugin.googlecode.com/svn/tags/maven-license-plugin-1.8.0 maven-license-plugin
-# tar cfJ maven-license-plugin-1.8.0.tar.xz maven-license-plugin
-Source0:        %{name}-%{version}.tar.xz
-# remove testng dep (tests are skipped) and maven-license-plugin call
-Patch0:         001-mavenlicenseplugin-fixbuild.patch
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-BuildRequires:  apache-resource-bundles
-BuildRequires:  maven-local
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-deploy-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-changelog-plugin
-BuildRequires:  maven-changes-plugin
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-help-plugin
-BuildRequires:  maven-idea-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-pmd-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-repository-plugin
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-shared
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  maven-release-plugin
-BuildRequires:  plexus-utils
-BuildRequires:  plexus-classworlds
-BuildRequires:  xml-commons-apis
-BuildRequires:  xmltool
-
-Requires:       jpackage-utils
-Requires:       maven
-Requires:       maven-shared
-Requires:       xmltool
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt5jpp
+Source: maven-license-plugin-1.8.0-18.fc23.cpio
 
 %description
 maven-license-plugin is a Maven plugin that help you managing license
@@ -67,58 +35,28 @@ This plugin lets you maintain the headers, including checking if the
 header is present, generating a report and of course having the
 possibility to update / reformat missing license headers.
 
-
-%package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-BuildArch:      noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}
-%patch0 -p1
-# fix EOL
-sed -i 's/\r//' LICENSE.txt
-sed -i 's/\r//' NOTICE.txt
-
-# Remove wagon-webdav extension which is not available
-%pom_xpath_remove pom:build/pom:extensions
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# jar
-install -Dp -m 644 target/%{name}-%{version}.jar \
-$RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/  $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%doc NOTICE.txt LICENSE.txt
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt5jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt4_15jpp7
 - new release
 
