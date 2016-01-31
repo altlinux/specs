@@ -2,37 +2,32 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-deploy-plugin
-Version:        2.7
-Release:        alt2_10jpp7
+Version:        2.8.2
+Release:        alt1_4jpp8
 Summary:        Maven Deploy Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-deploy-plugin/
+BuildArch:      noarch
+
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildArch: noarch
-
-# Basic stuff
-
 # Maven and its dependencies
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-archiver
-BuildRequires: mvn(org.apache.maven:maven-artifact:2.0.6)
-BuildRequires: mvn(org.apache.maven:maven-model:2.0.6)
-# The following maven packages haven't updated yet
-BuildRequires: maven-changes-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-invoker-plugin
-
-Requires:      mvn(org.apache.maven:maven-artifact:2.0.6)
-Requires:      mvn(org.apache.maven:maven-model:2.0.6)
-
-Provides:      maven2-plugin-deploy = 0:%{version}-%{release}
-Obsoletes:     maven2-plugin-deploy <= 0:2.0.8
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-artifact:2.0.6)
+BuildRequires:  mvn(org.apache.maven:maven-model:2.0.6)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.mockito:mockito-core)
 Source44: import.info
 
 %description
@@ -49,7 +44,6 @@ API documentation for %{name}.
 %prep
 %setup -q
 
-%pom_xpath_inject pom:project "<build><plugins/></build>"
 %pom_add_plugin :maven-plugin-plugin . "
         <configuration>
           <helpPackageName>org.apache.maven.plugin.deploy</helpPackageName>
@@ -71,6 +65,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.8.2-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_10jpp7
 - new release
 
