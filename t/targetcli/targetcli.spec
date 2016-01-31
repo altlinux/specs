@@ -3,7 +3,7 @@ License:        ASL 2.0
 Group:          System/Libraries
 Summary:        An administration shell for storage targets
 Version:        2.1.fb35
-Release:        alt1
+Release:        alt2
 URL:            https://fedorahosted.org/targetcli-fb/
 Source:         %{name}-%{version}.tar
 BuildArch:      noarch
@@ -36,9 +36,12 @@ install -m 644 targetcli.8.bz2 %{buildroot}%{_mandir}/man8/
 %dir %{_sysconfdir}/target
 %dir %{_sysconfdir}/target/backup
 %doc COPYING README.md
-%{_mandir}/man8/targetcli.8.bz2
+%{_mandir}/man8/targetcli.8.*
 
 %changelog
+* Sun Jan 31 2016 Lenar Shakirov <snejok@altlinux.ru> 2.1.fb35-alt2
+- Man pages packaging fixed
+
 * Thu Jul 31 2014 Lenar Shakirov <snejok@altlinux.ru> 2.1.fb35-alt1
 - First build for ALT (based on Fedora 2.1.fb35-2.fc21.src)
 
