@@ -2,8 +2,9 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name native2ascii-maven-plugin
 %define version 1.0
@@ -11,28 +12,26 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          native2ascii-maven-plugin
 Version:       1.0
-Release:       alt3_0.7.beta1jpp7
+Release:       alt3_0.11.beta1jpp8
 Summary:       Native2Ascii Maven Plugin
 License:       MIT
 URL:           http://mojo.codehaus.org/%{name}/
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{namedversion}/%{name}-%{namedversion}-source-release.zip
 
-BuildRequires: mvn(org.codehaus.mojo:mojo-parent)
+BuildRequires: mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
 
-BuildRequires: junit
+BuildRequires: mvn(junit:junit)
 
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-invoker-plugin
-BuildRequires: maven-plugin-cobertura
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-surefire-provider-junit4
 
 # requires by javadoc-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -54,9 +53,10 @@ This package contains javadoc for %{name}.
 %setup -q -n %{name}-%{namedversion}
 %pom_remove_plugin org.apache.maven.plugins:maven-invoker-plugin
 
+%mvn_file :%{name} %{name}
+
 %build
 
-%mvn_file :%{name} %{name}
 %mvn_build
 
 %install
@@ -69,6 +69,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.11.beta1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.7.beta1jpp7
 - new release
 
