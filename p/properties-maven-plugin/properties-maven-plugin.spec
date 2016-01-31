@@ -1,6 +1,7 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name properties-maven-plugin
 %define version 1.0
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          properties-maven-plugin
 Version:       1.0
-Release:       alt3_0.6.alpha2jpp7
+Release:       alt3_0.10.alpha2jpp8
 Summary:       Properties Maven Plugin
 License:       ASL 2.0
 URL:           http://mojo.codehaus.org/properties-maven-plugin/
@@ -17,20 +18,14 @@ URL:           http://mojo.codehaus.org/properties-maven-plugin/
 Source0:       %{name}-%{namedversion}-src-svn.tar.gz
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires: mvn(org.codehaus.mojo:mojo-parent)
-
+BuildRequires: maven-local
 BuildRequires: mvn(org.apache.maven:maven-core)
 BuildRequires: mvn(org.apache.maven:maven-model)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
-
-# test deps (no test to run)
-BuildRequires: mvn(junit:junit)
-
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-plugin-plugin
 
 BuildArch:     noarch
 Source44: import.info
@@ -60,6 +55,7 @@ sed -i 's/\r//' LICENSE-2.0.txt
 
 %build
 
+# no test to run
 %mvn_build
 
 %install
@@ -72,6 +68,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.10.alpha2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.6.alpha2jpp7
 - new release
 
