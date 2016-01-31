@@ -1,14 +1,14 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          xml-maven-plugin
 Version:       1.0
-Release:       alt5_9jpp7
+Release:       alt5_12jpp8
 Summary:       Maven XML Plugin
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://mojo.codehaus.org/xml-maven-plugin/
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/xml-maven-plugin/1.0/xml-maven-plugin-1.0-source-release.zip
@@ -17,26 +17,10 @@ BuildRequires: mojo-parent
 
 BuildRequires: apache-rat-plugin
 BuildRequires: maven-local
-BuildRequires: maven-changes-plugin
 BuildRequires: maven-checkstyle-plugin
-BuildRequires: maven-clean-plugin
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
 BuildRequires: maven-invoker-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-testing-harness
-BuildRequires: maven-plugin-cobertura
-
-BuildRequires: plexus-component-api
-BuildRequires: plexus-io
-BuildRequires: plexus-resources
-BuildRequires: plexus-utils
-BuildRequires: saxon
-BuildRequires: xerces-j2
-BuildRequires: xml-commons-apis
-BuildRequires: xml-commons-resolver
 
 BuildArch:     noarch
 Source44: import.info
@@ -70,19 +54,21 @@ sed -i 's|stylesheet |stylesheet version="1.0" |'  src/it/it8/src/main/xsl/it8.x
 %pom_add_dep org.apache.maven:maven-core
 
 %build
-%mvn_build -f -- install
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_9jpp7
 - new release
 
