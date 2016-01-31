@@ -1,99 +1,58 @@
+Name: cglib
+Version: 3.1
+Summary: Code Generation Library for Java
+License: ASL 2.0 and BSD
+Url: http://cglib.sourceforge.net/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: jarjar
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           cglib
-Version:        2.2
-Release:        alt2_17jpp7
-Summary:        Code Generation Library for Java
-License:        ASL 2.0 and BSD
-Group:          Development/Java
-Url:            http://cglib.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.jar
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-Source2:        bnd.properties
-# Remove the repackaging step that includes other jars into the final thing
-Patch0:         %{name}-build_xml.patch
-
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: cglib = 3.1-7.fc23
+Provides: mvn(cglib:cglib) = 3.1
+Provides: mvn(cglib:cglib-full) = 3.1
+Provides: mvn(cglib:cglib-full:pom:) = 3.1
+Provides: mvn(cglib:cglib-nodep) = 3.1
+Provides: mvn(cglib:cglib-nodep:pom:) = 3.1
+Provides: mvn(cglib:cglib:pom:) = 3.1
+Provides: mvn(net.sf.cglib:cglib) = 3.1
+Provides: mvn(net.sf.cglib:cglib:pom:) = 3.1
+Provides: mvn(org.sonatype.sisu.inject:cglib) = 3.1
+Provides: mvn(org.sonatype.sisu.inject:cglib:pom:) = 3.1
+Requires: java-headless
+Requires: java-headless
+Requires: jpackage-utils
 Requires: objectweb-asm
 
-BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.5
-BuildRequires:  objectweb-asm
-BuildRequires:  unzip
-BuildRequires:  aqute-bnd
-BuildArch:      noarch
-Source44: import.info
-Source45: cglib-nodep-2.2.pom
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: cglib-3.1-7.fc23.cpio
 
 %description
-cglib is a powerful, high performance and quality code generation library 
-for Java. It is used to extend Java classes and implements interfaces 
+cglib is a powerful, high performance and quality code generation library
+for Java. It is used to extend Java classes and implements interfaces
 at runtime.
 
-%package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-BuildArch: noarch
-%description javadoc
-Documentation for the cglib code generation library.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -c %{name}-%{version}
-rm lib/*.jar
-# for jarjar
-pushd lib
-ln -s $(build-classpath objectweb-asm/asm) asm-3.1.jar
-popd
-#patch0 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-export CLASSPATH=`build-classpath objectweb-asm jarjar`
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadoc
-# Convert to OSGi bundle
-pushd dist
-java -Dcglib.bundle.version="%{version}" \
-  -jar $(build-classpath aqute-bnd) wrap -output %{name}-%{version}.bar -properties %{SOURCE2} %{name}-%{version}.jar
-popd
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-mkdir -p %{buildroot}%{_mavenpomdir}
-cp %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-# yes, this is really *.bar - aqute bnd created it
-install -p -m 644 dist/%{name}-%{version}.bar %{buildroot}%{_javadir}/%{name}.jar
-install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a net.sf.cglib:cglib
-%add_maven_depmap -a cglib:cglib-full
-
-cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
-# jpp6 compat
-cp -p dist/%{name}-nodep-%{version}.jar %{buildroot}%{_javadir}/%{name}-nodep.jar
-cp -p %{SOURCE45} %{buildroot}%{_mavenpomdir}/JPP-%{name}-nodep.pom
-%add_to_maven_depmap cglib cglib-nodep %{version} JPP %{name}-nodep
-%add_to_maven_depmap net.sf.cglib cglib-nodep %{version} JPP %{name}-nodep
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files
-%doc LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-# jpp6 compat
-%{_javadir}/%{name}-nodep.jar
-%{_mavenpomdir}/JPP-%{name}-nodep.pom
-
-
-%files javadoc
-%doc LICENSE NOTICE
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt2_17jpp7
 - new release
 
