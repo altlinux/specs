@@ -1,27 +1,24 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-rar-plugin
-Version:        2.3
-Release:        alt1_1jpp7
+Version:        2.4
+Release:        alt1_1jpp8
 Summary:        Plugin to create Resource Adapter Archive which can be deployed to a J2EE server
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-rar-plugin/
 Source0:        http://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
 
+Patch0:         fix-tests.patch
+
 BuildArch: noarch
 
-BuildRequires: plexus-utils
-BuildRequires: ant
 BuildRequires: maven-local
-BuildRequires: jpackage-utils
-
-Obsoletes: maven2-plugin-rar <= 0:2.0.8
-Provides: maven2-plugin-rar = 1:%{version}-%{release}
 Source44: import.info
 
 %description
@@ -33,7 +30,7 @@ to store these resource adapters to an archive
  a J2EE server.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -42,16 +39,20 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
+%patch0
 
 # Fix deps to build against maven 3
 %pom_remove_dep org.apache.maven:maven-project
 %pom_add_dep org.apache.maven:maven-compat
 %pom_add_dep org.apache.maven:maven-core
+%pom_add_dep junit:junit::test
 
-%mvn_file : %{name}
+# To make tests work
+%pom_remove_dep org.apache.maven:maven-artifact
+%pom_add_dep org.apache.maven:maven-artifact
 
 %build
-%mvn_build -- -Dmaven.test.failure.ignore=true
+%mvn_build
 
 %install
 %mvn_install
@@ -63,6 +64,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_1jpp7
 - new release
 
