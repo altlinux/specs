@@ -1,48 +1,38 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-gpg-plugin
-Version:        1.4
-Release:        alt3_10jpp7
+Version:        1.6
+Release:        alt1_2jpp8
 Summary:        Maven GPG Plugin
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-gpg-plugin/
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         0001-Add-support-for-maven-3.patch
+BuildArch:      noarch
 
-BuildArch: noarch
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+Patch0:         0001-Port-to-Maven-3.3.1.patch
 
 BuildRequires: plexus-utils
 BuildRequires: ant
 BuildRequires: maven-local
-BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 
 # Uses system gpg binary for actual signing
 Requires:      gnupg
-
-Obsoletes: maven2-plugin-gpg <= 0:2.0.8
-Provides: maven2-plugin-gpg = 1:%{version}-%{release}
 Source44: import.info
 
 %description
 This plugin signs all of the project's attached artifacts with
 GnuPG. It adds goals gpg:sign and gpg:sign-and-deploy-file.
 
-
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -54,7 +44,6 @@ API documentation for %{name}.
 
 # migrate to maven 3.x 
 %patch0 -p1
-sed -i 's/${mavenVersion}/3.0.4/' pom.xml
 
 %build
 %mvn_build
@@ -70,6 +59,9 @@ sed -i 's/${mavenVersion}/3.0.4/' pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3_10jpp7
 - new release
 
