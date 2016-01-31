@@ -1,32 +1,25 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          maven-processor-plugin
-Version:       2.1.1
-Release:       alt1_4jpp7
+Version:       2.2.4
+Release:       alt1_5jpp8
 Summary:       Maven Processor Plugin
-# some classes and pom file are annotated with ASL 2.0
-# and the site here it is hosted says "GNU Lesser GPL"
-# contacted the project owner (available in POM) and clarified the license status in LGPLv3
-License:       LGPLv3 and ASL 2.0
-Url:           http://code.google.com/p/maven-annotation-plugin/
-# git clone https://code.google.com/p/maven-annotation-plugin/ maven-processor-plugin-2.1.1
-# (cd maven-processor-plugin-2.1.1/ && git archive --format=tar --prefix=maven-processor-plugin-2.1.1/ maven-processor-plugin-2.1.1 | xz > ../maven-processor-plugin-2.1.1-src-git.tar.xz)
-Source0:       %{name}-%{version}-src-git.tar.xz
+License:       LGPLv3+
+Url:           https://github.com/bsorrentino/maven-annotation-plugin
+Source0:       https://github.com/bsorrentino/maven-annotation-plugin/archive/%{name}-%{version}.tar.gz
 
-
+BuildRequires: maven-local
 # main deps
 BuildRequires: mvn(org.apache.maven:maven-core)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
 BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
-
 # test deps
-BuildRequires: junit
-
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: mvn(junit:junit)
 
 BuildArch:     noarch
 Source44: import.info
@@ -48,15 +41,16 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
+%setup -q -n maven-annotation-plugin-%{name}-%{version}
 %pom_xpath_remove pom:project/pom:profiles
 %pom_xpath_remove pom:build/pom:extensions
 
 cp -p src/main/resources/COPYING.LESSER .
 
+%mvn_file :%{name} %{name}/%{name} %{name}
+
 %build
 
-%mvn_file :%{name} %{name}
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -69,6 +63,9 @@ cp -p src/main/resources/COPYING.LESSER .
 %doc COPYING.LESSER
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_5jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt1_4jpp7
 - new release
 
