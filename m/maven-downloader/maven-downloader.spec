@@ -1,14 +1,18 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-downloader
 Version:        1.1
-Release:        alt1_4jpp7
+Release:        alt1_10jpp8
 # Maven-shared defines maven-downloader version as 1.2
 Epoch:          1
 Summary:        Maven artifact downloader
 License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-osgi
+URL:            http://maven.apache.org/shared/maven-downloader
 # svn export http://svn.apache.org/repos/asf/maven/shared/tags/maven-downloader-1.1 maven-downloader-1.1
 # tar caf maven-downloader-1.1.tar.xz maven-downloader-1.1/
 Source0:        %{name}-%{version}.tar.xz
@@ -59,6 +63,7 @@ cp %{SOURCE1} LICENSE.txt
 %mvn_install
 
 %files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
@@ -66,6 +71,9 @@ cp %{SOURCE1} LICENSE.txt
 
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_10jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_4jpp7
 - new release
 
