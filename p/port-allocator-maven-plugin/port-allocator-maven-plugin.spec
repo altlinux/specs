@@ -1,11 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:		port-allocator-maven-plugin
 Version:	1.2
-Release:	alt3_6jpp7
+Release:	alt3_9jpp8
 Summary:	Port Allocator Maven Plugin
 
 Group:		Development/Java
@@ -22,7 +20,6 @@ Patch0:		%{name}-parent.patch
 
 BuildArch:	noarch
 
-BuildRequires:	jpackage-utils
 BuildRequires:	maven-local
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-enforcer-plugin
@@ -32,19 +29,14 @@ BuildRequires:	maven-surefire-plugin
 BuildRequires:	maven-jar-plugin
 BuildRequires:	maven-javadoc-plugin
 BuildRequires:	sonatype-oss-parent
-
-Requires:	jpackage-utils
-Requires:	maven
-Requires:	sonatype-oss-parent
 Source44: import.info
 
 %description
 Allocate ports to be used during maven build process.
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadocs for %{name}
-Group:		Development/Java
-Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -61,33 +53,22 @@ find -name '*.jar' -exec rm -f '{}' \;
 
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POMs
-install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE-2.0.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_6jpp7
 - new release
 
