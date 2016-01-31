@@ -1,49 +1,21 @@
+Epoch: 0
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
+BuildRequires: jpackage-generic-compat
 Name:           jsch
-Version:        0.1.50
-Release:        alt1_2jpp7
-Epoch:          0
+Version:        0.1.53
+Release:        alt1_3jpp8
 Summary:        Pure Java implementation of SSH2
 Group:          Development/Java
 License:        BSD
 URL:            http://www.jcraft.com/jsch/
+BuildArch:      noarch
+
 Source0:        http://download.sourceforge.net/sourceforge/jsch/jsch-%{version}.zip
 # wget \
 # http://download.eclipse.org/tools/orbit/downloads/drops/R20090825191606/bundles/com.jcraft.jsch_0.1.41.v200903070017.jar
@@ -56,17 +28,13 @@ Source0:        http://download.sourceforge.net/sourceforge/jsch/jsch-%{version}
 # unix2dos MANIFEST.MF
 Source1:        MANIFEST.MF
 Source2:        plugin.properties
-Source3:        http://repo1.maven.org/maven2/com/jcraft/%{name}/%{version}/%{name}-%{version}.pom
 
-BuildRequires:  jpackage-utils >= 0:1.5
 BuildRequires:  jzlib >= 0:1.0.5
-BuildRequires:  ant
+BuildRequires:  maven-local
 BuildRequires:  zip
 
-BuildArch:      noarch
-
 Requires:       jzlib >= 0:1.0.5
-Requires:       jpackage-utils
+Obsoletes: %{name}-demo < %{version}
 Source44: import.info
 
 %description
@@ -75,71 +43,44 @@ X11 forwarding, file transfer, etc., and you can integrate its
 functionality into your own Java programs.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
-%package        demo
-Summary:        Examples for %{name}
-Group:          Development/Java
-
-%description    demo
-%{summary}.
-
-
 %prep
 %setup -q
+%mvn_file : jsch
+
+%pom_xpath_remove pom:project/pom:build/pom:extensions
 
 %build
-export CLASSPATH=$(build-classpath jzlib)
-ant dist javadoc 
+%mvn_build
 
 # inject the OSGi Manifest
 mkdir META-INF
 cp %{SOURCE1} META-INF
 cp %{SOURCE2} plugin.properties
-zip dist/lib/%{name}-*.jar META-INF/MANIFEST.MF
-zip dist/lib/%{name}-*.jar plugin.properties
+touch META-INF/MANIFEST.MF
+touch plugin.properties
+zip target/%{name}-%{version}.jar META-INF/MANIFEST.MF
+zip target/%{name}-%{version}.jar plugin.properties
 
 %install
-# jars
-install -Dpm 644 dist/lib/%{name}-*.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# javadoc
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# examples
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-cp -pr examples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
-
-# POM and depmap
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-
-%files
-%{_javadir}/*.jar
-%doc LICENSE.txt
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc %{_javadocdir}/%{name}*
+%files -f .mfiles
 %doc LICENSE.txt
 
-%files demo
-%doc %{_datadir}/%{name}*
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.1.53-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.1.50-alt1_2jpp7
 - new release
 

@@ -1,15 +1,19 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jzlib
-Version:        1.1.2
-Release:        alt1_2jpp7
+Version:        1.1.3
+Release:        alt1_3jpp8
 Epoch:          0
 Summary:        Re-implementation of zlib in pure Java
 License:        BSD
 URL:            http://www.jcraft.com/jzlib/
 BuildArch:      noarch
 Source0:        https://github.com/ymnk/jzlib/archive/%{version}.tar.gz
+
+# This patch is sent upstream: https://github.com/ymnk/jzlib/pull/15
+Patch0:         jzlib-javadoc-fixes.patch
 
 BuildRequires:  maven-local
 Source44: import.info
@@ -39,6 +43,8 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %prep
 %setup -q
+%patch0
+
 %mvn_file : %{name}
 
 %build
@@ -61,6 +67,9 @@ cp -pr example/* %{buildroot}%{_datadir}/%{name}
 %doc %{_datadir}/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_2jpp7
 - new release
 
