@@ -1,11 +1,12 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 
 %global group_id  org.codehaus.mojo
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt5_12jpp7
+Release:          alt5_17jpp8
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Java
@@ -20,7 +21,6 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit4
 
 Requires:         jpackage-utils
 Requires:         maven
@@ -49,6 +49,9 @@ This package contains the API documentation for %{name}.
 mv LICENSE.txt LICENSE-MIT
 cp %{SOURCE1} LICENSE-ASL
 
+# junit dependency was removed in Plexus 1.6
+%pom_add_dep junit:junit::test
+
 %build
 %mvn_build
 
@@ -62,6 +65,9 @@ cp %{SOURCE1} LICENSE-ASL
 %doc LICENSE-MIT LICENSE-ASL
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_17jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5_12jpp7
 - new release
 
