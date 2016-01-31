@@ -1,27 +1,35 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-docck-plugin
-Version:        1.0
-Release:        alt2_14jpp7
+Version:        1.1
+Release:        alt1_2jpp8
 Summary:        Maven Documentation Checker Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-docck-plugin/
-#svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-docck-plugin-1.0/
-#tar jcf maven-docck-plugin-1.0.tar.bz2 maven-docck-plugin-1.0/
-Source0:        %{name}-%{version}.tar.bz2
-BuildArch: noarch
+BuildArch:      noarch
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+Patch0:         0001-Port-to-maven-plugin-tools-3.4.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-httpclient:commons-httpclient)
-BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-tools-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
-BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-descriptor)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-tools-api)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-tools-beanshell)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
@@ -37,7 +45,8 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q 
+%setup -q
+%patch0 -p1
 
 %build
 %mvn_build
@@ -50,6 +59,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14jpp7
 - new release
 
