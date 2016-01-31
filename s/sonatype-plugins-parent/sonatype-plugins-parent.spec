@@ -1,10 +1,11 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global tag a594629
 
 Name:           sonatype-plugins-parent
 Version:        8
-Release:        alt2_6jpp7
+Release:        alt2_8jpp8
 Summary:        Sonatype Plugins Parent POM
 BuildArch:      noarch
 Group:          Development/Java
@@ -16,6 +17,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildRequires:  maven-local
 BuildRequires:  forge-parent
 Source44: import.info
+Provides: mvn(org.sonatype.plugins:plugins-parent) = 8
 
 %description
 This package provides Sonatype plugins parent POM used by other Sonatype
@@ -37,6 +39,9 @@ cd ./plugins-parent
 %doc LICENSE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt2_8jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt2_6jpp7
 - new release
 
