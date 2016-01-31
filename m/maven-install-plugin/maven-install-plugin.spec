@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-install-plugin
-Version:        2.5
-Release:        alt1_1jpp7
+Version:        2.5.2
+Release:        alt1_3jpp8
 Summary:        Maven Install Plugin
 
 Group:          Development/Java
@@ -15,26 +16,20 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 
 BuildArch:      noarch
 
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: plexus-utils
-BuildRequires: maven-archiver
-BuildRequires: mvn(org.apache.maven:maven-artifact:2.0.6)
-BuildRequires: mvn(org.apache.maven:maven-model:2.0.6)
-BuildRequires: mvn(commons-codec:commons-codec)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-utils)
-
-Requires: maven
-Requires: jpackage-utils
-Requires: maven-archiver
-Requires: plexus-digest
-Requires: mvn(org.apache.maven:maven-artifact:2.0.6)
-Requires: mvn(org.apache.maven:maven-model:2.0.6)
-
-Provides:       maven2-plugin-install = %{version}-%{release}
-Obsoletes:      maven2-plugin-install <= 0:2.0.8
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -58,8 +53,10 @@ API documentation for %{name}.
 # Harness in which scope of maven-core dependency is "compile".
 %pom_add_dep org.apache.maven:maven-core::test
 
+%pom_add_dep org.apache.maven:maven-compat
+
 %build
-%mvn_build -f
+%mvn_build -f -- -DmavenVersion=3.1.1
 
 %install
 %mvn_install
@@ -71,6 +68,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_1jpp7
 - new release
 
