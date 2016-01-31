@@ -1,46 +1,36 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-ear-plugin
-Version:        2.8
-Release:        alt1_5jpp7
+Version:        2.10
+Release:        alt1_2jpp8
 Summary:        Maven EAR Plugin
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-ear-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
-BuildRequires: junit
-BuildRequires: maven-local
-BuildRequires: maven-archiver
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-annotations
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-shared-filtering
-BuildRequires: maven-shared-verifier
-BuildRequires: maven-surefire-plugin
-BuildRequires: plexus-archiver
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-utils
-BuildRequires: xmlunit
-
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       maven-plugin-annotations
-Requires:       plexus-archiver
-Requires:       plexus-containers-container-default
-Requires:       plexus-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.apache.maven.shared:maven-verifier)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(xmlunit:xmlunit)
 
 Obsoletes: maven2-plugin-ear <= 0:2.0.8
 Provides: maven2-plugin-ear = 0:%{version}-%{release}
@@ -50,9 +40,8 @@ Source44: import.info
 Generates a J2EE Enterprise Archive (EAR) file.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -62,37 +51,22 @@ API documentation for %{name}.
 %prep
 %setup -q 
 
-# Was missing
-%pom_add_dep org.codehaus.plexus:plexus-container-default:1.0
-
 %build
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
+%mvn_build -f
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_5jpp7
 - new release
 
