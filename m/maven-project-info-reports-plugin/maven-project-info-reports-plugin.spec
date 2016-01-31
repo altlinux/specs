@@ -1,70 +1,67 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-project-info-reports-plugin
 Version:        2.7
-Release:        alt1_1jpp7
+Release:        alt1_7jpp8
 Summary:        Maven Project Info Reports Plugin
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-project-info-reports-plugin/
+BuildArch:      noarch
+
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch: noarch
 
-BuildRequires: jpackage-utils
-BuildRequires: apache-commons-parent
-BuildRequires: maven-local
-BuildRequires: maven-dependency-tree
-BuildRequires: maven-plugin-annotations
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-shared-reporting-api
-BuildRequires: maven-shared-reporting-impl
-BuildRequires: maven-doxia-tools
-BuildRequires: maven-shared-jar
-BuildRequires: maven-wagon
-BuildRequires: maven-scm
-BuildRequires: maven-doxia-sink-api
-BuildRequires: maven-doxia-logging-api
-BuildRequires: maven-doxia-core
-BuildRequires: maven-doxia-module-xhtml
-BuildRequires: maven-doxia-sitetools
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-component-api
-BuildRequires: plexus-i18n
-BuildRequires: plexus-utils
-BuildRequires: apache-commons-validator
-BuildRequires: httpunit
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: servlet3
-BuildRequires: maven-jarsigner-plugin
-BuildRequires: keytool-maven-plugin
-BuildRequires: joda-time
+Patch0:         0001-Update-to-Doxia-1.6.patch
 
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       plexus-containers-container-default
-Requires:       plexus-component-api
-Requires:       plexus-i18n
-Requires:       plexus-utils
-Requires:       apache-commons-validator
-Requires:       httpunit
-Requires:       servlet3
-Requires:       maven-dependency-tree
-Requires:       maven-doxia-sink-api
-Requires:       maven-doxia-logging-api
-Requires:       maven-doxia-core
-Requires:       maven-doxia-module-xhtml
-Requires:       maven-doxia-sitetools
-Requires:       maven-shared-jar
-Requires:       maven-scm
-Requires:       joda-time
-
-Obsoletes: maven2-plugin-project-info-reports <= 0:2.0.8
-Provides: maven2-plugin-project-info-reports = 0:%{version}-%{release}
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-validator:commons-validator)
+BuildRequires:  mvn(joda-time:joda-time)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-logging-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xhtml)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-jarsigner-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-manager-plexus)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-cvs-commons)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-cvsexe)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-git-commons)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-hg)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-perforce)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-starteam)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-svn-commons)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-svnexe)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.apache.maven.shared:maven-doxia-tools)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-jar)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-file)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-http-lightweight)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-ssh)
+BuildRequires:  mvn(org.codehaus.mojo:keytool-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -73,9 +70,8 @@ that generates standard reports for the specified project.
   
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -84,42 +80,25 @@ API documentation for %{name}.
 
 %prep
 %setup -q -c
-pushd %{name}-%{version}
+mv %{name}-%{version}/* .
+%patch0 -p1
 # removed cvsjava provider since we don't support it anymore
 %pom_remove_dep :maven-scm-provider-cvsjava
-%pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
-popd
 
 %build
-pushd %{name}-%{version}
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        verify javadoc:javadoc
-popd
+%mvn_build -f
 
 %install
-pushd %{name}-%{version}
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%files -f .mfiles
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-popd
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_1jpp7
 - new release
 
