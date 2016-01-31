@@ -1,32 +1,21 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             fusesource-pom
 Version:          1.9
-Release:          alt1_5jpp7
+Release:          alt1_10jpp8
 Summary:          Parent POM for FuseSource Maven projects
-Group:            Development/Java
 License:          ASL 2.0
 URL:              http://fusesource.com/
 Source0:          http://repo1.maven.org/maven2/org/fusesource/fusesource-pom/%{version}/fusesource-pom-%{version}.pom
 Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
-
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-enforcer-plugin
-
-Requires:         maven
-Requires:         jpackage-utils
 Source44: import.info
+Provides: mvn(org.fusesource:fusesource-pom) = 1.9
 
 %description
 This is a shared POM parent for FuseSource Maven projects
@@ -41,22 +30,18 @@ cp -p %{SOURCE1} LICENSE
 %pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-webdav-jackrabbit']]"
 
 %build
-mvn-rpmbuild install
+%mvn_build
 
 %install
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_10jpp8
+- new release
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt1_5jpp7
 - new release
 
