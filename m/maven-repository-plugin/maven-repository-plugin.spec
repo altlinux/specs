@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-repository-plugin
 Version:        2.3.1
-Release:        alt2_10jpp7
+Release:        alt2_13jpp8
 Summary:        Plugin to create bundles of artifacts for manual uploaded to repository
 
 Group:          Development/Java
@@ -69,6 +70,9 @@ API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt2_10jpp7
 - new release
 
