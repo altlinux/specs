@@ -2,17 +2,23 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:		maven-toolchains-plugin
-Version:	1.0
-Release:	alt4_7jpp7
-Summary:	Maven plugin for sharing configuration across projects
-License:	ASL 2.0
-URL:		http://maven.apache.org/plugins/maven-toolchains-plugin/
-Source0:	http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-BuildArch:	noarch
-BuildRequires:	maven-local
+BuildRequires: jpackage-generic-compat
+Name:           maven-toolchains-plugin
+Version:        1.1
+Release:        alt1_3jpp8
+Summary:        Maven plugin for sharing configuration across projects
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-toolchains-plugin
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Patch0:         0001-Port-to-Eclipse-Sisu.patch
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-toolchain)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -23,15 +29,16 @@ allows to control environmental constraints in the build.
 
 %package javadoc
 Group: Development/Java
-Summary:	API documentation for %{name}
-Requires:	jpackage-utils
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-The API documentation of %{name}.
+The API documentation for %{name}.
 
 %prep
 %setup -q
+
+%patch0 -p1
 
 %build
 %mvn_build
@@ -46,6 +53,9 @@ The API documentation of %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3jpp8
+- new version
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_7jpp7
 - new release
 
