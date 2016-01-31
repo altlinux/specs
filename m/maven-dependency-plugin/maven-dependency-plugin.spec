@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-dependency-plugin
-Version:        2.7
-Release:        alt1_1jpp7
+Version:        2.10
+Release:        alt1_2jpp8
 Summary:        Plugin to manipulate, copy and unpack local and remote artifacts
 
 Group:          Development/Java
@@ -20,33 +21,40 @@ Patch1:         %{name}-commons-io.patch
 Patch2:         %{name}-core.patch
 # Removed exception catching as it has already been done
 # (not upstreamable)
-Patch4:         %{name}-removed-exception-catching.patch
+Patch3:         %{name}-removed-exception-catching.patch
 
 BuildArch:      noarch
 
-BuildRequires: plexus-utils
-BuildRequires: ant
-BuildRequires: apache-commons-io
-BuildRequires: maven-local
-BuildRequires: maven-install-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-dependency-tree
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-plugin-annotations
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-shared-dependency-analyzer
-BuildRequires: maven-shared-common-artifact-filters
-BuildRequires: maven-shared-file-management
-BuildRequires: maven-project
-BuildRequires: maven-artifact-manager
-BuildRequires: maven-plugin-testing-tools
-
-Obsoletes: maven2-plugin-dependency <= 0:2.0.8
-Provides: maven2-plugin-dependency = 1:%{version}-%{release}
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-io)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-tools)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-analyzer) >= 1.4
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-repository-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -70,12 +78,7 @@ BuildArch: noarch
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch4 -p1
-
-sed -i \
-    's:org.codehaus.classworlds.ClassRealm:org.codehaus.plexus.classworlds.realm.ClassRealm:' \
-    src/test/java/org/apache/maven/plugin/dependency/its/AbstractDependencyPluginITCase.java
-
+%patch3 -p1
 
 %build
 # Tests fail to compile because they use unsupported legacy API.
@@ -92,6 +95,9 @@ sed -i \
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_2jpp8
+- new version
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_1jpp7
 - new version
 
