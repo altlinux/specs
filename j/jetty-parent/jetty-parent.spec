@@ -1,51 +1,49 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jetty-parent
 Version:        19
-Release:        alt2_8jpp7
+Release:        alt2_13jpp8
 Summary:        Jetty parent POM file
-
-Group:          Development/Java
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
+BuildArch:      noarch
+
 Source0:        http://repo1.maven.org/maven2/org/eclipse/jetty/%{name}/%{version}/%{name}-%{version}.pom
 # rpmlint config file (fedpkg lint will use this)
 Source1:        .rpmlint
 Source2:        http://www.eclipse.org/legal/epl-v10.html
 Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
-BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-
-Requires:       jpackage-utils
+BuildRequires:  maven-release-plugin
 Source44: import.info
+Provides: mvn(org.eclipse.jetty:jetty-parent) = 19
+
 
 %description
 Jetty parent POM file
 
 %prep
 %setup -q -c -T
+cp -p %{SOURCE0} pom.xml
 cp -p %{SOURCE2} %{SOURCE3} .
 
+%build
+%mvn_build
+
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE0} \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom
-
-%files
+%files -f .mfiles
 %doc epl-v10.html LICENSE-2.0.txt
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 19-alt2_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 19-alt2_8jpp7
 - new release
 
