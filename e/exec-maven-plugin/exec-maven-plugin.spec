@@ -1,58 +1,50 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           exec-maven-plugin
-Version:        1.2.1
-Release:        alt4_10jpp7
+Version:        1.4.0
+Release:        alt1_2jpp8
 Summary:        Exec Maven Plugin
 
-Group:          Development/Java
-# Most of the files are under ASL 2.0 license, but there are some files
-# with no license specified. The project contains MIT license text,
-# but there is no file which uses such a license.
-License:        ASL 2.0 and MIT
+License:        ASL 2.0
 URL:            http://mojo.codehaus.org/exec-maven-plugin
-Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plugin/1.2.1/exec-maven-plugin-1.2.1-source-release.zip
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/exec-maven-plugin/%{version}/exec-maven-plugin-%{version}-source-release.zip
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  plexus-utils
-BuildRequires:  maven-shared-plugin-testing-harness
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-plugin-cobertura
-BuildRequires:  mojo-signatures
-BuildRequires:  maven-invoker-plugin
-BuildRequires:  apache-commons-exec
-BuildRequires:  plexus-containers-container-default
+BuildRequires:  mvn(org.apache.commons:commons-exec)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-toolchain)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
 Obsoletes:      maven-plugin-exec < %{version}-%{release}
 Provides:       maven-plugin-exec = %{version}-%{release}
 Source44: import.info
 
 %description
-A plugin to allow execution of system and Java programs
+A plugin to allow execution of system and Java programs.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
-
 
 %prep
 %setup -q -n exec-maven-plugin-%{version}
@@ -60,26 +52,26 @@ API documentation for %{name}.
 sed -i 's/\r$//' LICENSE.txt
 find . -name *.jar -delete
 
-cp -p %{SOURCE1} .
-
-%pom_add_dep org.apache.maven:maven-compat pom.xml
-%pom_remove_plugin :animal-sniffer-maven-plugin pom.xml
+%pom_remove_plugin :animal-sniffer-maven-plugin
 
 %build
-# There are missing dependencies for tests
+# tests are disabled, see: rhbz#1095077
 %mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt LICENSE-2.0.txt
+%doc LICENSE.txt
 %dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt LICENSE-2.0.txt
+%doc LICENSE.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_2jpp8
+- new version
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt4_10jpp7
 - new release
 
