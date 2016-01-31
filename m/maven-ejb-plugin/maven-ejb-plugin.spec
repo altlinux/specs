@@ -3,29 +3,30 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-ejb-plugin
 Version:        2.3
-Release:        alt2_9jpp7
+Release:        alt2_13jpp8
 Summary:        Maven EJB Plugin
 
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-ejb-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildArch: noarch
-
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
-BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
 BuildRequires:  mvn(org.apache.maven:maven-archiver)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
+BuildArch: noarch
 
 Obsoletes: maven2-plugin-ejb <= 0:2.0.8
 Provides: maven2-plugin-ejb = 0:%{version}-%{release}
@@ -63,6 +64,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_9jpp7
 - new release
 
