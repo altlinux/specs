@@ -3,11 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-patch-plugin
-Version:        1.1.1
-Release:        alt2_8jpp7
+Version:        1.2
+Release:        alt1_1jpp8
 Summary:        Maven Patch Plugin
 
 License:        ASL 2.0
@@ -27,7 +28,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-docck-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-gpg-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-install-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
 Source44: import.info
 
 %description
@@ -51,13 +51,16 @@ API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%doc DEPENDENCIES LICENSE NOTICE
+%doc LICENSE NOTICE
 %dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_8jpp7
 - new release
 
