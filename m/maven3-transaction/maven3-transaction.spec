@@ -5,21 +5,21 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt17jpp
+Release: alt18jpp
 
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
-Provides: eclipse-swt = 4.0 i586-eclipse-swt = 4.0
 Provides: eclipse-platform eclipse-rcp
 Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
+#Provides: eclipse-swt = 4.0 i586-eclipse-swt = 4.0
 #Provides: osgi(org.objectweb.asm) = 3.2.0
 #Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
-Requires: activemq
-Requires: apache-commons-math
-Requires: arquillian-osgi
+#Requires: activemq
+#Requires: apache-commons-math
+#Requires: arquillian-osgi
 #Requires: gshell
 #Requires: hibernate3
 #Requires: hibernate-validator
-Requires: infinispan
+#Requires: infinispan
 #Requires: jaxb2-maven-plugin
 #Requires: jbosgi-deployment
 #Requires: jbosgi-framework
@@ -28,17 +28,17 @@ Requires: infinispan
 #Requires: jboss-remoting
 #Requires: jboss-web
 #Requires: jersey
-Requires: jetty
-Requires: maven
+#Requires: jetty
+#Requires: maven
 #Requires: maven-ant-tasks
 #Requires: maven-indexer
-Requires: maven-jflex-plugin
-Requires: maven-site-plugin
-Requires: mojo-signatures
+#Requires: maven-jflex-plugin
+#Requires: maven-site-plugin
+#Requires: mojo-signatures
 #Requires: plexus-container-default
-Requires: springframework
-Requires: tomcat6
-Requires: weld-api
+#Requires: springframework
+#Requires: tomcat6
+#Requires: weld-api
 #Requires: xnio
 
 %description
@@ -55,6 +55,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt18jpp
+- updated dependencies
+
 * Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt17jpp
 - updated dependencies
 
