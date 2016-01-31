@@ -1,12 +1,14 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-dependency-analyzer
-Version:        1.3
-Release:        alt1_7jpp7
+Version:        1.6
+Release:        alt1_2jpp8
 Summary:        Maven dependency analyzer
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-dependency-analyzer/
@@ -14,10 +16,15 @@ Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-shared
-BuildRequires:  httpcomponents-project
-BuildRequires:  maven-doxia-module-xhtml
-BuildRequires:  maven-plugin-testing-tools
+BuildRequires:  mvn(asm:asm)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-tools)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 
 # This is a replacement package for maven-shared-dependency-analyzer
 Provides:       maven-shared-dependency-analyzer = %{version}-%{release}
@@ -55,12 +62,16 @@ BuildArch: noarch
 %mvn_install
 
 %files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2jpp8
+- new version
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_7jpp7
 - new release
 
