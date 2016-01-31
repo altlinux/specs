@@ -1,9 +1,10 @@
 Epoch: 0
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           xmltool
 Version:        3.3
-Release:        alt3_10jpp7
+Release:        alt3_14jpp8
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 Group:          Development/Java
@@ -63,6 +64,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt3_10jpp7
 - new release
 
