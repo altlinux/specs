@@ -1,6 +1,6 @@
 Name: xdrawchem
 Version: 1.9.9
-Release: alt3.qa3
+Release: alt3.qa3.1
 
 Summary: XDrawChem is a two-dimensional molecule drawing program
 Summary(ru_RU.KOI8-R): XDrawChem - программа двумерного рисования молекул
@@ -64,6 +64,9 @@ install -pD -m 644 %SOURCE2 %buildroot/%_niconsdir/xdrawchem.png
 %_niconsdir/xdrawchem.png
 
 %changelog
+* Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 1.9.9-alt3.qa3.1
+- NMU: rebuild with new openbabel
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.9-alt3.qa3
 - Fixed build with glibc 2.16
 
