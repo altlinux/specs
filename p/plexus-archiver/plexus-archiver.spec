@@ -1,24 +1,32 @@
-Name: plexus-archiver
-Version: 3.0.1
-Summary: Plexus Archiver Component
-License: ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-archiver
-Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus-archiver) = 3.0.1.SNAPSHOT
-Provides: mvn(org.codehaus.plexus:plexus-archiver:pom:) = 3.0.1.SNAPSHOT
-Provides: plexus-archiver = 0:3.0.1-0.2.gitdc873a4.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.commons:commons-compress)
-Requires: mvn(org.codehaus.plexus:plexus-io)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: mvn(org.xerial.snappy:snappy-java)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: plexus-archiver-3.0.1-0.2.gitdc873a4.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global commit dc873a4d3eb1ae1e55d661dff8ed85ec3d8eb936
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
+Name:           plexus-archiver
+Version:        3.0.1
+Release:        alt1_0.2.gitdc873a4jpp8
+Epoch:          0
+Summary:        Plexus Archiver Component
+License:        ASL 2.0
+URL:            https://github.com/codehaus-plexus/plexus-archiver
+BuildArch:      noarch
+
+Source0:        https://github.com/codehaus-plexus/plexus-archiver/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
+
+# This prevents "Too many open files" when building Eclipse documentation
+# bundles inside a slow VM/mock environment
+Patch0:         0001-Avoid-using-ParallelScatterZipCreator.patch
+
+BuildRequires:  maven-local
+BuildRequires:  plexus-containers-container-default
+BuildRequires:  plexus-io
+BuildRequires:  plexus-utils
+BuildRequires:  apache-commons-compress
+BuildRequires:  snappy-java
+Source44: import.info
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -28,24 +36,39 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{commit}
+%pom_remove_plugin :maven-shade-plugin
+%mvn_file :%{name} plexus/archiver
+
+%patch0 -p1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_0.2.gitdc873a4jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
