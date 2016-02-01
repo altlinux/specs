@@ -1,7 +1,7 @@
 %define oname	cryptopp
 Name: libcryptopp
-Version: 5.6.2
-Release: alt1.1
+Version: 5.6.3
+Release: alt1
 
 # convert 5.6.2 -> 562 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -14,8 +14,8 @@ Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.cryptopp.com/%oname%orig_version.tar.bz2
-Patch: %oname-5.6.2-autotools.patch
+Source: http://www.cryptopp.com/%oname%orig_version.tar
+Patch: %oname-autotools.patch
 
 Provides: libcrypto++ = %version-%release
 Obsoletes: libcrypto++
@@ -108,9 +108,13 @@ EOF
 
 %files progs
 %_bindir/cryptest
+%_bindir/cryptestcwd
 #%_datadir/cryptopp/
 
 %changelog
+* Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 5.6.3-alt1
+- new version 5.6.3 (with rpmrb script)
+
 * Sat Jul 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.2-alt1.1
 - Rebuilt with gcc5
 
