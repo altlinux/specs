@@ -1,49 +1,66 @@
-Name: maven-source-plugin
-Version: 2.4
-Summary: Plugin creating source JAR
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-source-plugin/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-source-plugin = 2.4-3.fc23
-Provides: mvn(org.apache.maven.plugins:maven-source-plugin) = 2.4
-Provides: mvn(org.apache.maven.plugins:maven-source-plugin:pom:) = 2.4
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven:maven-archiver)
-Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
-Requires: mvn(org.apache.maven:maven-model:2.2.1)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.codehaus.plexus:plexus-archiver)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-source-plugin-2.4-3.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-source-plugin
+Version:        2.4
+Release:        alt1_3jpp8
+Summary:        Plugin creating source JAR
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-source-plugin/
+BuildArch:      noarch
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
 
 %description
-The Maven Source Plugin creates a JAR archive of the
+The Maven Source Plugin creates a JAR archive of the 
 source files of the current project.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q 
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_file : %{name}
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_3jpp8
+- new version
+
 * Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
