@@ -1,69 +1,26 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%global parent plexus
-%global subname digest
-
+BuildRequires: jpackage-generic-compat
 Name:           plexus-digest
 Version:        1.1
-Release:        alt2_14jpp7
+Release:        alt2_19jpp8
 Epoch:          0
 Summary:        Plexus Digest / Hashcode Components
 License:        ASL 2.0
-Group:          Development/Java
-URL:            http://plexus.codehaus.org/plexus-components/plexus-digest/
-Source0:        %{name}-%{version}-src.tar.gz
+URL:            https://github.com/codehaus-plexus/plexus-digest
+BuildArch:      noarch
+
 # svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-digest-1.1/ plexus-digest/
 # tar czf plexus-digest-1.1-src.tar.gz plexus-digest/
+Source0:        %{name}-%{version}-src.tar.gz
 
 Patch0:         %{name}-migration-to-component-metadata.patch
 Patch1:         %{name}-fix-test-dependencies.patch
 Patch2:         0001-Do-not-use-algorithm-name-as-regular-expression.patch
 
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  ant >= 0:1.6
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  qdox >= 1.5
 BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  plexus-cdc
 Source44: import.info
 
 
@@ -76,8 +33,8 @@ velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -90,7 +47,7 @@ Javadoc for %{name}.
 %patch2 -p1
 
 %build
-%mvn_file  : %{parent}/%{subname}
+%mvn_file  : plexus/digest
 %mvn_build
 
 %install
@@ -101,6 +58,9 @@ Javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_19jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_14jpp7
 - new release
 
