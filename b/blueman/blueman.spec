@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: blueman
-Version: 2.0.1
+Version: 2.0.3
 Release: alt1
 
 Summary: The GTK+ bluetooth management utility
@@ -108,6 +108,9 @@ EOF
 %exclude %python3_sitelibdir/_%{name}.la
 
 %changelog
+* Sun Jan 31 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3 (switched back to 2-0-stable)
+
 * Sun Oct 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
