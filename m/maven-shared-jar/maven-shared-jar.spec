@@ -1,13 +1,13 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven-local unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-shared-jar
 Version:        1.1
-Release:        alt1_2jpp7
+Release:        alt1_9jpp8
 # Maven-shared defines maven-shared-jar version as 1.1
 Epoch:          1
 Summary:        Maven JAR Utilities
@@ -17,16 +17,15 @@ Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  maven
-BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  maven-surefire-provider-junit
-Requires:       apache-commons-collections
-Requires:       bcel
-Requires:       jpackage-utils
-Requires:       maven
-Requires:       plexus-digest
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(org.apache.bcel:bcel)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-digest)
+
 
 Obsoletes:      maven-shared-jar < %{epoch}:%{version}-%{release} 
 Provides:       maven-shared-jar = %{epoch}:%{version}-%{release}
@@ -39,9 +38,8 @@ analysis and Maven metadata analysis.
 This is a replacement package for maven-shared-jar
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
     
 %description javadoc
@@ -63,35 +61,22 @@ find -name 'pom.xml' -exec sed \
 
 %build
 # Tests require the jars that were removed
-mvn-rpmbuild package javadoc:aggregate -Dmaven.test.skip
+%mvn_build -f
 
 %install
-# JAR
-install -Ddm 755 %{buildroot}/%{_javadir}
-install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# POM
-install -Ddm 755 %{buildroot}/%{_mavenpomdir}
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# JavaDoc
-install -Ddm 755 %{buildroot}/%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%doc %{_javadocdir}/%{name}
 
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_9jpp8
+- new version
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_2jpp7
 - update
 
