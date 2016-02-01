@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.9.2
-Release: alt4
+Release: alt5
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -82,7 +82,7 @@ Url: http://gcc.gnu.org/
 %def_with libsanitizer
 %endif
 
-%set_compress_method bzip2
+%set_compress_method xz
 %ifarch %arm
 %set_verify_elf_method textrel=relaxed
 %endif
@@ -240,7 +240,7 @@ Requires: libtsan0 %REQ %EVR
 %endif
 %endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
-BuildPreReq: gcc5-c++ coreutils flex makeinfo
+BuildPreReq: gcc-c++ coreutils flex makeinfo
 BuildPreReq: libcloog-isl-devel libelf-devel libmpc-devel libmpfr-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
@@ -1653,7 +1653,7 @@ EOF
 %if_with cxx
 # no valid g++ manpage exists in 4.1+ series.
 rm %buildroot%_man1dir/g++%psuffix.1
-ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
+ln -s gcc%psuffix.1.xz %buildroot%_man1dir/g++%psuffix.1.xz
 
 %ifndef _cross_platform
 mkdir -p %buildroot%gcc_gdb_auto_load
@@ -1675,7 +1675,7 @@ popd
 install -d %buildroot%_altdir
 cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-cpp	%_bindir/%gcc_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%gcc_target_platform-cpp%psuffix
+%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%gcc_target_platform-cpp%psuffix
 EOF
 
 cat >%buildroot%_altdir/%name <<EOF
@@ -1684,21 +1684,21 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%gcc_target_platform-gcc-ar	%_bindir/%gcc_target_platform-gcc-ar%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcc-nm	%_bindir/%gcc_target_platform-gcc-nm%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
 %_bindir/%gcc_target_platform-gcc-ranlib	%_bindir/%gcc_target_platform-gcc-ranlib%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcc.1.xz	%_man1dir/gcc%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
 EOF
 
 %if_with cxx
 cat >%buildroot%_altdir/c++%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-g++	%_bindir/%gcc_target_platform-g++%psuffix	%priority
-%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%gcc_target_platform-g++%psuffix
+%_man1dir/g++.1.xz	%_man1dir/g++%psuffix.1.xz	%_bindir/%gcc_target_platform-g++%psuffix
 EOF
 %endif #with_cxx
 
 %if_with fortran
 cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-gfortran	%_bindir/%gcc_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.bz2	%_man1dir/gfortran%psuffix.1.bz2	%_bindir/%gcc_target_platform-gfortran%psuffix
+%_man1dir/gfortran.1.xz	%_man1dir/gfortran%psuffix.1.xz	%_bindir/%gcc_target_platform-gfortran%psuffix
 EOF
 %endif #with_fortran
 
@@ -1709,7 +1709,7 @@ $(for i in %java_binaries; do
 	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 $(for i in gcj %java_binaries; do
-	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcj%psuffix"
+	echo "%_man1dir/$i.1.xz	%_man1dir/$i%psuffix.1.xz	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 EOF
 %endif #with_java
@@ -1717,7 +1717,7 @@ EOF
 %if_with go
 cat >%buildroot%_altdir/gccgo%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-gccgo	%_bindir/%gcc_target_platform-gccgo%psuffix	%priority
-%_man1dir/gccgo.1.bz2	%_man1dir/gccgo%psuffix.1.bz2	%_bindir/%gcc_target_platform-gccgo%psuffix
+%_man1dir/gccgo.1.xz	%_man1dir/gccgo%psuffix.1.xz	%_bindir/%gcc_target_platform-gccgo%psuffix
 EOF
 %endif #with_go
 
@@ -2328,6 +2328,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Feb 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt5
+- Changed compress_method to xz.
+
 * Fri May 15 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.2-alt4
 - Built in gcc5 compatibility mode.
 - Fixed gcc -dumpversion output.
