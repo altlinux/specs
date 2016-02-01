@@ -1,19 +1,25 @@
-Name: javaewah
-Version: 0.8.4
-Summary: A word-aligned compressed variant of the Java bitset class
-License: ASL 2.0
-Url: http://code.google.com/p/javaewah/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: javaewah = 0.8.4-5.fc23
-Provides: mvn(com.googlecode.javaewah:JavaEWAH) = 0.8.4
-Provides: mvn(com.googlecode.javaewah:JavaEWAH:pom:) = 0.8.4
-Requires: java-headless
-Requires: jpackage-utils
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global commit c6a7fca48eb10572c57e8f644c11633456611d8f
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: javaewah-0.8.4-5.fc23.cpio
+Name:           javaewah
+Version:        0.8.4
+Release:        alt1_5jpp8
+Summary:        A word-aligned compressed variant of the Java bitset class
+
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://code.google.com/p/javaewah/
+Source0:        https://github.com/lemire/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+
+BuildArch:      noarch
+
+BuildRequires: maven-local
+BuildRequires: maven-surefire-provider-junit
+Source44: import.info
+
 
 %description
 JavaEWAH is a word-aligned compressed variant of the Java bitset class.
@@ -26,24 +32,37 @@ scheme we implemented is always more efficient storage-wise than an
 uncompressed bitmap (implemented in Java as the BitSet class). Unlike
 some alternatives, javaewah does not rely on a patented scheme.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -qn %{name}-%{commit}
+
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc CHANGELOG README.md LICENSE-2.0.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-2.0.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_5jpp8
+- new version
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
