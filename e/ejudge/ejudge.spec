@@ -12,7 +12,7 @@
 %add_findreq_skiplist *vg*.in
 
 Name: ejudge
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Summary: Ejudge is a programming contest managment system
@@ -23,7 +23,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: ejudge-3.5.0.tgz
+Source0: ejudge-3.5.1.tgz
 Source1: %name.rc
 Source2: %name.logrotate
 Source4: ejudge-README-ALT.utf8
@@ -68,7 +68,7 @@ Requires: %name = %version-%release
 BuildArch: noarch
 
 %description doc
-User and contest administratoxr manual for ejudge system.
+User and contest administrator manual for ejudge system.
 
 %description doc -l ru_RU.UTF-8
 Документация пользователя и администратора для системы
@@ -80,7 +80,6 @@ User and contest administratoxr manual for ejudge system.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-# %patch4 -p1
 cp  %SOURCE4 %SOURCE5 %SOURCE6 .
 sed -i "s/,-rpath,/,/" configure
 
@@ -158,6 +157,9 @@ install -p -m644 -D %SOURCE8 %buildroot%{_tmpfilesdir}/%name.conf
 %doc ejudge-*.pdf
 
 %changelog
+* Sun Jan 31 2016 Denis Kirienko <dk@altlinux.org> 3.5.1-alt1
+- Version 3.5.1
+
 * Thu Jan 07 2016 Denis Kirienko <dk@altlinux.org> 3.5.0-alt1
 - Version 3.5.0
 - kumir2 compilation script fix (Closes: 31658)
