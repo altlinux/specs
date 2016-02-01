@@ -1,10 +1,11 @@
 Group: Development/Java
 BuildRequires: maven-enforcer-plugin
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           cargo-parent
 Version:        4.13
-Release:        alt1_3jpp7
+Release:        alt1_7jpp8
 Summary:        Parent pom file for cargo.codehaus.org project
 License:        ASL 2.0
 URL:            http://cargo.codehaus.org/
@@ -19,9 +20,8 @@ BuildRequires:  maven-local
 BuildRequires:  maven-checkstyle-plugin
 BuildRequires:  maven-release-plugin
 BuildRequires:  codehaus-parent
-
-Requires:       codehaus-parent
 Source44: import.info
+Provides: mvn(org.codehaus.cargo:cargo-parent) = 4.13
 
 %description
 This package contains the cargo parent pom.
@@ -45,6 +45,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 4.13-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.13-alt1_3jpp7
 - new release
 
