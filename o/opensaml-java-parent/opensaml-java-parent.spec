@@ -1,11 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 22
 Name:             opensaml-java-parent
 Version:          4
-Release:          alt1_4jpp7
+Release:          alt1_9jpp8
 Summary:          OpenSAML Java Parent
 Group:            Development/Java
 License:          ASL 2.0
@@ -24,33 +23,36 @@ BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-clean-plugin
 BuildRequires:    maven-dependency-plugin
 
-Requires:         jpackage-utils
+%if 0%{?fedora} >= 21
+BuildRequires:    jcl-over-slf4j
+BuildRequires:    jul-to-slf4j
+BuildRequires:    log4j-over-slf4j
+%else
+BuildRequires:    slf4j
+%endif
 Source44: import.info
+Provides: mvn(net.shibboleth:parent) = 4
 
 %description
 This package contains the OpenSAML Java Parent
 
 %prep
+cp %{SOURCE0} pom.xml
 cp %{SOURCE1} .
 
 %build
-mvn-rpmbuild -f %{SOURCE0} install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%mvn_install
 
-# POM
-install -pm 644 %{SOURCE0} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 4-alt1_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4-alt1_4jpp7
 - new release
 
