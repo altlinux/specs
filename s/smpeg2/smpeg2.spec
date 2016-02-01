@@ -1,6 +1,6 @@
 Name: smpeg2
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: SDL MPEG Player Library
 License: LGPLv2
@@ -11,13 +11,13 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: %name-%version.tar
 
-Requires: lib%name = %version-%release
-
 Conflicts: smpeg-player
 
 BuildRequires: chrpath
 BuildRequires: gcc-c++
-BuildRequires: libSDL2-devel >= 2.0.0
+BuildRequires: libSDL2-devel
+
+Requires: lib%name = %EVR
 
 %description
 SMPEG is a free MPEG1 video player library with sound support.  Video playback
@@ -36,7 +36,6 @@ linked with %name.
 %package -n lib%name-devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
-Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 This package contains the headers that programmers will need to develop
@@ -59,7 +58,7 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %files
 %doc BUGS CHANGES COPYING README README.SDL_mixer TODO
 %_bindir/plaympeg
-%_man1dir/plaympeg.1.gz
+%_man1dir/plaympeg.1.*
 
 %files -n lib%name
 %_libdir/lib%name-2.0.so.*
@@ -72,6 +71,12 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.0.0.0
 %_aclocaldir/%name.m4
 
 %changelog
+* Mon Feb 01 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt3
+- Fix man file
+
+* Wed Feb 05 2014 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt0.M70T.1
+- Build for branch t7
+
 * Fri Nov 01 2013 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
 - Add conflicts on smpeg-player
 - Add requires for lib%name-devel on lib%name
