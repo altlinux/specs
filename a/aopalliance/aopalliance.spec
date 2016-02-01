@@ -1,21 +1,28 @@
-Name: aopalliance
-Version: 1.0
-Summary: Java/J2EE AOP standards
-License: Public Domain
-Url: http://aopalliance.sourceforge.net/
-Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: aopalliance = 0:1.0-11.fc23
-Provides: mvn(aopalliance:aopalliance) = 1.0
-Provides: mvn(aopalliance:aopalliance:pom:) = 1.0
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt4jpp
-Source: aopalliance-1.0-11.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           aopalliance
+Version:        1.0
+Release:        alt5_11jpp8
+Epoch:          0
+Summary:        Java/J2EE AOP standards
+License:        Public Domain
+URL:            http://aopalliance.sourceforge.net/
+BuildArch:      noarch
+# cvs -d:pserver:anonymous@aopalliance.cvs.sourceforge.net:/cvsroot/aopalliance login
+# password empty
+# cvs -z3 -d:pserver:anonymous@aopalliance.cvs.sourceforge.net:/cvsroot/aopalliance export -r HEAD aopalliance
+Source0:        aopalliance-src.tar.gz
+Source1:        http://repo1.maven.org/maven2/aopalliance/aopalliance/1.0/aopalliance-1.0.pom
+Source2:        %{name}-MANIFEST.MF
+
+BuildRequires:  ant
+BuildRequires:  javapackages-local
+Source44: import.info
 
 %description
 Aspect-Oriented Programming (AOP) offers a better solution to many
@@ -26,24 +33,45 @@ environements (e.g. Eclipse).  The AOP Alliance also aims to ensure
 interoperability between Java/J2EE AOP implementations to build a
 larger AOP community.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{summary}
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+export CLASSPATH=
+export OPT_JAR_LIST=:
+%{ant} -Dbuild.sysclasspath=only jar javadoc
+
+# Inject OSGi manifest required by Eclipse.
+jar umf %{SOURCE2} build/%{name}.jar
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+install -d -m 755 %{buildroot}%{_javadir}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 build/%{name}.jar %{buildroot}%{_javadir}/
+install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
 
+# javadoc
+install -dm 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
-%files -f %name-list
+%files -f .mfiles
+
+%files javadoc
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_11jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
