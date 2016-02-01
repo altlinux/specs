@@ -1,46 +1,40 @@
-Name: buildnumber-maven-plugin
-Version: 1.3
-Summary: Build Number Maven Plugin
-License: MIT and ASL 2.0
-Url: http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.3
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: buildnumber-maven-plugin = 1.3-4.fc23
-Provides: mvn(org.codehaus.mojo:buildnumber-maven-plugin) = 1.3
-Provides: mvn(org.codehaus.mojo:buildnumber-maven-plugin:pom:) = 1.3
-Requires: java-headless
-Requires: java-headless
-Requires: jna
-Requires: jpackage-utils
-Requires: jpackage-utils
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           buildnumber-maven-plugin
+Version:        1.3
+Release:        alt1_4jpp8
+Summary:        Build Number Maven Plugin
+
+Group:          Development/Java
+License:        MIT and ASL 2.0
+URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-%{version}
+
+Source0:        http://central.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildArch: 	noarch
+
+# Basic stuff
+BuildRequires: jpackage-utils
+
+# Maven and its dependencies
+BuildRequires: maven-local
+BuildRequires: jna
+BuildRequires: maven-scm
+
 Requires: maven
 Requires: maven-project
 Requires: maven-scm
+Requires: jna
+Requires: jpackage-utils
 Requires: mojo-parent
-Requires: mvn(net.java.dev.jna:jna)
-Requires: mvn(org.apache.maven.scm:maven-scm-api)
-Requires: mvn(org.apache.maven.scm:maven-scm-manager-plexus)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-bazaar)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-clearcase)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-cvsexe)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-hg)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-perforce)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-starteam)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-svn-commons)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-svnexe)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.apache.maven:maven-settings:2.0.6)
-Requires: mvn(org.codehaus.plexus:plexus-container-default)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
 Requires: plexus-containers-container-default
 Requires: plexus-utils
-
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: buildnumber-maven-plugin-1.3-4.fc23.cpio
+Source44: import.info
 
 %description
 This mojo is designed to get a unique build number for each time you build
@@ -60,24 +54,44 @@ Optionally, you can configure this mojo to produce a revision based on a
 timestamp, or on a sequence, without requiring any interaction with an
 SCM system. Note that currently, the only supported SCM is subversion.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+Requires:       jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+cp -p %{SOURCE1} .
+
+%pom_remove_dep com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava
+%pom_remove_dep org.tmatesoft.svnkit:svnkit
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-invoker-plugin
+
+# junit dependency was removed in Plexus 1.6
+%pom_add_dep junit:junit::test
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt LICENSE-2.0.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_4jpp8
+- new version
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
