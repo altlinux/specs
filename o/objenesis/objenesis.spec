@@ -1,10 +1,8 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -37,45 +35,20 @@ BuildRequires: jpackage-compat
 
 Summary:        A library for instantiating Java objects
 Name:           objenesis
-Version:        1.2
-Release:        alt2_13jpp7
-Group:          Development/Java
+Version:        2.1
+Release:        alt1_2jpp8
 License:        ASL 2.0
-URL:            http://objenesis.googlecode.com/svn/docs/index.html
-# svn export http://objenesis.googlecode.com/svn/tags/1_2/ objenesis-1.2
-# tar cfJ objenesis-1.2.tar.xz objenesis-1.2
-Source0:        %{name}-%{version}.tar.xz
+URL:            http://objenesis.org/
+Source0:        https://github.com/easymock/%{name}/archive/%{version}.tar.gz
 
-# Skipping website (requires xsite), this patch is unused atm
-#Patch0:         objenesis-website-pom.patch
-
-# Remove deps for test scope (unavailable); fix
-# maven-license-plugin groupID to latest version available.
-Patch1:         001-objenesis-fix-build.patch
-Patch2:         JRockitInstantntiatorCharacters.patch
-
-BuildRequires:  jpackage-utils
-BuildRequires:  junit
 BuildRequires:  maven-local
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-remote-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-license-plugin
-BuildRequires:  maven-timestamp-plugin
-BuildRequires:  xpp3-minimal
-BuildRequires:  asm2
-BuildRequires: apache-resource-bundles apache-jar-resource-bundle
-
-Requires:       jpackage-utils
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-ssh-external)
 
 BuildArch:      noarch
 Source44: import.info
@@ -95,16 +68,15 @@ the constructor is a fairly specialized task, however there are certain cases
 when this is useful:
 * Serialization, Remoting and Persistence - Objects need to be instantiated 
   and restored to a specific state, without invoking code.
-* Proxies, AOP Libraries and Mock Objects - Classes can be subclassed without 
+* Proxies, AOP Libraries and Mock Objects - Classes can be sub-classed without 
   needing to worry about the super() constructor.
 * Container Frameworks - Objects can be dynamically instantiated in 
   non-standard ways.
 
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch:      noarch
 
 %description javadoc
@@ -122,17 +94,17 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q 
-#%%patch0 -b .sav0
-%patch1 -p1
-%patch2 -p2
 
+# Enable generation of pom.properties (rhbz#1017850)
+%pom_xpath_remove pom:addMavenDescriptor
+
+%pom_remove_plugin :maven-timestamp-plugin
+%pom_remove_plugin :maven-license-plugin
+%pom_xpath_remove "pom:dependency[pom:scope='test']" tck
 
 %build
 # tests are skipped because of missing dependency spring-osgi-test
-mvn-rpmbuild -e \
-          -Dyear=2009 \
-          -Dmaven.test.skip=true \
-          install javadoc:javadoc
+%mvn_build -- -Dyear=2009 -Dmaven.test.skip=true
 
 # Below is for manual (requires xsite), skipped
 #pushd website
@@ -145,37 +117,20 @@ mvn-rpmbuild -e \
 
 
 %install
-# jars
-install -Dp -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}-parent.pom
-
-install -Dp -m 644 main/target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -Dp -m 644 main/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-install -Dp -m 644 tck/target/%{name}-tck-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-tck.jar
-install -Dp -m 644 tck/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-tck.pom
-%add_maven_depmap JPP-%{name}-tck.pom %{name}-tck.jar
-
-# javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}/main
-cp -pr main/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/main
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}/tck
-cp -pr tck/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/tck
+%mvn_install
 
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_javadir}/*.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_2jpp8
+- new version
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_13jpp7
 - rebuild with new apache-resource-bundles
 
