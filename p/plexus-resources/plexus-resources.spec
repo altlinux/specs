@@ -1,22 +1,28 @@
-Name: plexus-resources
-Version: 1.0
-Summary: Plexus Resource Manager
-License: MIT
-Url: https://github.com/codehaus-plexus/plexus-resources
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus-resources) = 1.0.alpha.7
-Provides: mvn(org.codehaus.plexus:plexus-resources:pom:) = 1.0.alpha.7
-Provides: plexus-resources = 1.0-0.19.a7.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.plexus:plexus-container-default)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt6jpp
-Source: plexus-resources-1.0-0.19.a7.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global namedversion 1.0-alpha-7
+
+Name:           plexus-resources
+Version:        1.0
+Release:        alt7_0.19.a7jpp8
+Summary:        Plexus Resource Manager
+License:        MIT
+URL:            https://github.com/codehaus-plexus/plexus-resources
+BuildArch:      noarch
+
+# svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-resources-1.0-alpha-7/
+# tar caf plexus-resources-1.0-alpha-7-src.tar.xz plexus-resources-1.0-alpha-7
+Source0:        %{name}-%{version}-alpha-7-src.tar.xz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
+Source45: plexus-resources-1.0-components.xml
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -26,24 +32,36 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{namedversion}
+
+mkdir -p target/classes/META-INF/plexus
+cp -p %{SOURCE45} target/classes/META-INF/plexus/components.xml
+
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_file  : plexus/resources
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.19.a7jpp8
+- new version
+
 * Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
