@@ -1,46 +1,23 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat jsoup
-%global project_version 1.0-alpha-2
+BuildRequires: jpackage-generic-compat
 Name:           maven-stage-plugin
 Version:        1.0
-Release:        alt3_0.9.alpha2jpp7
+Release:        alt3_1jpp8
 Summary:        Plugin to copy artifacts from one repository to another
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-stage-plugin/
-# svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-stage-plugin-1.0-alpha-2/
-# tar jcf maven-stage-plugin-1.0-alpha-2.tar.bz2 maven-stage-plugin-1.0-alpha-2/
-Source0:        %{name}-%{project_version}.tar.bz2
-
-# Migrating from plexus-maven-plugin to plexus-containers-component-metadata
-Patch0:         %{name}-plexus-maven-plugin.patch
+Source0:        http://archive.apache.org/dist/maven/plugins/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
 
-BuildRequires: plexus-containers-component-metadata
-BuildRequires: ant
-BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: plexus-utils
-Requires: ant
-Requires: maven
-Requires: jpackage-utils
-
-Obsoletes: maven2-plugin-stage <= 0:2.0.8
-Provides: maven2-plugin-stage = 1:%{version}-%{release}
+BuildRequires: maven-wagon-ssh
 Source44: import.info
 
 %description
@@ -49,46 +26,32 @@ Its main use is for copying artifacts from a staging repository to
 the real repository.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
-
 %prep
-%setup -q -n %{name}-%{project_version}
-%patch0 -p1
+%setup -q
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{project_version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%files -f .mfiles
+%doc LICENSE NOTICE DEPENDENCIES
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_1jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.9.alpha2jpp7
 - new release
 
