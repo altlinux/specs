@@ -1,42 +1,42 @@
-Name: objectweb-pom
-Version: 1.5
-Summary: Objectweb POM
-License: ASL 2.0
-Url: http://gitorious.ow2.org/ow2/pom/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.ow2:ow2:pom:) = 1.5
-Provides: objectweb-pom = 1.5-3.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: objectweb-pom-1.5-3.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           objectweb-pom
+Version:        1.5
+Release:        alt1_3jpp8
+Summary:        Objectweb POM
+BuildArch:      noarch
+License:        ASL 2.0
+URL:            http://gitorious.ow2.org/ow2/pom/
+Source0:        http://repo.maven.apache.org/maven2/org/ow2/ow2/%{version}/ow2-%{version}.pom
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+Source44: import.info
 
 %description
 This package provides Objectweb parent POM used by different
 Objectweb packages.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+cp -p %{SOURCE0} pom.xml
+cp -p %{SOURCE1} LICENSE
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_3jpp8
+- new version
+
 * Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
