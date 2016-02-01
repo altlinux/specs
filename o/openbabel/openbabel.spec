@@ -1,6 +1,6 @@
 Name: openbabel
 Version: 2.3.2
-Release: alt1
+Release: alt2
 
 Summary: Chemistry software file format converter
 License: GPL
@@ -9,6 +9,8 @@ Group: Sciences/Chemistry
 Url: http://openbabel.sourceforge.net
 Source0: http://dl.sf.net/%name/%name-%version.tar.gz
 Source1: %name.watch
+Patch1: alt-gcc5.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
@@ -76,6 +78,7 @@ Python bindings for Open Babel.
 
 %prep
 %setup
+%patch1 -p1
 echo PYTHON_BINDINGS:BOOL=ON >CMakeCache.txt
 
 %build
@@ -129,6 +132,9 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 # - BR: eigen3 (FTBFS as of 20140413)
 
 %changelog
+* Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.2-alt2
+- fix to build with gcc5
+
 * Sun Apr 13 2014 Michael Shigorin <mike@altlinux.org> 2.3.2-alt1
 - added watch file
 - new version (watch file uupdate)
