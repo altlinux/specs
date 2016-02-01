@@ -1,3 +1,4 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
@@ -5,57 +6,23 @@ Obsoletes: jakarta-regexp = 1.4-alt1
 Obsoletes: jakarta-regexp = 1.4-alt2
 Obsoletes: jakarta-regexp = 1.4-alt3
 Obsoletes: jakarta-regexp = 1.4-alt4
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name regexp
-%define version 1.5
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%global full_name       jakarta-%{name}
-
+BuildRequires: jpackage-generic-compat
 Name:           regexp
+Epoch:          1
 Version:        1.5
-Release:        alt1_13jpp7
-Epoch:          0
+Release:        alt1_20jpp8
 Summary:        Simple regular expressions API
 License:        ASL 2.0
-Group:          Development/Java
-Url:            http://jakarta.apache.org/%{name}/
-Source0:        http://www.apache.org/dist/jakarta/regexp/jakarta-regexp-%{version}.tar.gz
-Source1:        http://repo.maven.apache.org/maven2/%{full_name}/%{full_name}/1.4/%{full_name}-1.4.pom
-BuildRequires:  jpackage-utils >= 0:1.6
-
-BuildRequires:  ant >= 1.6
+URL:            http://jakarta.apache.org/%{name}/
 BuildArch:      noarch
+
+Source0:        http://archive.apache.org/dist/jakarta/%{name}/jakarta-%{name}-%{version}.tar.gz
+
+BuildRequires:  ant
+BuildRequires:  javapackages-local
+
 Source44: import.info
 Provides: jakarta-regexp = %{version}-%{release}
 
@@ -68,7 +35,7 @@ It includes complete Javadoc documentation as well as a simple Applet
 for visual debugging and testing suite for compatibility.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -76,14 +43,13 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q -n %{full_name}-%{version}
+%setup -q -n jakarta-%{name}-%{version}
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
 mkdir lib
-ant -Djakarta-site2.dir=. jar javadocs
-
+%ant -Djakarta-site2.dir=. jar javadocs
 
 %install
 # jars
@@ -91,29 +57,25 @@ install -d -m 755 %{buildroot}%{_javadir}
 install -m 644 build/*.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-cp -r docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a regexp:regexp
+%add_maven_depmap jakarta-%{name}:jakarta-%{name}:%{version} -a %{name}:%{name} %{name}.jar
 
 %check
-ant -Djakarta-site2.dir=. test
+%ant -Djakarta-site2.dir=. test
 
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_20jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_13jpp7
 - new release
 
