@@ -1,58 +1,82 @@
-Name: maven-assembly-plugin
-Version: 2.5.5
-Summary: Maven Assembly Plugin
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-assembly-plugin/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-assembly-plugin = 2.5.5-3.fc23
-Provides: mvn(org.apache.maven.plugins:maven-assembly-plugin) = 2.5.5
-Provides: mvn(org.apache.maven.plugins:maven-assembly-plugin:pom:) = 2.5.5
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-io:commons-io)
-Requires: mvn(org.apache.maven.shared:file-management)
-Requires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
-Requires: mvn(org.apache.maven.shared:maven-filtering)
-Requires: mvn(org.apache.maven.shared:maven-repository-builder)
-Requires: mvn(org.apache.maven.shared:maven-shared-io)
-Requires: mvn(org.apache.maven:maven-archiver)
-Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-model:2.2.1)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.codehaus.plexus:plexus-archiver)
-Requires: mvn(org.codehaus.plexus:plexus-interpolation)
-Requires: mvn(org.codehaus.plexus:plexus-io)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-assembly-plugin-2.5.5-3.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-assembly-plugin
+Version:        2.5.5
+Release:        alt1_3jpp8
+Summary:        Maven Assembly Plugin
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-assembly-plugin/
+BuildArch:      noarch
+
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+Patch0:         0001-Port-to-current-plexus-archiver.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.apache.maven.shared:maven-repository-builder)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-io)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation) >= 1.22
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
 
 %description
 A Maven plugin to create archives of your project's sources, classes,
 dependencies etc. from flexible assembly descriptors.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package provides %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+%patch0 -p1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Tests need easymockclassextension version 2.x, which is incompatible
+# with easymockclassextension version 3.x we have in Fedora.
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt1_3jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.5-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
