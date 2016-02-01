@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          tiger-types
 Version:       1.4
-Release:       alt1_3jpp7
+Release:       alt1_8jpp8
 Summary:       Type arithmetic library for Java5
 License:       CDDL or GPLv2 with exceptions
 Url:           http://java.net/projects/tiger-types
@@ -14,15 +15,10 @@ Source0:       %{name}-%{version}-src-svn.tar.gz
 # tiger-types package don't include the license file
 Source1:       glassfish-LICENSE.txt
 
-BuildRequires: jvnet-parent
-
-BuildRequires: junit
-
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-surefire-provider-junit4
-
-Requires:      jvnet-parent
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -89,6 +85,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_8jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3jpp7
 - new release
 
