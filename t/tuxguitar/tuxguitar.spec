@@ -1,6 +1,6 @@
 Name: tuxguitar
 Version: 1.2
-Release: alt3.1
+Release: alt3.3
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL
@@ -21,7 +21,7 @@ Patch: %name-plugin-properties.patch
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Automatically added by buildreq on Thu Jan 06 2011
-BuildRequires: ant-antlr ant-bcel ant-commons-logging ant-commons-net ant-jai ant-jakarta-oro ant-jakarta-regexp ant-javamail ant-jdepend ant-jmf ant-jsch ant-junit ant-log4j ant-nodeps ant-stylebook ant-swing ant-trax ant-xml-resolver checkstyle eclipse-swt itext jtidy libfluidsynth-devel libgcj-devel tzdata
+BuildRequires: ant ant-junit ant-nodeps checkstyle eclipse-swt itext jtidy libfluidsynth-devel libgcj-devel tzdata
 
 BuildRequires: rpm-build-java
 #BuildRequires: xml-commons-apis
@@ -163,6 +163,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*.png
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3.3
+- NMU: corrected java dependencies
+
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3.2
+- NMU: corrected java dependencies
+
 * Thu Jul 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3.1
 - NMU: corrected java dependencies
 
