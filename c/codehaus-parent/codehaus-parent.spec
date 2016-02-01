@@ -1,42 +1,48 @@
-Name: codehaus-parent
-Version: 4
-Summary: Parent pom file for codehaus projects
-License: ASL 2.0
-Url: http://codehaus.org/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: codehaus-parent = 4-9.fc23
-Provides: mvn(org.codehaus:codehaus-parent:pom:) = 4
-Provides: mvn(org.codehaus:codehaus-parent) = 4
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
-Source: codehaus-parent-4-9.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           codehaus-parent
+Version:        4
+Release:        alt4_9jpp8
+Summary:        Parent pom file for codehaus projects
+License:        ASL 2.0
+URL:            http://codehaus.org/
+BuildArch:      noarch
+
+#Next version with license is at https://github.com/sonatype/codehaus-parent/blob/master/pom.xml
+Source0:        http://repo1.maven.org/maven2/org/codehaus/codehaus-parent/%{version}/codehaus-parent-%{version}.pom
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+Patch0:         %{name}-enforcer.patch
+
+BuildRequires:  maven-local
+Source44: import.info
+Provides: mvn(org.codehaus:codehaus-parent) = 4
 
 %description
 This package contains the parent pom file for codehaus projects.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -c -T
+cp -p %{SOURCE0} pom.xml
+cp -p %{SOURCE1} LICENSE
+%patch0
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:4-alt4_9jpp8
+- new version
+
 * Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 0:4-alt3jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
