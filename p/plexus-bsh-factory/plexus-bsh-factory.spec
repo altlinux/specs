@@ -1,12 +1,13 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %define parent plexus
 %define subname bsh-factory
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.13.a7jpp7
+Release:        alt5_0.15.a7jpp8
 Epoch:          0
 Summary:        Plexus Bsh component factory
 License:        MIT
@@ -60,6 +61,9 @@ cp -p %{SOURCE3} .
 %doc plexus-bsh-factory-license.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.15.a7jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.13.a7jpp7
 - new release
 
