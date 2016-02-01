@@ -1,102 +1,151 @@
-Name: maven-scm
-Version: 1.9.4
-Summary: Common API for doing SCM operations
-License: ASL 2.0
-Url: http://maven.apache.org/scm
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-scm = 1.9.4-3.fc23
-Provides: mvn(org.apache.maven.plugins:maven-scm-plugin) = 1.9.4
-Provides: mvn(org.apache.maven.plugins:maven-scm-plugin:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-api) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-api:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-client) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-client:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-manager-plexus) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-manager-plexus:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-managers:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-accurev) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-accurev:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-bazaar) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-bazaar:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-clearcase) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-clearcase:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-cvs-commons) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-cvs-commons:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-cvsexe) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-cvsexe:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-git-commons) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-git-commons:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-gitexe) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-gitexe:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-hg) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-hg:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-jazz) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-jazz:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-jgit) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-jgit:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-local) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-local:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-perforce) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-perforce:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-starteam) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-starteam:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-svn-commons) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-svn-commons:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-svnexe) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-svnexe:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-synergy) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-synergy:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-tfs) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-tfs:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-vss) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-provider-vss:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-providers-cvs:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-providers-git:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-providers-standard:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-providers-svn:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm-providers:pom:) = 1.9.4
-Provides: mvn(org.apache.maven.scm:maven-scm:pom:) = 1.9.4
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-io:commons-io)
-Requires: mvn(commons-lang:commons-lang)
-Requires: mvn(org.apache.maven.shared:file-management)
-Requires: mvn(org.apache.maven:maven-compat)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-settings)
-Requires: mvn(org.codehaus.plexus:plexus-container-default)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: mvn(org.eclipse.jgit:org.eclipse.jgit)
-Requires: mvn(org.sonatype.plexus:plexus-sec-dispatcher)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-scm-1.9.4-3.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# Copyright (c) 2000-2005, JPackage Project
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the
+#    distribution.
+# 3. Neither the name of the JPackage Project nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+Name:           maven-scm
+Version:        1.9.4
+Release:        alt1_3jpp8
+Summary:        Common API for doing SCM operations
+License:        ASL 2.0
+URL:            http://maven.apache.org/scm
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/scm/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+# Patch to migrate to new plexus default container
+# This has been sent upstream: https://issues.apache.org/jira/browse/SCM-731
+Patch6:         0001-port-maven-scm-to-latest-version-of-plexus-default-c.patch
+# Workaround upstream's workaround for a modello bug, see: https://issues.apache.org/jira/browse/SCM-518
+Patch7:         vss-modello-config.patch
+# Compatibility with JGit 4.x, not yet forwarded
+Patch8:         %{name}-jgit-4-compat.patch
+
+BuildArch:      noarch
+
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  maven-local
+BuildRequires:  modello
+BuildRequires:  plexus-utils >= 1.5.6
+BuildRequires:  maven-invoker-plugin
+BuildRequires:  maven-plugin-testing-harness
+BuildRequires:  bzr
+BuildRequires:  subversion
+BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  plexus-containers-container-default
+BuildRequires:  plexus-classworlds
+BuildRequires:  jgit
+Source44: import.info
 
 %description
 Maven SCM supports Maven plugins (e.g. maven-release-plugin) and other
 tools (e.g. Continuum) in providing them a common API for doing SCM operations.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package test
+Group: Development/Java
+Summary:        Tests for %{name}
+Requires:       maven-scm = %{?epoch:%epoch:}%{version}-%{release}
+
+%description test
+Tests for %{name}.
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch6 -p1 -b .orig
+%patch7 -p0 -b .orig
+%patch8 -p1
+
+# Remove unnecessary animal sniffer
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+
+# Remove providers-integrity from build (we don't have mks-api)
+%pom_remove_dep org.apache.maven.scm:maven-scm-provider-integrity maven-scm-providers/maven-scm-providers-standard
+%pom_disable_module maven-scm-provider-integrity maven-scm-providers
+
+# Partially remove cvs support for removal of netbeans-cvsclient
+# It still works with cvsexe provider
+%pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-client
+%pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-standard
+%pom_disable_module maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-cvs
+sed -i s/cvsjava.CvsJava/cvsexe.CvsExe/ maven-scm-client/src/main/resources/META-INF/plexus/components.xml
+
+# Tests are skipped anyways, so remove dependency on mockito.
+%pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-jazz
+%pom_remove_dep org.mockito: maven-scm-providers/maven-scm-provider-accurev
+
+# Accepted upstream: https://issues.apache.org/jira/browse/SCM-786
+%pom_add_dep junit:junit:4.11 maven-scm-test
+
+# Put TCK tests into a separate sub-package
+%mvn_package :%{name}-provider-cvstest test
+%mvn_package :%{name}-provider-gittest test
+%mvn_package :%{name}-provider-svntest test
+%mvn_package :%{name}-test test
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Don't build and unit run tests because
+# * accurev tests need porting to a newer hamcrest
+# * vss tests fail with the version of junit in fedora
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
+%dir %{_javadir}/%{name}
 
-%files -f %name-list
+%files test -f .mfiles-test
+%doc LICENSE NOTICE
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4-alt1_3jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
