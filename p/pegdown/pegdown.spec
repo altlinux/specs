@@ -1,43 +1,124 @@
-Name: pegdown
-Version: 1.4.2
-Summary: Java library for Markdown processing
-License: ASL 2.0
-Url: http://pegdown.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.pegdown:pegdown) = 1.4.2
-Provides: mvn(org.pegdown:pegdown:pom:) = 1.4.2
-Provides: pegdown = 1.4.2-7.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.parboiled:parboiled-java)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: pegdown-1.4.2-7.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:          pegdown
+Version:       1.4.2
+Release:       alt1_7jpp8
+Summary:       Java library for Markdown processing
+License:       ASL 2.0
+URL:           http://pegdown.org
+Source0:       https://github.com/sirthias/pegdown/archive/%{version}.tar.gz
+# Newer release use sbt builder
+Source1:       http://repo1.maven.org/maven2/org/pegdown/pegdown/%{version}/pegdown-%{version}.pom
+# Forwarded upstream: https://github.com/sirthias/pegdown/pull/130
+Patch0:        %{name}-rhbz1096735.patch
+
+BuildRequires: maven-local
+BuildRequires: mvn(org.parboiled:parboiled-java)
+BuildRequires: mvn(net.sf.jtidy:jtidy)
+%if 0
+# test deps
+BuildRequires: mvn(org.specs2:specs2_2.9.3)
+%endif
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 A pure-Java Markdown processor based on a parboiled PEG parser
 supporting a number of extensions.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+find . -name "*.class" -delete
+find . -name "*.jar" -delete
+%patch0 -p1
+
+cp -p %{SOURCE1} pom.xml
+
+%pom_xpath_inject "pom:project" "
+<build>
+  <plugins>
+
+  </plugins>
+</build>"
+
+%pom_xpath_inject "pom:build" "
+<resources>
+  <resource>
+    <directory>.</directory>
+    <targetPath>\${project.build.outputDirectory}/META-INF</targetPath>
+    <includes>
+      <include>LICENSE</include>
+      <include>NOTICE</include>
+    </includes>
+  </resource>
+</resources>"
+
+%pom_add_plugin org.apache.maven.plugins:maven-jar-plugin . "
+<configuration>
+  <archive>
+    <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+    <manifest>
+      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+      <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+    </manifest>
+  </archive>
+</configuration>"
+
+%pom_add_plugin org.apache.felix:maven-bundle-plugin . "
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <Built-By>\${user.name}</Built-By>
+    <Bundle-SymbolicName>org.pegdown</Bundle-SymbolicName>
+    <Bundle-Name>pegdown</Bundle-Name>
+    <Bundle-Vendor>pegdown.org</Bundle-Vendor>
+    <Bundle-Version>\${project.version}</Bundle-Version>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
+
+rm -r src/test/scala/*
+%pom_remove_dep org.specs2:specs2_2.9.3
+
+%mvn_file :%{name} %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc CHANGELOG README.markdown
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_7jpp8
+- new version
+
 * Mon Jan 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
