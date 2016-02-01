@@ -1,47 +1,71 @@
-Name: jsr-305
-Version: 0
-Summary: Correctness annotations for Java code
-License: BSD and CC-BY
-Url: http://jsr-305.googlecode.com/
 Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jsr-305 = 0-0.18.20130910svn.fc23
-Provides: mvn(com.google.code.findbugs:jsr305) = 0.1.SNAPSHOT
-Provides: mvn(com.google.code.findbugs:jsr305:pom:) = 0.1.SNAPSHOT
-Provides: mvn(org.jsr-305:jsr-305:pom:) = 0.1.SNAPSHOT
-Provides: mvn(org.jsr-305:ri) = 0.1.SNAPSHOT
-Provides: mvn(org.jsr-305:ri:pom:) = 0.1.SNAPSHOT
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
-Source: jsr-305-0-0.18.20130910svn.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           jsr-305
+Version:        0
+Release:        alt4_0.18.20130910svnjpp8
+Summary:        Correctness annotations for Java code
+
+# The majority of code is BSD-licensed, but some Java sources
+# are licensed under CC-BY license, see: $ grep -r Creative .
+License:        BSD and CC-BY
+URL:            http://jsr-305.googlecode.com/
+BuildArch:      noarch
+
+# There has been no official release yet.  This is a snapshot of the Subversion
+# repository as of 10 Sep 2013.  Use the following commands to generate the
+# tarball:
+#   svn export -r 51 http://jsr-305.googlecode.com/svn/trunk jsr-305
+#   tar -czvf jsr-305-20130910svn.tgz jsr-305
+Source0:        jsr-305-20130910svn.tgz
+# File containing URL to CC-BY license text
+Source1:        NOTICE-CC-BY.txt
+
+BuildRequires:  maven-local
+Source44: import.info
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc documentation for %{name}
+BuildArch: noarch
 
 %description
 This package contains reference implementations, test cases, and other
 documents for Java Specification Request 305: Annotations for Software Defect
 Detection.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}
+cp %{SOURCE1} NOTICE-CC-BY
+
+%mvn_file :ri %{name}
+%mvn_alias :ri com.google.code.findbugs:jsr305
+%mvn_package ":{proposedAnnotations,tcl}" __noinstall
+
+# do not build sampleUses module - it causes Javadoc generation to fail
+%pom_disable_module sampleUses
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc ri/LICENSE NOTICE-CC-BY sampleUses
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc ri/LICENSE NOTICE-CC-BY
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:0-alt4_0.18.20130910svnjpp8
+- new version
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1:0-alt3jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
