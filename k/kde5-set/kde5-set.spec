@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt22
+Release: alt23
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -58,7 +58,7 @@ Requires: kde5
 Requires: kf5-plasma-workspace-wallpapers
 Requires: kf5-kwrited kf5-plasma-nm-maxi
 Requires: kf5-user-manager
-Requires: kde5-konversation kde5-kate kde5-print-manager
+Requires: kde5-konversation kde5-kate kde5-print-manager kde5-skanlite
 Requires: kde5-pim kde5-baseapps kde5-kcron kde5-kruler
 Requires: kf5-plasma-mediacenter kde5-krfb
 Requires: kid3-ui-kde5
@@ -67,7 +67,8 @@ Requires: kid3-ui-kde5
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-big
-Requires: kde5-konqueror kdenlive
+Requires: kdenlive
+Requires: kde5-konqueror kde5-dragon
 
 %package -n kde5-somedevel
 Summary: %summary
@@ -103,6 +104,9 @@ Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
 %files -n kde5-somedevel
 
 %changelog
+* Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt23
+- update requires
+
 * Fri Jan 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt22
 - update requires
 
