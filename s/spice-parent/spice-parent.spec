@@ -1,61 +1,50 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           spice-parent
-Version:        15
-Release:        alt1_10jpp7
+Version:        26
+Release:        alt1_4jpp8
 Summary:        Sonatype Spice Components
-
-Group:          Development/Java
 License:        ASL 2.0
-URL:            http://svn.sonatype.org/spice/tags/spice-parent-15
-#svn export http://svn.sonatype.org/spice/tags/spice-parent-15 spice-parent-15
-#tar zcf spice-parent-15.tar.gz spice-parent-15/
-Source0:        %{name}-%{version}.tar.gz
+URL:            http://github.com/sonatype/oss-parents
+BuildArch:      noarch
+
+Source0:        http://repo1.maven.org/maven2/org/sonatype/spice/%{name}/%{version}/%{name}-%{version}.pom
 Source1:        http://apache.org/licenses/LICENSE-2.0.txt
+
 Patch0:         pom.patch
 
-BuildArch: noarch
-
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  forge-parent
-
-Requires:          jpackage-utils
-Requires:          forge-parent
 Source44: import.info
+Provides: mvn(org.sonatype.spice:spice-parent) = 26
 
 %description
 Spice components and libraries are common components
 used throughout the Sonatype Forge.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -qcT
+cp -p %{SOURCE0} pom.xml
+cp -p %{SOURCE1} .
+
 #Remove plexus-javadoc
 %patch0
-cp %{SOURCE1} .
 
 %build
-#nothing to do for the pom
+%mvn_build
 
 %install
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom
-
-%check
-mvn-rpmbuild verify
+%mvn_install
 
 %files -f .mfiles
 %doc LICENSE-2.0.txt
 
-
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 26-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 15-alt1_10jpp7
 - new release
 
