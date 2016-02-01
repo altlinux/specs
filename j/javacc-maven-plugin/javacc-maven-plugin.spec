@@ -1,51 +1,69 @@
-Name: javacc-maven-plugin
-Version: 2.6
-Summary: JavaCC Maven Plugin
-License: ASL 2.0
-Url: http://mojo.codehaus.org/javacc-maven-plugin/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: javacc-maven-plugin = 2.6-20.fc23
-Provides: mvn(org.codehaus.mojo:javacc-maven-plugin) = 2.6
-Provides: mvn(org.codehaus.mojo:javacc-maven-plugin:pom:) = 2.6
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(net.java.dev.javacc:javacc)
-Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
-Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
-Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
-Requires: mvn(org.apache.maven.reporting:maven-reporting-impl)
-Requires: mvn(org.apache.maven:maven-model)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt4jpp
-Source: javacc-maven-plugin-2.6-20.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           javacc-maven-plugin
+Version:        2.6
+Release:        alt5_20jpp8
+Summary:        JavaCC Maven Plugin
+License:        ASL 2.0
+URL:            http://mojo.codehaus.org/javacc-maven-plugin/
+BuildArch:      noarch
+
+#svn export http://svn.codehaus.org/mojo/tags/javacc-maven-plugin-2.6
+#tar cjf javacc-maven-plugin-2.6.tar.bz2 javacc-maven-plugin-2.6
+Source0:        javacc-maven-plugin-2.6.tar.bz2
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+Patch0:         javacc-maven-plugin-pom.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.java.dev.javacc:javacc)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
 
 %description
 Maven Plugin for processing JavaCC grammar files.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q 
+%patch0 -b .sav
+cp -p %{SOURCE1} .
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE-2.0.txt src/main/resources/NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_20jpp8
+- new version
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt4jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
