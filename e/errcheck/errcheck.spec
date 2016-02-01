@@ -1,5 +1,5 @@
-%global import_path github.com/golang/lint
-%global commit 32a87160691b3c96046c0c678fe57c5bef761456
+%global import_path github.com/kisielk/errcheck
+%global commit 1cd10f9f7824cdbedd5175a6cea0da9763bbeece
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -9,27 +9,27 @@
 %add_debuginfo_skiplist %go_root %_bindir
 %brp_strip_none %_bindir/* %go_tooldir/*
 
-Name:		golang-lint
+Name:		errcheck
 Version:	0
 Release:	alt2.git%abbrev
-Summary:	Linter for Go source code
+Summary:	Error checker for Go programs
 
 Group:		Development/Other
 License:	BSD
-URL:		https://github.com/golang/lint
+URL:		https://github.com/kisielk/errcheck
 
 Packager:	Alexey Gladkov <legion@altlinux.ru>
 
-Source0:	golang-lint-%version.tar
+Source0:	%name-%version.tar
 
-ExclusiveArch:	%go_arches
-AutoReq:	nocpp
+ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-build-golang
 
-BuildRequires:	golang
-BuildRequires:	golang(golang.org/x/tools/go/gcimporter)
-BuildRequires:	golang(golang.org/x/tools/go/types)
+BuildRequires: golang
+BuildRequires: golang(github.com/kisielk/gotool)
+BuildRequires: golang(golang.org/x/tools/go/loader)
+
 
 %description
 %{summary}
@@ -40,11 +40,11 @@ BuildRequires:	golang(golang.org/x/tools/go/types)
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
+export GOPATH="%go_path:$BUILDDIR"
 
 %golang_prepare
 
-cd .build/src/%import_path/golint
+cd .build/src/%import_path
 %golang_build .
 
 %install
@@ -57,9 +57,8 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
-* Fri Jan 22 2016 Alexey Gladkov <legion@altlinux.ru> 0-alt2.git32a87160
-- New snapshot.
-- Use rpm-build-golang.
+* Fri Jan 22 2016 Alexey Gladkov <legion@altlinux.ru> 0-alt2.git1cd10f9f
+- New shapshot.
 
-* Mon Jul 06 2015 Alexey Gladkov <legion@altlinux.ru> 0-alt1.git7b7f4364
+* Thu Nov 19 2015 Alexey Gladkov <legion@altlinux.ru> 0-alt1.git12fd1ab9
 - First build for ALTLinux.
