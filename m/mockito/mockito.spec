@@ -1,40 +1,29 @@
+Name: mockito
+Version: 1.10.19
+Summary: A Java mocking framework
+License: MIT
+Url: http://mockito.org
 Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mockito = 1.10.19-4.fc23
+Provides: mvn(org.mockito:mockito-all) = 1.10.19
+Provides: mvn(org.mockito:mockito-all:pom:) = 1.10.19
+Provides: mvn(org.mockito:mockito-core) = 1.10.19
+Provides: mvn(org.mockito:mockito-core:pom:) = 1.10.19
+Requires: cglib
+Requires: hamcrest
+Requires: java-headless
+Requires: jpackage-utils
+Requires: junit
+Requires: mvn(net.sf.cglib:cglib)
+Requires: mvn(org.hamcrest:hamcrest-core)
+Requires: mvn(org.objenesis:objenesis)
+Requires: objenesis
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           mockito
-Version:        1.9.0
-Release:        alt2_13jpp7
-Summary:        A Java mocking framework
-
-License:        MIT
-URL:            http://code.google.com/p/mockito/
-Source0:        mockito-%{version}.tar.xz
-Source1:        make-mockito-sourcetarball.sh
-Patch0:         fixup-ant-script.patch
-Patch1:         fix-cglib-refs.patch
-Patch2:         maven-cglib-dependency.patch
-Patch3:         fix-bnd-config.patch
-Patch4:         %{name}-matcher.patch
-
-BuildArch:      noarch
-BuildRequires:  jpackage-utils
-BuildRequires:  ant
-BuildRequires:  objenesis
-BuildRequires:  cglib
-BuildRequires:  junit4
-BuildRequires:  hamcrest
-BuildRequires:  aqute-bnd
-
-Requires:       jpackage-utils
-Requires:       objenesis
-Requires:       cglib
-Requires:       junit4
-Requires:       hamcrest
-Source44: import.info
+Release: alt0.1jpp
+Source: mockito-1.10.19-4.fc23.cpio
 
 %description
 Mockito is a mocking framework that tastes really good. It lets you write
@@ -42,59 +31,28 @@ beautiful tests with clean & simple API. Mockito doesn't give you hangover
 because the tests are very readable and they produce clean verification
 errors.
 
-%package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-# Set Bundle-Version properly
-sed -i 's/Bundle-Version= ${version}/Bundle-Version= %{version}/' conf/mockito-core.bnd
-%patch3
-%patch4 -p1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-ant jar javadoc
-# Convert to OSGi bundle
-pushd target
-java -jar $(build-classpath aqute-bnd) wrap -output mockito-core-%{version}.bar -properties ../conf/mockito-core.bnd mockito-core-%{version}.jar
-popd
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-sed -i -e "s|@version@|%{version}|g" maven/mockito-core.pom
-cp -p target/mockito-core-%{version}.bar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 maven/mockito-core.pom  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.mockito:mockito-all"
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc NOTICE
-%doc LICENSE
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc LICENSE
-%doc NOTICE
+%files -f %name-list
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.0-alt2_13jpp7
 - new release
 
