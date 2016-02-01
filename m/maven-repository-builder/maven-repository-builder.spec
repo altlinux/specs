@@ -1,51 +1,85 @@
-Name: maven-repository-builder
-Version: 1.0
-Summary: Maven repository builder
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-repository-builder/
-Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-repository-builder = 1:1.0-2.fc23
-Provides: maven-shared-repository-builder = 1:1.0-2.fc23
-Provides: mvn(org.apache.maven.shared:maven-repository-builder) = 1.0
-Provides: mvn(org.apache.maven.shared:maven-repository-builder:pom:) = 1.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-codec:commons-codec)
-Requires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
-Requires: mvn(org.apache.maven.shared:maven-shared-utils)
-Requires: mvn(org.apache.maven:maven-artifact)
-Requires: mvn(org.apache.maven:maven-artifact-manager)
-Requires: mvn(org.apache.maven:maven-project)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: maven-repository-builder-1.0-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-repository-builder
+Version:        1.0
+Release:        alt3_2jpp8
+# Maven-shared defines maven-repository-builder version as 1.0
+Epoch:          1
+Summary:        Maven repository builder
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/maven-repository-builder/
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/maven-repository-builder/1.0/maven-repository-builder-%{version}-source-release.zip
+# ASL mandates that the licence file be included in redistributed source
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildArch:      noarch
+
+BuildRequires:  junit
+BuildRequires:  maven-local
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-test-tools
+BuildRequires:  maven-wagon-file
+BuildRequires:  maven-wagon-http-lightweight
+BuildRequires:  maven-shared
+
+Obsoletes:      maven-shared-repository-builder < %{epoch}:%{version}-%{release}
+Provides:       maven-shared-repository-builder = %{epoch}:%{version}-%{release}
+Source44: import.info
 
 %description
 Maven repository builder.
 
 This is a replacement package for maven-shared-repository-builder
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+    
+%description javadoc
+API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+# Replace plexus-maven-plugin with plexus-component-metadata
+find -name 'pom.xml' -exec sed \
+    -i 's/<artifactId>plexus-maven-plugin<\/artifactId>/<artifactId>plexus-component-metadata<\/artifactId>/' '{}' ';'
+find -name 'pom.xml' -exec sed \
+    -i 's/<goal>descriptor<\/goal>/<goal>generate-metadata<\/goal>/' '{}' ';'
+
+# Removing JARs because of binary code contained
+find -iname '*.jar' -delete
+
+cp %{SOURCE1} LICENSE.txt
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Skipping tests because they don't work without the JARs
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
+
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_2jpp8
+- new version
+
 * Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
