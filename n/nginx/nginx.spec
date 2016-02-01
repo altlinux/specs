@@ -15,8 +15,8 @@
 %def_enable rtmp
 
 Name: nginx
-Version: 1.8.0
-Release: alt1.1
+Version: 1.8.1
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -271,6 +271,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Mon Feb 01 2016 Denis Smirnov <mithraen@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+- CVE-2016-0742
+- CVE-2016-0746
+- CVE-2016-0747
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1.1
 - rebuild with new perl 5.22.0
 
