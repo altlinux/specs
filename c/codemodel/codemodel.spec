@@ -1,10 +1,11 @@
 Group: Development/Java
 BuildRequires: maven-enforcer-plugin
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:         codemodel
 Version:      2.6
-Release:      alt2_10jpp7
+Release:      alt2_17jpp8
 Summary:      Java library for code generators
 License:      CDDL and GPLv2
 URL:          http://codemodel.java.net
@@ -17,16 +18,12 @@ Patch0:       %{name}-remove-istack-commons-dependency.patch
 
 BuildArch:     noarch
 
-
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-release-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: mvn(net.java:jvnet-parent)
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
 BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(junit:junit)
-
-Requires:      mvn(net.java:jvnet-parent)
 Source44: import.info
 
 
@@ -38,7 +35,7 @@ to generate Java source files.
 
 %package javadoc
 Group: Development/Java
-Summary: Javadocs for %{name}
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -53,10 +50,11 @@ This package contains the API documentation for %{name}.
 # Remove bundled jar files:
 find . -name '*.jar' -print -delete
 
-%build
-
 %mvn_file :%{name} %{name}
 %mvn_file :%{name}-annotation-compiler %{name}-annotation-compiler
+
+%build
+
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -69,6 +67,9 @@ find . -name '*.jar' -print -delete
 %doc LICENSE.html
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_17jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_10jpp7
 - new release
 
