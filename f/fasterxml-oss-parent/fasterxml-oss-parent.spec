@@ -1,28 +1,26 @@
-Name: fasterxml-oss-parent
-Version: 18e
-Summary: FasterXML parent pom
-License: ASL 2.0 and LGPLv2+
-Url: http://fasterxml.com/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: fasterxml-oss-parent = 18e-2.fc23
-Provides: mvn(com.fasterxml:oss-parent:pom:) = 18
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.felix:maven-bundle-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-jar-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-scm-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-site-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
-Requires: mvn(org.apache.maven.scm:maven-scm-manager-plexus)
-Requires: mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
-Requires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: fasterxml-oss-parent-18e-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global oname oss-parent
+Name:          fasterxml-oss-parent
+Version:       18e
+Release:       alt1_2jpp8
+Summary:       FasterXML parent pom
+# pom file licenses ASL 2.0 and LGPL 2.1
+License:       ASL 2.0 and LGPLv2+
+URL:           http://fasterxml.com/
+Source0:       https://github.com/FasterXML/oss-parent/archive/%{version}.tar.gz
+
+BuildRequires: maven-local
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-plugin-build-helper
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-site-plugin
+
+BuildArch:     noarch
+Source44: import.info
+Provides: mvn(com.fasterxml:oss-parent) = 18
 
 %description
 FasterXML is the business behind the Woodstox streaming XML parser,
@@ -34,24 +32,36 @@ and extension.
 
 This package contains the parent pom file for FasterXML.com projects.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{oname}-%{version}
+
+%pom_remove_plugin org.sonatype.plugins:nexus-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:jdepend-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
+# remove unavailable com.google.doclava doclava 1.0.3
+%pom_xpath_remove "pom:build/pom:extensions/pom:extension[pom:artifactId='wagon-gitsite']"
+%pom_xpath_remove "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration"
+%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']" '
+<configuration>
+  <encoding>UTF-8</encoding>
+  <quiet>true</quiet>
+  <source>${javac.src.version}</source>
+</configuration>'
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc README.creole
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 18e-alt1_2jpp8
+- new version
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 18e-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
