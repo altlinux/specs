@@ -1,19 +1,25 @@
-Name: base64coder
-Version: 20101219
-Summary: Fast and compact Base64 encoder/decoder Java library
-License: EPL or LGPLv2+ or GPLv2+ or ASL 2.0+ or BSD
-Url: http://www.source-code.biz/base64coder/java/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: base64coder = 20101219-13.fc23
-Provides: mvn(biz.source_code:base64coder) = 2010.12.19
-Provides: mvn(biz.source_code:base64coder:pom:) = 2010.12.19
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: base64coder-20101219-13.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global long_ver  2010-12-19
+
+Name:           base64coder
+Version:        20101219
+Release:        alt3_13jpp8
+Summary:        Fast and compact Base64 encoder/decoder Java library
+License:        EPL or LGPLv2+ or GPLv2+ or ASL 2.0+ or BSD
+BuildArch:      noarch
+URL:            http://www.source-code.biz/%{name}/java/
+Source0:        http://repo2.maven.org/maven2/biz/source_code/%{name}/%{long_ver}/%{name}-%{long_ver}-distribution.zip
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+Source44: import.info
 
 %description
 Base64Coder is a fast and compact Base64 encoder/decoder class.
@@ -22,24 +28,34 @@ There is no Base64 encoder/decoder in the standard Java SDK class
 library.  The undocumented classes sun.misc.BASE64Encoder and
 sun.misc.BASE64Decoder should not be used.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{long_ver}
+sed -i 's/\r//g' README.txt CHANGES.txt
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README.txt CHANGES.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 20101219-alt3_13jpp8
+- new version
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 20101219-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
