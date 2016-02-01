@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 Summary:        XML Pull Parser
 Name:           xpp2
 Version:        2.1.10
-Release:        alt4_16jpp7
+Release:        alt4_22jpp8
 Epoch:          0
 License:        xpp and ASL 1.1 and Public Domain
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/
@@ -47,12 +48,14 @@ Source0:        http://www.extreme.indiana.edu/xgws/xsoap/xpp/download/PullParse
 Patch0:         xpp2-build_xml.patch
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  javapackages-local
 BuildRequires:  junit
 BuildRequires:  xml-commons-apis
 Requires:       xml-commons-apis
 Requires:       jpackage-utils
 BuildArch:      noarch
+Provides:  xpp2-doc = 0:%{version}-%{release}
+Obsoletes: xpp2-doc < 0:2.1.10-18
 Source44: import.info
 
 %description
@@ -62,23 +65,15 @@ All active development concentrates on its successor XPP3/MXP1.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires:       jpackage-utils
+Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
-%package doc
-Summary:        Manual for %{name}
-Group:          Development/Documentation
-
-%description doc
-%{summary}.
-
 %package demo
 Summary:        Samples for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}
 
 %description demo
@@ -91,73 +86,58 @@ find \( -name *.class -o -name *.jar \) -delete
 
 %patch0 -b .sav
 
+# Fix encoding of licence file
+iconv -f ISO-8859-1 -t UTF-8 LICENSE.txt > LICENSE.txt.utf8
+mv LICENSE.txt.utf8 LICENSE.txt
+
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=$(build-classpath xml-commons-apis)
 ant all api api.impl
 CLASSPATH=$CLASSPATH:$(build-classpath junit):build/tests:build/lib/PullParser-2.1.10.jar
 java AllTests
 
 %install
-
 # jars
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 
 cp -p build/lib/%{originalname}-intf-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-intf-%{version}.jar
+  $RPM_BUILD_ROOT%{_javadir}/%{name}-intf.jar
 cp -p build/lib/%{originalname}-standard-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-standard-%{version}.jar
+  $RPM_BUILD_ROOT%{_javadir}/%{name}-standard.jar
 cp -p build/lib/%{originalname}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 cp -p build/lib/%{originalname}-x2-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-x2-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+  $RPM_BUILD_ROOT%{_javadir}/%{name}-x2.jar
 
 # javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api_impl
-cp -pr doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api
-cp -pr doc/api_impl/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/api_impl
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}/api
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}/api_impl
+cp -pr doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/api
+cp -pr doc/api_impl/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/api_impl
 rm -rf doc/{build.txt,api,api_impl}
 
-# doc
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
-cp -pr doc/* $RPM_BUILD_ROOT%{_datadir}/doc/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
-
 # demo
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-cp -pr src/java/samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr src/java/samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 %files
-%doc README.html
-%doc LICENSE.txt
+%doc LICENSE.txt README.html doc
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}-intf.jar
-%{_javadir}/%{name}-intf-%{version}.jar
 %{_javadir}/%{name}-standard.jar
-%{_javadir}/%{name}-standard-%{version}.jar
 %{_javadir}/%{name}-x2.jar
-%{_javadir}/%{name}-x2-%{version}.jar
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
-
-%files doc
-%doc %{_datadir}/doc/%{name}-%{version}
-%doc %{_datadir}/doc/%{name}
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
 %files demo
-%{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_22jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.10-alt4_16jpp7
 - new release
 
