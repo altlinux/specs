@@ -1,163 +1,187 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           istack-commons
-Version:        2.17
-Release:        alt1_2jpp7
+Version:        2.21
+Release:        alt1_3jpp8
 Summary:        Common code for some Glassfish projects
-Group:          Development/Java
 License:        CDDL and GPLv2 with exceptions
 URL:            http://istack-commons.java.net
-
-# svn export https://svn.java.net/svn/istack-commons~svn/tags/istack-commons-2.17/ istack-commons-2.17
-# find istack-commons-2.17/ -name '*.class' -delete
-# find istack-commons-2.17/ -name '*.jar' -delete
-# tar -zcvf istack-commons-2.17.tar.gz istack-commons-2.17
+# svn export https://svn.java.net/svn/istack-commons~svn/tags/istack-commons-2.21/ istack-commons-2.21
+# find istack-commons-2.21/ -name '*.class' -delete
+# find istack-commons-2.21/ -name '*.jar' -delete
+# rm -rf istack-commons-2.21/test/lib/*.zip istack-commons-2.21/runtime/lib/*.zip
+# tar -zcvf istack-commons-2.21.tar.gz istack-commons-2.21
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  args4j
-BuildRequires:  bea-stax-api
-BuildRequires:  codemodel >= 2.6-4
-BuildRequires:  dom4j
-BuildRequires:  jpackage-utils
-BuildRequires:  jvnet-parent
-BuildRequires:  junit
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-shared-file-management
-BuildRequires:  plexus-archiver
-BuildRequires:  plexus-io
-BuildRequires:  testng
-
-Requires:       jpackage-utils
-Requires:       jvnet-parent
+BuildRequires:  mvn(args4j:args4j)
+BuildRequires:  mvn(com.sun.codemodel:codemodel)
+BuildRequires:  mvn(com.sun:tools)
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven:maven-aether-provider)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-http-lightweight)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.aether:aether-api)
+BuildRequires:  mvn(org.eclipse.aether:aether-connector-basic)
+BuildRequires:  mvn(org.eclipse.aether:aether-impl)
+BuildRequires:  mvn(org.eclipse.aether:aether-spi)
+BuildRequires:  mvn(org.eclipse.aether:aether-transport-file)
+BuildRequires:  mvn(org.eclipse.aether:aether-transport-wagon)
+BuildRequires:  mvn(org.eclipse.aether:aether-util)
+BuildRequires:  mvn(org.testng:testng)
 Source44: import.info
-
 
 %description
 Code shared between JAXP, JAXB, SAAJ, and JAX-WS projects.
 
-
-%package -n maven-istack-commons-plugin
+%package maven-plugin
+Group: Development/Java
 Summary:        istack-commons Maven Mojo
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-Requires:       codemodel >= 2.6-4
-Requires:       maven-shared-file-management
-Requires:       plexus-archiver
-Requires:       plexus-io
+Obsoletes:      maven-istack-commons-plugin < %{version}-%{release}
+Provides:       maven-istack-commons-plugin = %{version}-%{release}
 
-
-%description -n maven-istack-commons-plugin
+%description maven-plugin
 This package contains the istack-commons Maven Mojo.
 
+%package -n import-properties-plugin
+Group: Development/Java
+Summary:        istack-commons import properties plugin
+
+%description -n import-properties-plugin
+This package contains the istack-commons import properties Maven Mojo.
+
+%package buildtools
+Group: Development/Java
+Summary:        istack-commons buildtools
+Obsoletes:      %{name} < %{version}-%{release}
+
+%description buildtools
+This package contains istack-commons buildtools.
+
+%package runtime
+Group: Development/Java
+Summary:        istack-commons runtime
+Obsoletes:      %{name} < %{version}-%{release}
+
+%description runtime
+This package contains istack-commons runtime.
+
+%package soimp
+Group: Development/Java
+Summary:        istack-commons soimp
+Obsoletes:      %{name} < %{version}-%{release}
+
+%description soimp
+This package contains istack-commons soimp.
+
+%package test
+Group: Development/Java
+Summary:        istack-commons test
+Obsoletes:      %{name} < %{version}-%{release}
+
+%description test
+This package contains istack-commons test.
+
+%package tools
+Group: Development/Java
+Summary:        istack-commons tools
+Obsoletes:      %{name} < %{version}-%{release}
+
+%description tools
+This package contains istack-commons tools.
 
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        Javadoc for %{name}
 BuildArch: noarch
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %prep
 %setup -q
-rm -rf test/lib/*.zip runtime/lib/*.zip
 
 %pom_remove_plugin org.glassfish.copyright:glassfish-copyright-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 
+# backward compatibility symlinks
+%mvn_file com.sun.istack:%{name}-buildtools %{name}-buildtools %{name}/%{name}-buildtools
+%mvn_file com.sun.istack:%{name}-runtime %{name}-runtime %{name}/%{name}-runtime
+%mvn_file com.sun.istack:%{name}-soimp %{name}-soimp %{name}/%{name}-soimp
+%mvn_file com.sun.istack:%{name}-test %{name}-test %{name}/%{name}-test
+%mvn_file com.sun.istack:%{name}-tools %{name}-tools %{name}/%{name}-tools
+
+# Unused & unavailable dep
+%pom_remove_dep org.sonatype.sisu:sisu-inject-plexus import-properties-plugin
+
+# get rid of scope "import", our tools don't know how to handle such deps
+%pom_remove_dep com.sun:tools tools
+%pom_add_dep com.sun:tools tools
+
 %build
 
-# The "-Pdefault-tools.jar" option is needed in order to make sure that the
-# "tools.jar" file is added to the dependencies, otherwise it will not be added
-# if the "java.vendor" property is "Oracle Corporation", which happens to be
-# the value in JDK7:
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  -Pdefault-tools.jar \
-  install \
-  javadoc:aggregate
-
+%mvn_build -s -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-# JAR
-cp -p runtime/target/istack-commons-runtime-%{version}.jar %{buildroot}%{_javadir}/%{name}-runtime.jar
-cp -p tools/target/istack-commons-tools-%{version}.jar %{buildroot}%{_javadir}/%{name}-tools.jar
-cp -p test/target/istack-commons-test-%{version}.jar %{buildroot}%{_javadir}/%{name}-test.jar
-cp -p buildtools/target/%{name}-buildtools-%{version}.jar %{buildroot}%{_javadir}/%{name}-buildtools.jar
-cp -p maven-plugin/target/%{name}-maven-plugin-%{version}.jar %{buildroot}%{_javadir}/%{name}-maven-plugin.jar
-cp -p soimp/target/%{name}-soimp-%{version}.jar %{buildroot}%{_javadir}/%{name}-soimp.jar
-
-# JAVADOC
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-# POM
-cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-cp -p runtime/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-runtime.pom
-cp -p tools/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-tools.pom
-cp -p test/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-test.pom
-cp -p buildtools/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-buildtools.pom
-cp -p maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-maven-plugin.pom
-cp -p soimp/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-soimp.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}-runtime.pom %{name}-runtime.jar
-%add_maven_depmap JPP-%{name}-tools.pom %{name}-tools.jar
-%add_maven_depmap JPP-%{name}-test.pom %{name}-test.jar
-%add_maven_depmap JPP-%{name}-buildtools.pom %{name}-buildtools.jar
-%add_maven_depmap JPP-%{name}-maven-plugin.pom %{name}-maven-plugin.jar -f maven-plugin
-%add_maven_depmap JPP-%{name}-soimp.pom %{name}-soimp.jar
-
-%files
-%{_mavenpomdir}/JPP-%{name}-runtime.pom
-%{_mavenpomdir}/JPP-%{name}-test.pom
-%{_mavenpomdir}/JPP-%{name}-tools.pom
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-buildtools.pom
-%{_mavenpomdir}/JPP-%{name}-soimp.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}-buildtools.jar
-%{_javadir}/%{name}-runtime.jar
-%{_javadir}/%{name}-soimp.jar
-%{_javadir}/%{name}-test.jar
-%{_javadir}/%{name}-tools.jar
+%files -f .mfiles-istack-commons
+%dir %{_javadir}/%{name}
 %doc Licence.txt
 
-%files -n maven-istack-commons-plugin
-%{_javadir}/%{name}-maven-plugin.jar
-%{_mavenpomdir}/JPP-%{name}-maven-plugin.pom
-%{_mavendepmapfragdir}/%{name}-maven-plugin
+%files -n %{name}-maven-plugin -f .mfiles-%{name}-maven-plugin
 %doc Licence.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files -n import-properties-plugin -f .mfiles-import-properties-plugin
+%doc Licence.txt
+
+%files buildtools -f .mfiles-istack-commons-buildtools
+%doc Licence.txt
+
+%files runtime -f .mfiles-istack-commons-runtime
+%doc Licence.txt
+
+%files soimp -f .mfiles-istack-commons-soimp
+%doc Licence.txt
+
+%files test -f .mfiles-istack-commons-test
+%doc Licence.txt
+
+%files tools -f .mfiles-istack-commons-tools
+%doc Licence.txt
+
+%files javadoc -f .mfiles-javadoc
 %doc Licence.txt
 
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1_3jpp8
+- new version
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.17-alt1_2jpp7
 - new release
 
