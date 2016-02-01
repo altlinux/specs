@@ -1,14 +1,22 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%global svnrev 1592769
+
 Name:           bcel
-Version:        5.2
-Release:        alt4_17jpp7
+Version:        6.0
+Release:        alt1_0.4.20140406svn1592769jpp8
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        ASL 2.0
 URL:            http://commons.apache.org/proper/commons-bcel/
-Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-5.2-src.tar.gz
+# Source for releases:
+# Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
+
+# svn export http://svn.apache.org/repos/asf/commons/proper/bcel/trunk bcel
+# tar cJf bcel-1592769.tar.xz bcel
+Source0:        bcel-%{svnrev}.tar.xz
 # Upstream uses Maven 1, which is not available in Fedora.
 # The following is upstream project.xml converted to Maven 2/3.
 Source1:        %{name}-pom.xml
@@ -45,10 +53,14 @@ BuildArch: noarch
 This package provides %{summary}.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 cp -p %{SOURCE1} pom.xml
-%mvn_alias : bcel:
+%mvn_alias : bcel: apache:
 %mvn_file : %{name}
+
+# different path in test
+sed -i '\|lib/dt\.jar|s|javaHome|javaHome.substring(0, javaHome.length() - 4)|' \
+        src/test/java/org/apache/bcel/PerformanceTest.java
 
 %build
 %mvn_build
@@ -64,6 +76,9 @@ cp -p %{SOURCE1} pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:6.0-alt1_0.4.20140406svn1592769jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_17jpp7
 - new release
 
