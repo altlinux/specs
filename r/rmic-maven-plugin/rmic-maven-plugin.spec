@@ -1,14 +1,15 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             rmic-maven-plugin
 Version:          1.2.1
-Release:          alt1_6jpp7
+Release:          alt1_11jpp8
 Summary:          Uses the java rmic compiler to generate classes used in remote method invocation
 License:          MIT
-Group:            Development/Java
 URL:              http://mojo.codehaus.org/%{name}
 
 Source0:          http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -17,10 +18,7 @@ Patch0:           pom-compiler-source-target.patch
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-invoker-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    maven-checkstyle-plugin
 Source44: import.info
 
 %description
@@ -28,8 +26,8 @@ This plugin works with Maven 2 and uses the java rmic compiler to generate
 classes used in remote method invocation.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadoc for %{name}
-Group:            Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -41,7 +39,7 @@ sed -i -e "s|groupId>plexus|groupId>org.codehaus.plexus|g" pom.xml
 
 %patch0 -p0
 
-%mvn_file :rmic-maven-plugin rmic-maven-plugin
+%pom_add_dep "junit:junit::test"
 
 %build
 # Unit tests pass, but for some reason the integrations fail in mock
@@ -57,6 +55,9 @@ sed -i -e "s|groupId>plexus|groupId>org.codehaus.plexus|g" pom.xml
 %doc License.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_6jpp7
 - new release
 
