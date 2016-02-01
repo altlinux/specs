@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-oro
 Version:        2.0.8
-Release:        alt2_14jpp7
+Release:        alt2_18jpp8
 Epoch:          0
 Summary:        Full regular expressions API
 License:        ASL 1.1
@@ -47,13 +48,12 @@ Source1:        MANIFEST.MF
 Source2:        http://repo1.maven.org/maven2/%{base_name}/%{base_name}/%{version}/%{base_name}-%{version}.pom
 Patch1:         %{name}-build-xml.patch
 URL:            http://jakarta.apache.org/oro
-BuildRequires:  jpackage-utils > 1.6
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildArch:      noarch
 Requires:       jpackage-utils
 Source44: import.info
 Provides: oro = %epoch:%version-%release
-Source45: oro-2.0.8.pom
 
 %description
 The Jakarta-ORO Java classes are a set of text-processing Java classes
@@ -100,28 +100,20 @@ rm -rf docs/api
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap
-# pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-cp -p %{SOURCE45} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap oro oro %{version} JPP %{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files
+%files -f .mfiles
 %doc COMPILE ISSUES README TODO CHANGES CONTRIBUTORS LICENSE STYLE
-%{_javadir}/*.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%_mavendepmapfragdir/*
-%_mavenpomdir/*.pom
+# symlink, not in .mfiles
+%{_javadir}/%{base_name}.jar
 
 %files javadoc
 %doc LICENSE
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_18jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.8-alt2_14jpp7
 - new release
 
