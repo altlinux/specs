@@ -1,46 +1,62 @@
-Name: maven-shared-incremental
-Version: 1.1
-Summary: Maven Incremental Build support utilities
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-shared-incremental/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-shared-incremental = 1.1-9.fc23
-Provides: mvn(org.apache.maven.shared:maven-shared-incremental) = 1.1
-Provides: mvn(org.apache.maven.shared:maven-shared-incremental:pom:) = 1.1
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven.shared:maven-shared-utils)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.codehaus.plexus:plexus-component-annotations)
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-shared-incremental
+Version:        1.1
+Release:        alt1_9jpp8
+Summary:        Maven Incremental Build support utilities
+License:        ASL 2.0
+Group:          Development/Java
+URL:            http://maven.apache.org/shared/maven-shared-incremental/
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:      noarch
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: maven-shared-incremental-1.1-9.fc23.cpio
+BuildRequires:  maven-local
+
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-api)
+Source44: import.info
 
 %description
 Various utility classes and plexus components for supporting
 incremental build functionality in maven plugins.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Summary:          API documentation for %{name}
+Group:            Development/Java
+BuildArch: noarch
+
+%description javadoc
+This package provides %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
+%dir %{_javadir}/%{name}
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_9jpp8
+- new version
+
 * Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
