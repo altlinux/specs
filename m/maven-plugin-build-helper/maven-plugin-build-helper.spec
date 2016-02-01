@@ -1,50 +1,78 @@
-Name: maven-plugin-build-helper
-Version: 1.9.1
-Summary: Build Helper Maven Plugin
-License: MIT and ASL 2.0
-Url: http://mojo.codehaus.org/build-helper-maven-plugin/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-plugin-build-helper = 1.9.1-2.fc23
-Provides: mvn(org.codehaus.mojo:build-helper-maven-plugin) = 1.9.1
-Provides: mvn(org.codehaus.mojo:build-helper-maven-plugin:pom:) = 1.9.1
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
-Requires: mvn(org.apache.maven:maven-compat)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-model:2.2.1)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.beanshell:bsh)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-plugin-build-helper
+Version:        1.9.1
+Release:        alt1_2jpp8
+Summary:        Build Helper Maven Plugin
+Group:          Development/Java
+License:        MIT and ASL 2.0
+URL:            http://mojo.codehaus.org/build-helper-maven-plugin/
 BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: maven-plugin-build-helper-1.9.1-2.fc23.cpio
+
+# The source tarball has been generated from upstream VCS:
+# svn export https://svn.codehaus.org/mojo/tags/build-helper-maven-plugin-%{version} %{name}-%{version}
+# tar caf %{name}-%{version}.tar.xz %{name}-%{version}
+Source0:        %{name}-%{version}.tar.xz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.codehaus.mojo:mojo-parent:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
+
+Provides: mojo-maven2-plugin-build-helper = %version
+Obsoletes: mojo-maven2-plugin-build-helper = 17
+
+
 
 %description
 This plugin contains various small independent goals to assist with
 Maven build lifecycle.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package provides %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q 
+cp %{SOURCE1} LICENSE-2.0.txt
+%pom_add_dep org.apache.maven:maven-compat
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc header.txt LICENSE-2.0.txt
+%dir %{_javadir}/%{name}
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc header.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt1_2jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
