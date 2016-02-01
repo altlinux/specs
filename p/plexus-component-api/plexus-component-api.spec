@@ -1,11 +1,15 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %define project_version 1.0-alpha-15
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt4_0.15.alpha15jpp7
+Release:        alt4_0.19.alpha15jpp8
 Summary:        Plexus Component API
 
 License:        ASL 2.0
@@ -52,9 +56,13 @@ API documentation for %{name}.
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files -f .mfiles
+%dir %{_javadir}/%{name}
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.19.alpha15jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.15.alpha15jpp7
 - new release
 
