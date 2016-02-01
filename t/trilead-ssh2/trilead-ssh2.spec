@@ -1,24 +1,30 @@
-Name: trilead-ssh2
-Version: 217
-Summary: SSH-2 protocol implementation in pure Java
-License: BSD and MIT
-Url: https://github.com/jenkinsci/trilead-ssh2
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(com.trilead:trilead-ssh2) = build217.jenkins.8
-Provides: mvn(com.trilead:trilead-ssh2:pom:) = build217.jenkins.8
-Provides: mvn(org.jenkins-ci:trilead-ssh2) = build217.jenkins.8
-Provides: mvn(org.jenkins-ci:trilead-ssh2:pom:) = build217.jenkins.8
-Provides: mvn(org.tmatesoft.svnkit:trilead-ssh2) = build217.jenkins.8
-Provides: mvn(org.tmatesoft.svnkit:trilead-ssh2:pom:) = build217.jenkins.8
-Provides: trilead-ssh2 = 217-6.jenkins8.fc23
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: trilead-ssh2-217-6.jenkins8.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global patchlvl 8
+
+Name:           trilead-ssh2
+Version:        217
+Release:        alt1_6.jenkins8jpp8
+Summary:        SSH-2 protocol implementation in pure Java
+
+# project is under BSD, but some parts are MIT licensed
+# see LICENSE.txt for more information
+License:        BSD and MIT
+URL:            https://github.com/jenkinsci/trilead-ssh2
+Source0:        https://github.com/jenkinsci/%{name}/archive/%{name}-build%{version}-jenkins-%{patchlvl}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+
+BuildArch:      noarch
+Source44: import.info
 
 %description
 Trilead SSH-2 for Java is a library which implements the SSH-2 protocol in pure
@@ -28,24 +34,39 @@ and shell access), local and remote port forwarding, local stream forwarding,
 X11 forwarding and SCP. There are no dependencies on any JCE provider, as all
 crypto functionality is included.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-build%{version}-jenkins-%{patchlvl}
+
+# compat symlink/alias
+%mvn_file  : %{name}/%{name} %{name}
+%mvn_alias : "org.tmatesoft.svnkit:trilead-ssh2" "com.trilead:trilead-ssh2"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE.txt HISTORY.txt README.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
+
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:217-alt1_6.jenkins8jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:217-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
