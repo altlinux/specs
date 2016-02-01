@@ -1,9 +1,7 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jbossws-parent
 %define version 1.1.0
@@ -12,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:             jbossws-parent
 Version:          1.1.0
-Release:          alt1_4jpp7
+Release:          alt1_9jpp8
 Summary:          JBossWS Parent
 Group:            Development/Java
 License:          LGPLv2+
@@ -21,21 +19,9 @@ Source0:          https://repository.jboss.org/nexus/service/local/repositories/
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-clean-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-war-plugin
-BuildRequires:    maven-help-plugin
-BuildRequires:    maven-dependency-plugin
-
-Requires:         jpackage-utils
 Source44: import.info
+Provides: mvn(org.jboss.ws:jbossws-parent) = 1.1.0.GA
 
 %description
 This package contains the JBossWS Parent
@@ -44,22 +30,17 @@ This package contains the JBossWS Parent
 cp %{SOURCE0} pom.xml
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%mvn_install
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_4jpp7
 - new release
 
