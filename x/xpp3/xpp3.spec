@@ -1,28 +1,28 @@
+Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define oversion 1.1.3_8
+BuildRequires: jpackage-generic-compat
+%define oversion 1.1.4c
 
 Summary:        XML Pull Parser
 Name:           xpp3
-Version:        1.1.3.8
-Release:        alt1_10jpp7
-Epoch:          1
+Version:        1.1.4
+Release:        alt1_7.cjpp8
 License:        ASL 1.1
 URL:            http://www.extreme.indiana.edu/xgws/xsoap/xpp/mxp1/index.html
 Source0:        http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-%{oversion}_src.tgz
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3/1.1.3.4.O/xpp3-1.1.3.4.O.pom
-Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3_xpath/1.1.3.4.O/xpp3_xpath-1.1.3.4.O.pom
-Source3:        http://mirrors.ibiblio.org/pub/mirrors/maven2/xpp3/xpp3_min/1.1.3.4.O/xpp3_min-1.1.3.4.O.pom
+Source1:        http://repo1.maven.org/maven2/xpp3/xpp3/%{oversion}/xpp3-%{oversion}.pom
+Source2:        http://repo1.maven.org/maven2/xpp3/xpp3_xpath/%{oversion}/xpp3_xpath-%{oversion}.pom
+Source3:        http://repo1.maven.org/maven2/xpp3/xpp3_min/%{oversion}/xpp3_min-%{oversion}.pom
 Patch0:         %{name}-link-docs-locally.patch
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  junit
 BuildRequires:  xml-commons-apis
-Requires:       junit
 Requires:       xml-commons-apis
 
 BuildArch:      noarch
@@ -37,8 +37,6 @@ take best advantage of latest JIT JVMs such as Hotspot in JDK 1.4.
 %package minimal
 Group: Development/Java
 Summary:        Minimal XML Pull Parser
-Requires:       junit
-Requires:       xml-commons-apis
 
 %description minimal
 Minimal XML pull parser implementation.
@@ -57,6 +55,9 @@ Javadoc for %{name}.
 find -name \*.jar -delete
 
 %patch0
+
+# "src/java/addons_tests" does not exist
+sed -i 's|depends="junit_main,junit_addons"|depends="junit_main"|' build.xml
 
 %build
 export CLASSPATH=$(build-classpath xml-commons-apis junit)
@@ -89,15 +90,20 @@ install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}-minimal.pom
 cp -pr doc/api/* %{buildroot}%{_javadocdir}/%{name}
 
 %files -f .mfiles
-%doc README.html LICENSE.txt doc/*
+%doc README.html doc/*
+%doc LICENSE.txt
 
 %files minimal -f .mfiles-minimal
 %doc LICENSE.txt
 
 %files javadoc
 %doc %{_javadocdir}/%{name}
+%doc LICENSE.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1.4-alt1_7.cjpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1.3.8-alt1_10jpp7
 - new release
 
