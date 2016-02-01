@@ -1,29 +1,25 @@
-Name: args4j
+Name: args4j-tools
 Version: 2.32
-Summary: Java command line arguments parser
+Summary: Development-time tool for generating additional artifacits
 License: MIT
 Url: http://args4j.kohsuke.org
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: args4j = 2.32-1.fc23
-Provides: mvn(args4j:args4j) = 2.32
-Provides: mvn(args4j:args4j:pom:) = 2.32
+Provides: args4j-tools = 2.32-1.fc23
+Provides: mvn(args4j:args4j-tools) = 2.32
+Provides: mvn(args4j:args4j-tools:pom:) = 2.32
 Requires: java-headless
 Requires: jpackage-utils
+Requires: mvn(args4j:args4j)
+Requires: mvn(com.sun:tools)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: args4j-2.32-1.fc23.cpio
+Source: args4j-tools-2.32-1.fc23.cpio
 
 %description
-args4j is a small Java class library that makes it easy
-to parse command line options/arguments in your CUI application.
-- It makes the command line parsing very easy by using annotations
-- You can generate the usage screen very easily
-- You can generate HTML/XML that lists all options for your documentation
-- Fully supports localization
-- It is designed to parse javac like options (as opposed to GNU-style
-  where ls -lR is considered to have two options l and R)
+This package contains args4j development-time tool for generating
+additional artifacits.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
