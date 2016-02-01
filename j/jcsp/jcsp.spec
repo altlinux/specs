@@ -1,20 +1,32 @@
-Name: jcsp
-Version: 1.1
-Summary: Communicating Sequential Processes for Java (JCSP)
-License: LGPLv2+
-Url: https://xircles.codehaus.org/projects/jcsp
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jcsp = 1.1-0.4.rc5.fc23
-Provides: mvn(org.codehaus.jcsp:jcsp) = 1.1.rc5
-Provides: mvn(org.codehaus.jcsp:jcsp:pom:) = 1.1.rc5
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.felix:org.osgi.core)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jcsp-1.1-0.4.rc5.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jcsp
+%define version 1.1
+%global namedreltag -rc5
+%global namedversion %{version}%{?namedreltag}
+Name:          jcsp
+Version:       1.1
+Release:       alt1_0.4.rc5jpp8
+Summary:       Communicating Sequential Processes for Java (JCSP)
+License:       LGPLv2+
+URL:           https://xircles.codehaus.org/projects/jcsp
+# sh jcsp-create-tarball.sh < VERSION-TAG >
+Source0:       %{name}-%{namedversion}-clean.tar.xz
+Source1:       %{name}-create-tarball.sh
+
+BuildRequires: mvn(org.apache.felix:org.osgi.core)
+# test deps
+BuildRequires: mvn(junit:junit)
+BuildRequires: maven-local
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-surefire-provider-junit
+BuildRequires: maven-surefire-report-plugin
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 JCSP (Communication Sequential Processes for Java) is a
@@ -36,24 +48,78 @@ JCSP is an alternative concurrency model to the threads and
 mechanisms built into Java. It is also compatible with
 it since it is implemented on top of it.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{namedversion}
 
-%build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :jdepend-maven-plugin
+%pom_remove_plugin :rat-maven-plugin
+%pom_remove_plugin :taglist-maven-plugin
 
-%install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+# remove wagon-webdav
+%pom_xpath_remove "pom:project/pom:build/pom:extensions"
+# fix resouce directory and filter these ones
+%pom_xpath_inject "pom:project/pom:build" "
+<resources>
+  <resource>
+    <directory>src</directory>
+    <excludes>
+      <exclude>**/*.java</exclude>
+      <exclude>**/doc-files/**</exclude>
+      <exclude>**/win32/*Services.txt</exclude>
+      <exclude>**/package.html</exclude>
+    </excludes>
+  </resource>
+</resources>"
+
+%pom_xpath_remove "pom:project/pom:reporting/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:excludePackageNames"
+
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-bundle-plugin']/pom:configuration/pom:instructions/pom:Export-Package"
+%pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-bundle-plugin']/pom:configuration/pom:instructions" '
+<Export-Package>org.jcsp.*;version="${project.version}"</Export-Package>'
+
+sed -i 's|${name}|${project.name}|' pom.xml
+
+sed -i "s|59 Temple Place, Suite 330, Boston, MA 02111-1307 USA|51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA|" pom.xml
+
+for d in LICENCE README ; do
+  iconv -f iso8859-1 -t utf-8 $d.txt > $d.txt.conv && mv -f $d.txt.conv $d.txt
+  sed -i 's/\r//' $d.txt
 done
 
+rm -r src/org/jcsp/win32 \
+ src/org/jcsp/net/remote/SpawnerServiceNT.java \
+ src/org/jcsp/net/tcpip/TCPIPCNSServerNT.java
 
-%files -f %name-list
+%mvn_file : %{name}
+
+%build
+
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+
+%install
+%mvn_install
+
+%files -f .mfiles
+%doc README.txt
+%doc LICENCE.txt
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENCE.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_0.4.rc5jpp8
+- new version
+
 * Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
