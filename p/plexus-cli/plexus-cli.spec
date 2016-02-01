@@ -1,23 +1,27 @@
-Name: plexus-cli
-Version: 1.6
-Summary: Command Line Interface facilitator for Plexus
-License: ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-cli
-Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus-cli) = 1.6
-Provides: mvn(org.codehaus.plexus:plexus-cli:pom:) = 1.6
-Provides: plexus-cli = 0:1.6-2.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-cli:commons-cli)
-Requires: mvn(org.codehaus.plexus:plexus-container-default)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: plexus-cli-1.6-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           plexus-cli
+Version:        1.6
+Release:        alt1_2jpp8
+Epoch:          0
+Summary:        Command Line Interface facilitator for Plexus
+License:        ASL 2.0
+URL:            https://github.com/codehaus-plexus/plexus-cli
+BuildArch:      noarch
+
+# git clone git://github.com/codehaus-plexus/plexus-cli.git
+# git --git-dir plexus-cli/.git archive --prefix plexus-cli-1.6/ 8927458e81 | xz >plexus-cli-1.6.tar.xz
+Source0:        %{name}-%{version}.tar.xz
+Source1:        LICENSE-2.0.txt
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -27,24 +31,36 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+cp -p %{SOURCE1} .
+
+%mvn_file : plexus/cli
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE-2.0.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-2.0.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_2jpp8
+- new version
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
