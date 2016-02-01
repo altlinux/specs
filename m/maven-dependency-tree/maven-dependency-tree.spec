@@ -1,45 +1,73 @@
-Name: maven-dependency-tree
-Version: 2.2
-Summary: Maven dependency tree artifact
-License: ASL 2.0
-Url: http://maven.apache.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-dependency-tree = 2.2-2.fc23
-Provides: maven-shared-dependency-tree = 2.2-2.fc23
-Provides: mvn(org.apache.maven.shared:maven-dependency-tree) = 2.2
-Provides: mvn(org.apache.maven.shared:maven-dependency-tree:pom:) = 2.2
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.plexus:plexus-component-annotations)
-Requires: mvn(org.eclipse.aether:aether-api)
-Requires: mvn(org.eclipse.aether:aether-util)
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: maven-dependency-tree-2.2-2.fc23.cpio
+Name:          maven-dependency-tree
+Version:       2.2
+Release:       alt1_2jpp8
+Summary:       Maven dependency tree artifact
+Group:         Development/Java
+License:       ASL 2.0
+Url:           http://maven.apache.org/
+Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:     noarch
+
+Patch0001:     0001-Port-to-Maven-3.1.0-and-Eclipse-Aether.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.eclipse.aether:aether-api)
+BuildRequires:  mvn(org.eclipse.aether:aether-util)
+
+Provides:      maven-shared-dependency-tree = %{version}-%{release}
+Obsoletes:     maven-shared-dependency-tree < %{version}-%{release}
+Source44: import.info
 
 %description
 Apache Maven dependency tree artifact. Originally part of maven-shared.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0001 -p1
+
+%pom_remove_plugin :apache-rat-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Incompatible version of jMock (Fedora has 2.x, upstream uses 1.x)
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
