@@ -1,43 +1,51 @@
-Name: plexus-pom
-Version: 3.3.3
-Summary: Root Plexus Projects POM
-License: ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-pom
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus:pom:) = 3.3.3
-Provides: plexus-pom = 3.3.3-2.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.sonatype.forge:forge-parent:pom:)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:          plexus-pom
+Version:       3.3.3
+Release:       alt1_2jpp8
+Summary:       Root Plexus Projects POM
+Group:         Development/Java
+License:       ASL 2.0
+URL:           https://github.com/codehaus-plexus/plexus-pom
+Source0:       https://github.com/codehaus-plexus/plexus-pom/archive/plexus-%{version}.tar.gz
+Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+BuildArch:     noarch
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: plexus-pom-3.3.3-2.fc23.cpio
+BuildRequires: maven-local
+BuildRequires: forge-parent
+Source44: import.info
 
 %description
 The Plexus project provides a full software stack for creating and
 executing software projects.  This package provides parent POM for
 Plexus packages.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n plexus-pom-plexus-%{version}
+# require: maven-site-plugin *
+%pom_xpath_remove "pom:profile[pom:id='maven-3']"
+# * require: org.codehaus.plexus plexus-stylus-skin 1.0
+# org.apache.maven.wagon wagon-webdav-jackrabbit 1.0
+%pom_remove_plugin org.apache.maven.plugins:maven-site-plugin
+
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
+cp -p %{SOURCE1} LICENSE
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.3-alt1_2jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.3-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
