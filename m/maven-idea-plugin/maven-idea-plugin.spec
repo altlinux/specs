@@ -1,18 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-idea-plugin
-Version:        2.2
-Release:        alt3_14jpp7
+Version:        2.2.1
+Release:        alt1_5jpp8
 Summary:        Maven IDEA Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/%{name}
-# svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-idea-plugin-2.2
-# tar caf maven-idea-plugin-2.2.tar.xz maven-idea-plugin-2.2
+# svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-idea-plugin-2.2.1
+# tar caf maven-idea-plugin-2.2.1.tar.xz maven-idea-plugin-2.2.1
 Source0:        %{name}-%{version}.tar.xz
 Source1:        http://apache.org/licenses/LICENSE-2.0.txt
 
@@ -21,7 +22,7 @@ BuildArch: noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -32,9 +33,6 @@ BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-
-Obsoletes:      maven2-plugin-idea <= 0:2.0.8
-Provides:       maven2-plugin-idea = 1:%{version}-%{release}
 Source44: import.info
 
 %description
@@ -70,6 +68,9 @@ cp %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_5jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_14jpp7
 - new release
 
