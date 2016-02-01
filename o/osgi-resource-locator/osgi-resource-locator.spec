@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          osgi-resource-locator
 Version:       1.0.1
-Release:       alt1_3jpp7
+Release:       alt1_7jpp8
 Summary:       OSGi resource locator bundle
 License:       CDDL or GPLv2 with exceptions
 Url:           http://hk2.java.net/
@@ -13,7 +14,6 @@ Source0:       %{name}-%{version}-src-svn.tar.gz
 # wget -O glassfish-LICENSE.txt https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resources/META-INF/LICENSE.txt
 # glassfish-master-pom package don't include the license file
 Source1:       glassfish-LICENSE.txt
-
 
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
@@ -44,9 +44,10 @@ sed -i 's/\r//' LICENSE.txt
 
 %pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-jar-plugin']" "<version>2.4</version>"
 
+%mvn_file :%{name} %{name}
+
 %build
 
-%mvn_file :%{name} %{name}
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -59,6 +60,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7jpp8
+- new version
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp7
 - new release
 
