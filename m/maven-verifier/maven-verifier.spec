@@ -1,46 +1,65 @@
-Name: maven-verifier
-Version: 1.6
-Summary: Maven verifier
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-verifier
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-shared-verifier = 1.6-1.fc23
-Provides: maven-verifier = 1.6-1.fc23
-Provides: mvn(org.apache.maven.shared:maven-verifier) = 1.6
-Provides: mvn(org.apache.maven.shared:maven-verifier:pom:) = 1.6
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(junit:junit)
-Requires: mvn(org.apache.maven.shared:maven-shared-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-verifier-1.6-1.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-verifier
+Version:        1.6
+Release:        alt1_1jpp8
+Summary:        Maven verifier
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/maven-verifier
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
+
+Obsoletes:      maven-shared-verifier < %{version}-%{release}
+Provides:       maven-shared-verifier = %{version}-%{release}
+Source44: import.info
 
 %description
 Provides a test harness for Maven integration tests.
 
 This is a replacement package for maven-shared-verifier
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+    
+%description javadoc
+API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
+
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1jpp8
+- new version
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
