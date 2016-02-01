@@ -1,31 +1,28 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          xmlstreambuffer
-Version:       1.5.1
-Release:       alt1_3jpp7
+Version:       1.5.4
+Release:       alt1_2jpp8
 Summary:       XML Stream Buffer
 License:       CDDL or GPLv2 with exceptions
 Url:           http://java.net/projects/xmlstreambuffer/
-# svn export https://svn.java.net/svn/xmlstreambuffer~svn/tags/streambuffer-1.5.1/ xmlstreambuffer-1.5.1
-# find xmlstreambuffer-1.5.1/ -name '*.class' -delete
-# find xmlstreambuffer-1.5.1/ -name '*.jar' -delete
-# find xmlstreambuffer-1.5.1/ -name '*.zip' -delete
-# tar czf xmlstreambuffer-1.5.1-src-svn.tar.gz xmlstreambuffer-1.5.1
-Source0:       %{name}-%{version}-src-svn.tar.gz
+# svn export https://svn.java.net/svn/xmlstreambuffer~svn/tags/streambuffer-1.5.4/ xmlstreambuffer-1.5.4
+# find xmlstreambuffer-1.5.4/ -name '*.class' -delete
+# find xmlstreambuffer-1.5.4/ -name '*.jar' -delete
+# find xmlstreambuffer-1.5.4/ -name '*.zip' -delete
+# tar cJf xmlstreambuffer-1.5.4.tar.xz xmlstreambuffer-1.5.4
+Source0:       %{name}-%{version}.tar.xz
 # wget -O glassfish-LICENSE.txt https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resources/META-INF/LICENSE.txt
 # xmlstreambuffer package don't include the license file
 Source1:       glassfish-LICENSE.txt
 
 BuildRequires: jvnet-parent
-
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-surefire-provider-junit4
-
-BuildRequires: bea-stax-api
+BuildRequires: maven-surefire-provider-junit
 BuildRequires: stax-ex >= 1.7.1
-
 # test deps
 BuildRequires: junit
 BuildRequires: woodstox-core
@@ -65,11 +62,20 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 
-%pom_remove_dep javax.activation:activation
-sed -i "s|<artifactId>wstx-asl</artifactId>|<artifactId>woodstox-core-asl</artifactId>|" pom.xml
+%pom_remove_plugin :maven-deploy-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :glassfish-copyright-maven-plugin
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+%pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox']/pom:artifactId" woodstox-core-asl
 
 cp -p %{SOURCE1} LICENSE.txt
 sed -i 's/\r//' LICENSE.txt
+
+rm -r test/com/sun/xml/stream/buffer/stax/InscopeNamespaceTest.java
 
 %mvn_file :streambuffer %{name}
 
@@ -87,6 +93,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_2jpp8
+- new version
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_3jpp7
 - new release
 
