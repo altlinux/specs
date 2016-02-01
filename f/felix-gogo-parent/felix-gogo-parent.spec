@@ -1,18 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name felix-gogo-parent
-%define version 0.6.0
-%global project   felix-gogo
-%global pkgname   parent
-
-%{!?scl:%global pkg_name %{name}}
-%{?scl:%scl_package %{project}-%{pkgname}}
-
-Name:             %{?scl_prefix}%{project}-%{pkgname}
+BuildRequires: jpackage-generic-compat
+Name:             felix-gogo-parent
 Version:          0.6.0
-Release:          alt2_8jpp7
+Release:          alt2_13jpp8
 Summary:          Parent package for Felix Gogo
 License:          ASL 2.0
 URL:              http://felix.apache.org/site/apache-felix-gogo.html
@@ -23,13 +15,12 @@ BuildArch:        noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:felix-parent)
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-compiler-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.mockito:mockito-all)
-
-%{?scl:Requires: %scl_runtime}
 Source44: import.info
+Provides: mvn(org.apache.felix:gogo-parent) = 0.6.0
 
 %description
 Apache Felix is a community effort to implement the OSGi R4 Service Platform
@@ -53,6 +44,9 @@ dynamic service deployment framework that is amenable to remote management.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_8jpp7
 - new release
 
