@@ -1,16 +1,14 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global project_version 1.0-beta-2
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt2_0.13.beta2jpp7
+Release:        alt2_0.18.beta2jpp8
 Summary:        Plexus Container-Backed Active Collections
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://plexus.codehaus.org/
 #svn export http://svn.codehaus.org/plexus/tags/plexus-active-collections-1.0-beta-2/
@@ -22,44 +20,19 @@ Patch0:         %{name}-migration-to-component-metadata.patch
 
 BuildArch: noarch
 
-BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  ant
 BuildRequires:  maven-local
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-shared-reporting-impl
-BuildRequires:  maven-plugin-testing-harness
-BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-component-api
-BuildRequires:  junit
-
-Requires:          plexus-component-api
-Requires:          plexus-containers-container-default
-Requires:          plexus-utils
-Requires:          junit
-Requires:          jpackage-utils
 Source44: import.info
-
 
 %description
 Plexus Container-Backed Active Collections
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
-
 
 %prep
 %setup -q -n %{name}-%{project_version}
@@ -67,36 +40,21 @@ API documentation for %{name}.
 cp %{SOURCE1} .
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/plexus
-install -m 644 target/%{name}-%{project_version}.jar %{buildroot}%{_javadir}/plexus/%{name}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP.plexus-%{name}.pom 
-%add_maven_depmap JPP.plexus-%{name}.pom plexus/%{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE-2.0.txt
-%{_javadir}/plexus/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
-%{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.18.beta2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.13.beta2jpp7
 - new release
 
