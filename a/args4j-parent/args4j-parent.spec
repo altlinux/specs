@@ -1,29 +1,24 @@
-Name: args4j
+Name: args4j-parent
 Version: 2.32
-Summary: Java command line arguments parser
+Summary: args4j parent POM
 License: MIT
 Url: http://args4j.kohsuke.org
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: args4j = 2.32-1.fc23
-Provides: mvn(args4j:args4j) = 2.32
-Provides: mvn(args4j:args4j:pom:) = 2.32
+Provides: args4j-parent = 2.32-1.fc23
+Provides: mvn(args4j:args4j-site:pom:) = 2.32
 Requires: java-headless
 Requires: jpackage-utils
+Requires: mvn(org.apache.felix:maven-bundle-plugin)
+Requires: mvn(org.apache.maven.plugins:maven-site-plugin)
+Requires: mvn(org.kohsuke:pom:pom:)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: args4j-2.32-1.fc23.cpio
+Source: args4j-parent-2.32-1.fc23.cpio
 
 %description
-args4j is a small Java class library that makes it easy
-to parse command line options/arguments in your CUI application.
-- It makes the command line parsing very easy by using annotations
-- You can generate the usage screen very easily
-- You can generate HTML/XML that lists all options for your documentation
-- Fully supports localization
-- It is designed to parse javac like options (as opposed to GNU-style
-  where ls -lR is considered to have two options l and R)
+This package contains parent POM for args4j project.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
