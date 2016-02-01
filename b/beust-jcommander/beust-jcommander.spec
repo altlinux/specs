@@ -1,42 +1,53 @@
-Name: beust-jcommander
-Version: 1.47
-Summary: Java framework for parsing command line parameters
-License: ASL 2.0
-Url: http://jcommander.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: beust-jcommander = 1.47-2.fc23
-Provides: mvn(com.beust:jcommander) = 1.47
-Provides: mvn(com.beust:jcommander:pom:) = 1.47
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: beust-jcommander-1.47-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global short_name   jcommander
+
+Name:             beust-%{short_name}
+Version:          1.47
+Release:          alt1_2jpp8
+Summary:          Java framework for parsing command line parameters
+License:          ASL 2.0
+URL:              http://jcommander.org/
+Source0:          https://github.com/cbeust/%{short_name}/archive/%{short_name}-%{version}.tar.gz
+BuildArch:        noarch
+BuildRequires:    maven-local
+Source44: import.info
 
 %description
 JCommander is a very small Java framework that makes it trivial to
 parse command line parameters (with annotations).
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{short_name}-%{version}
+chmod -x license.txt
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_file : %{name}
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc license.txt notice.md README.markdown
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc license.txt notice.md
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1_2jpp8
+- new version
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.47-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
