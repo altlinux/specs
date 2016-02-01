@@ -1,56 +1,42 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          ehcache-parent
 Version:       2.3
-Release:       alt2_5jpp7
+Release:       alt2_10jpp8
 Summary:       Ehcache Parent
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://www.terracotta.org/
 # svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-parent-2.3
 # tar czf ehcache-parent-2.3-src-svn.tar.gz ehcache-parent-2.3
 Source0:       ehcache-parent-2.3-src-svn.tar.gz
-BuildRequires: jpackage-utils
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-gpg-plugin
-BuildRequires: maven-idea-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-pmd-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: maven-surefire-plugin
-Requires: jpackage-utils
+BuildRequires: maven-local
 BuildArch: noarch
 Source44: import.info
 Provides: ehcache1-parent = %version
 Obsoletes: ehcache1-parent < 2.0
-
+Provides: mvn(net.sf.ehcache:ehcache-parent) = 2.3
 
 %description
 Ehcache is a widely used, pure Java, in-process, distributed cache.
 
 %prep
-
 %setup -q -n ehcache-parent-%{version}
 
 %build
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
+%mvn_install
 
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_5jpp7
 - new release
 
