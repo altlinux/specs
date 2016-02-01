@@ -1,41 +1,45 @@
-Name: maven-parent
-Version: 26
-Summary: Apache Maven parent POM
-License: ASL 2.0
-Url: http://maven.apache.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-parent = 26-2.fc23
-Provides: mvn(org.apache.maven:maven-parent:pom:) = 26
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache:apache:pom:)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-parent-26-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-parent
+Version:        26
+Release:        alt1_2jpp8
+Summary:        Apache Maven parent POM
+License:        ASL 2.0
+URL:            http://maven.apache.org
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  apache-parent
+Source44: import.info
 
 %description
 Apache Maven parent POM file used by other Maven projects.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :apache-rat-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 26-alt1_2jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 26-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
