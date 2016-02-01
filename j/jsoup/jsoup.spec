@@ -1,19 +1,22 @@
-Name: jsoup
-Version: 1.8.2
-Summary: Java library for working with real-world HTML
-License: MIT
-Url: http://jsoup.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jsoup = 1.8.2-2.fc23
-Provides: mvn(org.jsoup:jsoup) = 1.8.2
-Provides: mvn(org.jsoup:jsoup:pom:) = 1.8.2
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jsoup-1.8.2-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           jsoup
+Version:        1.8.2
+Release:        alt1_2jpp8
+Summary:        Java library for working with real-world HTML
+License:        MIT
+URL:            http://%{name}.org/
+BuildArch:      noarch
+
+Source0:        https://github.com/jhy/jsoup/archive/jsoup-%{version}%{?vertag}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+Source44: import.info
 
 %description
 jsoup is a Java library for working with real-world HTML.
@@ -34,24 +37,36 @@ jsoup is designed to deal with all varieties of HTML found in the wild;
 from pristine and validating, to invalid tag-soup;
 jsoup will create a sensible parse tree.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n jsoup-jsoup-%{version}%{?vertag}
+%pom_remove_plugin :animal-sniffer-maven-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README CHANGES
+%doc LICENSE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_2jpp8
+- new version
+
 * Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
