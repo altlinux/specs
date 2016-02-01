@@ -1,40 +1,78 @@
-Name: xerces-j2
-Version: 2.11.0
-Summary: Java XML parser
-License: ASL 2.0
-Url: http://xerces.apache.org/xerces2-j/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jaxp_parser_impl = 1.4
-Provides: mvn(apache:xerces-j2) = 2.11.0
-Provides: mvn(apache:xerces-j2:pom:) = 2.11.0
-Provides: mvn(xerces:xerces) = 2.11.0
-Provides: mvn(xerces:xerces:pom:) = 2.11.0
-Provides: mvn(xerces:xercesImpl) = 2.11.0
-Provides: mvn(xerces:xercesImpl:pom:) = 2.11.0
-Provides: mvn(xerces:xmlParserAPIs) = 2.11.0
-Provides: mvn(xerces:xmlParserAPIs:pom:) = 2.11.0
-Provides: xerces-j2 = 2.11.0-23.fc23
-Provides: xerces-j2-scripts = 2.11.0-23.fc23
-Requires: /bin/sh
-Requires: /bin/sh
-Requires: /bin/sh
-Requires: chkconfig
-Requires: chkconfig
-Requires: java-headless
-Requires: java-headless
-Requires: jaxp_parser_impl
-Requires: jaxp_parser_impl
-Requires: jpackage-utils
-Requires: jpackage-utils
-Requires: xalan-j2
-Requires: xml-commons-apis
-Requires: xml-commons-resolver
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global cvs_version 2_11_0
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt2jpp
-Source: xerces-j2-2.11.0-23.fc23.cpio
+%define __requires_exclude system.bundle
+
+Name:          xerces-j2
+Version:       2.11.0
+Release:       alt3_23jpp8
+Summary:       Java XML parser
+Group:         Development/Java
+License:       ASL 2.0
+URL:           http://xerces.apache.org/xerces2-j/
+
+Source0:       http://mirror.ox.ac.uk/sites/rsync.apache.org/xerces/j/source/Xerces-J-src.%{version}.tar.gz
+Source1:       %{name}-version.sh
+Source2:       %{name}-constants.sh
+Source11:      %{name}-version.1
+Source12:      %{name}-constants.1
+
+# Custom javac ant task used by the build
+Source3:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/XJavac.java
+
+# Custom doclet tags used in javadocs
+Source5:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/ExperimentalTaglet.java
+Source6:       https://svn.apache.org/repos/asf/xerces/java/tags/Xerces-J_%{cvs_version}/tools/src/InternalTaglet.java
+
+Source7:       %{name}-pom.xml
+
+# Patch the build so that it doesn't try to use bundled xml-commons source
+Patch0:        %{name}-build.patch
+
+# Patch the manifest so that it includes OSGi stuff
+Patch1:        %{name}-manifest.patch
+
+# Backported fix from upstream http://svn.apache.org/viewvc?view=revision&revision=1499506
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1140031
+Patch2:        xerces-j2-CVE-2013-4002.patch
+
+BuildArch:     noarch
+
+BuildRequires: jpackage-utils
+BuildRequires: xalan-j2 >= 2.7.1
+BuildRequires: xml-commons-apis >= 1.4.01
+BuildRequires: xml-commons-resolver >= 1.2
+BuildRequires: ant
+BuildRequires: jaxp_parser_impl
+BuildRequires: fonts-ttf-dejavu
+BuildRequires: xerces-j2
+Requires:      jpackage-utils
+Requires:      xalan-j2 >= 2.7.1
+Requires:      xml-commons-apis >= 1.4.01
+Requires:      xml-commons-resolver >= 1.2
+
+Provides:      jaxp_parser_impl = 1.4
+Provides:      %{name}-scripts = %{version}-%{release}
+Obsoletes:     %{name}-scripts < 2.11.0-6
+
+Requires(post): jaxp_parser_impl
+Requires(preun): jaxp_parser_impl
+
+# This documentation is provided by xml-commons-apis
+Obsoletes:     %{name}-javadoc-apis < %{version}-%{release}
+
+# http://mail-archives.apache.org/mod_mbox/xerces-j-dev/201008.mbox/%3COF8D7E2F83.0271A181-ON8525777F.00528302-8525777F.0054BBE0@ca.ibm.com%3E
+Obsoletes:     %{name}-manual < %{version}-%{release}
+Source44: import.info
 
 %description
 Welcome to the future! Xerces2 is the next generation of high performance,
@@ -63,34 +101,128 @@ also handles name spaces according to the XML Namespaces 1.1 Recommendation,
 and will correctly serialize XML 1.1 documents if the DOM level 3 load/save
 APIs are in use.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package        javadoc
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+
+# Consolidating all javadocs into one package
+Obsoletes:      %{name}-javadoc-impl < %{version}-%{release}
+Obsoletes:      %{name}-javadoc-xs < %{version}-%{release}
+Obsoletes:      %{name}-javadoc-xni < %{version}-%{release}
+Obsoletes:      %{name}-javadoc-other < %{version}-%{release}
+BuildArch: noarch
+
+%description    javadoc
+This package contains the API documentation for %{name}.
+
+%package        demo
+Summary:        Demonstrations and samples for %{name}
+Group:          Development/Java
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+
+%description    demo
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n xerces-%{cvs_version}
+%patch0 -p0 -b .orig
+%patch1 -p0 -b .orig
+%patch2 -p0 -b .orig
+
+# Copy the custom ant tasks into place
+mkdir -p tools/org/apache/xerces/util
+mkdir -p tools/bin
+cp -a %{SOURCE3} %{SOURCE5} %{SOURCE6} tools/org/apache/xerces/util
+
+# Make sure upstream hasn't sneaked in any jars we don't know about
+find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -exec rm -f '{}' \;
+
+sed -i 's/\r//' LICENSE README NOTICE
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+pushd tools
+
+# Build custom ant tasks
+javac -classpath $(build-classpath ant) org/apache/xerces/util/XJavac.java
+jar cf bin/xjavac.jar org/apache/xerces/util/XJavac.class
+
+# Build custom doc taglets
+javac -classpath /usr/lib/jvm/java/lib/tools.jar org/apache/xerces/util/*Taglet.java
+jar cf bin/xerces2taglets.jar org/apache/xerces/util/*Taglet.class
+
+ln -sf $(build-classpath xalan-j2-serializer) serializer.jar
+ln -sf $(build-classpath xml-commons-apis) xml-apis.jar
+ln -sf $(build-classpath xml-commons-resolver) resolver.jar
+ln -sf $(build-classpath xerces-j2) x.jar
+popd
+
+# Build everything
+export ANT_OPTS="-Xmx256m -Djava.endorsed.dirs=$(pwd)/tools -Djava.awt.headless=true -Dbuild.sysclasspath=first -Ddisconnected=true"
+ant -Djavac.source=1.5 -Djavac.target=1.5 \
+    -Dbuild.compiler=modern \
+    clean jars javadocs
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+# jars
+install -pD -T build/xercesImpl.jar %{buildroot}%{_javadir}/%{name}.jar
 
-%preun
-{
-  [ $1 = 0 ] || exit 0
-  update-alternatives --remove jaxp_parser_impl /usr/share/java/xerces-j2.jar
-} >/dev/null 2>&1 || :
+# javadoc
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/impl
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/xs
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/xni
+mkdir -p %{buildroot}%{_javadocdir}/%{name}/other
 
-%post
-update-alternatives --install /usr/share/java/jaxp_parser_impl.jar \
-  jaxp_parser_impl /usr/share/java/xerces-j2.jar 40
+cp -pr build/docs/javadocs/xerces2/* %{buildroot}%{_javadocdir}/%{name}/impl
+cp -pr build/docs/javadocs/api/* %{buildroot}%{_javadocdir}/%{name}/xs
+cp -pr build/docs/javadocs/xni/* %{buildroot}%{_javadocdir}/%{name}/xni
+cp -pr build/docs/javadocs/other/* %{buildroot}%{_javadocdir}/%{name}/other
 
+# scripts
+install -pD -m755 -T %{SOURCE1} %{buildroot}%{_bindir}/%{name}-version
+install -pD -m755 -T %{SOURCE2} %{buildroot}%{_bindir}/%{name}-constants
 
-%files -f %name-list
+# manual pages
+install -d -m 755 %{buildroot}%{_mandir}/man1
+install -p -m 644 %{SOURCE11} %{buildroot}%{_mandir}/man1
+install -p -m 644 %{SOURCE12} %{buildroot}%{_mandir}/man1
+
+# demo
+install -pD -T build/xercesSamples.jar %{buildroot}%{_datadir}/%{name}/%{name}-samples.jar
+cp -pr data %{buildroot}%{_datadir}/%{name}
+
+# Pom
+install -pD -T -m 644 %{SOURCE7} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+# Depmap with legacy depmaps for compatability
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "xerces:xerces,xerces:xmlParserAPIs,apache:xerces-j2"
+
+# jaxp_parser_impl ghost symlink
+ln -s %{_sysconfdir}/alternatives \
+  %{buildroot}%{_javadir}/jaxp_parser_impl.jar
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_parser_impl_xerces-j2<<EOF
+%{_javadir}/jaxp_parser_impl.jar	%{_javadir}/%{name}.jar	40
+EOF
+
+%files -f .mfiles
+%_altdir/jaxp_parser_impl_xerces-j2
+%doc LICENSE NOTICE README
+%{_javadir}/%{name}*
+%{_bindir}/*
+%{_mandir}/*/*
+
+%files javadoc
+%{_javadocdir}/%{name}
+
+%files demo
+%{_datadir}/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt3_23jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.11.0-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
