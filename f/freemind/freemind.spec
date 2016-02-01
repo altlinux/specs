@@ -17,7 +17,7 @@
 # wait for xstream
 Name: freemind
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: A Program for creating and viewing Mindmaps
 
@@ -34,7 +34,7 @@ Source1: %name.desktop
 Source2: %name.xml
 Requires: java >= 1.5.0
 
-BuildRequires: ant-antlr ant-bcel ant-bsf ant-commons-logging ant-commons-net ant-jai ant-jakarta-oro ant-jakarta-regexp ant-javamail ant-jdepend ant-jmf ant-jsch ant-log4j ant-swing ant-trax ant-xml-resolver gnu-regexp xerces-j2
+BuildRequires: ant gnu-regexp xerces-j2
 #BuildRequires: batik batik-squiggle gnu-regexp groovy jtidy rhino
 
 BuildRequires: java-devel-default
@@ -86,6 +86,9 @@ install -D -m644 images/FreeMindWindowIcon.png %buildroot%_pixmapsdir/%name.png
 %_pixmapsdir/*.png
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1.1
+- NMU: corrected java BuildRequires
+
 * Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
 
