@@ -1,49 +1,67 @@
-Name: maven-jar-plugin
-Version: 2.6
-Summary: Maven JAR Plugin
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-jar-plugin/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-jar-plugin = 2.6-2.fc23
-Provides: mvn(org.apache.maven.plugins:maven-jar-plugin) = 2.6
-Provides: mvn(org.apache.maven.plugins:maven-jar-plugin:pom:) = 2.6
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven:maven-archiver)
-Requires: mvn(org.apache.maven:maven-artifact)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-Requires: mvn(org.codehaus.plexus:plexus-archiver)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-jar-plugin
+Version:        2.6
+Release:        alt1_2jpp8
+Summary:        Maven JAR Plugin
+
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-jar-plugin/
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: maven-jar-plugin-2.6-2.fc23.cpio
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+Source44: import.info
 
 %description
 Builds a Java Archive (JAR) file from the compiled
 project classes and resources.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Test class MockArtifact doesn't override method getMetadata
+%mvn_build -f -- -DmavenVersion=3.1.1
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_2jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
