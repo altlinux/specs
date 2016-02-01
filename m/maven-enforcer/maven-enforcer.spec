@@ -1,42 +1,106 @@
-Name: maven-enforcer
-Version: 1.4
-Summary: Maven Enforcer
-License: ASL 2.0
-Url: http://maven.apache.org/enforcer
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-enforcer = 1.4-2.fc23
-Provides: mvn(org.apache.maven.enforcer:enforcer:pom:) = 1.4
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven:maven-parent:pom:)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-enforcer-1.4-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-enforcer
+Version:        1.4
+Release:        alt1_2jpp8
+Summary:        Maven Enforcer
+License:        ASL 2.0
+URL:            http://maven.apache.org/enforcer
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/enforcer/enforcer/%{version}/enforcer-%{version}-source-release.zip
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.beanshell:bsh)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
 
 %description
 Enforcer is a build rule execution framework.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
+%package api
+Group: Development/Java
+Summary:        Enforcer API
+Provides: maven-shared-enforcer-rule-api = %{version}-%{release}
+
+%description api
+This component provides the generic interfaces needed to
+implement custom rules for the maven-enforcer-plugin.
+
+%package rules
+Group: Development/Java
+Summary:        Enforcer Rules
+
+%description rules
+This component contains the standard Enforcer Rules.
+
+%package plugin
+Group: Development/Java
+Summary:        Enforcer Rules
+
+%description plugin
+This component contains the standard Enforcer Rules.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n enforcer-%{version}
+%pom_add_dep org.apache.maven:maven-compat enforcer-rules
+
+# Replace plexus-maven-plugin with plexus-component-metadata
+sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-component-metadata</artifactId>|" \
+    -e "s|<goal>descriptor</goal>|<goal>generate-metadata</goal>|" \
+    -i enforcer-{api,rules}/pom.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -s -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles-enforcer
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files api -f .mfiles-enforcer-api
+%doc LICENSE NOTICE
+%dir %{_javadir}/%{name}
+
+%files rules -f .mfiles-enforcer-rules
+
+%files plugin -f .mfiles-maven-enforcer-plugin
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_2jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
