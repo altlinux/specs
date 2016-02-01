@@ -1,42 +1,58 @@
-Name: maven-shared
-Version: 21
-Summary: Maven Shared Components
-License: ASL 2.0
-Url: http://maven.apache.org/shared/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-shared = 21-2.fc23
-Provides: mvn(org.apache.maven.shared:maven-shared-components:pom:) = 21
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven:maven-parent:pom:)
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Summary:        Maven Shared Components
+URL:            http://maven.apache.org/shared/
+Name:           maven-shared
+Version:        21
+Release:        alt1_2jpp8
+License:        ASL 2.0
+Group:          Development/Java
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: maven-shared-21-2.fc23.cpio
+Source0:        https://github.com/apache/%{name}/archive/%{name}-components-%{version}.tar.gz
+
+BuildRequires:  maven-local
+
+BuildArch:      noarch
+
+# Obsoleting retired subpackages. The packages with hardcoded versions and
+# releases had their versions manually set in maven-shared-15 to something else
+# than {version}. To make the change effective, the release below is one
+# greater than the last release of maven-shared-15 in rawhide.
+Obsoletes:      maven-shared-ant < 1.0-32
+Obsoletes:      maven-shared-model-converter < 2.3-32
+Obsoletes:      maven-shared-runtime < 1.0-32
+Obsoletes:      maven-shared-monitor < 1.0-32
+Obsoletes:      maven-shared-javadoc < %{version}-%{release}
+Source44: import.info
 
 %description
 Maven Shared Components
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-components-%{version}
+chmod -R go=u-w *
+
+# Maven-scm-publish-plugin is not in Fedora
+%pom_remove_plugin org.apache.maven.plugins:maven-scm-publish-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:21-alt1_2jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:21-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
