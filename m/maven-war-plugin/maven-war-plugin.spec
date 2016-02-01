@@ -1,47 +1,43 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Requires: xpp3-minimal
 BuildRequires: xpp3-minimal
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-war-plugin
-Version:        2.4
-Release:        alt1_1jpp7
+Version:        2.5
+Release:        alt1_3jpp8
 Summary:        Maven WAR Plugin
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-war-plugin/
+BuildArch:      noarch
+
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-BuildArch: noarch
-
-# Basic stuff
-BuildRequires: jpackage-utils
-# Maven and its dependencies
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-shared-filtering
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-changes-plugin
-# Others
-BuildRequires: xstream
-
-Requires: maven
-Requires: xstream
-Requires: jpackage-utils
-
-Provides:       maven2-plugin-war = 0:%{version}-%{release}
-Obsoletes:      maven2-plugin-war <= 0:2.0.8
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(com.thoughtworks.xstream:xstream)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
+BuildRequires:  mvn(org.apache.maven.shared:maven-mapping)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-io)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -49,9 +45,8 @@ Builds a Web Application Archive (WAR) file from the project output and its
 dependencies.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -73,6 +68,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_1jpp7
 - new release
 
