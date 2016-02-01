@@ -1,25 +1,33 @@
-Name: jtidy
-Version: 1.0
-Summary: HTML syntax checker and pretty printer
-License: zlib
-Url: http://jtidy.sourceforge.net/
-Epoch: 3
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jtidy = 2:1.0-0.21.20100930svn1125.fc23
-Provides: mvn(jtidy:jtidy) = 8.0.SNAPSHOT
-Provides: mvn(jtidy:jtidy:pom:) = 8.0.SNAPSHOT
-Provides: mvn(net.sf.jtidy:jtidy) = 8.0.SNAPSHOT
-Provides: mvn(net.sf.jtidy:jtidy:pom:) = 8.0.SNAPSHOT
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
-Requires: jpackage-utils
-Requires: xml-commons-apis
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: jtidy-1.0-0.21.20100930svn1125.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global jtidyversion r938
+
+Name:             jtidy
+Version:          1.0
+Release:          alt3_0.21.20100930svn1125jpp8
+Epoch:            3
+Summary:          HTML syntax checker and pretty printer
+License:          zlib
+URL:              http://jtidy.sourceforge.net/
+# svn export -r1125 https://jtidy.svn.sourceforge.net/svnroot/jtidy/trunk/jtidy/ jtidy
+# tar caf jtidy.tar.xz jtidy
+Source0:          %{name}.tar.xz
+Source1:          %{name}.jtidy.script
+BuildArch:        noarch
+
+BuildRequires:    jpackage-utils
+BuildRequires:    ant
+BuildRequires:    xml-commons-apis
+
+Requires:         jpackage-utils
+Requires:         xml-commons-apis
+Source44: import.info
 
 %description
 JTidy is a Java port of HTML Tidy, a HTML syntax checker and pretty
@@ -29,24 +37,62 @@ DOM interface to the document that is being processed, which
 effectively makes you able to use JTidy as a DOM parser for real-world
 HTML.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}
+
+%pom_remove_dep xerces:dom3-xml-apis
+
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+ant -Dant.build.javac.source=1.4
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+# jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 target/%{name}-%{jtidyversion}.jar %{buildroot}%{_javadir}/%{name}.jar
+
+# pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap -a net.sf.jtidy:%{name}
+
+# javadoc
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}/
+cp -pr target/javadoc/* %{buildroot}%{_javadocdir}/%{name}/
+
+# shell script
+mkdir -p %{buildroot}%{_bindir}
+cp -ap %{SOURCE1} %{buildroot}%{_bindir}/%{name}
+
+# ant.d
+mkdir -p %{buildroot}%{_sysconfdir}/ant.d
+cat > %{buildroot}%{_sysconfdir}/ant.d/%{name} << EOF
+jtidy
+EOF
 
 
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE.txt
+%attr(755, root, root) %{_bindir}/*
+%config(noreplace) %{_sysconfdir}/ant.d/%{name}
+
+%files javadoc
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
+
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt3_0.21.20100930svn1125jpp8
+- new version
+
 * Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 3:1.0-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
