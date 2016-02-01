@@ -1,83 +1,49 @@
+Name: apache-commons-exec
+Version: 1.3
+Summary: Java library to reliably execute external processes from within the JVM
+License: ASL 2.0
+Url: http://commons.apache.org/exec/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /bin/ping
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global base_name exec
-%global short_name commons-%{base_name}
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-exec = 1.3-3.fc23
+Provides: mvn(org.apache.commons:commons-exec) = 1.3
+Provides: mvn(org.apache.commons:commons-exec:pom:) = 1.3
+Requires: java-headless
+Requires: java-headless
+Requires: jpackage-utils
+Requires: jpackage-utils
 
-Name:           apache-commons-exec
-Version:        1.1
-Release:        alt1_8jpp7
-Summary:        Java library to reliably execute external processes from within the JVM
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://commons.apache.org/exec/
-Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-
-BuildRequires:  iputils
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-local
-Requires:       jpackage-utils
-BuildArch:      noarch
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: apache-commons-exec-1.3-3.fc23.cpio
 
 %description
 Commons Exec is a library for dealing with external process execution and
 environment management in Java.
 
-
-%package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
-
-# Shell scripts used for unit tests must be executable (see
-# http://commons.apache.org/exec/faq.html#environment-testing)
-chmod a+x src/test/scripts/*.sh
-
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{short_name}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-cp -p pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files
-%doc LICENSE.txt NOTICE.txt STATUS
-%{_mavenpomdir}/*
-%{_javadir}/*.jar
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
-
+%files -f %name-list
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_8jpp7
 - new version
 
