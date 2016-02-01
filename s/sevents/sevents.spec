@@ -1,6 +1,6 @@
 Name: sevents
 Version: 1.2
-Release: alt6.r69
+Release: alt7.r69
 
 Summary: System of Events programming with random factor
 Summary(ru_RU.UTF8): Система событийного программирования с фактором случайности
@@ -13,8 +13,8 @@ Patch: sevents-distribution.patch
 Packager: Rinat Bikov <becase@altlinux.org>
 
 BuildRequires(pre): /proc rpm-build-java
-BuildRequires(pre): java-devel >= 1.6.0
-BuildRequires(pre): ant ant-optional ant-nodeps junit
+BuildRequires(pre): java-devel-default
+BuildRequires(pre): ant ant-junit ant-nodeps junit
 
 Requires: %name-main %name-libloader
 
@@ -98,6 +98,9 @@ ln -s -f %_javadir/%name-%version.jar %buildroot/%_javadir/%name.jar
 %_bindir/libseventsloader
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt7.r69
+- NMU: updated java dependencies
+
 * Mon Feb 7 2011 Rinat Bikov <becase@altlinux.org> 1.2-alt6.r69
 - created second, main noarch package
 
