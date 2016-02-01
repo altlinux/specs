@@ -1,45 +1,53 @@
-Name: httpcomponents-project
-Version: 7
-Summary: Common POM file for HttpComponents
-License: ASL 2.0
-Url: http://hc.apache.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: httpcomponents-project = 7-2.fc23
-Provides: mvn(org.apache.httpcomponents:project:pom:) = 7
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-jar-plugin)
-Requires: mvn(org.apache:apache:pom:)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:              httpcomponents-project
+Summary:           Common POM file for HttpComponents
+Version:           7
+Release:           alt1_2jpp8
+Group:             Development/Java
+License:           ASL 2.0
+URL:               http://hc.apache.org/
+# svn export http://svn.apache.org/repos/asf/httpcomponents/project/tags/%{version} %{name}-%{version}
+# tar cJf %{name}-%{version}.tar.xz %{name}-%{version}
+Source:            %{name}-%{version}.tar.xz
+BuildArch:         noarch
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: httpcomponents-project-7-2.fc23.cpio
+BuildRequires:     maven-local
+Source44: import.info
+
+Obsoletes: hc-project < 4.1.1-alt1_1jpp6
+Provides: hc-project = %version-%release
+
 
 %description
 Common Maven POM  file for HttpComponents. This project should be
 required only for building dependant packages with Maven. Please don't
 use it as runtime requirement.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :clirr-maven-plugin
+%pom_remove_plugin :docbkx-maven-plugin
+%pom_remove_plugin :maven-clover2-plugin
+%pom_remove_plugin :maven-notice-plugin
+%pom_remove_plugin :maven-site-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_file  : %{name}
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt1_2jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 7-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
