@@ -1,43 +1,49 @@
-Name: apache-parent
-Version: 17
-Summary: Parent POM file for Apache projects
-License: ASL 2.0
-Url: http://apache.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-parent = 17-2.fc23
-Provides: mvn(org.apache:apache:pom:) = 17
-Provides: mvn(org.apache:apache) = 17
-Requires: apache-resource-bundles
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: apache-parent-17-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           apache-parent
+Version:        17
+Release:        alt1_2jpp8
+Summary:        Parent POM file for Apache projects
+License:        ASL 2.0
+URL:            http://apache.org/
+Source0:        http://repo1.maven.org/maven2/org/apache/apache/%{version}/apache-%{version}-source-release.zip
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  jpackage-utils
+BuildRequires:  apache-resource-bundles
+BuildRequires:  maven-remote-resources-plugin
+
+Requires:       apache-resource-bundles
+Source44: import.info
+Provides: mvn(org.apache:apache) = 17
 
 %description
 This package contains the parent pom file for apache projects.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -n apache-%{version}
+
+%pom_remove_plugin :maven-site-plugin pom.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 17-alt1_2jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 17-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
