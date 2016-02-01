@@ -1,20 +1,23 @@
-Name: plexus-interpolation
-Version: 1.22
-Summary: Plexus Interpolation API
-License: ASL 2.0 and ASL 1.1 and MIT
-Url: https://github.com/codehaus-plexus/plexus-interpolation
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus-interpolation) = 1.22
-Provides: mvn(org.codehaus.plexus:plexus-interpolation:pom:) = 1.22
-Provides: plexus-interpolation = 1.22-4.fc23
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: plexus-interpolation-1.22-4.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           plexus-interpolation
+Version:        1.22
+Release:        alt1_4jpp8
+Summary:        Plexus Interpolation API
+License:        ASL 2.0 and ASL 1.1 and MIT
+URL:            https://github.com/codehaus-plexus/plexus-interpolation
+BuildArch:      noarch
+
+Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+Source44: import.info
 
 %description
 Plexus interpolator is the outgrowth of multiple iterations of development
@@ -22,24 +25,32 @@ focused on providing a more modular, flexible interpolation framework for
 the expression language style commonly seen in Maven, Plexus, and other
 related projects.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_file : plexus/interpolation
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt1_4jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.22-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
