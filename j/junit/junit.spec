@@ -1,48 +1,113 @@
-Name: junit
-Version: 4.12
-Summary: Java regression test package
-License: EPL
-Url: http://www.junit.org/
-Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: junit = 1:4.12-3.fc23
-Provides: junit4 = 1:4.12-3.fc23
-Provides: mvn(junit:junit) = 4.12
-Provides: mvn(junit:junit:pom:) = 4.12
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.hamcrest:hamcrest-core)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: junit-4.12-3.fc23.cpio
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           junit
+Epoch:          1
+Version:        4.12
+Release:        alt1_3jpp8
+Summary:        Java regression test package
+License:        EPL
+URL:            http://www.junit.org/
+BuildArch:      noarch
+
+# ./clean-tarball.sh %{version}
+Source0:        %{name}-%{version}-clean.tar.gz
+Source3:        create-tarball.sh
+
+BuildRequires:  maven-local
+BuildRequires:  hamcrest
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
+Obsoletes:      %{name}-demo < 4.12
+Source44: import.info
+
+Provides: junit = 0:%{version}
+Provides: junit4 = %{epoch}:%{version}-%{release}
+Conflicts: junit4 < 1:4.11-alt3_1jpp7
+Obsoletes: junit4 < 1:4.11-alt3_1jpp7
+Obsoletes: junit-junit4 < 1:4.11-alt3_1jpp7
+Obsoletes: junit-junit3 < 1:3.8.2-alt9_10jpp6
+Conflicts: junit-junit4 < 1:4.11-alt3_1jpp7
+Conflicts: junit-junit3 < 1:3.8.2-alt9_10jpp6
 
 %description
-JUnit is a regression testing framework written by Erich Gamma and Kent Beck.
+JUnit is a regression testing framework written by Erich Gamma and Kent Beck. 
 It is used by the developer who implements unit tests in Java. JUnit is Open
-Source Software, released under the Common Public License Version 1.0 and
+Source Software, released under the Common Public License Version 1.0 and 
 hosted on GitHub.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package manual
+Group: Development/Java
+Summary:        Manual for %{name}
+BuildArch: noarch
+
+%description manual
+Documentation for %{name}.
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-r%{version}
+
+# InaccessibleBaseClassTest fails with Java 8
+sed -i /InaccessibleBaseClassTest/d src/test/java/org/junit/tests/AllTests.java
+
+%pom_remove_plugin :replacer
+sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >src/main/java/junit/runner/Version.java
+
+%pom_remove_plugin :animal-sniffer-maven-plugin
+
+# Removing hamcrest source jar references (not available and/or necessary)
+%pom_remove_plugin :maven-javadoc-plugin
+
+# Add proper Apache Felix Bundle Plugin instructions
+# so that we get a reasonable OSGi manifest.
+%pom_xpath_inject pom:project "<packaging>bundle</packaging>"
+%pom_xpath_inject pom:build/pom:plugins "
+    <plugin>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <extensions>true</extensions>
+      <configuration>
+        <instructions>
+          <Bundle-SymbolicName>org.junit</Bundle-SymbolicName>
+          <Export-Package>{local-packages},!org.hamcrest*,*;x-internal:=true</Export-Package>
+          <_nouses>true</_nouses>
+        </instructions>
+      </configuration>
+    </plugin>"
+
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
-ln -s junit.jar %buildroot/usr/share/java/junit4.jar
+%mvn_install
 
-%files -f %name-list
-/usr/share/java/junit4.jar
+%files -f .mfiles
+%doc LICENSE-junit.txt README.md
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-junit.txt
+
+%files manual
+%doc LICENSE-junit.txt
+%doc doc/*
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt1_3jpp8
+- new version
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.12-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
