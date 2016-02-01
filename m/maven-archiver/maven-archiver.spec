@@ -1,51 +1,77 @@
-Name: maven-archiver
-Version: 2.6
-Summary: Maven Archiver
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-archiver/
-Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-archiver = 0:2.6-2.fc23
-Provides: maven-shared-archiver = 2.6-2.fc23
-Provides: mvn(org.apache.maven:maven-archiver) = 2.6
-Provides: mvn(org.apache.maven:maven-archiver:pom:) = 2.6
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven.shared:maven-shared-utils)
-Requires: mvn(org.apache.maven:maven-artifact:2.2.1)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-model:2.2.1)
-Requires: mvn(org.codehaus.plexus:plexus-archiver)
-Requires: mvn(org.codehaus.plexus:plexus-interpolation)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-archiver-2.6-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-archiver
+Version:        2.6
+Release:        alt1_2jpp8
+Epoch:          0
+Summary:        Maven Archiver
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/maven-archiver/
+BuildArch:      noarch
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+# Port to Maven 3
+Patch0:         maven-archiver-maven-3.patch
+
+BuildRequires:  jpackage-utils >= 0:1.7.2
+BuildRequires:  maven-local
+BuildRequires:  maven-shared
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-doxia-sitetools
+BuildRequires:  maven-shared-jar
+BuildRequires:  plexus-interpolation
+BuildRequires:  plexus-archiver >= 2.1-1
+BuildRequires:  plexus-utils
+BuildRequires:  apache-commons-parent
+
+Provides:       maven-shared-archiver = %{version}-%{release}
+Obsoletes:      maven-shared-archiver < %{version}-%{release}
+Source44: import.info
 
 %description
 The Maven Archiver is used by other Maven plugins
 to handle packaging
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0
+%pom_add_dep org.apache.maven:maven-core
+# tests don't compile with maven 2.2.1
+rm -fr src/test/java/org/apache/maven/archiver/*.java
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_2jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
