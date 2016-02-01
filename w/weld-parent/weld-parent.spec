@@ -1,44 +1,49 @@
-Name: weld-parent
-Version: 31
-Summary: Parent POM for Weld
-License: ASL 2.0
-Url: http://seamframework.org/Weld
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.jboss.weld:weld-parent:pom:) = 31
-Provides: weld-parent = 31-2.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-source-plugin)
-Requires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
-Requires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:             weld-parent
+Version:          31
+Release:          alt1_2jpp8
+Summary:          Parent POM for Weld
+Group:            Development/Java
+License:          ASL 2.0
+URL:              http://seamframework.org/Weld
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: weld-parent-31-2.fc23.cpio
+Source0:          http://repo1.maven.org/maven2/org/jboss/weld/%{name}/%{version}/%{name}-%{version}.pom
+Source1:          http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildArch:        noarch
+
+BuildRequires:    maven-local
+BuildRequires:    maven-shared
+BuildRequires:    maven-enforcer-plugin
+BuildRequires:    maven-plugin-build-helper
+BuildRequires:    maven-install-plugin
+Source44: import.info
 
 %description
 Parent POM for Weld
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+cp %{SOURCE0} pom.xml
+cp %{SOURCE1} LICENSE
+
+%pom_remove_plugin ":maven-remote-resources-plugin"
+%pom_remove_plugin ":maven-eclipse-plugin"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 31-alt1_2jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 31-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
