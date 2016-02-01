@@ -1,23 +1,30 @@
-Name: plexus-velocity
-Version: 1.1.8
-Summary: Plexus Velocity Component
-License: ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-velocity
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus-velocity) = 1.1.8
-Provides: mvn(org.codehaus.plexus:plexus-velocity:pom:) = 1.1.8
-Provides: plexus-velocity = 1.1.8-19.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(org.codehaus.plexus:plexus-container-default)
-Requires: mvn(velocity:velocity)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
-Source: plexus-velocity-1.1.8-19.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define parent plexus
+%define subname velocity
+
+Name:           plexus-velocity
+Version:        1.1.8
+Release:        alt4_19jpp8
+Summary:        Plexus Velocity Component
+License:        ASL 2.0
+URL:            https://github.com/codehaus-plexus/plexus-velocity
+BuildArch:      noarch
+
+# svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-velocity-1.1.8/
+# tar czf plexus-velocity-1.1.8-src.tar.gz plexus-velocity-1.1.8/
+Source0:        plexus-velocity-%{version}-src.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(velocity:velocity)
+Source44: import.info
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -27,24 +34,37 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
-
-%build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
-
-%install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+%setup -q -n plexus-velocity-%{version}
+cp -p %{SOURCE1} LICENSE
+for j in $(find . -name "*.jar"); do
+        mv $j $j.no
 done
 
+%build
+%mvn_build
 
-%files -f %name-list
+%install
+%mvn_install
+
+%files -f .mfiles
+%doc LICENSE
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt4_19jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt3jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
