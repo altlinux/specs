@@ -1,49 +1,68 @@
-Name: plexus-i18n
-Version: 1.0
-Summary: Plexus I18N Component
-License: ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-i18n
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus-i18n) = 1.0.beta.10
-Provides: mvn(org.codehaus.plexus:plexus-i18n:pom:) = 1.0.beta.10
-Provides: plexus-i18n = 1.0-0.7.b10.4.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.plexus:plexus-container-default)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define parent plexus
+%define subname i18n
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt6jpp
-Source: plexus-i18n-1.0-0.7.b10.4.fc23.cpio
+Name:           plexus-i18n
+Version:        1.0
+Release:        alt7_0.7.b10.4jpp8
+Summary:        Plexus I18N Component
+License:        ASL 2.0
+Group:          Development/Java
+URL:            https://github.com/codehaus-plexus/plexus-i18n
+BuildArch:      noarch
+
+# svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-i18n-1.0-beta-10/
+# tar cjf plexus-i18n-1.0-beta-10-src.tar.bz2 plexus-i18n-1.0-beta-10/
+Source0:        plexus-i18n-1.0-beta-10-src.tar.bz2
+
+Patch0:         %{name}-migration-to-component-metadata.patch
+Patch1:         %{name}-plexus-container-default-missing.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+Source44: import.info
 
 %description
-The Plexus project seeks to create end-to-end developer tools for
-writing applications. At the core is the container, which can be
-embedded or for a full scale application server. There are many
-reusable components for hibernate, form processing, jndi, i18n,
-velocity, etc. Plexus also includes an application server which
+The Plexus project seeks to create end-to-end developer tools for 
+writing applications. At the core is the container, which can be 
+embedded or for a full scale application server. There are many 
+reusable components for hibernate, form processing, jndi, i18n, 
+velocity, etc. Plexus also includes an application server which 
 is like a J2EE application server, without all the baggage.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n plexus-i18n-1.0-beta-10
+%patch0 -p1
+%patch1 -p1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.7.b10.4jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
