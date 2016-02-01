@@ -14,8 +14,8 @@
 %define nv_version 352
 %define nv_release 63
 %define nv_minor %nil
-%define pkg_rel alt148
-%def_enable kernelsource
+%define pkg_rel alt149
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -333,6 +333,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 352.63-alt149
+- don't package kernel module sources
+
 * Tue Nov 24 2015 Sergey V Turchin <zerg@altlinux.org> 352.63-alt148
 - new version
 
