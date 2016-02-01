@@ -2,11 +2,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jetty-version-maven-plugin
 Version:        1.0.7
-Release:        alt4_9jpp7
+Release:        alt4_13jpp8
 Summary:        Jetty version management Maven plugin
 
 License:        ASL 2.0 or EPL
@@ -18,7 +19,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
-BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-toolchain)
+BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-toolchain:pom:)
 Source44: import.info
 
 
@@ -62,6 +63,9 @@ pushd %{name}
 %doc LICENSE-APACHE-2.0.txt LICENSE-ECLIPSE-1.0.html notice.html
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt4_9jpp7
 - new release
 
