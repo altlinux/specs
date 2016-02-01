@@ -5,37 +5,12 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt18jpp
+Release: alt19jpp
 
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
 Provides: eclipse-platform eclipse-rcp
 Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
-#Provides: eclipse-swt = 4.0 i586-eclipse-swt = 4.0
-#Provides: osgi(org.objectweb.asm) = 3.2.0
-#Provides: /usr/share/java/slf4j/jcl-over-slf4j.jar /usr/share/java/slf4j/jul-to-slf4j.jar mvn(org.slf4j:jcl-over-slf4j) mvn(org.slf4j:jul-to-slf4j)
-#Requires: activemq
-#Requires: apache-commons-math
-#Requires: arquillian-osgi
-#Requires: gshell
-#Requires: hibernate3
-#Requires: hibernate-validator
-#Requires: infinispan
-#Requires: jaxb2-maven-plugin
-#Requires: jbosgi-deployment
-#Requires: jbosgi-framework
-#Requires: jboss-metadata
-#Requires: jboss-naming
-#Requires: jboss-remoting
-#Requires: jboss-web
-#Requires: jersey
-#Requires: jetty
-#Requires: maven
-#Requires: maven-ant-tasks
-#Requires: maven-indexer
-#Requires: maven-jflex-plugin
-#Requires: maven-site-plugin
-#Requires: mojo-signatures
-#Requires: plexus-container-default
+Provides: i586-eclipse-swt = 4.0
 #Requires: springframework
 #Requires: tomcat6
 #Requires: weld-api
@@ -55,6 +30,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt19jpp
+- updated dependencies
+
 * Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt18jpp
 - updated dependencies
 
