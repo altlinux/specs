@@ -1,35 +1,29 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name javassist
+%define version 3.18.1
+%global upstream_version rel_%(sed s/\\\\./_/g <<<"%{version}")_ga
+
 Name:           javassist
-Version:        3.16.1
-Release:        alt2_6jpp7
+Version:        3.18.1
+Release:        alt1_4jpp8
 Summary:        The Java Programming Assistant provides simple Java bytecode manipulation
 Group:          Development/Java
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
-URL:            http://www.csg.is.titech.ac.jp/~chiba/javassist/
-Source0:        http://downloads.sourceforge.net/jboss/%{name}-%{version}-GA.zip
+URL:            http://www.csg.is.titech.ac.jp/~chiba/%{name}/
 BuildArch:      noarch
 
-BuildRequires:     jpackage-utils
+Source0:        http://github.com/jboss-%{name}/%{name}/archive/%{upstream_version}.tar.gz
 
-BuildRequires:     maven-local
-BuildRequires:     maven-compiler-plugin
-BuildRequires:     maven-install-plugin
-BuildRequires:     maven-jar-plugin
-BuildRequires:     maven-javadoc-plugin
-BuildRequires:     maven-resources-plugin
-BuildRequires:     maven-surefire-plugin
-BuildRequires:     maven-surefire-provider-junit
-BuildRequires:     maven-source-plugin
-BuildRequires:     maven-antrun-plugin
-BuildRequires:     maven-doxia-sitetools
+Patch0:         0001-Remove-usage-of-junit.awtui-and-junit.swingui.patch
 
-Requires:          jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
 %description
@@ -54,46 +48,33 @@ BuildArch: noarch
 javassist development documentation.
 
 %prep
-%setup -q -n %{name}-%{version}-GA
-
-mkdir runtest
+%setup -q -n %{name}-%{upstream_version}
 find . -name \*.jar -type f -delete
+mkdir runtest
+%patch0 -p1
+%pom_xpath_remove "pom:profile[pom:id='default-tools']"
+%pom_add_dep com.sun:tools
+
+%mvn_file : %{name}
+%mvn_alias : %{name}:%{name}
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+# TODO: enable tests
+%mvn_build -f
 
 %install
+%mvn_install
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-# jar
-install -d $RPM_BUILD_ROOT%{_javadir}
-install -m644 target/%{name}-%{version}-GA.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name}"
-
-# javadoc
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-
-%files
+%files -f .mfiles
 %doc License.html Readme.html
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc License.html
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.18.1-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.16.1-alt2_6jpp7
 - new release
 
