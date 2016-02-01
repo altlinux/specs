@@ -1,45 +1,53 @@
-Name: jboss-parent
-Version: 11
-Summary: JBoss Parent POM
-License: Public Domain
-Url: http://www.jboss.org/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jboss-parent = 11-6.fc23
-Provides: mvn(org.jboss:jboss-parent:pom:) = 11
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.sun:tools)
-Requires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-source-plugin)
-Requires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: jboss-parent-11-6.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           jboss-parent
+Version:        11
+Release:        alt3_6jpp8
+Summary:        JBoss Parent POM
+License:        Public Domain
+URL:            http://www.jboss.org/
+BuildArch:      noarch
+
+Source0:        https://github.com/jboss/jboss-parent-pom/archive/86bff326310a192ef657d893fa8e96ebd33e1ae4.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.sun:tools)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+Source44: import.info
+Provides: mvn(org.jboss:jboss-parent) = 11
 
 %description
 The Project Object Model files for JBoss packages.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -n jboss-parent-pom-86bff326310a192ef657d893fa8e96ebd33e1ae4
+
+%pom_remove_plugin :maven-clover2-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :sonar-maven-plugin
+%pom_remove_plugin :javancss-maven-plugin
+
+%pom_remove_dep com.sun:tools
+%pom_add_dep com.sun:tools
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc README.md
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:11-alt3_6jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:11-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
