@@ -1,52 +1,35 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:             maven-injection-plugin
-Version:          1.0.2
-Release:          alt3_9jpp7
-Summary:          Bytecode injection at Maven build time
-Group:            Development/Java
-License:          LGPLv2+
-URL:              http://www.jboss.org
+BuildRequires: jpackage-generic-compat
+Name:           maven-injection-plugin
+Version:        1.0.2
+Release:        alt3_13jpp8
+Summary:        Bytecode injection at Maven build time
+License:        LGPLv2+
+URL:            http://www.jboss.org
+BuildArch:      noarch
 
 # svn export http://anonsvn.jboss.org/repos/labs/labs/jbossbuild/maven-plugins/tags/maven-injection-plugin-1.0.2/
 # tar cafJ maven-injection-plugin-1.0.2.tar.xz maven-injection-plugin-1.0.2
-Source0:          %{name}-%{version}.tar.xz
+Source0:        %{name}-%{version}.tar.xz
 
-BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    javassist
-BuildRequires:    jboss-parent
-BuildRequires:    junit
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-
-Requires:         javassist
-Requires:         jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(javassist:javassist)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
 %description
 This package provides capability to perform bytecode injection as part of build.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -56,33 +39,19 @@ This package contains the API documentation for %{name}.
 %setup -q
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_9jpp7
 - new release
 
