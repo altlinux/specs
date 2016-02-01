@@ -1,6 +1,6 @@
 Name: flacon
-Version: 1.2.0
-Release: alt2
+Version: 2.0.1
+Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -59,6 +59,9 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Feb 01 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1
+- Version 2.0.1
+
 * Sun Jan 24 2016 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt2
 - Fix man file
 
