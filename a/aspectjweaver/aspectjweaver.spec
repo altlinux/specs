@@ -1,48 +1,83 @@
-Name: aspectjweaver
-Version: 1.8.4
-Summary: Java byte-code weaving library
-License: EPL
-Url: http://eclipse.org/aspectj/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: aspectjweaver = 1.8.4-3.fc23
-Provides: mvn(aspectj:aspectjrt) = 1.8.4
-Provides: mvn(aspectj:aspectjrt:pom:) = 1.8.4
-Provides: mvn(org.aspectj:aspectjrt) = 1.8.4
-Provides: mvn(org.aspectj:aspectjrt:pom:) = 1.8.4
-Provides: mvn(org.aspectj:aspectjweaver) = 1.8.4
-Provides: mvn(org.aspectj:aspectjweaver:pom:) = 1.8.4
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.ow2.asm:asm)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: aspectjweaver-1.8.4-3.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:          aspectjweaver 
+Version:       1.8.4
+Release:       alt1_3jpp8
+Summary:       Java byte-code weaving library
+License:       EPL
+URL:           http://eclipse.org/aspectj/
+Source0:       http://repo1.maven.org/maven2/org/aspectj/%{name}/%{version}/%{name}-%{version}-sources.jar
+# This build.xml file was adapted from the Ubuntu package. The src jar has no build scripts.
+Source1:       aspectjweaver-build.xml
+Source2:       http://repo1.maven.org/maven2/org/aspectj/%{name}/%{version}/%{name}-%{version}.pom
+Source3:       epl-v10.txt
+
+BuildRequires: ant
+BuildRequires: apache-commons-logging
+BuildRequires: javapackages-local
+BuildRequires: objectweb-asm
+#Requires:      objectweb-asm
+BuildArch:     noarch
+Source44: import.info
 
 %description
 The AspectJ Weaver supports byte-code weaving for aspect-oriented
 programming (AOP) in java.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
-%prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
 
+%description javadoc
+API documentation for %{summary}.
+
+%prep
+%setup -q -c
+sed -i.objectweb-asm "s|import aj.|import |" \
+ org/aspectj/weaver/bcel/asm/StackMapAdder.java
+
+cp %{SOURCE1} build.xml
+
+# JRockit is not open source, so we cannot build against it
+rm org/aspectj/weaver/loadtime/JRockitAgent.java
+
+cp %{SOURCE2} pom.xml
+%pom_xpath_inject "pom:project" "
+  <dependencies>
+    <dependency>
+      <groupId>org.ow2.asm</groupId>
+      <artifactId>asm</artifactId>
+      <version>5.0.3</version>
+    </dependency>
+  </dependencies>"
+
+cp %{SOURCE3} .
+  
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_file org.aspectj:%{name} %{name}
+%mvn_alias org.aspectj:%{name} "org.aspectj:aspectjrt" "aspectj:aspectjrt"
+LANG=en_US.ISO8859-1 CLASSPATH=$( build-classpath objectweb-asm/asm commons-logging ) ant
+LANG=en_US.ISO8859-1 CLASSPATH=$( build-classpath objectweb-asm/asm commons-logging ) ant javadoc
+%mvn_artifact pom.xml build/%{name}.jar
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install -J javadoc
 
+%files -f .mfiles
+%doc epl-v10.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc epl-v10.txt
 
 %changelog
+* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.4-alt1_3jpp8
+- new version
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
