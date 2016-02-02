@@ -1,35 +1,28 @@
-Name: xalan-j2
+Name: xalan-j2-xsltc
 Version: 2.7.1
-Summary: Java XSLT processor
+Summary: XSLT compiler
 License: ASL 2.0 and W3C
 Url: http://xalan.apache.org/
 Epoch: 0
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jaxp_transform_impl
-Provides: mvn(xalan:serializer) = 2.7.1
-Provides: mvn(xalan:serializer:pom:) = 2.7.1
-Provides: mvn(xalan:xalan) = 2.7.1
-Provides: mvn(xalan:xalan:pom:) = 2.7.1
-Provides: xalan-j2 = 0:2.7.1-27.fc23
-Requires: /bin/sh
-Requires: /bin/sh
-Requires: chkconfig
-Requires: chkconfig
+Provides: mvn(xalan:xsltc) = 2.7.1
+Provides: mvn(xalan:xsltc:pom:) = 2.7.1
+Provides: xalan-j2-xsltc = 0:2.7.1-27.fc23
+Requires: bcel
 Requires: java-headless
+Requires: java_cup
 Requires: jpackage-utils
+Requires: regexp
 Requires: xerces-j2
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt3jpp
-Source: xalan-j2-2.7.1-27.fc23.cpio
+Source: xalan-j2-xsltc-2.7.1-27.fc23.cpio
 
 %description
-Xalan is an XSLT processor for transforming XML documents into HTML,
-text, or other XML document types. It implements the W3C Recommendations
-for XSL Transformations (XSLT) and the XML Path Language (XPath). It can
-be used from the command line, in an applet or a servlet, or as a module
-in other program.
+The XSLT Compiler is a Java-based tool for compiling XSLT stylesheets into
+lightweight and portable Java byte codes called translets.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
@@ -44,16 +37,6 @@ mkdir -p $RPM_BUILD_ROOT
 for i in usr var etc; do
 [ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
-
-%preun
-{
-  [ $1 = 0 ] || exit 0
-  update-alternatives --remove jaxp_transform_impl /usr/share/java/xalan-j2.jar
-} >/dev/null 2>&1 || :
-
-%post
-update-alternatives --install /usr/share/java/jaxp_transform_impl.jar \
-  jaxp_transform_impl /usr/share/java/xalan-j2.jar 30
 
 
 %files -f %name-list

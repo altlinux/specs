@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jspeex
 Version:        0.9.7
-Release:        alt1_5jpp7
+Release:        alt1_7jpp8
 Summary:        Java Implementation of Speex
 
 Group:          Development/Java
@@ -66,6 +67,9 @@ cp -rp doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt1_5jpp7
 - new release
 
