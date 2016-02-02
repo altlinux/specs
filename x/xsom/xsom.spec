@@ -1,15 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global checkout 20110809
 
 Name: xsom
 Version: 0
-Release: alt2_10.20110809svnjpp7
+Release: alt2_14.20110809svnjpp8
 Summary: XML Schema Object Model (XSOM)
-Group: Development/Java
 License: CDDL or GPLv2 with exceptions
 URL: http://xsom.java.net
 
@@ -25,30 +23,15 @@ Source1: http://docs.oasis-open.org/regrep/v3.0/schema/lcm.xsd
 
 Patch0: %{name}-%{checkout}svn-pom.patch
 
-BuildRequires: jpackage-utils
-BuildRequires: junit4
-BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-plugin-build-helper
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-shared
-BuildRequires: relaxngDatatype
-BuildRequires: relaxngcc
-BuildRequires: sonatype-oss-parent
-BuildRequires: forge-parent
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
+BuildRequires:  relaxngcc
 
-Requires: jpackage-utils
-Requires: relaxngDatatype
 BuildArch: noarch
 Source44: import.info
-
 
 %description
 XML Schema Object Model (XSOM) is a Java library that allows applications to
@@ -58,17 +41,13 @@ input.  The library is a straight-forward implement of "schema components" as
 defined in the XML Schema spec part 1.  Refer to this specification of how this
 object model works. 
 
-
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
-
 
 %description javadoc
 This package contains javadoc for %{name}.
-
 
 %prep
 %setup -q -n %{name}-%{checkout}svn
@@ -81,49 +60,25 @@ sed -i \
   test/XSOMParserTest.java
 
 pushd lib
-  ln -sf $(build-classpath relaxngcc) relaxngcc.jar
+  ln -sf `build-classpath relaxngcc` relaxngcc.jar
 popd
 
-
 %build
-
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install \
-  javadoc:aggregate
-
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-cp -p target/xsom-%{checkout}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-# Dependencies map:
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 %doc license.txt
 
-
-%files javadoc
-%{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
-
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_14.20110809svnjpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0-alt2_10.20110809svnjpp7
 - new release
 
