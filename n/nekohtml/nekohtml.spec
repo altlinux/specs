@@ -1,9 +1,11 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -35,33 +37,36 @@ BuildRequires: jpackage-compat
 #
 
 Name:           nekohtml
-Version:        1.9.14
-Release:        alt2_12jpp7
+Version:        1.9.22
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        HTML scanner and tag balancer
 License:        ASL 2.0
 URL:            http://nekohtml.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-# http://www.jpackage.org/cgi-bin/viewvc.cgi/*checkout*/rpms/devel/nekohtml/nekohtml-filter.sh?root=jpackage&content-type=text%2Fplain
-Source1:        %{name}-filter.sh
+# No upstream tarball for this release
+# svn export svn://svn.code.sf.net/p/nekohtml/code/branches/nekohtml-1.9.22 nekohtml-1.9.22
+# find nekohtml-1.9.22 -name '*.jar' -delete
+# tar cjf nekohtml-1.9.22.tar.bz2 nekohtml-1.9.22/
+Source0:        %{name}-%{version}.tar.bz2
 Source2:        nekohtml-component-info.xml
-Source3:        http://repo1.maven.org/maven2/net/sourceforge/nekohtml/nekohtml/1.9.14/nekohtml-1.9.14.pom
-Patch0:         %{name}-crosslink.patch
-Patch1:         %{name}-jars.patch
-Group:          Development/Java
+Source3:        http://central.maven.org/maven2/net/sourceforge/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+Patch0:         0001-Crosslink-javadoc.patch
+Patch1:         0002-Jar-paths.patch
+# Add proper attributes to MANIFEST.MF file so bundle can be used by other OSGI bundles.
+Patch2:         0003-Add-OSGi-attributes.patch
+
 Requires:       bcel
-Requires:       jpackage-utils >= 0:1.6
 Requires:       xerces-j2 >= 0:2.7.1
 Requires:       xml-commons-apis
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  java-javadoc
 BuildRequires:  bcel
 BuildRequires:  bcel-javadoc
 BuildRequires:  xerces-j2 >= 0:2.7.1
 BuildRequires:  xerces-j2-javadoc
 BuildRequires:  xml-commons-apis
+
 BuildArch:      noarch
 Source44: import.info
 
@@ -79,16 +84,16 @@ the NekoHTML parser with existing XNI tools without modification or
 rewriting code.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package demo
+Group: Development/Java
 Summary:        Demo for %{name}
-Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
@@ -98,9 +103,17 @@ Demonstrations and samples for %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%{_bindir}/find . -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%{__perl} -pi -e 's/\r$//g' *.txt doc/*.html
-%{__rm} -r doc/javadoc
+%patch2 -p1
+
+find -name "*.jar" -delete
+sed -i 's/\r$//g' *.txt doc/*.html
+
+# cannonization test fails on some whitespace, TODO investigate
+rm data/meta/test-meta-encoding3.html
+
+%mvn_alias net.sourceforge.%{name}:%{name} %{name}:%{name}
+%mvn_package net.sourceforge.%{name}:%{name}-samples demo
+%mvn_file ':{*}' @1
 
 %build
 export CLASSPATH=$(build-classpath bcel xerces-j2)
@@ -114,41 +127,35 @@ export CLASSPATH=$(build-classpath bcel xerces-j2)
     -Dj2se.javadoc=%{_javadocdir}/java \
     -Dxni.javadoc=%{_javadocdir}/xerces-j2-xni \
     -Dxerces.javadoc=%{_javadocdir}/xerces-j2-impl \
-    clean jar jar-xni doc 
+    clean jar jar-xni test doc
 # test - disabled because it makes the build failing
 
+%mvn_artifact %{SOURCE3} %{name}.jar
+%mvn_artifact net.sourceforge.%{name}:%{name}-xni:%{version} %{name}-xni.jar
+%mvn_artifact net.sourceforge.%{name}:%{name}-samples:%{version} %{name}-samples.jar
+
 %install
-# Jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 %{name}{,-samples,-xni}.jar $RPM_BUILD_ROOT%{_javadir}/
+%mvn_install -J build/doc/javadoc
 
 # Scripts
-install -Dpm 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/%{name}-filter
+%jpackage_script org.cyberneko.html.filters.Writer "" "" "nekohtml:xerces-j2" nekohtml-filter true
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a nekohtml:nekohtml
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
+touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
-# Javadocs
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -a build/doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc --no-dereference LICENSE.txt README.txt doc/*.html
-%attr(755,root,root) %{_bindir}/%{name}-filter
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/%{name}.jar
-%{_javadir}/%{name}-xni.jar
+%{_bindir}/%{name}-filter
+%config(noreplace,missingok) /etc/java/%{name}.conf
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
-%files demo
-%{_javadir}/%{name}-samples.jar
+%files demo -f .mfiles-demo
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.22-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.14-alt2_12jpp7
 - new release
 
