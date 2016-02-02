@@ -1,38 +1,30 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name sat4j
-%define version 2.3.5
-%{?scl:%scl_package sat4j}
-%{!?scl:%global pkg_name %{name}}
-
-%global eclipse_base %{_libdir}/eclipse
-
+BuildRequires: jpackage-generic-compat
 # should be consistent across one release
 %global build_date 20130405
 
-Name:           %{?scl_prefix}sat4j
+Name:           sat4j
 Version:        2.3.5
-Release:        alt1_2jpp7
+Release:        alt1_7jpp8
 Summary:        A library of SAT solvers written in Java
 
-Group:          Development/Java
 License:        EPL or LGPLv2
 URL:            http://www.sat4j.org/
-# Created by sh %{pkg_name}-fetch.sh
-Source0:        %{pkg_name}-%{version}.tar.xz
-Source1:        %{pkg_name}-fetch.sh
-Patch0:         %{pkg_name}-classpath.patch
+# Created by sh sat4j-fetch.sh
+Source0:        sat4j-%{version}.tar.xz
+Source1:        sat4j-fetch.sh
+Patch0:         sat4j-classpath.patch
 
 BuildRequires:  ant
-BuildRequires:  ecj
-Requires:       jpackage-utils
-%{?scl:Requires: %scl_runtime}
+BuildRequires:  javapackages-local
+Requires:       maven-local
 
 BuildArch:      noarch
 Source44: import.info
@@ -44,19 +36,12 @@ boxes", those willing to embed SAT technologies into their application
 without worrying about the details.
 
 %prep
-%setup -q -n %{pkg_name}-%{version}
+%setup -q -n sat4j-%{version}
 %patch0
-
-pushd lib
-	ln -s /usr/share/java/commons-beanutils.jar
-	ln -s /usr/share/java/commons-logging.jar
-	ln -s /usr/share/java/mockito.jar mockito-all-1.9.5.jar
-popd
 
 %build
 ant -Dbuild.compiler=modern -Drelease=%{version} \
  -Dtarget=1.5 -DBUILD_DATE=%{build_date} p2 
-
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -70,6 +55,9 @@ cp -rp dist/%{version}/org.sat4j.pb.jar \
 %{_javadir}/org.sat4j*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_2jpp7
 - new release
 
