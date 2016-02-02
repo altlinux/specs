@@ -1,61 +1,23 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+BuildRequires: jpackage-generic-compat
 Name: jopt-simple
-Version: 4.5
-Release: alt1_2jpp7
+Version: 4.6
+Release: alt1_2jpp8
 Summary: A Java command line parser
 License: MIT
-Group: Development/Java
 URL: http://pholser.github.io/jopt-simple/
 Source0: https://github.com/pholser/jopt-simple/archive/jopt-simple-%{version}.tar.gz
+
 BuildArch: noarch
-BuildRequires: jpackage-utils
+
 BuildRequires: maven-local
-BuildRequires: maven-clean-plugin
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-deploy-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-pmd-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: ant
 BuildRequires: joda-time
-# Unit testing is disabled due to this missing dependency:
-#BuildRequires:  continuous-testing-toolkit
-Requires: jpackage-utils
 Source44: import.info
 
 %description
@@ -63,9 +25,8 @@ JOpt Simple is a Java library for parsing command line options, such as those
 you might pass to an invocation of javac.
 
 %package javadoc
-Summary: Javadoc for %{name}
 Group: Development/Java
-Requires: jpackage-utils
+Summary: Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -78,32 +39,26 @@ This package contains the API documentation for %{name}.
 %pom_remove_dep org.infinitest:continuous-testing-toolkit
 %pom_remove_plugin org.pitest:pitest-maven
 %pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-pmd-plugin
 
 %build
-mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip=true
+# Unit testing is disabled due to a missing dependency in Fedora of continuous-testing-toolkit
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-%add_maven_depmap
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%dir %{_javadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.6-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.5-alt1_2jpp7
 - new release
 
