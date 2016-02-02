@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:		wsil4j
 Version:	1.0
-Release:	alt2_7jpp7
+Release:	alt2_11jpp8
 Summary:	Web Services Inspection Language for Java API
 
 Group:		Development/Java
@@ -73,7 +74,6 @@ cp -rp build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # POMs
 install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
 %{_javadir}/*
@@ -81,7 +81,6 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 %doc README.htm
 %{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
 %files javadoc
 %doc docs
@@ -91,6 +90,9 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp7
 - new release
 
