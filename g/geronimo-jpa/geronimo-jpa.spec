@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global spec_ver 3.0
 %global spec_name geronimo-jpa_%{spec_ver}_spec
 
 Name:           geronimo-jpa
 Version:        1.1.1
-Release:        alt3_13jpp7
+Release:        alt3_16jpp8
 Summary:        Java persistence API implementation
 
 License:        ASL 2.0
@@ -55,7 +56,7 @@ BuildArch: noarch
 %setup -q -n %{spec_name}-%{version}
 
 %build
-%mvn_file  : %{name} %{spec_name}-%{version} jpa
+%mvn_file  : %{name}/%{name} %{name} jpa
 %mvn_alias : javax.persistence:persistence-api
 %mvn_build
 
@@ -86,6 +87,9 @@ ln -sf ../%{name}.jar %{buildroot}%{_javadir}/javax.persistence/
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_13jpp7
 - new release
 
