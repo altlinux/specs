@@ -1,24 +1,25 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           sablecc
 Version:        3.2
-Release:        alt3_5jpp7
+Release:        alt3_10jpp8
 Summary:        A parser generator written in Java
-Group:          Development/Java
 License:        LGPLv2+
 URL:            http://sablecc.org
 Source0:        http://downloads.sourceforge.net/sablecc/sablecc-3.2.zip
+#Source1:        http://repo1.maven.org/maven2/sablecc/sablecc/3.2/sablecc-3.2.pom
 Patch0:         sablecc-fsf-addr.patch
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
-Requires:       jpackage-utils
+BuildRequires:  javapackages-local
 Source44: import.info
 
 %description
@@ -32,8 +33,13 @@ cycle.
 %patch0 -p1
 # The ant task has to be unpacked and sanitized prior to the main build. 
 tar xzf %{name}-anttask-1.0.1.tar.gz
-find . -regex '.*\(class\|jar\)' -type f -exec rm -f {} \;
+find -name "*.jar" -delete
+find -name "*.class" -delete
 rm %{name}-anttask-1.0.1.tar.gz
+
+sed -i "s|lib/%{name}.jar|%{_javadir}/%{name}.jar|" bin/%{name}
+
+%mvn_file %{name}:%{name} %{name}
 
 %build
 # Build the ant task and copy *only* that class into the main
@@ -49,18 +55,22 @@ popd
 ant -Dsablecc-anttask_available=true jar
 
 %install
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 0755 $RPM_BUILD_ROOT%{_bindir}
-install -m 0644 lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -m 0755 bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
+%mvn_artifact %{name}:%{name}:%{version} lib/%{name}.jar
+%mvn_install
 
-%files
+install -d -m 0755 $RPM_BUILD_ROOT%{_bindir}
+install -pm 0755 bin/%{name} $RPM_BUILD_ROOT%{_bindir}/%{name}
+
+%files -f .mfiles
 %{_bindir}/%{name}
-%{_javadir}/%{name}.jar
-%doc LICENSE README.html ChangeLog AUTHORS COPYING-LESSER THANKS
+%doc README.html ChangeLog AUTHORS THANKS
+%doc LICENSE COPYING-LESSER
 %doc doc/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt3_5jpp7
 - new release
 
