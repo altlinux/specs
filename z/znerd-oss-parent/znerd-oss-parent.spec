@@ -1,27 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/C
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
 Name:          znerd-oss-parent
 Version:       3
-Release:       alt1_5
+Release:       alt2_11jpp8
 Summary:       Znerd.org OSS Parent
-Group:         Development/C
 License:       BSD
 URL:           https://github.com/znerd/znerd-oss-parent
-# git clone git://github.com/znerd/znerd-oss-parent.git znerd-oss-parent-3
-# (cd znerd-oss-parent-3/ && git archive --format=tar --prefix=znerd-oss-parent-3/ znerd-oss-parent-3 | xz > ../znerd-oss-parent-3-src-git.tar.xz)
-Source0:       %{name}-%{version}-src-git.tar.xz
-
-BuildRequires: java-devel
-BuildRequires: jpackage-utils
+Source0:       https://github.com/znerd/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 # required by enforcer-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
-
-Requires:      jpackage-utils
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildArch:     noarch
 Source44: import.info
 
@@ -29,25 +23,24 @@ Source44: import.info
 Parent for znerd.org OSS Projects.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
+
+%pom_remove_plugin org.apache.maven.plugins:maven-eclipse-plugin
 
 %build
-# Nothing to do
+%mvn_build
+
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
-%check
-mvn-rpmbuild verify
-
-%files
-%{_mavenpomdir}/JPP.%{name}-parent.pom
-%{_mavendepmapfragdir}/%{name}
-%doc CHANGES.txt COPYRIGHT.txt README.txt
+%files -f .mfiles
+%doc CHANGES.txt README.txt
+%doc COPYRIGHT.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3-alt2_11jpp8
+- new version
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 3-alt1_5
 - new version
 
