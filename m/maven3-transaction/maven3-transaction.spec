@@ -5,8 +5,10 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt19jpp
+Release: alt20jpp
 
+# for apacheds jpp7
+Provides: mvn(org.apache.directory.project:project)
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
 Provides: eclipse-platform eclipse-rcp
 Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
@@ -30,6 +32,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt20jpp
+- updated dependencies
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt19jpp
 - updated dependencies
 

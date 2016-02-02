@@ -1,17 +1,18 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          directory-project
 Version:       27
-Release:       alt2_5jpp7
+Release:       alt2_10jpp8
 Summary:       Apache Directory Project Root pom
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://directory.apache.org/
 # svn export http://svn.apache.org/repos/asf/directory/project/tags/27 directory-project-27
 # tar czf directory-project-27-src-svn.tar.gz directory-project-27
 Source0:       directory-project-27-src-svn.tar.gz
-
 BuildRequires: maven-local
+BuildRequires: maven-site-plugin
 BuildArch:     noarch
 Source44: import.info
 
@@ -44,9 +45,13 @@ directory tools (Apache Directory Studio).
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt
+%doc README.txt
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 27-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 27-alt2_5jpp7
 - new release
 
