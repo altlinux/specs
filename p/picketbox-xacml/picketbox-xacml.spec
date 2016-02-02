@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name picketbox-xacml
 %define version 2.0.7
@@ -11,9 +10,8 @@ BuildRequires: jpackage-compat
 
 Name:             picketbox-xacml
 Version:          2.0.7
-Release:          alt3_5jpp7
+Release:          alt3_10jpp8
 Summary:          JBoss XACML
-Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/picketbox
 
@@ -24,28 +22,17 @@ Patch0:           %{name}-%{namedversion}-pom.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    junit4
-BuildRequires:    picketbox-commons
-
-Requires:         picketbox-commons
-Requires:         jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.picketbox:picketbox-commons)
 Source44: import.info
-Source2: depmap
 
 %description
 JBoss XACML Library
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,43 +44,26 @@ This package contains the API documentation for %{name}.
 
 rm .classpath
 
+%mvn_file :jboss-xacml %{name}
+%mvn_file :jboss-sunxacml picketbox-sunxacml
+%mvn_alias :jboss-xacml org.jboss.security:jbossxacml
+%mvn_package ::pom: __noinstall
+
 %build
 # Disabled tests because OpenDS is needed
-mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE2}" \
- -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -pm 644 jboss-xacml/target/jboss-xacml-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -pm 644 jboss-sunxacml/target/jboss-sunxacml-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/picketbox-sunxacml.jar
+%mvn_install
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
-install -pm 644 jboss-xacml/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 jboss-sunxacml/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-picketbox-sunxacml.pom
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-main.pom
+%files -f .mfiles
 
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.jboss.security:jbossxacml"
-%add_maven_depmap JPP-picketbox-sunxacml.pom picketbox-sunxacml.jar
-%add_maven_depmap JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}-main.pom
-
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt3_10jpp8
+- new version
+
 * Mon Sep 15 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt3_5jpp7
 - fixed build
 
