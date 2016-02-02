@@ -1,15 +1,16 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: relaxngcc
 Version: 1.12
-Release: alt2_6jpp7
+Release: alt2_9jpp8
 Summary: RELAX NG Compiler Compiler
-Group: Development/Java
 
 License: ASL 1.1
 
@@ -24,6 +25,7 @@ BuildRequires: jpackage-utils
 BuildRequires: msv-msv
 BuildRequires: msv-xsdlib
 BuildRequires: relaxngDatatype
+BuildRequires: isorelax
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
 BuildRequires: dos2unix
@@ -31,6 +33,7 @@ BuildRequires: dos2unix
 Requires: msv-msv
 Requires: msv-xsdlib
 Requires: relaxngDatatype
+Requires: isorelax
 Requires: xerces-j2
 Requires: xml-commons-apis
 
@@ -47,7 +50,6 @@ take appropriate actions while parsing valid XML documents against the grammar.
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 
@@ -91,13 +93,8 @@ done
 # Populate the lib directory with references to the jar files required for the
 # build:
 mkdir lib
-pushd lib
-  ln -sf $(build-classpath msv-msv) .
-  ln -sf $(build-classpath relaxngDatatype) .
-  ln -sf $(build-classpath xerces-j2) .
-  ln -sf $(build-classpath msv-xsdlib) .
-  ln -sf $(build-classpath javacc) .
-popd
+build-jar-repository -p lib \
+  msv-msv msv-xsdlib relaxngDatatype isorelax javacc
 
 # Put the ant build files in place:
 cp %{SOURCE1} build.xml
@@ -128,6 +125,9 @@ cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}/.
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.12-alt2_6jpp7
 - new release
 
