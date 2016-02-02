@@ -3,8 +3,9 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-jpa-2.0-api
 %define version 1.0.1
@@ -13,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:             hibernate-jpa-2.0-api
 Version:          1.0.1
-Release:          alt3_12jpp7
+Release:          alt3_16jpp8
 Summary:          Java Persistence 2.0 (JSR 317) API
 
 Group:            Development/Java
@@ -28,11 +29,8 @@ Patch1:           %{name}-%{namedversion}-osgi-manifest.patch
 
 BuildArch:        noarch
 
-Requires:         jpackage-utils
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
 BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -49,7 +47,6 @@ Hibernate definition of the Java Persistence 2.0 (JSR 317) API.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,39 +60,30 @@ This package contains the API documentation for %{name}.
 %pom_xpath_remove pom:build/pom:extensions
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
 # Fixing wrong-file-end-of-line-encoding
 sed -i 's/\r//' target/site/apidocs/jdstyle.css
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp  target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install
 
 # compat symlink for eclipselink-2.3.2-alt1_1jpp7, jasperreports-4.0.2-alt1_3jpp7
 mkdir -p $RPM_BUILD_ROOT%{_javadir}/hibernate
 ln -s ../%{name}.jar $RPM_BUILD_ROOT%{_javadir}/hibernate/%{name}.jar
 
 
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc license.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_12jpp7
 - new release
 
