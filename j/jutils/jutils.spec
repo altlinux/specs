@@ -1,8 +1,9 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jutils
 Version:        1.0.1
-Release:        alt2_9.20110719svnjpp7
+Release:        alt2_12.20110719svnjpp8
 Summary:        Common utilities for the Java Gaming Interface
 
 Group:          Development/Java
@@ -52,6 +53,9 @@ sed -i 's/-SNAPSHOT//' pom.xml
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_12.20110719svnjpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_9.20110719svnjpp7
 - new release
 
