@@ -1,12 +1,12 @@
 Epoch: 0
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_12jpp7
+Release:	alt2_15jpp8
 Summary:	Compile and link task for ant
-
-Group:		Development/Java
 
 License:	ASL 2.0
 URL:		http://ant-contrib.sourceforge.net/
@@ -26,8 +26,8 @@ adaptors are currently available for several C/C++ compilers, FORTRAN,
 MIDL and Windows Resource files.
 
 %package        javadoc
+Group: Development/Java
 Summary:	Javadoc for %{name}
-Group:		Development/Java
 BuildArch: noarch
 
 %description	javadoc
@@ -45,6 +45,9 @@ cp -p %{SOURCE1} ./README.fedora
 
 # Use default compiler configuration
 %pom_remove_plugin :maven-compiler-plugin
+
+# Let xmvn generate javadocs
+%pom_remove_plugin :maven-javadoc-plugin
 
 # Fix dependency on ant
 %pom_remove_dep ant:ant
@@ -84,6 +87,9 @@ install -D -m 644 pom.xml $RPM_BUILD_ROOT%_mavenpomdir/JPP-%{name}.pom
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_15jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_12jpp7
 - new release
 
