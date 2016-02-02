@@ -1,8 +1,10 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Upstream uses version-release.  Control the madness here.
 %global upver 1.11
 %global uprel 8
@@ -10,17 +12,16 @@ BuildRequires: jpackage-compat
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_5jpp7
+Release:        alt1_11jpp8
 Summary:        A Java finite state automata/regular expression library
 
-Group:          Development/Java
 License:        BSD
 URL:            http://www.brics.dk/automaton/
-Source:         http://www.brics.dk/~amoeller/%{name}/%{name}-%{filever}.tar.gz
+Source0:        http://www.brics.dk/~amoeller/%{name}/%{name}-%{filever}.tar.gz
+Source1:        https://repo1.maven.org/maven2/dk/brics/%{name}/%{name}/%{filever}/%{name}-%{filever}.pom
 
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
-Requires:       jpackage-utils
+BuildRequires:  java-javadoc
 
 BuildArch:      noarch
 Source44: import.info
@@ -36,36 +37,50 @@ compact, and implements real, unrestricted regular operations.  It uses a
 symbolic representation based on intervals of Unicode characters.
 
 %package javadoc
+Group: Development/Documentation
 Summary:        A Java finite state automata/regular expression library
-Group:          Development/Documentation
 BuildArch:      noarch
-Requires:       %{name} = %{version}-%{release}
 
 %description javadoc
 Javadoc documentation for automaton.
 
 %prep
 %setup -q -n %{name}-%{upver}
-rm -f dist/%{name}.jar
+
+# Remove prebuilt artifacts
+rm -fr dist/%{name}.jar doc/*
+
+# Link to offline javadocs
+sed -i 's,http.*api/,file://%{_javadocdir}/java/,' build.xml
 
 %build
 ant all
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p dist/%{name}.jar $RPM_BUILD_ROOT%{_javadir}
+mkdir -p %{buildroot}%{_javadir}
+cp -p dist/%{name}.jar %{buildroot}%{_javadir}
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-mv doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}
+cp -a doc %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%doc ChangeLog COPYING README
-%{_javadir}/%{name}.jar
+# Install the POM
+mkdir -p %{buildroot}%{_mavenpomdir}
+cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/%{name}.pom
+
+# Add Maven metadata
+%add_maven_depmap %{name}.pom %{name}.jar
+
+%files -f .mfiles
+%doc ChangeLog README
+%doc COPYING
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_11jpp8
+- new version
+
 * Tue Sep 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_5jpp7
 - update to new release by jppimport
 
