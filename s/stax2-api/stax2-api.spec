@@ -1,22 +1,23 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             stax2-api
-Version:          3.1.1
-Release:          alt2_8jpp7
+Version:          3.1.4
+Release:          alt1_3jpp8
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD
-# NOTE. new home http://wiki.fasterxml.com/WoodstoxStax2
-URL:              http://docs.codehaus.org/display/WSTX/StAX2
-# NOTE. newer release available here https://github.com/FasterXML/stax2-api/
-Source0:          http://repository.codehaus.org/org/codehaus/woodstox/%{name}/%{version}/%{name}-%{version}-sources.jar
-Source1:          http://repository.codehaus.org/org/codehaus/woodstox/%{name}/%{version}/%{name}-%{version}.pom
+URL:              http://wiki.fasterxml.com/WoodstoxStax2
+Source0:          https://github.com/FasterXML/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    bea-stax-api
-BuildRequires:    maven-local
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.xml.stream:stax-api)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -36,14 +37,12 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -c %{name}
-# fixing incomplete source directory structure
-mkdir -p src/main/java
-mv -f org src/main/java/
+%setup -q -n %{name}-%{name}-%{version}
 
-cp %{SOURCE1} pom.xml
-%pom_remove_dep javax.xml.stream:stax-api
-%pom_add_dep stax:stax-api:1.0.1
+%pom_xpath_remove pom:Import-Package
+
+# javadoc generation fails due to strict doclint in JDK 8
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
 
@@ -58,6 +57,9 @@ cp %{SOURCE1} pom.xml
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.1-alt2_8jpp7
 - new release
 
