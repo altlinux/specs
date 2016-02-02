@@ -3,20 +3,21 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:       simplevalidation
 # upstream is pretty bad about version numbering
 # this is a guess based on the version of a separate api "release" jar
 Version:    1.0
-Release:    alt1_0.1.SNAPSHOTjpp7
+Release:    alt1_0.4.SNAPSHOTjpp8
 Summary:    A library for adding user-interface input validation to Swing applications
 License:    GPLv2 or CDDL
 URL:        http://kenai.com/projects/simplevalidation
 # svn export -r331 https://svn.kenai.com/svn/simplevalidation~src/trunk/ simplevalidation-1.0-SNAPSHOT
 # tar cJf simplevalidation-1.0-SNAPSHOT-20121212.tar.xz simplevalidation-1.0-SNAPSHOT
 Source0:    http://kenai.com/projects/simplevalidation/downloads/download/validation-src.zip
-
+Patch0:     simplevalidation-1.0-disable-doclint.patch
 
 BuildArch:  noarch
 
@@ -49,6 +50,7 @@ This package contains the API documentation for %{name}
 
 %prep
 %setup -q -c
+%patch0 -p0
 
 find . -name '*.class' -delete
 find . -name '*.jar' -delete
@@ -75,17 +77,19 @@ install -pm 644 maven/pom.xml %{buildroot}%{_mavenpomdir}/JPP-ValidationAPI.pom
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -a ValidationAPI/dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %doc ValidationAPI/doc/overview.html
 %doc ValidationAPI/doc/duckLogo.png
 %{_javadir}/ValidationAPI.jar
 %{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.4.SNAPSHOTjpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.1.SNAPSHOTjpp7
 - new release
 
