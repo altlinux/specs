@@ -1,36 +1,20 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: System/Libraries
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           ws-commons-util
 Version:        1.0.1
-Release:        alt1_27jpp7
+Release:        alt1_32jpp8
 Summary:        Common utilities from the Apache Web Services Project
 
-Group:          System/Libraries
 License:        ASL 2.0
-URL:            http://apache.osuosl.org/ws/commons/util/
-Source0:        http://apache.osuosl.org/ws/commons/util/sources/ws-commons-util-1.0.1-src.tar.gz
+URL:            http://archive.apache.org/dist/ws/commons/util/
+Source0:        http://archive.apache.org/dist/ws/commons/util/sources/ws-commons-util-1.0.1-src.tar.gz
 Patch0:         %{name}-addosgimanifest.patch
-# Remove maven-eclipse-plugin from build dependencies to simplify the
-# dependency chain.
-Patch1:         %{name}-maven-eclipse-plugin.patch
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  maven-local
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  java-javadoc
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -38,9 +22,8 @@ This is version 1.0.1 of the common utilities from the Apache Web
 Services Project.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -49,35 +32,30 @@ BuildArch: noarch
 %prep
 %setup -q -n %{name}-%{version}
 %patch0
-%patch1
+
+# Remove maven-eclipse-plugin from build dependencies to simplify the
+# dependency chain.
+%pom_remove_plugin :maven-eclipse-plugin
+
+%mvn_file : %{name}
+%mvn_alias org.apache.ws.commons:ws-commons-util org.apache.ws.commons.util:ws-commons-util
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -pm 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# install maven pom file
-install -Dm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# ... and maven depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.ws.commons.util:%{name}"
-
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pR target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_javadir}/*.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_32jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_27jpp7
 - new release
 
