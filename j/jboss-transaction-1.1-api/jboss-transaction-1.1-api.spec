@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-transaction-1.1-api
 %define version 1.0.1
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-transaction-1.1-api
 Version:          1.0.1
-Release:          alt2_6jpp7
+Release:          alt2_11jpp8
 Summary:          Transaction 1.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -22,20 +23,17 @@ Url:              http://www.jboss.org
 Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildRequires:    jboss-specs-parent
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-ear-plugin
 BuildRequires:    maven-clean-plugin
 BuildRequires:    maven-ejb-plugin
 
-Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
 
@@ -45,7 +43,6 @@ The Java Transaction 1.1 API classes.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -55,36 +52,22 @@ This package contains the API documentation for %{name}.
 %setup -q -n jboss-transaction-1.1-api
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/jboss-transaction-api_1.1_spec-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc README LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_6jpp7
 - new release
 
