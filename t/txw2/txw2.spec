@@ -1,13 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: txw2
 Version: 20110809
-Release: alt2_8jpp7
+Release: alt2_13jpp8
 Summary: Typed XML writer for Java
-Group: Development/Java
 License: CDDL and GPLv2 with exceptions
 URL: https://txw.dev.java.net
 
@@ -24,95 +22,49 @@ Patch1: %{name}-%{version}-args4j.patch
 
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-shared
-BuildRequires: args4j
-BuildRequires: xsom
-BuildRequires: rngom
-BuildRequires: codemodel
-
-Requires: jpackage-utils
-Requires: args4j
-Requires: xsom
-Requires: rngom
-Requires: codemodel
+BuildRequires:  maven-local
+BuildRequires:  mvn(args4j:args4j)
+BuildRequires:  mvn(com.sun.codemodel:codemodel)
+BuildRequires:  mvn(com.sun.xsom:xsom)
+BuildRequires:  mvn(javax.xml.stream:stax-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.kohsuke.rngom:rngom)
+BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
 Source44: import.info
-
 
 %description
 Typed XML writer for Java.
 
-
 %package javadoc
-Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: jpackage-utils
+Summary: Javadocs for %{name}
 BuildArch: noarch
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
-
 
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 
-
 %build
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install \
-  javadoc:aggregate
-
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-cp -p runtime/target/txw2-%{version}.jar %{buildroot}%{_javadir}/txw2.jar
-cp -p compiler/target/txwc2-%{version}.jar %{buildroot}%{_javadir}/txwc2.jar
-
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-txw2-project.pom
-cp -p runtime/pom.xml %{buildroot}%{_mavenpomdir}/JPP-txw2.pom
-cp -p compiler/pom.xml %{buildroot}%{_mavenpomdir}/JPP-txwc2.pom
-
-# Dependencies map:
-%add_maven_depmap JPP-txw2-project.pom
-%add_maven_depmap JPP-txw2.pom txw2.jar
-%add_maven_depmap JPP-txwc2.pom txwc2.jar
-
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc license.txt
 
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
-
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 20110809-alt2_8jpp7
 - new release
 
