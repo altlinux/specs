@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           werken-xpath
 Version:        0.9.4
-Release:        alt1_12.beta.12.5jpp7
+Release:        alt1_14.beta.12.6jpp8
 Epoch:          0
 Summary:        XPath implementation using JDOM
 License:        Saxpath
@@ -133,16 +134,13 @@ cp -pr build/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{name}-%{version}.pom \
         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 
 # -----------------------------------------------------------------------------
 
-%files
+%files -f .mfiles
 %doc INSTALL LICENSE LIMITATIONS README TODO
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc LICENSE
@@ -151,6 +149,9 @@ install -pm 644 %{name}-%{version}.pom \
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_14.beta.12.6jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.4-alt1_12.beta.12.5jpp7
 - new release
 
