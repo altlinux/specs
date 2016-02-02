@@ -1,3 +1,4 @@
+Provides: /usr/share/java/aqute-bnd.jar
 Provides: /etc/java/aqute-bnd.conf
 Name: aqute-bnd
 Version: 2.4.1
@@ -22,7 +23,7 @@ Requires: mvn(org.eclipse.osgi:org.eclipse.osgi.services)
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: aqute-bnd-2.4.1-2.fc23.cpio
 
 %description
@@ -51,14 +52,17 @@ mkdir -p $RPM_BUILD_ROOT
 for i in usr var etc; do
 [ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
-pushd %buildroot/usr/share/java
-ln -s aqute-bnd/biz.aQute.bnd.jar aqute-bnd.jar
-popd
+#pushd %buildroot/usr/share/java
+#ln -s aqute-bnd/biz.aQute.bnd.jar aqute-bnd.jar
+#popd
 
 %files -f %name-list
-/usr/share/java/aqute-bnd.jar
+#/usr/share/java/aqute-bnd.jar
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt0.2jpp
+- removed compatibility symlink
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
