@@ -1,33 +1,29 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name glassfish-jax-rs-api
-%define version 2.0
+%define version 2.0.1
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 %global oname javax.ws.rs-api
 Name:          glassfish-jax-rs-api
-Version:       2.0
-Release:       alt1_4jpp7
+Version:       2.0.1
+Release:       alt1_2jpp8
 Summary:       JAX-RS API Specification (JSR 339)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://jax-rs-spec.java.net/
-# git clone git://java.net/jax-rs-spec~git glassfish-jax-rs-api
-# (cd glassfish-jax-rs-api/ && git archive --format=tar --prefix=glassfish-jax-rs-api-2.0/ 2.0 | xz > ../glassfish-jax-rs-api-2.0-src-git.tar.xz)
-Source0:       %{name}-%{namedversion}-src-git.tar.xz
+# git clone git://java.net/jax-rs-spec~api glassfish-jax-rs-api
+# (cd glassfish-jax-rs-api/ && git archive --format=tar --prefix=glassfish-jax-rs-api-2.0.1/ 2.0.1 | xz > ../glassfish-jax-rs-api-2.0.1.tar.xz)
+Source0:       %{name}-%{namedversion}.tar.xz
 
+BuildRequires: junit
 BuildRequires: jvnet-parent
 
-# test deps
-BuildRequires: junit
-
-#BuildRequires: buildnumber-maven-plugin
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-resources-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-provider-junit4
 BuildRequires: spec-version-maven-plugin
 
 # Disabled on rawhide: texlive is broken
@@ -97,10 +93,16 @@ find . -name '*.class' -delete
 %pom_remove_plugin org.apache.maven.plugins:maven-jxr-plugin src/jax-rs-api
 %pom_remove_plugin org.apache.maven.plugins:maven-checkstyle-plugin src/jax-rs-api
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin src/jax-rs-api
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin src/jax-rs-api
+%pom_remove_plugin org.apache.maven.plugins:maven-deploy-plugin src/jax-rs-api
+
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-javadoc-plugin' ]/pom:executions" src/jax-rs-api
 
 %pom_xpath_remove "pom:build/pom:finalName" src/jax-rs-api
 
 sed -i "s|dvips|pdftex|" spec/spec.tex
+
+sed -i '/check-module/d' src/jax-rs-api/pom.xml
 
 cp -p src/etc/config/copyright.txt .
 sed -i 's/\r//' copyright.txt src/examples/pom.xml
@@ -133,10 +135,14 @@ cd src/jax-rs-api
 
 %if 0
 %files manual
-%doc copyright.txt spec/spec.pdf src/examples
+%doc spec/spec.pdf src/examples
+%doc copyright.txt
 %endif
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_2jpp8
+- new version
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_4jpp7
 - new release
 
