@@ -1,30 +1,27 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global artifactId javax.el-api
 
 Name:           glassfish-el-api
-Version:        2.2.4
-Release:        alt1_1jpp7
+Version:        3.0.0
+Release:        alt1_7jpp8
 Summary:        Expression Language API 2.2.4
-
-Group:          Development/Java
 # Part of implementation files contain ASL 2.0 copyright
-License:        CDDL and ASL 2.0
+License:        (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:            http://uel.java.net
-# svn export https://svn.java.net/svn/uel~svn/tags/javax.el-api-2.2.4 javax.el-api-2.2.4
-# tar cvJf javax.el-api-2.2.4.tar.xz javax.el-api-2.2.4/
-Source0:        %{artifactId}-%{version}.tar.xz
+# ./generate_tarball.sh
+Source0:        %{name}-%{version}.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source2:        generate_tarball.sh
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  jvnet-parent
 BuildRequires:  maven-local
-BuildRequires:  maven
-BuildRequires:  maven-source-plugin
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
 %description
@@ -34,7 +31,7 @@ The main goals are:
  * Provides API for use by other tools, such as Netbeans
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -42,38 +39,33 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n %{artifactId}-%{version}
+%setup -q
 cp -p %{SOURCE1} .
 
+%mvn_file :%{artifactId} %{name}
+
+# missing (unneeded) dep org.glassfish:legal
+%pom_remove_plugin :maven-remote-resources-plugin
+# javadoc generation fails due to strict doclint in JDK 8
+%pom_remove_plugin :maven-javadoc-plugin
+
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_alias : javax.el:el-api
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{artifactId}-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}.jar
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-rm -rf target/site/api*
+%mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt
+%doc LICENSE.txt LICENSE-2.0.txt
 
-%files javadoc
-%doc LICENSE-2.0.txt
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_7jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_1jpp7
 - new release
 
