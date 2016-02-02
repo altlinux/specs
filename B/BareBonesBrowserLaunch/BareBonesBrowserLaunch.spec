@@ -1,68 +1,57 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:       BareBonesBrowserLaunch
-Version:    3.1
-Release:    alt1_6jpp7
-Summary:    Simple library to launch a browser window from Java
-Group:      Development/Java
-License:    Public Domain
-URL:        http://www.centerkey.com/java/browser/
-Source0:    http://www.centerkey.com/java/browser/myapp/real/bare-bones-browser-launch-%{version}.jar
+BuildRequires: jpackage-generic-compat
+Name:          BareBonesBrowserLaunch
+Version:       3.1
+Release:       alt1_11jpp8
+Summary:       Simple library to launch a browser window from Java
+License:       Public Domain
+URL:           http://www.centerkey.com/java/browser/
+Source0:       http://www.centerkey.com/java/browser/myapp/real/bare-bones-browser-launch-%{version}.jar
 
-BuildRequires:  jpackage-utils
+BuildRequires: javapackages-local
 
-Requires:   jpackage-utils
-BuildArch:  noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
 Utility class to open a web page from a Swing application in the user's 
 default browser. Supports: Mac OS X, GNU/Linux, Unix, Windows XP
 
-
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Documentation
-Requires:       jpackage-utils
+Group: Development/Documentation
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}
 
-
 %prep
 %setup -q -c
-find * -name *.class -exec rm -f {} \;
 
+find * -name *.class -delete
+rm -rf doc/*
 
 %build
-%{javac} com/centerkey/utils/BareBonesBrowserLaunch.java
-%{jar} -cf %{name}-%{version}.jar .
 
+%{javac} com/centerkey/utils/BareBonesBrowserLaunch.java
+%{jar} -cf %{name}.jar com/centerkey/utils/BareBonesBrowserLaunch.class
+%{javadoc} -encoding UTF-8 -d doc com/centerkey/utils/BareBonesBrowserLaunch.java -windowtitle "%{name} %{version}"
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-pushd .
-cd $RPM_BUILD_ROOT%{_javadir}
-ln -s %{name}-%{version}.jar %{name}.jar
-popd
-#javadocs
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pR doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_artifact com.centerkey.utils:%{name}:%{version} %{name}.jar
+%mvn_file com.centerkey.utils:%{name} %{name}
+%mvn_install -J doc
 
+%files -f .mfiles
 
-%files
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
-
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_6jpp7
 - new release
 
