@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
+BuildRequires: jpackage-generic-compat
 # SVN revision used
 %global svnrel 1340
 
 Name:		jide-oss
 Version:	2.7.6
-Release:	alt1_11.1340svnjpp7
+Release:	alt1_12.1340svnjpp8
 Summary:	Swing component library built on top of Java/Swing
 License:	GPLv2 with exceptions
 URL:		https://jide-oss.dev.java.net/
@@ -32,8 +33,8 @@ BuildRequires:	jpackage-utils
 BuildRequires:	dos2unix
 BuildRequires:	dos2unix
 BuildRequires:	ant
-Source44: import.info
 
+Source44: import.info
 
 %description
 JIDE Common Layer is Swing component library built on top of Java/Swing.
@@ -99,6 +100,9 @@ cp -rf -p javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %doc docs/JIDE_Common_Layer_Developer_Guide.pdf
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_12.1340svnjpp8
+- new version
+
 * Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.6-alt1_11.1340svnjpp7
 - converted from JPackage by jppimport script
 
