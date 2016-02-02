@@ -1,22 +1,23 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 %def_with repolib
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: jcommon
-Version: 1.0.18
-Release: alt1_3jpp7
+Version: 1.0.23
+Release: alt1_2jpp8
 Summary: JFree Java utility classes
 License: LGPLv2+
 Group: System/Libraries
-Source: http://downloads.sourceforge.net/jfreechart/%%{name}-%%{version}.tar.gz
-Source2: bnd.properties
+# Github: https://github.com/jfree/jcommon
+# There are no tags which we can use to get sources. See:
+#   https://github.com/jfree/jcommon/issues/1
+# Source retrieved via:
+#  bash getsources.sh 1ea10aa82e30e0d60f57e1c562281a3ac7dd5cdd 1.0.23
+Source: %%{name}-%%{version}.tar.gz
 URL: http://www.jfree.org/jcommon
-BuildRequires: ant jpackage-utils
-# Required for converting jars to OSGi bundles
-BuildRequires:  aqute-bnd
+BuildRequires: maven-local
+BuildRequires: maven-plugin-bundle
 Requires: jpackage-utils
 BuildArch: noarch
 Source44: import.info
@@ -39,53 +40,43 @@ Javadoc for %{name}.
 %description javadoc -l fr
 Javadoc pour %{name}.
 
-%package xml
-Summary: JFree XML utility classes
-Group: System/Libraries
-Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires: jpackage-utils
-
-%description xml
-Optional XML utility classes.
-
 %prep
 %setup -q
 find . -name "*.jar" -exec rm -f {} \;
+MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>org.jfree.jcommon</Bundle-SymbolicName>
+            <Bundle-Vendor>Fedora Project</Bundle-Vendor>
+            <Bundle-Version>%{version}</Bundle-Version>
+            <!-- Do not autogenerate uses clauses in Manifests -->
+            <_nouses>true</_nouses>
+          </instructions>
+        </configuration>"
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :maven-site-plugin
+%pom_add_plugin org.apache.felix:maven-bundle-plugin . "$MVN_BUNDLE_PLUGIN_EXTRA_XML"
+# Change to packaging type bundle so as to be able to use it
+# as an OSGi bundle.
+%pom_xpath_set "pom:packaging" "bundle"
 
 %build
-pushd ant
-ant compile compile-xml javadoc
-popd
-# Convert to OSGi bundle
-java -Djcommon.bundle.version="%{version}" \
-     -jar $(build-classpath aqute-bnd) wrap -output %{name}-%{version}.bar -properties %{SOURCE2} %{name}-%{version}.jar
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p %{name}-%{version}.bar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-cp -p %{name}-xml-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-xml.jar
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
+%doc LICENSE README.md
 
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%doc licence-LGPL.txt README.txt
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/%{name}.jar
-
-%files xml
-%{_javadir}/%{name}-xml.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.23-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.18-alt1_3jpp7
 - new release
 
