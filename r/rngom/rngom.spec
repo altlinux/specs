@@ -1,16 +1,14 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: rngom
 Version: 201103
-Release: alt2_0.8.20120119svnjpp7
+Release: alt2_0.12.20120119svnjpp8
 Summary: Java library for parsing RELAX NG grammars
-Group: Development/Java
 License: MIT
-URL: https://rngom.dev.java.net
+URL: https://java.net/projects/rngom
 
 # svn export -r 70 https://svn.java.net/svn/rngom~svn/trunk/rngom rngom-201103
 # find rngom-201103/ -name '*.class' -delete
@@ -19,35 +17,18 @@ URL: https://rngom.dev.java.net
 Source0: %{name}-%{version}.tar.gz
 Patch0: %{name}-%{version}-pom.patch
 
-BuildRequires: bsf
-BuildRequires: bsh
-BuildRequires: stax2-api
-BuildRequires: javacc
-BuildRequires: javacc-maven-plugin
-BuildRequires: jpackage-utils
-BuildRequires: junit4
-BuildRequires: maven-local
-BuildRequires: maven-clean-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: msv-xsdlib
-BuildRequires: relaxngDatatype
-BuildRequires: sonatype-oss-parent
-BuildRequires: xmlunit
-
-Requires: stax2-api
-Requires: jpackage-utils
-Requires: msv-xsdlib
-Requires: relaxngDatatype
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.sun.msv.datatype.xsd:xsdlib)
+BuildRequires:  mvn(javax.xml.stream:stax-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(relaxngDatatype:relaxngDatatype)
+BuildRequires:  mvn(xmlunit:xmlunit)
 
 BuildArch: noarch
 Source44: import.info
-
 
 %description
 RNGOM is an open-source Java library for parsing RELAX NG grammars.
@@ -62,56 +43,34 @@ In particular, RNGOM can:
 * parse foreign elements/attributes in a schema
 * parse comments in a schema
 
-
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
-
 
 %description javadoc
 This package contains javadoc for %{name}.
-
 
 %prep
 %setup -q
 %patch0 -p1
 
-
 %build
-mvn-rpmbuild install javadoc:aggregate
-
+%mvn_build
 
 %install
+%mvn_install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-cp -p target/rngom-%{version}-SNAPSHOT.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc licenceheader.txt
 
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
-
-# Dependencies map:
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-
-%files javadoc
-%{_javadocdir}/*
-
+%files javadoc -f .mfiles-javadoc
+%doc licenceheader.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.12.20120119svnjpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt2_0.8.20120119svnjpp7
 - new release
 
