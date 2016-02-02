@@ -1,32 +1,24 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-
+BuildRequires: jpackage-generic-compat
 Name:          simple-jndi
 Version:       0.11.4.1
-Release:       alt2_6jpp7
+Release:       alt2_9jpp8
 Summary:       A JNDI implementation
 License:       BSD
-Url:           http://code.google.com/p/osjava/
+Url:           https://github.com/hen/osjava
 Source0:       http://osjava.googlecode.com/svn/dist/releases/official/simple-jndi/simple-jndi-0.11.4.1-src.tar.gz
 # wget -O simple-jndi-0.11.4.1.pom http://osjava.googlecode.com/svn/releases/simple-jndi-0.11.4.1/pom.xml
 Source1:       simple-jndi-%{version}.pom
 Patch0:        simple-jndi-0.11.4.1-jdk7.patch
 
-BuildRequires: jpackage-utils
-
-BuildRequires: ant ant-junit
+BuildRequires: javapackages-local
+BuildRequires: ant
 BuildRequires: apache-commons-dbcp
 BuildRequires: apache-commons-pool
 BuildRequires: junit
 
-Requires:      apache-commons-dbcp
-Requires:      apache-commons-pool
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -76,25 +68,20 @@ rm -r src/test/org/osjava/sj/memory/SharedMemoryTest.java
   jar javadoc
 
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}/
+%mvn_artifact %{SOURCE1} target/%{name}-%{version}.jar
+%mvn_file %{name}:%{name} %{name}
+%mvn_install -J dist/docs/api
 
 %files -f .mfiles
 %doc LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_9jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.11.4.1-alt2_6jpp7
 - new release
 

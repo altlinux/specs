@@ -5,8 +5,10 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt20jpp
+Release: alt21jpp
 
+# gradle 
+Provides: /usr/share/java/plexus/container-default.jar plexus-container-default
 # for apacheds jpp7
 Provides: mvn(org.apache.directory.project:project)
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
@@ -32,6 +34,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt21jpp
+- updated dependencies
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt20jpp
 - updated dependencies
 
@@ -69,25 +74,4 @@ mkdir -p $RPM_BUILD_ROOT
 - updated dependencies
 
 * Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt8jpp
-- updated dependencies
-
-* Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt7jpp
-- updated dependencies
-
-* Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt6jpp
-- updated dependencies
-
-* Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt5jpp
-- updated dependencies
-
-* Tue Nov 25 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4jpp
-- updated dependencies
-
-* Mon Jun 23 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3jpp
-- updated dependencies
-
-* Thu Feb 28 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2jpp
-- updated dependencies
-
-* Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1jpp
 - updated dependencies
