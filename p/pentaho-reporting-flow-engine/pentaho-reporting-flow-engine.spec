@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: pentaho-reporting-flow-engine
 Version: 0.9.4
-Release: alt1_8jpp7
+Release: alt1_11jpp8
 Summary: Pentaho Flow Reporting Engine
 License: LGPLv2+
 Epoch: 1
@@ -63,6 +64,9 @@ cp -rp build/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.9.4-alt1_8jpp7
 - new release
 
