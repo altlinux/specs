@@ -1,14 +1,15 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          glassfish-toplink-essentials
 Version:       2.0.46
-Release:       alt2_6jpp7
+Release:       alt2_10jpp8
 Summary:       Glassfish JPA Toplink Essentials
-Group:         Development/Java
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/javaee5/persistence/
 Source0:       http://dlc.sun.com.edgesuite.net/javaee5/promoted/source/glassfish-persistence-v2-b46-src.zip
@@ -44,9 +45,8 @@ Source44: import.info
 Glassfish Persistence Implementation.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name} Implementation
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -98,12 +98,7 @@ install -pm 644 glassfish/entity-persistence/toplink-essentials-agent.pom \
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/%{name}-agent.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-agent.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc glassfish/bootstrap/legal/*
 
 %files javadoc
@@ -114,6 +109,9 @@ cp -pr glassfish/entity-persistence/build/javadoc/* %{buildroot}%{_javadocdir}/%
 %doc glassfish/bootstrap/legal/LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.46-alt2_6jpp7
 - new release
 
