@@ -1,12 +1,13 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # use dcm4che-test as name, no use carrying the version in the name
 %global svn_rev 15516
 
 Name:           dcm4che-test
 Version:        2.6
-Release:        alt3_0.8.20110530svn15516jpp7
+Release:        alt3_0.11.20110530svn15516jpp8
 Summary:        Test images for dcm4che2
 License:        MPLv1.1 or GPLv2 or LGPLv2
 URL:            http://www.dcm4che.org/confluence/display/proj/The+Project
@@ -47,6 +48,9 @@ rm -rf target/site/apidocs/javadoc.sh
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.11.20110530svn15516jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt3_0.8.20110530svn15516jpp7
 - new release
 
