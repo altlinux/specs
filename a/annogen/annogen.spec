@@ -1,30 +1,25 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           annogen 
-Version:        0.1.0
-Release:        alt1_6jpp7
-Summary:        Java framework for JSR-175 annotations
-
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://annogen.codehaus.org/
+BuildRequires: jpackage-generic-compat
+Name:          annogen 
+Version:       0.1.0
+Release:       alt1_12jpp8
+Summary:       Java framework for JSR-175 annotations 
+License:       ASL 2.0
+URL:           http://annogen.codehaus.org/
 # svn export http://svn.codehaus.org/annogen/annogen/tags/release-0_1_0/ annogen-0.1.0
 # find annogen-0.1.0/ -name '*.jar' -delete
 # tar cJf annogen-0.1.0-CLEAN.tar.xz annogen-0.1.0
-Source0:        %{name}-%{version}-CLEAN.tar.xz
-Source1:        http://repo1.maven.org/maven2/annogen/annogen/0.1.0/annogen-0.1.0.pom
-Patch0:         annogen-doc-build.patch
-BuildArch:      noarch
-
+Source0:       %{name}-%{version}-CLEAN.tar.xz
+Source1:       http://repo1.maven.org/maven2/annogen/annogen/0.1.0/annogen-0.1.0.pom
+Patch0:        annogen-doc-build.patch
+BuildArch:     noarch
 BuildRequires: ant
-BuildRequires: qdox
-BuildRequires: jpackage-utils
 BuildRequires: dos2unix
-Requires:      jpackage-utils
+BuildRequires: javapackages-local
+BuildRequires: qdox
 Requires:      qdox
 Source44: import.info
 
@@ -34,9 +29,8 @@ In a nutshell, Annogen generates a proxy layer in front of your
 Annotations.
 
 %package javadoc
+Group: Development/Java
 Summary:      API documentation for %{name}
-Group:        Development/Java
-Requires:     jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -45,41 +39,45 @@ API documentation for %{name}.
 %prep
 %setup -q
 %patch0 -p1
+
+sed -i.tools_jar "s|/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.1.x86_64|%{_jvmdir}/java|" build-docs.xml
+
+sed -i.version "s|0.1.1|%{version}|" build.properties
+
 find examples -type f | xargs dos2unix
 find license -type f | xargs dos2unix
 find docs -name '*.html' -o -name '*.css' | xargs dos2unix
 
-%build
-export CLASSPATH=$( build-classpath qdox)
+sed -i.qdox2 "s|import com.thoughtworks.qdox.model.AbstractJavaEntity;|import com.thoughtworks.qdox.model.impl.AbstractJavaEntity;|" \
+ annogen/adapters/qdox/src/org/codehaus/annogen/override/QDoxElementIdPool.java \
+ annogen/adapters/qdox/src/org/codehaus/annogen/view/QDoxAnnoViewer.java
+
 for x in *.xml; do 
-  sed -i -e "s/source='1.4'/source='1.5'/; s/target='1.4'/target='1.5'/" $x;
+  sed -i -e "s/source='1.4'/source='1.6'/; s/target='1.4'/target='1.6'/;" $x;
 done
+
+%build
+
+export CLASSPATH=$( build-classpath qdox)
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 jars
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 docs
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-cp build/distribution/annogen-*.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_file %{name}:%{name} %{name}
+%mvn_artifact %{SOURCE1} build/distribution/%{name}-%{version}.jar
+%mvn_install -J build/docs
 
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%files -f .mfiles
+%doc examples/
+%doc license/LICENSE.txt license/NOTICE.txt
 
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp build/docs/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
-%doc license/LICENSE.txt license/NOTICE.txt examples/
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc license/LICENSE.txt
-%{_javadocdir}/%{name}
-
+%files javadoc -f .mfiles-javadoc
+%doc license/LICENSE.txt license/NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.1.0-alt1_6jpp7
 - new release
 
