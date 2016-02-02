@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name picketbox-commons
 %define version 1.0.0
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           picketbox-commons
 Version:        1.0.0
-Release:        alt2_8jpp7
+Release:        alt2_11jpp8
 Summary:        Common classes for security projects
 Group:          Development/Java
 License:        LGPLv2+
@@ -56,6 +57,9 @@ API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_8jpp7
 - new release
 
