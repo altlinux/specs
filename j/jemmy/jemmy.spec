@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jemmy
 %define version 2.3.0.0
@@ -16,7 +17,7 @@ BuildRequires: jpackage-compat
 
 Name:           jemmy
 Version:        2.3.0.0
-Release:        alt2_10jpp7
+Release:        alt2_12jpp8
 Summary:        Java UI testing library
 
 Group:          Development/Java
@@ -35,7 +36,6 @@ Source0:        jemmy-2.3.0.0.tar.gz
 # POM based on one from maven.org, with version and license info modified:
 # http://central.maven.org/maven2/org/netbeans/jemmy/2.2.7.5/jemmy-2.2.7.5.pom
 Source1:        %{name}.pom
-
 
 BuildRequires:  ant >= 1.6.5
 BuildRequires:  jpackage-utils
@@ -56,7 +56,6 @@ also do any other operations needed to be done from test.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -72,12 +71,9 @@ echo "Please, visit http://jemmy.java.net for more info about Jemmy." > README.t
 %ant jar javadoc
 
 %install
-
 # jar
 %__mkdir_p %{buildroot}%{_javadir}
-%__cp -a %{target_jar} %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do \
-%__ln_s ${jar} ${jar/-%{version}/}; done)
+%__cp -a %{target_jar} %{buildroot}%{_javadir}/%{name}.jar
 
 # POM
 install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
@@ -89,16 +85,18 @@ install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %__cp -a %{target_javadoc} %{buildroot}%{_javadocdir}/%{name}
 
 
-%files
+%files -f .mfiles
 %doc README.txt
 %{_javadir}/*.jar
 %{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt2_10jpp7
 - new release
 
