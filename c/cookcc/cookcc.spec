@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             cookcc
 Version:          0.3.3
-Release:          alt2_8jpp7
+Release:          alt2_12jpp8
 Summary:          Lexer and Parser Generator
 Group:            Development/Java
 License:          BSD
@@ -18,6 +19,7 @@ Source1:          %{name}-%{version}-pom.xml
 
 Patch0:           %{name}-%{version}-xerces.patch
 Patch1:           %{name}-%{version}-buildxml.patch
+Patch2:           %{name}-%{version}-port-to-jsr-269.patch
 
 BuildArch:        noarch
 
@@ -50,6 +52,7 @@ This package contains the API documentation for %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 find . -name '*.jar' -delete
 
@@ -72,10 +75,7 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc LICENSE_cookcc.txt
 
 %files javadoc
@@ -83,6 +83,9 @@ cp -rp javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE_cookcc.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_8jpp7
 - new release
 
