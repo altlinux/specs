@@ -1,24 +1,25 @@
-%filter_from_requires /^.usr.bin.run/d
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /.etc.java.jing-trang.conf/d
+%filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 # TODO:
 # - Install dtdinst's schemas, XSL etc as non-doc and to system catalogs?
 # - Drop isorelax and xerces license texts and references to them because
 #   our package does not actually contain them?
 
-%if 0%{?fedora} >= 29
+%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
 %global headless -headless
 %endif
 
 Name:           jing-trang
-Version:        20091111
-Release:        alt3_15jpp7
+Version:        20131210
+Release:        alt1_3jpp8
 Summary:        Schema validation and conversion based on RELAX NG
 
 Group:          Text tools
@@ -31,15 +32,15 @@ Source99:       %{name}-prepare-tarball.sh
 # Applicable parts submitted upstream:
 # http://code.google.com/p/jing-trang/issues/detail?id=129
 # http://code.google.com/p/jing-trang/issues/detail?id=130
-Patch0:         %{name}-20091111-build.patch
+Patch0:         0001-Various-build-fixes.patch
 # Saxon "HE" doesn't work for this, no old Saxon available, details in #655601
-Patch1:         %{name}-20091111-xalan.patch
+Patch1:         0002-Use-Xalan-instead-of-Saxon-for-the-build-655601.patch
 Patch2:         %{name}-20091111-datatype-sample.patch
-# http://code.google.com/p/jing-trang/source/detail?r=2356, #716177
-Patch3:         %{name}-20091111-saxon93-716177.patch
+# https://code.google.com/p/jing-trang/issues/detail?id=182
+Patch3:         jing-trang-20131210-java8.patch
 BuildArch:      noarch
 
-%if 0%{?rhel}
+%if 0%{?rhel} && 0%{?rhel} < 7
 BuildRequires:  ant-trax
 %else
 BuildRequires:  ant >= 1.8.2
@@ -120,15 +121,22 @@ format.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 sed -i -e 's/\r//g' lib/isorelax.copying.txt
 find . -name "OldSaxon*.java" -delete # No "old" saxon available in Fedora
+%if 0%{?_licensedir:1}
+sed -i -e 's|"\(copying\.txt\)"|"%{_licensedir}/dtdinst/\1"|' \
+    dtdinst/index.html
+sed -i -e 's|"\(copying\.txt\)"|"%{_licensedir}/trang/\1"|' \
+    trang/doc/trang.html trang/doc/trang-manual.html
+%endif
 
 
 %build
-CLASSPATH=$(build-classpath beust-jcommander xalan-j2 xalan-j2-serializer) \
+CLASSPATH=$(build-classpath \
+    beust-jcommander xalan-j2 xalan-j2-serializer saxon) \
 %ant -Dlib.dir=%{_javadir} -Dbuild.sysclasspath=last dist
 
 
@@ -143,6 +151,10 @@ mv jing-%{version}/doc/api $RPM_BUILD_ROOT%{_javadocdir}/jing
 ln -s %{_javadocdir}/jing jing-%{version}/doc/api
 rm -f jing-%{version}/sample/datatype/datatype-sample.jar
 %jpackage_script com.thaiopensource.relaxng.util.Driver "" "" jing:relaxngDatatype:xml-commons-resolver:xerces-j2 jing true
+%if 0%{?_licensedir:1}
+mkdir -p jing-%{version}/_licenses
+mv jing-%{version}/doc/*copying.* jing-%{version}/_licenses
+%endif
 
 %{__unzip} build/dist/trang-%{version}.zip
 install -pm 644 trang-%{version}/trang.jar $RPM_BUILD_ROOT%{_javadir}
@@ -154,26 +166,39 @@ install -pm 644 dtdinst-%{version}/dtdinst.jar $RPM_BUILD_ROOT%{_javadir}
 
 
 %files -n jing
+%if 0%{?_licensedir:1}
+%doc --no-dereference jing-%{version}/_licenses/*
+%endif
 %doc --no-dereference jing-%{version}/{readme.html,doc,sample}
 %{_bindir}/jing
 %{_javadir}/jing.jar
 
 %files -n jing-javadoc
-%doc jing-%{version}/doc/{copying.html,isorelax.copying.txt,xerces.copying.txt}
+%if 0%{?_licensedir:1}
+%doc jing-%{version}/_licenses/*
+%else
+%doc jing-%{version}/doc/*copying.*
+%endif
 %{_javadocdir}/jing/
 
 %files -n trang
-%doc trang-%{version}/*.{txt,html}
+%doc trang-%{version}/copying.txt
+%doc trang-%{version}/*.html
 %{_bindir}/trang
 %{_javadir}/trang.jar
 
 %files -n dtdinst
-%doc dtdinst-%{version}/{*.{txt,html,rng,xsl},example}
+%doc dtdinst-%{version}/copying.txt
+%doc dtdinst-%{version}/*.{html,rng,xsl}
+%doc dtdinst-%{version}/{dtdinst.rnc.txt,teixml.dtd.txt,example}
 %{_bindir}/dtdinst
 %{_javadir}/dtdinst.jar
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:20131210-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:20091111-alt3_15jpp7
 - new release
 
