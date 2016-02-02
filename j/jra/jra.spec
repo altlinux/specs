@@ -2,8 +2,9 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jra
 %define version 1.0
@@ -12,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:          jra
 Version:       1.0
-Release:       alt2_0.6.alpha4jpp7
+Release:       alt2_0.10.alpha4jpp8
 Summary:       Java REST Annotations
 License:       ASL 2.0
 Group:         Development/Java
@@ -25,7 +26,6 @@ Source0:       %{name}-%{namedversion}.tar.xz
 
 BuildArch:     noarch
 
-BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -34,8 +34,6 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-release-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
-
-Requires:      jpackage-utils
 Source44: import.info
 
 %description
@@ -60,38 +58,22 @@ This package contains the API documentation for %{name}.
 %pom_xpath_remove pom:build/pom:extensions
 
 %build
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  package javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
-# jar
-install -pm 644 target/%{name}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# pom
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc src/main/resources/META-INF/LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.10.alpha4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.6.alpha4jpp7
 - new release
 
