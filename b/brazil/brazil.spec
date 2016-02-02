@@ -2,28 +2,21 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:      brazil
 Version:   2.3
-Release:   alt3_11jpp7
+Release:   alt3_14jpp8
 Summary:   Extremely small footprint Java HTTP stack
 Group:     Development/Java
 License:   SPL
-URL:       http://research.sun.com/brazil/
+URL:       https://github.com/mbooth101/brazil
 
-# source tarball and the script used to fetch it from Sun's Download Center
-# script usage:
-# $ sh get-brazil.sh
-Source0:   %{name}-%{version}.tar.gz
-Source1:   get-brazil.sh
+Source0:   https://github.com/mbooth101/brazil/archive/%{name}-%{version}.tar.gz
 
 # upsteam's build script doesn't build javadocs, so use our own, better script
 Source2:   brazil-build.xml
-
-# patch for removing sun proprietary signal handling api not in gcj
-Patch0:    brazil-remove-proprietary-sun-api.patch
-
 
 BuildArch:        noarch
 
@@ -39,10 +32,8 @@ Labs. This package contains the core set of classes that are not dependent on
 any other external Java libraries.
 
 %package javadoc
-Summary:   Javadocs for %{name}
+Summary:   Java-docs for %{name}
 Group:     Development/Java
-Requires:  %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:  jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -58,10 +49,7 @@ Requires:  tcl
 Demonstrations and samples for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
-
-# apply patches
-%patch0 -p0
+%setup -q -n %{name}-%{name}-%{version}
 
 # fix permissions and interpreter in sample scripts
 grep -lR -e ^\#\!/usr/sfw/bin/tclsh8.3 samples | xargs sed --in-place "s|/usr/sfw/bin/tclsh8.3|/usr/bin/tclsh|"
@@ -73,11 +61,9 @@ cp -p %{SOURCE2} build.xml
 ant all
 
 %install
-
 # jars
 mkdir -p %{buildroot}%{_javadir}
-cp -p build/%{name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+cp -p build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
@@ -88,9 +74,8 @@ mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -pr samples %{buildroot}%{_datadir}/%{name}
 
 %files
-%doc srcs/license.terms
+%doc README.md srcs/license.terms
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
 
 %files javadoc
 %doc %{_javadocdir}/%{name}
@@ -100,6 +85,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_11jpp7
 - new release
 
