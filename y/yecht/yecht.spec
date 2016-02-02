@@ -1,27 +1,25 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global commitversion 157cf13
 %global dlversion 0.0.2-0-g157cf13
-%global cluster olabini
+%global cluster jruby
 
 Name:     yecht
-Version:  0.0.2
-Release:  alt1_9jpp7
+Version:  1.0
+Release:  alt1_2jpp8
 Summary:  A YAML processor based on Syck
-Group:    Development/Java
 License:  MIT
-URL:            http://github.com/%{cluster}/%{name}
-Source0:        %{url}/tarball/%{version}/%{cluster}-%{name}-%{dlversion}.tar.gz
-Patch0:   fix-build-xml-classpaths.path
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=561455
-Patch1:   add-javadocs-to-build-xml.patch
+URL:      http://github.com/%{cluster}/%{name}
+Source0:  https://github.com/%{cluster}/%{name}/archive/%{name}-%{version}.zip
+Patch0:   disable-jruby-dep.patch
 
 BuildRequires: jpackage-utils
-BuildRequires: ant
+BuildRequires: maven-local
 Requires: jpackage-utils
 
 BuildArch:      noarch
@@ -31,9 +29,8 @@ Source44: import.info
 Yecht is a Syck port, a YAML 1.0 processor for Ruby.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -41,35 +38,26 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n olabini-%{name}-%{commitversion}
-%patch0 -p1
-%patch1
+%setup -n %{name}-%{name}-%{version}
+%patch0
 
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
 %build
-mkdir lib
-ant
-ant javadocs
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+%mvn_install
 
-cp lib/yecht-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/yecht-%{version}.jar
-ln -s %{_javadir}/yecht-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/yecht.jar
+%files -f .mfiles
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/yecht-%{version}.jar
-%{_javadir}/yecht.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_9jpp7
 - new release
 
