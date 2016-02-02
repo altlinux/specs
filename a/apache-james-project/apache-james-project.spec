@@ -1,11 +1,12 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global server_ver      2.2.0
 %global short_name      apache-james
 
 Name:             %{short_name}-project
 Version:          1.8.1
-Release:          alt1_5jpp7
+Release:          alt1_11jpp8
 Summary:          Main project POM files and resources
 License:          ASL 2.0
 Group:            Development/Java
@@ -16,7 +17,7 @@ Source1:          create-tarball.sh
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    maven-site-plugin
 Source44: import.info
 
 
@@ -29,6 +30,9 @@ Main project POM files and resources for Apache James project
 # generates erroneous runtime dependency
 %pom_remove_plugin :maven-doap-plugin
 
+%pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-ssh-external']]"
+%pom_xpath_remove "pom:dependency[pom:artifactId[text()='wagon-ssh']]"
+
 %build
 %mvn_build
 
@@ -39,6 +43,9 @@ Main project POM files and resources for Apache James project
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_5jpp7
 - new release
 
