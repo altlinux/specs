@@ -3,11 +3,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           cal10n
 Version:        0.7.7
-Release:        alt1_3jpp7
+Release:        alt1_6jpp8
 Summary:        Compiler assisted localization library (CAL10N)
 License:        MIT
 URL:            http://cal10n.qos.ch
@@ -53,6 +54,7 @@ an enum type match those in the corresponding resource bundles.
 %prep
 %setup -q 
 find . -name \*.jar -delete
+%pom_xpath_remove pom:extensions
 %pom_add_dep org.apache.maven:maven-artifact maven-%{name}-plugin
 %pom_disable_module %{name}-site
 %pom_disable_module maven-%{name}-plugin-smoke
@@ -74,6 +76,9 @@ find . -name \*.jar -delete
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.7.7-alt1_6jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.7-alt1_3jpp7
 - new release
 
