@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global base_name       antunit
 
 Name:             ant-%{base_name}
-Version:          1.2
-Release:          alt2_12jpp7
+Version:          1.3
+Release:          alt1_3jpp8
 Summary:          Provide antunit ant task
 Group:            Development/Java
 License:          ASL 2.0
@@ -89,6 +90,9 @@ echo "%{base_name} ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_12jpp7
 - new release
 
