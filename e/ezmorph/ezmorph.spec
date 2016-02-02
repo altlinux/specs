@@ -1,10 +1,11 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           ezmorph
 Version:        1.0.6
-Release:        alt1_9jpp7
+Release:        alt1_13jpp8
 Summary:        Object transformation library for Java
 License:        ASL 2.0
 URL:            http://ezmorph.sourceforge.net/
@@ -19,7 +20,6 @@ Source0:        %{name}-%{version}.tar.gz
 Source1:        http://ezmorph.cvs.sourceforge.net/viewvc/ezmorph/ezmorph/LICENSE.txt
 Patch0:         ezmorph-1.0.6-maven.patch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  jakarta-oro
 BuildRequires:  maven-local
 BuildArch:      noarch
@@ -31,7 +31,7 @@ Object. It supports transformations for primitives and Objects and
 multidimensional arrays.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -59,6 +59,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.6-alt1_9jpp7
 - new release
 
