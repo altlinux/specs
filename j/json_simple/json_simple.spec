@@ -1,36 +1,23 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-
+BuildRequires: jpackage-generic-compat
 Name:           json_simple
 Version:        1.1.1
-Release:        alt2_5jpp7
+Release:        alt2_11jpp8
 Summary:        Simple Java toolkit for JSON
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://code.google.com/p/json-simple/
+BuildArch:      noarch
+
 # svn export http://json-simple.googlecode.com/svn/tags/tag_release_1_1_1/ json-simple-1.1.1
 # tar czf json-simple-1.1.1-src-svn.tar.gz json-simple-1.1.1
 Source0:        json-simple-1.1.1-src-svn.tar.gz
 
-BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
+#https://code.google.com/p/json-simple/issues/detail?id=97
+Patch0:         json-simple-hash-java-1.8.patch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  junit4
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -48,13 +35,12 @@ to encode or decode JSON text.
   * Both of the source code and the binary are JDK1.2 compatible 
 
 %package javadoc
-Group:         Development/Java
-Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
+Group: Development/Java
+Summary:       API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains %{summary}.
 
 %prep
 %setup -q -n json-simple-%{version}
@@ -62,33 +48,26 @@ find . -name '*.jar' -exec rm -f '{}' \;
 # All the files have dos line endings, remove them.
 find . -type f -exec %{__sed} -i 's/\r//' {} \;
 
-%build
+%patch0 -p1
 
-mvn-rpmbuild install javadoc:aggregate
+%mvn_file : %{name}
+
+%build
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/json-simple-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc AUTHORS.txt ChangeLog.txt LICENSE.txt README.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_5jpp7
 - new release
 
