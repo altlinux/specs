@@ -8,7 +8,7 @@
 %define oversion 10_0
 
 Name:    icebw
-Version: 11.4
+Version: 11.5
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -21,6 +21,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:  %url/download/%name-%oversion.tar.bz2
 Source1: %name.watch
 Patch1:	 %name-fix-pathes.patch
+Patch2:  %name-alt-fix-missing-global-variables.patch
 
 BuildRequires: gcc-c++ libMySQL-devel libgtk+3-devel
 
@@ -30,6 +31,7 @@ Free financial accounting system.
 %prep
 %setup -q -c
 %patch1 -p2
+%patch2 -p2
 subst "s|/usr/share/locale/ru/|%buildroot%_datadir/locale/uk/|g" locale/Makefile
 
 %build
@@ -46,6 +48,10 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Tue Feb 02 2016 Andrey Cherepanov <cas@altlinux.org> 11.5-alt1
+- new version 11.5
+- fix missing global variables as `organ`
+
 * Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 11.4-alt1
 - new version 11.4
 
