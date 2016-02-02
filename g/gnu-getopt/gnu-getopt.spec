@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_4jpp7
+Release:        alt1_9jpp8
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -47,7 +48,7 @@ Provides:       gnu.getopt = %{epoch}:%{version}-%{release}
 Obsoletes:      gnu.getopt < %{epoch}:%{version}-%{release}
 BuildArch:      noarch
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 Requires:       jpackage-utils
 Source44: import.info
 
@@ -95,18 +96,18 @@ cp -pr build/api/* %{buildroot}%{_javadocdir}/%{name}
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
-%files
+%files -f .mfiles
 %doc gnu/getopt/COPYING.LIB gnu/getopt/README
-%{_javadir}/%{name}.jar
 %{_javadir}/gnu.getopt.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc gnu/getopt/COPYING.LIB
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_4jpp7
 - new release
 
