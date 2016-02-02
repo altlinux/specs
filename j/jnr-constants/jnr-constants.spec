@@ -1,80 +1,60 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global commit_hash 7cb9fc2
-%global tag_hash 874071e
-
+BuildRequires: jpackage-generic-compat
 Name:           jnr-constants
-Version:        0.8.4
-Release:        alt1_3jpp7
+Version:        0.9.0
+Release:        alt1_1jpp8
 Summary:        Java Native Runtime constants 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://github.com/jnr/%{name}/
-Source0:        https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
+Source0:        https://github.com/jnr/%{name}/archive/%{version}.tar.gz
+Source1:        MANIFEST.MF
+Patch0:         add-manifest.patch
+
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       jpackage-utils
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
 Provides java values for common platform C constants (e.g. errno).
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jnr-%{name}-%{tag_hash}
+%setup -q
+cp %{SOURCE1} .
+%patch0
 find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
+%mvn_file : %{name}/%{name} %{name} constantine
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-# link to older version jarname, so that gradle works
-ln -s %{_javadir}/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/constantine.jar
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-%{_javadir}/constantine.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_3jpp7
 - new release
 
