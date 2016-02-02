@@ -1,13 +1,15 @@
-Epoch: 0
+Epoch: 1
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: perl(Getopt/Mixed.pm) unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,16 +40,13 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define scm_version 1_7R4
+%define scm_version 1_7_7
 
 Name:           rhino
-# R3 doesn't mean a prerelease, but behind R there is a version of this implementation
-# of Javascript version 1.7 (which is independent from this particular implementation,
-# e.g., there is C++ implementation in Spidermonkey)
-Version:        1.7R4
-Release:        alt1_6jpp7
+Version:        1.7.7
+Release:        alt1_2jpp8
 Summary:        JavaScript for Java
-License:        MPLv2.0 
+License:        MPLv2.0
 
 Source0:        https://github.com/mozilla/rhino/archive/Rhino%{scm_version}_RELEASE.zip
 Source1:        http://repo1.maven.org/maven2/org/mozilla/rhino/%{version}/rhino-%{version}.pom
@@ -55,18 +54,14 @@ Source2:        %{name}.script
 
 Patch0:         %{name}-build.patch
 # Add OSGi metadata from Eclipse Orbit project
-# Rip out of MANIFEST.MF included in this JAR:
-# http://www.eclipse.org/downloads/download.php?r=1&file=/tools/orbit/downloads/drops/R20110523182458/repository/plugins/org.mozilla.javascript_1.7.2.v201005080400.jar
 Patch1:         %{name}-addOrbitManifest.patch
-Patch2:         %{name}-1.7R3-crosslink.patch
-Patch3:         %{name}-shell-manpage.patch
 
 URL:            http://www.mozilla.org/rhino/
-Group:          Development/Java
 
 BuildRequires:  ant
-Requires:       jpackage-utils
 Requires:       jline
+Obsoletes:      %{name}-javadoc < %{version}-%{release}
+Obsoletes:      %{name}-manual < %{version}-%{release}
 
 # Disable xmlbeans until we can get it into Fedora
 #Requires:       xmlbeans
@@ -80,41 +75,16 @@ in Java. It is typically embedded into Java applications to provide
 scripting to end users.
 
 %package        demo
+Group: Development/Java
 Summary:        Examples for %{name}
-Group:          Development/Java
 
 %description    demo
 Examples for %{name}.
 
-%package        manual
-
-Summary:        Manual for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description    manual
-Documentation for %{name}.
-
-%package        javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-BuildRequires:  java-javadoc
-Requires:       java-javadoc
-BuildArch: noarch
-
-%description    javadoc
-Javadoc for %{name}.
-
 %prep
 %setup -q -n %{name}-Rhino%{scm_version}_RELEASE
 %patch0 -p1 -b .build
-%patch1 -p1 -b .fixManifest
-%patch2 -p1 -b .crosslink
-%patch3 -p1 -b .manpage
-
-# Fix build
-sed -i -e '/.*<get.*src=.*>$/d' build.xml testsrc/build.xml \
-       toolsrc/org/mozilla/javascript/tools/debugger/build.xml xmlimplsrc/build.xml
+%patch1 -b .fixManifest
 
 # Fix manifest
 sed -i -e '/^Class-Path:.*$/d' src/manifest
@@ -123,30 +93,26 @@ sed -i -e '/^Class-Path:.*$/d' src/manifest
 sed -i -e 's|^implementation.version: Rhino .* release .* \${implementation.date}|implementation.version: Rhino %{version} release %{release} \${implementation.date}|' build.properties
 
 %build
-ant deepclean jar copy-all javadoc -Dno-xmlbeans=1
+ant deepclean jar copy-all -Dno-xmlbeans=1
 
 pushd examples
 
-export CLASSPATH=../build/%{name}%{scm_version}/js.jar:$(build-classpath xmlbeans/xbean 2>/dev/null)
+export CLASSPATH=../build/%{name}%{version}/js.jar:$(build-classpath xmlbeans/xbean 2>/dev/null)
 %{javac} *.java
-%{jar} cvf ../build/%{name}%{scm_version}/%{name}-examples.jar *.class
+%{jar} cf ../build/%{name}%{version}/%{name}-examples.jar *.class
 popd
 
 %install
 # jars
 mkdir -p %{buildroot}%{_javadir}
-cp -a build/%{name}%{scm_version}/js.jar %{buildroot}%{_javadir}
+cp -a build/%{name}%{version}/js.jar %{buildroot}%{_javadir}
 ln -s js.jar %{buildroot}%{_javadir}/%{name}.jar
-cp -a build/%{name}%{scm_version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
-
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -a build/%{name}%{scm_version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+cp -a build/%{name}%{version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
 
 # man page
 mkdir -p %{buildroot}%{_mandir}/man1/
-install -m 644 build/%{name}%{scm_version}/man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
- 
+install -m 644 man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
+
 ## script
 mkdir -p %{buildroot}%{_bindir}
 install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
@@ -164,26 +130,20 @@ install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
-%files
+%files -f .mfiles
 %attr(0755,root,root) %{_bindir}/*
 %{_javadir}/*
 %{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 %{_mandir}/man1/%{name}.1*
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %files demo
 %{_datadir}/%{name}
 
-%files manual
-%if 0
-%doc build/%{name}%{scm_version}/docs/*
-%endif
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
-
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7.7-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7R4-alt1_6jpp7
 - new release
 
