@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          aries-quiesce
 Version:       0.3
-Release:       alt2_5jpp7
+Release:       alt2_9jpp8
 Summary:       Apache Aries Quiesce
 License:       ASL 2.0
 Group:         Development/Java
@@ -19,7 +20,6 @@ Patch0:        %{name}-%{version}-xml.patch
 
 BuildArch:     noarch
 
-BuildRequires: jpackage-utils
 BuildRequires: maven-local
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -35,15 +35,6 @@ BuildRequires: aries-util
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
 BuildRequires: slf4j
-
-Requires:      jpackage-utils
-Requires:      apache-commons-lang
-Requires:      apache-commons-pool
-Requires:      apache-commons-collections
-Requires:      aries-util
-Requires:      felix-osgi-compendium
-Requires:      felix-osgi-core
-Requires:      slf4j
 Source44: import.info
 
 %description
@@ -52,7 +43,6 @@ Quiesce support for Aries.
 %package javadoc
 Summary:       Javadocs for %{name}
 Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,46 +53,20 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 
 %build
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  package javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# modules
-for module in api manager;
-do
-  pushd quiesce-$module
-  jarname=org.apache.aries.quiesce.$module
-  install -pm 644 target/$jarname-%{version}.jar %{buildroot}%{_javadir}/%{name}/$jarname.jar
-  install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-$jarname.pom
-  %add_maven_depmap JPP.%{name}-$jarname.pom %{name}/$jarname.jar
-  popd
-done
-
-# pom
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}.pom
-
-# depmap
-%add_maven_depmap JPP.%{name}.pom
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_5jpp7
 - new release
 
