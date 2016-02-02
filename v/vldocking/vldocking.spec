@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:		vldocking
 Version:	2.1.5
-Release:	alt1_6jpp7
+Release:	alt1_9jpp8
 Summary:	A Java a.. docking system for JFC Swing applications
 Group:		Development/Java
 License:	CeCILL
@@ -56,11 +57,7 @@ ant javadoc
 
 %install
 
-install -D jar/%{name}_%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-
-pushd $RPM_BUILD_ROOT%{_javadir}
-	ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-popd
+install -D jar/%{name}_%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -73,6 +70,9 @@ cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt1_6jpp7
 - new release
 
