@@ -2,30 +2,25 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          jsr-311
 Version:       1.1.1
-Release:       alt2_7jpp7
+Release:       alt2_11jpp8
 Summary:       JAX-RS: Java API for RESTful Web Services
 License:       CDDL
 URL:           http://jsr311.java.net
 # svn export https://svn.java.net/svn/jsr311~svn/tags/jsr311-api-1.1.1 jsr-311-1.1.1
 # tar cvzf jsr-311-1.1.1.tgz jsr-311-1.1.1
 Source0:       %{name}-%{version}.tgz
-# Patch the POM:
-Patch0:        %{name}-pom.patch
 
-
-BuildRequires: buildnumber-maven-plugin
-BuildRequires: junit
-BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-source-plugin
-
-BuildArch:     noarch
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 
 Provides:      javax.ws.rs
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -41,7 +36,11 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0
+
+%pom_remove_plugin :buildnumber-maven-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_xpath_remove "///pom:extensions/pom:extension[pom:artifactId='wagon-svn']"
 
 %build
 
@@ -57,6 +56,9 @@ This package contains javadoc for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_7jpp7
 - new release
 
