@@ -1,13 +1,14 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global base_name       pool
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
 Version:          1.6
-Release:          alt2_7jpp7
+Release:          alt2_11jpp8
 Summary:          Apache Commons Pool Package
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
@@ -16,12 +17,6 @@ BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
-# This should go away with F-17
-Provides:         jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 0:1.3-14
-Obsoletes:        jakarta-%{short_name}-tomcat5 < 0:1.3-14
-Obsoletes:        jakarta-%{short_name}-manual < 0:1.3-14
 Source44: import.info
 
 %description
@@ -57,6 +52,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_7jpp7
 - new release
 
