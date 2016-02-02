@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          aries-util
 Version:       0.4
-Release:       alt2_6jpp7
+Release:       alt2_8jpp8
 Summary:       Apache Aries Util
 License:       ASL 2.0
 URL:           http://aries.apache.org/
@@ -60,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_8jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_6jpp7
 - new release
 
