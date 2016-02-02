@@ -2,18 +2,19 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sblim-cim-client2
-%define version 2.2.1
+%define version 2.2.5
 
 %global project_folder %{name}-%{version}-src
 %global archive_folder build
 
 Name:           sblim-cim-client2
-Version:        2.2.1
-Release:        alt1_2jpp7
+Version:        2.2.5
+Release:        alt1_4jpp8
 Summary:        Java CIM Client library
 
 Group:          Development/Java
@@ -86,7 +87,7 @@ ant \
 
 %install
 # --- documentation ---
-dstDocDir=$RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+dstDocDir=$RPM_BUILD_ROOT%{_docdir}/%{name}
 install -d $dstDocDir
 install --mode=644 ChangeLog COPYING README NEWS $dstDocDir
 # --- samples (also into _docdir) ---
@@ -97,40 +98,34 @@ install -d $confDir
 install --mode=664 sblim-cim-client2.properties sblim-slp-client2.properties $confDir
 # --- jar ---
 install -d $RPM_BUILD_ROOT%{_javadir}
-install %{archive_folder}/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(
-  cd $RPM_BUILD_ROOT%{_javadir} &&
-    ln -sf %{name}-%{version}.jar %{name}.jar;
-)
+install %{archive_folder}/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 # --- javadoc ---
 install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %files
-%dir %{_datadir}/doc/%{name}-%{version}
+%dir %{_docdir}/%{name}
 %config(noreplace) %{_sysconfdir}/java/sblim-cim-client2.properties
 %config(noreplace) %{_sysconfdir}/java/sblim-slp-client2.properties
-%doc %{_docdir}/%{name}-%{version}/COPYING
-%doc %{_docdir}/%{name}-%{version}/README
-%doc %{_docdir}/%{name}-%{version}/ChangeLog
-%doc %{_docdir}/%{name}-%{version}/NEWS
+%doc %{_docdir}/%{name}/COPYING
+%doc %{_docdir}/%{name}/README
+%doc %{_docdir}/%{name}/ChangeLog
+%doc %{_docdir}/%{name}/NEWS
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %files manual
-%doc %{_docdir}/%{name}-%{version}/COPYING
-%doc %{_docdir}/%{name}-%{version}/org
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%doc %{_docdir}/%{name}/COPYING
+%doc %{_docdir}/%{name}/org
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_4jpp8
+- new version
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_2jpp7
 - new version
 
