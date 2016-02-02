@@ -1,5 +1,6 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global commit_hash d50ee0e
 %global tag_hash d50ee0e
 
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           jcodings
 Version:        1.0.9
-Release:        alt2_5jpp7
+Release:        alt2_8jpp8
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 Group:          Development/Java
@@ -46,6 +47,9 @@ echo "See %{url} for more info about the %{name} project." > README.txt
 %doc README.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_8jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_5jpp7
 - new release
 
