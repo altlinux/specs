@@ -1,98 +1,61 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name: geronimo-commonj
-Version: 1.1.0
-Release: alt2_7jpp7
-Summary: CommonJ Specification
 Group: Development/Java
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global spec_ver 1.1
+%global spec_name geronimo-commonj_%{spec_ver}_spec
+Name:    geronimo-commonj
+Version: 1.1.0
+Release: alt2_12jpp8
+Summary: CommonJ Specification
 License: ASL 2.0
-URL: http://geronimo.apache.org/
-
+URL:     http://geronimo.apache.org/
 # svn export https://svn.apache.org/repos/asf/geronimo/specs/tags/specs-1.4/geronimo-commonj_1.1_spec geronimo-commonj-1.1.0
 # tar cvfJ geronimo-commonj-1.1.0.tar.xz geronimo-commonj-1.1.0
-Source: %{name}-%{version}.tar.xz
+Source:  %{name}-%{version}.tar.xz
 
 # Remove the SNAPSHOT tag from the version in the POM file:
-Patch0: %{name}-version-fix.patch
+Patch0:  %{name}-version-fix.patch
 
 BuildArch: noarch
-
 BuildRequires: geronimo-parent-poms
-BuildRequires: jpackage-utils
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-local
-
-
-Requires: jpackage-utils
 Source44: import.info
-
 
 %description
 Geronimo CommonJ Specification.
 
-
 %package javadoc
-Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: jpackage-utils
+Summary: Javadoc for %{name}
 BuildArch: noarch
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
-
 
 %prep
 %setup -q
 %patch0 -p0
 
+%mvn_file :%{spec_name} %{name}
 
 %build
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install \
-  javadoc:aggregate
 
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
+%mvn_install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-install -pm 644 target/%{name}_1.1_spec-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt
 
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-# Dependencies map:
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%doc LICENSE.txt
-%doc NOTICE.txt
-
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc LICENSE.txt
-%doc NOTICE.txt
-
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_7jpp7
 - new release
 
