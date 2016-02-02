@@ -1,12 +1,13 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global base_name  discovery
 %global short_name commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        0.5
-Release:        alt3_9jpp7
+Release:        alt3_14jpp8
 Epoch:          2
 Summary:        Apache Commons Discovery
 License:        ASL 2.0
@@ -17,11 +18,7 @@ Patch1:         %{name}-remove-unreliable-test.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  apache-commons-logging >= 1.1.1
-
-Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} <= 1:0.4
 Source44: import.info
 
 %description
@@ -35,9 +32,6 @@ classes.
 %package javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
-
-Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc <= 1:0.4
 BuildArch: noarch
 
 %description javadoc
@@ -63,6 +57,9 @@ BuildArch: noarch
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_14jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2:0.5-alt3_9jpp7
 - new release
 
