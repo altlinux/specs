@@ -2,14 +2,15 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           colossus
 %global         rev        5331
 %global         revdate    20130917
 Version:        0.14.0
 %global         branch    %{nil}
-Release:        alt1_4jpp7
+Release:        alt1_4jpp8
 Summary:        Allows people to play Titan against each other or AIs
 
 Group:          Games/Other
@@ -187,6 +188,9 @@ touch --no-create %{_datadir}/pixmaps || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_4jpp8
+- new version
+
 * Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_4jpp7
 - update to new release by jppimport
 
