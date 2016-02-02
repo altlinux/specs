@@ -1,11 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jrosetta
 Version:        1.0.4
-Release:        alt1_7jpp7
+Release:        alt1_12jpp8
 Summary:        A common base to build a graphical console
 
 Group:          Development/Java
@@ -15,21 +13,9 @@ Source0:        http://maven.artenum.com/content/groups/public/com/artenum/%{nam
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-clean-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit4
-
-Requires:       jpackage-utils
+Requires:       maven-local
 Source44: import.info
 
 %description
@@ -60,46 +46,20 @@ rm CHANGE.txt.CRLF
 %pom_xpath_remove "pom:build/pom:extensions" pom.xml
 
 %build
-mvn-rpmbuild -e install javadoc:aggregate
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+%mvn_install
 
-cp -p modules/%{name}-api/target/%{name}-api-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-API-%{version}.jar
-ln -s %{name}-API-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-API.jar
-cp -p modules/%{name}-engine/target/%{name}-engine-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-engine-%{version}.jar
-ln -s %{name}-engine-%{version}.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-engine.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 modules/%{name}-api/pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-API.pom
-install -pm 644 modules/%{name}-engine/pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-engine.pom
-
-%add_maven_depmap JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}-API.pom %{name}-API.jar
-%add_maven_depmap JPP-%{name}-engine.pom %{name}-engine.jar
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}-*.jar
+%files -f .mfiles
 %doc LICENSE.txt COPYRIGHT.txt CHANGE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_12jpp8
+- new version
+
 * Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_7jpp7
 - re-imported for xmvn migration
 
