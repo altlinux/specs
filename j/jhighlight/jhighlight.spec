@@ -1,35 +1,25 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jhighlight
-Version:        1.0
-Release:        alt3_5jpp7
+Version:        1.0.1
+Release:        alt1_4jpp8
 Summary:        An embeddable pure Java syntax highlighting library
 
 Group:          Development/Java
-License:        LGPLv2+
+License:        LGPLv2+ or CDDL
 URL:            http://svn.rifers.org/jhighlight
 
-# svn export http://svn.rifers.org/jhighlight/tags/release-1.0/ jhighlight-1.0
-# find jhighlight-1.0/ -name *.jar
-# tar cJf jhighlight-1.0.tar.xz jhighlight-1.0/
-Source0:        %{name}-%{version}.tar.xz
-Source1:        http://central.maven.org/maven2/com/uwyn/%{name}/%{version}/%{name}-%{version}.pom
+Source0:        https://github.com/codelibs/jhighlight/archive/jhighlight-%{version}.tar.gz
+Patch0:         servlet31.patch
 
 BuildArch:      noarch
 
-BuildRequires:  ant
-BuildRequires:  jflex
-BuildRequires:  jpackage-utils
-BuildRequires:  tomcat-servlet-3.0-api
-
-Requires:       jflex
-Requires:       jpackage-utils
-Requires:       tomcat-servlet-3.0-api
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -42,54 +32,35 @@ and the actual marked up source.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-
-find -name '*.class' -delete
-find -name '*.jar' -delete
-
-pushd lib/
-ln -s %{_javadir}/jflex.jar
-ln -s %{_javadir}/tomcat-servlet-3.0-api.jar
-popd
+%setup -q -n %{name}-%{name}-%{version}
+%patch0
+%mvn_alias : com.uwyn:
 
 %build
-ant
+%mvn_build 
 
 %install
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p build/dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-unzip build/dist/%{name}-javadocs-%{version}.zip -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%doc README
+%files -f .mfiles
+%doc README.md
 %doc COPYING
-%doc LICENSE_LGPL.txt
+%doc LICENSE_LGPL.txt LICENSE_CDDL.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
-%doc LICENSE_LGPL.txt
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE_LGPL.txt LICENSE_CDDL.txt
 %doc COPYING
-
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_5jpp7
 - new release
 
