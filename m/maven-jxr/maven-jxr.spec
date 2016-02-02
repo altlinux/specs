@@ -3,41 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
+BuildRequires: jpackage-generic-compat
 Name:           maven-jxr
-Version:        2.3
-Release:        alt3_9jpp7
+Version:        2.5
+Release:        alt1_2jpp8
 Epoch:          0
 Summary:        Source cross referencing tool
 # BSD: maven-jxr/src/main/java/org/apache/maven/jxr/JavaCodeTransform.java
@@ -59,7 +30,7 @@ BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
 BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires:  mvn(org.apache.maven:maven-model)
-BuildRequires:  mvn(org.apache.maven:maven-parent)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.velocity:velocity)
@@ -102,12 +73,11 @@ cp %{SOURCE1} .
 # need to provide it or tests will fail to compile.  This works for
 # upstream because upstream uses a different version of Plugin Testing
 # Harness in which scope of maven-core dependency is "compile".
-%pom_xpath_inject pom:project "<dependencies/>"
 %pom_add_dep org.apache.maven:maven-core::test
 
 %build
 # The test failures seem to have something to do with:
-# http://jira.codehaus.org/browse/MCHANGES-88
+# https://issues.apache.org/jira/browse/MCHANGES-88
 # We can investigate when we upgrade to 2.2.x to see if they still occur.
 # Update: Seems that tests fail because they are trying to access
 # plexus component descriptors which seem to be different?
@@ -126,6 +96,9 @@ cp %{SOURCE1} .
 %files -n maven-plugin-jxr -f .mfiles-maven-plugin-jxr
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_9jpp7
 - new release
 
