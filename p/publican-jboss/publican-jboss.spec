@@ -1,5 +1,6 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat perl(Pod/Text.pm)
+BuildRequires: jpackage-generic-compat
 %define brand JBoss
 %define pub_name Publican
 %define RHEL6 %(test %{?dist} == .el6 && echo 1 || echo 0)
@@ -7,7 +8,7 @@ BuildRequires: jpackage-compat perl(Pod/Text.pm)
 Name:		publican-jboss
 Summary:	Common documentation files for %{brand}
 Version:	2.6
-Release:	alt2_5jpp7
+Release:	alt2_6jpp8
 License:	CC-BY-SA
 Group:		Text tools
 # Limited to these arches on RHEL 6 due to PDF + Java limitations
@@ -44,6 +45,9 @@ publican install_brand --path=$RPM_BUILD_ROOT%{_datadir}/publican/Common_Content
 %{_datadir}/publican/Common_Content/%{brand}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_6jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_5jpp7
 - new release
 
