@@ -1,6 +1,7 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -33,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jaxen
 Version:        1.1.6
-Release:        alt1_1jpp7
+Release:        alt1_7jpp8
 Epoch:          0
 Summary:        An XPath engine written in Java
 License:        BSD
@@ -43,7 +44,7 @@ Source0:        http://dist.codehaus.org/jaxen/distributions/%{name}-%{version}-
 BuildRequires:  maven-local
 BuildRequires:  mvn(dom4j:dom4j)
 BuildRequires:  mvn(jdom:jdom)
-BuildRequires:  mvn(org.sonatype.oss:oss-parent)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires:  mvn(xerces:xercesImpl)
 BuildRequires:  mvn(xml-apis:xml-apis)
 
@@ -84,7 +85,6 @@ rm src/java/test/org/jaxen/test/XOM*.java
 %pom_remove_dep xom:xom
 
 %mvn_file : %{name}
-%mvn_alias : "saxpath:saxpath"
 
 %build
 %mvn_build -f
@@ -106,6 +106,9 @@ cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}/samples
 %{_datadir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.6-alt1_1jpp7
 - new release
 
