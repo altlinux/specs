@@ -1,19 +1,22 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global commit bd245c9
 
-Name:		pcfi
-Version:	2010.08.09
-Release:	alt2_7.20111103gitbd245c9jpp7
-Summary:	PDF Core Font Information
+Name:           pcfi
+Version:        2010.08.09
+Release:        alt2_9.20111103gitbd245c9jpp8
+Summary:        PDF Core Font Information
 
-Group:		Publishing
-License:	BSD
-URL:		https://github.com/jukka/pcfi
-Source0:	https://github.com/jukka/pcfi/tarball/%{commit}/jukka-pcfi-%{commit}.tar.gz
-Source1:	http://opensource.adobe.com/wiki/display/cmap/License
-BuildArch:	noarch
-BuildRequires:	maven-local
+Group:          Publishing
+License:        BSD
+URL:            https://github.com/jukka/pcfi
+Source0:        https://github.com/jukka/pcfi/tarball/%{commit}/jukka-pcfi-%{commit}.tar.gz
+# Originally downloaded from: http://opensource.adobe.com/wiki/display/cmap/License
+# This now points to Adobe's sourceforge pages
+Source1:        License
+BuildArch:      noarch
+BuildRequires:  maven-local
 Requires:       jpackage-utils
 Source44: import.info
 
@@ -45,6 +48,9 @@ cp %SOURCE1 .
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_9.20111103gitbd245c9jpp8
+- new version
+
 * Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 2010.08.09-alt2_7.20111103gitbd245c9jpp7
 - new release
 
