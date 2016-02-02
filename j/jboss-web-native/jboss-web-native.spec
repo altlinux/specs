@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ perl(DynaLoader.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(IO/File.pm) perl(find.pl)
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-web-native
 %define version 2.0.10
@@ -14,7 +15,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-web-native
 Version:          2.0.10
-Release:          alt1_5jpp7
+Release:          alt1_8jpp8
 Summary:          JBoss Web Native
 Group:            Development/Java
 License:          LGPLv2+ and ASL 2.0
@@ -42,6 +43,8 @@ This package contains support for Apache Portable Runtime (APR) in JBoss AS.
 Group: Development/Java
 Summary: JBoss Web Native development files
 Requires: jboss-web-native = %{version}-%{release}
+Requires: libapr1-devel
+Requires: libssl-devel
 
 %description devel
 This package provides the support files which can be used to
@@ -77,6 +80,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/pkgconfig/jbnative-1.pc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_8jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_5jpp7
 - new release
 
