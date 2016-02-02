@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          axis
 Version:       1.4
-Release:       alt3_20jpp7
+Release:       alt3_27jpp8
 Epoch:         0
 Summary:       SOAP implementation in Java
 License:       ASL 2.0
@@ -36,9 +37,10 @@ Patch2:        axis-1.4-wsdl-pom.patch
 # CVE-2012-5784: Does not verify that the server hostname matches X.509 certificate name
 # https://issues.apache.org/jira/secure/attachment/12560257/CVE-2012-5784-2.patch
 Patch3:        %{name}-CVE-2012-5784.patch
+# Patch to use newer xml-commons-apis
+Patch4:        axis-xml-commons-apis.patch
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: ant >= 0:1.6
-BuildRequires: ant-nodeps
 BuildRequires: ant-junit
 BuildRequires: httpunit
 BuildRequires: junit
@@ -47,8 +49,8 @@ BuildRequires: xmlunit
 BuildRequires: bea-stax-api
 BuildRequires: bsf
 BuildRequires: castor
-BuildRequires: javamail
-BuildRequires: tomcat6-servlet-2.5-api
+BuildRequires: javax.mail
+BuildRequires: glassfish-servlet-api
 BuildRequires: apache-commons-discovery
 BuildRequires: jakarta-commons-httpclient >= 1:3.0
 BuildRequires: apache-commons-logging
@@ -56,26 +58,27 @@ BuildRequires: apache-commons-net
 BuildRequires: jakarta-oro
 BuildRequires: regexp
 BuildRequires: log4j
-BuildRequires: wsdl4j
+BuildRequires: javax.wsdl
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
-BuildRequires: xml-commons-apis12
+BuildRequires: xml-commons-apis
 BuildRequires: xmlbeans
 BuildRequires: xml-security
 BuildRequires: zip
 # optional requires
 #BuildRequires: jimi
-BuildRequires: jetty
 
 Requires:      jpackage-utils >= 0:1.6
 Requires:      apache-commons-discovery
 Requires:      apache-commons-logging
 Requires:      jakarta-commons-httpclient >= 1:3.0
-Requires:      javamail
 Requires:      log4j
-Requires:      wsdl4j
+Requires:      javax.mail
+Requires:      javax.wsdl
 
 BuildArch:     noarch
+
+Provides:      javax.xml.rpc
 Source44: import.info
 
 %description
@@ -94,16 +97,16 @@ procedure calls and responses.
 This project is a follow-on to the Apache SOAP project.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package manual
+Group: Development/Java
 Summary:        Manual for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description manual
@@ -128,6 +131,7 @@ cp %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} .
 
 # %patch2 -b .orig
 %patch3 -p1 -b .orig
+%patch4 -p1 -b .orig
 
 %build
 pushd lib
@@ -139,7 +143,6 @@ ln -sf $(build-classpath commons-httpclient) .
 ln -sf $(build-classpath commons-logging) .
 ln -sf $(build-classpath commons-net) .
 ln -sf $(build-classpath httpunit) .
-ln -sf $(build-classpath jetty/jetty) .
 ln -sf $(build-classpath log4j) .
 ln -sf $(build-classpath oro) .
 ln -sf $(build-classpath xalan-j2) .
@@ -148,7 +151,7 @@ ln -sf $(build-classpath xmlbeans/xbean) .
 ln -sf $(build-classpath wsdl4j) .
 pushd endorsed
 ln -sf $(build-classpath xerces-j2) .
-ln -sf $(build-classpath xml-commons-apis12) .
+ln -sf $(build-classpath xml-commons-apis) .
 popd
 ln -sf $(build-classpath javamail/mail) .
 popd
@@ -164,11 +167,10 @@ ant \
     -Dregexp.jar=$(build-classpath regexp) \
     -Dxmlunit.jar=$(build-classpath xmlunit) \
     -Dmailapi.jar=$(build-classpath javamail/mail) \
-    -Dservlet.jar=$(build-classpath servlet) \
+    -Dservlet.jar=$(build-classpath glassfish-servlet-api) \
     -Dbsf.jar=$(build-classpath bsf) \
     -Dcastor.jar=$(build-classpath castor) \
     -Dcommons-net.jar=$(build-classpath commons-net) \
-    -Djetty.jar=$(build-classpath jetty/jetty) \
     -Dsecurity.jar=$(build-classpath xml-security) \
     -Dxmlbeans.jar=$(build-classpath xmlbeans) \
     -Dhttpunit.jar=$(build-classpath httpunit) \
@@ -215,13 +217,20 @@ install -m 644 %{S:7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-saaj.pom
 install -m 644 %{S:8} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-axis-schema.pom
 %add_maven_depmap JPP.%{name}-axis-schema.pom %{name}/axis-schema.jar -a "axis:axis-schema"
 
-%files
+# J2EE API dir
+install -d -m 755 %{buildroot}%{_javadir}/javax.xml.rpc/
+ln -sf ../%{name}/jaxrpc.jar %{buildroot}%{_javadir}/javax.xml.rpc/
+ln -sf ../%{name}/%{name}.jar %{buildroot}%{_javadir}/javax.xml.rpc/
+build-jar-repository %{buildroot}%{_javadir}/javax.xml.rpc/ javax.wsdl \
+              javax.mail apache-commons-logging apache-commons-discovery \
+              jakarta-commons-httpclient log4j
+
+
+%files -f .mfiles
 %doc LICENSE README release-notes.html changelog.html
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*.jar
+%{_javadir}/javax.xml.rpc
 %{_datadir}/%{name}-%{version}
-%{_mavenpomdir}/*.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}
@@ -230,6 +239,9 @@ install -m 644 %{S:8} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-axis-schema.pom
 %doc --no-dereference docs/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_27jpp8
+- new version
+
 * Wed Jul 09 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_20jpp7
 - converted from JPackage by jppimport script
 
