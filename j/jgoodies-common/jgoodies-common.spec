@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global shortname common
 
 Name:           jgoodies-common
-Version:        1.6.0
-Release:        alt1_3jpp7
+Version:        1.8.0
+Release:        alt1_2jpp8
 Summary:        Common library shared by JGoodies libraries and applications
 
 Group:          Development/Java
@@ -82,6 +83,9 @@ done
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt1_3jpp7
 - new release
 
