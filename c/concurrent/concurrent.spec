@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           concurrent
 Version:        1.3.4
-Release:        alt1_17jpp7
+Release:        alt1_20jpp8
 Epoch:          0
 Summary:        Utility classes for concurrent Java programming
 License:        Public Domain
@@ -44,6 +45,7 @@ Source0:        http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/current/con
 Source1:        %{name}-%{version}.build.xml
 Source2:        %{name}-%{version}.pom
 Patch0:         concurrent-build.patch
+Patch1:         JDK-8-support.patch
 URL:            http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html
 Group:          Development/Java
 
@@ -51,6 +53,7 @@ BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
+BuildRequires:  javapackages-local
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -77,6 +80,7 @@ mv concurrent src/EDU/oswego/cs/dl/util
 # Build with debug on
 pushd src/EDU/oswego/cs/dl/util/concurrent
 %patch0
+%patch1 -p1
 popd
 sed -i -e 's/..\/sun-u.c.license.pdf/http:\/\/gee.cs.oswego.edu\/dl\/classes\/EDU\/oswego\/cs\/dl\/util\/sun-u.c.license.pdf/' src/EDU/oswego/cs/dl/util/concurrent/intro.html
 
@@ -91,33 +95,22 @@ ant \
 popd
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
 # JAR
-install -m 644 src/EDU/oswego/cs/dl/util/concurrent/lib/%{name}.jar \
-               $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_artifact %{SOURCE2} src/EDU/oswego/cs/dl/util/concurrent/lib/concurrent.jar
 
 # JAVADOCS
-cp -pr src/EDU/oswego/cs/dl/util/concurrent/docs/* \
-       $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-# POM
-install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install -J src/EDU/oswego/cs/dl/util/concurrent/docs/
 
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "oswego-concurrent:concurrent"
-
-%files
-%{_javadir}/*.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc src/EDU/oswego/cs/dl/util/concurrent/intro.html
 
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_20jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_17jpp7
 - new release
 
