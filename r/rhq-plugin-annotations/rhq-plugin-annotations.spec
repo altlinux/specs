@@ -1,13 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             rhq-plugin-annotations
 Version:          3.0.4
-Release:          alt2_6jpp7
+Release:          alt2_10jpp8
 Summary:          RHQ plugin annotations
-Group:            Development/Java
 License:          GPL and LGPLv2+
 URL:              http://rhq-project.org
 
@@ -20,23 +18,15 @@ Patch0:           rhq-plugin-annotations-%{version}-pom.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
-Annotations to help generate RHQ plugin descriptors
+Annotations to help generate RHQ plugin descriptors.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -46,35 +36,22 @@ This package contains the API documentation for %{name}.
 %setup -q -n pluginAnnotations
 %patch0 -p1
 
+%mvn_file : %{name}/%{name} %{name}
+
 %build
-mvn-rpmbuild -Dproject.build.sourceEncoding=iso8859-1  install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=iso8859-1
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/rhq-pluginAnnotations-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt2_6jpp7
 - new release
 
