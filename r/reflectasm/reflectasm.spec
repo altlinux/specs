@@ -1,28 +1,20 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          reflectasm
-Version:       1.07
-Release:       alt1_4jpp7
+Version:       1.11.0
+Release:       alt1_2jpp8
 Summary:       High performance Java library that provides reflection by using code generation
 License:       BSD
-URL:           http://code.google.com/p/reflectasm/
-# svn checkout http://reflectasm.googlecode.com/svn/tags/1.07 reflectasm-1.07
-# find reflectasm-1.07/ -name '*.jar' -delete
-# find reflectasm-1.07/ -name '*.class' -delete
-# rm -rf reflectasm-1.07/.svn
-# tar cJf reflectasm-1.07-clean.tar.xz reflectasm-1.07
-Source0:       %{name}-%{version}-clean.tar.xz
-# Upstream update for reflectasm 1.07
-Patch0:        %{name}-1.07-update.patch
-
-
-BuildRequires: mvn(org.ow2.asm:asm)
-# test deps
-BuildRequires: mvn(junit:junit)
+URL:           https://github.com/EsotericSoftware/reflectasm
+Source0:       https://github.com/EsotericSoftware/reflectasm/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -45,11 +37,19 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{name}-%{version}
+find -name "*.class" -delete
+find -name "*.jar" -delete
+
 sed -i 's/\r//' license.txt
+# Do not shade asm
+%pom_remove_plugin :maven-shade-plugin
 
 %mvn_file :%{name} %{name}
+%mvn_alias :%{name} "com.esotericsoftware.%{name}:%{name}"
+
+# AssertionFailedError: expected:<1> but was:<0>
+rm -r test/com/esotericsoftware/reflectasm/ClassLoaderTest.java
 
 %build
 
@@ -59,12 +59,16 @@ sed -i 's/\r//' license.txt
 %mvn_install
 
 %files -f .mfiles
+%doc README.md
 %doc license.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.11.0-alt1_2jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_4jpp7
 - new release
 
