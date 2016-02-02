@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-classfilewriter
 %define version 1.0.5
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-classfilewriter
 Version:          1.0.5
-Release:          alt1_3jpp7
+Release:          alt1_7jpp8
 Summary:          JBoss Class File Writer
 Group:            Development/Java
 License:          LGPLv2+
@@ -25,8 +26,8 @@ BuildArch:        noarch
 
 BuildRequires:    aether
 BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    junit4
+BuildRequires:    maven-surefire-provider-junit
+BuildRequires:    junit
 BuildRequires:    jboss-parent
 Source44: import.info
 
@@ -56,6 +57,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_3jpp7
 - new release
 
