@@ -3,7 +3,7 @@
 
 Name:     pencil
 Version:  2.0.5
-Release:  alt1
+Release:  alt2
 
 Summary: GUI prototyping tool
 
@@ -19,6 +19,7 @@ Source0: %name-%version.tar
 
 Patch0: %name-2.0.4-alt-desktop.patch
 Patch1: %name-2.0.4-alt-xulrunner_versions.patch
+Patch2: %name-2.0.5-alt-xulrunner.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -38,6 +39,7 @@ shapes, Android and iOS GUI shapes.
 %setup
 %patch0
 %patch1
+%patch2
 
 mv COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -61,6 +63,9 @@ cp -a ./%_datadir/%name %buildroot%_datadir/
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Feb 02 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.5-alt2
+- Removing xulrunner usage
+
 * Sun Oct 06 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.5-alt1
 - New version
 
