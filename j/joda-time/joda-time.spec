@@ -1,17 +1,18 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global tzversion tzdata2013g
+BuildRequires: jpackage-generic-compat
+%global tzversion tzdata2015e
 
 Name:             joda-time
-Version:          2.3
-Release:          alt1_1.tzdata2013gjpp7
+Version:          2.8.1
+Release:          alt1_1.tzdata2015ejpp8
 Summary:          Java date and time API
 
 License:          ASL 2.0
-URL:              http://joda-time.sourceforge.net
-Source0:          http://downloads.sourceforge.net/%{name}/%{name}-%{version}-dist.tar.gz
+URL:              http://www.joda.org/joda-time/
+Source0:          https://github.com/JodaOrg/%{name}/archive/v%{version}.tar.gz
 Source1:          ftp://ftp.iana.org/tz/releases/%{tzversion}.tar.gz
 BuildArch:        noarch
 
@@ -40,7 +41,8 @@ This package contains the API documentation for %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
+
 sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' NOTICE.txt
 sed -i 's/\r//' RELEASE-NOTES.txt
@@ -55,6 +57,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 # compat filename
 %mvn_file : %{name}
 
+# javadoc generation fails due to strict doclint in JDK 8
+%pom_remove_plugin :maven-javadoc-plugin
+
 %build
 %mvn_build
 
@@ -68,6 +73,9 @@ tar -xzf %{SOURCE1} -C src/main/java/org/joda/time/tz/src/
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8.1-alt1_1.tzdata2015ejpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_1.tzdata2013gjpp7
 - new release
 
