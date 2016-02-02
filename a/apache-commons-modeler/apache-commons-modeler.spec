@@ -1,13 +1,14 @@
 Epoch: 1
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global base_name       modeler
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
 Version:          2.0.1
-Release:          alt1_13jpp7
+Release:          alt1_16jpp8
 Summary:          Model MBeans utility classes
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
@@ -72,6 +73,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.1-alt1_13jpp7
 - new release
 
