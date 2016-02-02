@@ -2,11 +2,12 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          xml-stylebook
 Version:       1.0
-Release:       alt2_0.14.b3_xalan2.svn313293jpp7
+Release:       alt2_0.17.b3_xalan2.svn313293jpp8
 Summary:       Apache XML Stylebook
 Group:         Development/Java
 License:       ASL 1.1
@@ -120,6 +121,9 @@ ln -s xml-stylebook.jar $RPM_BUILD_ROOT/%{_javadir}/stylebook.jar
 %{_datadir}/%{name} 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.17.b3_xalan2.svn313293jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_0.14.b3_xalan2.svn313293jpp7
 - new release
 
