@@ -1,25 +1,25 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name: jarbundler	
-Version: 2.2.0
-Release: alt1_5jpp7
-Summary: A feature-rich Ant task which will create a Mac OS X application bundle
-
-Group:	Development/Java
-License: ASL 2.0
-URL:	http://informagen.com/JarBundler/
-Source0: http://informagen.com/JarBundler/dist/jarbundler.tar.gz
-
-BuildRequires:	ant
+BuildRequires: jpackage-generic-compat
+Name:          jarbundler	
+Version:       2.2.0
+Release:       alt1_10jpp8
+Summary:       A feature-rich Ant task which will create a Mac OS X application bundle
+License:       ASL 2.0
+URL:           http://informagen.com/JarBundler/
+Source0:       http://informagen.com/JarBundler/dist/%{name}.tar.gz
+Source1:       %{name}-template-pom.xml
+BuildRequires: ant
 BuildRequires: jpackage-utils
 
-Requires: ant
-Requires: jpackage-utils
+Requires:      ant
+Requires:      jpackage-utils
 
-BuildArch: noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -40,10 +40,8 @@ cycle. It is free software licensed under the GNU General Public
 License.
 
 %package javadoc
-Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: jpackage-utils
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -53,46 +51,51 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{version}
 
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.class' -delete
+find -name '*.jar' -delete
 
+cp -p %{SOURCE1} pom.xml
+sed -i "s|@VERSION@|%{version}|" pom.xml
 
+sed -i 's|source="1.4"|source="1.5" target="1.5"|' build.xml
+sed -i 's|/Developer/Java/Ant/lib/ant.jar|%{_javadir}/ant.jar|' build.xml
+sed -i 's|<javadoc destdir="javadoc" classpath="${ant.jar}">|<javadoc destdir="javadoc" classpath="${ant.jar}:build/${jarbundler.jar}">|' build.xml
 
 %build
-export CLASSPATH=
-CLASSPATH=build/lib/%{name}-%{version}.jar:$CLASSPATH
-echo $ANT_HOME
-export OPT_JAR_LIST=:"ant/%{name}-%{version}"
+
 ant jar javadocs
 
 %install
 
 # jars
-install -Dpm 644 %{_builddir}/%{name}-%{version}/build/%{name}-%{version}.jar \
- %{buildroot}/%{_javadir}/ant/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar  %{buildroot}/%{_javadir}/ant/%{name}.jar
+mkdir -p %{buildroot}%{_javadir}/ant
+install -pm 644 build/%{name}-%{version}.jar \
+ %{buildroot}/%{_javadir}/%{name}.jar
+ln -s ../%{name}.jar  %{buildroot}/%{_javadir}/ant/%{name}.jar
 
-mkdir -p %{buildroot}%{_javadir}
-cp -a build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-mkdir -p  %{buildroot}/%{_javadocdir}/%{name}
-cp -rp %{_builddir}/%{name}-%{version}/javadoc \
- %{buildroot}/%{_javadocdir}/%{name}
+mkdir -p  %{buildroot}/%{_javadocdir}
+cp -rp javadoc %{buildroot}/%{_javadocdir}/%{name}
 
 mkdir -p  %{buildroot}/%{_sysconfdir}/ant.d
-echo "jarbundler" >  %{buildroot}/%{_sysconfdir}/ant.d/jarbundler
+echo "%{name}" >  %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 
-%files
-%{_javadir}/*
-%{_sysconfdir}/ant.d/jarbundler
+%files -f .mfiles
+%config(noreplace) %{_sysconfdir}/ant.d/%{name}
+%{_javadir}/ant/%{name}.jar
 %doc LICENSE.TXT
 
 %files javadoc
 %{_javadocdir}/%{name}
-
+%doc LICENSE.TXT
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_5jpp7
 - new release
 
