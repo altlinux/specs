@@ -1,3 +1,5 @@
+%filter_from_requires /^.usr.bin.jar/d
+%filter_from_requires /^objectweb-asm/d
 %add_python3_path /usr/share/java-utils/
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
@@ -24,7 +26,7 @@ BuildRequires: /proc
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt1_12jpp8
+Release:        alt2_12jpp8
 Epoch:		1
 Summary:        Macros and scripts for Java packaging support
 
@@ -51,10 +53,7 @@ BuildRequires:  maven-local >= 4.0.0
 BuildRequires:  xmvn-resolve >= 2
 %endif
 
-Requires:       coreutils
 Requires:       lua
-Requires:       python3-module-javapackages = %{version}-%{release}
-Requires:       python3
 
 Provides:       jpackage-utils = %{version}-%{release}
 Provides:       jpackage-utils = 1:5.0.0
@@ -65,7 +64,6 @@ Patch33: macros.jpackage-to-alt.patch
 Patch34: macros.fjava-to-alt-rpm404.patch
 Patch35: javapackages-tools-4.6.0-alt-use-enviroment.patch
 Patch36: javapackages-tools-4.6.0-alt-req-headless-off.patch
-Source22: macros.eclipse
 Source23: maven.prov.files
 Source24: maven.env
 
@@ -94,6 +92,8 @@ BuildArch:      noarch
 Requires:       javapackages-tools = %{epoch}:%{version}-%{release}
 Requires: 	rpm-macros-java >= %{epoch}:%{version}-%{release}
 #Requires: rpm-build-java-osgi >= %{epoch}:%{version}-%{release}
+Requires:       python3-module-javapackages = %{version}-%{release}
+Requires:       python3
 
 %description -n rpm-build-java
 RPM build helpers for Java packages.
@@ -241,14 +241,14 @@ sed -i -e '/usr\/lib\/rpm/d' files-common
 # move /usr/share/xmvn/* to maven-local
 grep /usr/share/xmvn files-common >> files-maven
 sed -i -e '/usr\/share\/xmvn/d' files-common
+sed -i -e '/usr\/share\/java-utils\/.*\.py/d' files-common
+sed -i -e '/usr\/bin\/xmvn-builddep/d' files-common
 
 rm -rf %buildroot/usr/lib/rpm/fileattrs
 
 pushd %buildroot%_rpmmacrosdir/
 mv macros.fjava javapackages-fjava
 mv macros.jpackage javapackages-jpackage
-### TMP OLD ECLIPSE ###
-install -m 644 %{SOURCE22} javapackages-eclipse
 popd
 
 %if %{with tests}
@@ -264,7 +264,7 @@ popd
 
 #%files -n gradle-local -f files-gradle
 
-#%files -n ivy-local -f files-ivy
+%files -n ivy-local -f files-ivy
 
 %files -n python3-module-javapackages
 %doc LICENSE
@@ -274,7 +274,6 @@ popd
 %doc LICENSE
 
 %files -n rpm-macros-java
-%_rpmmacrosdir/javapackages-eclipse
 %_rpmmacrosdir/javapackages-fjava
 %_rpmmacrosdir/javapackages-jpackage
 
@@ -282,8 +281,16 @@ popd
 /usr/lib/rpm/maven.*
 /usr/lib/rpm/javadoc.*
 %_rpmmacrosdir/maven.env
+%_datadir/java-utils/maven_depmap.py
+%_datadir/java-utils/pom_editor.py
+%_datadir/java-utils/request-artifact.py
+%_bindir/xmvn-builddep
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt2_12jpp8
+- explicitly cleaned jar dependency
+- moved python to rpm-build-java
+
 * Thu Jan 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt1_12jpp8
 - new version
 
