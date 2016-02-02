@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.6.3
-Release: alt1.git20141225
+Release: alt2.git20141225
 Summary: The simplest way to write one program that runs on both Python 2 and Python 3
 License: MIT
 Group: Development/Python
@@ -15,14 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-enum34 python-module-pytest python-module-py
-BuildPreReq: python-module-pypandoc
+BuildRequires: python-module-enum34 python-module-pytest
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-enum34 python3-module-pytest python3-module-py
-BuildPreReq: python3-module-pypandoc
+BuildRequires: python3-module-enum34 python3-module-pytest
 %endif
 
 %py_provides %oname
@@ -84,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 2.6.3-alt2.git20141225
+- cleanup buildreq
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.3-alt1.git20141225
 - Version 2.6.3
 
