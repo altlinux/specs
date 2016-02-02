@@ -1,80 +1,65 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           miglayout
-Version:        4.0
-Release:        alt1_5jpp7
-Summary:        Versatile and flexible Swing and SWT layout manager
+Version:        4.2
+Release:        alt1_4jpp8
+Summary:        Versatile and flexible Swing layout manager
 URL:            http://www.miglayout.com/
 License:        BSD
-Group:          System/Libraries
 
-Source0:        http://www.migcalendar.com/miglayout/versions/%{version}/miglayout-%{version}-sources.jar
+# Hidden in maven.org labyrinth, so no download URL's
+Source0:        miglayout-core-4.2-sources.jar
+Source1:        miglayout-swing-4.2-sources.jar
 
 BuildArch:      noarch
-BuildRequires:  eclipse-swt dos2unix jpackage-utils
 
-Requires:       jpackage-utils
+# We no longer have an examples sub-package, note no provides as the examples
+# are no longer packaged, so we do not provide them
+Obsoletes:      %{name}-examples < %{version}-%{release}
 Source44: import.info
 
 %description
-MiGLayout is a versatile SWT/Swing layout manager.  It uses String or
+MiGLayout is a versatile Swing layout manager.  It uses String or
 API type-checked constraints to format the layout. MiGLayout can
 produce flowing, grid based, absolute (with links), grouped and
 docking layouts. MiGLayout is created to be to manually coded layouts
 what Matisse/GroupLayout is to IDE supported visual layouts.
 
+
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for MiGLayout
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for MiGLayout.
 
-%package examples
-Summary:        Examples and demo code for MiGLayout
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-
-%description examples
-This package contains examples and demos code for MiGLayout.
 
 %prep
 %setup -q -c %{name}
-# Fix line endings in some demo and example source files.
-dos2unix net/miginfocom/demo/{CallbackDemo,SwingDemo,SwtDemo}.java
-dos2unix net/miginfocom/examples/{Example01,Example,ExampleGood}.java
-# Convert Windows codepage 1251 quotes in SwtDemo.java to UTF-8.
-iconv --from=windows-1251 --to=UTF-8 net/miginfocom/demo/SwtDemo.java >net/miginfocom/demo/SwtDemo.java.new
-touch -r net/miginfocom/demo/SwtDemo.java{,.new}
-mv net/miginfocom/demo/SwtDemo.java{.new,}
+unzip -oq %{SOURCE1}
+
 
 %build
-export CLASSPATH=%{_libdir}/java/swt.jar:.
-javac -encoding utf8 net/miginfocom/{layout,swing,swt}/*.java
+javac -encoding utf8 net/miginfocom/{layout,swing}/*.java
 
-# We'll build the demos and examples just to ensure that they compile,
-# but we're not going to package the binaries.
-# We can't build demo/HiDPISimulator.java due to a missing prerequisite
-# (org.jvnet.substance).
-javac -encoding utf8 net/miginfocom/demo/[CS]*.java
-javac -encoding utf8 net/miginfocom/examples/*.java
+jar cmf META-INF/MANIFEST.MF %{name}-core.jar net/miginfocom/layout/*.class
+jar cmf META-INF/MANIFEST.MF %{name}-swing.jar net/miginfocom/swing/*.class
+javadoc -Xdoclint:none -d doc net.miginfocom.{layout,swing}
 
-jar cmf META-INF/MANIFEST.MF \
-        %{name}-%{version}.jar  \
-        net/miginfocom/{layout,swing,swt}/*.class
-javadoc -d doc net.miginfocom.{layout,swing,swt}
 
 %install
 mkdir -p %{buildroot}%{_javadir}
 mkdir -p %{buildroot}%{_javadocdir}
-cp -a %{name}-%{version}.jar %{buildroot}%{_javadir}/
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+cp -a %{name}-*.jar %{buildroot}%{_javadir}
 cp -a doc %{buildroot}%{_javadocdir}/%{name}
+
 
 %files
 %{_javadir}/*.jar
@@ -82,11 +67,10 @@ cp -a doc %{buildroot}%{_javadocdir}/%{name}
 %files javadoc
 %doc %{_javadocdir}/%{name}
 
-%files examples
-%doc net/miginfocom/demo/*.java
-%doc net/miginfocom/examples/*.java
-
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 4.2-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_5jpp7
 - new release
 
