@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jdeparser
 %define version 1.0.0
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:             jdeparser
 Version:          1.0.0
-Release:          alt1_2jpp7
+Release:          alt1_4jpp8
 Summary:          Source generator library for Java
 Group:            Development/Java
 # See README.md
@@ -58,6 +59,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE-original.html
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp7
 - new release
 
