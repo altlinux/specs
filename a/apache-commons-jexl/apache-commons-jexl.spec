@@ -1,11 +1,16 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global jarname commons-jexl
+%global compatver 2.1.0
 
 Name:           apache-%{jarname}
 Version:        2.1.1
-Release:        alt2_8jpp7
+Release:        alt2_14jpp8
 Summary:        Java Expression Language (JEXL)
 
 Group:          Development/Java
@@ -14,6 +19,8 @@ URL:            http://commons.apache.org/jexl
 Source0:        http://www.apache.org/dist/commons/jexl/source/%{jarname}-%{version}-src.tar.gz
 # Patch to fix test failure with junit 4.11
 Patch0:         001-Fix-tests.patch
+# Fix javadoc build
+Patch1:         apache-commons-jexl-javadoc.patch
 
 BuildRequires:  maven-local
 BuildRequires:  javacc-maven-plugin
@@ -52,16 +59,33 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{jarname}-%{version}-src
 %patch0 -p1 -b .test
+%patch1 -p1 -b .javadoc
 # Java 1.6 contains bsf 3.0, so we don't need the dependency in the pom.xml file
 %pom_remove_dep org.apache.bsf:bsf-api
 find \( -name '*.jar' -o -name '*.class' \) -delete
 # Fix line endings
 find -name '*.txt' -exec sed -i 's/\r//' '{}' +
 
+# Drop "-SNAPSHOT" from version
+%pom_xpath_set "pom:project/pom:version" %{compatver} jexl2-compat
+%pom_xpath_set "pom:dependency[pom:artifactId='commons-jexl']/pom:version" %{version} jexl2-compat
+
+echo "
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.fedoraproject</groupId>
+  <artifactId>commons-jexl-aggegator</artifactId>
+  <version>%{version}</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>.</module>
+    <module>jexl2-compat</module>
+  </modules>
+</project>" >>aggregator-pom.xml
+%mvn_package :commons-jexl-aggegator __noinstall
 
 %build
-%mvn_build
-
+%mvn_build -- -f aggregator-pom.xml
 
 %install
 %mvn_install
@@ -69,13 +93,16 @@ find -name '*.txt' -exec sed -i 's/\r//' '{}' +
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_14jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_8jpp7
 - new release
 
