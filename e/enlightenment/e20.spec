@@ -1,6 +1,7 @@
 %define ver_major 0.20
 %define beta %nil
-%define efl_ver_major 1.16
+# since 0.20.4 requires ecore_wl2 available in efl >= 1.17
+%define efl_ver_major 1.17
 %define snapshot 2015-10-28
 %define cvs_date 5469c3b6
 %undefine cvs_date
@@ -18,7 +19,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.3
+Version: %ver_major.4
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -208,6 +209,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Feb 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.4-alt1
+- 0.20.4
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.3-alt1
 - 0.20.3
 

@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.16
+%define ver_major 1.17
 %define beta %nil
 %define gst_api_ver 1.0
+%define wayland_ver 1.8.0
 
 %def_enable multisense
 %def_enable fb
@@ -20,8 +21,8 @@
 %def_disable gl_drm
 
 Name: efl
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 License: BSD/LGPLv2.1+
@@ -51,7 +52,7 @@ BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libGL-devel
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= 1.3.0 libwayland-cursor-devel libxkbcommon-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel libxkbcommon-devel libuuid-devel}
 %{?_enable_wayland_egl:BuildRequires: libwayland-egl-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 %{?_enable_gstreamer1:BuildRequires: gst-plugins%gst_api_ver-devel}
@@ -266,6 +267,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/ecore-input.pc
 %_pkgconfigdir/ecore-ipc.pc
 %_pkgconfigdir/ecore-wayland.pc
+%_pkgconfigdir/ecore-wl2.pc
 %_pkgconfigdir/ecore-x.pc
 %_pkgconfigdir/ecore.pc
 %_pkgconfigdir/ector.pc
@@ -313,6 +315,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Tue Feb 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
+- 1.17.0
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt2
 - rebuilt against libwebp.so.6
 

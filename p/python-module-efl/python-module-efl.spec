@@ -3,7 +3,7 @@
 
 Name: python-module-efl
 Version: 1.16.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for EFL libraries
 Group: Development/Python
@@ -90,6 +90,9 @@ popd
 %doc AUTHORS README* ChangeLog
 
 %changelog
+* Tue Feb 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt2
+- rebuilt against 1.17.0 e-libraries
+
 * Mon Nov 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 

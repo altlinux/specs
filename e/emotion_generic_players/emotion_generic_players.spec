@@ -1,4 +1,4 @@
-%define ver_major 1.16
+%define ver_major 1.17
 %define beta %nil
 
 Name: emotion_generic_players
@@ -42,6 +42,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Tue Feb 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
+- 1.17.0
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0 release
 
