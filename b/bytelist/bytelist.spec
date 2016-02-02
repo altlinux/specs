@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global  git_commit d0ec879
 %global  cluster jruby
 
@@ -11,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt1_6jpp7
+Release:        alt1_10jpp8
 Summary:        A java library for lists of bytes
 
 Group:          Development/Java
@@ -67,10 +68,13 @@ export CLASSPATH=$(build-classpath junit jcodings)
 %files
 %{_javadir}/*
 %{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%{_datadir}/maven-metadata/%{name}.xml
 %doc README.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_6jpp7
 - new release
 
