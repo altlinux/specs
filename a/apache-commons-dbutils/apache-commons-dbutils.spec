@@ -1,11 +1,12 @@
 Epoch: 0
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global short_name      commons-dbutils
 
 Name:             apache-%{short_name}
 Version:          1.5
-Release:          alt1_5jpp7
+Release:          alt1_9jpp8
 Summary:          Apache Commons DbUtils Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -16,7 +17,6 @@ BuildArch:        noarch
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    hamcrest
-BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    mockito
 Requires:         jpackage-utils
 Source44: import.info
@@ -57,6 +57,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_5jpp7
 - new release
 
