@@ -1,11 +1,12 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global api_version 2.0
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt2_7jpp7
+Release:       alt2_11jpp8
 Summary:       Java Portlet Specification V2.0
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -13,11 +14,10 @@ Url:           http://portals.apache.org/
 # tar czf portlet-2.0-api-1.0-src-svn.tar.gz portlet-2.0-api-1.0
 Source0:       %{name}-%{version}-src-svn.tar.gz
 
-BuildRequires: mvn(org.apache.portals:portals-pom)
+BuildRequires: mvn(org.apache.portals:portals-pom:pom:)
 BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
-Requires:      mvn(org.apache.portals:portals-pom)
 BuildArch:     noarch
 Source44: import.info
 
@@ -68,6 +68,9 @@ sed -i "s|javax.servlet.http;version=2.4,*|javax.servlet.http;version=3.0,*|" po
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp7
 - new release
 
