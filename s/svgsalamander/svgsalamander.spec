@@ -1,11 +1,12 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 #
 # spec file for package svgsalamander
 
 Name:           svgsalamander
-Version:        0.1.19
-Release:        alt1_2jpp7
+Version:        0.1.33
+Release:        alt1_2jpp8
 Summary:        An SVG engine for Java
 
 Group:          Development/Java
@@ -72,6 +73,9 @@ popd
 %doc www/license/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.33-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.19-alt1_2jpp7
 - new release
 
