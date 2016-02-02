@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           clapham
 Version:        0.1.003
-Release:        alt1_9jpp7
+Release:        alt1_12jpp8
 Summary:        Railroad diagram generator for computer languages
 URL:            http://clapham.hydromatic.net/
 License:        GPLv2
@@ -95,6 +96,9 @@ cp -a doc/api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.003-alt1_9jpp7
 - new release
 
