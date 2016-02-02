@@ -1,13 +1,14 @@
 Epoch: 1
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 
 %global base_name   daemon
 %global short_name  commons-%{base_name}
 
 Name:           apache-%{short_name}
 Version:        1.0.15
-Release:        alt1_4jpp7
+Release:        alt1_10jpp8
 Summary:        Defines API to support an alternative invocation mechanism
 License:        ASL 2.0
 Group:          Development/Java
@@ -16,15 +17,14 @@ Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{sho
 Patch1:         apache-commons-daemon-JAVA_OS.patch
 # backport from https://fisheye6.atlassian.com/changelog/commons?cs=1458896
 Patch2:         apache-commons-daemon-secondary.patch
+# backport from http://svn.apache.org/viewvc?view=revision&revision=1533345
+# https://issues.apache.org/jira/browse/DAEMON-308
+Patch3:         apache-commons-daemon-aarch64.patch
 BuildRequires:  maven-local
 BuildRequires:  jpackage-utils
 BuildRequires:  apache-commons-parent
 BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  xmlto
-
-
-Provides:       jakarta-%{short_name} = 1:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} <= 1:1.0.1
 Source44: import.info
 
 
@@ -41,9 +41,6 @@ Summary:        Java daemon launcher
 Group:          Development/Java
 Provides:       jsvc = 1:%{version}-%{release}
 
-Provides:       jakarta-%{short_name}-jsvc = 1:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-jsvc <= 1:1.0.1
-
 %description    jsvc
 %{summary}.
 
@@ -53,9 +50,6 @@ Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch:      noarch
 
-Provides:       jakarta-%{short_name}-javadoc = 1:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc <= 1:1.0.1
-
 %description    javadoc
 %{summary}.
 
@@ -64,6 +58,7 @@ Obsoletes:      jakarta-%{short_name}-javadoc <= 1:1.0.1
 %setup -q -n %{short_name}-%{version}-src
 %patch1 -p1 -b .java_os
 %patch2 -p1 -b .secondary
+%patch3 -p1 -b .aarch64
 
 # remove java binaries from sources
 rm -rf src/samples/build/
@@ -113,6 +108,9 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.15-alt1_4jpp7
 - new release
 
