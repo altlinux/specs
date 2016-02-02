@@ -1,10 +1,11 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global bundle org.apache.felix.shell
 
 Name:           felix-shell
 Version:        1.4.3
-Release:        alt1_4jpp7
+Release:        alt1_7jpp8
 Summary:        Apache Felix Shell Service
 Group:          Development/Java
 License:        ASL 2.0
@@ -21,7 +22,6 @@ BuildRequires: maven-plugin-bundle
 BuildRequires: felix-parent
 BuildRequires: mockito
 Source44: import.info
-
 
 %description
 A simple OSGi command shell service.
@@ -54,6 +54,9 @@ This package contains API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_4jpp7
 - new release
 
