@@ -6,16 +6,16 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           batik
 Version:        1.8
-Release:        alt1_0.10.svn1230816jpp7
+Release:        alt1_2jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            http://xml.apache.org/batik/
-#Source0:        http://apache.crihan.fr/dist/xmlgraphics/batik/batik-src-%%{version}.zip
-Source0:        %{name}-repack-%{version}.zip
+Source0:        http://apache.crihan.fr/dist/xmlgraphics/batik/source/batik-src-%{version}.zip
 Source1:        %{name}.squiggle.script
 Source2:        %{name}.svgpp.script
 Source3:        %{name}.ttf2svg.script
@@ -23,8 +23,6 @@ Source4:        %{name}.rasterizer.script
 Source5:        %{name}.slideshow.script
 Source6:        %{name}-squiggle.desktop
 Source7:        %{name}-repack.sh
-
-%global inner_version 1.8pre
 
 # These manifests with OSGi metadata are taken from the Eclipse Orbit
 # project:  http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/
@@ -34,24 +32,24 @@ Source7:        %{name}-repack.sh
 # Then manually remove all lines containing MD5sums/crypto hashes.
 # tar czf batik-1.6-orbit-manifests.tar.gz *.MF
 #
-# FIXME:  move to 1.7 manifests
-Source8:        %{name}-1.6-orbit-manifests.tar.gz
+Source8:        %{name}-1.7-orbit-manifests.tar.gz
 
 
 Patch0:         %{name}-manifests.patch
 Patch1:         %{name}-policy.patch
 # remove dependency on bundled rhino from pom
-Patch2:		%{name}-script-remove-js.patch
-# SMIL in Fedora has been merged into xml-commons-apis-ext like it has
-# been upstream.  It's easier to take the OSGi manifests from Orbit
-# directly and patch this one.
-#
-# FIXME:  move to 1.7 manifest from Eclipse Orbit project
-Patch3:         %{name}-1.6-nosmilInDOMSVGManifest.patch
+Patch2:         %{name}-script-remove-js.patch
+
+# make sure we fail build if javadocs fail (run OOM)
+# also make maxmem a bit higher. we seem to need more...
+# https://issues.apache.org/jira/browse/BATIK-1065
+Patch3:         %{name}-javadoc-task-failonerror-and-oom.patch
+
+Patch4:         %{name}-disable-doclint.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 1.5
+BuildRequires:  maven-local >= 1.5
 BuildRequires:  ant
 BuildRequires:  subversion
 BuildRequires:  zip
@@ -61,16 +59,17 @@ BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  xerces-j2
 BuildRequires:  xalan-j2
 BuildRequires:  xml-commons-apis >= 1.3.04
+BuildRequires:  xmlgraphics-commons
 
 BuildRequires:  java-javadoc >= 1:1.6.0
-BuildRequires:  rhino-javadoc
 
-Requires:       jpackage-utils
+Requires:       maven-local
 #full support for tiff
-Requires:	jai-imageio-core
+Requires:       jai-imageio-core
 Requires:       rhino >= 1.5
 Requires:       xalan-j2
 Requires:       xml-commons-apis >= 1.3.04
+Requires:       %{name}-css = %{?epoch:%epoch:}%{version}-%{release}
 Source44: import.info
 #19119
 Provides: xmlgraphics-batik = 0:%version-%release
@@ -86,6 +85,14 @@ Conflicts: xmlgraphics-batik-ttf2svg < 0:%version
 Batik is a Java(tm) technology based toolkit for applications that want
 to use images in the Scalable Vector Graphics (SVG) format for various
 purposes, such as viewing, generation or manipulation.
+
+%package css
+Group: Graphics
+Summary:        Batik CSS engine
+Obsoletes:      %{name} < 1.8-0.17.svn1230816
+
+%description css
+CSS component of the Apache Batik SVG manipulation and rendering library.
 
 %package        squiggle
 Summary:        Batik SVG browser
@@ -204,14 +211,13 @@ Demonstrations and samples for %{name}.
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 rm -f `find -name readOnly.png`
 rm -f `find -name properties`
 mkdir orbit
 pushd orbit
 tar xzf %{SOURCE8}
-%patch3
 popd
 
 # create poms from templates
@@ -219,16 +225,21 @@ for module in anim awt-util bridge codec css dom ext extension gui-util \
               gvt parser script svg-dom svggen swing transcoder util xml \
               rasterizer slideshow squiggle svgpp ttf2svg; do
       sed "s:@version@:%{version}:g" sources/%{name}-$module.pom.template \
-      	  > %{name}-$module.pom
+         > %{name}-$module.pom
 done
-%patch2
+#%patch2
+
+#%patch3
+%patch4
+
+rm -fr sources/org/apache/batik/ext/awt/image/codec/tiff
 
 %build
 
 export ANT_OPTS="-Xmx512m"
 # due to javadoc x86_64 out of memory
 subst 's,maxmemory="128m",maxmemory="512m",' build.xml
-export CLASSPATH=$(build-classpath xml-commons-apis xml-commons-apis-ext js rhino xalan-j2 xalan-j2-serializer xerces-j2)
+export CLASSPATH=$(build-classpath xml-commons-apis xml-commons-apis-ext xmlgraphics-commons js rhino xalan-j2 xalan-j2-serializer xerces-j2)
 ant all-jar jars\
         -Ddebug=on \
         -Dsun-codecs.present=false \
@@ -239,9 +250,6 @@ ant all-jar jars\
         rasterizer-jar \
         ttf2svg-jar
 
-for j in $(find batik-%{version} -name *.jar); do
- export CLASSPATH=$CLASSPATH:${j}
-done
 ant javadoc
 
 
@@ -250,64 +258,63 @@ ant javadoc
 mkdir -p META-INF
 cp -p orbit/batik-bridge-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-bridge.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-bridge-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-css-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-css.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-css-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-dom-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-dom.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-dom-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-dom-svg-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-svg-dom.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-svg-dom-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-ext-awt-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-awt-util.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-awt-util-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-extension-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-extension.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-extension-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-parser-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-parser.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-parser-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-svggen-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-svggen.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-svggen-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-swing-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-swing.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-swing-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-transcoder-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-transcoder.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-transcoder-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-util-gui-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-gui-util.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-gui-util-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-util-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-util.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-util-%{version}.jar META-INF/MANIFEST.MF
 cp -p orbit/batik-xml-MANIFEST.MF META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u %{name}-%{inner_version}/lib/batik-xml.jar META-INF/MANIFEST.MF
+zip -u %{name}-%{version}/lib/batik-xml-%{version}.jar META-INF/MANIFEST.MF
 
 
 # jars
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 mkdir -p $RPM_BUILD_ROOT%{_javadir}/%{name}
-pushd %{name}-%{inner_version}/lib
+pushd %{name}-%{version}/lib
 for jarname in $(find batik-*.jar); do
-    cp -p ${jarname} $RPM_BUILD_ROOT%{_javadir}/%{name}/
+    cp -p ${jarname} $RPM_BUILD_ROOT%{_javadir}/%{name}/${jarname//-1.8/}
 done
 
 rm -fr $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-all.jar
-cp -p %{name}-all.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-all.jar
+cp -p %{name}-all-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-all.jar
 
 popd
 
-cp -p %{name}-%{inner_version}/batik-rasterizer.jar \
-        %{name}-%{inner_version}/%{name}-slideshow.jar \
-        %{name}-%{inner_version}/%{name}-squiggle.jar \
-        %{name}-%{inner_version}/%{name}-svgpp.jar \
-        %{name}-%{inner_version}/%{name}-ttf2svg.jar \
-        $RPM_BUILD_ROOT%{_javadir}
+pushd %{name}-%{version}
+for module in rasterizer slideshow squiggle svgpp ttf2svg; do
+	cp -p batik-$module-%{version}.jar  $RPM_BUILD_ROOT%{_javadir}/batik-$module.jar
+done
+popd
 
 # poms and depmaps for subpackages are different (no batik subdir)
 install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
@@ -316,16 +323,19 @@ for module in rasterizer slideshow squiggle svgpp ttf2svg; do
       %add_maven_depmap JPP-%{name}-$module.pom %{name}-$module.jar -a "%{name}:%{name}-$module" -f $module
 done
 
+# css pom files and maven depmaps
+for module in css gui-util util; do
+      install -pm 644 %{name}-$module.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-$module.pom
+      %add_maven_depmap JPP.%{name}-%{name}-$module.pom %{name}/%{name}-$module.jar -a "%{name}:%{name}-$module" -f css
+done
+
 # main pom files and maven depmaps
-for module in anim awt-util bridge codec css dom ext extension gui-util \
-              gvt parser script svg-dom svggen swing transcoder util xml; do
+for module in anim awt-util bridge codec dom ext extension \
+              gvt parser script svg-dom svggen swing transcoder xml; do
 
       install -pm 644 %{name}-$module.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-$module.pom
       %add_maven_depmap JPP.%{name}-%{name}-$module.pom %{name}/%{name}-$module.jar -a "%{name}:%{name}-$module"
 done
-
-
-
 
 # scripts
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
@@ -337,7 +347,7 @@ cp -p %{SOURCE5} $RPM_BUILD_ROOT%{_bindir}/slideshow
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr %{name}-%{inner_version}/docs/* \
+cp -pr %{name}-%{version}/docs/* \
   $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # demo
@@ -421,6 +431,8 @@ popd
 %_javadir/batik
 %dir %_javadir/xmlgraphics-batik
 
+%files css -f .mfiles-css
+
 %files squiggle -f .mfiles-squiggle
 %attr(0755,root,root) %{_bindir}/squiggle
 %config(noreplace,missingok) /etc/squiggle.conf
@@ -451,6 +463,9 @@ popd
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_0.10.svn1230816jpp7
 - new release
 
