@@ -3,11 +3,12 @@ Epoch: 1
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           ganymed-ssh2
 Version:        210
-Release:        alt1_14jpp7
+Release:        alt1_16jpp8
 Summary:        SSH-2 protocol implementation in pure Java
 
 Group:          Development/Java
@@ -75,6 +76,9 @@ cp -pr javadoc/* \
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:210-alt1_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:210-alt1_14jpp7
 - new release
 
