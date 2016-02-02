@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           openprops
 Version:        0.6
-Release:        alt1_4jpp7
+Release:        alt1_9jpp8
 Summary:        An improved java.util.Properties from OpenJDK
 
 Group:          Development/Java
@@ -15,9 +16,6 @@ URL:            https://github.com/zanata/%{name}
 Source0:        https://github.com/zanata/%{name}/archive/%{name}-%{version}.zip
 
 BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
-
 
 BuildRequires:  maven-local
 
@@ -72,34 +70,24 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{name}-%{version} 
  
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
-
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}*.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%check
-mvn-rpmbuild verify
+%mvn_install
+# multiple -f flags in %files: merging -f .mfiles-javadoc into -f .mfiles
+cat .mfiles-javadoc >> .mfiles
 
 %files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc README.txt COPYING.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
 %doc COPYING.txt
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_9jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_4jpp7
 - new release
 
