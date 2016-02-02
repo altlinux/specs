@@ -1,12 +1,10 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          mojarra
 Version:       2.1.7
-Release:       alt2_8jpp7
+Release:       alt2_12jpp8
 Summary:       JSF Reference Implementation
 License:       CDDL or GPLv2 with exceptions
 URL:           http://javaserverfaces.java.net
@@ -56,31 +54,37 @@ Patch9:        %{name}-dont-bundle-api.patch
 # that merges the jsf-ri-runtime.xml file:
 Patch10:       %{name}-dont-use-namespace-alias.patch
 
+# Adapt the source to the Servlet 3.1 specification:
+Patch11:       %{name}-servlet-3.1.patch
+
 BuildArch: noarch
 
-BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: ant-contrib
-BuildRequires: maven-local
-BuildRequires: groovy
+BuildRequires: apache-commons-digester
 BuildRequires: aqute-bnd
-BuildRequires: tomcat-servlet-3.0-api
-BuildRequires: tomcat-el-2.2-api
-BuildRequires: tomcat-jsp-2.2-api
 BuildRequires: geronimo-annotation
 BuildRequires: geronimo-validation
-BuildRequires: maven-install-plugin
-BuildRequires: apache-commons-digester
+BuildRequires: glassfish-el-api
+BuildRequires: glassfish-jsp-api
+BuildRequires: glassfish-servlet-api
+BuildRequires: groovy
 BuildRequires: jboss-jstl-1.2-api
+BuildRequires: jpackage-utils
+BuildRequires: jpackage-utils
+BuildRequires: maven-install-plugin
+BuildRequires: maven-local
 
-Requires: jpackage-utils
-Requires: tomcat-servlet-3.0-api
-Requires: tomcat-el-2.2-api
-Requires: tomcat-jsp-2.2-api
+Requires: apache-commons-digester
 Requires: geronimo-annotation
 Requires: geronimo-validation
+Requires: glassfish-el-api
+Requires: glassfish-jsp-api
+Requires: glassfish-servlet-api
+Requires: jboss-jstl-1.2-api
+Requires: jpackage-utils
+Requires: jpackage-utils
 Source44: import.info
-
 
 %description
 JvaServer(TM) Faces technology simplifies building user interfaces for
@@ -112,6 +116,7 @@ This package contains the API documentation for %{name}.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # Remove binaries (I know this is already mentinoned in the instructions to
 # build the source tarball above, but it doesn't hurt):
@@ -127,12 +132,6 @@ cp -p %{SOURCE2} jsf-impl.pom
 for a in jsf-api.pom jsf-impl.pom; do
 %pom_remove_dep javax.servlet.jsp.jstl:jstl-api ${a}
 %pom_add_dep org.jboss.spec.javax.servlet.jstl:jboss-jstl-api_1.2_spec:1.0.3.Final:provided ${a}
-%pom_remove_dep javax.servlet:javax.servlet-api ${a}
-%pom_add_dep org.apache.tomcat:tomcat-servlet-api:7.0.40:provided ${a}
-%pom_remove_dep javax.servlet.jsp:javax.servlet.jsp-api ${a}
-%pom_add_dep org.apache.tomcat:tomcat-jsp-api:7.0.40:provided ${a}
-%pom_remove_dep javax.el:javax.el-api ${a}
-%pom_add_dep org.apache.tomcat:tomcat-el-api:7.0.40:provided ${a}
 done
 
 %build
@@ -147,36 +146,38 @@ apache-commons-logging
 '
 for name in ${names}
 do
-  ln -s `build-classpath ${name}` lib/${name}.jar
+  ln -s `build-classpath ${name}` lib/$(basename ${name}).jar
 done
 
 # Create links for the jars used for compilation:
 mkdir -p lib/compile
 names='
-jboss-jstl-1.2-api
-tomcat-servlet-3.0-api
-tomcat-el-2.2-api
-tomcat-jsp-2.2-api
 geronimo-annotation
 geronimo-validation
-groovy
+glassfish-el-api
+glassfish-jsp-api
+glassfish-servlet-api
+groovy/groovy-all
+jboss-jstl-1.2-api
 '
 for name in ${names}
 do
-  ln -s `build-classpath ${name}` lib/compile/${name}.jar
+  ln -s `build-classpath ${name}` lib/compile/$(basename ${name}).jar
 done
 
 # Some other jars that require specific version number in the names:
 mkdir -p common/lib
-ln -s `build-classpath aqute-bnd` common/lib/bnd-0.0.249.jar
+sed -i 's|bnd-[0-9.]*\.jar"/>$|bnd.jar"/>|' common/ant/common.xml
+sed -i '/bnd.jar"\/>$/ a\<pathelement location="${jsf.build.home}/common/lib/bndlib.jar"/>' common/ant/common.xml
+ln -s `build-classpath aqute-bnd/biz.aQute.bnd` common/lib/bnd.jar
+ln -s `build-classpath aqute-bnd/biz.aQute.bndlib` common/lib/bndlib.jar
 
-sed -i 's|<arg line="-f|<arg line="-- -f|' common/ant/maven.xml
-# Build it the binaries:
+# Build the binaries:
 ant \
   -Dbuild.sysclasspath=last \
   -Djsf.build.home=$PWD \
   -Dcontainer.name=tomcat7 \
-  -Dmvn.cmd=`which mvn-build`
+  -Dmvn.cmd=xmvn
 
 # Generate the javadocs:
 ant \
@@ -193,34 +194,22 @@ ant \
   -f jsf-ri/build.xml \
   javadocs
 
+# Associate POM files with artifacts:
+%mvn_artifact jsf-api.pom jsf-api/build/lib/jsf-api-intermediate.jar
+%mvn_artifact jsf-impl.pom jsf-ri/build/lib/javax.faces.jar
 
 %install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -m 644 jsf-api/build/lib/jsf-api-intermediate.jar %{buildroot}%{_javadir}/%{name}/jsf-api.jar
-install -m 644 jsf-ri/build/lib/javax.faces.jar %{buildroot}%{_javadir}/%{name}/jsf-impl.jar
+# Install artifacts:
+%mvn_install
 
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -m 644 jsf-api.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-jsf-api.pom
-install -m 644 jsf-impl.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-jsf-impl.pom
-
-# API javadoc files:
+# Install the Javadoc:
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}/jsf-api
 cp -rp jsf-api/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-api/.
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}/jsf-impl
-cp -rp jsf-api/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-impl/.
+cp -rp jsf-ri/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-impl/.
 
-# Dependencies map:
-%add_maven_depmap JPP.%{name}-jsf-api.pom %{name}/jsf-api.jar
-%add_maven_depmap JPP.%{name}-jsf-impl.pom %{name}/jsf-impl.jar
-
-
-%files
-%{_javadir}/%{name}
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 %doc LICENSE
 %doc docs/index.html
 %doc docs/releasenotes.html
@@ -232,6 +221,9 @@ cp -rp jsf-api/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}/jsf-impl/.
 %doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.7-alt2_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.7-alt2_8jpp7
 - new release
 
