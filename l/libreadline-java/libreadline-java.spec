@@ -3,14 +3,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global editline_ver    2.9
 %global src_dirs        org test
 
 Name:          libreadline-java
 Version:       0.8.0
-Release:       alt2_33jpp7
+Release:       alt2_40jpp8
 Summary:       Java wrapper for the EditLine library
 License:       LGPLv2+
 URL:           http://java-readline.sf.net/
@@ -43,6 +44,8 @@ API documentation for %{name}.
 %patch0
 %patch1
 sed -i 's|@LIBDIR@|%{_libdir}|' src/org/gnu/readline/Readline.java
+
+sed -i 's|javadoc |javadoc -Xdoclint:none |' Makefile
 %__subst s,termcap,tinfo, src/native/Makefile
 
 %build
@@ -71,29 +74,27 @@ ln -sf ../java/%{name}.jar %{buildroot}%{_libdir}/%{name}/%{name}.jar
 
 mkdir -p %{buildroot}%{_mavenpomdir}
 install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 # javadoc
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -a api/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%doc ChangeLog NEWS README README.1st VERSION COPYING.LIB
+%files -f .mfiles
+%doc ChangeLog NEWS README README.1st VERSION
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/*
 %{_jnidir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
+%doc COPYING.LIB
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc COPYING.LIB
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_40jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.8.0-alt2_33jpp7
 - new release
 
