@@ -2,28 +2,13 @@
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /.opt-share.etc.profile.ant/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# baserelease defines which build revision of this version we're building.
-# The magical name baserelease is matched by the rpmdev-bumpspec tool, which
-# you should use.
-%global baserelease 1
-
-%global pkg_name gluegen
-%global pkg_version 2.0.2
-#%global pkg_rc rc12
-
-%if 0%{?pkg_rc:0}
-%global pkg_release 0.%{baserelease}.%{pkg_rc}
-%global src_name %{pkg_name}-v%{pkg_version}-%{pkg_rc}
-%else
-%global pkg_release %{baserelease}
-%global src_name %{pkg_name}-v%{pkg_version}
-%endif
-
+BuildRequires: jpackage-generic-compat
 Name:           gluegen2
-Version:        %{pkg_version}
-Release:        alt1_1jpp7
+Version:        2.2.4
+Release:        alt1_3jpp8
+%global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
 Group:          Development/Java
@@ -36,6 +21,9 @@ Patch1:         %{name}-0001-renamed-library.patch
 Patch2:         %{name}-0002-use-fedora-jni.patch
 Patch3:         %{name}-0003-disable-executable-tmp-tests.patch
 Patch4:         %{name}-0004-add-antlr-jar-to-all-targets.patch
+Patch5:         %{name}-0005-use-system-antlib.patch
+Patch6:         %{name}-0006-disable-static-libgcc.patch
+Patch7:         %{name}-add-ppc64-aarch64.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires: p7zip-standalone p7zip
@@ -77,8 +65,6 @@ Summary:        Javadoc for GlueGen2
 Group:          Development/Java
 BuildArch:      noarch
 
-Requires:       jpackage-utils
-
 %description javadoc
 Javadoc for GlueGen2.
 
@@ -105,9 +91,17 @@ sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH2} \
 /usr/bin/patch -s -p1 --fuzz=0 <use-fedora-jni.patch
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 # Remove any JNI files
 rm -fr make/stub_includes/jni
+
+# Remove bundled dependencies
+find -name "*.jar" -type f -exec rm {} \;
+find -name "*.apk" -type f -exec rm {} \;
+rm -fr make/lib
 
 # Fix wrong-script-end-of-line-encoding
 rm make/scripts/*.bat
@@ -126,11 +120,6 @@ find make/scripts -type f -name "*.sh" -exec chmod +x {} +
 # Fix script-without-shebang
 find make/scripts -type f -name "*.sh" -exec sed -i -e '1i#!/bin/sh' {} +
 
-# Remove bundled dependencies
-find -name "*.jar" -type f -exec rm {} \;
-find -name "*.apk" -type f -exec rm {} \;
-rm -fr make/lib
-
 # Remove hardcoded classpath
 sed -i '/Class-Path/I d' make/Manifest
 
@@ -144,8 +133,13 @@ sed -i 's/executable="7z"/executable="true"/' make/jogamp-archivetasks.xml
 sed -i 's/executable="mvn"/executable="true"/' make/build.xml
 
 %build
+
+# Clean up some tests
+rm -f src/junit/com/jogamp/common/util/TestVersionSemantics.java src/junit/com/jogamp/junit/util/VersionSemanticsUtil.java
+
 cd make
 xargs -t ant <<EOF
+ -verbose
  -Dc.compiler.debug=true
  -Djavacdebug=false
 %ifarch x86_64
@@ -197,10 +191,13 @@ cp -rdf build/javadoc/gluegen/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 # Make the doc package
 mkdir -p %{buildroot}%{_docdir}/%{name}
 cp -rdf doc/manual/* %{buildroot}%{_docdir}/%{name}
+cp LICENSE.txt %{buildroot}%{_docdir}/%{name}/
+cp LICENSE.txt %{buildroot}%{_javadocdir}/%{name}/
 
 %check
 cd make
 _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/natives" xargs -t ant <<EOF
+ -verbose
  -Djavacdebug=true
  -Dc.compiler.debug=true
  -Djavacdebug=true
@@ -218,28 +215,31 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
  junit.run
 EOF
 
+rm -fr %{buildroot}%{_jnidir}/test
+
 %files
-%doc LICENSE.txt
+%{_docdir}/%{name}/LICENSE.txt
 %{_jnidir}/%{name}-rt.jar
 %{_libdir}/%{name}
-%{_mavendepmapfragdir}/%{name}
 %{_mavenpomdir}/JPP-%{name}-rt.pom
 
 %files devel
-%doc LICENSE.txt
+%{_docdir}/%{name}/LICENSE.txt
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
+%{_datadir}/maven-metadata/%{name}.xml
 %{gluegen_devel_dir}
 
 %files javadoc
-%doc LICENSE.txt
 %{_javadocdir}/%{name}
 
 %files doc
-%doc LICENSE.txt
 %{_docdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt1_1jpp7
 - new release
 
