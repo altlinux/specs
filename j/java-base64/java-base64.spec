@@ -1,14 +1,12 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global oname base64
 Name:          java-base64
 Version:       2.3.8
-Release:       alt1_2jpp7
+Release:       alt1_8jpp8
 Summary:       Java class for encoding and decoding Base64 notation
-Group:         Development/Java
 # pom file license comment
 # I have released this software into the Public Domain. That
 # means you can do whatever you want with it. Really. You don't
@@ -21,22 +19,12 @@ Group:         Development/Java
 License:       Public Domain
 URL:           http://iharder.net/base64/
 Source0:       https://github.com/omalley/base64/archive/release-%{version}.tar.gz
-
+Patch0:        %{name}-2.3.8-elasticsearch.patch
 
 # test deps
 BuildRequires: junit
-
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-
 Provides:      %{oname} = %{version}-%{release}
-
 BuildArch:     noarch
 Source44: import.info
 
@@ -46,7 +34,7 @@ decoding Base64 notation. There are one-liner convenience
 methods as well as Input and Output Streams.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
 BuildArch: noarch
 
@@ -55,54 +43,41 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{oname}-release-%{version}
-
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-compiler-plugin']" "<version>2.5.1</version>"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-source-plugin']" "<version>2.1.2</version>"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-javadoc-plugin']" "<version>2.9</version>"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-release-plugin']" "<version>2.2.1</version>"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-scm-plugin']" "<version>1.7</version>"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId ='maven-project-info-reports-plugin']" "<version>2.4</version>"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId ='maven-javadoc-plugin']" "<version>2.9</version>"
+%patch0 -p0
 
 sed -i "s|<version>2.3.9-SNAPSHOT</version>|<version>%{version}</version>|" pom.xml
 
+# Unwanted
+%pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :maven-scm-plugin
+# Unwanted - disable javadoc source jar
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+
+%mvn_file :%{oname} %{name}
+%mvn_file :%{oname} %{oname}
+
 %build
 
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{oname}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-(
- cd %{buildroot}%{_javadir}
- ln -sf %{name}.jar %{oname}.jar
-)
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 (
  cd %{buildroot}%{_javadocdir}
  ln -sf %{name} %{oname}
 )
 
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/%{oname}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %{_javadocdir}/%{oname}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.8-alt1_8jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.8-alt1_2jpp7
 - new release
 
