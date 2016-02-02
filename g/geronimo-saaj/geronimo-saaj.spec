@@ -1,12 +1,13 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global spec_ver 1.3
 %global spec_name geronimo-saaj_%{spec_ver}_spec
 
 Name:             geronimo-saaj
 Version:          1.1
-Release:          alt2_13jpp7
+Release:          alt2_16jpp8
 Summary:          Java EE: SOAP with Attachments API Package v1.3
 License:          ASL 2.0 and W3C
 
@@ -62,6 +63,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_13jpp7
 - new release
 
