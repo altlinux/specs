@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: libserializer
 Version: 1.1.2
-Release: alt1_10jpp7
+Release: alt1_14jpp8
 Summary: JFreeReport General Serialization Framework
 License: LGPLv2+
 Group: System/Libraries
@@ -49,23 +50,22 @@ ant jar javadoc
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p dist/libserializer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
-pushd $RPM_BUILD_ROOT%{_javadir}
-ln -s %{name}-%{version}.jar %{name}.jar
-popd
+cp -p dist/libserializer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
 %doc ChangeLog.txt licence-LGPL.txt README.txt
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_10jpp7
 - new release
 
