@@ -1,6 +1,6 @@
 Name: libalsa
 Version: 1.1.0
-Release: alt1
+Release: alt1.1.1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -99,6 +99,7 @@ cat << __EOF__ >> %buildroot%modprobe_conf
 #options snd-usb-audio index=0
 
 ## offset HDMI output compared to onboard audio (#28648)
+#options snd_hda_codec_hdmi index=2,3
 #options snd_hda_intel index=2,3
 
 #options snd_intel8x0 index=2
@@ -111,6 +112,8 @@ cat << __EOF__ >> %buildroot%modprobe_conf
 ## get PC speaker out of the way
 options snd_pcsp index=10
 __EOF__
+
+install -d %buildroot%_localstatedir/alsa
 
 %pre
 [ ! -f %modutils_oss ] || {
@@ -140,6 +143,7 @@ done
 %_libdir/alsa-lib/smixer
 %config(noreplace) %modprobe_conf
 %_datadir/alsa
+%dir %_localstatedir/alsa
 
 %files devel
 %_includedir/sys/*
@@ -157,6 +161,12 @@ done
 %_bindir/aserver
 
 %changelog
+* Tue Feb 02 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1.1.1
+- added %_localstatedir/alsa (thx aris@)
+
+* Mon Dec 07 2015 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1.1
+- added snd-hda-codec-hdmi to alsa-modindex.conf too (see #28648)
+
 * Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1
 - 1.1.0
 
