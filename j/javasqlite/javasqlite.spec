@@ -2,21 +2,27 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsqlite-devel
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name javasqlite
-%define version 20130214
+%define version 20150419
 # javaver nil: build for 1.5.0 and 1.6.0
 # javaver something else: build only for that
 
-%if 0%{?fedora}
 # Java >= 1.7.0 stuff can't coexist in jar with older versions
+%if 0%{?fedora} > 20
+%global javaver 1.8.0
+%else
+%if 0%{?fedora} || 0%{?rhel} > 6
 %global javaver 1.7.0
-%if %{?fedora} > 39
-%global headless -headless
 %endif
+%endif
+
+%if 0%{?fedora} > 19 || 0%{?rhel} > 6
+%global headless -headless
 %endif
 
 %if 0%{?el6}
@@ -29,8 +35,8 @@ BuildRequires: jpackage-compat
 %global __provides_exclude_from ^%{_libdir}/%{name}/.*\.so$
 
 Name:           javasqlite
-Version:        20130214
-Release:        alt1_3jpp7
+Version:        20150419
+Release:        alt1_2jpp8
 Summary:        SQLite Java Wrapper/JDBC Driver
 
 License:        BSD
@@ -69,8 +75,10 @@ API documentation for %{name}.
 %prep
 %setup -q
 sed -e 's|@JNIPATH@|%{_libdir}/%{name}|' %{PATCH0} | patch -p1 --fuzz=0
+
 sed -i -e 's/\r//g' doc/ajhowto.txt
 f=ChangeLog ; iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
+rm doc/stylesheet.css # overrides javadoc's defaults
 
 
 %build
@@ -80,6 +88,7 @@ origpath="$PATH"
 common_flags="
     --with-jardir=%{_libdir}/%{name}
     --libdir=%{_libdir}/%{name}
+    --without-sqlite
 "
 
 %if 0%{?javaver:1}
@@ -117,10 +126,11 @@ make javadoc JAVADOCLINK=%{_javadocdir}/java
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/libsqlite_jni.la
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pR doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+
+make install DESTDIR=%{buildroot}
+rm -f %{buildroot}%{_libdir}/%{name}/libsqlite_jni.la
+install -dm 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pR doc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %check
@@ -134,7 +144,8 @@ done
 
 
 %files
-%doc ChangeLog license.terms
+%doc ChangeLog
+%doc license.terms
 %dir %{_libdir}/%{name}/
 %{_libdir}/%{name}/sqlite.jar
 %{_libdir}/%{name}/libsqlite_jni.so
@@ -143,8 +154,10 @@ done
 %doc license.terms
 %{_javadocdir}/%{name}
 
-
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 20150419-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 20130214-alt1_3jpp7
 - new release
 
