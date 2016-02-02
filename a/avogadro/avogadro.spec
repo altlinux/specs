@@ -6,7 +6,7 @@
 
 Name: avogadro
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -18,6 +18,7 @@ Requires: %libname = %version-%release
 
 Source: %name-%version.tar
 # FC
+Patch0: 0029-Fix-compilation-on-ARM-where-qreal-can-be-defined-as.patch
 Patch1: avogadro-1.0.3-mkspecs-dir.patch
 Patch2: avogadro-1.0.3-no-strip.patch
 Patch3: avogadro-1.1.1-pkgconfig_eigen.patch
@@ -66,6 +67,7 @@ Development Avogadro files.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -133,6 +135,9 @@ sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMake
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Tue Feb 02 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt3
+- fix to build on arm
+
 * Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
 - rebuild with gcc5
 
