@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:		taggle
 Version:	1.0
-Release:	alt2_6jpp7
+Release:	alt2_9jpp8
 Summary:	An online french word game
 
 Group:		Games/Other
@@ -97,6 +99,9 @@ install -D -p -m 0755 %{S:4} %{buildroot}%{_bindir}/%{name}-server
 %{_bindir}/%{name}-server
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_6jpp7
 - new release
 
