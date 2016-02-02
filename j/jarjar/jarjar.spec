@@ -1,10 +1,12 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -37,26 +39,24 @@ BuildRequires: jpackage-compat
 
 Name:           jarjar
 Version:        1.4
-Release:        alt1_4jpp7
+Release:        alt1_15jpp8
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
-Group:          Development/Java
 Source0:        http://jarjar.googlecode.com/files/jarjar-src-1.4.zip
 Source1:        jarjar.pom
 Source2:        jarjar-util.pom
 Patch0:         fix-maven-plugin.patch
+Patch1:         do-not-embed-asm.patch
+
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  jpackage-utils
-BuildRequires:  objectweb-asm4
-BuildRequires:  maven-local
-Requires:       objectweb-asm4
+BuildRequires:  objectweb-asm
+BuildRequires:  javapackages-local
+BuildRequires:  maven
+Requires:       objectweb-asm
 
 BuildArch:      noarch
-
-# Work around weird file permission problems
-%define __jar_repack %{nil}
 Source44: import.info
 
 %description
@@ -69,19 +69,17 @@ version of a library, which may conflict with the dependencies of
 another library.
 
 %package maven-plugin
+Group: Development/Java
 Summary:        Maven plugin for %{name}
-Group:          Development/Java
 Requires:       maven
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Obsoletes: %{name}-maven2-plugin <= 1.0
-Provides: %{name}-maven2-plugin = %{version}-%{release}
 
 %description maven-plugin
 %{summary}.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -89,72 +87,64 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p0 -b .orig
+%patch0
+%patch1
 
 # remove all binary libs
 rm -f lib/*.jar
 
+%mvn_package :jarjar-plugin %{name}-maven-plugin
+
+# create ant config
+echo "jarjar/jarjar objectweb-asm/asm objectweb-asm/asm-commons" > jarjar.ant
+
 %build
 pushd lib
-ln -sf $(build-classpath objectweb-asm4/asm) asm-4.0.jar
-ln -sf $(build-classpath objectweb-asm4/asm-commons) asm-commons-4.0.jar
+ln -sf $(build-classpath objectweb-asm/asm) asm-4.0.jar
+ln -sf $(build-classpath objectweb-asm/asm-commons) asm-commons-4.0.jar
 ln -sf $(build-classpath maven/maven-plugin-api) maven-plugin-api.jar
 popd
-export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=$(build-classpath ant)
 ant jar jar-util javadoc mojo test
 
-%install
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-
-install -m 644 dist/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -m 644 dist/%{name}-util-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-util.jar
-install -m 644 dist/%{name}-plugin-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-plugin.jar
-
 sed -i -e s/@VERSION@/%{version}/g maven/pom.xml
 
-# poms
-install -pD -T -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -pD -T -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-util.pom
-install -pD -T -m 644 maven/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-plugin.pom
+# request maven artifact installation
+%mvn_artifact %{SOURCE1} dist/jarjar-%{version}.jar
+%mvn_artifact %{SOURCE2} dist/jarjar-util-%{version}.jar
+%mvn_artifact maven/pom.xml dist/jarjar-plugin-%{version}.jar
+%mvn_alias tonic:jarjar jarjar:jarjar com.tonicsystems:jarjar com.googlecode.jarjar:jarjar org.gradle.jarjar:jarjar
+%mvn_alias tonic:jarjar-util jarjar:jarjar-util com.tonicsystems:jarjar-util
+%mvn_alias com.tonicsystems.jarjar:jarjar-plugin jarjar:jarjar-plugin tonic:jarjar-plugin com.tonicsystems:jarjar-plugin
 
-# depmaps
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "jarjar:%{name},com.tonicsystems:%{name}"
-%add_maven_depmap JPP-%{name}-util.pom %{name}-util.jar -a "jarjar:%{name}-util,com.tonicsystems:%{name}-util"
-%add_maven_depmap JPP-%{name}-plugin.pom %{name}-plugin.jar -a "jarjar:%{name}-plugin,tonic:%{name}-plugin,com.tonicsystems:%{name}-plugin" -f "plugin"
+%install
+%mvn_install -J dist/javadoc
 
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-# compat for old groovy 1 jpp5
-%add_to_maven_depmap com.tonicsystems jarjar %{version} JPP %{name}
+%jpackage_script com.tonicsystems.jarjar.Main "" "" jarjar/jarjar:objectweb-asm/asm:objectweb-asm/asm-commons %{name} true
 
-%files
+# install ant config
+install -m 644 -D jarjar.ant %{buildroot}%{_sysconfdir}/ant.d/jarjar
+
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
+touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
+
+%files -f .mfiles
 %doc COPYING
-%{_javadir}/%{name}.jar
-%{_javadir}/%{name}-util.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-util.pom
-%{_mavendepmapfragdir}/%{name}
+%{_bindir}/%{name}
+%{_sysconfdir}/ant.d/jarjar
+%dir %{_javadir}/%{name}
+%config(noreplace,missingok) /etc/java/%{name}.conf
 
-%files maven-plugin
+%files maven-plugin -f .mfiles-%{name}-maven-plugin
 %doc COPYING
-%{_javadir}/%{name}-plugin.jar
-%{_mavenpomdir}/JPP-%{name}-plugin.pom
-%{_mavendepmapfragdir}/%{name}-plugin
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc COPYING
-%{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_15jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_4jpp7
 - new release
 
