@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.0.5
-Release: alt2.dev.git20140320
+Release: alt3.dev.git20140320
 
 Summary: Python configuration module from Zope
 License: ZPL
@@ -17,7 +17,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %setup_python_module %modulename
-BuildPreReq: python-module-setuptools-tests python-module-Zope2-tests
+BuildPreReq: python-module-setuptools-tests
 BuildPreReq: python-module-zope.testrunner
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -74,7 +74,7 @@ Zope Corporation < zodb-devAATTzope.org>
 Summary: Tests for ZConfig
 Group: Development/Python3
 Requires: python3-module-%modulename = %version-%release
-%py3_requires zope.testrunner
+#%py3_requires zope.testrunner
 
 %description -n python3-module-%modulename-tests
 ZConfig is a configuration library intended for general use. It supports a
@@ -90,7 +90,7 @@ This package contains tests for ZConfig.
 Summary: Tests for ZConfig
 Group: Development/Python
 Requires: %name = %version-%release
-%py_requires zope.testrunner
+#%py_requires zope.testrunner
 
 %description tests
 ZConfig is a configuration library intended for general use. It supports a
@@ -161,6 +161,9 @@ python setup.py test
 %endif
 
 %changelog
+* Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 3.0.5-alt3.dev.git20140320
+- cleanup buildreq
+
 * Wed Oct 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.5-alt2.dev.git20140320
 - Enabled testing
 
