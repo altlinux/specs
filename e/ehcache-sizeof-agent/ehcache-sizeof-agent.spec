@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          ehcache-sizeof-agent
 Version:       1.0.1
-Release:       alt2_6jpp7
+Release:       alt2_10jpp8
 Summary:       Ehcache Size Of Agent
 License:       ASL 2.0
 URL:           http://www.terracotta.org/
@@ -18,7 +19,6 @@ BuildRequires: maven-local
 BuildRequires: maven-shared
 BuildRequires: maven-gpg-plugin
 BuildRequires: maven-idea-plugin
-BuildRequires: maven-plugin-cobertura
 BuildRequires: maven-pmd-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-release-plugin
@@ -45,9 +45,10 @@ This package contains the API documentation for %{name}.
 cp %{SOURCE1} LICENSE.txt
 sed -i 's/\r//' LICENSE.txt
 
+%mvn_file :sizeof-agent %{name}
+
 %build
 
-%mvn_file :sizeof-agent %{name}
 %mvn_build 
 
 %install
@@ -60,6 +61,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_6jpp7
 - new release
 
