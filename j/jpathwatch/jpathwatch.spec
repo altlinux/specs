@@ -1,30 +1,29 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-
+BuildRequires: jpackage-generic-compat
 %global site_ver  0-95
 
 Name:             jpathwatch
 Version:          0.95
-Release:          alt1_1jpp7
+Release:          alt1_7jpp8
 Summary:          Java library for monitoring directories for changes
 License:          GPLv2
-Group:            Development/Java
 # http://jpathwatch.wordpress.com/
 URL:              http://%{name}.wordpress.com/
 # wget http://jpathwatch.svn.sourceforge.net/viewvc/jpathwatch/branches/0-94/jpathwatch/?view=tar -O jpathwatch-0.94.tar.gz
 # wget http://%{name}.svn.sourceforge.net/viewvc/%{name}/branches/%{site_ver}/%{name}/?view=tar -O %{name}-%{version}.tar.gz
 Source0:          %{name}-%{version}.tar.gz
+Source1:          https://repo1.maven.org/maven2/net/sf/%{name}/%{name}/%{version}/%{name}-%{version}.pom
 
 Patch0:           %{name}-fsf-address.patch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    ant
-
-Requires:         jpackage-utils
+BuildRequires:    javapackages-local
 
 # can't debug .so in jars
 %global debug_package %{nil}
@@ -45,9 +44,8 @@ The following events on a directory can be monitored:
 
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch:        noarch
 
 %description javadoc
@@ -73,27 +71,23 @@ cd ../../../..
 ant -Dplatforms.JDK_1.5.home=%{_jvmdir}/java jar
 
 # javadoc target exists but doesn't work - generating
-find %{name}-java/src -name '*.java' | xargs javadoc -classpath dist:%{name}-%{site_ver}.jar -d doc
+find %{name}-java/src -name '*.java' | xargs javadoc -Xdoclint:none -classpath dist:%{name}-%{site_ver}.jar -d doc
 
 %install
+%mvn_artifact %{SOURCE1} dist/%{name}-%{site_ver}.jar
+%mvn_file : %{name}
+%mvn_install -J doc
 
-# jars
-install -d -m 755 %{buildroot}%{_jnidir}
-install -p -m 644 dist/%{name}-%{site_ver}.jar %{buildroot}%{_jnidir}/%{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc README.txt LICENSE.txt
-%{_jnidir}/%{name}.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.95-alt1_1jpp7
 - new release
 
