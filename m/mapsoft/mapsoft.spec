@@ -1,6 +1,6 @@
 Name: mapsoft
-Version: 20150103
-Release: alt1.2
+Version: 20160202
+Release: alt1
 License: GPL
 Summary: mapsoft - programs for working with maps and geodata
 Group: Sciences/Geosciences
@@ -47,15 +47,15 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %files
 %_bindir/mapsoft_convert
 %_bindir/mapsoft_mapview
-%_mandir/man1/mapsoft_convert.1.gz
-%_mandir/man1/mapsoft_mapview.1.gz
+%_mandir/man1/mapsoft_convert.*
+%_mandir/man1/mapsoft_mapview.*
 
 %files tools
 %_bindir/convs_*
 %_bindir/mapsoft_toxyz
 %_bindir/mapsoft_geofig
 %_bindir/mapsoft_mkmap
-%_mandir/man1/mapsoft_geofig.1.gz
+%_mandir/man1/mapsoft_geofig.*
 %_libdir/gimp/2.0/plug-ins/map-helper.py
 
 %files vmap
@@ -65,9 +65,12 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %dir %_datadir/mapsoft
 %_datadir/mapsoft/*
 %_datadir/xfig/Libraries/*
-%_mandir/man1/mapsoft_vmap.1.gz
+%_mandir/man1/mapsoft_vmap.*
 
 %changelog
+* Tue Feb 02 2016 Vladislav Zavjalov <slazav@altlinux.org> 20160202-alt1
+- build fix (man page extensions, .gz -> .*)
+
 * Mon Oct 19 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20150103-alt1.2
 - build fixed
 
