@@ -1,14 +1,15 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jsilver
 Version:        1.0.0
-Release:        alt1_5jpp7
+Release:        alt1_9jpp8
 Summary:        A pure-Java implementation of Clearsilver
 
-Group:          Development/Java
 License:        ASL 2.0 
 
 URL:            http://code.google.com/p/jsilver/
@@ -18,29 +19,17 @@ Source0:        jsilver-1.0.0.tar.xz
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-plugin-exec
-BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  exec-maven-plugin
 BuildRequires:  sablecc
-
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
 A pure-Java implementation of Clearsilver, an HTML template system.
 
 %package javadoc
+Group: Development/Java
 Summary:        API docs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -51,33 +40,26 @@ This package contains the API documentation for %{name}.
 find . -name *.jar -exec rm -f {} \;
 ln -s %{_javadir}/sablecc.jar sablecc/
 
+%mvn_file : jsilver
+
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
+
+# workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1106598
+mkdir target
+mv build/site target
 
 %install
+%mvn_install
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p build/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp build/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp7
 - new release
 
