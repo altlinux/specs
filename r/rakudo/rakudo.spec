@@ -1,6 +1,6 @@
 Name: rakudo
-Version: 2015.12
-Release: alt2
+Version: 2016.01
+Release: alt1
 Summary: Perl 6 compiler for the MoarVM
 
 Group: Development/Other
@@ -61,6 +61,9 @@ export RAKUDO_PREFIX=%buildroot%_datadir/perl6
 %exclude %_datadir/perl6/repo.lock
 
 %changelog
+* Tue Feb 02 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.01-alt1
+- 2016.01
+
 * Sat Dec 26 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.12-alt2
 - fix install
 
