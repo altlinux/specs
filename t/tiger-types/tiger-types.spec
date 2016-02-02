@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          tiger-types
 Version:       1.4
-Release:       alt1_8jpp8
+Release:       alt2_8jpp8
 Summary:       Type arithmetic library for Java5
 License:       CDDL or GPLv2 with exceptions
 Url:           http://java.net/projects/tiger-types
@@ -85,6 +85,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_8jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_8jpp8
 - new version
 
