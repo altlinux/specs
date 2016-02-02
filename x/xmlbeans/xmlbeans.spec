@@ -5,8 +5,9 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: subversion
 %define _without_maven 1
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -52,7 +53,7 @@ BuildRequires: jpackage-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt1_6jpp7
+Release:        alt1_10jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -66,6 +67,9 @@ Patch1:         0001-Update-to-newer-saxon-API.patch
 Patch2:         xmlbeans-2.6.0-iso-8859-1-encoding.patch
 Patch3:         xmlbeans-2.6.0-jsr-bundle.patch
 Patch4:         xmlbeans-scripts-classpath.patch
+# error: cannot access TypeStoreUser
+Patch5:         xmlbeans-2.6.0-java8.patch
+
 License:        ASL 2.0
 
 %if %without bootstrap
@@ -134,7 +138,7 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-
+%patch5 -p0
 
 %build
 # Piccolo and jam are rebuilt from source and bundled with xbean
@@ -156,7 +160,7 @@ ln -sf $(build-classpath saxon) external/lib/saxon9-dom.jar
 sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbeans.css docs/guide/tools.html
 
 # Build
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 -Djavac.source=1.5 -Djavac.target=1.5 default docs
+ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 -Djavac.source=1.6 -Djavac.target=1.6 default docs
 
 %install
 # jar
@@ -194,30 +198,31 @@ cp -pr build/docs/reference/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 rm -rf build/docs/reference
 
 # manual
-install -d -m 755 $RPM_BUILD_ROOT%{_pkgdocdir}
-cp -pr build/docs/* LICENSE.txt NOTICE.txt README.txt $RPM_BUILD_ROOT%{_pkgdocdir}
+install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}
+cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 %files -f .mfiles
-%dir %{_pkgdocdir}
-%doc %{_pkgdocdir}/LICENSE.txt
-%doc %{_pkgdocdir}/NOTICE.txt
-%doc %{_pkgdocdir}/README.txt
+%dir %{_docdir}/%{name}
+%doc %{_docdir}/%{name}/README.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc
-%dir %{_pkgdocdir}
-%doc %{_pkgdocdir}/LICENSE.txt
-%doc %{_pkgdocdir}/NOTICE.txt
-%doc %{_pkgdocdir}/README.txt
+%dir %{_docdir}/%{name}
+%doc %{_docdir}/%{name}/README.txt
 %doc %{_javadocdir}/%{name}
+%doc LICENSE.txt NOTICE.txt
 
 %files manual
-%{_pkgdocdir}
+%{_docdir}/%{name}
 
 %files scripts
 %attr(0755,root,root) %{_bindir}/*
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_6jpp7
 - new release
 
