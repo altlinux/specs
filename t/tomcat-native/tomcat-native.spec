@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(IO/File.pm)
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           tomcat-native
-Version:        1.1.29
-Release:        alt1_1jpp7
+Version:        1.1.33
+Release:        alt1_2jpp8
 Summary:        Tomcat native library
 
 Group:          System/Libraries
 License:        ASL 2.0
-URL:            http://tomcat.apache.org/tomcat-7.0-doc/apr.html
+URL:            http://tomcat.apache.org/tomcat-8.0-doc/apr.html
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/native/%{version}/source/%{name}-%{version}-src.tar.gz
 
 BuildRequires:  jpackage-utils
@@ -54,12 +55,17 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %files
-%doc CHANGELOG.txt LICENSE NOTICE TODO.txt
+%{!?_licensedir:%global license %%doc}
+%doc LICENSE NOTICE
+%doc CHANGELOG.txt TODO.txt
 # Note: unversioned *.so needed here due to how Tomcat loads the lib :(
 %{_libdir}/libtcnative*.so*
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.33-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.29-alt1_1jpp7
 - new release
 
