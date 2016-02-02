@@ -1,13 +1,11 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          jcifs
-Version:       1.3.17
-Release:       alt1_10jpp7
+Version:       1.3.18
+Release:       alt1_3jpp8
 Summary:       Common Internet File System Client in 100% Java
 # Licenses:
 #   src/jcifs/util/DES.java: BSD and MIT
@@ -16,17 +14,12 @@ Summary:       Common Internet File System Client in 100% Java
 License:       LGPLv2+ and BSD and MIT
 URL:           http://jcifs.samba.org/
 Source0:       http://jcifs.samba.org/src/%{name}-%{version}.tgz
-Source1:       http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+Source1:       http://mirrors.ibiblio.org/pub/mirrors/maven2/jcifs/jcifs/1.3.17/jcifs-1.3.17.pom
 # fix javac executable
-Patch0:        %{name}-%{version}-build.patch
-BuildRequires: jpackage-utils
-
+Patch0:        %{name}-1.3.17-build.patch
 BuildRequires: ant
-
-BuildRequires: tomcat-servlet-3.0-api
-Requires:      tomcat-servlet-3.0-api
-
-Requires:      jpackage-utils
+BuildRequires: javapackages-local
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildArch:     noarch
 Source44: import.info
 
@@ -45,7 +38,7 @@ reciprocation).
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadocs for %{name}
+Summary:       Javadoc for %{name}
 # Neither DES.java nor MD4.java (see License comment) are documented here
 License:       LGPLv2+
 BuildArch: noarch
@@ -68,35 +61,36 @@ Demonstrations and samples for %{name}.
 find -name '*.class' -delete
 find -name '*.jar' -delete
 %patch0 -p0
+sed -i "s|1.5|1.6|" build.xml
 cp -p %{SOURCE1} pom.xml
+sed -i "s|<version>1.3.17|<version>%{version}|" pom.xml
 %pom_remove_plugin :maven-gpg-plugin
+
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:version" 3.1.0
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:artifactId" javax.servlet-api
+
+%mvn_file %{name}:%{name} %{name}
+%mvn_alias %{name}:%{name} org.samba.jcifs:jcifs
 
 %build
 
-export CLASSPATH=$(build-classpath tomcat-servlet-3.0-api)
+export CLASSPATH=$(build-classpath glassfish-servlet-api)
 export OPT_JAR_LIST=:
 %ant jar javadoc docs
 
+%mvn_artifact pom.xml %{name}-%{version}.jar
+
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -p -m 644 %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a org.samba.jcifs:jcifs
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J docs/api
 
 mkdir -p %{buildroot}%{_datadir}/%{name}/examples
 cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt docs/*.{html,txt,gif}
+%doc README.txt docs/*.{html,txt,gif}
+%doc LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %files demo
@@ -104,6 +98,9 @@ cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.18-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.17-alt1_10jpp7
 - new release
 
