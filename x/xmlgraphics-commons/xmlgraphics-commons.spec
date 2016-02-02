@@ -1,27 +1,27 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           xmlgraphics-commons
-Version:        1.5
-Release:        alt1_2jpp7
+Version:        2.0.1
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        XML Graphics Commons
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://xmlgraphics.apache.org/
-Source0:        http://apache.skknet.net/xmlgraphics/commons/source/%{name}-%{version}-src.tar.gz
+Source0:        http://apache.org/dist/xmlgraphics/commons/source/%{name}-%{version}-src.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit >= 0:1.6
 BuildRequires:  junit
 BuildRequires:  apache-commons-io >= 1.3.1
 BuildRequires:  apache-commons-logging >= 1.0.4
-Requires:       jpackage-utils
 Requires:       apache-commons-io >= 1.3.1
 Requires:       apache-commons-logging >= 1.0.4
 Source44: import.info
@@ -36,9 +36,8 @@ Graphics2D implementations that let you generate PDF &
 PostScript files, and much more.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
@@ -66,16 +65,13 @@ ant package javadocs
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -Dpm 0644 build/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -pm 644 %{name}.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE README
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_javadir}/*.jar
 
 %files javadoc
 %doc LICENSE NOTICE
@@ -83,6 +79,9 @@ cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_2jpp7
 - new release
 
