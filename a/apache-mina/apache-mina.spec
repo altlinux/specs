@@ -1,31 +1,23 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name: apache-mina
-Version: 2.0.7
-Release: alt1_1jpp7
-Summary: Apache MINA
 Group: Development/Java
-License: ASL 2.0
-URL: http://mina.apache.org
-Source0: http://mina.apache.org/dyn/closer.cgi/mina/%{version}/%{name}-%{version}-src.tar.gz
-BuildArch: noarch
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           apache-mina
+Version:        2.0.9
+Release:        alt1_3jpp8
+Summary:        Apache MINA
+License:        ASL 2.0
+URL:            http://mina.apache.org
+Source0:        http://www.eu.apache.org/dist/mina/mina/%{version}/%{name}-%{version}-src.tar.gz
 
-BuildRequires: maven-local
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.jcraft:jzlib)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 
-BuildRequires: apache-commons-lang
-BuildRequires: easymock
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-shared
-BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-plugin
+BuildArch:      noarch
 Source44: import.info
-
 
 %description
 Apache MINA is a network application framework which helps users develop high
@@ -34,19 +26,43 @@ abstract event-driven asynchronous API over various transports such as TCP/IP
 and UDP/IP via Java NIO.
 
 
-%package javadoc
-Summary: API documentation for %{name}
+%package        mina-core
 Group: Development/Java
-BuildArch: noarch
+Summary:        Apache MINA Core
 
+%description    mina-core
+This package contains Apache MINA Core module.
+
+%package        mina-filter-compression
+Group: Development/Java
+Summary:        Apache MINA Compression Filter
+
+%description    mina-filter-compression
+This package contains Apache MINA Compression Filter module.
+
+%package        mina-statemachine
+Group: Development/Java
+Summary:        Apache MINA State Machine
+
+%description    mina-statemachine
+This package contains Apache MINA State Machine module.
+
+%package        mina-http
+Group: Development/Java
+Summary:        Apache MINA HTTP client and server codec
+
+%description    mina-http
+This package contains Apache MINA HTTP client and server codec.
+
+%package        javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
 
 %description javadoc
 This package provides %{name}.
 
-
 %prep
-
-# Extract the source:
 %setup -q
 
 # In the tarball distributed by Apache the source code is inside the src
@@ -67,6 +83,7 @@ sed -i \
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-bundle-plugin
+%pom_remove_plugin :maven-site-plugin
 
 # Disable the modules that we can't currently build:
 %pom_disable_module mina-legal
@@ -77,30 +94,34 @@ sed -i \
 %pom_disable_module mina-integration-jmx
 %pom_disable_module mina-example
 
-
 %build
-
 # The tests are disabled because they require EasyMock version 2 and we only
 # have version 3:
-%mvn_build -f
-
+%mvn_build -f -s
 
 %install
 %mvn_install
 
+%files -f .mfiles-mina-parent
+%doc LICENSE.txt NOTICE.txt
 
-%files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE.txt
-%doc NOTICE.txt
+%files mina-core -f .mfiles-mina-core
+%doc LICENSE.txt NOTICE.txt
 
+%files mina-filter-compression -f .mfiles-mina-filter-compression
+
+%files mina-statemachine -f .mfiles-mina-statemachine
+%doc LICENSE.txt NOTICE.txt
+
+%files mina-http -f .mfiles-mina-http
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
-%doc NOTICE.txt
-
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt1_1jpp7
 - new release
 
