@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           bsf
 Version:        2.4.0
-Release:        alt3_17jpp7
+Release:        alt3_22jpp8
 Epoch:          1
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
@@ -45,7 +46,7 @@ Source0:        http://apache.mirror.anlx.net//commons/%{name}/source/%{name}-sr
 Source1:        %{name}-pom.xml
 Patch0:         build-file.patch
 Patch1:	        build.properties.patch
-BuildRequires:  jpackage-utils >= 1.6
+BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  xalan-j2
 BuildRequires:  rhino
@@ -96,45 +97,40 @@ Javadoc for %{name}.
 %setup -q
 # remove all binary libs
 find . -name "*.jar" -exec %{__rm} -f {} \;
-%{__rm} -fr bsf
+rm -fr bsf
 
 %patch0 -p1
 %patch1 -p1
 
 %build
-[ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
 export CLASSPATH=$(build-classpath apache-commons-logging xalan-j2 rhino)
 ant jar
-%{__rm} -rf bsf/src/org/apache/bsf/engines/java
+rm -rf bsf/src/org/apache/bsf/engines/java
 ant javadocs
 
 %install
 # jar
-%{__install} -d -m 755 %{buildroot}%{_javadir}
-%{__install} -m 644 build/lib/%{name}.jar \
+install -d -m 755 %{buildroot}%{_javadir}
+install -m 644 build/lib/%{name}.jar \
              %{buildroot}%{_javadir}/%{name}.jar
 # javadoc
-%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -pr build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
 
-%{__install} -DTm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.bsf:%{name}"
+install -DTm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap -a "org.apache.bsf:%{name}"
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt AUTHORS.txt CHANGES.txt NOTICE.txt README.txt TODO.txt RELEASE-NOTE.txt
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_22jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_17jpp7
 - new release
 
