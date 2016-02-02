@@ -4,8 +4,9 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: xalan-j2
 Requires: xalan-j2
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           tagsoup
 Version:        1.2.1
-Release:        alt2_6jpp7
+Release:        alt2_10jpp8
 Epoch:          0
 Summary:        A SAX-compliant HTML parser written in Java 
 # AFL/GPLv2+ license for src/java/org/ccil/cowan/tagsoup/PYXScanner.java is
@@ -99,7 +100,7 @@ install -m 644 dist/lib/%{name}-%{version}.jar \
 
 mkdir -p %{buildroot}%{_mavenpomdir}
 install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
@@ -107,18 +108,19 @@ cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
 mkdir -p %{buildroot}%{_mandir}/man1
 install -m 644 %{name}.1 %{buildroot}%{_mandir}/man1/
 
-%files
-%{_javadir}/%{name}.jar
+%files -f .mfiles
 %{_mandir}/man1/%{name}.1*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc CHANGES LICENSE README TODO %{name}.txt
+%doc CHANGES README TODO %{name}.txt
+%doc LICENSE
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_6jpp7
 - new release
 
