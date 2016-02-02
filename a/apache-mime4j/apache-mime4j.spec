@@ -2,11 +2,12 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           apache-mime4j
 Version:        0.7.2
-Release:        alt3_8jpp7
+Release:        alt3_11jpp8
 Summary:        Apache JAMES Mime4j
 Group:          Development/Java
 License:        ASL 2.0
@@ -62,6 +63,9 @@ done
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.7.2-alt3_8jpp7
 - new release
 
