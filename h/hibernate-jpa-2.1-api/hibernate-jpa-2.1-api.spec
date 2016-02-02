@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-jpa-2.1-api
 %define version 1.0.0
@@ -12,9 +11,8 @@ BuildRequires: jpackage-compat
 %global apiversion 2.1
 Name:          hibernate-jpa-2.1-api
 Version:       1.0.0
-Release:       alt1_0.1.Draft.16jpp7
+Release:       alt1_0.7.Draft.16jpp8
 Summary:       Java Persistence 2.1 (JSR 338) API
-Group:         Development/Java
 License:       EPL and BSD
 URL:           http://www.hibernate.org/
 Source0:       https://github.com/hibernate/hibernate-jpa-api/archive/2.1-%{namedversion}.tar.gz
@@ -24,12 +22,7 @@ Source1:       http://repo1.maven.org/maven2/org/hibernate/javax/persistence/%{n
 Patch0:        %{oname}-2.1-1.0.0.Draft-16-pom.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
 
 BuildArch:     noarch
 Source44: import.info
@@ -38,7 +31,7 @@ Source44: import.info
 Hibernate definition of the Java Persistence 2.1 (JSR 338) API.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
 BuildArch: noarch
 
@@ -59,35 +52,29 @@ for s in src/main/java/javax/persistence/MapsId.java \
  native2ascii -encoding UTF8 ${s} ${s}
 done
 
+# Fixing wrong-file-end-of-line-encoding
+sed -i 's/\r//' src/main/javadoc/jdstyle.css
+
+%mvn_file :%{name} %{name}
+
 %build
 
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc README.md
+%doc license.txt
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# Fixing wrong-file-end-of-line-encoding
-sed -i 's/\r//' target/site/apidocs/jdstyle.css
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp  target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc license.txt README.md
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.7.Draft.16jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.1.Draft.16jpp7
 - new release
 
