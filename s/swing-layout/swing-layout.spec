@@ -1,15 +1,16 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define _without_gcj 1
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           swing-layout
 Version:        1.0.4
-Release:        alt1_8jpp7
+Release:        alt1_11jpp8
 Summary:        Natural layout for Swing panels
-Group:          Development/Java
 License:        LGPLv2
 URL:            https://swing-layout.dev.java.net/
 # https://svn.java.net/svn/swing-layout~svn/trunk/
@@ -30,14 +31,15 @@ Source44: import.info
 %description
 Extensions to Swing to create professional cross platform layout.
 
+%if 0
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc documentation for Swing Layout
-Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
 Documentation for Swing Layout code.
-
+%endif
 
 %prep
 %setup -q
@@ -51,31 +53,47 @@ sed -i "s|<version>1.0.3</version>|<version>%{version}</version>|" pom.xml
 
 %build
 
-%{ant} jar javadoc dist
-
+%{ant} jar \
+#   [javadoc] Loading source files for package org.jdesktop.layout...
+#   [javadoc] 1 error
+#   [javadoc] java.lang.IllegalStateException: endPosTable already set
+%if 0
+ javadoc dist
+%endif
+ 
 %install
 
 mkdir -p %{buildroot}%{_javadir}
+
+%if 0
 install -m 644 dist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%else
+install -m 644 dist/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+%endif
 
 mkdir -p %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
+%if 0
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+%endif
 
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc releaseNotes.txt COPYING
+%files -f .mfiles
+%doc releaseNotes.txt
+%doc COPYING
 
+%if 0
 %files javadoc
 %{_javadocdir}/%{name}
 %doc COPYING
+%endif
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_8jpp7
 - new release
 
