@@ -4,11 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          mckoi
 Version:       1.0.4
-Release:       alt2_6jpp7
+Release:       alt2_10jpp8
 Summary:       Open Source Java SQL Database
 License:       GPLv2
 URL:           http://mckoi.com/database/
@@ -71,10 +72,10 @@ cd src/main/java/com/mckoi/database/sql
 rm -rf TokenMgrError.java ParseException.java Token.java SimpleCharStream.java
 javacc.sh SQL.jj
 
-%build
-
 %mvn_file :MckoiSQLDB %{name}
 %mvn_file :MckoiSQLDB MckoiSQLDB
+
+%build
 
 %mvn_build
 
@@ -98,7 +99,8 @@ cd test
 sh ./runLocalTest.sh
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt
+%doc README.txt
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
@@ -106,8 +108,12 @@ sh ./runLocalTest.sh
 %files demos
 %{_datadir}/%{name}
 %doc docs/*
+%doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_6jpp7
 - new release
 
