@@ -1,5 +1,5 @@
 Name: moarvm
-Version: 2015.12
+Version: 2016.01
 Release: alt1
 Summary: 6model-based VM for NQP and Rakudo Perl 6
 
@@ -9,8 +9,11 @@ URL: http://moarvm.org
 
 # Cloned from https://github.com/MoarVM/MoarVM
 Source: %name-%version.tar
+# Cloned from  https://github.com/libuv/libuv
 Source1: libuv.tar
+# Cloned from https://github.com/MoarVM/dynasm
 Source2: dynasm.tar
+# Cloned from https://github.com/MoarVM/dyncall
 Source3: dyncall.tar
 
 Patch: %name-%version-%release.patch
@@ -71,15 +74,15 @@ perl Configure.pl --prefix=%_prefix --libdir=%_libdir \
 
 %files -n lib%name-devel
 %_includedir/moar
-%_includedir/tinymt
 %exclude %_includedir/libtommath
 %exclude %_includedir/libatomic_ops
-%exclude %_includedir/sha1
 %exclude %_includedir/libuv
-%exclude %_includedir/msinttypes
 %_datadir/pkgconfig/moar.pc
 
 %changelog
+* Tue Feb 02 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.01-alt1
+- 2016.01
+
 * Fri Dec 25 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.12-alt1
 - 2015.12
 
