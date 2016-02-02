@@ -1,51 +1,36 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name felix-gogo-runtime
-%define version 0.10.0
-%global project   felix
-%global bundle    org.apache.felix.gogo.runtime
+BuildRequires: jpackage-generic-compat
+Name:           felix-gogo-runtime
+Version:        0.16.2
+Release:        alt1_2jpp8
+Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
+License:        ASL 2.0
+URL:            http://felix.apache.org/site/apache-felix-gogo.html
 
-%{!?scl:%global pkg_name %{name}}
-%{?scl:%scl_package %{project}-gogo-runtime}
-
-Name:            %{?scl_prefix}%{project}-gogo-runtime
-Version:          0.10.0
-Release:          alt2_8jpp7
-Summary:          Community OSGi R4 Service Platform Implementation - Basic Commands
-Group:            Development/Java
-License:          ASL 2.0
-URL:              http://felix.apache.org/site/apache-felix-gogo.html
-
-Source0:          http://www.mirrorservice.org/sites/ftp.apache.org//felix/org.apache.felix.gogo.runtime-0.10.0-project.tar.gz
+Source0:        http://www.apache.org/dist/felix/org.apache.felix.gogo.runtime-%{version}-project.tar.gz
 
 # Typecast an Event constructor call with java.util.Properties to 
 # java.util.Dictionary because the call to the constructor with Properties
 # was ambiguous.
-Patch1:           %{pkg_name}-dictionary.patch
+Patch1:         felix-gogo-runtime-dictionary.patch
 # Changed path to DEPENDENCIES, LICENSE and NOTICE from META-INF to root dir
-Patch2:           %{pkg_name}-bundle-resources.patch
+Patch2:         felix-gogo-runtime-bundle-resources.patch
 # Removed failing thread IO test
-Patch3:           %{pkg_name}-deleted-io-test.patch
+Patch3:         felix-gogo-runtime-deleted-io-test.patch
 # Removed relativePath to parent pom
-Patch4:           %{pkg_name}-parent.patch
+Patch4:         felix-gogo-runtime-parent.patch
 
-BuildArch:        noarch
+BuildArch:      noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    felix-osgi-core
-BuildRequires:    felix-osgi-compendium
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    %{?scl_prefix}felix-gogo-parent
-%{?scl:BuildRequires:	  %{?scl_prefix}build}
-
-Requires:         jpackage-utils
-%{?scl:Requires: %scl_runtime}
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.mockito:mockito-all)
+BuildRequires:  mvn(org.osgi:org.osgi.compendium)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
 Source44: import.info
 
 %description
@@ -58,51 +43,38 @@ OSGi technology combines aspects of these aforementioned principles to define a
 dynamic service deployment framework that is amenable to remote management.
 
 %package javadoc
-Group:            Development/Java
-Summary:          Javadoc for %{name}
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{bundle}-%{version}
+%setup -q -n org.apache.felix.gogo.runtime-%{version}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
+%mvn_file : felix/%{name}
+
 %build
-%{?scl:%scl_maven_opts}
-mvn-rpmbuild install javadoc:aggregate 
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/%{project}
-install -pm 644 target/%{bundle}-%{version}.jar %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
-%add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{pkg_name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{pkg_name}
-
-
-%files
+%files -f .mfiles
 %doc DEPENDENCIES LICENSE NOTICE 
-%{_javadir}/*
-%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{pkg_name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.2-alt1_2jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_8jpp7
 - new release
 
