@@ -1,19 +1,16 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          gentlyweb-utils
 # there are no differences in the debian source taraball
 # http://ftp.de.debian.org/debian/pool/main/g/gentlyweb-utils/gentlyweb-utils_1.5.orig.tar.gz
 # the version is changed only in the activemq package see activemq-5.6.0/pom.xml
 Version:       1.5
-Release:       alt1_4jpp7
+Release:       alt1_8jpp8
 Summary:       Java utility library used by JoSQL for I/O
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://josql.sourceforge.net/
-#Sour ce0:       http://gentlyweb-utils.sourcearchive.com/downloads/1.5-1/gentlyweb-utils_1.5.orig.tar.gz
 Source0:       http://sourceforge.net/projects/josql/files/josql/stable-2.2/gentlyWEB-src-utils-1.1.tar.gz
 Source1:       http://repo.fusesource.com/nexus/content/groups/public/net/sf/josql/%{name}/%{version}/gentlyweb-utils-%{version}.pom
 # use system libraries
@@ -22,13 +19,10 @@ Source1:       http://repo.fusesource.com/nexus/content/groups/public/net/sf/jos
 # add javadoc task
 Patch0:        %{name}-%{version}-build.patch
 
-
-BuildRequires: jpackage-utils
-
 BuildRequires: ant
+BuildRequires: javapackages-local
 BuildRequires: jdom
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -36,9 +30,8 @@ Source44: import.info
 Simple java utility library used mainly by JoSQL for I/O.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -48,36 +41,27 @@ This package contains javadoc for %{name}.
 %setup -q -n gentlyWEB-src-utils-1.1
 %patch0 -p0
 
+%mvn_file : %{name} gentlyWEB-utils
+
 %build
 
 %ant -f build-utils.xml createUtilsJar javadoc
 
 %install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 gentlyWEB-utils-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
-ln -sf %{name}.jar %{buildroot}%{_javadir}/gentlyWEB-utils.jar
+%mvn_artifact %{SOURCE1} gentlyWEB-utils-%{version}.jar
+%mvn_install -J apidocs
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %SOURCE1 %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/gentlyWEB-utils.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE-2.0.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_8jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_4jpp7
 - new release
 
