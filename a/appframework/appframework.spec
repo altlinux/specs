@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:    appframework
 Version: 1.03
-Release: alt2_12jpp7
+Release: alt2_15jpp8
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
@@ -15,14 +16,13 @@ Group:   Development/Java
 Source0: https://appframework.dev.java.net/downloads/AppFramework-1.03-src.zip
 Patch0:  %{name}-%{version}-no-local-storage.diff
 Patch1:  %{name}-%{version}-openjdk.diff
-
-BuildRequires: jpackage-utils
+Patch2:  %{name}-%{version}-disable-doclint.diff
 
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: swing-layout >= 1.0.3
 
-Requires: jpackage-utils
+Requires: maven-local
 
 Requires: swing-layout >= 1.0.3
 
@@ -50,6 +50,7 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 
 %patch0 -b .sav
 %patch1 -p1 -b .sav
+%patch2 -b .sav
 
 %build
 %{ant} -Dlibs.swing-layout.classpath=%{_javadir}/swing-layout.jar dist
@@ -70,6 +71,9 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_15jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_12jpp7
 - new release
 
