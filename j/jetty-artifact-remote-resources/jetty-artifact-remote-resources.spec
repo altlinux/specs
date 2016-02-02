@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jetty-artifact-remote-resources
 Version:        1.0
-Release:        alt3_10jpp7
+Release:        alt3_13jpp8
 Summary:        Jetty toolchain artifact remote resources
 
 License:        ASL 2.0 or EPL
@@ -16,13 +17,9 @@ BuildArch:      noarch
 Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Source3:        http://www.eclipse.org/legal/epl-v10.html
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-remote-resources-plugin >= 1.2.1-3
 BuildRequires:  jetty-toolchain
-
-Requires:       maven
-Requires:       jetty-toolchain
 Source44: import.info
 
 %description
@@ -42,6 +39,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 %doc LICENSE-2.0.txt epl-v10.html
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_10jpp7
 - new release
 
