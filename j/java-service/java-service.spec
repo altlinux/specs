@@ -1,6 +1,6 @@
 Name: java-service
 Version: 0.1
-Release: alt2
+Release: alt2.1
 
 Summary: Java service tools
 License: GPL
@@ -10,7 +10,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Requires: jakarta-commons-daemon jakarta-commons-daemon-jsvc java-1.6.0-sun
+Requires: apache-commons-daemon apache-commons-daemon-jsvc java
 
 %description
 Java service tools
@@ -27,6 +27,9 @@ cp -a * %buildroot/
 %_localstatedir/%name
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2.1
+- NMU: corrected java deps
+
 * Fri Oct 29 2010 Eugene Prokopiev <enp@altlinux.ru> 0.1-alt2
 - add requires and update service template
 
