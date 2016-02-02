@@ -1,5 +1,7 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -33,13 +35,11 @@ BuildRequires: jpackage-compat
 Summary:	Parser Generator with Java Extension
 Name:		byaccj
 Version:	1.15
-Release:	alt1_7jpp7
+Release:	alt1_11jpp8
 Epoch:		0
 License:	Public Domain
 URL:		http://byaccj.sourceforge.net/
-Group:		Development/Java
 Source0:	http://sourceforge.net/projects/byaccj/files/byaccj/1.15/byaccj1.15_src.tar.gz
-Requires:	man-pages
 Source44: import.info
 
 %description
@@ -64,13 +64,7 @@ pushd src
 make linux CFLAGS="%{optflags}" LDFLAGS=""
 popd
 
-sed -i 's/\r//g' docs/tf.y
-
 %install
-# manual
-install -d -m 755 %{buildroot}%{_mandir}/man1
-mv docs/yacc.cat %{buildroot}%{_mandir}/man1
-
 # jars
 mkdir -p %{buildroot}%{_bindir}
 cp -p src/yacc.linux \
@@ -78,10 +72,12 @@ cp -p src/yacc.linux \
 
 %files
 %doc docs/* src/README
-%{_mandir}/man1/yacc.cat*
 %attr(755, root, root) %{_bindir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_7jpp7
 - new release
 
