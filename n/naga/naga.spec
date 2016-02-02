@@ -1,13 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global svnrel 82
 
 Name:           naga
 Version:        3.0
-Release:        alt1_2.82svnjpp7
+Release:        alt1_6.82svnjpp8
 Summary:        Simplified Java NIO asynchronous sockets
 
 Group:        	System/Base
@@ -68,23 +69,25 @@ ant build javadoc
 
 %install
 mkdir -p %{buildroot}%{_javadir}
-install -D -p -m 644 -t %{buildroot}%{_javadir}/ _DIST/naga-3_0.jar 
+install -D -p -m 644 _DIST/naga-3_0.jar %{buildroot}%{_javadir}/naga.jar
+ln -s %{_javadir}/naga.jar %{buildroot}%{_javadir}/naga-3_0.jar
 
+# Javadocs
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
-# Install symlink
-ln -s naga-3_0.jar %{buildroot}%{_javadir}/naga.jar
-
 %files
-%{_javadir}/naga-3_0.jar
 %{_javadir}/naga.jar
+%{_javadir}/naga-3_0.jar
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_6.82svnjpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_2.82svnjpp7
 - new release
 
