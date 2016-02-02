@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           ini4j
 Version:        0.5.1
-Release:        alt2_10jpp7
+Release:        alt2_14jpp8
 Summary:        Java API for handling files in Windows .ini format
 Group:          Development/Java
 License:        ASL 2.0
@@ -29,6 +29,8 @@ Patch6:         %{name}-remove-license-plugin.patch
 # need to specify version explicitly for maven-dependency-plugin:unpack
 # the normal version a specified in the dependency elment is ignored by maven
 Patch7:         %{name}-add-version-bsh.patch
+# build with java8. technically, this is an api change
+Patch8:         %{name}-java8-compat.patch
 
 BuildArch:      noarch
 
@@ -41,7 +43,6 @@ BuildRequires:  bsh
 BuildRequires:  javamail
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-changes-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-install-plugin
@@ -51,7 +52,6 @@ BuildRequires:  maven-release-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-plugin
-BuildRequires:  plexus-mail-sender
 BuildRequires:  xmlrpc3-client
 BuildRequires:  xmlrpc3-common
 
@@ -90,49 +90,34 @@ find . -type f \( -iname "*.jar" -o -iname "*.class" -o -iname "*.exe" -o -iname
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+
+# maven-changes-plugin was retired
+%pom_remove_plugin :maven-changes-plugin
 
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-
 # Tests require easymock2 class extension to compile. This package is not
 # available in fedora yet. So disable tests for now.
 # Will also need to add the correct depmap for jetty when tests are enabled.
-
-mvn-rpmbuild \
-        -Dmaven.local.depmap.file=%{SOURCE1} \
-        -Dmaven.test.skip=true \
-        install javadoc:aggregate
-
+%mvn_build -f
 
 %install
-# jar
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
 
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_10jpp7
 - new release
 
