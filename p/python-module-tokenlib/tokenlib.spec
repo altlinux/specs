@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.1
-Release: alt1.git20140108
+Release: alt2.git20140108
 Summary: Generic support library for signed-token-based auth schemes
 License: MPLv2.0
 Group: Development/Python
@@ -14,12 +14,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/mozilla-services/tokenlib.git
 Source: %name-%version.tar
 BuildArch: noarch
-
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-json
+BuildRequires: python-module-setuptools-tests python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
@@ -115,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 0.3.1-alt2.git20140108
+- cleanup buildreq
+
 * Wed Oct 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20140108
 - Initial build for Sisyphus
 
