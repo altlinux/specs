@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:           jilter
 Version:        1.2
-Release:        alt1_7jpp7
+Release:        alt1_10jpp8
 Summary:        Sendmail milter protocol for Java
 
 Group:          Development/Java
@@ -20,6 +22,9 @@ BuildRequires:  log4j
 BuildRequires:  junit
 
 Requires:       jpackage-utils
+%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
+%else
+%endif
 Requires:       log4j
 Source44: import.info
 
@@ -70,6 +75,9 @@ cp -rp build/doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_7jpp7
 - new release
 
