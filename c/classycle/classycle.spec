@@ -1,13 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          classycle
 Version:       1.4
-Release:       alt2_4jpp7
+Release:       alt2_8jpp8
 Summary:       Analysing Tools for Java Class and Package Dependencies
-Group:         Development/Java
 License:       BSD
 URL:           http://classycle.sourceforge.net/
 # http://downloads.sourceforge.net/project/classycle/classycle1.4.zip without build file
@@ -18,13 +16,13 @@ Source1:       http://repo1.maven.org/maven2/org/specs2/%{name}/%{version}/%{nam
 # various fix
 Patch0:        %{name}-%{version}-build.patch
 
-BuildRequires: jpackage-utils
+Patch1:        %{name}-%{version}-disable-doclint.patch
 
+BuildRequires: javapackages-local
 BuildRequires: ant
 BuildRequires: ant-testutil
-BuildRequires: junit4
+BuildRequires: junit
 
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -35,9 +33,8 @@ dependency detection (beyond JDepend), XML report, checking layered
 architectures. The tools runs from command line and as Ant tasks.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -46,6 +43,7 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p0
 cp -p %{SOURCE1} pom.xml
 %pom_remove_dep "org.scala-lang:scala-library"
 
@@ -54,30 +52,22 @@ cp -p %{SOURCE1} pom.xml
 # skip test for various reasons
 ant jar apidoc
 
-
 %install
+%mvn_file org.specs2:%{name} %{name}
+%mvn_artifact pom.xml target/%{name}-%{version}.jar
+%mvn_install -J target/site/apidocs
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc README.html
+%doc LICENSE.txt
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE.txt README.html
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_8jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_4jpp7
 - new release
 
