@@ -1,25 +1,20 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          classmate
-Version:       0.8.0
-Release:       alt1_3jpp7
+Version:       1.1.0
+Release:       alt1_2jpp8
 Summary:       Java introspection library
 License:       ASL 2.0
 Url:           http://github.com/cowtowncoder/java-classmate/
 Source0:       https://github.com/cowtowncoder/java-classmate/archive/%{name}-%{version}.tar.gz
-# classmate package don't include the license file
-Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
-
-BuildRequires: sonatype-oss-parent
 
 BuildRequires: junit
-
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: sonatype-oss-parent
 
 BuildArch:     noarch
 Source44: import.info
@@ -42,27 +37,36 @@ This package contains javadoc for %{name}.
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
-cp -p %{SOURCE1} .
-sed -i 's/\r//' LICENSE-2.0.txt
+%pom_remove_plugin :maven-source-plugin
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
 
-# these test fails junit.framework.AssertionFailedError: expected:<X> but was:<Y>
-rm -r src/test/java/com/fasterxml/classmate/TestReadme.java \
- src/test/java/com/fasterxml/classmate/types/ResolvedObjectTypeTest.java
+sed -i 's/\r//' src/main/resources/META-INF/LICENSE src/main/resources/META-INF/NOTICE
+cp -p src/main/resources/META-INF/LICENSE .
+cp -p src/main/resources/META-INF/NOTICE .
+
+# this test fails junit.framework.AssertionFailedError: expected:<X> but was:<Y>
+rm -r src/test/java/com/fasterxml/classmate/AnnotationsTest.java
+
+%mvn_file :%{name} %{name}
 
 %build
-%mvn_file :%{name} %{name}
+
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt README.md release-notes.txt
+%doc README.md VERSION.txt
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_3jpp7
 - new release
 
