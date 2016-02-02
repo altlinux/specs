@@ -1,17 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           cortado
 Version:        0.6.0
-Release:        alt1_8jpp7
+Release:        alt1_11jpp8
 Summary:        Java media framework
 URL:            http://www.theora.org/cortado/
 # The codecs are all LGPLv2+, the jst framework is mixed, the player applet GPL
 License:        LGPLv2+ and GPLv2+
 Group:          System/Libraries
 Source0:        http://downloads.xiph.org/releases/%{name}/%{name}-%{version}.tar.gz
+Patch0:         cortado-0.6.0-javadoc-fix.patch
 BuildArch:      noarch
 BuildRequires:  jpackage-utils jorbis
 Requires:       jpackage-utils jorbis
@@ -33,6 +35,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 # Remove included jorbis copy
 rm -fr src/com/jcraft
 # We don't want to include the examples in the jar we build
@@ -71,6 +74,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_8jpp7
 - new release
 
