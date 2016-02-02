@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             cookxml
 Version:          3.0.2
-Release:          alt2_6jpp7
+Release:          alt2_10jpp8
 Summary:          Dynamic XML data binding tool
 Group:            Development/Java
 License:          BSD
@@ -64,10 +65,7 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 # DEPMAP
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc LICENSE
 
 %files javadoc
@@ -75,6 +73,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt2_6jpp7
 - new release
 
