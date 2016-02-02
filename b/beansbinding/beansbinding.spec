@@ -2,24 +2,24 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_11jpp7
+Release:        alt1_14jpp8
 Summary:        Beans Binding (JSR 295) reference implementation
 
 Group:          Development/Java
 License:        LGPLv2+
 URL:            https://beansbinding.dev.java.net/
 Source0:        https://beansbinding.dev.java.net/files/documents/6779/73673/beansbinding-1.2.1-src.zip
-
-BuildRequires:  jpackage-utils
+Patch0:         disable-doclint.patch
 
 BuildRequires:  ant
 BuildRequires:  ant-junit
 
-Requires:       jpackage-utils
+Requires:       maven-local
 
 BuildArch:      noarch
 Source44: import.info
@@ -40,6 +40,7 @@ Javadoc for %{name}.
 
 %prep
 %setup -q -c -n %{name}-%{version}
+%patch0 -p1
 # remove all binary libs
 find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 %{__rm} -f
 
@@ -62,6 +63,9 @@ find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 %{__
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_11jpp7
 - new release
 
