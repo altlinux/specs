@@ -1,5 +1,5 @@
 Name: nqp
-Version: 2015.12
+Version: 2016.01
 Release: alt1
 Summary: Not Quite Perl
 
@@ -9,8 +9,6 @@ URL: https://github.com/perl6/nqp
 
 # Cloned from https://github.com/perl6/nqp
 Source: %name-%version.tar
-
-#Patch: %name-%version-%release.patch
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
@@ -60,6 +58,9 @@ perl Configure.pl --prefix=%_prefix --backends=moar
 %doc docs examples
 
 %changelog
+* Tue Feb 02 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.01-alt1
+- 2016.01
+
 * Fri Dec 25 2015 Vladimir Lettiev <crux@altlinux.ru> 2015.12-alt1
 - 2015.12
 
