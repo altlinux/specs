@@ -1,7 +1,8 @@
 Epoch: 1
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-jaxr-1.0-api
 %define version 1.0.2
@@ -10,7 +11,7 @@ BuildRequires: jpackage-compat
 %global oname jboss-jaxr-api_1.0_spec
 Name:          jboss-jaxr-1.0-api
 Version:       1.0.2
-Release:       alt2_6jpp7
+Release:       alt2_9jpp8
 Summary:       Java API for XML Registries 1.0 (JAXR)
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org/
@@ -43,21 +44,26 @@ This package contains javadoc for %{name}.
 %setup -q -n %{name}
 %pom_remove_dep javax.activation:activation
 
+%mvn_file :%{oname} %{name}
+
 %build
 
-%mvn_file :%{oname} %{name}
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE README
+%doc README
+%doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_6jpp7
 - new release
 
