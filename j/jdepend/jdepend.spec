@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jdepend
 Version:        2.9.1
-Release:        alt3_8jpp7
+Release:        alt3_13jpp8
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        BSD
@@ -104,11 +105,8 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 # depmap
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
+%files -f .mfiles
 %doc README LICENSE docs
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}-%{version}
@@ -118,6 +116,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_13jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.9.1-alt3_8jpp7
 - new release
 
