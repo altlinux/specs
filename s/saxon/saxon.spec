@@ -1,10 +1,12 @@
 Epoch: 0
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,14 +40,13 @@ BuildRequires: jpackage-compat
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
 Version:        9.3.0.4
-Release:        alt2_8jpp7
+Release:        alt2_16jpp8
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
 # net/sf/saxon/option/jdom/ is MPLv1.1
 # net/sf/saxon/serialize/codenorm/ is UCD
 # net/sf/saxon/expr/sort/GenericSorter.java is MIT
 # net/sf/saxon/expr/Tokenizer.java and few other bits are BSD
 License:        MPLv1.0 and MPLv1.1 and ASL 1.1 and UCD and MIT
-Group:          Text tools
 URL:            http://saxon.sourceforge.net/
 Source0:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxon9-3-0-4source.zip
 Source1:        %{name}.saxon.script
@@ -54,12 +55,12 @@ Source3:        %{name}.build.script
 Source4:        %{name}.1
 Source5:        %{name}q.1
 Source6:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxon-resources9-3.zip
-Source7:        http://irrational.googlecode.com/svn/trunk/maven-repo/net/sf/saxon/saxon-he/9.3.0.4/saxon-he-9.3.0.4.pom
+Source7:        saxon-%{version}.pom
 Source8:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.0.txt
 Source9:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.1.txt
 BuildRequires:  unzip
 BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  javapackages-local
 BuildRequires:  bea-stax-api
 BuildRequires:  xml-commons-apis
 BuildRequires:  xom
@@ -67,7 +68,6 @@ BuildRequires:  jdom >= 0:1.0-0.b7
 BuildRequires:  java-javadoc
 BuildRequires:  jdom-javadoc >= 0:1.0-0.b9.3jpp
 BuildRequires:  dom4j
-Requires:       jpackage-utils
 Requires:       bea-stax-api
 Requires:       bea-stax
 Requires:       chkconfig
@@ -90,35 +90,33 @@ Recommendation published on 3 November 2005. It is a complete and
 conformant implementation, providing all the mandatory features of
 those specifications and nearly all the optional features.
 
-
 %package        manual
+Group: Text tools
 Summary:        Manual for %{name}
-Group:          Text tools
 BuildArch: noarch
 
 %description    manual
 Manual for %{name}.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
 
 %description    javadoc
 Javadoc for %{name}.
 
 %package        demo
+Group: Text tools
 Summary:        Demos for %{name}
-Group:          Text tools
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
 Demonstrations and samples for %{name}.
 
 %package        scripts
+Group: Text tools
 Summary:        Utility scripts for %{name}
-Group:          Text tools
-Requires:       jpackage-utils >= 0:1.5
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    scripts
@@ -132,7 +130,7 @@ unzip -q %{SOURCE6}
 cp -p %{SOURCE3} ./build.xml
 
 # deadNET
-rm -rf net/sf/saxon/dotnet
+rm -rf net/sf/saxon/dotnet samples/cs
 
 # Depends on XQJ (javax.xml.xquery)
 rm -rf net/sf/saxon/xqj
@@ -158,12 +156,11 @@ ant \
   -Dj2se.javadoc=%{_javadocdir}/java \
   -Djdom.javadoc=%{_javadocdir}/jdom
 
+%mvn_artifact %{SOURCE7} build/lib/saxon.jar
+%mvn_alias : net.sf.saxon:saxon::dom:
 
 %install
-
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p build/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -184,33 +181,22 @@ install -p -m644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/man1/%{name}q.1
 # jaxp_transform_impl ghost symlink
 ln -s %{_sysconfdir}/alternatives \
   $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
-
-# a simple POM
-install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-sed -i -e 's/saxon-he/saxon/' $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxp_transform_impl_saxon<<EOF
-%{_javadir}/jaxp_transform_impl.jar	%{_javadir}/%{name}.jar	25
+%{_javadir}/jaxp_transform_impl.jar	%{_javadir}/saxon/saxon.jar	25
 EOF
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files
+%files -f .mfiles
 %_altdir/jaxp_transform_impl_saxon
 %doc mpl-1.0.txt mpl-1.1.txt
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%dir %{_javadir}/%{name}
 
 %files manual
 %doc doc/*
 
 %files javadoc
-%doc %{_javadocdir}/%{name}
+%doc mpl-1.0.txt mpl-1.1.txt
+%{_javadocdir}/%{name}
 
 %files demo
 %{_datadir}/%{name}
@@ -223,6 +209,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.3.0.4-alt2_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.3.0.4-alt2_8jpp7
 - new release
 
