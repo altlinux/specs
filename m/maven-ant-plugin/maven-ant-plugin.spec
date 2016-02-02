@@ -1,57 +1,47 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-ant-plugin
 Version:        2.3
-Release:        alt2_13jpp7
+Release:        alt2_17jpp8
 Summary:        Maven Ant Plugin
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-ant-plugin
+BuildArch:      noarch
+
 #svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-ant-plugin-2.3/
 #tar jcf maven-ant-plugin-2.3.tar.bz2 maven-ant-plugin-2.3/
 Source0:        %{name}-%{version}.tar.bz2
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
 Patch0:         %{name}-pom.patch
 
-BuildArch: noarch
-
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: plexus-utils
-BuildRequires: ant
-BuildRequires: plexus-containers-container-default
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: junit
-
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       plexus-utils
-Requires:       ant
-Requires:       plexus-containers-container-default
-Requires:       junit
-
-Obsoletes: maven2-plugin-ant <= 0:2.0.8
-Provides: maven2-plugin-ant = 0:%{version}-%{release}
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-nodeps)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(xalan:xalan)
+BuildRequires:  mvn(xml-apis:xml-apis)
 Source44: import.info
 
 %description
 Generates an Ant build file from a POM.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -64,34 +54,21 @@ API documentation for %{name}.
 cp -p %{SOURCE1} .
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.skip=true \
-        install javadoc:javadoc
+%mvn_build -f
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE-2.0.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Sun Jan 31 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_17jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2_13jpp7
 - new release
 
