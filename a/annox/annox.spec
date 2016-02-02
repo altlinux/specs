@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          annox
 Version:       0.5.0
-Release:       alt2_7jpp7
+Release:       alt2_11jpp8
 Summary:       Java annotations in XML resources
 License:       BSD
 Url:           http://java.net/projects/annox
@@ -16,15 +17,13 @@ Source0:       annox-0.5.0-src-svn.tar.gz
 # work only if we include this notice. So we HAVE TO include these notices.
 Source1:       annox-LICENSE
 
-BuildRequires: sonatype-oss-parent
-
 BuildRequires: ant
 BuildRequires: apache-commons-lang
 BuildRequires: glassfish-jaxb
 BuildRequires: junit
-
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
+BuildRequires: sonatype-oss-parent
 
 BuildArch:     noarch
 Source44: import.info
@@ -65,9 +64,10 @@ find \( -name '*.jar' -o -name '*.class' -o -name '*.bat' \) -exec rm -f '{}' \;
 cp -p %{SOURCE1} LICENSE
 sed -i 's/\r//' LICENSE
 
+%mvn_file :%{name} %{name}
+
 %build
 
-%mvn_file :%{name} %{name}
 # unavailable deps for run test: org.hibernate hibernate-search 3.0.0.GA
 %mvn_build -f
   
@@ -81,6 +81,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_7jpp7
 - new release
 
