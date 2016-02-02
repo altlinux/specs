@@ -1,17 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           Mars
-Version:        4.3
-Release:        alt1_2jpp7
+Version:        4.5
+Release:        alt1_2jpp8
 Summary:        An interactive development environment for programming in MIPS assembly language
 
 Group:          Development/Java
 License:        MIT
 URL:            http://courses.missouristate.edu/KenVollmar/MARS/
-Source0:        http://courses.missouristate.edu/KenVollmar/MARS/MARS_4_3_Jan2013/Mars4_3.jar
+Source0:        http://courses.missouristate.edu/KenVollmar//mars/MARS_4_5_Aug2014/Mars4_5.jar
 Source1:        Mars
 Source2:        Mars.desktop
 Source3:        build.xml
@@ -56,6 +58,9 @@ desktop-file-install                                \
 %doc MARSlicense.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 4.5-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_2jpp7
 - new release
 
