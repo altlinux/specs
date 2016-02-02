@@ -1,12 +1,13 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global spec_ver 1.1
 %global spec_name geronimo-annotation_%{spec_ver}_spec
 
 Name:             geronimo-annotation
 Version:          1.0
-Release:          alt2_14jpp7
+Release:          alt2_17jpp8
 Summary:          Java EE: Annotation API v1.1
 License:          ASL 2.0
 URL:              http://geronimo.apache.org/
@@ -60,6 +61,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_17jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14jpp7
 - new release
 
