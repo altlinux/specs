@@ -1,22 +1,24 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           xz-java
-Version:        1.4
-Release:        alt1_1jpp7
+Version:        1.5
+Release:        alt1_4jpp8
 Summary:        Java implementation of XZ data compression
-Group:          Development/Java
-BuildArch:      noarch
-
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
+BuildArch:      noarch
+
 Source0:        http://tukaani.org/xz/xz-java-%{version}.zip
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
+
 Requires:       jpackage-utils
 Source44: import.info
 
@@ -29,9 +31,8 @@ decompression with limited random access support, raw streams (no .xz headers)
 for advanced users, including LZMA2 with preset dictionary.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -58,20 +59,20 @@ cp -R build/doc %{buildroot}%{_javadocdir}/%{name}
 # pom
 install -dm 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 build/maven/xz-%{version}.pom %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
-%files
+%files -f .mfiles
 %doc COPYING README THANKS
-%{_javadir}/%{name}.jar
 %{_javadir}/xz.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
 %files javadoc
 %doc COPYING
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_1jpp7
 - new release
 
