@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           xmlrpc
 Version:        3.1.3
-Release:        alt7_7jpp7
+Release:        alt7_13jpp8
 Epoch:          1
 Summary:        Java XML-RPC implementation
 License:        ASL 2.0
@@ -14,9 +15,10 @@ Source0:        http://www.apache.org/dist/ws/xmlrpc/sources/apache-xmlrpc-%{ver
 Patch0:         %{name}-client-addosgimanifest.patch
 Patch1:         %{name}-common-addosgimanifest.patch
 Patch2:         %{name}-javax-methods.patch
+Patch3:         %{name}-server-addosgimanifest.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache:apache)
+BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(commons-httpclient:commons-httpclient)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.servlet:servlet-api)
@@ -70,12 +72,15 @@ Provides:   %{name}3-server = 3.1.3-13
 
 %prep
 %setup -q -n apache-%{name}-%{version}-src
-%patch2 -b .sav
+%patch2 -p1
 pushd client
 %patch0 -b .sav
 popd
 pushd common
 %patch1 -b .sav
+popd
+pushd server
+%patch3 -b .sav
 popd
 
 sed -i 's/\r//' LICENSE.txt
@@ -103,6 +108,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1.3-alt7_7jpp7
 - new release
 
