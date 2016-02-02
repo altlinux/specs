@@ -1,40 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name felix-osgi-obr-resolver
-%define version 0.1.0
-%global namedreltag .Beta1
-%global namedversion %{version}%{?namedreltag}
+BuildRequires: jpackage-generic-compat
 %global osginame org.apache.felix.resolver
 
 Name:             felix-osgi-obr-resolver
-Version:          0.1.0
-Release:          alt2_0.9.Beta1jpp7
+Version:          1.2.0
+Release:          alt1_1jpp8
 Summary:          Apache Felix Resolver
 Group:            Development/Java
 License:          ASL 2.0
-URL:              https://github.com/tdiesler/obr-resolver
+URL:              http://felix.apache.org/documentation/subprojects/apache-felix-osgi-bundle-repository.html
 
-# git clone git://github.com/tdiesler/obr-resolver.git
-# cd obr-resolver/ && git archive --format=tar --prefix=felix-osgi-obr-resolver-0.1.0.Beta1/ 0.1.0.Beta1 | xz > felix-osgi-obr-resolver-0.1.0.Beta1.tar.xz
-Source0:          felix-osgi-obr-resolver-%{namedversion}.tar.xz
-
-# Provided osgi.core in Fedora is old and the felix impl is the right one in this case
-Patch0:           0001-Use-felix-directly.patch
-Patch1:           0002-JDK7-support.patch
-Patch2:           0003-Compile-with-target-1.5-or-greater.patch
+Source0:          http://apache.cbox.biz//felix/org.apache.felix.resolver-1.2.0-source-release.tar.gz
 
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    felix-parent
 BuildRequires:    felix-framework
 BuildRequires:    apache-rat-plugin
 BuildRequires:    mockito
@@ -52,17 +37,9 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n felix-osgi-obr-resolver-%{namedversion}
+%setup -q -n %{osginame}-%{version}
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
-# This is diabled because we don't have OSGi 5 provider in Fedora.
-# TODO We need to remove this after OSGi 5 lands in Fedora.
-#
-# https://bugzilla.redhat.com/show_bug.cgi?id=832420#c2
-# rm -rf src/main/java/org/osgi/framework/wiring
+%pom_change_dep org.osgi:org.osgi.core org.apache.felix:org.apache.felix.framework
 
 %build
 %mvn_build
@@ -72,10 +49,16 @@ This package contains the API documentation for %{name}.
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
+%doc LICENSE
+%doc NOTICE DEPENDENCIES
 
 %files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2_0.9.Beta1jpp7
 - new release
 
