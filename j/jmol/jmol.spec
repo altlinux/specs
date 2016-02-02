@@ -1,13 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++ perl(CGI.pm) perl(CGI/Carp.pm) perl(English.pm) perl(HTML/Parser.pm) perl(LWP.pm) perl(LWP/UserAgent.pm)
+BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(CGI.pm) perl(CGI/Carp.pm) perl(English.pm) perl(HTML/Parser.pm) perl(LWP.pm) perl(LWP/UserAgent.pm) unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+%global pkgdate 2015.01.22
+# Build jsmol by default
+%bcond_without jsmol
+
 Name:        jmol
-Version:     13.2.4
-Release:     alt1_1jpp7
+Version:     14.2.12
+Release:     alt1_3.2015.01.22jpp8
 Summary:     An open-source Java viewer for chemical structures in 3D
 Group:       Engineering
 # most is LGPLv2+, src/com/obrador is combination of IJG and BSD
@@ -15,50 +25,68 @@ Group:       Engineering
 License:     LGPLv2+ and IJG and BSD
 URL:         http://jmol.sourceforge.net
 BuildArch:   noarch
-Source0:     http://downloads.sourceforge.net/%{name}/Jmol-%{version}-full.tar.gz
-# Image available at "http://wiki.jmol.org:81/index.php/Image:Jmol_icon_128.png"
-Source1:     Jmol_icon_128.png
+Source0:     http://downloads.sourceforge.net/%{name}/Jmol-%{version}_%{pkgdate}-full.tar.gz
+Source1:     http://wiki.jmol.org/images/1/1c/Jmol_icon13.png
 # Patch to get Jmol to build in Fedora (location of JAR files)
-Patch0:      jmol-13.2.3-fedorabuild.patch
-# Unbundle bundled classes from jars
-Patch1:      jmol-13.2.3-unbundle.patch
+Patch0:      jmol-14.2.12-fedorabuild.patch
 # Don't try to sign jars
-Patch2:      jmol-13.2.3-dontsign.patch
-# Don't ignore the system classpath
-Patch3:      jmol-12.0.48-classpath.patch
-
+Patch1:      jmol-14.0.11-dontsign.patch
 
 
 BuildRequires:    ant ant-contrib
 BuildRequires:    desktop-file-utils
 BuildRequires:    gettext-devel
-BuildRequires:    itext
 BuildRequires:    apache-commons-cli
 BuildRequires:    jpackage-utils
-BuildRequires:	  jspecview
-BuildRequires:	  naga
-
-%if 0%{?fedora} > 14
+BuildRequires:    jspecview >= 2-6.1464svn
+BuildRequires:    naga
 # In newer releases some of the necessary Java classes are
 # in the browser plugin package
 BuildRequires:    mozilla-plugin-java-1.7.0-openjdk
-Requires:    mozilla-plugin-java-1.7.0-openjdk
-%endif
-
-Requires:    jpackage-utils
-Requires:   itext
-Requires:   vecmath
-Requires:   apache-commons-cli
+Requires:         mozilla-plugin-java-1.7.0-openjdk
+Requires:         jpackage-utils
+Requires:         apache-commons-cli
+Requires:         jspecview >= 2-6.1464svn
+Requires:         naga
 Source44: import.info
 
 %description
 Jmol is a free, open source molecule viewer for students, educators,
 and researchers in chemistry and biochemistry.
 
+%if %{with jsmol}
+%package -n jsmol
+Summary:     JavaScript-Based Molecular Viewer From Jmol
+Group:       Engineering
+Requires:    %{name} = %{version}-%{release}
+BuildRequires: web-assets-devel
+Requires:    web-assets-filesystem
+
+%description -n jsmol
+JSmol is the extension of the Java-based molecular visualization
+applet Jmol (jmol.sourceforge.net) as an HTML5 JavaScript-only
+web app. It can be used in conjunction with the Java applet to
+provide an alternative to Java when the platform does not support
+that (iPhone/iPad) or does not support applets (Android). Used in
+conjunction with the Jmol JavaScript Object
+(http://wiki.jmol.org/index.php/Jmol_Javascript_Object ), JSmol
+seamlessly offers alternatives to Java on these non-Applet platforms.
+
+JSmol can read all the files that Jmol reads. You can do all the
+scripting that Jmol does. You can create all the buttons and links
+and such that you are used to creating for Jmol. All of the rendering
+capability of the Jmol applet is there. JSmol has both a console and
+a popup menu.
+
+JSmol is integrated fully with JSME and JSpecView.
+
+A "lite" version of JSmol provides minimal functionality
+(balls and sticks only) for extremely small-bandwith apps.
+%endif
 
 %package javadoc
-Summary:    Java docs for %{name}
-Group:        Development/Java
+Summary:     Java docs for %{name}
+Group:       Development/Java
 Requires:    %{name} = %{version}-%{release}
 Requires:    jpackage-utils
 BuildArch: noarch
@@ -68,8 +96,8 @@ This package contains the API documentation for %{name}.
 
 
 %package doc
-Summary:    Documentation for %{name}
-Group:        Development/Java
+Summary:     Documentation for %{name}
+Group:       Development/Java
 Requires:    %{name} = %{version}-%{release}
 
 %description doc
@@ -77,11 +105,9 @@ The documentation for %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}_%{pkgdate}
 %patch0 -p1 -b .fedorabuild
-%patch1 -p1 -b .unbundle
-%patch2 -p1 -b .nosign
-%patch3 -p1 -b .classpath
+%patch1 -p1 -b .nosign
 
 # Remove binaries
 find -name '*.class' -exec rm -f '{}' \;
@@ -114,36 +140,34 @@ EOF
 
 %build
 export ANT_OPTS="-Dfile.encoding=utf-8"
-%if 0%{?fedora} > 15
 # Need to be able to find netscape.javascript.*classes
 PLUGIN_JAR=%{_datadir}/icedtea-web/plugin.jar
 jar tf $PLUGIN_JAR | grep javascript/JSObject.class
-#ant --execdebug -lib $PLUGIN_JAR doc jar applet-jar
-
-ant --execdebug -lib $PLUGIN_JAR jar
-ant --execdebug -lib $PLUGIN_JAR applet-jar
-ant --execdebug -lib $PLUGIN_JAR doc
-%else
-ant --execdebug doc jar applet-jar
-%endif
+ant --execdebug -lib $PLUGIN_JAR jar applet-jar doc
 
 %install
-install -D -p -m 644 build/JmolUnsigned.jar %{buildroot}%{_javadir}/Jmol.jar
+install -D -p -m 644 build/Jmol.jar %{buildroot}%{_javadir}/Jmol.jar
 install -D -p -m 644 build/JmolApplet.jar %{buildroot}%{_javadir}/JmolApplet.jar
 install -D -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/pixmaps/%{name}.png
 
-%jpackage_script org.openscience.jmol.app.Jmol "" "" Jmol:commons-cli:vecmath:itext jmol true
+%jpackage_script org.openscience.jmol.app.Jmol "" "" Jmol:commons-cli:jspecview.app:jspecview.applet jmol true
 
 # Install desktop file
-desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
-%if (0%{?fedora} && 0%{?fedora} < 19) || ( 0%{?rhel} && 0%{?rhel} < 7)
---vendor=fedora \
-%endif
-jmol.desktop
+desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications jmol.desktop
 
 # Javadoc files
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -rp build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
+
+%if %{with jsmol}
+pushd appletweb
+    unzip jsmol.zip
+    pushd jsmol
+        mkdir -p %{buildroot}%{_jsdir}/jsmol
+        cp -pr *.htm *.js j2s js %{buildroot}%{_jsdir}/jsmol
+    popd
+popd
+%endif
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%name.conf`
 touch $RPM_BUILD_ROOT/etc/java/%name.conf
@@ -154,12 +178,13 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %{_javadir}/Jmol.jar
 %{_javadir}/JmolApplet.jar
 %{_datadir}/pixmaps/%{name}.png
-%if (0%{?fedora} && 0%{?fedora} < 19) || ( 0%{?rhel} && 0%{?rhel} < 7)
-%{_datadir}/applications/fedora-%{name}.desktop
-%else
 %{_datadir}/applications/%{name}.desktop
-%endif
 %config(noreplace,missingok) /etc/java/%name.conf
+
+%if %{with jsmol}
+%files -n jsmol
+%{_jsdir}/jsmol
+%endif
 
 %files javadoc
 %{_javadocdir}/%{name}/
@@ -168,6 +193,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc build/doc/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 14.2.12-alt1_3.2015.01.22jpp8
+- new version
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 13.2.4-alt1_1jpp7
 - new version
 
