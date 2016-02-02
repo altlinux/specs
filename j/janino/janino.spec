@@ -4,8 +4,9 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -36,30 +37,27 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 Name:          janino
-Version:       2.6.1
-Release:       alt2_18jpp7
+Version:       2.7.8
+Release:       alt1_3jpp8
 Summary:       An embedded Java compiler
 License:       BSD
 URL:           http://docs.codehaus.org/display/JANINO/Home
-Source0:       http://dist.codehaus.org/%{name}/%{name}-%{version}.zip
+Source0:       http://janino.net/download/%{name}-%{version}.zip
 Source1:       http://repo1.maven.org/maven2/org/codehaus/%{name}/%{name}-parent/%{version}/%{name}-parent-%{version}.pom
 Source2:       http://repo1.maven.org/maven2/org/codehaus/%{name}/commons-compiler/%{version}/commons-compiler-%{version}.pom
 Source3:       http://repo1.maven.org/maven2/org/codehaus/%{name}/commons-compiler-jdk/%{version}/commons-compiler-jdk-%{version}.pom
 Source4:       http://repo1.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-# remove org.codehaus.mojo findbugs-maven-plugin 1.1.1, javancss-maven-plugin 2.0, jdepend-maven-plugin 2.0-beta-2
-# change artifactId ant-nodeps in ant
-Patch0:        %{name}-%{version}-poms.patch
-
-BuildRequires: codehaus-parent
+# removes the de.unkrig.commons.nullanalysis annotations
+# http://unkrig.de/w/Unkrig.de
+# https://svn.code.sf.net/p/loggifier/code/tags/loggifier_0.9.9.v20140430-1829/de.unkrig.commons.nullanalysis/
+Patch0:        %{name}-2.7.8-remove-nullanalysis-annotations.patch
 
 BuildRequires: ant
+BuildRequires: codehaus-parent
 BuildRequires: junit
 
-BuildRequires: buildnumber-maven-plugin
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-provider-junit4
 
 BuildArch:     noarch
 Source44: import.info
@@ -68,7 +66,7 @@ Source44: import.info
 Janino is a super-small, super-fast Java compiler. Not only can it compile
 a set of source files to a set of class files like the JAVAC tool, but also
 can it compile a Java expression, block, class body or source file in
-memory, load the bytecode and execute it directly in the same JVM. Janino
+memory, load the byte-code and execute it directly in the same JVM. Janino
 is not intended to be a development tool, but an embedded compiler for
 run-time compilation purposes, e.g. expression evaluators or "server pages"
 engines like JSP.
@@ -101,18 +99,29 @@ for m in commons-compiler \
   )
 done
 
-cp -p %{SOURCE1} pom.xml
-cp -p %{SOURCE2} commons-compiler/pom.xml
-cp -p %{SOURCE3} commons-compiler-jdk/pom.xml
-cp -p %{SOURCE4} %{name}/pom.xml
-
-# RHBZ #842604
-sed -i 's#<source>1.2</source>#<source>1.5</source>#' pom.xml
-sed -i 's#<target>1.1</target>#<target>1.5</target>#' pom.xml
-
 %patch0 -p1
 
+install -m 644 %{SOURCE1} pom.xml
+install -m 644 %{SOURCE2} commons-compiler/pom.xml
+install -m 644 %{SOURCE3} commons-compiler-jdk/pom.xml
+install -m 644 %{SOURCE4} %{name}/pom.xml
+
+%pom_xpath_set "pom:dependencyManagement/pom:dependencies/pom:dependency[pom:groupId = 'org.apache.ant']/pom:artifactId" ant
+%pom_xpath_set "pom:dependencies/pom:dependency[pom:groupId = 'org.apache.ant']/pom:artifactId" ant %{name}
+
+# RHBZ#842604
+%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:source" 1.6
+%pom_xpath_set "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:target" 1.6
+
 perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
+
+# Cannot run program "svn"
+%pom_remove_plugin :buildnumber-maven-plugin
+
+%pom_remove_plugin :maven-clean-plugin
+%pom_remove_plugin :maven-deploy-plugin
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-source-plugin
 
 %build
 
@@ -123,12 +132,16 @@ perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
 
 %files -f .mfiles
 %dir %{_javadir}/%{name}
-%doc new_bsd_license.txt README.txt
+%doc README.txt
+%doc new_bsd_license.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc new_bsd_license.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.8-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.1-alt2_18jpp7
 - new release
 
