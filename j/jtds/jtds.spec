@@ -2,11 +2,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          jtds
 Version:       1.3.1
-Release:       alt1_1jpp7
+Release:       alt1_5jpp8
 Summary:       SQL Server and Sybase JDBC driver
 License:       MIT and LGPLv2+
 URL:           http://jtds.sourceforge.net/
@@ -84,17 +85,18 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr build/doc/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc CHANGELOG LICENSE README*
+%files -f .mfiles
+%doc CHANGELOG README*
+%doc LICENSE
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_5jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_1jpp7
 - new release
 
