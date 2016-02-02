@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.beta4.git20150724
+Release: alt2.beta4.git20150724
 Summary: Pure python implementation of SSL and TLS
 License: BSD & LGPLv2
 Group: Development/Python
@@ -16,19 +16,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests /proc
-BuildPreReq: python-module-diff_cover pylint
-BuildPreReq: python-module-coverage python-module-coveralls
-BuildPreReq: python-module-pycrypto python-module-m2crypto
-BuildPreReq: python-module-gmpy python-module-mock
-BuildPreReq: python-module-epydoc graphviz
+BuildRequires: graphviz python-module-coverage python-module-epydoc python-module-gmpy python-module-html5lib python-module-logilab-common python-module-m2crypto python-module-mock python-module-ndg-httpsclient python-module-pycrypto python-module-yaml /proc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-diff_cover pylint-py3
-BuildPreReq: python3-module-coverage python3-module-coveralls
-BuildPreReq: python3-module-pycrypto python3-module-m2crypto
-BuildPreReq: python3-module-gmpy python3-module-mock
+BuildRequires: python3-module-setuptools-tests pylint-py3 python3-module-coverage python3-module-coveralls python3-module-pycrypto python3-module-m2crypto python3-module-gmpy python3-module-mock
 %endif
 
 %py_provides %oname
@@ -156,6 +147,9 @@ python3 -m unittest discover -v
 %endif
 
 %changelog
+* Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 0.5.0-alt2.beta4.git20150724
+- cleanup buildreq
+
 * Thu Aug 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.beta4.git20150724
 - Initial build for Sisyphus
 
