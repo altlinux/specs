@@ -1,17 +1,18 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_4jpp7
+Release:        alt1_7jpp8
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
-Group:          Development/Java
 Source0:        http://bitronix.be/downloads/btm-dist-2.1.2.zip
 Source1:        http://repo1.maven.org/maven2/org/codehaus/btm/btm-parent/2.1.2/btm-parent-2.1.2.pom
 Source2:        http://repo1.maven.org/maven2/org/codehaus/btm/btm/2.1.2/btm-2.1.2.pom
@@ -45,9 +46,8 @@ to keep the code as simple as possible for easier understanding of the
 XA semantics.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -83,17 +83,18 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}-parent.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
-%doc license.txt release-notes-%{version}.txt
-%{_javadir}/%{name}*.jar
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*.pom
+%files -f .mfiles
+%doc release-notes-%{version}.txt
+%doc license.txt
 
 %files javadoc
 %doc license.txt
 %doc %{_javadocdir}/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_7jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_4jpp7
 - new release
 
