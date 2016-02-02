@@ -1,22 +1,20 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:    jgrapht
 Version: 0.8.1
-Release: alt1_7jpp7
+Release: alt1_12jpp8
 Summary: A free Java graph library that provides mathematical graph objs and algorithms
-Group:   Development/Java
 License: LGPLv2+
 URL:     http://jgrapht.sourceforge.net/
 Source0: http://downloads.sourceforge.net/project/jgrapht/JGraphT/Version%%200.8.1/jgrapht-%{version}.tar.gz
 Patch0:  remove_uneccessary_hardcoded_classpath.patch
+Patch1:  jgrapht-0.8.1-disable-doclint.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-local
 BuildRequires: ant
-Requires: jpackage-utils
 
 BuildArch: noarch
 Source44: import.info
@@ -26,10 +24,8 @@ JGraphT is a free Java graph library that provides mathematical graph-theory
 objects and algorithms.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -38,6 +34,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 %patch0
+%patch1 -p0
 
 # remove uneccessary dirs/files
 # removing touchgraph/jgraph support as we don't currently have deps packaged
@@ -52,23 +49,21 @@ ant jar
 ant javadoc
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+%mvn_artifact thirdparty:%{name}-jdk1.6:%{version} %{name}-jdk1.6.jar
+%mvn_file thirdparty:%{name}-jdk1.6 %{name}
+%mvn_install -J javadoc
 
-cp %{name}-jdk1.6.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc README.html
+%doc license-LGPL.txt
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%doc license-LGPL.txt README.html
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc license-LGPL.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.8.1-alt1_7jpp7
 - new release
 
