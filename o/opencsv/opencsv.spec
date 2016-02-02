@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           opencsv
 Version:        2.3
-Release:        alt1_8jpp7
+Release:        alt1_12jpp8
 Summary:        A very simple CSV (comma-separated values) parser library for Java
 License:        ASL 2.0
 URL:            http://opencsv.sourceforge.net/
@@ -71,6 +72,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_8jpp7
 - new release
 
