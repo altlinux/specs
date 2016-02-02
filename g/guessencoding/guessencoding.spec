@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:             guessencoding
 Version:          1.4
-Release:          alt2_8jpp7
+Release:          alt2_11jpp8
 Summary:          Guess encoding of files and return configured reader
 Group:            Development/Java
 License:          ASL 2.0
@@ -17,20 +19,11 @@ Source0:          %{name}-%{version}.tar.gz
 Patch0:           guessencoding-webdav.patch
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    apache-commons-io
-BuildRequires:    junit
 
+%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
+%else
+%endif
 Requires:         jpackage-utils
 Source44: import.info
 
@@ -68,33 +61,23 @@ This package contains the API documentation for %{name}.
 
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 
 %install
-
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install
 
 
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_8jpp7
 - new release
 
