@@ -1,15 +1,16 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 
 Name:          jdiff
 Version:       1.1.1
-Release:       alt2_5jpp7
+Release:       alt2_9jpp8
 Summary:       An HTML Report of API Differences
-Group:         Development/Java
 License:       GPL+ and LGPLv2+
 URL:           http://javadiff.sourceforge.net/
 # cvs -d:pserver:anonymous@javadiff.cvs.sourceforge.net:/cvsroot/javadiff login
@@ -22,6 +23,8 @@ URL:           http://javadiff.sourceforge.net/
 Source0:       jdiff-1.1.1-clean-src-cvs.tar.gz
 Source1:       jdiff-pom-template.xml
 Source2:       jdiff-script
+
+Patch0:        jdiff-java8.patch
 
 BuildRequires: jpackage-utils
 
@@ -49,9 +52,8 @@ It does not compare what the source code does when
 executed. 
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -59,6 +61,9 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n jdiff
+
+%patch0 -p0
+
 perl -pi -e 's/\r$//g' doc/CHANGES.txt doc/KNOWN_LIMITATIONS.txt doc/TODO doc/dev_notes.txt
 
 perl -pi -e 's/\r$//g' LICENSE.txt README.txt
@@ -69,12 +74,14 @@ ln -sf $(build-classpath xerces-j2) lib/xerces.jar
 native2ascii -encoding UTF8 test/old/ChangedPackageDoc2/ChangedMethod.java test/old/ChangedPackageDoc2/ChangedMethod.java
 native2ascii -encoding UTF8 test/new/ChangedPackageDoc2/ChangedMethod.java test/new/ChangedPackageDoc2/ChangedMethod.java
 
+
 %build
 export CLASSPATH=$(build-classpath junit):`pwd`/build/lib/jdiff.jar:`pwd`/build/lib/antjdiff.jar
-%{ant} -Dbuild.sysclasspath=only release
+%{ant} -Dbuild.sysclasspath=only dist unittest check.compile
+# release
 
 %javadoc -classpath `pwd`/build/lib/jdiff.jar:`pwd`/build/lib/antjdiff.jar:$(build-classpath xerces-j2 ant.jar ../jvm/java/lib/tools) \
--d apidocs -sourcepath src -subpackages jdiff
+-d apidocs -Xdoclint:none -sourcepath src -subpackages jdiff
 
 %install
 
@@ -96,12 +103,11 @@ install -pm 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
-%files
+%files -f .mfiles
 %{_bindir}/%{name}
-%{_javadir}/*%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE.txt README.txt doc/jdiff.html doc/CHANGES.txt doc/KNOWN_LIMITATIONS.txt doc/TODO doc/dev_notes.txt
+%{_javadir}/ant%{name}.jar
+%doc README.txt doc/jdiff.html doc/CHANGES.txt doc/KNOWN_LIMITATIONS.txt doc/TODO doc/dev_notes.txt
+%doc LICENSE.txt
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc
@@ -109,6 +115,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_5jpp7
 - new release
 
