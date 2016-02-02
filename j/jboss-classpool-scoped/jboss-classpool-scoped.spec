@@ -1,11 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jboss-classpool-scoped
 Version:        1.0.0
-Release:        alt2_6jpp7
+Release:        alt2_10jpp8
 Summary:        A custom class pool for several JBoss products
 
 Group:          Development/Java
@@ -16,24 +14,10 @@ URL:            http://www.jboss.org/jbossreflect
 # tar cJf jboss-classpool-scoped-1.0.0.tar.xz jboss-classpool-scoped-1.0.0/
 Source0:        jboss-classpool-scoped-1.0.0.tar.xz
 
-Patch0:         %{name}-pom.patch
-
 BuildArch:      noarch
-
-BuildRequires:  jpackage-utils
 
 BuildRequires:  javassist
 BuildRequires:  maven-local
-
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-
-Requires:       javassist
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -54,35 +38,24 @@ This package contains the API documentation for %{name}.
 find -type f -name *.jar -delete
 find -type f -name *.class -delete
 
-%patch0
+%pom_set_parent org.jboss:jboss-parent:6
+%pom_xpath_inject pom:project \
+    "<groupId>org.jboss.classpool</groupId><version>1.0.0.GA</version>"
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/jboss-classpool-scoped.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
-
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_6jpp7
 - new release
 
