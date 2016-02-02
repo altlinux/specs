@@ -2,41 +2,50 @@
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           apache-rat
-Version:        0.10
-Release:        alt1_1jpp7
+Version:        0.11
+Release:        alt1_2jpp8
 Summary:        Apache Release Audit Tool (RAT)
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://creadur.apache.org/rat/
 Source0:        http://www.apache.org/dist/creadur/%{name}-%{version}/%{name}-%{version}-src.tar.bz2
-Patch2:         apache-rat-0.8-test.patch
+Patch3:         0001-Update-to-Maven-Doxia-1.6.patch
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-invoker-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-wagon
-
-BuildRequires:  ant-antunit
-BuildRequires:  ant-testutil
-BuildRequires:  apache-commons-compress
-
-Requires:       jpackage-utils
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-antunit)
+BuildRequires:  mvn(org.apache.ant:ant-testutil)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.shared:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -54,15 +63,8 @@ or apache-rat-plugin.
 
 
 %package core
+Group: Development/Java
 Summary:        Core functionality for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-Requires:       apache-commons-cli
-Requires:       apache-commons-collections
-Requires:       apache-commons-compress
-Requires:       apache-commons-lang
-Requires:       apache-commons-io
-Requires:       junit
 
 %description core
 The core functionality of RAT, shared by the Ant tasks, and the Maven plugin.
@@ -71,27 +73,24 @@ to running upstream's "java -jar apache-rat.jar".
 
 
 %package plugin
+Group: Development/Java
 Summary:        Maven plugin for %{name}
-Group:          Development/Java
-Requires:       %{name}-core = %{version}-%{release}
 
 %description plugin
 Maven plugin for running RAT, the Release Audit Tool.
 
 
 %package tasks
+Group: Development/Java
 Summary:        Ant tasks for %{name}
-Group:          Development/Java
-Requires:       %{name}-core = %{version}-%{release}
 
 %description tasks
 Ant tasks for running RAT.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -100,32 +99,28 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch2 -p1 -b .test
+%patch3 -p1
 
+# apache-rat is a module bundling other RAT modules together and as
+# such it is not needed.
+%pom_disable_module apache-rat
+
+# maven-antrun-plugin is used for running tests only and tests are
+# skipped anyways.  See rhbz#988561
+%pom_remove_plugin :maven-antrun-plugin apache-rat-tasks
+
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+# wagon-ssh is not needed in Fedora.
+%pom_xpath_remove pom:extensions
 
 %build
-mvn-rpmbuild -DskipTests=true package javadoc:aggregate
+# Tests are skipped because of incompatibility with Maven 3
+%mvn_build -s -f
 
 %install
-#Dirs
-mkdir -p $RPM_BUILD_ROOT%{_javadir}/%{name}
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-
-#Parent pom
-cp -p pom.xml \
-  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-%add_maven_depmap JPP.%{name}-%{name}.pom
-
-#Components
-for comp in core plugin tasks
-do
-  jarname=%{name}-${comp}
-  jarfile=$jarname/target/${jarname}-%{version}.jar
-  cp -p $jarfile $RPM_BUILD_ROOT%{_javadir}/%{name}/${jarname}.jar
-  cp -p ${jarname}/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-${jarname}.pom
-  %add_maven_depmap JPP.%{name}-${jarname}.pom %{name}/${jarname}.jar -f ${comp}
-done
+%mvn_install
 
 #Wrapper script
 %jpackage_script org.apache.rat.Report "" "" %{name}/%{name}-core:commons-cli:commons-io:commons-collections:commons-compress:commons-lang:junit apache-rat true 
@@ -134,48 +129,33 @@ done
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 echo "apache-rat/rat-core apache-rat/rat-tasks" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 
-#Javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/
-cp -rp target/site/apidocs \
-   $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/apache-rat.conf`
 touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
-%files
-%doc LICENSE NOTICE README.txt RELEASE_NOTES.txt
-%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%dir %{_javadir}/%{name}
-
-%files core
+%files -f .mfiles-%{name}-project
 %doc LICENSE NOTICE
-%{_mavenpomdir}/JPP.%{name}-%{name}-core.pom
-%{_mavendepmapfragdir}/%{name}-core
+
+%files core -f .mfiles-%{name}-core
+%doc README.txt RELEASE_NOTES.txt
+%doc LICENSE NOTICE
+%dir %{_javadir}/%{name}
 %{_bindir}/%{name}
-%{_javadir}/%{name}/%{name}-core.jar
 %config(noreplace,missingok) /etc/java/apache-rat.conf
 
-%files plugin
-%doc LICENSE NOTICE
-%{_mavenpomdir}/JPP.%{name}-%{name}-plugin.pom
-%{_mavendepmapfragdir}/%{name}-plugin
-%{_javadir}/%{name}/%{name}-plugin.jar
+%files plugin -f .mfiles-%{name}-plugin
 
-%files tasks
-%doc LICENSE NOTICE
+%files tasks -f .mfiles-%{name}-tasks
 %{_sysconfdir}/ant.d/%{name}
-%{_mavenpomdir}/JPP.%{name}-%{name}-tasks.pom
-%{_mavendepmapfragdir}/%{name}-tasks
-%{_javadir}/%{name}/%{name}-tasks.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1jpp7
 - new release
 
