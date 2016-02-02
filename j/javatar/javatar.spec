@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:           javatar
 Version:        2.5
-Release:        alt1_10jpp7
+Release:        alt1_14jpp8
 Summary:        Java tar archive io package
 
 Group:          Development/Java
@@ -22,6 +24,9 @@ BuildRequires:  jpackage-utils
 BuildRequires:  ant
 
 Requires:       jpackage-utils
+%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
+%else
+%endif
 Source44: import.info
 
 %description
@@ -58,10 +63,8 @@ ant -buildfile source/com/ice/tar/build.xml deploy
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p tar-%{version}/jars/tar.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/tar.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/tar-%{version}.jar
+  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/tar.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
 cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
@@ -69,9 +72,7 @@ cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
 
 %files
 %doc doc/LICENSE
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_javadir}/tar-%{version}.jar
 %{_javadir}/tar.jar
 
 %files javadoc
@@ -80,6 +81,9 @@ cp -rp doc $RPM_BUILD_ROOT/%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_10jpp7
 - new release
 
