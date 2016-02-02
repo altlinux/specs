@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jetty-distribution-remote-resources
 Version:        1.1
-Release:        alt3_8jpp7
+Release:        alt3_10jpp8
 Summary:        Jetty toolchain artifact for distribution remote resources
 
 License:        ASL 2.0 or EPL
@@ -38,6 +39,9 @@ Jetty toolchain artifact for distribution remote distribution resources
 %doc src/main/resources/LICENSE*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_8jpp7
 - new release
 
