@@ -1,23 +1,23 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global project_name MultithreadedTC
 Name:           multithreadedtc
 Version:        1.01
-Release:        alt3_13jpp7
+Release:        alt3_19jpp8
 Summary:        A framework for testing concurrent Java application
-
-Group:          Development/Java
 License:        BSD 
 URL:            http://www.cs.umd.edu/projects/PL/multithreadedtc
 #http://multithreadedtc.googlecode.com/files/MultithreadedTC-1.01-source.zip
 Source0:        %{project_name}-%{version}-source.zip
 Source1:        %{name}.pom
-Patch0:        %{name}-build.patch
+Patch0:         %{name}-build.patch
 
 BuildArch: noarch
 
@@ -26,11 +26,8 @@ BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit
 BuildRequires: junit
 
-Requires:       jpackage-utils
+Requires:      jpackage-utils
 Requires:      junit
-
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
 Source44: import.info
 
 %description
@@ -39,9 +36,8 @@ It features a metronome that is used to provide fine control over
 the sequence of activities in multiple threads.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -52,7 +48,8 @@ API documentation for %{name}.
 %setup -q -n %{project_name}-%{version}-source
 %patch0 -p0 -b .sav
 
-rm -f *.jar
+find . -name "*.class" -print -delete
+find . -name "*.jar" -print -delete
 
 sed -i 's/\r//' web/docs/package-list
 sed -i 's/\r//' web/docs/stylesheet.css
@@ -66,36 +63,37 @@ ant
 
 # jars
 install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 %{project_name}-%{version}.jar   %{buildroot}%{_javadir}/%{project_name}-%{version}.jar
-
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; \
-    do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
-
-%add_to_maven_depmap edu.umd.cs.mtc multithreadedtc %{version} JPP %{project_name}
-%add_to_maven_depmap edu.umd.cs.mtc multithreadedtc-jdk14 %{version} JPP %{project_name}
+install -m 644 %{project_name}-%{version}.jar   %{buildroot}%{_javadir}/%{project_name}.jar
 
 # poms
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 %{SOURCE1} \
     %{buildroot}%{_mavenpomdir}/JPP-%{project_name}.pom
+%add_maven_depmap JPP-%{project_name}.pom %{project_name}.jar -a "edu.umd.cs.mtc:multithreadedtc-jdk14,com.googlecode.multithreadedtc:multithreadedtc"
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr web/docs/* %{buildroot}%{_javadocdir}/%{name}-%{version}/
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr web/docs/* %{buildroot}%{_javadocdir}/%{name}/
 rm -rf web/docs
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt README.txt
 %{_javadir}/*
 %{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+
+# Workaround for rpm bug, remove in F23
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_19jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.01-alt3_13jpp7
 - new release
 
