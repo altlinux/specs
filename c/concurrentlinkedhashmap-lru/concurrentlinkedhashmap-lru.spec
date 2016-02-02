@@ -1,52 +1,38 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          concurrentlinkedhashmap-lru
-Version:       1.3.2
-Release:       alt1_1jpp7
+Version:       1.4.2
+Release:       alt1_2jpp8
 Summary:       A ConcurrentLinkedHashMap for Java
-Group:         Development/Java
 License:       ASL 2.0
-Url:           http://code.google.com/p/concurrentlinkedhashmap/
-# git clone https://code.google.com/p/concurrentlinkedhashmap/ concurrentlinkedhashmap-lru-1.3.2
-# (cd concurrentlinkedhashmap-lru-1.3.2 && git checkout concurrentlinkedhashmap-lru-1.3.2)
-# find concurrentlinkedhashmap-lru-1.3.2 -name "*.class" -delete
-# find concurrentlinkedhashmap-lru-1.3.2 -name "*.jar" -type f -delete
-# lib/cache-benchmark/benchmark-fwk.jar
-# rm -rf concurrentlinkedhashmap-lru-1.3.2/.git
-# tar czf concurrentlinkedhashmap-lru-1.3.2-src-git.tar.gz concurrentlinkedhashmap-lru-1.3.2
-Source0:       %{name}-%{version}-src-git.tar.gz
-
-BuildRequires: sonatype-oss-parent
+Url:           https://github.com/ben-manes/concurrentlinkedhashmap
+Source0:       https://github.com/ben-manes/concurrentlinkedhashmap/archive/%{name}-%{version}.tar.gz
 
 # test deps
 %if 0
-BuildRequires: apache-commons-lang
-BuildRequires: ehcache-core
-BuildRequires: ehcache-parent
-BuildRequires: guava
-BuildRequires: mockito
-BuildRequires: testng
+BuildRequires: mvn(com.github.stephenc.high-scale-lib:high-scale-lib)
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(net.sf.ehcache:ehcache)
 BuildRequires: mvn(org.hamcrest:hamcrest-library) >= 1.3
+BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(org.testng:testng)
 # unavailable test deps
+BuildRequires: mvn(com.google.caliper:caliper)
+BuildRequires: mvn(com.jayway.awaitility:awaitility)
 # require cache-benchmark == r7903 from http://sourceforge.net/projects/cachebenchfwk/
 BuildRequires: mvn(org.cachebench:cache-benchmark)
-BuildRequires: mvn(com.google.caliper:caliper)
-# https://bugzilla.redhat.com/show_bug.cgi?id=865893
-BuildRequires: mvn(com.github.stephenc.high-scale-lib:high-scale-lib)
-BuildRequires: mvn(com.jayway.awaitility:awaitility)
 %endif
-# com.google.code.findbugs:jsr305:2.0.1 scope: provided
-BuildRequires: jsr-305
 
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-site-plugin
-#BuildRequires: animal-sniffer
-#BuildRequires: mojo-signatures
+
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
 
 BuildArch:     noarch
 Source44: import.info
@@ -56,7 +42,7 @@ A high performance version of java.util.LinkedHashMap
 for use as a software cache.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
 BuildArch: noarch
 
@@ -64,7 +50,9 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
+%setup -q -n concurrentlinkedhashmap-%{name}-%{version}
+find . -name "*.class" -delete
+find . -name "*.jar" -type f -print -delete
 
 # Unavailable
 %pom_remove_plugin :findbugs-maven-plugin
@@ -86,38 +74,37 @@ This package contains javadoc for %{name}.
 %pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration" "
 <compilerArgument>-Xlint:all</compilerArgument>"
 
+# remove bundled Doug Lea JCP JSR-166
+rm -r src/main/java/com/googlecode/concurrentlinkedhashmap/ConcurrentHashMapV8.java
+sed -i "s|ConcurrentHashMapV8|java.util.concurrent.ConcurrentHashMap|" \
+ src/main/java/com/googlecode/concurrentlinkedhashmap/ConcurrentLinkedHashMap.java
+
 # Fix mojo-signatures aId
-sed -i "s|jdk.version}-sun</artifactId>|jdk.version}</artifactId>|" pom.xml
+#sed -i "s|jdk.version}-sun</artifactId>|jdk.version}</artifactId>|" pom.xml
 # Disabled currently is broken
 %pom_remove_plugin :animal-sniffer-maven-plugin
+
+%mvn_file :%{name} %{name}
 
 %build
 
 # test skipped for unavailable test deps
-mvn-rpmbuild -Dmaven.test.skip=true package javadoc:aggregate
+%mvn_build -f
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc README
+%doc LICENSE NOTICE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_2jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt1_1jpp7
 - new release
 
