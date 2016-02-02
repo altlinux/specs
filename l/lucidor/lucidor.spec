@@ -3,7 +3,7 @@
 
 Name:     lucidor
 Version:  0.9.10
-Release:  alt1
+Release:  alt2
 
 Summary: E-book reader application
 
@@ -17,6 +17,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 Patch0: %name-0.9.7-alt-desktop.patch
+Patch1: %name-0.9.10-alt-xulrunner.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -41,6 +42,7 @@ Lucidor provides functionality to:
 %prep
 %setup
 %patch0
+%patch1
 
 mv gpl-3.0.txt gpl-3.0.txt.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/gpl-3.0.txt) gpl-3.0.txt
@@ -77,6 +79,9 @@ mkdir -p %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Feb 02 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.10-alt2
+- Removing xulrunner usage
+
 * Fri Sep 04 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.10-alt1
 - New version (Closes: 31253)
 
