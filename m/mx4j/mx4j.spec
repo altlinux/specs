@@ -3,8 +3,9 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: docbook-dtds
 %define _without_tests 1
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt2_18jpp7
+Release:        alt2_21jpp8
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -82,8 +83,6 @@ BuildRequires:  xml-commons-apis
 BuildRequires:  xerces-j2
 BuildRequires:  dos2unix
 BuildArch:      noarch
-Requires(post):       alternatives
-Requires(postun):       alternatives
 Requires:       javamail
 Requires:       log4j >= 0:1.2.7
 Requires:       apache-commons-logging >= 0:1.0.1
@@ -203,11 +202,9 @@ EOF
 %pre
 rm -f %{_javadir}/%{name}.jar
 
-%files
+%files -f .mfiles
 %_altdir/jmxri_mx4j
-%{_javadir}/%{name}
-%{_mavenpomdir}/JPP.%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
+%{_javadir}/%{name}/boa/
 %doc LICENSE.txt
 %doc README.txt
 
@@ -218,6 +215,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_21jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_18jpp7
 - new release
 
