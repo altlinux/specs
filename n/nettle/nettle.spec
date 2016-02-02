@@ -1,8 +1,10 @@
 %define libnettle_soname 6
 %define libhogweed_soname 4
 
+%define _unpackaged_files_terminate_build 1
+
 Name: nettle
-Version: 3.1.1
+Version: 3.2
 Release: alt1
 Summary: A low-level cryptographic library
 
@@ -102,6 +104,9 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Tue Feb 02 2016 Mikhail Efremov <sem@altlinux.org> 3.2-alt1
+- Updated to 3.2.
+
 * Tue Dec 01 2015 Mikhail Efremov <sem@altlinux.org> 3.1.1-alt1
 - Use soname in the names.
 - Package libnettle and libhogweed as separate subpackages.
