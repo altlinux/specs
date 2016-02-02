@@ -1,10 +1,12 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -37,19 +39,17 @@ BuildRequires: jpackage-compat
 
 Name:           junitperf
 Version:        1.9.1
-Release:        alt1_12jpp7
+Release:        alt1_16jpp8
 Summary:        JUnit extension for performance and scalability testing
 License:        BSD
-Group:          Development/Java
 Source0:        http://www.clarkware.com/software/junitperf-1.9.1.zip
 Source1:        https://repository.jboss.org/nexus/content/repositories/thirdparty-uploads/junitperf/junitperf/%{version}/junitperf-%{version}.pom
 URL:            http://www.clarkware.com/software/JUnitPerf.html
 BuildRequires:  ant
 BuildRequires:  ant-junit
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  junit >= 3.2
 BuildArch:      noarch
-Requires:       jpackage-utils
 Requires:       junit >= 3.2
 Source44: import.info
 
@@ -59,16 +59,15 @@ performance and scalability of functionality contained within existing
 JUnit tests.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        API documentation for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %package demo
-Group:          Development/Java
+Group: Development/Java
 Summary:        Demos and samples for %{name}
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
@@ -80,18 +79,16 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
+find . -name "*.class" -exec rm -f {} \;
 
 %build
 CLASSPATH=$(build-classpath junit) ant -Dbuild.sysclasspath=first jar test javadoc
 
-%install
-# jar
-install -pD -T dist/%{name}-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
+# request maven artifact installation
+%mvn_artifact %{SOURCE1} dist/junitperf-%{version}.jar
 
-install -d -m 0755 %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%install
+%mvn_install
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
@@ -101,15 +98,9 @@ cp -pr build/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 install -d -m 0755 %{buildroot}%{_datadir}/%{name}
 cp -pr samples %{buildroot}%{_datadir}/%{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files
+%files -f .mfiles
 %doc LICENSE README docs/JUnitPerf.html
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%dir %{_javadir}/%{name}
 
 %files javadoc
 %doc LICENSE
@@ -120,6 +111,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_datadir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_12jpp7
 - new release
 
