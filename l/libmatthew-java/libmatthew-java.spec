@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt1_7jpp7
+Release:        alt1_13jpp8
 Summary:        A few useful Java libraries
 Group:          Development/Java
 License:        MIT
@@ -22,9 +23,8 @@ Patch0:         install_doc.patch
 Patch1:         native-library-paths.patch
 Patch2:         classpath_fix.patch
 
-BuildRequires:  jpackage-utils
 
-Requires:       jpackage-utils
+Requires:       maven-local
 Source44: import.info
 
 %description
@@ -50,7 +50,7 @@ A colleciton of Java libraries:
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       jpackage-utils
+Requires:       maven-local
 BuildArch: noarch
 
 
@@ -76,6 +76,7 @@ make %{?_smp_mflags} \
     GCJFLAGS='%{optflags}' \
     LDFLAGS='%{optflags}' \
     PPFLAGS='%{optflags}' \
+    JAVADOC="javadoc -Xdoclint:none" \
     -j1
 
 # Inject OSGi manifests
@@ -87,11 +88,8 @@ make install \
     DESTDIR=$RPM_BUILD_ROOT \
     JARDIR=%{_jnidir} \
     LIBDIR=%{_libdir}/%{name} \
-    DOCDIR=%{_javadocdir}/%{name}
-
-for i in unix cgi io hexdump debug-disable debug-enable ; do
-ln -s %{_jnidir}/$i.jar %buildroot%{_libdir}/%{name}/$i.jar
-done
+    DOCDIR=%{_javadocdir}/%{name} \
+    JAVADOC="javadoc -Xdoclint:none"
 
 %files
 %{_jnidir}/*.jar
@@ -104,6 +102,9 @@ done
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_13jpp8
+- new version
+
 * Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_7jpp7
 - new release
 - added compat symlinks
