@@ -1,46 +1,40 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jetty-test-policy
 Version:        1.2
-Release:        alt3_9jpp7
+Release:        alt3_14jpp8
 Summary:        Jetty test policy files
-
-Group:          Development/Java
 License:        ASL 2.0 or EPL
 URL:            http://www.eclipse.org/jetty/
-Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/snapshot/%{name}-%{version}.tar.bz2
-# rpmlint config file (fedpkg lint will use this)
-#Source1:        .rpmlint
-Source2:        http://www.eclipse.org/legal/epl-v10.html
-Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-local
-BuildRequires:  jetty-toolchain
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-surefire-provider-junit
+Source0:        http://git.eclipse.org/c/jetty/org.eclipse.jetty.toolchain.git/snapshot/%{name}-%{version}.tar.bz2
+Source2:        http://www.eclipse.org/legal/epl-v10.html
+Source3:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       jetty-toolchain
+Patch0:         0001-Sign-JAR-with-maven-jarsigner-plugin.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.maven.plugins:maven-jarsigner-plugin)
+BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-toolchain:pom:)
 Source44: import.info
 
 %description
 Jetty test policy files
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-%{summary}.
-
+This package provides %{summary}.
 
 %prep
 %setup -q
+%patch0 -p1
 cp -p %{SOURCE2} %{SOURCE3} .
 
 %build
@@ -56,6 +50,9 @@ cp -p %{SOURCE2} %{SOURCE3} .
 %doc epl-v10.html LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_9jpp7
 - new release
 
