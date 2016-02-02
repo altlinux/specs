@@ -1,14 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global majorv 5
 %global minorv 6
 
 Name:           jpanoramamaker
 Version:        %{majorv}.%{minorv}
-Release:        alt1_1jpp7
+Release:        alt1_4jpp8
 Summary:        Tool for stitching photos to panorama in linear curved space
 BuildArch:      noarch
 
@@ -17,10 +19,10 @@ Group:          Toys
 License:        BSD
 URL:            http://jpanoramamaker.wz.cz
 Source0:        http://jpanoramamaker.wz.cz/fedora/%{name}-%{version}.src.tar.gz
+Source1:        %{name}.appdata.xml
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
-BuildRequires:  ant-nodeps
 BuildRequires:  swing-layout
 BuildRequires:  desktop-file-utils
 
@@ -40,7 +42,8 @@ BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
-
+This tool is unique in number of manual touches you can do to affect final result.
+Sometimes simple changing of order of image or lying a bit on position where they meet can do miracles.
 
 
 %prep
@@ -86,7 +89,8 @@ mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp ./dist/javadoc/  $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 ln -s %{_javadocdir}/%{name} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
-
+#appdata
+install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 
 #####################################
@@ -95,6 +99,7 @@ ln -s %{_javadocdir}/%{name} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 %{_datadir}/pixmaps/jpanoramamaker.png
 %{_datadir}/applications/jpanoramamaker.desktop
 %attr(755,root,root) %{_bindir}/jpanoramamaker
+%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %{_javadir}/*
@@ -107,6 +112,9 @@ ln -s %{_javadocdir}/%{name} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_4jpp8
+- new version
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 5.6-alt1_1jpp7
 - new version
 
