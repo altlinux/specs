@@ -1,25 +1,27 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %define patched_resolver_ver 1.2
 %define patched_resolver xml-commons-resolver-%{patched_resolver_ver}
 
 Name:    netbeans-resolver
 Version: 6.7.1
-Release: alt1_7jpp7
+Release: alt1_11jpp8
 Summary: Resolver subproject of xml-commons patched for NetBeans
 
 Group:   Development/Java
 License: ASL 1.1
 URL:     http://xml.apache.org/commons/
 
-Source0: http://www.apache.org/dist/xml/commons/%{patched_resolver}.tar.gz
+Source0: http://archive.apache.org/dist/xml/commons/%{patched_resolver}.tar.gz
 
 # see http://hg.netbeans._org/main/file/721f72486327/o.apache.xml.resolver/external/readme.txt
 Patch0: %{name}-%{version}-nb.patch
 Patch1: %{name}-%{version}-resolver.patch
+Patch2: javadoc-source-version.patch
 
 BuildArch: noarch
 
@@ -34,32 +36,50 @@ Source44: import.info
 Resolver subproject of xml-commons, version %{patched_resolver_ver} with 
 a patch for NetBeans.
 
+%package javadoc
+Summary:    Javadocs for %{name}
+Group:      Development/Java
+Requires:   jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}
+
 %prep
 %setup -q -n %{patched_resolver}
 # remove all binary libs and prebuilt javadocs
 find . -name "*.jar" -exec rm -f {} \;
-%{__rm} -rf docs
+rm -rf apidocs
 
 %patch0 -p1 -b .sav
 %patch1 -p1 -b .sav
+%patch2 -p1 -b .sav
 
 dos2unix -k KEYS
 dos2unix -k LICENSE.resolver.txt
 
 %build
-%{ant} -f resolver.xml jar
+ant -f resolver.xml jar docs
 
 %install
+mkdir -p %{buildroot}%{_javadir}
+cp -p build/resolver.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# JARs
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p build/resolver.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -rp build/apidocs/resolver %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %{_javadir}/*
 %doc LICENSE.resolver.txt KEYS
 
+%files javadoc
+%{_javadocdir}/%{name}
+%doc LICENSE.resolver.txt
+
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_7jpp7
 - new release
 
