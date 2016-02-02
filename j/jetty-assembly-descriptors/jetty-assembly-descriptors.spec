@@ -1,8 +1,9 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jetty-assembly-descriptors
 Version:        1.0
-Release:        alt3_9jpp7
+Release:        alt3_12jpp8
 Summary:        Jetty assembly descriptors used for building
 
 Group:          Development/Java
@@ -14,14 +15,9 @@ BuildArch:      noarch
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Source2:        http://www.eclipse.org/legal/epl-v10.html
 
-BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  jetty-toolchain
 BuildRequires:  maven-surefire-provider-junit
-
-Requires:       maven
-Requires:       jpackage-utils
-Requires:       jetty-toolchain
 Source44: import.info
 
 %description
@@ -41,6 +37,9 @@ cp -p %{SOURCE1} %{SOURCE2} .
 %doc LICENSE-2.0.txt epl-v10.html
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_9jpp7
 - new release
 
