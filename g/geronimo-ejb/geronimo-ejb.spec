@@ -1,12 +1,12 @@
-BuildRequires: geronimo-annotation geronimo-interceptor
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global spec_ver 3.1
 %global spec_name geronimo-ejb_%{spec_ver}_spec
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt2_12jpp7
+Release:          alt2_15jpp8
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Java
 License:          ASL 2.0
@@ -27,10 +27,6 @@ BuildRequires:    geronimo-osgi-locator
 
 Provides:         ejb_api = %{spec_ver}
 Source44: import.info
-
-#Provides:       ejb = 0:3.1
-#Provides:       ejb_api = 0:3.1
-##Provides:       ejb_3_1_api = %{version}-%{release}
 
 %description
 Contains the Enterprise JavaBeans classes and interfaces that define the
@@ -65,34 +61,16 @@ sed -i 's/\r//' LICENSE
 %install
 %mvn_install
 
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/ejb_geronimo-ejb<<EOF
-%{_javadir}/ejb.jar	%{_javadir}/geronimo-ejb.jar	30100
-EOF
-# install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/ejb_api_geronimo-ejb<<EOF
-# %{_javadir}/ejb_api.jar	%{_javadir}/geronimo-ejb.jar	30100
-# EOF
-# install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/ejb_3_0_api_geronimo-ejb<<EOF
-# %{_javadir}/ejb_3_0_api.jar	%{_javadir}/geronimo-ejb.jar	100
-# EOF
-# install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/ejb_3_1_api_geronimo-ejb<<EOF
-# %{_javadir}/ejb_3_1_api.jar	%{_javadir}/geronimo-ejb.jar	30100
-# EOF
-
-
 %files -f .mfiles
 %doc LICENSE NOTICE
-
-#%_altdir/ejb_3_1_api_geronimo-ejb
-#%_altdir/ejb_3_0_api_geronimo-ejb
-#%_altdir/ejb_api_geronimo-ejb
-%_altdir/ejb_geronimo-ejb
-%exclude %{_javadir}*/ejb.jar
-
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_12jpp7
 - new release
 
