@@ -2,8 +2,9 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
 # Copyright (c) 2007 Hans de Goede <j.w.r.degoede@hhs.nl>
 # This file and all modifications and additions to the pristine
@@ -13,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_30jpp7
+Release:        alt1_30jpp8
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -234,6 +235,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_30jpp8
+- new version
+
 * Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_30jpp7
 - update to new release by jppimport
 
