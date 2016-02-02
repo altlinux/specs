@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jorbis
 Version:        0.0.17
-Release:        alt1_10jpp7
+Release:        alt1_13jpp8
 Summary:        Pure Java Ogg Vorbis Decoder
 URL:            http://www.jcraft.com/jorbis/
 License:        LGPLv2+
@@ -19,8 +20,6 @@ Source0:        http://www.jcraft.com/jorbis/%{name}-%{version}.zip
 # the actual patches have been rebased to 0.0.17 !
 Patch0:         jorbis-0.0.17-cortado-fixes.patch
 BuildArch:      noarch
-BuildRequires:  jpackage-utils
-Requires:       jpackage-utils
 # We used to also package the comment editor example, but that is not so
 # useful to end users (esp. the passing of cmdline args as java defines)
 Obsoletes:      %{name}-comment <= 0.0.17-3
@@ -87,6 +86,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.0.17-alt1_10jpp7
 - new release
 
