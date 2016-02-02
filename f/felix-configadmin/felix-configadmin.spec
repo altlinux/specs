@@ -2,14 +2,15 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global site_name org.apache.felix.configadmin
 %global grp_name  felix
 
 Name:             felix-configadmin
 Version:          1.4.0
-Release:          alt2_10jpp7
+Release:          alt2_14jpp8
 Summary:          Felix Configuration Admin Service
 License:          ASL 2.0
 URL:              http://felix.apache.org/site/apache-felix-config-admin.html
@@ -19,6 +20,7 @@ Source0:          http://www.fightrice.com/mirrors/apache/felix/%{site_name}-%{v
 BuildArch:        noarch
 
 BuildRequires:    maven-local
+BuildRequires:    felix-parent
 BuildRequires:    felix-osgi-compendium >= 1.4.0-10
 BuildRequires:    felix-osgi-core
 BuildRequires:    aqute-bndlib
@@ -56,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_14jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_10jpp7
 - new release
 
