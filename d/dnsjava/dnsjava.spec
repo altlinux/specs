@@ -1,18 +1,16 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: System/Libraries
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Test of properly function library need DNS querys. It work perfectly on my machine and pass all tests.
 # But internet access is not allowed from mock chroot. So, I need disable it by default. Yo may enable it if you want.
 %global do_not_test 1
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_5jpp7
+Release:       alt1_9jpp8
 Summary:       Java DNS implementation
-Group:         System/Libraries
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
 Source0:       http://www.dnsjava.org/download/%{name}-%{version}.tar.gz
@@ -21,12 +19,10 @@ Source1:       %{name}-%{version}.pom
 Patch0:        dnsjava-2.0.6-java1.5.target.patch
 
 BuildRequires: ant
-BuildRequires: jpackage-utils >= 0:1.5
-
+# see https://fedorahosted.org/released/javapackages/doc/#_add_maven_depmap_macro_2
+BuildRequires: javapackages-local
 # For tests
 BuildRequires: ant-junit
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -52,9 +48,8 @@ A 'dig' clone and a dynamic update program are included, as well as a
 primary-only server.
 
 %package javadoc
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,32 +58,26 @@ Javadoc for %{name}.
 %prep
 %setup -q
 rm -rf doc/
+find -name "*.class" -print -delete
+find -name "*.jar" -print -delete
 
 %patch0 -p1 -b .java1.5
 
 iconv -f iso8859-1 -t utf8 Changelog > Changelog.tmp
 touch -r Changelog Changelog.tmp
 mv -f Changelog.tmp Changelog
+# install in _javadir
+%mvn_file %{name}:%{name} %{name}
 
 %build
+
 export CLASSPATH=%(build-classpath jce)
 ant -Dj2se.javadoc=%{_javadocdir}/java clean docsclean jar docs
 
+%mvn_artifact %{SOURCE1} %{name}-%{version}.jar
+
 %install
-
-# jars
-mkdir -p %{buildroot}%{_javadir}
-cp -p %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# pom and depmap
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}
-
+%mvn_install -J doc
 
 %if ! 0%{?do_not_test}
 %check
@@ -97,20 +86,15 @@ ant -Dj2se.javadoc=%{_javadocdir}/java compile_tests
 ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %endif
 
-%files
+%files -f .mfiles
 %doc Changelog README USAGE examples.html *.java
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_5jpp7
 - new release
 
