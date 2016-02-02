@@ -2,11 +2,12 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jargs
 Version:        1.0
-Release:        alt1_12jpp7
+Release:        alt1_16jpp8
 Summary:        Java command line option parsing suite
 
 Group:          Development/Java
@@ -59,11 +60,8 @@ cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{name}:%{name}"
 
 
-%files
+%files -f .mfiles
 %doc README LICENCE TODO doc/CHANGES 
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 
 %files javadoc
@@ -72,6 +70,9 @@ cp -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_12jpp7
 - new release
 
