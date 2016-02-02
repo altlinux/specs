@@ -3,11 +3,12 @@ Epoch: 0
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             jacorb
 Version:          2.3.1
-Release:          alt1_9jpp7
+Release:          alt1_15jpp8
 Summary:          The Java implementation of the OMG's CORBA standard
 Group:            Development/Java
 License:          LGPLv2
@@ -41,19 +42,17 @@ Patch4:           jacorb-2.3.1-primaddress_port.patch
 # to "skip" valid boolean values, as those are not padded.
 Patch5:           jacorb-2.3.1-read_boolean.patch
 
+# Support for JDK 8
+Patch6:           JDK8-support.patch
+
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
+BuildRequires:    javapackages-local
 BuildRequires:    ant
 BuildRequires:    antlr-tool
 BuildRequires:    avalon-logkit
+BuildRequires:    bsh
 BuildRequires:    slf4j
-
-Requires:         jpackage-utils
-Requires:         antlr-tool
-Requires:         avalon-logkit
-Requires:         slf4j
-Requires:         bsh
 Source44: import.info
 
 %description
@@ -85,12 +84,15 @@ find -name '*.zip' -exec rm -f '{}' \;
 %patch3 -p0
 %patch4 -p0
 %patch5 -p0
+%patch6 -p1
 
 # No xdoclet available
 sed -i 's|,notification||' src/org/jacorb/build.xml
 
 ln -s $(build-classpath antlr) lib/antlr-2.7.2.jar
 ln -s $(build-classpath slf4j/api) lib/slf4j-api-1.5.6.jar
+
+%mvn_alias "org.jacorb:" "jacorb:"
 
 %build
 
@@ -108,37 +110,23 @@ sed -i "s|>avalon<|>avalon-logkit<|g" jacorb-idl-compiler.pom
 ant all doc
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/
-install -pm 644 lib/jacorb.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -pm 644 lib/idl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-idl-compiler.jar
+%mvn_artifact jacorb-parent.pom
+%mvn_artifact jacorb.pom lib/jacorb.jar
+%mvn_artifact jacorb-idl-compiler.pom lib/idl.jar
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 jacorb-parent.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
-install -pm 644 jacorb.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 jacorb-idl-compiler.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-idl-compiler.pom
+%mvn_install -J doc/api
 
-# DEPMAP
-%add_maven_depmap JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "jacorb:jacorb"
-%add_maven_depmap JPP-%{name}-idl-compiler.pom %{name}-idl-compiler.jar -a "jacorb:jacorb-idl-compiler,jacorb:idl"
-
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc doc/LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc doc/LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_15jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_9jpp7
 - new release
 
