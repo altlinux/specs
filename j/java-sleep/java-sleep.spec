@@ -1,11 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:		java-sleep
 Version:	2.1
-Release:	alt1_6jpp7
+Release:	alt1_10jpp8
 Summary:	Multi-paradigm scripting language for Java
 
 Group:		Development/Java
@@ -19,6 +21,9 @@ BuildArch:	noarch
 BuildRequires:	jpackage-utils
 BuildRequires:	ant-contrib
 Requires:	jpackage-utils
+%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
+%else
+%endif
 Source44: import.info
 
 %description
@@ -91,6 +96,9 @@ java -jar sleep.jar runtests.sl
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_10jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_6jpp7
 - new release
 
