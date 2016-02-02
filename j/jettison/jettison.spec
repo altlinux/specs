@@ -1,41 +1,32 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jettison
-Version:        1.3.3
-Release:        alt1_2jpp7
+Version:        1.3.4
+Release:        alt1_5jpp8
 Summary:        A JSON StAX implementation
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://jettison.codehaus.org/
-# svn export http://svn.codehaus.org/jettison/tags/jettison-1.3.3 jettison-1.3.3
-# rm -rf jettison-1.3.3/trunk
-# tar cvJf jettison-1.3.3.tar.xz jettison-1.3.3
-Source0:        %{name}-%{version}.tar.xz
 BuildArch:      noarch
+
+# svn export http://svn.codehaus.org/jettison/tags/jettison-%{version} jettison-%{version}
+# rm -rf jettison-%{version}/trunk
+# tar cvJf jettison-%{version}.tar.xz jettison-%{version}
+Source0:        %{name}-%{version}.tar.xz
 
 # Change the POM to use the version of woodstox that we have available:
 Patch0: %{name}-update-woodstox-version.patch
 
-%if 0%{?rhel} <= 5
-%else
-%endif
-BuildRequires:     jpackage-utils
-BuildRequires:     maven-local
-BuildRequires:     maven-compiler-plugin
-BuildRequires:     maven-install-plugin
-BuildRequires:     maven-jar-plugin
-BuildRequires:     maven-javadoc-plugin
-BuildRequires:     maven-release-plugin
-BuildRequires:     maven-resources-plugin
-BuildRequires:     woodstox-core
-BuildRequires:     stax2-api
-Requires:          jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(stax:stax-api)
 Source44: import.info
-
 
 %description
 Jettison is a collection of Java APIs (like STaX and DOM) which read
@@ -43,17 +34,13 @@ and write JSON. This allows nearly transparent enablement of JSON based
 web services in services frameworks like CXF or XML serialization
 frameworks like XStream.
 
-
 %package javadoc
+Group: Development/Java
 Summary:           Javadocs for %{name}
-Group:             Development/Java
-Requires:          %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:          jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
-
 
 %prep
 %setup -q
@@ -63,39 +50,21 @@ This package contains the API documentation for %{name}.
 
 %build
 # Disable the tests until BZ#796739 is fixed:
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.skip=true install javadoc:aggregate
-
+%mvn_build -f
 
 %install
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-cp -p target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
-
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# Dependencies map:
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
+%files -f .mfiles
 %doc src/main/resources/META-INF/LICENSE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc src/main/resources/META-INF/LICENSE
-%{_javadocdir}/%{name}
-
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_5jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_2jpp7
 - new release
 
