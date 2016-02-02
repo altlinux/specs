@@ -1,11 +1,12 @@
 Epoch: 0
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global short_name      commons-email
 
 Name:             apache-%{short_name}
 Version:          1.3.1
-Release:          alt1_1jpp7
+Release:          alt1_4jpp8
 Summary:          Apache Commons Email Package
 Group:            Development/Java
 License:          ASL 2.0
@@ -17,8 +18,6 @@ BuildArch:        noarch
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    javamail
-Requires:         javamail
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
@@ -28,7 +27,6 @@ the JavaMail API, which it aims to simplify.
 %package javadoc
 Summary:          Javadoc for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_4jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_1jpp7
 - new release
 
