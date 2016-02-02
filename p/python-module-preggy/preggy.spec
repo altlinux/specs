@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt1.git20141002
+Release: alt2.git20141002
 Summary: preggy is an assertion library for Python. (What were you ``expect()``ing?)
 License: MIT
 Group: Development/Python
@@ -15,16 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-six
-BuildPreReq: python-module-unidecode python-module-nose
-BuildPreReq: python-module-yanc python-module-coverage
-BuildPreReq: python-module-tox
+BuildRequires: python-module-coverage python-module-nose python-module-setuptools-tests python-module-six python-module-tox python-module-unidecode 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests python3-module-six
-BuildPreReq: python3-module-unidecode python3-module-nose
-BuildPreReq: python3-module-yanc python3-module-coverage
-BuildPreReq: python3-module-tox
+BuildRequires:  python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-six python3-module-tox python3-module-unidecode
 %endif
 
 %py_provides %oname
@@ -88,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.3-alt2.git20141002
+- cleanup buildreq
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20141002
 - Initial build for Sisyphus
 
