@@ -1,14 +1,15 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           microba
 Version:        0.4.4.3
-Release:        alt1_10jpp7
+Release:        alt1_13jpp8
 Summary:        Set of JFC (Swing) components
-Group:          Development/Java
 License:        BSD
 URL:            http://microba.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/%{name}-%{version}-full.zip
@@ -35,10 +36,8 @@ components. Among them are CalendarPane, DatePicker, DatePickerCellEditor
 for JTree and JTable, MarkerBar, and GradientEditor.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -69,21 +68,18 @@ install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 mkdir -p %{buildroot}%{_javadocdir}
 cp -r javadoc %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc license.txt readme.txt change.log.txt
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
+%files -f .mfiles
+%doc readme.txt change.log.txt
+%doc license.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt1_10jpp7
 - new release
 
