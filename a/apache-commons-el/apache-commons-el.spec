@@ -5,8 +5,9 @@ BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 
 %global base_name       el
 %global short_name      commons-%{base_name}
@@ -14,7 +15,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.0
-Release:        alt1_29jpp7
+Release:        alt1_35jpp8
 Summary:        The Apache Commons Extension Language
 License:        ASL 1.1
 URL:            http://commons.apache.org/%{base_name}
@@ -25,8 +26,9 @@ Patch0:         %{short_name}-%{version}-license.patch
 Patch1:         %{short_name}-eclipse-manifest.patch
 Patch2:         %{short_name}-enum.patch
 BuildRequires:  ant
-BuildRequires:  tomcat-jsp-2.2-api
-BuildRequires:  tomcat-servlet-3.0-api
+BuildRequires:  javapackages-local
+BuildRequires:  tomcat-jsp-2.3-api
+BuildRequires:  tomcat-servlet-3.1-api
 BuildRequires:  junit
 Source44: import.info
 Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
@@ -39,9 +41,6 @@ javax.servlet.jsp.el which is part of the JSP 2.0 specification.
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
-
-Provides:       jakarta-%{short_name}-javadoc = 0:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc < 0:%{version}-%{release}
 BuildArch: noarch
 
 
@@ -61,8 +60,8 @@ find . -type f -name "*.jar" -exec rm -f {} \;
 cat > build.properties <<EOBP
 build.compiler=modern
 junit.jar=$(build-classpath junit)
-servlet-api.jar=$(build-classpath tomcat-servlet-3.0-api)
-jsp-api.jar=$(build-classpath tomcat-jsp-2.2-api)
+servlet-api.jar=$(build-classpath tomcat-servlet-3.1-api)
+jsp-api.jar=$(build-classpath tomcat-jsp-2.3-api)
 servletapi.build.notrequired=true
 jspapi.build.notrequired=true
 EOBP
@@ -93,12 +92,11 @@ install -pD -T -m 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.p
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt STATUS.html
 %{_javadir}/%{name}.jar
 %{_javadir}/%{short_name}.jar
 %{_mavenpomdir}/JPP-%{short_name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc LICENSE.txt
@@ -106,6 +104,9 @@ cp -pr dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_35jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_29jpp7
 - new release
 
