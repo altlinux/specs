@@ -3,8 +3,9 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
@@ -40,7 +41,7 @@ BuildRequires: jpackage-compat
 Summary:        Code Coverage Tool
 Name:           emma
 Version:        %{shortver}.5312
-Release:        alt2_12jpp7
+Release:        alt2_16jpp8
 Epoch:          0
 License:        CPL
 URL:            http://emma.sourceforge.net/
@@ -70,7 +71,7 @@ BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  jpackage-utils >= 0:1.7.5-1jpp.3
 # For the timestamp hack (see above)
 BuildRequires:  bc
-Requires:       jpackage-utils >= 0:1.7.5-1jpp.3
+BuildRequires:  javapackages-local
 
 
 BuildArch:      noarch
@@ -111,37 +112,23 @@ rm lib/internal/stamptool.jar
 ant -Dbuild.compiler=modern build javadoc
 
 %install
+%mvn_artifact %{SOURCE1} dist/%{name}.jar
+%mvn_artifact %{SOURCE2} dist/%{name}_ant.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 dist/%{name}.jar \
-               $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -m 644 dist/%{name}_ant.jar \
-               $RPM_BUILD_ROOT%{_javadir}/%{name}_ant.jar
+# JAVADOCS
+%mvn_install -J out/javadocs/
 
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}_ant.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP-%{name}_ant.pom %{name}_ant.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr out/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc cpl-v10.html
-%{_javadir}/*
-%{_mavenpomdir}/JPP-%{name}*
-%{_mavendepmapfragdir}/%{name}
+%dir %{_javadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc cpl-v10.html
-%doc %{_javadocdir}/%{name}*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5312-alt2_12jpp7
 - new release
 
