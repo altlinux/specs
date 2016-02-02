@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt5_0.13.a2.1jpp7
+Release:        alt5_0.16.a2.2jpp8
 Epoch:          0
 Summary:        Plexus Ant component factory
 # Email from copyright holder confirms license.
@@ -56,7 +57,7 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 
 BuildRequires:  ant
-BuildRequires:  classworlds
+BuildRequires:  plexus-classworlds
 BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-utils
 BuildRequires:  plexus-component-factories-pom
@@ -100,6 +101,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.16.a2.2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.13.a2.1jpp7
 - new release
 
