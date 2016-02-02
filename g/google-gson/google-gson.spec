@@ -1,34 +1,24 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-
-%global short_name   gson
-%global group_id     com.google.code.gson
-
-Name:             google-%{short_name}
-Version:          2.2.4
-Release:          alt1_3jpp7
+BuildRequires: jpackage-generic-compat
+Name:             google-gson
+Version:          2.3.1
+Release:          alt1_2jpp8
 Summary:          Java lib for conversion of Java objects into JSON representation
 License:          ASL 2.0
-Group:            Development/Java
-URL:              http://code.google.com/p/%{name}
-# request for tarball: http://code.google.com/p/google-gson/issues/detail?id=283
-# svn export http://google-gson.googlecode.com/svn/tags/gson-%{version} google-gson-%{version}
-# tar caf google-gson-%{version}.tar.xz google-gson-%{version}
-Source0:          %{name}-%{version}.tar.xz
+URL:              https://github.com/google/gson
+Source0:          https://github.com/google/gson/archive/gson-%{version}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-install-plugin
-
-Requires:         jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-eclipse-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -38,49 +28,42 @@ equivalent Java object. Gson can work with arbitrary Java objects including
 pre-existing objects that you do not have source-code of.
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n gson-gson-%{version}
 
 # convert CR+LF to LF
 sed -i 's/\r//g' LICENSE
 
+# Test requires network
+rm src/test/java/com/google/gson/DefaultInetAddressTypeAdapterTest.java
+
+# Throwable has more fields serialized, probably incorrect test expectations
+rm src/test/java/com/google/gson/functional/ThrowableFunctionalTest.java
+
 %build
 # LANG="C" or LANG="en_US.utf8" needed for the tests
-mvn-rpmbuild -Dmaven.test.failure.ignore=true install 
+%mvn_build
 
 %install
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE README
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_3jpp7
 - new release
 
