@@ -2,11 +2,12 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: libfonts
 Version: 1.1.3
-Release: alt1_13jpp7
+Release: alt1_17jpp8
 Summary: TrueType Font Layouting
 License: LGPLv2 and UCD
 Group: System/Libraries
@@ -55,23 +56,22 @@ done
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p ./dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}
-pushd $RPM_BUILD_ROOT%{_javadir}
-ln -s %{name}-%{version}.jar %{name}.jar
-popd
+cp -p ./dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
 %doc licence-LGPL.txt README.txt ChangeLog.txt
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_17jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_13jpp7
 - new release
 
