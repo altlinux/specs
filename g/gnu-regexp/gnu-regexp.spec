@@ -3,8 +3,9 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_18jpp7
+Release:        alt1_20jpp8
 Summary:        Java NFA regular expression engine implementation
 # GPLv2+: gnu/regexp/util/Egrep.java
 #         gnu/regexp/util/Grep.java
@@ -122,6 +123,9 @@ cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_20jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_18jpp7
 - new release
 
