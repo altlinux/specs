@@ -1,15 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global spname		ldapsp
 %global filtname	ldapfilt
 %global beansname	ldapbeans
 
 Name:		ldapjdk
 Version:	4.18
-Release:	alt1_14jpp7
+Release:	alt1_17jpp8
 Epoch:		1
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
@@ -92,14 +93,11 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -r mozilla/directory/java-sdk/dist/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
-%files
-%{_javadir}/%{name}*.jar
+%files -f .mfiles
 %{_javadir}/%{spname}*.jar
 %{_javadir}/%{filtname}*.jar
 %{_javadir}/%{beansname}*.jar
 %{_javadir}-1.3.0/*.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 %_javadir/ldapsdk.jar
 
 %files javadoc
@@ -108,6 +106,9 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_17jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_14jpp7
 - new release
 
