@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          osgi-resource-locator
 Version:       1.0.1
-Release:       alt1_7jpp8
+Release:       alt2_7jpp8
 Summary:       OSGi resource locator bundle
 License:       CDDL or GPLv2 with exceptions
 Url:           http://hk2.java.net/
@@ -60,6 +60,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_7jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7jpp8
 - new version
 
