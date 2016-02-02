@@ -1,10 +1,11 @@
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global spec_name geronimo-jta_1.1_spec
 
 Name:		geronimo-jta
 Version:	1.1.1
-Release:	alt3_15jpp7
+Release:	alt3_18jpp8
 Summary:	J2EE JTA v1.1 API
 
 Group:		Development/Java
@@ -87,6 +88,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_18jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_15jpp7
 - new release
 
