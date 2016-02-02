@@ -2,11 +2,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           sequence-library
 Version:        1.0.2
-Release:        alt1_4jpp7
+Release:        alt1_8jpp8
 Summary:        Textual diff and merge library
 
 License:        Sequence     
@@ -76,10 +77,7 @@ install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -rp docs/api/ %{buildroot}%{_javadocdir}/%{name}
 
 
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE.txt
 
 %files javadoc
@@ -88,6 +86,9 @@ cp -rp docs/api/ %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_8jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_4jpp7
 - new release
 
