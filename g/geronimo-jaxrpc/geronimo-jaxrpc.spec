@@ -1,19 +1,18 @@
 Group: Development/Java
-BuildRequires: geronimo-saaj
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global spec_ver 1.1
 %global spec_name geronimo-jaxrpc_%{spec_ver}_spec
 
 Name:             geronimo-jaxrpc
 Version:          2.1
-Release:          alt2_13jpp7
+Release:          alt2_17jpp8
 Summary:          Java EE: Java API for XML Remote Procedure Call v1.1
 License:          ASL 2.0 and W3C
 
 URL:              http://geronimo.apache.org/
 Source0:          http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{spec_name}/%{version}/%{spec_name}-%{version}-source-release.tar.gz
-Source1:          %{name}.depmap
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
@@ -22,15 +21,11 @@ BuildRequires:    geronimo-parent-poms
 BuildRequires:    maven-resources-plugin
 BuildRequires:    saaj_api
 BuildRequires:    geronimo-osgi-locator
-BuildRequires:    tomcat-servlet-3.0-api
+BuildRequires:    glassfish-servlet-api
 BuildRequires:    maven-surefire-provider-junit
 
 Provides:         jaxrpc_api = %{spec_ver}
 Source44: import.info
-
-#Provides:       jaxrpc = 0:1.1
-#Provides:       jaxrpc_1_1_api = %{version}-%{release}
-#Provides:       jaxrpc_api = 0:1.1
 
 %description
 This package contains the core JAX-RPC APIs for the client programming model.
@@ -54,46 +49,22 @@ sed -i 's/\r//' LICENSE NOTICE
 %mvn_alias : javax.xml:jaxrpc-api
 %mvn_file : %{name} jaxrpc
 
-cat >>.xmvn/config.d/mvn-rpmbuild-config.xml <<EOF
-<configuration>
-  <resolverSettings>
-    <metadataRepositories>
-      <repository>%{SOURCE1}</repository>
-    </metadataRepositories>
-  </resolverSettings>
-</configuration>
-EOF
-
 %build
 %mvn_build
 
 %install
 %mvn_install
 
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxrpc_geronimo-jaxrpc<<EOF
-%{_javadir}/jaxrpc.jar	%{_javadir}/geronimo-jaxrpc.jar	10000
-EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxrpc_api_geronimo-jaxrpc<<EOF
-#%{_javadir}/jaxrpc_api.jar	%{_javadir}/geronimo-jaxrpc.jar	10000
-#EOF
-#install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaxrpc_1_1_api_geronimo-jaxrpc<<EOF
-#%{_javadir}/jaxrpc_1_1_api.jar	%{_javadir}/geronimo-jaxrpc.jar	10000
-#EOF
-
-
 %files -f .mfiles
 %doc LICENSE NOTICE
-
-#%_altdir/jaxrpc_1_1_api_geronimo-jaxrpc
-#%_altdir/jaxrpc_api_geronimo-jaxrpc
-%_altdir/jaxrpc_geronimo-jaxrpc
-%exclude %{_javadir}*/jaxrpc.jar
-
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2_17jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1-alt2_13jpp7
 - new release
 
