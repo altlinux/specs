@@ -1,9 +1,10 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: swig
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat ant-junit
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name glassfish-pfl
 %define version 3.2.0
@@ -11,9 +12,8 @@ BuildRequires: jpackage-compat ant-junit
 %global namedversion %{version}%{?namedreltag}
 Name:          glassfish-pfl
 Version:       3.2.0
-Release:       alt2_0.3.b001jpp7
+Release:       alt2_0.9.b001jpp8
 Summary:       GlassFish Primitive Function Library
-Group:         Development/Java
 # Few files in src/org/glassfish/pfl/test/ is under ASL 2.0
 License:       (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:           http://java.net/projects/gmbal/pages/Home
@@ -45,20 +45,16 @@ Source10:      http://www.apache.org/licenses/LICENSE-2.0.txt
 
 Patch0:        %{name}-%{namedversion}-use-system-asm.patch
 
-BuildRequires: jpackage-utils
-
 BuildRequires: ant
 BuildRequires: aqute-bnd
-
-BuildRequires: objectweb-asm
+BuildRequires: javapackages-local
+BuildRequires: objectweb-asm3
 
 # test deps
 BuildRequires: geronimo-ejb
-BuildRequires: junit4
+BuildRequires: hamcrest
+BuildRequires: junit
 
-Requires:      objectweb-asm
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -75,9 +71,8 @@ when not run under GlassFish v3.
 This package provides the gmbal Primitive Function Library.
  
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -94,12 +89,12 @@ cp -p %{SOURCE4} pom-dynamic.xml
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm-util</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>" pom-dynamic.xml
 
 cp -p %{SOURCE6} pom-tf.xml
@@ -108,17 +103,17 @@ cp -p %{SOURCE6} pom-tf.xml
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm-tree</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm-util</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>" pom-tf.xml
 
 cp -p %{SOURCE7} pom-tf-tools.xml
@@ -127,17 +122,17 @@ cp -p %{SOURCE7} pom-tf-tools.xml
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm-tree</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>
     <dependency>
       <groupId>asm</groupId>
       <artifactId>asm-util</artifactId>
-      <version>3.3.1</version>
+      <version>3</version>
     </dependency>" pom-tf-tools.xml
 
 cp -p %{SOURCE9} LICENSE.txt
@@ -146,50 +141,28 @@ sed -i 's/\r//' LICENSE.txt LICENSE-2.0.txt
 
 %build
 
-%ant dist javadoc
+%ant dist javadoc test
 
 %install
+%mvn_artifact %{SOURCE2} target/pfl-basic.jar
+%mvn_artifact %{SOURCE3} target/pfl-basic-tools.jar
+%mvn_artifact pom-dynamic.xml target/pfl-dynamic.jar
+%mvn_artifact %{SOURCE5} target/pfl-ff.jar
+%mvn_artifact pom-tf.xml target/pfl-tf.jar
+%mvn_artifact pom-tf-tools.xml target/pfl-tf-tools.jar
+%mvn_artifact %{SOURCE8} target/pfl-test.jar
+%mvn_install -J target/apidocs
 
-mkdir -p %{buildroot}%{_javadir}/%{name}
-install -m 644 target/pfl-basic.jar %{buildroot}%{_javadir}/%{name}/%{name}-basic.jar
-install -m 644 target/pfl-basic-tools.jar %{buildroot}%{_javadir}/%{name}/%{name}-basic-tools.jar
-install -m 644 target/pfl-dynamic.jar %{buildroot}%{_javadir}/%{name}/%{name}-dynamic.jar
-install -m 644 target/pfl-ff.jar %{buildroot}%{_javadir}/%{name}/%{name}-ff.jar
-install -m 644 target/pfl-test.jar %{buildroot}%{_javadir}/%{name}/%{name}-test.jar
-install -m 644 target/pfl-tf-tools.jar %{buildroot}%{_javadir}/%{name}/%{name}-tf-tools.jar
-install -m 644 target/pfl-tf.jar %{buildroot}%{_javadir}/%{name}/%{name}-tf.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-basic.pom
-%add_maven_depmap JPP.%{name}-%{name}-basic.pom %{name}/%{name}-basic.jar
-install -pm 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-basic-tools.pom
-%add_maven_depmap JPP.%{name}-%{name}-basic-tools.pom %{name}/%{name}-basic-tools.jar
-install -pm 644 pom-dynamic.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-dynamic.pom
-%add_maven_depmap JPP.%{name}-%{name}-dynamic.pom %{name}/%{name}-dynamic.jar
-install -pm 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-ff.pom
-%add_maven_depmap JPP.%{name}-%{name}-ff.pom %{name}/%{name}-ff.jar
-install -pm 644 pom-tf.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-tf.pom
-%add_maven_depmap JPP.%{name}-%{name}-tf.pom %{name}/%{name}-tf.jar
-install -pm 644 pom-tf-tools.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-tf-tools.pom
-%add_maven_depmap JPP.%{name}-%{name}-tf-tools.pom %{name}/%{name}-tf-tools.jar
-install -pm 644 %{SOURCE8} %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-test.pom
-%add_maven_depmap JPP.%{name}-%{name}-test.pom %{name}/%{name}-test.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-*.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %doc LICENSE.txt LICENSE-2.0.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2_0.9.b001jpp8
+- new version
+
 * Fri Sep 05 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2_0.3.b001jpp7
 - new release
 
