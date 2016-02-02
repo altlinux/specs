@@ -1,16 +1,17 @@
 Epoch: 1
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global svnrev 238
 
 Name:           stax-utils
 Version:        0
-Release:        alt1_0.5.20110309svn238jpp7
+Release:        alt1_0.9.20110309svn238jpp8
 Summary:        StAX utility classes
-Group:          Development/Java
 License:        BSD
 URL:            http://java.net/projects/stax-utils/
 # svn export -r 238 https://svn.java.net/svn/stax-utils~svn/trunk/ stax-utils-svn238
@@ -38,9 +39,8 @@ This is a set of utility classes that make it easy for developers to
 integrate StAX into their existing XML processing applications.
 
 %package javadoc
+Group: Development/Java
 Summary:      API documentation for %{name}
-Group:        Development/Java
-Requires:     jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -70,18 +70,17 @@ sed -i -e 's/20060502/20110309/' %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 install -d -m 755 %{buildroot}%{_javadocdir}
 cp -rp build/javadoc %{buildroot}%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %doc docs/COPYRIGHT.TXT LICENSE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %doc docs/COPYRIGHT.TXT LICENSE
 %{_javadocdir}/%{name}
 
-
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.9.20110309svn238jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0-alt1_0.5.20110309svn238jpp7
 - new release
 
