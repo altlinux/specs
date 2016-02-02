@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.5.3
-Release: alt2.git20150216
+Release: alt3.git20150216
 Summary: ZODB Replicated Storage
 License: ZPLv2.1
 Group: Development/Python
@@ -59,6 +59,7 @@ from the primary storage.
 
 This package contains tests for %oname.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: ZODB Replicated Storage
 Group: Development/Python3
@@ -84,6 +85,7 @@ may be defined. The secondary storages will automatically replicate data
 from the primary storage.
 
 This package contains tests for %oname.
+%endif
 
 %prep
 %setup
@@ -165,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 2.5.3-alt3.git20150216
+- improve spec
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.5.3-alt2.git20150216
 - Cleanup buildreq
 
