@@ -1,21 +1,22 @@
+Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           electric
 Version:        8.09
-Release:        alt1_7jpp7
+Release:        alt1_10jpp8
 Summary:        Sophisticated ASIC and MEM CAD System
 
-Group:          Engineering
 License:        GPLv3
 URL:            http://www.staticfreesoft.com/
 
 Source0:        ftp://ftp.gnu.org/pub/gnu/electric/%{name}-%{version}.jar
 Source1:        %{name}.desktop
 Source2:        %{name}.1
-
 
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
@@ -32,10 +33,8 @@ and electro-mechanical hybrid layout.
 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 
@@ -60,21 +59,19 @@ ant -verbose        \
 
 
 %install
-
-
 # generating empty directories
 install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_javadir}/%{name}
 
 # real java binary created by this spec file
 install -pm 0755 %{name}-%{version}.jar \
-                 %{buildroot}%{_javadir}/%{name}/%{name}-%{version}.jar
+                 %{buildroot}%{_javadir}/%{name}/%{name}.jar
 
 
-# dummy executable file to call %%{name}-%%{version}.jar
+# dummy executable file to call %%{name}.jar
 cat > %{name} << EOF
 #!/bin/bash
-java -jar %{_javadir}/%{name}/%{name}-%{version}.jar
+java -jar %{_javadir}/%{name}/%{name}.jar
 EOF
 install -pm 0755 %{name} %{buildroot}%{_bindir}/%{name}
 
@@ -100,7 +97,7 @@ install -d %{buildroot}%{_javadocdir}/%{name}
 %doc packaging/README.txt ChangeLog.txt packaging/LicenseGNU.txt
 %{_bindir}/%{name}
 %dir %{_javadir}/%{name}/
-%{_javadir}/%{name}/%{name}-%{version}.jar
+%{_javadir}/%{name}/%{name}.jar
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %{_mandir}/man1/%{name}.1*
@@ -110,6 +107,9 @@ install -d %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 8.09-alt1_7jpp7
 - new release
 
