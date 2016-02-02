@@ -1,24 +1,25 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          stax-ex
-Version:       1.7.1
-Release:       alt1_6jpp7
+Version:       1.7.7
+Release:       alt1_3jpp8
 Summary:       StAX API extensions
 License:       CDDL or GPLv2
 Url:           https://stax-ex.dev.java.net
-# svn export https://svn.java.net/svn/stax-ex~svn/tags/stax-ex-1.7.1 stax-ex-1.7.1
-# find stax-ex-1.7.1/ -name '*.jar' -delete
-# tar czf stax-ex-1.7.1.tar.gz stax-ex-1.7.1
+# svn export https://svn.java.net/svn/stax-ex~svn/tags/stax-ex-1.7.7/ stax-ex-1.7.7
+# find stax-ex-1.7.7/ -name '*.jar' -delete
+# tar czf stax-ex-1.7.7.tar.gz stax-ex-1.7.7
 Source0:       %{name}-%{version}.tar.gz
 
-BuildRequires: bea-stax
 BuildRequires: dos2unix
-BuildRequires: junit
-BuildRequires: jvnet-parent
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
+BuildRequires: mvn(javax.xml.stream:stax-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildArch:     noarch
 Source44: import.info
 
@@ -44,15 +45,20 @@ This package contains javadoc for %{name}.
 %setup -q
 
 %pom_remove_dep javax.activation:activation
+%pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin org.glassfish.copyright:glassfish-copyright-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-deploy-plugin
 
 # Convert the license to UTF-8:
 mv LICENSE.txt LICENSE.txt.tmp
 iconv -f ISO-8859-1 -t UTF-8 LICENSE.txt.tmp > LICENSE.txt
 dos2unix LICENSE.txt
 
+%mvn_file :stax-ex %{name}
+
 %build
 
-%mvn_file :stax-ex %{name}
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -65,6 +71,9 @@ dos2unix LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.7-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_6jpp7
 - new release
 
