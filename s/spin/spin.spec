@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           spin
 Version:        1.5
-Release:        alt2_11jpp7
+Release:        alt2_13jpp8
 Summary:        A transparent threading solution for non-freezing Swing applications
 License:        LGPLv2
 Group:          Development/Java
@@ -60,6 +61,9 @@ Documentation for the spin Java library.
 %doc license.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_11jpp7
 - new release
 
