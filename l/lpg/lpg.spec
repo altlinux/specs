@@ -6,14 +6,15 @@ BuildRequires: unzip
 BuildRequires: gcc-c++
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global    _version 2.0.17
 %global    _compat_version 1.1.0
 
 Name:      lpg
 Version:   %{_version}
-Release:   alt1_18jpp7
+Release:   alt1_18jpp8
 Summary:   LALR Parser Generator
 # although the text of the licence isn't distributed with some of the source,
 # the author has exlicitly stated that everything is covered under the EPL
@@ -143,6 +144,9 @@ install -pD -T lpg-generator-cpp/bin/%{name}-linux_x86 \
 %{_javadir}/%{name}javaruntime.jar
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_18jpp8
+- new version
+
 * Mon Nov 23 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.17-alt1_18jpp7
 - new jpp release
 
