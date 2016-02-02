@@ -5,11 +5,12 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name: sac
 Version: 1.3
-Release: alt3_17jpp7
+Release: alt3_21jpp8
 Summary: Java standard interface for CSS parser
 License: W3C
 Group: System/Libraries
@@ -70,13 +71,16 @@ install -pm 644 %{SOURCE3} \
 %doc COPYRIGHT.html
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%{_datadir}/maven-metadata/*
 
 %files javadoc
 %doc COPYRIGHT.html
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_21jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_17jpp7
 - new release
 
