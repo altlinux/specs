@@ -2,11 +2,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          jaxb2-common-basics
 Version:       0.6.3
-Release:       alt2_8jpp7
+Release:       alt2_12jpp8
 Summary:       JAXB2 Basics
 License:       BSD
 Url:           http://java.net/projects/jaxb2-commons/pages/Home
@@ -18,8 +19,6 @@ Source0:       %{name}-%{version}-src-svn.tar.gz
 # but jaxb2-commons developers allowed us to redistribute their
 # work only if we include this notice. So we HAVE TO include these notices.
 Source1:       %{name}-LICENSE
-
-
 # remove 
 #    org.springframework spring 2.0.7
 #   test deps
@@ -83,6 +82,8 @@ rm -rf annotate/src/test/java/org/jvnet/jaxb2_commons/plugin/annotate/tests/*
 # require spring framework
 rm -rf tools/src/main/java/org/jvnet/jaxb2_commons/plugin/spring/*
 
+sed -i "s|com.sun.tools.xjc.outline.Aspect|com.sun.tools.xjc.model.Aspect|" \
+ tools/src/main/java/org/jvnet/jaxb2_commons/xjc/model/concrete/XJCCMInfoFactory.java
 
 %build
 
@@ -98,6 +99,9 @@ rm -rf tools/src/main/java/org/jvnet/jaxb2_commons/plugin/spring/*
 %doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt2_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt2_8jpp7
 - new release
 
