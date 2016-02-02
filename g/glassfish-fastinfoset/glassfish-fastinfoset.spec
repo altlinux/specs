@@ -1,55 +1,34 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name: glassfish-fastinfoset
-Version: 1.2.12
-Release: alt5_7jpp7
-Summary: Fast Infoset
-Group: Development/Java
-License: ASL 2.0
-URL: https://fi.dev.java.net
+BuildRequires: jpackage-generic-compat
+Name:          glassfish-fastinfoset
+Version:       1.2.13
+Release:       alt1_3jpp8
+Summary:       Fast Infoset
+License:       ASL 2.0
+URL:           https://fi.java.net
+# svn export https://svn.java.net/svn/fi~svn/tags/fastinfoset-project-1.2.13/ glassfish-fastinfoset-1.2.13
+# find glassfish-fastinfoset-1.2.13/ -name '*.class' -delete
+# find glassfish-fastinfoset-1.2.13/ -name '*.jar' -delete
+# rm -rf glassfish-fastinfoset-1.2.13/roundtrip-tests
+# tar czf glassfish-fastinfoset-1.2.13-src-svn.tar.gz glassfish-fastinfoset-1.2.13
+Source0:       %{name}-%{version}-src-svn.tar.gz
+Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
+# add xmlstreambuffer 1.5.x support
+Patch0:        %{name}-1.2.12-utilities-FastInfosetWriterSAXBufferProcessor.patch
 
-# svn export https://svn.java.net/svn/fi~svn/tags/1_2_12/ glassfish-fastinfoset-1.2.12
-# find glassfish-fastinfoset-1.2.12/ -name '*.class' -delete
-# find glassfish-fastinfoset-1.2.12/ -name '*.jar' -delete
-# rm -rf glassfish-fastinfoset-1.2.12/roundtrip-tests
-# tar czf glassfish-fastinfoset-1.2.12-src-svn.tar.gz glassfish-fastinfoset-1.2.12
-Source0: %{name}-%{version}-src-svn.tar.gz
-
-# Replace javax.xml.bind jsr173_api with stax (bea-)stax-api:
-Patch0: %{name}-%{version}-pom.patch
-
-BuildRequires: jpackage-utils
-BuildRequires: bea-stax-api
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-jxr
-BuildRequires: maven-plugin-tools-api
-BuildRequires: maven-project-info-reports-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: xsom
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-surefire-provider-junit
+BuildRequires: mvn(com.sun.xml.stream.buffer:streambuffer)
+BuildRequires: mvn(com.sun.xsom:xsom)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-tools-api)
+BuildRequires: mvn(org.apache.maven.plugins:maven-release-plugin)
 
-Requires: bea-stax-api
-Requires: jpackage-utils
-Requires: xsom
-
-BuildArch: noarch
+BuildArch:     noarch
 Source44: import.info
-
-
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-Requires: jpackage-utils
-BuildArch: noarch
-
 
 %description
 Fast Infoset specifies a standardized binary encoding for the XML Information
@@ -59,60 +38,50 @@ specified by the Fast Infoset standard, may be serialized to a fast infoset
 document.  Fast infoset documents are generally smaller in size and faster to
 parse and serialize than equivalent XML documents.
 
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
-
 %prep
 %setup -q
-%patch0 -p1
+%patch0 -p0
 
+cp %{SOURCE1} .
+
+# Remove wagon-webdav
+%pom_xpath_remove "pom:build/pom:extensions"
+
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :maven-antrun-extended-plugin
+%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
+
+%pom_disable_module roundtrip-tests
+%pom_disable_module samples
+
+%mvn_file :FastInfoset %{name}
+%mvn_file :FastInfosetUtilities %{name}-utilities
 
 %build
-mvn-rpmbuild install javadoc:aggregate
-
+%mvn_build
 
 %install
+%mvn_install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 fastinfoset/target/FastInfoset-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{_javadir}/%{name}.jar %{buildroot}%{_javadir}/FastInfoset.jar
+%files -f .mfiles
+%doc copyright.txt LICENSE-2.0.txt
 
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-project.pom
-cp -p fastinfoset/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# Javadoc files.
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
-
-# Dependencies map:
-%add_maven_depmap JPP-%{name}-project.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/FastInfoset_glassfish-fastinfoset<<EOF
-%{_javadir}/FastInfoset.jar	%{_javadir}/%name.jar	300
-EOF
-
-
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%_altdir/FastInfoset_glassfish-fastinfoset
-%exclude %{_javadir}*/FastInfoset.jar
-
-
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc copyright.txt LICENSE-2.0.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.13-alt1_3jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt5_7jpp7
 - new release
 
