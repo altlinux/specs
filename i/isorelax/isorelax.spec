@@ -2,8 +2,9 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -42,7 +43,7 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.14.release20050331jpp7
+Release:        alt1_0.18.release20050331jpp8
 License:        MIT and ASL 1.1
 BuildArch:      noarch
 
@@ -61,9 +62,8 @@ Source1:        license.txt
 Source2:        http://repo2.maven.org/maven2/%{name}/%{name}/20030108/%{name}-20030108.pom
 Patch0:         %{name}-apidocsandcompressedjar.patch
 
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  javapackages-local
 BuildRequires:  ant
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -111,6 +111,9 @@ install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/*
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.18.release20050331jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.14.release20050331jpp7
 - new release
 
