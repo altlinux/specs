@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           cambozola
 Version:        0.93
-Release:        alt1_1jpp7
+Release:        alt1_3jpp8
 Summary:        A viewer for multipart jpeg streams
 
 Group:          Development/Java
@@ -75,6 +76,9 @@ cp -rp javadoc/*  \
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1_3jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.93-alt1_1jpp7
 - new release
 
