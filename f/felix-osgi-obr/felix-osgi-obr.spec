@@ -3,13 +3,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global bundle org.osgi.service.obr
 
 Name:           felix-osgi-obr
 Version:        1.0.2
-Release:        alt2_11jpp7
+Release:        alt2_15jpp8
 Summary:        Felix OSGi OBR Service API
 
 License:        ASL 2.0
@@ -19,7 +20,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:felix)
+BuildRequires:  mvn(org.apache.felix:felix:pom:)
 BuildRequires:  mvn(org.apache.felix:org.osgi.core)
 BuildRequires:  mvn(org.easymock:easymock)
 BuildRequires:  mvn(org.mockito:mockito-all)
@@ -56,6 +57,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_15jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_11jpp7
 - new release
 
