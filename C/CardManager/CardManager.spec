@@ -1,19 +1,22 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           CardManager
 Version:        3
-Release:        alt1_3jpp7
+Release:        alt1_6jpp8
 Summary:        Java application to allows you to play any, especially collectible, card game
 
 Group:          Games/Other
 License:        BSD
 URL:            http://cardmanager.wz.cz/
 Source0:        http://cardmanager.wz.cz/CardManager_sources%{version}.zip
+Source1:        %{name}.appdata.xml
 Patch0:         removeManifestEntries.patch
+Patch1:         jdk8-javadoc.patch
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
@@ -50,6 +53,7 @@ This package contains the API documentation for %{name}.
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 %patch0
+%patch1
 
 %build
 
@@ -69,6 +73,8 @@ cp -p ./FedoraLauncher.sh $RPM_BUILD_ROOT%{_bindir}/CardManager
 #end launcher
 
 
+#appdata
+install -Dpm0644 %{SOURCE1} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p dist/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
@@ -86,6 +92,7 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %attr(755,root,root) %{_bindir}/CardManager
 %{_javadir}/*
 %doc license.txt
+%{_datadir}/appdata/%{name}.appdata.xml
 
 %files javadoc
 %{_javadocdir}/%{name}
@@ -93,6 +100,9 @@ cp -r dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 3-alt1_6jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3-alt1_3jpp7
 - new release
 
