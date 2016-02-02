@@ -2,24 +2,23 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          javaparser
 Version:       1.0.8
-Release:       alt2_5jpp7
+Release:       alt2_10jpp8
 Summary:       Java 1.5 Parser and AST
 License:       GPLv3+ and LGPLv3+
-URL:           http://code.google.com/p/javaparser/
+URL:           http://javaparser.github.io/javaparser/
 Source0:       http://javaparser.googlecode.com/files/%{name}-%{version}-src.zip
 Source1:       http://%{name}.googlecode.com/svn/maven2/com/google/code/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-
 
 # test deps
 BuildRequires: junit
 
 BuildRequires: javacc
 BuildRequires: maven-local
-# BuildRequires: maven-surefire-provider-junit4
 BuildRequires: sonatype-oss-parent
 
 BuildArch:     noarch
@@ -57,6 +56,8 @@ done
 
 sed -i 's/\r//' COPYING.LESSER
 
+%mvn_file :%{name} %{name}
+
 %build
 
 (
@@ -64,7 +65,7 @@ sed -i 's/\r//' COPYING.LESSER
   rm JavaCharStream.java ParseException.java Token.java TokenMgrError.java
   javacc.sh java_1_5.jj
 )
-%mvn_file :%{name} %{name}
+
 # test skip http://code.google.com/p/javaparser/issues/detail?id=43
 %mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
@@ -72,12 +73,17 @@ sed -i 's/\r//' COPYING.LESSER
 %mvn_install
 
 %files -f .mfiles
-%doc COPYING COPYING.LESSER readme.txt
+%doc readme.txt
+%doc COPYING COPYING.LESSER
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING COPYING.LESSER readme.txt
+%doc readme.txt
+%doc COPYING COPYING.LESSER
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_10jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_5jpp7
 - new release
 
