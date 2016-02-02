@@ -1,14 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global major 2.0
 %global minor 1
 
 Name:		jaxodraw
 Version:	%{major}.%{minor}
-Release:	alt1_13jpp7
+Release:	alt1_16jpp8
 Summary:	A Java program for drawing Feynman diagrams
 Group:		Engineering
 License:	GPLv2+
@@ -102,14 +104,45 @@ cp -rp build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 # LaTeX style
 install -D -p -m 644 axodraw4j.sty %{buildroot}%{_datadir}/texmf/tex/latex/axodraw4j/axodraw4j.sty
 
-%check
-# Unit tests fail with Open JDK
-#ant test
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
+<!--
+EmailAddress: lukas_theussl@users.sf.net
+SentUpstream: 2014-05-22
+-->
+<application>
+  <id type="desktop">jaxodraw.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Create and edit Feynman diagrams</summary>
+  <description>
+    <p>
+      Jaxodraw is an application for creating and editing Feynman diagrams,
+      with the ability to export to LaTeX.
+      Feynman diagrams are a specific diagram scheme to represent the mathematical
+      expressions that describe the behavior of subatomic particles.
+    </p>
+  </description>
+  <url type="homepage">http://jaxodraw.sourceforge.net/</url>
+  <screenshots>
+  <screenshot type="default">http://jaxodraw.sourceforge.net/images/general.png</screenshot>
+  </screenshots>
+</application>
+EOF
 
 %files
 %doc src/doc/* axodraw4j-summary.txt
 %{_bindir}/%{name}
 %{_javadir}/%{name}.jar
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %{_mandir}/man1/%{name}.1.*
@@ -121,6 +154,9 @@ install -D -p -m 644 axodraw4j.sty %{buildroot}%{_datadir}/texmf/tex/latex/axodr
 %{_datadir}/texmf/tex/latex/axodraw4j/
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_13jpp7
 - new release
 
