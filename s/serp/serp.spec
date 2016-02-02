@@ -1,42 +1,36 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          serp
-Version:       1.14.2
-Release:       alt2_0.6.20120406cvsjpp7
-Summary:       Bytecode manipulation framework
+Version:       1.15.2
+Release:       alt1_0.2.20150412cvsjpp8
+Summary:       Byte-code manipulation framework
 License:       BSD
 Url:           http://serp.sourceforge.net/
 # cvs -d:pserver:anonymous@serp.cvs.sourceforge.net:/cvsroot/serp login
 # cvs -z3 -d:pserver:anonymous@serp.cvs.sourceforge.net:/cvsroot/serp  export -r HEAD serp
-# tar czf serp-1.14.2-20120406-src-cvs.tar.gz serp
-Source0:       serp-1.14.2-20120406-src-cvs.tar.gz
-# change 
-#  org.codehaus.mojo jxr-maven-plugin in org.apache.maven.plugins maven-jxr-plugin
-#  org.codehaus.mojo surefire-report-maven-plugin in org.apache.maven.plugins >maven-surefire-report-plugin
-Patch0:        serp-1.13.1-pom_xml.patch
-
+# tar cJf serp-1.15.2-20150412-cvs.tar.xz serp
+Source0:       serp-1.15.2-20150412-cvs.tar.xz
 
 BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-junit4
-
 BuildRequires: mvn(junit:junit)
 
 BuildArch:     noarch
 Source44: import.info
 
 %description
-The goal of the serp bytecode framework is to tap the full 
-power of bytecode modification while lowering its associated
+The goal of the serp byte-code framework is to tap the full 
+power of byte-code modification while lowering its associated
 costs. The framework provides a set of high-level APIs for 
-manipulating all aspects of bytecode, from large-scale 
+manipulating all aspects of byte-code, from large-scale 
 structures like class member fields to the individual 
 instructions that comprise the code of methods. While in 
 order to perform any advanced manipulation, some understanding 
 of the class file format and especially of the JVM instruction 
 set is necessary, the framework makes it as easy as possible
-to enter the world of bytecode development.
+to enter the world of byte-code development.
 
 %package javadoc
 Group: Development/Java
@@ -51,8 +45,12 @@ This package contains javadoc for %{name}.
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
 
-%patch0 -p0
-sed -i "s|pom.version|project.version|" pom.xml
+%pom_remove_plugin :jxr-maven-plugin
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :surefire-report-maven-plugin
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']"
 
 %mvn_file :%{name} %{name}
 %mvn_alias :%{name} %{name}:%{name}
@@ -65,12 +63,16 @@ sed -i "s|pom.version|project.version|" pom.xml
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt README.txt
+%doc README.txt
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.15.2-alt1_0.2.20150412cvsjpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.14.2-alt2_0.6.20120406cvsjpp7
 - new release
 
