@@ -2,8 +2,9 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -35,12 +36,13 @@ BuildRequires: jpackage-compat
 #
 
 %global section		devel
-%global upstreamver	9.2-1002
+%global upstreamrel	1200
+%global upstreamver	9.4-%{upstreamrel}
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	9.2.1002
-Release:	alt1_4jpp7
+Version:	9.4.%{upstreamrel}
+Release:	alt1_2jpp8
 # ASL 2.0 applies only to postgresql-jdbc.pom file, the rest is BSD
 License:	BSD and ASL 2.0
 Group:		Databases
@@ -49,6 +51,12 @@ URL:		http://jdbc.postgresql.org/
 Source0:	http://jdbc.postgresql.org/download/%{name}-%{upstreamver}.src.tar.gz
 # originally http://repo2.maven.org/maven2/postgresql/postgresql/8.4-701.jdbc4/postgresql-8.4-701.jdbc4.pom:
 Source1:	%{name}.pom
+
+# Revert back fix for travis build which breaks our ant-build for version 1.9.2
+# & 1.9.4.
+# ~> downstream
+# ~> 1118667
+Patch0:		postgresql-jdbc-9.3-1102-revert-88b9a034.patch
 
 BuildArch:	noarch
 BuildRequires:	jpackage-utils
@@ -77,10 +85,13 @@ This package contains the API Documentation for %{name}.
 %setup -c -q
 mv -f %{name}-%{upstreamver}.src/* .
 rm -f %{name}-%{upstreamver}.src/.gitignore
+rm -f %{name}-%{upstreamver}.src/.travis.yml
 rmdir %{name}-%{upstreamver}.src
 
 # remove any binary libs
 find -name "*.jar" -or -name "*.class" | xargs rm -f
+
+%patch0 -p1 -b .revert-travis-fix
 
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
@@ -98,7 +109,8 @@ ant jar publicapi
 install -d $RPM_BUILD_ROOT%{_javadir}
 # Per jpp conventions, jars have version-numbered names and we add
 # versionless symlinks.
-install -m 644 jars/postgresql.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 jars/postgresql-%{upstreamver}.jdbc41.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+
 
 pushd $RPM_BUILD_ROOT%{_javadir}
 # Also, for backwards compatibility with our old postgresql-jdbc packages,
@@ -118,8 +130,21 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
 cp -ra build/publicapi $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -d build/publicapi docs/%{name}
 
+
+%check
+%if 0%{?runselftest}
+# Note that this requires to have PostgreSQL properly configured;  for this
+# reason the testsuite is turned off by default (see org/postgresql/test/README)
+test_log=test.log
+# TODO: more reliable testing
+ant test 2>&1 | tee "$test_log" || :
+( test -f "$test_log" && ! grep FAILED "$test_log" )
+
+%endif
+
+
 %files -f .mfiles
-%doc LICENSE README doc/*
+%doc LICENSE README.md doc/*
 %{_javadir}/%{name}2.jar
 %{_javadir}/%{name}2ee.jar
 %{_javadir}/%{name}3.jar
@@ -129,6 +154,9 @@ install -d build/publicapi docs/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:9.4.1200-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:9.2.1002-alt1_4jpp7
 - new release
 
