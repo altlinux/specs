@@ -1,17 +1,17 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-
+BuildRequires: jpackage-generic-compat
 Name:          jdo2-api
 Version:       2.2
-Release:       alt2_6jpp7
+Release:       alt2_11jpp8
 Summary:       Implementation of JSR 243: Java Data Objects 2.0
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://db.apache.org/jdo/
-Source0:       http://svn.apache.org/repos/asf/db/jdo/releases/2.2/dist/db/jdo/2.2/jdo2-api-2.2-src.tar.gz
+Source0:       http://svn.apache.org/repos/asf/db/jdo/tags/2.2/dist/db/jdo/2.2/jdo2-api-2.2-src.tar.gz
 Source1:       jdo2-api-2.2-build.xml
 # changed javax.transaction transaction-api 1.1 with geronimo-jta_1.1_spec
 # fix pom version
@@ -40,9 +40,8 @@ Java model abstraction of persistence, developed as Java Specification
 Request 243 under the auspices of the Java Community Process.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       API documentation for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -71,10 +70,7 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
 cp -pr  dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f %{name}-%{version}/.mfiles
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc
@@ -82,6 +78,9 @@ cp -pr  dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_6jpp7
 - new release
 
