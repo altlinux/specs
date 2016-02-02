@@ -2,11 +2,13 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:           jchardet
 Version:        1.1
-Release:        alt2_8jpp7
+Release:        alt2_11jpp8
 Summary:        Java port of Mozilla's automatic character set detection algorithm
 
 Group:          Development/Java
@@ -21,6 +23,9 @@ BuildRequires:  maven-compiler-plugin
 BuildRequires:  jpackage-utils
 
 Requires:       jpackage-utils
+%if 0%{?fedora} >= 20 || 0%{?rhel} >= 7
+%else
+%endif
 Source44: import.info
 
 %description
@@ -71,6 +76,9 @@ mv src/*java src/main/java/org/mozilla/intl/chardet
 
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_8jpp7
 - new release
 
