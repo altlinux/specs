@@ -1,57 +1,59 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jBCrypt
-Version:        0.3
-Release:        alt1_9jpp7
+Version:        0.4
+Release:        alt1_2jpp8
 Summary:        Strong password hashing for Java
 
-Group:          Development/Java
 License:        ISC
-URL:            http://www.mindrot.org/projects/jBCrypt/
-Source0:        http://www.mindrot.org/files/jBCrypt/jBCrypt-%{version}.tar.gz
+URL:            http://www.mindrot.org/projects/jBCrypt
+Source0:        http://www.mindrot.org/files/%{name}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
+BuildRequires:  ant
+BuildRequires:  ant-junit
+BuildRequires:  javapackages-local
 BuildRequires:  junit
 
-Requires:       jpackage-utils
+Obsoletes:      %{name}-javadoc < %{version}-%{release}
 Source44: import.info
 
 %description
 A Java implementation of OpenBSD's Blowfish password hashing code. 
 
+%package        javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description    javadoc
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
 
+%mvn_file : %{name}/%{name} %{name}
 
 %build
-javac BCrypt.java
-jar cvf jBCrypt.jar BCrypt.class
-
-# compile test cases too
-javac -encoding UTF-8 -cp %{_javadir}/junit.jar:jBCrypt.jar TestBCrypt.java
-jar cvf jBCrypt-test.jar TestBCrypt.class
-
+ant test dist
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp jBCrypt.jar $RPM_BUILD_ROOT%{_javadir}/jBCrypt.jar
+%mvn_artifact 'org.mindrot:jbcrypt:0.4' jbcrypt.jar
+%mvn_install
 
-
-%check
-java -cp %{_javadir}/junit.jar:jBCrypt.jar:jBCrypt-test.jar TestBCrypt
-
-
-%files
-%doc LICENSE README
-%{_javadir}/%{name}.jar
-
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_9jpp7
 - new release
 
