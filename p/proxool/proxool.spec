@@ -1,44 +1,41 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %define git_commit 659fc71
 
-Summary: Java connection pool library
-Name:    proxool
-Version: 0.9.1
-Release: alt2_9jpp7
-Epoch: 0
-License: ASL 2.0
-URL: http://proxool.sourceforge.net/
-Group: Development/Java
+Summary:       Java connection pool library
+Name:          proxool
+Version:       0.9.1
+Release:       alt2_16jpp8
+Epoch:         0
+License:       ASL 2.0
+URL:           http://proxool.sourceforge.net/
 # Grabbing a newer version from git due to license change
 # https://github.com/proxool/proxool/tarball/master
 # (commit 659fc71e617151327779802a5171f0da8205918d)
-Source0: proxool-proxool-%{git_commit}.tar.gz
-Source1: proxool.pom
-Patch0: proxool-no-embedded-cglib.patch
+Source0:       proxool-proxool-%{git_commit}.tar.gz
+Source1:       proxool.pom
+Patch0:        proxool-no-embedded-cglib.patch
 
-BuildRequires: jpackage-utils
 BuildRequires: ant >= 0:1.7.1
 BuildRequires: ant-junit
-BuildRequires: apache-commons-collections
-BuildRequires: apache-commons-lang
-BuildRequires: apache-commons-logging
-BuildRequires: cglib
-BuildRequires: dom4j
-BuildRequires: avalon-framework
-BuildRequires: hsqldb >= 0:1.80
-BuildRequires: junit
-BuildRequires: log4j
-BuildRequires: tomcat6-servlet-2.5-api
-BuildRequires: checkstyle
+BuildRequires: javapackages-local
+BuildRequires: mvn(avalon-framework:avalon-framework-api)
+BuildRequires: mvn(avalon-framework:avalon-framework-impl)
+BuildRequires: mvn(avalon-logkit:avalon-logkit)
+BuildRequires: mvn(com.puppycrawl.tools:checkstyle)
+BuildRequires: mvn(commons-collections:commons-collections)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(dom4j:dom4j)
+BuildRequires: mvn(hsqldb:hsqldb:1)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(javax.transaction:jta)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(net.sf.cglib:cglib)
 
-Requires: avalon-logkit
-Requires: dom4j
-Requires: jta
-Requires: jpackage-utils
 BuildArch: noarch
 Source44: import.info
 
@@ -51,9 +48,8 @@ It's easy to configure using the JDBC API, XML, or Java property
 files - you decide.
 
 %package javadoc
-Summary: Javadoc for %{name}
-Group:   Development/Java
-Requires: jpackage-utils
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -67,35 +63,26 @@ rm -rf lib jarjar
 
 %patch0 -p1 -b .sav0
 
+%mvn_file %{name}:%{name} %{name}
+
 %build
-CLASSPATH=$( build-classpath cglib avalon-framework servlet ) ant build-jar javadoc
+CLASSPATH=$(build-classpath cglib avalon-framework glassfish-servlet-api) ant build-jar javadoc
 
 %install
-# jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-install -m 0644 build/%{name}-%{version}.jar \
-$RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_artifact %{SOURCE1} build/%{name}-%{version}.jar
+%mvn_install -J build/api
 
-# javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 0644 %{S:1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%doc *.txt
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
+%files -f .mfiles
+%doc CHANGES.txt README.txt
 %doc LICENCE.txt
-%doc %{_javadocdir}/%{name}
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENCE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_16jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_9jpp7
 - new release
 
