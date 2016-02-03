@@ -1,26 +1,25 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          xmlenc
 Version:       0.53
-Release:       alt1_8jpp7
+Release:       alt1_12jpp8
 Summary:       Light-weight XML output library for Java
 License:       BSD
 #  http://xmlenc.sourceforge.net/
 URL:           https://github.com/znerd/xmlenc/
 Source0:       https://github.com/znerd/xmlenc/archive/%{name}-%{version}.tar.gz
 
-BuildRequires: mvn(org.znerd:znerd-oss-parent)
-
+BuildRequires: mvn(org.znerd:znerd-oss-parent:pom:)
 # test deps
 BuildRequires: mvn(junit:junit)
 
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-surefire-provider-junit4
 # required by enforcer-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildArch:     noarch
 Source44: import.info
 
@@ -43,22 +42,27 @@ find . -name "*.class" -delete
 find . -name ".*" -delete
 find . -name "*.jar" -type f -delete
 
-%build
-
 %mvn_file : %{name}
 %mvn_alias : "%{name}:%{name}"
+
+%build
+
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGES.txt COPYRIGHT.txt README.txt THANKS.txt
+%doc CHANGES.txt README.txt THANKS.txt
+%doc COPYRIGHT.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc COPYRIGHT.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_12jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1_8jpp7
 - new release
 
