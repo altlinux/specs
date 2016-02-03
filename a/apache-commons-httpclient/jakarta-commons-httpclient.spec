@@ -1,49 +1,20 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
-AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 %define oldname jakarta-commons-httpclient
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
+BuildRequires: jpackage-generic-compat
 %global short_name httpclient
 
 Name:           apache-commons-httpclient
 Version:        3.1
-Release:        alt6_13jpp7
-Epoch:          1
+Release:        alt6_23jpp8
 Summary: Jakarta Commons HTTPClient implements the client side of HTTP standards
 License:        ASL 2.0 and (ASL 2.0 or LGPLv2+)
+URL:            http://jakarta.apache.org/commons/httpclient/
+Epoch:          1
 Source0:        http://archive.apache.org/dist/httpcomponents/commons-httpclient/source/commons-httpclient-3.1-src.tar.gz
 Source1:        http://repo.maven.apache.org/maven2/commons-httpclient/commons-httpclient/%{version}/commons-httpclient-%{version}.pom
 Patch0:         %{oldname}-disablecryptotests.patch
@@ -53,30 +24,25 @@ Patch2:         %{oldname}-encoding.patch
 # CVE-2012-5783: missing connection hostname check against X.509 certificate name
 # https://fisheye6.atlassian.com/changelog/httpcomponents?cs=1422573
 Patch3:         %{oldname}-CVE-2012-5783.patch
-URL:            http://jakarta.apache.org/commons/httpclient/
-Group:          Development/Java
+Patch4:         %{oldname}-CVE-2014-3577.patch
+Patch5:         %{oldname}-CVE-2015-5262.patch
+
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils >= 0:1.5
+# FIXME: we need BR maven-local, because we're using macros like mvn_install
+# this should be changed to "javapackages-local" when javapackages-tools 4.0.0 is out
+BuildRequires:  maven-local
 BuildRequires:  ant
 BuildRequires:  apache-commons-codec
 BuildRequires:  apache-commons-logging >= 0:1.0.3
-#BuildRequires:  java-javadoc
 BuildRequires:  apache-commons-logging-javadoc
+BuildRequires:  java-javadoc
 BuildRequires:  junit
 
-Requires:       jpackage-utils
 Requires:       apache-commons-logging >= 0:1.0.3
 Requires:       apache-commons-codec
-
-Provides:       commons-httpclient = %{epoch}:%{version}-%{release}
-Obsoletes:      commons-httpclient < %{epoch}:%{version}-%{release}
-Provides:       jakarta-commons-httpclient3 = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-commons-httpclient3 < %{epoch}:%{version}-%{release}
 Source44: import.info
-# jpackage compat
-Provides:       jakarta-commons-httpclient = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-commons-httpclient < %{epoch}:%{version}-%{release}
+Provides: jakarta-commons-httpclient = 1:%version
 
 %description
 The Hyper-Text Transfer Protocol (HTTP) is perhaps the most significant
@@ -97,25 +63,24 @@ service clients, or systems that leverage or extend the HTTP protocol
 for distributed communication.
 
 %package        javadoc
+Group: Development/Java
 Summary:        Javadoc for %{oldname}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
 %package        demo
+Group: Development/Java
 Summary:        Demos for %{oldname}
-Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    demo
 %{summary}.
 
 %package        manual
+Group: Development/Java
 Summary:        Manual for %{oldname}
-Group:          Development/Java
 Requires:       %{name}-javadoc = %{epoch}:%{version}-%{release}
 BuildArch: noarch
 
@@ -137,6 +102,8 @@ popd
 
 %patch2
 %patch3 -p2
+%patch4 -p1
+%patch5 -p1
 
 # Use javax classes, not com.sun ones
 # assume no filename contains spaces
@@ -148,6 +115,9 @@ pushd src
     rm tempf
 popd
 
+%mvn_alias : apache:commons-httpclient
+%mvn_file ":{*}" jakarta-@1 "@1" commons-%{short_name}3
+
 %build
 ant \
   -Dbuild.sysclasspath=first \
@@ -158,57 +128,37 @@ ant \
   -Djavac.encoding=UTF-8 \
   dist test
 
-
 %install
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p dist/commons-httpclient.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{oldname}.jar
-# compat symlink
-pushd $RPM_BUILD_ROOT%{_javadir}
-ln -s jakarta-commons-httpclient.jar commons-httpclient3.jar
-ln -s jakarta-commons-httpclient.jar commons-httpclient.jar
-popd
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-mv dist/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{oldname}
+%mvn_artifact %{SOURCE1} dist/commons-httpclient.jar
+%mvn_install -J dist/docs/api
 
 # demo
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{oldname}
 cp -pr src/examples src/contrib $RPM_BUILD_ROOT%{_datadir}/%{oldname}
 
 # manual and docs
-rm -f dist/docs/{BUILDING,TESTING}.txt
+rm -Rf dist/docs/{api,BUILDING.txt,TESTING.txt}
+ln -s %{_javadocdir}/%{oldname} dist/docs/apidocs
 
-# maven POM and depmap
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{oldname}.pom
-%add_maven_depmap JPP-%{oldname}.pom %{oldname}.jar
-# jpp compat
-#ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
 %doc README RELEASE_NOTES
-%{_javadir}/%{oldname}.jar
-%{_javadir}/commons-httpclient3.jar
-%{_javadir}/commons-httpclient.jar
-%{_mavenpomdir}/JPP-%{oldname}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%doc %{_javadocdir}/%{oldname}
 
 %files demo
 %{_datadir}/%{oldname}
 
 %files manual
-%doc dist/docs/*
+%doc --no-dereference dist/docs/*
 
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_23jpp8
+- new version
+
 * Mon Jul 21 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.1-alt6_13jpp7
 - updated provides
 
