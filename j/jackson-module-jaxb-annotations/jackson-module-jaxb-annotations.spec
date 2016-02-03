@@ -1,45 +1,85 @@
-Name: jackson-module-jaxb-annotations
-Version: 2.5.0
-Summary: JAXB annotations support for Jackson (2.x)
-License: ASL 2.0
-Url: http://wiki.fasterxml.com/JacksonJAXBAnnotations
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jackson-module-jaxb-annotations = 2.5.0-2.fc23
-Provides: jackson2-module-jaxb-annotations = 2.5.0-2.fc23
-Provides: mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations) = 2.5.0
-Provides: mvn(com.fasterxml.jackson.module:jackson-module-jaxb-annotations:pom:) = 2.5.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.fasterxml.jackson.core:jackson-core)
-Requires: mvn(com.fasterxml.jackson.core:jackson-databind)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jackson-module-jaxb-annotations-2.5.0-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define fedora 23
+Name:          jackson-module-jaxb-annotations
+Version:       2.5.0
+Release:       alt1_2jpp8
+Summary:       JAXB annotations support for Jackson (2.x)
+License:       ASL 2.0
+URL:           http://wiki.fasterxml.com/JacksonJAXBAnnotations
+Source0:       https://github.com/FasterXML/jackson-module-jaxb-annotations/archive/%{name}-%{version}.tar.gz
+
+%if %{?fedora} > 20
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
+%else
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent)
+%endif
+# Require glassfish-jaxb-api
+BuildRequires: mvn(javax.xml.bind:jaxb-api)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
+
+# test deps
+BuildRequires: mvn(javax.ws.rs:jsr311-api)
+BuildRequires: mvn(junit:junit)
+
+BuildRequires: maven-local
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-plugin-build-helper
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-site-plugin
+BuildRequires: maven-surefire-provider-junit
+BuildRequires: replacer
+# bundle-plugin Requires
+#BuildRequires: mvn(org.sonatype.aether:aether)
+
+Provides:      jackson2-module-jaxb-annotations = %{version}-%{release}
+Obsoletes:     jackson2-module-jaxb-annotations < %{version}-%{release}
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 Support for using JAXB annotations as an alternative to
 "native" Jackson annotations, for configuring data binding.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
+
+cp -p src/main/resources/META-INF/LICENSE .
+cp -p src/main/resources/META-INF/NOTICE .
+sed -i 's/\r//' LICENSE NOTICE
+
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README.md release-notes/*
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
+- new version
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
