@@ -1,21 +1,20 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:	SimplyHTML		
 Version:	0.16.7
-Release:	alt1_2jpp7
+Release:	alt1_6jpp8
 Summary:	Application and a java component for rich text processing
 
-Group:		Development/Java
 License:	GPLv2 and BSD
 URL:		http://simplyhtml.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/simplyhtml/%{name}_src_0_16_07.tar.gz
-Source1:	simplyhtml.sh
 Patch0:	simplyhtml-build.xml-classpath.patch
 Patch1:	simplyhtml-manifest-classpath.patch
-
 
 BuildRequires:	ant
 BuildRequires:	gnu-regexp
@@ -39,9 +38,8 @@ popular word processors with a simple and generic way of
 storing textual information and styles.
 
 %package javadoc
-Summary: API documentation for %{name}
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
+Summary: API documentation for %{name}
 Requires:	jpackage-utils
 BuildArch: noarch
 
@@ -63,30 +61,17 @@ ant full-dist dist
 cd ..
 
 %install
-
-
-
 mkdir -p %{buildroot}%{_javadir}/%{name}
 
 
-cp -a dist/lib/SimplyHTML.jar %{buildroot}%{_javadir}/%{name}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}.jar
-ln -s %{name}.jar %{buildroot}%{_javadir}/%{name}/simplyhtml-%{version}.jar
-ln -s simplyhtml-%{version}.jar %{buildroot}%{_javadir}/%{name}/simplyhtml.jar
+cp -a dist/lib/SimplyHTML.jar %{buildroot}%{_javadir}/%{name}/%{name}.jar
 
-cp -a dist/lib/SimplyHTMLHelp.jar %{buildroot}%{_javadir}/%{name}/%{name}-help-%{version}.jar
-ln -s %{name}-help-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-help.jar
-ln -s %{name}-help-%{version}.jar %{buildroot}%{_javadir}/%{name}/simplyhtmlhelp-%{version}.jar
-ln -s simplyhtmlhelp-%{version}.jar %{buildroot}%{_javadir}/%{name}/SimplyHTMLHelp-%{version}.jar
-ln -s simplyhtmlhelp-%{version}.jar %{buildroot}%{_javadir}/%{name}/simplyhtmlhelp.jar
+cp -a dist/lib/SimplyHTMLHelp.jar %{buildroot}%{_javadir}/%{name}/%{name}-help.jar
 
+%jpackage_script com.lightdev.app.shtm.App "" "" gnu-regexp:javahelp2:SimplyHTML simplyhtml true
 
-install -pD -m755 -T %{SOURCE1} %{buildroot}%{_bindir}/%(basename %{SOURCE1})
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -a dist/help/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -a dist/help/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
 %{_javadir}/%{name}
@@ -94,15 +79,14 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %doc gpl.txt 
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 %doc readme.txt
 
 
-
-
-
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_6jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.16.7-alt1_2jpp7
 - new release
 
