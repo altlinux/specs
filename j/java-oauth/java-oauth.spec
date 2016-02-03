@@ -1,10 +1,11 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global oname oauth
 Name:          java-oauth
 Version:       20100601
-Release:       alt2_7jpp7
+Release:       alt2_11jpp8
 Summary:       An open protocol to allow API authentication
 License:       ASL 2.0
 Url:           http://code.google.com/p/oauth/
@@ -15,27 +16,10 @@ Url:           http://code.google.com/p/oauth/
 # tar czf oauth-20100601-clean-src-svn.tar.gz oauth-20100601
 Source0:       oauth-20100601-clean-src-svn.tar.gz
 
-# remove unavailable test deps org.mortbay.jetty jetty-embedded 6.1.11
-# unavailable deps disable this modules: core-old example test
-
-# x test
-# org.mortbay.jetty jetty-embedded 6.1.11
-
-# x oauth-example-desktop
-# org.codehaus.mojo appassembler-maven-plugin
-# org.mortbay.jetty jetty-embedded 6.1.11
-
-# x oauth-example-provider oauth-example-consumer
-# org.mortbay.jetty jetty-maven-plugin
-
-Patch0:        oauth-20100601-poms.patch
-
-BuildRequires: httpcomponents-client
-BuildRequires: jakarta-commons-httpclient
-BuildRequires: tomcat-servlet-3.0-api
-
 BuildRequires: maven-local
-BuildRequires: maven-source-plugin
+BuildRequires: mvn(commons-httpclient:commons-httpclient)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(org.apache.httpcomponents:httpclient)
 
 BuildArch:     noarch
 Source44: import.info
@@ -55,15 +39,27 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch0 -p1
 
-%build
+%pom_remove_plugin :maven-source-plugin
+
+%pom_disable_module core-old
+%pom_disable_module example
+%pom_disable_module test core
+# jetty-embedded:6.1.11
+%pom_remove_dep org.mortbay.jetty: core/httpclient4
+%pom_remove_dep org.mortbay.jetty: core/test
+
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:version" 3.1.0 core/provider
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:artifactId" javax.servlet-api core/provider
 
 %mvn_file :%{oname} %{oname}/%{oname}
 %mvn_file :%{oname}-consumer %{oname}/%{oname}-consumer
 %mvn_file :%{oname}-httpclient3 %{oname}/%{oname}-httpclient3
 %mvn_file :%{oname}-httpclient4 %{oname}/%{oname}-httpclient4
 %mvn_file :%{oname}-provider %{oname}/%{oname}-provider
+
+%build
+
 # unavailable test deps
 %mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
@@ -77,6 +73,9 @@ This package contains javadoc for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 20100601-alt2_7jpp7
 - new release
 
