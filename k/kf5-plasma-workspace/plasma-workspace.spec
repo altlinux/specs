@@ -15,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.5.4
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -258,6 +258,9 @@ __EOF__
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
+- fix startup splash progress
+
 * Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
 - new version
 
