@@ -1,18 +1,18 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:		xjparse
 Version:	1.0
-Release:	alt1_10jpp7
+Release:	alt1_13jpp8
 Summary:	Wrapper for the Xerces XML Schema validator
-Group:		Text tools
 License:	ASL 2.0
 URL:		http://nwalsh.com/java/xjparse
 Source0:	http://nwalsh.com/java/xjparse/xjparse-src-%{version}.zip
-Source1:	xjparse.sh
 BuildArch:	noarch
 BuildRequires:	jpackage-utils
 BuildRequires:	ant
@@ -36,21 +36,22 @@ export CLASSPATH=$(build-classpath xml-commons-resolver)
 ant -f build.xml jar -verbose
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 cp -p build/xjparse.jar \
-$RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+$RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 install -dm 755 $RPM_BUILD_ROOT%{_bindir}
-install -pm 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/xjparse
+
+%jpackage_script com.nwalsh.parsers.xjparse "" "" xjparse:xml-commons-resolver xjparse true
 
 %files
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %{_bindir}/xjparse
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_10jpp7
 - new release
 
