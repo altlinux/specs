@@ -1,24 +1,24 @@
-Name: apache-commons-digester
-Version: 2.1
-Summary: XML to Java object mapping module
-License: ASL 2.0
-Url: http://commons.apache.org/digester/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-digester = 2.1-5.fc23
-Provides: mvn(commons-digester:commons-digester) = 2.1
-Provides: mvn(commons-digester:commons-digester:pom:) = 2.1
-Provides: mvn(org.apache.commons:commons-digester) = 2.1
-Provides: mvn(org.apache.commons:commons-digester:pom:) = 2.1
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-beanutils:commons-beanutils)
-Requires: mvn(commons-logging:commons-logging)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global short_name commons-digester
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt2jpp
-Source: apache-commons-digester-2.1-5.fc23.cpio
+Name:          apache-%{short_name}
+Version:       2.1
+Release:       alt3_5jpp8
+Summary:       XML to Java object mapping module
+Group:         Development/Java
+License:       ASL 2.0
+URL:           http://commons.apache.org/digester/
+Source0:       http://archive.apache.org/dist/commons/digester/source/%{short_name}-%{version}-src.tar.gz
+BuildArch:     noarch
+
+BuildRequires: jpackage-utils
+BuildRequires: apache-commons-beanutils >= 1.8
+BuildRequires: apache-commons-logging >= 1.1.1
+BuildRequires: maven-local
+Source44: import.info
 
 %description
 Many projects read XML configuration files to provide initialization of
@@ -26,24 +26,37 @@ various Java objects within the system. There are several ways of doing this,
 and the Digester component was designed to provide a common implementation
 that can be used in many different projects
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Summary:       API documentation for %{name}
+Group:         Development/Java
+BuildArch: noarch
+
+%description javadoc
+This package contains the %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
+
+# Compatibility links
+%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
+%mvn_file :%{short_name} %{short_name} %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt3_5jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
