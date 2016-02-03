@@ -1,45 +1,88 @@
-Name: jackson-databind
-Version: 2.5.0
-Summary: General data-binding package for Jackson (2.x)
-License: ASL 2.0 and LGPLv2+
-Url: http://wiki.fasterxml.com/JacksonHome
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jackson-databind = 2.5.0-2.fc23
-Provides: jackson2-databind = 2.5.0-2.fc23
-Provides: mvn(com.fasterxml.jackson.core:jackson-databind) = 2.5.0
-Provides: mvn(com.fasterxml.jackson.core:jackson-databind:pom:) = 2.5.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.fasterxml.jackson.core:jackson-annotations)
-Requires: mvn(com.fasterxml.jackson.core:jackson-core)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jackson-databind-2.5.0-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define fedora 23
+Name:          jackson-databind
+Version:       2.5.0
+Release:       alt1_2jpp8
+Summary:       General data-binding package for Jackson (2.x)
+License:       ASL 2.0 and LGPLv2+
+URL:           http://wiki.fasterxml.com/JacksonHome
+Source0:       https://github.com/FasterXML/jackson-databind/archive/%{name}-%{version}.tar.gz
+%if %{?fedora} > 20
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
+%else
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent)
+%endif
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations) >= 2.4.1
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core) >= 2.4.1
+# test deps
+BuildRequires: mvn(cglib:cglib)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.codehaus.groovy:groovy)
+
+BuildRequires: maven-local
+BuildRequires: replacer
+# bundle-plugin Requires
+#BuildRequires: mvn(org.sonatype.aether:aether)
+
+Provides:      jackson2-databind = %{version}-%{release}
+Obsoletes:     jackson2-databind < %{version}-%{release}
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 General data-binding functionality for Jackson:
 works on core streaming API.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
+
+cp -p src/main/resources/META-INF/LICENSE .
+cp -p src/main/resources/META-INF/NOTICE .
+sed -i 's/\r//' LICENSE NOTICE
+
+# unavailable test deps
+%pom_remove_dep org.hibernate:hibernate-cglib-repack
+rm src/test/java/com/fasterxml/jackson/databind/interop/TestHibernate.java
+%pom_remove_dep javax.measure:jsr-275
+rm src/test/java/com/fasterxml/jackson/databind/deser/TestNoClassDefFoundDeserializer.java
+
+# Off test that require connection with the web
+rm src/test/java/com/fasterxml/jackson/databind/ser/TestJdkTypes.java \
+ src/test/java/com/fasterxml/jackson/databind/deser/TestJdkTypes.java \
+ src/test/java/com/fasterxml/jackson/databind/TestJDKSerialization.java
+
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README.md release-notes/*
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
+- new version
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
