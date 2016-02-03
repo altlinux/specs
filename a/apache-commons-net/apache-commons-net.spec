@@ -1,33 +1,28 @@
 Epoch: 0
-Provides: osgi(org.apache.commons.net) = 2.0.0
+Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 
 %global base_name    net
 %global short_name   commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        3.2
-Release:        alt2_4jpp7
+Version:        3.3
+Release:        alt1_6jpp8
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://commons.apache.org/%{base_name}/
-Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  maven-plugin-build-helper
 BuildRequires:  apache-commons-parent
-
-Provides:       jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} < 0:2.0-3
+# Test dependency
+BuildRequires:  junit
 Source44: import.info
 
 
@@ -39,12 +34,8 @@ as BSD R command support. The purpose of the library is to provide
 fundamental protocol access, not higher-level abstractions.
 
 %package javadoc
+Group: Development/Java
 Summary:    API documentation for %{name}
-Group:      Development/Java
-Requires:   jpackage-utils
-
-Provides:   jakarta-%{short_name}-javadoc = 0:%{version}-%{release}
-Obsoletes:  jakarta-%{short_name}-javadoc < 0:2.0-3
 BuildArch: noarch
 
 %description javadoc
@@ -52,31 +43,31 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-sed -i 's/\r//' NOTICE.txt LICENSE.txt
+sed -i 's/\r//' NOTICE.txt LICENSE.txt README RELEASE-NOTES.txt
 
+# This test fails with "Connection timed out"
+rm src/test/java/org/apache/commons/net/time/TimeTCPClientTest.java
 
-%build
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:%{short_name}
-# test.failure.ignore added because package would not build on koji
-# with TimeTCPClientTest failing
-%mvn_build -f
 
+%build
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
 %mvn_install
-# jakarta compat
-ln -s %{short_name}.jar %buildroot%_javadir/jakarta-%{short_name}.jar
-
 
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt README RELEASE-NOTES.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt1_6jpp8
+- new version
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2-alt2_4jpp7
 - new release
 
