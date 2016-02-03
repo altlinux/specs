@@ -2,8 +2,9 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -39,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:        avalon-%{short_name}
 Version:     2.1
-Release:     alt2_13jpp7
+Release:     alt2_22jpp8
 Epoch:       0
 Summary:     Java logging toolkit
 License:     ASL 2.0
@@ -52,10 +53,11 @@ Patch1:      avalon-logkit-pom-deps.patch
 Patch2:      avalon-logkit-encoding.patch
 Patch3:      java7.patch
 Requires:    avalon-framework >= 0:4.1.4
-Requires:    tomcat-servlet-3.0-api
+Requires:    glassfish-servlet-api
 Requires:    jms
+Requires:    javamail
 
-BuildRequires:    jpackage-utils >= 0:1.5
+BuildRequires:    javapackages-local
 BuildRequires:    ant
 BuildRequires:    javamail
 BuildRequires:    ant-junit
@@ -63,7 +65,7 @@ BuildRequires:    log4j
 BuildRequires:    avalon-framework >= 0:4.1.4
 # Required for converting jars to OSGi bundles
 BuildRequires:    aqute-bnd
-BuildRequires:    tomcat-servlet-3.0-api
+BuildRequires:    glassfish-servlet-api
 BuildRequires:    jms
 
 BuildArch:    noarch
@@ -95,18 +97,21 @@ cp %{SOURCE1} pom.xml
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 
+# LogFactor5 is no longer distributed with log4j
+rm -rf src/java/org/apache/log/output/lf5
+
 %build
-export CLASSPATH=$(build-classpath log4j javamail/mailapi jms servlet jdbc-stdext avalon-framework junit):$PWD/build/classes
+export CLASSPATH=$(build-classpath log4j javamail/mailapi jms glassfish-servlet-api jdbc-stdext avalon-framework junit):$PWD/build/classes
 ant -Dencoding=ISO-8859-1 -Dnoget=true clean jar javadoc
 # Convert to OSGi bundle
-java -jar $(build-classpath aqute-bnd) wrap target/%{name}-%{version}.jar
+bnd wrap target/%{name}-%{version}.jar
 
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
 
-install -m 644 target/%{name}-%{version}.bar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name},org.apache.avalon.logkit:%{name},avalon:%{name}"
@@ -115,17 +120,17 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_javadir}/%{name}.jar
 
 %files javadoc
 %doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_22jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_13jpp7
 - new release
 
