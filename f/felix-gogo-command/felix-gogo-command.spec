@@ -1,56 +1,29 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name felix-gogo-command
-%define version 0.12.0
-%global project felix
-%global bundle org.apache.felix.gogo.command
-%global groupId org.apache.felix
-%global artifactId %{bundle}
-
-%{!?scl:%global pkg_name %{name}}
-%{?scl:%scl_package %{project}-gogo-command}
-
-Name:           %{?scl_prefix}%{project}-gogo-command
-Version:        0.12.0
-Release:        alt2_9jpp7
+BuildRequires: jpackage-generic-compat
+Name:           felix-gogo-command
+Version:        0.14.0
+Release:        alt1_5jpp8
 Summary:        Apache Felix Gogo Command
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://felix.apache.org
-Source0:        http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
+Source0:        http://www.apache.org/dist/felix/org.apache.felix.gogo.command-%{version}-project.tar.gz
 
 Patch0:         felix-gogo-command-pom.xml.patch
 Patch1:         java7compatibility.patch
 
 BuildArch:      noarch
 
-# This is to ensure we get OpenJDK and not GCJ
 BuildRequires:  maven-local
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-install-plugin
-BuildRequires:  mockito
-
-BuildRequires:  felix-osgi-core
-BuildRequires:  felix-framework
-BuildRequires:  felix-osgi-compendium
-BuildRequires:  %{?scl_prefix}felix-gogo-runtime
-BuildRequires:  %{?scl_prefix}felix-gogo-parent
+BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.felix:org.apache.felix.bundlerepository)
-%{?scl:BuildRequires:	  %{?scl_prefix}build}
-
-Requires:       felix-framework
-Requires:       felix-osgi-compendium
-Requires:       %{?scl_prefix}felix-gogo-runtime
-Requires:       mvn(org.apache.felix:org.apache.felix.bundlerepository)
-%{?scl:Requires: %scl_runtime}
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.framework)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.gogo.runtime)
+BuildRequires:  mvn(org.osgi:org.osgi.compendium)
+BuildRequires:  mvn(org.mockito:mockito-all)
 Source44: import.info
 
 %description
@@ -58,50 +31,40 @@ Provides basic shell commands for Gogo.
 
 %package javadoc
 Group:          Development/Java
-Summary:        Javadoc for %{pkg_name}
-Requires:       jpackage-utils
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{pkg_name}.
-
-%global POM %{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
+API documentation for %{name}.
 
 %prep
-%setup -q -n %{bundle}-%{version} 
+%setup -q -n org.apache.felix.gogo.command-%{version}
 %patch0 -p1
 %patch1 -p1
 
+# These deps are provided at runtime by the osgi framework in which are running
+# Adding "provided" scope here avoids unnecessary deps on the felix stack if we
+# are running in a different osgi container like equinox, for example
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId[text()='org.apache.felix.framework']]" "<scope>provided</scope>"
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId[text()='org.osgi.compendium']]" "<scope>provided</scope>"
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId[text()='org.apache.felix.bundlerepository']]" "<scope>provided</scope>"
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/%{project}
-install -m 644 target/%{bundle}-%{version}.jar \
-        %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
-
-%add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{pkg_name}
-%__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{pkg_name}
-
-%files
+%files -f .mfiles
 %doc LICENSE
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{pkg_name}
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_5jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt2_9jpp7
 - new release
 
