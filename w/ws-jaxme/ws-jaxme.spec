@@ -5,8 +5,9 @@ BuildRequires(pre): rpm-build-java
 Requires: xmldb-api-sdk
 BuildRequires: xmldb-api-sdk
 BuildRequires: docbook-dtds
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -41,7 +42,7 @@ BuildRequires: jpackage-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt4_10jpp7
+Release:        alt4_14jpp8
 Epoch:          0
 Summary:        Open source implementation of JAXB
 License:        ASL 2.0
@@ -75,8 +76,8 @@ BuildRequires:  ant-apache-resolver
 BuildRequires:  antlr
 BuildRequires:  apache-commons-codec
 BuildRequires:  junit
-BuildRequires:  hsqldb
-BuildRequires:  log4j
+BuildRequires:  hsqldb1
+BuildRequires:  log4j12
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
 BuildRequires:  docbook-style-xsl
@@ -85,8 +86,8 @@ BuildRequires:  zip
 Requires:       antlr
 Requires:       apache-commons-codec
 Requires:       junit
-Requires:       hsqldb
-Requires:       log4j
+Requires:       hsqldb1
+Requires:       log4j12
 Requires:       xalan-j2
 Requires:       xerces-j2
 Requires:       jpackage-utils
@@ -139,8 +140,11 @@ DOCBOOKX_DTD=`%{_bindir}/xmlcatalog %{_datadir}/sgml/docbook/xmlcatalog "-//OASI
 
 sed -i 's/\r//' NOTICE
 
+sed -i "s|log4j.jar|log4j12-1.2.17.jar|" ant/js.xml
+sed -i "s|hsqldb.jar|hsqldb1-1.jar|" ant/js.xml ant/pm.xml
+
 %build
-export CLASSPATH=$(build-classpath antlr hsqldb commons-codec junit log4j xerces-j2 xalan-j2 xalan-j2-serializer)
+export CLASSPATH=$(build-classpath antlr hsqldb1-1 commons-codec junit log4j12-1.2.17 xerces-j2 xalan-j2 xalan-j2-serializer)
 ant all Docs.all \
 -Dbuild.sysclasspath=first \
 -Ddocbook.home=%{_datadir}/sgml/docbook \
@@ -170,11 +174,9 @@ cp -pr build/docs/src/documentation/content/apidocs \
     $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 rm -rf build/docs/src/documentation/content/apidocs
 
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
 %{_javadir}/%{base_name}
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
 %files javadoc
 %doc LICENSE NOTICE
@@ -185,6 +187,9 @@ rm -rf build/docs/src/documentation/content/apidocs
 %doc build/docs/src/documentation/content/manual
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_14jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_10jpp7
 - new release
 
