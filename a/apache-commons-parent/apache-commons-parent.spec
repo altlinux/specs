@@ -1,51 +1,61 @@
-Name: apache-commons-parent
-Version: 38
-Summary: Apache Commons Parent Pom
-License: ASL 2.0
-Url: http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-38/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-parent = 38-1.fc23
-Provides: mvn(org.apache.commons:commons-parent:pom:) = 38
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.felix:maven-bundle-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-jar-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
-Requires: mvn(org.apache.rat:apache-rat-plugin)
-Requires: mvn(org.apache:apache:pom:)
-Requires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global short_name      commons-parent
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: apache-commons-parent-38-1.fc23.cpio
+Name:             apache-%{short_name}
+Version:          38
+Release:          alt1_1jpp8
+Summary:          Apache Commons Parent Pom
+Group:            Development/Java
+License:          ASL 2.0
+URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
+
+# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-38
+# tar caf commons-parent-38.tar.xz commons-parent-38
+Source0:          %{short_name}-%{version}.tar.xz
+
+BuildArch:        noarch
+
+BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache:apache:pom:)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+Requires:         mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+Source44: import.info
 
 %description
 The Project Object Model files for the apache-commons packages.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}
+
+# Plugin is not in fedora
+%pom_remove_plugin org.apache.commons:commons-build-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-scm-publish-plugin
+
+%pom_remove_plugin :maven-site-plugin
+
+%pom_xpath_remove "pom:profile[pom:id='animal-sniffer']"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:38-alt1_1jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:38-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
