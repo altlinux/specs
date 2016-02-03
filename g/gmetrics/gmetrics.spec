@@ -1,38 +1,34 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global oname GMetrics
 
 Name:          gmetrics
 Version:       0.6
-Release:       alt1_7jpp7
+Release:       alt1_13jpp8
 Summary:       Groovy library that provides reports and metrics for Groovy code
 License:       ASL 2.0
 Url:           http://gmetrics.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}/%{oname}-%{version}-bin.tar.gz
-# remove gmaven
-# remove codenarc
-# change artifactId groovy-all in groovy
-Patch0:        gmetrics-0.5-pom.patch
-# replace runtime 1.5 witn runtime 1.8
-# add groovy-all deps with generic version
-Patch1:        gmetrics-0.6-antrun-plugin.patch
+# use antrun-plugin instead of gmaven
+# fix log4j groovy version
+# rebase for groovy 2
+Patch0:        gmetrics-0.6-antrunplugin.patch
+Patch1:        gmetrics-0.6-groovy2.patch
 
-
-BuildRequires: ant
-BuildRequires: groovy
-BuildRequires: log4j
-# groovy-all embedded libs
-BuildRequires: antlr
-BuildRequires: apache-commons-cli
-BuildRequires: objectweb-asm
-BuildRequires: fusesource-pom
-BuildRequires: slf4j
-
-# depend on rhbz#914056 BuildRequires: gmaven
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-enforcer-plugin
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.codehaus.groovy:groovy-all)
+BuildRequires: mvn(org.fusesource:fusesource-pom:pom:)
+# groovy-all embedded libs
+BuildRequires: mvn(antlr:antlr)
+BuildRequires: mvn(org.ow2.asm:asm-all)
+BuildRequires: mvn(commons-cli:commons-cli)
+BuildRequires: mvn(org.slf4j:slf4j-nop)
 
 BuildArch:     noarch
 Source44: import.info
@@ -59,7 +55,11 @@ find . -name "*.jar" -delete
 find . -name "*.class" -delete
 rm -rf docs/*
 %patch0 -p0
-%patch1 -p0
+%patch1 -p1
+
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :gmaven-plugin
+%pom_remove_dep :CodeNarc
 
 sed -i "s|pom.version|project.version|" pom.xml
 
@@ -69,10 +69,10 @@ for d in CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt ; do
   sed -i 's/\r//' $d
 done
 
+%mvn_file :%{oname} %{name} %{oname}
+
 %build
 
-%mvn_file :%{oname} %{name}
-%mvn_file :%{oname} %{oname}
 # test skipped require Codenarc, circular deps
 %mvn_build -f
 
@@ -80,12 +80,16 @@ done
 %mvn_install
 
 %files -f .mfiles
-%doc CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt
+%doc CHANGELOG.txt README.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_13jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_7jpp7
 - new release
 
