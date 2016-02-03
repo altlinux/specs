@@ -1,23 +1,49 @@
-Name: apache-commons-jci
-Version: 1.1
-Summary: Commons Java Compiler Interface
-License: ASL 2.0
-Url: http://commons.apache.org/jci/
 Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-jci = 1.1-2.fc23
-Provides: mvn(org.apache.commons:commons-jci:pom:) = 1.1
-Requires: apache-commons-jci-core
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.commons:commons-parent:pom:)
-Requires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
-Requires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: apache-commons-jci-1.1-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name apache-commons-jci
+%define version 1.1
+%global base_name  jci
+%global short_name commons-%{base_name}
+%global namedreltag %{nil}
+%global namedversion %{version}%{?namedreltag}
+
+Name:          apache-commons-jci
+Version:       1.1
+Release:       alt1_2jpp8
+Summary:       Commons Java Compiler Interface
+License:       ASL 2.0
+URL:           http://commons.apache.org/jci/
+Source0:       http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{namedversion}-src.tar.gz
+Patch0:        %{name}-1.1-janino27.patch
+
+BuildRequires: maven-local
+BuildRequires: maven-antrun-plugin
+BuildRequires: maven-plugin-bundle
+BuildRequires: ecj >= 3.4.2-13
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires: mvn(org.codehaus.groovy:groovy)
+BuildRequires: mvn(org.codehaus.janino:janino)
+BuildRequires: mvn(rhino:js)
+
+# test deps
+BuildRequires: mvn(junit:junit)
+BuildRequires: objectweb-asm3
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+
+Requires:      %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+BuildArch:     noarch
+Source44: import.info
+
+#* jsr199 Commons JCI compiler implementation for JDK 1.6 and up.
 
 %description
 JCI is a java compiler interface featuring a compiling class loader.
@@ -29,24 +55,124 @@ compilers:
 * janino
 * rhino
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package core
+Group: Development/Java
+Summary:       Commons Java Compiler Interface - core
+
+%description core
+Commons JCI core interfaces and implementations.
+
+%package fam
+Group: Development/Java
+Summary:       Commons Java Compiler Interface - FAM
+
+%description fam
+Commons JCI FileAlterationMonitor (FAM) to
+monitor local file systems and get notified
+about changes.
+
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
+# compilers
+
+%package eclipse
+Group: Development/Java
+Summary:       Commons Java Compiler Interface - eclipse
+
+%description eclipse
+Commons JCI compiler implementation for the eclipse compiler.
+
+%package groovy
+Group: Development/Java
+Summary:       Commons Java Compiler Interface - groovy
+
+%description groovy
+Commons JCI compiler implementation for the groovy compiler.
+
+%package janino
+Group: Development/Java
+Summary:       Commons Java Compiler Interface - janino
+
+%description janino
+Commons JCI compiler implementation for the janino compiler.
+
+%package rhino
+Group: Development/Java
+Summary:       Commons Java Compiler Interface - rhino
+
+%description rhino
+Commons JCI compiler implementation for rhino JavaScript.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{namedversion}-src
+find . -name "*.class" -delete
+find . -name "*.jar" -delete
+
+%patch0 -p1
+
+# require old version of jdependency
+%pom_disable_module examples
+
+%pom_xpath_remove "pom:build/pom:extensions"
+
+%pom_xpath_set "pom:properties/pom:maven.compiler.source" 1.6
+%pom_xpath_set "pom:properties/pom:maven.compiler.target" 1.6
+
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :maven-site-plugin
+
+%pom_xpath_set "pom:dependencyManagement/pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']/pom:artifactId" groovy
+%pom_xpath_set "pom:dependencyManagement/pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']/pom:version" 1.8.9
+%pom_xpath_set "pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']/pom:artifactId" groovy compilers/groovy
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:groupId = 'org.codehaus.groovy']" "<version>1.8.9</version>" compilers/groovy
+
+# Fix installation directory      
+%mvn_file :%{short_name}-core    %{short_name}/%{short_name}-core
+%mvn_file :%{short_name}-fam     %{short_name}/%{short_name}-fam
+%mvn_file :%{short_name}-eclipse %{short_name}/%{short_name}-eclipse
+%mvn_file :%{short_name}-groovy  %{short_name}/%{short_name}-groovy
+%mvn_file :%{short_name}-janino  %{short_name}/%{short_name}-janino
+%mvn_file :%{short_name}-rhino   %{short_name}/%{short_name}-rhino
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+# random tests failures
+%mvn_build -s -- -Dmaven.test.failure.ignore=true
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles-%{short_name}
+%dir %{_javadir}/%{short_name}
+%doc README.txt TODO.txt
+%doc LICENSE.txt NOTICE.txt
 
-%files -f %name-list
+%files core -f .mfiles-%{short_name}-core
+
+%files fam -f .mfiles-%{short_name}-fam
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
+
+%files eclipse -f .mfiles-%{short_name}-eclipse
+
+%files groovy -f .mfiles-%{short_name}-groovy
+
+%files janino -f .mfiles-%{short_name}-janino
+
+%files rhino -f .mfiles-%{short_name}-rhino
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_2jpp8
+- new version
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
