@@ -1,37 +1,30 @@
 Epoch: 0
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global base_name       dbcp
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
 Version:          1.4
-Release:          alt2_14jpp7
+Release:          alt2_19jpp8
 Summary:          Apache Commons DataBase Pooling Package
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-
-# Depmap needed to remove tomcat* deps (needed only for testing)
-# and fix geronimo transaction
-Source1:          %{short_name}.depmap
-Patch0:           jdbc41.patch
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    apache-commons-parent
-BuildRequires:    apache-commons-pool
-BuildRequires:    geronimo-parent-poms
-BuildRequires:    jta
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-local
+Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 
-# This should go away with F-17
-Provides:         jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 0:1.4-1
-Obsoletes:        jakarta-%{short_name}-tomcat5 < 0:1.4-1
-Obsoletes:        hibernate_jdbc_cache < 0:1.4-1
+Patch0:           jdbc41.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(commons-pool:commons-pool)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 Source44: import.info
 
 %description
@@ -78,6 +71,9 @@ iconv -f iso8859-1 -t utf-8 RELEASE-NOTES.txt > RELEASE-NOTES.txt.conv && mv -f 
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_19jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_14jpp7
 - new release
 
