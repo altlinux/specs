@@ -1,47 +1,67 @@
-Provides: jakarta-commons-io
-Name: apache-commons-io
-Version: 2.4
-Summary: Utilities to assist with developing IO functionality
-License: ASL 2.0
-Url: http://commons.apache.org/io
-Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-io = 1:2.4-14.fc23
-Provides: mvn(commons-io:commons-io) = 2.4
-Provides: mvn(commons-io:commons-io:pom:) = 2.4
-Provides: mvn(org.apache.commons:commons-io) = 2.4
-Provides: mvn(org.apache.commons:commons-io:pom:) = 2.4
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt4jpp
-Source: apache-commons-io-2.4-14.fc23.cpio
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global base_name       io
+%global short_name      commons-%{base_name}
+
+Name:           apache-%{short_name}
+Version:        2.4
+Release:        alt5_14jpp8
+Epoch:          1
+Summary:        Utilities to assist with developing IO functionality
+License:        ASL 2.0
+URL:            http://commons.apache.org/%{base_name}
+Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  apache-commons-parent
+Source44: import.info
+# jpackage compat
+Provides:       jakarta-%{short_name} = %version
+Obsoletes:      jakarta-%{short_name} < %version
+Provides:       %{short_name} = %version
 
 %description
 Commons-IO contains utility classes, stream implementations,
 file filters, and endian classes. It is a library of utilities
 to assist with developing IO functionality.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package provides %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
+sed -i 's/\r//' *.txt
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_file  : %{short_name} %{name}
+%mvn_alias : org.apache.commons:
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
+# jpp compat
+ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt5_14jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4-alt4jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
