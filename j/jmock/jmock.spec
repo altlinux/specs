@@ -1,42 +1,35 @@
-Name: jmock
-Version: 2.8.1
-Summary: Java library for testing code with mock objects
-License: BSD
-Url: http://www.jmock.org/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jmock = 2.8.1-2.fc23
-Provides: mvn(org.jmock:jmock) = 2.8.1
-Provides: mvn(org.jmock:jmock-example) = 2.8.1
-Provides: mvn(org.jmock:jmock-example:pom:) = 2.8.1
-Provides: mvn(org.jmock:jmock-junit3) = 2.8.1
-Provides: mvn(org.jmock:jmock-junit3::tests:) = 2.8.1
-Provides: mvn(org.jmock:jmock-junit3:pom:) = 2.8.1
-Provides: mvn(org.jmock:jmock-junit4) = 2.8.1
-Provides: mvn(org.jmock:jmock-junit4:pom:) = 2.8.1
-Provides: mvn(org.jmock:jmock-legacy) = 2.8.1
-Provides: mvn(org.jmock:jmock-legacy:pom:) = 2.8.1
-Provides: mvn(org.jmock:jmock-parent:pom:) = 2.8.1
-Provides: mvn(org.jmock:jmock-script) = 2.8.1
-Provides: mvn(org.jmock:jmock-script::tests:) = 2.8.1
-Provides: mvn(org.jmock:jmock-script:pom:) = 2.8.1
-Provides: mvn(org.jmock:jmock-testjar) = 2.8.1
-Provides: mvn(org.jmock:jmock-testjar:pom:) = 2.8.1
-Provides: mvn(org.jmock:jmock::tests:) = 2.8.1
-Provides: mvn(org.jmock:jmock:pom:) = 2.8.1
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(cglib:cglib)
-Requires: mvn(junit:junit)
-Requires: mvn(org.beanshell:bsh)
-Requires: mvn(org.hamcrest:hamcrest-library)
-Requires: mvn(org.objenesis:objenesis)
-Requires: mvn(org.ow2.asm:asm)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jmock-2.8.1-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jmock
+%define version 2.8.1
+%global namedreltag %{nil}
+%global namedversion %{version}%{?namedreltag}
+
+Name:          jmock
+Version:       2.8.1
+Release:       alt1_2jpp8
+Summary:       Java library for testing code with mock objects
+License:       BSD
+Url:           http://www.jmock.org/
+Source0:       https://github.com/jmock-developers/jmock-library/archive/%{namedversion}.tar.gz
+
+BuildRequires: maven-local
+BuildRequires: mvn(cglib:cglib)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires: mvn(org.beanshell:bsh)
+BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires: mvn(org.hamcrest:hamcrest-library)
+BuildRequires: mvn(org.objenesis:objenesis)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 Mock objects help you design and test the interactions between the objects in
@@ -50,24 +43,59 @@ The jMock library:
   * plugs into your favorite test framework
   * is easy to extend.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-library-%{namedversion}
+
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-source-plugin
+
+%pom_remove_plugin :maven-gpg-plugin testjar
+
+%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib
+%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib %{name}
+
+sed -i "s|%classpath|$(build-classpath objectweb-asm/asm)|" %{name}/pom.xml
+
+%pom_xpath_remove pom:build %{name}-example
+%pom_xpath_inject "pom:project" "
+<build>
+  <sourceDirectory>src/main</sourceDirectory>
+</build>" %{name}-example
+# package org.jmock.integration.junit{3,4} do not exist
+%pom_add_dep org.%{name}:%{name}-junit3:'${project.version}' %{name}-example
+%pom_add_dep org.%{name}:%{name}-junit4:'${project.version}' %{name}-example
+
+%mvn_alias org.%{name}:%{name} :%{name}-script
+%mvn_package org.%{name}:%{name}::tests:
+%mvn_package org.%{name}:%{name}-junit3::tests:
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README*
+%doc LICENSE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8.1-alt1_2jpp8
+- new version
+
 * Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
