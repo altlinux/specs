@@ -1,22 +1,32 @@
-Name: maven-invoker
-Version: 2.2
-Summary: Fires a maven build in a clean environment
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-invoker/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-invoker = 2.2-2.fc23
-Provides: maven-shared-invoker = 2.2-2.fc23
-Provides: mvn(org.apache.maven.shared:maven-invoker) = 2.2
-Provides: mvn(org.apache.maven.shared:maven-invoker:pom:) = 2.2
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.plexus:plexus-component-annotations)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-invoker-2.2-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-invoker
+Version:        2.2
+Release:        alt1_2jpp8
+Summary:        Fires a maven build in a clean environment
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/maven-invoker/
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+# Patch rejected upstream
+Patch1:         %{name}-MSHARED-279.patch
+
+BuildArch:      noarch
+
+BuildRequires:  junit
+BuildRequires:  maven-local
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-shared
+# Required by tests
+BuildRequires:  maven-clean-plugin
+
+Obsoletes:      maven-shared-invoker < %{version}-%{release}
+Provides:       maven-shared-invoker = %{version}-%{release}
+Source44: import.info
 
 %description
 This API is concerned with firing a Maven build in a new JVM. It accomplishes
@@ -29,24 +39,36 @@ InvocationOutputHandlers.
 
 This is a replacement package for maven-shared-invoker
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+    
+%description javadoc
+API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch1 -p1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
+
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2jpp8
+- new version
+
 * Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
