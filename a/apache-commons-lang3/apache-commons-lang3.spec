@@ -1,19 +1,31 @@
-Name: apache-commons-lang3
-Version: 3.4
-Summary: Provides a host of helper utilities for the java.lang API
-License: ASL 2.0
-Url: http://commons.apache.org/lang
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-lang3 = 3.4-2.fc23
-Provides: mvn(org.apache.commons:commons-lang3) = 3.4
-Provides: mvn(org.apache.commons:commons-lang3:pom:) = 3.4
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
-Source: apache-commons-lang3-3.4-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global base_name       lang
+%global short_name      commons-%{base_name}3
+
+Name:           apache-%{short_name}
+Version:        3.4
+Release:        alt4_2jpp8
+Summary:        Provides a host of helper utilities for the java.lang API
+License:        ASL 2.0
+URL:            http://commons.apache.org/%{base_name}
+Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+BuildArch:      noarch
+
+# testParseSync() test fails on ARM and PPC64LE for unknown reason
+Patch0:         fix-ppc64le-test-failure.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.hamcrest:hamcrest-all)
+%if 0%{?rhel} <= 0
+BuildRequires:  mvn(org.easymock:easymock)
+%endif
+Source44: import.info
 
 %description
 The standard Java libraries fail to provide enough methods for
@@ -32,24 +44,35 @@ therefore created differently named artifact and jar files. This is
 the new version, while apache-commons-lang is the compatibility
 package.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package        javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description    javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
+%patch0
+%mvn_file : %{name} %{short_name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build %{?rhel:-f}
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt4_2jpp8
+- new version
+
 * Wed Jan 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt3jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
