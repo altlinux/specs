@@ -1,44 +1,83 @@
-Name: maven-artifact-resolver
-Version: 1.0
-Summary: Maven Artifact Resolution API
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-artifact-resolver
-Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-artifact-resolver = 1:1.0-13.fc23
-Provides: maven-shared-artifact-resolver = 1:1.0-13.fc23
-Provides: mvn(org.apache.maven.shared:maven-artifact-resolver) = 1.0
-Provides: mvn(org.apache.maven.shared:maven-artifact-resolver:pom:) = 1.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven:maven-compat)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: maven-artifact-resolver-1.0-13.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-artifact-resolver
+Version:        1.0
+Release:        alt3_13jpp8
+# Epoch is added because the original package's version in maven-shared is 1.1-SNAPSHOT
+Epoch:          1
+Summary:        Maven Artifact Resolution API
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/%{name}
+Source0:        http://central.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+# Replaced plexus-maven-plugin with plexus-component-metadata
+Patch0:         %{name}-plexus.patch
+
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.easymock:easymock)
+
+Obsoletes:      maven-shared-artifact-resolver < %{epoch}:%{version}-%{release}
+Provides:       maven-shared-artifact-resolver = %{epoch}:%{version}-%{release}
+Source44: import.info
 
 %description
 Provides a component for plugins to easily resolve project dependencies.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0 -p1
+
+%pom_xpath_inject pom:project/pom:dependencies "
+<dependency>
+  <groupId>org.apache.maven</groupId>
+  <artifactId>maven-compat</artifactId>
+  <version>1.0</version>
+</dependency>" pom.xml
+
+# Incompatible method invocation
+rm src/test/java/org/apache/maven/shared/artifact/resolver/DefaultProjectDependenciesResolverIT.java
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc DEPENDENCIES LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
+
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt3_13jpp8
+- new version
+
 * Tue Jan 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
