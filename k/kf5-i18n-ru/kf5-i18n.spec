@@ -4,7 +4,7 @@
 
 Name: kf5-i18n-%lng
 Version: 5.5.4
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Workspace
@@ -18,6 +18,8 @@ Source0: kf5-l10n-%lng-messages-%version.tar
 Source1: kf5-l10n-%lng-docs-%version.tar
 Source100: template-main
 Source101: template-messages
+
+Patch1: alt-userswitcher.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -35,6 +37,10 @@ for d in *-l10n-* ; do
     mv $d $simplename
 done
 
+pushd messages
+%patch1 -p0
+popd
+
 find docs -type d | \
 while read d ; do
     pushd $d
@@ -46,6 +52,8 @@ while read d ; do
 	    [ -d "$docd" ] || continue
 	    echo "add_subdirectory( $docd )" >>CMakeLists.txt
 	done
+    else
+	echo >CMakeLists.txt
     fi
     popd
 done
@@ -85,5 +93,8 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
+- update user switcher translation
+
 * Tue Feb 02 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
 - initial build
