@@ -1,10 +1,11 @@
 %define oname metalchemy
 
+%def_disable check
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20141006
+Release: alt2.git20141006
 Summary: SQLAlchemy hierarchical key/value helper
 License: MIT
 Group: Development/Python
@@ -15,18 +16,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-SQLAlchemy python-module-detox
-BuildPreReq: python-module-pytest-cache python-module-pytest-cov
-BuildPreReq: python-module-pytest-pep8 python-module-mock
-BuildPreReq: python-module-virtualenv python-modules-sqlite3
+BuildRequires: python-devel python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-SQLAlchemy
+#BuildPreReq: python-module-mock
+#BuildPreReq: python-module-virtualenv python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-SQLAlchemy python3-module-detox
-BuildPreReq: python3-module-pytest-cache python3-module-pytest-cov
-BuildPreReq: python3-module-pytest-pep8 python3-module-mock
-BuildPreReq: python3-module-virtualenv python3-modules-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-SQLAlchemy
+#BuildPreReq: python3-module-mock
+#BuildPreReq: python3-module-virtualenv python3-modules-sqlite3
+BuildRequires: python3-dev python3-module-setuptools
 %endif
 
 %py_provides %oname
@@ -90,6 +91,10 @@ popd
 %endif
 
 %changelog
+
+* Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.0-alt2.git20141006
+- Disable tests and unnecessary dependencies
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20141006
 - Initial build for Sisyphus
 
