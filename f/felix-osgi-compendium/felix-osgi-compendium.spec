@@ -1,47 +1,85 @@
-Name: felix-osgi-compendium
-Version: 1.4.0
-Summary: Felix OSGi R4 Compendium Bundle
-License: ASL 2.0
-Url: http://felix.apache.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: felix-osgi-compendium = 1.4.0-21.fc23
-Provides: mvn(org.apache.felix:org.osgi.compendium) = 1.4.0
-Provides: mvn(org.apache.felix:org.osgi.compendium:pom:) = 1.4.0
-Provides: mvn(org.osgi:org.osgi.compendium) = 1.4.0
-Provides: mvn(org.osgi:org.osgi.compendium:pom:) = 1.4.0
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(javax.servlet:javax.servlet-api)
-Requires: mvn(org.apache.felix:org.osgi.core)
-Requires: mvn(org.apache.felix:org.osgi.foundation)
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global bundle org.osgi.compendium
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt4jpp
-Source: felix-osgi-compendium-1.4.0-21.fc23.cpio
+Name:    felix-osgi-compendium
+Version: 1.4.0
+Release: alt5_21jpp8
+Summary: Felix OSGi R4 Compendium Bundle
+Group:   Development/Java
+License: ASL 2.0
+URL:     http://felix.apache.org
+Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
+
+Patch0:         0001-Fix-servlet-api-dependency.patch
+Patch1:         0002-Fix-compile-target.patch
+Patch2:         0003-Add-CM_LOCATION_CHANGED-property-to-ConfigurationEve.patch
+Patch3:         0004-Add-TARGET-property-to-ConfigurationPermission.patch
+# This is an ugly patch that adds getResourceURL method. This prevents jbosgi-framework
+# package from bundling osgi files. Once the jbosgi-framework will be updated
+# to a new version without the need for this patch, REMOVE it!
+Patch4:         0005-Add-getResourceURL-method-to-make-jbosgi-framework-h.patch
+
+BuildArch:      noarch
+
+BuildRequires: jpackage-utils
+BuildRequires: maven-local
+BuildRequires: felix-osgi-core
+BuildRequires: felix-osgi-foundation
+BuildRequires: felix-parent
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mockito
+
+Source44: import.info
 
 %description
 OSGi Service Platform Release 4 Compendium Interfaces and Classes.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{bundle}-%{version}
+
+# fix servlet api properly
+%patch0 -p1
+# fix compile source/target
+%patch1 -p1
+# add CM_LOCATION_CHANGED property
+%patch2 -p1
+# add TARGET property
+%patch3 -p1
+# add getResourceURL method
+%patch4 -p1
+
+%mvn_file :%{bundle} "felix/%{bundle}"
+%mvn_alias "org.apache.felix:%{bundle}" "org.osgi:%{bundle}"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -- -Drat.numUnapprovedLicenses=100
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_21jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt4jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
