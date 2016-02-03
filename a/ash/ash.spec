@@ -1,6 +1,6 @@
 Name: ash
-Version: 0.5.7
-Release: alt1.20120623
+Version: 0.5.8
+Release: alt1.2e5842258
 
 %define real_name dash
 
@@ -17,6 +17,7 @@ Patch0: dash-0.5.4-alt-losetup.patch
 Patch2: dash-0.5.6-alt-cleanup-warnings.patch
 Patch6: dash-0.5.3-makefile-cflags.patch
 Patch7: dash-0.5.6-string_literal.patch
+Patch8: dash-0.5.8-logical-not-parentheses.patch
 
 PreReq: coreutils, grep
 Conflicts: mkinitrd <= 1:1.7
@@ -56,6 +57,7 @@ This version is statically compiled.
 %patch2 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 sed -i -e 's,\$(tempfile),`mktemp -t ash.XXXXXX`,' src/mkbuiltins
 
@@ -103,6 +105,9 @@ ln -s %name.1 %buildroot/%_man1dir/dash.1
 /bin/%name.static
 
 %changelog
+* Wed Feb 03 2016 Alexey Gladkov <legion@altlinux.ru> 0.5.8-alt1.2e5842258
+- New release (0.5.8) and update from upstream git.
+
 * Sat Jun 23 2012 Alexey Gladkov <legion@altlinux.ru> 0.5.7-alt1.20120623
 - New release (0.5.7) and update from upstream git.
 
