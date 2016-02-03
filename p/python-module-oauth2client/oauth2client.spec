@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.12
-Release: alt1.git20150814
+Release: alt2.git20150814
 
 Summary: OAuth 2.0 client library
 License: Apache Software License
@@ -16,27 +16,15 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools-tests python-modules-json
-BuildPreReq: python-module-httplib2 python-module-pyasn1
-BuildPreReq: python-module-pyasn1-modules python-module-rsa
-BuildPreReq: python-module-keyring python-module-mox
-BuildPreReq: python-module-webapp2 python-module-google-appengine
-BuildPreReq: python-module-flask
-BuildPreReq: python-module-sphinx-devel python-module-django
-BuildPreReq: python-module-sphinx_rtd_theme
+BuildRequires: python-module-docutils python-module-html5lib python-module-httplib2 python-module-keyring python-module-mox python-module-objects.inv python-module-pyasn1-modules python-module-rsa python-module-setuptools-tests 
+BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-httplib2 python3-module-pyasn1
-BuildPreReq: python3-module-pyasn1-modules python3-module-rsa
-BuildPreReq: python3-module-keyring python3-module-mox
-BuildPreReq: python3-module-webapp2 python3-module-google-appengine
-BuildPreReq: python3-module-flask
+BuildRequires: python3-module-httplib2 python3-module-keyring python3-module-mox python3-module-pyasn1-modules python3-module-rsa python3-module-setuptools-tests
 BuildPreReq: python-tools-2to3
 %endif
 
 %setup_python_module %oname
-%py_requires httplib2 pyasn1 pyasn1_modules rsa six
 %add_python_req_skip google webapp2
 
 %description
@@ -64,7 +52,6 @@ This package contains documentation for %oname.
 %package -n python3-module-%oname
 Summary: OAuth 2.0 client library
 Group: Development/Python3
-%py3_requires httplib2 pyasn1 pyasn1_modules rsa six
 %add_python3_req_skip google webapp2
 
 %description -n python3-module-%oname
@@ -101,9 +88,9 @@ popd
 %endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs pickle
-%make -C docs html
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+#%make -C docs pickle
+#%make -C docs html
+#cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
@@ -116,13 +103,13 @@ popd
 %files
 %doc *.md
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
+#%exclude %python_sitelibdir/*/pickle
 
-%files pickles
-%python_sitelibdir/*/pickle
+#%files pickles
+#%python_sitelibdir/*/pickle
 
-%files docs
-%doc docs/_build/html/*
+#%files docs
+#%doc docs/_build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -131,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 1.4.12-alt2.git20150814
+- cleanup buildreq
+
 * Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.12-alt1.git20150814
 - Version 1.4.12
 
