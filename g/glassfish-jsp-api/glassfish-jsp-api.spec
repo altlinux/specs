@@ -1,46 +1,79 @@
-Name: glassfish-jsp-api
-Version: 2.3.2
-Summary: Glassfish J2EE JSP API specification
-License: (CDDL or GPLv2 with exceptions) and ASL 2.0
-Url: http://java.net/jira/browse/JSP
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: glassfish-jsp-api = 2.3.2-0.3.b01.fc23
-Provides: mvn(javax.servlet.jsp:javax.servlet.jsp-api) = 2.3.2.b01
-Provides: mvn(javax.servlet.jsp:javax.servlet.jsp-api:pom:) = 2.3.2.b01
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(javax.el:javax.el-api)
-Requires: mvn(javax.servlet:javax.servlet-api)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: glassfish-jsp-api-2.3.2-0.3.b01.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global artifactId javax.servlet.jsp-api
+%global jspspec 2.2
+%global reltag b01
+
+
+Name:       glassfish-jsp-api
+Version:    2.3.2
+Release:    alt1_0.3.b01jpp8
+Summary:    Glassfish J2EE JSP API specification
+
+License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
+URL:        http://java.net/jira/browse/JSP
+Source0:    %{artifactId}-%{version}-%{reltag}.tar.xz
+# no source releases, but this will generate tarball for you from an
+# SVN tag
+Source1:    generate_tarball.sh
+Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
+Source3:    http://hub.opensolaris.org/bin/download/Main/licensing/cddllicense.txt
+
+BuildArch:  noarch
+
+BuildRequires:  maven-local
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-source-plugin
+BuildRequires:  jvnet-parent
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(javax.el:javax.el-api)
+Source44: import.info
 
 %description
 This project provides a container independent specification of JSP
 2.2. Note that this package doesn't contain implementation of this
 specification. See glassfish-jsp for one of implementations
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch:      noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{artifactId}-%{version}-%{reltag}
+cp -p %{SOURCE2} LICENSE
+cp -p %{SOURCE3} cddllicense.txt
+
+# Submited upstream: http://java.net/jira/browse/JSP-31
+sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
+
+%pom_xpath_remove "pom:dependency[pom:groupId='javax.el' or pom:groupId='javax.servlet']/pom:scope"
+
+# javadoc generation fails due to strict doclint in JDK 8
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
-ln -s glassfish-jsp-api/javax.servlet.jsp-api.jar %buildroot/usr/share/java/glassfish-jsp-api.jar
+%mvn_install
 
-%files -f %name-list
-/usr/share/java/glassfish-jsp-api.jar
+%files -f .mfiles
+%doc LICENSE cddllicense.txt
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE cddllicense.txt
+
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_0.3.b01jpp8
+- new version
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
