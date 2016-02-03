@@ -1,58 +1,81 @@
-Name: maven-plugin-bundle
-Version: 2.5.4
-Summary: Maven Bundle Plugin
-License: ASL 2.0
-Url: http://felix.apache.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-plugin-bundle = 2.5.4-1.fc23
-Provides: mvn(org.apache.felix:maven-bundle-plugin) = 2.5.4
-Provides: mvn(org.apache.felix:maven-bundle-plugin:pom:) = 2.5.4
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(biz.aQute.bnd:biz.aQute.bndlib)
-Requires: mvn(net.sf.kxml:kxml2)
-Requires: mvn(org.apache.felix:org.apache.felix.bundlerepository)
-Requires: mvn(org.apache.felix:org.apache.felix.framework)
-Requires: mvn(org.apache.felix:org.apache.felix.utils)
-Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
-Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
-Requires: mvn(org.apache.maven.reporting:maven-reporting-impl)
-Requires: mvn(org.apache.maven.shared:maven-dependency-tree)
-Requires: mvn(org.apache.maven:maven-archiver)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: mvn(org.osgi:org.osgi.core)
-Requires: mvn(org.sonatype.plexus:plexus-build-api)
-Requires: glassfish-servlet-api
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-plugin-bundle-2.5.4-1.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global site_name maven-bundle-plugin
+
+Name:           maven-plugin-bundle
+Version:        2.5.4
+Release:        alt1_1jpp8
+Summary:        Maven Bundle Plugin
+License:        ASL 2.0
+URL:            http://felix.apache.org
+BuildArch:      noarch
+
+Source0:        http://archive.apache.org/dist/felix/%{site_name}-%{version}-source-release.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
+BuildRequires:  mvn(net.sf.kxml:kxml2)
+BuildRequires:  mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.bundlerepository)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.framework)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.utils)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
+Source44: import.info
 
 %description
 Provides a maven plugin that supports creating an OSGi bundle
 from the contents of the compilation classpath along with its
 resources and dependencies. Plus a zillion other features.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{site_name}-%{version}
+
+find -name '*.jar' -delete
+
+# There is forked version of maven-osgi in
+# src/{main,test}/java/org/apache/maven
+
+%pom_add_dep net.sf.kxml:kxml2
+%pom_add_dep org.apache.felix:org.apache.felix.framework
+%pom_add_dep org.apache.maven.reporting:maven-reporting-impl
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Tests depend on bundled JARs
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE DEPENDENCIES
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt1_1jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
