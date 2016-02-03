@@ -1,44 +1,59 @@
-Name: felix-osgi-foundation
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global bundle org.osgi.foundation
+
+Name:    felix-osgi-foundation
 Version: 1.2.0
+Release: alt5_19jpp8
 Summary: Felix OSGi Foundation EE Bundle
+Group:   Development/Java
 License: ASL 2.0
-Url: http://felix.apache.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: felix-osgi-foundation = 1.2.0-19.fc23
-Provides: mvn(org.apache.felix:org.osgi.foundation) = 1.2.0
-Provides: mvn(org.apache.felix:org.osgi.foundation:pom:) = 1.2.0
-Provides: mvn(org.osgi:org.osgi.foundation) = 1.2.0
-Provides: mvn(org.osgi:org.osgi.foundation:pom:) = 1.2.0
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
+URL:     http://felix.apache.org
+Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
 
 BuildArch: noarch
-Group: Development/Java
-Release: alt4jpp
-Source: felix-osgi-foundation-1.2.0-19.fc23.cpio
+
+BuildRequires: jpackage-utils
+BuildRequires: maven-local
+BuildRequires: mockito
+BuildRequires: felix-parent
+
+Source44: import.info
 
 %description
 OSGi Foundation Execution Environment (EE) Classes.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{bundle}-%{version}
+
+%mvn_file :%{bundle} "felix/%{bundle}"
+%mvn_alias "org.apache.felix:%{bundle}" "org.osgi:%{bundle}"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt5_19jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt4jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
