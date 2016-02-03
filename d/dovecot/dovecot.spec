@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.2.19
+Version: 2.2.21
 Release: alt1
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -174,7 +174,7 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_docdir/dovecot
 
 %_man1dir/*
-%_man7dir/doveadm-search-query.7.gz
+%_man7dir/doveadm-search-query.*
 
 # hi buildreq
 %_libdir/lib*.so.*
@@ -189,6 +189,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Mon Jan 25 2016 Fr. Br. George <george@altlinux.ru> 2.2.21-alt1
+- Autobuild version bump to 2.2.21
+
 * Wed Oct 14 2015 Fr. Br. George <george@altlinux.ru> 2.2.19-alt1
 - Autobuild version bump to 2.2.19
 - Fix systemd service patch
