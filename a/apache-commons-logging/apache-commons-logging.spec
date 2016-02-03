@@ -1,28 +1,46 @@
-Name: apache-commons-logging
-Version: 1.2
-Summary: Apache Commons Logging
-License: ASL 2.0
-Url: http://commons.apache.org/logging
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-logging = 1.2-4.fc23
-Provides: mvn(apache:commons-logging) = 1.2
-Provides: mvn(apache:commons-logging:pom:) = 1.2
-Provides: mvn(commons-logging:commons-logging) = 1.2
-Provides: mvn(commons-logging:commons-logging-api) = 1.1
-Provides: mvn(commons-logging:commons-logging-api:pom:) = 1.1
-Provides: mvn(commons-logging:commons-logging:pom:) = 1.2
-Provides: mvn(org.apache.commons:commons-logging) = 1.2
-Provides: mvn(org.apache.commons:commons-logging-api) = 1.1
-Provides: mvn(org.apache.commons:commons-logging-api:pom:) = 1.1
-Provides: mvn(org.apache.commons:commons-logging:pom:) = 1.2
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: apache-commons-logging-1.2-4.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# READ BEFORE UPDATING: After updating this package to new upstream
+# version eclipse-ecf should be rebuilt.  For more info, see:
+# https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
+
+%global base_name  logging
+%global short_name commons-%{base_name}
+
+Name:           apache-%{short_name}
+Version:        1.2
+Release:        alt1_4jpp8
+Summary:        Apache Commons Logging
+License:        ASL 2.0
+URL:            http://commons.apache.org/%{base_name}
+Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{short_name}-api/1.1/%{short_name}-api-1.1.pom
+
+Patch0:         0001-Generate-different-Bundle-SymbolicName-for-different.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(avalon-framework:avalon-framework-api)
+BuildRequires:  mvn(avalon-framework:avalon-framework-impl)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(log4j:log4j)
+BuildRequires:  mvn(logkit:logkit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+
+BuildArch:      noarch
+Source44: import.info
+
 
 %description
 The commons-logging package provides a simple, component oriented
@@ -35,24 +53,77 @@ commons-logging abstraction is meant to minimize the differences between
 the two, and to allow a developer to not tie himself to a particular
 logging implementation.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package        javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description    javadoc
+%{summary}.
+
+# -----------------------------------------------------------------------------
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
+%patch0 -p1
+
+# Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
+%pom_remove_dep :avalon-framework
+%pom_add_dep avalon-framework:avalon-framework-api:4.3:provided
+%pom_add_dep avalon-framework:avalon-framework-impl:4.3:test
+
+%pom_xpath_inject "pom:dependency[pom:artifactId='logkit']" '<scope>provided</scope>'
+
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :maven-scm-publish-plugin
+
+sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt NOTICE.txt
+
+# for compatibility reasons
+%mvn_file ":%{short_name}{*}" "%{short_name}@1" "%{name}@1"
+%mvn_alias ":%{short_name}{*}" "org.apache.commons:%{short_name}@1" "apache:%{short_name}@1"
+
+# Remove log4j12 tests
+rm -rf src/test/java/org/apache/commons/logging/log4j/log4j12
+
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
+
+# -----------------------------------------------------------------------------
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+%mvn_install
+
+install -p -m 644 target/%{short_name}-api-%{version}.jar %{buildroot}/%{_javadir}/%{name}-api.jar
+install -p -m 644 target/%{short_name}-adapters-%{version}.jar %{buildroot}/%{_javadir}/%{name}-adapters.jar
+
+pushd %{buildroot}/%{_javadir}
+for jar in %{name}-*; do
+    ln -sf ${jar} `echo ${jar}| sed "s|apache-||g"`
 done
+popd
+
+install -pm 644 %{SOURCE2} %{buildroot}/%{_mavenpomdir}/JPP-%{short_name}-api.pom
+
+%add_maven_depmap JPP-%{short_name}-api.pom %{short_name}-api.jar -a "org.apache.commons:commons-logging-api"
+
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt
+%doc PROPOSAL.html RELEASE-NOTES.txt
+%{_javadir}/*%{short_name}-api.jar
+%{_javadir}/*%{short_name}-adapters.jar
 
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
+
+# -----------------------------------------------------------------------------
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_4jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
