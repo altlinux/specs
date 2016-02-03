@@ -1,41 +1,72 @@
-Name: plexus-cipher
-Version: 1.7
-Summary: Plexus Cipher: encryption/decryption Component
-License: ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-cipher
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.sonatype.plexus:plexus-cipher) = 1.7
-Provides: mvn(org.sonatype.plexus:plexus-cipher:pom:) = 1.7
-Provides: plexus-cipher = 1.7-10.fc23
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: plexus-cipher-1.7-10.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           plexus-cipher
+Version:        1.7
+Release:        alt3_10jpp8
+Summary:        Plexus Cipher: encryption/decryption Component
+License:        ASL 2.0
+# project moved to GitHub and it looks like there is no official website anymore
+URL:            https://github.com/codehaus-plexus/plexus-cipher
+BuildArch:      noarch
+
+# git clone https://github.com/sonatype/plexus-cipher.git
+# cd plexus-cipher/
+# note this is version 1.7 + our patches which were incorporated by upstream maintainer
+# git archive --format tar --prefix=plexus-cipher-1.7/ 0cff29e6b2e | gzip -9 > plexus-cipher-1.7.tar.gz
+Source0:        %{name}-%{version}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(javax.enterprise:cdi-api)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.sonatype.plugins:sisu-maven-plugin)
+BuildRequires:  mvn(org.sonatype.spice:spice-parent:pom:)
+Source44: import.info
 
 %description
 Plexus Cipher: encryption/decryption Component
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+# replace %{version}-SNAPSHOT with %{version}
+%pom_xpath_replace pom:project/pom:version "<version>%{version}</version>"
+
+# fedora moved from sonatype sisu to eclipse sisu. sisu-inject-bean artifact
+# doesn't exist in eclipse sisu. this artifact contains nothing but
+# bundled classes from atinject, cdi-api, aopalliance and maybe others.
+%pom_remove_dep org.sonatype.sisu:sisu-inject-bean
+%pom_add_dep javax.inject:javax.inject:1:provided
+%pom_add_dep javax.enterprise:cdi-api:1.0:provided
+
+%mvn_file : plexus/%{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt3_10jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
