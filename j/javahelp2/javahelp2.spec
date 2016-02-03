@@ -1,12 +1,14 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %def_without demo
 %filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -39,24 +41,22 @@ BuildRequires: jpackage-compat
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt3_15jpp7
+Release:	alt3_18jpp8
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
-Url:		https://javahelp.dev.java.net/
-Group:		Development/Java
+Url:		https://javahelp.java.net/
 Source0:	https://javahelp.dev.java.net/files/documents/5985/59373/%{name}-src-%{version}.zip
 Source1:	%{name}-jhindexer.sh
 Source2:	%{name}-jhsearch.sh
 BuildArch:	noarch
 
-BuildRequires:	jpackage-utils >= 0:1.5.32
+BuildRequires:	javapackages-local
 
 BuildRequires:	ant
-BuildRequires:	tomcat-servlet-3.0-api
-BuildRequires:	tomcat-jsp-2.2-api
-
-Requires:	jpackage-utils >= 0:1.5.32
+BuildRequires:	tomcat-servlet-3.1-api
+BuildRequires:	tomcat-jsp-2.3-api
 Source44: import.info
+
 
 %description
 JavaHelp software is a full-featured, platform-independent, extensible
@@ -66,8 +66,8 @@ devices. Authors can also use the JavaHelp software to deliver online
 documentation for the Web and corporate Intranet.
 
 %package javadoc
+Group: Development/Java
 Summary:	Javadoc for %{name}
-Group:		Development/Java
 BuildArch: noarch
 
 %description javadoc
@@ -78,8 +78,7 @@ Javadoc for %{name}.
 # fix files perms
 chmod -R go=u-w *
 # remove windows files
-for file in `find . -type f -name .bat`; do rm -f $file; done
-
+find . -name "*.bat" -delete
 #
 # This class provides native browser integration and would require
 # JDIC project to be present. Currently there is no such jpackage.org
@@ -93,20 +92,26 @@ ln -s %{_javadir}/tomcat-jsp-api.jar javahelp_nbproject/lib/jsp-api.jar
 ln -s %{_javadir}/tomcat-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
 
 %build
-ant -f javahelp_nbproject/build.xml -Djdic-jar-present=true -Djdic-zip-present=true -Dservlet-jar-present=true -Dtomcat-zip-present=true release javadoc
+
+ant -f javahelp_nbproject/build.xml \
+ -Djavac.source=1.6 -Djavac.target=1.6 \
+ -Djdic-jar-present=true -Djdic-zip-present=true \
+ -Dservlet-jar-present=true -Dtomcat-zip-present=true \
+ -Djavadoc.additionalparam="-Xdoclint:none" \
+ release javadoc
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+# see https://svn.java.net/svn/javahelp~svn/trunk/jhMaster/jhall.pom
+%mvn_file javax.help:javahelp %{name}
+%mvn_artifact javax.help:javahelp:%{version} javahelp_nbproject/dist/lib/jhall.jar
+%mvn_install -J javahelp_nbproject/dist/lib/javadoc
+
 install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
+#cp -pr jhMaster/JavaHelp/doc/public-spec/dtd $RPM_BUILD_ROOT%%{_datadir}/%%{name}
+#cp -pr jhMaster/JavaHelp/demos $RPM_BUILD_ROOT%%{_datadir}/%%{name}
 install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/jh2indexer
 install -m 755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/jh2search
-
-install -m 644 javahelp_nbproject/dist/lib/jhall.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-#cp -pr jhMaster/JavaHelp/doc/public-spec/dtd $RPM_BUILD_ROOT%{_datadir}/%{name}
-#cp -pr jhMaster/JavaHelp/demos $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr javahelp_nbproject/dist/lib/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/jhindexer.conf`
 touch $RPM_BUILD_ROOT/etc/jhindexer.conf
@@ -114,17 +119,18 @@ touch $RPM_BUILD_ROOT/etc/jhindexer.conf
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/jhsearch.conf`
 touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 
-%files
-%attr(0755,root,root) %{_bindir}/*
-%{_javadir}/%{name}.jar
+%files -f .mfiles
+%{_bindir}/*
 %dir %{_datadir}/%{name}
 %config(noreplace,missingok) /etc/jhindexer.conf
 %config(noreplace,missingok) /etc/jhsearch.conf
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_18jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.05-alt3_15jpp7
 - new release
 
