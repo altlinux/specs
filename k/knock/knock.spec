@@ -1,18 +1,16 @@
 Name: knock
-Version: 0.5
-Release: alt6.qa1
+Version: 0.7.8
+Release: alt1
 
 Summary: knock is a port-knocking client
 License: GPL
 Group: Networking/Remote access
 
 Url: http://www.zeroflux.org/cgi-bin/cvstrac.cgi/knock/wiki
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: knockd.sysconfig
 Source2: knockd.init
-Source3: knockd.conf
-Patch: knock-0.5-alt-gcc43.patch
-Packager: Michael Shigorin <mike@altlinux.org>
+Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Feb 17 2005
 BuildRequires: gcc-c++ libpcap-devel
@@ -42,6 +40,7 @@ knockd server.
 %patch -p1
 
 %build
+autoreconf -fisv
 %configure
 %make_build
 
@@ -49,7 +48,7 @@ knockd server.
 %make_install DESTDIR=%buildroot install
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/knockd
 install -pD -m755 %SOURCE2 %buildroot%_initdir/knockd
-install -pD -m600 %SOURCE3 %buildroot%_sysconfdir/knockd.conf
+install -pD -m600 knockd.conf %buildroot%_sysconfdir/knockd.conf
 
 %post server
 %post_service knockd
@@ -67,15 +66,19 @@ fi
 %_man1dir/knock.1*
 
 %files server
-%doc README ChangeLog TODO
+%doc README.md ChangeLog TODO
 %attr(0755,root,root) %_sbindir/knockd
 %attr(0600,root,root) %config(noreplace) %_sysconfdir/knockd.conf
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/sysconfig/knockd
 %attr(0755,root,root) %config %_initdir/knockd
 %_sbindir/knockd
+%_sbindir/knock_add
 %_man1dir/knockd.1*
 
 %changelog
+* Wed Feb 03 2016 Anton Farygin <rider@altlinux.ru> 0.7.8-alt1
+- new version, build from upstream git
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5-alt6.qa1
 - NMU: rebuilt for debuginfo.
 
