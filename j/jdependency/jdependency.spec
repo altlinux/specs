@@ -1,49 +1,61 @@
-Name: jdependency
-Version: 0.9
-Summary: This project provides an API to analyse class dependencies
-License: ASL 2.0
-Url: http://github.com/tcurdt/jdependency
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jdependency = 0.9-3.fc23
-Provides: mvn(org.vafer:jdependency) = 0.9
-Provides: mvn(org.vafer:jdependency:pom:) = 0.9
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-io:commons-io)
-Requires: mvn(org.ow2.asm:asm)
-Requires: mvn(org.ow2.asm:asm-analysis)
-Requires: mvn(org.ow2.asm:asm-commons)
-Requires: mvn(org.ow2.asm:asm-tree)
-Requires: mvn(org.ow2.asm:asm-util)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jdependency-0.9-3.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           jdependency
+Version:        0.9
+Release:        alt1_3jpp8
+Summary:        This project provides an API to analyse class dependencies
+License:        ASL 2.0
+URL:            http://github.com/tcurdt/%{name}
+BuildArch:      noarch
+
+Source0:        http://github.com/tcurdt/%{name}/archive/%{name}-%{version}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.ow2.asm:asm-analysis)
+BuildRequires:  mvn(org.ow2.asm:asm-commons)
+BuildRequires:  mvn(org.ow2.asm:asm-tree)
+BuildRequires:  mvn(org.ow2.asm:asm-util)
+Source44: import.info
 
 %description
-jdependency is small library that helps you analyze class level
+%{name} is small library that helps you analyze class level
 dependencies, clashes and missing classes.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt README.md
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt1_3jpp8
+- new version
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
