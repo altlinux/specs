@@ -1,27 +1,22 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Summary:        Java implementation of a binary protocol for web services 
-Name:           hessian
-Version:        4.0.7
-Release:        alt2_6jpp7
-Epoch:          1
-License:        ASL 1.1
-URL:            http://hessian.caucho.com/
-Group:          Development/Java
-Source0:        http://caucho.com/download/hessian-4.0.7-src.jar
-Source1:        %{name}-build.xml
-Source2:        http://repo1.maven.org/maven2/com/caucho/hessian/4.0.7/hessian-4.0.7.pom
-Requires:       jpackage-utils >= 0:1.6
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  ant >= 0:1.6
-BuildRequires:  tomcat-servlet-3.0-api
-Requires:       jpackage-utils
-Requires:       tomcat-servlet-3.0-api
+BuildRequires: jpackage-generic-compat
+Summary:       Java implementation of a binary protocol for web services 
+Name:          hessian
+Version:       4.0.7
+Release:       alt2_11jpp8
+Epoch:         1
+License:       ASL 1.1
+URL:           http://hessian.caucho.com/
+Source0:       http://caucho.com/download/hessian-4.0.7-src.jar
+Source1:       %{name}-build.xml
+Source2:       http://repo1.maven.org/maven2/com/caucho/hessian/4.0.7/hessian-4.0.7.pom
+BuildRequires: javapackages-local
+BuildRequires: ant >= 0:1.6
+BuildRequires: tomcat-servlet-3.1-api
 
-BuildArch:      noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -29,9 +24,8 @@ This is the Java implementation of Caucho's Hession binary transport
 protocol for web services.
 
 %package javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -46,31 +40,20 @@ ant jar
 ant javadoc 
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_artifact %{SOURCE2} %{name}.jar
+%mvn_file com.caucho:%{name} %{name}
+%mvn_install -J doc/api
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar 
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-cp -rp doc/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*.jar
+%files -f .mfiles
 %doc apache.license
 
-%files javadoc
-%doc %{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
 %doc apache.license
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.0.7-alt2_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.0.7-alt2_6jpp7
 - new release
 
