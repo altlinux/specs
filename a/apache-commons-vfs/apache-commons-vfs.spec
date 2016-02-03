@@ -1,12 +1,13 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global base_name vfs
 %global short_name commons-%{base_name}
 Name:          apache-commons-vfs
 Version:       2.0
-Release:       alt4_11jpp7
+Release:       alt4_16jpp8
 Summary:       Commons Virtual File System
 License:       ASL 2.0
 Url:           http://commons.apache.org/%{base_name}/
@@ -20,7 +21,7 @@ BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(commons-net:commons-net)
 BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.commons:commons-compress)
-BuildRequires: mvn(org.apache.commons:commons-parent)
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.jdom:jdom)
 
@@ -132,6 +133,8 @@ rm -rf core/src/main/java/org/apache/commons/vfs2/provider/webdav
 rm -rf core/src/test/java/org/apache/commons/vfs2/provider/webdav
 sed -i 's|"webdav",||' core/src/test/java/org/apache/commons/vfs2/util/DelegatingFileSystemOptionsBuilderTest.java
 
+rm -r core/src/test/java/org/apache/commons/vfs2/provider/ram/test/CustomRamProviderTest.java
+
 # not really needed
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :commons-build-plugin
@@ -164,7 +167,8 @@ echo "ant commons-logging %{short_name}" > %{short_name}
 install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 
 %files -f .mfiles-commons-vfs2
-%doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
+%doc README.txt RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files examples -f .mfiles-commons-vfs2-examples
 
@@ -175,6 +179,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_16jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_11jpp7
 - new release
 
