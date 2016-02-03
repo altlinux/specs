@@ -1,22 +1,42 @@
-Name: httpcomponents-core
-Version: 4.4.1
-Summary: Set of low level Java HTTP transport components for HTTP services
-License: ASL 2.0 and CC-BY
-Url: http://hc.apache.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: httpcomponents-core = 4.4.1-2.fc23
-Provides: mvn(org.apache.httpcomponents:httpcomponents-core:pom:) = 4.4.1
-Provides: mvn(org.apache.httpcomponents:httpcore) = 4.4.1
-Provides: mvn(org.apache.httpcomponents:httpcore-nio) = 4.4.1
-Provides: mvn(org.apache.httpcomponents:httpcore-nio:pom:) = 4.4.1
-Provides: mvn(org.apache.httpcomponents:httpcore:pom:) = 4.4.1
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: httpcomponents-core-4.4.1-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define fedora 23
+# READ BEFORE UPDATING: After updating this package to new upstream
+# version eclipse-ecf should be rebuilt.  For more info, see:
+# https://fedoraproject.org/wiki/SIGs/Java#Package_Update.2FRebuild_Notes
+
+%global base_name httpcomponents
+
+Name:              httpcomponents-core
+Summary:           Set of low level Java HTTP transport components for HTTP services
+Version:           4.4.1
+Release:           alt1_2jpp8
+# The project is licensed under ASL 2.0, but it contains annotations
+# in the package org.apache.http.annotation which are derived
+# from JCIP-ANNOTATIONS project (CC-BY licensed)
+License:           ASL 2.0 and CC-BY
+URL:               http://hc.apache.org/
+Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
+BuildArch:         noarch
+
+BuildRequires:     maven-local
+BuildRequires:     httpcomponents-project
+BuildRequires:     jpackage-utils
+BuildRequires:     apache-commons-logging
+BuildRequires:     junit
+BuildRequires:     mvn(org.codehaus.mojo:build-helper-maven-plugin)
+%if 0%{?fedora}
+BuildRequires:     mockito
+%endif
+Source44: import.info
+
+Obsoletes: hc-httpcore < 4.1.1
+Provides: hc-httpcore = %version
 
 %description
 HttpCore is a set of low level HTTP transport components that can be
@@ -31,24 +51,65 @@ appropriate for high latency scenarios where raw data throughput is
 less important than the ability to handle thousands of simultaneous
 HTTP connections in a resource efficient manner.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package        javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description    javadoc
+%{summary}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
 
-%build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :apache-rat-plugin
 
-%install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+# we don't need these artifacts right now
+%pom_disable_module httpcore-osgi
+%pom_disable_module httpcore-ab
+
+# OSGify modules
+for module in httpcore httpcore-nio; do
+    %pom_xpath_remove "pom:project/pom:packaging" $module
+    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" $module
+    %pom_xpath_inject "pom:build/pom:plugins" "
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <Export-Package>*</Export-Package>
+              <Private-Package></Private-Package>
+              <_nouses>true</_nouses>
+            </instructions>
+          </configuration>
+        </plugin>" $module
 done
 
+# install JARs to httpcomponents/ for compatibility reasons
+# several other packages expect to find the JARs there
+%mvn_file ":{*}" httpcomponents/@1
 
-%files -f %name-list
+%build
+%mvn_build %{!?fedora -f}
+
+%install
+%mvn_install
+
+%files -f .mfiles
+%dir %{_javadir}/httpcomponents
+%doc LICENSE.txt NOTICE.txt README.txt RELEASE_NOTES.txt
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt1_2jpp8
+- new version
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 4.4.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
