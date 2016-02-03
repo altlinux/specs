@@ -1,49 +1,49 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: lcov
-Version: 1.10
+Version: 1.12
 Release: alt1
 
-Summary: A graphical GCOV front-end
+Summary: LTP GCOV extension code coverage tool
 Group: Development/Tools
-License: GPL
+License: GPLv2+
 URL: http://ltp.sourceforge.net/coverage/lcov.php
-
-Source: http://downloads.sourceforge.net/ltp/lcov-%version.tar.gz
-Patch: lcov-1.10-fc-gcc-47-unreachable.patch
-
 BuildArch: noarch
+
+# https://github.com/linux-test-project/lcov.git
+# git://git.altlinux.org/gears/l/lcov.git
+Source: %name-%version-%release.tar
+
 Requires: gcc-common perl-GD
 
+%define _unpackaged_files_terminate_build 1
+
 %description
-LCOV is a graphical front-end for GCC's coverage testing tool gcov.
-It collects gcov data for multiple source files and creates HTML pages
-containing the source code annotated with coverage information. It also
-adds overview pages for easy navigation within the file structure.
+LCOV is an extension of GCOV, a GNU tool which provides information
+about what parts of a program are actually executed (i.e. "covered")
+while running a particular test case.  The extension consists of a set
+of PERL scripts which build on the textual GCOV output to implement
+HTML based output and support for large projects.
 
 %prep
-%setup
-%patch -p1
+%setup -n %name-%version-%release
+cat > .version <<EOF
+VERSION=%version
+RELEASE=%release
+FULL=%version
+EOF
 
 %install
-%make install PREFIX=%buildroot
+make install PREFIX=%buildroot
 
 %files
-%_bindir/gendesc
-%_bindir/genhtml
-%_bindir/geninfo
-%_bindir/genpng
-%_bindir/%name
-%_man1dir/gendesc.1.*
-%_man1dir/genhtml.1.*
-%_man1dir/geninfo.1.*
-%_man1dir/genpng.1.*
-%_man1dir/%name.1.*
-%_man5dir/lcovrc.5.*
+%_bindir/*
+%_man1dir/*
+%_man5dir/*
 %config(noreplace) %_sysconfdir/lcovrc
-%doc README CHANGES
 
 %changelog
+* Wed Feb 03 2016 Dmitry V. Levin <ldv@altlinux.org> 1.12-alt1
+- 1.10 -> v1.12-1-g79e9f28.
+
 * Tue Apr 09 2013 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
 - 1.9.10
 
@@ -70,4 +70,3 @@ adds overview pages for easy navigation within the file structure.
 - implemented variables for version/release
 * Fri Oct 8 2002 Peter Oberparleiter (Peter.Oberparleiter@de.ibm.com)
 - created initial spec file
-
