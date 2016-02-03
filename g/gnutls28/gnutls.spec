@@ -1,5 +1,5 @@
 Name: gnutls28
-Version: 3.3.20
+Version: 3.3.21
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -90,6 +90,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %exclude %_pkgconfigdir/gnutls.pc
 
 %changelog
+* Wed Feb 03 2016 Mikhail Efremov <sem@altlinux.org> 3.3.21-alt1
+- Updated to 3.3.21.
+
 * Sat Jan 09 2016 Mikhail Efremov <sem@altlinux.org> 3.3.20-alt1
 - Updated to 3.3.20.
 
