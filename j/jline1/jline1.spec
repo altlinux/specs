@@ -37,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jline1
 Version:        1.0
-Release:        alt1_11jpp8
+Release:        alt2_11jpp8
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
@@ -63,7 +63,7 @@ BuildRequires: maven-surefire-provider-junit
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1022939
 
-BuildArch:     noarch
+#BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -116,14 +116,23 @@ mv tmp/* .
 %install
 %mvn_install
 
+if [ %_libdir != /usr/lib ]; then
+    mv %buildroot/usr/lib %buildroot%_libdir
+    sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
+fi
+
 %files -f .mfiles
 # there is native code in sources but only for Windows
+%dir %{_jnidir}/%{name}
 %doc LICENSE.txt src/main/resources/jline/keybindings.properties
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp8
+- manual jni fix
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_11jpp8
 - java 8 mass update
 
