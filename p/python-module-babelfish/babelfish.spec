@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt1.dev.git20150124
+Release: alt2.dev.git20150124
 Summary: A module to work with countries and languages
 License: BSD
 Group: Development/Python
@@ -16,12 +16,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Sphinx-PyPI-upload
-BuildPreReq: python-module-sphinx-devel diaoul-sphinx-themes
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-Sphinx-PyPI-upload
 %endif
 
 %py_provides %oname
@@ -57,24 +54,6 @@ BabelFish is a Python library to work with countries and languages.
 
 This package contains tests for %oname.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-BabelFish is a Python library to work with countries and languages.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-BabelFish is a Python library to work with countries and languages.
-
-This package contains documentation for %oname.
 
 %prep
 %setup
@@ -82,11 +61,6 @@ This package contains documentation for %oname.
 %if_with python3
 cp -fR . ../python3
 %endif
-
-rm -fR docs/_themes
-cp -fR %_datadir/diaoul-sphinx-themes docs/_themes
-%prepare_sphinx .
-ln -s ../objects.inv docs/
 
 %build
 %python_build_debug
@@ -106,11 +80,6 @@ pushd ../python3
 popd
 %endif
 
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
-
 %check
 python setup.py test
 %if_with python3
@@ -122,17 +91,11 @@ popd
 %files
 %doc AUTHORS *.rst
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
 %exclude %python_sitelibdir/*/tests.*
 
 %files tests
 %python_sitelibdir/*/tests.*
 
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -147,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 0.5.5-alt2.dev.git20150124
+- Delete unnecessary dependens
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5-alt1.dev.git20150124
 - Version 0.5.5-dev
 
