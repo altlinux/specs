@@ -26,7 +26,7 @@ BuildRequires: /proc
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt2_12jpp8
+Release:        alt3_12jpp8
 Epoch:		1
 Summary:        Macros and scripts for Java packaging support
 
@@ -60,7 +60,8 @@ Provides:       jpackage-utils = 1:5.0.0
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
 Source44: import.info
-Patch33: macros.jpackage-to-alt.patch
+Patch32: macros.jpackage-alt-jnidir.patch
+Patch33: macros.jpackage-alt-script.patch
 Patch34: macros.fjava-to-alt-rpm404.patch
 Patch35: javapackages-tools-4.6.0-alt-use-enviroment.patch
 Patch36: javapackages-tools-4.6.0-alt-req-headless-off.patch
@@ -206,7 +207,8 @@ This package provides non-essential macros and scripts to support Java packaging
 %patch1 -p1
 
 sed -i '/fedora-review/d' install
-%patch33 -p0
+%patch32 -p0
+%patch33 -p1
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
@@ -287,6 +289,9 @@ popd
 %_bindir/xmvn-builddep
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt3_12jpp8
+- fixes in script macro
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt2_12jpp8
 - explicitly cleaned jar dependency
 - moved python to rpm-build-java
