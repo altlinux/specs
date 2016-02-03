@@ -1,49 +1,115 @@
-Name: plexus-compiler
-Version: 2.4
-Summary: Compiler call initiators for Plexus
-License: MIT and ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-compiler
-Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.codehaus.plexus:plexus-compiler-api) = 2.4
-Provides: mvn(org.codehaus.plexus:plexus-compiler-api:pom:) = 2.4
-Provides: mvn(org.codehaus.plexus:plexus-compiler-javac) = 2.4
-Provides: mvn(org.codehaus.plexus:plexus-compiler-javac:pom:) = 2.4
-Provides: mvn(org.codehaus.plexus:plexus-compiler-manager) = 2.4
-Provides: mvn(org.codehaus.plexus:plexus-compiler-manager:pom:) = 2.4
-Provides: plexus-compiler = 0:2.4-3.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: plexus-compiler-2.4-3.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global parent  plexus
+
+Name:       plexus-compiler
+Version:    2.4
+Release:    alt1_3jpp8
+Epoch:      0
+Summary:    Compiler call initiators for Plexus
+# extras subpackage has a bit different licensing
+# parts of compiler-api are ASL2.0/MIT
+License:    MIT and ASL 2.0
+URL:        https://github.com/codehaus-plexus/plexus-compiler
+
+Source0:    https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
+Source1:    http://www.apache.org/licenses/LICENSE-2.0.txt
+Source2:    LICENSE.MIT
+
+BuildArch:      noarch
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-gpg-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-compiler-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-compilers:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-components:pom:)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.tycho:org.eclipse.jdt.core)
+Source44: import.info
+
 
 %description
 Plexus Compiler adds support for using various compilers from a
 unified api. Support for javac is available in main package. For
-additional compilers see plexus-compiler-extras package.
+additional compilers see %{name}-extras package.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package extras
+Group: Development/Java
+Summary:        Extra compiler support for %{name}
+# ASL 2.0: src/main/java/org/codehaus/plexus/compiler/util/scan/
+#          ...codehaus/plexus/compiler/csharp/CSharpCompiler.java
+# ASL 1.1/MIT: ...codehaus/plexus/compiler/jikes/JikesCompiler.java
+License:        MIT and ASL 2.0 and ASL 1.1
+
+%description extras
+Additional support for csharp, eclipse and jikes compilers
+
+%package pom
+Group: Development/Java
+Summary:        Maven POM files for %{name}
+
+%description pom
+This package provides %{summary}.
+
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+License:        MIT and ASL 2.0 and ASL 1.1
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
+
+cp %{SOURCE1} LICENSE
+cp %{SOURCE2} LICENSE.MIT
+
+%pom_disable_module plexus-compiler-aspectj plexus-compilers
+# missing com.google.errorprone:error_prone_core
+%pom_disable_module plexus-compiler-javac-errorprone plexus-compilers
+
+# don't build/install compiler-test module, it needs maven2 test harness
+%pom_disable_module plexus-compiler-test
+
+# don't install sources jars
+%mvn_package ":*::sources:" __noinstall
+
+%mvn_package ":plexus-compiler{,s}" pom
+%mvn_package ":*{csharp,eclipse,jikes}*" extras
+
+# don't generate requires on test dependency (see #1007498)
+%pom_xpath_remove "pom:dependency[pom:artifactId[text()='plexus-compiler-test']]" plexus-compilers
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Tests are skipped because of unavailable plexus-compiler-test artifact
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE LICENSE.MIT
+%files extras -f .mfiles-extras
+%files pom -f .mfiles-pom
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE LICENSE.MIT
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_3jpp8
+- new version
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
