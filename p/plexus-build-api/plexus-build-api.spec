@@ -1,43 +1,65 @@
-Name: plexus-build-api
-Version: 0.0.7
-Summary: Plexus Build API
-License: ASL 2.0
-Url: https://github.com/sonatype/sisu-build-api
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.sonatype.plexus:plexus-build-api) = 0.0.7
-Provides: mvn(org.sonatype.plexus:plexus-build-api:pom:) = 0.0.7
-Provides: plexus-build-api = 0.0.7-15.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: plexus-build-api-0.0.7-15.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           plexus-build-api
+Version:        0.0.7
+Release:        alt3_15jpp8
+Summary:        Plexus Build API
+License:        ASL 2.0
+URL:            https://github.com/sonatype/sisu-build-api
+BuildArch:      noarch
+
+#Fetched from https://github.com/sonatype/sisu-build-api/tarball/plexus-build-api-0.0.7
+Source0:        sonatype-sisu-build-api-plexus-build-api-0.0.7-0-g883ea67.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+# Forwarded upstream: https://github.com/sonatype/sisu-build-api/pull/2
+Patch0:         %{name}-migration-to-component-metadata.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.sonatype.spice:spice-parent:pom:)
+Source44: import.info
 
 %description
 Plexus Build API
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n sonatype-sisu-build-api-f1f8849
+cp -p %{SOURCE1} .
+
+%patch0 -p1
+
+%mvn_file : plexus/%{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE-2.0.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE-2.0.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt3_15jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
