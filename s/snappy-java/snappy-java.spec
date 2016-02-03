@@ -1,42 +1,128 @@
-Name: snappy-java
-Version: 1.0.5
-Summary: Fast compressor/decompresser
-License: ASL 2.0
-Url: http://xerial.org/snappy-java/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.xerial.snappy:snappy-java) = 1.0.5
-Provides: mvn(org.xerial.snappy:snappy-java:pom:) = 1.0.5
-Provides: snappy-java = 1.0.5-5.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: libsnappy
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: snappy-java-1.0.5-5.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# empty debuginfo
+%global debug_package %nil
+
+Name:             snappy-java
+Version:          1.0.5
+Release:          alt1_5jpp8
+Summary:          Fast compressor/decompresser
+License:          ASL 2.0
+URL:              http://xerial.org/snappy-java/
+Source0:          https://github.com/xerial/snappy-java/archive/%{version}.tar.gz
+
+Patch0:           snappy-java-1.0.5-build.patch
+
+BuildRequires:    libstdc++-devel-static
+BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache.felix:org.osgi.core)
+BuildRequires:    libsnappy-devel
+Requires:         libsnappy
+Source44: import.info
 
 %description
 A Java port of the snappy, a fast compresser/decompresser written in C++.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadoc for %{name}
+BuildArch:        noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+# Cleanup
+find -name "*.class" -print -delete
+find -name "*.jar" -print -delete
+
+# Remove prebuilt libraries
+find -name "*.jnilib" -print -delete
+find -name "*.dll" -print -delete
+find -name "*.so" -print -delete
+find -name "*.h" -print -delete
+
+%patch0 -p1
+
+# Modify pom
+%pom_change_dep org.osgi:core org.apache.felix:org.osgi.core
+%pom_xpath_remove "pom:dependency[pom:scope = 'test']"
+%pom_xpath_remove "pom:build/pom:extensions"
+%pom_xpath_remove "pom:Bundle-NativeCode"
+
+# Unwanted
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-source-plugin
+
+# Build JNI library
+%pom_add_plugin org.apache.maven.plugins:maven-antrun-plugin . '
+<dependencies>
+ <dependency>
+  <groupId>com.sun</groupId>
+  <artifactId>tools</artifactId>
+  <version>1.8.0</version>
+ </dependency>
+</dependencies>
+
+<executions>
+  <execution>
+  <id>compile</id>
+  <phase>process-classes</phase>
+    <configuration>
+      <target>
+       <javac destdir="lib"
+         srcdir="src/main/java"
+         source="1.6" target="1.6" debug="on"
+         classpathref="maven.plugin.classpath">
+         <include name="**/OSInfo.java"/>
+       </javac>
+       <exec executable="make">
+        <arg line="%{?_smp_mflags}
+        JAVA_HOME=%{_jvmdir}/java
+        JAVA=%{_jvmdir}/java/bin/java
+        JAVAC=%{_jvmdir}/java/bin/javac
+        JAVAH=%{_jvmdir}/java/bin/javah"/>
+       </exec>
+      </target>
+    </configuration>
+    <goals>
+      <goal>run</goal>
+    </goals>
+  </execution>
+</executions>'
+
+chmod 644 NOTICE README.md
+sed -i 's/\r//' LICENSE NOTICE README.md
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+CXXFLAGS="${CXXFLAGS:-%optflags}"
+export CXXFLAGS
+
+# no xerial-core package available
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README.md
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_5jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
