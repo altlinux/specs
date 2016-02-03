@@ -1,22 +1,23 @@
-Name: plexus-classworlds
-Version: 2.5.2
-Summary: Plexus Classworlds Classloader Framework
-License: ASL 2.0 and Plexus
-Url: https://github.com/codehaus-plexus/plexus-classworlds
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(classworlds:classworlds) = 2.5.2
-Provides: mvn(classworlds:classworlds:pom:) = 2.5.2
-Provides: mvn(org.codehaus.plexus:plexus-classworlds) = 2.5.2
-Provides: mvn(org.codehaus.plexus:plexus-classworlds:pom:) = 2.5.2
-Provides: plexus-classworlds = 2.5.2-3.fc23
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: plexus-classworlds-2.5.2-3.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           plexus-classworlds
+Version:        2.5.2
+Release:        alt1_3jpp8
+Summary:        Plexus Classworlds Classloader Framework
+License:        ASL 2.0 and Plexus
+URL:            https://github.com/codehaus-plexus/plexus-classworlds
+Source0:        https://github.com/sonatype/%{name}/archive/%{name}-%{version}.tar.gz
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+
+Obsoletes:      classworlds < 1.1-13
+Source44: import.info
 
 %description
 Classworlds is a framework for container developers
@@ -28,24 +29,35 @@ loading of components or otherwise represent a 'container'
 can benefit from the classloading control provided by
 classworlds.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
+%mvn_file : %{name} plexus/classworlds
+%mvn_alias : classworlds:classworlds
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt LICENSE-2.0.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt1_3jpp8
+- new version
+
 * Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
