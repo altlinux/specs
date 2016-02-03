@@ -1,47 +1,73 @@
-Name: jackson-datatype-joda
-Version: 2.5.0
-Summary: Add-on module for Jackson to support Joda data-types
-License: ASL 2.0
-Url: http://wiki.fasterxml.com/JacksonModuleJoda
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jackson-datatype-joda = 2.5.0-1.fc23
-Provides: mvn(com.fasterxml.jackson.datatype:jackson-datatype-joda) = 2.5.0
-Provides: mvn(com.fasterxml.jackson.datatype:jackson-datatype-joda:pom:) = 2.5.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.fasterxml.jackson.core:jackson-annotations)
-Requires: mvn(com.fasterxml.jackson.core:jackson-core)
-Requires: mvn(com.fasterxml.jackson.core:jackson-databind)
-Requires: mvn(joda-time:joda-time)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jackson-datatype-joda-2.5.0-1.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:          jackson-datatype-joda
+Version:       2.5.0
+Release:       alt1_1jpp8
+Summary:       Add-on module for Jackson to support Joda data-types
+License:       ASL 2.0
+URL:           http://wiki.fasterxml.com/JacksonModuleJoda
+Source0:       https://github.com/FasterXML/jackson-datatype-joda/archive/%{name}-%{version}.tar.gz
+
+BuildRequires: maven-local
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires: mvn(joda-time:joda-time)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 This is a Jackson module that aims to provide
 full support for data types of Joda date-time
 library.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
+
+sed -i 's/\r//' src/main/resources/META-INF/LICENSE
+cp -p src/main/resources/META-INF/LICENSE .
+
+# ComparisonFailure: expected:<...Midnight","2001-05-2[5]"]> but was:<...Midnight","2001-05-2[4]"]>
+rm -r src/test/java/com/fasterxml/jackson/datatype/joda/JodaSerializationTest.java
+
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README.md release-notes/*
+%doc LICENSE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_1jpp8
+- new version
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
