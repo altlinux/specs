@@ -1,6 +1,6 @@
 Name: groff
-Version: 1.20.1
-Release: alt0.20091013.1.qa1
+Version: 1.22.3
+Release: alt1
 
 Summary: A document formatting system
 License: GPL
@@ -19,7 +19,7 @@ Patch8: %name-1.19.1-rh-nohtml.patch
 Patch9: %name-1.19.3-alt-nroff.patch
 Patch10: %name-1.20.1-alt-perl.patch
 Patch11: %name-1.19.3-fix-unicode-tmac.patch
-Patch12: %name-1.19.3-add-T8bit.patch
+Patch12: %name-1.22.3-add-T8bit.patch
 Patch13: %name-1.20.1-replace-virmf.patch
 
 PreReq: %name-base = %version-%release
@@ -30,10 +30,9 @@ Requires: %name-ps = %version-%release
 Requires: %name-x11 = %version-%release
 Requires: %name-extra = %version-%release
 
-# Automatically added by buildreq on Mon Aug 21 2006
 BuildRequires: fonts-type1-urw gcc-c++ ghostscript-module-X groff-base imake
-BuildRequires: libXaw-devel netpbm psutils tcsh xorg-cf-files
-BuildRequires: perl-Math-Complex
+BuildRequires: libXaw-devel netpbm psutils tcsh xorg-cf-files makeinfo
+BuildRequires: perl-Math-Complex perl-IO-Compress
 
 %package base
 Summary: Parts of the %name formatting system that is required for viewing manpages
@@ -55,6 +54,11 @@ Requires: %name-base = %version-%release
 
 %package lj4
 Summary: HP Laserjet 4 family formats driver for %name
+Group: Text tools
+Requires: %name-base = %version-%release
+
+%package pdf
+Summary: PDF post processor for %name
 Group: Text tools
 Requires: %name-base = %version-%release
 
@@ -101,6 +105,10 @@ and corresponding files.
 This package contains grolj4 - driver for %name that produces PCL5 format output
 suitable for HP Laserjet 4 family printers, and corresponding files.
 
+%description pdf
+This package contains gropdf - PDF post processor for %name,
+and corresponding files.
+
 %description ps
 This package contains grops - driver for %name that produces PostScript format,
 and corresponding files.
@@ -116,12 +124,12 @@ This package contains additional %name components.
 %setup -q
 
 %patch1 -p1
-%patch2 -p1
+#patch2 -p1
 %patch3 -p1
 %patch6 -p1
-%patch8 -p1
+#patch8 -p1
 %patch9 -p1
-%patch10 -p2
+#patch10 -p2
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -138,19 +146,20 @@ done
 # Precache parameters.
 export YACC='bison -y' PAGE=A4
 
-%configure
+%configure \
+	--disable-rpath \
+	 --with-appresdir=%_x11appconfdir \
+	 #
 
 # Ensure mkstemp is found.
 grep -qs '^#define HAVE_MKSTEMP 1' src/include/config.h
 
-%make_build
+%make_build -j1
 
 %install
 mkdir -p -- $RPM_BUILD_ROOT%prefix
-%makeinstall \
-	manroot=$RPM_BUILD_ROOT%_mandir \
-	indexdir=$RPM_BUILD_ROOT%_datadir/dict/papers \
-	appresdir=$RPM_BUILD_ROOT%_x11appconfdir \
+%make_install install \
+	DESTDIR="$RPM_BUILD_ROOT" \
 	#
 
 # Add ALT specific (deb-based).
@@ -185,6 +194,13 @@ for f in $RPM_BUILD_ROOT{%_bindir,%_mandir/man*}/*; do
 done
 # END BLACK MAGIC>
 
+# Cleanup
+rm -rf \
+	$RPM_BUILD_ROOT%_bindir/glilypond \
+	$RPM_BUILD_ROOT%_libdir/%name/glilypond \
+	$RPM_BUILD_ROOT%_datadir/%name/%version/oldfont \
+	#
+
 # Prepare file lists.
 find $RPM_BUILD_ROOT%_bindir $RPM_BUILD_ROOT%_mandir -type f -o -type l |
 	sed -e "s|$RPM_BUILD_ROOT||g" |
@@ -198,7 +214,7 @@ find $RPM_BUILD_ROOT%_bindir $RPM_BUILD_ROOT%_mandir -type f -o -type l |
 
 find $RPM_BUILD_ROOT%_bindir $RPM_BUILD_ROOT%_mandir/ -type f -o -type l |
 	sed -e "s|$RPM_BUILD_ROOT||g" |
-	grep -Ev '/g?(eqn|groff|grog|grodvi|grolbp|grolj4|grotty|grops|neqn|nroff|pic|preconv|refer|soelim|tbl|troff|xditview|xtotroff)(\.|$)' |
+	grep -Ev '/g?(eqn|groff|grog|grodvi|grolbp|grolj4|grotty|gropdf|grops|neqn|nroff|pic|preconv|refer|soelim|tbl|troff|xditview|xtotroff)(\.|$)' |
 	sed 's|\(/man/.*\.[0-9]\)\(.*\)|\1*|g' >%name-extra.files
 
 # Prepare docs.
@@ -279,6 +295,14 @@ fi
 %dir %_datadir/%name/%version/font
 %_datadir/%name/%version/font/devlj4
 
+%files pdf
+%_bindir/gropdf
+%_man1dir/gropdf.*
+%dir %_datadir/%name
+%dir %_datadir/%name/%version
+%dir %_datadir/%name/%version/font
+%_datadir/%name/%version/font/devpdf
+
 %files ps
 %_bindir/grops
 %_man1dir/grops.*
@@ -309,6 +333,9 @@ fi
 %_docdir/%name-%version/[a-z]*
 
 %changelog
+* Wed Feb 03 2016 Alexey Gladkov <legion@altlinux.ru> 1.22.3-alt1
+- New release (1.22.3).
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.20.1-alt0.20091013.1.qa1
 - NMU: rebuilt for debuginfo.
 
