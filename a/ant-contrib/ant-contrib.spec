@@ -1,34 +1,32 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global beta_number b3
 
 Summary:        Collection of tasks for Ant
 Name:           ant-contrib
 Version:        1.0
-Release:        alt5_0.22.b3jpp7
+Release:        alt5_0.28.b3jpp8
 License:        ASL 2.0 and ASL 1.1
 URL:            http://ant-contrib.sourceforge.net/
-Group:          Development/Java
 Source0:        https://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-src.tar.bz2
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/1.0b3/%{name}-1.0b3.pom
 # ASL 2.0 Licence text
 # Upstream bug at https://sourceforge.net/tracker/?func=detail&aid=3590371&group_id=36177&atid=416920
 Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Patch0:         local-ivy.patch
 Patch2:         %{name}-antservertest.patch
-Patch3:         %{name}-pom.patch
-BuildRequires:  jpackage-utils >= 1.5
-BuildRequires:  junit >= 3.8.0
-BuildRequires:  ant-junit >= 1.6.2
+BuildRequires:  ivy-local
+BuildRequires:  junit
+BuildRequires:  ant-junit
 BuildRequires:  xerces-j2
-BuildRequires:  bcel >= 5.0
+BuildRequires:  bcel
 BuildRequires:  apache-ivy
-Requires:       junit >= 3.8.0
-Requires:       ant >= 1.6.2
+BuildRequires:  jakarta-commons-httpclient
+BuildRequires:  apache-commons-logging
+BuildRequires:  apache-commons-parent
+Requires:       junit
+Requires:       ant
 Requires:       xerces-j2
 BuildArch:      noarch
 Source44: import.info
@@ -49,11 +47,7 @@ Api documentation for %{name}.
 
 %prep
 %setup -q  -n %{name}
-%patch0 -b .sav
 %patch2
-
-cp %{SOURCE1} %{name}-1.0b3.pom
-%patch3 -p1
 
 cp %{SOURCE2} LICENSE-2.0.txt
 
@@ -64,41 +58,34 @@ sed -i "s|xercesImpl|xerces-j2|g" ivy.xml
 # needs porting to latest ivy
 rm -fr src/java/net/sf/antcontrib/net/URLImportTask.java
 
+sed -i '/<ivy:configure /d' build.xml
+rm -f ivy-conf.xml
+
+sed -i '/<info /s//&revision="1.0b3" /' ivy.xml
+%mvn_alias : ant-contrib:
+
 %build
-ant dist
+%ant -Divy.mode=local dist
 
 %install
-# jars
-install -Dpm 644 target/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/ant/%{name}.jar
-
-# javadoc
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_artifact ivy.xml target/%{name}.jar
+%mvn_install -J target/docs/api
 
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
-echo "ant/ant-contrib" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/ant-contrib
+echo "ant-contrib/ant-contrib" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/ant-contrib
 
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{name}-1.0b3.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.ant-%{name}.pom
-
-%add_maven_depmap JPP.ant-%{name}.pom ant/%{name}.jar
-# jpp compat symlink
-ln -s ant/ant-contrib.jar %buildroot%_javadir/ant-contrib.jar
-
-%files
+%files -f .mfiles
 %{_sysconfdir}/ant.d/ant-contrib
-%{_javadir}/ant/*.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 %doc target/docs/LICENSE.txt LICENSE-2.0.txt
 %doc target/docs/manual/tasks/*
-%_javadir/ant-contrib.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc target/docs/LICENSE.txt LICENSE-2.0.txt
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.28.b3jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.22.b3jpp7
 - new release
 
