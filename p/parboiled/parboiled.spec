@@ -1,25 +1,44 @@
-Name: parboiled
-Version: 1.1.6
-Summary: Java/Scala library providing parsing of input text based on PEGs
-License: ASL 2.0
-Url: http://parboiled.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.parboiled:parboiled-core) = 1.1.6
-Provides: mvn(org.parboiled:parboiled-core:pom:) = 1.1.6
-Provides: mvn(org.parboiled:parboiled-java) = 1.1.6
-Provides: mvn(org.parboiled:parboiled-java:pom:) = 1.1.6
-Provides: parboiled = 1.1.6-8.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.ow2.asm:asm)
-Requires: mvn(org.ow2.asm:asm-analysis)
-Requires: mvn(org.ow2.asm:asm-tree)
-Requires: mvn(org.ow2.asm:asm-util)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: parboiled-1.1.6-8.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global scala_short_version 2.10
+Name:          parboiled
+Version:       1.1.6
+Release:       alt1_8jpp8
+Summary:       Java/Scala library providing parsing of input text based on PEGs
+License:       ASL 2.0
+URL:           http://parboiled.org/
+Source0:       https://github.com/sirthias/parboiled/archive/%{version}.tar.gz
+# for build see https://github.com/sirthias/parboiled/wiki/Building-parboiled
+Source1:       http://repo1.maven.org/maven2/org/parboiled/%{name}-core/%{version}/%{name}-core-%{version}.pom
+Source2:       http://repo1.maven.org/maven2/org/parboiled/%{name}-java/%{version}/%{name}-java-%{version}.pom
+# customized aggregator pom
+Source3:       %{name}-pom.xml
+Source4:       http://repo1.maven.org/maven2/org/parboiled/%{name}-scala_%{scala_short_version}/%{version}/%{name}-scala_%{scala_short_version}-%{version}.pom
+Patch0:        %{name}-1.1.6-scala-use-antrun-plugin.patch
+Patch1:        parboiled-port-to-objectweb-asm-5.0.1.patch
+
+BuildRequires: maven-local
+BuildRequires: maven-antrun-plugin
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.ow2.asm:asm-analysis)
+BuildRequires: mvn(org.ow2.asm:asm-tree)
+BuildRequires: mvn(org.ow2.asm:asm-util)
+BuildRequires: mvn(org.scala-lang:scala-compiler)
+BuildRequires: mvn(org.scala-lang:scala-library)
+
+%if 0
+# test deps
+BuildRequires: mvn(org.scalatest:scalatest_2.9.3)
+BuildRequires: mvn(org.testng:testng)
+%endif
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 parboiled is a mixed Java/Scala library providing for lightweight and
@@ -29,24 +48,124 @@ context free grammars (CFGs) for formally specifying syntax, they
 make a good replacement for regular expressions and generally have quite
 a few advantages over the "traditional" way of building parser via CFGs.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package scala
+Group: Development/Java
+Summary:       Parboiled for Scala
+
+%description scala
+An internal Scala DSL for efficiently defining your parser rules.
+
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
 
-%build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+find . -name "*.class" -delete
+find . -name "*.jar" -delete
 
-%install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+cp -p %{SOURCE1} %{name}-core/pom.xml
+cp -p %{SOURCE2} %{name}-java/pom.xml
+cp -p %{SOURCE4} %{name}-scala/pom.xml
+
+for m in core java; do
+%pom_xpath_inject "pom:project" "
+<build>
+  <plugins>
+
+  </plugins>
+</build>" %{name}-${m}
+
+%pom_add_plugin org.apache.maven.plugins:maven-jar-plugin %{name}-${m} "
+<configuration>
+  <archive>
+    <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+  </archive>
+</configuration>"
 done
 
+%pom_add_plugin org.apache.felix:maven-bundle-plugin %{name}-core "
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <Bundle-SymbolicName>org.parboiled.core</Bundle-SymbolicName>
+    <Bundle-Name>org.parboiled.core</Bundle-Name>
+    <Bundle-Version>\${project.version}</Bundle-Version>
+    <Private-Package>org.parboiled.core.*</Private-Package>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
 
-%files -f %name-list
+%pom_add_plugin org.apache.felix:maven-bundle-plugin %{name}-java "
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <Bundle-SymbolicName>org.parboiled.java</Bundle-SymbolicName>
+    <Bundle-Name>org.parboiled.java</Bundle-Name>
+    <Bundle-Version>\${project.version}</Bundle-Version>
+    <Fragment-Host>org.parboiled.core</Fragment-Host>
+    <Private-Package>org.parboiled.java.*</Private-Package>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
+
+%patch0 -p0
+%patch1 -p1
+
+cp -p %{SOURCE3} pom.xml
+sed -i "s|@VERSION@|%{version}|" pom.xml
+
+%mvn_file :%{name}-core %{name}/core
+%mvn_file :%{name}-java %{name}/java
+%mvn_package :%{name}-project __noinstall
+%pom_xpath_inject "pom:modules" "<module>%{name}-scala</module>"
+%mvn_file :%{name}-scala_%{scala_short_version} %{name}/scala
+%mvn_package :%{name}-scala_%{scala_short_version} scala
+
+%build
+
+# test skipped unavailable dep org.scalatest scalatest_2.9.0 1.6.1
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
+ 
+%install
+%mvn_install
+
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc CHANGELOG README.markdown
+%doc LICENSE
+
+%files scala -f .mfiles-scala
+%doc LICENSE
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_8jpp8
+- new version
+
 * Mon Jan 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
