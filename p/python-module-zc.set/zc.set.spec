@@ -1,8 +1,10 @@
+%def_disable check
+
 %define mname zc
 %define oname %mname.set
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.dev.r75642
+Release: alt2.dev.r75642
 Summary: The persistent set module
 License: Free
 Group: Development/Python
@@ -12,13 +14,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # from http://download.zope.org/distribution/
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-ZODB3
-BuildPreReq: python-module-zope.app.folder
-BuildPreReq: python-module-zope.testing
+BuildRequires: python-module-pytest python-module-zope.app.folder python-module-zope.testing
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-ZODB3
+#BuildPreReq: python-module-zope.app.folder
+#BuildPreReq: python-module-zope.testing
 
 %py_provides %oname
-%py_requires %mname ZODB3 zope.app.folder
 
 %description
 The persistent set module contains a simple persistent version of a set,
@@ -29,7 +31,6 @@ any potentially mutating operation.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing
 
 %description tests
 The persistent set module contains a simple persistent version of a set,
@@ -63,6 +64,10 @@ py.test -vv $(find src/ -name '*.py')
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+
+* Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 0.1-alt2.dev.r75642
+- Disable tests
+
 * Sun Feb 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.dev.r75642
 - Initial build for Sisyphus
 
