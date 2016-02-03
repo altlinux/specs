@@ -1,53 +1,40 @@
+%define __global_ldflags %nil
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name native-platform
-%define version 0.3
-%global bits 32
+%define version 0.10
 %global debug_package %{nil}
 
-%ifarch x86_64 ppc64 s390x sparc64
-%global bits 64
-%endif
-%global namedreltag -rc-2
+%global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 
 Name:          native-platform
-Version:       0.3
-Release:       alt1_0.2.rc2jpp7
+Version:       0.10
+Release:       alt1_7jpp8
 Summary:       Java bindings for various native APIs
-Group:         Development/Java
-# contacted the developer for info about license, waiting for an answer...
 License:       ASL 2.0
 URL:           https://github.com/adammurdoch/native-platform
-# git clone git://github.com/adammurdoch/native-platform native-platform-0.3-rc-2
-# (cd native-platform-0.3-rc-2/ && git archive --format=tar --prefix=native-platform-0.3-rc-2/ 0.3-rc-2 | xz > ../native-platform-0.3-rc-2-src-git.tar.xz)
-Source0:       %{name}-%{namedversion}-src-git.tar.xz
-Source1:       http://repo.gradle.org/gradle/libs-releases-local/net/rubygrapefruit/%{name}/%{namedversion}/%{name}-%{namedversion}.pom
-Source2:       http://repo.gradle.org/gradle/libs-releases-local/net/rubygrapefruit/%{name}-linux-i386/%{namedversion}/%{name}-linux-i386-%{namedversion}.pom
-Source3:       http://repo.gradle.org/gradle/libs-releases-local/net/rubygrapefruit/%{name}-linux-amd64/%{namedversion}/%{name}-linux-amd64-%{namedversion}.pom
-Patch0:        %{name}-0.3-rc-2-build.patch
-
+Source0:       https://github.com/adammurdoch/native-platform/archive/%{namedversion}.tar.gz
+# From Debian
+Source4:       %{name}-0.7-Makefile
+# Try to load native library from /usr/lib*/native-platform
+# instead of extractDir or classpath.
+Patch0:        %{name}-0.10-NativeLibraryLocator.patch
+# Use generate libraries without arch references
+# Add support for arm and other x64 arches
+Patch1:        %{name}-0.10-native-libraries-name.patch
 
 # build tools and deps
-BuildRequires: antlr-tool
-BuildRequires: apache-commons-cli
-BuildRequires: gradle
-BuildRequires: groovy
-BuildRequires: objectweb-asm
-
+BuildRequires: javapackages-local
 BuildRequires: ncurses-devel
-
-# test deps
-BuildRequires: spock-core
-# test app deps jopt-simple >= 4.2
 BuildRequires: jopt-simple
 Source44: import.info
-
 
 %description
 A collection of cross-platform Java APIs
@@ -58,7 +45,7 @@ of these APIs overlap with APIs available
 in later Java versions.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
 BuildArch:     noarch
 
@@ -70,67 +57,46 @@ This package contains javadoc for %{name}.
 find .  -name "*.jar" -delete
 find .  -name "*.class" -delete
 
-%patch0 -p1
+%patch0 -p0
+%patch1 -p0
 
-cp -p %{SOURCE1} pom.xml
-
-%pom_remove_dep net.rubygrapefruit:%{name}-osx-universal pom.xml
-%pom_remove_dep net.rubygrapefruit:%{name}-windows-i386 pom.xml
-%pom_remove_dep net.rubygrapefruit:%{name}-windows-amd64 pom.xml
-%if %{bits} == 64
-%pom_remove_dep net.rubygrapefruit:%{name}-linux-i386 pom.xml
-%else
-%pom_remove_dep net.rubygrapefruit:%{name}-linux-amd64 pom.xml
-%endif
+cp -p %{SOURCE4} Makefile
 
 chmod 644 readme.md
 sed -i 's/\r//' readme.md
 
-%build
+# TODO
+mv src/curses/cpp/*.cpp src/main/cpp
+mv src/shared/cpp/* src/main/cpp
 
-# TODO not able to perform tests without gradle maven plugin,
-# problems to load in cp some groovy classes
-export GRADLE_USER_HOME=$PWD
-mkdir -p gradlehome
-gradle --debug Jar nativeJar javadoc -g $PWD/gradlehome -b $PWD/build.gradle
+%build
+CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
+CPPFLAGS="${CPPFLAGS:-%optflags}" ; export CPPFLAGS ;
+CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
+LDFLAGS="${LDFLAGS:-%__global_ldflags}"; export LDFLAGS;
+make %{?_smp_mflags} JAVA_HOME=%{_jvmdir}/java
+
+%mvn_artifact net.rubygrapefruit:%{name}:%{version} build/%{name}.jar
+%mvn_file : %{name}
 
 %install
+%mvn_install -J build/docs/javadoc
+mkdir -p %{buildroot}%{_libdir}/%{name}
+install -pm 0755 build/binaries/libnative-platform-curses.so %{buildroot}%{_libdir}/%{name}/
+install -pm 0755 build/binaries/libnative-platform.so %{buildroot}%{_libdir}/%{name}/
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 build/libs/%{name}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%{_libdir}/%{name}
+%doc readme.md
+%doc LICENSE
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# there is something of wrong in rawhide for x64 arch _jnidir point to /usr/lib/java
-mkdir -p %{buildroot}%{_jnidir}
-%if %{bits} == 64
-install -m 644 build/libs/%{name}-linux-amd64-%{namedversion}.jar %{buildroot}%{_jnidir}/%{name}-linux-amd64.jar
-install -pm 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}-linux-amd64.pom
-%add_maven_depmap JPP-%{name}-linux-amd64.pom %{name}-linux-amd64.jar
-%else
-install -m 644 build/libs/%{name}-linux-i386-%{namedversion}.jar %{buildroot}%{_jnidir}/%{name}-linux-i386.jar
-install -pm 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}-linux-i386.pom
-%add_maven_depmap JPP-%{name}-linux-i386.pom %{name}-linux-i386.jar
-%endif
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp build/docs/javadoc/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_jnidir}/%{name}-linux*.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-linux*.pom
-%{_mavendepmapfragdir}/%{name}
-%doc readme.md LICENSE
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_7jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_0.2.rc2jpp7
 - new release
 
