@@ -1,39 +1,28 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:     jgroups212
-Version:  2.12.3
-Release:  alt1_7jpp7
-Summary:  A toolkit for reliable multicast communication
-
-Group:    Development/Java
-License:  LGPLv2
-URL:      http://www.jgroups.org
+BuildRequires: jpackage-generic-compat
+Name:         jgroups212
+Version:      2.12.3
+Release:      alt1_11jpp8
+Summary:      A toolkit for reliable multicast communication
+License:      LGPLv2
+URL:          http://www.jgroups.org
 # git clone git://github.com/belaban/JGroups.git
 # cd JGroups && git checkout Branch_JGroups_2_12 && git checkout-index -f -a --prefix=jgroups212-2.12.3.Final
 # find jgroups212-2.12.3.Final/ -name '*.jar' -type f -delete
 # tar -cJf jgroups212-2.12.3.Final.tar.xz jgroups212-2.12.3.Final
-Source0:  %{name}-%{version}.Final.tar.xz
-Patch0:   %{name}-groupid.patch
+Source0:       %{name}-%{version}.Final.tar.xz
+Patch0:        %{name}-groupid.patch
 BuildArch:     noarch
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: bsh
-BuildRequires: log4j
-
-Requires:      jpackage-utils
-Requires:      bsh
-Requires:      log4j
+BuildRequires: mvn(bsh:bsh)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(xalan:xalan)
+BuildRequires: mvn(xalan:serializer)
 Source44: import.info
 
 %description
@@ -45,9 +34,8 @@ amounts of time, and allows for the application to be deployed in different
 environments, without having to change code.
 
 %package javadoc
+Group: Development/Java
 Summary:    Javadoc for %{name}
-Group:      Development/Java
-Requires:   jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -55,45 +43,38 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}.Final
-find . -name \*.jar -exec rm -f {} \;
+# Cleanup
+find . -name '*.jar' -delete
+find . -name '*.class' -delete
 
 %patch0 -p1
 
-%build
-# Tests to not current run under maven for this project
-mvn-rpmbuild -Dmaven.test.skip=true install \
-    -Dproject.build.sourceEncoding=UTF-8 \
-    javadoc:aggregate
-
-%install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/jgroups-%{version}.Final.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%pom_remove_plugin :maven-source-plugin
+%pom_xpath_set "pom:dependency[pom:groupId='log4j']/pom:version" 1.2.17
 
 # Fix incorrect permissions on documentation
 chmod 644 README
 
-%files
-%doc LICENSE README INSTALL.html
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%mvn_file org.%{name}:jgroups %{name}
 
-%files javadoc
+%build
+# Tests to not current run under maven for this project
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
+
+%install
+%mvn_install
+
+%files -f .mfiles
+%doc README INSTALL.html
 %doc LICENSE
-%{_javadocdir}/%{name}
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_11jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_7jpp7
 - new release
 
