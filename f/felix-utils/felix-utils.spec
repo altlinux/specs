@@ -1,43 +1,63 @@
-Name: felix-utils
-Version: 1.8.0
-Summary: Utility classes for OSGi
-License: ASL 2.0
-Url: http://felix.apache.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: felix-utils = 1.8.0-2.fc23
-Provides: mvn(org.apache.felix:org.apache.felix.utils) = 1.8.0
-Provides: mvn(org.apache.felix:org.apache.felix.utils:pom:) = 1.8.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.osgi:org.osgi.compendium)
-Requires: mvn(org.osgi:org.osgi.core)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: felix-utils-1.8.0-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global bundle org.apache.felix.utils
+
+Name:             felix-utils
+Version:          1.8.0
+Release:          alt1_2jpp8
+Summary:          Utility classes for OSGi
+License:          ASL 2.0
+URL:              http://felix.apache.org
+Source0:          http://repo1.maven.org/maven2/org/apache/felix/%{bundle}/%{version}/%{bundle}-%{version}-source-release.tar.gz
+
+BuildArch:        noarch
+
+BuildRequires:    maven-local
+BuildRequires:    mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires:    mvn(org.osgi:org.osgi.compendium)
+BuildRequires:    mvn(org.osgi:org.osgi.core)
+BuildRequires:    mvn(org.mockito:mockito-core)
+Source44: import.info
 
 %description
 Utility classes for OSGi
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{bundle}-%{version}
+
+# Remove compiler plugin so default target is used instead of 1.5
+%pom_remove_plugin :maven-compiler-plugin
+# Remove rat plugin that is not in Fedora
+%pom_remove_plugin org.codehaus.mojo:rat-maven-plugin
+
+%mvn_file :%{bundle} "felix/%{bundle}"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE DEPENDENCIES
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
