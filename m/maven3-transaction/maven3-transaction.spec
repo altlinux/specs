@@ -5,12 +5,13 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt22jpp
+Release: alt23jpp
 
 # jetty
 Provides: /usr/share/java/tomcat-el-2.2-api.jar
 Provides: /usr/share/java/tomcat-servlet-3.0-api.jar
 Provides: /usr/share/java/tomcat/tomcat-jsp-2.2-api.jar
+Provides: /usr/share/java/glassfish-jsp-api.jar
 # gradle 
 Provides: /usr/share/java/plexus/container-default.jar plexus-container-default
 # for apacheds jpp7
@@ -38,6 +39,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt23jpp
+- updated dependencies
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt22jpp
 - updated dependencies
 
@@ -75,10 +79,4 @@ mkdir -p $RPM_BUILD_ROOT
 - updated dependencies
 
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt10jpp
-- updated dependencies
-
-* Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt9jpp
-- updated dependencies
-
-* Tue Jan 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt8jpp
 - updated dependencies
