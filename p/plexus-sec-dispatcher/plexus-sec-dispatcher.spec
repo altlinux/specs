@@ -1,43 +1,62 @@
-Name: plexus-sec-dispatcher
-Version: 1.4
-Summary: Plexus Security Dispatcher Component
-License: ASL 2.0
-Url: https://github.com/codehaus-plexus/plexus-sec-dispatcher
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.sonatype.plexus:plexus-sec-dispatcher) = 1.4
-Provides: mvn(org.sonatype.plexus:plexus-sec-dispatcher:pom:) = 1.4
-Provides: plexus-sec-dispatcher = 1.4-20.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: mvn(org.sonatype.plexus:plexus-cipher)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
-Source: plexus-sec-dispatcher-1.4-20.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           plexus-sec-dispatcher
+Version:        1.4
+Release:        alt4_20jpp8
+Summary:        Plexus Security Dispatcher Component
+License:        ASL 2.0
+URL:            https://github.com/codehaus-plexus/plexus-sec-dispatcher
+BuildArch:      noarch
+
+# svn export http://svn.sonatype.org/spice/tags/plexus-sec-dispatcher-1.4/
+# tar jcf plexus-sec-dispatcher-1.4.tar.bz2 plexus-sec-dispatcher-1.4/
+Source0:        %{name}-%{version}.tar.bz2
+
+# Removed maven-compiler-plugin configuration version in the pom as annotations isn't available in version 1.4.
+Patch0:         %{name}-pom.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-cipher)
+BuildRequires:  mvn(org.sonatype.spice:spice-parent:pom:)
+Source44: import.info
 
 %description
 Plexus Security Dispatcher Component
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0 -p1
+%mvn_file : plexus/%{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_20jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
