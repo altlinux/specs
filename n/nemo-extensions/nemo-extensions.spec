@@ -2,7 +2,7 @@
 
 Name: nemo-extensions
 Version: 2.8.1
-Release: alt1
+Release: alt2
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -31,7 +31,7 @@ BuildRequires: gst-plugins1.0-devel
 BuildRequires: libwebkit2gtk-devel
 BuildRequires: libclutter-gtk3-devel
 BuildRequires: libclutter-gtk3-gir-devel
-BuildRequires: libclutter-gst2.0-devel
+BuildRequires: libclutter-gst3.0-devel
 BuildRequires: libgtksourceview3-gir-devel
 BuildRequires: libgtksourceview3-devel
 BuildRequires: perl(XML/Parser.pm)
@@ -93,6 +93,7 @@ License: %gpl3plus
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: nemo-python
+Requires: libvte3_2.90-gir
 
 %description -n nemo-terminal
 Embedded terminal window for Nemo
@@ -285,5 +286,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/applications/nemo-compare-preferences.desktop
 
 %changelog
+* Wed Feb 3 2016 Vladimir Didenko <cow@altlinux.org> 2.8.1-alt2
+- Add libvte3_2.90-gir to nemo-terminal deps
+- Port nemo-preview to ClutterGst 3.0
+
 * Tue Feb 2 2016 Vladimir Didenko <cow@altlinux.org> 2.8.1-alt1
 - Initial build for Sisyphus
