@@ -1,28 +1,26 @@
-Name: apache-commons-validator
-Version: 1.4.1
-Summary: Apache Commons Validator
-License: ASL 2.0
-Url: http://commons.apache.org/validator/
 Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-validator = 1.4.1-1.fc23
-Provides: mvn(commons-validator:commons-validator) = 1.4.1
-Provides: mvn(commons-validator:commons-validator:pom:) = 1.4.1
-Provides: mvn(org.apache.commons:commons-validator) = 1.4.1
-Provides: mvn(org.apache.commons:commons-validator:pom:) = 1.4.1
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
-Requires: jpackage-utils
-Requires: mvn(commons-beanutils:commons-beanutils)
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(commons-digester:commons-digester)
-Requires: mvn(commons-logging:commons-logging)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global short_name      commons-validator
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: apache-commons-validator-1.4.1-1.fc23.cpio
+Name:             apache-%{short_name}
+Version:          1.4.1
+Release:          alt1_1jpp8
+Summary:          Apache Commons Validator
+Group:            Development/Java
+License:          ASL 2.0
+URL:              http://commons.apache.org/validator/
+Source0:          http://www.apache.org/dist/commons/validator/source/%{short_name}-%{version}-src.tar.gz
+BuildArch:        noarch
+
+BuildRequires:    jpackage-utils
+BuildRequires:    apache-commons-beanutils
+BuildRequires:    apache-commons-digester
+BuildRequires:    apache-commons-logging
+BuildRequires:    maven-local
+Requires:         jpackage-utils
+Source44: import.info
 
 %description
 A common issue when receiving data either electronically or from user input is
@@ -32,24 +30,41 @@ the same set of data based on locale for example. Error messages may also vary
 by locale. This package attempts to address some of these issues and speed
 development and maintenance of validation rules.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Summary:          Javadoc for %{name}
+Group:            Development/Java
+Requires:         jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
+sed -i 's/\r//' LICENSE.txt
+sed -i 's/\r//' RELEASE-NOTES.txt
+sed -i 's/\r//' NOTICE.txt
+
+# Compatibility links
+%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
+%mvn_file :commons-validator %{short_name} %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.4.1-alt1_1jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.4.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
