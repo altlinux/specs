@@ -1,44 +1,74 @@
-Name: jackson-dataformat-smile
-Version: 2.5.0
-Summary: Support for reading and writing Smile encoded data
-License: ASL 2.0
-Url: http://wiki.fasterxml.com/JacksonForSmile
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jackson-dataformat-smile = 2.5.0-2.fc23
-Provides: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile) = 2.5.0
-Provides: mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-smile:pom:) = 2.5.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.fasterxml.jackson.core:jackson-core)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jackson-dataformat-smile-2.5.0-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define fedora 23
+Name:          jackson-dataformat-smile
+Version:       2.5.0
+Release:       alt1_2jpp8
+Summary:       Support for reading and writing Smile encoded data
+License:       ASL 2.0
+URL:           http://wiki.fasterxml.com/JacksonForSmile
+Source0:       https://github.com/FasterXML/jackson-dataformat-smile/archive/%{name}-%{version}.tar.gz
+
+%if %{?fedora} > 20
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
+%else
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent)
+%endif
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
+# test deps
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires: mvn(junit:junit)
+
+BuildRequires: maven-local
+BuildRequires: replacer
+# bundle-plugin Requires
+#BuildRequires: mvn(org.sonatype.aether:aether)
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 Support for reading and writing Smile ("binary JSON")
 encoded data using Jackson abstractions (streaming API,
 data binding, tree model).
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-%{version}
+
+cp -p src/main/resources/META-INF/LICENSE .
+cp -p src/main/resources/META-INF/NOTICE .
+sed -i 's/\r//' LICENSE NOTICE
+
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README.md release-notes/*
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt1_2jpp8
+- new version
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
