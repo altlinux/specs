@@ -1,7 +1,9 @@
 
+%def_disable gcrypt
+
 Name: libssh
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
@@ -14,8 +16,9 @@ Source1: version-script.libssh
 Source2: compat.lds
 Patch1: version-script.patch
 
-BuildRequires: cmake doxygen gcc-c++ ghostscript-utils graphviz latex2html
-BuildRequires: libgcrypt-devel libssl-devel zlib-devel kde-common-devel
+BuildRequires: cmake doxygen ghostscript-utils graphviz latex2html
+BuildRequires: gcc-c++ %{?_enable_gcrypt: libgcrypt-devel}
+BuildRequires: libssl-devel zlib-devel kde-common-devel
 
 %description
 The ssh library was designed to be used by programmers needing a working
@@ -64,7 +67,7 @@ install -m 0644 %SOURCE2 ./
 %build
 %Kbuild \
     -DWITH_ZLIB=ON \
-    -DWITH_GCRYPT=ON \
+    -DWITH_GCRYPT=%{?_enable_gcrypt:ON}%{!?_enable_gcrypt:OFF} \
     #
 
 %install
@@ -83,6 +86,9 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt2
+- build without libgcrypt
+
 * Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt1
 - new version
 
