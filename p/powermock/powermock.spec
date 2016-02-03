@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           powermock
 Version:        1.6.2
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        A Java mocking framework
 
 License:        ASL 2.0
@@ -193,6 +193,9 @@ rm modules/module-impl/junit4-common/src/test/java/org/powermock/modules/junit4/
 %doc LICENSE.txt
 
 %changelog
+* Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_2jpp8
+- new version
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_2jpp8
 - new version
 
