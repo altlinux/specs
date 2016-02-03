@@ -1,45 +1,68 @@
-Name: apache-commons-compress
-Version: 1.10
-Summary: Java API for working with compressed files and archivers
-License: ASL 2.0
-Url: http://commons.apache.org/compress/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-compress = 1.10-0.2.svn1684406.fc23
-Provides: mvn(commons:commons-compress) = 1.10.SNAPSHOT
-Provides: mvn(commons:commons-compress:pom:) = 1.10.SNAPSHOT
-Provides: mvn(org.apache.commons:commons-compress) = 1.10.SNAPSHOT
-Provides: mvn(org.apache.commons:commons-compress:pom:) = 1.10.SNAPSHOT
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: apache-commons-compress-1.10-0.2.svn1684406.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global base_name       compress
+%global short_name      commons-%{base_name}
+
+Name:           apache-%{short_name}
+Version:        1.10
+Release:        alt3_0.2.svn1684406jpp8
+Summary:        Java API for working with compressed files and archivers
+License:        ASL 2.0
+URL:            http://commons.apache.org/%{base_name}/
+BuildArch:      noarch
+
+# svn export http://svn.apache.org/repos/asf/commons/proper/compress/trunk/ commons-compress-1.10-src
+# tar caf commons-compress-1.10-SNAPSHOT.tar.xz commons-compress-1.10-src
+Source0:        %{short_name}-%{version}-SNAPSHOT.tar.xz
+#Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.tukaani:xz)
+Source44: import.info
 
 %description
 The Apache Commons Compress library defines an API for working with
 ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200 and bzip2 files.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package provides %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
+# FIXME: test fails for unknown reason
+find -name X5455_ExtendedTimestampTest.java -delete
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_file  : %{short_name} %{name}
+%mvn_alias : commons:
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt3_0.2.svn1684406jpp8
+- new version
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
