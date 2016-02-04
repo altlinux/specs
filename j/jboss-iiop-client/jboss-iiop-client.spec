@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-iiop-client
 %define version 1.0.0
@@ -11,19 +12,15 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-iiop-client
 Version:          1.0.0
-Release:          alt2_7jpp7
+Release:          alt2_10jpp8
 Summary:          JBoss IIOP Client
 Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossiiop
-
-# git clone git://github.com/jbossas/jboss-iiop-client.git
-# cd jboss-iiop-client/ && git archive --format=tar --prefix=jboss-iiop-client-1.0.0.Final/ 1.0.0.Final | xz > jboss-iiop-client-1.0.0.Final.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
+Source0:          https://github.com/jbossas/jboss-iiop-client/archive/1.0.0.Final.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -38,11 +35,8 @@ BuildRequires:    maven-eclipse-plugin
 BuildRequires:    maven-ejb-plugin
 BuildRequires:    jboss-ejb-3.1-api
 BuildRequires:    jboss-parent
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    junit
-
-Requires:         jpackage-utils
-Requires:         jboss-ejb-3.1-api
 Source44: import.info
 
 %description
@@ -52,44 +46,29 @@ the IIOP protocol
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n jboss-iiop-client-%{namedversion}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/jboss-iiop-client-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_10jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_7jpp7
 - new release
 
