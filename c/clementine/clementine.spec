@@ -2,8 +2,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.2.3
-Release: alt5
+Version: 1.3.0
+Release: alt1.rc1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -66,6 +66,9 @@ advantage of Qt4.
 
 
 %changelog
+* Thu Feb 4 2016 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt1.rc1
+- Version 1.3rc1
+
 * Wed Aug 5 2015 Vladimir Didenko <cow@altlinux.org> 1.2.3-alt5
 - rebuilt with new libcdio
 
