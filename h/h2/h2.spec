@@ -1,27 +1,30 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           h2
-Version:        1.3.168
-Release:        alt1_4jpp7
+Version:        1.3.176
+Release:        alt1_4jpp8
 Summary:        Java SQL database
 
-Group:          Development/Java
 License:        EPL
 URL:            http://www.h2database.com
-Source0:        http://www.h2database.com/h2-2012-07-13.zip
+Source0:        http://www.h2database.com/h2-2014-04-05.zip
 Source1:        http://repo2.maven.org/maven2/com/h2database/h2/%{version}/h2-%{version}.pom
-Patch1:         fix-build.patch
+Patch0:         fix-build.patch
+Patch1:         rm-osgi-jdbc-service.patch
+Patch2:         fix-broken-tests.patch
 BuildArch: noarch
 BuildRequires:  ant
-BuildRequires:  lucene >= 2.4
-BuildRequires:  lucene-contrib
+BuildRequires:  lucene3
 BuildRequires:  slf4j >= 1.5
 BuildRequires:  felix-osgi-core >= 1.2
-BuildRequires:  servlet3
+BuildRequires:  glassfish-servlet-api
+BuildRequires:  jts
 Source44: import.info
 
 %description
@@ -32,9 +35,8 @@ H2 is a the Java SQL database. The main features of H2 are:
 * Small footprint: around 1 MB jar file size 
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -43,14 +45,24 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 pushd src/test/org/h2/test/unit
-rm -fr TestServlet.java
+rm TestServlet.java
 popd
-pushd src/tools/org/h2/build
-%patch1 
-popd
-find -name '*.orig' -exec rm -f '{}' \;
+%patch0
+%patch2
+
+# Because no Fedora package provides org.osgi.service.jdbc interfaces yet
+%patch1
+rm src/main/org/h2/util/OsgiDataSourceFactory.java
+rm -fr src/test/org/h2/test/server/TestWeb.java
+sed -i -e "s|import org.h2.test.server.TestWeb;||g" src/test/org/h2/test/TestAll.java
+sed -i -e "s|new TestWeb().runTest(this);||g" src/test/org/h2/test/TestAll.java
+sed -i '/org.osgi.service.jdbc/d' src/main/META-INF/MANIFEST.MF
+
+# Delete pre-built binaries
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
+
+sed -i -e 's|authenticated|authenticate authenticated|' src/tools/org/h2/build/doc/dictionary.txt
 
 %build
 export JAVA_HOME=%{java_home}
@@ -70,10 +82,7 @@ mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
 cp -rp %SOURCE1 $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 %doc src/docsrc/html/license.html
 
 %files javadoc
@@ -81,6 +90,9 @@ cp -rp %SOURCE1 $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc src/docsrc/html/license.html
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.176-alt1_4jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.168-alt1_4jpp7
 - new release
 

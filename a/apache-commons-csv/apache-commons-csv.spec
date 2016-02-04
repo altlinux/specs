@@ -1,62 +1,66 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global base_name       csv
-%global short_name      commons-%{base_name}
+BuildRequires: jpackage-generic-compat
+Name:           apache-commons-csv
+Version:        1.1
+Release:        alt1_2jpp8
+Summary:        Utilities to assist with handling of CSV files
+License:        ASL 2.0
+URL:            https://commons.apache.org/proper/commons-csv/
+BuildArch:      noarch
 
-Name:             apache-%{short_name}
-Version:          1.0
-Release:          alt3_0.7.svn1071189jpp7
-Summary:          Utilities to assist with handling of CSV files
-License:          ASL 2.0
-Group:            Development/Java
-URL:              http://commons.apache.org/sandbox/%{base_name}
-# svn export -r 1071189 http://svn.apache.org/repos/asf/commons/sandbox/csv/trunk/ apache-commons-csv-1.0
-# tar caf apache-commons-csv-1.0.tar.xz apache-commons-csv-1.0
-Source0:          %{name}-%{version}.tar.xz
-BuildArch:        noarch
+Source0:        http://www.apache.org/dist/commons/csv/source/commons-csv-%{version}-src.tar.gz
 
-BuildRequires:    maven-local
-BuildRequires:    jpackage-utils
-BuildRequires:    junit4
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    apache-commons-parent
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.h2database:h2)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 Source44: import.info
-
 
 %description
 Commons CSV was started to unify a common and simple interface for
 reading and writing CSV files under an ASL license.
 
 %package javadoc
+Group: Development/Java
 Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n commons-csv-%{version}-src
 sed -i 's/\r//' *.txt
-sed -i 's:commons-sandbox-parent:commons-parent:' pom.xml
+find -name profile.jacoco -delete
+
+# Unwanted plugins
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+
+%mvn_file ":{*}" %{name} @1
+%mvn_alias : commons-csv:
 
 %build
-%mvn_file  : %{short_name} %{name}
-%mvn_alias : %{short_name}:%{short_name}
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc RELEASE-NOTES.txt
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_0.7.svn1071189jpp7
 - new release
 
