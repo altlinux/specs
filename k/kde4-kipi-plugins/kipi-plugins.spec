@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 4.14.0
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -24,8 +24,9 @@ Patch2: alt-lib-version.patch
 Patch3: alt-find-qtsoap.patch
 Patch4: alt-fix-build.patch
 
-Requires: %name-core = %version-%release
-Requires: %name-expoblending = %version-%release
+Requires: %name-core
+Requires: %name-expoblending
+Requires: %name-panorama
 Conflicts: kipi-plugins <= 3:0.1.6-alt5
 
 # Automatically added by buildreq on Thu Apr 16 2009 (-bi)
@@ -64,6 +65,14 @@ Requires: %name-common = %version-%release
 Requires: hugin enblend
 %description expoblending
 A tool to blend bracketed images
+
+%package panorama
+Group: Graphics
+Summary: A tool to assemble images as a panorama
+Requires: %name-common = %version-%release
+Requires: hugin enblend
+%description panorama
+A tool to assemble images as a panorama
 
 %package -n %libkipiplugins
 Summary: KDE 4 library
@@ -126,7 +135,6 @@ done
 #%_K4bindir/dnginfo
 %_K4bindir/dngconverter
 #%_K4bindir/multithread
-%_K4bindir/panoramagui
 %_K4bindir/photolayoutseditor
 %_K4bindir/scangui
 %_K4lib/kipiplugin_*.so
@@ -143,7 +151,6 @@ done
 %_K4iconsdir/hicolor/*/*/*.*
 %_K4xdg_apps/dngconverter.desktop
 %_K4xdg_apps/kipiplugins.desktop
-%_K4xdg_apps/panoramagui.desktop
 %_K4xdg_apps/photolayoutseditor.desktop
 %_K4xdg_apps/scangui.desktop
 %_K4tmpl/kipiplugins_photolayoutseditor/
@@ -151,6 +158,11 @@ done
 %exclude %_K4lib/kipiplugin_expoblending.so
 %exclude %_K4srv/kipiplugin_expoblending.desktop
 %exclude %_K4apps/kipiplugin_expoblending
+# exclude panorama
+%exclude %_K4lib/kipiplugin_panorama.so
+%exclude %_K4apps/kipi/kipiplugin_panoramaui.rc
+%exclude %_K4apps/kipiplugin_panorama/
+%exclude %_K4srv/kipiplugin_panorama.desktop
 
 %files expoblending
 %_K4bindir/expoblending
@@ -159,11 +171,22 @@ done
 %_K4srv/kipiplugin_expoblending.desktop
 %_K4xdg_apps/expoblending.desktop
 
+%files panorama
+%_K4bindir/panoramagui
+%_K4lib/kipiplugin_panorama.so
+%_K4apps/kipi/kipiplugin_panoramaui.rc
+%_K4apps/kipiplugin_panorama/
+%_K4srv/kipiplugin_panorama.desktop
+%_K4xdg_apps/panoramagui.desktop
+
 %files -n %libkipiplugins
 %_K4libdir/libkipiplugins.so.%libsover
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
+- split panorama to separate subpackage
+
 * Tue Oct 20 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt1
 - new version
 
