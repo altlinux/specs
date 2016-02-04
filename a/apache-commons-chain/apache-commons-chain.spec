@@ -1,39 +1,36 @@
 Epoch: 1
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global base_name chain
 %global short_name commons-%{base_name}
 Name:          apache-commons-chain
 Version:       1.2
-Release:       alt1_8jpp7
+Release:       alt1_12jpp8
 Summary:       An implementation of the GoF Chain of Responsibility pattern
 License:       ASL 2.0
 URL:           http://commons.apache.org/%{base_name}/
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-# javax.servlet 3.0 api support
-Patch0:        %{name}-%{version}-tests-servlet30.patch
+# javax.servlet 3.1 api support
+Patch0:        %{name}-%{version}-tests-servlet31.patch
 # javax.portlet 2.0 api support
 Patch1:        %{name}-%{version}-portlet20.patch
 
-
+BuildRequires: maven-local
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
 BuildRequires: mvn(commons-digester:commons-digester)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(javax.portlet:portlet-api)
-BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
-BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
-
-# test deps
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
 BuildRequires: mvn(junit:junit)
-
-BuildRequires: buildnumber-maven-plugin
-BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-remote-resources-plugin
-BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-provider-junit
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
 
 BuildArch:     noarch
 Source44: import.info
@@ -79,27 +76,31 @@ rm -r src/test/org/apache/commons/chain/config/ConfigParserTestCase.java
 
 %pom_remove_dep :myfaces-api
 %pom_add_dep org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec
-# Force tomcat apis
-%pom_remove_dep javax.servlet:servlet-api
-%pom_add_dep org.apache.tomcat:tomcat-servlet-api
+# Force servlet 3.1 apis
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet' ]/pom:artifactId" javax.servlet-api
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet' ]/pom:version" 3.1.0
 
 %mvn_file :%{short_name} %{name}
 %mvn_file :%{short_name} %{short_name}
 
 %build
 
-%mvn_build -- -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5
+%mvn_build -- -Dmaven.compile.source=1.6 -Dmaven.compile.target=1.6
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%doc RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_12jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.2-alt1_8jpp7
 - new release
 
