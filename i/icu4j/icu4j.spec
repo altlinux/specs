@@ -1,95 +1,46 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) unzip
+BuildRequires(pre): rpm-build-java
+BuildRequires: perl(Output.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(XML/LibXML.pm)
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%global with_eclipse 1
-
-%if 0%{?rhel}
-%global with_eclipse 0
-%endif
-
-%global eclipse_base            %{_libdir}/eclipse
-# Note:  this next section looks weird having an arch specified in a
-# noarch specfile but the parts of the build
-# All arches line up between Eclipse and Linux kernel names except i386 -> x86
-%ifarch %{ix86}
-%global eclipse_arch    x86
-%else
-%global eclipse_arch   %{_arch}
-%endif
-
+BuildRequires: jpackage-generic-compat
 Name:           icu4j
-Version:        4.4.2.2
-Release:        alt2_12jpp7
+Version:        54.1.1
+Release:        alt1_6jpp8
 Epoch:          1
 Summary:        International Components for Unicode for Java
-License:        MIT and EPL 
+License:        MIT and EPL
 URL:            http://site.icu-project.org/
-Group:          Development/Java
+%define pkg_name %name
+
 #CAUTION
 #to create a tarball use following procedure
-#svn co http://source.icu-project.org/repos/icu/icu4j/tags/release-4-4-2-eclipse37-20110208/ icu4j-<version>
+#svn co http://source.icu-project.org/repos/icu/icu4j/tags/release-54-1-1 icu4j-<version>
 #tar caf icu4j-<version>.tar.xz icu4j-<version>/
-Source0:        icu4j-4.4.2.2.tar.xz
-Source1:        %{name}-4.4.2.pom
-## CAUTION
-## Please do not forget to update this Manifest to the latest one taken from the icu4j bundle from
-## out/projects/ICU4J.com.ibm.icu/com.ibm.icu-com.ibm.icu.zip
-## This is needed to unbreak cyclic dependencies between Eclipse and ICU4J
-Source2:        icu4j-%{version}-MANIFEST.MF
+Source0:        icu4j-%{version}.tar.xz
 
-Patch0:         %{name}-crosslink.patch
-BuildRequires:  ant >= 1.7.0
-# FIXME:  is this necessary or is it just adding strings in the hrefs in
-# the docs?
+# Java 8 taglet API changes
+Patch0:         java8-taglets.patch
+
+# Add better OSGi metadata to core jar
+Patch1:         improve-osgi-manifest.patch
+
+BuildRequires:  ant
 BuildRequires:  java-javadoc
-# This is to ensure we get OpenJDK and not GCJ
-BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  javapackages-local
 BuildRequires:  zip
-Requires:       jpackage-utils
-# This is to ensure we get OpenJDK and not GCJ
-%if %{with_eclipse}
-BuildRequires:  eclipse-pde >= 0:3.2.1
-%global         debug_package %{nil}
-%endif
+
+# Obsoletes/provides added in F22
+Obsoletes:      %{name}-eclipse < %{epoch}:%{version}-%{release}
+Provides:       %{name}-eclipse = %{epoch}:%{version}-%{release}
 
 BuildArch:      noarch
 Source44: import.info
 %define java_bin %_jvmdir/java/bin
-
 
 %description
 The International Components for Unicode (ICU) library provides robust and
@@ -106,99 +57,70 @@ performance, keeping current with the Unicode standard, and providing
 richer APIs, while remaining as compatible as possible with the original
 Java text and internationalization API design.
 
+%package charset
+Group: Development/Java
+Summary:        Charset converter library of %{pkg_name}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description charset
+Charset converter library of %{pkg_name}.
+
+%package localespi
+Group: Development/Java
+Summary:        Locale SPI library of %{pkg_name}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
+
+%description localespi
+Locale SPI library of %{pkg_name}.
+
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        Javadoc for %{pkg_name}
 Requires:       java-javadoc
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
-
-%if %{with_eclipse}
-%package eclipse
-Summary:        Eclipse plugin for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-
-%description eclipse
-Eclipse plugin support for %{name}.
-
-%endif
+API documentation for %{pkg_name}.
 
 %prep
-%setup -q 
-#%patch0 -p0
+%setup -q -n icu4j-%{version}
 
-cp %{SOURCE1} .
-
-%{__sed} -i 's/\r//' APIChangeReport.html
-%{__sed} -i 's/\r//' readme.html
-
-sed --in-place "s/ .*bootclasspath=.*//g" build.xml
-sed --in-place "s/<date datetime=.*when=\"after\"\/>//" build.xml
-sed --in-place "/javac1.3/d" build.xml
-sed --in-place "s:/usr/lib:%{_datadir}:g" build.xml
+%patch0
+%patch1
 
 %build
-%ant -Dicu4j.javac.source=1.5 -Dicu4j.javac.target=1.5 -Dj2se.apidoc=%{_javadocdir}/java jar docs
-%if %{with_eclipse}
-pushd eclipse-build
-  %ant -Dj2se.apidoc=%{_javadocdir}/java -Declipse.home=%{eclipse_base} \
-    -Declipse.basews=gtk -Declipse.baseos=linux \
-    -Declipse.pde.dir=%{eclipse_base}/dropins/sdk/plugins/`ls %{eclipse_base}/dropins/sdk/plugins/|grep org.eclipse.pde.build_`
-popd
-%endif
-  
+export JAVA_HOME=%{_jvmdir}/java/
+ant -Dicu4j.api.doc.jdk.link=%{_javadocdir}/java all check
+
+%mvn_artifact pom.xml icu4j.jar
+
 %install
+%mvn_install -J doc
 
-# inject OSGi manifests
-mkdir -p META-INF
-cp -p %{SOURCE2} META-INF/MANIFEST.MF
-touch META-INF/MANIFEST.MF
-zip -u %{name}.jar META-INF/MANIFEST.MF
+# No poms for these, so install manually
+install -m 644 icu4j-charset.jar   %{buildroot}%{_javadir}/icu4j/
+install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 
-# jars
-%__mkdir_p %{buildroot}%{_javadir}
-%__cp -ap %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc main/shared/licenses/license.html readme.html APIChangeReport.html
+%dir %{_javadir}/icu4j
+%dir %{_mavenpomdir}/icu4j
 
-# javadoc
-%__mkdir_p %{buildroot}%{_javadocdir}/%{name}
-%__cp -pr doc/* %{buildroot}%{_javadocdir}/%{name}
+%files charset
+%doc main/shared/licenses/license.html
+%{_javadir}/icu4j/icu4j-charset.jar
 
-%if %{with_eclipse}
-# eclipse
-install -d -m755 %{buildroot}%{_javadir}/icu4j-eclipse
+%files localespi
+%doc main/shared/licenses/license.html
+%{_javadir}/icu4j/icu4j-localespi.jar
 
-unzip -qq -d %{buildroot}%{_javadir}/icu4j-eclipse eclipse-build/out/projects/ICU4J.com.ibm.icu/com.ibm.icu-com.ibm.icu.zip
-%endif
-
-# maven stuff
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-cp %{name}-4.4.2.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%doc readme.html APIChangeReport.html
-%{_javadir}/%{name}*.jar
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*.pom
-
-%files javadoc
-%doc %{_javadocdir}/*
-
-%if %{with_eclipse}
-%files eclipse
-%dir %{_javadir}/icu4j-eclipse/
-%dir %{_javadir}/icu4j-eclipse/features
-%dir %{_javadir}/icu4j-eclipse/plugins
-%{_javadir}/icu4j-eclipse/features/*
-%{_javadir}/icu4j-eclipse/plugins/*
-%doc readme.html
-%endif
+%files javadoc -f .mfiles-javadoc
+%doc main/shared/licenses/license.html
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:54.1.1-alt1_6jpp8
+- java 8 mass update
+
 * Mon Jul 14 2014 Igor Vlasenko <viy@altlinux.ru> 1:4.4.2.2-alt2_12jpp7
 - NMU rebuild to move poms and fragments
 
