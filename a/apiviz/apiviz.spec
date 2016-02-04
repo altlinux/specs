@@ -1,9 +1,8 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apiviz
 %define version 1.3.2
@@ -12,19 +11,19 @@ BuildRequires: jpackage-compat
 
 Name:             apiviz
 Version:          1.3.2
-Release:          alt1_5jpp7
+Release:          alt1_9jpp8
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Java
 License:          LGPLv2+
 URL:              http://code.google.com/p/apiviz/
 Source0:          http://apiviz.googlecode.com/files/apiviz-%{namedversion}-dist.tar.gz
-Patch0:           apiviz-pom.patch
+Patch0:           0001-JDK7-compatibility.patch
+Patch1:           0002-JDK8-compatibility.patch
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
 BuildRequires:    maven-antrun-plugin
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -34,16 +33,11 @@ BuildRequires:    maven-release-plugin
 BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    maven-plugin-jxr
 BuildRequires:    jdepend
 BuildRequires:    ant-contrib
-BuildRequires:    junit4
-BuildRequires:    ant
-
-Requires:         jdepend
-Requires:         jpackage-utils
-Requires:         graphviz
+BuildRequires:    junit
 Source44: import.info
 
 %description
@@ -54,7 +48,6 @@ quick understanding of the overall API structure.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -64,38 +57,37 @@ This package contains the API documentation for %{name}.
 %setup -q -n apiviz-%{namedversion}
 %patch0 -p1
 
+%if 0%{?fedora} >= 21
+%patch1 -p1
+%endif
+
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
+#%pom_xpath_remove "pom:dependencies/pom:dependency[pom:artifactId = 'tools']/pom:scope"
+#%pom_xpath_remove "pom:dependencies/pom:dependency[pom:artifactId = 'tools']/pom:systemPath"
+
+%pom_remove_dep com.sun:tools
+%pom_add_dep com.sun:tools
+
+%mvn_alias "org.jboss.apiviz:apiviz" "net.gleamynode.apiviz:apiviz"
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "net.gleamynode.apiviz:apiviz"
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc COPYRIGHT.txt LICENSE.jdepend.txt LICENSE.txt NOTICE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_9jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_5jpp7
 - new release
 
