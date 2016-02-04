@@ -1,92 +1,69 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name bean-validation-api
-%define version 1.0.0
-%global namedreltag .GA
+%define version 1.1.0
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             bean-validation-api
-Version:          1.0.0
-Release:          alt1_8jpp7
-Summary:          Bean Validation API
-Group:            Development/Java
+Version:          1.1.0
+Release:          alt1_4jpp8
+Summary:          Bean Validation API (JSR 349)
 License:          ASL 2.0
-URL:              http://www.hibernate.org/subprojects/validator.html
+URL:              http://beanvalidation.org/
+Source0:          https://github.com/beanvalidation/beanvalidation-api/archive/%{namedversion}.tar.gz
 
-# svn export http://anonsvn.jboss.org/repos/hibernate/beanvalidation/api/tags/v1_0_0_GA/ bean-validation-api-1.0.0.GA
-# tar czf bean-validation-api-1.0.0.GA-src-svn.tar.gz bean-validation-api-1.0.0.GA
-Source0:          %{name}-%{namedversion}-src-svn.tar.gz
 
-BuildRequires:    jpackage-utils
+# test deps
+BuildRequires:    mvn(org.testng:testng)
+
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    maven-docck-plugin
-BuildRequires:    maven-invoker-plugin
-BuildRequires:    maven-clean-plugin
-BuildRequires:    maven-dependency-plugin
+BuildRequires:    maven-plugin-bundle
+BuildRequires:    maven-surefire-provider-testng
 
-Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
 
 %description
-This package contains Bean Validation (JSR-303) API
+This package contains Bean Validation (JSR-349) API.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n beanvalidation-api-%{namedversion}
 
-%pom_xpath_remove "pom:build/pom:extensions"
+# Disable javadoc jar
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
+# Disable source jar
+%pom_remove_plugin :maven-source-plugin
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+
+%mvn_file : %{name}
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/validation-api-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
 %doc license.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_4jpp8
+- java 8 mass update
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_8jpp7
 - new release
 
