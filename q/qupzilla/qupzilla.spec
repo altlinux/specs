@@ -9,7 +9,7 @@
 
 Name: qupzilla
 Version: 1.8.9
-Release: alt1
+Release: alt2
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
@@ -48,6 +48,7 @@ support, Speed Dial and SSL Certificate manager.
 
 %prep
 %setup
+sed -i 's,бит/с,б/с,' translations/ru_RU.ts
 
 %build
 export USE_WEBGL="true"
@@ -80,6 +81,9 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Thu Feb 04 2016 Michael Shigorin <mike@altlinux.org> 1.8.9-alt2
+- tweaked Russian translation (sent upstream)
+
 * Sun Nov 15 2015 Michael Shigorin <mike@altlinux.org> 1.8.9-alt1
 - 1.8.9
 
