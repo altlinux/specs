@@ -1,51 +1,39 @@
 Epoch: 0
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-
+BuildRequires: jpackage-generic-compat
 %global base_name       configuration
 %global short_name      commons-%{base_name}
 
 Name:           apache-%{short_name}
-Version:        1.9
-Release:        alt3_6jpp7
+Version:        1.10
+Release:        alt1_5jpp8
 Summary:        Commons Configuration Package
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
 Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  javacc-maven-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-
-BuildRequires:  apache-commons-beanutils
-BuildRequires:  apache-commons-codec
-BuildRequires:  apache-commons-collections
-BuildRequires:  apache-commons-digester
-BuildRequires:  apache-commons-jexl
-BuildRequires:  apache-commons-jxpath
-BuildRequires:  apache-commons-lang
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-commons-vfs
-BuildRequires:  tomcat-servlet-3.0-api
-BuildRequires:  xml-commons-resolver
-
-
-Provides:       jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} < 0:%{version}-%{release}
+BuildRequires:  mvn(commons-beanutils:commons-beanutils)
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-digester:commons-digester)
+BuildRequires:  mvn(commons-jxpath:commons-jxpath)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(log4j:log4j)
+BuildRequires:  mvn(org.apache.commons:commons-jexl)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.commons:commons-vfs2)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:  mvn(xml-apis:xml-apis)
+BuildRequires:  mvn(xml-resolver:xml-resolver)
 Source44: import.info
 
 
@@ -63,12 +51,8 @@ by just subclassing AbstractConfiguration. This works
 similar to how AbstractList works.
 
 %package        javadoc
+Group: Development/Java
 Summary:        API documentation for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-
-Provides:       jakarta-%{short_name}-javadoc = 0:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc < 0:%{version}-%{release}
 BuildArch: noarch
 
 %description    javadoc
@@ -96,6 +80,9 @@ BuildArch: noarch
 
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10-alt1_5jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.9-alt3_6jpp7
 - new release
 

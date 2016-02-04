@@ -1,39 +1,30 @@
 Epoch: 0
-BuildRequires: tomcat6-jsp-2.1-api
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global base_name       jxpath
-%global short_name      commons-%{base_name}
+Group: Development/Java
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc glassfish-jsp
+BuildRequires: jpackage-generic-compat
+Name:           apache-commons-jxpath
+Version:        1.3
+Release:        alt3_24jpp8
+Summary:        Simple XPath interpreter
+License:        ASL 2.0
+URL:            http://commons.apache.org/jxpath/
+BuildArch:      noarch
 
-Name:             apache-%{short_name}
-Version:          1.3
-Release:          alt3_17jpp7
-Summary:          Simple XPath interpreter
+Source0:        http://www.apache.org/dist/commons/jxpath/source/commons-jxpath-%{version}-src.tar.gz
 
-Group:            Development/Java
-License:          ASL 2.0
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Patch0:           %{short_name}-mockrunner.patch
-BuildArch:        noarch
+Patch0:         commons-jxpath-mockrunner.patch
 
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-antrun-plugin
-BuildRequires:    maven-assembly-plugin
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-plugin-bundle
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    servlet
-BuildRequires:    jsp
-BuildRequires:    el_api
-
-Provides:         jakarta-%{short_name} = 0:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 0:%{version}-%{release}
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-beanutils:commons-beanutils)
+BuildRequires:  mvn(javax.servlet:jsp-api)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(jdom:jdom)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xml-apis:xml-apis)
 Source44: import.info
 
 %description
@@ -42,34 +33,29 @@ JXPath applies XPath expressions to graphs of objects of all kinds:
 JavaBeans, Maps, Servlet contexts, DOM etc, including mixtures thereof.
 
 %package javadoc
-Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
-
-Provides:         jakarta-%{short_name}-javadoc = 0:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name}-javadoc < 0:%{version}-%{release}
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-jxpath-%{version}-src
 %patch0 -p1
+
+%mvn_file ":{*}" %{name} @1
+%mvn_alias : org.apache.commons:
+
+%pom_xpath_inject 'pom:properties' \
+  '<commons.osgi.import>org.apache.commons.beanutils;resolution:="optional",org.jdom*;resolution:="optional",org.w3c.dom;resolution:="optional",*</commons.osgi.import>'
 
 %build
 # we are skipping tests because we don't have com.mockrunner in repos yet
-%mvn_file  : %{short_name} %{name}
-%mvn_alias : org.apache.commons:%{short_name}
 %mvn_build -f
 
 %install
 %mvn_install
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
@@ -78,6 +64,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_24jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_17jpp7
 - new release
 

@@ -1,23 +1,25 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
-BuildRequires: rpm-build-java-osgi
+BuildRequires: rpm-build-java-osgi ecj
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global artifactId javax.servlet.jsp
-%global jspspec 2.2
+%global jspspec 2.3
+%global reltag b02
 
 
 Name:       glassfish-jsp
-Version:    2.2.6
-Release:    alt2_11jpp7
+Version:    2.3.3
+Release:    alt1_0.3.b02jpp8
 Summary:    Glassfish J2EE JSP API implementation
 
-Group:      Development/Java
 License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:        http://glassfish.org
-Source0:    %{artifactId}-%{version}.tar.xz
+Source0:    %{artifactId}-%{version}-%{reltag}.tar.xz
 # no source releases, but this will generate tarball for you from an
 # SVN tag
 Source1:    generate_tarball.sh
@@ -25,15 +27,16 @@ Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
 Source3:    https://svn.java.net/svn/glassfish~svn/tags/legal-1.1/src/main/resources/META-INF/LICENSE.txt
 
 Patch0:     %{name}-build-eclipse-compilers.patch
+Patch1:     %{name}-port-to-servlet-3.1.patch
 
 BuildArch:  noarch
 
 BuildRequires:  maven-local
-BuildRequires:  glassfish-jsp-api
-BuildRequires:  mvn(javax.el:javax.el-api)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
-BuildRequires:  mvn(net.java:jvnet-parent)
+BuildRequires:  mvn(javax.servlet.jsp:javax.servlet.jsp-api)
+BuildRequires:  mvn(net.java:jvnet-parent:pom:)
 BuildRequires:  mvn(org.eclipse.jdt:core)
+BuildRequires:  mvn(org.glassfish:javax.el)
 
 Provides:   jsp = %{jspspec}
 Provides:   jsp%{jspspec}
@@ -45,7 +48,7 @@ Source44: import.info
 
 %description
 This project provides a container independent implementation of JSP
-2.2. The main goals are:
+2.3. The main goals are:
   * Improves current implementation: bug fixes and performance
     improvements
   * Provides API for use by other tools, such as Netbeans
@@ -54,16 +57,20 @@ This project provides a container independent implementation of JSP
 
 
 %package javadoc
+Group: Development/Java
 Summary:    API documentation for %{name}
-Group:      Development/Java
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %prep
-%setup -q -n %{artifactId}-%{version}
-%patch0
+%setup -q -n %{artifactId}-%{version}-%{reltag}
+%patch0 -p1
+%patch1 -p1
+
+%pom_add_dep org.eclipse.jdt:core::provided
+
 cp -p %{SOURCE2} LICENSE
 cp -p %{SOURCE3} cddllicense.txt
 
@@ -71,6 +78,9 @@ cp -p %{SOURCE3} cddllicense.txt
 
 # compat symlink
 %mvn_file : %{name}/javax.servlet.jsp %{name}
+
+# javadoc generation fails due to strict doclint in JDK 8
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
 %mvn_build
@@ -103,6 +113,9 @@ popd
 
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.3-alt1_0.3.b02jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt2_11jpp7
 - new release
 
