@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           aqute-bnd
 Version:        2.4.1
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        BND Tool
 License:        ASL 2.0
 URL:            http://www.aqute.biz/Bnd/Bnd
@@ -144,6 +144,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc biz.aQute.bnd/LICENSE
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_2jpp8
+- new versio
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt1_2jpp8
 - new version
 
