@@ -1,17 +1,16 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:           pdfbox
-Version:        1.8.2
-Release:        alt2_2jpp7
+Version:        1.8.8
+Release:        alt1_5jpp8
 Summary:        Java library for working with PDF documents
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://pdfbox.apache.org/
 Source0:        http://www.apache.org/dist/pdfbox/%{version}/%{name}-%{version}-src.zip
@@ -20,7 +19,8 @@ Patch0:         %{name}-nodownload.patch
 #Use sysytem bitream-vera-sans-fonts instead of bundled fonts
 Patch1:         %{name}-1.2.0-bitstream.patch
 
-BuildRequires:  jpackage-utils
+Patch2:         pdfbox-1.8.8-port-to-bouncycastle1.50.patch
+
 BuildRequires:  ant
 BuildRequires:  maven-local
 BuildRequires:  maven-install-plugin
@@ -29,27 +29,23 @@ BuildRequires:  apache-commons-logging
 BuildRequires:  apache-rat-plugin
 BuildRequires:  fonts-ttf-vera
 BuildRequires:  bouncycastle-mail
-BuildRequires:  cobertura-maven-plugin
 BuildRequires:  fontconfig
 BuildRequires:  icu4j
 BuildRequires:  javacc-maven-plugin
-BuildRequires:  junit4
+BuildRequires:  junit
 %if 0%{?fedora} >= 18
 BuildRequires:  lucene
 %else
 BuildRequires:  lucene-demo >= 2.4.1
 %endif
 BuildRequires:  pcfi
+BuildRequires:  log4j12
+
+BuildRequires:  maven-local >= 4.3.2-3
 
 BuildArch:      noarch
 
-Requires:       jpackage-utils
 Requires:       fonts-ttf-vera
-Requires:       bouncycastle-mail
-Requires:       fontbox
-Requires:       icu4j
-Requires:       apache-commons-logging
-Requires:       jempbox
 
 Obsoletes:      %{name}-app <= 1.6.0-4
 Provides:       %{name}-app = %{version}-%{release}
@@ -62,20 +58,16 @@ existing documents and the ability to extract content from documents. Apache
 PDFBox also includes several command line utilities. Apache PDFBox is
 published under the Apache License v2.0.
 
-
 %package examples
+Group: Development/Java
 Summary:        Examples for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 
 %description examples
 This package contains examples for %{name}.
 
-
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        Javadoc for %{name}
 Provides:       fontbox-javadoc = %{version}-%{release}
 Obsoletes:      fontbox-javadoc < %{version}-%{release}
 Provides:       jempbox-javadoc = %{version}-%{release}
@@ -85,55 +77,41 @@ BuildArch: noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 
-
 %package ant
+Group: Development/Java
 Summary:        Apache PDFBox for Ant
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       ant
 
 %description ant
 %{summary}.
 
-
 %package -n fontbox
+Group: Development/Java
 Summary:        Apache FontBox
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       junit
 
 %description -n fontbox
 FontBox is a Java library used to obtain low level information from font
 files. FontBox is a subproject of Apache PDFBox.
 
-
 %package -n jempbox
+Group: Development/Java
 Summary:        Apache JempBox
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       junit
 
 %description -n jempbox
 JempBox is an open source Java library that implements Adobe's XMP(TM)
 specification. JempBox is a subproject of Apache PDFBox.
 
-
 %package -n preflight
+Group: Development/Java
 Summary:        Apache Preflight
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       xmpbox = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n preflight
 The Apache Preflight library is an open source Java tool that implements 
 a parser compliant with the ISO-19005 (PDF/A) specification. Preflight is a 
 subproject of Apache PDFBox.
 
-
 %package -n xmpbox
+Group: Development/Java
 Summary:        Apache XmpBox
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n xmpbox
 The Apache XmpBox library is an open source Java tool that implements Adobe's
@@ -141,36 +119,44 @@ XMP(TM) specification.  It can be used to parse, validate and create xmp
 contents.  It is mainly used by subproject preflight of Apache PDFBox. 
 XmpBox is a subproject of Apache PDFBox.
 
-
-# Not compatible with lucene 3.6
-%if 0%{?fedora} < 18
-%package lucene
-Summary:        Apache PDFBox for Lucene
-Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-%if 0%{?fedora} >= 18
-Requires:       lucene
-%else
-Requires:       lucene-demo >= 2.4.1
-%endif
-
-%description lucene
-%{summary}.
-%endif
-
-
 %prep
 %setup -q
 %patch0 -p1 -b .nodownload
 %patch1 -p1 -b .bitstream
-#Disable lucene, not compatible with lucene 3
+
+# Skip testImageIOUtils
+# https://issues.apache.org/jira/browse/PDFBOX-2084
+sed -i -e "/TestImageIOUtils.java/d" pdfbox/pom.xml
+# Remove unpackaged deps for the above tests
+%pom_remove_dep net.java.dev.jai-imageio:jai-imageio-core-standalone pdfbox
+# https://bugzilla.redhat.com/show_bug.cgi?id=1094417
+%pom_remove_dep com.levigo.jbig2:levigo-jbig2-imageio pdfbox
+rm -rf pdfbox/src/test/java/org/apache/pdfbox/util/TestImageIOUtils.java \
+ pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/xobject/PDJpegTest.java \
+ pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/xobject/PDCcittTest.java
+sed -i -e /PDJpegTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
+sed -i -e /PDCcittTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
+sed -i -e /TestImageIOUtils/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
+
+# cobertura-maven-plugin has been retired
+%pom_remove_plugin :cobertura-maven-plugin preflight
+
+%pom_remove_dep javax.activation:activation preflight
+
+%pom_disable_module war
+
+sed -i.ant "s|<artifactId>ant-nodeps</artifactId>|<artifactId>ant</artifactId>|" pom.xml */pom.xml
+
+sed -i.log4j12 "s|<version>1.2.12</version>|<version>1.2.17</version>|" preflight*/pom.xml
+
+#Disable lucene, not compatible with lucene 3.6
 %pom_disable_module lucene
 #Use jdk16 version of bcprov
 sed -i -e s/jdk15/jdk16/g */pom.xml
 # Don't build app (it's just a bundle of everything)
 sed -i -e /app/d pom.xml
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.class' -delete
+find -name '*.jar' -delete
 #Fix line endings
 sed -i -e 's|\r||' RELEASE-NOTES.txt
 #Remove META-INF file that does not exist
@@ -178,91 +164,76 @@ sed -i -e '/META-INF/d' pdfbox/pom.xml
 #Remove included fonts
 rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
 
+%pom_add_dep org.bouncycastle:bcpkix-jdk15on:1.50 %{name}
+%patch2 -p1 -b .bouncycastle1.50
+
+# TODO
+rm -rf examples/src/main/java/org/apache/pdfbox/examples/signature/CreateSignature.java \
+ examples/src/main/java/org/apache/pdfbox/examples/signature/CreateVisibleSignature.java
+
+# Disable filtering
+sed -i -e /filtering/d examples/pom.xml
+
+# install all libraries in _javadir
+# NOTE: current guideline require all libraries must be installed in _javadir/%%name when JARs are > 2
+%mvn_file :jempbox jempbox
+%mvn_file :%{name} %{name}
+%mvn_file :%{name}-ant %{name}-ant
+%mvn_file :%{name}-examples %{name}-examples
+%mvn_file :preflight preflight
+%mvn_file :xmpbox xmpbox
+%mvn_file :fontbox fontbox
+
+# Merge paret poms in main package
+%mvn_package :%{name} %{name}
+%mvn_package :%{name}-parent %{name}
+%mvn_package :%{name}-reactor %{name}
+
+%mvn_package :%{name}-ant %{name}-ant
+%mvn_package :%{name}-examples %{name}-examples
+%mvn_package :fontbox fontbox
+%mvn_package :jempbox jempbox
+%mvn_package :preflight preflight
+%mvn_package :xmpbox xmpbox
 
 %build
-mvn-rpmbuild -Dadobefiles.jar=%{_javadir}/pcfi/pcfi.jar install javadoc:aggregate
 
+%mvn_build -- -Dadobefiles.jar=$(build-classpath pcfi) -Dmaven.test.skip.exec=true
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-
-for jar in */target/*.jar
-do
-  dir=$(dirname $jar)
-  target=$(dirname $dir)
-  jarname=$target
-  [ -f ${dir}/%{name}-${target}-%{version}.jar ] && jarname=%{name}-${target}
-
-  cp -p ${dir}/${jarname}-%{version}.jar \
-    $RPM_BUILD_ROOT%{_javadir}/${jarname}.jar
-
-  cp -p ${target}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-${jarname}.pom
-  %add_maven_depmap JPP-${jarname}.pom ${jarname}.jar
-done
-
-# Javadocs
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-#Parent
-cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
-%add_maven_depmap JPP-pdfbox-parent.pom
+%mvn_install
 
 #TODO - install/ship war
 
+%files -f .mfiles-%{name}
+%doc README.txt RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt
 
-%files
-%doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavenpomdir}/JPP-%{name}-parent.pom
-%{_mavendepmapfragdir}/%{name}
+%files examples -f .mfiles-%{name}-examples
+%doc LICENSE.txt NOTICE.txt
 
-%files examples
-%doc LICENSE.txt
-%{_javadir}/%{name}-examples.jar
-%{_mavenpomdir}/JPP-%{name}-examples.pom
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/%{name}
+%files ant -f .mfiles-%{name}-ant
+%doc LICENSE.txt NOTICE.txt
 
-%files ant
-%doc LICENSE.txt
-%{_javadir}/%{name}-ant.jar
-%{_mavenpomdir}/JPP-%{name}-ant.pom
+%files -n fontbox -f .mfiles-fontbox
+%doc LICENSE.txt NOTICE.txt
 
-%files -n fontbox
-%doc LICENSE.txt
-%{_javadir}/fontbox.jar
-%{_mavenpomdir}/JPP-fontbox.pom
+%files -n jempbox -f .mfiles-jempbox
+%doc LICENSE.txt NOTICE.txt
 
-%files -n jempbox
-%doc LICENSE.txt
-%{_javadir}/jempbox.jar
-%{_mavenpomdir}/JPP-jempbox.pom
+%files -n preflight -f .mfiles-preflight
+%doc LICENSE.txt NOTICE.txt
 
-%files -n preflight
-%doc LICENSE.txt
-%{_javadir}/preflight.jar
-%{_mavenpomdir}/JPP-preflight.pom
-
-%files -n xmpbox
-%doc LICENSE.txt
-%{_javadir}/xmpbox.jar
-%{_mavenpomdir}/JPP-xmpbox.pom
-
-# Not compatible with lucene 3.6
-%if 0%{?fedora} < 18
-%files lucene
-%doc LICENSE.txt
-%{_javadir}/%{name}-lucene.jar
-%{_mavenpomdir}/JPP-%{name}-lucene.pom
-%endif
-
+%files -n xmpbox -f .mfiles-xmpbox
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.8-alt1_5jpp8
+- java 8 mass update
+
 * Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.8.2-alt2_2jpp7
 - fixed build with pcfi-2010.08.09-alt2_7
 
