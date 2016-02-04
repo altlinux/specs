@@ -1,10 +1,11 @@
 %define oname pyaio
 
+%def_disable check
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1.git20130914
+Release: alt2.git20130914
 Summary: Python aio bindings
 License: BSD
 Group: Development/Python
@@ -24,7 +25,6 @@ BuildPreReq: python3-module-gevent
 %endif
 
 %py_provides %oname
-%py_requires gevent multiprocessing
 
 %description
 Python Asynchronous I/O bindings (aio.h).
@@ -36,7 +36,6 @@ in a tight loop. pyaio could hang if you hit the max aio queue size.
 Summary: Python aio bindings
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires gevent multiprocessing
 
 %description -n python3-module-%oname
 Python Asynchronous I/O bindings (aio.h).
@@ -92,6 +91,10 @@ popd
 %endif
 
 %changelog
+
+* Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 0.4-alt2.git20130914
+- Disable tests
+
 * Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20130914
 - Initial build for Sisyphus
 
