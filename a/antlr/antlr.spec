@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 Summary:		ANother Tool for Language Recognition
 Name:			antlr
 Version:		2.7.7
-Release:		alt11_37jpp8
+Release:		alt12_37jpp8
 Epoch:			0
 License:		Public Domain
 URL:			http://www.antlr.org/
@@ -99,6 +99,9 @@ Summary:		Python runtime support for ANTLR-generated parsers
 BuildRequires:	python-devel
 BuildRequires:	python-module-setuptools
 BuildArch:		noarch
+Obsoletes: python-module-antlr2 <= 0:2.7.7-alt11_13jpp6.1
+Conflicts: python-module-antlr2 <= 0:2.7.7-alt11_13jpp6.1
+
 
 %description	-n python-module-antlr
 Python runtime support for ANTLR-generated parsers
@@ -199,6 +202,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %{python_sitelibdir_noarch}/antlr-*
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt12_37jpp8
+- added python obsoletes.
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt11_37jpp8
 - new version
 
