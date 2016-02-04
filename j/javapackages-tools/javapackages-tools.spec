@@ -26,7 +26,7 @@ BuildRequires: /proc
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt3_12jpp8
+Release:        alt4_12jpp8
 Epoch:		1
 Summary:        Macros and scripts for Java packaging support
 
@@ -289,6 +289,9 @@ popd
 %_bindir/xmvn-builddep
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt4_12jpp8
+- fixes in script patch
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt3_12jpp8
 - fixes in script macro
 
