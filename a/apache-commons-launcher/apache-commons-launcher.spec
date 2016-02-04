@@ -1,52 +1,33 @@
+Name: apache-commons-launcher
+Version: 1.1
+Summary: A cross platform Java application launcher
+License: ASL 2.0
+Url: http://commons.apache.org/launcher/
 Epoch: 1
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global short_name commons-launcher
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: apache-commons-launcher = 1.1-16.20100521svn936225.fc23
+Provides: mvn(commons-launcher:commons-launcher) = 1.1
+Provides: mvn(commons-launcher:commons-launcher:pom:) = 1.1
+Provides: mvn(org.apache.commons:commons-launcher) = 1.1
+Provides: mvn(org.apache.commons:commons-launcher:pom:) = 1.1
+Requires: java
+Requires: java-headless
+Requires: jpackage-utils
+Requires: jpackage-utils
 
-Name:          apache-%{short_name}
-Version:       1.1
-Release:       alt1_14.20100521svn936225jpp7
-Summary:       A cross platform Java application launcher
-Group:         Development/Java
-License:       ASL 2.0
-URL:           http://commons.apache.org/launcher/
-
-# The last release of this package was many years ago and in that time there
-# have only been two extremely minor changes to the source code, [1] and [2].
-# It seems a new release is unlikely to be forthcoming in the near future.
-# 
-# [1] - http://svn.apache.org/viewvc/commons/proper/launcher/trunk/src/java/org/apache/commons/launcher/ChildMain.java?r1=138801&r2=138803
-# [2] - http://svn.apache.org/viewvc/commons/proper/launcher/trunk/src/java/org/apache/commons/launcher/Launcher.java?r1=138801&r2=138802
-# 
-# During that time however, support for the maven 2 build system has been
-# added. So in order to make my life easier as a maintainer, with regard to
-# supporting OSGi manifests and installing poms, etc, I have elected to package
-# a maven2 supporting snapshot instead of maintaining patches in our SRPM. As
-# an added bonus, the snapshot also has more accurate javadocs.
-# 
-# How to generate source tarball from source control:
-#  $ svn export -r 936225 http://svn.apache.org/repos/asf/commons/proper/launcher/trunk/ commons-launcher-1.1-src
-#  $ tar -zcf commons-launcher-1.1-src.tar.gz commons-launcher-1.1-src
-Source0:       %{short_name}-%{version}-src.tar.gz
-
-# remove unnecessary build dependency on ant-optional (ant no longer ships this jar)
-Patch0:        %{short_name}-pom.patch
-
-BuildArch:     noarch
-
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-Requires:      jpackage-utils
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt2jpp
+Source: apache-commons-launcher-1.1-16.20100521svn936225.fc23.cpio
 
 %description
-Commons-launcher eliminates the need for a batch or shell script to launch a 
-Java class. Some situations where elimination of a batch or shell script may 
+Commons-launcher eliminates the need for a batch or shell script to launch a
+Java class. Some situations where elimination of a batch or shell script may
 be desirable are:
 
 * You want to avoid having to determining where certain application paths are
-e.g. your application's home directory, etc. Determining this dynamically in 
-a Windows batch scripts is very tricky on some versions of Windows or when 
+e.g. your application's home directory, etc. Determining this dynamically in
+a Windows batch scripts is very tricky on some versions of Windows or when
 soft links are used on Unix platforms.
 
 * You want to avoid having to handle native file and path separators or native
@@ -55,50 +36,37 @@ path quoting issues.
 * You need to enforce certain system properties.
 
 * You want to allow users to pass in custom JVM arguments or system properties
-without having to parse and reorder arguments in your script. This can be 
+without having to parse and reorder arguments in your script. This can be
 tricky and/or messy in batch and shell scripts.
 
-* You want to bootstrap system properties from a configuration file instead 
+* You want to bootstrap system properties from a configuration file instead
 hard-coding them in your batch and shell scripts.
 
 * You want to provide localized error messages which is very tricky to do in
 batch and shell scripts.
 
-%package javadoc
-Summary:       API documentation for %{name}
-Group:         Development/Java
-Requires:      jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{short_name}-%{version}-src
-
-# apply patches
-%patch0 -p0 -b .orig
-
-sed -i 's/\r//' README.txt LICENSE.txt NOTICE.txt
-sed -i "s|\<groupId\>ant\<\/groupId\>|<groupId>org.apache.ant</groupId>|g" build.xml
-
-# Compatibility links
-%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
-%mvn_file :commons-launcher %{short_name} %{name}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%files -f %name-list
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.1-alt1_14.20100521svn936225jpp7
 - new release
 
