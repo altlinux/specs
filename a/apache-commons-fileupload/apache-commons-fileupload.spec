@@ -1,68 +1,44 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
-%global base_name       fileupload
-%global short_name      commons-%{base_name}
+BuildRequires: jpackage-generic-compat
+%define fedora 23
+Name:           apache-commons-fileupload
+Version:        1.3.1
+Release:        alt1_7jpp8
+Summary:        API to work with HTML file upload
+License:        ASL 2.0
+URL:            http://commons.apache.org/fileupload/
+BuildArch:      noarch
 
-Name:             apache-%{short_name}
-Version:          1.3
-Release:          alt1_4jpp7
-Summary:          This package provides an api to work with html file upload
-License:          ASL 2.0
-Group:            Development/Java
-URL:              http://commons.apache.org/%{base_name}/
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-BuildArch:        noarch
+Source0:        http://www.apache.org/dist/commons/fileupload/source/commons-fileupload-%{version}-src.tar.gz
 
-Patch1:           %{name}-portlet20.patch
-
-BuildRequires:    maven-local
-BuildRequires:    junit >= 0:3.8.1
-BuildRequires:    servlet
-BuildRequires:    apache-commons-io
-BuildRequires:    maven-antrun-plugin
-BuildRequires:    maven-assembly-plugin
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-doxia-sitetools
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-plugin-bundle
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
 %if 0%{?fedora}
-BuildRequires:    portlet-2.0-api
+BuildRequires:  mvn(javax.portlet:portlet-api)
 %endif
-
-Requires:         jpackage-utils
-Requires:         apache-commons-io
-%if 0%{?fedora}
-Requires:         portlet-2.0-api
-%endif
-
-Provides:         jakarta-%{short_name} = 1:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 1:1.2.2
 Source44: import.info
+%define short_name commons-fileupload
 Provides: %{short_name} = %{version}
 Conflicts:	jakarta-%{short_name} < 1:%version
 
 %description
-The javax.servlet package lacks support for rfc 1867, html file
-upload.  This package provides a simple to use api for working with
+The javax.servlet package lacks support for RFC-1867, HTML file
+upload.  This package provides a simple to use API for working with
 such data.  The scope of this package is to create a package of Java
 utility classes to read multipart/form-data within a
-javax.servlet.http.HttpServletRequest
+javax.servlet.http.HttpServletRequest.
 
 %package javadoc
-Summary:          API documentation for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
-
-Obsoletes:        jakarta-%{short_name}-javadoc < 1:1.2.1-2
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -71,7 +47,7 @@ This package contains the API documentation for %{name}.
 # -----------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-fileupload-%{version}-src
 sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' NOTICE.txt
 
@@ -89,48 +65,29 @@ rm src/test/java/org/apache/commons/fileupload/*Portlet*
 
 # -----------------------------------------------------------------------------
 
+%mvn_file ":{*}" %{name} @1
+%mvn_alias : org.apache.commons:
+
 %build
 # fix build with generics support
 # tests fail to compile because they use an obsolete version of servlet API (2.4)
-mvn-rpmbuild -Dmaven.test.skip=true -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 install javadoc:javadoc
-# -----------------------------------------------------------------------------
+%mvn_build -f
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-pushd $RPM_BUILD_ROOT%{_javadir}
-    ln -sf %{name}.jar %{short_name}.jar
-popd # come back from javadir
+%mvn_install
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{short_name}.pom
-%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "org.apache.commons:%{short_name}"
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt
-%{_javadir}/%{name}.jar
-%{_javadir}/%{short_name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{short_name}.pom
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
-%doc %{_javadocdir}/%{name}
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.3.1-alt1_7jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.3-alt1_4jpp7
 - new release
 
