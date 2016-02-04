@@ -6,7 +6,7 @@
 
 %define rname kdeconnect-kde
 Name: kde4-connect
-Version: 0.7.3
+Version: 0.8
 Release: alt1
 
 Group: Communications
@@ -98,13 +98,6 @@ Development files for %name
 %_K4lib/kio_kdeconnect.so
 %_K4lib/kdeconnectfiletiemaction.so
 
-%_K4dbus_interfaces/org.kde.kdeconnect.daemon.xml
-%_K4dbus_interfaces/org.kde.kdeconnect.device.battery.xml
-%_K4dbus_interfaces/org.kde.kdeconnect.device.notifications.notification.xml
-%_K4dbus_interfaces/org.kde.kdeconnect.device.notifications.xml
-%_K4dbus_interfaces/org.kde.kdeconnect.device.xml
-%_K4dbus_interfaces/org.kde.kdeconnect.device.sftp.xml
-#%_K4dbus_interfaces/org.kde.kded.kdeconnect.xml
 
 %_K4lib/kdeconnect_*.so
 %_K4apps/kdeconnect/
@@ -113,6 +106,7 @@ Development files for %name
 %_K4srv/kded/kdeconnect.desktop
 %_K4srv/*kdeconnect*
 %_K4srvtyp/kdeconnect_plugin.desktop
+%_K4dbus_services/org.kde.kdeconnect.service
 
 %_kde4_iconsdir/hicolor/*/apps/kdeconnect.*
 
@@ -129,8 +123,15 @@ Development files for %name
 %_K4includedir/KDEConnect/
 %_libdir/cmake/KDEConnect/
 %_K4link/lib*.so
+%_K4dbus_interfaces/org.kde.kdeconnect.*.xml
 
 %changelog
+* Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 0.8-alt1
+- new version
+
+* Mon Oct 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.3-alt0.M70P.1
+- built for M70P
+
 * Mon Oct 27 2014 Sergey V Turchin <zerg@altlinux.org> 0.7.3-alt1
 - new version
 
