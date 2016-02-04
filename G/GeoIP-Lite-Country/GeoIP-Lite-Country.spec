@@ -1,5 +1,5 @@
 Name: GeoIP-Lite-Country
-Version: 20160111
+Version: 20160204
 Release: alt1
 # OK, day designation in version string is unneeded, this file updates strictly
 # monthly. We need to introduce Epoch in order to drop day from version
@@ -48,6 +48,9 @@ gunzip -c %_sourcedir/GeoIP.dat.gz >%buildroot%_datadir/GeoIP/GeoIP.dat
 # version. We mark file norepace in order to prevent rpm from doing this.
 
 %changelog
+* Thu Feb 04 2016 Cronbuild Service <cronbuild@altlinux.org> 1:20160204-alt1
+- repocop cronbuild 20160204. At your service.
+
 * Mon Jan 11 2016 Cronbuild Service <cronbuild@altlinux.org> 1:20160111-alt1
 - repocop cronbuild 20160111. At your service.
 
