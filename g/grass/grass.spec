@@ -1,10 +1,11 @@
 Name:    grass
-Version: 7.2.2
-Release: alt2
+Version: 7.4.0
+Release: alt1
 
 %def_with mysql
 %def_with postgres
 %def_with sqlite
+%def_without python3
 
 Summary: Geographic Resources Analysis Support System
 License: %gpl2plus
@@ -20,21 +21,27 @@ Source1: %name.watch
 Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
 Patch2: %name-soname.patch
+Patch3: %name-alt-adapt-for-python3.patch
 
-%define shortver 72
+%define shortver 74
 #define grassdir grass%shortver
 %define grassdir grass-%version
 %define grassdatadir /var/lib/grass%shortver/data
 
-# internal modules
-%add_python_req_skip srs wms_base wms_cap_parsers
-
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: flex gcc-c++ python-devel
-BuildRequires: libfftw3-devel libjpeg-devel libpng-devel libtiff-devel zlib-devel
+BuildRequires: flex gcc-c++
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python-tools-2to3
+%else
+BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel
+%endif
+BuildRequires: libfftw-devel libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libncurses-devel libtinfo-devel
-BuildRequires: libpq-devel postgresql-devel libMySQL-devel libsqlite3-devel
+BuildRequires: postgresql-devel libMySQL-devel libsqlite3-devel
 BuildRequires: libqt4-core libXmu-devel swig libfreetype-devel readline-devel libGLU-devel
 BuildRequires: proj-devel libgdal-devel libproj-nad proj
 BuildRequires: tcl-devel tk-devel
@@ -56,12 +63,17 @@ BuildRequires: lesstif-devel
 BuildRequires: libGLw-devel
 BuildRequires: libunixODBC-devel
 BuildRequires: libwxGTK-devel
-BuildRequires: python-module-wx-devel
-BuildRequires: python-module-Numeric
-BuildRequires: python-modules-sqlite3
+BuildRequires: libmysqld-devel
 BuildRequires: python-module-simplejson
 BuildRequires: xorg-glproto-devel
 BuildRequires: desktop-file-utils
+
+# internal modules
+%if_with python3
+%add_python3_req_skip srs wms_base wms_cap_parsers
+%else
+%add_python_req_skip srs wms_base wms_cap_parsers
+%endif
 
 %description
 GRASS (Geographic Resources Analysis Support System) is an
@@ -92,6 +104,7 @@ This package contains development headers for GRASS.
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 %configure \
@@ -259,11 +272,22 @@ sed -i -e 's|%buildroot%_prefix/%grassdir|%_libdir/%grassdir|' \
 rm -rf %buildroot%_libdir/%grassdir/tools
 
 # Move python to %%python_sitelibdir
+%if_with python3
+mkdir -p %buildroot%python3_sitelibdir
+mv %buildroot%_libdir/%grassdir/etc/python/grass %buildroot%python3_sitelibdir
+%else
 mkdir -p %buildroot%python_sitelibdir
 mv %buildroot%_libdir/%grassdir/etc/python/grass %buildroot%python_sitelibdir
+%endif
 
 # Cleanup %%grassdir
 rm -rf %buildroot%_libdir/%grassdir/share %buildroot%_libdir/*.a
+
+# Prepare python files for Python 3
+%if_with python3
+2to3 -w -n --no-diffs %buildroot%python3_sitelibdir/grass/lib/vector.py %buildroot%_libdir/grass-*/scripts/*
+find %buildroot -type f | xargs -l1 subst 's,^#!/usr/bin/env python,#!%_bindir/python3,'
+%endif
 
 # Mark localization files
 %find_lang --output %name.lang %{name}mods %{name}libs %{name}wxpy
@@ -284,7 +308,11 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/%grassdir/*
 %exclude %_libdir/%grassdir/driver/db/*
 %_libdir/%grassdir/driver/db/*
+%if_with python3
+%python3_sitelibdir/%name
+%else
 %python_sitelibdir/%name
+%endif
 %_desktopdir/*.desktop
 %_datadir/appdata/%name.appdata.xml
 %_iconsdir/hicolor/*/apps/%name.png
@@ -302,6 +330,10 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sat Feb 24 2018 Andrey Cherepanov <cas@altlinux.org> 7.4.0-alt1
+- New version.
+- Make switch for build witih python3 (disabled by default).
+
 * Sun Dec 10 2017 Dmitry V. Levin <ldv@altlinux.org> 7.2.2-alt2
 - Build with fftw3.
 

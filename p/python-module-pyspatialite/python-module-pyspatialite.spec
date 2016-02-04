@@ -7,7 +7,7 @@
 %define oname pyspatialite
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python interface to Spatialite
 
@@ -19,6 +19,7 @@ Url: http://pyspatialite.googlecode.com/
 
 Source: %oname-%version.tar
 Patch0: %oname-3.0.1-vendor-setup.patch
+Patch1: %oname-alt-fix-build.patch
 
 BuildRequires: libsqlite3-devel
 BuildRequires: libspatialite-devel
@@ -76,7 +77,9 @@ This package contains tests for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch0 -p1
+%patch0 -p2
+%patch1 -p2
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -99,6 +102,8 @@ pushd ../python3
 popd
 %endif
 
+rm -rf %buildroot%_usr/pyspatialite-doc/
+
 %files
 %doc doc/install-source.txt
 %python_sitelibdir/%{oname}*
@@ -118,5 +123,8 @@ popd
 %endif
 
 %changelog
+* Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1.1
+- Rebuild with new libspatialite
+
 * Sun Jun 09 2013 Ivan Ovcherenko <asdus@altlinux.org> 3.0.1-alt1
 - Initial release
