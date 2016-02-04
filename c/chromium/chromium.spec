@@ -10,7 +10,7 @@
 %def_disable v8_internal
 %def_disable libchromiumcontent
 
-%define v8_version 4.8.271.17
+%define v8_version 4.8.271.18
 
 %if_enabled debug
 %define buildtype Debug
@@ -19,7 +19,7 @@
 %endif
 
 Name:           chromium
-Version:        48.0.2564.97
+Version:        48.0.2564.103
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -575,6 +575,9 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.103-alt1
+- New version
+
 * Thu Jan 28 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.97-alt1
 - New version
 
