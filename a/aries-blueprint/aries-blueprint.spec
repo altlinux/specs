@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          aries-blueprint
 Version:       0.3.1
-Release:       alt2_7jpp7
+Release:       alt2_11jpp8
 Summary:       Apache Aries Blueprint
 License:       ASL 2.0
 Group:         Development/Java
@@ -34,19 +35,10 @@ BuildRequires: maven-surefire-plugin
 BuildRequires: aries-util
 BuildRequires: aries-proxy
 BuildRequires: aries-quiesce
-BuildRequires: objectweb-asm
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
 BuildRequires: xbean
-
-Requires:      jpackage-utils
-Requires:      aries-util
-Requires:      aries-proxy
-Requires:      aries-quiesce
-Requires:      objectweb-asm
-Requires:      felix-osgi-compendium
-Requires:      felix-osgi-core
-Requires:      xbean
+BuildRequires: objectweb-asm3
 Source44: import.info
 
 %description
@@ -55,7 +47,6 @@ Implementation of the Blueprint Container Specification.
 %package javadoc
 Summary:       Javadocs for %{name}
 Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -66,53 +57,27 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 %patch1 -p1
 
+
+
 %build
 # tests disabled because of
 # missing dependency on org.apache.aries.unittest
-mvn-rpmbuild \
-  -Dmaven.test.skip=true \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  package javadoc:aggregate
+%mvn_build -f
 
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-
-# modules
-for module in blueprint-annotation-api blueprint-api blueprint-cm \
-              blueprint-core blueprint-sample;
-do
-  pushd $module
-  jarname=`echo org.apache.aries.$module | tr - .`
-  install -pm 644 target/$jarname-%{version}.jar %{buildroot}%{_javadir}/%{name}/$jarname.jar
-  install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-$jarname.pom
-  %add_maven_depmap JPP.%{name}-$jarname.pom %{name}/$jarname.jar
-  popd
-done
-
-# pom
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}.pom
-
-# depmap
-%add_maven_depmap JPP.%{name}.pom
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
+%files -f .mfiles
 %doc README LICENSE NOTICE
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%dir %{_javadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.3.1-alt2_11jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.3.1-alt2_7jpp7
 - new release
 
