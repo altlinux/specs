@@ -1,6 +1,6 @@
 Name:    qt5-gstreamer1
 Version: 1.2.0
-Release: alt3
+Release: alt4
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -10,6 +10,10 @@ URL:     http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
 Requires: gst-plugins-base1.0 gst-plugins-good1.0
 
 Source: qt-gstreamer-%version.tar
+# upstream
+Patch1: 001-memleak.patch
+Patch2: 002-boost157.patch
+Patch3: 003-gstreamer151.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -40,25 +44,11 @@ for %name.
 
 %prep
 %setup -qn qt-gstreamer-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-for subd in src elements/gstqtvideosink
-do
-pushd $subd
-if [ ! -e %_includedir/gstreamer-1.0/gst/gstconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gstconfig.h ]
-then
-    mkdir -p gst
-    [ -e gst/gstconfig.h ] || \
-       ln -s %_libdir/gstreamer-1.0/include/gst/gstconfig.h gst/gstconfig.h
-fi
-if [ ! -e %_includedir/gstreamer-1.0/gst/gl/gstglconfig.h -a -e %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h ]
-then
-    mkdir -p gst/gl
-    [ -e gst/gl/gstglconfig.h ] || \
-       ln -s %_libdir/gstreamer-1.0/include/gst/gl/gstglconfig.h gst/gl/gstglconfig.h
-fi
-popd
-done
 %Kbuild \
     -DQT_VERSION=5 \
     -DQTGSTREAMER_STATIC=OFF \
@@ -102,6 +92,9 @@ done
 
 
 %changelog
+* Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt4
+- apply upstream fixes
+
 * Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt3
 - fix against ugly gstreamer includes placement
 
