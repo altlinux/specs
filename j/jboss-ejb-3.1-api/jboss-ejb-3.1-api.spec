@@ -2,8 +2,9 @@ Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-ejb-3.1-api
 %define version 1.0.2
@@ -12,33 +13,25 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-ejb-3.1-api
 Version:          1.0.2
-Release:          alt2_8jpp7
+Release:          alt2_13jpp8
 Summary:          EJB 3.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
 Url:              http://www.jboss.org
-
-# git clone git://github.com/jboss/jboss-ejb-api_spec.git jboss-ejb-3.1-api
-# cd jboss-ejb-3.1-api/ && git archive --format=tar --prefix=jboss-ejb-3.1-api/ jboss-ejb-api_3.1_spec-1.0.2.Final | xz > jboss-ejb-3.1-api-1.0.2.Final.tar.xz
-Source0:          jboss-ejb-3.1-api-%{namedversion}.tar.xz
+Source0:          https://github.com/jboss/jboss-ejb-api_spec/archive/jboss-ejb-api_3.1_spec-%{namedversion}.tar.gz
 
 BuildRequires:    jboss-transaction-1.1-api
 BuildRequires:    jboss-jaxrpc-1.1-api
 BuildRequires:    jboss-specs-parent
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-ear-plugin
 
-Requires:         jboss-transaction-1.1-api
-Requires:         jboss-jaxrpc-1.1-api
-Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
 
@@ -46,48 +39,33 @@ Source44: import.info
 The Java EJB 3.1 API classes.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jboss-ejb-3.1-api
+%setup -q -n jboss-ejb-api_spec-jboss-ejb-api_3.1_spec-%{namedversion}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/jboss-ejb-api_3.1_spec-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc README LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_13jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt2_8jpp7
 - new release
 
