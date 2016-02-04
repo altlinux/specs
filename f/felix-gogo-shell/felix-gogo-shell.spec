@@ -1,49 +1,30 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name felix-gogo-shell
-%define version 0.10.0
-%global project   felix
-%global bundle    org.apache.felix.gogo.shell
+BuildRequires: jpackage-generic-compat
+Name:           felix-gogo-shell
+Version:        0.10.0
+Release:        alt2_15jpp8
+Summary:        Community OSGi R4 Service Platform Implementation - Basic Commands
+License:        ASL 2.0
+URL:            http://felix.apache.org/site/apache-felix-gogo.html
+BuildArch:      noarch
 
-%{!?scl:%global pkg_name %{name}}
-%{?scl:%scl_package %{project}-gogo-shell}
-
-Name:             %{?scl_prefix}%{project}-gogo-shell
-Version:          0.10.0
-Release:          alt2_9jpp7
-Summary:          Community OSGi R4 Service Platform Implementation - Basic Commands
-Group:            Development/Java
-License:          ASL 2.0
-URL:              http://felix.apache.org/site/apache-felix-gogo.html
-
-Source0:          http://mirror.catn.com/pub/apache//felix/org.apache.felix.gogo.shell-0.10.0-project.tar.gz
+Source0:        http://mirror.catn.com/pub/apache//felix/org.apache.felix.gogo.shell-0.10.0-project.tar.gz
   
 # Changed GroupID from osgi to felix
-Patch0:           %{pkg_name}-groupid.patch
+Patch0:         %{name}-groupid.patch
 
-Patch1:           ignoreActivatorException.patch
-
-BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    xmvn
-BuildRequires:    maven-plugin-bundle
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    %{?scl_prefix}felix-gogo-parent
-BuildRequires:    %{?scl_prefix}felix-gogo-runtime
-BuildRequires:    felix-osgi-compendium
-BuildRequires:    maven-install-plugin
-BuildRequires:    mockito
-
-%{?scl:BuildRequires:	  %{?scl_prefix}build}
-
-Requires:         jpackage-utils
-%{?scl:Requires: %scl_runtime}
+Patch1:         ignoreActivatorException.patch
+%define pkg_name %name
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:gogo-parent:pom:)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.felix:org.apache.felix.gogo.runtime)
+BuildRequires:  mvn(org.apache.felix:org.osgi.compendium)
+BuildRequires:  mvn(org.apache.felix:org.osgi.core)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.mockito:mockito-all)
 Source44: import.info
 
 %description
@@ -56,49 +37,34 @@ OSGi technology combines aspects of these aforementioned principles to define a
 dynamic service deployment framework that is amenable to remote management.
 
 %package javadoc
-Group:            Development/Java
-Summary:          Javadoc for %{pkg_name}
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:        Javadoc for %{pkg_name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{pkg_name}.
 
 %prep
-%setup -q -n %{bundle}-%{version}
+%setup -q -n org.apache.felix.gogo.shell-%{version}
 %patch0 -p1 -F3
 %patch1
 
 %build
-%{?scl:%scl_maven_opts}
-mvn-rpmbuild install javadoc:aggregate 
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/%{project}
-install -pm 644 target/%{bundle}-%{version}.jar %{buildroot}%{_javadir}/%{project}/%{bundle}.jar
+%mvn_install
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
-%add_maven_depmap JPP.%{project}-%{bundle}.pom %{project}/%{bundle}.jar
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{pkg_name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{pkg_name}
-
-
-%files
-%doc DEPENDENCIES LICENSE NOTICE
-%{_javadir}/*
-%{_mavenpomdir}/JPP.%{project}-%{bundle}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{pkg_name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_15jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.10.0-alt2_9jpp7
 - new release
 
