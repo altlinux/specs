@@ -1,10 +1,11 @@
 %define oname flask-login
 
 %def_with python3
+%def_disable check
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20150202
+Release: alt2.git20150202
 Summary: User session management for Flask
 License: MIT
 Group: Development/Python
@@ -15,20 +16,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-flask python-module-werkzeug
-BuildPreReq: python-module-blinker python-module-coverage
-BuildPreReq: python-module-mock python-module-nose python-tools-pep8
-BuildPreReq: pyflakes python-module-unittest2
-BuildPreReq: python-module-yanc
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-module-blinker python-module-coverage python-module-nose python-module-pbr python-module-pytest python-module-unittest2 python-tools-pep8 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-flask python3-module-werkzeug
-BuildPreReq: python3-module-blinker python3-module-coverage
-BuildPreReq: python3-module-mock python3-module-nose python3-tools-pep8
-BuildPreReq: python3-pyflakes python3-module-unittest2
-BuildPreReq: python3-module-yanc
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-blinker python3-module-coverage python3-module-html5lib python3-module-nose python3-module-pbr python3-module-unittest2 python3-pyflakes python3-tools-pep8
 %endif
 
 %description
@@ -100,6 +93,10 @@ popd
 %endif
 
 %changelog
+* Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 0.3.0-alt2.git20150202
+- cleanup buildreq
+- disable check
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20150202
 - New snapshot
 
