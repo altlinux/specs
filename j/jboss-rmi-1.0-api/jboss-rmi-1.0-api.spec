@@ -1,106 +1,47 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-rmi-1.0-api
-%define version 1.0.4
-%define namedreltag .Final
-%define namedversion %{version}%{?namedreltag}
-
 Name: jboss-rmi-1.0-api
 Version: 1.0.4
-Release: alt1_8jpp7
 Summary: Java Remote Method Invocation 1.0 API
-Group: Development/Java
 License: GPLv2 with exceptions
-URL: http://www.jboss.org
-
-# git clone https://github.com/jboss/jboss-rmi-api_spec
-# cd jboss-rmi-api_spec/ && git archive --format=tar --prefix=jboss-rmi-1.0-api-1.0.4.Final/ jboss-rmi-api_1.0_spec-1.0.4.Final | xz > jboss-rmi-1.0-api-1.0.4.Final.tar.xz
-Source0: %{name}-%{namedversion}.tar.xz
-
-# Fix the address of the FSF in the license file:
-Patch0: %{name}-fix-fsf-address.patch
-
-BuildRequires: jboss-parent
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: jacorb >= 2.3.1-3.20120215git
-
+Url: http://www.jboss.org
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jboss-rmi-1.0-api = 1.0.4-11.fc22
+Provides: mvn(org.jboss.spec.javax.rmi:jboss-rmi-api_1.0_spec) = 1.0.4.Final
+Provides: mvn(org.jboss.spec.javax.rmi:jboss-rmi-api_1.0_spec:pom:) = 1.0.4.Final
+Requires: jacorb
+Requires: java-headless
 Requires: jpackage-utils
-Requires: jacorb >= 2.3.1-3.20120215git
+Requires: jpackage-utils
 
 BuildArch: noarch
-Source44: import.info
-
+Group: Development/Java
+Release: alt2jpp
+Source: jboss-rmi-1.0-api-1.0.4-11.fc22.cpio
 
 %description
 Java Remote Method Invocation 1.0 API classes.
 
-
-%package javadoc
-Summary: Javadocs for %{name}
-Group: Development/Java
-Requires: jpackage-utils
-BuildArch: noarch
-
-
-%description javadoc	
-This package contains the API documentation for %{name}.
-
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-
-# Unpack the sources:
-%setup -q -n %{name}-%{namedversion}
-
-# Apply the patches:
-%patch0 -p1
-
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-install -pm 644 target/jboss-rmi-api_1.0_spec-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# Dependencies map:
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
 
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%doc src/main/resources/LICENSE
-
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc src/main/resources/LICENSE
-
+%files -f %name-list
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_8jpp7
 - new release
 
