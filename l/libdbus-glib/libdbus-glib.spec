@@ -1,5 +1,5 @@
 Name: libdbus-glib
-Version: 0.102
+Version: 0.106
 Release: alt1
 Epoch: 1
 Summary: GLib bindings for D-BUS
@@ -69,6 +69,9 @@ gtkdocize
 %_datadir/gtk-doc/html/dbus-glib
 
 %changelog
+* Fri Feb 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:0.106-alt1
+- 0.106
+
 * Thu Feb 13 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.102-alt1
 - 0.102
 
