@@ -1,8 +1,10 @@
+%def_disable check
+
 %define mname bda
 %define oname %mname.cache
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt1.git20091201
+Release: alt2.git20091201
 Summary: Simple caching infrastructure
 License: GPL
 Group: Development/Python
@@ -12,15 +14,16 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/bluedynamics/bda.cache.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-memcached
-BuildPreReq: python-module-zope.component
-BuildPreReq: python-module-interlude
-BuildPreReq: python-module-zope.testing
+BuildRequires: python-module-interlude python-module-pytest python-module-zope.component python-module-zope.testing
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-memcached
+#BuildPreReq: python-module-zope.component
+#BuildPreReq: python-module-interlude
+#BuildPreReq: python-module-zope.testing
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
-%py_requires zope.component
+#%py_requires zope.component
 
 %description
 This package is designed to be used by applications which require
@@ -33,7 +36,7 @@ interface.
 Summary: Tests for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires zope.testing
+#%py_requires zope.testing
 
 %description tests
 This package is designed to be used by applications which require
@@ -87,6 +90,11 @@ py.test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+
+* Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.3-alt2.git20091201
+- disabled tests
+- cleanup buildreq
+
 * Sat Oct 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20091201
 - Initial build for Sisyphus
 
