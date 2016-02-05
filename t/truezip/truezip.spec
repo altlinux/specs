@@ -1,62 +1,50 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:		truezip
-Version:	7.6.6
-Release:	alt2_4jpp7
-Summary:	Java based VFS for treating archive files as virtual directories
-
-Group:		Development/Java
-License:	EPL
-URL:		http://truezip.java.net/
+BuildRequires: jpackage-generic-compat
+Name:          truezip
+Version:       7.7.5
+Release:       alt1_7jpp8
+Summary:       Java based VFS for treating archive files as virtual directories
+License:       EPL
+URL:           http://truezip.java.net/
 
 # hg clone https://hg.java.net/hg/truezip~v7 && cd truezip~v7/
-# hg archive -r truezip-7.5.5 truezip-7.5.5.tar.gz -X ".hg*"
-Source0:	%{name}-%{version}.tar.gz
-Source1:	http://www.eclipse.org/legal/epl-v10.html
+# hg archive -r truezip-7.7.5 truezip-7.7.5.tar.gz -X ".hg*"
+Source0:       %{name}-%{version}.tar.gz
+Source1:       http://www.eclipse.org/legal/epl-v10.html
 
+# bouncycastle-1.50 has some small api changes
+Patch0:        %{name}-bouncycastle-api-change.patch
 
-BuildArch:	noarch
+BuildArch:     noarch
+BuildRequires: maven-local
+BuildRequires: mvn(com.google.code.findbugs:annotations)
+BuildRequires: mvn(junit:junit)
+# Use truecommons-parent:68
+BuildRequires: mvn(net.java.truecommons:truecommons-parent:pom:)
+BuildRequires: mvn(org.apache.commons:commons-compress)
+BuildRequires: mvn(org.apache.httpcomponents:httpclient)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk16)
+BuildRequires: mvn(org.jsr-305:ri)
+BuildRequires: mvn(org.netbeans:jemmy)
+BuildRequires: mvn(org.tukaani:xz)
 
-BuildRequires:	apache-commons-compress
-BuildRequires:	bouncycastle
-BuildRequires:	findbugs
-BuildRequires:	jemmy
-BuildRequires:	jsr-305
-BuildRequires:	junit
-BuildRequires:	maven-local
-BuildRequires:	schlichtherle-oss-parent
-
-BuildRequires:	maven-antrun-plugin
-BuildRequires:	maven-archetype-common
-BuildRequires:	maven-archetype-packaging
-BuildRequires:	maven-archetype-plugin
-BuildRequires:	maven-compiler-plugin
-BuildRequires:	maven-enforcer-plugin
-BuildRequires:	maven-failsafe-plugin
-BuildRequires:	maven-install-plugin
-BuildRequires:	maven-jar-plugin
-BuildRequires:	maven-javadoc-plugin
-BuildRequires:	maven-plugin-jxr
-BuildRequires:	maven-plugin-cobertura
-BuildRequires:	maven-release-plugin
-BuildRequires:	maven-resources-plugin
-BuildRequires:	maven-site-plugin
-BuildRequires:	maven-surefire-plugin
-
-Requires:	%{name}-driver-parent = %{version}-%{release}
-Requires:	%{name}-driver-file = %{version}-%{release}
-Requires:	%{name}-driver-http = %{version}-%{release}
-Requires:	%{name}-driver-tar = %{version}-%{release}
-Requires:	%{name}-driver-tzp = %{version}-%{release}
-Requires:	%{name}-driver-zip = %{version}-%{release}
-Requires:	%{name}-extension-parent = %{version}-%{release}
-Requires:	%{name}-extension-jmx-jul = %{version}-%{release}
-Requires:	%{name}-extension-pace = %{version}-%{release}
-Requires:	%{name}-file = %{version}-%{release}
-Requires:	%{name}-kernel = %{version}-%{release}
-Requires:	%{name}-path = %{version}-%{release}
-Requires:	%{name}-samples = %{version}-%{release}
-Requires:	%{name}-swing = %{version}-%{release}
+Requires:      %{name}-driver-parent = %{version}-%{release}
+Requires:      %{name}-driver-file = %{version}-%{release}
+Requires:      %{name}-driver-http = %{version}-%{release}
+Requires:      %{name}-driver-tar = %{version}-%{release}
+Requires:      %{name}-driver-tzp = %{version}-%{release}
+Requires:      %{name}-driver-zip = %{version}-%{release}
+Requires:      %{name}-extension-parent = %{version}-%{release}
+Requires:      %{name}-extension-jmx-jul = %{version}-%{release}
+Requires:      %{name}-extension-pace = %{version}-%{release}
+Requires:      %{name}-file = %{version}-%{release}
+Requires:      %{name}-kernel = %{version}-%{release}
+Requires:      %{name}-path = %{version}-%{release}
+Requires:      %{name}-samples = %{version}-%{release}
+Requires:      %{name}-swing = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -75,22 +63,21 @@ system space.
 
 %package parent
 Group: Development/Java
-Summary:	Parent POM for TrueZip modules
-Requires:	schlichtherle-oss-parent
+Summary:       Parent POM for TrueZip modules
 
 %description parent
 Parent POM for TrueZip modules.
 
 %package driver-parent
 Group: Development/Java
-Summary:	Parent POM for TrueZip pluggable file system drivers
+Summary:       Parent POM for TrueZip pluggable file system drivers
 
 %description driver-parent
 Parent POM for TrueZip pluggable file system drivers.
 
 %package driver-file
 Group: Development/Java
-Summary:	TrueZip driver for the FILE scheme
+Summary:       TrueZip driver for the FILE scheme
 
 %description driver-file
 The file system driver family for the FILE scheme.
@@ -101,7 +88,7 @@ client API modules.
 
 %package driver-http
 Group: Development/Java
-Summary:	TrueZip driver for the HTTP(S) scheme
+Summary:       TrueZip driver for the HTTP(S) scheme
 
 %description driver-http
 The file system driver for the HTTP(S) scheme.
@@ -112,7 +99,7 @@ client API modules.
 
 %package driver-tar
 Group: Development/Java
-Summary:	TrueZip driver for TAR archives
+Summary:       TrueZip driver for TAR archives
 
 %description driver-tar
 The file system driver family for TAR and related archive file types.
@@ -123,7 +110,7 @@ client API modules.
 
 %package driver-tzp
 Group: Development/Java
-Summary:	TrueZip driver for ZIP.RAES (TZP) encrypted archives
+Summary:       TrueZip driver for ZIP.RAES (TZP) encrypted archives
 
 %description driver-tzp
 The file system driver family for RAES encrypted ZIP alias
@@ -135,21 +122,21 @@ client API modules.
 
 %package driver-zip
 Group: Development/Java
-Summary:	TrueZip driver for ZIP archives
+Summary:       TrueZip driver for ZIP archives
 
 %description driver-zip
 TrueZIP Path module application - requires JSE 7.
 
 %package extension-parent
 Group: Development/Java
-Summary:	Parent POM for TrueZip pluggable extensions
+Summary:       Parent POM for TrueZip pluggable extensions
 
 %description extension-parent
 Parent POM for TrueZip pluggable extensions.
 
 %package extension-jmx-jul
 Group: Development/Java
-Summary:	TrueZip JMX/JUL Extension
+Summary:       TrueZip JMX/JUL Extension
 
 %description extension-jmx-jul
 This module provides a file system manager and an I/O pool service
@@ -161,7 +148,7 @@ service location in the client API modules.
 
 %package extension-pace
 Group: Development/Java
-Summary:	TrueZip PaceManager Extension
+Summary:       TrueZip PaceManager Extension
 
 %description extension-pace
 This module constrains the number of mounted archive files in order to
@@ -172,7 +159,7 @@ API modules.
 
 %package file
 Group: Development/Java
-Summary:	TrueZip File*
+Summary:       TrueZip File*
 
 %description file
 This module provides the TFile* classes for simple, uniform,
@@ -184,7 +171,7 @@ trees and choosing entries in archive files.
 
 %package kernel
 Group: Development/Java
-Summary:	Implements and manages virtual file systems for %{name}
+Summary:       Implements and manages virtual file systems for %{name}
 
 
 %description kernel
@@ -198,7 +185,7 @@ the file system drivers do not need to take care of this.
 
 %package path
 Group: Development/Java
-Summary:	TrueZip Path
+Summary:       TrueZip Path
 
 %description path
 This module provides the TPath class for simple, uniform,
@@ -209,7 +196,7 @@ system provider for the NIO.2 API (JSR 203) in JSE 7.
 
 %package samples
 Group: Development/Java
-Summary:	TrueZip Samples
+Summary:       TrueZip Samples
 
 %description samples
 Sample applications to demonstrate the usage of various TrueZIP module
@@ -226,7 +213,7 @@ de.schlichtherle.truezip.fs.sl.FsDriverLocator for more information.
 
 %package swing
 Group: Development/Java
-Summary:	TrueZip general Swing GUI classes
+Summary:       TrueZip general Swing GUI classes
 
 %description swing
 General Swing GUI classes.
@@ -234,8 +221,8 @@ General Swing GUI classes.
 This module does not depend on other TrueZIP modules.
 
 %package javadoc
-Summary:	Javadocs for %{name}
-Group:		Development/Java
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -248,19 +235,23 @@ find -type f -name *.zip -delete
 find -type f -name *.jar -delete
 find -type f -name *.class -delete
 
-# Parent has changed to net.java.truecommons:truecommons-parent
-# which isn't in Fedora, but older parent is
-%pom_set_parent de.schlichtherle:oss-parent:9
-
-# Fix findbugs groupId (switch for new dep)
-%pom_remove_dep com.google.code.findbugs:annotations
-%pom_add_dep net.sourceforge.findbugs:annotations . "<optional>true</optional>"
+%patch0
 
 # Add jsr-305 as dependency for javax.annotation.concurrent
 %pom_add_dep org.jsr-305:ri
 
+# ${project.groupId} doesn't seem to get expanded properly here
+%pom_remove_dep :%{name}-kernel %{name}-extension
+%pom_add_dep de.schlichtherle.%{name}:%{name}-kernel:%{version} %{name}-extension
+%pom_remove_dep :%{name}-kernel %{name}-driver
+%pom_add_dep de.schlichtherle.%{name}:%{name}-kernel:%{version} %{name}-driver
+
+find -name pom.xml -exec \
+ sed -i -e "s/\${project.groupId}/de.schlichtherle.truezip/g" -e "s/\${project.version}/%{version}/g" {} \;
+
 %pom_disable_module %{name}-archetype
 
+cp -p %{SOURCE1} .
 
 %build
 # Skipping tests because some fail with 'Bad test setup' error
@@ -271,6 +262,7 @@ find -type f -name *.class -delete
 
 %files parent -f .mfiles-%{name}
 %files javadoc -f .mfiles-javadoc
+%doc epl-v10.html
 %files driver-parent -f .mfiles-%{name}-driver
 %files driver-file -f .mfiles-%{name}-driver-file
 %files driver-http -f .mfiles-%{name}-driver-http
@@ -282,11 +274,15 @@ find -type f -name *.class -delete
 %files extension-pace -f .mfiles-%{name}-extension-pace
 %files file -f .mfiles-%{name}-file
 %files kernel -f .mfiles-%{name}-kernel
+%doc epl-v10.html
 %files path -f .mfiles-%{name}-path
 %files samples -f .mfiles-%{name}-samples
 %files swing -f .mfiles-%{name}-swing
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 7.7.5-alt1_7jpp8
+- java 8 mass update
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 7.6.6-alt2_4jpp7
 - update
 
