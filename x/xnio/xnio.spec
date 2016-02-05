@@ -1,57 +1,38 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven jmock byteman
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name xnio
-%define version 3.0.3
-%global namedreltag .GA
+%define version 3.3.0
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             xnio
-Version:          3.0.3
-Release:          alt3_6jpp7
+Version:          3.3.0
+Release:          alt1_2jpp8
 Summary:          JBoss XNIO
-Group:            Development/Java
-License:          LGPLv2+
+License:          ASL 2.0
 URL:              http://www.jboss.org/xnio
-
-# git clone git://github.com/jboss-remoting/xnio.git
-# cd xnio/ && git archive --format=tar --prefix=xnio-3.0.3.GA/ 3.0.3.GA | xz > xnio-3.0.3.GA.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
-Patch00:          %{name}-%{namedversion}-jmock.patch
+Source0:          https://github.com/xnio/xnio/archive/%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
 BuildRequires:    jboss-parent
 BuildRequires:    jboss-logging
+BuildRequires:    jboss-logging-tools >= 1.1.0
 BuildRequires:    jboss-logmanager
 BuildRequires:    maven-injection-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    junit4
+BuildRequires:    maven-surefire-provider-junit
+BuildRequires:    junit
 BuildRequires:    maven-shared
-
-Requires:         jboss-logmanager
-Requires:         jboss-logging
-Requires:         jpackage-utils
+BuildRequires:    jmock
+BuildRequires:    byteman >= 2.0.4-4
 Source44: import.info
 
 %description
@@ -61,54 +42,36 @@ the lack of NIO support for multicast sockets and non-socket I/O, while still
 maintaining all the capabilities present in NIO.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-%patch0 -p1
+%setup -q -n xnio-%{namedversion}
+
+%pom_remove_plugin "org.jboss.bridger:bridger" api/pom.xml
 
 %build
-# No jmock
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+# JMock is too old in Fedora
+%mvn_build -f
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p api/target/%{name}-api-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-api.jar
-cp -p nio-impl/target/%{name}-nio-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-nio.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE.txt
 
-# POMS
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 api/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-api.pom
-install -pm 644 nio-impl/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-nio.pom
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}-api.pom %{name}-api.jar
-%add_maven_depmap JPP-%{name}-nio.pom %{name}-nio.jar
-%add_maven_depmap JPP-%{name}.pom
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-%doc COPYING.txt
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc COPYING.txt
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt1_2jpp8
+- java 8 mass update
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.3-alt3_6jpp7
 - added BR: for xmvn
 
