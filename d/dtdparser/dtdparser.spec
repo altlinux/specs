@@ -1,11 +1,12 @@
+Epoch: 0
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-%define version 1.21
-%define name dtdparser
-# Copyright (c) 2000-2011, JPackage Project
+BuildRequires: jpackage-generic-compat
+# Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,35 +36,28 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/wutka-dtdparser/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-
 Name:           dtdparser
 Version:        1.21
-Release:	alt2_8jpp6
-Epoch:          0
-Summary:        Java DTD Parser
-License:        LGPLv2+
-Group:          Development/Java
-URL:            http://wutka.com/dtdparser.html
-Source0:        http://wutka.com/download/%{name}-%{version}.tgz
-Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/dtdparser/dtdparser/1.21/dtdparser-1.21.pom
-Source2:        dtdparser-component-info.xml
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       jpackage-utils
+Release:        alt2_16jpp8
+Summary:        A Java DTD Parser
+
+# The code has no license attribution.
+# There is a LICENSE.INFO file, but it does not specify versions.
+# The only versioning is in the ASL_LICENSE file, which has been edited by the upstream.
+License:        LGPLv2+ or ASL 1.1
+URL:            http://wutka.com/%{name}.html
+BuildArch:      noarch
+
+Source0:        http://sourceforge.net/projects/%{name}/files/%{name}/%{version}/%{name}-%{version}.tgz
+Source1:        http://repo1.maven.org/maven2/com/wutka/%{name}/%{version}/%{name}-%{version}.pom
+
+# Without removing these comments, build fails
+Patch0:         %{name}-unmappable-chars-in-comments.patch
+
 BuildRequires:  ant
 BuildRequires:  jpackage-utils
-BuildArch:      noarch
+
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -72,21 +66,9 @@ DTD isn't valid XML. At some point, if/when XML Schema becomes widely
 accepted, no one will need DTD parsers anymore. Until then, you can
 use this library to parse a DTD.
 
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
 %package javadoc
+Group: Development/Documentation
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -94,63 +76,44 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%{_bindir}/find -name "*.jar" | %{_bindir}/xargs -t %{__rm}
+find -name \*.jar -delete -o -name \*.class -delete
+
+echo com.wutka.dtd > doc/package-list
+
+sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301," LICENSE
+
+%patch0
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 build createdoc
+ant build createdoc
 
 %install
-
 # jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p dist/%{name}120.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
-
-# poms
-%{__mkdir_p} %{buildroot}%{_mavenpomdir}
-%{__cp} -p %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap dtdparser dtdparser %{version} JPP %{name}
-# XXX: for jboss
-%add_to_maven_depmap wutka-dtdparser dtdparser121 1.2.1 JPP %{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -m 644 dist/%{name}120.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr doc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %with repolib
-%{__mkdir_p} %{buildroot}%{repodir}
-%{__mkdir_p} %{buildroot}%{repodirlib}
-%{__cp} -p %{SOURCE2} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__mkdir_p} %{buildroot}%{repodirsrc}
-%{__cp} -p %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/dtdparser.jar %{buildroot}%{repodirlib}/dtdparser.jar
-%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{repodirlib}/dtdparser.pom
-%endif
+# POM
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-%files
-%doc CHANGES LICENSE README
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+%files -f .mfiles
+%doc CHANGES LICENSE README ASL_LICENSE
+
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-
-%if %with repolib
-%files repolib
-%dir %{_javadir}
-%{_javadir}/repository.jboss.com
-%endif
+%doc %{_javadocdir}/*
+%doc LICENSE ASL_LICENSE
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt2_16jpp8
+- java 8 mass update
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.21-alt2_8jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
