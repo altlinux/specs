@@ -1,42 +1,56 @@
-Name: maven-doxia-sitetools
-Version: 1.6
-Summary: Doxia content generation framework
-License: ASL 2.0
-Url: http://maven.apache.org/doxia/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-doxia-sitetools = 1.6-2.fc23
-Provides: mvn(org.apache.maven.doxia:doxia-decoration-model) = 1.6
-Provides: mvn(org.apache.maven.doxia:doxia-decoration-model:pom:) = 1.6
-Provides: mvn(org.apache.maven.doxia:doxia-doc-renderer) = 1.6
-Provides: mvn(org.apache.maven.doxia:doxia-doc-renderer:pom:) = 1.6
-Provides: mvn(org.apache.maven.doxia:doxia-site-renderer) = 1.6
-Provides: mvn(org.apache.maven.doxia:doxia-site-renderer:pom:) = 1.6
-Provides: mvn(org.apache.maven.doxia:doxia-sitetools:pom:) = 1.6
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(org.apache.maven.doxia:doxia-core)
-Requires: mvn(org.apache.maven.doxia:doxia-logging-api)
-Requires: mvn(org.apache.maven.doxia:doxia-module-apt)
-Requires: mvn(org.apache.maven.doxia:doxia-module-fml)
-Requires: mvn(org.apache.maven.doxia:doxia-module-fo)
-Requires: mvn(org.apache.maven.doxia:doxia-module-xdoc)
-Requires: mvn(org.apache.maven.doxia:doxia-module-xhtml)
-Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
-Requires: mvn(org.apache.velocity:velocity)
-Requires: mvn(org.codehaus.plexus:plexus-component-annotations)
-Requires: mvn(org.codehaus.plexus:plexus-container-default)
-Requires: mvn(org.codehaus.plexus:plexus-i18n)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: mvn(org.codehaus.plexus:plexus-velocity)
-Requires: mvn(xalan:xalan)
-Requires: mvn(xml-apis:xml-apis)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-doxia-sitetools-1.6-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global parent maven-doxia
+%global subproj sitetools
+
+Name:           %{parent}-%{subproj}
+Version:        1.6
+Release:        alt1_2jpp8
+Summary:        Doxia content generation framework
+License:        ASL 2.0
+URL:            http://maven.apache.org/doxia/
+BuildArch:      noarch
+
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia-sitetools/%{version}/doxia-%{subproj}-%{version}-source-release.zip
+
+Patch1:         0001-Remove-dependency-on-velocity-tools.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-logging-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-apt)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-confluence)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-docbook-simple)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-fml)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-fo)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xdoc)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xhtml)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sitetools:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
+BuildRequires:  mvn(xalan:xalan)
+BuildRequires:  mvn(xml-apis:xml-apis)
+Source44: import.info
+
 
 %description
 Doxia is a content generation framework which aims to provide its
@@ -45,24 +59,59 @@ content. Doxia can be used to generate static sites in addition to
 being incorporated into dynamic content generation systems like blogs,
 wikis and content management systems.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n doxia-%{subproj}-%{version}
+
+# upstream added support for velocity toolmanager, but it also means new
+# dependency on velocity-tools. we don't want to depend on this package
+# (it depends on struts 1) so this patch reverts upstream changes
+%patch1 -p1
+%pom_remove_dep :velocity-tools doxia-site-renderer
+
+%pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin
+%pom_remove_dep net.sourceforge.htmlunit:htmlunit doxia-site-renderer/pom.xml
+
+
+%pom_xpath_inject "pom:plugin[pom:artifactId[text()='modello-maven-plugin']]/pom:configuration" \
+    "<useJava5>true</useJava5>" doxia-decoration-model
+
+# There are two backends for generating PDFs: one based on iText and
+# one using FOP.  iText module is broken and only brings additional
+# dependencies.  Besides that upstream admits that iText support will
+# likely removed in future versions of Doxia.  In Fedora we remove
+# iText backend sooner in order to fix dependency problems.
+#
+# See also: http://maven.apache.org/doxia/faq.html#How_to_export_in_PDF
+# http://lists.fedoraproject.org/pipermail/java-devel/2013-April/004742.html
+rm -rf $(find -type d -name itext)
+%pom_remove_dep :itext doxia-doc-renderer
+%pom_remove_dep :doxia-module-itext doxia-doc-renderer
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# tests can't run because of missing deps
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
 
-%files -f %name-list
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_2jpp8
+- java 8 mass update
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
