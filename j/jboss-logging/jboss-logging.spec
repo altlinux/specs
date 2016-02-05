@@ -1,28 +1,26 @@
-BuildRequires: /proc
-BuildRequires: jpackage-compat
+Group: Development/Java
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc jdepend
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-logging
-%define version 3.1.2
+%define version 3.1.4
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-logging
-Version:          3.1.2
-Release:          alt1_1jpp7
+Version:          3.1.4
+Release:          alt1_4jpp8
 Summary:          The JBoss Logging Framework
-Group:            Development/Java
 License:          ASL 2.0
 URL:              https://github.com/jboss-logging/jboss-logging
+Source0:          https://github.com/jboss-logging/jboss-logging/archive/%{namedversion}.tar.gz
 
-# git clone git://github.com/jboss-logging/jboss-logging.git
-# cd jboss-logging/ && git archive --format=tar --prefix=jboss-logging-3.1.2.GA/ 3.1.2.GA | xz > jboss-logging-3.1.2.GA.tar.xz
-Source0:          jboss-logging-%{namedversion}.tar.xz
+Patch0:           0001-SLF4j-1.7-upgrade.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -37,20 +35,14 @@ BuildRequires:    log4j
 BuildRequires:    apiviz
 BuildRequires:    jboss-parent
 BuildRequires:    maven-surefire-provider-junit
-
-Requires:         log4j
-Requires:         slf4j
-Requires:         jboss-logmanager
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 This package contains the JBoss Logging Framework.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -58,6 +50,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n jboss-logging-%{namedversion}
+
+%patch0 -p1
 
 %build
 %mvn_build -f
@@ -72,6 +66,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_4jpp8
+- java 8 mass update
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.2-alt1_1jpp7
 - update
 
