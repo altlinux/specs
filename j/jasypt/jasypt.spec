@@ -1,37 +1,31 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          jasypt
-Version:       1.9.0
-Release:       alt2_6jpp7
+Version:       1.9.2
+Release:       alt1_2jpp8
 Summary:       Java Simplified Encryption
 License:       ASL 2.0
 Url:           http://www.jasypt.org/
-# svn export https://jasypt.svn.sourceforge.net/svnroot/jasypt/tags/jasypt/jasypt-1.9.0 jasypt-1.9.0
-# tar czf jasypt-1.9.0-src-svn.tar.gz jasypt-1.9.0
-Source0:       %{name}-%{version}-src-svn.tar.gz
+# svn export https://jasypt.svn.sourceforge.net/svnroot/jasypt/tags/jasypt/jasypt-1.9.2 jasypt-1.9.2
+# tar cJf jasypt-1.9.2.tar.xz jasypt-1.9.2
+Source0:       %{name}-%{version}.tar.xz
 # remove internal commons-codec 1.3
-Patch0:        %{name}-%{version}-use-system-commons-codec.patch
+Patch0:        %{name}-1.9.0-use-system-commons-codec.patch
 # tks to jhernand
 # system commons-codec 1.4 support
-Patch1:        %{name}-%{version}-StandardStringDigester.patch
-Patch2:        %{name}-%{version}-StandardPBEStringEncryptor.patch
-
-
-# test deps
-BuildRequires: apache-commons-lang
-BuildRequires: apache-commons-logging
-BuildRequires: bouncycastle
-BuildRequires: junit
-# main deps
-BuildRequires: apache-commons-codec
-BuildRequires: icu4j
-BuildRequires: tomcat-servlet-3.0-api
+Patch1:        %{name}-1.9.0-StandardStringDigester.patch
+Patch2:        %{name}-1.9.0-StandardPBEStringEncryptor.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-assembly-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: mvn(com.ibm.icu:icu4j)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk16)
 
 BuildArch:     noarch
 Source44: import.info
@@ -55,42 +49,54 @@ This package contains javadoc for %{name}.
 %patch2 -p0
 
 %pom_remove_plugin :maven-gpg-plugin
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration/pom:reportOutputDirectory"
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-resources-plugin']/pom:configuration"
-%pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-resources-plugin']" "
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-assembly-plugin
+
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions"
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-resources-plugin']/pom:configuration"
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-resources-plugin']" "
 <configuration>
-  <encoding>UTF-8</encoding>
-</configuration>"
-%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration"
-%pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']" "
-<configuration>
-  <source>1.5</source>
-  <target>1.5</target>
   <encoding>UTF-8</encoding>
 </configuration>"
 
-%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId='org.bouncycastle']/pom:artifactId" bcprov-jdk16
-%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId='org.bouncycastle']/pom:version" 1.46
+%pom_xpath_remove "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration"
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-compiler-plugin']" "
+<configuration>
+  <source>1.6</source>
+  <target>1.6</target>
+  <encoding>UTF-8</encoding>
+</configuration>"
+
+%pom_remove_dep bouncycastle:bcprov-jdk12
+%pom_add_dep org.bouncycastle:bcprov-jdk16:1.46:test
+
 %pom_add_dep commons-logging:commons-logging::test
 
-# force tomcat-servlet-3.0-api use
-%pom_remove_dep javax.servlet:servlet-api
-%pom_add_dep org.apache.tomcat:tomcat-servlet-api::provided
+# force servlet-3.1 api
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:version" 3.1.0
+%pom_xpath_set "pom:dependency[pom:groupId = 'javax.servlet']/pom:artifactId" javax.servlet-api
+
+%mvn_file :%{name} %{name}
 
 %build
-%mvn_file :%{name} %{name}
+
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc *.txt
+%doc ChangeLog.txt README.txt RELEASING.txt USAGE.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.2-alt1_2jpp8
+- java 8 mass update
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt2_6jpp7
 - new release
 
