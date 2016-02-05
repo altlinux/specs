@@ -1,6 +1,6 @@
 Name: spatialite-gui
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: GUI to manage Spatialite databases
 
 Group: Databases
@@ -62,6 +62,9 @@ desktop-file-install                               \
 %_datadir/pixmaps/%name.png
 
 %changelog
+* Fri Feb 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt2
+- Rebuild with new geos
+
 * Sat Feb 02 2013 Ilya Mashkin <oddity@altlinux.ru> 1.6.0-alt1
 - Build for Sisyphus
 
