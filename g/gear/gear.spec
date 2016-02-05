@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -56,6 +56,9 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Tue Feb 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.5-alt1
+- gear-changelog-rpm: added support of epoch.
+
 * Sun Aug 31 2014 Dmitry V. Levin <ldv@altlinux.org> 2.0.4-alt1
 - gear-update: added --strip-components option (by Alexey Gladkov).
 - gear-create-tag:
