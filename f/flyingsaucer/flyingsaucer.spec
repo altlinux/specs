@@ -1,17 +1,17 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-
+BuildRequires: jpackage-generic-compat
 Name:          flyingsaucer
 Version:       8
-Release:       alt1_6jpp7
+Release:       alt1_11jpp8
 Summary:       XML/XHTML and CSS 2.1 renderer in pure Java
-Group:         Development/Java
 License:       LGPLv2+
-URL:           http://code.google.com/p/flying-saucer/
+URL:           https://github.com/flyingsaucerproject/flyingsaucer
 Source0:       http://flying-saucer.googlecode.com/files/%{name}-R%{version}-src.zip
 Source1:       http://repo1.maven.org/maven2/org/xhtmlrenderer/core-renderer/R%{version}/core-renderer-R%{version}.pom
 # remove Pack200Task.jar references
@@ -21,7 +21,7 @@ Patch0:        %{name}-R%{version}-build.patch
 # remove org.jvnet.wagon-svn wagon-svn 1.8
 Patch1:        %{name}-R%{version}-pom.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-local
 
 BuildRequires: ant
 # main
@@ -30,10 +30,6 @@ BuildRequires: xml-commons-apis
 # optional for svg demo
 BuildRequires: svgsalamander
 
-Requires:      itext-core
-Requires:      xml-commons-apis
-
-Requires:      jpackage-utils
 Provides:      xhtmlrenderer = %{version}-%{release}
 BuildArch:     noarch
 Source44: import.info
@@ -43,16 +39,15 @@ An XML/XHTML CSS 2.1 Renderer library in pure Java
 for rendering to PDF, images, and Swing panels.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %package demos
-Group:         Development/Java
+Group: Development/Java
 Summary:       Demostrations and samples for %{name}
 Requires:      %{name} = %{version}-%{release}
 
@@ -102,9 +97,9 @@ sed -i 's/Class-Path: joshy-common.jar ss_css2.jar core-renderer.jar xalan.jar//
 # lib/dev/Pack200Task.jar !
 # lib/dev/jdic_win_30092005/jdic_30092005.jar !
 
-sed -i 's|<property name="compiler.source" value="1.4"/>|<property name="compiler.source" value="1.5"/>|' \
+sed -i 's|<property name="compiler.source" value="1.4"/>|<property name="compiler.source" value="1.6"/>|' \
   etc/build/properties.xml
-sed -i 's|<property name="compiler.target" value="1.4"/>|<property name="compiler.target" value="1.5"/>|' \
+sed -i 's|<property name="compiler.target" value="1.4"/>|<property name="compiler.target" value="1.6"/>|' \
   etc/build/properties.xml
   
 %build
@@ -114,9 +109,10 @@ sed -i 's|<property name="compiler.target" value="1.4"/>|<property name="compile
 # test
 
 %install
+%mvn_artifact pom.xml build/core-renderer.jar
+%mvn_install -J doc/full/api
 
-mkdir -p %{buildroot}%{_javadir}/%{name}
-install -pm 644 build/core-renderer.jar %{buildroot}%{_javadir}/%{name}/
+
 install -pm 644 build/core-renderer-minimal.jar %{buildroot}%{_javadir}/%{name}/
 
 (
@@ -130,20 +126,11 @@ install -pm 644 build/browser.jar %{buildroot}%{_javadir}/%{name}/
 install -pm 644 build/docbook.jar %{buildroot}%{_javadir}/%{name}/
 install -pm 644 build/svg.jar %{buildroot}%{_javadir}/%{name}/
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-core-renderer.pom
-%add_maven_depmap JPP.%{name}-core-renderer.pom %{name}/core-renderer.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr doc/full/api/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}/core-renderer.jar
+%files -f .mfiles
 %{_javadir}/%{name}/core-renderer-minimal.jar
 %{_javadir}/%{name}/xhtmlrenderer.jar
-%{_mavenpomdir}/JPP.%{name}-core-renderer.pom
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE* README
+%doc README
+%doc LICENSE*
 
 %files demos
 %{_javadir}/%{name}/aboutbox.jar
@@ -152,11 +139,13 @@ cp -pr doc/full/api/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadir}/%{name}/svg.jar
 %doc LICENSE*
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE*
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 8-alt1_11jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 8-alt1_6jpp7
 - new release
 
