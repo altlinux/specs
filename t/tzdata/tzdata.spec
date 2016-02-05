@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2015g
+Version: 2016a
 Release: alt1
 
 Summary: Timezone data
@@ -85,6 +85,9 @@ make -k check_tables
 %endif #with java
 
 %changelog
+* Fri Feb 05 2016 Dmitry V. Levin <ldv@altlinux.org> 2016a-alt1
+- Updated to 2016a.
+
 * Mon Dec 28 2015 Dmitry V. Levin <ldv@altlinux.org> 2015g-alt1
 - Updated to 2015g (closes: #31663).
 
