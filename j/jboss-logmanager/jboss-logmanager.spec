@@ -1,80 +1,46 @@
+Name: jboss-logmanager
+Version: 1.5.2
+Summary: JBoss Log Manager
+License: LGPLv2+
+Url: https://github.com/jboss-logging/jboss-logmanager
 Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jboss-logmanager = 1.5.2-2.fc21
+Provides: mvn(org.jboss.logmanager:jboss-logmanager) = 1.5.2.Final
+Provides: mvn(org.jboss.logmanager:jboss-logmanager:pom:) = 1.5.2.Final
+Requires: java-headless
+Requires: jpackage-utils
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-logmanager
-%define version 1.5.1
-%global namedreltag .Final
-%global namedversion %{version}%{?namedreltag}
-
-Name:             jboss-logmanager
-Version:          1.5.1
-Release:          alt1_1jpp7
-Summary:          JBoss Log Manager
-License:          LGPLv2+
-URL:              https://github.com/jboss-logging/jboss-logmanager
-Source0:          https://github.com/jboss-logging/jboss-logmanager/archive/%{namedversion}.tar.gz
-
-BuildArch:        noarch
-
-BuildRequires:    maven-local
-
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
-BuildRequires:    testng
-BuildRequires:    maven-surefire-provider-testng
-BuildRequires:    qdox
-BuildRequires:    jboss-modules
-BuildRequires:    jboss-parent
-Source44: import.info
+Release: alt0.1jpp
+Source: jboss-logmanager-1.5.2-2.fc21.cpio
 
 %description
 This package contains the JBoss Log Manager
 
-%package javadoc
-Group: Development/Java
-Summary:          Javadocs for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n jboss-logmanager-%{namedversion}
-
-# We won't run on JDK 6
-%pom_remove_plugin "org.jboss.seven2six:seven2six"
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc COPYING.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc COPYING.txt
+%files -f %name-list
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.1-alt1_1jpp7
 - new release
 
