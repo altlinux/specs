@@ -1,70 +1,99 @@
-Name: maven-site-plugin
-Version: 3.4
-Summary: Maven Site Plugin
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-site-plugin/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-site-plugin = 3.4-4.fc23
-Provides: mvn(org.apache.maven.plugins:maven-site-plugin) = 3.4
-Provides: mvn(org.apache.maven.plugins:maven-site-plugin:pom:) = 3.4
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-io:commons-io)
-Requires: mvn(commons-lang:commons-lang)
-Requires: mvn(javax.servlet:servlet-api)
-Requires: mvn(org.apache.maven.doxia:doxia-core)
-Requires: mvn(org.apache.maven.doxia:doxia-decoration-model)
-Requires: mvn(org.apache.maven.doxia:doxia-integration-tools)
-Requires: mvn(org.apache.maven.doxia:doxia-logging-api)
-Requires: mvn(org.apache.maven.doxia:doxia-module-apt)
-Requires: mvn(org.apache.maven.doxia:doxia-module-fml)
-Requires: mvn(org.apache.maven.doxia:doxia-module-markdown)
-Requires: mvn(org.apache.maven.doxia:doxia-module-xdoc)
-Requires: mvn(org.apache.maven.doxia:doxia-module-xhtml)
-Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
-Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
-Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
-Requires: mvn(org.apache.maven.reporting:maven-reporting-exec)
-Requires: mvn(org.apache.maven.wagon:wagon-provider-api)
-Requires: mvn(org.apache.maven:maven-archiver)
-Requires: mvn(org.apache.maven:maven-artifact)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-model)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-settings)
-Requires: mvn(org.apache.maven:maven-settings-builder)
-Requires: mvn(org.apache.velocity:velocity)
-Requires: mvn(org.codehaus.plexus:plexus-archiver)
-Requires: mvn(org.codehaus.plexus:plexus-i18n)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: mvn(org.codehaus.plexus:plexus-velocity)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-site-plugin-3.4-4.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-site-plugin
+Version:        3.4
+Release:        alt1_4jpp8
+Summary:        Maven Site Plugin
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-site-plugin/
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:      noarch
+
+Patch0:         0001-Port-to-jetty-9.patch
+Patch1:         0001-Fix-jetty-dependencies.patch
+# Jetty is needed only in interactive mode of maven-site-plugin. Change
+# dependency scope from compile to provided to reduce dependency bloat.
+Patch2:         %{name}-jetty-provided.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-integration-tools)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-logging-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xdoc)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xhtml)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-markdown)
+BuildRequires:  mvn(org.apache.maven:maven-archiver)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
+BuildRequires:  mvn(org.apache.maven:maven-settings-builder)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-exec)
+BuildRequires:  mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-i18n)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-velocity)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-server)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-servlet)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-util)
+BuildRequires:  mvn(org.eclipse.jetty:jetty-webapp)
+Source44: import.info
 
 %description
 The Maven Site Plugin is a plugin that generates a site for the current project.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:          Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# skipping tests because we need to fix them first for jetty update
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1_4jpp8
+- java 8 mass update
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 3.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
