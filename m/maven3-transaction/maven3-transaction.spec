@@ -5,17 +5,18 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt26jpp
+Release: alt27jpp
 
 # to drop bouncycastle-tsp
 Provides: bouncycastle-mail = 1.46
+Provides: bouncycastle-tsp = 1.46
 # jetty
 #Provides: /usr/share/java/tomcat-el-2.2-api.jar
 #Provides: /usr/share/java/tomcat-servlet-3.0-api.jar
 #Provides: /usr/share/java/tomcat/tomcat-jsp-2.2-api.jar
 Provides: jetty = 9
 # glassfish-jsp
-Provides: /usr/share/java/glassfish-jsp-api.jar
+#Provides: /usr/share/java/glassfish-jsp-api.jar
 # gradle 
 Provides: /usr/share/java/plexus/container-default.jar plexus-container-default
 Provides: /usr/share/java/aqute-bnd.jar
@@ -42,6 +43,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt27jpp
+- updated dependencies
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt26jpp
 - updated dependencies
 
