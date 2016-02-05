@@ -1,3 +1,5 @@
+%def_disable check
+
 %define oname ZEO
 
 %def_with python3
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt2.dev0.git20150605
+Release: alt3.dev0.git20150605
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -19,8 +21,6 @@ BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-zope.testing
 BuildPreReq: python-module-manuel
-BuildPreReq: python-module-random2
-BuildPreReq: python-module-ZODB-tests
 BuildPreReq: python-module-transaction
 BuildPreReq: python-module-persistent
 BuildPreReq: python-module-zc.lockfile
@@ -32,9 +32,6 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-zope.testing
 BuildPreReq: python3-module-manuel
-BuildPreReq: python3-module-random2
-BuildPreReq: python3-module-ZODB-tests
-BuildPreReq: python3-module-zodbpickle
 BuildPreReq: python3-module-transaction
 BuildPreReq: python3-module-persistent
 BuildPreReq: python3-module-zc.lockfile
@@ -168,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 4.2.0-alt3.dev0.git20150605
+- Disabled tests and unnecessary buildreq
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt2.dev0.git20150605
 - Enabled check
 
