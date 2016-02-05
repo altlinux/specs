@@ -1,63 +1,81 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global oname jamon
 
-Name:       jamonapi
-Version:    2.73
-Release:    alt2_7jpp7
-Summary:    A Java monitoring API
-Group:      Development/Java
-License:    BSD
-URL:        http://jamon.sourceforge.net
-
+Name:          jamonapi
+Version:       2.74
+Release:       alt1_8jpp8
+Summary:       A Java monitoring API
+License:       BSD
+URL:           http://jamonapi.sourceforge.net/
+# Newer release available @ https://github.com/stevensouza/jamonapi/
 # cvs -d:pserver:anonymous@jamonapi.cvs.sourceforge.net:/cvsroot/jamonapi login
-# cvs -z3 -d:pserver:anonymous@jamonapi.cvs.sourceforge.net:/cvsroot/jamonapi co -P -r v2_73 jamonapi/src
-# tar caf jamonapi-2.73.tar.gz jamonapi
-Source0:    jamonapi-2.73.tar.gz
+# cvs -z3 -d:pserver:anonymous@jamonapi.cvs.sourceforge.net:/cvsroot/jamonapi co -P -r v2_74 jamonapi/src
+# Remove pregenerated javadoc files in the source tree
+# rm -rf jamonapi/src/JAMonUsersGuide/javadoc/*
+# Remove zip file which contains a proprietary binary
+# rm -rf jamonapi/src/JAMonUsersGuide/JAMon_PB.zip
+# rm -rf $(find -name "CVS")
+# tar cJf jamonapi-2.74.tar.xz jamonapi
+Source0:       %{name}-%{version}.tar.xz
 # This POM is completely Fedora-specific
-Source1:    jamonapi-2.73.pom
-Patch0:     jamonapi-buildxml.patch
-Patch1:     jamonapi-jetty8.patch
+Source1:       %{name}-%{version}.pom
 
-BuildRequires:   jpackage-utils
-BuildRequires:   ant
-BuildRequires:   tomcat-lib
-BuildRequires:   tomcat-servlet-3.0-api
-BuildRequires:   tomcat-el-2.2-api
-BuildRequires:   jetty
-BuildRequires:   geronimo-interceptor
-BuildRequires:   log4j
-BuildRequires:   dos2unix
-Requires:        jpackage-utils
-Requires:        tomcat-lib
-Requires:        tomcat-servlet-3.0-api
-Requires:        tomcat-el-2.2-api
-Requires:        jetty
-Requires:        geronimo-interceptor
-Requires:        log4j
-BuildArch:       noarch
+Patch0:        %{name}-buildxml.patch
+Patch1:        %{name}-jetty8.patch
+Patch2:        %{name}-log4j12.patch
+Patch3:        %{name}-jetty93.patch
+
+BuildRequires: javapackages-local
+BuildRequires: ant
+BuildRequires: tomcat-lib
+BuildRequires: tomcat-servlet-3.1-api
+BuildRequires: tomcat-el-3.0-api
+BuildRequires: jetty
+BuildRequires: geronimo-interceptor
+BuildRequires: log4j12
+BuildRequires: dos2unix
+
+Requires:      geronimo-interceptor
+Requires:      log4j12
+
+BuildArch:     noarch
 Source44: import.info
 
 %description
-A Java monitoring API
+JAMon API is a free, simple, high performance, thread safe,
+Java API that allows developers to easily monitor the
+performance and scalability of production applications. JAMon
+tracks hits, execution times (total, avg, min, max, std dev),
+and more.
 
 %package javadoc
+Group: Development/Java
 Summary:         API documentation for %{name}
-Group:           Development/Java
-Requires:        jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+This package contains API documentation for Java monitoring API.
 
 %prep
 %setup -q -n %{name}
 %patch0 -p0
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+sed -i "s|tomcat-el-2.2-api.jar|tomcat-el-api.jar|" src/ant/build.xml
+sed -i "s|tomcat-servlet-3.0-api.jar|tomcat-servlet-api.jar|" src/ant/build.xml
+
+sed -i 's|target="1.5" source="1.5"|target="1.6" source="1.6"|' src/ant/build.xml
+sed -i 's|"source" value="1.5"|"source" value="1.6"|' src/ant/build.xml
+sed -i 's|"vm" value="1.5"|"vm" value="1.6"|' src/ant/build.xml
+
+sed -i 's|packagenames="${package}"|packagenames="${package}" additionalparam="-Xdoclint:none"|' src/ant/build.xml
+
 mkdir dist
 mkdir lib
 
@@ -71,11 +89,6 @@ popd
 find src/JAMonUsersGuide -type f | xargs chmod -x
 find src/JAMonUsersGuide -regex '.*\(xml\|css\|js\)' -o -name package-list | xargs dos2unix
 
-# Remove pregenerated javadoc files in the source tree
-rm -rf src/JAMonUsersGuide/javadoc/
-# Remove zip file which contains a proprietary binary
-rm src/JAMonUsersGuide/JAMon_PB.zip
-
 # There should be a shorter way to do an iconv task, but I do not know of one
 pushd src/JAMonUsersGuide/presentation/jamon_files/
 mv master04_stylesheet.css master04_stylesheet.css.iso8859-1
@@ -83,31 +96,24 @@ iconv -f ISO-8859-1 -t UTF-8 master04_stylesheet.css.iso8859-1 > master04_styles
 rm master04_stylesheet.css.iso8859-1
 popd
 
+cp -p src/JAMonUsersGuide/JAMonLicense.html .
+
 %install
-install -d -m 0755 ${RPM_BUILD_ROOT}/%{_javadir}
-install -m 0644 dist/%{oname}-%{version}.jar ${RPM_BUILD_ROOT}/%{_javadir}/%{name}.jar
-ln -s %{name}.jar ${RPM_BUILD_ROOT}/%{_javadir}/%{oname}.jar
+%mvn_artifact %{SOURCE1} dist/%{oname}-%{version}.jar
+%mvn_file com.jamonapi:jamon %{oname} %{name}
+%mvn_install -J src/doc/javadoc
 
-install -d -m 0755 ${RPM_BUILD_ROOT}/%{_mavenpomdir}
-install -m 0644 %{SOURCE1} ${RPM_BUILD_ROOT}/%{_mavenpomdir}/JPP-%{oname}.pom
-
-install -d -m 0755 ${RPM_BUILD_ROOT}%{_javadocdir}
-cp -rp src/doc/javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
-
-%add_maven_depmap JPP-%{oname}.pom %{oname}.jar
-
-%files
+%files -f .mfiles
 %doc src/JAMonUsersGuide
-%{_javadir}/%{oname}.jar
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{oname}.pom
-%{_mavendepmapfragdir}/%{name}
+%doc JAMonLicense.html
 
-%files javadoc
-%doc src/JAMonUsersGuide/JAMonLicense.html
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc JAMonLicense.html
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.74-alt1_8jpp8
+- java 8 mass update
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.73-alt2_7jpp7
 - new release
 
