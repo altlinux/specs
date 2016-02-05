@@ -3,7 +3,7 @@
 %define dist Math-BigInt-FastCalc
 Name: perl-%dist
 Version: 0.40
-Release: alt1
+Release: alt1.1
 
 Summary: XS implementation of arbitrary size integer math
 License: GPL or Artistic
@@ -12,8 +12,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/P/PJ/PJACKLAM/Math-BigInt-FastCalc-%{version}.tar.gz
 
-# Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-devel
 
 %if_with bootstrap
 %define _without_test 1
@@ -42,6 +41,9 @@ some of the Calc functions in XS.
 %perl_vendor_autolib/Math
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1.1
+- dropped Pod/Pod-Coverage tests (closes: #31760)
+
 * Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - automated CPAN update
 
