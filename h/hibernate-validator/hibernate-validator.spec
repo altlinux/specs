@@ -1,152 +1,208 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hibernate-validator
-%define version 4.2.0
+%define version 5.0.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
+%global majorversion 5
+Name:          hibernate-validator
+Version:       5.0.1
+Release:       alt1_5jpp8
+Summary:       Bean Validation 1.1 (JSR 349) Reference Implementation
+License:       ASL 2.0
+URL:           http://www.hibernate.org/subprojects/validator.html
+Source0:       https://github.com/hibernate/hibernate-validator/archive/%{namedversion}.tar.gz
+# JAXB2 and JDK7 problems see https://hibernate.atlassian.net/browse/HV-528
+Patch0:        %{name}-5.0.1.Final-jaxb.patch
 
-Name: hibernate-validator
-Version: 4.2.0
-Release: alt2_8jpp7
-Summary: Bean Validation (JSR 303) Reference Implementation
-
-Group: Development/Java
-License: ASL 2.0 
-
-URL: http://www.hibernate.org/subprojects/validator.html
-
-# git clone git://github.com/hibernate/hibernate-validator
-# cd hibernate-validator/ && git archive --format=tar --prefix=hibernate-validator-4.2.0.Final/ 4.2.0.Final | xz > hibernate-validator-4.2.0.Final.tar.xz
-Source0: hibernate-validator-4.2.0.Final.tar.xz
-
-# Remove the jdocbook plugin as it is not available in the distribution:
-Patch0: %{name}-remove-jdocbook-plugin.patch
-
-# Use maven-jaxb2-plugin (already packaged) to avoid adding packaging
-# jaxb2-maven-plugin:
-Patch1: %{name}-use-maven-jaxb2-plugin.patch         
-
-# Don't generate test reports:
-Patch2: %{name}-dont-generate-test-reports.patch
-
-# Remove the shade plugin:
-Patch3: %{name}-remove-shade-plugin.patch
-
-# Remove the wagon webdav extension:
-Patch4: %{name}-remove-wagon-webdav-extension.patch
-
-BuildArch: noarch
-
-BuildRequires: jpackage-utils
-BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-enforcer-plugin
+BuildRequires: cdi-api
+BuildRequires: bean-validation-api
+BuildRequires: classmate
+BuildRequires: glassfish-annotation-api
+BuildRequires: glassfish-el
+BuildRequires: glassfish-el-api
+BuildRequires: glassfish-jaxb
+BuildRequires: glassfish-jaxb-api
+BuildRequires: hibernate-jpa-2.1-api
+BuildRequires: jboss-interceptors-1.2-api
+BuildRequires: jboss-logging >= 3.1.1
+# 1.7.1
 BuildRequires: jsoup
-BuildRequires: jtype
 BuildRequires: joda-time
-BuildRequires: geronimo-validation
-BuildRequires: maven-injection-plugin
-BuildRequires: hibernate-jpa-2.0-api
-BuildRequires: maven-jaxb2-plugin
-BuildRequires: dos2unix
+BuildRequires: junit
 
-Requires: hibernate-jpa-2.0-api
-Requires: jpackage-utils
-Requires: geronimo-validation
-Requires: jsoup
-Requires: jtype
-Requires: joda-time
-Requires: slf4j
+BuildRequires: jaxb2-maven-plugin
+# 1.0.3.Final
+BuildRequires: jboss-logging-tools
+BuildRequires: maven-local
+#BuildRequires: maven-dependency-plugin
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-injection-plugin
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-processor-plugin
+%if 0
+BuildRequires: beanvalidation-tck
+BuildRequires: maven-failsafe-plugin
+%endif
+
+BuildArch:     noarch
 Source44: import.info
 
-
 %description
-Bean Validation (JSR 303) Reference Implementation
+This is the reference implementation of JSR-349 - Bean Validation 1.1.
+Bean Validation defines a meta-data model and API for JavaBean as well
+as method validation. The default meta-data source are annotations,
+with the ability to override and extend the meta-data through the
+use of XML validation descriptors.
 
+%package annotation-processor
+Group: Development/Java
+Summary:       Hibernate Validator Annotation Processor
+
+%description annotation-processor
+Hibernate Validator Annotation Processor.
+
+%package cdi
+Group: Development/Java
+Summary:       Hibernate Validator Portable Extension
+
+%description cdi
+Hibernate Validator CDI Portable Extension.
+
+%package performance
+Group: Development/Java
+Summary:       Hibernate Validator Performance Tests
+
+%description performance
+Hibernate Validator performance tests.
+
+%if 0
+%package integration
+Group: Development/Java
+Summary:       Hibernate Validator AS Integration Tests
+
+%description integration
+Hibernate Validator integration tests.
+
+%package tck-runner
+Group: Development/Java
+Summary:       Hibernate Validator TCK Runner
+
+%description tck-runner
+Aggregates dependencies and runs the JSR-349 TCK.
+%endif
 
 %package javadoc
-Summary: API docs for %{name}
 Group: Development/Java
-Requires: jpackage-utils
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
-
 %description javadoc
-Reference implementation of JSR 303 - Bean Validation. Bean Validation defines
-a metadata model and API for JavaBean validation. The default metadata source
-is annotations, with the ability to override and extend the meta-data through
-the use of XML validation descriptors.
-
+This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n hibernate-validator-%{namedversion}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%setup -q -n %{name}-%{namedversion}
+find . -name "*.jar" -delete
+# tck-runner/src/as7config/modules/org/jboss/as/ee/main/jboss-as-ee-7.1.1.Final.jar
+%pom_disable_module distribution
+%pom_disable_module documentation
+# documentation plugins
+%pom_remove_plugin :maven-jdocbook-plugin
+%pom_remove_plugin org.zanata:zanata-maven-plugin
+# tck-runner and documentation plugins
+%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin
+%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin integration
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-surefire-report-plugin
+%pom_remove_plugin org.codehaus.mojo:chronos-jmeter-maven-plugin
 
+%pom_remove_plugin org.apache.maven.plugins:maven-surefire-report-plugin engine
+%pom_remove_plugin org.codehaus.mojo:chronos-jmeter-maven-plugin performance
+%pom_remove_plugin org.codehaus.mojo:chronos-report-maven-plugin performance
+
+%pom_xpath_remove "pom:build/pom:extensions"
+# groovy 2.1.0
+%pom_remove_dep org.codehaus.groovy:groovy-jsr223
+# 2.0.0.CR2
+%pom_remove_dep org.jboss.weld:weld-core
+%pom_remove_dep org.jboss.as:jboss-as-arquillian-container-managed
+%pom_remove_dep org.jboss.arquillian.container:arquillian-weld-se-embedded-1.1
+%pom_remove_dep org.jboss.arquillian:arquillian-bom
+%pom_remove_dep :fest-assert
+%pom_remove_dep :easymock
+%pom_remove_dep :log4j
+%pom_remove_dep :slf4j-log4j12
+%pom_remove_dep :testng
+
+%pom_remove_plugin :maven-dependency-plugin tck-runner
+%pom_remove_plugin :maven-surefire-report-plugin tck-runner
+%pom_remove_plugin :maven-dependency-plugin annotation-processor
+
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" annotation-processor
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" cdi
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" engine
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" integration
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope ='test']" tck-runner
+
+%patch0 -p1
+
+%pom_disable_module integration
+%pom_disable_module tck-runner
+
+%pom_xpath_inject "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration" "
+<excludePackageNames>*.internal.*</excludePackageNames>"
+
+%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:configuration" "
+<excludePackageNames>*.internal.*</excludePackageNames>" engine
 
 %build
-
-# Rrunning tests requires hibernate proper, so skip for now:
-mvn-rpmbuild \
-  -Dmaven.test.skip=true \
-  -pl hibernate-validator \
-  install \
-  javadoc:javadoc
-
-# Fix the line endings:
-dos2unix readme.txt
-
+%mvn_package ":%{name}-parent" %{name}
+# Running tests requires hibernate proper (and require weld-core >= 2.0.0 groovy >= 2.1.0), so skip for now:
+%mvn_build -f -s -- -Pdist
 
 %install
+%mvn_install
 
-# Jar files:
-install -d -m 755 %{buildroot}%{_javadir}
-install -m 644 hibernate-validator/target/%{name}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -m 644 engine/target/hibernate-validator-%{namedversion}-testing.jar \
+    %{buildroot}%{_javadir}/%{name}/%{name}-testing.jar
 
-# POM files:
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP-%{name}-parent.pom
-install -pm 644 %{name}/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles-%{name}
+%dir %{_javadir}/%{name}
+%{_javadir}/%{name}/%{name}-testing.jar
+%doc CONTRIBUTING.md README.md changelog.txt
+%doc copyright.txt license.txt
 
-# Javadoc files:
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp %{name}/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%files annotation-processor -f .mfiles-%{name}-annotation-processor
+%doc copyright.txt license.txt
 
-# Dependencies map:
-%add_maven_depmap JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%files cdi -f .mfiles-%{name}-cdi
+%doc copyright.txt license.txt
 
+%files performance -f .mfiles-%{name}-performance
+%doc copyright.txt license.txt
 
-%files
-%{_mavenpomdir}/JPP-%{name}-parent.pom
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-%doc license.txt
-%doc readme.txt
-%doc changelog.txt
+%if 0
+%files integration -f .mfiles-%{name}-integrationtest-as
+%doc copyright.txt license.txt
 
+%files tck-runner -f .mfiles-%{name}-tck-runner
+%doc copyright.txt license.txt
+%endif
 
-%files javadoc
-%{_javadocdir}/%{name}
-%doc license.txt
-
+%files javadoc -f .mfiles-javadoc
+%doc copyright.txt license.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_5jpp8
+- java 8 mass update
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt2_8jpp7
 - new release
 
