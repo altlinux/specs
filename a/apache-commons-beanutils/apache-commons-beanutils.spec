@@ -1,32 +1,29 @@
-Name: apache-commons-beanutils
-Version: 1.9.2
-Summary: Java utility methods for accessing and modifying the properties of arbitrary JavaBeans
-License: ASL 2.0
-Url: http://commons.apache.org/beanutils
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-beanutils = 1.9.2-4.fc23
-Provides: mvn(commons-beanutils:commons-beanutils) = 1.9.2
-Provides: mvn(commons-beanutils:commons-beanutils-bean-collections) = 1.9.2
-Provides: mvn(commons-beanutils:commons-beanutils-bean-collections:pom:) = 1.9.2
-Provides: mvn(commons-beanutils:commons-beanutils-core) = 1.9.2
-Provides: mvn(commons-beanutils:commons-beanutils-core:pom:) = 1.9.2
-Provides: mvn(commons-beanutils:commons-beanutils:pom:) = 1.9.2
-Provides: mvn(org.apache.commons:commons-beanutils) = 1.9.2
-Provides: mvn(org.apache.commons:commons-beanutils-bean-collections) = 1.9.2
-Provides: mvn(org.apache.commons:commons-beanutils-bean-collections:pom:) = 1.9.2
-Provides: mvn(org.apache.commons:commons-beanutils-core) = 1.9.2
-Provides: mvn(org.apache.commons:commons-beanutils-core:pom:) = 1.9.2
-Provides: mvn(org.apache.commons:commons-beanutils:pom:) = 1.9.2
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(commons-logging:commons-logging)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt4jpp
-Source: apache-commons-beanutils-1.9.2-4.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global base_name       beanutils
+%global short_name      commons-%{base_name}
+
+Name:           apache-%{short_name}
+Version:        1.9.2
+Release:        alt5_4jpp8
+Summary:        Java utility methods for accessing and modifying the properties of arbitrary JavaBeans
+License:        ASL 2.0
+URL:            http://commons.apache.org/%{base_name}
+BuildArch:      noarch
+Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-collections:commons-collections)
+BuildRequires:  mvn(commons-collections:commons-collections-testframework)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+Source44: import.info
 
 %description
 The scope of this package is to create a package of Java utility methods
@@ -34,24 +31,43 @@ for accessing and modifying the properties of arbitrary JavaBeans.  No
 dependencies outside of the JDK are required, so the use of this package
 is very lightweight.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
+sed -i 's/\r//' *.txt
+
+%pom_remove_plugin :maven-assembly-plugin
+
+%mvn_alias :{*} :@1-core :@1-bean-collections
+%mvn_alias :{*} org.apache.commons:@1 org.apache.commons:@1-core org.apache.commons:@1-bean-collections
+%mvn_file : %{name} %{name}-core %{name}-bean-collections
+%mvn_file : %{short_name} %{short_name}-core %{short_name}-bean-collections
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Some tests fail in Koji
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc RELEASE-NOTES.txt
+%doc LICENSE.txt NOTICE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.2-alt5_4jpp8
+- java 8 mass update
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.9.2-alt4jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
