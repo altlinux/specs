@@ -1,38 +1,38 @@
-Name: objectweb-asm
-Version: 5.0.3
-Summary: Java bytecode manipulation and analysis framework
-License: BSD
-Url: http://asm.ow2.org/
 Epoch: 0
-Provides: /etc/java/objectweb-asm.conf
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.ow2.asm:asm) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-all) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-all:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-analysis) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-analysis:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-commons) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-commons:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-debug-all) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-debug-all:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-parent:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-tree) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-tree:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-util) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-util:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-xml) = 5.0.3
-Provides: mvn(org.ow2.asm:asm-xml:pom:) = 5.0.3
-Provides: mvn(org.ow2.asm:asm:pom:) = 5.0.3
-Provides: objectweb-asm = 5.0.3-2.fc23
-Provides: objectweb-asm4 = 5.0.3-2.fc23
-Requires: /bin/bash
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: objectweb-asm-5.0.3-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name objectweb-asm
+%define version 5.0.3
+%{?scl:%scl_package objectweb-asm}
+%{!?scl:%global pkg_name %{name}}
+
+Name:           %{?scl_prefix}objectweb-asm
+Version:        5.0.3
+Release:        alt1_2jpp8
+Summary:        Java bytecode manipulation and analysis framework
+License:        BSD
+URL:            http://asm.ow2.org/
+BuildArch:      noarch
+
+Source0:        http://download.forge.ow2.org/asm/asm-%{version}.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildRequires:  ant
+BuildRequires:  aqute-bnd
+BuildRequires:  maven-local
+%{?scl:Requires: %scl_runtime}
+
+Obsoletes:      %{?scl_prefix}objectweb-asm4 < 5
+Provides:       %{?scl_prefix}objectweb-asm4 = %{version}-%{release}
+Source44: import.info
 
 %description
 ASM is an all purpose Java bytecode manipulation and analysis
@@ -41,24 +41,50 @@ generate classes, directly in binary form.  Provided common
 transformations and analysis algorithms allow to easily assemble
 custom complex transformations and code analysis tools.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package        javadoc
+Group: Development/Java
+Summary:        API documentation for %{pkg_name}
+BuildArch: noarch
+
+%description    javadoc
+This package provides %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n asm-%{version}
+find -name *.jar -delete
+
+sed -i /Class-Path/d archive/*.bnd
+sed -i "s/Import-Package:/&org.objectweb.asm,org.objectweb.asm.util,/" archive/asm-xml.bnd
+sed -i "s|\${config}/biz.aQute.bnd.jar|`build-classpath aqute-bnd`|" archive/*.xml
+sed -i -e '/kind="lib"/d' -e 's|output/eclipse|output/build|' .classpath
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%ant -Dobjectweb.ant.tasks.path= jar jdoc
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+%{?scl:scl enable %{scl} - <<"EOF"}
+%mvn_artifact output/dist/lib/asm-parent-%{version}.pom
+for m in asm asm-analysis asm-commons asm-tree asm-util asm-xml all/asm-all all/asm-debug-all; do
+    %mvn_artifact output/dist/lib/${m}-%{version}.pom \
+                  output/dist/lib/${m}-%{version}.jar
 done
+%mvn_install -J output/dist/doc/javadoc/user
+%{?scl:EOF}
 
+%jpackage_script org.objectweb.asm.xml.Processor "" "" %{pkg_name}/asm:%{pkg_name}/asm-attrs:%{pkg_name}/asm-util:%{pkg_name}/asm-xml %{pkg_name}-processor true
 
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE.txt README.txt
+%{_bindir}/%{pkg_name}-processor
+%dir %{_javadir}/%{pkg_name}
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.3-alt1_2jpp8
+- java 8 mass update
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.0.3-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
