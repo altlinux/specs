@@ -5,7 +5,7 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt29jpp
+Release: alt30jpp
 
 # to build hornetq
 Provides: mvn(org.hornetq:hornetq-journal)
@@ -25,7 +25,7 @@ Provides: codenarc
 Provides: mvn(org.apache.directory.project:project)
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
 Provides: eclipse-platform eclipse-rcp
-#Provides: i586-eclipse-swt = 4.0
+Provides: i586-eclipse-swt = 4.0
 Provides: i586-itext
 #Requires: springframework
 #Requires: xnio
@@ -44,6 +44,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt30jpp
+- updated dependencies
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt29jpp
 - updated dependencies
 
