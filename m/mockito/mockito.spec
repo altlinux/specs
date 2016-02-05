@@ -1,29 +1,39 @@
-Name: mockito
-Version: 1.10.19
-Summary: A Java mocking framework
-License: MIT
-Url: http://mockito.org
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mockito = 1.10.19-4.fc23
-Provides: mvn(org.mockito:mockito-all) = 1.10.19
-Provides: mvn(org.mockito:mockito-all:pom:) = 1.10.19
-Provides: mvn(org.mockito:mockito-core) = 1.10.19
-Provides: mvn(org.mockito:mockito-core:pom:) = 1.10.19
-Requires: cglib
-Requires: hamcrest
-Requires: java-headless
-Requires: jpackage-utils
-Requires: junit
-Requires: mvn(net.sf.cglib:cglib)
-Requires: mvn(org.hamcrest:hamcrest-core)
-Requires: mvn(org.objenesis:objenesis)
-Requires: objenesis
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: mockito-1.10.19-4.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           mockito
+Version:        1.10.19
+Release:        alt1_4jpp8
+Summary:        A Java mocking framework
+
+License:        MIT
+URL:            http://mockito.org
+Source0:        mockito-%{version}.tar.xz
+Source1:        make-mockito-sourcetarball.sh
+Patch0:         fixup-ant-script.patch
+Patch1:         fix-bnd-config.patch
+Patch2:         mockito-matcher.patch
+# Workaround for NPE in setting NamingPolicy in cglib
+Patch3:         setting-naming-policy.patch
+# because we have old objenesis
+Patch4:         fix-incompatible-types.patch
+
+BuildArch:      noarch
+BuildRequires:  javapackages-local
+BuildRequires:  ant
+BuildRequires:  objenesis
+BuildRequires:  cglib
+BuildRequires:  junit
+BuildRequires:  hamcrest
+BuildRequires:  aqute-bnd
+
+Requires:       objenesis
+Requires:       cglib
+Requires:       junit
+Requires:       hamcrest
+Source44: import.info
 
 %description
 Mockito is a mocking framework that tastes really good. It lets you write
@@ -31,24 +41,55 @@ beautiful tests with clean & simple API. Mockito doesn't give you hangover
 because the tests are very readable and they produce clean verification
 errors.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadocs for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+%pom_add_dep net.sf.cglib:cglib maven/mockito-core.pom
+find . -name "*.java" -exec sed -i "s|org\.mockito\.cglib|net\.sf\.cglib|g" {} +
+mkdir -p lib/compile
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+build-jar-repository lib/compile objenesis cglib junit hamcrest/core
+ant jar javadoc
+# Convert to OSGi bundle
+pushd target
+bnd wrap --output mockito-core-%{version}.bar --properties ../conf/mockito-core.bnd \
+    --version %{version} mockito-core-%{version}.jar
+mv mockito-core-%{version}.bar mockito-core-%{version}.jar
+popd
+
+sed -i -e "s|@version@|%{version}|g" maven/mockito-core.pom
+%mvn_artifact maven/mockito-core.pom target/mockito-core-%{version}.jar
+%mvn_alias org.mockito:mockito-core org.mockito:mockito-all
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install -J target/javadoc
 
+%files -f .mfiles
+%doc NOTICE
+%doc LICENSE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
+%doc NOTICE
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt1_4jpp8
+- java 8 mass update
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.10.19-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
