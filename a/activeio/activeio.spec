@@ -3,11 +3,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          activeio
 Version:       3.1.4
-Release:       alt1_7jpp7
+Release:       alt1_11jpp8
 Summary:       Apache ActiveMQ ActiveIO :: Core
 License:       ASL 2.0
 Url:           http://activemq.apache.org/
@@ -17,19 +18,15 @@ Source0:       activeio-3.1.4-src-svn.tar.gz
 # build fix for howl-logger 1.0.2
 Patch0:        activeio-3.1.4-howl-logger.patch
 
-
 BuildRequires: apache-commons-logging
 %if 0
 BuildRequires: howl-logger
 %endif
 BuildRequires: jboss-j2eemgmt-1.1-api
-
 BuildRequires: junit
-
 BuildRequires: maven-local
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-provider-junit4
 
 BuildArch:     noarch
 Source44: import.info
@@ -115,9 +112,10 @@ sed -i "s|<howl-version>0.1.8|<howl-version>1.0.2|" pom.xml
 
 sed -i 's/\r//' NOTICE
 
+%mvn_file :%{name}-core activemq/%{name}-core
+
 %build
 
-%mvn_file :%{name}-core activemq/%{name}-core
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -134,6 +132,9 @@ install -m 644 %{name}-core/target/%{name}-core-%{version}-tests.jar \
 %doc LICENSE NOTICE
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_11jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_7jpp7
 - new release
 
