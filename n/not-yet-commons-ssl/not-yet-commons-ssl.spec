@@ -3,19 +3,20 @@ Epoch: 0
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           not-yet-commons-ssl
-Version:        0.3.11
-Release:        alt2_10jpp7
+Version:        0.3.17
+Release:        alt1_2jpp8
 Summary:        Library to make SSL and Java Easier
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://juliusdavies.ca/commons-ssl
-Source0:        http://juliusdavies.ca/commons-ssl/not-yet-commons-ssl-0.3.11.zip
+Source0:        http://juliusdavies.ca/commons-ssl/not-yet-commons-ssl-%{version}.zip
 Source1:        %{name}-MANIFEST.MF
-Source2:		%{name}-%{version}.pom
+Source2:        %{name}-%{version}.pom
 BuildArch:      noarch
 
 BuildRequires:  ant
@@ -23,10 +24,10 @@ BuildRequires:  log4j
 BuildRequires:  jakarta-commons-httpclient
 BuildRequires:  bouncycastle
 BuildRequires:  ant-junit
+BuildRequires:  mockito
 BuildRequires:  zip
 Requires:       log4j
 Requires:       jakarta-commons-httpclient
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -38,7 +39,6 @@ bleed into the rest of your system.
 Summary:        API documentation for %{name}
 Group:          Development/Java
 Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -50,20 +50,22 @@ This package contains the API documentation for %{name}.
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 rm -fr javadocs/
+sed -i -e 's|optimize="false"|optimize="false" encoding="UTF-8"|g' build.xml
+sed -i -e 's|linksource="yes"|linksource="yes" encoding="UTF-8"|g' build.xml
 
 %build
-export CLASSPATH=$(build-classpath log4j commons-httpclient bcprov)
+export CLASSPATH=$(build-classpath log4j commons-httpclient bcprov mockito)
 ant -Dbuild.sysclasspath=first jar test javadoc
 
 # inject OSGi manifests
 mkdir -p META-INF
 cp -p %{SOURCE1} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
-zip -u build/commons-ssl.jar META-INF/MANIFEST.MF
+zip -u build/not-yet-commons-ssl.jar META-INF/MANIFEST.MF
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p build/commons-ssl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+cp -p build/not-yet-commons-ssl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp build/javadocs/*  \
@@ -73,16 +75,16 @@ install -pm 644 %{SOURCE2} \
     $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
-%{_javadir}/*
+%files -f .mfiles
 %doc LICENSE.txt NOTICE.txt README.txt
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.3.17-alt1_2jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.3.11-alt2_10jpp7
 - new release
 
