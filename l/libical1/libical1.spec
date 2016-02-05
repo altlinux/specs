@@ -1,17 +1,14 @@
-%define _name libical
-%define soversion 1
-
-Name: %_name%soversion
+Name: libical1
 Version: 1.0.1
-Release: alt4
+Release: alt5
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
 License: LGPL2.1+/MPL
-Url: https://github.com/%_name
+Url: https://github.com/%name
 
-Source: %url/%_name/releases/download/v%version/%_name-%version.tar.gz
-Patch: %_name-1.0.1-alt-libdir.patch
+Source: %url/%name/releases/download/v%version/libical-%version.tar.gz
+Patch: libical-1.0.1-alt-libdir.patch
 
 BuildRequires: cmake gcc-c++ ctest
 
@@ -21,8 +18,17 @@ Calendaring and Scheduling protocols (RFC 2445, 2446, and 2447).
 It parses iCal components and provides a C API for manipulating the
 component properties, parameters, and subcomponents
 
+%package devel
+Summary: Files for developing applications that use libical
+Requires: %name = %version-%release
+Group: Development/C
+
+%description devel
+The header files and libtool library  for developing applications that
+use libical.
+
 %prep
-%setup -n %_name-%version
+%setup -n libical-%version
 %patch -p1
 
 %build
@@ -40,9 +46,19 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %doc TODO TEST THANKS
 %_libdir/*.so.*
 
+%files devel
+%doc doc/UsingLibical*
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+%_libdir/cmake/LibIcal/
+
 
 %changelog
-* Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt4
+* Fri Feb 05 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.0.1-alt5
+- returned libical1-devel (some packages require old source)
+
+* Fri Jan 22 2016 Yuri N. Sedunov <aris at altlinux.org> 1.0.1-alt4
 - compat library
 
 * Thu Sep 10 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt3
