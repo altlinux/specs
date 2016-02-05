@@ -1,30 +1,20 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           invokebinder
-Version:        1.1
-Release:        alt1_8jpp7
-Summary:        A Java DSL for binding method handles forward, rather than backward
-Group:          Development/Java
-License:        ASL 2.0
-URL:            http://github.com/headius/%{name}/
-Source0:        https://github.com/headius/%{name}/archive/%{name}-%{version}.tar.gz
-BuildArch:      noarch
+Name: invokebinder
+Version: 1.2
+Summary: A Java DSL for binding method handles forward, rather than backward
+License: ASL 2.0
+Url: http://github.com/headius/invokebinder/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: invokebinder = 1.2-1.fc22
+Provides: mvn(com.headius:invokebinder) = 1.2
+Provides: mvn(com.headius:invokebinder:pom:) = 1.2
+Requires: java-headless
+Requires: jpackage-utils
+Requires: jpackage-utils
 
-BuildRequires:  jpackage-utils
-
-BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit
-
-Requires:       jpackage-utils
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: invokebinder-1.2-1.fc22.cpio
 
 %description
 This library hopes to provide a more friendly DSL for binding method handles.
@@ -33,44 +23,28 @@ MethodType and eventually adapted to a final target MethodHandle. Along the
 way the transformations are pushed onto a stack and eventually applied in
 reverse order, as the standard API demands.
 
-%package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-find ./ -name '*.jar' -exec rm -f '{}' \; 
-find ./ -name '*.class' -exec rm -f '{}' \; 
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files -f .mfiles
-%doc LICENSE
-
-%files javadoc
-%doc LICENSE
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Fri Aug 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_8jpp7
 - new release
 
