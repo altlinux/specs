@@ -1,46 +1,64 @@
-Name: jboss-websocket-1.0-api
-Version: 1.0.0
-Summary: JSR-356: Java WebSocket 1.0 API
-License: CDDL or GPLv2 with exceptions
-Url: https://github.com/jboss/jboss-websocket-api_spec
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jboss-websocket-1.0-api = 1.0.0-3.fc23
-Provides: mvn(javax.websocket:javax.websocket-api) = 1.0.0.Final
-Provides: mvn(javax.websocket:javax.websocket-api:pom:) = 1.0.0.Final
-Provides: mvn(javax.websocket:javax.websocket-client-api) = 1.0.0.Final
-Provides: mvn(javax.websocket:javax.websocket-client-api:pom:) = 1.0.0.Final
-Provides: mvn(org.jboss.spec.javax.websocket:jboss-websocket-api_1.0_spec) = 1.0.0.Final
-Provides: mvn(org.jboss.spec.javax.websocket:jboss-websocket-api_1.0_spec:pom:) = 1.0.0.Final
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.sun:tools)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jboss-websocket-1.0-api-1.0.0-3.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jboss-websocket-1.0-api
+%define version 1.0.0
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+Name:             jboss-websocket-1.0-api
+Version:          1.0.0
+Release:          alt1_3jpp8
+Summary:          JSR-356: Java WebSocket 1.0 API
+License:          CDDL or GPLv2 with exceptions
+Url:              https://github.com/jboss/jboss-websocket-api_spec
+Source0:          https://github.com/jboss/jboss-websocket-api_spec/archive/jboss-websocket-api_1.0_spec-%{namedversion}.tar.gz
+
+BuildRequires:    jboss-parent
+BuildRequires:    maven-local
+BuildRequires:    felix-osgi-foundation
+BuildRequires:    felix-parent
+
+BuildArch:        noarch
+Source44: import.info
 
 %description
 The JSR-356: Java WebSocket 1.0 API classes.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadocs for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n jboss-websocket-api_spec-jboss-websocket-api_1.0_spec-%{namedversion}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_alias "org.jboss.spec.javax.websocket:jboss-websocket-api_1.0_spec" "javax.websocket:javax.websocket-api" "javax.websocket:javax.websocket-client-api"
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE README
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE README
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_3jpp8
+- java 8 mass update
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
