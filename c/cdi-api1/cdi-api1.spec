@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cdi-api1
 %define version 1.0
@@ -13,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:             cdi-api1
 Version:          1.0
-Release:          alt1_11.SP4jpp7
+Release:          alt1_16.SP4jpp8
 Summary:          CDI API 1.0
 Group:            Development/Java
 License:          ASL 2.0
@@ -42,12 +43,6 @@ BuildRequires:    geronimo-annotation
 BuildRequires:    geronimo-parent-poms
 BuildRequires:    weld-parent
 BuildRequires:    jpackage-utils
-
-Requires:         jpackage-utils
-Requires:         jboss-el-2.2-api
-Requires:         jboss-interceptors-1.1-api
-Requires:         jboss-ejb-3.1-api
-Requires:         geronimo-annotation
 Source44: import.info
 
 %description
@@ -61,7 +56,6 @@ BuildArch: noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 Group:            Documentation
-Requires:         jpackage-utils
 
 %prep
 %setup -q -n cdi-api-%{namedversion}
@@ -69,35 +63,23 @@ Requires:         jpackage-utils
 cp %{SOURCE1} .
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_compat_version : %{namedversion} %{upstreamversion} %{version} 1
+%mvn_build
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/cdi-api-%{upstreamversion}.jar %{buildroot}%{_javadir}/%{name}/%{name}.jar
-
-# POM
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-
-%add_maven_depmap JPP.%{name}-%{name}.pom %{name}/%{name}.jar -v "1,%{upstreamversion}"
-
-# JAVADOC
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE-2.0.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_16.SP4jpp8
+- java 8 mass update
+
 * Wed Sep 10 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_11.SP4jpp7
 - new version
 
