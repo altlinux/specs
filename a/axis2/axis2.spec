@@ -4,11 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          axis2
 Version:       1.6.1
-Release:       alt2_9jpp7
+Release:       alt2_15jpp8
 Summary:       Java-based Web Services / SOAP / WSDL engine
 License:       ASL 2.0
 URL:           http://axis.apache.org/axis2/java/core/
@@ -24,24 +25,24 @@ BuildRequires: maven-dependency-plugin
 BuildRequires: geronimo-jta
 BuildRequires: geronimo-saaj
 BuildRequires: geronimo-parent-poms
-BuildRequires: ws-commons-XmlSchema
+BuildRequires: XmlSchema
 BuildRequires: apache-commons-logging
-BuildRequires: ws-commons-axiom
+BuildRequires: axiom
 BuildRequires: neethi
 BuildRequires: jsr-311
-BuildRequires: ws-commons-woden
+BuildRequires: woden
 BuildRequires: javamail
 BuildRequires: dos2unix
 BuildRequires: maven-remote-resources-plugin
 BuildRequires: apache-commons-fileupload
-BuildRequires: tomcat-servlet-3.0-api
+BuildRequires: glassfish-servlet-api
 BuildRequires: geronimo-saaj
 BuildRequires: maven-plugin-build-helper
 
-Requires:      log4j
+Requires:      log4j12
 Requires:      xerces-j2
 Requires:      javamail
-Requires:      tomcat-servlet-3.0-api
+Requires:      glassfish-servlet-api
 Source44: import.info
 
 %description
@@ -65,7 +66,6 @@ API documentation for %{name}.
 %pom_disable_module modules/addressing
 %pom_disable_module modules/fastinfoset
 %pom_disable_module modules/integration
-%pom_disable_module modules/java2wsdl
 %pom_disable_module modules/jibx
 %pom_disable_module modules/json
 %pom_disable_module modules/mex
@@ -97,8 +97,9 @@ API documentation for %{name}.
 %pom_disable_module modules/clustering
 %pom_disable_module modules/corba
 %pom_disable_module modules/osgi
-%pom_disable_module modules/transport/local
-%pom_disable_module modules/transport/http
+#%% pom_disable_module modules/transport/local
+#%% pom_disable_module modules/transport/http
+#%% pom_disable_module modules/java2wsdl
 
 # Remove non standard apidocs final subdir
 %pom_xpath_remove "pom:project/pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin' ]/pom:configuration/pom:destDir"
@@ -114,6 +115,19 @@ API documentation for %{name}.
 
 %patch0 -p0
 
+%pom_xpath_set "pom:properties/pom:servlet.api.version" 3.1.0 modules/parent
+%pom_xpath_set "pom:dependencies/pom:dependency[pom:groupId = 'javax.servlet']/pom:artifactId" javax.servlet-api modules/parent modules/kernel
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:groupId = 'javax.servlet']" "<version>1.6.2</version>" modules/kernel
+
+# reference to Parameter is ambiguous both class java.lang.reflect.Parameter in
+# java.lang.reflect and class org.apache.axis2.description.Parameter in org.apache.axis2.description match
+sed -i "s|Parameter sortAtt|org.apache.axis2.description.Parameter sortAtt|" \
+ modules/kernel/src/org/apache/axis2/description/java2wsdl/DefaultSchemaGenerator.java
+sed -i "s|Parameter generateWrappedArrayTypes|org.apache.axis2.description.Parameter generateWrappedArrayTypes|" \
+ modules/kernel/src/org/apache/axis2/description/java2wsdl/DefaultSchemaGenerator.java
+sed -i "s|Parameter extraClassesParam|org.apache.axis2.description.Parameter extraClassesParam|" \
+ modules/kernel/src/org/apache/axis2/description/java2wsdl/DefaultSchemaGenerator.java
+
 %build
 # Tests currently use an auto-generated ant build xml file which
 # fails due to incorrect setting of JAVA_HOME (to JRE instead of JDK home)
@@ -125,13 +139,17 @@ dos2unix NOTICE.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt release-notes.html
+%doc README.txt release-notes.html
 %dir %{_javadir}/%{name}
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_15jpp8
+- java 8 mass update
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.1-alt2_9jpp7
 - new release
 
