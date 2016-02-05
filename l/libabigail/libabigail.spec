@@ -1,6 +1,6 @@
 Name: libabigail
 Version: 1.0
-Release: alt0.2.rc0.1
+Release: alt0.2.rc2
 Summary: Set of ABI analysis tools
 Group: Development/Other
 
@@ -8,11 +8,9 @@ License: LGPLv3+
 Url: https://sourceware.org/libabigail/
 Source0: %name-%version.tar
 
-# Automatically added by buildreq on Tue May 19 2015 (-ba)
-# optimized out: elfutils fontconfig fonts-bitmap-misc libcloog-isl4 libelf-devel libstdc++-devel libwayland-client libwayland-server makeinfo pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest
-BuildRequires: dos2unix doxygen elfutils-devel gcc-c++ graphviz libxml2-devel python-module-cssselect python-module-docutils python-module-html5lib time
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+# Automatically added by buildreq on Fri Feb 05 2016 (-bi)
+# optimized out: cpio elfutils fontconfig fonts-bitmap-misc libelf-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest xz
+BuildRequires: dos2unix doxygen elfutils-devel gcc-c++ graphviz libxml2-devel makeinfo python-module-alabaster python-module-docutils python-module-html5lib time
 
 %description
 The libabigail package comprises four command line utilities: abidiff,
@@ -42,8 +40,7 @@ application binary interfaces of shared libraries in the ELF format.
 %package doc
 Summary: Man pages, texinfo files and html manuals of libabigail
 Group: Development/Other
-Requires(post): info
-Requires(preun): info
+BuildArch: noarch
 
 %description doc
 This package contains documentation for the libabigail tools in the
@@ -55,7 +52,12 @@ format.
 
 %build
 %autoreconf
-%configure --disable-silent-rules --disable-zip-archive --disable-static
+%configure \
+	--disable-silent-rules \
+	--disable-zip-archive \
+	--enable-cxx11=yes \
+	--disable-static \
+	#
 %make_build
 
 make -C doc html-doc
@@ -73,7 +75,7 @@ make -C doc/manuals install-man-and-info-doc DESTDIR=%buildroot
 dos2unix doc/manuals/html/_static/jquery.js
 
 %check
-make check ||:
+make check
 
 cat tests/test-suite.log
 
@@ -99,6 +101,9 @@ cat tests/test-suite.log
 %_infodir/abigail.info*
 
 %changelog
+* Fri Feb 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0-alt0.2.rc2
+- Updated to 1.0.rc2.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.2.rc0.1
 - NMU: added BR: texinfo
 
