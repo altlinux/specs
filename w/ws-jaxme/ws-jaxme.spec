@@ -2,8 +2,6 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
-Requires: xmldb-api-sdk
-BuildRequires: xmldb-api-sdk
 BuildRequires: docbook-dtds
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -42,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt4_14jpp8
+Release:        alt5_14jpp8
 Epoch:          0
 Summary:        Open source implementation of JAXB
 License:        ASL 2.0
@@ -187,6 +185,9 @@ rm -rf build/docs/src/documentation/content/apidocs
 %doc build/docs/src/documentation/content/manual
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt5_14jpp8
+- dropped dep on xmldb-api-sdk
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt4_14jpp8
 - new version
 
