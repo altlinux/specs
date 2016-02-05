@@ -1,94 +1,45 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jbossws-api
-%define version 1.0.1
-%global namedreltag .Final
-%global namedversion %{version}%{?namedreltag}
+Name: jbossws-api
+Version: 1.0.2
+Summary: JBossWS API
+License: LGPLv2+
+Url: http://www.jboss.org/jbossws
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: jbossws-api = 1.0.2-0.4.CR1.fc21
+Provides: mvn(org.jboss.ws:jbossws-api) = 1.0.2.CR1
+Provides: mvn(org.jboss.ws:jbossws-api:pom:) = 1.0.2.CR1
+Requires: java-headless
+Requires: jpackage-utils
 
-Name:             jbossws-api
-Version:          1.0.1
-Release:          alt1_3jpp7
-Summary:          JBossWS API
-Group:            Development/Java
-License:          LGPLv2+
-URL:              http://www.jboss.org/jbossws
-
-# svn export http://anonsvn.jboss.org/repos/jbossws/api/tags/jbossws-api-1.0.1.Final/ jbossws-api-1.0.1.Final
-# tar cafJ jbossws-api-1.0.1.Final.tar.xz jbossws-api-1.0.1.Final
-Source0:          jbossws-api-%{namedversion}.tar.xz
-
-BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-clean-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-war-plugin
-BuildRequires:    maven-help-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-logging-tools
-BuildRequires:    jbossws-parent
-
-Requires:         jpackage-utils
-Requires:         jboss-logging
-Requires:         jboss-logging-tools
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: jbossws-api-1.0.2-0.4.CR1.fc21.cpio
 
 %description
 JBoss WS public API
 
-%package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n jbossws-api-%{namedversion}
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# JAR
-install -pm 644 target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp7
 - new release
 
