@@ -2,12 +2,12 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 26.0r
-Release: alt1
+Version: 26.0.3
+Release: alt1.1.5e83
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
-Epoch: 1
+Epoch: 2
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -34,6 +34,8 @@ Patch16: firefox-cross-desktop.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
+# Patch22: palemoon-26.01.patch
+
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -92,6 +94,8 @@ tar -xf %SOURCE2
 #popd
 popd
 
+#patch22 -p1
+
 #patch5  -p1
 %patch6  -p1
 #patch14 -p1
@@ -125,9 +129,7 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 %endif
 
 %ifarch %ix86
-#ac_add_options --disable-cairo
-#echo 'ac_add_options --enable-optimize="-O3 -msse2 -mfpmath=sse"' >> .mozconfig
-echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
+echo 'ac_add_options "--enable-optimize=-O2  -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
 %build
@@ -306,6 +308,15 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Feb 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.0.3-alt1.1.5e83
+- Update from git
+
+* Tue Feb 02 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:26.01-alt1.1
+- Fix Build
+
+* Mon Feb 01 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:26.01-alt1
+- New Version
+
 * Tue Jan 26 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:26.0r-alt1
 - New Version
 
@@ -366,4 +377,3 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
