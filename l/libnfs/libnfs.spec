@@ -1,5 +1,7 @@
+%def_enable utils
+
 Name: libnfs
-Version: 1.9.8
+Version: 1.10.0
 Release: alt1
 
 Summary: NFS client library
@@ -40,6 +42,7 @@ This package provides utilities from LibNFS package.
 %build
 %autoreconf
 %configure --disable-static
+#	%{subst_enable utils}
 
 %install
 %makeinstall_std
@@ -53,6 +56,7 @@ This package provides utilities from LibNFS package.
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
+%if_enabled utils
 %files utils
 %_bindir/nfs-ls
 %_bindir/nfs-cat
@@ -60,8 +64,12 @@ This package provides utilities from LibNFS package.
 %_man1dir/nfs-ls.1.*
 %_man1dir/nfs-cat.1.*
 %_man1dir/nfs-cp.1.*
+%endif
 
 %changelog
+* Fri Feb 05 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Tue Aug 11 2015 Yuri N. Sedunov <aris@altlinux.org> 1.9.8-alt1
 - 1.9.8
 
