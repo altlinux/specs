@@ -5,11 +5,10 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt27jpp
+Release: alt28jpp
 
-# to drop bouncycastle-tsp
-Provides: bouncycastle-mail = 1.46
-Provides: bouncycastle-tsp = 1.46
+# to build hornetq
+Provides: mvn(org.hornetq:hornetq-journal)
 # jetty
 #Provides: /usr/share/java/tomcat-el-2.2-api.jar
 #Provides: /usr/share/java/tomcat-servlet-3.0-api.jar
@@ -21,6 +20,7 @@ Provides: jetty = 9
 Provides: /usr/share/java/plexus/container-default.jar plexus-container-default
 Provides: /usr/share/java/aqute-bnd.jar
 Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
+Provides: codenarc 
 # for apacheds jpp7
 Provides: mvn(org.apache.directory.project:project)
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
@@ -43,6 +43,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt28jpp
+- updated dependencies
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt27jpp
 - updated dependencies
 
@@ -65,7 +68,4 @@ mkdir -p $RPM_BUILD_ROOT
 - updated dependencies
 
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt20jpp
-- updated dependencies
-
-* Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt19jpp
 - updated dependencies
