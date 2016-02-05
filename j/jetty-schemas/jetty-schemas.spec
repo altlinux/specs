@@ -1,41 +1,51 @@
-Name: jetty-schemas
-Version: 3.1
-Summary: XML Schemas for Jetty
-License: CDDL or GPLv2 with exceptions
-Url: http://www.eclipse.org/jetty/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jetty-schemas = 3.1-4.fc23
-Provides: mvn(org.eclipse.jetty.toolchain:jetty-schemas) = 3.1.M0
-Provides: mvn(org.eclipse.jetty.toolchain:jetty-schemas:pom:) = 3.1.M0
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jetty-schemas-3.1-4.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global     addver M0
+%global     toolchain_id org.eclipse.jetty.toolchain
+Name:       jetty-schemas
+Version:    3.1
+Release:    alt1_4jpp8
+Summary:    XML Schemas for Jetty
+
+License:    CDDL or GPLv2 with exceptions
+URL:        http://www.eclipse.org/jetty/
+Source0:    http://git.eclipse.org/c/jetty/%{toolchain_id}.git/snapshot/%{toolchain_id}-%{name}-%{version}.%{addver}.tar.bz2
+Source1:    https://glassfish.dev.java.net/public/CDDL+GPL_1_1.html
+
+BuildArch:  noarch
+BuildRequires:  maven-local
+
+BuildRequires:  jetty-toolchain
+Source44: import.info
 
 %description
-XML Schemas for Jetty.
+%{summary}.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{toolchain_id}-%{name}-%{version}.%{addver}
+cp %SOURCE1 .
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+pushd %{name}
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+pushd %{name}
+%mvn_install
 
-
-%files -f %name-list
+%files -f %{name}/.mfiles
+%dir %{_javadir}/%{name}
+%doc CDDL+GPL_1_1.html
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_4jpp8
+- java 8 mass update
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 3.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
