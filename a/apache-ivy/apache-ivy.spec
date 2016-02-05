@@ -1,25 +1,47 @@
-Name: apache-ivy
-Version: 2.4.0
-Summary: Java-based dependency manager
-License: ASL 2.0
-Url: http://ant.apache.org/ivy
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-ivy = 2.4.0-4.fc23
-Provides: ivy = 2.4.0-4.fc23
-Provides: mvn(jayasoft:ivy) = 2.4.0.local.20150617001712
-Provides: mvn(jayasoft:ivy:pom:) = 2.4.0.local.20150617001712
-Provides: mvn(jayasoft:ivy:xml:) = 2.4.0.local.20150617001712
-Provides: mvn(org.apache.ivy:ivy) = 2.4.0.local.20150617001712
-Provides: mvn(org.apache.ivy:ivy:pom:) = 2.4.0.local.20150617001712
-Provides: mvn(org.apache.ivy:ivy:xml:) = 2.4.0.local.20150617001712
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: apache-ivy-2.4.0-4.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           apache-ivy
+Version:        2.4.0
+Release:        alt1_4jpp8
+Summary:        Java-based dependency manager
+
+License:        ASL 2.0
+URL:            http://ant.apache.org/ivy
+Source0:        http://www.apache.org/dist/ant/ivy/%{version}/%{name}-%{version}-src.tar.gz
+BuildArch:      noarch
+
+# Non-upstreamable.  Add /etc/ivy/ivysettings.xml at the end list of
+# settings files Ivy tries to load.  This file will be used only as
+# last resort, when no other setting files exist.
+Patch0:         %{name}-global-settings.patch
+# sent upstream: IVY-1521
+Patch1:         port-to-bc-1.52.patch
+
+Provides:       ivy = %{version}-%{release}
+
+BuildRequires:  ant
+BuildRequires:  ant-contrib
+BuildRequires:  ant-testutil
+BuildRequires:  apache-commons-vfs
+BuildRequires:  apache-commons-lang
+BuildRequires:  bouncycastle
+BuildRequires:  bouncycastle-pg
+BuildRequires:  jakarta-commons-httpclient
+BuildRequires:  jsch
+BuildRequires:  jakarta-oro
+BuildRequires:  apache-commons-parent
+BuildRequires:  sonatype-oss-parent
+BuildRequires:  apache-parent
+BuildRequires:  ivy-local >= 4
+BuildRequires:  jsch-agent-proxy-connector-factory
+BuildRequires:  jsch-agent-proxy-core
+BuildRequires:  jsch-agent-proxy-jsch
+Source44: import.info
+AutoReqProv: yes,noosgi
+Obsoletes: ivy < 2
 
 %description
 Apache Ivy is a tool for managing (recording, tracking, resolving and
@@ -29,24 +51,69 @@ tool, Apache Ivy works particularly well with Apache Ant providing a number
 of powerful Ant tasks ranging from dependency resolution to dependency
 reporting and publication.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Summary:        API Documentation for ivy
+Group:          Development/Java
+BuildArch: noarch
+
+%description javadoc
+JavaDoc documentation for %{name}
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0
+%patch1 -p1
+
+%mvn_alias : jayasoft:ivy
+%mvn_file : %{name}/ivy ivy
+
+# Fix messed-up encodings
+for F in README LICENSE NOTICE
+do
+        sed 's/\r//' $F |iconv -f iso8859-1 -t utf8 >$F.utf8
+        touch -r $F $F.utf8
+        mv $F.utf8 $F
+done
+# ant-trax has been obsoleted, use main ant package
+sed -i s/ant-trax/ant/ ivy.xml
+
+# Fedora bouncycastle packages provide -jdk16 artifacts only
+sed -i /bouncycastle/s/jdk14/jdk16/ ivy.xml
+
+# Port from commons-vfs 1.x to 2.x
+sed -i "s/commons.vfs/&2/" src/java/org/apache/ivy/plugins/repository/vfs/*
+
+# Remove prebuilt documentation
+rm -rf doc build/doc
+
+# Publish artifacts through XMvn
+sed -i /ivy:publish/s/local/xmvn/ build.xml
+
+# girar noarch diff
+sed -i -e s,yyyyMMddHHmmss,yyyyMMddHH, build.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%ant -Divy.mode=local -Dtarget.ivy.bundle.version=%{version} -Dtarget.ivy.bundle.version.qualifier= -Dtarget.ivy.pubdate=20160205060000 -Dtarget.ivy.version=%{version} jar javadoc publish-local
+
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install -J build/doc/reports/api
 
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
+echo "apache-ivy/ivy" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/%{name}
 
-%files -f %name-list
+%files -f .mfiles
+%{_sysconfdir}/ant.d/%{name}
+%doc README
+%doc LICENSE NOTICE
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_4jpp8
+- java 8 mass update
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
