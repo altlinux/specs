@@ -1,4 +1,4 @@
-%define		svn 7273
+%define		svn 7387
 
 %define		rel alt1
 
@@ -9,7 +9,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	15.11.0
+Version:	16.1.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -104,6 +104,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Sat Feb 06 2016 Motsyo Gennadi <drool@altlinux.ru> 16.1.0-alt1.7387
+- 16.1.0 version (svn7387)
+
 * Fri Dec 11 2015 Motsyo Gennadi <drool@altlinux.ru> 15.11.0-alt1.7273
 - 15.11.0 version (svn7273)
 
