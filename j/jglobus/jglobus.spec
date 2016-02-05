@@ -2,36 +2,32 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:		jglobus
-Version:	2.0.6
-Release:	alt1_3jpp7
+Version:	2.1.0
+Release:	alt1_3jpp8
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
 #		ssl-proxies/src/main/java/org/globus/tools/GridCertRequest.java
 License:	ASL 2.0 and MIT
 URL:		http://github.com/%{name}/
-Source0:	http://github.com/%{name}/JGlobus/archive/JGlobus-%{version}.tar.gz
-#		Fixes from Bartek Palak (see pull request in github)
-Patch0:		jglobus-final-static.patch
-Patch1:		jglobus-semi.patch
-Patch2:		jglobus-synch-disconnect.patch
-Patch3:		jglobus-errors.patch
-Patch4:		jglobus-impl-clonable.patch
-Patch5:		jglobus-dont-hide-super.patch
-#		Fix javadoc warnings
-Patch6:		jglobus-doc.patch
-#		Name parent parent
-Patch7:		jglobus-parent.patch
+Source0:	http://github.com/%{name}/JGlobus/archive/JGlobus-Release-%{version}.tar.gz
+#		DERObjectIdentifier is obsolete
+Patch0:		%{name}-DERObjectIdentifier-is-obsolete.patch
+#		Don't force SSLv3
+Patch1:		%{name}-dont-force-SSLv3.patch
 
 BuildArch:	noarch
 
-BuildRequires:	dos2unix
 BuildRequires:	maven-local
+%if %{?fedora}%{!?fedora:0}
 BuildRequires:	mvn(axis:axis)
 BuildRequires:	mvn(axis:axis-jaxrpc)
+%endif
 BuildRequires:	mvn(commons-codec:commons-codec)
 BuildRequires:	mvn(commons-httpclient:commons-httpclient)
 BuildRequires:	mvn(commons-io:commons-io)
@@ -41,14 +37,12 @@ BuildRequires:	mvn(junit:junit)
 BuildRequires:	mvn(log4j:log4j)
 BuildRequires:	mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-compiler-plugin)
-BuildRequires:	mvn(org.apache.maven.plugins:maven-patch-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-release-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:	mvn(org.apache.maven.plugins:maven-surefire-plugin)
 BuildRequires:	mvn(org.apache.tomcat:tomcat-catalina)
 BuildRequires:	mvn(org.apache.tomcat:tomcat-coyote)
-BuildRequires:	mvn(org.bouncycastle:bcprov-jdk16)
-BuildRequires:	mvn(org.sonatype.oss:oss-parent)
+BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on)
 Source44: import.info
 
 %description
@@ -135,6 +129,7 @@ Requires:	%{name}-gss = %{version}-%{release}
 %description myproxy
 Globus Java library with MyProxy support
 
+%if %{?fedora}%{!?fedora:0}
 %package axisg
 Group: Development/Java
 Summary:	Globus Java - Apache AXIS support
@@ -143,6 +138,7 @@ Requires:	%{name}-gss = %{version}-%{release}
 
 %description axisg
 Globus Java library with Apache AXIS support
+%endif
 
 %package javadoc
 Group: Development/Java
@@ -154,68 +150,21 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n JGlobus-JGlobus-%{version}
+%setup -q -n JGlobus-JGlobus-Release-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-
-dos2unix axis/src/main/java/org/globus/axis/example/README.txt
-chmod 644 axis/src/main/java/org/globus/axis/example/README.txt
-
-# Move test classes to test directory
-mkdir -p gram/src/test/java/org/globus/gram/util
-mv gram/src/main/java/org/globus/gram/Gram15Test.java \
-   gram/src/test/java/org/globus/gram/Gram15Test.java
-mv gram/src/main/java/org/globus/gram/GramTest.java \
-   gram/src/test/java/org/globus/gram/GramTest.java
-mv gram/src/main/java/org/globus/gram/MultiUserGramTest.java \
-   gram/src/test/java/org/globus/gram/MultiUserGramTest.java
-mv gram/src/main/java/org/globus/gram/util/TestUtil.java \
-   gram/src/test/java/org/globus/gram/util/TestUtil.java
-
-# Move gram tests using io classes to io directory
-mkdir -p io/src/test/java/org/globus/gram/tests
-mkdir -p io/src/test/java/org/globus/gram/util
-mkdir -p io/src/test/resources
-mv gram/src/test/java/org/globus/gram/Gram15Test.java \
-   io/src/test/java/org/globus/gram/Gram15Test.java
-mv gram/src/test/java/org/globus/gram/tests/GramTest.java \
-   io/src/test/java/org/globus/gram/tests/GramTest.java
-mv gram/src/test/java/org/globus/gram/tests/test.sh \
-   io/src/test/java/org/globus/gram/tests/test.sh
-mv gram/src/test/java/org/globus/gram/util/TestUtil.java \
-   io/src/test/java/org/globus/gram/util/TestUtil.java
-mv gram/src/test/resources/test.properties \
-   io/src/test/resources/test.properties
-
-# Remove code duplication
-mkdir -p gss/src/test/java/org/globus/net/test
-mv gram/src/test/java/org/globus/net/test/GSIHttpURLConnectionTest.java \
-   gss/src/test/java/org/globus/net/test/GSIHttpURLConnectionTest.java
-rm gss/src/test/java/org/globus/net/GSIHttpURLConnectionTest.java
-rm -rf gram/src/main/java/org/globus/net      # also in gss
-rm -rf gram/src/main/java/org/globus/io/gass  # also in io
-
-# Move test.properties files to resources directories
-mkdir -p gridftp/src/test/resources/org/globus/ftp/test
-mkdir -p myproxy/src/test/resources/org/globus/myproxy/test
-rm gridftp/src/test/java/org/globus/ftp/test/test1.properties
-rm gridftp/src/test/java/test.properties
-mv gridftp/src/test/java/org/globus/ftp/test/test.properties \
-   gridftp/src/test/resources/org/globus/ftp/test/test.properties
-mv gridftp/src/test/java/org/globus/ftp/test/test.properties.in \
-   gridftp/src/test/resources/org/globus/ftp/test/test.properties.in
-mv myproxy/src/test/java/org/globus/myproxy/test/test.properties \
-   myproxy/src/test/resources/org/globus/myproxy/test/test.properties
 
 # Do not package test classes
 %mvn_package org.jglobus:container-test-utils __noinstall
 %mvn_package org.jglobus:test-utils __noinstall
+
+# Avoid build dependency bloat
+%pom_remove_parent
+
+# Disable axis module for EPEL 7
+%if %{?rhel}%{!?rhel:0} == 7
+%pom_disable_module axis
+%endif
 
 %build
 # Many tests requires network connections and a valid proxy certificate
@@ -229,7 +178,8 @@ mv myproxy/src/test/java/org/globus/myproxy/test/test.properties \
 
 %files ssl-proxies -f .mfiles-ssl-proxies
 %dir %{_javadir}/%{name}
-%doc LICENSE README.textile
+%doc README.textile
+%doc LICENSE
 
 %files jsse -f .mfiles-jsse
 
@@ -245,11 +195,17 @@ mv myproxy/src/test/java/org/globus/myproxy/test/test.properties \
 
 %files myproxy -f .mfiles-myproxy
 
+%if %{?fedora}%{!?fedora:0}
 %files axisg -f .mfiles-axisg
+%doc axis/src/main/java/org/globus/axis/example/README.txt
+%endif
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt1_3jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_3jpp7
 - new release
 
