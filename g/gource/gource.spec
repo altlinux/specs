@@ -1,24 +1,23 @@
 Name: gource
-Version: 0.38
-Release: alt1.2
+Version: 0.43
+Release: alt1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
 License: %gpl3only
 Group: Development/Tools
-Url: http://code.google.com/p/gource/
+Url: http://gource.io/
 
 # git clone git://github.com/acaudwell/Gource.git
 # git clone git://github.com/acaudwell/Core.git
 Source0: %name-main-%version.tar
 Source1: %name-core-%version.tar
-Patch0: %name-%version-alt-build.patch
-#Source: %name-%version.tar
+Patch0: %name-0.43-alt-build.patch
 
 Requires: fonts-ttf-freefont
 
 BuildPreReq: rpm-build-licenses
-BuildPreReq: libSDL-devel >= 1.2
-BuildPreReq: libSDL_image-devel >= 1.2
+BuildPreReq: libSDL2-devel >= 1.2
+BuildPreReq: libSDL2_image-devel >= 1.2
 BuildPreReq: libpcre-devel
 BuildPreReq: libfreetype-devel
 BuildPreReq: libglew-devel
@@ -28,6 +27,8 @@ BuildPreReq: tinyxml-devel
 BuildPreReq: gcc-c++
 # zlib-devel be req by libfreetype
 BuildPreReq: zlib-devel
+
+BuildRequires: libpng-devel
 
 %description
 OpenGL-based 3D visualisation tool for source control repositories. The
@@ -39,7 +40,7 @@ files and directories.
 %prep
 %setup
 tar xf %_sourcedir/%name-core-%version.tar -C src/
-%patch0 -p2
+%patch0 -p0
 
 %build
 %autoreconf
@@ -55,6 +56,11 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Fri Feb 05 2016 Mikhail Efremov <sem@altlinux.org> 0.43-alt1
+- Updated alt-build.patch.
+- Updated Url.
+- Updated to 0.43.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.38-alt1.2
 - rebuild with boost 1.57.0
 - fix build with recent gcc
