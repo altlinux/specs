@@ -58,7 +58,7 @@
 
 Name: etercifs
 Version: 5.4.14
-Release: alt1
+Release: alt2
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
 
@@ -449,6 +449,10 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_sbindir/%name-build
 
 %changelog
+* Fri Feb 05 2016 Vitaly Lipatov <lav@altlinux.ru> 5.4.14-alt2
+- functions.sh: small workround and update comments
+- rewrite for separate OpenVZ-kernels checking
+
 * Sun Dec 06 2015 Pavel Shilovsky <piastry@altlinux.org> 5.4.14-alt1
 - Add sources for 4.4 (v4.4-rc3)
 - Add sources for 4.3 (v4.3)
