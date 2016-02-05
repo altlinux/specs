@@ -1,54 +1,83 @@
-Name: cglib
-Version: 3.1
-Summary: Code Generation Library for Java
-License: ASL 2.0 and BSD
-Url: http://cglib.sourceforge.net/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: cglib = 3.1-7.fc23
-Provides: mvn(cglib:cglib) = 3.1
-Provides: mvn(cglib:cglib-full) = 3.1
-Provides: mvn(cglib:cglib-full:pom:) = 3.1
-Provides: mvn(cglib:cglib-nodep) = 3.1
-Provides: mvn(cglib:cglib-nodep:pom:) = 3.1
-Provides: mvn(cglib:cglib:pom:) = 3.1
-Provides: mvn(net.sf.cglib:cglib) = 3.1
-Provides: mvn(net.sf.cglib:cglib:pom:) = 3.1
-Provides: mvn(org.sonatype.sisu.inject:cglib) = 3.1
-Provides: mvn(org.sonatype.sisu.inject:cglib:pom:) = 3.1
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           cglib
+Version:        3.1
+Release:        alt1_7jpp8
+Summary:        Code Generation Library for Java
+License:        ASL 2.0 and BSD
+Url:            http://cglib.sourceforge.net/
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.jar
+Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+Source2:        bnd.properties
+
 Requires: objectweb-asm
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: cglib-3.1-7.fc23.cpio
+BuildRequires:  ant
+BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  objectweb-asm
+BuildRequires:  unzip
+BuildRequires:  aqute-bnd
+BuildArch:      noarch
+Source44: import.info
 
 %description
 cglib is a powerful, high performance and quality code generation library
 for Java. It is used to extend Java classes and implements interfaces
 at runtime.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+Documentation for the cglib code generation library.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -c %{name}-%{version}
+cp -p %{SOURCE1} pom.xml
+rm lib/*.jar
+# Remove the repackaging step that includes other jars into the final thing
+sed -i "/<taskdef name=.jarjar/,/<.jarjar>/d" build.xml
+
+%pom_xpath_remove "pom:dependency[pom:artifactId = 'asm-util']/pom:optional"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+export OPT_JAR_LIST=objectweb-asm
+ant jar javadoc
+# Convert to OSGi bundle
+bnd wrap --output dist/%{name}-%{version}.bar --properties %{SOURCE2} \
+         --version %{version} dist/%{name}-%{version}.jar
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+install -d -m 755 %{buildroot}%{_javadir}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_mavenpomdir}
+# yes, this is really *.bar - aqute bnd created it
+install -p -m 644 dist/%{name}-%{version}.bar %{buildroot}%{_javadir}/%{name}.jar
+install -p -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap -a net.sf.cglib:cglib,cglib:cglib-full,cglib:cglib-nodep,org.sonatype.sisu.inject:cglib
 
+cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
 
-%files -f %name-list
+%files -f .mfiles
+%doc LICENSE NOTICE
+
+%files javadoc
+%doc LICENSE NOTICE
+%{_javadocdir}/%{name}
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_7jpp8
+- java 8 mass update
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
