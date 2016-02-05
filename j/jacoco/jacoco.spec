@@ -1,55 +1,119 @@
-Name: jacoco
-Version: 0.7.5
-Summary: Java Code Coverage for Eclipse
-License: EPL
-Url: http://www.eclemma.org/jacoco/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jacoco = 0.7.5-2.fc23
-Provides: mvn(org.jacoco:org.jacoco.agent) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.agent.rt) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.agent.rt:pom:) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.agent::runtime:) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.agent:pom:) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.ant) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.ant:pom:) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.build:pom:) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.core) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.core:pom:) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.report) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:org.jacoco.report:pom:) = 0.7.5.201505241946
-Provides: mvn(org.jacoco:root:pom:) = 0.7.5.201505241946
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.ow2.asm:asm-debug-all)
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global tag 201505241946
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: jacoco-0.7.5-2.fc23.cpio
+Name:      jacoco
+Version:   0.7.5
+Release:   alt1_2jpp8
+Summary:   Java Code Coverage for Eclipse 
+Group:     System/Libraries
+License:   EPL
+URL:       http://www.eclemma.org/jacoco/
+Source0:   https://github.com/jacoco/jacoco/archive/v%{version}.tar.gz
+Source1:   EnchancedManifest.mf
+
+Patch0:    removeUselessBuildParts.patch
+
+BuildArch:        noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-tools-javadoc)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.shared:file-management)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.jacoco:org.jacoco.build:pom:)
+BuildRequires:  mvn(org.ow2.asm:asm-debug-all)
+BuildRequires:  dos2unix
+Source44: import.info
+
 
 %description
-JaCoCo is a free code coverage library for Java,
-which has been created by the EclEmma team based on the lessons learned
-from using and integration existing libraries over the last five years.
+JaCoCo is a free code coverage library for Java, 
+which has been created by the EclEmma team based on the lessons learned 
+from using and integration existing libraries over the last five years. 
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package    javadoc
+Group: System/Libraries
+Summary:    Java-docs for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
+%package    maven-plugin
+Group: System/Libraries
+Summary:    A Jacoco plugin for maven
+
+%description maven-plugin
+A Jacoco plugin for maven.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q 
+%patch0 -b .sav
+
+%pom_disable_module ../org.jacoco.examples org.jacoco.build
+%pom_disable_module ../org.jacoco.doc org.jacoco.build
+%pom_disable_module ../org.jacoco.tests org.jacoco.build
+%pom_disable_module ../jacoco org.jacoco.build
+
+%mvn_package ":jacoco-maven-plugin:{jar,pom}:{}:" maven-plugin
+%mvn_package ":{org.}*:{jar,pom}:runtime:"
+
+sed -i -e "s|nb-configuration.xml|nb-configuration.xml,build.xml, pom.xml|g" org.jacoco.build/pom.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
+
+dos2unix org.jacoco.doc/docroot/doc/.resources/doc.css 
+
+# workaround missing premain in agent.rt RH1151442. Not sure where to fix this in build.
+# TODO, fix in build itself
+# 'all' have already premain, 'sources' don't need.
+a=`find org.jacoco.agent.rt/target/ | grep jar | grep -v -e sources -e all`
+for x in $a ; do
+jar -umf %{SOURCE1}  $x
+done;
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+# ant config
+mkdir -p %{buildroot}%{_sysconfdir}/ant.d
+echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{_sysconfdir}/ant.d/%{name}
 
-%files -f %name-list
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%config(noreplace) %{_sysconfdir}/ant.d/%{name}
+%doc org.jacoco.doc/docroot/*
+%doc org.jacoco.doc/about.html
+
+%files maven-plugin -f .mfiles-maven-plugin
+
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.5-alt1_2jpp8
+- java 8 mass update
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.5-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
