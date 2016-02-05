@@ -1,38 +1,35 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
-# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name portecle
-%define version 1.7
-%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+BuildRequires: jpackage-generic-compat
+%global bcver   1.51
 
 Name:           portecle
-Version:        1.7
-Release:        alt2_9jpp7
+Version:        1.9
+Release:        alt1_1jpp8
 Summary:        Multipurpose keystore and certificate tool
 
 License:        GPLv2+
 URL:            http://portecle.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/portecle/%{name}-%{version}-src.zip
 Source1:        portecle.sh.in
-# http://portecle.git.sourceforge.net/git/gitweb.cgi?p=portecle/portecle;a=commitdiff;h=02e4545
-Patch0:         %{name}-1.7-no-jre-check.patch
 
 BuildArch:      noarch
 BuildRequires:  ant
-BuildRequires:  bouncycastle >= 1.44
+BuildRequires:  bouncycastle >= %{bcver}
+BuildRequires:  bouncycastle-pkix >= %{bcver}
 BuildRequires:  desktop-file-utils
 BuildRequires:  jpackage-utils
-Requires:       bouncycastle >= 1.44
+Requires:       bouncycastle >= %{bcver}
+Requires:       bouncycastle-pkix >= %{bcver}
 # >= 1.7.5-3.9 for _prefer_jre in launcher script (#461683, #498831)
 Requires:       jpackage-utils >= 1.7.5-3.9
 Requires:       icon-theme-hicolor
-Requires:       jre >= 1.6.0
+Requires:       jre >= 1.7.0
 Source44: import.info
 
 %description
@@ -43,15 +40,14 @@ certificate revocation lists and more.
 
 %prep
 %setup -q -n %{name}-%{version}-src
-%patch0 -p1
-rm -r src/main/net/sf/portecle/version # see Patch0
-rm lib/*.jar
+rm lib/bc*.jar
 cp -p src/main/net/sf/portecle/images/splash.png doc/images/
 
 
 %build
-%ant -Djar.classpath= -Dhelpbaseurl=file://%{_pkgdocdir}/doc/ \
-    -Dbcprov.jar=$(build-classpath bcprov) jar
+%ant -Djar.classpath= -Dhelpbaseurl=file://%{_docdir}/%{name}/doc/ \
+    -Dbcprov.jar=$(build-classpath bcprov) \
+    -Dbcpkix.jar=$(build-classpath bcpkix) jar
 
 
 %install
@@ -61,17 +57,16 @@ install -Dpm 644 build/portecle.jar $RPM_BUILD_ROOT%{_javadir}/portecle.jar
 install -Dpm 644 src/icons/portecle.png \
     $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/portecle.png
 desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-    --vendor=fedora \
-%endif
     --mode=644 \
     --add-mime-type=application/x-pkcs7-certificates \
     --dir=$RPM_BUILD_ROOT%{_datadir}/applications src/etc/portecle.desktop
+install -Dpm 644 src/etc/portecle.appdata.xml \
+    $RPM_BUILD_ROOT%{_datadir}/appdata/portecle.appdata.xml
 
 # Enable experimental features in non-EL builds by default
 install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 exp="%{?rhel:false}%{!?rhel:true}"
-sed -e "s|@DOCDIR@|%{_pkgdocdir}/doc|" -e "s|@EXPERIMENTAL@|$exp|" %{SOURCE1} \
+sed -e "s|@DOCDIR@|%{_docdir}/%{name}/doc|" -e "s|@EXPERIMENTAL@|$exp|" %{SOURCE1} \
     > $RPM_BUILD_ROOT%{_bindir}/portecle
 chmod 755 $RPM_BUILD_ROOT%{_bindir}/portecle
 
@@ -80,15 +75,20 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
 
 %files
-%doc README.txt LICENSE.txt NEWS.txt doc/
+%doc LICENSE.txt
+%doc README.txt NEWS.txt doc/
 %{_bindir}/portecle
 %{_javadir}/portecle.jar
+%{_datadir}/appdata/portecle.appdata.xml
 %{_datadir}/applications/*portecle.desktop
 %{_datadir}/icons/hicolor/32x32/apps/portecle.png
 %config(noreplace,missingok) /etc/java/%name.conf
 
 
 %changelog
+* Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_1jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_9jpp7
 - new release
 
