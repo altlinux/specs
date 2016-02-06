@@ -3,7 +3,7 @@
 %define real_name autobox-Core
 
 Name: perl-autobox-Core
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: Perl module with core functions to autoboxed scalars, arrays and hashes
@@ -50,6 +50,9 @@ methods taken from Perl 6.
 %perl_vendor_privlib/autobox/Core*
 
 %changelog
+* Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.32-alt1
+- New version
+
 * Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.31-alt1
 - New version
 
