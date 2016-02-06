@@ -1,35 +1,24 @@
-Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:    c3p0
-Version: 0.9.2.1
-Release: alt1_4jpp7
+Name: c3p0
+Version: 0.9.5
 Summary: JDBC DataSources/Resource Pools
 License: LGPLv2 or EPL
-URL:     https://github.com/swaldman/c3p0
-Group:   Development/Java
-
-BuildRequires: java-javadoc >= 1:1.6.0
-BuildRequires: jpackage-utils
-BuildRequires: ant
-BuildRequires: mchange-commons >= 0.2.3.4
-
-Requires: mchange-commons >= 0.2.3.4
+Url: https://github.com/swaldman/c3p0
+Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: c3p0 = 0.9.5-0.2.pre8.fc23
+Provides: mvn(c3p0:c3p0) = 0.9.5
+Provides: mvn(c3p0:c3p0:pom:) = 0.9.5
+Provides: mvn(com.mchange:c3p0) = 0.9.5
+Provides: mvn(com.mchange:c3p0:pom:) = 0.9.5
+Requires: java-headless
 Requires: jpackage-utils
-
-Source0: https://github.com/swaldman/%{name}/archive/%{name}-%{version}-final.tar.gz
-
-# Patch to build on java 1.6
-Patch0: %{name}-build-on-1.6.patch
-
-# Patch to build on java 1.7 (intentionally kept separate from above)
-Patch1: %{name}-build-on-1.7.patch
+Requires: mchange-commons
+Requires: mvn(com.mchange:mchange-commons-java)
 
 BuildArch: noarch
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: c3p0-0.9.5-0.2.pre8.fc23.cpio
 
 %description
 c3p0 is an easy-to-use library for augmenting traditional JDBC drivers with
@@ -37,69 +26,28 @@ JNDI-bindable DataSources, including DataSources that implement Connection
 and Statement Pooling, as described by the jdbc3 spec and jdbc2 standard
 extension.
 
-%package  javadoc
-Summary:  API documentation for %{name}
-Group:    Development/Java
-Requires: jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-%{name}-%{version}-final
-
-%patch0 -p1 -b .java6
-%patch1 -p1 -b .java7
-
-# remove all binary bits
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
-
-# remove manifest classpath
-sed -i.bak -e "s/<attribute\ name=\"Class-Path\"\ value=\"\${mchange-commons-java\.jar\.file\.name}\"\ \/>//" build.xml
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-ant \
-  -Dbuild.sysclasspath=first \
-  -Dmchange-commons-java.jar.file=`build-classpath mchange-commons-java` \
-  jar javadoc
-
-sed -i -e "s|@c3p0.version.maven@|%{version}|g" \
-  -e "s|@mchange-commons-java.version.maven@|0.2.3.4|g" \
-  src/maven/pom.xml
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jar
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 build/%{name}-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# javadocs
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 src/maven/pom.xml \
-  %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap -a "c3p0:c3p0" JPP-%{name}.pom %{name}.jar
-
-%files
-%doc src/dist-static/CHANGELOG
-%doc src/dist-static/LICENSE*
-%doc src/dist-static/RELEASE*
-%doc src/doc/index.html
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-*
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc src/dist-static/LICENSE*
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.5-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2.1-alt1_4jpp7
 - new release
 
