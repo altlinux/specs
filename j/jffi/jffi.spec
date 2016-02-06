@@ -1,41 +1,60 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ texinfo unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global commit_hash 52af1f2
-%global tag_hash f2d7914
-%global sofile_version 1.2
+BuildRequires: jpackage-generic-compat
+%global cluster jnr
+%global sover 1.2
 
-Name:    jffi
-Version: 1.2.6
-Release: alt2_3jpp7
-Summary: An optimized Java interface to libffi 
+Name:           jffi
+Version:        1.2.9
+Release:        alt1_8jpp8
+Summary:        Java Foreign Function Interface
 
-Group:   System/Libraries
-License: LGPLv3+ or ASL 2.0
-URL:     http://github.com/jnr/%{name}/
-Source0: https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
-Patch0:  jffi-fix-dependencies-in-build-xml.patch
-Patch1:  jffi-add-built-jar-to-test-classpath.patch
-Patch2:  jffi-fix-compilation-flags.patch
+License:        LGPLv3+ or ASL 2.0
+URL:            http://github.com/jnr/jffi
+Source0:        https://github.com/%{cluster}/%{name}/archive/%{version}.zip
+Source1:        MANIFEST.MF
+Source2:        NATIVE-MANIFEST.MF
+Source3:        p2.inf
+Patch0:         jffi-fix-dependencies-in-build-xml.patch
+Patch1:         jffi-add-built-jar-to-test-classpath.patch
+Patch2:         jffi-fix-compilation-flags.patch
 
-BuildRequires: jpackage-utils
-BuildRequires: libffi-devel
-
-BuildRequires: ant
-BuildRequires: ant-junit
-BuildRequires: junit4
-
-Requires: jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  libffi-devel
+BuildRequires:  ant
+BuildRequires:  ant-junit
 Source44: import.info
 
 %description
-An optimized Java interface to libffi 
+An optimized Java interface to libffi.
+
+%package native
+Group: System/Libraries
+Summary:        %{name} JAR with native bits
+
+%description native
+This package contains %{name} JAR with native bits.
+
+%package javadoc
+Group: System/Libraries
+Summary:        Javadoc for %{name}
+BuildArch:      noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 
 %prep
-%setup -q -n jnr-%{name}-%{tag_hash}
+%setup -q
+cp %{SOURCE1} .
+cp %{SOURCE2} .
+sed -i -e's/@VERSION/%{version}/g' MANIFEST.MF
+sed -i -e's/@VERSION/%{version}/g' NATIVE-MANIFEST.MF
 %patch0
 %patch1
 %patch2
@@ -43,12 +62,6 @@ An optimized Java interface to libffi
 # ppc{,64} fix
 # https://bugzilla.redhat.com/show_bug.cgi?id=561448#c9
 sed -i.cpu -e '/m\$(MODEL)/d' jni/GNUmakefile libtest/GNUmakefile
-%ifnarch %{ix86} x86_64
-rm -rf test/
-%endif
-
-# remove random executable bit
-chmod 0644 jni/jffi/jffi.h
 
 # remove uneccessary directories
 rm -rf archive/* jni/libffi/ jni/win32/ lib/CopyLibs/ lib/junit*
@@ -56,39 +69,65 @@ rm -rf archive/* jni/libffi/ jni/win32/ lib/CopyLibs/ lib/junit*
 find ./ -name '*.jar' -exec rm -f '{}' \; 
 find ./ -name '*.class' -exec rm -f '{}' \; 
 
-%build
 build-jar-repository -s -p lib/ junit
 
-ant -Duse.system.libffi=1
+%mvn_package 'com.github.jnr:jffi::native:' native
+%mvn_file ':{*}' %{name}/@1 @1
+
+%build
+# ant will produce JAR with native bits
+ant jar build-native -Duse.system.libffi=1
+
+# maven will look for JAR with native bits in archive/
+cp -p dist/jffi-*-Linux.jar archive/
+
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}
-mkdir -p $RPM_BUILD_ROOT%{_jnidir}/
+%mvn_install
 
-cp -p dist/%{name}-complete.jar $RPM_BUILD_ROOT%{_jnidir}/%{name}.jar
+if [ %_libdir != /usr/lib ]; then
+    mv %buildroot/usr/lib %buildroot%_libdir
+    sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
+fi
 
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-# hack for maven 304 to find jar
-mkdir -p %{buildroot}%{_javadir}/
-ln -s %_jnidir/jffi.jar %{buildroot}%{_javadir}/jffi.jar
+mkdir -p META-INF/
+cp %{SOURCE3} META-INF/
+jar umf MANIFEST.MF %{buildroot}%{_jnidir}/%{name}/%{name}.jar META-INF/p2.inf
+
+# install *.so
+install -dm 755 %{buildroot}%{_libdir}/%{name}
+cp -rp target/jni/* %{buildroot}%{_libdir}/%{name}/
+# create version-less symlink for .so file
+sofile=`find %{buildroot}%{_libdir}/%{name} -name lib%{name}-%{sover}.so`
+chmod +x ${sofile}
+ln -sr ${sofile} `dirname ${sofile}`/lib%{name}.so
+
+jar umf NATIVE-MANIFEST.MF %{buildroot}%{_jnidir}/%{name}/%{name}-native.jar
 
 %check
+# skip tests on s390 until https://bugzilla.redhat.com/show_bug.cgi?id=1084914 is resolved
+%ifnarch s390
 # don't fail on unused parameters... (TODO: send patch upstream)
 sed -i 's|-Werror||' libtest/GNUmakefile
 ant -Duse.system.libffi=1 test
+%endif
 
-%files
+%files -f .mfiles
 %doc COPYING.GPL COPYING.LESSER LICENSE
-%{_jnidir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%_javadir/jffi.jar
+
+%files native -f .mfiles-native
+%{_libdir}/%{name}
+%doc COPYING.GPL COPYING.LESSER LICENSE
+
+%files javadoc -f .mfiles-javadoc
+%doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_8jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.6-alt2_3jpp7
 - new release
 
