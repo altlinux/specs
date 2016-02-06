@@ -1,44 +1,74 @@
-Name: jastow
-Version: 1.0.0
-Summary: Jasper fork
-License: ASL 2.0
-Url: https://github.com/undertow-io/jastow
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jastow = 1.0.0-4.fc23
-Provides: mvn(io.undertow.jastow:jastow) = 1.0.0.Final
-Provides: mvn(io.undertow.jastow:jastow:pom:) = 1.0.0.Final
-Requires: java-headless
-Requires: jpackage-utils
-#Requires: mvn(com.sun:tools)
-#Requires: mvn(io.undertow:undertow-servlet)
-Requires: mvn(org.jboss.logging:jboss-logging)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jastow-1.0.0-4.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jastow
+%define version 1.0.0
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+Name:             jastow
+Version:          1.0.0
+Release:          alt1_4jpp8
+Summary:          Jasper fork
+License:          ASL 2.0
+Url:              https://github.com/undertow-io/jastow
+Source0:          http://github.com/undertow-io/jastow/archive/%{namedversion}.tar.gz
+
+BuildRequires:    jboss-parent
+BuildRequires:    jboss-logging
+BuildRequires:    jboss-logging-tools
+BuildRequires:    jboss-logmanager
+BuildRequires:    jboss-servlet-3.1-api
+BuildRequires:    jboss-jsp-2.3-api
+BuildRequires:    xnio
+BuildRequires:    ecj
+BuildRequires:    maven-local
+BuildRequires:    maven-injection-plugin
+BuildRequires:    maven-injection-plugin
+BuildRequires:    undertow
+
+BuildArch:        noarch
+Source44: import.info
 
 %description
 The Jasper fork for Undertow.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadocs for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n jastow-%{namedversion}
+
+%pom_remove_dep "org.glassfish:javax.el"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# we don't want to have cyclic dep
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE README NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp8
+- unbootsrap build
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
