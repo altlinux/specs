@@ -1,44 +1,90 @@
-Name: jboss-jsf-2.2-api
-Version: 2.2.0
-Summary: JavaServer Faces 2.2 API
-License: (CDDL or GPLv2 with exceptions) and ASL 2.0
-Url: http://www.jboss.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jboss-jsf-2.2-api = 2.2.0-4.fc21
-Provides: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.2_spec) = 2.2.0
-Provides: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.2_spec:pom:) = 2.2.0
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.sun:tools)
-Requires: mvn(javax.enterprise:cdi-api)
-Requires: mvn(javax.inject:javax.inject)
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jboss-jsf-2.2-api
+%define version 2.2.0
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+Name:       jboss-jsf-2.2-api
+Version:    2.2.0
+Release:    alt1_4jpp8
+Summary:    JavaServer Faces 2.2 API
+License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
+URL:        http://www.jboss.org
+Source0:    https://github.com/jboss/jboss-jsf-api_spec/archive/jboss-jsf-api_2.2_spec-%{namedversion}.tar.gz
+Source1:    cddl.txt
+Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
+
+BuildRequires: jboss-parent
+BuildRequires: maven-local
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: bean-validation-api
+BuildRequires: mojarra
+BuildRequires: jboss-jstl-1.2-api
+BuildRequires: jboss-jsp-2.2-api
+BuildRequires: jboss-el-2.2-api
+BuildRequires: atinject
+BuildRequires: cdi-api
 
 BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: jboss-jsf-2.2-api-2.2.0-4.fc21.cpio
+Source44: import.info
 
 %description
 This package contains JSR-344: JavaServer Faces 2.2 API.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary: Javadocs for %{name}
+BuildArch: noarch
+
+%description javadoc	
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n jboss-jsf-api_spec-jboss-jsf-api_2.2_spec-%{namedversion}
+
+# We don't have this
+%pom_remove_dep "org.jboss.spec:jboss-javaee-all-6.0"
+# But we have this
+%pom_add_dep "javax.inject:javax.inject"
+%pom_add_dep "javax.enterprise:cdi-api"
+
+cp %{SOURCE1} .
+cp %{SOURCE2} .
+
+sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301," LICENSE
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE LICENSE-2.0.txt
+%doc README
+%doc cddl.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE LICENSE-2.0.txt
+%doc README
+%doc cddl.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_4jpp8
+- unbootsrap build
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
