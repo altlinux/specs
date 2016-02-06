@@ -1,111 +1,143 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%global githash cb6709646eed97c271d73f50ad750cc43c8e052a
 Name:             paranamer
-Version:          2.4.1
-Release:          alt2_6jpp7
+Version:          2.8
+Release:          alt1_1jpp8
 Summary:          Library for accessing non-private method parameter names at run-time
-Group:            Development/Java
 License:          BSD
-URL:              http://paranamer.codehaus.org
+URL:              https://github.com/paul-hammant/paranamer
+Source0:          https://github.com/paul-hammant/paranamer/archive/%{githash}/%{name}-%{githash}.tar.gz
 
-# git clone git://git.codehaus.org/paranamer-git.git paranamer-2.4.1
-# cd paranamer-2.4.1 && git checkout paranamer-2.4.1
-# find . -name '*.jar' -delete
-# rm -rf .git
-# cd .. && tar cafJ paranamer-2.4.1-CLEAN.tar.xz paranamer-2.4.1
-Source0:          paranamer-%{version}-CLEAN.tar.xz
+BuildRequires:    maven-local
+BuildRequires:    mvn(com.thoughtworks.qdox:qdox)
+BuildRequires:    mvn(javax.inject:javax.inject)
+BuildRequires:    mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires:    mvn(org.mockito:mockito-all)
+BuildRequires:    mvn(org.ow2.asm:asm)
 
 BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    jmock
-
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 It is a library that allows the parameter names of non-private methods
-and constructors to be accessed at runtime.
+and constructors to be accessed at run-time.
+
+%package ant
+Group: Development/Java
+Summary:          ParaNamer Ant
+
+%description ant
+This package contains the ParaNamer Ant tasks.
+
+%package generator
+Group: Development/Java
+Summary:          ParaNamer Generator
+
+%description generator
+This package contains the ParaNamer Generator.
+
+%package integration-tests
+Group: Development/Java
+Summary:          ParaNamer Integration Test Parent POM
+
+%description integration-tests
+ParaNamer Integration Test Parent POM.
+
+%package it-011
+Group: Development/Java
+Summary:          ParaNamer Integration Test 011
+
+%description it-011
+ParaNamer IT 011: can use maven plugin defaults.
+
+%package maven-plugin
+Group: Development/Java
+Summary:          ParaNamer Maven plugin
+
+%description maven-plugin
+This package contains the ParaNamer Maven plugin.
+
+%package parent
+Group: Development/Java
+Summary:          ParaNamer Parent POM
+
+%description parent
+This package contains the ParaNamer Parent POM.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{githash}
+# Cleanup
+find -name "*.class" -print -delete
+# Do not erase test resources
+find -name "*.jar" -print ! -name "test.jar" -delete
 
 chmod -x LICENSE.txt
 
 # Remove wagon extension
 %pom_xpath_remove "pom:build/pom:extensions"
+
+%pom_remove_plugin -r :maven-dependency-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
+%pom_remove_plugin -r :maven-source-plugin
+
 # Disable distribution module
-%pom_disable_module paranamer-distribution
-# Specify version in the plugin
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'paranamer-maven-plugin']" "<version>%{version}</version>" paranamer/pom.xml
+%pom_disable_module %{name}-distribution
+
+# Unavailable test deps
+%pom_remove_dep -r net.sourceforge.f2j:
+%pom_xpath_remove -r "pom:dependency[pom:classifier = 'javadoc' ]"
+# package org.netlib.blas does not exist
+rm -r %{name}/src/test/com/thoughtworks/paranamer/JavadocParanamerTest.java
+# testRetrievesParameterNamesFromBootstrapClassLoader java.lang.AssertionError:
+#       Should not find names for classes loaded by the bootstrap class loader.
+rm -r %{name}/src/test/com/thoughtworks/paranamer/BytecodeReadingParanamerTestCase.java
 
 %build
-# Test failures
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+
+%mvn_build -s
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 paranamer-generator/target/paranamer-generator-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-generator.jar
-install -pm 644 paranamer-maven-plugin/target/paranamer-maven-plugin-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-maven-plugin.jar
-install -pm 644 paranamer-integration-tests/it-011/target/paranamer-it-011-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-it-011.jar
-install -pm 644 paranamer-ant/target/paranamer-ant-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-ant.jar
-install -pm 644 paranamer/target/paranamer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
-
-# POM
-install -pm 644 paranamer-generator/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-generator.pom
-install -pm 644 paranamer-maven-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-maven-plugin.pom
-install -pm 644 paranamer-integration-tests/it-011/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-it-011.pom
-install -pm 644 paranamer-integration-tests/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-it.pom
-install -pm 644 paranamer-ant/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-ant.pom
-install -pm 644 paranamer/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
-
-# DEPMAP
-%add_maven_depmap JPP.%{name}-%{name}-generator.pom %{name}/%{name}-generator.jar
-%add_maven_depmap JPP.%{name}-%{name}-maven-plugin.pom %{name}/%{name}-maven-plugin.jar
-%add_maven_depmap JPP.%{name}-%{name}-it-011.pom %{name}/%{name}-it-011.jar
-%add_maven_depmap JPP.%{name}-%{name}-ant.pom %{name}/%{name}-ant.jar
-%add_maven_depmap JPP.%{name}-%{name}.pom %{name}/%{name}.jar
-
-%add_maven_depmap JPP.%{name}-%{name}-it.pom
-%add_maven_depmap JPP.%{name}-%{name}-parent.pom
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles-%{name}
+%doc README.md
 %doc LICENSE.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files ant -f .mfiles-%{name}-ant
+
+%files generator -f .mfiles-%{name}-generator
+%doc LICENSE.txt
+
+%files integration-tests -f .mfiles-%{name}-integration-tests
+%doc LICENSE.txt
+
+%files it-011 -f .mfiles-%{name}-it-011
+%doc LICENSE.txt
+
+%files maven-plugin -f .mfiles-%{name}-maven-plugin
+
+%files parent -f .mfiles-%{name}-parent
+%doc LICENSE.txt
+
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_1jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_6jpp7
 - new release
 
