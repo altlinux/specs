@@ -1,93 +1,68 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-transaction-spi
-%define version 7.0.0
+%define version 7.1.0
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-transaction-spi
-Version:          7.0.0
-Release:          alt2_6jpp7
+Version:          7.1.0
+Release:          alt1_3jpp8
 Summary:          JBoss Transaction SPI
-Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org
-
-# svn export http://anonsvn.jboss.org/repos/jbossas/projects/integration/tags/jboss-transaction-spi-7.0.0.Final/
-# tar cafJ jboss-transaction-spi-7.0.0.Final.tar.xz jboss-transaction-spi-7.0.0.Final
-Source0:          %{name}-%{namedversion}.tar.xz
-Patch0:           %{name}-%{namedversion}-pom.patch
+Source0:          https://github.com/jbosstm/jboss-transaction-spi/archive/%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jboss-connector-1.6-api
+BuildRequires:    jboss-connector-1.7-api
 BuildRequires:    jboss-logging
-BuildRequires:    jboss-transaction-1.1-api
-BuildRequires:    jpackage-utils
+BuildRequires:    jboss-transaction-1.2-api
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-
-Requires:         jboss-connector-1.6-api
-Requires:         jboss-logging
-Requires:         jboss-transaction-1.1-api
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
 The Java Transaction SPI classes
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-%patch0 -p1
+%setup -q -n jboss-transaction-spi-%{namedversion}
 
-rm .classpath
+rm -rf .classpath
+rm -rf .settings
+
+sed -i "s|jboss-logging-spi|jboss-logging|" pom.xml
+sed -i "s|>jboss-connector-api_1.5_spec<|>jboss-connector-api_1.7_spec<|" pom.xml
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/
-install -pm 644 target/jboss-transaction-spi-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.0-alt1_3jpp8
+- java 8 mass update
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 7.0.0-alt2_6jpp7
 - new release
 
