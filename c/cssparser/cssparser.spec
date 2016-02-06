@@ -1,17 +1,13 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           cssparser
-Version:        0.9.7
-Release:        alt1_1jpp7
+Version:        0.9.15
+Release:        alt1_4jpp8
 Summary:        CSS Parser
-
-Group:          Development/Java
-License:        LGPLv2
+License:        LGPLv2+ 
 URL:            http://cssparser.sourceforge.net/
 # sh ./fetch-cssparser.sh
 Source0:        cssparser-%{version}.tar.xz
@@ -19,31 +15,23 @@ Source1:        fetch-cssparser.sh
 
 BuildArch: noarch
 
-BuildRequires: sac >= 1.3-6
-BuildRequires: junit
-BuildRequires: javacc-maven-plugin >= 2.6-3
+BuildRequires: mvn(org.w3c.css:sac) >= 1.3
+BuildRequires: mvn(junit:junit)
+BuildRequires: javacc-maven-plugin >= 2.6
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-install-plugin
 BuildRequires: maven-source-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
 BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-shared-reporting-impl
-Requires: sac
+BuildRequires: maven-reporting-impl
+BuildRequires: replacer
 Source44: import.info
 
 %description
 A CSS parser which implements SAC (the Simple API for CSS).
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -51,37 +39,25 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
+%pom_remove_plugin :maven-checkstyle-plugin
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+%mvn_build
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%doc doc/license.html doc/readme.html
+%doc LICENSE.txt
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-rm -rf target/site/api*
-
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%doc LICENSE.txt doc/license.html doc/readme.html
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.15-alt1_4jpp8
+- java 8 mass update
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.7-alt1_1jpp7
 - new version
 
