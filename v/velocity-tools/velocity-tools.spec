@@ -1,10 +1,11 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          velocity-tools
 Version:       2.0
-Release:       alt2_7jpp7
+Release:       alt2_12jpp8
 Summary:       Collection of useful tools for Velocity template engine
 License:       ASL 2.0
 Url:           http://velocity.apache.org/tools/releases/2.0/
@@ -12,8 +13,8 @@ Source0:       http://www.apache.org/dist/velocity/tools/%{version}/%{name}-%{ve
 Patch0:        %{name}-%{version}-junit4.patch
 Patch1:        %{name}-%{version}-dont_copy_test_lib.patch
 # servlet 3.0 support thanks to mizdebsk
+# servlet 3.1 support
 Patch2:        %{name}-%{version}-servlet.patch
-
 
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
 BuildRequires: mvn(commons-chain:commons-chain)
@@ -49,7 +50,7 @@ BuildRequires: maven-local
 BuildRequires: maven-resources-plugin
 # required by resources-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-filtering)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -77,7 +78,7 @@ find . -name "*.jar" -delete
 find . -name "*.class" -delete
 %patch0 -p1
 %patch1 -p1
-%patch2 -p0
+%patch2 -p1
 
 sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 
@@ -105,12 +106,16 @@ sed -i 's/\r//' LICENSE NOTICE WHY_THREE_JARS.txt
 %mvn_install
 
 %files -f .mfiles
-%doc CONTRIBUTORS LICENSE NOTICE README.txt STATUS WHY_THREE_JARS.txt
+%doc CONTRIBUTORS README.txt STATUS WHY_THREE_JARS.txt
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_12jpp8
+- java 8 mass update
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_7jpp7
 - new release
 
