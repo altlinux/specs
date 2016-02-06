@@ -1,54 +1,41 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
+BuildRequires: jdepend
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-remoting
-%define version 3.2.4
-%global namedreltag .GA
+%define version 4.0.3
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-remoting
-Version:          3.2.4
-Release:          alt2_4jpp7
-Summary:          JBoss Remoting 3
+Version:          4.0.3
+Release:          alt1_2jpp8
+Summary:          JBoss Remoting
 Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossremoting
 
 # git clone git://github.com/jboss-remoting/jboss-remoting.git
-# cd jboss-remoting && git checkout 3.2.4.GA && git checkout-index -f -a --prefix=jboss-remoting-3.2.4.GA/
-# rm jboss-remoting-3.2.4.GA/src/test/resources/test-content.bin
-# tar -cJf jboss-remoting-3.2.4.GA-CLEAN.tar.xz jboss-remoting-3.2.4.GA
-Source0:          %{name}-%{namedversion}-CLEAN.tar.xz
+# cd jboss-remoting && git checkout 4.0.3.Final && git checkout-index -f -a --prefix=jboss-remoting-4.0.3.Final/
+# rm jboss-remoting-4.0.3.Final/src/test/resources/test-content.bin
+# tar -cJf jboss-remoting-4.0.3.Final-CLEAN.tar.xz jboss-remoting-4.0.3.Final
+Source0:          jboss-remoting-%{namedversion}-CLEAN.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-injection-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    maven-enforcer-plugin
 BuildRequires:    jboss-parent
 BuildRequires:    xnio
+BuildRequires:    jboss-logging
 BuildRequires:    jboss-logmanager
 BuildRequires:    jboss-logging-tools
-BuildRequires:    junit4
+BuildRequires:    junit
 BuildRequires:    apiviz
-
-Requires:         jboss-logmanager
-Requires:         jboss-logging-tools
-Requires:         xnio
-Requires:         jpackage-utils
 Source44: import.info
 
 %description
@@ -60,46 +47,32 @@ and asynchronous callbacks.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n jboss-remoting-%{namedversion}
 
 %build
 # Skipped test because of removing binary content from test dir which is required to run them
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc COPYING.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc COPYING.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0.3-alt1_2jpp8
+- java 8 mass update
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.2.4-alt2_4jpp7
 - new release
 
