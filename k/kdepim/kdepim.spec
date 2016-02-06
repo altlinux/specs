@@ -20,7 +20,7 @@
 
 Name: kdepim
 Version: 3.5.13.2
-Release: alt5.2
+Release: alt5.3
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -998,6 +998,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Sat Feb 06 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:3.5.13.2-alt5.3
+- NMU: rebuilt with libical 2.0
+
 * Wed Oct 28 2015 Andrey Cherepanov <cas@altlinux.org> 1:3.5.13.2-alt5.2
 - Rebuilt for gcc5 C++11 ABI
 
