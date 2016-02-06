@@ -3,12 +3,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 %global master_version 4
 Name:          struts
 Version:       1.3.10
-Release:       alt4_9jpp7
+Release:       alt4_15jpp8
 Summary:       Web application framework
 License:       ASL 2.0
 URL:           http://struts.apache.org/
@@ -23,19 +25,23 @@ Source1:       %{name}-master-%{master_version}-pom.xml
 # add struts-master relativePath
 Patch0:        %{name}-%{version}-parent-pom.patch
 # add 
-#  org.jboss.spec.javax.el jboss-el-api_2.2_spec
+#  org.jboss.spec.javax.el
 #  org.apache.maven.plugins maven-resources-plugin configuration
 # change 
-#  myfaces myfaces-jsf-api 1.0.9 with org.jboss.spec.javax.faces jboss-jsf-api_2.1_spec
-#  jakarta-taglibs-standard with jboss-jstl-1.2-api
-#  javax.servlet servlet-api with org.jboss.spec.javax.servlet jboss-servlet-api_3.0_spec
-#  javax.servlet jsp-api with org.jboss.spec.javax.servlet.jsp jboss-jsp-api_2.2_spec
+#  myfaces myfaces-jsf-api 1.0.9 with org.jboss.spec.javax.faces
+#  jakarta-taglibs-standard with taglibs-standard-jstlel
+#  javax.servlet servlet-api with org.jboss.spec.javax.servlet
+#  javax.servlet jsp-api with org.jboss.spec.javax.servlet.jsp
 # fix
 #  bsf gId
 #  maven-compiler-plugin build source/target
-#  build for junit servlet-3.0-api
+#  build for junit servlet-3.1-api
 Patch1:        %{name}-%{version}-jboss.patch
+# Thanks to Arun Babu Neelicattu aneelica@redhat.com
+# and Brandon.Vincent@asu.edu
+Patch2:        struts-1.3.10-CVE-2014-0114.patch
 
+Patch3:        struts-1.3.10-CVE-2015-0899.patch
 
 BuildRequires: mvn(antlr:antlr)
 BuildRequires: mvn(commons-beanutils:commons-beanutils)
@@ -45,16 +51,20 @@ BuildRequires: mvn(commons-fileupload:commons-fileupload)
 BuildRequires: mvn(commons-logging:commons-logging)
 BuildRequires: mvn(commons-validator:commons-validator)
 BuildRequires: mvn(junit:junit)
+%if %{?fedora} >= 21
+BuildRequires: mvn(log4j:log4j:1.2.17)
+%else
+BuildRequires: mvn(log4j:log4j)
+%endif
 BuildRequires: mvn(org.apache.bsf:bsf)
-BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_2.2_spec)
-BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec)
-BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.2_spec)
-BuildRequires: mvn(org.jboss.spec.javax.servlet.jstl:jboss-jstl-api_1.2_spec)
-BuildRequires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
+BuildRequires: mvn(org.apache.taglibs:taglibs-standard-jstlel)
+BuildRequires: mvn(org.jboss.spec.javax.el:jboss-el-api_3.0_spec)
+BuildRequires: mvn(org.jboss.spec.javax.faces:jboss-jsf-api_2.2_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.3_spec)
+BuildRequires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec)
 BuildRequires: mvn(oro:oro)
 
 BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-junit4
 
 BuildArch:     noarch
 Obsoletes:     %{name}-manual < %{version}
@@ -92,6 +102,8 @@ find -name "*.jar" -delete
 find -name "*.class" -delete
 %patch0 -p0
 %patch1 -p1
+%patch2 -p0
+%patch3 -p1
 
 sed -i 's/\r//' LICENSE.txt NOTICE.txt
 
@@ -100,7 +112,8 @@ for s in src/tiles/src/main/java/org/apache/struts/tiles/ComponentDefinition.jav
   native2ascii -encoding UTF8 ${s} ${s}
 done
 
-cp -p %{SOURCE1} pom.xml
+%pom_remove_parent src
+#cp -p %%{SOURCE1} pom.xml
 
 cd src
 %mvn_file :%{name}-core %{name}/core
@@ -123,21 +136,19 @@ cd src
 cd src
 %mvn_install
 )
-
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-master.pom
-%add_maven_depmap JPP.%{name}-master.pom
 rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 
 %files -f src/.mfiles
 %dir %{_javadir}/%{name}
-%{_mavenpomdir}/JPP.%{name}-master.pom
-%{_mavendepmapfragdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f src/.mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_15jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt4_9jpp7
 - new release
 
