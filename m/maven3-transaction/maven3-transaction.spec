@@ -5,8 +5,9 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt30jpp
+Release: alt31jpp
 
+Provides: objectweb-asm4 = 5
 # to build hornetq
 Provides: mvn(org.hornetq:hornetq-journal)
 # jetty
@@ -44,6 +45,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt31jpp
+- updated dependencies
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt30jpp
 - updated dependencies
 
