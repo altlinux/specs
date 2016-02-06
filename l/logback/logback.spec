@@ -1,82 +1,84 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
-%global with_maven 0
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:           logback
-Version:        1.0.9
-Release:        alt2_2jpp7
+Version:        1.1.2
+Release:        alt1_5jpp8
 Summary:        A Java logging library
-
-Group:          Development/Java
 License:        LGPLv2 or EPL
 URL:            http://logback.qos.ch/
 Source0:        http://logback.qos.ch/dist/%{name}-%{version}.tar.gz
-Source1:        %{name}-%{version}-00-build.xml
-Source2:        %{name}-%{version}-core-osgi.bnd
-Source3:        %{name}-%{version}-classic-osgi.bnd
-Source4:        %{name}-%{version}-access-osgi.bnd
+# use antrun-plugin instead of gmaven
+Patch0:         %{name}-1.0.10-antrunplugin.patch
+# servlet 3.1 support
+Patch1:         %{name}-1.1.2-servlet.patch
+Patch2:         %{name}-1.1.2-jetty9.3.0.patch
 
 # Java dependencies
-BuildRequires: jpackage-utils
 
 # Required libraries
-BuildRequires: geronimo-jms
-# require groovy 2.0.0
-BuildRequires: groovy
-BuildRequires: janino
-# require jansi 1.8
-BuildRequires: jansi
-BuildRequires: javamail
-BuildRequires: jetty
-BuildRequires: log4j
-BuildRequires: slf4j
-BuildRequires: tomcat-lib
-BuildRequires: tomcat-servlet-3.0-api
+BuildRequires: mvn(javax.mail:mail)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
+BuildRequires: mvn(org.apache.tomcat:tomcat-catalina)
+BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires: mvn(org.codehaus.janino:janino)
+BuildRequires: mvn(org.eclipse.jetty:jetty-server)
+BuildRequires: mvn(org.eclipse.jetty:jetty-util)
+BuildRequires: mvn(org.fusesource:fusesource-pom:pom:)
+BuildRequires: mvn(org.fusesource.jansi:jansi)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-ext)
 
-# groovy-all embedded libraries
-BuildRequires: antlr-tool
-BuildRequires: apache-commons-cli
-BuildRequires: objectweb-asm
-
-# Build tools -- build with ant for now because of circular dependencies
-%if %with_maven
-# antrun plugin deps
-BuildRequires: ant-junit
-BuildRequires: felix-main
-BuildRequires: junit
-
-BuildRequires: gmaven
-BuildRequires: maven
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-build-helper
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
+%if %{?fedora} > 21
+# use groovy 2.x
+BuildRequires: mvn(org.codehaus.groovy:groovy-all)
+BuildRequires: mvn(org.ow2.asm:asm-all)
 %else
-BuildRequires: ant
-BuildRequires: aqute-bnd
+# use groovy 1.8.9
+BuildRequires: mvn(org.codehaus.groovy:groovy:1.8.9)
+BuildRequires: mvn(asm:asm-all)
+%endif
+# groovy-all embedded libraries
+BuildRequires: mvn(antlr:antlr)
+BuildRequires: mvn(commons-cli:commons-cli)
+BuildRequires: mvn(org.slf4j:slf4j-nop)
+
+# test deps
+%if 0
+BuildRequires: mvn(com.h2database:h2:1.2.132)
+BuildRequires: mvn(dom4j:dom4j:1.6.1)
+BuildRequires: mvn(hsqldb:hsqldb:1.8.0.7)
+BuildRequires: mvn(mysql:mysql-connector-java:5.1.9)
+BuildRequires: mvn(postgresql:postgresql:8.4-701.jdbc4)
+BuildRequires: mvn(org.easytesting:fest-assert:1.2)
+BuildRequires: mvn(org.mockito:mockito-core:1.9.0)
+BuildRequires: mvn(org.slf4j:integration:1.7.5)
+BuildRequires: mvn(org.slf4j:jul-to-slf4j:1.7.5)
+BuildRequires: mvn(org.slf4j:log4j-over-slf4j:1.7.5)
+BuildRequires: mvn(org.slf4j:slf4j-api:1.7.5:test-jar)
+BuildRequires: mvn(org.slf4j:slf4j-ext:1.7.5)
+BuildRequires: mvn(com.icegreen:greenmail:1.3)
+BuildRequires: mvn(org.subethamail:subethasmtp:2.1.0)
+# mvn(ch.qos.logback:logback-core:%%{version}:test-jar)
 %endif
 
-# Java runtime dependencies
-Requires:      jpackage-utils
-# Java library dependencies
-Requires:      geronimo-jms
-Requires:      groovy
-Requires:      janino
-Requires:      jansi
-Requires:      javamail
+# antrun plugin deps
+BuildRequires: mvn(org.apache.ant:ant-junit)
+BuildRequires: mvn(org.apache.felix:org.apache.felix.main)
+BuildRequires: mvn(junit:junit)
 
-Requires:      slf4j
-Requires:      tomcat-lib
-Requires:      tomcat-servlet-3.0-api
+BuildRequires: maven-local
+BuildRequires: maven-antrun-plugin
+BuildRequires: maven-plugin-build-helper
+BuildRequires: maven-plugin-bundle
+#BuildRequires: maven-source-plugin
 
 BuildArch:     noarch
 Source44: import.info
@@ -97,23 +99,16 @@ Tomcat and Jetty, to provide HTTP-access log functionality. Note that you
 could easily build your own module on top of logback-core.
 
 %package javadoc
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Group:         Development/Java
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 API documentation for the Logback library
 
 %package access
+Group: Development/Java
 Summary:       Logback-access module for Servlet integration
-Group:         Development/Java
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      janino
-Requires:      javamail
-Requires:      jetty
-Requires:      tomcat-lib
-Requires:      tomcat-servlet-3.0-api
 
 %description access
 The logback-access module integrates with Servlet containers, such as Tomcat
@@ -121,28 +116,27 @@ and Jetty, to provide HTTP-access log functionality. Note that you could
 easily build your own module on top of logback-core. 
 
 %package examples
+Group: Development/Java
 Summary:       Logback Examples Module
-Group:         Development/Java
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      %{name}-access = %{?epoch:%epoch:}%{version}-%{release}
-Requires:      log4j
-Requires:      slf4j
-Requires:      tomcat-servlet-3.0-api
 
 %description examples
 logback-examples module.
 
 %prep
 %setup -q
-%if !%with_maven
-cp -p %{SOURCE4} osgi-access.bnd
-%endif
-
-%pom_remove_plugin org.scala-tools:maven-scala-plugin %{name}-core
-
+# Clean up
 find . -name "*.class" -delete
 find . -name "*.cmd" -delete
 find . -name "*.jar" -delete
+
+%patch0 -p0
+sed -i 's|source="1.5" target="1.5"|source="1.6" target="1.6"|' %{name}-classic/pom.xml
+%patch1 -p1
+%patch2 -p1
+
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :gmaven-plugin %{name}-classic
 
 # Clean up the documentation
 sed -i 's/\r//' LICENSE.txt README.txt docs/*.* docs/*/*.* docs/*/*/*.*
@@ -152,85 +146,98 @@ rm -f docs/manual/.htaccess docs/css/site.css # Zero-length file
 
 sed -i 's#<artifactId>groovy-all</artifactId#<artifactId>groovy</artifactId#' $(find . -name "pom.xml")
 
+# Fix build with groovy2
+%if %{?fedora} > 21
+sed -i 's#groupId>asm#groupId>org.ow2.asm#' %{name}-classic/pom.xml
+sed -i 's#artifactId>groovy#artifactId>groovy-all#' %{name}-classic/pom.xml
+%endif
+
+# force tomcat apis
+sed -i 's#<groupId>javax.servlet#<groupId>org.apache.tomcat#' $(find . -name "pom.xml")
+sed -i 's#<artifactId>servlet-api#<artifactId>tomcat-servlet-api#' $(find . -name "pom.xml")
+sed -i 's#javax.servlet.*;version="2.5"#javax.servlet.*;version="3.1"#' %{name}-access/pom.xml
+sed -i 's#<version>2.5</version>#<version>${tomcat.version}</version>#' pom.xml
+
+sed -i 's#<version>1.2.14</version>#<version>1.2.17</version>#' %{name}-examples/pom.xml
+
+rm -r %{name}-*/src/test/java/*
+# remove test deps
+# ch.qos.logback:logback-core:test-jar
+%pom_xpath_remove "pom:project/pom:dependencyManagement/pom:dependencies/pom:dependency[pom:type = 'test-jar']"
+
+while read f
+do
+
+%pom_xpath_remove "pom:project/pom:dependencies/pom:dependency[pom:type = 'test-jar']" ${f}
+
+done << EOF
+%{name}-access/pom.xml
+%{name}-classic/pom.xml
+EOF
+
+while read f
+do
+
+%pom_xpath_remove "pom:project/pom:dependencies/pom:dependency[pom:scope = 'test']" ${f}
+
+done << EOF
+pom.xml
+%{name}-access/pom.xml
+%{name}-classic/pom.xml
+%{name}-core/pom.xml
+EOF
+
+# bundle-test-jar
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions" %{name}-access
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions" %{name}-classic
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions" %{name}-core
+
+# com.oracle:ojdbc14:10.2.0.1 com.microsoft.sqlserver:sqljdbc4:2.0
+%pom_xpath_remove "pom:project/pom:profiles/pom:profile[pom:id = 'host-orion']" %{name}-access
+%pom_xpath_remove "pom:project/pom:profiles" %{name}-classic
+
+%pom_xpath_remove "pom:project/pom:profiles/pom:profile[pom:id = 'javadocjar']"
+
 # disable for now
-#om_disable_module logback-site
-sed -i 's#<module>logback-site</module>#<!--module>logback-site</module-->#' pom.xml
+%pom_disable_module logback-site
+
+%pom_xpath_remove "pom:build/pom:extensions"
 
 %build
 
-%if %with_maven
+%mvn_package ":%{name}-access" access
+%mvn_package ":%{name}-examples" examples
 # unavailable test dep maven-scala-plugin
 # slf4jJAR and org.apache.felix.main are required by logback-examples modules for maven-antrun-plugin
-mvn-rpmbuild -Dmaven.test.skip=true \
+%mvn_build -f -- \
   -Dslf4jJAR=$(build-classpath slf4j/api) \
-  -Dorg.apache.felix:org.apache.felix.main:jar=$(build-classpath felix/org.apache.felix.main) \
-  package javadoc:aggregate
-%else
-cp -p %{SOURCE1} build.xml
-cp -p %{SOURCE2} osgi-core.bnd
-cp -p %{SOURCE3} osgi-classic.bnd
-ant dist javadoc
-%endif
+  -Dorg.apache.felix:org.apache.felix.main:jar=$(build-classpath felix/org.apache.felix.main)
 
 %install
-
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-install -pm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-%{name}-parent.pom
-
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-# main
-for sub in classic core; do
-  install -m 644 %{name}-$sub/target/%{name}-$sub-%{version}.jar \
-      %{buildroot}%{_javadir}/%{name}/%{name}-$sub.jar
-  install -pm 644 %{name}-$sub/pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{name}-%{name}-$sub.pom
-%add_maven_depmap JPP.%{name}-%{name}-$sub.pom %{name}/%{name}-$sub.jar
-done
-
-# optionals
-for sub in access examples; do
-  install -m 644 %{name}-$sub/target/%{name}-$sub-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}/%{name}-$sub.jar
-  install -pm 644 %{name}-$sub/pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{name}-%{name}-$sub.pom
-%add_maven_depmap JPP.%{name}-%{name}-$sub.pom %{name}/%{name}-$sub.jar -f $sub
-done
-
-install -d -m 755 p %{buildroot}%{_javadocdir}/%{name}
-# copy only apis docs
-cp -r target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 install -d -m 755 %{buildroot}%{_datadir}/%{name}-%{version}/examples
 cp -r %{name}-examples/pom.xml %{name}-examples/src %{buildroot}%{_datadir}/%{name}-%{version}/examples
 
-%files
-%doc LICENSE.txt README.txt docs/*
+%files -f .mfiles
+%doc README.txt docs/*
+%doc LICENSE.txt
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-classic.jar
-%{_javadir}/%{name}/%{name}-core.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-classic.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-core.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
-%files access
+%files access -f .mfiles-access
 %doc LICENSE.txt
-%{_javadir}/%{name}/%{name}-access.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-access.pom
-%{_mavendepmapfragdir}/%{name}-access
 
-%files examples
+%files examples -f .mfiles-examples
 %doc LICENSE.txt
 %{_datadir}/%{name}-%{version}
-%{_javadir}/%{name}/%{name}-examples.jar
-%{_mavendepmapfragdir}/%{name}-examples
-%{_mavenpomdir}/JPP.%{name}-%{name}-examples.pom
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.2-alt1_5jpp8
+- java 8 mass update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.9-alt2_2jpp7
 - fixed build (use java6 due to reflection API change)
 
