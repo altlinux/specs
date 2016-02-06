@@ -2,51 +2,37 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global bits 32
+BuildRequires: jpackage-generic-compat
+# fedora __isa_bits tmp hack
+%ifarch x86_64
+%define __isa_bits 64
+%else
+%define __isa_bits 32
+%endif
+%global bits %{__isa_bits}
 %global debug_package %{nil}
 
-%ifarch x86_64 ppc64 s390x sparc64
-  %global bits 64
-%endif
+Name:           jansi-native
+Version:        1.5
+Release:        alt1_9jpp8
+Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://jansi.fusesource.org/
+Source0:        https://github.com/fusesource/jansi-native/archive/jansi-native-1.5.tar.gz
 
-Name:             jansi-native
-Version:          1.4
-Release:          alt1_5jpp7
-Summary:          Jansi Native implements the JNI Libraries used by the Jansi project
-Group:            Development/Java
-License:          ASL 2.0
-URL:              http://jansi.fusesource.org/
-
-# git clone git://github.com/fusesource/jansi-native.git
-# cd jansi-native && git archive --format=tar --prefix=jansi-native-1.4/ jansi-native-1.4 | xz > jansi-native-1.4.tar.xz
-Source0:          jansi-native-%{version}.tar.xz
-
-Patch0:           0001-Fixing-archiver-requires-AM_PROG_AR-in-configure.ac-.patch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-report-plugin
-BuildRequires:    maven-project-info-reports-plugin
-BuildRequires:    maven-clean-plugin
-BuildRequires:    maven-plugin-bundle
-BuildRequires:    maven-plugin-jxr
-BuildRequires:    junit4
-BuildRequires:    hawtjni
-BuildRequires:    autoconf
-BuildRequires:    automake
-BuildRequires:    libtool
-BuildRequires:    make
-BuildRequires:    fusesource-pom
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    maven-hawtjni-plugin
-
-Requires:         hawtjni
-Requires:         jpackage-utils
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:  mvn(org.fusesource:fusesource-pom:pom:)
+BuildRequires:  mvn(org.fusesource.hawtjni:hawtjni-runtime) >= 1.9
+BuildRequires:  mvn(org.fusesource.hawtjni:maven-hawtjni-plugin) >= 1.9
 Source44: import.info
 
 %description
@@ -56,53 +42,39 @@ which don't support it like Windows and provides graceful degradation for
 when output is being sent to output devices which cannot support ANSI sequences. 
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
-BuildArch: noarch
+BuildArch:        noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n jansi-native-jansi-native-%{version}
+%mvn_package :::linux%{bits}:
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-mkdir -p $RPM_BUILD_ROOT%{_jnidir}
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
+%mvn_install
 
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-cp -p target/%{name}-%{version}-linux%{bits}.jar $RPM_BUILD_ROOT%{_jnidir}/%{name}-linux.jar
+if [ %_libdir != /usr/lib ]; then
+    mv %buildroot/usr/lib %buildroot%_libdir
+        sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
+fi
 
-# JAVADOC
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_to_maven_depmap org.fusesource.jansi jansi-native %{version} JPP %{name}
-%add_to_maven_depmap org.fusesource.jansi jansi-native-linux%{bits} %{version} JPP %{name}-linux
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_jnidir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_jnidir}/%{name}
 %doc readme.md license.txt changelog.md
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_9jpp8
+- java 8 mass update
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_5jpp7
 - new release
 
