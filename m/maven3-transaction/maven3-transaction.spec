@@ -5,7 +5,10 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt31jpp
+Release: alt32jpp
+
+# todo infinicpan
+Provides: mvn(org.infinispan:infinispan-lucene-directory)
 
 Provides: objectweb-asm4 = 5
 # to build hornetq
@@ -45,6 +48,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt32jpp
+- updated dependencies
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt31jpp
 - updated dependencies
 
