@@ -1,38 +1,34 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mvel
-%define version 2.1.6
+%define version 2.2.2
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
+
 Name:          mvel
-Version:       2.1.6
-Release:       alt1_1jpp7
+Version:       2.2.2
+Release:       alt1_3jpp8
 Summary:       MVFLEX Expression Language
 License:       ASL 2.0
 Url:           http://mvel.codehaus.org/
 Source0:       https://github.com/mvel/mvel/archive/%{name}2-%{namedversion}.tar.gz
-
 Source1:       %{name}-script
-Patch0:        %{name}-2.1.6.Final-use-system-asm.patch
+Patch0:        %{name}-2.2.2.Final-use-system-asm.patch
 # remove tests which require internal objectweb-asm libraries
-Patch1:        %{name}-2.1.6.Final-tests.patch
+Patch1:        %{name}-2.2.2.Final-tests.patch
 
-
-BuildRequires: mvn(asm:asm)
-BuildRequires: mvn(asm:asm-util)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.ow2.asm:asm-util)
 # test deps 
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(com.thoughtworks.xstream:xstream)
 
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-provider-junit4
 BuildRequires: maven-surefire-report-plugin
 
 BuildArch:     noarch
@@ -55,9 +51,13 @@ This package contains javadoc for %{name}.
 %setup -q -n %{name}-%{name}2-%{namedversion}
 find . -name "*.jar" -delete
 find . -name "*.class" -delete
+
 rm ASM-LICENSE.txt
 %patch0 -p1
 %patch1 -p1
+
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1095339
+sed -i '/Unsafe/d' src/main/java/org/mvel2/util/JITClassLoader.java
 
 # Uwanted
 %pom_remove_plugin :maven-source-plugin
@@ -69,11 +69,12 @@ sed -i 's/\r//' LICENSE.txt
 # fix non ASCII chars
 native2ascii -encoding UTF8 src/main/java/org/mvel2/sh/ShellSession.java src/main/java/org/mvel2/sh/ShellSession.java
 
+%mvn_file :%{name}2 %{name}
+
 %build
 
-%mvn_file :%{name}2 %{name}
-# some test at random fails
-%mvn_build -- -Dmaven.test.failure.ignore=true
+# Tests fails only on ARM builder
+%mvn_build -f
 
 %install
 %mvn_install
@@ -81,14 +82,11 @@ native2ascii -encoding UTF8 src/main/java/org/mvel2/sh/ShellSession.java src/mai
 mkdir -p %{buildroot}%{_bindir}
 install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 
-install -m 644 target/%{name}2-%{namedversion}-tests.jar %{buildroot}%{_javadir}/%{name}-tests.jar
-
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mvel.conf`
 touch $RPM_BUILD_ROOT/etc/mvel.conf
 
 %files -f .mfiles
 %{_bindir}/%{name}
-%{_javadir}/%{name}-tests.jar
 %doc LICENSE.txt
 %config(noreplace,missingok) /etc/mvel.conf
 
@@ -96,6 +94,9 @@ touch $RPM_BUILD_ROOT/etc/mvel.conf
 %doc LICENSE.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt1_3jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.1.6-alt1_1jpp7
 - new release
 
