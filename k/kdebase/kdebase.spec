@@ -36,7 +36,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt7.2
+Release: alt7.3
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -237,6 +237,7 @@ Patch1086: kdebase-3.5.13.2-desktop-fixes.patch
 Patch1087: tdebase-3.5.13-KJobViewer-crash.patch
 Patch1088: tdebase-3.5.13-desktop-icoTextShadow.patch
 Patch1089: kdebase-3.5.13.2-alt-fix_typo_in_desktop_files.patch
+Patch1090: kdebase-3.5.13.2-kde-info2html-perl-defined.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -661,6 +662,7 @@ Menu resources for the original KDE menu.
 %patch1087 -p1
 %patch1088 -p1
 %patch1089 -p1
+%patch1090 -p1
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -2005,6 +2007,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Sat Feb 06 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.5.13.2-alt7.3
+- Fixed build with new Perl (removed 'defined(@array)')
+
 * Wed Oct 28 2015 Andrey Cherepanov <cas@altlinux.org> 3.5.13.2-alt7.2
 - Rebuilt for gcc5 C++11 ABI
 
