@@ -1,117 +1,54 @@
+Name: ehcache-core
+Version: 2.6.7
+Summary: Easy Hibernate Cache
+License: ASL 2.0
+Url: http://ehcache.org/
 Epoch: 0
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: ehcache-core = 2.6.7-9.fc23
+Provides: mvn(net.sf.ehcache:ehcache) = 2.6.7
+Provides: mvn(net.sf.ehcache:ehcache-core) = 2.6.7
+Provides: mvn(net.sf.ehcache:ehcache-core:pom:) = 2.6.7
+Provides: mvn(net.sf.ehcache:ehcache:pom:) = 2.6.7
+Requires: hibernate3
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(javax.servlet:javax.servlet-api)
+Requires: mvn(javax.transaction:jta)
+Requires: mvn(net.sf.ehcache:sizeof-agent)
+Requires: mvn(org.slf4j:slf4j-api)
+Requires: mvn(org.slf4j:slf4j-jdk14)
+
+BuildArch: noarch
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:          ehcache-core
-Version:       2.6.7
-Release:       alt1_3jpp7
-Summary:       Easy Hibernate Cache
-License:       ASL 2.0
-URL:           http://ehcache.org/
-# svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-core-2.6.7
-# find ehcache-core-2.6.7 -name '*.jar' -delete
-# ehcache-core-2.6.7/tools/maven-ant-tasks-2.0.7.jar
-# ehcache-core-2.6.7/src/test/resources/resourceclassloader/private-classpath.jar
-# find ehcache-core-2.6.7 -name '*.class' -delete
-# tar czf ehcache-core-2.6.7-clean-src-svn.tar.gz ehcache-core-2.6.7
-Source0:       %{name}-%{version}-clean-src-svn.tar.gz
-
-BuildRequires: ehcache-parent
-
-BuildRequires: geronimo-jta
-BuildRequires: hibernate3 >= 3.6.10-7
-BuildRequires: ehcache-sizeof-agent
-BuildRequires: slf4j
-BuildRequires: tomcat-servlet-3.0-api
-
-# test
-%if 0
-BuildRequires: apache-commons-logging
-BuildRequires: mvn(net.sf.hibernate:hibernate) >= 2.1.8
-BuildRequires: mvn(org.hibernate:hibernate-ehcache)
-BuildRequires: bsh
-BuildRequires: btm
-BuildRequires: derby
-BuildRequires: dom4j
-BuildRequires: hamcrest12
-BuildRequires: javassist
-BuildRequires: junit
-BuildRequires: mockito
-BuildRequires: xsom
-%endif
-
-BuildRequires: maven-local
-BuildRequires: maven-source-plugin
-BuildRequires: rmic-maven-plugin
-BuildRequires: xml-maven-plugin
-BuildRequires: plexus-resources
-
-Requires:      ehcache-sizeof-agent
-Requires:      geronimo-jta
-Requires:      hibernate3 >= 3.6.10-7
-Requires:      slf4j
-Requires:      tomcat-servlet-3.0-api
-
-BuildArch:     noarch
-Source44: import.info
+Release: alt2jpp
+Source: ehcache-core-2.6.7-9.fc23.cpio
 
 %description
 Ehcache is a pure Java, in-process cache.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q
-
-%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin
-%pom_remove_plugin org.eclipse.m2e:lifecycle-mapping
-%pom_remove_plugin org.apache.maven.plugins:maven-checkstyle-plugin
-
-# don't generate source archive
-%pom_remove_plugin org.apache.maven.plugins:maven-assembly-plugin
-
-# Make sure we require version '3' of Hibernate
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:groupId = 'org.hibernate']/pom:version"
-%pom_xpath_inject "pom:dependencies/pom:dependency[pom:groupId = 'org.hibernate']" "<version>3</version>"
-
-# Don't use buildnumber-plugin, because jna is required (and currently broken)
-%pom_xpath_remove "pom:profiles/pom:profile[pom:id = 'buildnumber-git']"
-
-# circular deps
-# org.hibernate hibernate-ehcache 3.3.2.GA
-# unavailable deps
-%pom_remove_dep net.sf.hibernate:hibernate
-%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope = 'test']"
-
-# disable embedded ehcache-sizeof-agent.jar copy
-%pom_remove_plugin :maven-dependency-plugin
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-
-%mvn_file :%{name} %{name}
-%mvn_alias :%{name} net.sf.ehcache:ehcache
-# tests skipped. cause: missing dependencies
-%mvn_build -f -- -Dmaven.local.depmap.file="%{_mavendepmapfragdir}/tomcat-tomcat-servlet-api"
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc src/assemble/EHCACHE-CORE-LICENSE.txt
+%files -f %name-list
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.6.7-alt2jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.6.7-alt1_3jpp7
 - new release
 
