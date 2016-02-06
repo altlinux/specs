@@ -1,6 +1,8 @@
+%define git 1f026
+
 Name: libva
-Version: 1.4.1
-Release: alt1
+Version: 1.6.3
+Release: alt0.2.git%git
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
@@ -9,11 +11,11 @@ Url: http://www.splitted-desktop.com/~gbeauchesne/
 
 Obsoletes: libva1 < %version-%release vainfo < %version-%release
 
-Source: %name-%version.tar
+Source: %name-%version-%git.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libGL-devel libEGL-devel libXext-devel libXfixes-devel
-BuildRequires: libwayland-client-devel libwayland-server-devel
+BuildRequires: libwayland-client-devel libwayland-server-devel libdrm-devel
 
 %description
 Video Acceleration (VA) API for Linux - runtime
@@ -33,7 +35,7 @@ Obsoletes: libva1-devel < %version-%release
 This package provides the development environment for libva
 
 %prep
-%setup
+%setup -n %name-%version-%git
 %patch -p1
 
 %build
@@ -48,6 +50,7 @@ This package provides the development environment for libva
 %files
 %_bindir/vainfo
 %_libdir/*.so.*
+%dir %_libdir/dri
 %_libdir/dri/*.so
 
 %files devel
@@ -56,8 +59,21 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Feb 06 2016 L.A. Kostis <lakostis@altlinux.ru> 1.6.3-alt0.2.git1f026
+- Added patches:
+  + va/va.c: use libva.conf when looking for driver name.
+  + va/va.c: add 'gallium' to prefer_drivers_list.
+  + va/drm: use gallium driver for radeonsi.
+
+* Sat Feb 06 2016 L.A. Kostis <lakostis@altlinux.ru> 1.6.3-alt0.1.git1f026
+- GIT 1f026 snapshot.
+- Start providing %%_libdir/dri as nobody doing this.
+
 * Tue Nov 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
 - 1.4.1
+
+* Sat Jun 28 2014 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt1
+- 1.3.1.
 
 * Fri Jan 24 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
 - 1.2.1
