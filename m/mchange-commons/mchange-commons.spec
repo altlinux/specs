@@ -1,96 +1,46 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:    mchange-commons
-Version: 0.2.3.4
-Release: alt1_3jpp7
+Name: mchange-commons
+Version: 0.2.7
 Summary: A collection of general purpose utilities for c3p0
 License: LGPLv2 or EPL
-URL:     https://github.com/swaldman/mchange-commons-java
-Group:   Development/Java
-
-BuildRequires: java-javadoc >= 1:1.6.0
-BuildRequires: jpackage-utils
-BuildRequires: ant
-BuildRequires: junit
-BuildRequires: ant-junit
-BuildRequires: log4j
-
+Url: https://github.com/swaldman/mchange-commons-java
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mchange-commons = 0.2.7-1.fc21
+Provides: mvn(com.mchange:mchange-commons-java) = 0.2.7
+Provides: mvn(com.mchange:mchange-commons-java:pom:) = 0.2.7
+Requires: java-headless
 Requires: jpackage-utils
 
-Source0: https://github.com/swaldman/%{name}-java/archive/%{name}-java-%{version}-final.tar.gz
-
-# Patch to build with JDBC 4.1/Java 7
-Patch1: mchange-commons-jdbc-4.1.patch
-
-# Remove one of the tests that intermittently fails
-Patch2: mchange-commons-remove-weakness-test.patch
-
 BuildArch: noarch
-Source44: import.info
+Group: Development/Java
+Release: alt0.1jpp
+Source: mchange-commons-0.2.7-1.fc21.cpio
 
 %description
-Originally part of c3p0, %{name} is a set of general purpose
+Originally part of c3p0, mchange-commons is a set of general purpose
 utilities.
 
-%package javadoc
-Summary:       API documentation for %{name}
-Group:         Development/Java
-Requires:      jpackage-utils
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n %{name}-java-%{name}-java-%{version}-final
-
-%patch1 -p0 -b .jdbc41
-%patch2 -p0 -b .testweakness
-
-# remove all binary bits
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-ant \
-  -Dbuild.sysclasspath=first \
-  -Djunit.jar.file=`build-classpath junit` \
-  -Dlog4j.jar.file=`build-classpath log4j`
-
-sed -i -e "s|@mchange-commons-java.version.maven@|%{version}|g" \
-  src/maven/pom.xml
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-# jar
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 build/%{name}-java-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}-java.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-# javadocs
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 src/maven/pom.xml \
-  %{buildroot}%{_mavenpomdir}/JPP-%{name}-java.pom
-
-%add_maven_depmap JPP-%{name}-java.pom %{name}-java.jar
-
-%files
-%doc LICENSE*
-%{_javadir}/*
-%{_mavenpomdir}/JPP-*
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc LICENSE*
-%{_javadocdir}/%{name}
+%files -f %name-list
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.7-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.2.3.4-alt1_3jpp7
 - new release
 
