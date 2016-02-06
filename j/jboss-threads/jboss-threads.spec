@@ -3,8 +3,9 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc jdepend
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-threads
 %define version 2.1.0
@@ -13,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-threads
 Version:          2.1.0
-Release:          alt1_2jpp7
+Release:          alt1_4jpp8
 Summary:          JBoss Threads
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-threads
@@ -63,6 +64,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_4jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_2jpp7
 - new release
 
