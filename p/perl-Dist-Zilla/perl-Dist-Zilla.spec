@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Dist::Zilla
 
 Name: perl-Dist-Zilla
-Version: 5.042
+Version: 5.043
 Release: alt1
 
 Summary: scary tools for building CPAN distributions
@@ -77,6 +77,9 @@ rm -f -- t/plugins/manifest.t
 
 
 %changelog
+* Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 5.043-alt1
+- New version
+
 * Sun Nov 29 2015 Nikolay A. Fetisov <naf@altlinux.ru> 5.042-alt1
 - New version
 
