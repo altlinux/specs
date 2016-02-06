@@ -3,7 +3,7 @@
 %define real_name HTTP-BrowserDetect
 
 Name: perl-HTTP-BrowserDetect
-Version: 2.07
+Version: 2.08
 Release: alt1
 
 Summary: determine Web browser from an HTTP user agent string
@@ -45,9 +45,12 @@ http://www.mozilla.org/docs/web-developer/sniffer/browser_type.html .
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc CONTRIBUTORS TODO Changes
 %perl_vendor_privlib/HTTP/BrowserDetect*
 
 %changelog
+* Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.08-alt1
+- New version
+
 * Sat Dec 05 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.07-alt1
 - Initial build for ALT Linux Sisyphus
