@@ -1,13 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          sslext
 Version:       1.2
-Release:       alt2_5jpp7
+Release:       alt2_8jpp8
 Summary:       Struts SSL Switching Extension
-Group:         Development/Java
 License:       ASL 1.1
 Url:           http://sslext.sourceforge.net/
 #cvs -d:pserver:anonymous@sslext.cvs.sourceforge.net:/cvsroot/sslext login
@@ -31,7 +29,7 @@ Patch2:        %{name}-%{version}-pom.patch
 # build apis documentation
 Patch3:        %{name}-%{version}-javadocs.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: javapackages-local
 
 BuildRequires: ant
 BuildRequires: apache-commons-beanutils
@@ -42,16 +40,9 @@ BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-validator
 BuildRequires: jakarta-oro
 BuildRequires: struts
-BuildRequires: tomcat-jsp-2.2-api
-BuildRequires: tomcat-servlet-3.0-api
+BuildRequires: tomcat-jsp-2.3-api
+BuildRequires: tomcat-servlet-3.1-api
 
-Requires:      apache-commons-digester
-Requires:      apache-commons-logging
-Requires:      struts
-Requires:      tomcat-servlet-3.0-api
-Requires:      tomcat-jsp-2.2-api
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -61,9 +52,8 @@ applications to automatically switch between the HTTP and HTTPS protocols.
 Configuration is performed within the Struts config XML file.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -73,6 +63,9 @@ This package contains javadoc for %{name}.
 %setup -q
 mkdir -p web/WEB-INF/classes
 %patch0 -p0
+sed -i "s|tomcat-servlet-3.0-api|tomcat-servlet-api|" build.xml
+sed -i "s|tomcat-jsp-2.2-api|tomcat-jsp-api|" build.xml
+sed -i "s|1.5|1.6|" build.xml
 %patch1 -p0
 cp -p %{SOURCE1} pom.xml
 %patch2 -p0
@@ -80,30 +73,22 @@ cp -p %{SOURCE1} pom.xml
 
 %build
 
-export CLASSPATH=$(build-classpath tomcat-jsp-2.2-api tomcat-servlet-3.0-api)
+export CLASSPATH=$(build-classpath tomcat-servlet-api tomcat-jsp-api)
 %ant compile make-jar javadoc
 
 %install
+%mvn_artifact pom.xml web/WEB-INF/lib/%{name}.jar
+%mvn_file %{name}:%{name} %{name}
+%mvn_install -J docs
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 web/WEB-INF/lib/%{name}.jar %{buildroot}%{_javadir}/
+%files -f .mfiles
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_8jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_5jpp7
 - new release
 
