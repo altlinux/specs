@@ -1,69 +1,48 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Summary:        Enterprise Job Scheduler for Java
 Name:           quartz
-Version:        2.1.2
-Release:        alt3_7jpp7
+Version:        2.2.1
+Release:        alt1_4jpp8
 Epoch:          0
 License:        ASL 2.0
 URL:            http://www.quartz-scheduler.org/
-Group:          Development/Java
-# svn export http://svn.terracotta.org/svn/quartz/tags/quartz-2.1.2
-# tar caf quartz-2.1.2.tar.xz quartz-2.1.2
+# svn export http://svn.terracotta.org/svn/quartz/tags/quartz-2.2.1
+# tar caf quartz-2.2.1.tar.xz quartz-2.2.1
 Source0:        %{name}-%{version}.tar.xz
-Patch0:         %{name}-%{version}-dep-fixes.patch
-BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  geronimo-parent-poms
-BuildRequires:  maven-local derby
-BuildRequires:  maven-shared
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-pmd-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  rmic-maven-plugin
-BuildRequires:  junit
-BuildRequires:  c3p0
-BuildRequires:  ejb_api
-BuildRequires:  apache-commons-beanutils
-BuildRequires:  apache-commons-collections
-BuildRequires:  apache-commons-dbcp
-BuildRequires:  apache-commons-digester
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-commons-modeler
-BuildRequires:  apache-commons-pool
-BuildRequires:  apache-commons-validator
-BuildRequires:  javamail >= 1.4.3
-BuildRequires:  jms
-BuildRequires:  jta
-BuildRequires:  log4j
-BuildRequires:  servlet >= 2.5
 
-Requires:  jpackage-utils
-Requires:  apache-commons-beanutils
-Requires:  apache-commons-collections
-Requires:  apache-commons-dbcp
-Requires:  apache-commons-digester
-Requires:  apache-commons-logging
-Requires:  apache-commons-modeler
-Requires:  apache-commons-pool
-Requires:  apache-commons-validator
-Requires:  ejb_api
-Requires:  javamail
-Requires:  jms
-Requires:  log4j
-Requires:  servlet >= 2.5
-Requires:  jta
+BuildRequires:  maven-local
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-checkstyle-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-release-plugin
+BuildRequires:  maven-shade-plugin
+BuildRequires:  maven-shared
+BuildRequires:  rmic-maven-plugin
+BuildRequires:  mvn(com.mchange:c3p0)
+BuildRequires:  mvn(javax.mail:mail) >= 1.4.3
+BuildRequires:  mvn(javax.xml.bind:jaxb-api)
+BuildRequires:  mvn(log4j:log4j:1.2.17)
+BuildRequires:  mvn(org.apache.geronimo.specs:specs:pom:)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-commonj_1.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-ejb_2.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
+BuildRequires:  mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
+BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-log4j12)
+# test deps
+BuildRequires:  mvn(asm:asm)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.derby:derby)
+BuildRequires:  mvn(org.hamcrest:hamcrest-library) >= 1.2
 
 BuildArch:      noarch
 Source44: import.info
@@ -76,53 +55,94 @@ even tens-of-thousands of jobs; jobs whose tasks are defined as standard
 Java components or EJBs. 
 
 %package javadoc
+Group: Development/Java
 Summary:        API docs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API Documentation for %{name}.
 
 %prep
-%setup -q 
-%patch0 -b .sav0
+%setup -q
+# Unwated modules
+%pom_disable_module quartz-jboss
+%pom_disable_module quartz-oracle
+%pom_disable_module quartz-weblogic
+
+# Unavailable deps
+# org.terracotta.toolkit:terracotta-toolkit-api,terracotta-toolkit-api-internal:2.1.0
+%pom_disable_module terracotta
+
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+# Unwated plugin disable source JARs
+%pom_remove_plugin :maven-source-plugin
+
+# Fix c3p0 groupId
+sed -i -e 's/groupId>c3p0</groupId>com.mchange</' **/pom.xml pom.xml
+# Fix junit artifactId
+sed -i -e 's/artifactId>junit-dep</artifactId>junit</' **/pom.xml pom.xml
+
+# Use available javax apis
+%pom_remove_dep org.apache.openejb:javaee-api quartz-core
+%pom_add_dep org.apache.geronimo.specs:geronimo-jta_1.1_spec::provided quartz-core
+%pom_add_dep org.apache.tomcat:tomcat-servlet-api::provided quartz-core
+%pom_remove_dep org.apache.openejb:javaee-api quartz-jobs
+%pom_add_dep org.apache.geronimo.specs:geronimo-ejb_2.1_spec::provided quartz-jobs
+%pom_add_dep org.apache.geronimo.specs:geronimo-jms_1.1_spec::provided quartz-jobs 
+%pom_remove_dep org.apache.openejb:javaee-api quartz-plugins
+%pom_add_dep org.apache.geronimo.specs:geronimo-jta_1.1_spec::provided quartz-plugins
+# Disable javadoc jar
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin' ]/pom:executions" quartz-jobs
+
+# Fix log4j version
+sed -i -e 's/<log4j.version>1.2.16/<log4j.version>1.2.17/' pom.xml
+# This artefact bundled all quartz modules
+%pom_disable_module quartz
+%if 0
+# Unavailable plugins
+# org.terracotta:maven-forge-plugin:1.0.7
+%pom_remove_plugin org.terracotta:maven-forge-plugin quartz
+%pom_remove_plugin :gmaven-plugin quartz
+# Disable javadoc jar
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin' ]/pom:executions" quartz
+# Unavailable deps
+%pom_remove_dep org.quartz-scheduler.internal:quartz-jboss quartz
+%pom_remove_dep org.quartz-scheduler.internal:quartz-oracle quartz
+%pom_remove_dep org.quartz-scheduler.internal:quartz-terracotta-bootstrap quartz
+%pom_remove_dep org.quartz-scheduler.internal:quartz-weblogic quartz
+# Remove unavailable libraries references, ( TODO provide a OSGi MANIFEST.MF file ).
+sed -i '/org.jboss/d' quartz/pom.xml
+sed -i '/org.terracotta.toolkit/d' quartz/pom.xml
+sed -i '/weblogic.jdbc/d' quartz/pom.xml
+sed -i '/oracle.sql/d' quartz/pom.xml
+%endif
+
+cp -p distribution/src/main/assembly/root/licenses/LICENSE.txt .
+sed -i 's/\r//' LICENSE.txt
+
+%mvn_file :%{name}-core %{name}/%{name}-core %{name}/%{name} %{name}
+%mvn_alias :%{name}-core org.quartz-scheduler:%{name}
 
 %build
+
 # skip tests for now due to requirement on hamcrest 1.2
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p %{name}/target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-cp -p %{name}-backward-compat/target/%{name}-backward-compat-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-backward-compat.jar
+%mvn_install
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
-install -m 644 %{name}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -m 644 %{name}-backward-compat/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-backward-compat.pom
-
-%add_maven_depmap JPP-%{name}-parent.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP-%{name}-backward-compat.pom %{name}-backward-compat.jar
-
-#javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%doc README.txt NOTICE.txt LICENSE.txt
-%{_javadir}/*.jar
-%{_mavenpomdir}/JPP-*
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc README.txt
 %doc LICENSE.txt
-%doc %{_javadocdir}/%{name}
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_4jpp8
+- java 8 mass update
+
 * Fri Aug 22 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt3_7jpp7
 - added BR: for xmvn
 
