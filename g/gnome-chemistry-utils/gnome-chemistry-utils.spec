@@ -11,14 +11,14 @@
 
 Name: gnome-chemistry-utils
 Version: %ver_major.10
-Release: alt9
+Release: alt10
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
 License: GPLv2+
 Url: http://gchemutils.nongnu.org/
 
-Source: http://mirrors.zerg.biz/nongnu/gchemutils/%ver_major/%name-%version.tar.xz
+Source: http://download.savannah.gnu.org/releases/gchemutils/%ver_major/%name-%version.tar.xz
 Patch1: %name-0.10.12-alt-mozplugindir.patch
 
 Requires: %name-data = %version-%release bodr chemical-mime-data
@@ -133,6 +133,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Sat Feb 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.10-alt10
+- rebuilt for new gnumeric-1.12.27
+
 * Tue Dec 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.14.10-alt9
 - rebuilt for new gnumeric-1.12.26
 

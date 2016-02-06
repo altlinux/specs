@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.26
+Version: %ver_major.27
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -137,6 +137,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Sat Feb 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.27-alt1
+- 0.10.27
+
 * Tue Dec 29 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.26-alt1
 - 0.10.26
 

@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.26
+Version: %ver_major.27
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -26,10 +26,10 @@ Patch1: gnumeric-1.12.1-alt-locale_dir.patch
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
-%define gsf_ver 1.14.34
+%define gsf_ver 1.14.35
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.26
+%define goffice_ver 0.10.27
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
@@ -180,6 +180,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Sat Feb 06 2016 Yuri N. Sedunov <aris@altlinux.org> 1.12.27-alt1
+- 1.12.27
+
 * Tue Dec 29 2015 Yuri N. Sedunov <aris@altlinux.org> 1.12.26-alt1
 - 1.12.26
 
