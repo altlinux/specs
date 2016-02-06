@@ -26,7 +26,7 @@ BuildRequires: /proc
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt5_12jpp8
+Release:        alt6_12jpp8
 Epoch:		1
 Summary:        Macros and scripts for Java packaging support
 
@@ -264,7 +264,7 @@ popd
 
 %files -n maven-local -f files-maven
 
-#%files -n gradle-local -f files-gradle
+%files -n gradle-local -f files-gradle
 
 %files -n ivy-local -f files-ivy
 
@@ -289,6 +289,9 @@ popd
 %_bindir/xmvn-builddep
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt6_12jpp8
+- enabled gradle-local
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt5_12jpp8
 - fixes in fjava macros
 
