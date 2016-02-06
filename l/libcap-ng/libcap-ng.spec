@@ -1,16 +1,17 @@
-%def_with python3
-
 Name: libcap-ng
-Summary: An alternate posix capabilities library
 Version: 0.7.4
-Release: alt1
+Release: alt1.1
+
+Summary: An alternate posix capabilities library
 License: LGPLv2+
 Group: System/Libraries
-Url: http://people.redhat.com/sgrubb/libcap-ng
 
+Url: http://people.redhat.com/sgrubb/libcap-ng
 Source: http://people.redhat.com/sgrubb/libcap-ng/%name-%version.tar.gz
 
-BuildRequires: kernel-headers >= 2.6.11 libattr-devel python-devel swig
+BuildRequires: kernel-headers >= 2.6.11
+BuildRequires: libattr-devel
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
@@ -30,25 +31,31 @@ Requires: %name = %version-%release
 The libcap-ng-devel package contains the files needed for developing
 applications that need to use the libcap-ng library.
 
+%if_without bootstrap
 %package -n python-module-%name
 Summary: Python bindings for libcap-ng library
 License: LGPLv2+
 Group: Development/Python
+BuildRequires: python-devel swig
 Requires: %name = %version-%release
 
 %description -n python-module-%name
 The libcap-ng-python package contains the bindings so that libcap-ng
 and can be used by python applications.
+%endif
 
+%if_with python3
 %package -n python3-module-%name
 Summary: Python bindings for libcap-ng library
 License: LGPLv2+
 Group: Development/Python3
+BuildRequires: swig
 Requires: %name = %version-%release
 
 %description -n python3-module-%name
 The libcap-ng-python package contains the bindings so that libcap-ng
 and can be used by python applications.
+%endif
 
 %package utils
 Summary: Utilities for analysing and setting file capabilities
@@ -128,8 +135,10 @@ popd
 %_datadir/aclocal/cap-ng.m4
 %_pkgconfigdir/libcap-ng.pc
 
+%if_without bootstrap
 %files -n python-module-%name
 %python_sitelibdir/*
+%endif
 
 %files utils
 %doc COPYING
@@ -142,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 18 2016 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1.1
+- BOOTSTRAP: disable python, python3, don't ask for swig either
+
 * Tue Sep 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt1
 - Version 0.7.4
 - Added module for Python 3
