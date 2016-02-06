@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit3
 Version:        3.8.2
-Release:	alt9_10jpp6
+Release:	alt10_10jpp6
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -79,7 +79,7 @@ Buildarch:      noarch
 %endif
 Source44: import.info
 Conflicts: junit < 1:3.8.2-alt8
-Obsoletes: junit < 1:3.8.2-alt8
+#Obsoletes: junit < 1:3.8.2-alt8
 
 %define repodir %{_javadir}/repository.jboss.com/junit/%{version}-brew
 %define repodirlib %{repodir}/lib
@@ -148,7 +148,7 @@ Demonstrations and samples for %{name}.
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist
+%{ant} -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  dist
 
 %install
 
@@ -163,7 +163,7 @@ export OPT_JAR_LIST=:
 # pom
 %{__mkdir_p} %{buildroot}%{_mavenpomdir}
 %{__cp} -p %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap junit junit %{version} JPP %{name}
+#%add_to_maven_depmap junit junit %{version} JPP %{name}
 
 # demo
 # Not using %%name for last part because it is part of package name
@@ -199,7 +199,7 @@ EOF
 %doc cpl-v10.html README.html
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+#%{_mavendepmapfragdir}/%{name}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/junit3.jar.*
@@ -229,6 +229,9 @@ EOF
 %endif
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt10_10jpp6
+- disabled old maven support
+
 * Sat Jul 12 2014 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt9_10jpp6
 - dropped junit-junit3 virtual provider - no more needed
 
