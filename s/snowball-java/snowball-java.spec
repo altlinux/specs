@@ -1,0 +1,76 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:          snowball-java
+Version:       0
+Release:       alt1_0.5.20130902jpp8
+Summary:       Java stemming algorithm library
+License:       BSD
+URL:           http://snowball.tartarus.org/index.php
+Source0:       http://snowball.tartarus.org/dist/libstemmer_java.tgz
+# Custom pom file
+Source1:       snowball-template-pom.xml
+# http://snowball.tartarus.org/license.php
+Source2:       snowball-notice.txt
+# see http://snowball.tartarus.org/license.php
+# http://www.opensource.org/licenses/bsd-license.html
+Source3:       snowball-BSD-license.txt
+# Build fix remove 'break;' 
+Patch0:        snowball-remove-unreachable-statement.patch
+
+BuildRequires: maven-local
+BuildArch:     noarch
+Source44: import.info
+
+%description
+Snowball is a small string processing language
+designed for creating stemming algorithms
+for use in Information Retrieval.
+
+This package contains all you need to include the
+snowball stemming algorithms into a Java
+project of your own. If you use this,
+you don't need to use the snowball compiler,
+or worry about the internals of the
+stemmers in any way.
+
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
+%prep
+%setup -q -n libstemmer_java
+
+%patch0 -p0
+
+cp -p %{SOURCE1} pom.xml
+sed -i "s|@VERSION@|%{version}|" pom.xml
+
+cp -p %{SOURCE2} notice.txt
+cp -p %{SOURCE3} license.txt
+sed -i 's/\r//' license.txt notice.txt
+
+%mvn_file : %{name}
+
+%build
+
+%mvn_build
+
+%install
+%mvn_install
+
+%files -f .mfiles
+%doc license.txt notice.txt
+
+%files javadoc -f .mfiles-javadoc
+%doc license.txt notice.txt
+
+%changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.5.20130902jpp8
+- java 8 mass update
+
