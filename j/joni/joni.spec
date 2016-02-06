@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:             joni
 Version:          2.1.3
-Release:          alt1_2jpp8
+Release:          alt2_2jpp8
 Summary:          Java port of Oniguruma regexp library 
 Group:            Development/Java
 License:          MIT
@@ -23,7 +23,7 @@ BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-surefire-plugin
 
-BuildRequires:    objectweb-asm4
+BuildRequires:    objectweb-asm
 
 Requires:         jcodings
 Requires:         jpackage-utils
@@ -69,6 +69,9 @@ sed -i -e 's|\r||' test/org/joni/test/TestA.java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_2jpp8
+- build with objectweb-asm
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_2jpp8
 - new version
 
