@@ -5,8 +5,8 @@
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
-Release: alt0.2
+Version: %ver_major.5
+Release: alt0.1
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
@@ -15,9 +15,11 @@ Url: http://www.gimp.org
 
 Source: %_name-%version.tar
 
+%define babl_ver 0.1.14
+
 BuildRequires: asciidoc gcc-c++ graphviz glib2-devel gtk-doc intltool libSDL-devel
-BuildRequires: libavformat-devel libbabl-devel libjpeg-devel libraw-devel libgomp-devel
-BuildRequires: librsvg-devel libspiro-devel openexr-devel python-modules-encodings
+BuildRequires: libavformat-devel libbabl-devel >= %babl_ver libjpeg-devel libraw-devel
+BuildRequires: libgomp-devel librsvg-devel libspiro-devel openexr-devel python-modules-encodings
 BuildRequires: ruby w3m liblua5-devel libgtk+3-devel enscript
 BuildRequires: libexiv2-devel libjasper-devel libpng-devel liblensfun-devel
 BuildRequires: liblcms2-devel libwebp-devel libv4l-devel libpoly2tri-c-devel
@@ -81,8 +83,8 @@ GObject introspection devel data for the GEGL library.
 %files -f %_name-%api_ver.lang
 # temporarily exclude to avoid conflict with libgegl-0.2
 %exclude %_bindir/%_name
-%_bindir/gegl-tester
-
+%_bindir/%_name-tester
+%_bindir/%_name-imgcmp
 %_libdir/lib%_name-%api_ver.so.*
 %_libdir/lib%_name-sc-%api_ver.so
 %_libdir/lib%_name-npd-%api_ver.so
@@ -90,16 +92,6 @@ GObject introspection devel data for the GEGL library.
 %_libdir/%_name-%api_ver/*.so
 %_libdir/%_name-%api_ver/grey2.json
 %exclude %_libdir/%_name-%api_ver/*.la
-
-# exclude examples
-%exclude %_bindir/2geglbuffer
-%exclude %_bindir/gegl-convert
-%exclude %_bindir/gegl-imgcmp
-%exclude %_bindir/gegl-slicer
-%exclude %_bindir/geglbuffer-add-image
-%exclude %_bindir/geglbuffer-clock
-%exclude %_bindir/hello-world
-%exclude %_bindir/sdl-draw
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -119,6 +111,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Sat Feb 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt0.1
+- updated to GEGL_0_3_4-96-ga299466
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt0.2
 - rebuilt against libwebp.so.6
 
