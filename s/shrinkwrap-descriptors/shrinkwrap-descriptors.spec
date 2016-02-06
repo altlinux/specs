@@ -2,8 +2,9 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc jdepend
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name shrinkwrap-descriptors
 %define version 2.0.0
@@ -13,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:          shrinkwrap-descriptors
 Version:       2.0.0
-Release:       alt3_0.7.alpha2jpp7
+Release:       alt3_0.11.alpha2jpp8
 Summary:       ShrinkWrap subproject for creating Archive Descriptors
 License:       ASL 2.0
 Url:           http://www.jboss.org/shrinkwrap/
@@ -29,7 +30,7 @@ BuildArch:     noarch
 
 BuildRequires: jboss-parent
 BuildRequires: apiviz
-BuildRequires: junit4
+BuildRequires: junit
 BuildRequires: maven-local
 BuildRequires: maven-checkstyle-plugin
 BuildRequires: maven-compiler-plugin
@@ -40,7 +41,7 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-plugin-build-helper
 
 BuildRequires: apache-commons-lang3
@@ -82,6 +83,9 @@ export JAVA5_HOME=%{_jvmdir}/java
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.11.alpha2jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.7.alpha2jpp7
 - new release
 
