@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-MetaProvides
 
 Name: perl-Dist-Zilla-Plugin-MetaProvides
-Version: 2.001002
-Release: alt2
+Version: 2.001011
+Release: alt1
 
 Summary: Generating and Populating 'provides' in META.yml
 
@@ -51,6 +51,9 @@ defining it in the metadata.
 %perl_vendor_privlib/Dist/Zilla/Role/MetaProvider*
 
 %changelog
+* Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.001011-alt1
+- New version
+
 * Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.001002-alt2
 - Bump release to override package from autoimports/Sisyphus repository
 
