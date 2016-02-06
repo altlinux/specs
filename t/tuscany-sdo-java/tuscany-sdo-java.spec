@@ -1,6 +1,7 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tuscany-sdo-java
 %define version 1.1.1
@@ -11,22 +12,18 @@ BuildRequires: jpackage-compat
 
 Name:          tuscany-sdo-java
 Version:       1.1.1
-Release:       alt2_8jpp7
+Release:       alt2_12jpp8
 Summary:       Service Data Objects 2.1 Java API spec
 License:       ASL 2.0
 Url:           http://tuscany.apache.org/sdo-java.html
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/tuscany/java/sdo/%{version}/apache-tuscany-sdo-%{version}-src.tar.gz
 
-
 BuildRequires: mvn(junit:junit)
-
 BuildRequires: maven-local
 BuildRequires: maven-assembly-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-surefire-provider-junit4
-
 # required by plugin-bundle
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -54,7 +51,7 @@ EclipseLink is a implementation of this spec.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadocs for %{name}
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -71,6 +68,9 @@ This package contains the API documentation for %{name}.
 %pom_disable_module distribution
 %pom_disable_module java5tools
 
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :maven-javadoc-plugin sdo-api
+
 sed -i 's|<artifactId>tuscany-sdo-api-r${specVersion}</artifactId>|<artifactId>%{api_name}</artifactId>|' $( find . -iname "pom.xml")
 
 sed -i 's|pom.name|project.name|' sdo-api/pom.xml
@@ -85,22 +85,27 @@ sed -i 's/\r//' LICENSE NOTICE README RELEASE_NOTES
 sed -i 's#<source>1.4</source>#<source>1.5</source>#' pom.xml sdo-api/pom.xml
 sed -i 's#<target>1.4</target>#<target>1.5</target>#' pom.xml sdo-api/pom.xml
 
-%build
-
 %mvn_file :%{api_name} %{name}
 %mvn_file :%{api_name} tuscany-sdo-api
+
+%build
+
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE NOTICE README RELEASE_NOTES
+%doc README RELEASE_NOTES
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_12jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_8jpp7
 - new release
 
