@@ -3,7 +3,7 @@
 %define real_name DBD-Cassandra
 
 Name: perl-DBD-Cassandra
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: DBD database driver for Cassandra's CQL3
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Mon Sep 28 2015
+# Automatically added by buildreq on Sat Feb 06 2016
 # optimized out: perl-Encode perl-PerlIO-via-Timeout perl-Pod-Escapes perl-Pod-Simple perl-devel
-BuildRequires: perl-Authen-SASL perl-Compress-LZ4 perl-Compress-Snappy perl-DBI perl-IO-Socket-Timeout perl-Term-ReadLine-Gnu perl-Test-Pod
+BuildRequires: perl-Compress-LZ4 perl-Compress-Snappy perl-DBI perl-IO-Socket-Timeout perl-Term-ReadLine-Gnu perl-Test-Pod
 
 %description
 Perl module DBD::Cassandra aids developers in connecting to
@@ -49,6 +49,9 @@ is not very good, so this might become XS some day.
 %perl_vendor_privlib/DBD/Cassandra*
 
 %changelog
+* Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.24-alt1
+- New version
+
 * Sun Oct 25 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.23-alt1
 - New version
 
