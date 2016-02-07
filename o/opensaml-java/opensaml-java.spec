@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          opensaml-java
 Version:       2.5.3
-Release:       alt2_6jpp7
+Release:       alt2_9jpp8
 Summary:       Java OpenSAML library
 License:       ASL 2.0
 Group:         Development/Java
@@ -14,6 +15,9 @@ URL:           http://www.opensaml.org/
 # svn export https://svn.shibboleth.net/java-opensaml2/tags/2.5.3/ opensaml-java-2.5.3
 # tar cafJ opensaml-java-2.5.3.tar.xz opensaml-java-2.5.3
 Source0:       opensaml-java-%{version}.tar.xz
+
+# HTTPS Connections Via HTTP Resources Do Not Perform Hostname Verification
+Patch0:        rhbz1132022.patch
 
 BuildArch:     noarch
 
@@ -26,7 +30,7 @@ BuildRequires: maven-release-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: opensaml-java-parent
-BuildRequires: opensaml-java-openws
+BuildRequires: opensaml-java-openws >= 1.5.0
 BuildRequires: owasp-esapi-java
 BuildRequires: apache-commons-codec
 BuildRequires: apache-commons-collections
@@ -36,7 +40,7 @@ BuildRequires: joda-time
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-resolver
-BuildRequires: tomcat-servlet-3.0-api
+BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires: logback
 BuildRequires: junit
 BuildRequires: springframework
@@ -58,6 +62,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n opensaml-java-%{version}
+
+%patch0 -p1
 
 sed -i "s|\${xerces.groupId}|xerces|" pom.xml
 
@@ -82,6 +88,9 @@ mv -f doc/CREDITS.txt.conv doc/CREDITS.txt
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2_9jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt2_6jpp7
 - new release
 
