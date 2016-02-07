@@ -1,63 +1,113 @@
-Name: castor
-Version: 1.3.3
-Summary: An open source data binding framework for Java
-License: BSD and ASL 2.0
-Url: http://castor.codehaus.org
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: castor = 1.3.3-2.fc23
-Provides: mvn(org.codehaus.castor:castor-archetype-codegen-testcase) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-archetype-codegen-testcase:pom:) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-codegen) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-codegen:pom:) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-core) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-core:pom:) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-xml) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-xml-diff) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-xml-diff:pom:) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-xml-schema) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-xml-schema:pom:) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor-xml:pom:) = 1.3.3
-Provides: mvn(org.codehaus.castor:castor:pom:) = 1.3.3
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-cli:commons-cli)
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(commons-lang:commons-lang)
-Requires: mvn(commons-logging:commons-logging)
-Requires: mvn(javax.inject:javax.inject)
-Requires: mvn(javax.xml.stream:stax-api)
-Requires: mvn(org.springframework:spring-context)
-Requires: mvn(stax:stax)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: castor-1.3.3-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Summary:        An open source data binding framework for Java
+Name:           castor
+Version:        1.3.3
+Release:        alt1_2jpp8
+# Older source files are BSD licensed and newer ones are ASL licensed
+License:        BSD and ASL 2.0
+URL:            http://castor.codehaus.org
+# Hash sum of source will not match upstream because bundled jars have been removed
+Source0:        http://dist.codehaus.org/castor/%{version}/castor-%{version}-src.tgz
+Patch0:         castor-1.3.2-fix-unmappable-chars.patch
+
+BuildArch:      noarch
+BuildRequires:  maven-local
+BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-gpg-plugin
+BuildRequires:  codehaus-parent
+BuildRequires:  apache-commons-cli
+BuildRequires:  apache-commons-lang
+BuildRequires:  apache-commons-logging
+BuildRequires:  regexp
+BuildRequires:  ldapjdk
+BuildRequires:  jakarta-oro
+BuildRequires:  bea-stax
+BuildRequires:  velocity
+BuildRequires:  multithreadedtc
+BuildRequires:  easymock3
+BuildRequires:  mockito
+BuildRequires:  javacc-maven-plugin
+BuildRequires:  castor-maven-plugin
+BuildRequires:  geronimo-jpa
+BuildRequires:  geronimo-jta
+BuildRequires:  springframework-context
+BuildRequires:  springframework-test
+Obsoletes:      castor-demo < 1.3.2
+Obsoletes:      castor-test < 1.3.2
+Obsoletes:      castor-xml < 1.3.2
+Obsoletes:      castor-doc < 1.3.2
+Source44: import.info
 
 %description
 Castor is an open source data binding framework for Java. It's basically
 the shortest path between Java objects, XML documents and SQL tables.
 Castor provides Java to XML binding, Java to SQL persistence, and more.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+find . -name "*.jar" -exec rm -f {} \;
+find . -name "*.class" -exec rm -f {} \;
+
+%patch0 -p0 -b .orig
+
+# Disable uneeded modules
+%pom_disable_module anttask
+%pom_disable_module xmlctf-framework
+%pom_disable_module maven-plugins
+%pom_disable_module xml-annotations
+
+# Disable integration test suites
+%pom_disable_module cpactf
+%pom_disable_module jpa-extensions-it
+%pom_disable_module xmlctf
+
+# Remove test deps that are not in Fedora
+%pom_remove_dep tyrex:tyrex
+%pom_remove_dep tyrex:tyrex cpa
+%pom_xpath_remove "pom:build/pom:extensions"
+
+# Fix dep on cglib
+sed -i 's@cglib-nodep@cglib@g' pom.xml cpa/pom.xml
+
+# Fix dep on mtc
+sed -i 's@edu.umd.cs.mtc@edu.umd.cs@g' pom.xml xml/pom.xml
+
+# Fix dep on ant
+sed -i 's@groupId>ant<@groupId>org.apache.ant<@g' pom.xml xml/pom.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -- -Dgpg.skip=true -Dmaven.test.skip=true
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc src/doc/license.txt src/doc/new-license.txt
+%dir %{_javadir}/%{name}
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc src/doc/license.txt src/doc/new-license.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt1_2jpp8
+- unbootsrap build
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
