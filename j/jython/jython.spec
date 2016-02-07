@@ -1,6 +1,6 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 #BuildRequires(pre): j2se-jdbc = 1.4.2
@@ -9,45 +9,63 @@ BuildRequires: jline
 Requires: jline libreadline-java
 AutoReq: yes, nopython
 %filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%{expand: %%define pyver %(python -c 'import sys;print(sys.version[0:3])')}
+BuildRequires: jpackage-generic-compat
+%global cpython_version    2.7
+%global scm_tag            v2.7.0
 
-%global cpython_version    %{pyver}
-%global svn_tag            Release_2_2_1
-%global _python_bytecompile_errors_terminate_build 0
+# Turn off the brp-python-bytecompile script
+# We generate JVM bytecode instead
+%global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
 
 Name:                      jython
-Version:                   2.2.1
-Release:                   alt7_14jpp7
+Version:                   2.7
+Release:                   alt1_2jpp8
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
+
 # Use the included fetch-jython.sh script to generate the source drop
-# for jython 2.2.1
-# sh fetch-jython.sh \
-#   jython https://jython.svn.sourceforge.net/svnroot Release_2_2_1
-#
-Source0:                   %{name}-fetched-src-%{svn_tag}.tar.bz2
-Source2:                   fetch-%{name}.sh
-Patch0:                    %{name}-cachedir.patch
-# Make javadoc and copy-full tasks not depend upon "full-build"
-# Also, copy python's license from source directory and not
-# ${python.home}
-Patch1:                    %{name}-nofullbuildpath.patch
-Patch2:                    jython-dont-validate-pom.patch
-Requires:                  jpackage-utils
-Requires:                  jakarta-oro
-Requires:                  servlet
-Requires:                  libreadline-java >= 0.8.0-16
-Requires:                  mysql-connector-java
+# Usage: sh fetch-jython.sh %%{scm_tag}
+Source0:                   jython-%{scm_tag}.tar.xz
+Source1:                   fetch-jython.sh
+
+# Make the cache dir be in the user's home
+Patch0:                    jython-cachedir.patch
+# Avoid rebuilding and validating poms when installing maven stuff and don't gpg sign
+Patch1:                    jython-dont-validate-pom.patch
+
+Requires:                  python >= %{cpython_version}
+Requires:                  antlr32-java
+Requires:                  apache-commons-compress
+Requires:                  guava
+Requires:                  objectweb-asm
+Requires:                  jnr-constants
+Requires:                  jnr-ffi
+Requires:                  jnr-netdb
+Requires:                  jnr-posix >= 3.0.9
+Requires:                  jffi
+Requires:                  jline >= 2.12.1
+Requires:                  jansi
+Requires:                  icu4j
+Requires:                  netty
+# We build with ant, but install with maven
+BuildRequires:             javapackages-local
 BuildRequires:             ant
-BuildRequires:             libreadline-java >= 0.8.0-16
-BuildRequires:             mysql-connector-java
-BuildRequires:             jakarta-oro
-BuildRequires:             servlet
-BuildRequires:             jpackage-utils
-Group:                     Development/Java
+BuildRequires:             junit
+BuildRequires:             glassfish-servlet-api
+BuildRequires:             python >= %{cpython_version}
+BuildRequires:             antlr32-tool
+BuildRequires:             apache-commons-compress
+BuildRequires:             guava
+BuildRequires:             objectweb-asm
+BuildRequires:             jnr-constants
+BuildRequires:             jnr-ffi
+BuildRequires:             jnr-netdb
+BuildRequires:             jnr-posix >= 3.0.9
+BuildRequires:             jffi
+BuildRequires:             jline >= 2.12.1
 
 BuildArch:                 noarch
 Source44: import.info
@@ -71,25 +89,25 @@ seamless interaction between Python and Java allows developers to freely
 mix the two languages both during development and in shipping products.
 
 %package javadoc
+Group: Development/Java
 Summary:           Javadoc for %{name}
-Group:             Development/Java
 BuildArch: noarch
 
 %description javadoc
 API documentation for %{name}.
 
 %package manual
+Group: Development/Java
 Summary:           Manual for %{name}
-Group:             Development/Java
 BuildArch: noarch
 
 %description manual
 Usage documentation for %{name}.
 
 %package demo
+Group: Development/Java
 Summary:           Demo for %{name}
-Requires:          %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Group:             Development/Java
+Requires:          %{name} = %{version}
 AutoReq: yes, nopython
 #AutoProv: yes, nopython
 
@@ -97,69 +115,50 @@ AutoReq: yes, nopython
 Demonstrations and samples for %{name}.
 
 %prep
-%setup -q -n %{name}-svn-%{svn_tag}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup -q -n jython-%{scm_tag}
+%patch0
+%patch1
+
+# Set correct encoding for source to fix javadoc generation
+sed -i -e '723i encoding="UTF-8"' build.xml
 
 %build
-export CLASSPATH=$(build-classpath mysql-connector-java oro servlet)
-# FIXME: fix jpackage-utils to handle multilib correctly
-export CLASSPATH=$CLASSPATH:%{_libdir}/libreadline-java/libreadline-java.jar
-
-rm -rf org/apache
-
-perl -p -i -e 's|execon|apply|g' build.xml
+build-jar-repository -p -s extlibs \
+  antlr32/antlr antlr32/antlr-runtime stringtemplate antlr \
+  jnr-constants jnr-ffi jnr-netdb jnr-posix jffi jline/jline \
+  glassfish-servlet-api guava objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util \
+  commons-compress junit hamcrest/core
 
 ant \
-  -Dpython.home=%{_bindir} \
-  -Dht2html.dir=%{_datadir}/ht2html \
-  -Dpython.lib=./CPythonLib \
-  -Dpython.exe=%{_bindir}/python \
-  copy-dist
+  -Djython.dev.jar=jython.jar \
+  -Dhas.repositories.connection=false \
+  developer-build javadoc
 
+# remove shebangs from python files
+find dist -type f -name '*.py' | xargs sed -i "s:#!\s*/usr.*::"
 
-# remove #! from python files
-pushd dist
-  for f in `find . -name '*.py'`
-  do
-    sed --in-place  "s:#!\s*/usr.*::" $f
-  done
-popd
-
-# Create Maven POM's
 pushd maven
-  ant -Dproject.version=%{version} install
+# generate maven pom
+ant -Dproject.version=%{version} install
 popd
+
+# request maven artifact installation
+%mvn_artifact build/maven/jython-%{version}.pom dist/jython.jar
+%mvn_alias org.python:jython org.python:jython-standalone
 
 %install
-# jar
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 dist/%{name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+# install maven artifacts
+%mvn_install -J dist/Doc/javadoc
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr dist/Doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 # data
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
 # these are not supposed to be distributed
 find dist/Lib -type d -name test | xargs rm -rf
-
 cp -pr dist/Lib $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr dist/Tools $RPM_BUILD_ROOT%{_datadir}/%{name}
 # demo
-cp -pr dist/Demo $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr Demo $RPM_BUILD_ROOT%{_datadir}/%{name}
 # manual
-rm -rf dist/Doc/javadoc
-mv dist/Doc %{name}-manual-%{version}
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 build/maven/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.python:jython-standalone"
+cp -pr Doc $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # registry
 install -m 644 registry $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -168,7 +167,6 @@ install -d $RPM_BUILD_ROOT%{_bindir}
 
 cat > $RPM_BUILD_ROOT%{_bindir}/%{name} << EOF
 #!/bin/sh
-#
 
 # Source functions library
 . %{_datadir}/java-utils/java-functions
@@ -183,26 +181,13 @@ if [ -f \$HOME/.%{name}rc ] ; then
   . \$HOME/.%{name}rc
 fi
 
-# Arch-specific location of dependency
-case \$(uname -m) in
-   x86_64 | ia64 | s390x | ppc64 | sparc64 )
-      JYTHONLIBDIR="/usr/lib64" ;;
-   * )
-      JYTHONLIBDIR="/usr/lib" ;;
-esac
-
 # Configuration
-MAIN_CLASS=org.python.util.%{name}
-BASE_FLAGS=-Dpython.home=%{_datadir}/%{name}
-BASE_JARS="%{name} oro servlet mysql-connector-java"
-
-BASE_FLAGS="\$BASE_FLAGS -Dpython.console=org.python.util.ReadlineConsole"
-BASE_FLAGS="\$BASE_FLAGS -Djava.library.path=\$JYTHONLIBDIR/libreadline-java"
-BASE_FLAGS="\$BASE_FLAGS -Dpython.console.readlinelib=Editline"
+MAIN_CLASS=org.python.util.jython
+BASE_FLAGS=-Dpython.home=%{_datadir}/jython
+BASE_JARS="jython/jython guava jnr-constants jnr-ffi jnr-netdb jnr-posix jffi jline/jline jansi/jansi antlr32/antlr-runtime objectweb-asm/asm objectweb-asm/asm-commons objectweb-asm/asm-util commons-compress icu4j netty/netty-buffer netty/netty-codec netty/netty-common netty/netty-handler netty/netty-transport"
 
 # Set parameters
 set_jvm
-CLASSPATH=\$CLASSPATH:\$JYTHONLIBDIR/libreadline-java/libreadline-java.jar
 set_classpath \$BASE_JARS
 set_flags \$BASE_FLAGS
 set_options \$BASE_OPTIONS
@@ -211,39 +196,11 @@ set_options \$BASE_OPTIONS
 run "\$@"
 EOF
 
-cat > $RPM_BUILD_ROOT%{_bindir}/%{name}c << EOF
-#!/bin/sh
-#
-
-%{_bindir}/%{name} %{_datadir}/%{name}/Tools/%{name}c/%{name}c.py "\$@"
-EOF
-
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/jython.conf`
 touch $RPM_BUILD_ROOT/etc/jython.conf
 
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/jython/cachedir/packages
 ln -s $(relative %{_localstatedir}/jython/cachedir %{_datadir}/jython/) $RPM_BUILD_ROOT%{_datadir}/jython/
-
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}                     
-%add_to_maven_depmap org.python %{name} %{version} JPP %{name}                  
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-cat > $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom <<'EOF'
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>jython</groupId>
-  <artifactId>jython</artifactId>
-  <version>%version</version>
-
-  <distributionManagement>
-    <relocation>
-      <groupId>org.python</groupId>
-    </relocation>
-  </distributionManagement>
-
-</project>
-EOF
 
 %post 
 
@@ -259,40 +216,35 @@ then
 fi || :
 
 
-%files
+%files -f .mfiles
 %doc ACKNOWLEDGMENTS NEWS LICENSE.txt README.txt
 %attr(0755,root,root) %{_bindir}/%{name}
-%attr(0755,root,root) %{_bindir}/%{name}c
-%{_javadir}/*
+%dir %{_datadir}/java/%{name}
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/Lib
-%{_datadir}/%{name}/Tools
 %{_datadir}/%{name}/registry
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 %config(noreplace,missingok) /etc/jython.conf
 
 %{_localstatedir}/jython
 # is it worth ghosting?
 #%ghost %{_localstatedir}/jython/cachedir/packages
 %{_datadir}/jython/cachedir
-# pom
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%doc %{_javadocdir}/%{name}
 
 %files manual
-%doc LICENSE.txt README.txt
-%doc %{name}-manual-%{version}
+%doc LICENSE.txt
+%{_datadir}/%{name}/Doc
 
 %files demo
 %doc ACKNOWLEDGMENTS NEWS LICENSE.txt README.txt
-%doc %{_datadir}/%{name}/Demo
+%{_datadir}/%{name}/Demo
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_2jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt7_14jpp7
 - new release
 
