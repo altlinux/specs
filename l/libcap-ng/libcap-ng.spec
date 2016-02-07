@@ -1,6 +1,9 @@
+%def_with python
+%def_with python3
+
 Name: libcap-ng
 Version: 0.7.4
-Release: alt1.1
+Release: alt1.2
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
@@ -31,7 +34,7 @@ Requires: %name = %version-%release
 The libcap-ng-devel package contains the files needed for developing
 applications that need to use the libcap-ng library.
 
-%if_without bootstrap
+%if_with python
 %package -n python-module-%name
 Summary: Python bindings for libcap-ng library
 License: LGPLv2+
@@ -135,7 +138,7 @@ popd
 %_datadir/aclocal/cap-ng.m4
 %_pkgconfigdir/libcap-ng.pc
 
-%if_without bootstrap
+%if_with python
 %files -n python-module-%name
 %python_sitelibdir/*
 %endif
@@ -151,6 +154,10 @@ popd
 %endif
 
 %changelog
+* Sun Feb 07 2016 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1.2
+- fix knobs so that both python modules get built by default
+  (thx ldv@ for spotting the breakage)
+
 * Mon Jan 18 2016 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1.1
 - BOOTSTRAP: disable python, python3, don't ask for swig either
 
