@@ -1,113 +1,57 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:             owasp-esapi-java
-Version:          2.0.1
-Release:          alt3_9jpp7
-Summary:          OWASP Enterprise Security API
-Group:            Development/Java
-License:          BSD
-URL:              http://code.google.com/p/owasp-esapi-java/
+Name: owasp-esapi-java
+Version: 2.1.0
+Summary: OWASP Enterprise Security API
+License: BSD
+Url: http://code.google.com/p/owasp-esapi-java/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: mvn(org.owasp.esapi:esapi) = 2.1.0
+Provides: mvn(org.owasp.esapi:esapi:pom:) = 2.1.0
+Provides: owasp-esapi-java = 2.1.0-2.fc22
+Requires: java-headless
+Requires: jpackage-utils
+Requires: mvn(commons-beanutils:commons-beanutils-core)
+Requires: mvn(commons-collections:commons-collections)
+Requires: mvn(commons-configuration:commons-configuration)
+Requires: mvn(commons-fileupload:commons-fileupload)
+Requires: mvn(log4j:log4j:12)
+Requires: mvn(org.apache.tomcat:tomcat-jsp-api)
+Requires: mvn(org.beanshell:bsh)
+Requires: mvn(xom:xom)
 
-# svn export http://owasp-esapi-java.googlecode.com/svn/tags/esapi-2.0.1/ owasp-esapi-java-2.0.1 
-# tar cafJ owasp-esapi-java-2.0.1.tar.xz owasp-esapi-java-2.0.1
-Source0:          owasp-esapi-java-%{version}.tar.xz
-
-# Antisammy is not available
-Patch0:           0001-Remove-validator-implementation-bsed-on-Antisammy.patch
-# Use different directory in tests
-Patch1:           0002-Use-different-directory-to-testing-bin-is-a-symlink.patch
-# Missing implementations
-Patch2:           0003-Implement-missing-servlet-3.0-methods-in-mock.patch
-
-BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    sonatype-oss-parent
-BuildRequires:    tomcat-servlet-3.0-api
-BuildRequires:    tomcat-jsp-2.2-api
-BuildRequires:    tomcat-el-2.2-api
-BuildRequires:    bsh
-BuildRequires:    junit
-BuildRequires:    apache-commons-io
-BuildRequires:    apache-commons-collections
-BuildRequires:    apache-commons-fileupload
-BuildRequires:    log4j
-BuildRequires:    xom
-BuildRequires:    ecj
-BuildRequires:    maven-shared
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: owasp-esapi-java-2.1.0-2.fc22.cpio
 
 %description
 OWASP ESAPI (The OWASP Enterprise Security API) is a free, open source,
 web application security control library that makes it easier for programmers
 to write lower-risk applications. The ESAPI for Java library is designed to
 make it easier for programmers to retrofit security into existing applications.
-ESAPI for Java also serves as a solid foundation for new development. 
+ESAPI for Java also serves as a solid foundation for new development.
 
-%package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
-%package doc
-Summary:          Documentation for %{name}
-Group:            Development/Java
-License:          CC-BY-SA
-
-%description doc
-This package contains the documentation for %{name}.
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -n owasp-esapi-java-%{version}
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
-# Plugin not available
-%pom_remove_plugin "org.codehaus.mojo:versions-maven-plugin"
-
-# Atisammy not available
-%pom_remove_dep "org.owasp.antisamy:antisamy"
-
-# No POM file for bsh-core in Fedora
-%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId='bsh-core']" "<systemPath>$(build-classpath bsh-core)</systemPath>"
-%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId='bsh-core']" "<scope>system</scope>"
-
-sed -i "s|public void testSetCookie()|public void ignoredSetCookie()|" src/test/java/org/owasp/esapi/reference/HTTPUtilitiesTest.java
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-%mvn_build -f
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-%mvn_install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
 
-%files -f .mfiles
-%dir %{_javadir}/%{name}
 
-%files javadoc -f .mfiles-javadoc
-
-%files doc
-%doc documentation/*
+%files -f %name-list
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.0-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt3_9jpp7
 - new release
 
