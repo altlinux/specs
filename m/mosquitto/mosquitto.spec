@@ -1,10 +1,9 @@
 %define mosquitto_user      mosquitto
 %define mosquitto_group     mosquitto
-%define mosquitto_dir      /var/lib/%mosquitto_user
 
 Name: mosquitto
 Version: 1.4.7
-Release: alt2
+Release: alt3
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -50,8 +49,6 @@ mv -f %buildroot/usr/lib/* %buildroot%_libdir/
 
 chmod a-x %buildroot%_includedir/*.h
 
-mkdir -p %buildroot/%mosquitto_dir
-
 mkdir -p %buildroot/%_initdir
 mv .gear/%name %buildroot%_initdir/
 
@@ -83,7 +80,6 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 %_man5dir/*
 %_man7dir/*
 %_man8dir/*
-%attr(750,%mosquitto_user,%mosquitto_group) %dir %mosquitto_dir/
 %_initdir/*
 
 %files devel
@@ -91,6 +87,9 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 %_libdir/*.so
 
 %changelog
+* Mon Feb 08 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt3
+- remove /var/lib/mosquitto (not used)
+
 * Mon Feb 08 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt2
 - fixed homepage in spec
 - set home to /dev/null for mosquitto user
