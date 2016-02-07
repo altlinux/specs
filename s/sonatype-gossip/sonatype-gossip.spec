@@ -2,13 +2,14 @@ Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global shortname gossip
 
 Name:             sonatype-gossip
 Version:          1.7
-Release:          alt1_9jpp7
+Release:          alt1_13jpp8
 Summary:          SLF4j Gossip Provider
 Group:            Development/Java
 License:          ASL 2.0
@@ -22,7 +23,6 @@ Patch0:           %{shortname}-%{version}-use-java5-modello.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-license-plugin
 BuildRequires:    maven-install-plugin
@@ -31,9 +31,6 @@ BuildRequires:    slf4j
 BuildRequires:    modello
 BuildRequires:    jansi
 BuildRequires:    fusesource-pom
-
-Requires:         jpackage-utils
-Requires:         slf4j
 Source44: import.info
 
 %description
@@ -42,7 +39,6 @@ Gossip is a plugin for SLF4j which has simple and flexible configuration.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -55,43 +51,22 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+%mvn_install
 
-for sub in bootstrap bootstrap-slf4j support core slf4j extra; do
-  # JAR
-  cp -p %{shortname}-${sub}/target/%{shortname}-${sub}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-${sub}.jar
-
-  # POM
-  install -pm 644 %{shortname}-${sub}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-${sub}.pom
-
-  # DEPMAP
-  %add_maven_depmap JPP.%{name}-%{name}-${sub}.pom %{name}/%{name}-${sub}.jar
-done
-
-# Parent POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-# Parent DEPMAP
-%add_maven_depmap JPP.%{name}-%{name}.pom
-
-# JAVADOC
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc README.md header.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc header.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_13jpp8
+- java8 mass update
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_9jpp7
 - new release
 
