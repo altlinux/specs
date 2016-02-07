@@ -1,13 +1,10 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
-
 %define _name licenses
 
 Name: rpm-build-%_name
 Version: 2.0.5
-Release: %branch_release alt1
+Release: alt2
 
 Summary: RPM macros for well-known licenses
 # We can't use our own macros...
@@ -21,8 +18,6 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 BuildArch: noarch
 
 Requires: common-licenses
-
-BuildRequires(pre): rpm-macros-branch
 
 %description
 This package contains RPM macros for license names commonly used in
@@ -93,6 +88,11 @@ install -pD -m644 %_name.rpmmacros %buildroot%_rpmmacrosdir/%_name
 %doc --no-dereference COPYING
 
 %changelog
+* Sun Feb 07 2016 Michael Shigorin <mike@altlinux.org> 2.0.5-alt2
+- get rid of useless rpm-macros-branch: this package was never
+  built for any branch specifically (ironically, that one has
+  BRs on both this one and itself thus creating a loop)
+
 * Fri Oct 03 2014 Sergey Y. Afonin <asy@altlinux.ru> 2.0.5-alt1
 - added a more specific macros for the GNU Free Documentation License (Bug #24945)
 - added a set of macroses for the GNU Affero General Public License (Bug #26826)
