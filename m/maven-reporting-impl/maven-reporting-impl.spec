@@ -1,28 +1,41 @@
-Name: maven-reporting-impl
-Version: 2.3
-Summary: Abstract classes to manage report generation
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-reporting-impl
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-reporting-impl = 2.3-2.fc23
-Provides: maven-shared-reporting-impl = 2.3-2.fc23
-Provides: mvn(org.apache.maven.reporting:maven-reporting-impl) = 2.3
-Provides: mvn(org.apache.maven.reporting:maven-reporting-impl:pom:) = 2.3
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-validator:commons-validator)
-Requires: mvn(org.apache.maven.doxia:doxia-core)
-Requires: mvn(org.apache.maven.doxia:doxia-sink-api)
-Requires: mvn(org.apache.maven.doxia:doxia-site-renderer)
-Requires: mvn(org.apache.maven.reporting:maven-reporting-api)
-Requires: mvn(org.apache.maven.shared:maven-shared-utils)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.apache.maven:maven-project)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-reporting-impl-2.3-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define fedora 23
+Name:           maven-reporting-impl
+Version:        2.3
+Release:        alt1_2jpp8
+Summary:        Abstract classes to manage report generation
+License:        ASL 2.0
+URL:            http://maven.apache.org/shared/%{name}
+BuildArch:      noarch
+
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/reporting/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+# Forwarded upstream: https://issues.apache.org/jira/browse/MSHARED-344
+Patch0:         0001-Update-to-Doxia-1.6.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-validator:commons-validator)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+%{?fedora:BuildRequires: junit-addons}
+
+Obsoletes:      maven-shared-reporting-impl < %{version}-%{release}
+Provides:       maven-shared-reporting-impl = %{version}-%{release}
+Source44: import.info
 
 %description
 Abstract classes to manage report generation, which can be run both:
@@ -32,24 +45,35 @@ Abstract classes to manage report generation, which can be run both:
 
 This is a replacement package for maven-shared-reporting-impl
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+    
+%description javadoc
+API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%patch0 -p1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build %{!?fedora:-f}
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_2jpp8
+- unbootsrap build
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
