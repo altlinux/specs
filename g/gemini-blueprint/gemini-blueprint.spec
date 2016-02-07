@@ -1,68 +1,50 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name gemini-blueprint
 %define version 1.0.2
 %global namedreltag .RELEASE
 %global namedversion %{version}%{?namedreltag}
+%global dotname gemini.blueprint
 Name:          gemini-blueprint
 Version:       1.0.2
-Release:       alt1_2jpp7
+Release:       alt1_9jpp8
 Summary:       Reference Implementation of the OSGi Blueprint Service
-Group:         Development/Java
 # BSD file - test-support/src/main/java/org/eclipse/gemini/blueprint/test/internal/util/DependencyVisitor.java,
 License:       ASL 2.0 and BSD and EPL
 URL:           http://www.eclipse.org/gemini/
 # https://github.com/glyn/Gemini-Blueprint
-# git clone git://github.com/eclipse/gemini.blueprint gemini-blueprint-1.0.2.RELEASE
-# (cd gemini-blueprint-1.0.2.RELEASE/ && git archive --format=tar --prefix=gemini-blueprint-1.0.2.RELEASE/ 1.0.2.RELEASE | xz > ../gemini-blueprint-1.0.2.RELEASE-src-git.tar.xz)
-Source0:       %{name}-%{namedversion}-src-git.tar.xz
+Source0:       https://github.com/eclipse/gemini.blueprint/archive/%{namedversion}.tar.gz
 # add maven-{bundle,jar}-plugin configuration
 Patch0:        %{name}-%{namedversion}-add-osgi-manifests.patch
-BuildRequires: jpackage-utils
 
 BuildRequires: aopalliance
 BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
-BuildRequires: log4j
-BuildRequires: slf4j
+BuildRequires: log4j12
 BuildRequires: springframework
 BuildRequires: springframework-aop
 BuildRequires: springframework-beans
 BuildRequires: springframework-context
 BuildRequires: springframework-context-support
+BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-log4j12)
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
 
 # test deps
-BuildRequires: easymock
+BuildRequires: easymock3
 BuildRequires: junit
 BuildRequires: multithreadedtc
 # BuildRequires: springframework-test
 
-Requires:      aopalliance
-Requires:      felix-osgi-compendium
-Requires:      felix-osgi-core
-Requires:      log4j
-Requires:      slf4j
-Requires:      springframework
-Requires:      springframework-aop
-Requires:      springframework-beans
-Requires:      springframework-context
-Requires:      springframework-context-support
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -83,19 +65,19 @@ NOTE: Eclipse Gemini Blueprint can be considered the
 successor of Spring DM (OSGi) 2.x (http://www.springsource.org/osgi).
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n %{dotname}-%{namedversion}
 %patch0 -p1
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-bundle-plugin']/pom:configuration/pom:instructions" "<Bundle-Activator>org.eclipse.gemini.blueprint.extender.internal.boot.ChainActivator</Bundle-Activator>" extender
 
+%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-bundle-plugin']/pom:configuration/pom:instructions" "
+<Bundle-Activator>org.eclipse.gemini.blueprint.extender.internal.boot.ChainActivator</Bundle-Activator>" extender
 
 find . -name "*.class" -delete
 find . -name "*.jar" -type f -delete
@@ -111,27 +93,6 @@ find . -name "*.jar" -type f -delete
 # remove clover knopflerfish profiles (todo remove also eclipse/equinox and org.apache.felix profiles)
 %pom_xpath_remove pom:profiles
 
-sed -i "s|<groupId>org.aopalliance|<groupId>aopalliance|" pom.xml {core,extender}/pom.xml
-sed -i "s|<artifactId>com.springsource.org.aopalliance|<artifactId>aopalliance|" pom.xml {core,extender}/pom.xml
-
-sed -i "s|<groupId>org.junit</groupId>|<groupId>junit</groupId>|" pom.xml
-sed -i "s|<artifactId>com.springsource.org.junit</artifactId>|<artifactId>junit</artifactId>|" pom.xml
-
-# test deps
-%pom_remove_dep log4j:log4j
-# build deps
-sed -i "s|<groupId>org.apache.log4j</groupId>|<groupId>log4j</groupId>|" pom.xml
-sed -i "s|<artifactId>com.springsource.org.apache.log4j</artifactId>|<artifactId>log4j</artifactId>|" pom.xml
-
-sed -i "s|<groupId>multithreadedtc</groupId>|<groupId>edu.umd.cs.mtc</groupId>|" core/pom.xml
-
-%pom_remove_dep org.springframework:spring-test
-%pom_remove_dep org.springframework:spring-test core
-
-# require org.springframework:org.springframework.test*
-rm -r core/src/test/java/org/eclipse/gemini/blueprint/internal/util/BeanFactoryUtilsTest.java \
-  core/src/test/java/org/eclipse/gemini/blueprint/DictionaryEditorTest.java
-
 # TODO require:
 # org.springframework spring-test
 # org.knopflerfish framework
@@ -140,43 +101,104 @@ rm -r core/src/test/java/org/eclipse/gemini/blueprint/internal/util/BeanFactoryU
 %pom_disable_module test-support
 %pom_remove_dep org.eclipse.gemini.blueprint:gemini-blueprint-test
 
+# build deps
+%pom_remove_dep org.springframework:spring-test
+%pom_remove_dep org.springframework:spring-test core
+# require org.springframework:org.springframework.test*
+rm -r core/src/test/java/org/eclipse/gemini/blueprint/internal/util/BeanFactoryUtilsTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/DictionaryEditorTest.java
+
+%pom_remove_dep log4j:log4j
+%pom_remove_dep org.apache.log4j:com.springsource.org.apache.log4j
+%pom_add_dep log4j:log4j:1.2.17
+%pom_remove_dep org.junit:com.springsource.org.junit
+%pom_add_dep junit:junit:4.11:test
+
+%pom_remove_dep org.aopalliance: core
+%pom_add_dep aopalliance:aopalliance::provided core
+
+%pom_remove_dep org.aopalliance: extender
+%pom_add_dep aopalliance:aopalliance::test extender
+
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:artifactId = 'multithreadedtc' ]/pom:groupId" edu.umd.cs core
+
+%pom_xpath_set "pom:project/pom:dependencyManagement/pom:dependencies/pom:dependency[pom:version = '1.0.0' ]/pom:artifactId" aopalliance
+%pom_xpath_set "pom:project/pom:dependencyManagement/pom:dependencies/pom:dependency[pom:version = '1.0.0' ]/pom:groupId" aopalliance
+
+# migrate from easymock 1 to easymock 3
+%pom_remove_dep easymock:
+%pom_add_dep org.easymock:easymock:3.2:test
+rm -r mock/src/test/java/org/eclipse/gemini/blueprint/mock/MockServiceRegistrationTest.java \
+ extender/src/test/java/org/eclipse/gemini/blueprint/extender/internal/ContextLoaderListenerTest.java \
+ io/src/test/java/org/eclipse/gemini/blueprint/io/OsgiBundleResourceLoaderTest.java \
+ io/src/test/java/org/eclipse/gemini/blueprint/io/OsgiBundleResourceTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/config/internal/OsgiServiceLifecycleListenerAdapterTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/config/internal/OsgiServiceRegistrationListenerAdapterTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/config/BundleFactoryBeanParserTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/context/support/AbstractBundleXmlApplicationContextTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/context/support/AbstractRefreshableOsgiBundleApplicationContextTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/context/support/BundleContextAwareProcessorTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/util/BundleDelegatingClassLoaderTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/service/OsgiServiceReferenceUtilsTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/service/importer/OsgiSingleServiceProxyFactoryBeanTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/service/importer/OsgiServiceCollectionProxyFactoryBeanTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/service/OsgiServiceUtilsTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/service/exporter/support/internal/support/ServiceRegistrationWrapperTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/service/exporter/support/OsgiServiceFactoryBeanTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/service/exporter/BeanNameServicePropertiesResolverTest.java \
+ core/src/test/java/org/eclipse/gemini/blueprint/compendium/internal/cm/ConfigurationAdminManagerTest.java
+
 # Fix CRLF
 sed 's/\r//' -i changelog.txt license-apache.txt readme-building.txt readme.txt
 
+rm -r core/src/test/java/org/eclipse/gemini/blueprint/blueprint/ReflectionTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/ComponentElementTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/ComponentSubElementTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/ConstructorInjectionTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/MixedRfc124BeansTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/NestedElementsTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/SchemaWithLocationTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/SpringDmRfc124Test.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/SpringRootConfigTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/config/TypeConverterTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/container/BlueprintFieldsTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/container/CycleTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/container/GenericsTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/container/LazyExporterTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/container/TestBlueprintBuiltinConvertersTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/container/TestLazyBeansTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/metadata/BundleContextApiTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/metadata/ImporterMetadataTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/metadata/BeanComponentMetadataTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/metadata/DefaultsTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/metadata/ExporterMetadataTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/metadata/ImporterCollectionsMetadataTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/blueprint/reflect/NestedDefinitionMetadataTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/compendium/config/CmConfigAndCtxPropertiesConfigurationTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/compendium/config/ConfigPropertiesHandlerTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/compendium/config/ManagedPropertiesTest.java \
+  core/src/test/java/org/eclipse/gemini/blueprint/compendium/config/ManagedServiceFactoryTest.java \
+
 %build
+
 # some test fails for unavailable build deps*
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.failure.ignore=true install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.failure.ignore=true
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-%add_maven_depmap JPP.%{name}-%{name}.pom
-
-mkdir -p %{buildroot}%{_javadir}/%{name}
-# TODO test-support
-for m in core extender mock io; do
-    install -m 644 ${m}/target/%{name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${m}.jar
-    install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-%add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-*.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-%{_mavenpomdir}/JPP.%{name}-%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
-%doc about.html changelog.txt epl-v10.html license-apache.txt notice.html readme-building.txt readme.txt
+%doc about.html changelog.txt readme-building.txt readme.txt
+%doc epl-v10.html license-apache.txt notice.html 
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc epl-v10.html license-apache.txt notice.html
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_9jpp8
+- java 8 mass update
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_2jpp7
 - new release
 
