@@ -1,7 +1,8 @@
 Epoch: 0
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apache-commons-javaflow
 %define version 1.0
@@ -11,14 +12,13 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 Name:          apache-commons-javaflow
 Version:       1.0
-Release:       alt8_0.6.20120509SNAPSHOTjpp7
+Release:       alt8_0.10.20120509SNAPSHOTjpp8
 Summary:       Commons Javaflow
 License:       ASL 2.0
 Url:           http://commons.apache.org/sandbox/javaflow/
 # svn export http://svn.apache.org/repos/asf/commons/sandbox/javaflow/trunk/  commons-javaflow-1.0-SNAPSHOT
 # tar czf commons-javaflow-1.0-SNAPSHOT-src-svn.tar.gz commons-javaflow-1.0-SNAPSHOT
 Source0:       %{short_name}-%{namedversion}-src-svn.tar.gz
-
 
 BuildRequires: mvn(asm:asm)
 BuildRequires: mvn(asm:asm-analysis)
@@ -27,19 +27,12 @@ BuildRequires: mvn(asm:asm-tree)
 BuildRequires: mvn(asm:asm-util)
 BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(junit-addons:junit-addons)
 BuildRequires: mvn(org.apache.ant:ant)
 BuildRequires: mvn(org.apache.bcel:bcel)
 BuildRequires: mvn(org.apache.commons:commons-jci-core)
-
-# test deps
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(junit-addons:junit-addons)
-
 BuildRequires: maven-local
-#BuildRequires: maven-antrun-plugin
-#BuildRequires: maven-plugin-bundle
-#BuildRequires: maven-site-plugin
-BuildRequires: maven-surefire-provider-junit4
 
 BuildArch:     noarch
 Source44: import.info
@@ -67,7 +60,7 @@ languages as well.
 Group: Development/Java
 Summary:       Development files for Commons Javaflow
 Requires:      ant
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      %{name} = %{version}
 
 %description ant
 This package enables support for the Commons Javaflow ant tasks.
@@ -89,10 +82,13 @@ find . -name "*.jar" -delete
 #sed -i "s|commons-sandbox-parent|commons-parent|" pom.xml
 %pom_xpath_inject "pom:project" "<groupId>org.apache.commons</groupId>"
 
-%build
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId = 'ant' ]" "<scope>provided</scope>"
 
 %mvn_file :%{short_name} %{name}
 %mvn_file :%{short_name} %{short_name}
+
+%build
+
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -103,7 +99,8 @@ echo "ant %{short_name}" > %{short_name}
 install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 
 %files -f .mfiles
-%doc CREDITS.txt LICENSE.txt NOTICE.txt TODO.txt
+%doc CREDITS.txt TODO.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
@@ -112,6 +109,9 @@ install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.10.20120509SNAPSHOTjpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.6.20120509SNAPSHOTjpp7
 - new release
 
