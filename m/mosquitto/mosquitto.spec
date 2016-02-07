@@ -1,6 +1,10 @@
+%define mosquitto_user      mosquitto
+%define mosquitto_group     mosquitto
+%define mosquitto_dir      /var/lib/%mosquitto_user
+
 Name: mosquitto
 Version: 1.4.7
-Release: alt0.4
+Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -44,8 +48,33 @@ mkdir -p %buildroot%_libdir
 mv -f %buildroot/usr/lib/* %buildroot%_libdir/
 %endif
 
+chmod a-x %buildroot%_includedir/*.h
+
+mkdir -p %buildroot/%mosquitto_dir
+
+mkdir -p %buildroot/%_initdir
+mv .gear/%name %buildroot%_initdir/
+
+mkdir -p %buildroot/%_sysconfdir/sysconfig
+mv .gear/%name.sysconf %buildroot%_sysconfdir/sysconfig/%name
+
+mkdir -p %buildroot/%_sysconfdir/%name
+mv .gear/%name.conf %buildroot%_sysconfdir/%name
+
+%pre
+%_sbindir/groupadd -r -f %mosquitto_group 2>/dev/null ||:
+%_sbindir/useradd -M -r -g %mosquitto_group -c 'Mosquitto daemon' -s /dev/null -d %mosquitto_dir %mosquitto_user 2>/dev/null ||:
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+        
 %files
-%config %_sysconfdir/%{name}
+%dir %_sysconfdir/%name
+%config %dir %_sysconfdir/%name/*
+%config %_sysconfdir/sysconfig/%name
 %_libdir/*.so.*
 %_bindir/*
 %_sbindir/*
@@ -54,12 +83,20 @@ mv -f %buildroot/usr/lib/* %buildroot%_libdir/
 %_man5dir/*
 %_man7dir/*
 %_man8dir/*
+%attr(750,%mosquitto_user,%mosquitto_group) %dir %mosquitto_dir/
+%_initdir/*
 
 %files devel
 %_includedir/*.h
 %_libdir/*.so
 
 %changelog
+* Sun Feb 07 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt1
+- fixed header files attributes
+- add service file for init.d
+- create mosquitto_user and group 
+- add sysconfig/mosquitto
+
 * Mon Feb 01 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt0.4
 - test build for x86_64
 
