@@ -2,11 +2,12 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          activemq-protobuf
 Version:       1.1
-Release:       alt3_6jpp7
+Release:       alt3_10jpp8
 Summary:       ActiveMQ Protocol Buffers
 License:       ASL 2.0
 Url:           http://activemq.apache.org/
@@ -14,17 +15,13 @@ Url:           http://activemq.apache.org/
 # tar czf activemq-protobuf-1.1-src-svn.tar.gz activemq-protobuf-1.1
 Source0:       activemq-protobuf-1.1-src-svn.tar.gz
 
-
+BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
-
-BuildRequires: junit
-
 BuildRequires: maven-local
 BuildRequires: javacc-maven-plugin
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-plugin-plugin
-BuildRequires: maven-surefire-provider-junit4
 
 BuildArch:     noarch
 Source44: import.info
@@ -55,10 +52,11 @@ sed -i 's|${version}|${project.version}|' pom.xml activemq-protobuf-test/pom.xml
 
 chmod 644 LICENSE
 
-%build
-
 %mvn_file :%{name} activemq/protobuf
 %mvn_file :%{name}-test activemq/protobuf-test
+
+%build
+
 %mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
@@ -66,12 +64,16 @@ chmod 644 LICENSE
 
 %files -f .mfiles
 %dir %{_javadir}/activemq
-%doc LICENSE NOTICE README.txt
+%doc README.txt
+%doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_10jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_6jpp7
 - new release
 
