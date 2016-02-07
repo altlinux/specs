@@ -1,33 +1,30 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global     builddir        build-mysql-jdbc
 %global     distdir         dist-mysql-jdbc
-%global     java6_rtpath    %{java_home}/jre/lib/rt.jar
-%global     java6_javacpath /usr/bin/javac
-%global     java6_javapath  /usr/bin/javac
 
 Summary:    Official JDBC driver for MySQL
 Name:       mysql-connector-java
-Version:    5.1.26
-Release:    alt1_2jpp7
-Epoch:      1 
+Version:    5.1.36
+Release:    alt1_1jpp8
+Epoch:      1
 
 # MySQL FLOSS Exception
 License:    GPLv2 with exceptions
-Group:      System/Libraries
 URL:        http://dev.mysql.com/downloads/connector/j/
 
 # Mysql has a mirror redirector for its downloads
 # You can get this tarball by following a link from:
-# http://dev.mysql.com/get/Downloads/Connector-J/%{name}-%{version}.zip/from/pick#mirrors
+# http://dev.mysql.com/get/Downloads/Connector-J/%{name}-%{version}.tar.gz
 #
 # Following prebuilt jars and sources have been removed from the tarball:
 #
 # %{name}-%{version}-bin.jar
-# src/lib/ant-contrib.jar
 # src/lib/c3p0-0.9.1-pre6.jar
 # src/lib/c3p0-0.9.1-pre6.src.zip
 # src/lib/jboss-common-jdbc-wrapper.jar
@@ -44,20 +41,23 @@ Source1:           generate-tarball.sh
 
 # Patch to build with JDBC 4.1/Java 7
 Patch0:             %{name}-jdbc-4.1.patch
+Patch1:             %{name}-build.patch
+Patch2:             %{name}-hibernate.patch
 
 BuildArch:          noarch
 
 BuildRequires:      ant >= 1.6.0
 BuildRequires:      ant-contrib >= 1.0
-BuildRequires:      jpackage-utils >= 1.6
+BuildRequires:      bzr
+BuildRequires:      javapackages-local
 BuildRequires:      jta >= 1.0
 BuildRequires:      junit
 BuildRequires:      slf4j
 BuildRequires:      apache-commons-logging
+BuildRequires:      hibernate-core
 
 Requires:           jta >= 1.0
 Requires:           slf4j
-Requires:               jpackage-utils
 Source44: import.info
 
 %description
@@ -78,7 +78,11 @@ rm README README.txt
 # fix line endings
 sed -i 's/\r//' docs/README.txt
 
-%patch0 -p1 -F3
+sed -i 's/>@.*</>%{version}</' src/doc/sources/pom.xml
+
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 
@@ -90,31 +94,29 @@ export CLASSPATH=$(build-classpath jdbc-stdext jta junit slf4j commons-logging.j
 rm -rf src/com/mysql/jdbc/integration/jboss
 rm src/testsuite/regression/ConnectionRegressionTest.java
 rm src/testsuite/regression/DataSourceRegressionTest.java
+rm src/testsuite/regression/jdbc4/ConnectionRegressionTest.java
 rm src/testsuite/simple/ReadOnlyCallableStatementTest.java
 rm src/testsuite/simple/jdbc4/StatementsTest.java
 
-ant -DbuildDir=%{builddir} -DdistDir=%{distdir} -Dcom.mysql.jdbc.java6.rtjar=%{java6_rtpath} -Dcom.mysql.jdbc.java6.javac=%{java6_javacpath} -Dcom.mysql.jdbc.java6.java=%{java6_javapath}
+ant -DbuildDir=%{builddir} -DdistDir=%{distdir} \
+    -Dcom.mysql.jdbc.jdk6=%{java_home} \
+    -Dcom.mysql.jdbc.extra.libs=/usr/share/java \
+    dist
 
 %install
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 %{builddir}/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSHOT-bin.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
 # Install the Maven build information
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 src/doc/sources/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-sed -i 's/>@.*</>%{version}</' $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_file mysql:mysql-connector-java %{name}
+%mvn_artifact src/doc/sources/pom.xml build-mysql-jdbc/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSHOT-bin.jar
+%mvn_install
 
-%add_maven_depmap
-
-%files
-%doc CHANGES COPYING docs
-%{_javadir}/*.jar
-%config(noreplace) %{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*.pom
+%files -f .mfiles
+%doc CHANGES docs
+%doc COPYING
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:5.1.36-alt1_1jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:5.1.26-alt1_2jpp7
 - new release
 
