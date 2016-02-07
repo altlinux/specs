@@ -1,27 +1,25 @@
-Name: springframework
+Name: springframework-instrument
 Version: 3.2.14
-Summary: Spring Java Application Framework
+Summary: Spring Instrumentation
 License: ASL 2.0
 Url: http://projects.spring.io/spring-framework/
 Epoch: 0
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.springframework:spring-core) = 3.2.14.RELEASE
-Provides: mvn(org.springframework:spring-core:pom:) = 3.2.14.RELEASE
-Provides: springframework = 0:3.2.14-2.fc23
+Provides: mvn(org.springframework:spring-instrument) = 3.2.14.RELEASE
+Provides: mvn(org.springframework:spring-instrument:pom:) = 3.2.14.RELEASE
+Provides: springframework-instrument = 0:3.2.14-2.fc23
 Requires: java-headless
 Requires: jpackage-utils
-Requires: mvn(commons-logging:commons-logging)
-Requires: mvn(net.sf.cglib:cglib)
-Requires: mvn(org.ow2.asm:asm)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: springframework-3.2.14-2.fc23.cpio
+Source: springframework-instrument-3.2.14-2.fc23.cpio
 
 %description
-Spring is a layered Java/J2EE application framework, based on code published in
-Expert One-on-One J2EE Design and Development by Rod Johnson (Wrox, 2002).
+The Spring Instrumentation Framework exposes performance and
+resource utilization metrics for the Spring container and
+gives you runtime control of the container.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none

@@ -1,27 +1,29 @@
-Name: springframework
+Name: springframework-webmvc-portlet
 Version: 3.2.14
-Summary: Spring Java Application Framework
+Summary: Spring Web Portlet
 License: ASL 2.0
 Url: http://projects.spring.io/spring-framework/
 Epoch: 0
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.springframework:spring-core) = 3.2.14.RELEASE
-Provides: mvn(org.springframework:spring-core:pom:) = 3.2.14.RELEASE
-Provides: springframework = 0:3.2.14-2.fc23
+Provides: mvn(org.springframework:spring-webmvc-portlet) = 3.2.14.RELEASE
+Provides: mvn(org.springframework:spring-webmvc-portlet:pom:) = 3.2.14.RELEASE
+Provides: springframework-webmvc-portlet = 0:3.2.14-2.fc23
 Requires: java-headless
 Requires: jpackage-utils
-Requires: mvn(commons-logging:commons-logging)
-Requires: mvn(net.sf.cglib:cglib)
-Requires: mvn(org.ow2.asm:asm)
+Requires: mvn(org.springframework:spring-beans)
+Requires: mvn(org.springframework:spring-context)
+Requires: mvn(org.springframework:spring-core)
+Requires: mvn(org.springframework:spring-web)
+Requires: mvn(org.springframework:spring-webmvc)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: springframework-3.2.14-2.fc23.cpio
+Source: springframework-webmvc-portlet-3.2.14-2.fc23.cpio
 
 %description
-Spring is a layered Java/J2EE application framework, based on code published in
-Expert One-on-One J2EE Design and Development by Rod Johnson (Wrox, 2002).
+This package provide support development of Portlet
+applications with Spring.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none

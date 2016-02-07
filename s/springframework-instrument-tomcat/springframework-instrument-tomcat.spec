@@ -1,27 +1,26 @@
-Name: springframework
+Name: springframework-instrument-tomcat
 Version: 3.2.14
-Summary: Spring Java Application Framework
+Summary: Spring Instrument Tomcat Weaver
 License: ASL 2.0
 Url: http://projects.spring.io/spring-framework/
 Epoch: 0
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.springframework:spring-core) = 3.2.14.RELEASE
-Provides: mvn(org.springframework:spring-core:pom:) = 3.2.14.RELEASE
-Provides: springframework = 0:3.2.14-2.fc23
+Provides: mvn(org.springframework:spring-instrument-tomcat) = 3.2.14.RELEASE
+Provides: mvn(org.springframework:spring-instrument-tomcat:pom:) = 3.2.14.RELEASE
+Provides: springframework-instrument-tomcat = 0:3.2.14-2.fc23
 Requires: java-headless
 Requires: jpackage-utils
-Requires: mvn(commons-logging:commons-logging)
-Requires: mvn(net.sf.cglib:cglib)
-Requires: mvn(org.ow2.asm:asm)
+Requires: mvn(org.apache.tomcat:tomcat-catalina)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: springframework-3.2.14-2.fc23.cpio
+Source: springframework-instrument-tomcat-3.2.14-2.fc23.cpio
 
 %description
-Spring is a layered Java/J2EE application framework, based on code published in
-Expert One-on-One J2EE Design and Development by Rod Johnson (Wrox, 2002).
+Extension of Tomcat's default class loader which
+adds instrumentation to loaded classes without the
+need to use a VM-wide agent.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none

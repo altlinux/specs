@@ -1,27 +1,34 @@
-Name: springframework
+Name: springframework-context
 Version: 3.2.14
-Summary: Spring Java Application Framework
+Summary: Spring Application Context
 License: ASL 2.0
 Url: http://projects.spring.io/spring-framework/
 Epoch: 0
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.springframework:spring-core) = 3.2.14.RELEASE
-Provides: mvn(org.springframework:spring-core:pom:) = 3.2.14.RELEASE
-Provides: springframework = 0:3.2.14-2.fc23
+Provides: mvn(org.springframework:spring-context) = 3.2.14.RELEASE
+Provides: mvn(org.springframework:spring-context:pom:) = 3.2.14.RELEASE
+Provides: springframework-context = 0:3.2.14-2.fc23
 Requires: java-headless
 Requires: jpackage-utils
-Requires: mvn(commons-logging:commons-logging)
-Requires: mvn(net.sf.cglib:cglib)
-Requires: mvn(org.ow2.asm:asm)
+Requires: mvn(org.apache.geronimo.specs:geronimo-interceptor_3.0_spec)
+Requires: mvn(org.apache.geronimo.specs:geronimo-validation_1.0_spec)
+Requires: mvn(org.apache.tomcat:tomcat-servlet-api)
+Requires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
+Requires: mvn(org.jruby.extras:bytelist)
+Requires: mvn(org.springframework:spring-aop)
+Requires: mvn(org.springframework:spring-beans)
+Requires: mvn(org.springframework:spring-core)
+Requires: mvn(org.springframework:spring-expression)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: springframework-3.2.14-2.fc23.cpio
+Source: springframework-context-3.2.14-2.fc23.cpio
 
 %description
-Spring is a layered Java/J2EE application framework, based on code published in
-Expert One-on-One J2EE Design and Development by Rod Johnson (Wrox, 2002).
+The Spring Application Context is a complete superset of a bean factory, and
+adds enhanced capabilities to it, some of them more J2EE and
+enterprise-centric.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
