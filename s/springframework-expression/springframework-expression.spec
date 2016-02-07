@@ -1,27 +1,25 @@
-Name: springframework
+Name: springframework-expression
 Version: 3.2.14
-Summary: Spring Java Application Framework
+Summary: Spring Expression Language (SpEL)
 License: ASL 2.0
 Url: http://projects.spring.io/spring-framework/
 Epoch: 0
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.springframework:spring-core) = 3.2.14.RELEASE
-Provides: mvn(org.springframework:spring-core:pom:) = 3.2.14.RELEASE
-Provides: springframework = 0:3.2.14-2.fc23
+Provides: mvn(org.springframework:spring-expression) = 3.2.14.RELEASE
+Provides: mvn(org.springframework:spring-expression:pom:) = 3.2.14.RELEASE
+Provides: springframework-expression = 0:3.2.14-2.fc23
 Requires: java-headless
 Requires: jpackage-utils
-Requires: mvn(commons-logging:commons-logging)
-Requires: mvn(net.sf.cglib:cglib)
-Requires: mvn(org.ow2.asm:asm)
+Requires: mvn(org.springframework:spring-core)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: springframework-3.2.14-2.fc23.cpio
+Source: springframework-expression-3.2.14-2.fc23.cpio
 
 %description
-Spring is a layered Java/J2EE application framework, based on code published in
-Expert One-on-One J2EE Design and Development by Rod Johnson (Wrox, 2002).
+The Spring Expression Language (SpEL for short) is a powerful expression
+language that supports querying and manipulating an object graph at runtime.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
