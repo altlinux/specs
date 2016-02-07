@@ -1,5 +1,5 @@
 Name: mpg123
-Version: 1.22.2
+Version: 1.23.0
 Release: alt1
 
 Summary: MPEG audio player
@@ -24,8 +24,9 @@ Requires: libmpg123 = %version-%release
 %endif
 %endif
 
-BuildRequires: libalsa-devel libaudio-devel libaudiofile-devel esound-devel
-BuildRequires: libSDL_sound-devel libSDL-devel libltdl-devel libpulseaudio-devel
+BuildRequires: libalsa-devel libaudio-devel
+BuildRequires: libSDL_sound-devel libSDL-devel
+BuildRequires: libpulseaudio-devel libltdl-devel
 
 %description
 Mpg123 is a fast, free and portable MPEG audio player for Unix.
@@ -62,34 +63,49 @@ install -p -m644 %SOURCE1 .
 %build
 %autoreconf
 %add_optflags %optflags_shared
-%configure --with-audio='alsa oss esd sdl pulse' \
+%configure --with-audio='alsa oss sdl pulse' \
 	--with-optimization=0 \
 	--enable-network=yes \
 	--with-cpu=%{wcpu}
 %make_build CFLAGS="%optflags -Wformat -Werror=format-security"
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 mkdir -p %buildroot%_defaultdocdir/%name-%version/
 %find_lang %name
 
-
 %files -f %name.lang
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README mp3license doc/
-%_bindir/*
-%_man1dir/*
-%_libdir/%name
+
+%_bindir/%name
+%_bindir/%name-id3dump
+%_bindir/%name-strip
+%_bindir/out123
+%_man1dir/%name.1.*
+%_man1dir/out123.1.*
+%dir %_libdir/%name
+%_libdir/%name/*.so
+
+%exclude %_libdir/%name/*.la
 
 %files -n libmpg123
 %_libdir/libmpg123.so.*
+%_libdir/libout123.so.*
+%doc NEWS.lib%name
 
 %files -n libmpg123-devel
 %_libdir/libmpg123.so
-%_pkgconfigdir/*
-%_includedir/*
+%_libdir/libout123.so
+%_pkgconfigdir/lib%name.pc
+%_pkgconfigdir/libout123.pc
+%_includedir/*.h
 
 
 %changelog
+* Sun Feb 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
+- 1.23.0
+- disabled ESOUND support
+
 * Sat Jul 11 2015 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
 - 1.22.2
 
