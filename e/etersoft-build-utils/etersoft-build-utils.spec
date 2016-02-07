@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.5
+Version: 2.4.6
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sun Feb 07 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.6-alt1
+- add --help support
+- rpmbb: restore PKGFORMAT detection for fix --nodeps
+- fix some asserts
+
 * Tue Jan 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
 - detect MENV by current ALT Linux version
 - fix target repo transfer from rpmbp to rpmbsh
