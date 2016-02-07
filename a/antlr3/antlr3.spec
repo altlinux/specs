@@ -18,7 +18,7 @@ BuildRequires: jpackage-generic-compat
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Version:            %{antlr_version}
-Release:            alt0_9jpp8
+Release:            alt1_9jpp8
 Epoch:              1
 URL:                http://www.antlr3.org/
 Source0:            https://github.com/antlr/antlr3/archive/%{antlr_version}.tar.gz
@@ -35,7 +35,7 @@ BuildRequires:      junit
 BuildRequires:      tomcat-servlet-3.1-api
 BuildRequires:      stringtemplate4
 BuildRequires:      stringtemplate
-BuildRequires:      antlr3-tool-bootstrap antlr3-java-bootstrap
+BuildRequires:      antlr3-tool
 
 BuildRequires:      autoconf
 BuildRequires:      automake
@@ -309,6 +309,9 @@ install -pm 644 runtime/Cpp/include/* $RPM_BUILD_ROOT/%{_includedir}/
 %doc tool/LICENSE.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt1_9jpp8
+- full-fledged build
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.5.2-alt0_9jpp8
 - java 8 mass update (bootstrap)
 
