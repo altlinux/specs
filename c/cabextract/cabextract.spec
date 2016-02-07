@@ -1,5 +1,5 @@
 Name: cabextract
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: Utility for extracting Microsoft Cabinet files
@@ -35,6 +35,9 @@ A program for extracting Microsoft Cabinet (.CAB) files.
 %doc NEWS README
 
 %changelog
+* Sun Feb 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6
+
 * Sun Mar 01 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
 - 1.5
 
