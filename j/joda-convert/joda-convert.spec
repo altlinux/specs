@@ -1,41 +1,56 @@
-Name: joda-convert
-Version: 1.7
-Summary: Java library for conversion to and from standard string formats
-License: ASL 2.0
-Url: https://github.com/JodaOrg/joda-convert/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: joda-convert = 1.7-2.fc23
-Provides: mvn(org.joda:joda-convert) = 1.7
-Provides: mvn(org.joda:joda-convert:pom:) = 1.7
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: joda-convert-1.7-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           joda-convert
+Version:        1.7
+Release:        alt1_2jpp8
+Summary:        Java library for conversion to and from standard string formats
+License:        ASL 2.0 
+URL:            https://github.com/JodaOrg/joda-convert/
+BuildArch:      noarch
+
+Source0:        https://github.com/JodaOrg/joda-convert/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+Source44: import.info
 
 %description
 Java library to enable conversion to and from standard string formats.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+%mvn_file : %{name}
+sed -i s/// *.txt
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1_2jpp8
+- unbootsrap build
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.7-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
