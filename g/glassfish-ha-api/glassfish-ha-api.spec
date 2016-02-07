@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          glassfish-ha-api
 Version:       3.1.9
-Release:       alt1_3jpp7
+Release:       alt1_6jpp8
 Summary:       High Availability APIs and SPI
 License:       CDDL or GPLv2 with exceptions
 URL:           http://glassfish.java.net/
@@ -15,9 +16,7 @@ Source0:       %{name}-%{version}-src-svn.tar.gz
 Source1:       glassfish-LICENSE.txt
 
 BuildRequires: jvnet-parent
-
 BuildRequires: glassfish-hk2-api
-
 # test dep
 BuildRequires: junit
 
@@ -71,9 +70,10 @@ sed -i "s|<artifactId>hk2</artifactId>|<artifactId>hk2-api</artifactId>|" pom.xm
 cp -p %{SOURCE1} LICENSE.txt
 sed -i 's/\r//' LICENSE.txt
 
+%mvn_file :ha-api %{name}
+
 %build
 
-%mvn_file :ha-api %{name}
 %mvn_build
 
 %install
@@ -86,6 +86,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_6jpp8
+- java 8 mass update
+
 * Wed Aug 27 2014 Igor Vlasenko <viy@altlinux.ru> 3.1.9-alt1_3jpp7
 - new release
 
