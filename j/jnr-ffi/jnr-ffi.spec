@@ -1,40 +1,34 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global commit_hash f28dc0a
-%global tag_hash 929dd3c
-
+BuildRequires: jpackage-generic-compat
 Name:     jnr-ffi
-Version:  0.7.10
-Release:  alt1_3jpp7
+Version:  2.0.3
+Release:  alt1_4jpp8
 Summary:  Java Abstracted Foreign Function Layer
-Group:    System/Libraries
 License:  ASL 2.0
 URL:      http://github.com/jnr/%{name}/
-Source0:  https://github.com/jnr/%{name}/tarball/%{version}/jnr-%{name}-%{version}-0-g%{commit_hash}.tar.gz
-
-Patch1:   %{name}-remove-dependency-versions-not-understood-by-fedora-maven.patch
-
-BuildRequires: jpackage-utils
-BuildRequires: jffi
-BuildRequires: jnr-x86asm
-BuildRequires: junit
-BuildRequires: objectweb-asm4
+Source0:  https://github.com/jnr/%{name}/archive/%{version}.tar.gz
+Source1:  MANIFEST.MF
+Patch0:   add-manifest.patch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
+BuildRequires:  mvn(com.github.jnr:jffi)
+BuildRequires:  mvn(com.github.jnr:jffi::native:)
+BuildRequires:  mvn(com.github.jnr:jnr-x86asm)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.ow2.asm:asm-analysis)
+BuildRequires:  mvn(org.ow2.asm:asm-commons)
+BuildRequires:  mvn(org.ow2.asm:asm-tree)
+BuildRequires:  mvn(org.ow2.asm:asm-util)
+BuildRequires:  sonatype-oss-parent
 
-Requires:      jpackage-utils
-Requires:      jffi
-Requires:      jnr-x86asm
-Requires:      objectweb-asm4
 
 BuildArch:     noarch
 Source44: import.info
@@ -45,51 +39,44 @@ Source44: import.info
 An abstracted interface to invoking native functions from java
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n jnr-%{name}-%{tag_hash}
-%patch1 -p0
+%setup -q
+cp %{SOURCE1} .
+sed -i -e's/@VERSION/%{version}/g' MANIFEST.MF
+%patch0
 
 # remove all builtin jars
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
-%build
 # don't fail on unused parameters... (TODO: send patch upstream)
 sed -i 's|-Werror||' libtest/GNUmakefile
-# TODO: tests still fail, investigate
-mvn-rpmbuild install javadoc:aggregate -DskipTests
+
+%mvn_file :{*} %{name}/@1 @1
+
+%build
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml  \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc LICENSE
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1_4jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.7.10-alt1_3jpp7
 - new release
 
