@@ -2,9 +2,10 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rxtx
 %define version 2.2
@@ -14,7 +15,7 @@ BuildRequires: jpackage-compat
 
 %global upver	2.2
 %global uprel	20100211
-%global rel	0.7
+%global rel	0.14
 
 #global jni	%{_jnidir}
 %global jni	%{_libdir}/%{name}
@@ -22,7 +23,7 @@ BuildRequires: jpackage-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt2_0.7.20100211.2jpp7
+Release:	alt2_0.14.20100211.1jpp8
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://rxtx.qbang.org/
@@ -32,17 +33,22 @@ URL:		http://rxtx.qbang.org/
 #  tar cjvf rxtx-%{uprel}.tar.bz2 --exclude CVS --exclude .cvsignore rxtx-%{uprel}
 Source:		%{name}-%{uprel}.tar.bz2
 #Source:		http://rxtx.qbang.org/pub/rxtx/%{name}-%{upver}-%{uprel}.tgz
+Source1:	README.fedora
 Patch1:		rxtx-2.2-loadlibrary.patch
 Patch2:		rxtx-2.2-no-io.h.patch
 Patch3:		rxtx-2.2-fhs_lock.patch
 Patch4:		rxtx-2.2-lock.patch
-Patch5:		rxtx-aarch64.patch
+Patch5:		rxtx-2.2-Add-Arduino-driver-ttyACM-rxtxcomm-as-device.patch
+Patch6:		rxtx-2.2-java-version-fix.patch
+Patch7:         rxtx-2.2-convert-strcpy-to-strncpy.patch
+
 #BuildRequires:	java-devel >= 1:1.6.0
 BuildRequires:	jpackage-utils
-BuildRequires:  libtool automake
+BuildRequires:	libtool automake
 BuildRequires:	ant >= 1.7.0
 BuildRequires:	ant-junit >= 1.7.0
-BuildRequires:	junit4
+BuildRequires:	junit
+BuildRequires:	maven-local
 #Requires:	java >= 1:1.6.0
 Requires:	jpackage-utils
 ExcludeArch:	ppc ppc64 s390 s390x
@@ -61,10 +67,13 @@ sed -e 's|@JNIPATH@|%{jni}|' %{PATCH1} | patch -s -b --suffix .p1 -p1
 %if 0%{?fedora} > 13 || 0%{?rhel} > 6
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 %endif
 # remove prebuild binaries
 find . -name '*.jar' -exec rm {} \;
 find . -name '*.hqx' -exec rm {} \;
+cp -a %{SOURCE1} .
 
 %build
 export JAVA_HOME=%{java_home}
@@ -80,12 +89,30 @@ make RXTX_PATH=%{buildroot}%{jni} JHOME=%{buildroot}%{_javadir} install
 #echo "Driver=gnu.io.RXTXCommDriver" > %{buildroot}%{_javadir}/gnu.io.rxtx.properties
 find %{buildroot} -name '*.la' -exec rm {} \;
 
+%mvn_artifact org.rxtx:rxtx:%{version} RXTXcomm.jar
+
+%mvn_file org.rxtx:rxtx:%{version} RXTXcomm
+%mvn_install
+if [ %_libdir != /usr/lib ]; then
+    mkdir -p %buildroot%_libdir/java/
+    mv %buildroot/usr/lib/java/* %buildroot%_libdir/java/
+    sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
+fi
+
+rm -f  %{buildroot}%{_datadir}/java/RXTXcomm.jar
+ln -s %{_jnidir}/RXTXcomm.jar %{buildroot}%{_datadir}/java/RXTXcomm.jar
+
 %files
-%doc AUTHORS COPYING ChangeLog INSTALL README TODO
+%doc AUTHORS COPYING ChangeLog INSTALL README TODO README.fedora
 %{_javadir}/*
+%{_jnidir}/*
 %{jni}
+%attr(644, root, root) %{_datadir}/maven-metadata/%{name}.xml
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.14.20100211.1jpp8
+- java8 mass update
+
 * Wed Jun 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.7.20100211.2jpp7
 - update to new release by jppimport
 
