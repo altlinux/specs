@@ -1,33 +1,29 @@
 Group: Development/Java
-BuildRequires: /proc
-BuildRequires: jpackage-compat
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc woodstox-core
+BuildRequires: jpackage-generic-compat
 %global oname policy
 Name:          glassfish-policy
-Version:       2.3.1
-Release:       alt1_3jpp7
+Version:       2.5
+Release:       alt1_3jpp8
 Summary:       GlassFish WS-Policy implementation
 License:       CDDL or GPLv2 with exceptions
 URL:           http://policy.java.net/
-# svn export https://svn.java.net/svn/policy~policy/tags/policy-2.3.1
-# tar czf policy-2.3.1-src-svn.tar.gz policy-2.3.1
-Source0:       %{oname}-%{version}-src-svn.tar.gz
+# svn export https://svn.java.net/svn/policy~policy/tags/policy-2.5
+# tar cJf policy-2.5.tar.xz policy-2.5
+Source0:       %{oname}-%{version}.tar.xz
 
-BuildRequires: jvnet-parent
-
-BuildRequires: bea-stax-api
-BuildRequires: istack-commons
-BuildRequires: txw2
-BuildRequires: woodstox-core
-
-# test deps
-BuildRequires: junit
-
-# BuildRequires: buildnumber-maven-plugin
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-surefire-provider-junit4
-# BuildRequires: svn
+BuildRequires: mvn(com.sun.istack:istack-commons-buildtools)
+BuildRequires: mvn(com.sun.istack:istack-commons-runtime)
+BuildRequires: mvn(com.sun.xml.txw2:txw2)
+BuildRequires: mvn(javax.xml.stream:stax-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.java:jvnet-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+#BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin)
+#BuildRequires: mvn(org.apache.maven.plugins:maven-deploy-plugin)
 
 BuildArch:     noarch
 Source44: import.info
@@ -51,24 +47,22 @@ find -name '*.class' -delete
 
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin org.glassfish.build:gfnexus-maven-plugin
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :maven-deploy-plugin
 
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-resources-plugin']" "<version>any</version>"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='cobertura-maven-plugin']" "<version>any</version>"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId ='maven-jar-plugin']" "<version>any</version>"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId ='maven-javadoc-plugin']" "<version>any</version>"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId ='maven-surefire-report-plugin']" "<version>any</version>"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId ='maven-jxr-plugin']" "<version>any</version>"
-%pom_xpath_inject "pom:reporting/pom:plugins/pom:plugin[pom:artifactId ='cobertura-maven-plugin']" "<version>any</version>"
 
 sed -i 's/${artifactId}/${project.artifactId}/' pom.xml
 
 iconv -f iso8859-1 -t utf-8 LICENSE.txt > LICENSE.txt.conv && mv -f LICENSE.txt.conv LICENSE.txt
 sed -i 's/\r//' LICENSE.txt
 
+%mvn_file :%{oname} %{name}
+
 %build
 
-%mvn_file :%{oname} %{name}
-%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -80,6 +74,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt Licenses/license-policy.html
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_3jpp8
+- java 8 mass update
+
 * Thu Aug 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_3jpp7
 - new release
 
