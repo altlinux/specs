@@ -1,7 +1,7 @@
 # SPEC file for uBlock Origin extension
 
 %define rname	ublock_origin
-%define version 1.5.3
+%define version 1.5.5
 %define release alt1
 %define cid 	uBlock0@raymondhill.net
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -62,5 +62,8 @@ fi
 %ciddir
 
 %changelog
+* Sun Feb 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.5-alt1
+- New version
+
 * Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.3-alt1
 - Initial build for ALTLinux Sisyphus
