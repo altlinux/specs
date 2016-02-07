@@ -1,41 +1,63 @@
-Name: felix-scr-annotations
-Version: 1.9.12
-Summary: Annotations for SCR
-License: ASL 2.0
-Url: http://felix.apache.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: felix-scr-annotations = 1.9.12-2.fc23
-Provides: mvn(org.apache.felix:org.apache.felix.scr.annotations) = 1.9.12
-Provides: mvn(org.apache.felix:org.apache.felix.scr.annotations:pom:) = 1.9.12
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: felix-scr-annotations-1.9.12-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global project   felix
+%global bundle    org.apache.felix.scr.annotations
+Name:          felix-scr-annotations
+Version:       1.9.12
+Release:       alt1_2jpp8
+Summary:       Annotations for SCR
+License:       ASL 2.0
+URL:           http://felix.apache.org/
+Source0:       http://www.apache.org/dist/felix/%{bundle}-%{version}-source-release.tar.gz
+
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.felix:felix-parent:pom:)
+BuildRequires: mvn(org.apache.felix:org.apache.felix.scr.generator)
+BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
+# i dont know which package as missing this required...
+BuildRequires: mvn(org.mockito:mockito-all)
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 Annotations for generating OSGi service descriptors.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{bundle}-%{version}
+
+%mvn_file :%{bundle} %{project}/%{bundle}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+# no test to run
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc changelog.txt
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.12-alt1_2jpp8
+- unbootsrap build
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.12-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
