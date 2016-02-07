@@ -1,7 +1,7 @@
 # SPEC file for uMatrix extension
 
 %define rname	umatrix
-%define version 0.9.3.1
+%define version 0.9.3.2
 %define release alt1
 %define cid 	uMatrix@raymondhill.net
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -53,5 +53,8 @@ fi
 %ciddir
 
 %changelog
+* Sun Feb 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.3.2-alt1
+- New version
+
 * Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.3.1-alt1
 - Initial build for ALTLinux Sisyphus
