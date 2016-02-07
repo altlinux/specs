@@ -1,37 +1,37 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
 Name:          littleproxy
-Version:       0.4
-Release:       alt1_6jpp7
+Version:       0.5.3
+Release:       alt1_1jpp8
 Summary:       High Performance HTTP Proxy
 License:       ASL 2.0
 URL:           http://www.littleshoot.org/littleproxy/
-# git clone git://github.com/adamfisk/LittleProxy.git littleproxy-0.4
-# cd littleproxy-0.4 &&  git archive --format=tar --prefix=littleproxy-0.4/ littleproxy-0.4 | xz > ../littleproxy-0.4-src-git.tar.xz
-Source0:       %{name}-%{version}-src-git.tar.xz
-# add netty 3.5.x support
-Patch0:        %{name}-%{version}-netty35.patch
-# remove: maven-assembly-plugin, maven-gpg-plugin
-Patch1:        %{name}-%{version}-pom.patch
-
-BuildRequires: sonatype-oss-parent
-
-BuildRequires: apache-commons-codec
-BuildRequires: apache-commons-io
-BuildRequires: apache-commons-lang
-BuildRequires: ehcache-core
-BuildRequires: log4j
-BuildRequires: netty
-BuildRequires: slf4j
-
-# test deps
-BuildRequires: junit
+Source0:       https://github.com/adamfisk/LittleProxy/archive/%{name}-%{version}.tar.gz
 
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(commons-cli:commons-cli)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(io.netty:netty:3)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.httpcomponents:httpclient)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.eclipse.jetty:jetty-server:8.1.17.v20150415)
+BuildRequires: mvn(org.littleshoot:dnssec4j)
+BuildRequires: mvn(org.mockito:mockito-all)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-log4j12)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+%if 0
+# Not available test dep
+BuildRequires: mvn(org.seleniumhq.selenium:selenium-java:2.28.0)
+%endif
 
 BuildArch:     noarch
 Source44: import.info
@@ -49,30 +49,59 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
-%if %{?fedora} > 17
-%patch0 -p1
-%pom_remove_plugin :maven-assembly-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
-%else
-%patch1 -p0
-%endif
+%setup -q -n LittleProxy-%{name}-%{version}
+find . -name "*.class" -print -delete
+find . -name "*.jar" -print -delete
+#%% patch0 -p1
+
+# Unavailable plugins
+%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-site-plugin
+# 8.1.14.v20131031 8.1.17.v20150415
+%pom_xpath_set "pom:dependency[pom:artifactId = 'jetty-server']/pom:version" 8.1.17.v20150415
+%pom_xpath_inject "pom:dependency[pom:artifactId = 'jetty-server']" "
+<exclusions>
+    <exclusion>
+    <groupId>org.eclipse.jetty.orbit</groupId>
+    <artifactId>javax.servlet</artifactId>
+    </exclusion>
+</exclusions>"
+
+%pom_xpath_set "pom:dependency[pom:artifactId = 'netty']/pom:version" 3
+
+%pom_remove_dep org.seleniumhq.selenium:selenium-java
+rm -r src/test/java/org/littleshoot/proxy/EndToEndStoppingTest.java
+
+%pom_add_dep javax.servlet:javax.servlet-api:3.1.0:test
+
+# Use web connection
+rm -r src/test/java/org/littleshoot/proxy/HttpProxyTest.java
+# NoClassDefFoundError: Could not initialize class org.littleshoot.proxy.ProxyUtils
+rm -r src/test/java/org/littleshoot/proxy/HttpFilterTest.java \
+ src/test/java/org/littleshoot/proxy/ProxyChainTest.java \
+ src/test/java/org/littleshoot/proxy/ProxyUtilsTest.java \
+ src/test/java/org/littleshoot/proxy/RegexHttpRequestFilterTest.java
+
+%mvn_file :%{name} %{name}
 
 %build
 
-%mvn_file :%{name} %{name}
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc README.md
 %doc COPYRIGHT.txt LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc COPYRIGHT.txt LICENSE.txt
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_6jpp7
 - new release
 
