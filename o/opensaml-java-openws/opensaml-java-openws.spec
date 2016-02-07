@@ -1,18 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           opensaml-java-openws
-Version:        1.4.4
-Release:        alt1_6jpp7
+Version:        1.5.5
+Release:        alt1_2jpp8
 Summary:        Java OpenWS library
 License:        ASL 2.0
 Group:          Development/Java
 URL:            http://www.opensaml.org/
 
-# svn export https://svn.shibboleth.net/java-openws/tags/1.4.4/ opensaml-java-openws-1.4.4
-# tar cafJ opensaml-java-openws-1.4.4.tar.xz opensaml-java-openws-1.4.4
+# svn export https://svn.shibboleth.net/java-openws/tags/1.5.5/ opensaml-java-openws-1.5.5
+# tar cafJ opensaml-java-openws-1.5.5.tar.xz opensaml-java-openws-1.5.5
 Source0:        opensaml-java-openws-%{version}.tar.xz
 
 BuildArch:      noarch
@@ -30,7 +31,7 @@ BuildRequires:  opensaml-java-xmltooling
 BuildRequires:  xalan-j2
 BuildRequires:  apache-commons-codec
 BuildRequires:  jakarta-commons-httpclient
-BuildRequires:  tomcat-servlet-3.0-api
+BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires:  xerces-j2
 BuildRequires:  xml-commons-apis
 BuildRequires:  junit
@@ -54,10 +55,9 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 
-sed -i "s|\${xerces.groupId}|xerces|" pom.xml
+%pom_remove_parent
 
-%pom_remove_dep "xerces:xml-apis"
-%pom_remove_dep "xerces:serializer"
+%pom_remove_dep "org.springframework:spring-test"
 
 %build
 # tests disabled because of missing dependency org.springframework:spring-mock
@@ -74,6 +74,9 @@ sed -i "s|\${xerces.groupId}|xerces|" pom.xml
 %doc doc
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_2jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.4-alt1_6jpp7
 - new release
 
