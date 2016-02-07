@@ -1,56 +1,75 @@
-Name: maven-shade-plugin
-Version: 2.4
-Summary: This plugin provides the capability to package the artifact in an uber-jar
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-shade-plugin
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-shade-plugin = 2.4-2.fc23
-Provides: mvn(org.apache.maven.plugins:maven-shade-plugin) = 2.4
-Provides: mvn(org.apache.maven.plugins:maven-shade-plugin:pom:) = 2.4
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.google.guava:guava)
-Requires: mvn(commons-io:commons-io)
-Requires: mvn(org.apache.maven.shared:maven-dependency-tree)
-Requires: mvn(org.apache.maven:maven-artifact)
-Requires: mvn(org.apache.maven:maven-compat)
-Requires: mvn(org.apache.maven:maven-core)
-Requires: mvn(org.apache.maven:maven-model)
-Requires: mvn(org.apache.maven:maven-plugin-api)
-Requires: mvn(org.codehaus.plexus:plexus-utils)
-Requires: mvn(org.jdom:jdom)
-Requires: mvn(org.ow2.asm:asm)
-Requires: mvn(org.ow2.asm:asm-commons)
-Requires: mvn(org.vafer:jdependency)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: maven-shade-plugin-2.4-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-shade-plugin
+Version:        2.4
+Release:        alt1_2jpp8
+Summary:        This plugin provides the capability to package the artifact in an uber-jar
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/%{name}
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(asm:asm)
+BuildRequires:  mvn(asm:asm-commons)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.shared:maven-dependency-tree)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.jdom:jdom)
+BuildRequires:  mvn(org.vafer:jdependency)
+Source44: import.info
 
 %description
 This plugin provides the capability to package the artifact in an
 uber-jar, including its dependencies and to shade - i.e. rename - the
 packages of some of the dependencies.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+rm src/test/jars/plexus-utils-1.4.1.jar
+ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# A class from aopalliance is not found. Simply adding BR does not solve it
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc LICENSE NOTICE
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_2jpp8
+- unbootsrap build
+
 * Wed Jan 27 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
