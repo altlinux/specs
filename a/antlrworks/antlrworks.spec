@@ -1,44 +1,40 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           antlrworks
-Version:        1.4.3
-Release:        alt1_8jpp7
+Version:        1.5.2
+Release:        alt1_3jpp8
 Summary:        Grammar development environment for ANTLR v3 grammars
 
 Group:          Development/Java
 License:        BSD
 URL:            http://www.antlr3.org/works
-Source0:        http://www.antlr3.org/download/%{name}-%{version}-src.zip
-Source1:        antlrworks.desktop
+Source0:        https://github.com/antlr/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Source1:        %{name}.desktop
 # Disable embedding of dependency jars files into antlrworks jar file
-Patch0:         %{name}-1.4-build.patch
-# Add xdg-open and epiphany as available web browsers to open help (sent
-# upstream)
-Patch1:         %{name}-1.4-browsers.patch
-# Fix compilation with JGoodies Forms >= 1.4.2
-Patch2:         %{name}-1.4-jgoodies-forms_1.4.2.patch
-# Fix compilation with OpenJDK 7
-Patch3:         %{name}-1.4.3-jdk7.patch
-# Fix compilation with JGoodies Forms >= 1.6.0
-Patch4:         %{name}-1.4.3-jgoodies-forms_1.6.0.patch
+Patch0:         %{name}-1.5.2-build.patch
+# Fix compilation with JGoodies Forms >= 1.7.1
+Patch1:         %{name}-1.5.2-jgoodies-forms_1.7.1.patch
+# Add xdg-open to the list of available browsers to open the help
+Patch2:         %{name}-1.5.2-browsers.patch
 
 BuildRequires:  ant
-BuildRequires:  antlr-tool
-BuildRequires:  antlr3-tool >= 3.3
+BuildRequires:  antlr3-tool >= 3.5
 BuildRequires:  desktop-file-utils
-BuildRequires:  jgoodies-forms >= 1.6.0
+BuildRequires:  jgoodies-forms >= 1.7.1
 BuildRequires:  stringtemplate
-Requires:       antlr-tool
-Requires:       antlr3-tool >= 3.3
+BuildRequires:  stringtemplate4
+Requires:       antlr3-tool >= 3.5
 Requires:       graphviz
 # Owns /usr/share/icons/hicolor
 Requires:       icon-theme-hicolor
 # Antlrworks requires javac
-Requires:       jgoodies-forms >= 1.6.0
+Requires:       jgoodies-forms >= 1.7.1
+Requires:       stringtemplate4
 BuildArch:      noarch
 Source44: import.info
 
@@ -57,19 +53,21 @@ encountered by grammar developers.
 
 
 %prep
-%setup -q -c
+%setup -q
 %patch0 -p0 -b .build
-%patch1 -p1 -b .browsers
-%patch2 -p0 -b .jgoodies-forms_1.4.2
-%patch3 -p1 -b .jdk7
-%patch4 -p0 -b .jgoodies-forms_1.6.0
+%patch1 -p0 -b .jgoodies-forms_1.7.1
+%patch2 -p0 -b .browsers
 
-find -name '*.class' -o -name '*.jar' -exec rm '{}' \;
+# Fix version
+sed -i "s|^version=.*|version=%{version}|" build.properties
+
+# Add JARs to the default classpath folder
+mkdir -p lib/
+build-jar-repository -s -p lib/ antlr3-runtime jgoodies-forms stringtemplate stringtemplate4/ST4 
 
 
 %build
-export CLASSPATH=$(build-classpath antlr antlr3 antlr3-runtime jgoodies-forms stringtemplate stringtemplate4)
-ant build
+ant build -Daw.lib=lib/ -Dantlr3.jar=antlr3-runtime.jar -Djgoodies.jar=jgoodies-forms.jar
 
 
 %install
@@ -86,21 +84,27 @@ for i in 16 32 64; do
   install -Dpm 0644 resources/icons/app_${i}x$i.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/${i}x$i/apps/%{name}.png
 done
 
-desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%name.conf`
+touch $RPM_BUILD_ROOT/etc/java/%name.conf
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/antlrworks.conf`
-touch $RPM_BUILD_ROOT/etc/java/antlrworks.conf
+
+%check
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 
 
 %files
+%doc History.txt
 %{_bindir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_javadir}/*.jar
-%config(noreplace,missingok) /etc/java/antlrworks.conf
+%config(noreplace,missingok) /etc/java/%name.conf
 
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_3jpp8
+- java8 mass update
+
 * Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_8jpp7
 - jgoodies fix
 
