@@ -3,20 +3,18 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global master_version 3
 Name:          tiles
 Version:       2.2.2
-Release:       alt3_9jpp7
+Release:       alt3_14jpp8
 Summary:       Java templating framework for web application user interfaces
 License:       ASL 2.0
 Url:           http://tiles.apache.org/
 Source0:       http://www.apache.org/dist/%{name}/v%{version}/%{name}-%{version}-src.tar.gz
-# wget -O tiles-master-3-pom.xml http://svn.apache.org/repos/asf/tiles/maven/tags/tiles-master-3/pom.xml
-Source1:       %{name}-master-%{master_version}-pom.xml
-# force tomcat 7.x apis use
-Source2:       %{name}-%{version}-2-depmap
+
 # remove shale-test and maven-taglib-plugin
 # change 
 #  org.codehaus.mojo rat-maven-plugin in org.apache.rat apache-rat-plugin
@@ -27,38 +25,38 @@ Patch0:        %{name}-%{version}-fix-build.patch
 Patch1:        %{name}-%{version}-commons-ognl.patch
 # add tiles-master relativePath
 Patch2:        %{name}-%{version}-parent-pom.patch
-# build fix fot tomcat 7.x apis
-Patch3:        %{name}-%{version}-servlet-servlet30.patch
-Patch4:        %{name}-%{version}-jsp-servlet30.patch
+# build fix fot tomcat 8.x apis
+Patch3:        %{name}-%{version}-servlet3.1.patch
 
-
-BuildRequires: apache-commons-digester
-BuildRequires: apache-commons-ognl
-BuildRequires: freemarker
-BuildRequires: mvel
-BuildRequires: portlet-2.0-api
+BuildRequires: mvn(commons-digester:commons-digester)
+BuildRequires: mvn(javax.portlet:portlet-api)
+BuildRequires: mvn(org.apache.commons:commons-ognl)
+BuildRequires: mvn(org.apache.tomcat:tomcat-el-api)
+BuildRequires: mvn(org.apache.tomcat:tomcat-jasper-el)
+BuildRequires: mvn(org.apache.tomcat:tomcat-jsp-api)
+BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
+BuildRequires: mvn(org.apache.velocity:velocity-tools)
+BuildRequires: mvn(org.freemarker:freemarker)
+BuildRequires: mvn(org.mvel:mvel2)
+BuildRequires: mvn(org.slf4j:jcl-over-slf4j)
+BuildRequires: mvn(org.slf4j:slf4j-jdk14)
 BuildRequires: slf4j
 BuildRequires: tomcat-lib
-BuildRequires: tomcat-el-2.2-api
-BuildRequires: tomcat-jsp-2.2-api
-BuildRequires: tomcat-servlet-3.0-api
-BuildRequires: velocity-tools
 
 # test deps
 %if 0
 BuildRequires: mvn(org.easymock:easymockclassextension) >= 2.4
 BuildRequires: mvn(org.apache.shale:shale-test) >= 1.0.5
 %endif
-BuildRequires: junit
+BuildRequires: mvn(junit:junit)
 
 BuildRequires: maven-local
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-resources-plugin
 
 # requires by remote-resources-plugin
 BuildRequires: mvn(org.apache.maven.shared:maven-artifact-resolver)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -90,9 +88,8 @@ This package contains javadoc for %{name}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
+%patch3 -p1
 
-%patch3 -p0
-%patch4 -p0
 
 # require org.springframework spring-webmvc-portlet 2.5.6
 %pom_disable_module tiles-portlet-wildcard src/pom.xml
@@ -104,7 +101,33 @@ This package contains javadoc for %{name}.
 
 sed -i "s|<artifactId>jasper-el|<artifactId>tomcat-jasper-el|" src/tiles-el/pom.xml
 
-cp -p %{SOURCE1} pom.xml
+sed -i "s|<groupId>javax.servlet</groupId>|<groupId>org.apache.tomcat</groupId>|" src/tiles-core/pom.xml \
+ src/tiles-api/pom.xml \
+ src/tiles-velocity/pom.xml \
+ src/tiles-servlet/pom.xml \
+ src/tiles-compat/pom.xml \
+ src/tiles-portlet/pom.xml \
+ src/tiles-jsp/pom.xml \
+ src/tiles-extras/pom.xml \
+ src/tiles-freemarker/pom.xml \
+ src/tiles-el/pom.xml \
+ src/tiles-servlet-wildcard/pom.xml
+
+sed -i "s|<artifactId>servlet-api</artifactId>|<artifactId>tomcat-servlet-api</artifactId>|" src/tiles-core/pom.xml \
+ src/tiles-api/pom.xml \
+ src/tiles-velocity/pom.xml \
+ src/tiles-servlet/pom.xml \
+ src/tiles-compat/pom.xml \
+ src/tiles-portlet/pom.xml \
+ src/tiles-jsp/pom.xml \
+ src/tiles-extras/pom.xml \
+ src/tiles-freemarker/pom.xml \
+ src/tiles-el/pom.xml \
+ src/tiles-servlet-wildcard/pom.xml
+
+
+%pom_remove_parent src
+#cp -p %%{SOURCE1} pom.xml
 
 %build
 
@@ -127,7 +150,7 @@ cd src
 %mvn_file :%{name}-velocity %{name}/velocity
 
 # test skip for unavailable deps
-%mvn_build -f -- -Dmaven.local.depmap.file="%{SOURCE2}"
+%mvn_build -f
 
 %install
 
@@ -136,19 +159,17 @@ cd src
 %mvn_install
 )
 
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-master.pom
-%add_maven_depmap JPP.%{name}-master.pom
-
 %files -f src/.mfiles
 %dir %{_javadir}/%{name}
-%{_mavenpomdir}/JPP.%{name}-master.pom
-%{_mavendepmapfragdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f src/.mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_14jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_9jpp7
 - new release
 
