@@ -2,15 +2,16 @@
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/xsltproc
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # the package is arch-dependent because scripts contain arch dependent paths
 # the debuginfo package will be empty if produced
 %define debug_package %{nil}
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt1_12jpp7
+Release:    alt1_20jpp8
 Summary:    Java implementation of the DBus protocol
 Group:      Development/Java
 License:    AFL or LGPLv2
@@ -27,8 +28,8 @@ Patch2:     parallel.patch
 # java-7 compatibility patch
 # https://bugs.freedesktop.org/show_bug.cgi?id=44791
 Patch3:     utf-8-encoding.patch
+Patch4:     version-less-jars.patch
 
-BuildRequires:  jpackage-utils
 BuildRequires:  texlive-base
 BuildRequires:  texlive-latex-base
 BuildRequires:  texlive-base
@@ -47,7 +48,7 @@ BuildRequires:  libmatthew-java
 BuildRequires:  docbook2X
 BuildRequires:  texlive-latex-recommended
 
-Requires:   jpackage-utils
+Requires:   maven-local
 Requires:   libmatthew-java
 Source44: import.info
 
@@ -85,11 +86,13 @@ Javadocs for %{name}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 sed -i "s|!doctype|!DOCTYPE|g" *.sgml
 sed -i 's|<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN"|<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"|g' *.sgml
 
 %build
+
 # no configure file
 make %{?_smp_mflags} \
     DOCBOOKTOMAN="db2x_docbook2man --to-stdout"\
@@ -100,7 +103,8 @@ make %{?_smp_mflags} \
     DOCPREFIX=%{_defaultdocdir}/%{name} \
     JAVADOCPREFIX=%{_javadocdir}/%{name} \
     JAVAUNIXLIBDIR=%{_libdir}/libmatthew-java \
-    JAVAUNIXJARDIR=%{_libdir}/libmatthew-java
+    JAVAUNIXJARDIR=%{_jnidir} \
+    JAVADOC="javadoc -Xdoclint:none"
 
 # Inject OSGi manifests
 jar umf %{SOURCE1} libdbus-java-%{version}.jar
@@ -113,7 +117,8 @@ make check \
     DOCPREFIX=%{_defaultdocdir}/%{name} \
     JAVADOCPREFIX=%{_javadocdir}/%{name} \
     JAVAUNIXLIBDIR=%{_libdir}/libmatthew-java \
-    JAVAUNIXJARDIR=%{_libdir}/libmatthew-java
+    JAVAUNIXJARDIR=%{_jnidir} \
+    JAVADOC="javadoc -Xdoclint:none"
 
 
 %install
@@ -125,7 +130,8 @@ make install \
     DOCPREFIX=%{_defaultdocdir}/%{name} \
     JAVADOCPREFIX=%{_javadocdir}/%{name} \
     JAVAUNIXLIBDIR=%{_libdir}/libmatthew-java \
-    JAVAUNIXJARDIR=%{_libdir}/libmatthew-java
+    JAVAUNIXJARDIR=%{_jnidir} \
+    JAVADOC="javadoc -Xdoclint:none"
 
 %files
 %{_javadir}/%{name}
@@ -135,11 +141,11 @@ make install \
 %{_bindir}/DBusViewer
 %{_bindir}/ListDBus
 %doc %{_defaultdocdir}/%{name}
-%doc %{_mandir}/man1/CreateInterface.1.gz
-%doc %{_mandir}/man1/DBusCall.1.gz
-%doc %{_mandir}/man1/DBusDaemon.1.gz
-%doc %{_mandir}/man1/DBusViewer.1.gz
-%doc %{_mandir}/man1/ListDBus.1.gz
+%doc %{_mandir}/man1/CreateInterface.1*
+%doc %{_mandir}/man1/DBusCall.1*
+%doc %{_mandir}/man1/DBusDaemon.1*
+%doc %{_mandir}/man1/DBusViewer.1.*
+%doc %{_mandir}/man1/ListDBus.1.*
 %doc AUTHORS COPYING INSTALL README
 
 %files javadoc
@@ -148,6 +154,9 @@ make install \
 
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_20jpp8
+- java8 mass update
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_12jpp7
 - new release
 
