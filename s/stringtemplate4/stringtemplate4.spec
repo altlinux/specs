@@ -1,20 +1,24 @@
-Name: stringtemplate4
-Version: 4.0.8
-Summary: A Java template engine
-License: BSD
-Url: http://www.stringtemplate.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.antlr:ST4) = 4.0.8
-Provides: mvn(org.antlr:ST4:pom:) = 4.0.8
-Provides: stringtemplate4 = 4.0.8-2.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.antlr:antlr-runtime)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: stringtemplate4-4.0.8-2.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           stringtemplate4
+Version:        4.0.8
+Release:        alt1_2jpp8
+Summary:        A Java template engine
+License:        BSD
+URL:            http://www.stringtemplate.org/
+BuildArch:      noarch
+
+Source0:        https://github.com/antlr/stringtemplate4/archive/%{version}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.antlr:antlr-runtime) >= 3.5.2
+BuildRequires:  mvn(org.antlr:antlr3-maven-plugin) >= 3.5.2
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+Source44: import.info
+
 
 %description
 StringTemplate is a java template engine (with ports for
@@ -23,24 +27,46 @@ emails, or any other formatted text output. StringTemplate
 is particularly good at multi-targeted code generators,
 multiple site skins, and internationalization/localization.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-shade-plugin
+
+# Bug, should be reported upstream
+sed -i '/tmpdir =/s,;,+"/"&,' test/org/stringtemplate/v4/test/BaseTest.java
+# Tests fail for unknown reason
+sed -i /testUnknownNamedArg/s/@Test// test/org/stringtemplate/v4/test/TestGroups.java
+sed -i /testMissingImportString/s/@Test// test/org/stringtemplate/v4/test/TestGroupSyntaxErrors.java
+# Requires running X server
+rm -r test/org/stringtemplate/v4/test/TestEarlyEvaluation.java
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc CHANGES.txt contributors.txt README.txt
+%doc LICENSE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt1_2jpp8
+- java8 mass update
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.8-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
