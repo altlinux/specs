@@ -1,21 +1,48 @@
-Name: snakeyaml
-Version: 1.13
-Summary: YAML parser and emitter for the Java programming language
-License: ASL 2.0
-Url: http://code.google.com/p/snakeyaml
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.yaml:snakeyaml) = 1.13
-Provides: mvn(org.yaml:snakeyaml:pom:) = 1.13
-Provides: snakeyaml = 1.13-9.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(biz.source_code:base64coder)
-Requires: mvn(commons-codec:commons-codec)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: snakeyaml-1.13-9.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global vertag 3f1ee79d50cf
+
+Name:             snakeyaml
+Version:          1.13
+Release:          alt1_9jpp8
+Summary:          YAML parser and emitter for the Java programming language
+License:          ASL 2.0
+# http://code.google.com/p/snakeyaml
+URL:              http://code.google.com/p/%{name}
+Source0:          https://snakeyaml.googlecode.com/archive/v%{version}.zip#/%{name}-%{version}.zip
+
+# Upstream has forked gdata-java and base64 and refuses [1] to
+# consider replacing them by external dependencies.  Bundled libraries
+# need to be removed and their use replaced by system libraries.
+# See rhbz#875777 and http://code.google.com/p/snakeyaml/issues/detail?id=175
+#
+# Remove use of bundled Base64 implementation
+Patch0:           0001-Replace-bundled-base64-implementation.patch
+# We don't have gdata-java in Fedora any longer, use commons-codec instead
+Patch1:           0002-Replace-bundled-gdata-java-client-classes-with-commo.patch
+# Fix tests on Java 8 (can be removed if version > 1.13)
+Patch2:           java8-use-linked-hashmap.patch
+
+BuildArch:        noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(asm:asm)
+BuildRequires:  mvn(biz.source_code:base64coder)
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(joda-time:joda-time)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-eclipse-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.velocity:velocity)
+BuildRequires:  mvn(org.springframework:spring-core)
+Source44: import.info
 
 %description
 SnakeYAML features:
@@ -27,24 +54,57 @@ SnakeYAML features:
     * support for all types from the YAML types repository.
     * relatively sensible error messages.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group: Development/Java
+Summary:          API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains %{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{vertag}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+%mvn_file : %{name}
+
+%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
+%pom_remove_plugin :maven-changes-plugin
+%pom_remove_plugin :maven-license-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+
+sed -i "/<artifactId>spring</s/spring/&-core/" pom.xml
+rm -f src/test/java/examples/SpringTest.java
+
+# Replacement for bundled gdata-java-client
+%pom_add_dep commons-codec:commons-codec
+
+# remove bundled stuff
+rm -rf target
+rm -rf src/main/java/org/yaml/snakeyaml/external
+
+# convert CR+LF to LF
+sed -i 's/\r//g' LICENSE.txt
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_9jpp8
+- unbootsrap build
+
 * Thu Jan 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
