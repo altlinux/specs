@@ -5,22 +5,20 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt33jpp
+Release: alt34jpp
 
+# todo springframework
+Provides: mvn(org.springframework.batch:spring-batch-infrastructure)
+Provides: mvn(org.springframework.batch:spring-batch-core)
 # todo infinicpan
 Provides: mvn(org.infinispan:infinispan-lucene-directory)
 # todo sonar
-Provides: sonar-batch-bootstrapper
-Provides: objectweb-asm4 = 5
+#Provides: sonar-batch-bootstrapper
+#Provides: objectweb-asm4 = 5
 # to build hornetq
 Provides: mvn(org.hornetq:hornetq-journal)
 # jetty
 Provides: jetty = 9
-# gradle 
-Provides: /usr/share/java/plexus/container-default.jar plexus-container-default
-Provides: /usr/share/java/aqute-bnd.jar
-Provides: /usr/share/java/maven-ant-tasks.jar maven-ant-tasks
-Provides: codenarc 
 # for apacheds jpp7
 Provides: mvn(org.apache.directory.project:project)
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
@@ -44,6 +42,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt34jpp
+- updated dependencies
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt33jpp
 - updated dependencies
 
