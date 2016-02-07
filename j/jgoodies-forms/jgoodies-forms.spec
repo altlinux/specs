@@ -1,50 +1,51 @@
-Name: jgoodies-forms
-Version: 1.6.0
-Release: alt2
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define shortname forms
 
-License: BSD style
-Group: Development/Java
-Summary: %name is a framework that helps you lay out and implement elegant Swing panels quickly and consistently
+Name:           jgoodies-forms
+Version:        1.8.0
+Release:        alt1_1jpp8
+Summary:        Framework to lay out and implement elegant Swing panels in Java
 
-Url: http://www.jgoodies.com/downloads/libraries.html
-Packager: Michael Pozhidaev <msp@altlinux.ru>
-
-Source: forms-1_2_0.zip
-Patch: jgoodies-forms-1.6.0-build.patch
-
-Requires: java
-Requires: jgoodies-common >= 1.4.0
-BuildRequires: rpm-build-java ant unzip
-BuildRequires: java-devel-default
+Group:          Development/Java
+License:        BSD
+URL:            http://www.jgoodies.com/freeware/forms/
+Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
 
 # Fontconfig and DejaVu fonts needed for tests
-BuildRequires:  fonts-ttf-dejavu fontconfig
-BuildRequires:  jgoodies-common >= 1.4.0
+BuildRequires:  fonts-ttf-dejavu
+BuildRequires:  fontconfig
+BuildRequires:  jgoodies-common >= 1.8.0
+BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-surefire-provider-junit4
-
-BuildArch: noarch
+Requires:       jgoodies-common >= 1.8.0
+Requires:       jpackage-utils
+BuildArch:      noarch
+Source44: import.info
 
 %description
-%name is a framework that helps you lay out and implement elegant Swing panels quickly and
-consistently. Forms makes simple things easy and the hard stuff
+The JGoodies Forms framework helps you lay out and implement elegant Swing
+panels quickly and consistently. It makes simple things easy and the hard stuff
 possible, the good design easy and the bad difficult.
 
+
 %package javadoc
-Summary: API documentation for %name
-Group: Development/Java
-Requires: java-common
+Summary:        Javadoc for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch: noarch
+
 %description javadoc
-Auto-generated API documentation for the %name.jar.
+This package contains the API documentation for %{name}.
+
 
 %prep
-%setup -q -n forms-%version
-%patch0 -p1 -b .build
-
-#msp:There was problem, javadoc on generation never exits.
-#rm -rf ./docs/api
-#rm -rf ./*.jar
+%setup -q
 
 # Unzip source and test files from provided JARs
 mkdir -p src/main/java/ src/test/java/
@@ -74,27 +75,28 @@ for file in LICENSE.txt RELEASE-NOTES.txt; do
   rm $file.orig
 done
 
+%mvn_file :%{name} %{name} %{name}
+
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
+
 
 %install
-install -Dpm 0644 target/%{name}-%{version}.jar %buildroot%{_javadir}/%{name}.jar
-install -Dpm 0644 pom.xml %buildroot%{_mavenpomdir}/JPP-%{name}.pom
-install -dm 0755 %buildroot%{_javadocdir}/%{name}/
-cp -a target/site/apidocs/* %buildroot%{_javadocdir}/%{name}/
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt README.html RELEASE-NOTES.txt
-%{_javadir}/*.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
-%files javadoc
-%{_javadocdir}/%{name}/
+
+%files javadoc -f .mfiles-javadoc
+
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_1jpp8
+- java8 mass update
+
 * Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2
 - NMU: BR: maven-local
 
