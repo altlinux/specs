@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             glassfish-saaj
 Version:          1.3.19
-Release:          alt2_4jpp7
+Release:          alt2_8jpp8
 Summary:          JSR-67 implementation
 Group:            Development/Java
 License:          CDDL and GPLv2 with exceptions
@@ -19,7 +20,6 @@ Source0:          glassfish-saaj-%{version}.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -29,10 +29,6 @@ BuildRequires:    maven-enforcer-plugin
 BuildRequires:    mimepull
 BuildRequires:    geronimo-saaj
 BuildRequires:    jvnet-parent
-
-Requires:         jpackage-utils
-Requires:         mimepull
-Requires:         geronimo-saaj
 Source44: import.info
 
 %description
@@ -42,7 +38,6 @@ API for Java (SAAJ MR: 1.3)
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -52,36 +47,22 @@ This package contains the API documentation for %{name}.
 %setup -q
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/saaj-impl-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 %doc license.html
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.html
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_8jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_4jpp7
 - new release
 
