@@ -1,40 +1,22 @@
 %def_disable static
 %def_disable debug
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: loudmouth
-Version: 1.4.3
-Release: alt4.1.1
+Version: 1.5.2
+Release: alt1
 
 Summary: Jabber library for C
 Group: System/Libraries
 License: LGPLv2.1+
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Url: https://mcabber.com
 
-# does't exists
-#URL: http://www.loudmouth-project.org/
-URL: https://launchpad.net/loudmouth
-# or http://groups.google.com/group/loudmouth-dev/
+#VCS: https://github.com/mcabber/loudmouth.git
+Source: %url/files/loudmouth/%name-%version.tar.xz
+Patch: %name-1.4.3-alt-certs_location.patch
 
-Source: http://ftp.imendio.com/pub/imendio/%name/src/%name-%version.tar.bz2
-
-Patch0: %name-1.4.3-gnutls-2.8.patch
-Patch1: %name-1.4.3-alt-certs_location.patch
-
-# Debian patches, from upstream 
-# Fix sasl md5 digest-uri when using SRV lookups, which prevented 
-# loudmouth from logging into recent versions of ejabberd 
-Patch101: %name-1.4.3-fix-sasl-md5-digest-uri.patch
-# Fix sync resolving, patch from upstream git. (fixes assertion 
-# when trying to log in to some XMPP servers) 
-Patch102: %name-1.4.3-async_assertion.patch
-# Drop stanzas that can't be parsed instead of blocking the 
-# parser. Patch from upstream bug tracker. 
-Patch103: %name-1.4.3-drop-stanzas-on-fail.patch
-
-Patch104: %name-1.4.3-alt-glib2.patch
-
-BuildRequires: glib2-devel gtk-doc libcheck-devel libgnutls-devel libidn-devel
+BuildRequires: libgio-devel >= 2.26 gtk-doc libcheck-devel
+BuildRequires: libgnutls-devel >= 1.2.0 libidn-devel libkrb5-devel libasyncns-devel
 
 %description
 Loudmouth is a lightweight and easy-to-use C library for programming
@@ -54,7 +36,6 @@ and yet extensible to let you do anything the Jabber protocol allows.
 Summary: Development files for %name
 Group: Development/C
 Requires: lib%name = %version-%release
-
 
 %description -n lib%name-devel
 This package contains files needed to develop applications using Loudmouth.
@@ -87,13 +68,8 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %endif	# enabled static
 
 %prep
-%setup -q
-%patch0 -p0
-%patch1 -p1
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p2
+%setup
+%patch -p1 -b .sert_location
 
 %build
 %autoreconf
@@ -110,11 +86,11 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files -n lib%name
-%doc AUTHORS COPYING ChangeLog NEWS README
 %_libdir/*.so.*
+%doc AUTHORS NEWS README
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -130,6 +106,11 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %endif # enabled static
 
 %changelog
+* Sun Feb 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2 (new upstream)
+- dropped upstreamed patches
+- updated buildreqs for krb5/asyncns support
+
 * Wed Oct 07 2015 Sergey V Turchin <zerg at altlinux dot org> 1.4.3-alt4.1.1
 - rebuild against new gnutls
 
