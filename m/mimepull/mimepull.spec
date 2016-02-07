@@ -1,45 +1,35 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             mimepull
-Version:          1.8
-Release:          alt2_6jpp7
+Version:          1.9.5
+Release:          alt1_2jpp8
 Summary:          Streaming API to access attachments from a MIME message
-Group:            Development/Java
 License:          CDDL and GPLv2 with exceptions
 URL:              http://mimepull.java.net
 
-# svn export https://svn.java.net/svn/mimepull~svn/tags/mimepull-1.8/ mimepull-1.8
-# tar cafJ mimepull-1.8.tar.xz mimepull-1.8
+# svn export https://svn.java.net/svn/mimepull~svn/tags/mimepull-1.9.5/ mimepull-1.9.5
+# tar cafJ mimepull-1.9.5.tar.xz mimepull-1.9.5
 Source0:          mimepull-%{version}.tar.xz
 
 BuildArch:        noarch
-
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    junit
-BuildRequires:    jvnet-parent
-
-Requires:         jpackage-utils
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(net.java:jvnet-parent:pom:)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:    mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires:    mvn(org.tmatesoft.svnkit:svnkit)
 Source44: import.info
 
 %description
 Provides a streaming API to access attachments parts in a MIME message
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -48,40 +38,35 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 
+# Unavailable plugins
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :glassfish-copyright-maven-plugin
+# Unneeded plugins
+%pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :maven-deploy-plugin
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-source-plugin
+
 iconv -f iso8859-1 -t utf-8 LICENSE > LICENSE.conv && mv -f LICENSE.conv LICENSE
 sed -i 's/\r//' LICENSE
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/mimepull-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.5-alt1_2jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_6jpp7
 - new release
 
