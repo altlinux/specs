@@ -1,14 +1,12 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          apacheds-shared
 Version:       0.9.19
-Release:       alt3_3jpp7
+Release:       alt3_9jpp8
 Summary:       Shared APIs of Apache Directory Project
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://directory.apache.org/
 # svn export http://svn.apache.org/repos/asf/directory/shared/tags/0.9.19/ apacheds-shared-0.9.19
@@ -17,46 +15,25 @@ Source0:       apacheds-shared-0.9.19-src-svn.tar.gz
 # requires antlr 2.x and change org.apache.maven.plugins maven-antlr-plugin with org.codehaus.mojo antlr-maven-plugin
 Patch0:        apacheds-shared-0.9.19-antlr-plugin.patch
 
-BuildRequires: jpackage-utils
-BuildRequires: directory-project
-
 BuildRequires: antlr
 BuildRequires: apache-commons-collections
 BuildRequires: apache-commons-io
 BuildRequires: apache-commons-lang
 BuildRequires: apache-commons-pool
-BuildRequires: apache-mina
+BuildRequires: apache-mina apache-mina-mina-core
+BuildRequires: directory-project
 BuildRequires: dom4j
-BuildRequires: log4j
+BuildRequires: log4j12
 BuildRequires: slf4j
 BuildRequires: xpp3
-
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-log4j12)
 # test deps
 BuildRequires: junit
 
 BuildRequires: antlr-maven-plugin
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
 
-Requires:      antlr
-Requires:      apache-commons-collections
-Requires:      apache-commons-io
-Requires:      apache-commons-lang
-Requires:      apache-commons-pool
-Requires:      apache-mina
-Requires:      dom4j
-Requires:      log4j
-Requires:      slf4j
-Requires:      xpp3
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -73,9 +50,8 @@ This package contains the shared APIs of the
 Apache Directory Project.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -92,57 +68,41 @@ sed -i "s|<module>all</module>|<!--module>all</module-->|" pom.xml
 # fix wrong permissions
 chmod 644 README.txt
 
+rm -r ldap-schema-manager/src/test/java/org/apache/directory/shared/ldap/schema/loader/ldif/SchemaManagerLoadTest.java
+
+%mvn_file :shared-asn1 apacheds/shared-asn1
+%mvn_file :shared-asn1-codec apacheds/shared-asn1-codec
+%mvn_file :shared-cursor apacheds/shared-cursor
+%mvn_file :shared-dsml-parser apacheds/shared-dsml-parser
+%mvn_file :shared-i18n apacheds/shared-i18n
+%mvn_file :shared-ldap apacheds/shared-ldap
+%mvn_file :shared-ldap-constants apacheds/shared-ldap-constants
+%mvn_file :shared-ldap-converter apacheds/shared-ldap-converter
+%mvn_file :shared-ldap-jndi apacheds/shared-ldap-jndi
+%mvn_file :shared-ldap-schema apacheds/shared-ldap-schema
+%mvn_file :shared-ldap-schema-dao apacheds/shared-ldap-schema-dao
+%mvn_file :shared-ldap-schema-loader apacheds/shared-ldap-schema-loader
+%mvn_file :shared-ldap-schema-manager apacheds/shared-ldap-schema-manager
+%mvn_file :shared-ldif apacheds/shared-ldif
+
 %build
 
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
+%files -f .mfiles
+%doc README.txt
+%doc LICENSE NOTICE
 
-mkdir -p %{buildroot}%{_javadir}/apacheds
-
-install -m 644 ldap-convert/target/shared-ldap-converter-%{version}.jar %{buildroot}%{_javadir}/apacheds/shared-ldap-converter.jar
-install -pm 644 ldap-convert/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-ldap-converter.pom
-%add_maven_depmap JPP.%{name}-ldap-converter.pom apacheds/shared-ldap-converter.jar
-
-install -m 644 ldap-ldif/target/shared-ldif-%{version}.jar %{buildroot}%{_javadir}/apacheds/shared-ldif.jar
-install -pm 644 ldap-ldif/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-ldif.pom
-%add_maven_depmap JPP.%{name}-ldif.pom apacheds/shared-ldif.jar
-
-for m in asn1 \
-  asn1-codec \
-  cursor \
-  dsml-parser \
-  i18n \
-  ldap \
-  ldap-constants \
-  ldap-jndi \
-  ldap-schema \
-  ldap-schema-dao \
-  ldap-schema-loader \
-  ldap-schema-manager; do
-  install -m 644 ${m}/target/shared-${m}-%{version}.jar %{buildroot}%{_javadir}/apacheds/shared-${m}.jar
-  install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-%add_maven_depmap JPP.%{name}-${m}.pom apacheds/shared-${m}.jar
-done
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/apacheds/shared-*.jar
-%{_mavenpomdir}/JPP.%{name}-*.pom
-%{_mavendepmapfragdir}/%{name}
-%doc LICENSE NOTICE README.txt
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.9.19-alt3_9jpp8
+- java 8 mass update
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 0:0.9.19-alt3_3jpp7
 - new release
 
