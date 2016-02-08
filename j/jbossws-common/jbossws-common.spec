@@ -1,37 +1,33 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
+BuildRequires: jdepend
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jbossws-common
-%define version 2.1.0
+%define version 2.3.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jbossws-common
-Version:          2.1.0
-Release:          alt1_3jpp7
+Version:          2.3.1
+Release:          alt1_2jpp8
 Summary:          JBossWS Common
-Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossws
 
-# svn export http://anonsvn.jboss.org/repos/jbossws/common/tags/jbossws-common-2.1.0.Final/ jbossws-common-2.1.0.Final
-# tar cafJ jbossws-common-2.1.0.Final.tar.xz jbossws-common-2.1.0.Final
+# svn export http://anonsvn.jboss.org/repos/jbossws/common/tags/jbossws-common-2.3.1.Final/ jbossws-common-2.3.1.Final
+# tar cafJ jbossws-common-2.3.1.Final.tar.xz jbossws-common-2.3.1.Final
 Source0:          jbossws-common-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-enforcer-plugin
 BuildRequires:    jboss-common-core
 BuildRequires:    jboss-ejb-3.1-api
@@ -44,28 +40,16 @@ BuildRequires:    jbossws-api
 BuildRequires:    jbossws-spi
 BuildRequires:    jbossws-parent
 BuildRequires:    jboss-logging
+BuildRequires:    jboss-logging-tools
 BuildRequires:    wsdl4j
-
-Requires:         jpackage-utils
-Requires:         jboss-common-core
-Requires:         jboss-ejb-3.1-api
-Requires:         jboss-jaxb-intros
-Requires:         jboss-jaxws-2.2-api
-Requires:         jboss-jaxrpc-1.1-api
-Requires:         jboss-jms-1.1-api
-Requires:         jboss-servlet-3.0-api
-Requires:         jbossws-api
-Requires:         jbossws-spi
-Requires:         jboss-logging
 Source44: import.info
 
 %description
 JBoss Web Services - Common
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -74,40 +58,27 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n jbossws-common-%{namedversion}
 
+# Remove test where network connectivity is required
+rm src/test/java/org/jboss/test/ws/common/management/AbstractServerConfigTestCase.java
+
 # Add jaxrpc dependency, since it's required
 %pom_xpath_inject "pom:dependencies" "<dependency><groupId>org.jboss.spec.javax.xml.rpc</groupId><artifactId>jboss-jaxrpc-api_1.1_spec</artifactId><version>1.0.1.Final</version></dependency>"
 
 %build
-mvn-rpmbuild \
-    -Dproject.build.sourceEncoding=UTF-8 \
-    install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/jbossws-common-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_2jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_3jpp7
 - new release
 
