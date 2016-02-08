@@ -1,6 +1,6 @@
 Name: parole
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 # '1' for gstreamer-1.0
 # '0' or undefined for gstreamer-0.10
@@ -38,10 +38,10 @@ BuildRequires: intltool gtk-doc
 
 %if %{?gstreamer1}%{!?gstreamer1:0}
 Requires: gstreamer1.0
-Requires: gst-plugins-base1.0 gst-plugins-good1.0
+Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
 %else
 Requires: gstreamer
-Requires: gst-plugins-base gst-plugins-good
+Requires: gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-ffmpeg
 %endif
 
 %description
@@ -100,6 +100,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Feb 08 2016 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt2
+- Add more GStreamer media plugins to requires (closes: #31681).
+
 * Mon Oct 26 2015 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
 - Updated to 0.8.1.
 
