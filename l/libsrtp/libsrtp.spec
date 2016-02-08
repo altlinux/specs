@@ -4,7 +4,7 @@
 #============================================================================
 Name: libsrtp
 Summary: Secure Real-time Transport Protocol implementation
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 License: BSD-like
 Group: System/Libraries
@@ -78,6 +78,12 @@ CFLAGS="$CFLAGS -fPIC -Wall -O2 -fexpensive-optimizations -funroll-loops"
 %_libdir/libsrtp.so.*
 
 %changelog
+* Mon Feb 08 2016 Denis Smirnov <mithraen@altlinux.ru> 1.5.4-alt1
+- new version 1.5.4
+
+* Mon Feb 08 2016 Denis Smirnov <mithraen@altlinux.ru> 1.5.3-alt2
+- fix watch file
+
 * Sat Nov 28 2015 Denis Smirnov <mithraen@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 - CVE-2015-6360
