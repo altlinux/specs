@@ -1,6 +1,6 @@
 Name: libopenr2
-Version: 1.3.1
-Release: alt2
+Version: 1.3.3
+Release: alt1
 Summary: MFC/R2 call setup library
 
 Group: System/Kernel and hardware
@@ -50,8 +50,8 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_bindir/r2test
 %_bindir/r2dtmf_detect
 %_libdir/*.so.*
-%_man5dir/r2test.conf.5.gz
-%_man8dir/r2test.8.gz
+%_man5dir/r2test.conf.5.*
+%_man8dir/r2test.8.*
 %dir %_sysconfdir/openr2/
 %config(noreplace) %_sysconfdir/openr2/r2test.conf
 %config(noreplace) %_sysconfdir/openr2/r2proto.conf
@@ -64,6 +64,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_libdir/*.so
 
 %changelog
+* Mon Feb 08 2016 Denis Smirnov <mithraen@altlinux.ru> 1.3.3-alt1
+- 1.3.3
+
 * Mon Jun 18 2012 Denis Smirnov <mithraen@altlinux.ru> 1.3.1-alt2
 - fix build
 
