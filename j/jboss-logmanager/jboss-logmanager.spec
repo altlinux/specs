@@ -1,42 +1,63 @@
-Name: jboss-logmanager
-Version: 1.5.2
-Summary: JBoss Log Manager
-License: LGPLv2+
-Url: https://github.com/jboss-logging/jboss-logmanager
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jboss-logmanager = 1.5.2-2.fc21
-Provides: mvn(org.jboss.logmanager:jboss-logmanager) = 1.5.2.Final
-Provides: mvn(org.jboss.logmanager:jboss-logmanager:pom:) = 1.5.2.Final
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jboss-logmanager-1.5.2-2.fc21.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jboss-logmanager
+%define version 1.5.2
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+Name:             jboss-logmanager
+Version:          1.5.2
+Release:          alt1_4jpp8
+Summary:          JBoss Log Manager
+License:          LGPLv2+
+URL:              https://github.com/jboss-logging/jboss-logmanager
+Source0:          https://github.com/jboss-logging/jboss-logmanager/archive/%{namedversion}.tar.gz
+
+BuildArch:        noarch
+
+BuildRequires:    maven-local
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.modules:jboss-modules)
+Source44: import.info
 
 %description
 This package contains the JBoss Log Manager
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n jboss-logmanager-%{namedversion}
+
+# We won't run on JDK 6
+%pom_remove_plugin "org.jboss.seven2six:seven2six"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc COPYING.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc COPYING.txt
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt1_4jpp8
+- java8 mass update
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
