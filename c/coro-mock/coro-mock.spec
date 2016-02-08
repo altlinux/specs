@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name coro-mock
 %define version 1.0
@@ -13,24 +12,14 @@ BuildRequires: jpackage-compat
 
 Name: coro-mock
 Version: 1.0
-Release: alt1_0.7.e55ca83gitjpp7
+Release: alt1_0.9.e55ca83gitjpp8
 Summary: A mock library for compiling JVM coroutine-using code on JVMs without coroutines
-Group: Development/Java
 License: Public Domain
 Url: https://github.com/headius/coro-mock
 Source0: https://github.com/headius/%{name}/tarball/%{git}/headius-%{name}-%{git}.tar.gz
 
-BuildRequires: forge-parent
-BuildRequires: jpackage-utils
-BuildRequires: junit
-
-BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-
-Requires: jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
 
 BuildArch: noarch
 Source44: import.info
@@ -42,7 +31,6 @@ without coroutines.
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -52,28 +40,22 @@ This package contains javadoc for %{name}.
 %setup -q -n headius-%{name}-%{git}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-install -pm 644 target/%{name}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml  %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 %files -f .mfiles
 %doc LICENSE
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.9.e55ca83gitjpp8
+- java8 mass update
+
 * Fri Aug 29 2014 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.7.e55ca83gitjpp7
 - new release
 
