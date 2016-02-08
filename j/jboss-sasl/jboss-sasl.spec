@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-sasl
 %define version 1.0.0
@@ -11,9 +10,8 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-sasl
 Version:          1.0.0
-Release:          alt2_7jpp7
+Release:          alt2_12jpp8
 Summary:          SASL Provider for J2SE
-Group:            Development/Java
 License:          LGPLv2+
 URL:              https://github.com/jboss-remoting/jboss-sasl
 
@@ -23,38 +21,20 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    maven-injection-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    jboss-parent
-BuildRequires:    jboss-logging
-BuildRequires:    jboss-logging-tools
-
-Requires:         jboss-logging
-Requires:         jboss-logging-tools
-Requires:         jpackage-utils
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.maven.plugins:maven-injection-plugin)
 Source44: import.info
 
 %description
 This package contains SASL Provider for J2SE
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -64,33 +44,19 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}-%{namedversion}
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_12jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_7jpp7
 - new release
 
