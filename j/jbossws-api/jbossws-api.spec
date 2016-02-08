@@ -1,41 +1,64 @@
-Name: jbossws-api
-Version: 1.0.2
-Summary: JBossWS API
-License: LGPLv2+
-Url: http://www.jboss.org/jbossws
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jbossws-api = 1.0.2-0.4.CR1.fc21
-Provides: mvn(org.jboss.ws:jbossws-api) = 1.0.2.CR1
-Provides: mvn(org.jboss.ws:jbossws-api:pom:) = 1.0.2.CR1
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jbossws-api-1.0.2-0.4.CR1.fc21.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jbossws-api
+%define version 1.0.2
+%global namedreltag .CR1
+%global namedversion %{version}%{?namedreltag}
+
+Name:             jbossws-api
+Version:          1.0.2
+Release:          alt1_0.6.CR1jpp8
+Summary:          JBossWS API
+License:          LGPLv2+
+URL:              http://www.jboss.org/jbossws
+
+# svn export http://anonsvn.jboss.org/repos/jbossws/api/tags/jbossws-api-1.0.2.CR1/ jbossws-api-1.0.2.CR1
+# tar cafJ jbossws-api-1.0.2.CR1.tar.xz jbossws-api-1.0.2.CR1
+Source0:          jbossws-api-%{namedversion}.tar.xz
+
+BuildArch:        noarch
+
+BuildRequires:    maven-local
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.ws:jbossws-parent:pom:)
+Source44: import.info
 
 %description
 JBoss WS public API
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n jbossws-api-%{namedversion}
+
+# Disable java8doc doclint, using own javadoc setting
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_0.6.CR1jpp8
+- java8 mass update
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
