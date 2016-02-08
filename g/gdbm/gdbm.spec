@@ -1,6 +1,6 @@
 Name: gdbm
 Version: 1.8.3
-Release: alt9
+Release: alt10
 
 Summary: A GNU set of database routines which use extensible hashing
 License: GPLv2+
@@ -17,8 +17,11 @@ Patch11: gdbm-1.8.3-deb-texinfo.patch
 Patch12: gdbm-1.8.3-deb-zero-headers.patch
 Patch13: gdbm-1.8.3-deb-man.patch
 Patch14: gdbm-1.8.3-rh-GDBM_FILE.patch
+Patch15: gdbm-1.8.3-deb-texinfo-null.patch
 
 %def_disable static
+
+BuildRequires: makeinfo
 
 %package -n lib%name
 Summary: A GNU set of database routines which use extensible hashing
@@ -74,6 +77,7 @@ the gdbm database.
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 rm aclocal.m4
 
 %build
@@ -107,6 +111,11 @@ ln -s gdbm/gdbm.h %buildroot%_includedir/
 %endif
 
 %changelog
+* Sat Feb 06 2016 Michael Shigorin <mike@altlinux.org> 1.8.3-alt10
+- Fixed FTBFS:
+  + BR: makeinfo;
+  + Debian patch for deb#709905.
+
 * Tue Feb 15 2011 Dmitry V. Levin <ldv@altlinux.org> 1.8.3-alt9
 - Imported a fix for a g++ 4.5 warning from Fedora.
 - Rebuilt for debuginfo.
