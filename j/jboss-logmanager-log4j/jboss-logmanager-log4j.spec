@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-logmanager-log4j
 %define version 1.0.0
@@ -11,9 +10,8 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-logmanager-log4j
 Version:          1.0.0
-Release:          alt2_8jpp7
+Release:          alt2_13jpp8
 Summary:          JBoss LogManager Log4j Compatibility Library 
-Group:            Development/Java
 License:          LGPLv2+
 URL:              https://github.com/jboss-logging/jboss-logmanager-log4j
 
@@ -23,38 +21,18 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
-
-BuildRequires:    jboss-parent
-BuildRequires:    log4j
-BuildRequires:    jboss-logmanager
-
-Requires:         jboss-logmanager
-Requires:         log4j
-Requires:         jpackage-utils
+BuildRequires:    mvn(log4j:log4j:12)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.logmanager:jboss-logmanager)
 Source44: import.info
 
 %description
 This package contains JBoss LogManager Log4j Compatibility Library 
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -63,30 +41,22 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{namedversion}
 
+%pom_xpath_set "pom:dependency[pom:artifactId = 'log4j']/pom:version" 12
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
 
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_13jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_8jpp7
 - new release
 
