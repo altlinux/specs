@@ -1,7 +1,9 @@
+%def_disable check
+
 %define oname hg-github
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt1.git20140713
+Release: alt2.git20140713
 Summary: A Mercurial extension for working with GitHub repositories
 License: BSD
 Group: Development/Python
@@ -12,8 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-hg-git
-BuildPreReq: python-module-sphinx-me mercurial
+BuildRequires: python-module-setuptools-tests mercurial
 
 Requires: mercurial
 %py_provides hggithub
@@ -43,6 +44,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 0.1.5-alt2.git20140713
+- Disabled tests and unnecessary dependents
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.git20140713
 - Initial build for Sisyphus
 
