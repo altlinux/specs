@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.83
+Version: 1.1.84
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -67,11 +67,13 @@ as a book in HTML and PDF formats.
 make BUILDDIR=%docs docs
 
 %install
-mkdir -p %buildroot%mpdir
+mkdir -p %buildroot{%mpdir,%_man7dir}
 cp -a * %buildroot%mpdir
+mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 
 %files
 %mpdir/
+%_man7dir/*
 
 %files doc
 %doc README
@@ -79,6 +81,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Feb 08 2016 Michael Shigorin <mike@altlinux.org> 1.1.84-alt1
+- %name(7) :)
+
 * Mon Jan 25 2016 Michael Shigorin <mike@altlinux.org> 1.1.83-alt1
 - openssh 7.x (see also #31716)
 
