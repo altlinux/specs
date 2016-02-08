@@ -1,6 +1,6 @@
 Name: xfce4
 Version: 4.12
-Release: alt1
+Release: alt2
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -82,6 +82,8 @@ Requires: xarchiver
 Requires: ristretto
 Requires: mousepad
 Requires: parole
+# For xfce4-pulseaudio-plugin
+Requires: pavucontrol
 # xfce4-volumed-pulse is alternative for xfce4-volumed.
 #Requires: xfce4-volumed
 # Panel plugins
@@ -112,6 +114,7 @@ Requires: xfce4-sensors-plugin
 Requires: xfce4-whiskermenu-plugin
 Requires: xfce4-pulseaudio-plugin
 Requires: xfce4-smartbookmark-plugin
+Requires: xfce4-calculator-plugin
 
 # Not needed for most users.
 #Requires: xfce4-radio-plugin
@@ -133,8 +136,6 @@ Requires: gnome-icon-theme
 Requires: firefox
 Requires: firefox-ru
 Requires: firefox-uk
-# For xfce4-pulseaudio-plugin
-Requires: pavucontrol
 
 %description regular
 %summary
@@ -159,6 +160,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %files regular
 
 %changelog
+* Mon Feb 08 2016 Mikhail Efremov <sem@altlinux.org> 4.12-alt2
+- full: Add xfce4-calculator-plugin.
+- Move pavucontrol from regular to full.
+
 * Thu Mar 19 2015 Mikhail Efremov <sem@altlinux.org> 4.12-alt1
 - regular: Add pavucontrol.
 - full: Add xfce4-smartbookmark-plugin.
