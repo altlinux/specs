@@ -1,9 +1,10 @@
 Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          apacheds-ldap-client
 Version:       0.1
-Release:       alt2_6jpp7
+Release:       alt2_10jpp8
 Summary:       ApacheDS LDAP Client API
 License:       ASL 2.0
 Url:           http://directory.apache.org/
@@ -15,18 +16,12 @@ Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 # use the apacheds shared ldap apis
 Patch0:        apacheds-ldap-client-0.1-api-LdapConnection.patch
 
-BuildRequires: directory-project
-
 BuildRequires: apache-commons-pool
 BuildRequires: apache-mina
 BuildRequires: apacheds-shared
-
-# test deps
+BuildRequires: directory-project
 BuildRequires: junit
-
 BuildRequires: maven-local
-BuildRequires: maven-surefire-provider-junit4
-
 BuildArch:     noarch
 Source44: import.info
 
@@ -59,9 +54,10 @@ find . -name "*.class" -delete
 cp -p %{SOURCE1} .
 sed -i 's/\r//' LICENSE-2.0.txt
 
+%mvn_file :ldap-client-api apacheds/ldap-client-api
+
 %build
 
-%mvn_file :ldap-client-api apacheds/ldap-client-api
 %mvn_build
 
 %install
@@ -74,6 +70,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc LICENSE-2.0.txt
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_10jpp8
+- java 8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_6jpp7
 - new release
 
