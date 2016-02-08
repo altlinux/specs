@@ -1,29 +1,23 @@
-Name: hawtbuf
+Name: hawtbuf-proto
 Version: 1.11
-Summary: A rich byte buffer library
+Summary: A protobuf library
 License: ASL 2.0
 Url: https://github.com/fusesource/hawtbuf/
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: hawtbuf = 1.11-3.fc23
-Provides: mvn(org.fusesource.hawtbuf:hawtbuf) = 1.11
-Provides: mvn(org.fusesource.hawtbuf:hawtbuf-project:pom:) = 1.11
-Provides: mvn(org.fusesource.hawtbuf:hawtbuf:pom:) = 1.11
+Provides: hawtbuf-proto = 1.11-3.fc23
+Provides: mvn(org.fusesource.hawtbuf:hawtbuf-proto) = 1.11
+Provides: mvn(org.fusesource.hawtbuf:hawtbuf-proto:pom:) = 1.11
 Requires: java-headless
 Requires: jpackage-utils
+Requires: mvn(org.fusesource.hawtbuf:hawtbuf)
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: hawtbuf-1.11-3.fc23.cpio
+Source: hawtbuf-proto-1.11-3.fc23.cpio
 
 %description
-This library implements a simple interface with working with
-byte arrays. It is a shame that the Java SDK did not come with
-a built in class that was just simply a byte[], int offset,
-int length class which provided a rich interface similar to
-what the String class does for char arrays. This library
-fills in that void by providing a Buffer class which does provide
-that rich interface.
+HawtBuf Proto: A protobuf library.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
