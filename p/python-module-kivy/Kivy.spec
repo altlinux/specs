@@ -1,6 +1,6 @@
 Name: python-module-kivy
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: Open source library for rapid development of applications
 License: LGPLv3
 Group: Development/Python
@@ -13,9 +13,7 @@ Source: Kivy-%version.tar.gz
 %add_python_req_skip jnius
 %add_python_req_skip android
 
-# Automatically added by buildreq on Wed Jan 29 2014
-# optimized out: libEGL-devel python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-html5lib python-module-jinja2 python-module-markupsafe python-module-numpy python-module-numpy-testing python-module-protobuf python-module-setuptools python-module-simplejson python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
-BuildRequires: ctags libGL-devel libGLES-devel python-module-Cython0.18 python-module-Pyrex python-module-jinja2-tests python-module-nss python-module-pygame python-module-pytz python-module-sphinx python-modules-json time
+BuildRequires: libGL-devel libGLES-devel python-module-Cython0.18 python-module-Pyrex python-module-docutils python-module-html5lib python-module-nss python-module-numpy-testing python-module-pygame
 
 %description
 Kivy - Open source library for rapid development of applications
@@ -58,7 +56,7 @@ cd doc &&
   export PYTHONPATH=`ls -d ../build/lib*` &&
   python autobuild.py &&
   export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments &&
-  make html
+  #make html
 
 %install
 %python_install
@@ -68,11 +66,15 @@ cd doc &&
 %python_sitelibdir/kivy
 
 %files devel
-%doc doc/build/html
+#%doc doc/build/html
 %_datadir/kivy-examples
 ## XXX garden binary is moved to separate module
 
 %changelog
+* Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.8.0-alt2
+- cleanup buildreq
+- switchoff html generation
+
 * Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 1.8.0-alt1
 - Autobuild version bump to 1.8.0
 - The garden binary is gone
