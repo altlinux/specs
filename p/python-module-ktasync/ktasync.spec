@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.git20140614
+Release: alt2.git20140614
 Summary: Binary protocol of Kyoto Tycoon with asyncio for io batching
 License: MIT
 Group: Development/Python
@@ -18,20 +18,16 @@ BuildArch: noarch
 
 %if_with python2
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-trollius python-module-pylama
+BuildPreReq: python-module-trollius 
 BuildPreReq: python-module-nose python-tools-pep8
-BuildPreReq: pyflakes pylint python-module-coverage
+BuildPreReq: pyflakes python-module-coverage
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-pylama
-BuildPreReq: python3-module-nose python3-tools-pep8
-BuildPreReq: python3-pyflakes pylint-py3 python3-module-coverage
+BuildRequires: python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-pyflakes python3-tools-pep8
 %endif
 
 %py_provides %oname
-%py_requires trollius
 
 %description
 Kyoto Tycoon is a lightweight database server with impressive
@@ -54,7 +50,6 @@ This package contains tests for %oname.
 Summary: Binary protocol of Kyoto Tycoon with asyncio for io batching
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires asyncio
 
 %description -n python3-module-%oname
 Kyoto Tycoon is a lightweight database server with impressive
@@ -139,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 0.0.1-alt2.git20140614
+- Disabled unnecessary dependents
+
 * Sat Jan 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.git20140614
 - Initial build for Sisyphus
 
