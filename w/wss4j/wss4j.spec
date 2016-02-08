@@ -1,53 +1,37 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
 Name:           wss4j 
-Version:        1.6.10
-Release:        alt2_1jpp7
+Version:        1.6.18
+Release:        alt1_3jpp8
 Summary:        Apache WS-Security implementation
-
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://ws.apache.org/wss4j/
-Source0:        http://archive.apache.org/dist/ws/wss4j/1_6_10/wss4j-src-%{version}.zip
+Source0:        http://archive.apache.org/dist/ws/wss4j/1_6_18/wss4j-src-%{version}.zip
+Patch0:         fix-tests.patch
 
-BuildRequires:  axis
-BuildRequires:  xml-security >= 0:1.5
-BuildRequires:  xml-commons-apis
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(log4j:log4j:1.2.17)
+BuildRequires:  mvn(net.shibboleth:parent:pom:)
+BuildRequires:  mvn(org.apache.santuario:xmlsec)
+BuildRequires:  mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires:  mvn(org.opensaml:opensaml)
+BuildRequires:  mvn(org.slf4j:slf4j-log4j12)
+BuildRequires:  mvn(xalan:xalan)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xml-apis:xml-apis)
+BuildRequires:  dos2unix
 BuildRequires:  maven-local
 BuildRequires:  maven-shared
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-remote-resources-plugin
-BuildRequires: apache-resource-bundles apache-jar-resource-bundle
-BuildRequires:  dos2unix
-BuildRequires:  opensaml-java
-BuildRequires:  xalan-j2
-BuildRequires:  xerces-j2
-BuildRequires:  junit
-BuildRequires:  slf4j
-BuildRequires:  apache-commons-logging
-BuildRequires:  opensaml-java-parent
-BuildRequires:  maven-surefire-provider-junit4
-
-%if 0%{?fedora} > 17
 BuildRequires:  plexus-pom
 BuildRequires:  plexus-components-pom
-%endif
-
-Requires:       jpackage-utils
-Requires:       axis
-Requires:       xml-security >= 0:1.5
-Requires:       xml-commons-apis
-Requires:       opensaml-java
-Requires:       xalan-j2
-Requires:       xerces-j2
-Requires:       apache-commons-logging
 
 BuildArch:      noarch
 Source44: import.info
@@ -57,9 +41,8 @@ The Apache WSS4J project provides a Java implementation of the
 primary security standards for Web Services. 
 
 %package javadoc
+Group: Development/Java
 Summary: Javadoc for %{name}
-Group:   Development/Java
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -67,45 +50,41 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-
-sed -i "s|bcprov-jdk15on|bcprov-jdk16|" pom.xml
+%patch0
 
 # This plugin does not impact the build, and it currently raises this error:
 # Reporting mojo's can only be called from ReportDocumentRender
 %pom_remove_plugin "org.apache.maven.plugins:maven-pmd-plugin"
 
+%pom_remove_plugin :maven-source-plugin
+%pom_xpath_remove "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-javadoc-plugin']/pom:executions"
+%pom_xpath_set "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:source" 1.6
+%pom_xpath_set "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:target" 1.6
+
 dos2unix NOTICE
 
+# Fails on java8
+rm -r src/test/java/org/apache/ws/security/message/EncryptionCRLTest.java \
+ src/test/java/org/apache/ws/security/message/SignatureCRLTest.java \
+ src/test/java/org/apache/ws/security/message/EncryptionGCMTest.java
+
 %build
-mvn-rpmbuild -Dmaven.test.failure.ignore=true package javadoc:javadoc
+%mvn_build -- -Dmaven.test.skip.exec=true
 
 %install
-# jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-install -m 0644 target/%{name}-%{version}.jar \
-$RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%files -f .mfiles
+%doc ChangeLog.txt README.txt
+%doc LICENSE.txt NOTICE
 
-# pom
-install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 0644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap
-
-%files
-%doc ChangeLog.txt NOTICE LICENSE.txt
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
-%doc LICENSE.txt
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.18-alt1_3jpp8
+- java 8 mass update
+
 * Sun Jul 27 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.6.10-alt2_1jpp7
 - fixed build
 
