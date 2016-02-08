@@ -1,16 +1,18 @@
 Group: Development/Java
+BuildRequires: jdepend
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-marshalling
-%define version 1.4.1
+%define version 1.4.6
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-marshalling
-Version:          1.4.1
-Release:          alt1_1jpp7
+Version:          1.4.6
+Release:          alt1_2jpp8
 Summary:          JBoss Marshalling
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossmarshalling
@@ -51,10 +53,6 @@ This package contains %{summary}.
 %pom_disable_module tests
 %pom_disable_module osgi
 
-# Compat symlinks.  TODO: remove once jboss-as is rebuilt to use the
-# new JAR names.
-%mvn_file :{*} %{name}/@1 @1
-
 # Conditionally remove dependency on apiviz
 if [ %{?rhel} ]; then
     %pom_remove_plugin :maven-javadoc-plugin
@@ -67,12 +65,15 @@ fi
 %mvn_install
 
 %files -f .mfiles
-%doc COPYING.txt
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc COPYING.txt
+%doc LICENSE.txt
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_1jpp7
 - new release
 
