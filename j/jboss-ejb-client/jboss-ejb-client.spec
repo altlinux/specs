@@ -1,62 +1,37 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-ejb-client
-%define version 1.0.5
+%define version 2.0.1
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:          jboss-ejb-client
-Version:       1.0.5
-Release:       alt2_5jpp7
+Version:       2.0.1
+Release:       alt1_3jpp8
 Summary:       JBoss EJB client
-Group:         Development/Java
 License:       LGPLv2+
 URL:           http://www.jboss.org/
 
-# git clone git://github.com/jbossas/jboss-ejb-client.git
-# cd jboss-ejb-client/ && git archive --format=tar --prefix=jboss-ejb-client-1.0.5.Final/ 1.0.5.Final | xz > jboss-ejb-client-1.0.5.Final.tar.xz
-Source0:       %{name}-%{namedversion}.tar.xz
+Source0:       https://github.com/jbossas/jboss-ejb-client/archive/%{namedversion}.tar.gz
 
-BuildRequires: jpackage-utils
-BuildRequires: jboss-parent
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-injection-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-checkstyle-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-ear-plugin
-BuildRequires: maven-eclipse-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: jboss-ejb-3.1-api
-BuildRequires: jboss-logging
-BuildRequires: jboss-logging-tools
-BuildRequires: jboss-logmanager
-BuildRequires: jboss-marshalling
-BuildRequires: jboss-remoting
-BuildRequires: jboss-sasl
-BuildRequires: jboss-transaction-1.1-api
-BuildRequires: xnio
-
-Requires:      jpackage-utils
-Requires:      jboss-ejb-3.1-api
-Requires:      jboss-logging
-Requires:      jboss-logging-tools
-Requires:      jboss-logmanager
-Requires:      jboss-marshalling
-Requires:      jboss-remoting
-Requires:      jboss-sasl
-Requires:      jboss-transaction-1.1-api
-Requires:      xnio
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
+BuildRequires: mvn(org.jboss.logging:jboss-logging)
+BuildRequires: mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires: mvn(org.jboss.logmanager:jboss-logmanager)
+BuildRequires: mvn(org.jboss.marshalling:jboss-marshalling)
+BuildRequires: mvn(org.jboss.marshalling:jboss-marshalling-river)
+BuildRequires: mvn(org.jboss.maven.plugins:maven-injection-plugin)
+BuildRequires: mvn(org.jboss.remoting:jboss-remoting)
+BuildRequires: mvn(org.jboss.sasl:jboss-sasl)
+BuildRequires: mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec)
+BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec)
+BuildRequires: mvn(org.jboss.xnio:xnio-api)
+BuildRequires: mvn(org.jboss.xnio:xnio-nio)
 
 BuildArch:     noarch
 Source44: import.info
@@ -65,9 +40,8 @@ Source44: import.info
 Client library for EJB applications working against JBoss AS
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -76,35 +50,23 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{namedversion}
 
+# Dont work properly
+%pom_remove_plugin :maven-checkstyle-plugin
+
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/jboss-ejb-client-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3jpp8
+- java8 mass update
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt2_5jpp7
 - new release
 
