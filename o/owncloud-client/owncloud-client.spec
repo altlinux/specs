@@ -1,6 +1,6 @@
 %define rname owncloudclient
 Name: owncloud-client
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Group: Networking/File transfer
@@ -59,6 +59,9 @@ desktop-file-install \
 %_iconsdir/hicolor/*/apps/ownCloud_*.*
 
 %changelog
+* Mon Feb 08 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
+- new version
+
 * Wed Oct 21 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.1-alt1
 - new version
 
