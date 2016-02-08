@@ -1,6 +1,6 @@
 Name: iscan-free
 Version: 2.20.0
-Release: alt2
+Release: alt3
 
 Summary: Free Image Scan Version with epkowa Driver for Epson Scanners
 
@@ -168,10 +168,13 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 %dir %_libdir/sane
 %_libdir/sane/libsane-epkowa.so*
 %_datadir/iscan/
-%_man5dir/sane-epkowa.5.gz
+%_man5dir/sane-epkowa.5.*
 
 
 %changelog
+* Mon Feb 08 2016 Lenar Shakirov <snejok@altlinux.ru> 2.20.0-alt3
+- man packaging fixed
+
 * Fri Apr 01 2011 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt2
 - update buildreqs
 
