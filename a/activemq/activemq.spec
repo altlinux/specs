@@ -1,14 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven-local
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:          activemq
 Version:       5.6.0
-Release:       alt2_5jpp7
+Release:       alt2_12jpp8
 Summary:       Open source messaging and Integration Patterns server
-Group:         Development/Java
 License:       ASL 2.0
 URL:           http://activemq.apache.org
 # git clone -b activemq-5.6.0 https://github.com/apache/activemq.git activemq-core-5.6.0
@@ -16,37 +13,23 @@ URL:           http://activemq.apache.org
 # tar cJf activemq-core-5.6.0.tar.xz activemq-core-5.6.0
 Source0:       activemq-5.6.0.tar.xz
 
-BuildRequires: activeio
-BuildRequires: activemq-protobuf
-BuildRequires: derby
-BuildRequires: geronimo-jta
-BuildRequires: jasypt
-BuildRequires: javacc-maven-plugin
-BuildRequires: jettison
-BuildRequires: jpackage-utils
-BuildRequires: maven-clean-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-gpg-plugin
-BuildRequires: maven-idea-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-pmd-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-xbean-plugin
-BuildRequires: springframework-jms
+Patch0:        activemq-5.6.0-jaas-CVE-2015-6524.patch
 
-# Required for /usr/share/java/activemq directory
-Requires: activemq-protobuf
-
-Requires: jpackage-utils
+BuildRequires: maven-local
+BuildRequires: mvn(commons-net:commons-net)
+BuildRequires: mvn(org.apache.derby:derby)
+BuildRequires: mvn(org.apache.activemq:activeio-core)
+BuildRequires: mvn(org.apache.activemq.protobuf:activemq-protobuf)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
+BuildRequires: mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires: mvn(org.apache.xbean:maven-xbean-plugin)
+BuildRequires: mvn(org.codehaus.jettison:jettison)
+BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires: mvn(org.jasypt:jasypt)
+BuildRequires: mvn(org.springframework:spring-jms)
 
 BuildArch: noarch
 Source44: import.info
-
 
 %description
 The most popular and powerful open source messaging and Integration Patterns
@@ -55,7 +38,6 @@ server.
 %package javadoc
 Group: Development/Java
 Summary: Javadoc for %{name}
-Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -64,17 +46,6 @@ This package contains javadoc for %{name}
 %package core
 Group: Development/Java
 Summary: ActiveMQ Core
-Requires: %{name} = %{version}-%{release}
-Requires: %{name}-jaas = %{version}-%{release}
-Requires: %{name}-kahadb = %{version}-%{release}
-Requires: jpackage-utils
-Requires: activemq-protobuf
-Requires: activeio
-Requires: jettison
-Requires: springframework-jms
-Requires: geronimo-jta
-Requires: derby
-Requires: jasypt
 
 %description core
 ActiveMQ Core Library
@@ -82,8 +53,6 @@ ActiveMQ Core Library
 %package jaas
 Group: Development/Java
 Summary: ActiveMQ Jaas
-Requires: %{name} = %{version}-%{release}
-Requires: jpackage-utils
 
 %description jaas
 ActiveMQ Jaas Library
@@ -91,10 +60,6 @@ ActiveMQ Jaas Library
 %package kahadb
 Group: Development/Java
 Summary: ActiveMQ KahaDB
-Requires: %{name} = %{version}-%{release}
-Requires: jpackage-utils
-Requires: activemq-protobuf
-Requires: activeio
 
 %description kahadb
 A file based persistence database that is local to the message broker that
@@ -105,6 +70,7 @@ and provides faster recovery than its predecessor, the AMQ Message Store.
 %prep
 
 %setup -q -n %{name}-%{version}
+%patch0 -p1
 
 # Disable modules
 for m in all camel console fileserver blueprint karaf \
@@ -121,6 +87,9 @@ done
 
 # Remove missing plugin
 %pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
+%pom_remove_plugin -r :cobertura-maven-plugin
+# Workaround for new bundle plugin
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-bundle-plugin' ]/pom:configuration"
 
 # Remove missing test dependencies
 %pom_remove_dep org.springframework:spring-test
@@ -158,54 +127,38 @@ chmod 644 LICENSE README.txt
 mv LICENSE LICENSE.orig
 iconv -f iso-8859-1 -t utf-8 LICENSE.orig > LICENSE
 
+%mvn_package ":activemq-core:{xsd}::" __noinstall
+%mvn_package ":activemq-core:{jar,pom}:{}:" core
+%mvn_package ":activemq-jaas:{jar,pom}:{}:" jaas
+%mvn_package ":kahadb:{jar,pom}:{}:" kahadb
+
+
 %build
-mvn-rpmbuild -Dmaven.test.skip=true \
-    -Dproject.build.sourceEncoding=UTF-8 \
-    install javadoc:aggregate
+%mvn_build -f
 
 %install
+%mvn_install
 
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-for m in %{name}-core %{name}-jaas kahadb; do
-    install -pm 644 ${m}/target/${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
-    install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-    %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
-done
-
-# Parent POM
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%doc LICENSE NOTICE README.txt
-# Not owning /usr/share/java/activemq since it is owned by activemq-protobuf
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-
-%files javadoc
+%files -f .mfiles
+%doc README.txt
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
-%files core
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadir}/%{name}/%{name}-core.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-core.pom
 
-%files jaas
+%files core -f .mfiles-core
 %doc LICENSE NOTICE
-%{_javadir}/%{name}/%{name}-jaas.jar
-%{_mavenpomdir}/JPP.%{name}-%{name}-jaas.pom
 
-%files kahadb
+%files jaas -f .mfiles-jaas
 %doc LICENSE NOTICE
-%{_javadir}/%{name}/kahadb.jar
-%{_mavenpomdir}/JPP.%{name}-kahadb.pom
+
+%files kahadb -f .mfiles-kahadb
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_12jpp8
+- new version
+
 * Thu Aug 07 2014 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt2_5jpp7
 - rebuild with maven-local
 
