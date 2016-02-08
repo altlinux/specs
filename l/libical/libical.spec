@@ -3,7 +3,7 @@
 
 Name: libical
 Version: 2.0.1
-Release: alt0.2
+Release: alt0.3
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -92,6 +92,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %endif
 
 %changelog
+* Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt0.3
+- rebuild against libicu*.so.56
+
 * Mon Jan 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt0.2
 - added libicu-devel as dependence for -devel subpackage
 

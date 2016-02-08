@@ -4,7 +4,7 @@
 
 Name: gnome-todo
 Version: %ver_major.1
-Release: alt2
+Release: alt3
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -49,6 +49,9 @@ with GNOME.
 %doc NEWS README
 
 %changelog
+* Tue Feb 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt3
+- rebuild against libicu*.so.56
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt2
 - rebuilt against libical.so.2
 

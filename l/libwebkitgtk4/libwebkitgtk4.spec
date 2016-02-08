@@ -15,7 +15,7 @@
 
 Name: libwebkitgtk4
 Version: 2.10.7
-Release: alt1
+Release: alt2
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -275,6 +275,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue Feb 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10.7-alt2
+- rebuild against libicu*.so.56
+
 * Sun Jan 31 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10.7-alt1
 - 2.10.7
 
