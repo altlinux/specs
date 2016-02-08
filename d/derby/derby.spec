@@ -1,159 +1,80 @@
+Provides: /etc/derby.conf
+Name: derby
+Version: 10.11.1.1
+Summary: Relational database implemented entirely in Java
+License: ASL 2.0
+Url: http://db.apache.org/derby/
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           derby
-Version:        10.9.1.0
-Release:        alt1_6jpp7
-Summary:        Relational database implemented entirely in Java
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: derby = 10.11.1.1-1.fc23
+Provides: mvn(org.apache.derby:derby) = 10.11.1.1
+Provides: mvn(org.apache.derby:derby-project:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derby:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_cs) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_cs:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_de_DE) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_de_DE:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_es) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_es:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_fr) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_fr:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_hu) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_hu:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_it) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_it:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_ja_JP) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_ja_JP:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_ko_KR) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_ko_KR:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_pl) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_pl:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_pt_BR) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_pt_BR:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_ru) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_ru:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_zh_CN) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_zh_CN:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_zh_TW) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyLocale_zh_TW:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyclient) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbyclient:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbynet) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbynet:pom:) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbytools) = 10.11.1.1
+Provides: mvn(org.apache.derby:derbytools:pom:) = 10.11.1.1
+Requires: /bin/bash
+Requires: /bin/sh
+Requires: /bin/sh
+Requires: /bin/sh
+Requires: java-headless
+Requires: jpackage-utils
+Requires: shadow-utils
+Requires: systemd-units
+Requires: systemd-units
 
-Group:          Databases
-License:        ASL 2.0
-URL:            http://db.apache.org/derby/
-Source0:        http://archive.apache.org/dist/db/%{name}/db-%{name}-%{version}/db-%{name}-%{version}-src.tar.gz
-Source1:        derby-script
-Source2:        derby.service
-
-Source10:       http://repo1.maven.org/maven2/org/apache/%{name}/derby/%{version}/derby-%{version}.pom
-Source11:       http://repo1.maven.org/maven2/org/apache/%{name}/derby-project/%{version}/derby-project-%{version}.pom
-Source12:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_cs/%{version}/derbyLocale_cs-%{version}.pom
-Source13:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_de_DE/%{version}/derbyLocale_de_DE-%{version}.pom
-Source14:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_es/%{version}/derbyLocale_es-%{version}.pom
-Source15:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_fr/%{version}/derbyLocale_fr-%{version}.pom
-Source16:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_hu/%{version}/derbyLocale_hu-%{version}.pom
-Source17:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_it/%{version}/derbyLocale_it-%{version}.pom
-Source18:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_ja_JP/%{version}/derbyLocale_ja_JP-%{version}.pom
-Source19:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_ko_KR/%{version}/derbyLocale_ko_KR-%{version}.pom
-Source20:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_pl/%{version}/derbyLocale_pl-%{version}.pom
-Source21:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_pt_BR/%{version}/derbyLocale_pt_BR-%{version}.pom
-Source22:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_ru/%{version}/derbyLocale_ru-%{version}.pom
-Source23:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_zh_CN/%{version}/derbyLocale_zh_CN-%{version}.pom
-Source24:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyLocale_zh_TW/%{version}/derbyLocale_zh_TW-%{version}.pom
-Source25:       http://repo1.maven.org/maven2/org/apache/%{name}/derbyclient/%{version}/derbyclient-%{version}.pom
-Source26:       http://repo1.maven.org/maven2/org/apache/%{name}/derbynet/%{version}/derbynet-%{version}.pom
-Source27:       http://repo1.maven.org/maven2/org/apache/%{name}/derbytools/%{version}/derbytools-%{version}.pom
-
-# https://issues.apache.org/jira/browse/DERBY-5125
-Patch1: derby-javacc5.patch
-# https://bugzilla.redhat.com/show_bug.cgi?id=830661
-Patch2: derby-net.patch
-
-BuildRequires:  jpackage-utils
-BuildRequires:  servlet3
-BuildRequires:  jakarta-oro
-BuildRequires:  javacc
-BuildRequires:  junit4
-BuildRequires:  xalan-j2
-BuildRequires:  xerces-j2
-BuildRequires:  ant
-Requires(pre):  shadow-utils
-
-BuildArch:      noarch
-Source44: import.info
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: derby-10.11.1.1-1.fc23.cpio
 
 %description
 Apache Derby, an Apache DB sub-project, is a relational database implemented
 entirely in Java. Some key advantages include a small footprint, conformance
 to Java, JDBC, and SQL standards and embedded JDBC driver.
 
-
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
 %prep
-%setup -q -c
-pushd db-%{name}-%{version}-src
-rm java/engine/org/apache/derby/impl/sql/compile/Token.java
-%patch1 -p0
-popd
-%patch2 -p1 -F1
+cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-cd db-%{name}-%{version}-src
-find -name '*.jar' -delete
-
-# tools/ant/properties/extrapath.properties
-ln -sf $(build-classpath javacc) tools/java/javacc.jar
-ln -sf $(build-classpath servlet25) \
-        tools/java/geronimo-spec-servlet-2.4-rc4.jar
-ln -sf $(build-classpath xalan-j2) tools/java/xalan.jar
-ln -sf $(build-classpath oro) tools/java/jakarta-oro-2.0.8.jar
-ln -sf $(build-classpath xerces-j2) tools/java/xercesImpl.jar
-ln -sf $(build-classpath xalan-j2-serializer) tools/java/serializer.jar
-ln -sf $(build-classpath junit4) tools/java/junit.jar
-
-# Using generics
-find -name build.xml |xargs sed '
-        s/target="1.4"/target="1.6"/
-        s/source="1.4"/source="1.6"/
-        /Class-Path/d
-' -i
-
-# Fire
-ant -verbose clobber buildsource buildjars
-
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
 
 %install
-cd db-%{name}-%{version}-src
-
-# Library
-install -d $RPM_BUILD_ROOT%{_javadir}/%{name}
-for i in jars/sane/*.jar
-do
-        B=$(basename $i |sed 's/.jar$//')
-        install -m644 $i $RPM_BUILD_ROOT%{_javadir}/%{name}/$B.jar
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
-
-# Wrapper scripts
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -p -m755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/%{name}-ij
-for P in sysinfo NetworkServerControl startNetworkServer stopNetworkServer
-do
-        ln $RPM_BUILD_ROOT%{_bindir}/%{name}-ij \
-                $RPM_BUILD_ROOT%{_bindir}/%{name}-$P
-done
-
-# POMs
-install -d $RPM_BUILD_ROOT%{_mavenpomdir}
-install -p -m644 %{SOURCE10} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derby.pom
-install -p -m644 %{SOURCE11} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derby-project.pom
-install -p -m644 %{SOURCE12} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_cs.pom
-install -p -m644 %{SOURCE13} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_de_DE.pom
-install -p -m644 %{SOURCE14} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_es.pom
-install -p -m644 %{SOURCE15} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_fr.pom
-install -p -m644 %{SOURCE16} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_hu.pom
-install -p -m644 %{SOURCE17} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_it.pom
-install -p -m644 %{SOURCE18} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_ja_JP.pom
-install -p -m644 %{SOURCE19} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_ko_KR.pom
-install -p -m644 %{SOURCE20} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_pl.pom
-install -p -m644 %{SOURCE21} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_pt_BR.pom
-install -p -m644 %{SOURCE22} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_ru.pom
-install -p -m644 %{SOURCE23} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_zh_CN.pom
-install -p -m644 %{SOURCE24} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyLocale_zh_TW.pom
-install -p -m644 %{SOURCE25} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbyclient.pom
-install -p -m644 %{SOURCE26} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbynet.pom
-install -p -m644 %{SOURCE27} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.derby-derbytools.pom
-
-# Dependency maps
-for pom in $RPM_BUILD_ROOT%{_mavenpomdir}/*.pom ; do
-        B=$(basename $pom | sed -e 's/JPP.%{name}-//' -e 's/.pom$//')
-	if [ -f "$RPM_BUILD_ROOT%{_javadir}/%{name}/$B.jar" ] ; then
-		%add_maven_depmap JPP.%{name}-$B.pom %{name}/$B.jar
-	else
-		%add_maven_depmap JPP.%{name}-$B.pom
-	fi
-done
-
-# Systemd unit
-mkdir -p $RPM_BUILD_ROOT%{_unitdir}
-install -p -m 644 %{SOURCE2} \
-        $RPM_BUILD_ROOT%{_unitdir}/%{name}.service
-
-# Derby home dir
-install -dm 755 $RPM_BUILD_ROOT/var/lib/derby
-
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
-touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 %pre
 getent group derby >/dev/null || groupadd -r derby
@@ -163,27 +84,28 @@ getent passwd derby >/dev/null || \
 exit 0
 
 %preun
-%preun_service derby
+
+if [ $1 -eq 0 ] ; then 
+        # Package removal, not upgrade 
+        systemctl --no-reload disable derby.service > /dev/null 2>&1 || : 
+        systemctl stop derby.service > /dev/null 2>&1 || : 
+fi
 
 %post
-%post_service derby
 
-%files
-%{_bindir}/*
-%{_javadir}/%{name}
-%doc db-%{name}-%{version}-src/LICENSE
-%doc db-%{name}-%{version}-src/NOTICE
-%doc db-%{name}-%{version}-src/published_api_overview.html
-%doc db-%{name}-%{version}-src/RELEASE-NOTES.html
-%doc db-%{name}-%{version}-src/README
-%{_mavenpomdir}/*.pom
-%{_mavendepmapfragdir}/%{name}
-%{_unitdir}/%{name}.service
-%attr(755,derby,derby) %{_sharedstatedir}/%{name}
-%config(noreplace,missingok) /etc/%{name}.conf
+if [ $1 -eq 1 ] ; then 
+        # Initial installation 
+        systemctl preset derby.service >/dev/null 2>&1 || : 
+fi
 
+
+%files -f %name-list
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:10.11.1.1-alt0.1jpp
+- bootstrap pack of jars created with jppbootstrap script
+- temporary package to satisfy circular dependencies
+
 * Sun Sep 14 2014 Igor Vlasenko <viy@altlinux.ru> 0:10.9.1.0-alt1_6jpp7
 - new release
 
