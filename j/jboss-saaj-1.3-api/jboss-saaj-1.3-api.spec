@@ -1,42 +1,67 @@
-Name: jboss-saaj-1.3-api
-Version: 1.0.2
-Summary: SOAP with Attachments API for Java 1.3
-License: CDDL or GPLv2 with exceptions
-Url: http://www.jboss.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jboss-saaj-1.3-api = 1.0.2-9.fc22
-Provides: mvn(org.jboss.spec.javax.xml.soap:jboss-saaj-api_1.3_spec) = 1.0.2.Final
-Provides: mvn(org.jboss.spec.javax.xml.soap:jboss-saaj-api_1.3_spec:pom:) = 1.0.2.Final
-Requires: java-headless
-Requires: jpackage-utils
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
-Source: jboss-saaj-1.3-api-1.0.2-9.fc22.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jboss-saaj-1.3-api
+%define version 1.0.2
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+Name:          jboss-saaj-1.3-api
+Version:       1.0.2
+Release:       alt4_11jpp8
+Summary:       SOAP with Attachments API for Java 1.3
+License:       CDDL or GPLv2 with exceptions
+URL:           http://www.jboss.org
+
+# git clone git://github.com/jboss/jboss-saaj-api_spec.git jboss-saaj-1.3-api
+# cd jboss-saaj-1.3-api/ && git archive --format=tar --prefix=jboss-saaj-1.3-api-1.0.2.Final/ jboss-saaj-api_1.3_spec-1.0.2.Final | xz > jboss-saaj-1.3-api-1.0.2.Final.tar.xz
+Source0:       %{name}-%{namedversion}.tar.xz
+
+BuildArch:     noarch
+BuildRequires: maven-local
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
+Source44: import.info
 
 %description
 The SOAP with Attachments API for Java Version 1.3 classes.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary: Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{namedversion}
+
+# Unneeded plugin
+%pom_remove_plugin :maven-source-plugin
+
+%mvn_file : %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE
+%doc README
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
+%doc README
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt4_11jpp8
+- java8 mass update
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
