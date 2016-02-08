@@ -1,15 +1,12 @@
 Epoch: 1
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jbossxb
 Version:        2.0.3
-Release:        alt2_4jpp7
+Release:        alt2_9jpp8
 Summary:        JBoss XML Binding
-
-Group:          Development/Java
 
 License:        LGPLv2+
 URL:            http://www.jboss.org
@@ -17,47 +14,29 @@ URL:            http://www.jboss.org
 # svn export http://anonsvn.jboss.org/repos/common/jbossxb/tags/2.0.3.GA/ jbossxb-2.0.3
 # tar cJf jbossxb-2.0.3.tar.xz jbossxb-2.0.3/
 Source0:        %{name}-%{version}.tar.xz
-Patch0:         %{name}-pom.patch
 
 BuildArch:      noarch
 
-BuildRequires:  jpackage-utils
-
-BuildRequires:  bea-stax
-BuildRequires:  javassist
-BuildRequires:  jboss-classpool-scoped
-BuildRequires:  jboss-common-core
-BuildRequires:  jboss-jaxb-2.2-api
-BuildRequires:  jboss-logging
-BuildRequires:  jboss-reflect
 BuildRequires:  maven-local
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  xerces-j2
-
-Requires:       bea-stax
-Requires:       javassist
-Requires:       jboss-classpool-scoped
-Requires:       jboss-common-core
-Requires:       jboss-logging
-Requires:       jboss-reflect
-Requires:       jpackage-utils
-Requires:       xerces-j2
+BuildRequires:  mvn(com.wutka:dtdparser)
+BuildRequires:  mvn(org.jboss:jboss-common-core)
+BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:  mvn(org.jboss:jboss-reflect)
+BuildRequires:  mvn(org.jboss.logging:jboss-logging)
+BuildRequires:  mvn(org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec)
+BuildRequires:  mvn(stax:stax)
+# Required by stax-ri but not resolved
+BuildRequires:  mvn(stax:stax-api)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xml-apis:xml-apis)
 Source44: import.info
 
 %description
 JBoss XML Binding.
 
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -66,42 +45,32 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 
-# can't compile stuff in the test dir...missing deps
+# can't compile stuff in the test dir...missing deps: jboss-test
 rm -rf src/test
 
 find -type f -name *.jar -delete
 find -type f -name *.class -delete
 
-%patch0
+%pom_change_dep org.jboss.logging:jboss-logging-spi org.jboss.logging:jboss-logging
+%pom_add_dep stax:stax
+%pom_add_dep org.jboss.spec.javax.xml.bind:jboss-jaxb-api_2.2_spec
+%pom_remove_dep sun-jaxb:jaxb-api
+%pom_remove_dep javax.activation:activation
+%pom_remove_dep org.jboss.test:jboss-test
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-# jar is named jboss-xml-binding.jar by default; Renamed to jbossxb.jar.
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/jboss-xml-binding.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
-
+%files -f .mfiles
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_9jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_4jpp7
 - new release
 
