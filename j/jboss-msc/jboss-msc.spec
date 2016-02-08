@@ -2,17 +2,19 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+BuildRequires: jdepend
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-msc
-%define version 1.2.0
-%global namedreltag .Beta1
+%define version 1.2.2
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-msc
-Version:          1.2.0
-Release:          alt1_0.3.Beta1jpp7
+Version:          1.2.2
+Release:          alt1_2jpp8
 Summary:          JBoss Modular Service Container
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-msc
@@ -21,10 +23,10 @@ Source0:          https://github.com/jbossas/jboss-msc/archive/%{namedversion}.t
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    javassist
 BuildRequires:    jboss-parent
-BuildRequires:    junit4
+BuildRequires:    junit
 BuildRequires:    byteman
 BuildRequires:    jboss-logging
 BuildRequires:    jboss-vfs
@@ -49,9 +51,6 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n jboss-msc-%{namedversion}
 
-%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-surefire-plugin']/pom:executions/pom:execution[pom:id = 'rejected-execution-test']/pom:configuration/pom:argLine"
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-surefire-plugin']/pom:executions/pom:execution[pom:id = 'rejected-execution-test']/pom:configuration" "<argLine>-Xbootclasspath/a:$(build-classpath jboss-logmanager) -- -javaagent:$(build-classpath byteman/byteman)=boot:$(build-classpath byteman/byteman),script:\${project.build.testOutputDirectory}/org/jboss/msc/racecondition/RejectedExecutionTestCase.btm</argLine>"
-
 %build
 # Some failed tests, most probably because network limitations on Koji
 %mvn_build -f
@@ -65,6 +64,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_0.3.Beta1jpp7
 - new release
 
