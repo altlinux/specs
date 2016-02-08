@@ -1,106 +1,66 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name jboss-vfs
-%define version 3.1.0
+%define version 3.2.5
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             jboss-vfs
-Version:          3.1.0
-Release:          alt2_6jpp7
+Version:          3.2.5
+Release:          alt1_3jpp8
 Summary:          JBoss Virtual File System
-Group:            Development/Java
 License:          LGPLv2+
 URL:              https://github.com/jbossas/jboss-vfs/
-
-# Microsoft JDBC driver needs to be removed
-#
-# git clone git://github.com/jbossas/jboss-vfs.git
-# cd jboss-vfs && git checkout 3.1.0.Final && git checkout-index -f -a --prefix=jboss-vfs-3.1.0.Final/
-# rm jboss-vfs-3.1.0.Final/src/test/resources/vfs/test/zipeinit.jar
-# tar -cJf jboss-vfs-3.1.0.Final-CLEAN.tar.xz jboss-vfs-3.1.0.Final
-Source0:          %{name}-%{namedversion}-CLEAN.tar.xz
-Patch0:           %{name}-%{namedversion}-pom.patch
+Source0:          https://github.com/jbossas/jboss-vfs/archive/jboss-vfs-%{namedversion}.tar.gz
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-surefire-provider-junit4
-BuildRequires:    jboss-logging
-BuildRequires:    junit4
-BuildRequires:    jboss-parent
-
-Requires:         jboss-logging
-Requires:         jpackage-utils
+BuildRequires:    mvn(junit:junit)
+#BuildRequires:    mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-annotations)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
 Source44: import.info
 
 %description
 This package contains the JBoss Virtual File System.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-%patch0 -p1
+%setup -q -n jboss-vfs-jboss-vfs-%{namedversion}
 
-rm -rf .classpath archives/ .project
+rm -rf src/test/resources/vfs/test/zipeinit.jar
+# break build see for e.g. jboss-metadata.spec
+%pom_remove_plugin :maven-checkstyle-plugin
 
 %build
-# Skipped because jboss-test is not packaged already
-mvn-rpmbuild install -Dmaven.test.skip=true javadoc:aggregate
+# Skipped because jboss-test is not packaged yet
+%mvn_build -f
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-# JAR
-install -pm 644 target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.2.5-alt1_3jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt2_6jpp7
 - new release
 
