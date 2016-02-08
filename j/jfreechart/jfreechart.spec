@@ -1,34 +1,32 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
-# TODO: junit QA tests
-
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:           jfreechart
-Version:        1.0.14
-Release:        alt3_10jpp7
+Version:        1.0.19
+Release:        alt1_3jpp8
 Summary:        Java chart library
 
 Group:          Development/Java
 License:        LGPLv2+
 URL:            http://www.jfree.org/jfreechart/
-Source0:        http://download.sourceforge.net/sourceforge/jfreechart/%{name}-%{version}.tar.gz
-Source1:        bnd.properties
+Source0:        http://download.sourceforge.net/sourceforge/jfreechart/%{name}-%{version}.zip
+Patch0:         build_swt_encoding_fix.patch
 
-Requires:       servlet jpackage-utils
-Requires:       jcommon >= 1.0.17
-BuildRequires:  %{requires} ant servlet
+BuildRequires:  maven-local
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  mvn(org.jfree:jcommon) >= 1.0.23
+BuildRequires:  servlet >= 2.5
 %if 0%{?fedora}
 BuildRequires:  eclipse-swt
 %endif
-# Required for converting jars to OSGi bundles
-BuildRequires:  aqute-bnd
 
 BuildArch:      noarch
-Patch0:         remove_itext_dep.patch
 Source44: import.info
 
 %description
@@ -37,9 +35,9 @@ developers to display professional quality charts in their applications.
 
 %if 0%{?fedora}
 %package swt
-Summary:        Experimental swt extension for jfreechart
+Summary:        Swt extension for jfreechart
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       eclipse-swt jpackage-utils
 
 %description swt
@@ -49,7 +47,7 @@ Experimental swt extension for jfreechart.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -65,52 +63,59 @@ Javadoc pour %{name}.
 %setup -q
 # Erase prebuilt files
 find \( -name '*.jar' -o -name '*.class' \) -exec rm -f '{}' \;
-%patch0
+%patch0 -p2
+
+MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>org.jfree.jfreechart</Bundle-SymbolicName>
+            <Bundle-Vendor>Fedora Project</Bundle-Vendor>
+            <Bundle-Version>%{version}</Bundle-Version>
+            <!-- Do not autogenerate uses clauses in Manifests -->
+            <Import-Package>
+              !javax.servlet,
+              !javax.servlet.http,
+              *
+            </Import-Package>
+            <_nouses>true</_nouses>
+          </instructions>
+        </configuration>"
+%pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :cobertura-maven-plugin
+%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-jxr-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+
+%pom_add_plugin org.apache.felix:maven-bundle-plugin . "$MVN_BUNDLE_PLUGIN_EXTRA_XML"
+%pom_add_plugin org.apache.maven.plugins:maven-javadoc-plugin . "<configuration><excludePackageNames>org.jfree.chart.fx*</excludePackageNames></configuration>"
+# Change to packaging type bundle so as to be able to use it
+# as an OSGi bundle.
+%pom_xpath_set "pom:packaging" "bundle"
 
 %build
-CLASSPATH=$(build-classpath jcommon servlet) \
-        ant -f ant/build.xml \
-        compile javadoc
+# Ignore failing test: SegmentedTimelineTest
+%mvn_build -- -Dmaven.test.failure.ignore=true
+
 %if 0%{?fedora}
-# See RHBZ#912664. There seems to be some dispute about build-classpath.
-# So don't use it for swt.
+# /usr/lib/java/swt.jar is an arch independent path to swt
 ant -f ant/build-swt.xml \
-        -Dswt.jar=%{_libdir}/eclipse/swt.jar \
+        -Dswt.jar=%_libdir/java/swt.jar \
         -Djcommon.jar=$(build-classpath jcommon) \
-        -Djfreechart.jar=lib/jfreechart-%{version}.jar
+        -Djfreechart.jar=target/jfreechart-%{version}.jar
 %endif
-# Convert to OSGi bundle
-java -Djfreechart.bundle.version="%{version}" -jar $(build-classpath aqute-bnd) \
-   wrap -output lib/%{name}-%{version}.bar -properties %{SOURCE1} lib/%{name}-%{version}.jar
 
 %install
-# Directory structure
-install -d $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-install -d $RPM_BUILD_ROOT%{_mavenpomdir}
+%mvn_install
 
-# JARs and JavaDoc
-install -m 644 lib/jfreechart-%{version}.bar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
 %if 0%{?fedora}
 install -m 644 lib/swtgraphics2d.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/swtgraphics2d.jar
 install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-swt.jar
 %endif
-cp -rp javadoc/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap -a "%{name}:%{name}" JPP.%{name}-%{name}.pom %{name}/%{name}.jar
-ln -s %{name}/%{name}.jar %buildroot%{_javadir}/%{name}.jar
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}.jar
-%doc ChangeLog licence-LGPL.txt NEWS README.txt
-%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc ChangeLog NEWS README.txt
 
 %if 0%{?fedora}
 %files swt
@@ -118,10 +123,12 @@ ln -s %{name}/%{name}.jar %buildroot%{_javadir}/%{name}.jar
 %{_javadir}/%{name}/%{name}-swt*.jar
 %endif
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_3jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_10jpp7
 - new release
 
