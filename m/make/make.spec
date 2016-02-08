@@ -1,6 +1,6 @@
 Name: make
 Version: 3.82
-Release: alt5
+Release: alt6
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -49,6 +49,9 @@ Patch111: make-3.82-rh-err-reporting.patch
 Patch112: make-3.82-rh-jobserver.patch
 Patch113: make-3.82-rh-warn_undefined_function.patch
 Patch114: make-3.82-rh-trace.patch
+Patch115: make-3.81-fix-itemx-must-follow-item.patch
+
+BuildRequires: makeinfo
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -99,6 +102,7 @@ makefile.
 %patch112 -p1
 %patch113 -p1
 %patch114 -p1
+%patch115 -p1
 find -type f -name \*.orig -delete -print
 rm doc/*.info*
 
@@ -126,6 +130,11 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat Feb 06 2016 Michael Shigorin <mike@altlinux.org> 2:3.82-alt6
+- Fixed FTBFS:
+  + BR: makeinfo;
+  + added backported 4.0 patch to fix texinfo build (thx OE).
+
 * Fri Oct 05 2012 Dmitry V. Levin <ldv@altlinux.org> 2:3.82-alt5
 - Backported more upstream changes to fix quotation bugs,
   thanks to Alexey Morozov for reporting this.
