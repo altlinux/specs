@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.99.2
-Release: alt1.git20130522
+Release: alt2.git20130522
 
 Summary: Base module for all Kaa modules
 
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Sat May 26 2007
 BuildRequires: glib2-devel python-devel python-module-PyXML python-modules-compiler
 
-BuildPreReq: python-module-sphinx-devel python-modules-sqlite3
+BuildPreReq: python-modules-sqlite3
 BuildPreReq: python-module-dbus python-module-avahi
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -39,43 +39,6 @@ main loop at all. The documentation of the module should explain if
 and why the main loop is needed. If you already have a main loop
 running, please read SourceDoc/MainLoop how to merge the main loop you
 use with the kaa main loop.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python
-
-%description pickles
-This module contains some basic code needed in all kaa modules. This
-is a requirement for all the other modules in the repository.
-
-The module also contains a main loop (notifier). Some kaa modules like
-kaa-Display require the main loop to be running, for other modules
-like kaa-Thumb it's optional and some like kaa-Metadata don't need the
-main loop at all. The documentation of the module should explain if
-and why the main loop is needed. If you already have a main loop
-running, please read SourceDoc/MainLoop how to merge the main loop you
-use with the kaa main loop.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This module contains some basic code needed in all kaa modules. This
-is a requirement for all the other modules in the repository.
-
-The module also contains a main loop (notifier). Some kaa modules like
-kaa-Display require the main loop to be running, for other modules
-like kaa-Thumb it's optional and some like kaa-Metadata don't need the
-main loop at all. The documentation of the module should explain if
-and why the main loop is needed. If you already have a main loop
-running, please read SourceDoc/MainLoop how to merge the main loop you
-use with the kaa main loop.
-
-This package contains documentation for %oname.
 
 %package -n python3-module-%oname
 Summary: Base module for all Kaa modules
@@ -101,9 +64,6 @@ use with the kaa main loop.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv doc/
-
 %build
 %python_build_debug
 
@@ -123,32 +83,23 @@ popd
 %endif
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C doc html
-%make -C doc pickle
 
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR doc/.build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
-%doc API_CHANGES AUTHORS NEWS README TODO
 %python_sitelibdir/kaa/
 %python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files docs
-%doc doc/html/*
 
 %if_with python3
 %files -n python3-module-%oname
-%doc API_CHANGES AUTHORS NEWS README TODO
 %python3_sitelibdir/kaa/
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 0.99.2-alt2.git20130522
+- Disabled Doc, Pickle and Sphinx
+
 * Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99.2-alt1.git20130522
 - Version 0.99.2
 - Added module for Python 3
