@@ -1,14 +1,11 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          activeio
 Version:       3.1.4
-Release:       alt1_11jpp8
+Release:       alt1_13jpp8
 Summary:       Apache ActiveMQ ActiveIO :: Core
 License:       ASL 2.0
 Url:           http://activemq.apache.org/
@@ -18,15 +15,15 @@ Source0:       activeio-3.1.4-src-svn.tar.gz
 # build fix for howl-logger 1.0.2
 Patch0:        activeio-3.1.4-howl-logger.patch
 
-BuildRequires: apache-commons-logging
-%if 0
-BuildRequires: howl-logger
-%endif
-BuildRequires: jboss-j2eemgmt-1.1-api
-BuildRequires: junit
 BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-plugin-bundle
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.jboss.spec.javax.management.j2ee:jboss-j2eemgmt-api_1.1_spec)
+%if 0
+BuildRequires: mvn(org.objectweb.howl:howl)
+%endif
 
 BuildArch:     noarch
 Source44: import.info
@@ -49,36 +46,17 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :taglist-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
 
-%pom_remove_dep org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec
-%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
-<dependency>
-  <groupId>org.jboss.spec.javax.management.j2ee</groupId>
-  <artifactId>jboss-j2eemgmt-api_1.1_spec</artifactId>
-  <version>1.0.1.Final</version>
-</dependency>"
 
-%pom_remove_dep org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec %{name}-core
-%pom_add_dep org.jboss.spec.javax.management.j2ee:jboss-j2eemgmt-api_1.1_spec %{name}-core
+%pom_change_dep -r :geronimo-j2ee-management_1.1_spec org.jboss.spec.javax.management.j2ee:jboss-j2eemgmt-api_1.1_spec:1.0.1.Final
 
 %pom_add_dep junit:junit::test %{name}-core
 
 # TODO remove when howl-logger is available
-%pom_remove_dep howl:howl-logger
-%pom_remove_dep howl:howl-logger %{name}-core/pom.xml
+%pom_remove_dep -r howl:howl-logger
+
 %if 0
-sed -i "s|<howl-version>0.1.8|<howl-version>1.0.2|" pom.xml
-%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" '
-<dependency>
-  <groupId>org.objectweb.howl</groupId>
-  <artifactId>howl</artifactId>
-  <version>${howl-version}</version>
-</dependency>'
-%pom_xpath_inject "pom:project/pom:dependencies" "
-<dependency>
-  <groupId>org.objectweb.howl</groupId>
-  <artifactId>howl</artifactId>
-  <optional>true</optional>
-</dependency>" %{name}-core/pom.xml
+%pom_xpath_set "pom:properties/pom:howl-version" 1.0.2
+%pom_change_dep -r :howl-logger org.objectweb.howl:howl:'${howl-version}'
 %patch0 -p0
 %else
 %pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin  %{name}-core "
@@ -110,9 +88,51 @@ sed -i "s|<howl-version>0.1.8|<howl-version>1.0.2|" pom.xml
 </executions>"
 %endif
 
+%pom_remove_plugin :maven-bundle-plugin
+%pom_add_plugin org.apache.felix:maven-bundle-plugin:2.5.4 %{name}-core '
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <Bundle-Name>${project.artifactId}</Bundle-Name>
+    <Bundle-SymbolicName>${activeio.osgi.symbolic.name}</Bundle-SymbolicName>
+    <Implementation-Title>Apache ActiveIO</Implementation-Title>
+    <Implementation-Version>${project.version}</Implementation-Version>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>'
+
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions/pom:execution" %{name}-core
+%pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:executions" "
+<execution>
+ <id>default-jar</id>
+ <goals>
+  <goal>jar</goal>
+ </goals>
+ <configuration>
+  <archive>
+    <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+  </archive>
+ </configuration>
+</execution>
+<execution>
+ <id>test-jar</id>
+ <goals>
+  <goal>test-jar</goal>
+ </goals>
+</execution>" %{name}-core
+
 sed -i 's/\r//' NOTICE
 
 %mvn_file :%{name}-core activemq/%{name}-core
+%mvn_package :%{name}-core::tests:
 
 %build
 
@@ -121,17 +141,16 @@ sed -i 's/\r//' NOTICE
 %install
 %mvn_install
 
-install -m 644 %{name}-core/target/%{name}-core-%{version}-tests.jar \
-   %{buildroot}%{_javadir}/activemq/%{name}-core-tests.jar
-   
 %files -f .mfiles
-%{_javadir}/activemq/%{name}-core-tests.jar
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_13jpp8
+- bugfix release
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.1.4-alt1_11jpp8
 - java 8 mass update
 
