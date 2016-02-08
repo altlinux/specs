@@ -1,6 +1,6 @@
 Name: openjade
 Version: 1.3.2
-Release: alt12
+Release: alt13
 
 %def_disable static
 %def_enable http
@@ -33,8 +33,9 @@ Patch2: %name-1.3.1-nsl.patch
 Patch3: %name-deplibs.patch
 # from fedora
 Patch4: openjade-1.3.2-gcc46.patch
+Patch5: openjade-getoptperl.patch
 
-BuildRequires: gcc-c++ libOpenSP-devel >= %sp_ver perl-Perl4-CoreLibs chrpath
+BuildRequires: gcc-c++ libOpenSP-devel >= %sp_ver chrpath
 
 %description
 OpenJade is an implementation of the ISO/IEC 10179:1996 standard DSSSL
@@ -51,6 +52,7 @@ XML, RTF, TeX, MIF (FrameMaker), SGML, or XML.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 cp config/configure.in ./
@@ -142,6 +144,9 @@ OJCATALOGS=$(echo %sgmlbase/%name-*/catalog)
 %exclude %_libdir/libostyle.so
 
 %changelog
+* Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt13
+- applied getoptperl.patch
+
 * Mon Jan 16 2012 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt12
 - fixed RPATH
 
