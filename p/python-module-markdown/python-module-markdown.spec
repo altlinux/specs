@@ -1,5 +1,7 @@
+%def_disable check
+
 %define version 2.6.2
-%define release alt1.git20150620
+%define release alt2.git20150620
 %define modulename markdown
 
 %def_with python3
@@ -25,14 +27,12 @@ BuildPreReq: rpm-build-licenses
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-yaml python-modules-logging
 BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-tidylib
 BuildPreReq: python-modules-xml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-yaml
 BuildPreReq: python3-module-nose python3-module-coverage
-BuildPreReq: python3-module-tidylib
 %endif
 
 Conflicts: discount
@@ -106,24 +106,23 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %buildroot%_bindir/%modulename README.md >README.html
 
 %files
-%doc *.html
 %_bindir/*
 %if_with python3
 %exclude %_bindir/%{modulename}_py3
 %endif
 %python_sitelibdir/*
 
-%files docs
-%doc docs/*
 
 %if_with python3
 %files -n python3-module-%modulename
-%doc *.html
 %_bindir/%{modulename}_py3
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 2.6.2-alt2.git20150620
+- Disabled Doc, tests and unnecessary dependents
+
 * Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1.git20150620
 - Version 2.6.2
 
