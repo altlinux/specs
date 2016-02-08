@@ -1,12 +1,11 @@
 Epoch: 0
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+BuildRequires: jdepend
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jboss-reflect
 Version:        2.0.2
-Release:        alt4_5jpp7
+Release:        alt4_9jpp8
 Summary:        JBoss Reflection
 
 Group:          Development/Java
@@ -17,7 +16,6 @@ URL:            http://www.jboss.org
 # svn export http://anonsvn.jboss.org/repos/jbossas/projects/jboss-reflect/tags/2.0.2.GA/ jboss-reflect-2.0.2
 # tar cJf jboss-reflect-2.0.2.tar.xz jboss-reflect-2.0.2
 Source0:        %{name}-%{version}.tar.xz
-Patch0:         %{name}-pom.patch
 
 BuildArch:      noarch
 
@@ -33,12 +31,7 @@ BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
-
-Requires:       javassist
-Requires:       jboss-common-core
-Requires:       jboss-logging
-Requires:       jpackage-utils
+BuildRequires:  maven-surefire-provider-junit
 Source44: import.info
 
 %description
@@ -62,35 +55,27 @@ rm -rf src/test
 find -type f -name *.jar -delete
 find -type f -name *.class -delete
 
-%patch0
+%pom_remove_dep org.jboss.test:jboss-test
+%pom_remove_dep jboss.profiler.jvmti:jboss-profiler-jvmti
+
+%pom_remove_dep org.jboss.logging:jboss-logging-spi
+%pom_add_dep org.jboss.logging:jboss-logging
 
 %build
-mvn-rpmbuild package javadoc:aggregate
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%files -f .mfiles
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-
-%files
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt4_9jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt4_5jpp7
 - new release
 
