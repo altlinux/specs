@@ -3,7 +3,7 @@
 
 Name: hal
 Version: 0.5.15
-Release: alt2
+Release: alt3
 Summary: Hardware Abstraction Layer
 Group: System/Servers
 License: AFL/GPL
@@ -20,7 +20,7 @@ Patch2: hal-0.5.14-alt-v4l.patch
 Patch3: hal-0.5.14-alt-glib2.patch
 Patch4: hal-0.5.15-udev-direct.patch
 Patch5: hal-0.5.15-udevadmin-infoR.patch
-
+Patch6: hal-0.5.15-haldaemon-lsb.patch
 
 AutoReq: yes, noshell
 BuildPreReq: libblkid-devel >= 1.43
@@ -61,6 +61,7 @@ Headers for HAL
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 rm -f gtk-doc.make acinclude.m4
 
@@ -82,6 +83,10 @@ rm -f gtk-doc.make acinclude.m4
 	--with-hwdata=%_datadir/misc \
 	--with-pid-file=%_var/run/hal.pid \
 	--localstatedir=%_var
+
+# for glibc-kernheaders 4.4
+sed "s|^hal-setup-keymap-keys.txt: /usr/include/linux/input.h|hal-setup-keymap-keys.txt: /usr/include/linux/input-event-codes.h|" -i tools/Makefile
+
 %make_build
 
 %install
@@ -89,6 +94,8 @@ rm -f gtk-doc.make acinclude.m4
 
 mkdir -p %buildroot%_var/{run,cache}/hald
 mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
+
+rm -f %buildroot/lib/udev/rules.d/90-hal.rules
 
 %pre
 %_sbindir/groupadd -r -f haldaemon >/dev/null 2>&1 || :
@@ -129,6 +136,10 @@ mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
 %_pkgconfigdir/*
 
 %changelog
+* Mon Feb 08 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.5.15-alt3
+- Fixed build with glibc-kernheaders 4.4
+- Added lsb init header (fixed repocop's error)
+
 * Sat Apr 27 2013 Roman Savochenko <rom_as@altlinux.org> 0.5.15-alt2
 - Restore path for replace "udevadmin info -r" to fixed "/dev"
 
