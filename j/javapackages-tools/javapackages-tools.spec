@@ -26,7 +26,7 @@ BuildRequires: /proc
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt6_12jpp8
+Release:        alt7_12jpp8
 Epoch:		1
 Summary:        Macros and scripts for Java packaging support
 
@@ -65,6 +65,7 @@ Patch33: macros.jpackage-alt-script.patch
 Patch34: macros.fjava-to-alt-rpm404.patch
 Patch35: javapackages-tools-4.6.0-alt-use-enviroment.patch
 Patch36: javapackages-tools-4.6.0-alt-req-headless-off.patch
+Patch37: javapackages-tools-4.6.0-alt-shade-jar.patch
 Source23: maven.prov.files
 Source24: maven.env
 
@@ -212,6 +213,7 @@ sed -i '/fedora-review/d' install
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
+%patch37 -p1
 
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
 
@@ -289,6 +291,9 @@ popd
 %_bindir/xmvn-builddep
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt7_12jpp8
+- fixes in shade-jar (javapackages-tools-4.6.0-alt-shade-jar.patch)
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt6_12jpp8
 - enabled gradle-local
 
