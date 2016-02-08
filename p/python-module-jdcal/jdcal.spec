@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.git20111008
+Release: alt2.git20111008
 Summary: Julian dates from proleptic Gregorian and Julian calendars
 License: BSD
 Group: Development/Python
@@ -15,12 +15,10 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pyslalib
+BuildRequires: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pyslalib
+BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
@@ -74,6 +72,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 1.0-alt2.git20111008
+- Disabled unnecessary dependents
+
 * Wed Feb 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.git20111008
 - Initial build for Sisyphus
 
