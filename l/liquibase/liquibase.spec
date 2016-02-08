@@ -1,31 +1,58 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# Provide an option to build the Maven plugin.  As far as I can tell, RPM versions
+# of Maven plugins are only really useful as BuildRequires for other RPMs and it's
+# unlikely that an RPM would need to run Liquibase during its build process.
+#def_with maven_plugin
+%bcond_with maven_plugin
+
 Name: liquibase
 Summary: Database Refactoring Tool
-Version: 3.0.7
-Release: alt1_4jpp7
+Version: 3.4.1
+Release: alt1_1jpp8
 License: ASL 2.0
 Group: Databases
 
 # Liquibase does not distribute source releases. To generate:
 #   git clone https://github.com/liquibase/liquibase.git
 #   cd liquibase/
-#   git archive --format=tar.gz --prefix=liquibase-3.0.7/ liquibase-parent-3.0.7 liquibase-core/ changelog.txt LICENSE.txt pom.xml > liquibase-3.0.7.tar.gz
+#   git archive --format=tar.gz --prefix=liquibase-3.4.1/ liquibase-parent-3.4.1 > liquibase-3.4.1.tar.gz
 Source0: %{name}-%{version}.tar.gz
-Source1: build.xml
 
-BuildRequires: jpackage-utils
-%if 0%{?rhel} && 0%{?rhel} <= 6
-BuildRequires: servlet25
-%else
-BuildRequires: servlet3
-%endif
-BuildRequires: ant >= 0:1.7.0
+BuildRequires: maven-local
+BuildRequires: maven-local
+BuildRequires: servlet
+BuildRequires: snakeyaml >= 0:1.13
+BuildRequires: mvn(org.springframework:spring-context)
+BuildRequires: mvn(org.springframework:spring-beans)
+BuildRequires: mvn(org.springframework:spring-core)
+BuildRequires: mvn(org.jboss.weld.se:weld-se)
+BuildRequires: mvn(org.apache.commons:commons-cli)
+BuildRequires: mvn(org.apache.velocity:velocity)
+BuildRequires: mvn(org.eclipse.jetty:jetty-servlet)
+BuildRequires: mvn(javax.enterprise:cdi-api)
 
-Requires: jpackage-utils
+Requires: maven-local
+Requires: servlet
+Requires: snakeyaml >= 0:1.13
+Requires: mvn(org.springframework:spring-context)
+Requires: mvn(org.springframework:spring-beans)
+Requires: mvn(org.springframework:spring-core)
+Requires: mvn(org.jboss.weld.se:weld-se)
+Requires: mvn(org.apache.commons:commons-cli)
+Requires: mvn(org.apache.velocity:velocity)
+Requires: mvn(org.eclipse.jetty:jetty-servlet)
+Requires: mvn(javax.enterprise:cdi-api)
 
 BuildArch: noarch
 Url: http://liquibase.org/
@@ -45,55 +72,93 @@ BuildArch: noarch
 %description javadoc
 This package contains %{summary}.
 
+%if %{with maven_plugin}
+%package maven-plugin
+Group: Development/Java
+Summary: Maven plugin for %{name}
+BuildRequires: mvn(org.apache.maven:maven-project)
+BuildRequires: mvn(org.apache.maven:maven-core)
+Requires: %{name} = %{version}
+Requires: maven
+
+%description maven-plugin
+%{summary}.
+%endif
+
 %prep
 %setup -q
-cp -p %SOURCE1 %{name}-core/
 
-# Remove the Spring wrapper; this is not available as a build dependency:
-rm %{name}-core/src/main/java/liquibase/integration/spring/SpringLiquibase.java
-rm %{name}-core/src/main/java/liquibase/integration/spring/MultiTenantSpringLiquibase.java
+%pom_disable_module liquibase-osgi
+%pom_disable_module liquibase-integration-tests
+%pom_disable_module liquibase-debian
+%pom_disable_module liquibase-rpm
 
-# Liquibase requires snakeyaml which is not available in EPEL.
-rm %{name}-core/src/main/java/liquibase/parser/core/yaml/YamlChangeLogParser.java
-rm %{name}-core/src/main/java/liquibase/parser/core/json/JsonChangeLogParser.java
-rm %{name}-core/src/main/java/liquibase/serializer/core/yaml/YamlChangeLogSerializer.java
-rm %{name}-core/src/main/java/liquibase/serializer/core/json/JsonChangeLogSerializer.java
+%if %{without maven_plugin}
+%pom_disable_module liquibase-maven-plugin
+%endif
 
-%{__mkdir} -p %{name}-core/lib
-build-jar-repository -s -p %{name}-core/lib ant servlet
+%pom_remove_dep org.springframework:spring %{name}-core
+%pom_add_dep org.springframework:spring-core %{name}-core
+%pom_add_dep org.springframework:spring-beans %{name}-core
+%pom_add_dep org.springframework:spring-context %{name}-core
+
+# Disable filtering of bundled JS, fonts, etc. which cause
+# maven-filtering to fail with IOException (see MSHARED-325 and
+# BZ 1077375).
+%pom_add_plugin :maven-resources-plugin %{name}-core "
+    <configuration>
+      <nonFilteredFileExtensions>
+        <nonFilteredFileExtension>js</nonFilteredFileExtension>
+        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+        <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+        <nonFilteredFileExtension>xsd</nonFilteredFileExtension>
+        <nonFilteredFileExtension>vm</nonFilteredFileExtension>
+        <nonFilteredFileExtension>sh</nonFilteredFileExtension>
+      </nonFilteredFileExtensions>
+    </configuration>"
+
+# Symlink liquibase/liquibase-core.jar to liquibase.jar
+%mvn_file :%{name}-core %{name}/%{name}-core %{name}
+
+# Remove all test dependencies.  We aren't running tests with this build.
+%pom_xpath_remove "//pom:dependency[pom:scope='test']" %{name}-core
+%pom_remove_plugin org.codehaus.gmaven:gmaven-plugin %{name}-core
+
+%if %{with maven_plugin}
+# Build maven plugin
+%mvn_package ":liquibase-maven-plugin" %{name}-maven-plugin
+%pom_add_dep org.apache.maven:maven-core %{name}-maven-plugin
+%endif
 
 %build
-ant -f %{name}-core/build.xml clean package javadoc
+%mvn_build -f
 
 %install
-%{__mkdir} -p %{buildroot}%{_bindir}
-%{__install} -d -m 755 %{buildroot}%{_javadir}/%{name}
-%{__install} -m 0644 -D -p %{name}-core/dist/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}/%{name}-core.jar
-pushd %{buildroot}%{_javadir}
-ln -sf %{name}/%{name}-core.jar %{name}.jar
-popd
+%mvn_install
 %jpackage_script liquibase.integration.commandline.Main "" "" %{name} %{name} true
-
-# javadoc
-%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp %{name}-core/dist/javadoc %{buildroot}%{_javadocdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
-%files
+%files -f .mfiles
 %doc changelog.txt LICENSE.txt
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-core.jar
-%{_javadir}/%{name}.jar
 %{_bindir}/%{name}
 %config(noreplace,missingok) /etc/java/%{name}.conf
 
-%files javadoc
+%if %{with maven_plugin}
+%files maven-plugin -f .mfiles-%{name}-maven-plugin
+%endif
+
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 3.4.1-alt1_1jpp8
+- new version
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 3.0.7-alt1_4jpp7
 - update
 
