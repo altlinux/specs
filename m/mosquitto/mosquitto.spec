@@ -4,13 +4,13 @@
 
 Name: mosquitto
 Version: 1.4.7
-Release: alt1
+Release: alt2
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
 License: This project is dual licensed under the Eclipse Public License 1.0 and the Eclipse Distribution License 1.0 as described in the epl-v10 and edl-v10 files
 Group: Development/C++
-Url: https://github.com/philsquared/Catch
+Url: http://mosquitto.org
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
@@ -63,7 +63,7 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 
 %pre
 %_sbindir/groupadd -r -f %mosquitto_group 2>/dev/null ||:
-%_sbindir/useradd -M -r -g %mosquitto_group -c 'Mosquitto daemon' -s /dev/null -d %mosquitto_dir %mosquitto_user 2>/dev/null ||:
+%_sbindir/useradd -M -r -g %mosquitto_group -c 'Mosquitto daemon' -s /dev/null -d /dev/null %mosquitto_user 2>/dev/null ||:
 
 %post
 %post_service %name
@@ -91,6 +91,10 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 %_libdir/*.so
 
 %changelog
+* Mon Feb 08 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt2
+- fixed homepage in spec
+- set home to /dev/null for mosquitto user
+
 * Sun Feb 07 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt1
 - fixed header files attributes
 - add service file for init.d
