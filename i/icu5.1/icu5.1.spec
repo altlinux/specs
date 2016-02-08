@@ -1,6 +1,9 @@
-Name: icu
-Version: 5.6.1
-Release: alt1
+%define _name icu
+%define ver_major 5.1
+
+Name: %_name%ver_major
+Version: %ver_major.1
+Release: alt4
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -8,22 +11,39 @@ Group: System/Libraries
 License: X License
 URL: http://www.icu-project.org/
 
-Source: http://download.icu-project.org/files/icu4c/56.1/icu4c-56_1-src.tgz
-# fc
-Patch1: icu.8198.revert.icu5431.patch
-Patch2: icu.8800.freeserif.crash.patch
-Patch3: icu.7601.Indic-ccmp.patch
-Patch4: gennorm2-man.patch
-Patch5: icuinfo-man.patch
-Patch6: armv7hl-disable-tests.patch
+Source: http://download.icu-project.org/files/icu4c/5.1.1/icu4c-50_1_1-src.tgz
+# https://bugs.gentoo.org/show_bug.cgi?id=439892
+Patch: libicu-5.1-up-disable_c++11_test.patch
+Patch1: icu-5.1.1-alt-fix.patch
 
 BuildRequires: doxygen gcc-c++ libstdc++-devel
 
-%define libicu libicu56
+%define libicu libicu50
 
 %description
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support
+
+%package -n %libicu
+Summary: International Components for Unicode (libraries)
+Group: System/Libraries
+Provides: libicu = %epoch:%version-%release
+Obsoletes: libicu < %epoch:%version-%release
+
+%description -n %libicu
+ICU is a C++ and C library that provides robust and full-featured Unicode
+support. This package contains the runtime libraries for ICU
+
+%package -n lib%name-devel
+Summary: International Components for Unicode (development files)
+Group: Development/C++
+Requires: %libicu = %epoch:%version-%release
+#Requires: icu-utils = %epoch:%version-%release
+Conflicts: lib%_name-devel
+
+%description -n lib%name-devel
+ICU is a C++ and C library that provides robust and full-featured Unicode
+support. This package contains the development files for ICU
 
 %package utils
 Summary: International Components for Unicode (utilities)
@@ -37,26 +57,6 @@ ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains the utilites for compiling and developing
 programs with ICU
 
-%package -n %libicu
-Summary: International Components for Unicode (libraries)
-Group: System/Libraries
-Provides: libicu = %epoch:%version-%release
-Obsoletes: libicu < %epoch:%version-%release
-
-%description -n %libicu
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the runtime libraries for ICU
-
-%package -n libicu-devel
-Summary: International Components for Unicode (development files)
-Group: Development/C++
-Requires: %libicu = %epoch:%version-%release
-Requires: icu-utils = %epoch:%version-%release
-
-%description -n libicu-devel
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the development files for ICU
-
 %package samples
 Summary: Sample programs for ICU
 Group: Development/Other
@@ -69,14 +69,8 @@ support. This package contains sample code for ICU
 
 %prep
 %setup -n icu
-%patch1 -p2 -R -b .icu8198.revert.icu5431.patch
-%patch2 -p1 -b .icu8800.freeserif.crash.patch
-%patch3 -p1 -b .icu7601.Indic-ccmp.patch
-%patch4 -p1 -b .gennorm2-man.patch
-%patch5 -p1 -b .icuinfo-man.patch
-%ifarch armv7hl
-%patch6 -p1 -b .armv7hl-disable-tests.patch
-%endif
+%patch -p1
+%patch1 -p2
 
 %build
 cd source
@@ -92,19 +86,11 @@ cd source
 cp -a samples %buildroot%_datadir/icu
 rm -f %buildroot%_bindir/icuinfo
 
-%files utils
-%_bindir/*
-%exclude %_bindir/icu-config
-%_sbindir/*
-%exclude %_man1dir/icu-config.1*
-%_man1dir/*
-%_man8dir/*
 
 %files -n %libicu
-%doc *.html *.css
 %_libdir/*.so.*
 
-%files -n libicu-devel
+%files -n lib%name-devel
 %_includedir/*
 %_bindir/icu-config
 %_libdir/*.so
@@ -114,12 +100,22 @@ rm -f %buildroot%_bindir/icuinfo
 %exclude %_datadir/icu/samples
 %_man1dir/icu-config.1*
 
+%if 0
+%files utils
+%_bindir/*
+%exclude %_bindir/icu-config
+%_sbindir/*
+%exclude %_man1dir/icu-config.1*
+%_man1dir/*
+%_man8dir/*
+
 %files samples
 %_datadir/icu/samples
+%endif
 
 %changelog
-* Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1:5.6.1-alt1
-- 5.6.1 (ALT #30950)
+* Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1:5.1.1-alt4
+- compat library
 
 * Mon May 13 2013 Dmitry V. Levin <ldv@altlinux.org> 1:5.1.1-alt3
 - Renamed libicu to libicu50 (closes: #28941).
