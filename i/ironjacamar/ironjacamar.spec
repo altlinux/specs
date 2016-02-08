@@ -1,78 +1,65 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name ironjacamar
-%define version 1.0.9
+%define version 1.1.10
 %global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
 Name:             ironjacamar
-Version:          1.0.9
-Release:          alt3_6jpp7
-Summary:          Java Connector Architecture 1.6 implementation
-Group:            Development/Java
+Version:          1.1.10
+Release:          alt1_1jpp8
+Summary:          Java Connector Architecture 1.7 implementation
 License:          LGPLv2+
-URL:              http://www.jboss.org/ironjacamar
+URL:              http://www.ironjacamar.org/
 
-# svn export http://anonsvn.jboss.org/repos/jbossas/projects/jboss-jca/tags/IRONJACAMAR_1_0_9_FINAL ironjacamar-1.0.9.Final
-# find ironjacamar-1.0.9.Final -name '*.jar' -type f -delete
-# rm -f ironjacamar-1.0.9.Final/common/src/main/resources/dtd/connector_1_0.dtd
-# tar cafJ ironjacamar-1.0.9.Final-CLEAN.tar.xz ironjacamar-1.0.9.Final
-# List of removed files: https://gist.github.com/2222757/77dda615e1b652afd16b470505e247d7faf1fc56
-Source0:          %{name}-%{namedversion}-CLEAN.tar.xz
+Source0:          https://github.com/ironjacamar/ironjacamar/archive/ironjacamar-%{version}.Final.tar.gz
 
 # Remote POM's...
-# You can use below script:
-#
-# modules="deployers-common common-impl-papaki validator-cli common-impl validator core-impl jdbc common-spi validator-maven core-api validator-ant common-api spec-api"
-# version="1.0.9"
-#
-# for m in $modules; do
-#   curl https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-${m}/${version}.Final/ironjacamar-${m}-${version}.Final.pom -o ironjacamar-${m}-${version}.Final.pom
-# done
-#
-Source1:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-deployers-common-%{version}.Final.pom
-Source2:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-common-impl-papaki-%{version}.Final.pom
-Source3:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-validator-cli-%{version}.Final.pom
-Source4:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-common-impl-%{version}.Final.pom
-Source5:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-validator-%{version}.Final.pom
-Source6:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-core-impl-%{version}.Final.pom
-Source7:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-jdbc-%{version}.Final.pom
-Source8:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-common-spi-%{version}.Final.pom
-Source9:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-validator-maven-%{version}.Final.pom
-Source10:         https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-core-api-%{version}.Final.pom
-Source11:         https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-validator-ant-%{version}.Final.pom
-Source12:         https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-common-api-%{version}.Final.pom
-Source13:         https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ironjacamar/ironjacamar-deployers-common/1.0.9.Final/ironjacamar-spec-api-%{version}.Final.pom
-
-# Commented out retrieving jars from Internet and limiting the jars to build
-Patch0:           %{name}-%{namedversion}-ivy.patch
+# Use spectool -g to get them
+Source1:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-deployers-common/%{namedversion}/ironjacamar-deployers-common-%{namedversion}.pom
+Source2:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-validator-cli/%{namedversion}/ironjacamar-validator-cli-%{namedversion}.pom
+Source3:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-common-impl/%{namedversion}/ironjacamar-common-impl-%{namedversion}.pom
+Source4:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-validator/%{namedversion}/ironjacamar-validator-%{namedversion}.pom
+Source5:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-core-impl/%{namedversion}/ironjacamar-core-impl-%{namedversion}.pom
+Source6:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-jdbc/%{namedversion}/ironjacamar-jdbc-%{namedversion}.pom
+Source7:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-common-spi/%{namedversion}/ironjacamar-common-spi-%{namedversion}.pom
+Source8:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-validator-maven/%{namedversion}/ironjacamar-validator-maven-%{namedversion}.pom
+Source9:          https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-core-api/%{namedversion}/ironjacamar-core-api-%{namedversion}.pom
+Source10:         https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-validator-ant/%{namedversion}/ironjacamar-validator-ant-%{namedversion}.pom
+Source11:         https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-common-api/%{namedversion}/ironjacamar-common-api-%{namedversion}.pom
+Source12:         https://repository.jboss.org/nexus/service/local/repositories/central/content/org/jboss/ironjacamar/ironjacamar-spec-api/%{namedversion}/ironjacamar-spec-api-%{namedversion}.pom
 
 # Commented out trying to download Ivy from the Internet
-Patch1:           %{name}-%{namedversion}-build.patch
-
-# Commented out Class-Path directive in the Manifest of ironjacamar-validator.jar
-Patch2:           %{name}-%{namedversion}-validator.patch
+Patch0:            0001-Use-Fedora-provided-IVY.patch
+Patch1:            0002-Adjust-IVY-paths.patch
 
 BuildArch:        noarch
 
 BuildRequires:    ant
 BuildRequires:    apache-ivy
 BuildRequires:    apiviz
-BuildRequires:    geronimo-validation
+BuildRequires:    bean-validation-api
 BuildRequires:    javamail
 BuildRequires:    javassist
 BuildRequires:    jboss-connector-1.6-api
-BuildRequires:    jboss-jaspi-1.0-api >= 1.0.0-3
+BuildRequires:    jboss-jaspi-1.0-api >= 1.0.1
 BuildRequires:    jboss-logging
-BuildRequires:    jboss-threads >= 2.0.0-4
-BuildRequires:    jboss-transaction-1.1-api
-BuildRequires:    jboss-transaction-spi
+BuildRequires:    jboss-logging-tools
+BuildRequires:    jboss-logmanager
+BuildRequires:    jboss-logmanager-log4j
+BuildRequires:    jboss-threads >= 2.0.0
+BuildRequires:    jboss-transaction-1.2-api
+BuildRequires:    jboss-transaction-spi >= 7.1.0
 BuildRequires:    jdepend
 BuildRequires:    jpackage-utils
+BuildRequires:    log4j-jboss-logmanager
 BuildRequires:    maven-local
 BuildRequires:    picketbox
 
@@ -83,14 +70,15 @@ Requires:         jboss-connector-1.6-api
 Requires:         jboss-jaspi-1.0-api
 Requires:         jboss-logging
 Requires:         jboss-threads
-Requires:         jboss-transaction-1.1-api
+Requires:         jboss-transaction-1.2-api
 Requires:         jboss-transaction-spi
+Requires:         log4j-jboss-logmanager
 Requires:         jpackage-utils
 Requires:         picketbox
 Source44: import.info
 
 %description
-The IronJacamar project implements the Java Connector Architecture 1.6
+The IronJacamar project implements the Java Connector Architecture 1.7
 specification.
 
 The Java Connector Architecture (JCA) defines a standard architecture for
@@ -108,16 +96,14 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-
+%setup -q -n %{name}-%{name}-%{namedversion}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 # Yes, a bit ugly because we copy also the source code
-cp %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} %{SOURCE7} %{SOURCE8} %{SOURCE9} %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} .
+cp %{SOURCE0} %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} %{SOURCE7} %{SOURCE8} %{SOURCE9} %{SOURCE10} %{SOURCE11} %{SOURCE12} .
 # Let's remove it
-rm -rf %{name}-%{namedversion}-CLEAN.tar.xz
+rm $(basename %{SOURCE0})
 
 # Fixing JDK7 ASCII issues
 files='
@@ -132,13 +118,17 @@ done
 # Rename the license file
 cp -r doc/licenses/lgpl-2.1.txt LICENSE.txt
 
+mkdir lib
+
+sed -i '/IronJacamar requires JDK7/d' build.xml
+
 %build
-ant -Dbrew nexus clean docs
+ant -Das jars-base clean docs
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadir}/%{name} \
+         $RPM_BUILD_ROOT%{_mavenpomdir} \
+         $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # common-impl-papaki validator-cli validator-maven validator-ant - not built in when nexus/brew target is selected
 # deployers-fungal - no fungal package avaialble
@@ -154,17 +144,19 @@ done
 # APIDOCS
 cp -rp target/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-%doc README.txt LICENSE.txt
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc README.md
+%doc LICENSE.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt1_1jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt3_6jpp7
 - new release
 
