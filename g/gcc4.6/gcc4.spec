@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.6.3
-Release: alt10
+Release: alt11
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -56,7 +56,7 @@ Url: http://gcc.gnu.org/
 %define gxx64idir %_includedir/c++/%version/%_target_platform
 %endif
 
-%set_compress_method bzip2
+%set_compress_method xz
 # due to libmudflap and libmudflapth
 %set_verify_elf_method unresolved=relaxed
 # due to libtool.m4-gcj.patch
@@ -189,6 +189,7 @@ Patch715: gcc44-alt-arm-pr41684-workaround.patch
 Patch716: gcc46-alt-no-copy-dt-needed-entries.patch
 Patch717: gcc45-alt-autoconf-ver.patch
 Patch718: gcc46-alt-armhf.patch
+Patch719: gcc44-fix-build-with-makeinfo5.patch
 
 Patch800: libtool.m4-gcj.patch
 
@@ -954,6 +955,7 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 #patch716 -p2
 %patch717 -p2
 %patch718 -p1
+%patch719 -p1
 
 # This testcase does not compile.
 rm libjava/testsuite/libjava.lang/PR35020*
@@ -1418,7 +1420,7 @@ EOF
 %if_with cxx
 # no valid g++ manpage exists in 4.1+ series.
 rm %buildroot%_man1dir/g++%psuffix.1
-ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
+ln -s gcc%psuffix.1.xz %buildroot%_man1dir/g++%psuffix.1.xz
 
 %ifndef _cross_platform
 mkdir -p %buildroot%gcc_gdb_auto_load
@@ -1440,27 +1442,27 @@ popd
 install -d %buildroot%_altdir
 cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-cpp	%_bindir/%gcc_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%gcc_target_platform-cpp%psuffix
+%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%gcc_target_platform-cpp%psuffix
 EOF
 
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%gcc_target_platform-gcc	%_bindir/%gcc_target_platform-gcc%psuffix	%priority
 %_bindir/%gcc_target_platform-gcov	%_bindir/%gcc_target_platform-gcov%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
-%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcc.1.xz	%_man1dir/gcc%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%gcc_target_platform-gcc%psuffix
 EOF
 
 %if_with cxx
 cat >%buildroot%_altdir/c++%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-g++	%_bindir/%gcc_target_platform-g++%psuffix	%priority
-%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%gcc_target_platform-g++%psuffix
+%_man1dir/g++.1.xz	%_man1dir/g++%psuffix.1.xz	%_bindir/%gcc_target_platform-g++%psuffix
 EOF
 %endif #with_cxx
 
 %if_with fortran
 cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-gfortran	%_bindir/%gcc_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.bz2	%_man1dir/gfortran%psuffix.1.bz2	%_bindir/%gcc_target_platform-gfortran%psuffix
+%_man1dir/gfortran.1.xz	%_man1dir/gfortran%psuffix.1.xz	%_bindir/%gcc_target_platform-gfortran%psuffix
 EOF
 %endif #with_fortran
 
@@ -1471,7 +1473,7 @@ $(for i in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gor
 	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 $(for i in gcj gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert; do
-	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcj%psuffix"
+	echo "%_man1dir/$i.1.xz	%_man1dir/$i%psuffix.1.xz	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 EOF
 %endif #with_java
@@ -1479,7 +1481,7 @@ EOF
 %if_with go
 cat >%buildroot%_altdir/gccgo%gcc_branch <<EOF
 %_bindir/%gcc_target_platform-gccgo	%_bindir/%gcc_target_platform-gccgo%psuffix	%priority
-%_man1dir/gccgo.1.bz2	%_man1dir/gccgo%psuffix.1.bz2	%_bindir/%gcc_target_platform-gccgo%psuffix
+%_man1dir/gccgo.1.xz	%_man1dir/gccgo%psuffix.1.xz	%_bindir/%gcc_target_platform-gccgo%psuffix
 EOF
 %endif #with_go
 
@@ -1924,6 +1926,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Feb 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.6.3-alt11
+- Fixed build with makeinfo >= 5.
+- Changed compress_method to xz.
+
 * Tue Jan 07 2014 Dmitry V. Levin <ldv@altlinux.org> 4.6.3-alt10
 - Fixed build with GNU Autoconf >= 2.69.
 - Changed build to use GNU Automake 1.11.
