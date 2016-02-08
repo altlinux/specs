@@ -1,44 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: perl(DBD/ODBC.pm) perl(DBI.pm) unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%global cvs_version 1_8_1_3
+BuildRequires: jpackage-generic-compat
+%global pomversion 2.3.0
 
 Name:           hsqldb
-Version:        1.8.1.3
-Release:        alt3_10jpp7
+Version:        2.3.3
+Release:        alt1_1jpp8
 Epoch:          1
 Summary:        HyperSQL Database Engine
 License:        BSD
@@ -47,12 +18,12 @@ Group:          Databases
 
 BuildArch:      noarch
 
-Source0:        http://downloads.sourceforge.net/hsqldb/%{name}_%{cvs_version}.zip
+Source0:        http://downloads.sourceforge.net/hsqldb/%{name}-%{version}.zip
 Source1:        %{name}-1.8.0-standard.cfg
 Source2:        %{name}-1.8.0-standard-server.properties
 Source3:        %{name}-1.8.0-standard-webserver.properties
 Source4:        %{name}-1.8.0-standard-sqltool.rc
-Source5:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/1.8.0.10/%{name}-1.8.0.10.pom
+Source5:        http://www.hsqldb.org/repos/org/hsqldb/hsqldb/%{pomversion}/hsqldb-%{pomversion}.pom
 # Custom systemd files - talking with upstream about incorporating them, see
 # http://sourceforge.net/projects/hsqldb/forums/forum/73673/topic/5367103
 Source6:        %{name}.systemd
@@ -60,20 +31,20 @@ Source7:        %{name}-wrapper
 Source8:        %{name}-post
 Source9:        %{name}-stop
 
-Patch0:         %{name}-1.8.0-scripts.patch
-Patch1:         hsqldb-tmp.patch
-Patch2:         %{name}-1.8.0-specify-su-shell.patch
-Patch3:         %{name}-jdbc-4.1.patch
+# Javadoc fails to create since apidocs folder is deleted and not recreated
+Patch0:         %{name}-apidocs.patch
+# Package org.hsqldb.cmdline was only compiled with java 1.5
+Patch1:         %{name}-cmdline.patch
 
 BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  javapackages-local
 BuildRequires:  junit
-BuildRequires:  tomcat-servlet-3.0-api
+BuildRequires:  glassfish-servlet-api
 
-Requires:       tomcat-servlet-3.0-api
+Requires:       %{name}-lib = %{epoch}:%{version}
 Requires(pre):  shadow-utils
 Source44: import.info
-Patch33: hsqldb-1.8.0.7-alt-init.patch
+Source45: hsqldb.init
 
 
 %description
@@ -92,6 +63,13 @@ It is best known for its small size, ability to execute completely in
 memory and its speed. Yet it is a completely functional relational
 database management system that is completely free under the Modified
 BSD License. Yes, that's right, completely free of cost or restrictions!
+
+%package lib
+Summary:    HyperSQL Database Engine library
+Group:      Development/Java
+
+%description lib
+Library part of %{name}.
 
 %package manual
 Summary:    Manual for %{name}
@@ -113,16 +91,13 @@ Javadoc for %{name}.
 %package demo
 Summary:    Demo for %{name}
 Group:      Development/Java
-Requires:   %{name} = %{epoch}:%{version}-%{release}
+Requires:   %{name} = %{epoch}:%{version}
 
 %description demo
 Demonstrations and samples for %{name}.
 
 %prep
-%setup -T -c -n %{name}
-(cd ..
-unzip -q %{SOURCE0} 
-)
+%setup -q -n %{name}-%{version}/%{name}
 # set right permissions
 find . -name "*.sh" -exec chmod 755 \{\} \;
 # remove all _notes directories
@@ -134,20 +109,20 @@ find . -name "*.war" -exec rm -f {} \;
 # correct silly permissions
 chmod -R go=u-w *
 
-%patch0
-%patch1 -p1
-%patch2
-%patch3 -p1
+# Fix doc location
+sed -i -e 's/doc-src/doc/g' build/build.xml
+sed -i -e 's|doc/apidocs|%{_javadocdir}/%{name}|g' index.html
 
-cp %{SOURCE5} ./pom.xml
-%patch33 -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 export CLASSPATH=$(build-classpath \
 servlet \
 junit)
 pushd build
-ant jar javadoc
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+ant hsqldb javadoc
 popd
 
 %install
@@ -156,11 +131,10 @@ install -d -m 755 %{buildroot}%{_javadir}
 install -m 644 lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 # bin
 install -d -m 755 %{buildroot}%{_bindir}
-install -m 755 bin/runUtil.sh %{buildroot}%{_bindir}/%{name}RunUtil
 # systemd
 install -d -m 755 %{buildroot}%{_unitdir}
 install -d -m 755 %{buildroot}%{_prefix}/lib/%{name}
-install -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}.service
+install -m 644 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}.service
 install -m 755 %{SOURCE7} %{buildroot}%{_prefix}/lib/%{name}/%{name}-wrapper
 install -m 755 %{SOURCE8} %{buildroot}%{_prefix}/lib/%{name}/%{name}-post
 install -m 755 %{SOURCE9} %{buildroot}%{_prefix}/lib/%{name}/%{name}-stop
@@ -174,24 +148,17 @@ install -m 644 %{SOURCE3} %{buildroot}%{_var}/lib/%{name}/webserver.properties
 install -m 600 %{SOURCE4} %{buildroot}%{_var}/lib/%{name}/sqltool.rc
 # lib
 install -d -m 755 %{buildroot}%{_var}/lib/%{name}/lib
-install -m 644 lib/functions %{buildroot}%{_var}/lib/%{name}/lib
+# javadoc
+install -d -m 755 %{buildroot}%{_javadocdir}
+mv doc/apidocs %{buildroot}%{_javadocdir}/%{name}
 # data
 install -d -m 755 %{buildroot}%{_var}/lib/%{name}/data
-# demo
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/demo
-install -m 755 demo/*.sh %{buildroot}%{_datadir}/%{name}/demo
-install -m 644 demo/*.html %{buildroot}%{_datadir}/%{name}/demo
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -r doc/src/* %{buildroot}%{_javadocdir}/%{name}
-rm -rf doc/src
 # manual
-install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}
-cp -r doc/* %{buildroot}%{_docdir}/%{name}-%{version}
-cp index.html %{buildroot}%{_docdir}/%{name}-%{version}
+install -d -m 755 %{buildroot}%{_docdir}/%{name}
+cp -r doc index.html %{buildroot}%{_docdir}/%{name}
 
 # Maven metadata
-install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+install -pD -T -m 644 %{SOURCE5} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap
 
 pushd %{buildroot}%{_var}/lib/%{name}/lib
@@ -202,7 +169,9 @@ pushd %{buildroot}%{_var}/lib/%{name}/lib
 popd
 # sysv init
 install -d -m 755 $RPM_BUILD_ROOT%{_initrddir}
-install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
+#install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
+install -m 755 %{SOURCE45} $RPM_BUILD_ROOT%{_initrddir}/%{name}
+
 
 %preun
 %preun_service hsqldb
@@ -216,9 +185,6 @@ install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %post_service hsqldb
 
 %files
-%doc doc/hsqldb_lic.txt
-%{_javadir}/*
-%attr(0755,root,root) %{_bindir}/*
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %{_unitdir}/%{name}.service
 %{_prefix}/lib/%{name}/%{name}-wrapper
@@ -230,22 +196,22 @@ install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 %{_var}/lib/%{name}/webserver.properties
 %attr(0600,hsqldb,hsqldb) %{_var}/lib/%{name}/sqltool.rc
 %dir %{_var}/lib/%{name}
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*
 %{_initrddir}/%{name}
 
+%files lib -f .mfiles
+
 %files manual
-%doc %{_docdir}/%{name}-%{version}
-%doc doc/hsqldb_lic.txt
+%doc %{_docdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}
-%doc doc/hsqldb_lic.txt
+%doc %{_javadocdir}/%{name}
 
 %files demo
-%{_datadir}/%{name}
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.3.3-alt1_1jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1.3-alt3_10jpp7
 - new release
 
