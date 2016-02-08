@@ -4,17 +4,14 @@ Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jettison
-Version:        1.3.4
-Release:        alt1_5jpp8
+Version:        1.3.7
+Release:        alt1_2jpp8
 Summary:        A JSON StAX implementation
 License:        ASL 2.0
 URL:            http://jettison.codehaus.org/
 BuildArch:      noarch
 
-# svn export http://svn.codehaus.org/jettison/tags/jettison-%{version} jettison-%{version}
-# rm -rf jettison-%{version}/trunk
-# tar cvJf jettison-%{version}.tar.xz jettison-%{version}
-Source0:        %{name}-%{version}.tar.xz
+Source0:        https://github.com/codehaus/jettison/archive/%{name}-%{version}.tar.gz
 
 # Change the POM to use the version of woodstox that we have available:
 Patch0: %{name}-update-woodstox-version.patch
@@ -43,10 +40,13 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{name}-%{version}
 %patch0 -p1
 # We don't need wagon-webdav
 %pom_xpath_remove pom:build/pom:extensions
+
+# Confuses maven-bundle-plugin
+%pom_xpath_remove pom:Private-Package
 
 %build
 # Disable the tests until BZ#796739 is fixed:
@@ -62,6 +62,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/META-INF/LICENSE
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.7-alt1_2jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.4-alt1_5jpp8
 - new version
 
