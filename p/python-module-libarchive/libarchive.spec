@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.2.1
-Release: alt2
+Release: alt3
 Summary: A libarchive wrapper for Python
 License: BSD
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 3.1.2.1-alt3
+- Fixed _libarchive.i
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2.1-alt2
 - Fixed build
 
