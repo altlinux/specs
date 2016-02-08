@@ -1,24 +1,47 @@
-Name: velocity
-Version: 1.7
-Summary: Java-based template engine
-License: ASL 2.0
-Url: http://velocity.apache.org/
-Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.apache.velocity:velocity) = 1.7
-Provides: mvn(org.apache.velocity:velocity:pom:) = 1.7
-Provides: mvn(velocity:velocity) = 1.7
-Provides: mvn(velocity:velocity:pom:) = 1.7
-Provides: velocity = 0:1.7-18.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-collections:commons-collections)
-Requires: mvn(commons-lang:commons-lang)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt2jpp
-Source: velocity-1.7-18.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           velocity
+Version:        1.7
+Release:        alt3_18jpp8
+Epoch:          1
+Summary:        Java-based template engine
+License:        ASL 2.0
+URL:            http://velocity.apache.org/
+BuildArch:      noarch
+
+Source0:        http://www.apache.org/dist/%{name}/engine/%{version}/%{name}-%{version}.tar.gz
+Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+
+Patch0:         0001-Remove-avalon-logkit.patch
+Patch1:         0004-Use-log4j-1.2.17.patch
+Patch2:         0003-Use-system-jars.patch
+Patch3:         0004-JDBC-41-compat.patch
+Patch4:         0001-Don-t-use-Werken-XPath.patch
+Patch5:         0006-Skip-Java-8-incompatible-test.patch
+Patch6:         velocity-1.7-doclint.patch
+Patch7:         velocity-1.7-osgi.patch
+
+BuildRequires:  javapackages-local
+BuildRequires:  ant
+BuildRequires:  antlr
+BuildRequires:  junit
+BuildRequires:  ant-junit
+BuildRequires:  hsqldb-lib
+BuildRequires:  apache-commons-collections
+BuildRequires:  apache-commons-logging
+BuildRequires:  apache-commons-lang
+BuildRequires:  servlet3
+BuildRequires:  jakarta-oro
+BuildRequires:  jaxen
+BuildRequires:  jdom
+BuildRequires:  bcel
+BuildRequires:  log4j12
+BuildRequires:  apache-parent
+
+# It fails one of the arithmetic test cases with gcj
+Source44: import.info
 
 %description
 Velocity is a Java-based template engine. It permits anyone to use the
@@ -41,24 +64,138 @@ template services for the Turbine web application framework.
 Velocity+Turbine provides a template service that will allow web
 applications to be developed according to a true MVC model.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package        manual
+Group: Development/Java
+Summary:        Manual for %{name}
+BuildArch: noarch
+
+%description    manual
+Documentation for %{name}.
+
+%package        javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description    javadoc
+Javadoc for %{name}.
+
+%package        demo
+Group: Development/Java
+Summary:        Demo for %{name}
+Requires:       %{name} = %{epoch}:%{version}
+
+%description    demo
+Demonstrations and samples for %{name}.
+
+# -----------------------------------------------------------------------------
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+# remove bundled libs/classes (except those used for testing)
+find . -name '*.jar' ! -name 'test*.jar' -print -delete
+find . -name '*.class' ! -name 'Foo.class' -print -delete
+
+# Remove dependency on avalon-logkit
+rm -f src/java/org/apache/velocity/runtime/log/AvalonLogChute.java
+rm -f src/java/org/apache/velocity/runtime/log/AvalonLogSystem.java
+rm -f src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
+
+# need porting to new servlet API. We would just add a lot of empty functions
+rm  src/test/org/apache/velocity/test/VelocityServletTestCase.java
+
+# This test doesn't work with new hsqldb
+rm src/test/org/apache/velocity/test/sql/DataSourceResourceLoaderTestCase.java
+
+cp %{SOURCE1} ./pom.xml
+
+# remove rest of avalon logkit refences
+%patch0 -p1
+
+# Use log4j 1.2.17
+%patch1 -p1
+
+# Use system jar files instead of downloading from net
+%patch2 -p1
+
+%patch3 -p1
+
+# Use jdom instead of werken-xpath
+%patch4 -p1
+%pom_remove_dep werken-xpath:
+
+# Skip Java 8 incompatible test
+%patch5 -p1
+
+# Disable Java8 doclint
+%patch6 -p1
+
+# Remove werken-xpath Import/Export refences in OSGi manifest file
+%patch7 -p1
+
+# -----------------------------------------------------------------------------
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+export CLASSPATH=$(build-classpath \
+antlr \
+apache-commons-collections \
+commons-lang \
+commons-logging \
+tomcat-servlet-api \
+junit \
+jakarta-oro \
+log4j:log4j:1.2.17 \
+jaxen \
+jdom \
+bcel \
+hsqldb \
+junit)
+ant \
+  -buildfile build/build.xml \
+  -Dbuild.sysclasspath=first \
+  -Djavac.target=1.6 \
+  -Djavac.source=1.6 \
+  jar javadocs test
+
+# fix line-endings in generated files
+sed -i 's/\r//' docs/api/stylesheet.css docs/api/package-list
+
+# -----------------------------------------------------------------------------
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_file : %{name}
+%mvn_alias : %{name}:%{name}
+%mvn_artifact pom.xml bin/%{name}-%{version}.jar
+%mvn_install -J docs/api
+
+# zero-length file
+rm -r test/issues/velocity-537/compare/velocity537.vm.cmp
+# data
+install -d -m 755 %{buildroot}%{_datadir}/%{name}
+cp -pr examples test %{buildroot}%{_datadir}/%{name}
 
 
-%files -f %name-list
+%files -f .mfiles
+%doc README.txt
+%doc LICENSE NOTICE
+
+%files manual
+%doc LICENSE NOTICE
+%doc docs/*
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
+
+%files demo
+%doc LICENSE NOTICE
+%{_datadir}/%{name}
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt3_18jpp8
+- unbootstrap build
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt2jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
