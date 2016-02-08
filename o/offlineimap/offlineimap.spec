@@ -1,18 +1,18 @@
 Name: offlineimap
-Version: 6.5.6.1
-Release: alt1.git20140708
+Version: 6.6.1
+Release: alt1
 Summary: Powerful IMAP/Maildir synchronization and reader support
 
 License: GPLv2+
 Group: Networking/Mail
 Url: http://offlineimap.org/
 # https://github.com/OfflineIMAP/offlineimap.git
-Source0: %{name}_%version.tar.gz
+Source0: %{name}_%version.tar
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun May 11 2008
-BuildRequires: docbook-utils python-devel
+BuildRequires: docbook-utils python-devel asciidoc-a2x
 BuildPreReq: python-module-sphinx-devel
 
 %description
@@ -39,10 +39,9 @@ ln -s ../objects.inv docs/doc-src/
 %install
 %python_install --prefix=%prefix
 
-%make -C docs man
+%make -C docs man api
 mkdir -p %buildroot/%_man1dir
 install -p docs/%name.1 %buildroot/%_man1dir/
-%make doc
 
 %files
 %_bindir/%name
@@ -50,9 +49,12 @@ install -p docs/%name.1 %buildroot/%_man1dir/
 %python_sitelibdir/%name-%version-py*.egg-info
 %_man1dir/%name.1.*
 
-%doc Changelog.* COPYING MAINTAINERS %name.conf* *.md docs/html
+%doc COPYING %name.conf* *.md docs/html
 
 %changelog
+* Thu Feb 04 2016 Lenar Shakirov <snejok@altlinux.ru> 6.6.1-alt1
+- Version 6.6.1
+
 * Wed Sep 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.6.1-alt1.git20140708
 - Version 6.5.6.1
 
