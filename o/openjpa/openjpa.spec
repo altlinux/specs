@@ -1,109 +1,90 @@
 Epoch: 0
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # set to 0 provides a minimal test suite
 %global with_tests 0
 
 Name:          openjpa
-Version:       2.2.1
-Release:       alt1_4jpp7
+Version:       2.4.0
+Release:       alt1_1jpp8
 Summary:       Java Persistence 2.0 API
-Group:         Development/Java
-# # For a breakdown of the licensing, see NOTICE file
+# For a breakdown of the licensing, see NOTICE file
 License:       ASL 2.0 and CDDL
 Url:           http://openjpa.apache.org/
-Source0:       ftp://ftp.gbnet.net/pub/apache/dist/%{name}/%{version}/apache-%{name}-%{version}-source.zip
-# force tomcat 7.x apis
-Source1:       %{name}-2.2.0-depmap
+Source0:       http://www.apache.org/dist/openjpa/%{version}/%{name}-parent-%{version}-source-release.zip
 # fix test failure
 Patch0:        %{name}-2.2.0-persistence-jdbc-DynamicEnhancementSuite.patch
-# remove testing profiles for unavailable drivers: db2jcc informix-driver jcc-driver jdbc-driver jdbc-oracle jtds sqljdbc
-Patch1:        %{name}-2.2.0-remove-test-profiles.patch
+# Thanks to Robert Rati
+Patch1:        %{name}-2.3.0-remove-WASRegistryManagedRuntime.patch
+# No idea why this is needed, but compiler complains loudly without it:
+# [ERROR] .../AnnotationPersistenceXMLMetaDataParser.java:[164,64] cannot find symbol
+# [ERROR] symbol:   method booleanValue()
+# [ERROR] location: class java.lang.Object
+Patch2:        openjpa-2.4.0-java8.patch
 
-BuildRequires: jpackage-utils
-
-BuildRequires: apache-rat-plugin
-BuildRequires: buildnumber-maven-plugin
-BuildRequires: javacc-maven-plugin
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-invoker-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-
-# maven-antrun-plugin deps
-BuildRequires: ant-contrib
-BuildRequires: ant-jsch
-
-BuildRequires: ant
-BuildRequires: apache-commons-collections
-BuildRequires: apache-commons-dbcp
-BuildRequires: apache-commons-lang
-BuildRequires: apache-commons-logging
-BuildRequires: apache-commons-pool
-BuildRequires: bval
-BuildRequires: felix-osgi-core
-BuildRequires: geronimo-jms
-BuildRequires: geronimo-jta
-BuildRequires: geronimo-validation
-BuildRequires: glassfish-jaxb
-BuildRequires: glassfish-jaxb-api
-BuildRequires: hibernate-jpa-2.0-api
-BuildRequires: hsqldb
-BuildRequires: log4j
 BuildRequires: maven-local
-BuildRequires: objectweb-asm
-BuildRequires: plexus-utils
-BuildRequires: postgresql-jdbc
-BuildRequires: serp
-BuildRequires: slf4j
-BuildRequires: tomcat-servlet-3.0-api
+BuildRequires: mvn(ant-contrib:ant-contrib)
+BuildRequires: mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires: mvn(commons-collections:commons-collections)
+BuildRequires: mvn(commons-dbcp:commons-dbcp)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(commons-pool:commons-pool)
+BuildRequires: mvn(hsqldb:hsqldb:1)
+BuildRequires: mvn(httpunit:httpunit)
+BuildRequires: mvn(jakarta-regexp:jakarta-regexp)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(javax.xml.bind:jaxb-api)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(mysql:mysql-connector-java)
+BuildRequires: mvn(net.sourceforge.serp:serp)
+BuildRequires: mvn(org.apache:apache:pom:)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.ant:ant-jsch)
+BuildRequires: mvn(org.apache.bval:bval-core)
+BuildRequires: mvn(org.apache.bval:bval-jsr303)
+BuildRequires: mvn(org.apache.commons:commons-jci-rhino)
+BuildRequires: mvn(org.apache.derby:derby)
+BuildRequires: mvn(org.apache.derby:derbyclient)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jta_1.1_spec)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-validation_1.0_spec)
+BuildRequires: mvn(org.apache.geronimo.specs:specs:pom:)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven:maven-project)
+BuildRequires: mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires: mvn(org.apache.xbean:xbean-finder)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
+BuildRequires: mvn(org.jmock:jmock)
+BuildRequires: mvn(org.jmock:jmock-junit3)
+BuildRequires: mvn(org.osgi:org.osgi.core)
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(postgresql:postgresql)
+BuildRequires: mvn(simple-jndi:simple-jndi)
 
-# test deps
-BuildRequires: apache-commons-jci-rhino
-BuildRequires: derby
-BuildRequires: httpunit
-BuildRequires: jmock
-#BuildRequires: jtds
-BuildRequires: junit
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: mysql-connector-java
-BuildRequires: regexp
-BuildRequires: simple-jndi
+# Test deps
+%if 0
+# https://gil.fedorapeople.org/mariadb-java-client-1.1.8-1.fc20.src.rpm
+BuildRequires: mvn(mariadb:mariadb-connector-java)
+%endif
 
-Requires:      ant
-Requires:      apache-commons-collections
-Requires:      apache-commons-dbcp
-Requires:      apache-commons-lang
-Requires:      apache-commons-logging
-Requires:      apache-commons-pool
-Requires:      felix-osgi-core
-Requires:      geronimo-jms
-Requires:      geronimo-jta
-Requires:      geronimo-validation
-Requires:      glassfish-jaxb
-Requires:      glassfish-jaxb-api
-Requires:      hibernate-jpa-2.0-api
-Requires:      hsqldb
-Requires:      log4j
-Requires:      objectweb-asm
-Requires:      postgresql-jdbc
-Requires:      serp
-Requires:      slf4j
-# servlet-api 2.4
-Requires:      tomcat-servlet-3.0-api
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -116,42 +97,68 @@ It is an object-relational mapping (ORM) solution for the Java language,
 which simplifies storing objects in databases.
 
 %package tools
-Group:         Development/Java
+Group: Development/Java
 Summary:       OpenJPA tools - Maven Plugin
-Requires:      maven
-Requires:      bval
-Requires:      geronimo-validation
-Requires:      hibernate-jpa-2.0-api
-Requires:      log4j
-Requires:      plexus-utils
-Requires:      jpackage-utils
-Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description tools
 OpenJPA tasks for enhancing, SQL creation and
 schema mapping creation using Apache maven.
 
 %package javadoc
-Group:         Development/Java
+Group: Development/Java
 Summary:       Javadoc for %{name}
-Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n apache-openjpa-%{version}-source
+%setup -q -n %{name}-parent-%{version}
 find . -name "*.class" -delete
 find . -name "*.jar" -delete
+# openjpa-kernel/internal-repository/com/ibm/websphere/websphere_uow_api/0.0.1/websphere_uow_api-0.0.1.jar
+%patch0 -p0
+%patch1 -p0
+%patch2 -p1
 
-%pom_remove_plugin com.agilejava.docbkx:docbkx-maven-plugin
-%pom_remove_plugin org.apache.maven.plugins:maven-checkstyle-plugin
-%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
-%pom_remove_plugin org.codehaus.mojo:taglist-maven-plugin
+# Remove deprecated stuff which don't build with Java8
+rm -r %{name}-lib/src/main/java/org/apache/openjpa/lib/util/concurrent/NullSafeConcurrentHashMap.java \
+ %{name}-lib/src/main/java/org/apache/openjpa/lib/util/concurrent/SizedConcurrentHashMap.java
+
+%pom_disable_module %{name}
+%pom_disable_module %{name}-all
+%pom_disable_module %{name}-examples
+%pom_disable_module %{name}-integration
+%pom_disable_module %{name}-project
+%pom_disable_module openbooks %{name}-examples
+
+%pom_remove_plugin :docbkx-maven-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :findbugs-maven-plugin
+%pom_remove_plugin :ianal-maven-plugin
+%pom_remove_plugin :taglist-maven-plugin
+%pom_remove_plugin :apache-rat-plugin
 
 %pom_remove_dep net.sourceforge.findbugs:annotations
+
+%pom_xpath_remove "pom:profile[pom:id='ydoc-profile']"
+# Remove testing profiles for unavailable drivers: 
+# db2jcc informix-driver jcc-driver jdbc-driver jdbc-oracle jtds sqljdbc
+%pom_xpath_remove "pom:profile[pom:id='test-sybase-jconnect']" %{name}-persistence-jdbc
+%pom_xpath_remove "pom:profile[pom:id='test-soliddb']" %{name}-persistence-jdbc
+for p in persistence-jdbc persistence-locking; do
+%pom_xpath_remove "pom:profile[pom:id='test-custom']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-custom2']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-db2-jcc']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-derbyjcc']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-ids-jcc']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-ids-informix']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-ingres']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-mssql']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-oracle']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-sqlserver']" %{name}-${p}
+%pom_xpath_remove "pom:profile[pom:id='test-sybase']" %{name}-${p}
+done
 
 %pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec
 %pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
@@ -160,94 +167,61 @@ find . -name "*.jar" -delete
     <artifactId>hibernate-jpa-2.0-api</artifactId>
     <version>1.0.1.Final</version>
   </dependency>"
-%pom_remove_dep org.apache.bval:org.apache.bval.bundle
-%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-core</artifactId>
-    <version>0.5</version>
-  </dependency>
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-jsr303</artifactId>
-    <version>0.5</version>
-  </dependency>"
 
-%pom_remove_dep com.ibm.websphere:websphere_uow_api openjpa-kernel
-# require non free com.ibm.websphere websphere_uow_api 0.0.1
-rm openjpa-kernel/src/main/java/org/apache/openjpa/ee/WASRegistryManagedRuntime.java
-rm openjpa-kernel/src/main/java/org/apache/openjpa/ee/AutomaticManagedRuntime.java
+%pom_remove_dep com.ibm.websphere:websphere_uow_api %{name}-kernel
+# Require non free com.ibm.websphere websphere_uow_api 0.0.1
+rm %{name}-kernel/src/main/java/org/apache/openjpa/ee/WASRegistryManagedRuntime.java
+# Remove bundled asm
+%pom_xpath_set "pom:dependency[pom:groupId = 'org.apache.xbean']/pom:artifactId" xbean-finder %{name}-kernel
+sed -i "s|org.apache.xbean.asm5|org.objectweb.asm|" \
+ %{name}-kernel/src/main/java/org/apache/openjpa/enhance/AsmAdaptor.java
+%pom_add_dep org.ow2.asm:asm:5.0.3 %{name}-kernel
 
-for p in kernel persistence; do
-%pom_remove_dep org.osgi:org.osgi.core openjpa-${p}
-%pom_xpath_inject "pom:project/pom:dependencies" "
-  <dependency>
-    <groupId>org.apache.felix</groupId>
-    <artifactId>org.osgi.core</artifactId>
-    <version>1.4.0</version>
-    <scope>provided</scope>
-  </dependency>" openjpa-${p}
-done
+# Use proper hsqldb version
+%pom_xpath_inject "pom:dependency[pom:artifactId='hsqldb']" "<version>1</version>" %{name}-jdbc
+%pom_xpath_set "pom:properties/pom:hsqldb.version" 1
 
-for p in openjpa-jest \
-  openjpa-persistence \
-  openjpa-tools/openjpa-maven-plugin \
-  openjpa-tools/openjpa-maven-plugin/src/it/default_settings \
-  openjpa-tools/openjpa-maven-plugin/src/it/dependingArtifact \
-  openjpa-tools/openjpa-maven-plugin/src/it/nonDefaultPersistenceXml \
-  openjpa-tools/openjpa-maven-plugin/src/it/testDependencies \
+# Use proper log4j version
+%pom_xpath_set "pom:dependency[pom:groupId='log4j']/pom:version" 1.2.17 
+%pom_xpath_set "pom:dependency[pom:groupId='log4j']/pom:version" 1.2.17 %{name}-tools/%{name}-maven-plugin
+%pom_xpath_inject "pom:dependency[pom:groupId='log4j']" "<version>1.2.17</version>" %{name}-lib
+
+# Fix jpa apis deps
+for p in %{name}-jest \
+  %{name}-persistence \
+  %{name}-slice \
+  %{name}-tools/%{name}-fetch-statistics \
+  %{name}-tools/%{name}-maven-plugin \
+  %{name}-tools/%{name}-maven-plugin/src/it/default_settings \
+  %{name}-tools/%{name}-maven-plugin/src/it/dependingArtifact \
+  %{name}-tools/%{name}-maven-plugin/src/it/nonDefaultPersistenceXml \
+  %{name}-tools/%{name}-maven-plugin/src/it/testDependencies \
   ; do
 %pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec ${p}
-%pom_xpath_inject "pom:project/pom:dependencies" "
-  <dependency>
-    <groupId>org.hibernate.javax.persistence</groupId>
-    <artifactId>hibernate-jpa-2.0-api</artifactId>
-    <version>1.0.1.Final</version>
-  </dependency>" ${p}
+%pom_add_dep org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final ${p}
 done
 
-%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec openjpa-slice
-%pom_xpath_inject "pom:project/pom:dependencies" "
-  <dependency>
-    <groupId>org.hibernate.javax.persistence</groupId>
-    <artifactId>hibernate-jpa-2.0-api</artifactId>
-    <version>1.0.1.Final</version>
-    <scope>test</scope>
-  </dependency>" openjpa-slice
+# Break build in f>=19
+%pom_remove_plugin :maven-invoker-plugin %{name}-tools/%{name}-maven-plugin
 
-%pom_remove_dep org.apache.bval:org.apache.bval.bundle openjpa-tools/openjpa-maven-plugin
-%pom_xpath_inject "pom:project/pom:dependencies" "
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-core</artifactId>
-    <version>0.5</version>
-  </dependency>
-  <dependency>
-    <groupId>org.apache.bval</groupId>
-    <artifactId>bval-jsr303</artifactId>
-    <version>0.5</version>
-  </dependency>" openjpa-tools/openjpa-maven-plugin
+# Fix bval deps
+%pom_xpath_set "pom:dependency[pom:groupId='org.apache.bval']/pom:artifactId" bval-core
+%pom_xpath_set "pom:dependency[pom:groupId='org.apache.bval']/pom:artifactId" bval-core %{name}-tools/%{name}-maven-plugin
+%pom_add_dep org.apache.bval:bval-jsr303:0.5 %{name}-tools/%{name}-maven-plugin
 
-%patch0 -p0
-%patch1 -p1
-# in f17 buildnumber dont work
-#om_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
+# Force servlet 3.1 apis
+%pom_xpath_set "pom:dependency[pom:groupId='javax.servlet']/pom:artifactId" javax.servlet-api %{name}-jest
+%pom_xpath_set "pom:dependency[pom:groupId='javax.servlet']/pom:version" 3.1.0 %{name}-jest
 
-
-%pom_disable_module openjpa
-%pom_disable_module openjpa-all
-%pom_disable_module openjpa-examples
-%pom_disable_module openjpa-integration
-%pom_disable_module openjpa-project
-%pom_disable_module openbooks openjpa-examples
-
-# break build in f19
-%pom_remove_plugin :maven-invoker-plugin openjpa-tools/openjpa-maven-plugin
+%mvn_package ":%{name}-tools" tools
+%mvn_package ":%{name}-maven-plugin" tools
+%mvn_package ":%{name}-fetch-statistics" tools
+%mvn_package ":%{name}-fetch-statistics-was" tools
 
 %build
-# test random fails
 
-mvn-rpmbuild -e \
+# test random fails
+%mvn_build -- \
 %if %{with_tests}
   -Ptest-derby \
 %else
@@ -255,81 +229,30 @@ mvn-rpmbuild -e \
 %endif
   -DfailIfNoTests=false \
   -Dmaven.test.failure.ignore=true \
-  -Dmaven.local.depmap.file="%{SOURCE1}" \
-  install javadoc:aggregate process-resources
+  process-resources
 
 %install
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
-mkdir -p %{buildroot}%{_javadir}/%{name}
-for m in jdbc \
-  jest \
-  kernel \
-  lib \
-  persistence \
-  persistence-jdbc \
-  persistence-locking \
-  slice \
-  xmlstore;do
-    install -m 644 %{name}-${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
-    install -pm 644 %{name}-${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-    %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
-done
-
-install -pm 644 %{name}-tools/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-tools.pom
-%add_maven_depmap -f tools JPP.%{name}-tools.pom
-install -pm 644 %{name}-tools/%{name}-maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-maven-plugin.pom
-install -m 644 %{name}-tools/%{name}-maven-plugin/target/%{name}-maven-plugin-%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}/maven-plugin.jar
-%add_maven_depmap -f tools JPP.%{name}-maven-plugin.pom %{name}/maven-plugin.jar -a "org.codehaus.mojo:openjpa-maven-plugin"
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
 mkdir -p %{buildroot}%{_sysconfdir}/ant.d
-echo "ant %{name}/jdbc %{name}/kernel %{name}/lib" > %{name}-ant
+echo "ant %{name}/%{name}-jdbc %{name}/%{name}-kernel %{name}/%{name}-lib" > %{name}-ant
 install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 
-%files
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/jdbc.jar
-%{_javadir}/%{name}/jest.jar
-%{_javadir}/%{name}/kernel.jar
-%{_javadir}/%{name}/lib.jar
-%{_javadir}/%{name}/persistence.jar
-%{_javadir}/%{name}/persistence-jdbc.jar
-%{_javadir}/%{name}/persistence-locking.jar
-%{_javadir}/%{name}/slice.jar
-%{_javadir}/%{name}/xmlstore.jar
-%{_mavenpomdir}/JPP.%{name}-jdbc.pom
-%{_mavenpomdir}/JPP.%{name}-jest.pom
-%{_mavenpomdir}/JPP.%{name}-kernel.pom
-%{_mavenpomdir}/JPP.%{name}-lib.pom
-%{_mavenpomdir}/JPP.%{name}-parent.pom
-%{_mavenpomdir}/JPP.%{name}-persistence.pom
-%{_mavenpomdir}/JPP.%{name}-persistence-jdbc.pom
-%{_mavenpomdir}/JPP.%{name}-persistence-locking.pom
-%{_mavenpomdir}/JPP.%{name}-slice.pom
-%{_mavenpomdir}/JPP.%{name}-xmlstore.pom
-%{_mavendepmapfragdir}/%{name}
+%files -f .mfiles
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
-%doc CHANGES.txt LICENSE NOTICE README.txt RELEASE-NOTES.html
-
-%files tools
-%{_javadir}/%{name}/maven-plugin.jar
-%{_mavenpomdir}/JPP.%{name}-tools.pom
-%{_mavenpomdir}/JPP.%{name}-maven-plugin.pom
-%{_mavendepmapfragdir}/%{name}-tools
+%doc README.txt
 %doc LICENSE NOTICE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files tools -f .mfiles-tools
+%doc LICENSE NOTICE
+
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.4.0-alt1_1jpp8
+- java 8 mass update
+
 * Fri Aug 01 2014 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_4jpp7
 - new version
 
