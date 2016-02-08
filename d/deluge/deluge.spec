@@ -1,5 +1,5 @@
 Name: deluge
-Version: 1.3.6
+Version: 1.3.12
 Release: alt1
 
 Summary: full-featured BitTorrent client
@@ -145,7 +145,6 @@ cp altlinux/deluged.sys %buildroot%_sysconfdir/sysconfig/deluged
 %_man1dir/%name-gtk.1*
 %python_sitelibdir/%name/ui/gtkui
 %_iconsdir/hicolor/*/apps/*
-%_iconsdir/scalable/apps/*
 %_desktopdir/%name.desktop
 
 %files web
@@ -154,6 +153,9 @@ cp altlinux/deluged.sys %buildroot%_sysconfdir/sysconfig/deluged
 %python_sitelibdir/%name/ui/web
 
 %changelog
+* Mon Feb 08 2016 Vladimir Lettiev <crux@altlinux.ru> 1.3.12-alt1
+- New version 1.3.12
+
 * Tue Apr 09 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3.6-alt1
 - New version 1.3.6 (Closes: #28750)
 
