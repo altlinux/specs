@@ -1,176 +1,351 @@
+Epoch: 0
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+BuildRequires: jpackage-generic-compat
+Name:          smack
+Version:       4.1.3
+Release:       alt1_1jpp8
+Summary:       Open Source XMPP (Jabber) client library
+License:       ASL 2.0
+URL:           http://www.igniterealtime.org/projects/smack/index.jsp
+Source0:       https://github.com/igniterealtime/Smack/archive/%{version}.tar.gz
+# sh smack-get-poms.sh < VERSION >
+Source1:       smack-%{version}-poms.tar.xz
+Source2:       smack-get-poms.sh
+# Default use gradle
+Source10:      smack-pom.xml
 
-%define gcj_support 0
+Patch0:        smack-4.1.1-antrun-plugin.patch
 
+BuildRequires: maven-local
+BuildRequires: mvn(com.jamesmurty.utils:java-xmlbuilder)
+BuildRequires: mvn(com.jcraft:jzlib)
+BuildRequires: mvn(de.measite.minidns:minidns)
+BuildRequires: mvn(dnsjava:dnsjava)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.igniterealtime.jbosh:jbosh)
+BuildRequires: mvn(org.igniterealtime.jxmpp:jxmpp-core)
+BuildRequires: mvn(org.igniterealtime.jxmpp:jxmpp-util-cache)
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.powermock:powermock-api-mockito)
+BuildRequires: mvn(org.powermock:powermock-module-junit4)
+BuildRequires: mvn(org.powermock:powermock-reflect)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires: mvn(xmlunit:xmlunit)
+BuildRequires: mvn(xpp3:xpp3)
 
-Name:           smack
-Version:        3.1.0
-Release:        alt2_3jpp6
-Epoch:          0
-Summary:        Open Source XMPP (Jabber) client library
-
-Group:          Development/Java
-License:        Apache Software License 2.0
-URL:            http://www.igniterealtime.org/projects/smack/index.jsp
-Source0:        http://www.igniterealtime.org/downloads/download-landing.jsp?file=smack/smack_src_3_1_0.tar.gz
-Source1:        http://repo1.maven.org/maven2/jivesoftware/smack/3.1.0/smack-3.1.0.pom
-Source2:        http://repo1.maven.org/maven2/jivesoftware/smackx/3.1.0/smackx-3.1.0.pom
-Source3:        http://maven.reucon.com/public/org/igniterealtime/smack/smackx-debug/3.1.0/smackx-debug-3.1.0.pom
-Patch0:         smack-3.1.0-build.patch
-
-%if %{gcj_support}
-BuildRequires:    gnu-crypto
-BuildRequires:          java-gcj-compat-devel
-Requires(post):         java-gcj-compat
-Requires(postun):       java-gcj-compat
-%endif
-%if ! %{gcj_support}
-BuildArch:      noarch
-%endif
-
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  ant-contrib >= 0:1.0
-BuildRequires:  junit >= 0:3.8.1
-BuildRequires:  jzlib
-BuildRequires:  xpp3
-Requires:  jzlib
-Requires:  xpp3
-Requires(post):    jpackage-utils >= 0:1.7.5
-Requires(postun):  jpackage-utils >= 0:1.7.5
+BuildArch:     noarch
 Source44: import.info
 
-
 %description
-Smack is an Open Source XMPP (Jabber) client library for instant 
-messaging and presence. A pure Java library, it can be embedded 
-into your applications to create anything from a full XMPP client 
-to simple XMPP integrations such as sending notification messages.
+Smack is an Open Source XMPP (Jabber) client library for instant
+messaging and presence. A pure Java library, it can be embedded
+into your applications to create anything from a full XMPP client
+to simple XMPP integrations such as sending notification messages and
+presence-enabling devices.
 
-%package        javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+%package bosh
+Group: Development/Java
+Summary:       Smack BOSH API
+
+%description bosh
+Smack BOSH API.
+
+%package compression-jzlib
+Group: Development/Java
+Summary:       Smack compression with jzlib
+
+%description compression-jzlib
+Allow to compress the XMPP stream with help of jzlib.
+
+%package debug
+Group: Development/Java
+Summary:       Smack GUI debugger
+
+%description debug
+Inspect the exchanged XMPP stanzas.
+
+%package debug-slf4j
+Group: Development/Java
+Summary:       Smack slf4j debugger
+
+%description debug-slf4j
+Inspect the exchanged XMPP stanzas.
+Connect your favorite slf4j back-end of
+choice to get output inside of it.
+
+%package experimental
+Group: Development/Java
+Summary:       Smack experimental extensions
+
+%description experimental
+Classes and methods for XEPs that are in status
+'experimental' or that should otherwise carefully
+considered for deployment. The API may change even
+between patch versions.
+
+%package extensions
+Group: Development/Java
+Summary:       Smack extensions
+
+%description extensions
+Classes and methods that implement support for the
+various XMPP XEPs (Multi-User Chat, PubSub, a..) and
+other XMPP extensions.
+
+%package im
+Group: Development/Java
+Summary:       Smack IM
+
+%description im
+Classes and methods for XMPP-IM (RFC 6121):
+Roster, Chat and other functionality.
+
+%package java7
+Group: Development/Java
+Summary:       Smack for Java7 (or higher)
+
+%description java7
+This is a pseudo-artifact that pulls all the required dependencies to
+run Smack on Java 7 (or higher) JVMs. Usually you want to add additional
+dependencies to smack-tcp, smack-extensions and smack-experimental.
+
+%package legacy
+Group: Development/Java
+Summary:       Smack legacy extensions
+
+%description legacy
+Usually XEPs in the state 'retracted', 'rejected',
+'deprecated', 'obsolete' or in a long standing
+'deferred' state.
+
+%package resolver-dnsjava
+Group: Development/Java
+Summary:       DNS SRV with dnsjava
+
+%description resolver-dnsjava
+Use dnsjava for DNS SRV lookups. For platforms
+that don't provide the javax.naming API (e.g. Android).
+
+%package resolver-javax
+Group: Development/Java
+Summary:       DNS SRV with Java7
+
+%description resolver-javax
+Use javax.naming for DNS SRV lookups. The
+javax.naming API is available in JavaSE
+since Java7.
+
+%package resolver-minidns
+Group: Development/Java
+Summary:       DNS SRV with minidns
+
+%description resolver-minidns
+Use minidns for DNS SRV lookups.
+For platforms that don't provide the
+javax.naming API (e.g. Android).
+
+%package sasl-javax
+Group: Development/Java
+Summary:       Smack javax SASL
+
+%description sasl-javax
+SASL with javax.security.sasl
+Use javax.security.sasl for SASL.
+
+%package sasl-provided
+Group: Development/Java
+Summary:       Smack SASL provided code
+
+%description sasl-provided
+SASL with Smack provided code
+Use Smack provided code for SASL.
+
+%package tcp
+Group: Development/Java
+Summary:       Smack TCP
+
+%description tcp
+Smack for standard XMPP connections over TCP.
+
+%package javadoc
+Group: Development/Documentation
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
-%description    javadoc
-%{summary}.
-
-%package        manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description    manual
-%{summary}.
-
+%description javadoc
+This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n smack_src_3_1_0
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
+%setup -q -n Smack-%{version} -a1
+# cleanup
+find . -name "*.class" -print -delete
+find . -name "*.dll" -print -delete
+find . -name "*.jar" -print  -delete
+%patch0 -p0
+
+# remove prebuilt documentation
+rm -rf javadoc/* documentation/*
+
+cp -p %{SOURCE10} pom.xml
+sed -i "s|@VERSION@|%{version}|" pom.xml
+
+for m in bosh \
+ compression-jzlib \
+ core \
+ debug \
+ debug-slf4j \
+ experimental \
+ extensions \
+ im \
+ java7 \
+ legacy \
+ resolver-dnsjava \
+ resolver-javax \
+ resolver-minidns \
+ sasl-javax \
+ sasl-provided \
+ tcp; do
+
+%pom_add_plugin org.apache.maven.plugins:maven-jar-plugin:2.4 %{name}-${m} "
+<configuration>
+  <archive>
+    <manifestFile>\${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+    <manifest>
+      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+      <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+    </manifest>
+  </archive>
+</configuration>"
+
+%pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" %{name}-${m}
+%pom_add_plugin org.apache.felix:maven-bundle-plugin:2.3.7 %{name}-${m} "
+<extensions>true</extensions>
+<configuration>
+  <instructions>
+    <Bundle-Name>\${project.artifactId}</Bundle-Name>
+    <Bundle-Version>\${project.version}</Bundle-Version>
+  </instructions>
+</configuration>
+<executions>
+  <execution>
+    <id>bundle-manifest</id>
+    <phase>process-classes</phase>
+    <goals>
+      <goal>manifest</goal>
+    </goals>
+  </execution>
+</executions>"
+
+%pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin:3.1 %{name}-${m} "
+<configuration>
+  <source>1.7</source>
+  <target>1.7</target>
+</configuration>"
+
+sed -i "s|name>Smack|name>Smack ${m}|" %{name}-${m}/pom.xml
+
 done
-rm -rf jingle
-%patch0 -b .sav0
-ln -sf $(build-classpath jzlib) build/merge/
+
+# Do not use OSGi manifest in test JAR
+%pom_xpath_remove "pom:plugin[pom:artifactId = 'maven-jar-plugin']/pom:configuration" %{name}-core
+
+# Fix test deps
+%pom_xpath_inject "pom:plugin[pom:artifactId = 'maven-jar-plugin']" "
+<executions>
+  <execution>
+    <goals>
+      <goal>test-jar</goal>
+    </goals>
+  </execution>
+</executions>" %{name}-core
+
+for m in debug debug-slf4j experimental extensions im legacy sasl-javax sasl-provided tcp; do
+%pom_add_dep org.igniterealtime.smack:smack-core:'${project.version}':test %{name}-${m} "<type>test-jar</type>"
+done
+
+%pom_add_dep com.jamesmurty.utils:java-xmlbuilder::test %{name}-experimental
+%pom_add_dep junit:junit::test %{name}-experimental
+%pom_add_dep junit:junit::test %{name}-extensions
+#%%pom_add_dep org.hamcrest:hamcrest-all::test %%{name}-extensions
+%pom_add_dep com.jamesmurty.utils:java-xmlbuilder::test %{name}-extensions
+%pom_add_dep org.mockito:mockito-core::test %{name}-extensions
+%pom_add_dep org.powermock:powermock-reflect::test %{name}-extensions
+# org.powermock:powermock-api-mockito
+%pom_add_dep xmlunit:xmlunit::test %{name}-extensions
+%pom_add_dep junit:junit::test %{name}-im
+%pom_add_dep junit:junit::test %{name}-legacy
+%pom_add_dep junit:junit::test %{name}-sasl-javax
+%pom_add_dep junit:junit::test %{name}-sasl-provided
+%pom_add_dep junit:junit::test %{name}-tcp
+%pom_add_dep com.jamesmurty.utils:java-xmlbuilder::test %{name}-tcp
+
+# org.junit.ComparisonFailure
+rm -r %{name}-extensions/src/test/java/org/jivesoftware/smackx/caps/EntityCapsManagerTest.java \
+ %{name}-extensions/src/test/java/org/jivesoftware/smackx/vcardtemp/VCardTest.java \
+ %{name}-extensions/src/test/java/org/jivesoftware/smackx/xdatavalidation/provider/DataValidationTest.java
+
+# expected null, but was:<en>
+rm -r %{name}-core/src/test/java/org/jivesoftware/smack/util/PacketParserUtilsTest.java
+
+# Use web connection
+rm -r %{name}-im/src/test/java/org/jivesoftware/smack/roster/RosterVersioningTest.java \
+ %{name}-im/src/test/java/org/jivesoftware/smack/roster/rosterstore/DirectoryRosterStoreTest.java \
+ %{name}-im/src/test/java/org/jivesoftware/smack/roster/RosterTest.java
+
+# fix non ASCII chars
+for s in %{name}-core/src/main/java/org/jivesoftware/smack/util/dns/HostAddress.java \
+ %{name}-extensions/src/main/java/org/jivesoftware/smackx/caps/cache/SimpleDirectoryPersistentCache.java \
+ %{name}-extensions/src/main/java/org/jivesoftware/smackx/bytestreams/socks5/Socks5BytestreamManager.java \
+ %{name}-extensions/src/main/java/org/jivesoftware/smackx/address/MultipleRecipientManager.java \
+ %{name}-extensions/src/main/java/org/jivesoftware/smackx/caps/packet/CapsExtension.java \
+ %{name}-extensions/src/main/java/org/jivesoftware/smackx/caps/provider/CapsExtensionProvider.java \
+ %{name}-extensions/src/main/java/org/jivesoftware/smackx/caps/EntityCapsManager.java \
+ %{name}-extensions/src/main/java/org/jivesoftware/smackx/caps/cache/EntityCapsPersistentCache.java;do
+  native2ascii -encoding UTF8 ${s} ${s}
+done
+
+%mvn_package :%{name}-core::tests: %{name}-core
+%mvn_package :%{name}-parent __noinstall
 
 %build
-pushd build
-ln -sf $(build-classpath ant-contrib)
-ln -sf $(build-classpath junit)
-pushd merge
-ln -sf $(build-classpath xpp3) xpp.jar
-popd
-popd
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -f build/build.xml jar javadoc jar-test
+
+%mvn_build -s -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
+%mvn_install
 
-install -m 644 target/%{name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 target/%{name}x.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}x-%{version}.jar
+%files -f .mfiles-%{name}-core
+%doc README.md resources/releasedocs/README.html resources/releasedocs/changelog.html
+%doc LICENSE
 
-install -m 644 target/%{name}-test.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-test-%{version}.jar
-install -m 644 target/%{name}x-debug.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}x-debug-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
-(cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+%files bosh -f .mfiles-%{name}-bosh
+%files compression-jzlib -f .mfiles-%{name}-compression-jzlib
+%files debug -f .mfiles-%{name}-debug
+%files debug-slf4j -f .mfiles-%{name}-debug-slf4j
+%files experimental -f .mfiles-%{name}-experimental
+%files extensions -f .mfiles-%{name}-extensions
+%files im -f .mfiles-%{name}-im
+%files java7 -f .mfiles-%{name}-java7
+%files legacy -f .mfiles-%{name}-legacy
+%files resolver-dnsjava -f .mfiles-%{name}-resolver-dnsjava
+%files resolver-javax -f .mfiles-%{name}-resolver-javax
+%files resolver-minidns -f .mfiles-%{name}-resolver-minidns
+%files sasl-javax -f .mfiles-%{name}-sasl-javax
+%files sasl-provided -f .mfiles-%{name}-sasl-provided
+%files tcp -f .mfiles-%{name}-tcp
 
-%add_to_maven_depmap org.igniterealtime.smack %{name} %{version} JPP %{name}
-%add_to_maven_depmap org.igniterealtime.smack %{name}x %{version} JPP %{name}x
-%add_to_maven_depmap org.igniterealtime.smack %{name}x-debug %{version} JPP %{name}x-debug
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}x.pom
-install -m 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}x-debug.pom
-
-# javadocs
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-
-# manual
-install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr documentation/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-%files
-%{_javadir}/*
-%{_mavendepmapfragdir}/*
-%{_mavenpomdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}*%{version}.jar.*
-%endif
-
-%files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
-
-%files manual
-%doc %{_docdir}/%{name}-%{version}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.1.3-alt1_1jpp8
+- new version
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:3.1.0-alt2_3jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
