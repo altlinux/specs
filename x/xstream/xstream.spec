@@ -1,60 +1,200 @@
-Name: xstream
-Version: 1.4.8
-Summary: Java XML serialization library
-License: BSD
-Url: http://xstream.codehaus.org/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(com.thoughtworks.xstream:xstream) = 1.4.8
-Provides: mvn(com.thoughtworks.xstream:xstream:pom:) = 1.4.8
-Provides: xstream = 1.4.8-2.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(xpp3:xpp3_min)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: xstream-1.4.8-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%define _without_maven 1
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# Copyright statement from JPackage this file is derived from:
+
+# Copyright (c) 2000-2007, JPackage Project
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the
+#    distribution.
+# 3. Neither the name of the JPackage Project nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+Name:           xstream
+Version:        1.4.8
+Release:        alt1_2jpp8
+Summary:        Java XML serialization library
+License:        BSD
+URL:            http://xstream.codehaus.org/
+Source0:        https://nexus.codehaus.org/content/repositories/releases/com/thoughtworks/xstream/xstream-distribution/%{version}/xstream-distribution-%{version}-src.zip
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(cglib:cglib)
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(javassist:javassist)
+BuildRequires:  mvn(joda-time:joda-time)
+BuildRequires:  mvn(net.sf.kxml:kxml2)
+BuildRequires:  mvn(net.sf.kxml:kxml2-min)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.codehaus:codehaus-parent:pom:)
+BuildRequires:  mvn(org.codehaus.jettison:jettison)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(org.hibernate:hibernate-core)
+BuildRequires:  mvn(org.hibernate:hibernate-envers)
+BuildRequires:  mvn(org.hsqldb:hsqldb)
+BuildRequires:  mvn(org.jdom:jdom)
+BuildRequires:  mvn(org.jdom:jdom2)
+BuildRequires:  mvn(org.json:json)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(oro:oro)
+BuildRequires:  mvn(stax:stax)
+BuildRequires:  mvn(stax:stax-api)
+BuildRequires:  mvn(xom:xom)
+BuildRequires:  mvn(xpp3:xpp3_min)
+
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
-XStream is a simple library to serialize objects to XML
-and back again. A high level facade is supplied that
-simplifies common use cases. Custom objects can be serialized
-without need for specifying mappings. Speed and low memory
-footprint are a crucial part of the design, making it suitable
-for large object graphs or systems with high message throughput.
-No information is duplicated that can be obtained via reflection.
-This results in XML that is easier to read for humans and more
-compact than native Java serialization. XStream serializes internal
-fields, including private and final. Supports non-public and inner
-classes. Classes are not required to have default constructor.
-Duplicate references encountered in the object-model will be
-maintained. Supports circular references. By implementing an
-interface, XStream can serialize directly to/from any tree
-structure (not just XML). Strategies can be registered allowing
-customization of how particular types are represented as XML.
-When an exception occurs due to malformed XML, detailed diagnostics
+XStream is a simple library to serialize objects to XML 
+and back again. A high level facade is supplied that 
+simplifies common use cases. Custom objects can be serialized 
+without need for specifying mappings. Speed and low memory 
+footprint are a crucial part of the design, making it suitable 
+for large object graphs or systems with high message throughput. 
+No information is duplicated that can be obtained via reflection. 
+This results in XML that is easier to read for humans and more 
+compact than native Java serialization. XStream serializes internal 
+fields, including private and final. Supports non-public and inner 
+classes. Classes are not required to have default constructor. 
+Duplicate references encountered in the object-model will be 
+maintained. Supports circular references. By implementing an 
+interface, XStream can serialize directly to/from any tree 
+structure (not just XML). Strategies can be registered allowing 
+customization of how particular types are represented as XML. 
+When an exception occurs due to malformed XML, detailed diagnostics 
 are provided to help isolate and fix the problem.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package        javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+BuildArch: noarch
+
+%description    javadoc
+%{name} API documentation.
+
+%package        hibernate
+Group: Development/Java
+Summary:        hibernate module for %{name}
+Requires:       %{name} = %{version}
+
+%description    hibernate
+hibernate module for %{name}.
+
+%package        benchmark
+Group: Development/Java
+Summary:        benchmark module for %{name}
+Requires:       %{name} = %{version}
+
+%description    benchmark
+benchmark module for %{name}.
+
+%package parent
+Group: Development/Java
+Summary:        Parent POM for %{name}
+Requires:       %{name} = %{version}
+
+%description parent
+Parent POM for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -qn %{name}-%{version}
+find . -name "*.class" -print -delete
+find . -name "*.jar" -print -delete
+
+# Remove org.apache.maven.wagon:wagon-webdav
+%pom_xpath_remove "pom:project/pom:build/pom:extensions"
+# Require org.codehaus.xsite:xsite-maven-plugin
+%pom_disable_module xstream-distribution
+%pom_remove_plugin :xsite-maven-plugin
+%pom_remove_plugin :jxr-maven-plugin
+# Unwanted
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-dependency-plugin
+
+%pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl
+%pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl xstream
+%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib
+%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib xstream
+# Remove xmlpull classes provides by xpp3
+%pom_remove_dep :xmlpull xstream
+# Require unavailable proxytoys:proxytoys
+%pom_remove_plugin :maven-dependency-plugin xstream
+
+%pom_remove_plugin :maven-javadoc-plugin xstream
+
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib xstream-hibernate
+%pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-hibernate
+%pom_remove_plugin :maven-dependency-plugin xstream-hibernate
+%pom_remove_plugin :maven-javadoc-plugin xstream-hibernate
+
+%pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-benchmark
+%pom_remove_plugin :maven-javadoc-plugin xstream-benchmark
+
+%mvn_file :%{name} %{name}/%{name} %{name}
+%mvn_file :%{name}-benchmark %{name}/%{name}-benchmark %{name}-benchmark
+
+%mvn_package :%{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# test skipped for unavailable test deps (com.megginson.sax:xml-writer)
+%mvn_build -f -s
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE.txt README.txt
+%dir %{_javadir}/%{name}
+%files parent -f .mfiles-%{name}-parent
+%files hibernate -f .mfiles-%{name}-hibernate
+%files benchmark -f .mfiles-%{name}-benchmark
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
 
 %changelog
+* Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.8-alt1_2jpp8
+- unbootstrap build
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.8-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
