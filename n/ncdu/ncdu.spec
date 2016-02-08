@@ -1,6 +1,6 @@
 Name:           ncdu
 Version:        1.7
-Release:        alt1
+Release:        alt2
 Summary:        Text-based disk usage viewer
 
 Group:          File tools
@@ -28,9 +28,12 @@ and provides a fast way to see what directories are using your disk space.
 %files
 %doc AUTHORS COPYING ChangeLog TODO
 %_bindir/ncdu
-%_man1dir/ncdu.1.gz
+%_man1dir/ncdu.1.*
 
 %changelog
+* Mon Feb 08 2016 Lenar Shakirov <snejok@altlinux.ru> 1.7-alt2
+- man packaging fixed
+
 * Mon Aug 01 2011 Mykola Grechukh <gns@altlinux.ru> 1.7-alt1
 - update to new upstream version 1.7
 
