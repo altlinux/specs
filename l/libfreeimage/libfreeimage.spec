@@ -1,24 +1,21 @@
 Name: libfreeimage
-Version: 3.16.0
-Release: alt2.2
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Version: 3.17.0
+Release: alt1
 
 Summary: Multi-format image decoder library
 License: GPL and FIPL (see the license-fi.txt)
 Group: System/Libraries
-
 URL: http://freeimage.sourceforge.net/
+
 %define srcversion %(echo %version | tr -d .)
 Source: http://downloads.sourceforge.net/freeimage/FreeImage%srcversion.zip
-Patch0: freeimage-64bit-ftbfs.patch
-Patch1: FreeImage-3.10.0-syslibs.patch
+Patch: FreeImage-3.17.0-syslibs.patch
+Patch1: FreeImage-3.17.0_CVE-2015-0852.patch
 
-# Automatically added by buildreq on Tue Sep 08 2009
-BuildRequires: gcc-c++ libmng-devel libpng-devel openexr-devel unzip
-
+BuildRequires: gcc-c++ libgomp-devel libmng-devel libpng-devel openexr-devel unzip
 BuildPreReq: rpm-macros-make libraw-devel zlib-devel libwebp-devel
-BuildPreReq: libtiff-devel
+BuildPreReq: libtiff-devel libopenjpeg2.0-devel libjxr-devel
+BuildRequires: dos2unix
 
 %description
 FreeImage is a library project for developers who would like to support
@@ -36,52 +33,46 @@ developing applications that use %name.
 
 %prep
 %setup -n FreeImage
-#patch1 -p1
+%patch -p1
+%patch1 -p1
 
-subst 's/\r//g' gensrclist.sh
+# remove bundled libraries
+rm -r Source/Lib* Source/ZLib Source/OpenEXR
+# fix line endings
+find ./ -type f -print0| xargs -r0 dos2unix --
+# fix Makefile
+subst 's|\-o root -g root ||g' Makefile.*
+# we can't built due to dependencies on private headers
+# see syslibs patch
+> Source/FreeImage/PluginG3.cpp
+> Source/FreeImageToolkit/JPEGTransform.cpp
 
 %build
-# We build with system libraries instead of internal copies.
-# Only internal OpenJPEG is used as this library is not yet in our repo.
-
-# remove included libs to make sure these don't get used during compile
-rm -r Source/LibPNG Source/ZLib Source/OpenEXR
-rm -fR Source/LibRawLite
-
 sh ./gensrclist.sh
+sh ./genfipsrclist.sh
 %add_optflags %optflags_shared -fvisibility=hidden
-%add_optflags -I$PWD/Source/LibTIFF4
-%add_optflags -g -fpermissive -DPNG_iTXt_SUPPORTED
-%add_optflags $(pkg-config --cflags OpenEXR)
-%add_optflags -I$PWD/Source/LibJXR/jxrgluelib
-%add_optflags -I$PWD/Source/LibJXR/image/sys
-%add_optflags -I$PWD/Source/LibJXR/common/include
-%add_optflags -fno-strict-aliasing
-gcc %optflags_shared -fvisibility=hidden -pthread -I. -ISource -ISource/Metadata \
-	-ISource/FreeImageToolkit -ISource/LibJPEG -ISource/LibTIFF4 \
-	-IWrapper/FreeImagePlus -IWrapper/FreeImagePlus/src -c \
-	Source/LibTIFF4/tif_unix.c -o Source/LibTIFF4/tif_unix.o
-
-%make_build_ext \
-	CXX="g++ %optflags" \
-	LIBRARIES="Source/LibTIFF4/tif_unix.o -lstdc++ -lm -lpng -lmng -lIlmImf -lraw -lIex -lHalf -lwebpmux -lwebp -lz"
+%make_build -f Makefile.gnu
+%make_build -f Makefile.fip
 
 %install
 %ifarch x86_64
 LIB_SUFFIX=64
 %endif
-%makeinstall_std LIB_SUFFIX=$LIB_SUFFIX
+%makeinstall_std INSTALLDIR=%buildroot%_libdir
 
 %files
-%doc license-fi.txt Whatsnew.txt
 %_libdir/libfreeimage.so.*
 %_libdir/libfreeimage-%version.so
+%doc license-fi.txt Whatsnew.txt README.linux
 
 %files devel
 %_includedir/*
 %_libdir/libfreeimage.so
 
 %changelog
+* Thu Feb 04 2016 Yuri N. Sedunov <aris@altlinux.org> 3.17.0-alt1
+- 3.17.0
+
 * Tue Sep 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.0-alt2.2
 - rebuilt against libraw.so.15
 
