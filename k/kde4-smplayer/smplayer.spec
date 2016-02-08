@@ -2,13 +2,13 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 7318
+%define svn 7385
 %define xde kde4
 %define XDE KDE4
 %define xapp kde4
 Name: %xde-%rname
 Version: 16.1.0.%svn
-Release: alt2
+Release: alt1
 
 %define qt_bin_dir %_qt4dir/bin
 %define configure_qmake %qmake_qt4
@@ -162,6 +162,9 @@ done
 
 
 %changelog
+* Mon Feb 08 2016 Sergey V Turchin <zerg@altlinux.org> 16.1.0.7385-alt1
+- update for upstream fixes
+
 * Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 16.1.0.7318-alt2
 - disable reminder
 
