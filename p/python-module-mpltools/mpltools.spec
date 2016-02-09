@@ -1,10 +1,12 @@
+%def_disable check
+
 %define oname mpltools
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20150224
+Release: alt2.git20150224
 Summary: Tools for Matplotlib
 License: BSD
 Group: Development/Python
@@ -16,16 +18,16 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
-BuildPreReq: python-module-matplotlib python-module-configobj
-BuildPreReq: python-module-future python-module-pygobject3
+BuildPreReq: python-module-matplotlib 
+BuildPreReq: python-module-pygobject3
 BuildPreReq: python-module-pycairo python-module-mock
 BuildPreReq: python-module-nose python-module-pytz
 BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-matplotlib python3-module-configobj
-BuildPreReq: python3-module-future python3-module-pygobject3
+BuildPreReq: python3-module-matplotlib 
+BuildPreReq: python3-module-pygobject3
 BuildPreReq: python3-module-pycairo python3-module-mock
 BuildPreReq: python3-module-nose python3-module-pytz
 %endif
@@ -83,8 +85,6 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx doc
-ln -s ../objects.inv doc/source/
 
 %build
 %python_build_debug
@@ -104,12 +104,6 @@ pushd ../python3
 popd
 %endif
 
-export PYTHONPATH=$PWD
-%make -C doc pickle
-xvfb-run make -C doc html
-
-cp -fR doc/build/pickle %buildroot%python_sitelibdir/*
-
 %check
 export PYTHONPATH=$PWD
 python setup.py test
@@ -125,13 +119,6 @@ popd
 %files
 %doc *.rst examples/*.py
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
-
-%files pickles
-%python_sitelibdir/*/pickle
-
-%files docs
-%doc doc/build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -140,6 +127,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 0.2.0-alt2.git20150224
+- turn off docs generation and tests
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150224
 - Initial build for Sisyphus
 
