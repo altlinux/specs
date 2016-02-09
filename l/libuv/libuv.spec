@@ -1,11 +1,14 @@
-%define soname 0.11
 Name: libuv
-Version: 0.11.5
+Version: 1.8.0
 Release: alt1
+
 Summary: Evented I/O for NodeJS
+
 Group: Development/Tools
 License: MIT License
-Url: https://github.com/joyent/libuv
+Url: https://github.com/libuv/libuv
+
+# Source-url: https://github.com/libuv/libuv/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel gyp
@@ -26,17 +29,23 @@ Requires: %name = %version-%release
 libuv header and build tools
 
 %prep
-%setup -q
+%setup
 
 %build
-./gyp_uv
-%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}" libuv.so
+# due option hack in autogen.sh
+#autoreconf
+./autogen.sh
+%configure --disable-static
+%make_build
+
+# not for hasher
+#check
+#make check
 
 %install
-mkdir -p %buildroot{%_libdir,%_includedir}
-install libuv.so %buildroot%_libdir/libuv.so.%soname
-ln -s libuv.so.%soname %buildroot%_libdir/libuv.so
-cp -R include/* %buildroot%_includedir
+%makeinstall_std
+# FIXME: --disable-static does no disable static
+rm -f %buildroot%_libdir/%name.a
 
 %files
 %_libdir/*.so.*
@@ -44,9 +53,15 @@ cp -R include/* %buildroot%_includedir
 %files devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/%name.pc
 
 
 %changelog
+* Tue Feb 09 2016 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+- move sources to libuv subdir
+- change soname to 1.0.0
+
 * Sat Jun 29 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.11.5-alt1
 - 0.11.5
 
