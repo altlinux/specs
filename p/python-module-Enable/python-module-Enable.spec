@@ -1,7 +1,7 @@
 %define oname Enable
 Name: python-module-%oname
 Version: 4.6.0
-Release: alt1.git20150423
+Release: alt3.git20151207
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: libGL-devel libX11-devel python-module-Cython
 BuildPreReq: libGLU-devel python-module-traits fonts-ttf-PT
 
-%add_python_req_skip macport mac_context
+%add_python_req_skip macport mac_context hypothesis
 
 %description
 The Enable project provides two related multi-platform packages for
@@ -47,6 +47,7 @@ This package contains pickles for Enable project.
 Summary: Tests for Enable project
 Group: Development/Python
 Requires: %name = %version-%release
+%add_python_req_skip hypothesis
 
 %description tests
 The Enable project provides two related multi-platform packages for
@@ -123,6 +124,12 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %doc docs/kiva examples html
 
 %changelog
+* Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 4.6.0-alt3.git20151207
+- skip hypothesys requirement for -tests subpackage
+
+* Mon Dec 07 2015 Sergey Alembekov <rt@altlinux.ru> 4.6.0-alt2.git20151207
+- update to current upstream branch
+
 * Sun May 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.0-alt1.git20150423
 - Version 4.6.0
 
