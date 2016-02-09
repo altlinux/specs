@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.11
-Release: alt1.git20140308
+Release: alt2.git20140308
 Summary: Routing Recognition and Generation Tools
 License: MIT
 Group: Development/Python
@@ -94,8 +94,6 @@ This package contains documentation for %oname.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
 
 %build
 %python_build_debug
@@ -115,11 +113,7 @@ pushd ../python3
 popd
 %endif
 
-%make -C docs pickle
-%make -C docs html
-
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 python setup.py test
@@ -132,13 +126,8 @@ popd
 %files
 %doc *.rst TODO
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
 
-%files pickles
-%python_sitelibdir/*/pickle
 
-%files docs
-%doc docs/_build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -147,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 2.11-alt2.git20140308
+- Disabled Docs
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.11-alt1.git20140308
 - Version 2.11
 
