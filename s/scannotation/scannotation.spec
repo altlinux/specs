@@ -1,8 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name scannotation
 %define version 1.0.3
@@ -10,38 +9,26 @@ BuildRequires: jpackage-compat
 %global namedversion %{version}%{?namedreltag}
 %global alphatag r12
 
-Name: scannotation
-Version: 1.0.3
-Release:  alt2_0.7.r12jpp7
-Summary: A Java annotation scanner
-Group: Development/Java
-License: ASL 2.0
-URL: http://scannotation.sourceforge.net
-
+Name:          scannotation
+Version:       1.0.3
+Release:       alt2_0.12.r12jpp8
+Summary:       A Java annotation scanner
+License:       ASL 2.0
+URL:           http://scannotation.sourceforge.net
+# Also available here https://github.com/jharting/scannotation
 # How we created tarball:
 # svn export -r 12  https://scannotation.svn.sourceforge.net/svnroot/scannotation scannotation-1.0.3.Final
 # tar -caJf scannotation-1.0.3.Final.tar.xz scannotation-1.0.3.Final
-Source0: %{name}-%{namedversion}.tar.xz
-#Adding License file
-Source1: License.txt
+Source0:       %{name}-%{namedversion}.tar.xz
+# Adding License file
+Source1:       License.txt
 
-Patch0: %{name}-%{namedversion}-remove-dependencies.patch
+BuildArch:     noarch
 
-BuildArch: noarch
-
-BuildRequires: junit4
-BuildRequires: javassist
-
-BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-provider-junit4
-
-Requires: jpackage-utils
-Requires: javassist
+BuildRequires: mvn(javassist:javassist)
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(junit:junit)
 Source44: import.info
 
 %description
@@ -55,9 +42,8 @@ classpath or WAR (web application) that you want to scan, then automatically
 scans them without loading each and every class within those archives
 
 %package javadoc
-Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: jpackage-utils
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -65,43 +51,34 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
-%patch0 -p1 -b .p0
+
+%pom_disable_module titan-test-jar
+%pom_remove_dep :titan-cruise %{name}
+
+# Force use servlet 3.1 apis
+%pom_change_dep :servlet-api javax.servlet:javax.servlet-api:3.1.0 %{name}
+
 cp -p %SOURCE1 .
 
+%mvn_file org.%{name}:%{name} %{name}
+
 %build
-# building jar files using mvn
-mvn-rpmbuild install javadoc:aggregate
+
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -pm 644 %{name}/target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%mvn_install
 
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-all.pom
-install -pm 644 %{name}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP - this is still ok, but we use different pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# all is the proper name in this case, this just to be there - not usable at all :)
-%add_maven_depmap JPP-%{name}-all.pom
-
-# APIDOCS
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
+%files -f .mfiles
 %doc License.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc License.txt
 
 %changelog
+* Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.12.r12jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_0.7.r12jpp7
 - new release
 
