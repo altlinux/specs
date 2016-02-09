@@ -1,15 +1,16 @@
 %define _name gupnp-dlna
+%define ver_major 0.10
 
 Name: libgupnp-dlna
-Version: 0.10.3
+Version: %ver_major.4
 Release: alt1
 Summary: A collection of helpers for building UPnP AV applications
 
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gupnp.org/
-Source: http://ftp.gnome.org/pub/GNOME/sources/gupnp-dlna/0.6/%name-%version.tar
-Patch: %name-%version-%release.patch
+
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildRequires: libgio-devel
 BuildRequires: pkgconfig(glib-2.0) >= 2.32 pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0)
@@ -17,7 +18,8 @@ BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0 pkgconfig(gstreamer-pbutils-1.0) 
 BuildRequires: gir(GObject) = 2.0 gir(Gst) = 1.0 gir(GstPbutils) = 1.0
 BuildRequires: vala-tools >= 0.18 rpm-build-vala libvala-devel
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.36.0
-BuildRequires: vapi(gupnp-1.0) vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0) vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)
+BuildRequires: vapi(gupnp-1.0) vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0)
+BuildRequires: vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.5.0
 BuildRequires: gtk-doc xml-utils
 
@@ -65,11 +67,10 @@ Conflicts: %name < %version
 Contains developer documentation for %_name.
 
 %prep
-%setup
-%patch -p1
+%setup -n %_name-%version
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+%autoreconf
 %configure --disable-static --enable-gtk-doc
 %make_build
 
@@ -82,7 +83,8 @@ NOCONFIGURE=1 ./autogen.sh
 %_bindir/*
 %_libdir/lib*.so.*
 %_datadir/%{_name}*
-%_libdir/%{_name}/*.so
+%_libdir/%_name/*.so
+%exclude %_libdir/%_name/*.la
 
 %files devel
 %_libdir/lib*.so
@@ -101,6 +103,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Feb 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.4-alt1
+- 0.10.4
+
 * Fri Jul 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.10.3-alt1
 - 0.10.3
 
