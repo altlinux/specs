@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jpfcodegen
 Version:        0.4
-Release:        alt1_6jpp7
+Release:        alt1_10jpp8
 Summary:        A tool for generating classes from JPF plug-ins
 
 Group:          Development/Java
 License:        LGPLv3
-URL:            http://page.mi.fu-berlin.de/oezbek/jpf/
+URL:            https://github.com/JabRef/jpfcodegen
 
 BuildArch:      noarch
 # svn export https://jabref.svn.sourceforge.net/svnroot/jabref/tags/jpfcodegen-0.4
@@ -18,6 +19,8 @@ BuildArch:      noarch
 Source0:        %{name}-%{version}.tbz
 # Fix the build to use system jars
 Patch0:         %{name}-build.patch
+# Fix the build on javadoc
+Patch1:         %{name}-javadoc.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
@@ -45,12 +48,13 @@ plug-in and simplifies working with plug-ins.
 %prep
 %setup -q
 %{__rm} -rf lib
-%patch0 -p1
+%patch0 -b .build -p0
+%patch1 -b .javadoc -p0
 find tutorials -type f -exec sed -i 's/\r//' '{}' \;
 
 %build
 export CLASSPATH=`build-classpath jpf jpf-boot commons-logging velocity`
-ant jars
+ant -v jars
 
 # Generate the javadoc
 mkdir javadoc
@@ -74,6 +78,9 @@ cp -r javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_10jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_6jpp7
 - new release
 
