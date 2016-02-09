@@ -1,30 +1,57 @@
-%define node_name      node
-%define node_version  0.10.20
-%define node_release   alt1
-%define npmver 1.3.11
+# check deps/npm/package.json for it
+%define npmver 2.14.12
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
-%global nodejs_abi 0.10
+%global nodejs_abi 4.2
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%global v8_abi 3.15
+%global v8_abi 4.5
+
+# TODO: we do not pack v8 headers
+%def_without systemv8
+
+# supports only openssl >= 1.0.2
+# see https://github.com/nodejs/node/issues/2783
+%def_with systemssl
+
+# too old in repo
+%def_without systemuv
 
 %def_disable check
 
-Name: %node_name
-Version: %node_version
-Release: %node_release
+Name: node
+Version: 4.2.6
+Release: alt1
+
 Summary: Evented I/O for V8 Javascript
+
 Group: Development/Tools
 License: MIT License
 Url: http://nodejs.org/
+
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
 Patch: addon.gypi-alt-linkage-fixes.patch
 
-BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-3.15-devel libcares-devel gyp
-BuildRequires: curl openssl
+BuildRequires: python-devel gcc-c++ zlib-devel libcares-devel gyp
+
+#BuildRequires: libv8-%v8_abi-devel
+%define libv8_package libv8-chromium
+
+%if_with systemv8
+BuildRequires: %libv8_package-devel >= %v8_abi-devel
+%endif
+
+%if_with systemssl
+BuildRequires: openssl-devel >= 1.0.2 openssl
+%endif
+
+%if_with systemuv
+BuildRequires: libuv-devel >= 1.8.0
+%endif
+
+BuildRequires: curl
 Provides: nodejs(engine) = %version
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
@@ -48,12 +75,32 @@ Group:          Development/Other
 License:        GPL
 BuildArch:      noarch
 Provides:	nodejs-devel = %version-%release
-Requires:	%node_name = %node_version
-Requires:       gcc-c++ openssl-devel zlib-devel libv8-devel = %{v8_abi} libcares-devel
+Requires:	%name = %version
+Requires:       gcc-c++ zlib-devel libcares-devel
+%if_with systemv8
+Requires:	%libv8_package-devel >= %{v8_abi}
+%endif
+%if_with systemssl
+Requires:	openssl-devel >= 1.0.2
+%endif
+%if_with systemuv
+Requires: libuv-devel
+%else
 Conflicts:      libuv-devel
+%endif
 
 %description devel
 Node.js header and build tools
+
+
+%package doc
+Summary: Documentation files
+Group: Development/Other
+Requires: %name-devel = %version-%release
+
+%description doc
+Documentation files for %name.
+
 
 %package -n npm
 Version: 	%npmver
@@ -69,20 +116,27 @@ npm is a package manager for node. You can use it to install and publish your
 node programs. It manages dependencies and does other cool stuff.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
-./configure --no-ssl2 \
+./configure \
     --prefix=%_prefix \
     --shared-zlib \
+%if_with systemssl
     --shared-openssl \
     --shared-openssl-includes=%_includedir \
+%endif
+%if_with systemuv
+    --shared-libuv \
+%endif
+%if_with systemv8
     --shared-v8 \
     --shared-v8-includes=%_includedir
+%endif
 
-mkdir -p ./tools/doc/node_modules/.bin
-ln -s ../marked/bin/marked ./tools/doc/node_modules/.bin/marked
+#mkdir -p ./tools/doc/node_modules/.bin
+#ln -s ../marked/bin/marked ./tools/doc/node_modules/.bin/marked
 
 %make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
 %make doc
@@ -98,11 +152,13 @@ echo 'export NODE_PATH="%{_libexecdir}/node_modules;%{_libexecdir}/node_altmodul
 echo 'setenv NODE_PATH %{_libexecdir}/node_modules;%{_libexecdir}/node_altmodules' >%buildroot%_sysconfdir/profile.d/node.csh
 chmod 0755 %buildroot%_sysconfdir/profile.d/*
 
+%if_without systemuv
 #install development headers
-mkdir -p %{buildroot}%{_includedir}/node/{uv-private,}
+mkdir -p %{buildroot}%{_includedir}/node/
 cp -p src/*.h %{buildroot}%{_includedir}/node
 cp -p deps/uv/include/*.h %{buildroot}%{_includedir}/node
-cp -p deps/uv/include/uv-private/*.h %{buildroot}%{_includedir}/node/uv-private
+#cp -p deps/uv/include/uv-private/*.h %{buildroot}%{_includedir}/node/uv-private
+%endif
 
 #node-gyp needs common.gypi too
 mkdir -p %{buildroot}%{_datadir}/node
@@ -119,16 +175,25 @@ echo 'nodejs(v8-abi) = %v8_abi'
 EOF
 chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 
+rm -rf %buildroot/usr/lib/dtrace/
+rm -rf %buildroot/usr/share/doc/node/gdbinit
+
 %files
-%doc AUTHORS ChangeLog LICENSE README.md out/doc
+%doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
 %dir %_libexecdir/node_modules/
-%dir %_datadir/node
+%dir %_datadir/node/
+%_datadir/systemtap/tapset/node.stp
 %_man1dir/*
 %_sysconfdir/profile.d/*
 
+%files doc
+%doc README.md out/doc/api
+
 %files devel
-%_includedir/node
+%if_without systemuv
+%_includedir/node/
+%endif
 %_datadir/node/common.gypi
 %_rpmlibdir/nodejs_native.req*
 #%_datadir/node/sources
@@ -139,6 +204,15 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Tue Feb 09 2016 Vitaly Lipatov <lav@altlinux.ru> 4.2.6-alt1
+- 2016-01-21 Node.js v4.2.6 "Argon" (LTS) Release (ALT bug #30191)
+- build with system openssl 1.0.2
+- split doc subpackage
+
+* Mon Nov 23 2015 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt1
+- build 4.2.2 LTS version
+- build with static v8 4.5 and static openssl 1.0.2
+
 * Wed Oct 02 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.10.20-alt1
 - new version
 - npm 1.3.8
