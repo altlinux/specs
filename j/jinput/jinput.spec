@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           jinput
-Version:        2.0.6
-Release:        alt1_6.20130309svnjpp7
+Version:        2.0.7
+Release:        alt1_5.20140526svnjpp8
 Summary:        Java Game Controller API
 
 Group:          Development/Java
@@ -15,9 +16,9 @@ URL:            http://java.net/projects/jinput
 # Also, some (non-Linux) plugin code is non-free.  As long as we are deleting
 # non-free plugins, we also delete plugins for non-Linux operating systems.
 # Create the source tarball as follows:
-# svn export -r 251 https://svn.java.net/svn/jinput~svn/trunk jinput-2.0.6
-# rm -rf jinput-2.0.6/plugins/{OSX,windows,wintab}
-# tar cJf jinput-2.0.6.tar.xz jinput-2.0.6
+# svn export -r 253 https://svn.java.net/svn/jinput~svn/trunk jinput-2.0.7
+# rm -rf jinput-2.0.7/plugins/{OSX,windows,wintab}
+# tar cJf jinput-2.0.7.tar.xz jinput-2.0.7
 Source0:        %{name}-%{version}.tar.xz
 # Fedora-specific patch: will not be sent upstream.  Remove build.xml rules
 # for building non-free plugin code.
@@ -28,11 +29,18 @@ Patch1:         002_jinput_dontstripso.patch
 # Fedora-specific patch: will not be sent upstream.  Load the shared library
 # from the Fedora-mandated location.
 Patch2:         003_jinput_usesystemload.patch
-# Patch from http://java.net/jira/browse/JINPUT-44 to not access usage bits,
+# Patch from https://java.net/jira/browse/JINPUT-44 to not access usage bits,
 # which are not supported in current Linux kernels
 Patch3:         004_jinput_usagebits.patch
+# Patch from https://java.net/jira/browse/JINPUT-51 to fix a resource leak
+Patch4:         005_jinput_leak.patch
+# Patch to be sent upstream to migrate to Java 5 (Java generics)
+Patch5:         006_jinput_java5.patch
+# Patch to be sent upstream to adapt to a change in headers in Linux 4.5
+Patch6:         007_jinput_linux_4.5.patch
 
 BuildRequires:  ant
+BuildRequires:  java-javadoc >= 1:1.6.0
 BuildRequires:  jpackage-utils
 BuildRequires:  jutils
 BuildRequires:  jutils-javadoc
@@ -54,7 +62,7 @@ understandable descriptions of the inputs available.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       jutils-javadoc
 BuildArch:      noarch
 
@@ -67,19 +75,40 @@ This package contains the API documentation for %{name}.
 %patch1
 %patch2
 %patch3
+%patch4
+%patch5
+%patch6
 
 # Don't use prebuilt jars
 rm -f lib/*.jar
 build-jar-repository -s -p lib jutils
 
-# Fix the version string in the POMs
-sed -i 's/@VERSION@/%{version}/' jinput.pom jinput-platform.pom
+fixtimestamp() {
+  touch -r $1.orig $1
+  rm -f $1.orig
+}
 
-# Use Fedora's CFLAGS
-sed -i "s/-O2 -Wall/$RPM_OPT_FLAGS/" plugins/linux/src/native/build.xml
+# Fix the version string in the POMs
+for fil in jinput.pom jinput-platform.pom; do
+  sed -i.orig 's/@VERSION@/%{version}/' $fil
+  fixtimestamp $fil
+done
+
+# Fix the version string in net.java.games.input.Version
+%global buildnum %(cut -d. -f1 <<< %{release})
+sed -i.orig 's/@API_VERSION@/%{version}/;s/@BUILD_NUMBER@/%{buildnum}/' \
+    coreAPI/src/java/net/java/games/input/Version.java
+fixtimestamp coreAPI/src/java/net/java/games/input/Version.java
+
+# Use Fedora's CFLAGS and LDFLAGS
+sed -i "s|-O2 -Wall|$RPM_OPT_FLAGS|;s|-shared|& $RPM_LD_FLAGS|" \
+    plugins/linux/src/native/build.xml
+
+# Prevent jutils.jar from being included in jinput.jar
+sed -i '\@zipfileset.*/>@d' build.xml
 
 %build
-# Get the latest definitions from <linux/input.h>
+# Get the latest definitions from <linux/input-event-codes.h>
 ant -f plugins/linux/src/native/build.xml createNativeDefinitions.java
 
 # Build
@@ -95,7 +124,8 @@ ant dist
 # Therefore, we throw up our hands in despair and do this instead:
 javadoc -d javadoc -classpath lib/jutils.jar:dist/jinput.jar -package \
   -sourcepath plugins/awt/src:plugins/linux/src/java:coreAPI/src/java \
-  -link %{_javadocdir}/jutils net.java.games.input
+  -link file://%{_javadocdir}/jutils -link file://%{_javadocdir}/java \
+  -source 1.6 net.java.games.input
 
 %install
 # jar
@@ -120,20 +150,21 @@ install -pm 644 jinput.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap JPP-%{name}-platform.pom 
 
 %check
+# Do not rebuild; just run the test
+sed -i 's/"versiontest" depends="init,all"/"versiontest"/' build.xml
 ant versiontest
 
-%files
+%files -f .mfiles
 %doc README.txt 
-%{_jnidir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_libdir}/%{name}
-%_jnidir/%{name}.jar
+%{_libdir}/%{name}/
 
 %files javadoc
-%{_javadocdir}/%{name}
+%{_javadocdir}/%{name}/
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt1_5.20140526svnjpp8
+- java8 mass update
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt1_6.20130309svnjpp7
 - new release
 
