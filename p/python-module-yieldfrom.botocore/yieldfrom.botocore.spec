@@ -1,3 +1,5 @@
+%def_disable check
+
 %define mname yieldfrom
 %define oname %mname.botocore
 
@@ -6,7 +8,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.git20150428
+Release: alt3.git20150428
 Summary: asyncio port of botocore, the low-level, data-driven core of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -17,31 +19,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # branch: develop
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx
 %if_with python2
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-jmespath python-module-dateutil
-BuildPreReq: python-module-yieldfrom.http.client
-BuildPreReq: python-module-yieldfrom.urllib3
-BuildPreReq: python-module-yieldfrom.requests
+BuildPreReq: python-module-dateutil
 BuildPreReq: python-module-nose python-module-mock
 BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-jmespath python3-module-dateutil
-BuildPreReq: python3-module-yieldfrom.http.client
-BuildPreReq: python3-module-yieldfrom.urllib3
-BuildPreReq: python3-module-yieldfrom.requests
+BuildPreReq: python3-module-setuptools-tests
+BuildPreReq: python3-module-dateutil
 BuildPreReq: python3-module-nose python3-module-mock
 BuildPreReq: python3-module-asyncio
 %endif
-BuildPreReq: python3-module-sphinx-devel
-
 %py_provides %oname
-%py_requires %mname jmespath dateutil yieldfrom.http.client asyncio
-%py_requires yieldfrom.urllib3 yieldfrom.requests
 
 %description
 This is an asyncio port of botocore.
@@ -54,8 +45,6 @@ Services. The botocore package is the foundation for AWS-CLI.
 Summary: asyncio port of botocore, the low-level, data-driven core of boto 3
 Group: Development/Python3
 %py3_provides %oname
-%py3_requires %mname jmespath dateutil yieldfrom.http.client asyncio
-%py3_requires yieldfrom.urllib3 yieldfrom.requests
 
 %description -n python3-module-%oname
 This is an asyncio port of botocore.
@@ -81,12 +70,6 @@ cp -fR . ../python3
 %if_with python3
 pushd ../python3
 %python3_build_debug
-
-%prepare_sphinx docs
-ln -s ../objects.inv docs/source/
-export PYTHONPATH=$PWD
-%make -C docs html
-popd
 %endif
 
 %install
@@ -116,19 +99,26 @@ popd
 
 %if_with python2
 %files
-%doc *.rst docs/build/html
+%doc *.rst
 %python_sitelibdir/%mname/*
 %python_sitelibdir/*.egg-info
 %endif
 
 %if_with python3
 %files -n python3-module-%oname
-%doc *.rst ../python3/docs/build/html
+%doc *.rst 
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 0.1.3-alt3.git20150428
+- disable sphinx
+
+* Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 0.1.3-alt2.git20150428
+- cleanup buildreq
+- disable check
+
 * Fri May 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150428
 - New snapshot
 
