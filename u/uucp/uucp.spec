@@ -1,6 +1,6 @@
 Name: uucp
 Version: 1.07
-Release: alt3.qa1
+Release: alt4
 
 Summary: The %name utility for copying files between systems
 License: GPL
@@ -15,8 +15,9 @@ Patch2: %name-1.06.1-sigfpe.patch
 PreReq: coreutils, /var/lock/serial
 
 Requires: syslog-common >= 1.4.1-alt1
+Requires: cu = %version-%release
 
-BuildRequires: autoconf_2.13
+BuildRequires: autoconf_2.13 makeinfo
 
 %description
 The %name command copies files between systems. Uucp is primarily used
@@ -26,8 +27,20 @@ local machines.
 Install the %name package if you need to use %name to transfer files
 between machines.
 
+%package -n cu
+Summary: %name cu utility
+Group: Networking/File transfer
+Conflicts: uucp < 1.07-alt4
+
+%description -n cu
+The %name command copies files between systems. Uucp is primarily used
+by remote machines downloading and uploading email and news files to
+local machines.
+
+This package contains only cu(1) utility.
+
 %prep
-%setup -q
+%setup
 %patch1 -p1
 
 %set_autoconf_version 2.13
@@ -95,7 +108,6 @@ chmod go-rwx %_logdir/%name/Debug
 %_sbindir/uuchk
 %_sbindir/uuconv
 %_sbindir/uusched
-%attr(6511,%name,%name) %_bindir/cu
 %attr(6511,%name,%name) %_bindir/uucp
 %attr(6511,%name,%name) %_bindir/uuname
 %attr(6511,%name,%name) %_bindir/uustat
@@ -103,17 +115,34 @@ chmod go-rwx %_logdir/%name/Debug
 %attr(6511,%name,%name) %_sbindir/uucico
 %attr(6511,%name,%name) %_sbindir/uuxqt
 %attr(770,%name,%name) %dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/*
+%config(noreplace) %_sysconfdir/%name/call
+%config(noreplace) %_sysconfdir/%name/dial
+%config(noreplace) %_sysconfdir/%name/dialcode
+%config(noreplace) %_sysconfdir/%name/passwd
+%config(noreplace) %_sysconfdir/%name/sys
+%_man1dir/uucp.1*
+%_man1dir/uustat.1*
+%_man1dir/uux.1*
+%_man8dir/uucico.8*
+%_man8dir/uuxqt.8*
 %attr(600,%name,%name) %ghost %_logdir/%name/Debug
 %attr(644,%name,%name) %ghost %_logdir/%name/Log
 %attr(644,%name,%name) %ghost %_logdir/%name/Stats
 %attr(-,%name,%name) %_spooldir/*
-%_mandir/man?/*
 %_infodir/*.info*
 %doc AUTHORS COPYING TODO README ChangeLog NEWS
 %doc sample contrib
 
+%files -n cu
+%attr(6511,%name,%name) %_bindir/cu
+%attr(770,%name,%name) %dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/port
+%_man1dir/cu.1*
+
 %changelog
+* Tue Feb 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.07-alt4
+- cu(1) subpackaged
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.07-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
