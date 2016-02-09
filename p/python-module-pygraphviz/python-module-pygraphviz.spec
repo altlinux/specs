@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.3
-Release: alt1.git20140720
+Release: alt2.git20140720
 
 Summary: Python wrapper for the Graphviz Agraph data structure
 
@@ -117,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.3-alt2.git20140720
+- Fix graphviz.i
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20140720
 - Version 1.3
 
