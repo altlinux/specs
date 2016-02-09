@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.10.0
-Release: alt1
+Release: alt2
 Summary: A Python Document-Object Mapper for working with MongoDB
 
 License: MIT
@@ -14,11 +14,11 @@ Url: http://hmarr.com/mongoengine/
 Source: %name-%version.tar
 BuildArch: noarch
 BuildRequires: python-devel python-module-setuptools
-BuildRequires: python-module-rednose
+BuildRequires: python-module-rednose python-module-colorama
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-rednose
+BuildRequires: python3-module-rednose python3-module-colorama
 %endif
 
 %description
@@ -71,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 0.10.0-alt2
+- add colorama to buildreqs
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1
 - Version 0.10.0
 
