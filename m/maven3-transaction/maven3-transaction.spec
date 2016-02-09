@@ -5,7 +5,7 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt35jpp
+Release: alt36jpp
 
 # todo springframework-batch
 Provides: mvn(org.springframework.batch:spring-batch-infrastructure)
@@ -22,8 +22,8 @@ Provides: mvn(org.apache.directory.project:project)
 Provides: netty-tcnative mvn(io.netty:netty-tcnative)
 # jibx BR tycho R eclipse-platform
 Provides: eclipse-platform eclipse-rcp
-#Provides: i586-eclipse-swt = 4.0
-#Provides: i586-itext
+Provides: i586-eclipse-swt = 4.0
+Provides: i586-itext
 
 %description
 Maven3 transaction unfinished files.
@@ -39,6 +39,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt36jpp
+- updated dependencies
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt35jpp
 - updated dependencies
 
