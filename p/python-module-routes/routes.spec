@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.1
-Release: alt1.git20150117
+Release: alt2.git20150117
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python
@@ -83,9 +83,6 @@ This package contains pickles for Routes.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
-
 %build
 %python_build
 
@@ -106,24 +103,17 @@ popd
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd docs
-%make_build html
-sphinx-build -b pickle -d _build/doctrees . _build/pickle
 
 install -d %buildroot%_docdir/%name
-cp -fR _build/html/* %buildroot%_docdir/%name/
-cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 popd
 
 %files
 %doc CHANGELOG LICENSE README TODO
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/pickle
 
 %files doc
 %_docdir/%name
 
-%files pickles
-%python_sitelibdir/*/pickle
 
 %if_with python3
 %files -n python3-module-%oname
@@ -132,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 2.1-alt2.git20150117
+- assembly documentation disabled
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.git20150117
 - Version 2.1
 
