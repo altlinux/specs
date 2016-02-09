@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 4.7.2
-Release: alt2
+Release: alt3
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -246,6 +246,9 @@ Internationalization and documentation for KMyMoney
 
 
 %changelog
+* Tue Feb 09 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.2-alt3
+- Rebuild with new libalkimia
+
 * Mon Jan 25 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.2-alt2
 - Fix build
 

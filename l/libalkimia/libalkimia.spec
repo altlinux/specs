@@ -1,14 +1,14 @@
 
 Name:    libalkimia
-Version: 4.3.2
-Release: alt1.1
+Version: 5.0.0
+Release: alt1
 
 Summary: Financial library
 License: LGPLv2+
 Group:	 System/Libraries
 URL:     http://community.kde.org/Alkimia/libalkimia
 
-Source: 137323-%name-%version.tar.bz2
+Source: %name-%version.tar
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires: doxygen
@@ -45,9 +45,12 @@ Headers and other files for develop with %name.
 %_K4includedir/alkimia/*
 %_K4lib/devel/%name.so
 %_pkgconfigdir/%name.pc
-%_K4apps/cmake/modules/FindLibAlkimia.cmake
+%_libdir/cmake/LibAlkimia
 
 %changelog
+* Tue Feb 09 2016 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1.1
 - Rebuilt with gmp 5.0.5
 
