@@ -1,49 +1,45 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:           maven-pmd-plugin
-Version:        2.7.1
-Release:        alt2_6jpp7
+Version:        3.6
+Release:        alt1_1jpp8
 Summary:        Maven PMD Plugin
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-pmd-plugin/
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        http://archive.apache.org/dist/maven/plugins/maven-pmd-plugin-%{version}-source-release.zip
 
 BuildArch: noarch
 
-BuildRequires: pmd
-BuildRequires: maven-local
-BuildRequires: maven-plugin-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven-plugin-testing-harness
-BuildRequires: maven-archiver
-BuildRequires: plexus-archiver
-BuildRequires: apache-commons-lang
-BuildRequires: plexus-resources
-BuildRequires: plexus-utils
-BuildRequires: junit
-BuildRequires: modello
-Requires: maven
-Requires: plexus-utils
-Requires: maven-plugin-testing-harness
-Requires: pmd
-Requires: junit
-Requires:       jpackage-utils
-
-Provides:       maven2-plugin-pmd = %{version}-%{release}
-Obsoletes:      maven2-plugin-pmd <= 0:2.0.8
+BuildRequires:  maven-local
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(net.sourceforge.pmd:pmd-core) >= 5.3.2
+BuildRequires:  mvn(net.sourceforge.pmd:pmd-java) >= 5.3.2
+BuildRequires:  mvn(net.sourceforge.pmd:pmd-javascript) >= 5.3.2
+BuildRequires:  mvn(net.sourceforge.pmd:pmd-jsp) >= 5.3.2
+BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-decoration-model)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-resources)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
 %description
@@ -53,9 +49,8 @@ fail the build based on these metrics.
   
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -63,40 +58,33 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q 
+%setup -q
+
+# remove unnecessary animal sniffer and enforcer plugins
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+
+# remove test dependency not in fedora
+%pom_remove_dep com.github.tomakehurst:wiremock
 
 %build
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+# ignore test failures
+# all tests fail, so this is probably environmental but I'm not sure what's missing
+%mvn_build -f
 
 %install
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install
 
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml \
-    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
-
-%files
+%files -f .mfiles
 %doc LICENSE NOTICE
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
-%{_javadocdir}/%{name}
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1_1jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt2_6jpp7
 - new release
 

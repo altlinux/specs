@@ -1,23 +1,26 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:             cxf-build-utils
-Version:          2.4.1
-Release:          alt5_6jpp7
+Version:          2.6.0
+Release:          alt1_2jpp8
 Summary:          Apache CXF Build Utils
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://cxf.apache.org/build-utils.html
 
-# svn export http://svn.apache.org/repos/asf/cxf/build-utils/tags/cxf-build-utils-2.4.1/ cxf-build-utils-2.4.1
-# tar cafJ cxf-build-utils-2.4.1.tar.xz cxf-build-utils-2.4.1
-Source0:          %{name}-%{version}.tar.xz
+# svn export http://svn.apache.org/repos/asf/cxf/build-utils/tags/cxf-build-utils-2.6.0/ cxf-build-utils-2.6.0
+# tar cafJ cxf-build-utils-2.6.0.tar.xz cxf-build-utils-2.6.0
+Source0:          cxf-build-utils-%{version}.tar.xz
+
+# PMD support in Fedora
+Patch0:           0001-Support-for-PMD-from-Fedora.patch
 
 BuildArch:        noarch
 
-BuildRequires:    jpackage-utils
 BuildRequires:    maven-local
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
@@ -25,12 +28,8 @@ BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-shade-plugin
 BuildRequires:    glassfish-fastinfoset
-BuildRequires:    maven-surefire-provider-junit4
+BuildRequires:    maven-surefire-provider-junit
 BuildRequires:    pmd
-
-Requires:         jpackage-utils
-Requires:         glassfish-fastinfoset
-Requires:         pmd
 Source44: import.info
 
 %description
@@ -40,49 +39,33 @@ that are used by multiple versions of the CXF builds.
 %package javadoc
 Summary:          Javadocs for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n cxf-build-utils-%{version}
+%patch0 -p1
+
+%pom_remove_dep net.sourceforge.pmd:pmd buildtools/pom.xml
+%pom_add_dep net.sourceforge.pmd:pmd-java buildtools/pom.xml
 
 %build
-mvn-rpmbuild \
-  -Dproject.build.sourceEncoding=UTF-8 \
-  install javadoc:aggregate
+%mvn_build
 
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%mvn_install
 
-for module in buildtools xml2fastinfoset-plugin; do
-  pushd $module
-  install -pm 644 target/cxf-$module-%{version}.jar %{buildroot}%{_javadir}/%{name}/cxf-$module.jar
-  install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-cxf-$module.pom
-  %add_maven_depmap JPP.%{name}-cxf-$module.pom %{name}/cxf-$module.jar
-  popd
-done
+%files -f .mfiles
+%dir %{_javadir}/%{name}
 
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}.pom
-%add_maven_depmap JPP.%{name}.pom
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_2jpp8
+- new version
+
 * Mon Aug 25 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt5_6jpp7
 - update
 
