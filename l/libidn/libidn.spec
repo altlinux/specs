@@ -1,6 +1,6 @@
 Name: libidn
 Version: 1.32
-Release: alt1
+Release: alt2
 
 Summary: Internationalized Domain Name support library
 Group: System/Libraries
@@ -9,6 +9,7 @@ Url: http://www.gnu.org/software/%name/
 # ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 
+%def_enable java
 %def_with emacs
 %{?!_without_emacs:BuildRequires: emacs-devel emacs-nox}
 
@@ -61,13 +62,50 @@ names.
 
 This package includes %name support files for GNU Emacs.
 
+%if_enabled java
+%package java
+Group: Development/Java
+Summary:       Java port of the GNU Libidn library
+BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java java-devel-default javapackages-local
+BuildRequires: mvn(com.google.code.findbugs:annotations)
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(junit:junit)
+BuildArch:     noarch
+
+%description java
+GNU Libidn is a fully documented implementation of the Stringprep,
+Punycode and IDNA specifications. Libidn's purpose is to encode
+and decode internationalized domain names.
+
+This package contains the native Java port of the library.
+
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}-java
+BuildArch:     noarch
+
+%description javadoc
+This package contains javadoc for %{name}-java.
+%endif
+
 %prep
 %setup
 # These gnulib tests fail.
 sed -i 's/test-\(lock\|thread_create\)\$(EXEEXT) //' lib/gltests/Makefile.in
 
+%if_enabled java
+# Cleanup
+find . -name '*.jar' -print -delete
+find . -name '*.class' -print -delete
+
+# Not available test dep
+%pom_remove_dep com.google.caliper:caliper java/pom.xml.in
+%endif
+
 %build
 %configure \
+	%{subst_enable java} \
 	--disable-rpath \
 	--disable-static \
 	--disable-silent-rules \
@@ -77,7 +115,11 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std \
+%if_enabled java
+ libidn_jardir=%{_javadir}
+%endif
+#
 rm %buildroot%_infodir/*.png
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir/reference/html
@@ -85,6 +127,18 @@ install -pm644 doc/*.html doc/*.pdf %buildroot%docdir/
 install -pm644 AUTHORS COPYING FAQ NEWS README THANKS %buildroot%docdir/
 install -pm644 doc/reference/*.pdf %buildroot%docdir/reference/
 install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
+
+%if_enabled java
+# regenerate java documentation (breaks %%check)
+##rm -rf doc/java/*
+##find doc/java -name '*.html' -delete
+##%javadoc -source 1.6 -d doc/java $(find java/src/main/java -name "*.java")
+# generate maven depmap
+rm -rf $RPM_BUILD_ROOT%{_javadir}/libidn*.jar
+%mvn_artifact java/pom.xml java/libidn-%{version}.jar
+%mvn_file org.gnu.inet:libidn libidn
+%mvn_install -J doc/java
+%endif
 
 %find_lang %name
 %set_verify_elf_method strict
@@ -119,7 +173,18 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_emacslispdir/*
 %endif #emacs
 
+%if_enabled java
+%files java -f .mfiles
+%doc COPYING* java/LICENSE-2.0.txt
+
+%files javadoc -f .mfiles-javadoc
+%doc COPYING* java/LICENSE-2.0.txt
+%endif #java
+
 %changelog
+* Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.32-alt2
+- NMU: added java subpackage (required by jxmpp)
+
 * Mon Dec 14 2015 Dmitry V. Levin <ldv@altlinux.org> 1.32-alt1
 - 1.29 -> 1.32.
 
