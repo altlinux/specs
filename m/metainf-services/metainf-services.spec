@@ -1,86 +1,60 @@
-BuildRequires: maven-compiler-plugin maven-jar-plugin maven-install-plugin maven-javadoc-plugin
-BuildRequires: /proc
-BuildRequires: jpackage-compat
-
-Name: metainf-services
-Version: 1.4
-Release: alt4_0jpp6
-Summary: A Java META-INF/services generator
-
 Group: Development/Java
-License: MIT
-Url: http://metainf-services.kohsuke.org/
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           metainf-services
+Version:        1.5
+Release:        alt1_5jpp8
+Summary:        Small java library for generating META-INF/services files
 
-Source0: %name-%version.tar
+# License is specified in pom file
+License:        MIT
+URL:            https://github.com/kohsuke/metainf-services
+Source0:        https://github.com/kohsuke/%{name}/archive/%{name}-%{version}.tar.gz
+Source1:        https://raw.github.com/kohsuke/youdebug/youdebug-1.5/LICENSE.txt
 
-Patch0: fix-extra-deps.patch
+BuildArch:      noarch
 
-BuildRequires: jpackage-utils >= 0:5.0.0
-BuildRequires: maven-local
-BuildRequires: maven-resources-plugin
-BuildRequires: junit
-
-Requires: jpackage-utils 
-
-BuildArch: noarch
+BuildRequires:  maven-local
+Source44: import.info
 
 %description
-This tiny library is an annotation processor that automatically
-generates META-INF/services/* file from annotations that you placed on
-your source code, thereby eliminating the need for you to do it by
-yourself.
+This package contains small Java library which can be used
+for automatic generation of META-INF/services files.
 
-%package javadoc
-Summary: Javadocs for %name
+%package        javadoc
 Group: Development/Java
-Requires: %name = %version-%release
+Summary:        Javadoc for %{name}
 BuildArch: noarch
 
-%description javadoc
-%summary
+%description    javadoc
+This package contains the API documentation for %{name}.
 
-This package contains generated documentation.
 
 %prep
-%setup
-%patch0 -p2
+%setup -q -n %{name}-%{name}-%{version}
+
+cp %{SOURCE1} LICENSE
+
+%pom_xpath_remove "pom:extension[pom:artifactId[text()='wagon-gitsite']]"
+%pom_xpath_remove "pom:plugin[pom:artifactId[text()='animal-sniffer-maven-plugin']]"
 
 %build
-export MAVEN_OPTS="-Djava.awt.headless=true -Daggregate=true -Dallow.test.failure.ignore=true -Dmaven.test.failure.ignore=true"
-
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        install javadoc:javadoc
+%mvn_build
 
 %install
-# jar
-%__mkdir_p %buildroot%_javadir
-%__install -m 644 target/%name-%version.jar %buildroot%_javadir
-(cd %buildroot%_javadir && for jar in *-%{version}*; do \
-%__ln_s ${jar} ${jar/-%version/}; done)
+%mvn_install
 
-# poms
-%__mkdir_p %buildroot%_mavenpomdir/
-%__install -m 644 pom.xml \
-               $RPM_BUILD_ROOT%_mavenpomdir/JPP-%name.pom
-%add_to_maven_depmap org.kohsuke.metainf-services %name %version JPP %name
 
-# javadoc
-%__mkdir_p %buildroot%_javadocdir/%name-%version
-%__cp -a target/site/apidocs/* \
-               %buildroot%_javadocdir/%name-%version
-%__ln_s %name-%version %buildroot%_javadocdir/%name
-
-%files
-%_javadir/*.jar
-%_mavenpomdir/*
-%_mavendepmapfragdir/*
-
-%files javadoc
-%_javadocdir/%name-%version
-%_javadocdir/%name
+%files -f .mfiles
+%doc LICENSE
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_5jpp8
+- new version
+
 * Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.4-alt4_0jpp6
 - NMU: BR: maven-local
 
