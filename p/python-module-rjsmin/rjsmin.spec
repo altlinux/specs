@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.10
-Release: alt1.git20141116
+Release: alt2.git20141116
 Summary: Javascript Minifier
 License: ASLv2.0
 Group: Development/Python
@@ -42,9 +42,6 @@ rJSmin is a javascript minifier written in python.
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx docs
-ln -s ../objects.inv docs/_userdoc/
-
 %build
 %python_build_debug
 
@@ -66,8 +63,6 @@ popd
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd docs
 epydoc --config=epydoc.conf
-sphinx-build -b html -d _build/doctrees _userdoc userdoc
-cp -fR apidoc userdoc %buildroot%_docdir/%oname/
 popd
 
 %files
@@ -81,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.10-alt2.git20141116
+- Documentation creation disabled
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt1.git20141116
 - Initial build for Sisyphus
 
