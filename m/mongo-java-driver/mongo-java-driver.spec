@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		%{?scl_prefix}mongo-java-driver
 Version:	2.13.2
-Release:	alt1_5jpp8
+Release:	alt2_5jpp8
 Summary:	A Java driver for MongoDB
 
 Group:		Development/Java
@@ -149,6 +149,9 @@ cp -r -p docs/bson/*              %{buildroot}%{_javadocdir}/%{pkg_name}-bson
 %doc README.md LICENSE.txt
 
 %changelog
+* Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 2.13.2-alt2_5jpp8
+- new version
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.13.2-alt1_5jpp8
 - new version
 
