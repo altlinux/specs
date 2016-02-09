@@ -1,10 +1,12 @@
 %define _name gupnp-av
+%define ver_major 0.12
+
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: libgupnp-av
-Version: 0.12.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -12,7 +14,7 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gupnp.org/
 
-Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 BuildPreReq: libgupnp-devel >= 0.20.10
 BuildRequires: glib2-devel >= 2.14 gtk-doc
@@ -118,6 +120,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Tue Feb 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.8-alt1
+- 0.12.8
+
 * Thu Jan 08 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.7-alt1
 - 0.12.7
 
