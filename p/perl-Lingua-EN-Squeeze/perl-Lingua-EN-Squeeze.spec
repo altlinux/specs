@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-Squeeze
-Version: 2015.01
+Version: 2016.01
 Release: alt1
 
 Summary: Shorten text to minimum syllables by using hash table lookup and vowel deletion
@@ -65,6 +65,9 @@ to). The compression ratio is typically 30-40%%.
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2016.01-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 2015.01-alt1
 - automated CPAN update
 
