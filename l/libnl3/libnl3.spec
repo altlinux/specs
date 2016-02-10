@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libnl3
-Version: 3.2.25
+Version: 3.2.27
 Release: alt1
 
 Summary: library for applications dealing with netlink sockets
@@ -61,7 +63,7 @@ libraries on which they depend
 %_pkgconfigdir/*.pc
 
 %files utils
-%_sbindir/*
+%_bindir/*
 %_libdir/libnl-cli*.so.*
 %_libdir/libnl/
 %_man8dir/*
@@ -69,6 +71,9 @@ libraries on which they depend
 %exclude %_libdir/libnl/cli/qdisc/*.la
 
 %changelog
+* Wed Feb 10 2016 Mikhail Efremov <sem@altlinux.org> 3.2.27-alt1
+- Updated to 3.2.27.
+
 * Mon Mar 23 2015 Mikhail Efremov <sem@altlinux.org> 3.2.25-alt1
 - Drop obsoleted patch.
 - Updated to 3.2.25.
