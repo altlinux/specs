@@ -1,48 +1,86 @@
-Name: jline
-Version: 2.12.1
-Summary: JLine is a Java library for handling console input
-License: BSD and ASL 2.0
-Url: https://github.com/jline/jline2
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jline = 2.12.1-2.fc23
-Provides: jline2 = 2.12.1-2.fc23
-Provides: mvn(jline:jline) = 2.12.1
-Provides: mvn(jline:jline:pom:) = 2.12.1
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.fusesource.jansi:jansi)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: jline-2.12.1-2.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:             jline
+Version:          2.12.1
+Release:          alt1_2jpp8
+Summary:          JLine is a Java library for handling console input
+License:          BSD and ASL 2.0
+URL:              https://github.com/jline/jline2
+
+# git clone git://github.com/jline/jline2.git
+# cd jline2/ && git archive --format=tar --prefix=jline-2.12.1/ jline-2.12.1 | xz > jline-2.12.1.tar.xz
+Source0:          jline-%{version}.tar.xz
+
+BuildArch:        noarch
+
+BuildRequires:    jpackage-utils
+BuildRequires:    maven-local
+BuildRequires:    maven-site-plugin
+BuildRequires:    jansi
+BuildRequires:    fusesource-pom
+
+Obsoletes: jline2 < %{version}-%{release}
+Provides: jline2 = %{version}-%{release}
+Source44: import.info
 
 %description
 JLine is a Java library for handling console input. It is similar
 in functionality to BSD editline and GNU readline. People familiar
 with the readline/editline capabilities for modern shells (such as
 bash and tcsh) will find most of the command editing features of
-JLine to be familiar.
+JLine to be familiar. 
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadocs for %{name}
+Obsoletes: jline2-javadoc < %{version}-%{release}
+Provides: jline2-javadoc = %{version}-%{release}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n jline-%{version}
+
+# Remove maven-shade-plugin usage
+%pom_remove_plugin "org.apache.maven.plugins:maven-shade-plugin"
+# Remove animal sniffer plugin in order to reduce deps
+%pom_remove_plugin "org.codehaus.mojo:animal-sniffer-maven-plugin"
+
+# Remove unavailable and unneeded deps
+%pom_xpath_remove "pom:build/pom:extensions"
+%pom_xpath_remove "pom:build/pom:pluginManagement/pom:plugins/pom:plugin[pom:artifactId = 'maven-site-plugin']"
+
+# Do not import non-existing internal package
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Import-Package"
+%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions" "<Import-Package>javax.swing;resolution:=optional,!org.fusesource.jansi.internal</Import-Package>"
+
+# Let maven bundle plugin figure out the exports.
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-bundle-plugin']/pom:executions/pom:execution/pom:configuration/pom:instructions/pom:Export-Package"
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/jline
+%dir %{_mavenpomdir}/jline
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.12.1-alt1_2jpp8
+- unbootstrap build
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.12.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
