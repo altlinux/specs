@@ -1,10 +1,12 @@
 Group: Development/Java
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          guava
 Version:       18.0
-Release:       alt1_4jpp8
+Release:       alt2_4jpp8
 Summary:       Google Core Libraries for Java
 License:       ASL 2.0
 URL:           https://github.com/google/guava
@@ -74,6 +76,9 @@ find . -name '*.jar' -delete
 %doc COPYING
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 18.0-alt2_4jpp8
+- added osgi provides
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 18.0-alt1_4jpp8
 - unbootsrap build
 
