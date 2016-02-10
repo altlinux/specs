@@ -1,19 +1,28 @@
-Name: args4j
-Version: 2.32
-Summary: Java command line arguments parser
-License: MIT
-Url: http://args4j.kohsuke.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: args4j = 2.32-1.fc23
-Provides: mvn(args4j:args4j) = 2.32
-Provides: mvn(args4j:args4j:pom:) = 2.32
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: args4j-2.32-1.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           args4j
+Version:        2.32
+Release:        alt1_2jpp8
+Summary:        Java command line arguments parser
+License:        MIT
+URL:            http://args4j.kohsuke.org
+Source0:        https://github.com/kohsuke/%{name}/archive/%{name}-site-%{version}.tar.gz
+
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.sun:tools)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.kohsuke:pom:pom:)
+BuildRequires:  mvn(org.mockito:mockito-all)
+Source44: import.info
 
 %description
 args4j is a small Java class library that makes it easy
@@ -25,24 +34,81 @@ to parse command line options/arguments in your CUI application.
 - It is designed to parse javac like options (as opposed to GNU-style
   where ls -lR is considered to have two options l and R)
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package tools
+Group: Development/Java
+Summary:        Development-time tool for generating additional artifacits
+
+%description tools
+This package contains args4j development-time tool for generating
+additional artifacits.
+
+%package parent
+Group: Development/Java
+Summary:        args4j parent POM
+
+%description parent
+This package contains parent POM for args4j project.
+
+%package javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-site-%{version}
+
+# removing classpath addition
+sed -i 's/<addClasspath>true/<addClasspath>false/g' %{name}-tools/pom.xml
+
+# fix ant group id
+sed -i 's/<groupId>ant/<groupId>org.apache.ant/g' %{name}-tools/pom.xml
+
+# removing bundled stuff
+find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -exec rm -f '{}' \;
+
+%pom_remove_plugin :maven-shade-plugin %{name}-tools
+
+# XMvn cannot generate requires on dependecies with scope "system"
+%pom_xpath_remove "pom:profile[pom:id[text()='jdk-tools-jar']]" %{name}-tools
+%pom_add_dep com.sun:tools %{name}-tools
+
+# we don't need these now
+%pom_disable_module args4j-maven-plugin
+%pom_disable_module args4j-maven-plugin-example
+
+# put args4j-tools and parent POM to separate subpackages
+%mvn_package :args4j-tools::{}: %{name}-tools
+%mvn_package :args4j-site::{}: %{name}-parent
+
+# install also compat symlinks
+%mvn_file ":{*}" %{name}/@1 @1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc %{name}/LICENSE.txt
 
-%files -f %name-list
+%files tools -f .mfiles-%{name}-tools
+
+%files parent -f .mfiles-%{name}-parent
+%doc %{name}/LICENSE.txt
+
+%files javadoc -f .mfiles-javadoc
+%doc %{name}/LICENSE.txt
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.32-alt1_2jpp8
+- java8 mass update
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.32-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
