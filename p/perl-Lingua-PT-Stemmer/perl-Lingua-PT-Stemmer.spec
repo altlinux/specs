@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Lingua-PT-Stemmer
 Name: perl-%dist
-Version: 0.01
+Version: 0.02
 Release: alt1
 
 Summary: Stemmers for Portuguese and Galician
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Lingua-PT-Stemmer-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,5 +41,8 @@ Portuguese stemming algorithm can be adopted to stem Galician texts.
 %perl_vendor_privlib/Lingua/PT
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- automated CPAN update
+
 * Sun Jan 16 2011 Alexey Tourbin <at@altlinux.ru> 0.01-alt1
 - decoupled from perl-Lingua-Stem
