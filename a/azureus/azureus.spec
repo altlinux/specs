@@ -1,20 +1,25 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 Conflicts: vuse < 4.2.0.3
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.2.0.0
-Release:	alt1_2jpp7
+Version:	5.7.0.0
+Release:	alt1_2jpp8
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
-License:	GPLv2+
+
+#Exception for using Eclipse SWT
+#http://wiki.vuze.com/w/Vuze_License
+License:	GPLv2 with exceptions
+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5200_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5700_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -22,30 +27,35 @@ Source3:	azureus.applications
 #ant build script from Azureus-4.3.0.6
 Source4:	build.xml
 
-Patch0:		azureus-cache-size.patch
-Patch1:		azureus-remove-manifest-classpath.patch
-Patch2:		azureus-no-shared-plugins.patch
-Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
+Patch0:		azureus-remove-manifest-classpath.patch
+Patch1:		azureus-no-shared-plugins.patch
+Patch2:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
-Patch4:	azureus-4.0.0.4-boo-osx.diff
+Patch4:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
-Patch6:	azureus-4.0.0.4-stupid-invalid-characters.diff
+Patch5:	azureus-4.2.0.4-java5.patch
 
-Patch7:	azureus-4.2.0.4-java5.patch
+Patch6:	azureus-4.8.1.2-no-bundled-apache-commons.patch
 
-Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
+Patch7: azureus-5.2.0.0-startupScript.patch
 
-Patch10: azureus-5.2.0.0-startupScript.patch
+Patch8: azureus-5.2-no-bundled-json.patch
+Patch9: azureus-5.3.0.0-no-bundled-bouncycastle
+Patch10: azureus-5.4.0.0-fix_compile.patch
+Patch11: vuze-5.3.0.0-disable-updaters.patch
 
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
-BuildRequires:	apache-commons-cli log4j
+BuildRequires:	apache-commons-cli log4j12
 BuildRequires:	apache-commons-lang
-BuildRequires:	bouncycastle >= 1.33-3
+BuildRequires:	bouncycastle >= 1.33
+BuildRequires:	json_simple
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
-Requires:	apache-commons-cli log4j
+Requires:	apache-commons-cli log4j12
+Requires:	apache-commons-lang
 Requires:	eclipse-swt >= 3.5
-Requires:	 bouncycastle >= 1.33-3
+Requires:	 bouncycastle >= 1.33
+Requires:	json_simple
 BuildRequires:	 desktop-file-utils
 Requires(post):	 desktop-file-utils
 Requires(postun):	desktop-file-utils
@@ -66,25 +76,27 @@ advanced users.
 
 cp %{SOURCE4} .
 
-%patch0 -p0 -b .cache-size
-%patch1 -p1 -b .remove-manifest-classpath
-%patch2 -p1 -b .no-shared-plugins
+%patch0 -p1 -b .remove-manifest-classpath
+%patch1 -p1 -b .no-shared-plugins
 
-%patch3 -p1 -b .nobcprov
-
+%patch2 -p1 -b .nobcprov
 
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
-%patch4 -p1 -b .boo-osx
 
-%patch6  -p1 -b stupid-invalid-characters
+%patch4  -p1 -b stupid-invalid-characters
 
-%patch7 -p1 -b .java5
+%patch5 -p1 -b .java5
 
-%patch9 -p1 -b .no-bundled-apache-commons
+%patch6 -p1 -b .no-bundled-apache-commons
 
-%patch10 -p1 -b .startupScript
+%patch7 -p1 -b .startupScript
+
+%patch8 -p1 -b .no-bundled-json
+%patch9 -p1 -b .no-bundled-bouncycastle
+%patch10 -p1 -b .5.4.0.0_fix_compile
+%patch11 -p1 -b .disable_updaters
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -95,18 +107,16 @@ chmod 644 *.txt
 
 #remove bundled libs
 rm -fR org/apache
+rm -fR org/bouncycastle
+rm -fR org/json
+#rm -fR org/pf
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov apache-commons-cli log4j \
-  junit apache-commons-lang
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
+  junit apache-commons-lang json_simple
 
-#ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
-if [ -e /usr/lib/eclipse/swt.jar ];then
-  ln -s /usr/lib/eclipse/swt.jar build/libs
-else
-  ln -s /usr/lib64/eclipse/swt.jar build/libs
-fi
+ln -s %_jnidir/swt.jar build/libs
 
 ant jar
 
@@ -141,7 +151,8 @@ touch %{_datadir}/icons/hicolor
 touch %{_datadir}/icons/hicolor
 
 %files
-%doc ChangeLog.txt GPL.txt
+%doc ChangeLog.txt
+%doc GPL.txt
 %{_datadir}/applications/*
 %{_datadir}/application-registry/*
 %{_datadir}/pixmaps/azureus.png
@@ -152,6 +163,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.0.0-alt1_2jpp8
+- java8 mass update
+
 * Sat Jan 18 2014 Igor Vlasenko <viy@altlinux.ru> 5.2.0.0-alt1_2jpp7
 - update
 
