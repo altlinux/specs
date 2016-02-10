@@ -1,77 +1,45 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: gcc-c++ unzip saxon
 # END SourceDeps(oneline)
-BuildRequires: oro plexus-resources
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+BuildRequires: jpackage-generic-compat
 Name:           pmd
-Version:        4.2.5
-Release:        alt5_15jpp7
 Epoch:          0
+Version:        5.4.1
+Release:        alt1_1jpp8
 Summary:        Scans Java source code and looks for potential problems
-License:        BSD
-
-Source0:        http://downloads.sourceforge.net/pmd/pmd-src-%{version}.zip
-# This patch has not been sent upstream.  It causes the build to use installed
-# jars for dependencies rather than use those distributed with the source.  It
-# also kills retroweaver dead, dead, dead so it won't interfere with the build.
-Patch0:         pmd-4.2.5-build.patch
-# This patch was sent upstream on 11 Feb 2009.  It fixes a null pointer
-# exception when using the nicerhtml output format.
-Patch1:         pmd-4.2.4-nicerhtml.patch
-# This patch has not been sent upstream.  It updates an ant dep in a pom file
-# to use the latest groupId for ant.
-Patch2:         pmd-4.2.5-antdep.patch
+License:        BSD and ASL 2.0 and LGPLv3+
 URL:            http://pmd.sourceforge.net/
-
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  ant >= 0:1.6
-BuildRequires:  ant-junit
-BuildRequires:  junit
-BuildRequires:  jaxen >= 0:1.1.1
-BuildRequires:  objectweb-asm >= 0:3.1
-BuildRequires:  objectweb-asm-javadoc >= 0:3.1
-BuildRequires:  xml-commons-apis >= 1.3.02
-Requires:       jpackage-utils >= 0:1.6
-Requires:       jaxen >= 0:1.1.1
-Requires:       objectweb-asm >= 0:3.1
-Requires:       xerces-j2
-Requires:       xml-commons-apis >= 1.3.02
-Group:          Development/Java
 BuildArch:      noarch
 
-Provides:       %{name}-manual = %{epoch}:%{version}-%{release}
-Obsoletes:      %{name}-manual < 0:4.0.0-1
+Source0:        http://downloads.sourceforge.net/project/pmd/pmd/%{version}/pmd-src-%{version}.zip
+
+# fix api incompatibilities with newer saxon
+# not sent upstream
+Patch1:         saxon.patch
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.beust:jcommander)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(jaxen:jaxen)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.java.dev.javacc:javacc)
+BuildRequires:  mvn(net.sf.saxon:saxon)
+BuildRequires:  mvn(net.sourceforge.pmd:pmd-build)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-testutil)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-markdown)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-site-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.jacoco:jacoco-maven-plugin)
+BuildRequires:  mvn(org.mozilla:rhino)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
 Source44: import.info
 
 %description
@@ -88,66 +56,48 @@ CodeGuide, NetBeans/Sun Java Studio Enterprise/Creator, IntelliJ IDEA,
 TextPad, Maven, Ant, Gel, JCreator, and Emacs.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       objectweb-asm-javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+API documentation for %{name}.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1
-%patch2
+%setup -q -n %{name}-src-%{version}
+%patch1 -p1
 
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
+find . -name "*.class" -exec rm -f {} \;
 
-# remove an unneeded script in an otherwise documentation directory
-rm -f etc/fr_docs/copy_up.sh
+%mvn_alias : pmd:pmd
+
+%pom_xpath_remove pom:build/pom:extensions
+
+%pom_xpath_set pom:parent/pom:version %{version} */pom.xml
+
+sed -i 's/net.sourceforge.saxon/net.sf.saxon/' `find -name pom.xml`
+
+%pom_xpath_set -r '//pom:property[@name="javacc.jar"]/@value' `xmvn-resolve net.java.dev.javacc:javacc`
 
 %build
-ant
-ant -f bin/build.xml -Ddir.lib=%{_javadir} javadoc
+# tests require com.github.tomakehurst:wiremock
+%mvn_build -f -- -P!jdk9-disabled
 
 %install
-# jar
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 lib/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}
-cp -p etc/pmd-nicerhtml.xsl $RPM_BUILD_ROOT%{_sysconfdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-cp -pr etc/xslt $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/rulesets
-cp -pr rulesets/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/rulesets
+%mvn_install
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%files -f .mfiles
+%doc LICENSE NOTICE
 
-%add_maven_depmap
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%doc LICENSE.txt etc/changelog.txt etc/fr_docs etc/readme.txt
-%doc etc/pmdProperties.rtf
-%{_javadir}/*.jar
-%{_datadir}/%{name}-%{version}
-%config(noreplace) %{_sysconfdir}/pmd-nicerhtml.xsl
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-
-%files javadoc
-%doc LICENSE.txt
-%{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:5.4.1-alt1_1jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 0:4.2.5-alt5_15jpp7
 - new release
 
