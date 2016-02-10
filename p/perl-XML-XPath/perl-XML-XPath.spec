@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-XPath
 Name: perl-%dist
-Version: 1.18
+Version: 1.30
 Release: alt1
 
 Summary: A set of modules for parsing and evaluating XPath statements
@@ -15,7 +15,7 @@ Patch: perl-XML-XPath-1.18-alt-fixes.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-XML-Parser perl-devel
+BuildRequires: perl-XML-Parser perl-devel perl(Path/Tiny.pm)
 
 %description
 This module aims to comply exactly to the XPath specification at
@@ -41,6 +41,9 @@ sed -i- '/EXE_FILES/d' Makefile.PL
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
+- automated CPAN update
+
 * Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
