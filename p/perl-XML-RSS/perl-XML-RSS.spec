@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-RSS
 Name: perl-%dist
-Version: 1.57
+Version: 1.58
 Release: alt1
 
 Summary: Creates and updates RSS files
@@ -35,6 +35,9 @@ creating, updating, and saving RSS files.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.58-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.57-alt1
 - automated CPAN update
 
