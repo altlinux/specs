@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist GDGraph
 Name: perl-GD-Graph
-Version: 1.51
+Version: 1.52
 Release: alt1
 Epoch: 1
 
@@ -35,6 +35,9 @@ GD.pm. See the documentation for some history and more information.
 %perl_vendor_privlib/GD
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.52-alt1
+- automated CPAN update
+
 * Mon Dec 28 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.51-alt1
 - automated CPAN update
 
