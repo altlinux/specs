@@ -2,12 +2,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           aopalliance
 Version:        1.0
-Release:        alt5_11jpp8
+Release:        alt6_11jpp8
 Epoch:          0
 Summary:        Java/J2EE AOP standards
 License:        Public Domain
@@ -69,6 +71,9 @@ cp -pr build/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_11jpp8
+- added osgi provides
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_11jpp8
 - new version
 
