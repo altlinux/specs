@@ -1,11 +1,13 @@
 Name: ustr
 Version: 1.0.4
-Release: alt3
+Release: alt4
 Summary: String library, very low memory overhead, simple to import
 Group: System/Libraries
 License: MIT or LGPLv2+ or BSD
 Url: http://www.and.org/ustr/
 Source0: http://www.and.org/ustr/%version/%name-%version.tar.gz
+# FC
+Patch1: c99-inline.patch
 %description
  Micro string library, very low overhead from plain strdup() (Ave. 44%% for
 0-20B strings). Very easy to use in existing C code. At it's simplest you can
@@ -70,9 +72,11 @@ Requires: lib%name-devel-debug = %version-%release
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
-%make_build CFLAGS="${CFLAGS:-%optflags}"
+%add_optflags -fgnu89-inline
+%make_build CFLAGS="${CFLAGS:-%optflags}" all-shared libustr.a ustr-import
 
 
 %install
@@ -107,6 +111,9 @@ Requires: lib%name-devel-debug = %version-%release
 %_libdir/libustr-debug.a
 
 %changelog
+* Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.4-alt4
+- build with gcc5
+
 * Tue Jul 24 2012 Anton Farygin <rider@altlinux.ru> 1.0.4-alt3
 - rebuild for set-versions
 
