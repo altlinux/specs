@@ -1,66 +1,75 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name infinispan
-%define version 5.1.2
-%global namedreltag .FINAL
+%define version 6.0.2
+%global namedreltag .Final
 %global namedversion %{version}%{?namedreltag}
 
+# Use this switch to rebuild without infinispan
+# This is useful to break the infinispan circular dependency
+%define with_infinispan 1
+
 Name:             infinispan
-Version:          5.1.2
-Release:          alt2_6jpp7
+Version:          6.0.2
+Release:          alt1_7jpp8
 Summary:          Data grid platform
-Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/infinispan
+Source0:          https://github.com/infinispan/infinispan/archive/%{namedversion}.tar.gz
 
-# git clone git://github.com/infinispan/infinispan.git
-# cd infinispan/ && git archive --format=tar --prefix=infinispan-5.1.2.FINAL/ 5.1.2.FINAL | xz > infinispan-5.1.2.FINAL.tar.xz
-Source0:          %{name}-%{namedversion}.tar.xz
-
-# Removes some of modules not necessary at this point
-Patch0:           %{name}-%{namedversion}-pom.patch
-# Adds support for new avro library
-Patch1:           %{name}-%{namedversion}-avro.patch
+Patch0:           0001-Avro-1.6.2-support.patch
+Patch1:           0002-ISPN-3974-Make-it-compile-with-JDK8.patch
+Patch2:           infinispan-6.0.2-lucene4.10-support.patch
 
 BuildArch:        noarch
 
-BuildRequires:    apache-commons-math
-BuildRequires:    apache-commons-pool
-BuildRequires:    avro
-BuildRequires:    c3p0
-BuildRequires:    jcip-annotations
-BuildRequires:    jboss-logging-tools
-BuildRequires:    jboss-marshalling
-BuildRequires:    jboss-naming
-BuildRequires:    jboss-transaction-1.1-api
-BuildRequires:    jgroups >= 3.0.3
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-plugin-exec
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-remote-resources-plugin
-BuildRequires:    rhq-plugin-annotations
-BuildRequires:    staxmapper
+%if %{with_infinispan}
+BuildRequires:    infinispan
+%endif
 
-Requires:         apache-commons-math
-Requires:         apache-commons-pool
-Requires:         avro
-Requires:         c3p0
-Requires:         jcip-annotations
-Requires:         jboss-logging-tools
-Requires:         jboss-marshalling
-Requires:         jboss-naming
-Requires:         jboss-transaction-1.1-api
-Requires:         jgroups >= 3.0.3
-Requires:         jpackage-utils
-Requires:         staxmapper
+BuildRequires:    maven-local
+BuildRequires:    mvn(c3p0:c3p0)
+BuildRequires:    mvn(com.puppycrawl.tools:checkstyle)
+BuildRequires:    mvn(commons-pool:commons-pool)
+BuildRequires:    mvn(gnu-getopt:getopt)
+BuildRequires:    mvn(log4j:log4j)
+BuildRequires:    mvn(net.jcip:jcip-annotations)
+BuildRequires:    mvn(org.apache.avro:avro)
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.lucene:lucene-core:3)
+%if 0%{?fedora} >= 23
+# Require these anyhow, always
+BuildRequires:    mvn(org.apache.lucene:lucene-core:4)
+BuildRequires:    mvn(org.apache.lucene:lucene-analyzers-common:4)
+%else
+BuildRequires:    mvn(org.apache.lucene:lucene-core)
+BuildRequires:    mvn(org.apache.lucene:lucene-analyzers-common)
+%endif
+BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-failsafe-plugin)
+BuildRequires:    mvn(org.codehaus.jackson:jackson-mapper-asl)
+BuildRequires:    mvn(org.codehaus.mojo:exec-maven-plugin)
+BuildRequires:    mvn(org.hibernate:hibernate-search-engine) >= 4.5.1
+BuildRequires:    mvn(org.hibernate:hibernate-search-infinispan)
+BuildRequires:    mvn(org.hibernate.hql:hibernate-hql-lucene)
+BuildRequires:    mvn(org.hibernate.hql:hibernate-hql-parser)
+BuildRequires:    mvn(org.infinispan.protostream:protostream)
+BuildRequires:    mvn(org.jboss.aesh:aesh)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+BuildRequires:    mvn(org.jboss.marshalling:jboss-marshalling)
+BuildRequires:    mvn(org.jboss.marshalling:jboss-marshalling-river)
+BuildRequires:    mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec)
+BuildRequires:    mvn(org.jgroups:jgroups)
+BuildRequires:    mvn(org.osgi:org.osgi.core)
 Source44: import.info
+
 
 %description
 Infinispan is an extremely scalable, highly available data grid
@@ -73,9 +82,8 @@ extends java.util.Map. It is also optionally is backed by a peer-to-peer
 network architecture to distribute state efficiently around a data grid.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -83,68 +91,126 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
+
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # Rename the license file
 cp -r license/src/main/resources/META-INF/LICENSE.txt.vm LICENSE.txt
 
+# Disable unnecessary at this point modules
+%pom_disable_module extended-statistics
+%pom_disable_module tools
+%pom_disable_module tree
+%if 0%{?fedora} < 21
+%pom_disable_module lucene/lucene-v4
+%endif
+%pom_disable_module server
+%pom_disable_module server/core
+%pom_disable_module server/memcached
+%pom_disable_module server/hotrod
+%pom_disable_module server/websocket
+%pom_disable_module server/rest
+%pom_disable_module cli/cli-server
+%pom_disable_module rhq-plugin
+%pom_disable_module spring
+%pom_disable_module demos/gui
+%pom_disable_module demos/ec2
+%pom_disable_module demos/distexec
+%pom_disable_module demos/ec2-ui
+%pom_disable_module demos/directory
+%pom_disable_module demos/lucene-directory-demo
+%pom_disable_module demos/gridfs-webdav
+%pom_disable_module demos/nearcache
+%pom_disable_module demos/nearcache-client
+%pom_disable_module cdi/extension
+%pom_disable_module integrationtests/luceneintegration
+%pom_disable_module remote-query/remote-query-server
+%pom_disable_module persistence/leveldb
+%pom_disable_module persistence/rest
+%pom_disable_module server/integration
+
+# Remove the 5.2.x migration support
+rm persistence/remote/src/main/java/org/infinispan/persistence/remote/upgrade/HotRodTargetMigrator.java
+%pom_remove_dep ":infinispan-adaptor52x" persistence/remote
+%pom_disable_module compatibility52x
+
+%pom_disable_module compatibility52x/adaptor52x
+%pom_disable_module compatibility52x/custom52x-store
+%pom_disable_module compatibility52x/cli-migrator52x
+
+%pom_disable_module as-modules
+%pom_disable_module jcache
+
+%if !%{with_infinispan}
+%pom_disable_module query
+%endif
+
+# https://bugs.openjdk.java.net/browse/JDK-8067747
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration" \
+ "<useIncrementalCompilation>false</useIncrementalCompilation>" commons
+for p in core persistence/jdbc query client/hotrod-client persistence/remote ;do
+%pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin:3.0 ${p} '
+<configuration>
+ <useIncrementalCompilation>false</useIncrementalCompilation>
+ <source>1.6</source>
+ <target>1.6</target>
+ <encoding>UTF-8</encoding>
+</configuration>'
+done
+
+%pom_remove_dep "org.jboss.arquillian:arquillian-bom" parent/pom.xml
+%pom_remove_dep "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-bom" parent/pom.xml
+
+%pom_remove_plugin ":maven-remote-resources-plugin" parent/pom.xml
+
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:scope = 'test']/pom:scope" lucene/lucene-directory/pom.xml
+
+%if 0%{?fedora} < 21
+# Lucene 4 is unavailable
+%pom_remove_dep ":infinispan-lucene-v4" lucene/lucene-directory/pom.xml
+%pom_remove_dep ":infinispan-lucene-v4" parent/pom.xml
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'maven-dependency-plugin']/pom:executions/pom:execution/pom:configuration/pom:artifactItems/pom:artifactItem[pom:artifactId = 'infinispan-lucene-v4']" lucene/lucene-directory/pom.xml
+%endif
+
+%pom_remove_plugin ":animal-sniffer-maven-plugin" parent/pom.xml
+
+# Support for JGroups 3.4.0
+sed -i "s|SiteUUID.getSiteName(src.getSite())|src.getSite()|" core/src/main/java/org/infinispan/xsite/BackupReceiverRepositoryImpl.java
+
+# Use lucene3 compat package
+%pom_xpath_set "pom:properties/pom:version.lucene.v3" 3 parent
+# Use lucene4 compat package
+%pom_xpath_set "pom:properties/pom:version.lucene.v4" 4 parent
+
+# TMP
+sed -i "s|error|first|" lucene/lucene-directory/pom.xml
+
+%pom_remove_dep "org.scala-lang:scala-library" server/pom.xml
+%pom_remove_plugin "org.scala-tools:maven-scala-plugin" server/core/pom.xml
+
+%pom_remove_dep "org.jboss.as:jboss-as-parent" server/integration/versions/pom.xml
+%pom_remove_plugin ":animal-sniffer-maven-plugin" server/integration/versions/pom.xml
+
 %build
-# We don't have one of easymock package
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+
+%mvn_build -f
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-for m in core; do
-  # JAR
-  install -pm 644 ${m}/target/infinispan-${m}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-${m}.jar
-  # POM
-  install -pm 644 ${m}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-  # DEPMAP
-  %add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
+%files -f .mfiles
+%doc README.md
+%doc LICENSE.txt
 
-# Cachestore modules
-for m in remote jdbc; do
-  # JAR
-  install -pm 644 cachestore/${m}/target/infinispan-cachestore-${m}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-cachestore-${m}.jar
-  # POM
-  install -pm 644 cachestore/${m}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-cachestore-${m}.pom
-  # DEPMAP
-  %add_maven_depmap JPP.%{name}-%{name}-cachestore-${m}.pom %{name}/%{name}-cachestore-${m}.jar
-done
-
-install -pm 644 client/hotrod-client/target/infinispan-client-hotrod.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-client-hotrod.jar
-
-# POM
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
-install -pm 644 parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-parent.pom
-install -pm 644 client/hotrod-client/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-client-hotrod.pom
-install -pm 644 cachestore/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-cachestore-parent.pom
-
-# DEPMAP
-%add_maven_depmap JPP.%{name}-%{name}.pom
-%add_maven_depmap JPP.%{name}-%{name}-parent.pom
-%add_maven_depmap JPP.%{name}-%{name}-cachestore-parent.pom
-%add_maven_depmap JPP.%{name}-%{name}-client-hotrod.pom %{name}/%{name}-client-hotrod.jar
-
-# APIDOCS
-cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-%doc LICENSE.txt README.mkdn
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.2-alt1_7jpp8
+- new version
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 5.1.2-alt2_6jpp7
 - new release
 
