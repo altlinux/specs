@@ -9,6 +9,7 @@
 %def_enable  shared_libraries
 %def_disable v8_internal
 %def_disable libchromiumcontent
+%def_enable  vaapi
 
 %define v8_version 4.8.271.18
 
@@ -20,7 +21,7 @@
 
 Name:           chromium
 Version:        48.0.2564.103
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -84,6 +85,10 @@ Patch93:	chromium-ps-print.patch
 Patch95:	chromium-fix-shrank-by-one-character.patch
 Patch96:	chromium-set-ffmpeg-flags-for-multimedia.patch
 Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
+
+# Experimental patches
+# https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1424201
+Patch300:	chromium-enable_vaapi_on_linux.patch
 
 BuildRequires: /proc
 
@@ -173,6 +178,9 @@ BuildRequires:  yasm
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
 BuildRequires:  zlib-devel
+%if_enabled vaapi
+BuildRequires:  libva-devel
+%endif
 
 Provides:       webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
@@ -250,6 +258,11 @@ cp -a src/libchromiumcontent/chromiumcontent src
 %patch95 -p0
 %patch96 -p0
 #patch98 -p0
+
+# VAAPI
+%if_enabled vaapi
+%patch300 -p1 -d src
+%endif
 
 %if_disabled v8_internal
 # Replace anywhere v8 to system package
@@ -575,6 +588,10 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Tue Feb 09 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.103-alt2
+- Enable experimental VAAPI support (ALT #31772) (thanks L.A. Kostis
+  for patch)
+
 * Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.103-alt1
 - New version
 
