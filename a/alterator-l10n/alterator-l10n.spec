@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.24
-Release: alt2
+Version: 2.9.25
+Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -85,6 +85,7 @@ make check
 %lang(pt_BR) %config(noreplace) %_sysconfdir/alterator/l10n/*-pt_BR
 %lang(es) %config(noreplace) %_sysconfdir/alterator/l10n/*-es_*
 %lang(kk) %config(noreplace) %_sysconfdir/alterator/l10n/*-kk_*
+%lang(de) %config(noreplace) %_sysconfdir/alterator/l10n/*-de_*
 
 %dir %_datadir/alterator/help/
 %lang(en) %dir %_datadir/alterator/help/en_US/
@@ -110,7 +111,12 @@ make check
 
 %lang(kk) %_datadir/locale/kk/LC_MESSAGES/*.mo
 
+%lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
+
 %changelog
+* Wed Feb 10 2016 Michael Shigorin <mike@altlinux.org> 2.9.25-alt1
+- Added German translation (courtesy of Armin Schafer)
+
 * Tue Dec 22 2015 Andrey Cherepanov <cas@altlinux.org> 2.9.24-alt2
 - Fix typo
 
