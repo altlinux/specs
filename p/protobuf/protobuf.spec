@@ -8,8 +8,8 @@
 %def_with python3
 
 Name: protobuf
-Version: 2.6.0
-Release: alt1.1
+Version: 2.6.1
+Release: alt1
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -118,21 +118,14 @@ Python bindings for protocol buffers
 %package java
 Summary: Java Protocol Buffers runtime library
 Group:   Development/Java
-BuildRequires:    jpackage-core
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-antrun-plugin
-BuildRequires:    maven-doxia
-BuildRequires:    maven-doxia-sitetools
-Requires:         java
-Requires:         jpackage-utils
+BuildRequires:    mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:    mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:    rpm-build-java java-devel-default
 Conflicts:        %{name}-compiler > %{version}
 Conflicts:        %{name}-compiler < %{version}
+# remove when xmvn will be patched to not insert this dep automatically
+%filter_from_requires /^java-headless/d
 
 %description java
 This package contains Java Protocol Buffers runtime library.
@@ -181,7 +174,8 @@ popd
 
 %if_with java
 pushd java
-mvn-rpmbuild install javadoc:javadoc
+%mvn_file : %{name}
+%mvn_build
 popd
 %endif
 
@@ -201,22 +195,15 @@ popd
 
 %if_with java
 pushd java
-install -d -m 755 %{buildroot}%{_javadir}
-install -pm 644 target/%{name}-java-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
-
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install
+popd
 %endif
 
 %files compiler
 %_bindir/protoc
 
 %files -n lib%{name}%{soversion}
-%doc CONTRIBUTORS.txt README.txt examples/
+%doc CONTRIBUTORS.txt README* examples/
 %_libdir/*.so.*
 %exclude %_libdir/libprotobuf-lite.so.*
 
@@ -240,18 +227,20 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
-%if_with java
-%files java
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%{_javadir}/%{name}.jar
+%if %{with java}
+%files java -f java/.mfiles
 %doc examples/AddPerson.java examples/ListPeople.java
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f java/.mfiles-javadoc
 %endif
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1.2
+- NMU: java is built according to new policy (using xmvn)
+
 * Wed Jun 10 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.0-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
