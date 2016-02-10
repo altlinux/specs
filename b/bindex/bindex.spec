@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # SVN info
 %global svnRev 96
 
 # Prevent brp-java-repack-jars from being run.
-%define __jar_repack %{nil}
+%global __jar_repack %{nil}
 
 Name:    bindex
 Version: 2.2
-Release: alt3_8.svn96jpp7
+Release: alt3_14.svn96jpp8
 Summary: Bundle Manifest Header Mapper
 
 Group:   Development/Java
@@ -32,11 +33,10 @@ BuildRequires: ant
 BuildRequires: aqute-bnd
 BuildRequires: felix-osgi-obr
 BuildRequires: felix-osgi-core
-BuildRequires: jpackage-utils
-BuildRequires: junit4
+BuildRequires: junit
 BuildRequires: kxml
 
-Requires: jpackage-utils
+Requires: maven-local
 Source44: import.info
 
 %description
@@ -58,19 +58,21 @@ pushd jar
   %__ln_s $(build-classpath kxml.jar) kxml2-min.jar
   %__ln_s $(build-classpath felix/org.osgi.service.obr.jar)
 popd
-java -jar $(build-classpath aqute-bnd.jar) \
-     build -output %{name}-%{version}.jar bindex.bnd
+bnd buildx --output %{name}.jar bindex.bnd
 
 %install
 %__install -d -m 0755 %{buildroot}%{_javadir}
-%__install -m 644 %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && %__ln_s %{name}-%{version}.jar %{name}.jar)
+%__install -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 %files
-%doc LICENSE.txt README
+%doc README
+%doc LICENSE.txt
 %{_javadir}/*
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_14.svn96jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_8.svn96jpp7
 - new release
 
