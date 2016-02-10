@@ -1,20 +1,30 @@
-Name: hawtbuf
-Version: 1.11
-Summary: A rich byte buffer library
-License: ASL 2.0
-Url: https://github.com/fusesource/hawtbuf/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: hawtbuf = 1.11-3.fc23
-Provides: mvn(org.fusesource.hawtbuf:hawtbuf) = 1.11
-Provides: mvn(org.fusesource.hawtbuf:hawtbuf-project:pom:) = 1.11
-Provides: mvn(org.fusesource.hawtbuf:hawtbuf:pom:) = 1.11
-Requires: java-headless
-Requires: jpackage-utils
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: hawtbuf-1.11-3.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:          hawtbuf
+Version:       1.11
+Release:       alt1_4jpp8
+Summary:       A rich byte buffer library
+License:       ASL 2.0
+URL:           https://github.com/fusesource/hawtbuf/
+Source0:       https://github.com/fusesource/hawtbuf/archive/%{name}-project-%{version}.tar.gz
+
+BuildRequires: maven-local
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven:maven-project)
+BuildRequires: mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires: mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires: mvn(org.fusesource:fusesource-pom:pom:)
+
+BuildArch:     noarch
+Source44: import.info
 
 %description
 This library implements a simple interface with working with
@@ -25,24 +35,64 @@ what the String class does for char arrays. This library
 fills in that void by providing a Buffer class which does provide
 that rich interface.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package proto
+Group: Development/Java
+Summary:       A protobuf library
+
+%description proto
+HawtBuf Proto: A protobuf library.
+
+%package protoc
+Group: Development/Java
+Summary:       A protobuf compiler as a maven plugin
+
+%description protoc
+HawtBuf Protoc: A protobuf compiler as a maven plugin.
+
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{name}-project-%{version}
+
+%pom_remove_plugin :maven-assembly-plugin
+
+%pom_xpath_set "pom:properties/pom:log4j-version" 1.2.17
+%pom_xpath_remove pom:Private-Package
+
+%mvn_package ":%{name}-project" %{name}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_build -s
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles-%{name}
+%doc readme.md
+%doc license.txt notice.md
 
-%files -f %name-list
+%files proto -f .mfiles-%{name}-proto
+%doc %{name}-proto/readme.md
+%doc license.txt notice.md
+
+%files protoc -f .mfiles-%{name}-protoc
+%doc %{name}-protoc/readme.md
+%doc license.txt notice.md
+
+%files javadoc -f .mfiles-javadoc
+%doc license.txt notice.md
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1_4jpp8
+- java8 mass update
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.11-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
