@@ -32,8 +32,8 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.10.11
-Release: alt2
+Version: 2.10.12
+Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -76,7 +76,7 @@ BuildPreReq: libXext-devel libX11-devel
 %{?_enable_dot:BuildPreReq: graphviz}
 %{?_enable_doxygen:BuildPreReq: doxygen}
 %{?_enable_idn:BuildPreReq: libidn-devel}
-%{?_enable_farstream:BuildPreReq: libfarstream0.2-devel}
+%{?_enable_farstream:BuildPreReq: libfarstream0.2-devel >= 0.2.7}
 %{?_enable_vv:BuildPreReq: gst-plugins1.0-devel}
 %{?_enable_gstreamer:BuildPreReq: gstreamer1.0-devel}
 %{?_enable_sm:BuildPreReq: libSM-devel}
@@ -86,7 +86,7 @@ BuildPreReq: libxml2-devel >= 2.6.0
 BuildPreReq: GConf libGConf-devel
 
 BuildRequires: gcc-c++ libgpg-error
-BuildRequires: python-modules-encodings
+BuildRequires: python-modules-encodings python-module-future
 # for shared gadu plugin
 BuildRequires: libgadu-devel >= 1.11.0
 BuildRequires: intltool
@@ -447,6 +447,9 @@ fi
 %endif
 
 %changelog
+* Wed Feb 10 2016 Alexey Shabalin <shaba@altlinux.ru> 2.10.12-alt1
+- 2.10.12
+
 * Fri Jan 30 2015 Alexey Shabalin <shaba@altlinux.ru> 2.10.11-alt2
 - rebuilt against libfarstream-0.2.so.5
 
