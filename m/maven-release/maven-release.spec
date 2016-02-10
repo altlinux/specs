@@ -1,45 +1,122 @@
-Name: maven-release
-Version: 2.2.1
-Summary: Release a project updating the POM and tagging in the SCM
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-release-plugin/
 Epoch: 1
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-release = 2.2.1-13.fc21
-Provides: mvn(org.apache.maven.release:maven-release:pom:) = 2.2.1
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
-Requires: mvn(org.apache.maven:maven-parent:pom:)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt5jpp
-Source: maven-release-2.2.1-13.fc21.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           maven-release
+Version:        2.2.1
+Release:        alt6_14jpp8
+Summary:        Release a project updating the POM and tagging in the SCM
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/maven-release-plugin/
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/release/%{name}/%{version}/%{name}-%{version}-source-release.zip
+# Remove deps needed for tests, till jmock gets packaged
+Patch1:         002-mavenrelease-fixbuild.patch
+Patch2:         003-fixing-migration-to-component-metadata.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1015123
+Patch3:         %{name}-ftbfs.patch
+# Maven's Setting.getRuntimeInfo() was removed, see https://issues.apache.org/jira/browse/MNG-3954
+Patch4:         %{name}-MNG-3954.patch
+
+BuildArch:      noarch
+
+BuildRequires:  maven-local
+BuildRequires:  maven-scm
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-source-plugin
+BuildRequires:  maven-plugin-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-plugin-testing-harness
+BuildRequires:  modello
+BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  plexus-utils
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-enforcer-plugin
+BuildRequires:  jaxen
+Source44: import.info
 
 %description
+This plugin is used to release a project with Maven, saving a lot of 
+repetitive, manual work. Releasing a project is made in two steps: 
+prepare and perform.
+
+%package manager
+Group: Development/Java
+Summary:        Release a project updating the POM and tagging in the SCM
+
+%description manager
+This package contains %{name}-manager needed by %{name}-plugin.
+
+%package plugin
+Group: Development/Java
+Summary:        Release a project updating the POM and tagging in the SCM
+
+%description plugin
 This plugin is used to release a project with Maven, saving a lot of
 repetitive, manual work. Releasing a project is made in two steps:
 prepare and perform.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:        Javadoc for %{name}
+Provides:       %{name}-manager-javadoc = %{version}-%{release}
+Obsoletes:      %{name}-manager-javadoc <= 2.0-1
+Provides:       %{name}-plugin-javadoc = %{version}-%{release}
+Obsoletes:      %{name}-plugin-javadoc <= 2.0-1
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{version}
+
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p0
+
+cat > README << EOT
+%{name}-%{version}
+
+This plugin is used to release a project with Maven, saving a lot of
+repetitive, manual work. Releasing a project is made in two steps:
+prepare and perform.
+EOT
+
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%mvn_file :%{name}-manager %{name}-manager
+%mvn_file :%{name}-plugin %{name}-plugin
+%mvn_package :%{name}-manager manager
+%mvn_package :%{name}-plugin plugin
+# Skip tests because we don't have dependencies (jmock)
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc LICENSE NOTICE README
 
-%files -f %name-list
+%files manager -f .mfiles-manager
+%doc LICENSE NOTICE
+
+%files plugin -f .mfiles-plugin
+%doc LICENSE NOTICE
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt6_14jpp8
+- java8 mass update
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt5jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
