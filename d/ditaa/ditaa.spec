@@ -1,26 +1,19 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%global         over 0_9
-%global         svn  74
-
+BuildRequires: jpackage-generic-compat
 Summary:        Diagrams Through ASCII Art
 Name:           ditaa
-Version:        0.9
-Release:        alt1_10.r74jpp7
+Version:        0.10
+Release:        alt1_1jpp8
 Group:          File tools
 License:        GPLv2+
 URL:            http://ditaa.sourceforge.net/
-#Source0:       http://downloads.sourceforge.net/ditaa/ditaa%{over}-src.zip
-# Sources pulled from svn:
-# rm -rf ditaa-0.9
-# svn co -r%{svn} https://ditaa.svn.sourceforge.net/svnroot/ditaa/trunk ditaa-0.9
-# tar cJvf ditaa-0.9.r%{svn}.tar.xz ditaa-0.9
-Source0:        ditaa-0.9.r%{svn}.tar.xz
+Source0:        https://github.com/stathissideris/ditaa/archive/v%{version}.tar.gz
 Source1:        ditaa.wrapper
-Patch0:         ditaa-0.9-batik-png.patch
+Patch0:         ditaa-0.9-port-to-batik-1.8.patch
 BuildArch:      noarch
 BuildRequires:  ant
 BuildRequires:  jpackage-utils
@@ -48,23 +41,23 @@ find -name '*.class' -delete
 find -name '*.jar' -delete
 
 %build
-%{__install} -d bin
+install -d bin
 build-jar-repository -s -p lib commons-cli batik-all xml-commons-apis-ext jericho-html
 ant -f build/release.xml
 
 %install
-%{__install} -D -p -m 0644 releases/%{name}%{over}.jar \
-    %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%{__ln_s}  %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-%{__install} -D -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
+install -D -p -m 0644 releases/%{name}0_9.jar %{buildroot}%{_javadir}/%{name}.jar
+install -D -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 
 %files
 %doc COPYING HISTORY
 %{_bindir}/%{name}
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_10.r74jpp7
 - new release
 
