@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist File-Remove
 Name: perl-%dist
-Version: 1.52
+Version: 1.55
 Release: alt1
 
 Summary: Remove files and directories
@@ -8,12 +9,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/File-Remove-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/File-Remove-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Pod-Escapes perl-devel
+BuildRequires: perl-Pod-Escapes perl-devel perl(Module/Build.pm)
 
 %description
 File::Remove::remove removes files and directories.  It acts like
@@ -39,6 +40,9 @@ hashref.
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.55-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
 - automated CPAN update
 
