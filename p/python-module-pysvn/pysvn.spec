@@ -3,23 +3,23 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.8
+Version: 1.8.0
 Release: alt1
 Summary: Subversion support for python
 License: Apache License
 Group: Development/Python
 Url: http://pysvn.tigris.org/
-Packager: Gennady Kovalev <gik@altlinux.ru>
 
 Source0: pysvn-%version.tar
-Patch0:  pysvn-1.7.6-fix-missed-apu-includes.patch
-Patch1:  02-fix-ld-shared.patch
+#Patch0:  pysvn-1.7.6-fix-missed-apu-includes.patch
+#Patch1:  02-fix-ld-shared.patch
 
 BuildRequires: gcc-c++ libcom_err-devel libexpat-devel libkrb5-devel libsubversion-devel python-devel python-modules-compiler python-modules-xml subversion
 BuildRequires: libaprutil1-devel
 BuildRequires: subversion-server-common
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pyutilib-svn
 BuildPreReq: python3-devel python-tools-2to3
 %endif
 
@@ -37,7 +37,7 @@ use Subversion.
 
 %prep
 %setup -n pysvn-%version
-%patch0 -p2
+#%patch0 -p2
 #patch1 -p1
 
 %if_with python3
@@ -89,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 10 2016 Denis Medvedev <nbr@altlinux.org> 1.8.0-alt1
+- up version
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.8-alt1
 - Version 1.7.8
 - Added module for Python 3
