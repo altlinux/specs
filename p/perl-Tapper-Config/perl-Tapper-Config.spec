@@ -1,21 +1,22 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(Hash/Merge.pm)
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Tapper/Config.pm
 BuildRequires: perl-Tapper
 %define upstream_name    Tapper-Config
-%define upstream_version 4.1.3
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_5
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Tapper - Context sensitive configuration hub for all Tapper libs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Config-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/ShareDir.pm)
@@ -51,6 +52,9 @@ libraries.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_5
 - update by mgaimport
 
