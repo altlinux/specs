@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Pod-Spell
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: A formatter for spellchecking Pod
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/Pod-Spell/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/X/XE/XENO/Pod-Spell-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOLMEN/Pod-Spell-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 09 2008
 BuildRequires: perl-Pod-Escapes perl-devel
@@ -71,6 +71,9 @@ and can be supplemented (on a per-document basis) by having
 %_man1dir/*
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - automated CPAN update
 
