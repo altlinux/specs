@@ -1,38 +1,59 @@
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-Name:           netty
-Version:        3.6.6
-Release:        alt1_2jpp7
-Summary:        An asynchronous event-driven network application framework and tools for Java
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name netty
+%define version 4.0.28
+# Disable generation of debuginfo package
+%global debug_package %{nil}
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
 
-Group:          Development/Java
+Name:           netty
+Version:        4.0.28
+Release:        alt1_2jpp8
+Summary:        An asynchronous event-driven network application framework and tools for Java
 License:        ASL 2.0
 URL:            https://netty.io/
-Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}.Final-dist.tar.bz2
-Patch0:         %{name}-port-to-jzlib-1.1.0.patch
-
-BuildArch:      noarch
+Source0:        https://github.com/netty/netty/archive/netty-%{namedversion}.tar.gz
+Patch0:         npn_alpn_ssl_fixes.patch
+Patch1:         transport-native-epoll-configure-fix.patch
 
 BuildRequires:  maven-local
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-enforcer-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-source-plugin
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  ant-contrib
+BuildRequires:  mvn(ant-contrib:ant-contrib)
+BuildRequires:  mvn(ch.qos.logback:logback-classic)
+BuildRequires:  mvn(com.google.protobuf:protobuf-java)
+BuildRequires:  mvn(com.jcraft:jzlib)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(log4j:log4j)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-checkstyle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-deploy-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-jxr-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-api)
+BuildRequires:  mvn(org.apache.maven.scm:maven-scm-provider-gitexe)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.fusesource.hawtjni:maven-hawtjni-plugin)
+BuildRequires:  mvn(org.javassist:javassist)
+BuildRequires:  mvn(org.jboss.marshalling:jboss-marshalling)
+BuildRequires:  mvn(org.jboss.marshalling:jboss-marshalling-river)
+BuildRequires:  mvn(org.jboss.marshalling:jboss-marshalling-serial)
+BuildRequires:  mvn(org.jmock:jmock-junit4)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.sonatype.oss:oss-parent:pom:)
+BuildRequires:  mvn(kr.motd.maven:os-maven-plugin)
+BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk15on)
 
-BuildRequires:  felix-osgi-compendium
-BuildRequires:  felix-osgi-core
-BuildRequires:  jboss-logging
-BuildRequires:  jboss-marshalling
-BuildRequires:  protobuf-java
-BuildRequires:  slf4j
-BuildRequires:  sonatype-oss-parent
-BuildRequires:  tomcat-servlet-3.0-api
+Provides:       netty4 = %{version}-%{release}
+Obsoletes:      netty4 < %{version}-%{release}
 Source44: import.info
 
 %description
@@ -49,44 +70,63 @@ text-based legacy protocols. As a result, Netty has succeeded to find
 a way to achieve ease of development, performance, stability, and
 flexibility without a compromise.
 
-
 %package javadoc
+Group: Development/Java
 Summary:   API documentation for %{name}
-Group:     Development/Java
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}.Final
-# just to be sure, but not used anyway
-rm -rf jar doc license
+%setup -q -n netty-netty-%{namedversion}
 
-%pom_remove_plugin :maven-jxr-plugin
-%pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin org.eclipse.m2e:lifecycle-mapping
-%pom_remove_dep javax.activation:activation
-%pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_xpath_remove "pom:execution[pom:id[text()='remove-examples']]"
-%pom_xpath_remove "pom:plugin[pom:artifactId[text()='maven-javadoc-plugin']]/pom:configuration"
-# Set scope of optional compile dependencies to 'provided'
-%pom_xpath_set "pom:dependency[pom:scope[text()='compile']
-	       and pom:optional[text()='true']]/pom:scope" provided
-
-sed s/jboss-logging-spi/jboss-logging/ -i pom.xml
-
-# Remove bundled jzlib and use system jzlib
-rm -rf src/main/java/org/jboss/netty/util/internal/jzlib
-%pom_add_dep com.jcraft:jzlib
-sed -i s/org.jboss.netty.util.internal.jzlib/com.jcraft.jzlib/ \
-    $(find src/main/java/org/jboss/netty/handler/codec -name \*.java | sort -u)
 %patch0 -p1
+%patch1 -p2
+
+# Missing Mavenized rxtx
+%pom_disable_module "transport-rxtx"
+%pom_remove_dep ":netty-transport-rxtx" all
+# Missing com.barchart.udt:barchart-udt-bundle:jar:2.3.0
+%pom_disable_module "transport-udt"
+%pom_remove_dep ":netty-transport-udt" all
+%pom_remove_dep ":netty-build" all
+# Not needed
+%pom_disable_module "example"
+%pom_remove_dep ":netty-example" all
+%pom_disable_module "testsuite"
+%pom_disable_module "testsuite-osgi"
+%pom_disable_module "tarball"
+%pom_disable_module "microbench"
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-antrun-plugin
+%pom_remove_plugin :maven-dependency-plugin
+# Optional things we don't ship
+%pom_remove_dep ":netty-tcnative"
+%pom_remove_dep ":netty-tcnative" handler
+%pom_remove_dep "org.eclipse.jetty.npn:npn-api"
+%pom_remove_dep "org.eclipse.jetty.npn:npn-api" handler
+%pom_remove_dep "org.mortbay.jetty.npn:npn-boot"
+%pom_remove_dep "org.mortbay.jetty.npn:npn-boot" handler
+%pom_remove_dep "org.eclipse.jetty.alpn:alpn-api"
+%pom_remove_dep "org.eclipse.jetty.alpn:alpn-api" handler
+%pom_remove_dep "org.mortbay.jetty.alpn:alpn-boot"
+%pom_remove_dep "org.mortbay.jetty.alpn:alpn-boot" handler
+
+sed -i 's|taskdef|taskdef classpathref="maven.plugin.classpath"|' all/pom.xml
+
+%pom_xpath_inject "pom:plugins/pom:plugin[pom:artifactId = 'maven-antrun-plugin']" '<dependencies><dependency><groupId>ant-contrib</groupId><artifactId>ant-contrib</artifactId><version>1.0b3</version></dependency></dependencies>' all/pom.xml
+%pom_xpath_inject "pom:execution[pom:id = 'build-native-lib']/pom:configuration" '<verbose>true</verbose>' transport-native-epoll/pom.xml
+
+# Tell xmvn to install attached artifact, which it does not
+# do by default. In this case install all attached artifacts with
+# the linux classifier.
+%mvn_package ":::linux*:"
 
 %build
-%mvn_alias : org.jboss.netty:
-%mvn_file  : %{name}
-# skipping tests because we don't have easymockclassextension
+export CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 %mvn_build -f
 
 %install
@@ -99,6 +139,9 @@ sed -i s/org.jboss.netty.util.internal.jzlib/com.jcraft.jzlib/ \
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.28-alt1_2jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 3.6.6-alt1_2jpp7
 - new release
 
