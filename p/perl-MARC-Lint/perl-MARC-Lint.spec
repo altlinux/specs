@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-MARC-Lint
-Version: 1.49
+Version: 1.50
 Release: alt1
 
 Summary: Perl extension for checking validity of MARC records
@@ -60,6 +60,9 @@ checks for that, and still get all the benefits of the MARC::Lint framework.
 %_man1dir/*
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.49-alt1
 - automated CPAN update
 
