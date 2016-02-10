@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.1
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -37,6 +37,7 @@ Source2: rpm-macros-addon
 # FC
 Patch1: qtbase-opensource-src-5.3.2-QTBUG-35459.patch
 Patch2: qtbase-opensource-src-5.4.0-QTBUG-43057.patch
+Patch3: qtbase-opensource-src-5.5.1-qdbusconnection_no_debug.patch
 # upstream
 # SuSE
 Patch100: 0001-Fix-QWidget-setWindowRole.patch
@@ -330,6 +331,7 @@ EGL integration library for the Qt%major toolkit
 %setup -n %rname-opensource-src-%version
 %patch1 -p1 -b .QTBUG-35459
 %patch2 -p1 -b .QTBUG-43057
+%patch3 -p1
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
@@ -731,6 +733,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt6
+- disable annoing qdbusconnection debug mesaage
+
 * Tue Dec 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt5
 - add patches against crashes when disconnect displays
 
