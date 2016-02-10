@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.1
-Release: alt2.dev120.git20150826
+Release: alt3.dev120.git20150826
 Summary: Partial differential equation (PDE) solver
 License: Public
 Group: Development/Python
@@ -24,7 +24,7 @@ BuildPreReq: python-module-scipy python-module-gist xvfb-run
 BuildPreReq: python-module-matplotlib python-module-gnuplot
 BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 BuildPreReq: python-module-sphinxcontrib.traclinks python-module-vtk6.2
-BuildPreReq: python-module-sphinxcontrib-bibtex python-module-PyQt4
+BuildPreReq: python-module-bibtex python-module-PyQt4
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -225,6 +225,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 10 2016 Denis Medvedev <nbr@altlinux.org>  3.1-alt3.dev120.git20150826
+- NMU
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2.dev120.git20150826
 - Version 3.1-dev120
 
