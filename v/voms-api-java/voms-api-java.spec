@@ -1,87 +1,41 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 21
-# Use maven if it is available - otherwise fall back to ant
-%if %{?fedora}%{!?fedora:0} >= 15 || %{?rhel}%{!?rhel:0} >= 7
-%global maven 1
-%else
-%global maven 0
-%endif
-
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:		voms-api-java
-Version:	2.0.10
-%global tagver %(tr . _ <<< %{version})
-Release:	alt1_4jpp7
+Version:	3.0.5
+Release:	alt1_3jpp8
 Summary:	Virtual Organization Membership Service Java API
 
 Group:		Development/Java
 License:	ASL 2.0
 URL:		https://wiki.italiangrid.it/VOMS
-Source0:	https://github.com/italiangrid/%{name}/archive/%{tagver}.tar.gz
-#		These are build instructions for ant generated from the maven
-#		build instrutions using the maven ant plugin.
-#		These are used for building on EPEL since there is no maven
-#		available there.
-Source1:	build.xml
-Source2:	maven-build.xml
-Source3:	maven-build.properties
-Patch0:		%{name}-test.patch
+Source0:	https://github.com/italiangrid/%{name}/archive/v%{version}.tar.gz
+#		Patch for bouncycastle 1.47+ (Fedora 21+, EPEL 7+)
+Patch0:		%{name}-bc147.patch
+#		Disable tests using non-local network interface
+Patch1:		%{name}-no-local.patch
+#		Fix javadoc warnings/errors
+Patch2:		%{name}-javadoc.patch
 BuildArch:	noarch
 
-# There is no bouncycastle in EPEL 5 ppc and EPEL 6 ppc64
-%if %{?rhel}%{!?rhel:0} == 5
-ExcludeArch:	ppc
-%endif
-%if %{?rhel}%{!?rhel:0} == 6
-ExcludeArch:	ppc64
-%endif
-
-Requires:	jpackage-utils
-Requires:	bouncycastle >= 1.39
-%if %{?fedora}%{!?fedora:0} >= 15 || %{?rhel}%{!?rhel:0} >= 7
-Requires:	apache-commons-cli
-Requires:	apache-commons-lang
-%else
-Requires:	jakarta-commons-cli
-Requires:	jakarta-commons-lang
-%endif
-Requires:	log4j
-
-Provides:	vomsjapi = %{version}-%{release}
-Obsoletes:	vomsjapi < 2.0.7
-
-BuildRequires:	jpackage-utils
-
-%if %maven
 BuildRequires:	maven-local
-BuildRequires:	maven-compiler-plugin
-BuildRequires:	maven-install-plugin
-BuildRequires:	maven-jar-plugin
-BuildRequires:	maven-javadoc-plugin
-BuildRequires:	maven-release-plugin
-BuildRequires:	maven-resources-plugin
-BuildRequires:	maven-surefire-plugin
-BuildRequires:	maven-surefire-provider-junit
-%else
-BuildRequires:	ant
-BuildRequires:	ant-junit
+BuildRequires:	mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-javadoc-plugin)
+BuildRequires:	mvn(org.apache.maven.plugins:maven-release-plugin)
+BuildRequires:	mvn(eu.eu-emi.security:canl)
+BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on)
+BuildRequires:	mvn(junit:junit)
+BuildRequires:	mvn(org.mockito:mockito-core)
+%if %{?fedora}%{!?fedora:0}
+#		Missing in EPEL
+BuildRequires:	mvn(com.mycila.maven-license-plugin:maven-license-plugin)
+BuildRequires:	mvn(net.jcip:jcip-annotations)
 %endif
-
-BuildRequires:	bouncycastle >= 1.39
-%if %{?fedora}%{!?fedora:0} >= 15 || %{?rhel}%{!?rhel:0} >= 7
-BuildRequires:	apache-commons-cli
-BuildRequires:	apache-commons-io
-BuildRequires:	apache-commons-lang
-%else
-BuildRequires:	jakarta-commons-cli
-BuildRequires:	jakarta-commons-io
-BuildRequires:	jakarta-commons-lang
-%endif
-BuildRequires:	log4j
 Source44: import.info
 
 %description
@@ -97,64 +51,52 @@ This package provides a java client API for VOMS.
 %package javadoc
 Summary:	Virtual Organization Membership Service Java API Documentation
 Group:		Development/Java
-Requires:	jpackage-utils
-Requires:	%{name} = %{version}-%{release}
-Provides:	vomsjapi-javadoc = %{version}-%{release}
-Obsoletes:	vomsjapi-javadoc < 2.0.7
 BuildArch: noarch
 
 %description javadoc
 Virtual Organization Membership Service (VOMS) Java API Documentation.
 
 %prep
-%setup -q -n %{name}-%{tagver}
+%setup -q
 %patch0 -p1
-install -m 644 %SOURCE1 .
-install -m 644 %SOURCE2 .
-install -m 644 %SOURCE3 .
+%patch1 -p1
+%patch2 -p1
 
-sed -e s/bcprov-ext-jdk16/bcprov-jdk16/ -i pom.xml
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:artifactId='bcmail']/pom:groupId" "org.bouncycastle"
+%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:artifactId='bcmail']/pom:artifactId" "bcpkix-jdk15on"
+
+%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
+
+%if %{?fedora}%{!?fedora:0}
+%pom_xpath_inject "pom:project/pom:build/pom:plugins/pom:plugin[pom:groupId='com.mycila.maven-license-plugin']/pom:configuration/pom:excludes" "<exclude>.xmvn/**</exclude>"
+%pom_xpath_remove "pom:project/pom:build/pom:plugins/pom:plugin[pom:groupId='com.mycila.maven-license-plugin']/pom:configuration/pom:strictCheck"
+%else
+# Missing in EPEL
+%pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
+%pom_remove_dep net.jcip:jcip-annotations
+%endif
 
 %build
-%if %{maven}
-mvn-rpmbuild -Dbouncycastle.version=1.46 install javadoc:aggregate
-%else
-export CLASSPATH=$(build-classpath bcprov log4j commons-cli commons-io commons-lang)
-ant -Dbuild.sysclasspath=last package javadoc
-%endif
+%mvn_build -- -Dmaven.test.failure.ignore=true
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{name}-%{version}.jar \
-    %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}.jar %{buildroot}%{_javadir}/vomsjapi.jar
+%mvn_install -J target/site/javadoc/apidocs
 
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-%if %{maven}
-cp -pr target/site/javadoc/apidocs %{buildroot}%{_javadocdir}/%{name}
-%else
-cp -pr target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%if %{?fedora}%{!?fedora:0} >= 21 || %{?rhel}%{!?rhel:0} >= 8
+%dir %{_mavenpomdir}/%{name}
 %endif
+%doc AUTHORS README.md
+%doc LICENSE
 
-%if %{maven}
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a org.glite:vomsjapi
-%endif
-
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/vomsjapi.jar
-%if %{maven}
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%endif
-%doc AUTHORS LICENSE README.md
-
-%files javadoc
-%doc %{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.5-alt1_3jpp8
+- new version
+
 * Sat Jul 19 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_4jpp7
 - new release
 
