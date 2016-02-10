@@ -1,13 +1,15 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+BuildRequires: /usr/bin/xsltproc docbook-style-xsl
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 Name:		gogui
-Version:	1.4.7
-Release:	alt1_1jpp7
+Version:	1.4.9
+Release:	alt1_5jpp8
 Summary:	Graphical user interface to programs that play the board game Go
 
 License:	GPLv3
@@ -87,6 +89,47 @@ install -pm 644 config/gogui-mime.xml $RPM_BUILD_ROOT%{_datadir}/mime/packages
 install -d $RPM_BUILD_ROOT%{_datadir}/thumbnailers
 install -pm 644 config/%{name}.thumbnailer $RPM_BUILD_ROOT%{_datadir}/thumbnailers/%{name}.thumbnailer
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Tim Waugh <twaugh@redhat.com -->
+<!--
+BugReportURL: https://sourceforge.net/p/gogui/bugs/41/
+SentUpstream: 2014-09-24
+-->
+<application>
+  <id type="desktop">gogui.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <summary>Play the Go board game</summary>
+  <description>
+    <p>
+      GoGui lets you play the game of Go, a board game with simple rules but
+      very many possible strategies.
+      Players take it in turns to capture territory and surround stones placed
+      by their opponent.
+    </p>
+    <p>
+      You can play against the computer by installing a program such as GNU Go
+      (gnugo) and configuring GoGui to use it for one of the players.
+    </p>
+    <p>
+      Games can be loaded and saved, or set up in specific positions.
+    </p>
+  </description>
+  <url type="homepage">http://gogui.sourceforge.net/</url>
+  <screenshots>
+    <screenshot type="default">http://a.fsdn.com/con/app/proj/gogui/screenshots/119714.jpg</screenshot>
+  </screenshots>
+</application>
+EOF
+
 %jpackage_script net.sf.gogui.gogui.MainWrapper "" "" %{name}/%{name} %{name} true
 %jpackage_script net.sf.gogui.tools.adapter.Main "" "" %{name}/%{name}-adapter %{name}-adapter true
 %jpackage_script net.sf.gogui.tools.client.Main "" "" %{name}/%{name}-client %{name}-client true
@@ -103,6 +146,7 @@ install -pm 644 config/%{name}.thumbnailer $RPM_BUILD_ROOT%{_datadir}/thumbnaile
 %files
 %{_javadir}/%{name}/
 %{_bindir}/gogui*
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %dir %{_datadir}/thumbnailers
 %{_datadir}/thumbnailers/%{name}.thumbnailer
@@ -118,6 +162,9 @@ install -pm 644 config/%{name}.thumbnailer $RPM_BUILD_ROOT%{_datadir}/thumbnaile
 %doc COPYING.html
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.9-alt1_5jpp8
+- java 8 mass update
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 1.4.7-alt1_1jpp7
 - new release
 
