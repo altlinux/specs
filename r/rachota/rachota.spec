@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global checkout 20130104cvs
 Name:           rachota
 Version:        2.3
-Release:        alt1_7.20130104cvsjpp7
+Release:        alt1_10.20130104cvsjpp8
 Summary:        Straightforward timetracking
 
 Group:          Development/Java
@@ -20,6 +22,9 @@ Source0:        %{name}.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}.png
 
+# Fix doclint issues that make the build fail with java 8
+Patch0:         doclint.patch
+
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
@@ -30,8 +35,8 @@ BuildRequires:  ant
 BuildRequires:  desktop-file-utils
 
 Requires:       jpackage-utils
-Source44: import.info
 
+Source44: import.info
 
 %description
 Rachota is a portable application for timetracking different projects. It runs
@@ -50,6 +55,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1
 
 %build
 ANT_OPTS="-Dfile.encoding=UTF-8" ant
@@ -68,8 +74,8 @@ install -D -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.png
 
 desktop-file-install --dir=$RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/rachota.conf`
-touch $RPM_BUILD_ROOT/etc/java/rachota.conf
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
+touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 
@@ -78,13 +84,16 @@ touch $RPM_BUILD_ROOT/etc/java/rachota.conf
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
-%config(noreplace,missingok) /etc/java/rachota.conf
+%config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_10.20130104cvsjpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_7.20130104cvsjpp7
 - new release
 
