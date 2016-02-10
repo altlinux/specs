@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # no network :(
 %def_disable test
 %define module Geo-IP-PurePerl
 
 Name: perl-%module
-Version: 1.25
-Release: alt2
+Version: 1.26
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -15,7 +16,7 @@ Group: Development/Perl
 BuildArch: noarch
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/B/BO/BORISZ/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MAXMIND/Geo-IP-PurePerl-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jun 25 2010 (-bi)
 BuildRequires: GeoIP-Lite-Country perl-Encode perl-Locale-Codes perl-devel
@@ -46,6 +47,9 @@ find . -type f -print0 | xargs -r0 subst 's./usr/local/share/GeoIP./usr/share/Ge
 %perl_vendor_privlib/Geo
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
+- automated CPAN update
+
 * Sun Oct 23 2011 Igor Vlasenko <viy@altlinux.ru> 1.25-alt2
 - fixed build (disabled tests because network is disabled)
 
