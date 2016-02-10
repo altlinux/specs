@@ -1,6 +1,6 @@
 Name: mpg123
 Version: 1.23.0
-Release: alt1
+Release: alt1.1
 
 Summary: MPEG audio player
 Group: Sound
@@ -85,8 +85,8 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 %_man1dir/out123.1.*
 %dir %_libdir/%name
 %_libdir/%name/*.so
-
-%exclude %_libdir/%name/*.la
+# required to load modules with lt_dlopen()
+%_libdir/%name/*.la
 
 %files -n libmpg123
 %_libdir/libmpg123.so.*
@@ -102,6 +102,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Wed Feb 10 2016 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1.1
+- fixed %%files section
+
 * Sun Feb 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
 - 1.23.0
 - disabled ESOUND support
