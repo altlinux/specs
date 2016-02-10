@@ -1,45 +1,88 @@
-Name: apache-commons-exec
-Version: 1.3
-Summary: Java library to reliably execute external processes from within the JVM
-License: ASL 2.0
-Url: http://commons.apache.org/exec/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: apache-commons-exec = 1.3-3.fc23
-Provides: mvn(org.apache.commons:commons-exec) = 1.3
-Provides: mvn(org.apache.commons:commons-exec:pom:) = 1.3
-Requires: java-headless
-Requires: java-headless
-Requires: jpackage-utils
-Requires: jpackage-utils
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: /bin/ping
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global base_name exec
+%global short_name commons-%{base_name}
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: apache-commons-exec-1.3-3.fc23.cpio
+Name:           apache-commons-exec
+Version:        1.3
+Release:        alt1_3jpp8
+Summary:        Java library to reliably execute external processes from within the JVM
+
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://commons.apache.org/exec/
+Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+
+BuildRequires:  iputils
+BuildRequires:  jpackage-utils
+BuildRequires:  maven-local
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-invoker-plugin
+Requires:       jpackage-utils
+BuildArch:      noarch
+Source44: import.info
 
 %description
 Commons Exec is a library for dealing with external process execution and
 environment management in Java.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{short_name}-%{version}-src
 
-%build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
-
-%install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+# Fix wrong end-of-line encoding
+for file in LICENSE.txt NOTICE.txt RELEASE-NOTES.txt STATUS; do
+  sed -i.orig "s/\r//" $file && \
+  touch -r $file.orig $file && \
+  rm $file.orig
 done
 
+# Shell scripts used for unit tests must be executable (see
+# http://commons.apache.org/exec/faq.html#environment-testing)
+chmod a+x src/test/scripts/*.sh
 
-%files -f %name-list
+# Skip Exec57Test (it is unstable), see rhbz#1202260
+find -name Exec57Test.java -delete
+
+%mvn_file :%{short_name} %{short_name} %{name}
+
+
+%build
+%mvn_build -- -Dmaven.test.failure.ignore=true
+
+
+%install
+%mvn_install
+
+
+%files -f .mfiles
+%doc LICENSE.txt NOTICE.txt STATUS RELEASE-NOTES.txt
+
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt NOTICE.txt
+
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_3jpp8
+- java8 mass update
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
