@@ -11,7 +11,7 @@
 %def_disable libchromiumcontent
 %def_enable  vaapi
 
-%define v8_version 4.8.271.18
+%define v8_version 4.8.271.19
 
 %if_enabled debug
 %define buildtype Debug
@@ -20,8 +20,8 @@
 %endif
 
 Name:           chromium
-Version:        48.0.2564.103
-Release:        alt2
+Version:        48.0.2564.109
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -138,6 +138,7 @@ BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
 %if_disabled v8_internal
 BuildRequires:  libv8-chromium-devel = %v8_version
+Requires:       libv8-chromium = %v8_version
 %endif
 BuildRequires:  libvpx-devel
 BuildRequires:  libwebp-devel
@@ -588,6 +589,15 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Feb 10 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.109-alt1
+- New version
+- Security fixes:
+  - High CVE-2016-1622: Same-origin bypass in Extensions.
+  - High CVE-2016-1623: Same-origin bypass in DOM.
+  - High CVE-2016-1624: Buffer overflow in Brotli.
+  - Medium CVE-2016-1625: Navigation bypass in Chrome Instant.
+  - Medium CVE-2016-1626: Out-of-bounds read in PDFium.
+
 * Tue Feb 09 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.103-alt2
 - Enable experimental VAAPI support (ALT #31772) (thanks L.A. Kostis
   for patch)
