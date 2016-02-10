@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators perl(Test/CPAN/Meta/JSON.pm)
 %global debug_package %{nil}
 
 Name:		perl-Test-Synopsis
-Version:	0.12
+Version:	0.13
 Release:	alt1
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
@@ -98,6 +98,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Mon Dec 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
