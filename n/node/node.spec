@@ -16,13 +16,13 @@
 %def_with systemssl
 
 # too old in repo
-%def_without systemuv
+%def_with systemuv
 
 %def_disable check
 
 Name: node
 Version: 4.2.6
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -84,7 +84,7 @@ Requires:	%libv8_package-devel >= %{v8_abi}
 Requires:	openssl-devel >= 1.0.2
 %endif
 %if_with systemuv
-Requires: libuv-devel
+Requires: libuv-devel >= 1.8.0
 %else
 Conflicts:      libuv-devel
 %endif
@@ -191,9 +191,20 @@ rm -rf %buildroot/usr/share/doc/node/gdbinit
 %doc README.md out/doc/api
 
 %files devel
+%dir %_includedir/node/
 %if_without systemuv
-%_includedir/node/
+%_includedir/node/uv*
 %endif
+%if_without systemv8
+%_includedir/node/v8*
+%endif
+%_includedir/node/node*
+# deps/cares
+%_includedir/node/ares*
+%_includedir/node/common.gypi
+%_includedir/node/config.gypi
+%_includedir/node/libplatform/
+%_includedir/node/nameser.h
 %_datadir/node/common.gypi
 %_rpmlibdir/nodejs_native.req*
 #%_datadir/node/sources
@@ -204,6 +215,10 @@ rm -rf %buildroot/usr/share/doc/node/gdbinit
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Feb 10 2016 Vitaly Lipatov <lav@altlinux.ru> 4.2.6-alt2
+- build with system libuv-devel 1.8.0
+- fix include packing
+
 * Tue Feb 09 2016 Vitaly Lipatov <lav@altlinux.ru> 4.2.6-alt1
 - 2016-01-21 Node.js v4.2.6 "Argon" (LTS) Release (ALT bug #30191)
 - build with system openssl 1.0.2
