@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:          python-module-%oname
-Version:       1.9.67
+Version:       1.9.73
 Release:       alt1
 %setup_python_module %oname
 
@@ -79,7 +79,7 @@ popd
 %endif
 
 %files
-%doc NEWS README TODO ChangeLog test.py examples
+%doc NEWS README TODO test.py examples
 %python_sitelibdir/*
 
 %files docs
@@ -87,11 +87,14 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc NEWS README TODO ChangeLog test.py examples
+%doc NEWS README TODO test.py examples
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Feb 10 2016 Sergey Alembekov <rt@altlinux.ru> 1.9.73-alt1
+- Version 1.9.73
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.67-alt1
 - Version 1.9.67
 - Added module for Python 3
