@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Serial: 1
-Version: 1.62
+Version: 1.63
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -39,6 +39,9 @@ returns the DateTime object associated.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.63-alt1
+- automated CPAN update
+
 * Mon Dec 21 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.62-alt1
 - automated CPAN update
 
