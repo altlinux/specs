@@ -4,7 +4,7 @@
 %def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.19.1
+Version: 1.20.1
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -17,13 +17,13 @@ Source: %name-%version.tar
 # Patch1: %name-%version-git_snapshot.patch
 
 Requires: pidgin
-Requires: gst-plugins-nice
+Requires: gst-plugins-nice1.0
 Requires: gssntlmssp
 
 BuildRequires: intltool libxml2-devel
 BuildRequires: glib2-devel >= 2.28.0
 BuildRequires: libpurple-devel >= 2.8.0
-%{?_with_vv:BuildRequires: libnice-devel >= 0.1.0 gstreamer-devel}
+%{?_with_vv:BuildRequires: libnice-devel >= 0.1.0 gstreamer1.0-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel gssntlmssp-devel}
 %{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.18.0 libdbus-glib-devel libgio-devel >= 2.32.0}
 # BuildRequires: libssl-devel
@@ -48,7 +48,7 @@ Communicator client with Pidgin.
 Summary: Telepathy connection manager to connect to MS Office Communicator
 Group: Networking/Instant messaging
 Requires: gssntlmssp
-Requires: gst-plugins-nice
+Requires: gst-plugins-nice1.0
 
 %description -n telepathy-sipe
 A Telepathy connection manager that implements the extended version of
@@ -95,6 +95,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_datadir/telepathy/profiles/sipe.profile
 
 %changelog
+* Wed Feb 10 2016 Alexey Shabalin <shaba@altlinux.ru> 1.20.1-alt1
+- 1.20.1
+
 * Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1.19.1-alt1
 - 1.19.1
 
