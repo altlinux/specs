@@ -1,100 +1,103 @@
-BuildRequires: maven-plugin-plugin
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: maven
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cxf
-%define version 2.6.9
+%define version 2.7.11
 # vim: set ts=4 sw=4 sts=4 et:
 %global tarname apache-%{name}-%{version}-src
 
-Name:           cxf
-Epoch:          1
-Version:        2.6.9
-Release:        alt2_1jpp7
-Summary:        Apache CXF
-License:        ASL 2.0
-Group:          Development/Java
-URL:            http://cxf.apache.org/
+Name:          cxf
+Epoch:         1
+Version:       2.7.11
+Release:       alt1_3jpp8
+Summary:       Apache CXF
+License:       ASL 2.0
+URL:           http://cxf.apache.org/
 
-Source0:        http://archive.apache.org/dist/%{name}/%{version}/%{tarname}.tar.gz
+Source0:       http://archive.apache.org/dist/%{name}/%{version}/%{tarname}.tar.gz
 
-BuildArch:      noarch
+Patch0:        0001-JDK-8-support.patch
 
-BuildRequires:  jpackage-utils
-BuildRequires:  maven-local
-BuildRequires:  maven-archetype-packaging
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-release-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-shared-artifact-resolver
-BuildRequires:  maven-shared-downloader
-BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-war-plugin
-BuildRequires:  apache-commons-lang
-BuildRequires:  apache-mina
-BuildRequires:  aries-blueprint
-BuildRequires:  asm2
-BuildRequires:  batik
-BuildRequires:  bouncycastle
-BuildRequires:  cglib
-BuildRequires:  cxf-build-utils
-BuildRequires:  cxf-xjc-utils
-BuildRequires:  ehcache-core
-BuildRequires:  felix-osgi-core
-BuildRequires:  geronimo-annotation
-BuildRequires:  geronimo-saaj
-BuildRequires:  glassfish-jaxb
-BuildRequires:  glassfish-jaxb-api
-BuildRequires:  glassfish-fastinfoset
-BuildRequires:  javamail
-BuildRequires:  jboss-connector-1.6-api
-BuildRequires:  jboss-servlet-3.0-api
-BuildRequires:  jboss-jaxws-2.2-api
-BuildRequires:  jibx
-BuildRequires:  jra
-BuildRequires:  neethi
-BuildRequires:  opensaml-java
-BuildRequires:  opensaml-java-parent
-BuildRequires:  springframework >= 3.1.1-9
-BuildRequires:  springframework-aop
-BuildRequires:  springframework-beans
-BuildRequires:  springframework-context
-BuildRequires:  springframework-jms
-BuildRequires:  springframework-tx
-BuildRequires:  springframework-web
-BuildRequires:  springframework-webmvc
-BuildRequires:  velocity
-BuildRequires:  wsdl4j
-BuildRequires:  wss4j >= 1.6
-BuildRequires:  xml-commons-resolver
-BuildRequires:  ws-xmlschema
+# Add missing method available in apache-mina 2.0.9
+Patch1:        cxf-2.7.11-mina-core2.0.9-support.patch
 
-Requires:       apache-commons-lang
-Requires:       bouncycastle
-Requires:       cxf-xjc-utils
-Requires:       cglib
-Requires:       ehcache-core
-Requires:       geronimo-annotation
-Requires:       glassfish-jaxb
-Requires:       jboss-connector-1.6-api
-Requires:       jboss-servlet-3.0-api
-Requires:       jboss-jaxws-2.2-api
-Requires:       jpackage-utils
-Requires:       jra
-Requires:       neethi
-Requires:       opensaml-java
-Requires:       ws-xmlschema
-Requires:       wsdl4j
-Requires:       wss4j >= 1.6
+
+BuildArch:     noarch
+
+BuildRequires: jandex
+BuildRequires: jra
+BuildRequires: maven-local
+BuildRequires: mvn(asm:asm)
+BuildRequires: mvn(ch.qos.logback:logback-classic)
+BuildRequires: mvn(com.sun.xml.bind:jaxb-impl)
+BuildRequires: mvn(com.sun.xml.bind:jaxb-xjc)
+BuildRequires: mvn(com.sun.xml.fastinfoset:FastInfoset)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(commons-logging:commons-logging)
+BuildRequires: mvn(javax.mail:mail)
+BuildRequires: mvn(jdom:jdom)
+BuildRequires: mvn(log4j:log4j:12)
+BuildRequires: mvn(net.sf.cglib:cglib)
+BuildRequires: mvn(net.sf.ehcache:ehcache-core)
+BuildRequires: mvn(net.shibboleth:parent:pom:)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.aries.blueprint:org.apache.aries.blueprint.core)
+BuildRequires: mvn(org.apache.cxf:cxf-xjc-plugin) >= 2.6.2
+BuildRequires: mvn(org.apache.cxf.build-utils:cxf-xml2fastinfoset-plugin) >= 2.6.0
+BuildRequires: mvn(org.apache.cxf.xjcplugins:cxf-xjc-dv)
+BuildRequires: mvn(org.apache.cxf.xjcplugins:cxf-xjc-pl)
+BuildRequires: mvn(org.apache.cxf.xjcplugins:cxf-xjc-wsdlextension)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.geronimo.specs:geronimo-jms_1.1_spec)
+BuildRequires: mvn(org.apache.maven:maven-artifact)
+BuildRequires: mvn(org.apache.maven:maven-core)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven:maven-project)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires: mvn(org.apache.maven.shared:maven-artifact-resolver)
+BuildRequires: mvn(org.apache.maven.wagon:wagon-ssh)
+BuildRequires: mvn(org.apache.mina:mina-core)
+BuildRequires: mvn(org.apache.neethi:neethi)
+BuildRequires: mvn(org.apache.velocity:velocity)
+BuildRequires: mvn(org.apache.ws.security:wss4j) >= 1.6.10
+BuildRequires: mvn(org.apache.ws.xmlschema:xmlschema-core)
+BuildRequires: mvn(org.apache.xmlbeans:xmlbeans)
+BuildRequires: mvn(org.apache.xmlgraphics:batik-ext)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk16)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.codehaus.mojo:buildnumber-maven-plugin)
+BuildRequires: mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires: mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires: mvn(org.eclipse.tycho:tycho-packaging-plugin)
+BuildRequires: mvn(org.jboss.spec.javax.resource:jboss-connector-api_1.6_spec) >= 1.0.1
+BuildRequires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
+BuildRequires: mvn(org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec)
+BuildRequires: mvn(org.jibx:jibx-bind)
+BuildRequires: mvn(org.jibx:jibx-run)
+BuildRequires: mvn(org.jibx:jibx-schema)
+BuildRequires: mvn(org.jibx:jibx-tools)
+BuildRequires: mvn(org.opensaml:opensaml)
+BuildRequires: mvn(org.osgi:org.osgi.compendium)
+BuildRequires: mvn(org.osgi:org.osgi.core)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.sonatype.plexus:plexus-build-api)
+BuildRequires: mvn(org.springframework:spring-aop)
+BuildRequires: mvn(org.springframework:spring-beans)
+BuildRequires: mvn(org.springframework:spring-context)
+BuildRequires: mvn(org.springframework:spring-core) >= 3.1.1
+BuildRequires: mvn(org.springframework:spring-jms)
+BuildRequires: mvn(org.springframework:spring-tx)
+BuildRequires: mvn(org.springframework:spring-web)
+BuildRequires: mvn(org.springframework:spring-webmvc)
+BuildRequires: mvn(rhino:js)
+BuildRequires: mvn(wsdl4j:wsdl4j)
+BuildRequires: mvn(xml-resolver:xml-resolver)
 Source44: import.info
 
 %description
@@ -103,57 +106,30 @@ the development of services using front-end programming APIs,
 like JAX-WS and JAX-RS.
 
 %package javadoc
-Summary:        Javadocs for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %package api
-Summary:        Apache CXF API
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       %{name}-common = %{epoch}:%{version}-%{release}
-Provides:       %{name}-common = %{epoch}:%{version}-%{release}
-Obsoletes:      %{name}-common < 2.4.9-4
+Group: Development/Java
+Summary:       Apache CXF API
 
 %description api
 Apache CXF API classes.
 
 %package maven-plugins
-Summary:        Apache CXF Maven Plugins
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       %{name}-api = %{epoch}:%{version}-%{release}
+Group: Development/Java
+Summary:       Apache CXF Maven Plugins
 
 %description maven-plugins
 Maven plugins required for building or testing Apache CXF.
 
-
 %package rt
-Summary:        Apache CXF Runtime
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       %{name}-api = %{epoch}:%{version}-%{release}
-Requires:       %{name}-tools = %{epoch}:%{version}-%{release}
-Requires:       apache-mina
-Requires:       aries-blueprint
-Requires:       asm2
-Requires:       felix-osgi-core
-Requires:       glassfish-fastinfoset
-Requires:       javamail
-Requires:       jibx
-Requires:       springframework
-Requires:       springframework-aop
-Requires:       springframework-beans
-Requires:       springframework-context
-Requires:       springframework-jms
-Requires:       springframework-tx
-Requires:       springframework-web
-Requires:       springframework-webmvc
-Requires:       xml-commons-resolver
+Group: Development/Java
+Summary:       Apache CXF Runtime
 
 %description rt
 This package contains core feature set of Apache CXF;
@@ -161,32 +137,30 @@ web service standards support, frontends, and protocols
 support.
 
 %package services
-Summary:        Apache CXF Services
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       %{name}-api = %{epoch}:%{version}-%{release}
-Requires:       %{name}-rt = %{epoch}:%{version}-%{release}
-Requires:       geronimo-jms
-Requires:       felix-osgi-core
-Requires:       aries-blueprint
-#Requires:       activemq
+Group: Development/Java
+Summary:       Apache CXF Services
 
 %description services
 This package contains Apache CXF WSN services.
 
 %package tools
-Summary:        Apache CXF Tools
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires(pre):  %{name}-rt = %{epoch}:%{version}-%{release}
-Requires:       velocity
+Group: Development/Java
+Summary:       Apache CXF Tools
 
 %description tools
 Apache CXF Command Line Tools.
 
 %prep
-
 %setup -q -n %{tarname}
+
+find . -name "*.jar" -delete
+find . -name "*.class" -delete
+
+%patch0 -p1
+%patch1 -p1
+
+iconv -f macintosh -t utf8 < licenses/cdd1-1.0.txt > cdd.txt
+mv -f cdd.txt licenses/cdd1-1.0.txt
 
 # Replace cglib-nodep with cglib
 find . -name "pom.xml" -print | xargs sed -i "s|>cglib<|>net.sf.cglib<|"
@@ -213,6 +187,7 @@ do
 
 done
 
+
 # Make sure we add the version requirements for just added APIs in parent pom.xml
 %pom_xpath_inject "pom:dependencyManagement/pom:dependencies/pom:dependency[pom:artifactId='${newaid}']" "<version>${version}</version>" parent/pom.xml
 
@@ -223,6 +198,7 @@ org.apache.geronimo.specs geronimo-javamail_1.4_spec javax.mail mail 1.4.3
 EOF
 
 # Disable main modules
+# No ant-trax
 %pom_disable_module "testutils"
 %pom_disable_module "integration"
 %pom_disable_module "osgi/karaf"
@@ -235,8 +211,7 @@ EOF
 
 # Disable Maven plugins submodules
 # Requires jsr-339, jaxrs 2.0
-%pom_disable_module "codegen-plugin" maven-plugins/pom.xml
-# Requires jsr-339, jaxrs 2.0
+%pom_disable_module "java2wadl-plugin" maven-plugins/pom.xml
 %pom_disable_module "wadl2java-plugin" maven-plugins/pom.xml
 %pom_disable_module "wsdl-validator-plugin" maven-plugins/pom.xml
 %pom_disable_module "corba" maven-plugins/pom.xml
@@ -250,8 +225,6 @@ EOF
 # Requires jsr-339, jaxrs 2.0
 %pom_disable_module "frontend/jaxrs" rt/pom.xml
 %pom_disable_module "transports/http-jetty" rt/pom.xml
-# Available in cxf 2.7.x
-#%pom_disable_module "transports/http-hc" rt/pom.xml
 %pom_disable_module "management-web" rt/pom.xml
 %pom_disable_module "rs/extensions/providers" rt/pom.xml
 %pom_disable_module "rs/extensions/search" rt/pom.xml
@@ -261,51 +234,47 @@ EOF
 %pom_disable_module "rs/security/oauth-parent" rt/pom.xml
 %pom_disable_module "rs/security/cors" rt/pom.xml
 
+%pom_disable_module xkms-itests services/xkms/pom.xml
+%pom_disable_module xkms-features services/xkms/pom.xml
+%pom_disable_module xkms-war services/xkms/pom.xml
+
+# The repository system is offline but the artifact org.apache.httpcomponents:httpasyncclient:jar:4.0-beta3 is not available in the local repository
+%pom_disable_module "transports/http-hc" rt/pom.xml
+
 %pom_disable_module "javascript-tests" rt/javascript/pom.xml
 
+%pom_disable_module wsn-core services/wsn/pom.xml
+%pom_disable_module wsn-osgi services/wsn/pom.xml
+
+%pom_remove_dep "com.wordnik:swagger-jaxrs_2.10" rt/frontend/jaxrs/pom.xml
+
 # Disable tools submodules
-# Requires jsr-339, jaxrs 2.0
+# Requires frontend/jaxrs
 %pom_disable_module "wadlto" tools/pom.xml
 %pom_disable_module "corba" tools/pom.xml
 # Requires jsr-339, jaxrs 2.0
-%pom_disable_module "frontend/javascript" tools/wsdlto/pom.xml
+#%pom_disable_module "frontend/javascript" tools/wsdlto/pom.xml
 %pom_disable_module "test" tools/wsdlto/pom.xml
 %pom_disable_module "misc" tools/wsdlto/pom.xml
 
-#%pom_disable_module "sts" services/pom.xml
-%pom_disable_module "wsn" services/pom.xml
-# Available in cxf 2.7.x
-#%pom_disable_module "ws-discovery" services/pom.xml
+# Test dependency
 %pom_disable_module "systests" services/sts/pom.xml
+# Unnecessary
+%pom_disable_module "sts-war" services/sts/pom.xml
 
+# No spring-ldap-core
 %pom_remove_dep "org.springframework.ldap:spring-ldap-core" services/sts/sts-core/pom.xml
 %pom_remove_dep "org.springframework.ldap:spring-ldap-core" services/sts/sts-war/pom.xml
+rm -rf services/sts/sts-core/src/main/java/org/apache/cxf/sts/claims/Ldap*
+
+# No hazelcast
 %pom_remove_dep "com.hazelcast:hazelcast" services/sts/sts-core/pom.xml
 %pom_remove_dep "com.hazelcast:hazelcast" services/sts/sts-war/pom.xml
+rm -rf services/sts/sts-core/src/main/java/org/apache/cxf/sts/cache/HazelCast*
 
-# Remove test deps
-for m in rt/frontend/simple rt/bindings/xml rt/frontend/jaxws rt/databinding/aegis tools/javato/ws rt/databinding/jibx rt/bindings/object rt/bindings/coloc rt/management rt/transports/jms rt/ws/rm; do
-%pom_remove_dep "org.apache.cxf:cxf-testutils" ${m}/pom.xml
-done
+%pom_xpath_set "pom:dependencies/pom:dependency[pom:artifactId = 'log4j']/pom:version" 12 services/sts/sts-core/pom.xml
 
-%pom_remove_dep "org.springframework:spring-test" rt/ws/policy/pom.xml
-%pom_remove_dep "org.apache.cxf:cxf-wstx-msv-validation" rt/databinding/aegis/pom.xml
-
-
-%pom_remove_dep "org.apache.cxf:cxf-rt-transports-http-jetty" rt/databinding/aegis/pom.xml
-%pom_remove_dep "org.apache.cxf:cxf-rt-transports-http-jetty" tools/javato/ws/pom.xml
-%pom_remove_dep "org.apache.cxf:cxf-rt-transports-http-jetty" rt/bindings/object/pom.xml
-
-%pom_remove_dep "org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec" rt/transports/jms/pom.xml
-%pom_remove_dep "org.apache.activemq:activemq-core" rt/transports/jms/pom.xml
-%pom_remove_dep "org.apache.xbean:xbean-spring" rt/transports/jms/pom.xml
-
-rm services/sts/sts-core/src/main/java/org/apache/cxf/sts/cache/HazelCastTokenStore.java
-rm services/sts/sts-core/src/main/java/org/apache/cxf/sts/claims/LdapClaimsHandler.java
-
-# Disable codegen plugin
-%pom_remove_plugin "org.apache.cxf:cxf-codegen-plugin" rt/ws/policy/pom.xml
-%pom_remove_plugin "org.apache.cxf:cxf-codegen-plugin" tools/javato/ws/pom.xml
+sed -i "s|@Override||" services/sts/sts-core/src/main/java/org/apache/cxf/sts/event/LoggerPatternLayoutLog4J.java
 
 # Disable checkstyle plugin
 %pom_remove_plugin "org.apache.maven.plugins:maven-checkstyle-plugin" parent/pom.xml
@@ -313,8 +282,41 @@ rm services/sts/sts-core/src/main/java/org/apache/cxf/sts/claims/LdapClaimsHandl
 # Disable pmd plugin
 %pom_remove_plugin "org.apache.maven.plugins:maven-pmd-plugin" parent/pom.xml
 
+# Workaround for Woodstox 4.1 (4.2 is required, remove after upgrade)
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'cxf-codegen-plugin']/pom:executions/pom:execution/pom:configuration/pom:fork" rt/ws/policy/pom.xml
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'cxf-codegen-plugin']/pom:executions/pom:execution/pom:configuration/pom:fork" tools/javato/ws/pom.xml
+
 # Disable remote-resources-plugin
 %pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-remote-resources-plugin']" parent/pom.xml
+
+# Remove testutils
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/bindings/xml/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/frontend/simple/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/frontend/jaxws/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/databinding/aegis/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/databinding/jibx/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/bindings/object/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/bindings/coloc/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/management/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" tools/javato/ws/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/transports/jms/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-testutils" rt/ws/rm/pom.xml
+
+# Remove jms transport test deps
+%pom_remove_dep "org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec" rt/transports/jms/pom.xml
+%pom_remove_dep "org.apache.xbean:xbean-spring" rt/transports/jms/pom.xml
+
+# Remove aegis test deps
+%pom_remove_dep "org.apache.cxf:cxf-wstx-msv-validation" rt/databinding/aegis/pom.xml
+
+# Remove transports-http-jetty test dep
+%pom_remove_dep "org.apache.cxf:cxf-rt-transports-http-jetty" tools/javato/ws/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-rt-transports-http-jetty" rt/databinding/aegis/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-rt-transports-http-jetty" rt/bindings/object/pom.xml
+%pom_remove_dep "org.apache.cxf:cxf-rt-transports-http-jetty" rt/frontend/jaxrs/pom.xml
+
+# Remove sprint-test dep
+%pom_remove_dep "org.springframework:spring-test" rt/ws/policy/pom.xml
 
 # Disable xsdvalidation
 %pom_remove_dep "org.apache.cxf:cxf-xerces-xsd-validation" rt/frontend/simple/pom.xml
@@ -322,221 +324,58 @@ rm services/sts/sts-core/src/main/java/org/apache/cxf/sts/claims/LdapClaimsHandl
 # Fix java.lang.NoClassDefFoundError: org/w3c/dom/ElementTraversal
 %pom_xpath_inject "pom:dependencies" "<dependency><groupId>org.apache.xmlgraphics</groupId><artifactId>batik-ext</artifactId><version>1.8</version><scope>runtime</scope></dependency>" tools/common/pom.xml
 
-find . -name "*.jar" -delete
-find . -name "*.class" -delete
+# Fix javadoc doclint
+%pom_remove_plugin -r :maven-javadoc-plugin
+# Removed unused artifact
+%pom_remove_dep -r org.apache.ant:ant-nodeps
+# Use activemq >= 5.8.0 (activemq-core was splitted in several sub modules)
+%pom_remove_dep -r org.apache.activemq:
 
-iconv -f macintosh -t utf8 < licenses/cdd1-1.0.txt > cdd.txt
-mv -f cdd.txt licenses/cdd1-1.0.txt
+%mvn_package ":cxf-tools*" tools
+%mvn_package ":cxf-rt*" rt
+%mvn_package ":cxf-maven-plugins*" maven-plugins
+%mvn_package ":cxf-api*" api
+%mvn_package ":cxf-services*" services
 
 %build
-# tests are disabled because of lots of missing dependencies
-mvn-rpmbuild \
-    -Pfastinstall \
-    -Dmaven.test.skip=true \
-    -Dmaven.local.depmap.file=%{_mavendepmapfragdir}/tomcat-tomcat-servlet-api \
-    -Dproject.build.sourceEncoding=UTF-8 \
-    package javadoc:aggregate
+%mvn_build -f
 
+# Create Jandex index file(s)
+# Required by WildFly
+java -cp $(build-classpath jandex) org.jboss.jandex.Main -j rt/ws/security/target/cxf-rt-ws-security-%{version}.jar
 
 %install
+%mvn_install
 
-install_pom_file ()
-{
-    local pom_file=${1}
-    local module=${2}
-    install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/${pom_file}
-    %add_maven_depmap ${pom_file} -f ${module}
-}
+install -pm 644 rt/ws/security/target/cxf-rt-ws-security-%{version}-jandex.jar %{buildroot}%{_javadir}/%{name}/cxf-rt-ws-security-jandex.jar
 
-install_jar_file ()
-{
-    local pom_file=${1}
-    local source=${2}
-    local target=${3}
-    local module=${4}
-
-    install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/${pom_file}
-    install -pm 644 ${source} %{buildroot}%{_javadir}/${target}
-    %add_maven_depmap ${pom_file} ${target} -f ${module}
-}
-
-guess_jar_file_and_target ()
-{
-    jar_found=true
-    jar_file=""
-    jar_target=""
-    local guess
-
-    echo "target/%{name}-${module}-${aid_name}-%{version}.jar"
-
-    guess=target/%{name}-${module}-${aid_name}-%{version}.jar
-    if [ -f ${guess} ]; then
-        jar_file=${guess}
-        jar_target=%{name}/${module}-${aid_name}.jar
-        return 0
-    fi
-
-    guess=target/%{name}-${module}-${aid_name}-%{version}.jar
-    if [ -f ${guess} ]; then
-        jar_file=${guess}
-        jar_target=%{name}/${module}-${aid_name}.jar
-        return 0
-    fi
-
-    guess=target/%{name}-${module}-%{version}.jar
-    if [ -f ${guess} ]; then
-        jar_file=${guess}
-        jar_target=%{name}/${module}.jar
-        return 0
-    fi
-
-    guess=target/%{name}-${aid_name}-%{version}.jar
-    if [ -f ${guess} ]; then
-        jar_file=${guess}
-        jar_target=%{name}/${module}-${aid_name}.jar
-        return 0
-    fi
-
-    jar_found=false
-}
-
-install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-
-while read module subdir nontemplate_name
-do
-    dir=${module}/${subdir}
-
-    pushd $dir
-
-    if [ "${subdir}" = "" ]; then
-        aid_name=""
-        pom_file=JPP.%{name}-${module}.pom
-    else
-        aid_name=${nontemplate_name:-$(echo ${subdir} | tr / -)}
-        pom_file=JPP.%{name}-${module}-${aid_name}.pom
-    fi
-
-    guess_jar_file_and_target
-
-    if $jar_found; then
-        install_jar_file ${pom_file} ${jar_file} ${jar_target} ${module}
-    else
-        install_pom_file ${pom_file} ${module}
-    fi
-
-    popd
-
-done <<EOM
-api
-maven-plugins
-maven-plugins java2ws-plugin
-rt
-rt bindings
-rt bindings/coloc
-rt bindings/object
-rt bindings/soap
-rt bindings/xml
-rt core
-rt databinding/jaxb
-rt databinding/aegis
-rt databinding/jibx
-rt frontend/simple
-rt frontend/jaxws
-rt frontend/js
-rt features/clustering
-rt javascript
-rt management
-rt transports/http
-rt transports/jms
-rt transports/local
-rt ws/addr
-rt ws/policy
-rt ws/mex
-rt ws/rm
-rt ws/security
-services
-services sts
-services sts/sts-core sts-core
-tools
-tools common
-tools javato
-tools validator
-tools wsdlto
-tools wsdlto/core
-tools wsdlto/databinding/jaxb
-tools wsdlto/frontend/jaxws
-EOM
-#services wsn
-#services wsn/wsn-core wsn-core
-#services wsn/wsn-api wsn-api
-#services wsn/wsn-osgi wsn-osgi
-#services ws-discovery
-#services ws-discovery/ws-discovery-api ws-discovery-api
-#services ws-discovery/ws-discovery-service ws-discovery-service
-
-
-# Available in 2.7.0
-#rt transports/udp
-
-
-# parents
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-cxf.pom
-install -pm 644 parent/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
-
-# special cases
-install -pm 644 tools/javato/ws/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-tools-java2ws.pom
-install -pm 644 tools/javato/ws/target/cxf-tools-java2ws-%{version}.jar %{buildroot}%{_javadir}/%{name}/tools-java2ws.jar
-%add_maven_depmap JPP.%{name}-tools-java2ws.pom %{name}/tools-java2ws.jar -f tools
-
-%add_maven_depmap JPP.%{name}-cxf.pom
-%add_maven_depmap JPP.%{name}-parent.pom
-
-# javadoc
-cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-
-%files
-%doc README LICENSE NOTICE
-%doc licenses
-%{_mavenpomdir}/JPP.%{name}-cxf.pom
-%{_mavenpomdir}/JPP.%{name}-parent.pom
-%{_mavendepmapfragdir}/%{name}
-%dir %{_javadir}/%{name}
-
-%files javadoc
+%files -f .mfiles
+%doc README
 %doc LICENSE NOTICE
-%doc licenses
-%{_javadocdir}/%{name}
 
-%files api
-%{_mavenpomdir}/JPP.%{name}-api.pom
-%{_mavendepmapfragdir}/%{name}-api
-%{_javadir}/%{name}/api.jar
+%files tools -f .mfiles-tools
+%doc LICENSE NOTICE
 
-%files maven-plugins
-%{_mavenpomdir}/JPP.%{name}-maven-plugins*
-%{_mavendepmapfragdir}/%{name}-maven-plugins
-%{_javadir}/%{name}/maven-plugins-*
+%files api -f .mfiles-api
+%doc LICENSE NOTICE
 
-%files rt
-%{_mavenpomdir}/JPP.%{name}-rt*
-%{_mavendepmapfragdir}/%{name}-rt
-%{_javadir}/%{name}/rt-*
+%files rt -f .mfiles-rt
+%{_javadir}/%{name}/cxf-rt-ws-security-jandex.jar
+%doc LICENSE NOTICE
 
-%files services
-%{_mavenpomdir}/JPP.%{name}-services*
-%{_mavendepmapfragdir}/%{name}-services
-%{_javadir}/%{name}/services-*
+%files services -f .mfiles-services
+%doc LICENSE NOTICE
 
-%files tools
-%{_mavenpomdir}/JPP.%{name}-tools*
-%{_mavendepmapfragdir}/%{name}-tools
-%{_javadir}/%{name}/tools-*
+%files maven-plugins -f .mfiles-maven-plugins
+%doc LICENSE NOTICE
 
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.7.11-alt1_3jpp8
+- new version
+
 * Fri Jul 18 2014 Igor Vlasenko <viy@altlinux.ru> 1:2.6.9-alt2_1jpp7
 - fixed build
 
