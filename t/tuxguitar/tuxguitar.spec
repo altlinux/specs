@@ -1,6 +1,6 @@
 Name: tuxguitar
 Version: 1.2
-Release: alt3.3
+Release: alt3.4
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL
@@ -21,9 +21,9 @@ Patch: %name-plugin-properties.patch
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Automatically added by buildreq on Thu Jan 06 2011
-BuildRequires: ant ant-junit ant-nodeps checkstyle eclipse-swt itext jtidy libfluidsynth-devel libgcj-devel tzdata
+BuildRequires: ant ant-junit checkstyle eclipse-swt itext jtidy libfluidsynth-devel libgcj-devel tzdata
 
-BuildRequires: rpm-build-java
+BuildRequires: rpm-build-java java-devel-default
 #BuildRequires: xml-commons-apis
 
 Requires: eclipse-swt
@@ -55,7 +55,7 @@ With TuxGuitar, you will be able to compose music using the following features:
 cp %SOURCE11 TuxGuitar/xml/build-altlinux.xml
 
 %build
-test -f %_libdir/java/swt.jar
+test -f %_jnidir/swt.jar
 test -f %_javadir/itext.jar
 
 # disabled plugins: gervill
@@ -72,8 +72,8 @@ LIBSUFFIX=$(echo %_lib|sed 's|lib||')
 ANT_FLAGS=" \
    -Dpath.tuxguitar=$PWD/TuxGuitar/%name.jar \
    -Dpath.itext=%_javadir/itext.jar \
-   -Dpath.swt=%_libdir/java/swt.jar \
-   -Dlib.swt.jar=%_libdir/java/swt.jar \
+   -Dpath.swt=%_jnidir/swt.jar \
+   -Dlib.swt.jar=%_jnidir/swt.jar \
    -Ddist.lib.path=%_libdir/%name/ \
    -Ddist.file=xml/build-altlinux.xml \
    -Ddist.jar.path=%_datadir/%name/ \
@@ -163,6 +163,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*.png
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3.4
+- NMU: corrected java dependencies
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3.3
 - NMU: corrected java dependencies
 
