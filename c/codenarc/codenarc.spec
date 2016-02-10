@@ -1,67 +1,37 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
-BuildRequires: maven-local
-# END SourceDeps(oneline)
+Group: Development/Java
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 %global oname CodeNarc
-%global with_gmaven 0
 Name:          codenarc
 Version:       0.17
-Release:       alt1_4jpp7
+Release:       alt1_15jpp8
 Summary:       Groovy library that provides static analysis features for Groovy code
-Group:         Development/Java
 License:       ASL 2.0
 Url:           http://codenarc.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/project/codenarc/codenarc/CodeNarc%%20Version%%20%{version}/CodeNarc-%{version}-bin.tar.gz
-Source1:       codenarc-%{version}-build.xml
-Source2:       codenarc-%{version}-build.properties
-# remove gmaven
-# change artifactId groovy-all in groovy
-Patch0:        codenarc-0.17-pom.patch
+# use antrun-plugin instead of gmaven
+# fix log4j version
+Patch0:        codenarc-0.17-antrunplugin.patch
 # remove @Override
 # unavailable method in groovy 1.8.x (...)
 Patch1:        codenarc-0.17-groovy18.patch
-# replace runtime 1.7 witn runtime 1.8
-# add groovy-all deps
-Patch2:        codenarc-0.17-enable-gmaven.patch
 
-BuildRequires: jpackage-utils
+BuildRequires: maven-local
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.ant:ant-junit)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.codehaus.groovy:groovy-all:1.8)
+BuildRequires: mvn(org.gmetrics:GMetrics)
+BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
+# groovy-all embedded libraries
+BuildRequires: mvn(antlr:antlr)
+BuildRequires: mvn(asm:asm-all)
+BuildRequires: mvn(commons-cli:commons-cli)
+BuildRequires: mvn(org.slf4j:slf4j-nop)
 
-BuildRequires: antlr
-BuildRequires: apache-commons-cli
-BuildRequires: objectweb-asm
-
-BuildRequires: ant
-BuildRequires: cobertura
-BuildRequires: gmetrics
-BuildRequires: groovy
-BuildRequires: log4j
-
-%if %with_gmaven
-# https://bugzilla.redhat.com/show_bug.cgi?id=841833
-BuildRequires: gmaven
-BuildRequires: maven
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-resources-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-provider-junit4
-# test deps
-BuildRequires: junit
-
-%endif
-
-Requires:      ant
-Requires:      cobertura
-Requires:      gmetrics
-Requires:      groovy
-Requires:      log4j
-
-Requires:      jpackage-utils
 BuildArch:     noarch
 Source44: import.info
 
@@ -76,13 +46,12 @@ of the number of violations per package and for the whole
 project.
 
 %package javadoc
-Group:         Development/Java
-Summary:       Groovydoc for %{name}
-Requires:      jpackage-utils
+Group: Development/Java
+Summary:       Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains groovydoc for %{name}.
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{oname}-%{version}
@@ -94,58 +63,36 @@ rm -rf docs/*
 %patch0 -p0
 %patch1 -p1
 
+%pom_remove_plugin :maven-javadoc-plugin
 
-%if !%with_gmaven
-# in fedora haven't gmaven yet
-cp -pr %{SOURCE1} build.xml
-cp -pr %{SOURCE2} build.properties
-%else
-%patch2 -p0
-%endif
+%pom_remove_dep net.sourceforge.cobertura:cobertura
+%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
 
 chmod 644 README.txt
 for d in CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt ; do
   sed -i 's/\r//' $d
 done
 
+%mvn_file org.%{name}:%{oname} %{name} %{oname}
+
 %build
 
-%if !%with_gmaven
-ant
-%else
-mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 -Dmaven.test.failure.ignore=true install javadoc:aggregate
-%endif
+%mvn_build
 
 %install
+%mvn_install
 
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 target/%{oname}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+%files -f .mfiles
+%doc CHANGELOG.txt README.txt
+%doc LICENSE.txt NOTICE.txt
 
-
-(
-  cd %{buildroot}%{_javadir}
-  ln -sf %{name}.jar %{oname}.jar
-)
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/%{name}.jar
-%{_javadir}/%{oname}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%doc CHANGELOG.txt LICENSE.txt NOTICE.txt README.txt
-
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_15jpp8
+- java8 mass update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_4jpp7
 - new release
 
