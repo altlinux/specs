@@ -1,6 +1,6 @@
 Name: ledger
 Version: 3.1.aed3709
-Release: alt1
+Release: alt1.1
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
@@ -127,6 +127,9 @@ This package contains emacs libraries to ease use of ledger.
 #%_emacslispdir/*
 
 %changelog
+* Wed Feb 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.aed3709-alt1.1
+- Rebuilt with libicuuc.so.56.
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.aed3709-alt1
 - new version 3.1 (with rpmrb script)
 

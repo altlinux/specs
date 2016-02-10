@@ -34,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -1728,6 +1728,9 @@ done
 
 
 %changelog
+* Tue Feb 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.58.0-alt1.1
+- Rebuilt with libicui18n.so.56 and libicuuc.so.56.
+
 * Wed May 20 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.58.0-alt1
 - Updated to 1.58.0.
 
