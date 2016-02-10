@@ -3,6 +3,8 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -21,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           google-%{short_name}
 Version:        4.0
-Release:        alt1_2jpp8
+Release:        alt1_3jpp8
 Summary:        Lightweight dependency injection framework for Java 5 and above
 License:        ASL 2.0
 URL:            https://github.com/google/%{short_name}
@@ -190,11 +192,11 @@ and above. This package provides ThrowingProviders module for Guice.
 Group: Development/Java
 Summary:        Bill of Materials for Guice
 
+%endif # with extensions
+
 %description -n %{short_name}-bom
 Guice is a lightweight dependency injection framework for Java 5
 and above. This package provides Bill of Materials module for Guice.
-
-%endif # with extensions
 
 %package javadoc
 Group: Development/Java
@@ -278,14 +280,18 @@ This package provides %{summary}.
 %files -n %{short_name}-spring -f .mfiles-guice-spring
 %files -n %{short_name}-testlib -f .mfiles-guice-testlib
 %files -n %{short_name}-throwingproviders -f .mfiles-guice-throwingproviders
-%files -n %{short_name}-bom -f .mfiles-guice-bom
 %endif # with extensions
+
+%files -n %{short_name}-bom -f .mfiles-guice-bom
 
 %files javadoc -f .mfiles-javadoc
 %doc COPYING
 
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0-alt1_3jpp8
+- added osgi provides
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:4.0-alt1_2jpp8
 - java8 mass update
 
