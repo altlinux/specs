@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     3
-%define postgresql_subminor  10
-%define postgresql_altrel    2
+%define postgresql_subminor  11
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -39,7 +39,6 @@ Patch1: 0001-9.3-Fix-searching-for-autoconf.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Fix-includedirs.patch
-Patch5: 0001-flex-2.6.0.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 Patch9: 0008-ALT-SeLinux-user-name.patch
@@ -268,7 +267,6 @@ database.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
-%patch5 -p1
 %patch6 -p2
 %patch8 -p1
 #%%patch9 -p1
@@ -761,6 +759,10 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Feb 10 2016 Alexei Takaseev <taf@altlinux.org> 9.3.11-alt1
+- 9.3.11
+- Drop patch 0001-flex-2.6.0.patch (Fix upstream)
+
 * Mon Jan 25 2016 Alexei Takaseev <taf@altlinux.org> 9.3.10-alt2
 - Fix build with flex 2.6.0
 
