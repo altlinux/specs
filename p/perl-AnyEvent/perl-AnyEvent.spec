@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist AnyEvent
 Name: perl-%dist
-Version: 7.11
+Version: 7.12
 Release: alt1
 
 Summary: Framework for multiple event loops
@@ -47,6 +47,9 @@ sed -i- '/ PM /,/}/d' Makefile.PL
 %perl_vendor_privlib/AnyEvent*
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 7.12-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 7.11-alt1
 - automated CPAN update
 
