@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Warnings
-Version:	0.024
+Version:	0.026
 Release:	alt1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
@@ -83,6 +83,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
+- automated CPAN update
+
 * Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
 - automated CPAN update
 
