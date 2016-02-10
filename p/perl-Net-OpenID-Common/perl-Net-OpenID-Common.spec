@@ -2,7 +2,7 @@
 %define module Net-OpenID-Common
 
 Name: perl-%module
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Summary: Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server
@@ -33,6 +33,9 @@ Libraries shared between Net::OpenID::Consumer and Net::OpenID::Server.
 %perl_vendor_privlib/Net/OpenID/
 
 %changelog
+* Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
 - automated CPAN update
 
