@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.30
+Version: 1.8.31
 Release: alt1
 
 Summary: Installer common parts
@@ -110,6 +110,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Feb 10 2016 Michael Shigorin <mike@altlinux.org> 1.8.31-alt1
+- added 65-setup-control.sh (for m-p at least)
+
 * Thu Nov 12 2015 Anton Farygin <rider@altlinux.ru> 1.8.30-alt1
 - add mmbclk*boot* to evms exclude list
 
