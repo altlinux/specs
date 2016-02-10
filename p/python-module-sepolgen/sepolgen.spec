@@ -1,10 +1,10 @@
 %def_disable check
 
-Epoch: 2
-Version: 1.2.1
-Release: alt1
-%setup_python_module sepolgen
 Name: python-module-sepolgen
+Version: 1.2.2
+Release: alt1
+Epoch: 2
+%setup_python_module sepolgen
 Summary: A Python module used in SELinux policy generation
 License: GPL2+
 Group: Development/Python
@@ -50,6 +50,9 @@ required access.
 
 
 %changelog
+* Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2:1.2.2-alt1
+- new version
+
 * Tue Jan 21 2014 Andriy Stepanov <stanv@altlinux.ru> 2:1.2.1-alt1
 - new version
 

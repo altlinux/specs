@@ -1,12 +1,12 @@
 Name: checkpolicy
-Version: 2.3
+Version: 2.4
 Release: alt1
 Summary: SELinux policy compiler
 Group: System/Configuration/Other
 License: GPLv2
 Url: http://userspace.selinuxproject.org
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch1: alt-ddecl.patch
 
 BuildRequires: flex libselinux-devel >= 2.3 libsepol-devel >= 2.3 libsepol-devel-static >= 2.3
 
@@ -27,7 +27,7 @@ Only required for building policies.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
 
 
 %build
@@ -47,6 +47,9 @@ done
 
 
 %changelog
+* Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
+- new version
+
 * Thu Feb 05 2015 Anton Farygin <rider@altlinux.ru> 2.3-alt1
 - new version
 
