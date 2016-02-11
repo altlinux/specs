@@ -26,14 +26,17 @@ Provides: mvn(org.eclipse.tycho:org.eclipse.osgi.compatibility.state:pom:) = 1.0
 Provides: mvn(org.eclipse.tycho:org.eclipse.osgi:pom:) = 3.10.101.v20151005.1500
 Provides: mvn(org.eclipse:osgi) = 3.10.101.v20151005.1500
 Provides: mvn(org.eclipse:osgi:pom:) = 3.10.101.v20151005.1500
-Requires: java-headless
-Requires: java-headless
-Requires: javapackages-tools
-Requires: jpackage-utils
+Provides: osgi(org.eclipse.osgi) = 3.10.101
+Provides: osgi(org.eclipse.osgi.compatibility.state) = 1.0.100
+Provides: osgi(org.eclipse.osgi.services) = 3.5.0
+Provides: osgi(org.eclipse.osgi.util) = 3.3.100
+Provides: osgi(system.bundle) = 1:4.5.1
+
+
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: eclipse-equinox-osgi-4.5.1-1.tar
 
 %description
@@ -57,6 +60,9 @@ done
 %files -f %name-list
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.5.1-alt0.2jpp
+- added osgi provides
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.5.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
