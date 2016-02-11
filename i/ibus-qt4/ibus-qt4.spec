@@ -1,16 +1,16 @@
 %define _name ibus-qt
 
 Name: %{_name}4
-Version: 1.3.1
-Release: alt2
+Version: 1.3.3
+Release: alt1
 
 Summary: Qt IBus library and Qt input method plugin
 License: GPLv2+
 Group: System/Libraries
-Url: http://code.google.com/p/ibus/
-Source: http://ibus.googlecode.com/files/%_name-%version-Source.tar.gz
+Url: https://github.com/ibus/%_name
 
-Patch: ibus-qt-HEAD.patch
+#VCS: https://github.com/ibus/ibus-qt.git
+Source: %url/releases/download/%version/%_name-%version-Source.tar.gz
 Patch1: ibus-qt-alt-build.patch
 
 %define ibus_ver 1.3.7
@@ -46,20 +46,15 @@ library.
 
 %prep
 %setup -n %_name-%version-Source
-%patch -p1
 %patch1
 
 %build
 %cmake -DLIBDIR=%_libdir
-
-pushd BUILD
-%make_build VERBOSE=1
-
+%cmake_build VERBOSE=1
 %make docs
 
 %install
-pushd BUILD
-%make DESTDIR=%buildroot install
+%cmakeinstall_std
 
 %files
 %_libdir/lib%{_name}.so.*
@@ -74,6 +69,9 @@ pushd BUILD
 #%doc docs/html
 
 %changelog
+* Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt2
 - rebuild against libicu-5.1
 
