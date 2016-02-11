@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           jinput
 Version:        2.0.7
-Release:        alt1_5.20140526svnjpp8
+Release:        alt2_5.20140526svnjpp8
 Summary:        Java Game Controller API
 
 Group:          Development/Java
@@ -162,6 +162,9 @@ ant versiontest
 %{_javadocdir}/%{name}/
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt2_5.20140526svnjpp8
+- %%_jnidir set to /usr/lib/java
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt1_5.20140526svnjpp8
 - java8 mass update
 
