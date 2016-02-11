@@ -5,12 +5,12 @@ License: EPL
 Url: http://www.eclipse.org/
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Provides: eclipse-platform = 1:4.5.1-1
-
-
+Provides: mvn(org.eclipse.equinox.http:servlet) = 1.2.1.v20151005.1500
+Provides: mvn(org.eclipse.equinox.http:servlet:pom:) = 1.2.1.v20151005.1500
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: eclipse-equinox-servlet-4.5.1-1.tar
 
 %description
@@ -34,6 +34,9 @@ done
 %files -f %name-list
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt0.2jpp
+- added mvn provides
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt0.1jpp
 - bootstrap pack of jars
 - temporary package to satisfy circular dependencies
