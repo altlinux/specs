@@ -1,53 +1,80 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: vcmi
-Version: 0.94
-Release: alt3
+Version: 0.98
+Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
+Summary(ru_RU.UTF-8): Open-source движок для игры HMM3:WoG
 License: GPLv2+
 Group: Games/Strategy
 URL: http://wiki.vcmi.eu/index.php?title=Main_Page
+Packager: Anton Midyukov <antohami@altlinux.org>
+Source0: http://download.vcmi.eu/%name-%version.tar.gz
+Patch1:	vcmi-0.98-fix-boost-1.58-build.patch
+BuildPreReq: cmake rpm-macros-cmake
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
-Source0: %name-%version.tar.gz
-
-# Automatically added by buildreq on Thu Oct 10 2013
-BuildRequires: boost-asio-devel boost-devel-headers boost-filesystem-devel boost-interprocess-devel boost-program_options-devel cmake gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libavdevice-devel libavformat-devel libfreetype-devel libpostproc-devel libswscale-devel zlib-devel
+# Automatically added by buildreq on Wed Feb 10 2016
+# optimized out: boost-devel boost-devel-headers cmake-modules gcc-c++ libEGL-devel libGL-devel libSDL2-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-widgets libstdc++-devel pkg-config zlib-devel
+BuildRequires: boost-asio-devel boost-filesystem-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel cmake libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libavdevice-devel libavformat-devel libminizip-devel libpostproc-devel libswscale-devel qt5-base-devel
 
 %description
 The purpose of VCMI project is to rewrite entire HOMM 3: WoG engine from
-scratch, giving it new and extended possibilities. We hope to support mods and
-new towns already made by fans but abandoned because of game code limitations.
+scratch, giving it new and extended possibilities. We hope to support 
+mods and new towns already made by fans but abandoned because of game
+code limitations.
 
-VCMI is fan-made open-source project in progress. We already allow support for
-maps of any sizes, higher resolutions and extended engine limits. However,
-although working, the game is not finished. There are still many features and
-functionalities to add, both old and brand new.
+VCMI is fan-made open-source project in progress. We already allow
+support for maps of any sizes, higher resolutions and extended engine
+limits. However, although working, the game is not finished. There are
+still many features and functionalities to add, both old and brand new.
 
-As yet VCMI is not standalone program, it uses Wake of Gods files and graphics.
-You need to install WoG before running VCMI.
+As yet VCMI is not standalone program, it uses Wake of Gods files and
+graphics. You need to install WoG before running VCMI.
+
+%description -l ru_RU.UTF8
+Цель проекта VCMI состоит в том, чтобы переписать полностью движок
+HoMM 3: WoG, и тем самым дать ему новые и расширенные возможности.
+Мы надеемся реализовать поддержку модов и новых городов, которые уже
+сделаны фанатами, но от которых отказались из-за ограничений кода игры.
+
+VCMI это фанатский проект с открытым исходным кодом. Мы уже реализовали
+поддержку карт любых размеров, более высокое разрешение и расширенные
+возможности движка. Тем не менее хотя игра и работает, она ещё не
+закончена. Есть еще много особенностей которые нужно добавить, как 
+старых так и новых.
+
+Пока VCMI не отдельная программа, она использует файлы от Wake of Gods.
+Вам нужно установить WoG перед запуском VCMI.
 
 %prep
 %setup -q
+%patch1 -p1
 
-%build
-%cmake_insource -DCMAKE_SKIP_RPATH=OFF
-%make_build VERBOSE=1
+%cmake_insource \
+	-DCMAKE_SKIP_RPATH=OFF \
+	-DENABLE_SDL2=ON
+	
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
+mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/
 
 %files
-%doc AUTHORS ChangeLog README README.linux
+%doc AUTHORS ChangeLog README.linux
 %_bindir/*
+%_libdir/libvcmi.so
 %_libdir/%name/*
 %_datadir/%name/*
 %_desktopdir/*
-%_datadir/icons/*/*/apps/vcmiclient.png
+%_datadir/icons/*/*/apps/*
 
 %changelog
+* Sun Aug 23 2015 Anton Midyukov <antohami@altlinux.org> 0.98-alt1
+- New version (Closes: 31364);
+- Fix build with boost-1.58.
+
 * Fri Oct 11 2013 Igor Zubkov <icesik@altlinux.org> 0.94-alt3
 - rebuild with -O3 optimization
 
