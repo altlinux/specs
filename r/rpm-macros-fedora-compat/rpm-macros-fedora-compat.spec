@@ -1,7 +1,7 @@
 %define module fedora-compat
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
-Version: 0.09
+Version: 0.10
 Release: alt1
 License: GPL
 Group: System/Base
@@ -9,7 +9,7 @@ BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: macros.systemd-alt-unitdir.patch
+Patch: macros.systemd-alt.patch
 Requires: rpm-macros-kde-common-devel
 
 %description
@@ -28,6 +28,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- updated systemd
+
 * Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - added _jsdir
 
