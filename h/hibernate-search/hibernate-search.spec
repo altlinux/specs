@@ -1,40 +1,70 @@
-Name: hibernate-search
-Version: 4.5.1
-Summary: Hibernate Search
-License: LGPLv2+
-Url: http://search.hibernate.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: hibernate-search = 4.5.1-5.fc23
-Provides: mvn(org.hibernate:hibernate-search-analyzers) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-analyzers:pom:) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-build-config) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-build-config:pom:) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-engine) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-engine:pom:) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-infinispan) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-infinispan:pom:) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-orm) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-orm:pom:) = 4.5.1.Final
-Provides: mvn(org.hibernate:hibernate-search-parent:pom:) = 4.5.1.Final
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.puppycrawl.tools:checkstyle)
-Requires: mvn(junit:junit)
-Requires: mvn(org.apache.avro:avro)
-Requires: mvn(org.apache.lucene:lucene-analyzers:3)
-Requires: mvn(org.apache.lucene:lucene-core:3)
-Requires: mvn(org.apache.lucene:lucene-facet:3)
-Requires: mvn(org.apache.solr:solr-analysis-extras:3)
-Requires: mvn(org.apache.tika:tika-core)
-Requires: mvn(org.hibernate.common:hibernate-commons-annotations)
-Requires: mvn(org.hibernate:hibernate-core)
-Requires: mvn(org.infinispan:infinispan-lucene-directory)
-Requires: mvn(org.jboss.logging:jboss-logging)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: hibernate-search-4.5.1-5.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define fedora 23
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name hibernate-search
+%define version 4.5.1
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+# Use this switch to rebuild without infinispan
+# This is useful to break the hibernate-search circular dependency
+%define with_infinispan 1
+
+Name:             hibernate-search
+Version:          4.5.1
+Release:          alt1_5jpp8
+Summary:          Hibernate Search
+License:          LGPLv2+
+Url:              http://search.hibernate.org
+
+# wget https://github.com/hibernate/hibernate-search/archive/4.5.1.Final.tar.gz
+# tar -xf 4.5.1.Final.tar.gz
+# rm -rf hibernate-search-4.5.1.Final/orm/src/test/resources/org/hibernate/search/test/bridge/tika/
+# tar -cvjf hibernate-search-4.5.1.Final-CLEAN.tar.gz hibernate-search-4.5.1.Final/
+Source0:          hibernate-search-%{namedversion}-CLEAN.tar.gz
+
+BuildRequires:    maven-local
+BuildRequires:    jboss-logging
+BuildRequires:    jboss-logging-tools
+BuildRequires:    avro
+BuildRequires:    jgroups
+BuildRequires:    slf4j
+BuildRequires:    jboss-transaction-1.1-api
+
+%if 0%{?fedora} >= 21
+BuildRequires:    lucene3
+BuildRequires:    lucene3-contrib
+%else
+BuildRequires:    lucene
+BuildRequires:    lucene-contrib
+%endif
+
+BuildRequires:    solr3
+
+BuildRequires:    h2
+BuildRequires:    maven-checkstyle-plugin
+BuildRequires:    maven-processor-plugin
+BuildRequires:    maven-injection-plugin
+BuildRequires:    byteman
+BuildRequires:    hibernate-commons-annotations
+BuildRequires:    hibernate-jpa-2.1-api
+BuildRequires:    hibernate-core >= 4.3.1
+BuildRequires:    geronimo-jta
+BuildRequires:    junit
+BuildRequires:    tika
+
+%if %{with_infinispan}
+BuildRequires:    infinispan
+%endif
+
+BuildArch:        noarch
+Source44: import.info
 
 %description
 Full text search engines like Apache Lucene are very powerful technologies to
@@ -49,24 +79,52 @@ synchronization and brings back regular managed objects from free text queries.
 
 Hibernate Search is using Apache Lucene under the cover.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadocs for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n hibernate-search-%{namedversion}
+
+%pom_disable_module integrationtest/wildfly
+%pom_disable_module integrationtest/spring
+%pom_disable_module integrationtest/narayana
+%pom_disable_module testing
+%pom_disable_module modules
+%pom_disable_module legacy
+
+%if !%{with_infinispan}
+%pom_disable_module infinispan
+%endif
+
+%pom_remove_plugin ":maven-enforcer-plugin"
+
+%pom_remove_dep "org.apache.tika:tika-parsers" engine/pom.xml
+%pom_add_dep "org.apache.tika:tika-core" engine/pom.xml
+
+sed -i "s|luceneVersion>3.6.2</luceneVersion|luceneVersion>3</luceneVersion|" pom.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc lgpl.txt README.md
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc lgpl.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt1_5jpp8
+- new version
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
