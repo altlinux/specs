@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 1.8
+Version: 1.9.2
 Release: alt1
 
 %setup_python_module %modulename
@@ -17,7 +17,8 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 %define srcname PyICU-%version
 # http://pypi.python.org/packages/source/P/PyICU/%srcname.tar.gz
-Source: %srcname.tar
+# VCS: https://github.com/ovalhub/pyicu.git
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libicu-devel python-devel
 BuildPreReq: python-module-setuptools
@@ -37,7 +38,7 @@ Group: Development/Python3
 PyICU - Python extension wrapping the ICU C++ API.
 
 %prep
-%setup -n %srcname
+%setup
 
 %if_with python3
 cp -fR . ../python3
@@ -63,17 +64,21 @@ popd
 
 %files
 %python_sitelibdir/*
-%python_sitelibdir/*.egg-info
-%doc CREDITS README samples/
+#%exclude %python_sitelibdir/*.egg-info
+%doc CREDITS README* CHANGES samples/
 
 %if_with python3
 %files -n python3-module-%modulename
 %python3_sitelibdir/*
-%python3_sitelibdir/*.egg-info
-%doc CREDITS README samples/
+#%exclude %python3_sitelibdir/*.egg-info
+%doc CREDITS README* CHANGES samples/
 %endif
 
 %changelog
+* Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
+- 1.9.2
+- switched build from tarballs to upstream git
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1
 - Version 1.8
 - Added module for Python 3
