@@ -2,8 +2,10 @@
 
 Name: bash-completion
 Epoch: 1
+# actualy it is version 1.3-109-g0f39d41
 Version: 1.99
-Release: alt3
+Release: alt5
+#TODO: control(8) for avahi-browse
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -17,7 +19,6 @@ Source: %name-%version.tar
 Source1: rpm-cache.filetrigger
 Patch1: %name-20060301-alt-iptables.patch
 Patch9: %name-alt-specific.patch
-Source2: mutt
 
 %if_enabled tests
 BuildRequires: dejagnu tcllib
@@ -36,39 +37,40 @@ of the programmable completion feature of bash 2.04 and later.
 %patch9 -p1
 
 %build
-./autogen.sh
+autoreconf -fisv
 %configure && make
 
 %check
 #FIXME
 %if_enabled tests
-	pushd test
-	./runCompletion
-	./runInstall
-	./runUnit
-	popd
+make -C test check
 %endif
 
 %install
 %makeinstall_std
 mv %buildroot%_sysconfdir/{profile.d,bashrc.d}
-mkdir -p %buildroot%_rpmlibdir
+mkdir -p %buildroot%_sysconfdir/bash_completion.d %buildroot%_rpmlibdir
 install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 
-#fixes
-install -p -m644 %SOURCE2 %buildroot%_sysconfdir/bash_completion.d/
-#one line fixes
->> %buildroot%_sysconfdir/bash_completion.d/_alt.fixes
+#%%add_findreq_skiplist %_datadir/%name/completions/btdownloadheadless.py
 
 %files
 %doc AUTHORS CHANGES README TODO doc/*.txt
-%_sysconfdir/bash_completion
 %_sysconfdir/bash_completion.d
 %_sysconfdir/bashrc.d/bash_completion.sh
 %_rpmlibdir/*
 %_datadir/%name
+#FIXME add more
 
 %changelog
+* Wed Feb 10 2016 Ildar Mulyukov <ildar@altlinux.ru> 1:1.99-alt5
+- fix rpm completion (ALT-specific)
+
+* Tue Jan 12 2016 Ildar Mulyukov <ildar@altlinux.ru> 1:1.99-alt4
+- new version. It is actually 1.3-109-g0f39d41. Closes: #28933
+- backported the new layout: everything is now in /usr/share/bash-completion/, rather than in /etc/.
+- drop mutt completion from Gentoo in favor of the one in the tree
+
 * Sun Aug 22 2010 Ildar Mulyukov <ildar@altlinux.ru> 1:1.99-alt3
 - new GIT version
 - bug fixes (closes: #22386, #22443, #23861)
