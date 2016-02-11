@@ -1,6 +1,6 @@
 Name: swftools
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: A collection of SWF manipulation and generation utilities
 License: GPL
@@ -17,18 +17,12 @@ BuildRequires: gcc-c++ libfreetype-devel libgif-devel libjpeg-devel liblame-deve
 
 BuildPreReq: zlib-devel
 
-Summary(ru_RU.KOI8-R): набор программ для работы с файлами формата SWF
+Summary(ru_RU.UTF-8): п╫п╟п╠п╬я─ п©я─п╬пЁя─п╟п╪п╪ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ я└п╟п╧п╩п╟п╪п╦ я└п╬я─п╪п╟я┌п╟ SWF
 
 %description
 SWF Tools is a collection of SWF manipulation and generation utilities
 
 Included are:
-
- PDF2SWF A PDF to SWF Converter. Generates one frame per page. Enables
- you to have fully formatted text, including tables, formulas etc.
- inside your Flash Movie. Uses the xpdf PDF parser from Derek B.
- Noonburg and the tt2pt1 font converter developed by the TTF2PT1 Project
- and its contributors.
 
  SWFCombine A tool for inserting SWFs into Wrapper SWFs. (Templates)
  E.g. for including the pdf2swf SWFs in some sort of Browsing-SWF.
@@ -56,43 +50,38 @@ Included are:
 
  SWFTools has been reported to work on Solaris, Linux, FreeBSD and OSX.
 
-%description -l ru_RU.KOI8-R
-SWF Tools -- это набор программ для работы с файлами формата SWF.
+%description -l ru_RU.UTF-8
+SWF Tools -- я█я┌п╬ п╫п╟п╠п╬я─ п©я─п╬пЁя─п╟п╪п╪ п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ я└п╟п╧п╩п╟п╪п╦ я└п╬я─п╪п╟я┌п╟ SWF.
 
-В пакет включены:
+п▓ п©п╟п╨п╣я┌ п╡п╨п╩я▌я┤п╣п╫я▀:
 
-PDF2SWF --- преобразователь PDF в SWF. Работает по принципу
-1 страница = 1 кадр. Позволяет вставлять в файл SWF
-отформатированный текст, таблицы, формулы и т.д. Используется
-парсер PDF из xpdf и преобразователь шрифтов tt2pt1.
+SWFCombine --- я█я┌п╬ п╦п╫я│я┌я─я┐п╪п╣п╫я┌ п╢п╩я▐ п╡я│я┌п╟п╡п╨п╦ я└п╟п╧п╩п╬п╡ SWF п╡ Wrapper SWFs.
+п²п╟п©я─п╦п╪п╣я─, п╪п╬п╤п╫п╬ я│п╬п╥п╢п╟п╡п╟я┌я▄ "п╦п╫я┌п╣я─п╟п╨я┌п╦п╡п╫я▀п╣" SWF я┤п╣я─п╣п╥ pdf2swf.
 
-SWFCombine --- это инструмент для вставки файлов SWF в Wrapper SWFs.
-Например, можно создавать "интерактивные" SWF через pdf2swf.
+SWFStrings я│п╨п╟п╫п╦я─я┐п╣я┌ я└п╟п╧п╩я▀ SWF п╫п╟ п©я─п╣п╢п╪п╣я┌ я│п╬п╢п╣я─п╤п╟п╫п╦я▐ п╡ п╫п╦я┘ я┌п╣п╨я│я┌п╟.
 
-SWFStrings сканирует файлы SWF на предмет содержания в них текста.
+SWFDump п╡я▀п╡п╬п╢п╦я┌ я─п╟п╥п╩п╦я┤п╫я┐я▌ п╦п╫я└п╬я─п╪п╟я├п╦я▌ п╬ я└п╟п╧п╩п╣ SWFs.
 
-SWFDump выводит различную информацию о файле SWFs.
+JPEG2SWF я│п╬п╥п╢п╟я▒я┌ я│п╩п╟п╧п╢я┬п╬я┐ п╡ я└п╬я─п╪п╟я┌п╣ SWF п╦п╥ п╫п╣я│п╨п╬п╩я▄п╨п╦я┘ я└п╟п╧п╩п╬п╡ JPEG.
 
-JPEG2SWF создаёт слайдшоу в формате SWF из нескольких файлов JPEG.
+PNG2SWF п╢п╣п╩п╟п╣я┌ я┌п╬ п╤п╣ я│п╟п╪п╬п╣, я┤я┌п╬ п╦ JPEG2SWF, я┌п╬п╩я▄п╨п╬ я│ я└п╟п╧п╩п╟п╪п╦ PNG.
 
-PNG2SWF делает то же самое, что и JPEG2SWF, только с файлами PNG.
+WAV2SWF п©я─п╣п╬п╠я─п╟п╥п╬п╡я▀п╡п╟п╣я┌ п╥п╡я┐п╨п╬п╡я▀п╣ я└п╟п╧п╩я▀ п╡ я└п╬я─п╪п╟я┌п╣ WAV п╡ я└п╟п╧п╩я▀ SWF я│ MP3
+п©я─п╦ п©п╬п╪п╬я┴п╦ п╨п╬п╢п╦я─п╬п╡я┴п╦п╨п╟ L.A.M.E.
 
-WAV2SWF преобразовывает звуковые файлы в формате WAV в файлы SWF с MP3
-при помощи кодировщика L.A.M.E.
+AVI2SWF п©я─п╣п╬п╠я─п╟п╥п╬п╡я▀п╡п╟п╣я┌ я└п╟п╧п╩я▀ п╡ я└п╬я─п╪п╟я┌п╣ AVI п╡ SWF. п╜я┌п╟ п©я─п╬пЁя─п╟п╪п╪п╟
+п╫п╟я┘п╬п╢п╦я┌я│я▐ п╡ п╫п╟я┤п╟п╩я▄п╫п╬п╧ я│я┌п╟п╢п╦п╦ я─п╟п╥я─п╟п╠п╬я┌п╨п╦, п╬п╢п╫п╟п╨п╬ я─п╟п╠п╬я┌п╟я▌я┴п╦п╣
+п©я─п╦п╪п╣я─я▀ я┐п╤п╣ п╪п╬п╤п╫п╬ п╫п╟п╧я┌п╦ п©п╬ п╟п╢я─п╣я│я┐ %url/examples.html.
 
-AVI2SWF преобразовывает файлы в формате AVI в SWF. Эта программа
-находится в начальной стадии разработки, однако работающие
-примеры уже можно найти по адресу %url/examples.html.
+SWFExtract п©п╬п╥п╡п╬п╩я▐п╣я┌ п╦п╥п╡п╩п╣п╨п╟я┌я▄ п╡п╦п╢п╣п╬я─п╬п╩п╦п╨п╦, п╥п╡я┐п╨п╦, п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ п╦
+п╢я─я┐пЁп╦п╣ п╢п╟п╫п╫я▀п╣ п╦п╥ я└п╟п╧п╩п╬п╡ SWF.
 
-SWFExtract позволяет извлекать видеоролики, звуки, изображения и
-другие данные из файлов SWF.
+RFXSWF --- я█я┌п╬ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟, п©я─п╦ п©п╬п╪п╬я┴п╦ п╨п╬я┌п╬я─п╬п╧ п╪п╬п╤п╫п╬ я│п╬п╥п╢п╟п╡п╟я┌я▄
+я└п╟п╧п╩я▀ п╡ я└п╬я─п╪п╟я┌п╣ SFX я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧, п╨п╫п╬п©п╬п╨,
+пЁп╣п╬п╪п╣я┌я─п╦я┤п╣я│п╨п╦я┘ п©я─п╦п╪п╦я┌п╦п╡п╬п╡, я┌п╣п╨я│я┌п╟, я┬я─п╦я└я┌п╬п╡, п╥п╡я┐п╨п╬п╡ п╦ я┌.п╢.
 
-RFXSWF --- это библиотека, при помощи которой можно создавать
-файлы в формате SFX с использованием изображений, кнопок,
-геометрических примитивов, текста, шрифтов, звуков и т.д.
-
-SWFTools была замечена в работающем состоянии на Solaris, Linux,
-FreeBSD и MacOS X.
+SWFTools п╠я▀п╩п╟ п╥п╟п╪п╣я┤п╣п╫п╟ п╡ я─п╟п╠п╬я┌п╟я▌я┴п╣п╪ я│п╬я│я┌п╬я▐п╫п╦п╦ п╫п╟ Solaris, Linux,
+FreeBSD п╦ MacOS X.
 
 %prep
 %setup
@@ -118,6 +107,9 @@ cd %buildroot%_datadir/%name/swfs
 %doc AUTHORS ChangeLog doc/*
 
 %changelog
+* Thu Feb 11 2016 Michael Shigorin <mike@altlinux.org> 0.9.2-alt2
+- dropped pdf2swf from package description (ALT#31773)
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 0.9.2-alt1
 - 0.9.2
 - dropped a patch
