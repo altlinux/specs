@@ -2,14 +2,14 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: Module for creating simple ASCII tables
 
 License: %lgpl3only
 Group: Development/Python
-Url: http://foutaise.org/code/
+Url: https://github.com/foutaise/texttable
 
 Source: %oname-%version.tar
 BuildArch: noarch
@@ -76,5 +76,8 @@ popd
 %endif
 
 %changelog
+* Mon Feb 8 2016 Vladimir Didenko <cow@altlinux.ru> 0.8.4-alt1
+- 0.8.4
+
 * Mon Sep 14 2015 Vladimir Didenko <cow@altlinux.ru> 0.8.3-alt1
 - 0.8.3

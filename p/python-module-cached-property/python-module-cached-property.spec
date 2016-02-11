@@ -1,15 +1,16 @@
-%define oname dockerpty
+%define oname cached-property
+%define modname cached_property
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.1
+Version: 1.3.0
 Release: alt1
 
-Summary: Use the pseudo-tty of a docker container.
+Summary: A decorator for caching properties in classes.
 
-License: %asl
+License: %bsd
 Group: Development/Python
-Url: https://github.com/d11wtq/dockerpty
+Url: https://github.com/pydanny/cached-property
 
 Source: %oname-%version.tar
 BuildArch: noarch
@@ -25,15 +26,15 @@ BuildRequires: python3-devel python3-module-distribute
 %setup_python_module %oname
 
 %description
-Python library to use the pseudo-tty of a docker container.
+A decorator for caching properties in classes.
 
 %if_with python3
 %package -n python3-module-%oname
-Summary: Use the pseudo-tty of a docker container (Python 3)
+Summary: A decorator for caching properties in classes (Python 3)
 Group: Development/Python3
 
 %description -n python3-module-%oname
-Python library to use the pseudo-tty of a docker container.
+A decorator for caching properties in classes.
 %endif
 
 
@@ -64,19 +65,17 @@ popd
 %endif
 
 %files
-%doc LICENSE.txt README.md
-%python_sitelibdir/%oname/
+%doc LICENSE AUTHORS.rst README.rst HISTORY.rst CONTRIBUTING.rst
+%python_sitelibdir/%modname.*
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
-%python3_sitelibdir/%oname/
+%python3_sitelibdir/%modname.*
 %python3_sitelibdir/*.egg-*
+%python3_sitelibdir/__pycache__/*
 %endif
 
 %changelog
-* Mon Feb 8 2016 Vladimir Didenko <cow@altlinux.ru> 0.4.1-alt1
-- 0.4.1
-
-* Mon Sep 14 2015 Vladimir Didenko <cow@altlinux.ru> 0.3.4-alt1
-- 0.3.4
+* Mon Feb 8 2016 Vladimir Didenko <cow@altlinux.ru> 1.3.0-alt1
+- 1.3.0
