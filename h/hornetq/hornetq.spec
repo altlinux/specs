@@ -1,37 +1,40 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
+# fedora __isa_bits tmp hack
+%ifarch x86_64
+%define __isa_bits 64
+%else
+%define __isa_bits 32
+%endif
+%define fedora 23
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name hornetq
+%define version 2.4.1
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+%global customnamedversion 2_4_1_Final
+
+# Use this switch to rebuild without narayana
+# This is useful to break the hornetq circular dependency
+%define with_narayana 0
+
 Name:             hornetq
-Version:          2.2.13
-Release:          alt2_6jpp7
+Version:          2.4.1
+Release:          alt1_0jpp8
 Summary:          High performance messaging system
-Group:            Development/Java
 License:          ASL 2.0
 URL:              http://www.jboss.org/hornetq
-
-# git clone git://github.com/hornetq/hornetq.git
-# cd hornetq && git checkout HornetQ_2_2_13_AS7_Final && git checkout-index -f -a --prefix=hornetq-2.2.13/ 
-# find hornetq-2.2.13/ -name '*.jar' -delete
-# tar cafJ hornetq-2.2.13-CLEAN.tar.xz hornetq-2.2.13
-Source0:          hornetq-%{version}-CLEAN.tar.xz
-
-Patch0:           0001-Removed-maven-buildmagic-thirdparty-plugin-dependenc.patch
-Patch1:           0002-Removed-spring-dependency.patch
-Patch2:           0003-gui-aid-changes.patch
-Patch3:           0004-JDK7-fix-for-FileChannel-constructor.patch
-Patch4:           0005-Libraries-paths.patch
-Patch5:           0006-Make-creation-of-pom-files-easier.patch
-Patch6:           0007-Add-jdepend-dependency-to-run-javadoc-creation.patch
-Patch7:           0008-Native-build-fixes.patch
-
-BuildRequires:    jpackage-utils
-BuildRequires:    ant
+Source0:          https://github.com/hornetq/hornetq/archive/HornetQ_%{customnamedversion}.tar.gz
 
 BuildRequires:    automake libtool autoconf
 BuildRequires:    apiviz
+BuildRequires:    aether
 BuildRequires:    apache-commons-logging
 BuildRequires:    javacc
 BuildRequires:    jboss-connector-1.6-api
@@ -39,32 +42,44 @@ BuildRequires:    jboss-ejb-3.1-api
 BuildRequires:    jboss-ejb3-ext-api
 BuildRequires:    jboss-jaspi-1.0-api
 BuildRequires:    jboss-jms-1.1-api
-BuildRequires:    jboss-jts
 BuildRequires:    jboss-logging
 BuildRequires:    jboss-servlet-3.0-api
 BuildRequires:    jboss-transaction-1.1-api
 BuildRequires:    jboss-transaction-spi
 BuildRequires:    jboss-logging
+BuildRequires:    jboss-logging-tools
+BuildRequires:    jboss-remoting
+BuildRequires:    jboss-naming
+BuildRequires:    jbossws-parent
 BuildRequires:    jdepend
 BuildRequires:    libaio-devel
+
+%if 0%{?fedora} > 20
 BuildRequires:    netty
+%else
+BuildRequires:    netty4
+%endif
 
-Requires:         jpackage-utils
+BuildRequires:    maven-local
+BuildRequires:    maven-license-plugin
+BuildRequires:    maven-checkstyle-plugin
+BuildRequires:    javacc-maven-plugin
+BuildRequires:    java-service-wrapper
+BuildRequires:    jgroups
+BuildRequires:    jboss-integration
+BuildRequires:    mvn(org.jboss.resteasy:resteasy-jaxrs)
+BuildRequires:    mvn(org.jboss.spec.javax.annotation:jboss-annotations-api_1.1_spec)
 
-Requires:         apache-commons-logging
-Requires:         jboss-connector-1.6-api
-Requires:         jboss-ejb-3.1-api
-Requires:         jboss-ejb3-ext-api
-Requires:         jboss-jaspi-1.0-api
-Requires:         jboss-jms-1.1-api
-Requires:         jboss-jts
-Requires:         jboss-logging
-Requires:         jboss-servlet-3.0-api
-Requires:         jboss-transaction-1.1-api
-Requires:         jboss-transaction-spi
-Requires:         jboss-logging
-Requires:         jdepend
-Requires:         netty
+%if %{with_narayana}
+BuildRequires:    narayana
+%endif
+
+BuildRequires:    xml-maven-plugin
+BuildRequires:    saxon
+BuildRequires:    qpid-proton-java
+BuildRequires:    mvn(org.jboss.spec.javax.resource:jboss-connector-api_1.6_spec)
+BuildRequires:    mvn(org.jboss.spec.javax.jms:jboss-jms-api_2.0_spec)
+BuildRequires:    nar-maven-plugin >= 3.0.0
 Source44: import.info
 
 %description
@@ -72,109 +87,104 @@ HornetQ is an open source project to build a multi-protocol, embeddable,
 very high performance, clustered, asynchronous messaging system.
 
 %package javadoc
+Group: Development/Java
 Summary:          Javadocs for %{name}
-Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-%package devel
-Summary:          Native development files for %{name}
-Group:            Development/Java
-Requires:         %{name}%{?_isa} = %{version}-%{release}
-
-%description devel
-This package provides the support files which can be used to
-build applications using the HornetQ native library.
-
 %prep
-%setup -q -n hornetq-%{version}
+%setup -q -n hornetq-HornetQ_%{customnamedversion}
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+# Remove bundled .so files
+find -name "*.so" -delete
 
-mkdir -p thirdparty/net/java/dev/javacc/lib/ thirdparty/org/jboss/apiviz/lib/
+%pom_remove_dep "org.jboss.jbossts.jts:jbossjts-jacorb" hornetq-jms-server/pom.xml
+%pom_add_dep "org.jboss.narayana.jta:jta" hornetq-jms-server/pom.xml
 
-ln -s $(build-classpath javacc) thirdparty/net/java/dev/javacc/lib/javacc.jar
-ln -s $(build-classpath apiviz) thirdparty/org/jboss/apiviz/lib/apiviz.jar
-ln -s $(build-classpath jdepend) thirdparty/org/jboss/apiviz/lib/jdepend.jar
+%pom_disable_module hornetq-service-sar
+%pom_disable_module hornetq-bootstrap
+%pom_disable_module tests
+%pom_disable_module examples
+%pom_disable_module hornetq-rest
+
+%pom_disable_module integration/hornetq-jboss-as-integration
+%pom_disable_module integration/hornetq-spring-integration
+%pom_disable_module integration/hornetq-twitter-integration
+%pom_disable_module integration/hornetq-aerogear-integration
+
+%if !%{with_narayana}
+%pom_disable_module hornetq-jms-server
+%pom_disable_module hornetq-ra
+%pom_disable_module hornetq-tools
+%endif
+
+%pom_remove_plugin ":maven-checkstyle-plugin"
+
+%pom_remove_dep "org.jboss.microcontainer:jboss-kernel"
+
+# Use netty version 4, always
+sed -i 's|>4.0.13.Final<|>4<|' pom.xml
+
+# Replace old jca
+%pom_remove_dep "org.jboss.javaee:jboss-jca-api" hornetq-ra/pom.xml
+%pom_add_dep "org.jboss.spec.javax.resource:jboss-connector-api_1.6_spec" hornetq-ra/pom.xml
+
+# Make xslt 2.0 avaialble!
+%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId = 'xml-maven-plugin']/pom:configuration" "<transformerFactory>net.sf.saxon.TransformerFactoryImpl</transformerFactory>" hornetq-core-client/pom.xml
+
+sed -i "s|>com.mycila<|>com.mycila.maven-license-plugin<|g" pom.xml
+sed -i "s|>license-maven-plugin<|>maven-license-plugin<|g" pom.xml
 
 %build
-# Build jars and javadocs
-ant -Dnodownload=true -Dhornetq.run_script=true jar-core jar-core-client jar-jms jar-jms-client jar-ra javadoc
+# Workaround for building native bits
+# Currently the build script uses the .so in the hornetq-nativebin/ directory
+# but we need to rebuild them. The issue is that the mvn build process does not
+# use the new .so files we've built. Here is a simple workaround.
 
-# Create POMs
-ant -f build-maven.xml deploy
-
-# Build native bits
-export JAVA_HOME=/usr/lib/jvm/java
-
-pushd native
-# Generate C headers
-pushd src
-javah -classpath ../../build/jars/hornetq-core.jar org.hornetq.core.asyncio.impl.AsynchronousFileImpl
+%if %{with_narayana}
+pushd hornetq-native
+# Let's build the .so files
+%mvn_build -i -f -- -Pnative-build
+# Copy them to hornetq-native/bin/ dir
+find -name "*.so" -exec cp {} bin/libHornetQAIO.so \;
+find -name "*.so" -exec cp {} bin/libHornetQAIO%{__isa_bits}.so \;
 popd
+%endif
 
-autoreconf --install
-%configure
-make %{?_smp_mflags}
-popd
+# This will rebuild one more time the hornet-native stuff,
+# but this time will include the correct native libraries
+
+# Tests are skipped because required modules are disabled
+%mvn_build -f -- -Pmaven-release
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%mvn_install
 
-for m in core-client core jms-client jms ra; do
-  # JAR
-  install -pm 644 build/jars/hornetq-${m}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-${m}.jar
+# Install native stuff
+%if %{with_narayana}
+install -d -m 755 %{buildroot}/%{_libdir}
+cp -L hornetq-native/bin/libHornetQAIO.so %{buildroot}/%{_libdir}/libHornetQAIO.so
+%endif
 
-  # POM
-  install -pm 644 hornetq-${m}.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}-${m}.pom
-
-  # DEPMAP
-  %add_maven_depmap JPP.%{name}-%{name}-${m}.pom %{name}/%{name}-${m}.jar
-done
-
-# APIDOCS
-cp -rp build/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# Install native bits
-pushd native
-make install DESTDIR=$RPM_BUILD_ROOT
-popd
-
-# Remove static files
-rm $RPM_BUILD_ROOT/%{_libdir}/*.la
-
-# Rename the executable file by prefixing it
-mv $RPM_BUILD_ROOT/%{_bindir}/disktest $RPM_BUILD_ROOT/%{_bindir}/%{name}-disktest
-
-%files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
-%{_javadir}/*
-%{_libdir}/libHornetQAIO.so.*
-%{_bindir}/%{name}-disktest
-%doc licenses/LICENSE.txt
-
-%files javadoc
-%{_javadocdir}/%{name}
-%doc licenses/LICENSE.txt
-
-%files devel
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%if %{with_narayana}
 %{_libdir}/libHornetQAIO.so
-%doc licenses/LICENSE.txt
+%endif
+%doc distribution/hornetq/src/main/resources/licenses/LICENSE.txt
+%doc NOTICE
+%doc README.md
+
+%files javadoc -f .mfiles-javadoc
+%doc distribution/hornetq/src/main/resources/licenses/LICENSE.txt
+%doc NOTICE
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_0jpp8
+- new version. build w/o narayana
+
 * Mon Jul 28 2014 Igor Vlasenko <viy@altlinux.ru> 2.2.13-alt2_6jpp7
 - new release
 
