@@ -11,8 +11,7 @@ Provides: servlet = 3.1
 Provides: servlet3
 Provides: servlet6
 Provides: tomcat-servlet-3.1-api = 1:8.0.26-1.fc23
-Requires: /bin/sh
-Requires: /bin/sh
+Provides: osgi(javax.servlet) = 3.0.0
 Requires: chkconfig
 Requires: chkconfig
 Requires: java-headless
@@ -20,7 +19,7 @@ Requires: jpackage-utils
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: tomcat-servlet-3.1-api-8.0.26-1.fc23.cpio
 Obsoletes: tomcat-servlet-3.0-api < 8
 Provides: tomcat-servlet-3.0-api = %version
@@ -56,6 +55,9 @@ fi
 %files -f %name-list
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.26-alt0.2jpp
+- osgi provides
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.26-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
