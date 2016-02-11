@@ -1,0 +1,40 @@
+Name: eclipse-equinox-servlet
+Version: 4.5.1
+Summary: Eclipse OSGi - Equinox
+License: EPL
+Url: http://www.eclipse.org/
+Packager: Igor Vlasenko <viy@altlinux.ru>
+Provides: eclipse-platform = 1:4.5.1-1
+
+
+
+BuildArch: noarch
+Group: Development/Java
+Release: alt0.1jpp
+Source: eclipse-equinox-servlet-4.5.1-1.tar
+
+%description
+Eclipse OSGi - Equinox
+
+# sometimes commpress gets crazy (see maven-scm-javadoc for details)
+%set_compress_method none
+%prep
+tar xf %{SOURCE0}
+
+%build
+tar tf %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+%install
+mkdir -p $RPM_BUILD_ROOT
+for i in usr var etc; do
+[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+done
+
+
+%files -f %name-list
+
+%changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt0.1jpp
+- bootstrap pack of jars
+- temporary package to satisfy circular dependencies
+
