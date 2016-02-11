@@ -1,26 +1,39 @@
-Name: hibernate-hql
-Version: 1.0.0
-Summary: Hibernate Query Parser
-License: LGPLv2 and ASL 2.0
-Url: https://github.com/hibernate/hibernate-hql-parser
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: hibernate-hql = 1.0.0-0.4.Alpha6.fc21
-Provides: mvn(org.hibernate.hql:hibernate-hql-lucene) = 1.0.0.Alpha6
-Provides: mvn(org.hibernate.hql:hibernate-hql-lucene:pom:) = 1.0.0.Alpha6
-Provides: mvn(org.hibernate.hql:hibernate-hql-parent:pom:) = 1.0.0.Alpha6
-Provides: mvn(org.hibernate.hql:hibernate-hql-parser) = 1.0.0.Alpha6
-Provides: mvn(org.hibernate.hql:hibernate-hql-parser:pom:) = 1.0.0.Alpha6
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.antlr:antlr-runtime)
-Requires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
-Requires: mvn(org.hibernate:hibernate-search-engine)
-Requires: mvn(org.jboss.logging:jboss-logging)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: hibernate-hql-1.0.0-0.4.Alpha6.fc21.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name hibernate-hql
+%define version 1.0.0
+%global namedreltag .Alpha6
+%global namedversion %{version}%{?namedreltag}
+
+Name:             hibernate-hql
+Version:          1.0.0
+Release:          alt1_0.6.Alpha6jpp8
+Summary:          Hibernate Query Parser
+License:          LGPLv2 and ASL 2.0
+Url:              https://github.com/hibernate/hibernate-hql-parser
+Source0:          https://github.com/hibernate/hibernate-hql-parser/archive/%{namedversion}.tar.gz
+
+Source1:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/hibernate/hql/%{name}-parser/%{namedversion}/%{name}-parser-%{namedversion}.pom
+Source2:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/hibernate/hql/%{name}-lucene/%{namedversion}/%{name}-lucene-%{namedversion}.pom
+
+BuildRequires:    maven-local
+BuildRequires:    mvn(org.antlr:antlr-runtime) >= 3.4
+BuildRequires:    mvn(org.antlr:antlr3-maven-plugin)
+BuildRequires:    mvn(org.antlr:stringtemplate)
+BuildRequires:    mvn(org.apache.lucene:lucene-core:3)
+BuildRequires:    mvn(org.apache.lucene:lucene-analyzers:3)
+BuildRequires:    mvn(org.apache.lucene:lucene-facet:3)
+BuildRequires:    mvn(org.bsc.maven:maven-processor-plugin)
+BuildRequires:    mvn(org.hibernate:hibernate-search-engine)
+BuildRequires:    mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging)
+BuildRequires:    mvn(org.jboss.logging:jboss-logging-processor)
+
+BuildArch:        noarch
+Source44: import.info
 
 %description
 Experimental new parser for HQL and JP-QL queries, to convert these into SQL
@@ -28,24 +41,115 @@ and other different targets such as Lucene queries, Map/Reduce queries for
 NoSQL stores, make it possible to perform more sophisticated SQL
 transformations.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:          Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-parser-%{namedversion}
+
+find . -name '*.jar' -delete
+find . -name '*.class' -delete
+
+sed -i "s,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301," license.txt
+
+cp %{SOURCE1} parser/pom.xml
+cp %{SOURCE2} lucene/pom.xml
+# This is a dummy POM added just to ease building in the RPM platforms
+cat > pom.xml << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.hibernate.hql</groupId>
+    <artifactId>hibernate-hql-parent</artifactId>
+    <version>%{namedversion}</version>
+    <packaging>pom</packaging>
+    <name>Hibernate HQL/JP-QL Parent</name>
+    <description>Hibernate HQL/JP-QL</description>
+
+    <modules>
+      <module>parser</module>
+      <module>lucene</module>
+    </modules>
+  
+</project>
+EOF
+
+%pom_add_plugin "org.bsc.maven:maven-processor-plugin:2.0.2 " parser '
+<configuration>
+    <defaultOutputDirectory>${project.build.directory}/generated-sources/logging</defaultOutputDirectory>
+    <processors>
+        <processor>org.jboss.logging.processor.apt.LoggingToolsProcessor</processor>
+    </processors>
+    <compilerArguments>
+      -nowarn -proc:only -encoding UTF-8 
+      -source 1.6 -target 1.6 
+      -sourcepath ${project.build.directory}/generated-sources/antlr3 
+      -Adebug=true -AskipTranslations=true
+    </compilerArguments>
+</configuration>
+<executions>
+    <execution>
+        <id>process</id>
+        <phase>generate-sources</phase>
+        <goals>
+            <goal>process</goal>
+        </goals>
+    </execution>
+</executions>
+<dependencies>
+    <dependency>
+        <groupId>org.jboss.logging</groupId>
+        <artifactId>jboss-logging-processor</artifactId>
+        <version>1.0.3.Final</version>
+    </dependency>
+</dependencies>'
+
+%pom_add_plugin "org.antlr:antlr3-maven-plugin:3.4" parser " 
+<executions>
+  <execution>
+   <phase>generate-sources</phase>
+   <goals>
+    <goal>antlr</goal>
+   </goals>
+   <configuration>
+    <sourceDirectory>src/main/antlr</sourceDirectory>
+   </configuration>
+ </execution>
+</executions>"
+
+# package org.antlr.stringtemplate does not exist
+%pom_add_dep org.antlr:stringtemplate:3.3-SNAPSHOT:provided parser
+# Force usage of lucene3 used by hibernate-search-engine
+%pom_add_dep org.apache.lucene:lucene-core:3:provided lucene
+%pom_add_dep org.apache.lucene:lucene-analyzers:3:provided lucene
+%pom_add_dep org.apache.lucene:lucene-facet:3:provided lucene
+
+%mvn_package :hibernate-hql-parent __noinstall
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc README.md
+%doc copyright.txt license.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc copyright.txt license.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_0.6.Alpha6jpp8
+- full build
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
