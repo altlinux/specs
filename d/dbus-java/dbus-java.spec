@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:       dbus-java
 Version:    2.7
-Release:    alt1_20jpp8
+Release:    alt2_20jpp8
 Summary:    Java implementation of the DBus protocol
 Group:      Development/Java
 License:    AFL or LGPLv2
@@ -141,9 +141,9 @@ make install \
 %{_bindir}/DBusViewer
 %{_bindir}/ListDBus
 %doc %{_defaultdocdir}/%{name}
-%doc %{_mandir}/man1/CreateInterface.1*
-%doc %{_mandir}/man1/DBusCall.1*
-%doc %{_mandir}/man1/DBusDaemon.1*
+%doc %{_mandir}/man1/CreateInterface.1.*
+%doc %{_mandir}/man1/DBusCall.1.*
+%doc %{_mandir}/man1/DBusDaemon.1.*
 %doc %{_mandir}/man1/DBusViewer.1.*
 %doc %{_mandir}/man1/ListDBus.1.*
 %doc AUTHORS COPYING INSTALL README
@@ -154,6 +154,9 @@ make install \
 
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_20jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_20jpp8
 - java8 mass update
 
