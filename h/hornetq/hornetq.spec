@@ -1,7 +1,7 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ hornetq
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -22,11 +22,11 @@ BuildRequires: jpackage-generic-compat
 
 # Use this switch to rebuild without narayana
 # This is useful to break the hornetq circular dependency
-%define with_narayana 0
+%define with_narayana 1
 
 Name:             hornetq
 Version:          2.4.1
-Release:          alt1_0jpp8
+Release:          alt1_6jpp8
 Summary:          High performance messaging system
 License:          ASL 2.0
 URL:              http://www.jboss.org/hornetq
@@ -182,6 +182,9 @@ cp -L hornetq-native/bin/libHornetQAIO.so %{buildroot}/%{_libdir}/libHornetQAIO.
 %doc NOTICE
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_6jpp8
+- build with narayana
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_0jpp8
 - new version. build w/o narayana
 
