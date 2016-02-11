@@ -1,11 +1,13 @@
 Epoch: 0
 Group: Development/Java
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-containers
 Version:        1.6
-Release:        alt1_4jpp8
+Release:        alt2_4jpp8
 Summary:        Containers for Plexus
 License:        ASL 2.0 and MIT
 URL:            https://github.com/codehaus-plexus/plexus-containers
@@ -145,6 +147,9 @@ sed -i "s|<version>2.3</version>|<version> %{javadoc_plugin_version}</version>|"
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_4jpp8
+- added osgi provides
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_4jpp8
 - new version
 
