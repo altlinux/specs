@@ -1,68 +1,67 @@
 Epoch: 0
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-# these packages are not configured to run as a server
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name apacheds
+%define version 2.0.0
+%global namedreltag -M21
+%global namedversion %{version}%{?namedreltag}
+
+%global jetty_version 8.1.17.v20150415
+
 Name:          apacheds
-Version:       1.5.7
-Release:       alt2_7jpp7
+Version:       2.0.0
+Release:       alt1_0.1.M21jpp8
 Summary:       Apache Directory Server
 License:       ASL 2.0
 Url:           http://directory.apache.org/
-# svn export http://svn.apache.org/repos/asf/directory/apacheds/tags/1.5.7/ apacheds-1.5.7
-# tar czf apacheds-1.5.7-src-svn.tar.gz apacheds-1.5.7
-Source0:       %{name}-%{version}-src-svn.tar.gz
-# remove unavailable / unused deps
-# fix bouncycastle gId aId
-Patch0:        %{name}-%{version}-fixbuild.patch
-# add maven-surefire-plugin version
-Patch1:        %{name}-%{version}-i18n-pom.patch
+Source0:       http://www.apache.org/dist/directory/apacheds/dist/%{namedversion}/%{name}-parent-%{namedversion}-source-release.zip
 
-BuildRequires: directory-project
-
-BuildRequires: apache-commons-io
-BuildRequires: apache-mina
-BuildRequires: apacheds-ldap-client
-BuildRequires: apacheds-shared
-BuildRequires: bouncycastle
-BuildRequires: junit
-BuildRequires: ldapjdk >= 0:4.18-11
-BuildRequires: log4j
-BuildRequires: slf4j
-
-# BuildRequires: antlr
-# BuildRequires: apache-commons-cli
-# BuildRequires: apache-commons-collections
-# BuildRequires: apache-commons-daemon
-# BuildRequires: apache-commons-dbcp
-# BuildRequires: apache-commons-lang
-# BuildRequires: apache-commons-pool
-# BuildRequires: apacheds-daemon-bootstrappers
-# BuildRequires: java-service-wrapper
-# BuildRequires: jboss-system
-# BuildRequires: jetty
-# BuildRequires: maven
-# BuildRequires: maven-xbean-plugin
-# BuildRequires: plexus-utils
-# BuildRequires: quartz
-# BuildRequires: springframework-beans
-# BuildRequires: springframework-context
-# BuildRequires: springframework-core 
-# BuildRequires: velocity
-# BuildRequires: xbean-spring 
-# BuildRequires: xerces-j2
-
-# test deps
-BuildRequires: apache-commons-net
+Patch0:        apacheds-2.0.0-M21-jetty8.patch
 
 BuildRequires: maven-local
-BuildRequires: maven-antrun-plugin
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-source-plugin
-BuildRequires: maven-surefire-provider-junit4
+BuildRequires: mvn(com.google.code.findbugs:annotations)
+BuildRequires: mvn(commons-collections:commons-collections)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(commons-lang:commons-lang)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(ldapsdk:ldapsdk)
+BuildRequires: mvn(log4j:log4j:1.2.17)
+BuildRequires: mvn(net.sf.ehcache:ehcache-core)
+BuildRequires: mvn(org.apache.directory.api:api-asn1-api)
+BuildRequires: mvn(org.apache.directory.api:api-dsml-engine)
+BuildRequires: mvn(org.apache.directory.api:api-i18n)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-client-api)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-codec-core)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-codec-standalone)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-extras-aci)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-extras-sp)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-extras-trigger)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-extras-util)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-model)
+BuildRequires: mvn(org.apache.directory.api:api-ldap-schema-data)
+BuildRequires: mvn(org.apache.directory.api:api-util)
+BuildRequires: mvn(org.apache.directory.jdbm:apacheds-jdbm1)
+BuildRequires: mvn(org.apache.directory.mavibot:mavibot)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.mina:mina-core)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
+BuildRequires: mvn(org.eclipse.jetty:jetty-server:%jetty_version)
+BuildRequires: mvn(org.eclipse.jetty:jetty-util:%jetty_version)
+BuildRequires: mvn(org.eclipse.jetty:jetty-webapp:%jetty_version)
+BuildRequires: mvn(org.eclipse.jetty:jetty-xml:%jetty_version)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-log4j12)
+BuildRequires: mvn(tanukisoft:wrapper)
+
+Obsoletes:     %{name}-jdbm < %{version}
+Obsoletes:     %{name}-utils
+Obsoletes:     %{name}-xdbm
 
 BuildArch:     noarch
 Source44: import.info
@@ -105,28 +104,19 @@ plugin.
 A linked in memory splay tree implementation with Cursor.
 Core unit tests. 
 
+%package http-integration
+Group: Development/Java
+Summary:       ApacheDS Jetty HTTP Server Integration
+
+%description http-integration
+This package provides Jetty HTTP Server Integration.
+
 %package i18n
 Group: Development/Java
 Summary:       ApacheDS I18n
 
 %description i18n
 Internationalization of errors and other messages.
-
-%package jdbm
-Group: Development/Java
-Summary:       ApacheDS specific JDBM Implementation
-
-%description jdbm
-A specific JDBM Implementation.
-A JDBM entry store which does not have any dependency on
-core interfaces. The JDBM partition will use this store
-and build on it to adapt this to server specific partition
-interfaces. Having this separate module without
-dependencies on core interfaces makes it easier to avoid
-cyclic dependencies between modules. This is especially
-important for use within the bootstrap plugin which needs
-to build the schema partition used for bootstrapping the
-server. 
 
 %package kerberos
 Group: Development/Java
@@ -136,6 +126,14 @@ Summary:       ApacheDS Kerberos
 This package provides:
 - The Kerberos protocol provider for ApacheDS.
 - Interceptors used by the ApacheDS kerberos service.
+
+%package osgi
+Group: Development/Java
+Summary:       ApacheDS OSGi Integration
+
+%description osgi
+This package provides:
+- ApacheDS OSGi Integration Tests.
 
 %package protocols
 Group: Development/Java
@@ -166,36 +164,21 @@ Various command-line utilities for apacheds.
 Unit testing framework for ApacheDS Server JNDI Provider.
 A single authoritative server.XML file. 
 
-%package utils
+%package service
 Group: Development/Java
-Summary:       ApacheDS Utils
+Summary:       ApacheDS Services
 
-%description utils
-Contains utility classes for ApacheDS. 
+%description service
+This package provides ApacheDS Services. Used for reading the
+configuration present in a Partition and instantiate the
+necessary objects like DirectoryService, Interceptors etc.
 
-#%% package xbean-spring
-# BR/R xbean-spring maven-xbean-plugin
-# BR/R springframework-beans
-# BR/R springframework-context
-# BR/R springframework-core 
-#%% description xbean-spring
-
-%package xdbm
+%package wrapper
 Group: Development/Java
-Summary:       ApacheDS XDBM
+Summary:       ApacheDS Wrapper
 
-%description xdbm
-Base XDBM (btree based) entry store interfaces.
-Search engine implementation generalized for XDBM entry
-store scheme.
-Generalized (X) DBM Tools:
-Several kinds of two column key/value data structures, in
-memory and on disk which sort keys can can be used to
-implement xdbm partitions. JDBM is one example. These
-partition use the same database structure or scheme for
-maintaining LDAP entries and facilitating search operations
-on them. This module contains common tools that could be
-used to manage aspects common to all xdbm implementations. 
+%description wrapper
+A Tanuki Wrapper implementation for the ApacheDS service.
 
 %package javadoc
 Group: Development/Java
@@ -206,58 +189,57 @@ BuildArch: noarch
 This package contains javadoc for %{name}.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p0
+%setup -q -n %{name}-parent-%{namedversion}
+# cleanup
+find . -name "*.bat" -delete
+find . -name "*.class" -delete
+find . -name "*.exe" -delete
+find . -name "*.jar" -print -delete
+rm -r installers-maven-plugin/src/main/resources/org/apache/directory/server/installers/*
+
 chmod 644 README.txt
 
+%patch0 -p1
+
+%pom_xpath_set "pom:properties/pom:jetty.version" %jetty_version
+
+%pom_remove_parent
+
+%pom_remove_plugin -r :maven-site-plugin
+%pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r :maven-shade-plugin
+%pom_remove_plugin -r :maven-dependency-plugin
+%pom_remove_plugin -r :maven-checkstyle-plugin
+
 %pom_disable_module all
-# TODO
-# depend on 
-# jboss jboss-system 3.2.3
-# org.apache.directory.daemon daemon-bootstrappers (deceased)
-# org.apache.xbean xbean-spring maven-xbean-plugin
-# org.springframework spring-core spring-beans spring-context
-%pom_disable_module xbean-spring
-# TODO
-# http-integration
-# default-config
-# server-sar
-# server-tools
-# server-xml
-%pom_disable_module server-tools
-%pom_disable_module server-xml
-# depend on jetty 6.x
-%pom_disable_module http-integration
-# depend on http-integration
-%pom_disable_module default-config
+%pom_disable_module installers
+%pom_disable_module installers-maven-plugin
 
-# this test fails
-rm -rf i18n/src/test/java/org/apache/directory/server/i18n/GermanLanguageTest.java
-rm -rf xdbm-search/src/test/java/org/apache/directory/server/xdbm/search/impl/LessEqTest.java
+%pom_remove_dep -r :apacheds-installers
+%pom_remove_dep -r :apacheds-installers-maven-plugin
+%pom_remove_dep -r org.apache.directory.junit:junit-addons
+# Remove the com.mycila.junit.concurrent annotations
+sed -i '/Concurrency/d' $(find */src/test/java -name "*.java")
+sed -i '/ConcurrentJunitRunner/d' $(find */src/test/java -name "*.java")
 
-%build
+%pom_change_dep -r findbugs:annotations com.google.code.findbugs:annotations
 
-%mvn_package ":%{name}-avl-partition" core
-%mvn_package ":%{name}-core" core
-%mvn_package ":%{name}-core-annotations" core
-%mvn_package ":%{name}-core-api" core
-%mvn_package ":%{name}-core-avl" core
-%mvn_package ":%{name}-core-constants" core
-%mvn_package ":%{name}-core-entry" core
-%mvn_package ":%{name}-core-integ" core
-%mvn_package ":%{name}-core-jndi" core
-%mvn_package ":%{name}-core-mock" core
-%mvn_package ":%{name}-jdbm-partition" core
-%mvn_package ":%{name}-jdbm-store" core
+%pom_xpath_remove -r "pom:dependency[pom:scope='test']"
+
+%mvn_package :%{name}-core* core
+%mvn_package :%{name}-interceptors* core
+%mvn_package ":%{name}-http-directory-bridge" core
+%mvn_package :%{name}-jdbm* core
 %mvn_package ":%{name}-ldif-partition" core
+%mvn_package ":%{name}-mavibot-partition" core
 %mvn_package ":%{name}-server-annotations" core
+%mvn_package ":%{name}-server-config" core
 %mvn_package ":%{name}-test-framework" core
+%mvn_package ":%{name}-xdbm-partition" core
 %mvn_package ":%{name}-i18n" i18n
-%mvn_package ":%{name}-jdbm" jdbm
 %mvn_package ":%{name}-interceptor-kerberos" kerberos
-%mvn_package ":%{name}-kerberos-shared" kerberos
-%mvn_package ":%{name}-kerberos-test" kerberos
+%mvn_package :%{name}-kerberos-* kerberos
+%mvn_package ":kerberos-client" kerberos
 %mvn_package ":%{name}-protocol-kerberos" kerberos
 %mvn_package ":%{name}-protocol-changepw" protocols
 %mvn_package ":%{name}-protocol-dhcp" protocols
@@ -265,36 +247,39 @@ rm -rf xdbm-search/src/test/java/org/apache/directory/server/xdbm/search/impl/Le
 %mvn_package ":%{name}-protocol-ldap" protocols
 %mvn_package ":%{name}-protocol-ntp" protocols
 %mvn_package ":%{name}-protocol-shared" protocols
+%mvn_package ":ldap-client-test" protocols
+%mvn_package ":%{name}-osgi-integ" osgi
 %mvn_package ":%{name}-server-integ" server
 %mvn_package ":%{name}-server-jndi" server
 %mvn_package ":%{name}-server-replication" server
-%mvn_package ":%{name}-utils" utils
-%mvn_package ":%{name}-xdbm-base" xdbm
-%mvn_package ":%{name}-xdbm-search" xdbm
-%mvn_package ":%{name}-xdbm-tools" xdbm
+%mvn_package ":%{name}-service" service
+%mvn_package ":%{name}-service-builder" service
 
-# server-integ fails
-%mvn_build -s -- -Pquicktest -Dmaven.test.failure.ignore=true
+%build
+
+# No test dep org.apache.directory.junit:junit-addons:0.1
+%mvn_build -s -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
 
 %files -f .mfiles-%{name}-parent
-%dir %{_javadir}/%{name}
-%doc LICENSE NOTICE README.txt
+%doc README.txt
+%doc LICENSE NOTICE
 
 %files core -f .mfiles-core
 %doc LICENSE NOTICE
 
-# files http-integration
+%files http-integration -f .mfiles-%{name}-http-integration
+%doc LICENSE NOTICE
 
 %files i18n -f .mfiles-i18n
 %doc LICENSE NOTICE
 
-%files jdbm -f .mfiles-jdbm
+%files kerberos -f .mfiles-kerberos
 %doc LICENSE NOTICE
 
-%files kerberos -f .mfiles-kerberos
+%files osgi -f .mfiles-osgi
 %doc LICENSE NOTICE
 
 %files protocols -f .mfiles-protocols
@@ -303,18 +288,19 @@ rm -rf xdbm-search/src/test/java/org/apache/directory/server/xdbm/search/impl/Le
 %files server -f .mfiles-server
 %doc LICENSE NOTICE
 
-%files utils -f .mfiles-utils
+%files service -f .mfiles-service
 %doc LICENSE NOTICE
 
-# files xbean-spring 
-
-%files xdbm -f .mfiles-xdbm
+%files wrapper -f .mfiles-%{name}-wrapper
 %doc LICENSE NOTICE
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.1.M21jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.5.7-alt2_7jpp7
 - new release
 
