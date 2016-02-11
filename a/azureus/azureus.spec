@@ -1,7 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
+Obsoletes: vuse < 4.2.0.3
 Conflicts: vuse < 4.2.0.3
+Requires: java
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -9,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		azureus
 Version:	5.7.0.0
-Release:	alt1_2jpp8
+Release:	alt2_2jpp8
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 
@@ -144,12 +146,6 @@ install -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/application-registry
 sed -i s,JAVA_HOME=/usr/lib/jvm/java-openjdk,JAVA_HOME=/usr/lib/jvm/java,g %buildroot%_bindir/%name
 sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 
-%post
-touch %{_datadir}/icons/hicolor
-
-%postun
-touch %{_datadir}/icons/hicolor
-
 %files
 %doc ChangeLog.txt
 %doc GPL.txt
@@ -163,6 +159,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.0.0-alt2_2jpp8
+- added java requires
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.0.0-alt1_2jpp8
 - java8 mass update
 
