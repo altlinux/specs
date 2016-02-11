@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:          axis
 Version:       1.4
-Release:       alt3_27jpp8
+Release:       alt4_27jpp8
 Epoch:         0
 Summary:       SOAP implementation in Java
 License:       ASL 2.0
@@ -239,6 +241,9 @@ build-jar-repository %{buildroot}%{_javadir}/javax.xml.rpc/ javax.wsdl \
 %doc --no-dereference docs/*
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_27jpp8
+- added osgi provides
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt3_27jpp8
 - new version
 
