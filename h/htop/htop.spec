@@ -4,8 +4,8 @@
 %def_enable oom
 
 Name: htop
-Version: 1.0.3
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPL
@@ -80,6 +80,9 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Thu Feb 11 2016 Michael Shigorin <mike@altlinux.org> 2.0.0-alt1
+- new version (watch file uupdate)
+
 * Sun Aug 16 2015 Michael Shigorin <mike@altlinux.org> 1.0.3-alt2
 - fixed 128px icon path, added proper 32px icon path
   (thanks shadowsbrother@ for spotting this)
