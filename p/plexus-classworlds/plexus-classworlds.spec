@@ -1,11 +1,13 @@
 Epoch: 0
 Group: Development/Java
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-classworlds
 Version:        2.5.2
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 URL:            https://github.com/codehaus-plexus/plexus-classworlds
@@ -55,6 +57,9 @@ API documentation for %{name}.
 %doc LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt2_3jpp8
+- added osgi provides
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:2.5.2-alt1_3jpp8
 - new version
 
