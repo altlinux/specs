@@ -7,7 +7,7 @@
 %def_enable wayland
 
 Name: ibus
-Version: 1.5.11
+Version: 1.5.12
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -39,14 +39,13 @@ BuildRequires: libdbus-devel
 BuildRequires: python-module-dbus-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc
-BuildRequires: python-module-pygobject-devel
 BuildRequires: intltool
 BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: gnome-icon-theme-symbolic
 BuildRequires: libXi-devel
 BuildRequires: libnotify-devel
-%{?_enable_python:BuildRequires: rpm-build-python python-module-pygobject-devel python-module-pygobject3-devel}
+%{?_enable_python:BuildRequires: rpm-build-python python-module-pygobject3-devel}
 %{?_enable_gconf:BuildRequires: libGConf-devel}
 # required if autoreconf used
 BuildRequires: libGConf-devel
@@ -254,6 +253,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.12-alt1
+- 1.5.12
+
 * Thu Aug 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5.11-alt1
 - 1.5.11
 
