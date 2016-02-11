@@ -37,7 +37,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jline1
 Version:        1.0
-Release:        alt2_11jpp8
+Release:        alt3_11jpp8
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
@@ -63,7 +63,7 @@ BuildRequires: maven-surefire-provider-junit
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1022939
 
-#BuildArch:     noarch
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -75,7 +75,7 @@ chain to other console applications.
 %package        demo
 Summary:        Demos for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -116,11 +116,6 @@ mv tmp/* .
 %install
 %mvn_install
 
-if [ %_libdir != /usr/lib ]; then
-    mv %buildroot/usr/lib %buildroot%_libdir
-    sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
-fi
-
 %files -f .mfiles
 # there is native code in sources but only for Windows
 %dir %{_jnidir}/%{name}
@@ -130,6 +125,9 @@ fi
 %doc LICENSE.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_11jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11jpp8
 - manual jni fix
 
