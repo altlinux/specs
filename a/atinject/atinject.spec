@@ -3,12 +3,14 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           atinject
 Version:        1
-Release:        alt6_21.20100611svn86jpp8
+Release:        alt7_21.20100611svn86jpp8
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
 URL:            http://code.google.com/p/atinject/
@@ -55,7 +57,7 @@ BuildArch: noarch
 %package        tck
 Group: Development/Java
 Summary:        TCK for testing %{name} compatibility with JSR-330
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       junit
 
 %description    tck
@@ -77,9 +79,6 @@ sed -i -e 's/pom\.groupId/project.groupId/' tck-pom.xml
 # TCK sub-package
 %mvn_file :javax.inject-tck atinject-tck
 %mvn_package :javax.inject-tck tck
-# fix insource
-sed -i 's,javac -g,javac -source 1.5 -target 1.5 -g,' build.sh
-
 
 %build
 set -e
@@ -115,6 +114,9 @@ cp -pr build/tck/javadoc/* %{buildroot}%{_javadocdir}/%{name}/tck
 %{_javadocdir}/atinject
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1-alt7_21.20100611svn86jpp8
+- added osgi provides
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:1-alt6_21.20100611svn86jpp8
 - new version
 
