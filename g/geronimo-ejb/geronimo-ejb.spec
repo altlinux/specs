@@ -1,3 +1,5 @@
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -6,7 +8,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             geronimo-ejb
 Version:          1.0
-Release:          alt2_15jpp8
+Release:          alt3_15jpp8
 Summary:          Java EE: EJB API v3.1
 Group:            Development/Java
 License:          ASL 2.0
@@ -68,6 +70,9 @@ sed -i 's/\r//' LICENSE
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_15jpp8
+- added osgi provides
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15jpp8
 - new version
 
