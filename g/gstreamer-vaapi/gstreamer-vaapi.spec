@@ -1,34 +1,34 @@
-%define ver_major 0.6
+%define ver_major 1.6
 %define api_ver 1.6
 %define gst_api_ver 1.0
 
 %def_enable wayland
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: gstreamer-vaapi
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
 Group: System/Libraries
 License: LGPLv2.1
-Url: http://freedesktop.org/wiki/Software/vaapi/
+Url: http://gstreamer.freedesktop.org/modules/gstreamer-vaapi.html
 
-# VCS: https://github.com/01org/gstreamer-vaapi.git
+# VCS: git://anongit.freedesktop.org/gstreamer/gstreamer-vaapi
 # Source: %name/%name-%version.tar
-Source: http://www.freedesktop.org/software/vaapi/releases/%name/%name-%version.tar.bz2
+Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 # VA/GLX specific APIs dropped in 5.10
 Patch: %name-0.6.1-alt-pkgconfig.patch
 
 %define glib_ver 2.28
-%define gst_ver 1.0
+%define gst_ver 1.6
 %define va_ver 1.1
 
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel >= %gst_ver
 BuildRequires: libva-devel >= %va_ver
-BuildRequires: libdrm-devel libudev-devel libvpx-devel
+BuildRequires: libdrm-devel libudev-devel
 BuildRequires: libGL-devel libXrandr-devel libXrender-devel
 BuildRequires: gtk-doc
 %{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel libwayland-server-devel}
@@ -39,15 +39,6 @@ acceleration from GStreamer applications.
 
 Includes elements for video decoding, display, encoding and post-processing
 using VA API (subject to hardware limitations).
-
-%package devel
-Summary: Development files for %name
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name helper libraries.
 
 %package devel-doc
 Summary: Development documentation for %name
@@ -62,7 +53,7 @@ GStreamer applications.
 
 %prep
 %setup
-%patch
+#%%patch
 
 %build
 %autoreconf
@@ -78,28 +69,20 @@ GStreamer applications.
 %makeinstall_std
 
 %files
-%_libdir/libgstvaapi-%api_ver.so.*
-%_libdir/libgstvaapi-drm-%api_ver.so.*
-%_libdir/libgstvaapi-glx-%api_ver.so.*
-%_libdir/libgstvaapi-wayland-%api_ver.so.*
-%_libdir/libgstvaapi-x11-%api_ver.so.*
-%_libdir/libgstvaapi-egl-%api_ver.so.*
 %_libdir/gstreamer-%gst_api_ver/*.so
 %doc AUTHORS NEWS README
 
 %exclude %_libdir/gstreamer-%gst_api_ver/*.la
 
-%files devel
-%_includedir/gstreamer-%gst_api_ver/gst/vaapi/
-%_libdir/*.so
-%_pkgconfigdir/gstreamer-vaapi*.pc
-
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%name/
+%_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 %endif
 
 %changelog
+* Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sun Oct 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
