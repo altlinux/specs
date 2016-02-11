@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jffi
 Version:        1.2.9
-Release:        alt1_8jpp8
+Release:        alt2_8jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -86,12 +86,6 @@ cp -p dist/jffi-*-Linux.jar archive/
 %install
 %mvn_install
 
-if [ %_libdir != /usr/lib ]; then
-    mv %buildroot/usr/lib %buildroot%_libdir
-    sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
-fi
-
-
 mkdir -p META-INF/
 cp %{SOURCE3} META-INF/
 jar umf MANIFEST.MF %{buildroot}%{_jnidir}/%{name}/%{name}.jar META-INF/p2.inf
@@ -125,6 +119,9 @@ ant -Duse.system.libffi=1 test
 %doc COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt2_8jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.9-alt1_8jpp8
 - java 8 mass update
 
