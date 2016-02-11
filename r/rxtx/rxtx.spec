@@ -23,7 +23,7 @@ BuildRequires: jpackage-generic-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt2_0.14.20100211.1jpp8
+Release:	alt3_0.14.20100211.1jpp8
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://rxtx.qbang.org/
@@ -90,15 +90,8 @@ make RXTX_PATH=%{buildroot}%{jni} JHOME=%{buildroot}%{_javadir} install
 find %{buildroot} -name '*.la' -exec rm {} \;
 
 %mvn_artifact org.rxtx:rxtx:%{version} RXTXcomm.jar
-
 %mvn_file org.rxtx:rxtx:%{version} RXTXcomm
 %mvn_install
-if [ %_libdir != /usr/lib ]; then
-    mkdir -p %buildroot%_libdir/java/
-    mv %buildroot/usr/lib/java/* %buildroot%_libdir/java/
-    sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
-fi
-
 rm -f  %{buildroot}%{_datadir}/java/RXTXcomm.jar
 ln -s %{_jnidir}/RXTXcomm.jar %{buildroot}%{_datadir}/java/RXTXcomm.jar
 
@@ -110,6 +103,9 @@ ln -s %{_jnidir}/RXTXcomm.jar %{buildroot}%{_datadir}/java/RXTXcomm.jar
 %attr(644, root, root) %{_datadir}/maven-metadata/%{name}.xml
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.14.20100211.1jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.14.20100211.1jpp8
 - java8 mass update
 
