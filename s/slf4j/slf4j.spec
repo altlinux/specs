@@ -1,6 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -35,8 +37,8 @@ BuildRequires: jpackage-generic-compat
 #
 
 Name:           slf4j
-Version:        1.7.12
-Release:        alt1_2jpp8
+Version:        1.7.14
+Release:        alt1_1jpp8
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 Group:          Development/Java
@@ -217,8 +219,12 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 
 %files manual
 %doc LICENSE.txt APACHE-LICENSE
+%{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.14-alt1_1jpp8
+- added osgi provides
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.7.12-alt1_2jpp8
 - new version
 
