@@ -5,20 +5,15 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt38jpp
+Release: alt39jpp
 
-# jetty
-Provides: jetty = 9
 # for apacheds jpp7
 Provides: mvn(org.apache.directory.project:project)
-# todo
-# jibx BR tycho R eclipse-platform
-#Provides: eclipse-platform 
 #i586-runawfe-gpd.32bit#3.6.0-alt1.svn4700       i586-eclipse-swt
 #i586-runawfe-notifier.32bit#3.6.0-alt1.svn4700  i586-eclipse-swt
-#i586-tuxguitar.32bit#1.2-alt3.3 i586-itext
 Provides: i586-eclipse-swt = 4.0
-Provides: i586-itext
+#i586-tuxguitar.32bit#1.2-alt3.3 i586-itext
+#Provides: i586-itext
 
 %description
 Maven3 transaction unfinished files.
@@ -34,6 +29,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt39jpp
+- updated dependencies
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt38jpp
 - updated dependencies
 
