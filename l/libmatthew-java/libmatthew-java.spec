@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt1_13jpp8
+Release:        alt2_13jpp8
 Summary:        A few useful Java libraries
 Group:          Development/Java
 License:        MIT
@@ -102,6 +102,9 @@ make install \
 
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_13jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_13jpp8
 - new version
 
