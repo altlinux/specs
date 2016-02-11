@@ -1,5 +1,7 @@
 Epoch: 0
 Group: Development/Java
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
@@ -8,7 +10,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             testng
 Version:          6.8.21
-Release:          alt1_2jpp8
+Release:          alt2_2jpp8
 Summary:          Java-based testing framework
 # org/testng/remote/strprotocol/AbstractRemoteTestRunnerClient.java is CPL
 License:          ASL 2.0 and CPL
@@ -92,6 +94,9 @@ mv -f ANNOUNCEMENT.txt.utf8 ANNOUNCEMENT.txt
 %doc LICENSE.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.8.21-alt2_2jpp8
+- added osgi provides
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.8.21-alt1_2jpp8
 - unbootsrap build
 
