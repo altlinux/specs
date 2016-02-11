@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           netty-tcnative
 Version:        1.1.30
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        Fork of Tomcat Native with improved OpenSSL and mavenized build
 License:        ASL 2.0
 URL:            https://github.com/netty/netty/wiki/Forked-Tomcat-Native
@@ -68,12 +68,6 @@ patch -p1 < $patch
 
 %install
 %mvn_install
-
-if [ %_libdir != /usr/lib ]; then
-    mv %buildroot/usr/lib %buildroot%_libdir
-    sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
-fi
-
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/
 cp target/native-build/target/lib/lib%{name}-%{namedversion}.so $RPM_BUILD_ROOT%{_libdir}/%{name}/lib%{name}.so
 
@@ -93,6 +87,9 @@ javac -d . -cp $RPM_BUILD_ROOT%{_jnidir}/%{name}/%{name}.jar %{SOURCE1}
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt2_2jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.30-alt1_2jpp8
 - new version
 
