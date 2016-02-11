@@ -1,44 +1,55 @@
-Name: spring-ldap
-Version: 1.3.1
-Summary: Java library for simplifying LDAP operations
-License: ASL 2.0
-Url: http://www.springframework.org/ldap
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: mvn(org.springframework.ldap.ldif:spring-ldap-ldif:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-core) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-core-tiger) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-core-tiger:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-core:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-ldif-batch) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-ldif-batch:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-ldif-core) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-ldif-core:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-odm) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-odm:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-parent-tiger:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap-parent:pom:) = 1.3.1.RELEASE
-Provides: mvn(org.springframework.ldap:spring-ldap:pom:) = 1.3.1.RELEASE
-Provides: spring-ldap = 1.3.1-12.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(commons-cli:commons-cli)
-Requires: mvn(commons-lang:commons-lang)
-Requires: mvn(commons-logging:commons-logging)
-Requires: mvn(commons-pool:commons-pool)
-Requires: mvn(log4j:log4j)
-Requires: mvn(org.freemarker:freemarker)
-Requires: mvn(org.springframework.batch:spring-batch-core)
-Requires: mvn(org.springframework.batch:spring-batch-infrastructure)
-Requires: mvn(org.springframework:spring-beans)
-Requires: mvn(org.springframework:spring-context)
-Requires: mvn(org.springframework:spring-core)
-Requires: mvn(org.springframework:spring-tx)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt3jpp
-Source: spring-ldap-1.3.1-12.fc23.cpio
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:          spring-ldap
+Version:       1.3.1
+Release:       alt4_12jpp8
+Summary:       Java library for simplifying LDAP operations
+License:       ASL 2.0
+URL:           http://www.springframework.org/ldap
+# svn export https://src.springframework.org/svn/spring-ldap/tags/spring-ldap-1.3.1.RELEASE spring-ldap-1.3.1
+# tar cfJ spring-ldap-1.3.1.tar.xz spring-ldap-1.3.1
+Source0:       %{name}-%{version}.tar.xz
+# Don't use ldapbp.jar, as I couldn't find the source and I doubt it has a valid
+# open source license:
+Patch0:        %{name}-remove-ldapbp.patch
+# Use Java 5 to build the core as the JavaCC generated source code uses Java 5
+# features like generics and annotations:
+Patch1:        %{name}-use-java-5-to-build-core.patch
+# Remove the dependency on spring-orm:
+Patch2:        %{name}-remove-spring-orm.patch
+
+BuildArch:     noarch
+
+BuildRequires: dos2unix
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(commons-cli:commons-cli)
+BuildRequires:  mvn(commons-codec:commons-codec)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(commons-pool:commons-pool)
+BuildRequires:  mvn(gsbase:gsbase)
+BuildRequires:  mvn(jdepend:jdepend)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(log4j:log4j)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.freemarker:freemarker)
+BuildRequires:  mvn(org.springframework.ldap:spring-ldap-core)
+BuildRequires:  mvn(org.springframework.ldap:spring-ldap-core-tiger)
+BuildRequires:  mvn(org.springframework.ldap:spring-ldap-ldif-core)
+BuildRequires:  mvn(org.springframework.ldap:spring-ldap-parent:pom:)
+BuildRequires:  mvn(org.springframework.ldap:spring-ldap-parent-tiger:pom:)
+BuildRequires:  mvn(org.springframework:spring-beans)
+BuildRequires:  mvn(org.springframework:spring-context)
+BuildRequires:  mvn(org.springframework:spring-core)
+BuildRequires:  mvn(org.springframework:spring-jdbc)
+BuildRequires:  mvn(org.springframework:spring-tx)
+Source44: import.info
 
 %description
 Spring LDAP is a Java library for simplifying LDAP operations, based on the
@@ -56,24 +67,60 @@ transaction support, a pooling library, exception translation from
 NamingExceptions to a mirrored unchecked Exception hierarchy, as well as
 several utilities for working with filters, LDAP paths and Attributes.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary:       Javadoc for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains javadoc for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+
+# Unpack and patch the source:
+%setup -q
+# Build the core only
+%pom_disable_module test-support
+%pom_disable_module test
+
+%pom_xpath_inject "pom:project/pom:parent" "<relativePath>../../parent/tiger</relativePath>" ldif/ldif-batch
+
+%pom_remove_plugin :cobertura-maven-plugin parent
+
+# Disable the AWS extension
+%pom_xpath_remove "pom:build/pom:extensions" parent
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+# Remove binary files:
+find . -name '*.jar' -print -delete
+
+# Fix line endings in documentation files:
+dos2unix notice.txt
+dos2unix license.txt
+dos2unix readme.txt
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+
+# Skip the tests for now, as they bring dependencies that are not available in
+# the distribution right now:
+%mvn_build -f -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%doc license.txt notice.txt
+%doc readme.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc license.txt notice.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt4_12jpp8
+- java 8 mass update
+
 * Sun Feb 07 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt3jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
