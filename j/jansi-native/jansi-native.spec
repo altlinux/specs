@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jansi-native
 Version:        1.5
-Release:        alt1_9jpp8
+Release:        alt2_9jpp8
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 Group:          Development/Java
 License:        ASL 2.0
@@ -59,11 +59,6 @@ This package contains the API documentation for %{name}.
 %install
 %mvn_install
 
-if [ %_libdir != /usr/lib ]; then
-    mv %buildroot/usr/lib %buildroot%_libdir
-        sed -i -e s,/usr/lib/,%_libdir/,g %buildroot/usr/share/maven-metadata/* .mfiles*
-fi
-
 %files -f .mfiles
 %dir %{_jnidir}/%{name}
 %doc readme.md license.txt changelog.md
@@ -72,6 +67,9 @@ fi
 %doc license.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_9jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Sat Feb 06 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_9jpp8
 - java 8 mass update
 
