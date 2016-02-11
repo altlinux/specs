@@ -1,114 +1,75 @@
-Name: narayana
-Version: 5.0.0
-Summary: Distributed Transaction Manager
-License: LGPLv2+
-Url: http://www.jboss.org/narayana/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: jboss-jts = 5.0.0-4.fc23
-Provides: mvn(org.jboss.narayana.arjunacore:arjuna) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.arjunacore:arjuna:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.arjunacore:arjunacore) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.arjunacore:arjunacore-all:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.arjunacore:arjunacore:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.arjunacore:txoj) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.arjunacore:txoj:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.ext:ext-all:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:cdi) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:cdi:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:jdbc) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:jdbc:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:jta) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:jta:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:narayana-jta) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:narayana-jta-all:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:narayana-jta:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:narayana-spi) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jta:narayana-spi:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:jacorb-idl) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:jacorb-idl:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:jtax) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:jtax:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:jts) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:jts:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:narayana-idl:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:narayana-jts-all:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:narayana-jts-integration) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:narayana-jts-integration:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:narayana-jts-jacorb) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:narayana-jts-jacorb:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:orbportability) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.jts:orbportability:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:rest-tx:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-api) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-api:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-bridge) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-bridge:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-integration) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-integration:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-util) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat-util:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.rts:restat:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.stm:stm) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.stm:stm:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.txframework:txframework) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.txframework:txframework:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:bridge) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:bridge::api:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:bridge:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:byteman_support) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:byteman_support:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:jbossxts) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:jbossxts::api:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:jbossxts:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:recovery) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:recovery:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:service) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:service:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:ws-c11) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:ws-c11::api:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:ws-c11:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:ws-t11) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:ws-t11::api:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:ws-t11:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:wsas) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:wsas:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:wscf11) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:wscf11:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:wstx11) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:wstx11::api:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:wstx11:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:xts-all:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:xts-test-servlet) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana.xts:xts-test-servlet:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana:common) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana:common:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana:jbosstxbridge) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana:jbosstxbridge:pom:) = 5.0.0.Final
-Provides: mvn(org.jboss.narayana:narayana-all:pom:) = 5.0.0.Final
-Provides: narayana = 5.0.0-4.fc23
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(com.sun:tools)
-Requires: mvn(commons-httpclient:commons-httpclient)
-Requires: mvn(dom4j:dom4j)
-Requires: mvn(junit:junit)
-Requires: mvn(log4j:log4j:1.2.17)
-Requires: mvn(org.hibernate.javax.persistence:hibernate-jpa-2.0-api)
-Requires: mvn(org.hornetq:hornetq-journal)
-Requires: mvn(org.jboss.byteman:byteman)
-Requires: mvn(org.jboss.byteman:byteman-submit)
-Requires: mvn(org.jboss.resteasy:jaxrs-api)
-Requires: mvn(org.jboss.resteasy:resteasy-jaxrs)
-Requires: mvn(org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec)
-Requires: mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec)
-Requires: mvn(org.jboss.weld:weld-core)
-Requires: mvn(org.jboss.ws:jbossws-api)
-Requires: mvn(org.jfree:jfreechart)
+Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name narayana
+%define version 5.0.0
+%global namedreltag .Final
+%global namedversion %{version}%{?namedreltag}
+
+Name:       narayana
+Version:    5.0.0
+Release:    alt1_4jpp8
+Summary:    Distributed Transaction Manager
+License:    LGPLv2+
+URL:        http://www.jboss.org/narayana/
+Source0:    https://github.com/jbosstm/narayana/archive/%{namedversion}.tar.gz
 
 BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: narayana-5.0.0-4.fc23.cpio
+
+BuildRequires: aether
+BuildRequires: junit
+BuildRequires: antlr-tool
+BuildRequires: ant
+BuildRequires: ant-junit
+BuildRequires: ant-contrib
+BuildRequires: apache-commons-codec
+BuildRequires: avalon-logkit
+BuildRequires: cdi-api
+BuildRequires: hibernate-jpa-2.0-api
+BuildRequires: dom4j
+BuildRequires: byteman
+BuildRequires: ironjacamar
+BuildRequires: jacorb
+BuildRequires: jakarta-commons-httpclient
+BuildRequires: jboss-logging
+BuildRequires: jboss-logging-tools
+BuildRequires: jboss-transaction-1.2-api
+BuildRequires: jboss-transaction-spi
+BuildRequires: jboss-interceptors-1.2-api
+BuildRequires: jboss-servlet-3.0-api
+BuildRequires: jboss-ejb-3.1-api
+BuildRequires: jboss-annotations-1.1-api
+BuildRequires: jbossws-api >= 1.0.2
+BuildRequires: jboss-integration
+BuildRequires: h2
+BuildRequires: hornetq
+BuildRequires: mvn(org.hornetq:hornetq-journal)
+BuildRequires: jfreechart
+BuildRequires: java-service-wrapper
+BuildRequires: slf4j
+BuildRequires: maven-local
+BuildRequires: maven-plugin-build-helper
+BuildRequires: maven-shade-plugin
+BuildRequires: maven-dependency-plugin
+BuildRequires: maven-war-plugin
+BuildRequires: idlj-maven-plugin
+BuildRequires: glassfish-annotation-api
+BuildRequires: jvnet-parent
+BuildRequires: jbossws-parent
+BuildRequires: resteasy
+BuildRequires: weld-core
+
+# This package replaced jboss-jts
+# Below you can find appropriate obsoletes/provides
+Provides: jboss-jts = %{version}-%{release}
+Obsoletes: jboss-jts < 4.16.6-12
+Source44: import.info
 
 %description
 A set of JBoss modules that fully supports ACID transactions
@@ -120,24 +81,76 @@ server instances, and CORBA OTS resources.
 JBossJTS implements the Java Transaction Service (JTS) and CORBA
 Transaction Service (OTS) specifications.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary: Javadocs for %{name}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+# Extract the source:
+%setup -q -n narayana-%{namedversion}
+
+find . -name "*.jar" -type f -delete
+find . -name "*.class" -type f -delete
+
+%pom_remove_dep "orson:orson" ArjunaCore/arjuna/pom.xml
+%pom_remove_plugin "org.codehaus.mojo:findbugs-maven-plugin"
+
+# Remove the hardcoded path to emma.jar
+sed -i "s|<systemPath*systemPath>||" pom.xml
+
+# Fix the gid of jfreechart
+%pom_remove_dep "jfree:jfreechart" ArjunaCore/arjuna/pom.xml
+%pom_add_dep "org.jfree:jfreechart" ArjunaCore/arjuna/pom.xml
+
+# Remove JConsole dep
+%pom_remove_dep "sun.jdk:jconsole" ArjunaCore/arjuna/pom.xml
+
+%pom_remove_dep "org.jboss.arquillian.junit:arquillian-junit-container" ArjunaJTA/cdi/pom.xml
+%pom_remove_dep "org.jboss.arquillian.junit:arquillian-junit-container" txframework/pom.xml
+
+%pom_disable_module localjunit XTS
+
+# No org.jboss.spec:jboss-javaee-6.0:pom:3.0.1.Final
+%pom_remove_dep "org.jboss.spec:jboss-javaee-6.0" txbridge/pom.xml
+%pom_remove_plugin ":maven-dependency-plugin" txbridge/pom.xml
+%pom_remove_plugin "org.jboss.byteman:byteman-rulecheck-maven-plugin"
+
+# Because of removed modules
+%pom_disable_module narayana-full
+
+# Remove war deps
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:type = 'war']" XTS/sar/pom.xml
+%pom_disable_module webservice rts/at/pom.xml
+%pom_remove_dep "org.jboss.narayana.rts:restat-web" narayana-full/pom.xml
+
+%pom_remove_dep "org.jboss.arquillian.junit:" ArjunaJTA/spi/pom.xml
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+%mvn_package :::api: __default
+# Some missing deps
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%doc README.md
+%doc copyright.txt
+%doc common/copyright.txt
 
-%files -f %name-list
+%files javadoc -f .mfiles-javadoc
+%doc copyright.txt
+%doc common/copyright.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_4jpp8
+- unbootstrap build
+
 * Fri Feb 05 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
