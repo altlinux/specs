@@ -3,12 +3,13 @@
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
+%def_disable glade
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL
@@ -36,6 +37,7 @@ BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: vala-tools libvala-devel
+%{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 
 %description
@@ -119,7 +121,7 @@ GObject introspection devel data for the %name library
 	%{subst_enable static} \
 	%{subst_enable introspection} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
-
+#	%{subst_enable glade}
 %make_build
 
 %install
@@ -159,6 +161,7 @@ find %buildroot -type f -name '*.la' -delete
 %_libdir/*.so
 %_libdir/pkgconfig/%_name-%api_ver.pc
 %_vapidir/vte-%api_ver.vapi
+#%{?_enable_glade:}
 
 %files -n lib%name-devel-doc
 %doc %_datadir/gtk-doc/html/*
@@ -177,6 +180,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.42.4-alt1
+- 0.42.4
+
 * Thu Jan 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.42.3-alt1
 - 0.42.3
 
