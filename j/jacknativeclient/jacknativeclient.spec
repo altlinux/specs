@@ -12,7 +12,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           jacknativeclient
 Version:        0
-Release:        alt1_0.10.20120218gitjpp8
+Release:        alt2_0.10.20120218gitjpp8
 Summary:        Java bindings for JACK clients
 
 License:        LGPLv3+
@@ -33,7 +33,7 @@ This package exposes the JACK audio interface to Java clients.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc documentation for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 BuildArch:      noarch
 
 %description javadoc
@@ -90,6 +90,9 @@ cp -a api %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.10.20120218gitjpp8
+- %%_jnidir set to /usr/lib/java
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.10.20120218gitjpp8
 - new version
 
