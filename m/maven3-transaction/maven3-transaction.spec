@@ -5,23 +5,27 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt36jpp
+Release: alt37jpp
 
 # todo springframework-batch
-Provides: mvn(org.springframework.batch:spring-batch-infrastructure)
-Provides: mvn(org.springframework.batch:spring-batch-core)
-# todo infinicpan
-Provides: mvn(org.infinispan:infinispan-lucene-directory)
+#Provides: mvn(org.springframework.batch:spring-batch-infrastructure)
+#Provides: mvn(org.springframework.batch:spring-batch-core)
+# todo infinispan
+#Provides: mvn(org.infinispan:infinispan-lucene-directory)
 # to build hornetq
-Provides: mvn(org.hornetq:hornetq-journal)
+#Provides: mvn(org.hornetq:hornetq-journal)
 # jetty
 Provides: jetty = 9
 # for apacheds jpp7
 Provides: mvn(org.apache.directory.project:project)
 # todo
-Provides: netty-tcnative mvn(io.netty:netty-tcnative)
+#Provides: netty-tcnative mvn(io.netty:netty-tcnative)
 # jibx BR tycho R eclipse-platform
-Provides: eclipse-platform eclipse-rcp
+Provides: eclipse-platform 
+#eclipse-rcp
+#i586-runawfe-gpd.32bit#3.6.0-alt1.svn4700       i586-eclipse-swt
+#i586-runawfe-notifier.32bit#3.6.0-alt1.svn4700  i586-eclipse-swt
+#i586-tuxguitar.32bit#1.2-alt3.3 i586-itext
 Provides: i586-eclipse-swt = 4.0
 Provides: i586-itext
 
@@ -39,6 +43,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt37jpp
+- updated dependencies
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt36jpp
 - updated dependencies
 
