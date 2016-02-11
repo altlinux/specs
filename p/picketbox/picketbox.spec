@@ -2,24 +2,25 @@ Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name picketbox
-%define version 4.0.18
-%global namedreltag .Final
+%define version 4.0.21
+%global namedreltag .Beta1
 %global namedversion %{version}%{?namedreltag}
 
 Name:             picketbox
-Version:          4.0.18
-Release:          alt1_1jpp7
+Version:          4.0.21
+Release:          alt1_0.2.Beta1jpp8
 Summary:          Security framework for Java Applications
 License:          LGPLv2+
 URL:              http://www.jboss.org/picketbox
 
-# svn export http://anonsvn.jboss.org/repos/picketbox/tags/4.0.18.Final/ picketbox-4.0.18.Final
-# tar cafJ picketbox-4.0.18.Final.tar.xz picketbox-4.0.18.Final
-Source0:          picketbox-%{namedversion}.tar.xz
+# svn export http://anonsvn.jboss.org/repos/picketbox/tags/4.0.20.Final/ picketbox-4.0.20.Final
+# tar cafJ picketbox-4.0.20.Final.tar.xz picketbox-4.0.20.Final
+Source0:          https://github.com/picketbox/picketbox/archive/%{namedversion}.tar.gz
 Source1:          picketbox-%{namedversion}-pom.xml
 
 Patch0:           picketbox-%{namedversion}-assembly.patch
@@ -27,7 +28,7 @@ Patch0:           picketbox-%{namedversion}-assembly.patch
 BuildArch:        noarch
 
 BuildRequires:    concurrent
-BuildRequires:    hibernate-jpa-2.0-api >= 1.0.1-5
+BuildRequires:    hibernate-jpa-2.0-api >= 1.0.1
 BuildRequires:    hibernate3
 BuildRequires:    hibernate3-entitymanager
 BuildRequires:    hibernate-commons-annotations
@@ -35,8 +36,8 @@ BuildRequires:    hsqldb
 BuildRequires:    infinispan
 BuildRequires:    javacc-maven-plugin
 BuildRequires:    jboss-connector-1.6-api
-BuildRequires:    jboss-jacc-1.4-api
-BuildRequires:    jboss-jaspi-1.0-api
+BuildRequires:    jboss-jacc-1.5-api
+BuildRequires:    jboss-jaspi-1.1-api
 BuildRequires:    jboss-parent
 BuildRequires:    jboss-servlet-3.0-api
 BuildRequires:    geronimo-jpa
@@ -102,6 +103,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.po
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.21-alt1_0.2.Beta1jpp8
+- new version
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 4.0.18-alt1_1jpp7
 - new release
 
