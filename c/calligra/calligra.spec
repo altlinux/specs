@@ -6,8 +6,8 @@
 %define koffice_ver 4:2.3.70
 
 Name: calligra
-Version: 2.9.10
-Release: alt3
+Version: 2.9.11
+Release: alt1
 Epoch: 0
 %define libname lib%name
 
@@ -550,9 +550,6 @@ done
 %_datadir/color/icc/krita/
 %_K4xdg_mime/krita.xml
 #
-%dir %_datadir/appdata
-%_datadir/appdata/krita.appdata.xml
-#
 %_K4bindir/calligragemini*
 %_K4apps/calligragemini/
 %_K4libdir/calligra/imports/Calligra/Gemini/
@@ -699,6 +696,9 @@ done
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Thu Feb 11 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.11-alt1
+- new version
+
 * Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.10-alt3
 - remove InitialPreference from desktop-files
 
