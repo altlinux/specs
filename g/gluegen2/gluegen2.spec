@@ -7,7 +7,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           gluegen2
 Version:        2.2.4
-Release:        alt1_3jpp8
+Release:        alt2_3jpp8
 %global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
@@ -50,7 +50,7 @@ Summary:        GlueGen2 devel utilities required to build JOGL2
 Group:          Development/Java
 BuildArch:      noarch
 
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       ant-antlr
 Requires:       ant-contrib
 Requires:       ant-junit
@@ -237,6 +237,9 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt2_3jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1_3jpp8
 - new version
 
