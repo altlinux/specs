@@ -3,8 +3,9 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-java
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -44,7 +45,7 @@ BuildRequires: jpackage-compat
 
 Name:           java-service-wrapper
 Version:        3.2.5
-Release:        alt1_19jpp7
+Release:        alt1_22jpp8
 Summary:        Java service wrapper
 License:        MIT
 URL:            https://bitbucket.org/ivertex/yaja-wrapper
@@ -65,7 +66,7 @@ Patch2:         %{name}-3.2.4-docbuild.patch
 # Forwarded upstream: https://bitbucket.org/ivertex/yaja-wrapper/issue/6
 Patch3:         %{name}-3.2.5-rhbz1037144.patch
 Patch99:	ppc64le-support.patch
-BuildRequires:  ant ant-junit
+BuildRequires:  ant
 BuildRequires:  jpackage-utils
 Source44: import.info
 
@@ -98,11 +99,12 @@ cd ..
 %endif
 (cd src/c; cp Makefile-linux-ppc64le-64.make Makefile-linux-aarch64-64.make)
 
-sed -i -e 's,-lm -pthread $(wrapper_SOURCE),-pthread $(wrapper_SOURCE) -lm,' src/c/Makefile-linux-*.make
+
+perl -i -npe 's,(\$[({]COMPILE[)}](?: -pthread)?) -lm(.*)$,$1$2 -lm,' src/c/Makefile-linux-*
 
 %build
 %ant -Dbits=%{__isa_bits} -Djavac.target.version=%{javaver}
-%javadoc -sourcepath src/java -d javadoc -link %{_javadocdir}/java -author \
+%javadoc -sourcepath src/java -Xdoclint:none -d javadoc -link %{_javadocdir}/java -author \
     -windowtitle "Java Service Wrapper API" -doctitle "Java Service Wrapper" \
     -version $(find src/java -name "*.java" -not -path "*/test/*")
 %if %{with docs}
@@ -131,12 +133,16 @@ cp -pR javadoc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc AboutThisRepository.txt doc/
 %{_sbindir}/java-service-wrapper
 %{_libdir}/%{name}/
+%doc doc/license.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
 %doc doc/license.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_22jpp8
+- new version
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 3.2.5-alt1_19jpp7
 - new release
 
