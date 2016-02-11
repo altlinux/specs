@@ -1,12 +1,18 @@
-%filter_from_requires /^.usr.bin.jar/d
-%filter_from_requires /^objectweb-asm/d
-%add_python3_path /usr/share/java-utils/
+Epoch: 1
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: python-devel
+BuildRequires(pre): rpm-build-java rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires: python3-devel python3-module-setuptools
 # END SourceDeps(oneline)
+# optional dependencies of jpackage-utils
+%filter_from_requires /^.usr.bin.jar/d
+%filter_from_requires /^objectweb-asm/d
+%define _unpackaged_files_terminate_build 0
+
+%add_python3_path /usr/share/java-utils/
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -22,12 +28,10 @@ BuildRequires: /proc
 
 %bcond_with tests
 
-
-
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt7_12jpp8
-Epoch:		1
+Release:        alt8_12jpp8
+
 Summary:        Macros and scripts for Java packaging support
 
 License:        BSD
@@ -37,40 +41,33 @@ Source0:        https://fedorahosted.org/released/javapackages/javapackages-%{ve
 Patch0:         0001-Initial-gradle_build-implementation.patch
 Patch1:         0002-install-Move-mvn_build-and-builddep-from-maven-local.patch
 
+BuildArch:      noarch
 
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-lxml
-BuildRequires:  python3-module-distribute
-BuildRequires:  python3-module-nose
-BuildRequires:  python3-module-matplotlib
 BuildRequires:  make
 BuildRequires:  asciidoc
 BuildRequires:  xmlto
-#BuildRequires:  scl-utils-build
 BuildRequires:  dia
 %if ! 0%{?bootstrap}
 BuildRequires:  maven-local >= 4.0.0
 BuildRequires:  xmvn-resolve >= 2
 %endif
 
+Requires:       coreutils
 Requires:       lua
 
 Provides:       jpackage-utils = %{version}-%{release}
-Provides:       jpackage-utils = 1:5.0.0
+Source44: import.info
+Source45: maven.prov.files
+Source46: maven.env
+Patch33: javapackages-tools-4.6.0-alt-use-enviroment.patch
+Patch34: javapackages-tools-4.6.0-alt-req-headless-off.patch
+Patch35: javapackages-tools-4.6.0-alt-shade-jar.patch
+Patch36: macros.fjava-to-alt-rpm404.patch
+Patch37: macros.jpackage-alt-script.patch
+
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
-Source44: import.info
-Patch32: macros.jpackage-alt-jnidir.patch
-Patch33: macros.jpackage-alt-script.patch
-Patch34: macros.fjava-to-alt-rpm404.patch
-Patch35: javapackages-tools-4.6.0-alt-use-enviroment.patch
-Patch36: javapackages-tools-4.6.0-alt-req-headless-off.patch
-Patch37: javapackages-tools-4.6.0-alt-shade-jar.patch
-Source23: maven.prov.files
-Source24: maven.env
-
-Provides: mvn(com.sun:tools) = SYSTEM
-Provides: mvn(sun.jdk:jconsole) = SYSTEM
+Provides:       jpackage-utils = 1:5.0.0
 
 %description
 This package provides macros and scripts to support Java packaging.
@@ -79,9 +76,8 @@ This package provides macros and scripts to support Java packaging.
 Summary: RPM helper macros to build Java packages
 Group: Development/Java
 Conflicts: rpm-build-java < 0:5.0.0-alt34
-
-# can't due to the jni path
-#BuildArch:      noarch
+# comment if jnidir patch is used
+BuildArch:      noarch
 
 %description -n rpm-macros-java
 These helper macros facilitate creation of RPM packages containing Java
@@ -94,17 +90,20 @@ BuildArch:      noarch
 Requires:       javapackages-tools = %{epoch}:%{version}-%{release}
 Requires: 	rpm-macros-java >= %{epoch}:%{version}-%{release}
 #Requires: rpm-build-java-osgi >= %{epoch}:%{version}-%{release}
-Requires:       python3-module-javapackages = %{version}-%{release}
+# moved from main package; not for runtime
+Requires:       python3-module-javapackages = %{epoch}:%{version}-%{release}
 Requires:       python3
 
 %description -n rpm-build-java
 RPM build helpers for Java packages.
 
+
+
 %package -n maven-local
 Group: Development/Java
 Summary:        Macros and scripts for Maven packaging support
-Requires:       maven-local = %{version}-%{release}
-Requires:       javapackages-local = %{version}-%{release}
+Requires:       maven-local = %{version}
+Requires:       javapackages-local = %{version}
 Requires:       maven
 Requires:       xmvn >= 2
 Requires:       xmvn-mojo >= 2
@@ -138,7 +137,6 @@ Requires:       maven-surefire-plugin
 Requires:       maven-surefire-provider-junit
 # testng is quite common as well
 Requires:       maven-surefire-provider-testng
-BuildArch:      noarch
 
 %description -n maven-local
 This package provides macros and scripts to support packaging Maven artifacts.
@@ -146,11 +144,10 @@ This package provides macros and scripts to support packaging Maven artifacts.
 %package -n gradle-local
 Group: Development/Java
 Summary:        Local mode for Gradle
-Requires:       maven-local = %{version}-%{release}
-Requires:       javapackages-local = %{version}-%{release}
+Requires:       maven-local = %{version}
+Requires:       javapackages-local = %{version}
 Requires:       gradle >= 2.2.1
 Requires:       xmvn-connector-gradle >= 2
-BuildArch:      noarch
 
 %description -n gradle-local
 This package implements local mode for Gradle, which allows artifact
@@ -159,11 +156,10 @@ resolution using XMvn resolver.
 %package -n ivy-local
 Group: Development/Java
 Summary:        Local mode for Apache Ivy
-Requires:       maven-local = %{version}-%{release}
-Requires:       javapackages-local = %{version}-%{release}
-Requires:       apache-ivy >= 2.3.0-8
+Requires:       maven-local = %{version}
+Requires:       javapackages-local = %{version}
+Requires:       apache-ivy >= 2.3.0
 Requires:       xmvn-connector-ivy >= 2
-BuildArch:      noarch
 
 %description -n ivy-local
 This package implements local mode for Apache Ivy, which allows
@@ -175,7 +171,6 @@ Summary:        Module for handling various files for Java packaging
 Requires:       python3-module-lxml
 Requires:       python3-module-matplotlib
 Obsoletes:      python-javapackages < %{version}-%{release}
-BuildArch:      noarch
 
 %description -n python3-module-javapackages
 Module for handling, querying and manipulating of various files for Java
@@ -184,7 +179,6 @@ packaging in Linux distributions
 %package doc
 Group: Development/Java
 Summary:        Guide for Java packaging
-BuildArch:      noarch
 
 %description doc
 User guide for Java packaging and using utilities from javapackages-tools
@@ -192,11 +186,10 @@ User guide for Java packaging and using utilities from javapackages-tools
 %package -n javapackages-local
 Group: Development/Java
 Summary:        Non-essential macros and scripts for Java packaging support
-Requires:       maven-local = %{version}-%{release}
+Requires:       maven-local = %{version}
 Requires:       xmvn-install >= 2
 Requires:       xmvn-subst >= 2
 Requires:       xmvn-resolve >= 2
-BuildArch:      noarch
 # Java build systems don't have hard requirement on java-devel, so it should be there
 
 %description -n javapackages-local
@@ -208,18 +201,18 @@ This package provides non-essential macros and scripts to support Java packaging
 %patch1 -p1
 
 sed -i '/fedora-review/d' install
-%patch32 -p0
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
 
+# alt specific shabang
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
+
 
 %build
 %configure --pyinterpreter=%{__python3}
-sed -i -e s,jnidir=/java,jnidir=%_libdir/java, config.status
 ./build
 
 %install
@@ -230,17 +223,18 @@ pushd python
   %{__python3} setup.py install -O1 --skip-build --root %{buildroot}
 popd
 
-install -m755 -D %{SOURCE23} %buildroot/usr/lib/rpm/maven.prov.files
-install -m755 -D %{SOURCE23} %buildroot/usr/lib/rpm/maven.req.files
+install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/maven.prov.files
+install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/maven.req.files
 
-install -m755 -D %{SOURCE23} %buildroot/usr/lib/rpm/javadoc.req.files
+install -m755 -D %{SOURCE45} %buildroot/usr/lib/rpm/javadoc.req.files
 sed -i -e s,/usr/share/maven-metadata/,/usr/share/javadoc/, %buildroot/usr/lib/rpm/javadoc.req.files
 
 chmod 755 %buildroot/usr/lib/rpm/*.req* %buildroot/usr/lib/rpm/*.prov*
 sed -i -e 's,^#!python,#!/usr/bin/python,' %buildroot/usr/lib/rpm/*.req* %buildroot/usr/lib/rpm/*.prov*
 
-install -m755 -D %{SOURCE24} %buildroot%_rpmmacrosdir/maven.env
+install -m755 -D %{SOURCE46} %buildroot%_rpmmacrosdir/maven.env
 
+# in rpm-build-java
 sed -i -e '/usr\/lib\/rpm/d' files-common
 # move /usr/share/xmvn/* to maven-local
 grep /usr/share/xmvn files-common >> files-maven
@@ -254,6 +248,8 @@ pushd %buildroot%_rpmmacrosdir/
 mv macros.fjava javapackages-fjava
 mv macros.jpackage javapackages-jpackage
 popd
+
+
 
 %if %{with tests}
 %check
@@ -290,7 +286,12 @@ popd
 %_datadir/java-utils/request-artifact.py
 %_bindir/xmvn-builddep
 
+
+
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt8_12jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt7_12jpp8
 - fixes in shade-jar (javapackages-tools-4.6.0-alt-shade-jar.patch)
 
