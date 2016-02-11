@@ -1,10 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
-BuildRequires: unzip
+BuildRequires: unzip apache-commons-logging
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:     tomcatjss
-Version:  7.1.0
-Release:  alt1_2
+Version:  7.1.3
+Release:  alt1_1jpp8
 Summary:  JSSE implementation using JSS for Tomcat
 URL:      http://pki.fedoraproject.org/
 License:  LGPLv2+
@@ -18,15 +22,26 @@ Source0:  http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.ta
 # jss requires versioning to meet both build and runtime requirements
 # tomcat requires versioning to meet both build and runtime requirements
 BuildRequires:    ant
-BuildRequires:    java-devel
-BuildRequires:    jpackage-utils >= 0:1.7.5-15
-BuildRequires:    jss >= 4.2.6-24
-BuildRequires:    tomcat >= 7.0.27
+BuildRequires:    apache-commons-lang
+BuildRequires:    jpackage-utils >= 0:1.7.5
+BuildRequires:    jss >= 4.2.6
+%if 0%{?fedora} >= 23
+BuildRequires:    tomcat >= 8.0.18
+%else
+BuildRequires:    tomcat >= 7.0.40
+%endif
 
-Requires:         java
-Requires:         jpackage-utils >= 0:1.7.5-15
-Requires:         jss >= 4.2.6-24
-Requires:         tomcat >= 7.0.27
+Requires:         apache-commons-lang
+%if 0%{?fedora} >= 21
+%else
+%endif
+Requires:         jpackage-utils >= 0:1.7.5
+Requires:         jss >= 4.2.6
+%if 0%{?fedora} >= 23
+Requires:         tomcat >= 8.0.18
+%else
+Requires:         tomcat >= 7.0.40
+%endif
 
 # The 'tomcatjss' package conflicts with the 'tomcat-native' package
 # because it uses an underlying NSS security model rather than the
@@ -51,6 +66,7 @@ NOTE:  The 'tomcatjss' package conflicts with the 'tomcat-native' package
 %prep
 
 %setup -q
+chmod -c -x LICENSE README
 
 %build
 
@@ -65,16 +81,19 @@ unzip %{name}-%{version}.zip -d %{buildroot}
 
 # Install our files
 cd %{buildroot}%{_javadir}
+%if 0%{?rhel} || 0%{?fedora} < 21
 mv %{name}.jar %{name}-%{version}.jar
 ln -s %{name}-%{version}.jar %{name}.jar
-mkdir -p %{buildroot}%{_datadir}/doc/%{name}-%{version}
+%endif
 
 %files
-%doc %attr(644,root,root) README LICENSE
-%attr(00755,root,root) %{_datadir}/doc/%{name}-%{version}
+%doc README LICENSE
 %{_javadir}/*
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.3-alt1_1jpp8
+- new version
+
 * Sat Jun 01 2013 Igor Vlasenko <viy@altlinux.ru> 7.1.0-alt1_2
 - new version
 
