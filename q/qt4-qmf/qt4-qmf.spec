@@ -3,8 +3,8 @@
 
 %define sover 1
 Name: qt4-qmf
-Version: 1.0.0
-Release: alt4
+Version: 4.0.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt Messaging Framework
@@ -16,9 +16,7 @@ Source: qt-labs-messagingframework-%version.tar
 # SuSE
 Patch1: add_headers.patch
 # ALT
-Patch100: qmf-alt-rpath.patch
 Patch101: qmf-alt-gcc47.patch
-Patch102: qmf-alt-no-gcc-hidden.patch
 
 # Automatically added by buildreq on Mon Feb 06 2012 (-bi)
 # optimized out: elfutils fontconfig glibc-devel-static libqt4-clucene libqt4-core libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-sql libqt4-sql-sqlite libqt4-test libqt4-xml libstdc++-devel pkg-config python-base ruby zlib-devel
@@ -82,16 +80,18 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n qt-labs-messagingframework-%version
-%patch1 -p1
-%patch100 -p1
+#%patch1 -p1
 %patch101 -p1
-%patch102 -p1
 # fix installation for lib64
 find -name '*.pr[oi]' -exec sed -i 's|$$QMF_INSTALL_ROOT/lib/qmf|__X_ALTLINUX_QT4DIR__|g' {} ";"
 find -name '*.pr[oi]' -exec sed -i 's|$$QMF_INSTALL_ROOT/lib|%_libdir|g' {} ";"
 find -name '*.pr[oi]' -exec sed -i 's|__X_ALTLINUX_QT4DIR__|%_qt4dir|g' {} ";"
 find -name '*.pr[oi]' -exec sed -i 's|$$QMF_INSTALL_ROOT/plugins|%_qt4dir/plugins|g' {} ";"
 find -name '*.pr[oi]' -exec sed -i 's|$$QMF_INSTALL_ROOT/tests|%_qt4dir/tests|g' {} ";"
+
+sed -i '/SUBDIRS/s|tests||' messagingframework.pro
+sed -i '/SUBDIRS/s|benchmarks||' messagingframework.pro
+#sed -i '/tests.depends/d' messagingframework.pro
 
 %build
 export PATH=%_qt4dir/bin:$PATH
@@ -137,7 +137,6 @@ cp -ar doc/html/* %buildroot/%qt4_docdir/html/qmf/
 %_libdir/libqmfutil.so
 %_libdir/pkgconfig/qmfclient.pc
 %_libdir/pkgconfig/qmfmessageserver.pc
-%exclude %_qt4dir/tests/
 
 %files doc
 %qt4_docdir/qch/qmf.qch
@@ -154,6 +153,9 @@ cp -ar doc/html/* %buildroot/%qt4_docdir/html/qmf/
 %_libdir/libqmfutil.so.%sover.*
 
 %changelog
+* Thu Feb 11 2016 Sergey V Turchin <zerg@altlinux.org> 4.0.3-alt1
+- new version
+
 * Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt4
 - fix to build with gcc-4.7
 
