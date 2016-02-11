@@ -11,6 +11,7 @@ Provides: mvn(org.apache.tomcat:tomcat-el-api:pom:) = 8.0.26
 Provides: mvn(org.eclipse.jetty.orbit:javax.el) = 8.0.26
 Provides: mvn(org.eclipse.jetty.orbit:javax.el:pom:) = 8.0.26
 Provides: tomcat-el-3.0-api = 1:8.0.26-1.fc23
+Provides: osgi(javax.el) = 2.2.0
 Requires: /bin/sh
 Requires: /bin/sh
 Requires: chkconfig
@@ -20,7 +21,7 @@ Requires: jpackage-utils
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: tomcat-el-3.0-api-8.0.26-1.fc23.cpio
 Obsoletes: tomcat-el-2.2-api < 8
 Provides: tomcat-el-2.2-api = %version
@@ -56,6 +57,9 @@ fi
 %files -f %name-list
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.26-alt0.2jpp
+- added osgi provides
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.26-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
