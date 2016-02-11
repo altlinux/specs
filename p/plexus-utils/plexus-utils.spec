@@ -1,11 +1,13 @@
 Epoch: 0
 Group: Development/Java
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           plexus-utils
 Version:        3.0.22
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        Plexus Common Utilities
 # ASL 1.1: several files in src/main/java/org/codehaus/plexus/util/ 
 # xpp: src/main/java/org/codehaus/plexus/util/xml/pull directory
@@ -78,6 +80,9 @@ cp %{SOURCE1} .
 %doc NOTICE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.22-alt2_2jpp8
+- added osgi provides
+
 * Mon Feb 01 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.0.22-alt1_2jpp8
 - new version
 
