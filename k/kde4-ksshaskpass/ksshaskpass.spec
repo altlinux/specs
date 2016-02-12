@@ -4,7 +4,7 @@
 %define rname ksshaskpass
 Name: kde4-ksshaskpass
 Version: 0.5.3
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: A KDE version of ssh-askpass with KWallet support
@@ -64,5 +64,11 @@ EOF
 %_kde4_xdg_apps/%rname.desktop
 
 %changelog
+* Fri Feb 12 2016 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt2
+- rebuild
+
+* Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt0.M70P.1
+- built for M70P
+
 * Thu Apr 24 2014 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
 - initial build
