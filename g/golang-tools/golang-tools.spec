@@ -1,5 +1,5 @@
 %global import_path golang.org/x/tools
-%global commit f3a63969dd29f8cfa913fdaea22f30c1ed537cb3
+%global commit 789265387ff52550e7d48b4e6f4c6bce831c1248
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -7,11 +7,11 @@
 
 %set_verify_elf_method unresolved=no
 %add_debuginfo_skiplist %go_root %_bindir
-%brp_strip_none %_bindir/* %go_tooldir/*
+%brp_strip_none %_bindir/* %go_root/bin/* %go_tooldir/*
 
 Name:		golang-tools
 Version:	0
-Release:	alt4.git%abbrev
+Release:	alt5.git%abbrev
 Summary:	Supplementary tools and packages for Go
 
 Group:		Development/Other
@@ -43,6 +43,7 @@ Requires: golang
 This package contains library source intended for building other packages
 which use the supplementary Go tools libraries with golang.org/x/ imports.
 
+
 %prep
 %setup -q
 
@@ -66,13 +67,30 @@ export GOPATH="%go_path"
 
 %golang_install
 
+mkdir -p -- %buildroot/%go_root/bin
+for f in %buildroot/%_bindir/*; do
+	[ -x "$f" ] || continue
+	f="${f##*/}"
+	what="$(relative %_bindir/$f %go_root/bin/$f)"
+	ln -s -- "$what" %buildroot/%go_root/bin/$f
+done
+
+# upstream commit 734737930440fc305a816e577cab457fbbc807c1 (rename oracle to guru)
+rm -f -- %buildroot/%_bindir/oracle
+ln -s -- guru %buildroot/%_bindir/oracle
+
+
 %files
 %_bindir/*
+%go_root/bin/*
 
 %files devel
 %go_path/src/*
 
 %changelog
+* Fri Feb 12 2016 Alexey Gladkov <legion@altlinux.ru> 0-alt5.git78926538
+- New snapshot.
+
 * Fri Jan 22 2016 Alexey Gladkov <legion@altlinux.ru> 0-alt4.gitf3a63969
 - New snapshot.
 
