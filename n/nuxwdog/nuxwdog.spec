@@ -1,6 +1,6 @@
 Name: nuxwdog
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: Watchdog server to start and stop processes, and prompt for passwords
 License: %lgpl2plus, %perl_license
@@ -10,9 +10,9 @@ Url: https://fedorahosted.org/nuxwdog/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-macros-java
 
-BuildRequires: rpm-macros-java gcc-c++ ant java-devel jpackage-utils
+BuildRequires: gcc-c++ ant java-devel-default jpackage-utils
 BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libselinux-devel
@@ -42,6 +42,7 @@ Summary: Development files for the Nuxwdog Watchdog
 License: %lgpl2plus
 Group: Development/C++
 Requires: lib%name = %version-%release
+Provides: %name-devel = %version-%release
 
 %description -n lib%name-devel
 This package contains the header files needed to build clients
@@ -52,9 +53,8 @@ the nuxwdog watchdog server.
 Summary: Nuxwdog Watchdog client JNI Package
 License: %lgpl2plus
 Group: Development/Java
-Requires: java-headless
-Requires: jpackage-utils
 Requires: lib%name = %version-%release
+Provides: %name-java-client = %version-%release
 
 %description -n lib%name-java
 This package contains a JNI interface to the nuxwdog
@@ -66,6 +66,8 @@ Summary: Nuxwdog Watchdog client perl bindings
 License: %perl_license
 Group: Development/Perl
 Requires: lib%name = %version-%release
+Provides: %name-perl-client = %version-%release
+
 
 %description -n lib%name-perl
 This package contains a perl interface to nuxwdog.
@@ -87,7 +89,8 @@ This package contains a perl interface to nuxwdog.
 %endif
 	--disable-static
 
-%make_build licensedir=%nuxwdog_docdir
+# just make; %%make_build seems to fail on multi-core CPU's
+make licensedir=%nuxwdog_docdir
 
 %install
 %makeinstall_std licensedir=%nuxwdog_docdir
@@ -117,6 +120,12 @@ chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 #_man3dir/Nuxwdogclient.3pm*
 
 %changelog
+* Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2
+- NMU:
+  * fixes in java BR: && R:
+  * added compat provides for perl && java
+  * %%_jnidir changed location, package should be rebuilt.
+
 * Wed Dec 09 2015 Mikhail Efremov <sem@altlinux.org> 1.0.3-alt1
 - Initial build.
 
