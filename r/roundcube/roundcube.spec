@@ -1,7 +1,7 @@
 %define oname roundcubemail
 Name: roundcube
 Version: 1.1.4
-Release: alt1
+Release: alt2
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -11,16 +11,29 @@ Url: http://roundcube.net/
 
 Source0: http://prdownloads.sf.net/%oname/%oname-%version.tar
 Source1: %name.apache.conf
+Source2: composer.json-dist
 BuildArch: noarch
 
 BuildRequires: rpm-macros-webserver-common
 BuildRequires: php5
 
+# check it with composer.json or on http://trac.roundcube.net/wiki/Howto_Requirements
+Requires: php5 >= 5.3.7
 Requires: webserver-common php-engine
-Requires: pear-MDB2 >= 2.5.0 pear-Auth_SASL pear-Net_SMTP >= 1.4.2 pear-Net_Socket pear-Net_IDNA2
-Requires: pear-Mail_Mime >= 1.7.0 pear-Mail_mimeDecode
+Requires: pear-Mail_Mime >= 1.9.0
+Requires: pear-Net_SMTP >= 1.7.1
+Requires: pear-Net_IDNA2 >= 0.1.1
+Requires: pear-Auth_SASL >= 1.0.6
+# managesieve plugin
+Requires: pear-Net_Sieve >= 1.3.4
+# for enigma plugin
+#Requires: pear-Crypt_GPG >= 1.2.0
+Requires: pear-Net_Socket
+Requires: pear-Mail_mimeDecode
+
 Requires: php5-dom php5-mcrypt php5-openssl
 Requires: php5-pdo_mysql
+Requires: php5-mbstring php5-fileinfo php5-mcrypt php5-zip php5-pspell
 
 Provides: roundcube-plugin-acl
 Obsoletes: roundcube-plugin-acl
@@ -54,6 +67,7 @@ sed -i 's,php_,php5_,' .htaccess
 mkdir -p %buildroot%_datadir/%name/
 install -Dpm 0644 index.php %buildroot%_datadir/%name/index.php
 install -Dpm 0644 .htaccess %buildroot%_datadir/%name/.htaccess
+install -Dpm 0644 robots.txt %buildroot%_datadir/%name/robots.txt
 cp -ar SQL bin program installer plugins skins %buildroot%_datadir/%name/
 
 cat > %buildroot%_datadir/%name/installer/.htaccess << EOF
@@ -69,6 +83,11 @@ EOF
 mkdir -p %buildroot%_sysconfdir/%name/
 cp -ar config/* %buildroot%_sysconfdir/%name/
 ln -s  %_sysconfdir/%name/ %buildroot%_datadir/%name/config
+
+install -Dpm 0644 %SOURCE2 %buildroot%_sysconfdir/%name/composer.json
+ln -s  %_sysconfdir/%name/composer.json %buildroot%_datadir/%name/composer.json
+
+ln -s  %_docdir/%name-%version %buildroot%_datadir/%name/doc
 
 install -pD -m0644 %SOURCE1 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 
@@ -93,6 +112,10 @@ service httpd condreload
 %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 
 %changelog
+* Fri Feb 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt2
+- pack composer.json, add link to doc dir
+- improve requirements
+
 * Fri Feb 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
 - new version 1.1.4 (with rpmrb script)
 
