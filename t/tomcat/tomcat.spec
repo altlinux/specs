@@ -66,7 +66,7 @@ BuildRequires: jpackage-generic-compat
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_1jpp8
+Release:       alt2_1jpp8
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         System/Servers
@@ -414,9 +414,9 @@ popd
 
 pushd ${RPM_BUILD_ROOT}%{libdir}
     # symlink JSP and servlet API jars
-    %{__ln_s} ../%{name}-jsp-%{jspspec}-api.jar .
-    %{__ln_s} ../%{name}-servlet-%{servletspec}-api.jar .
-    %{__ln_s} ../%{name}-el-%{elspec}-api.jar .
+    %{__ln_s} ../../java/%{name}-jsp-%{jspspec}-api.jar .
+    %{__ln_s} ../../java/%{name}-servlet-%{servletspec}-api.jar .
+    %{__ln_s} ../../java/%{name}-el-%{elspec}-api.jar .
     %{__ln_s} $(build-classpath apache-commons-collections) commons-collections.jar
     %{__ln_s} $(build-classpath apache-commons-dbcp) commons-dbcp.jar
     %{__ln_s} $(build-classpath apache-commons-pool) commons-pool.jar
@@ -651,6 +651,9 @@ EOF
 %attr(0644,root,root) %{_unitdir}/%{name}-jsvc.service
 
 %changelog
+* Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.26-alt2_1jpp8
+- fixed relative links in CATALINA_HOME
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.26-alt1_1jpp8
 - java 8 mass update
 
