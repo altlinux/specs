@@ -11,7 +11,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		azureus
 Version:	5.7.0.0
-Release:	alt2_2jpp8
+Release:	alt2_3jpp8
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 
@@ -159,6 +159,9 @@ sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
 %{_datadir}/azureus
 
 %changelog
+* Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.0.0-alt2_3jpp8
+- %%_jnidir set to /usr/lib/java
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.7.0.0-alt2_2jpp8
 - added java requires
 
