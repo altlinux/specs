@@ -8,6 +8,7 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 Provides: eclipse-swt = 1:4.5.1-1.fc23
 Provides: mvn(org.eclipse.swt:org.eclipse.swt) = 3.104.1.v20151005.1500
 Provides: mvn(org.eclipse.swt:swt) = 3.104.1.v20151005.1500
+Provides: osgi(org.eclipse.swt) = 3.104.1
 Requires: libgtk+2
 Requires: libgtk+3
 Requires: java
@@ -15,7 +16,7 @@ Requires: libwebkitgtk2
 Requires: libwebkitgtk3
 
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 
 Source1: swt.i586.jar
 Source2: swt.x86_64.jar
@@ -35,22 +36,28 @@ SWT Library for GTK+.
 
 %install
 mkdir -p $RPM_BUILD_ROOT/usr/share/maven-metadata
-mkdir -p $RPM_BUILD_ROOT%_libdir/java
+mkdir -p $RPM_BUILD_ROOT/usr/lib/java/
+mkdir -p $RPM_BUILD_ROOT%_libdir/eclipse
+ln -s ../../lib/java/swt.jar %buildroot%_libdir/eclipse/swt.jar
+
 %ifarch x86_64
 install -m 644 %{SOURCE4} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-sed -i -e s,/usr/lib/java,%_libdir/java, $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%_libdir/java/swt.jar
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
 %else
 install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%_libdir/java/swt.jar
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
 %endif
 
 
 %files
 /usr/share/maven-metadata/eclipse-swt.xml
-%_libdir/java/swt.jar
+/usr/lib/java/swt.jar
+%_libdir/eclipse/swt.jar
 
 %changelog
+* Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.5.1-alt0.2jpp
+- install to %%_jnidir
+
 * Sun Jan 24 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.5.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
