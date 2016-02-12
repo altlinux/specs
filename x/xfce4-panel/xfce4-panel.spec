@@ -2,7 +2,7 @@
 
 Name: xfce4-panel
 Version: 4.12.0
-Release: alt2
+Release: alt3
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -149,6 +149,9 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %_includedir/xfce4/%libxfce4panel_name_gtk3/
 
 %changelog
+* Fri Feb 12 2016 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt3
+- Don't try to use panel-desktop-handler in the KDE (closes: #31542).
+
 * Thu Mar 12 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
 - Package GTK+3 variant of the library.
 
