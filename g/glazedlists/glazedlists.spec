@@ -1,19 +1,20 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Work around koji build issues on ppc64
 # See https://www.redhat.com/archives/fedora-devel-list/2009-March/msg00022.html
 %global eclipse_dir $(ls -d /usr/lib*/eclipse)
 
 Name:           glazedlists
 Version:        1.9.0
-Release:        alt1_2jpp7
+Release:        alt1_7jpp8
 Summary:        A toolkit for transformations in Java
 License:        (LGPLv2+ or MPLv1.1+) and ASL 2.0
-Group:          Development/Java
 Url:            http://publicobject.com/glazedlists/
 BuildArch:      noarch
 
@@ -24,9 +25,8 @@ Patch0:         %{name}-1.9.0-build.xml.patch
 # Use the new Hibernate API
 Patch1:         %{name}-1.9.0-hibernate.patch
 
-BuildRequires:  jpackage-utils
+BuildRequires:  javapackages-local
 BuildRequires:  ant
-
 BuildRequires:  dos2unix
 BuildRequires:  aqute-bnd
 BuildRequires:  eclipse-swt
@@ -34,10 +34,9 @@ BuildRequires:  icu4j
 BuildRequires:  jcommon
 BuildRequires:  jfreechart
 BuildRequires:  jgoodies-forms
-BuildRequires:  hibernate
+BuildRequires:  hibernate-core
 BuildRequires:  hsqldb
-
-Requires:       jpackage-utils
+BuildRequires:  jvnet-parent
 Source44: import.info
 
 # Adapted from http://www.javaworld.com/javaworld/jw-10-2004/jw-1025-glazed.html
@@ -48,9 +47,10 @@ developer is already familiar with ArrayList or Vector, he or she will feel
 at home with Glazed Lists.
 
 %package javadoc
+Group: Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Java
 BuildArch: noarch
+
 %description javadoc
 Documentation for the %{name} Java library.
 
@@ -61,7 +61,7 @@ Documentation for the %{name} Java library.
 rm -rf extensions/ktable extensions/swinglabs extensions/nachocalendar \
         extensions/japex extensions/issuesbrowser 
 # Use correct libdir for this build architecture
-sed -i "s#ECLIPSE_DIR#%{eclipse_dir}#" build.xml
+sed -i "s#ECLIPSE_DIR#%{_jnidir}#" build.xml
 
 # Use new hibernate API
 %patch1 -p1
@@ -69,29 +69,30 @@ sed -i "s#ECLIPSE_DIR#%{eclipse_dir}#" build.xml
 # Clean up line endings
 dos2unix license
 
+# Don't download ant tasks
+sed -i -e '/"deploy-init"/ s/download-mavenanttasks,//' build.xml
+
 %build
-ant jar docs
+ant dist jar sourcejar javadocjar deploy-init -DartifactId=%{name}
+
+# Maven artifact installation
+%mvn_artifact target/deploy/pom.xml target/deploy/%{name}-%{version}.jar
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 target/%{name}_java15-%{version}.jar $RPM_BUILD_ROOT/%{_javadir}/%{name}.jar
-install -d -m 755 ${RPM_BUILD_ROOT}%{_javadocdir}/
-cp -r target/docs/api ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install -J target/docs/api
 
-%files
+%files -f .mfiles
 %doc license readme.html
-%{_javadir}/*.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
+%dir %{_javadir}/glazedlists
+%dir %{_mavenpomdir}/glazedlists
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc license
-%{_javadocdir}/%{name}
 
 %changelog
+* Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_7jpp8
+- unbootstrap build
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 1.9.0-alt1_2jpp7
 - new release
 
