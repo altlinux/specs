@@ -1,6 +1,6 @@
 Name: daemontools-asterisk
 Summary: Daemontools script for Asterisk
-Version: 0.5
+Version: 0.6
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -13,6 +13,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name
 
 Requires(pre): daemontools-common
+Requires: virt-what
 Requires: asterisk-initscript >= 0.69
 
 BuildPreReq: daemontools-common
@@ -27,6 +28,9 @@ touch %buildroot%_sysconfdir/daemontools.d/asterisk/down
 %files
 %_sysconfdir/daemontools.d/asterisk
 %changelog
+* Fri Feb 12 2016 Denis Smirnov <mithraen@altlinux.ru> 0.6-alt1
+- not wait for dahdi when started inside VE
+
 * Tue Aug 11 2015 Denis Smirnov <mithraen@altlinux.ru> 0.5-alt1
 - start Asterisk from initscript
 
