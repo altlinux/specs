@@ -1,6 +1,6 @@
 Name:		cqrlog
-Version:	1.9.0
-Release:	alt4
+Version:	1.9.1
+Release:	alt1
 Summary:	An amateur radio contact logging program
 
 Group:		Communications
@@ -8,8 +8,7 @@ License:	GPLv2
 URL:		http://www.cqrlog.com/
 Source0:	http://www.cqrlog.com/files/%{name}_%{version}/%{name}-%{version}.tar.gz
 
-Patch0:		cqrlog-1.9.0-install.patch
-Patch1:		cqrlog.desktop.patch
+Patch0:		cqrlog-install.patch
 Patch2:		cqrlog-build-with-fpc-3.0.0.patch
 
 BuildRequires:	fpc >= 2.6.4
@@ -34,7 +33,6 @@ and strongly focused on easy operation and maintenance.
 %prep
 %setup -q
 %patch0 -p1
-%patch1
 %patch2 -p2
 
 chmod -x src/*.pas \
@@ -63,6 +61,9 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Feb 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt1
+- New version
+
 * Thu Jan 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt4
 - Fix build with fpc-3.0.0
 
