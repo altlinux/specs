@@ -1,7 +1,7 @@
 %define oname roundcubemail
 Name: roundcube
-Version: 0.7.1
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -14,13 +14,18 @@ Source1: %name.apache.conf
 BuildArch: noarch
 
 BuildRequires: rpm-macros-webserver-common
+BuildRequires: php5
 
-Requires: webserver-common php-engine pear-MDB2 >= 2.5.0 pear-Auth_SASL pear-Net_SMTP >= 1.4.2 pear-Net_Socket
+Requires: webserver-common php-engine
+Requires: pear-MDB2 >= 2.5.0 pear-Auth_SASL pear-Net_SMTP >= 1.4.2 pear-Net_Socket pear-Net_IDNA2
 Requires: pear-Mail_Mime >= 1.7.0 pear-Mail_mimeDecode
 Requires: php5-dom php5-mcrypt php5-openssl
+Requires: php5-pdo_mysql
 
 Provides: roundcube-plugin-acl
 Obsoletes: roundcube-plugin-acl
+
+AutoReq: yes,nomingw32,noshell
 
 %add_findreq_skiplist %_datadir/%name/plugins/*
 %add_python_req_skip %_datadir/%name/plugins/*
@@ -49,18 +54,17 @@ sed -i 's,php_,php5_,' .htaccess
 mkdir -p %buildroot%_datadir/%name/
 install -Dpm 0644 index.php %buildroot%_datadir/%name/index.php
 install -Dpm 0644 .htaccess %buildroot%_datadir/%name/.htaccess
-cp -ar bin program installer plugins skins %buildroot%_datadir/%name/
+cp -ar SQL bin program installer plugins skins %buildroot%_datadir/%name/
 
 cat > %buildroot%_datadir/%name/installer/.htaccess << EOF
 Order Allow,Deny
 Deny from all
 EOF
 
-mkdir -p %buildroot%_localstatedir/%name/
-cp -ar logs/ temp/ %buildroot%_localstatedir/%name/
+#mkdir -p %buildroot%_localstatedir/%name/logs/
 
-ln -s %_localstatedir/%name/logs/ %buildroot%_datadir/%name/
-ln -s %_localstatedir/%name/temp/ %buildroot%_datadir/%name/
+#ln -s %_localstatedir/%name/logs/ %buildroot%_datadir/%name/
+#ln -s %_localstatedir/%name/temp/ %buildroot%_datadir/%name/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 cp -ar config/* %buildroot%_sysconfdir/%name/
@@ -76,19 +80,29 @@ service httpd condreload
 
 %files
 %_datadir/%name/
-%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/
-%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/logs/
-%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/temp/
-%_localstatedir/%name/logs/.htaccess
-%_localstatedir/%name/temp/.htaccess
+#%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/
+#%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/logs/
+#%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/temp/
+#%_localstatedir/%name/logs/.htaccess
+#%_localstatedir/%name/temp/.htaccess
 %dir %attr(0750,root,%webserver_group) %_sysconfdir/%name/
 %config(noreplace) %attr(0640,root,%webserver_group) %_sysconfdir/%name/*
-%doc CHANGELOG INSTALL LICENSE README UPGRADING SQL/ README.ALT
+%doc CHANGELOG LICENSE README.md UPGRADING SQL/
 
 %files apache
 %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 
 %changelog
+* Fri Feb 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
+- new version 1.1.4 (with rpmrb script)
+
+* Sun Nov 22 2015 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
+- new version 1.1.3 (with rpmrb script)
+- drop all inrepo tarball changes
+
+* Wed Apr 09 2014 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- release 1.0.0
+
 * Thu Feb 02 2012 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt2
 - really 0.7.1 (was 0.5.3 due my script's fault) (ALT bug #26807)
 
