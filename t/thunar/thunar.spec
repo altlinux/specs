@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: thunar
 Version: 1.6.10
-Release: alt1
+Release: alt2
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -13,9 +15,9 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses rpm-build-xfce4 >= 0.1.0
 
-BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
+BuildPreReq: xfce4-dev-tools
 BuildPreReq: libxfce4panel-devel >= 4.8 libxfconf-devel >= 4.8 libexo-devel >= 0.6.0 libxfce4ui-devel >= 4.8
 # Automatically added by buildreq on Thu Jan 22 2009
 BuildRequires: gtk-doc intltool libSM-devel libdbus-glib-devel libexif-devel libgamin-devel libpcre-devel time
@@ -74,7 +76,7 @@ mkdir -p m4/
 	--enable-exif \
 	--enable-pcre \
 	--enable-gio-unix \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -119,6 +121,14 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Fri Feb 12 2016 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt2
+- Enable debug (minimum level).
+- Fix potential buffer overflow (CVE-2013-7447).
+- Updated translations from upstream git.
+- Patches from upstream:
+  + Fixing missing return value in standard view.
+  + Fix crashes when reloading target file after move.
+
 * Mon May 25 2015 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt1
 - Updated to 1.6.10.
 
