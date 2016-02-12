@@ -1,80 +1,126 @@
-Provides: /etc/derby.conf
-Name: derby
-Version: 10.11.1.1
-Summary: Relational database implemented entirely in Java
-License: ASL 2.0
-Url: http://db.apache.org/derby/
 Epoch: 0
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: derby = 10.11.1.1-1.fc23
-Provides: mvn(org.apache.derby:derby) = 10.11.1.1
-Provides: mvn(org.apache.derby:derby-project:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derby:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_cs) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_cs:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_de_DE) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_de_DE:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_es) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_es:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_fr) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_fr:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_hu) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_hu:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_it) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_it:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_ja_JP) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_ja_JP:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_ko_KR) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_ko_KR:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_pl) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_pl:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_pt_BR) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_pt_BR:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_ru) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_ru:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_zh_CN) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_zh_CN:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_zh_TW) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyLocale_zh_TW:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyclient) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbyclient:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbynet) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbynet:pom:) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbytools) = 10.11.1.1
-Provides: mvn(org.apache.derby:derbytools:pom:) = 10.11.1.1
-Requires: /bin/bash
-Requires: /bin/sh
-Requires: /bin/sh
-Requires: /bin/sh
-Requires: java-headless
-Requires: jpackage-utils
-Requires: shadow-utils
-Requires: systemd-units
-Requires: systemd-units
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: derby-10.11.1.1-1.fc23.cpio
+%filter_from_requires /^.usr.bin.run/d
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           derby
+Version:        10.11.1.1
+Release:        alt2_3jpp8
+Summary:        Relational database implemented entirely in Java
+
+License:        ASL 2.0
+URL:            http://db.apache.org/derby/
+Source0:        http://archive.apache.org/dist/db/derby/db-derby-%{version}/db-derby-%{version}-src.tar.gz
+Source1:        derby-script
+Source2:        derby.service
+
+# https://issues.apache.org/jira/browse/DERBY-5125
+Patch1: derby-javacc5.patch
+# For compatibility with lucene >= 4.10
+Patch2: derby-lucene.patch
+
+BuildRequires:  apache-parent
+BuildRequires:  javapackages-local
+BuildRequires:  glassfish-servlet-api
+BuildRequires:  jakarta-oro
+BuildRequires:  javacc
+BuildRequires:  lucene4
+BuildRequires:  junit
+BuildRequires:  ant
+BuildRequires:  systemd
+Requires(pre):  shadow-utils
+
+BuildArch:      noarch
+Source44: import.info
 
 %description
 Apache Derby, an Apache DB sub-project, is a relational database implemented
 entirely in Java. Some key advantages include a small footprint, conformance
 to Java, JDBC, and SQL standards and embedded JDBC driver.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group: Development/Java
+Summary: API documentation for derby.
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -c
+
+find -name '*.jar' -delete
+find -name '*.class' -delete
+
+pushd db-derby-%{version}-src
+
+rm java/engine/org/apache/derby/impl/sql/compile/Token.java
+%patch1 -p0
+%patch2 -p0
+
+# Don't use Class-Path in manifests
+sed -i -e '/Class-Path/d' build.xml
+
+# Don't download online packagelists
+sed -e 's/initjars,set-doclint,install_packagelists/initjars,set-doclint/' \
+    -e '/<link offline/,+1d' \
+    -i build.xml
+
+popd
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+cd db-derby-%{version}-src
+
+# tools/ant/properties/extrapath.properties
+ln -sf $(build-classpath oro) tools/java/jakarta-oro-2.0.8.jar
+ln -sf $(build-classpath glassfish-servlet-api) tools/java/geronimo-spec-servlet-2.4-rc4.jar
+ln -sf $(build-classpath javacc) tools/java/javacc.jar
+ln -sf $(build-classpath junit) tools/java/junit.jar
+ln -sf $(build-classpath lucene4/lucene-core-4) tools/java/lucene-core.jar
+ln -sf $(build-classpath lucene4/lucene-analyzers-common-4) tools/java/lucene-analyzers-common.jar
+ln -sf $(build-classpath lucene4/lucene-queryparser-4) tools/java/lucene-queryparser.jar
+
+# Fire
+ant buildsource buildjars javadoc
+
+# Generate maven poms
+find maven2 -name pom.xml | xargs sed -i -e 's|ALPHA_VERSION|%{version}|'
+
+# Request maven installation
+%mvn_artifact maven2/pom.xml
+for p in engine net client tools \
+    derbyLocale_cs derbyLocale_de_DE derbyLocale_es derbyLocale_fr derbyLocale_hu \
+    derbyLocale_it derbyLocale_ja_JP derbyLocale_ko_KR derbyLocale_pl derbyLocale_pt_BR \
+    derbyLocale_ru derbyLocale_zh_CN derbyLocale_zh_TW ; do
+  d=derby${p#derby}
+  %mvn_artifact maven2/${p}/pom.xml jars/sane/${d%engine}.jar
+done
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+cd db-derby-%{version}-src
+
+%mvn_install -J javadoc
+
+# Wrapper scripts
+install -d $RPM_BUILD_ROOT%{_bindir}
+install -p -m755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/%{name}-ij
+for P in sysinfo NetworkServerControl startNetworkServer stopNetworkServer
+do
+        ln $RPM_BUILD_ROOT%{_bindir}/%{name}-ij \
+                $RPM_BUILD_ROOT%{_bindir}/%{name}-$P
 done
+
+# Systemd unit
+mkdir -p $RPM_BUILD_ROOT%{_unitdir}
+install -p -m 644 %{SOURCE2} \
+        $RPM_BUILD_ROOT%{_unitdir}/%{name}.service
+
+# Derby home dir
+install -dm 755 $RPM_BUILD_ROOT/var/lib/derby
+
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
+touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
 %pre
 getent group derby >/dev/null || groupadd -r derby
@@ -83,25 +129,34 @@ getent passwd derby >/dev/null || \
     -c "Apache Derby service account" derby
 exit 0
 
-%preun
-
-if [ $1 -eq 0 ] ; then 
-        # Package removal, not upgrade 
-        systemctl --no-reload disable derby.service > /dev/null 2>&1 || : 
-        systemctl stop derby.service > /dev/null 2>&1 || : 
-fi
-
 %post
+%post_service derby
 
-if [ $1 -eq 1 ] ; then 
-        # Initial installation 
-        systemctl preset derby.service >/dev/null 2>&1 || : 
-fi
+%preun
+%preun_service derby
 
+%files -f  db-derby-%{version}-src/.mfiles
+%{_bindir}/*
+%doc db-%{name}-%{version}-src/published_api_overview.html
+%doc db-%{name}-%{version}-src/RELEASE-NOTES.html
+%doc db-%{name}-%{version}-src/README
+%{_unitdir}/%{name}.service
+%attr(755,derby,derby) %{_sharedstatedir}/%{name}
+%doc db-derby-%{version}-src/LICENSE
+%doc db-derby-%{version}-src/NOTICE
+%config(noreplace,missingok) /etc/%{name}.conf
 
-%files -f %name-list
+%files javadoc -f db-derby-%{version}-src/.mfiles-javadoc
+%doc db-derby-%{version}-src/LICENSE
+%doc db-derby-%{version}-src/NOTICE
 
 %changelog
+* Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 0:10.11.1.1-alt2_3jpp8
+- unbootstrap build
+
+* Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 0:10.11.1.1-alt1_3jpp8
+- unbootstrap build
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:10.11.1.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
