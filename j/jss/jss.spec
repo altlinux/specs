@@ -2,12 +2,13 @@
 BuildRequires(pre): rpm-build-java
 BuildRequires: perl(Socket.pm)
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
-%define fedora 19
+BuildRequires: jpackage-generic-compat
+%define fedora 23
 Name:           jss
 Version:        4.2.6
-Release:        alt6_31jpp7
+Release:        alt6_37jpp8
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -22,9 +23,9 @@ Source1:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{versi
 Source2:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/gpl.txt
 Source3:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/lgpl.txt
 
-BuildRequires:  nss-devel >= 3.12.3.99
-BuildRequires:  libnspr-devel >= 4.6.99
-Requires:       nss >= 3.12.3.99
+BuildRequires:  nss-devel >= 3.14.3
+BuildRequires:  libnspr-devel >= 4.9.5
+Requires:       nss >= 3.14.3
 
 Patch1:         jss-key_pair_usage_with_op_flags.patch
 Patch2:         jss-javadocs-param.patch
@@ -49,7 +50,9 @@ Patch20:        jss-ECC-Phase2KeyArchivalRecovery.patch
 Patch21:        jss-undo-JCA-deprecations.patch
 Patch22:        jss-undo-BadPaddingException-deprecation.patch
 Patch23:        jss-fixed-build-issue-on-F17-or-newer.patch
-Patch24:	jss-support-TLS1_1-TLS1_2.patch
+Patch24:        jss-SHA-OID-fix.patch
+Patch25:        jss-RC4-strengh-verify.patch
+Patch26:        jss-support-TLS1_1-TLS1_2.patch
 Source44: import.info
 Patch33: jss-link-alt.patch
 
@@ -62,7 +65,7 @@ This only works with gcj. Other JREs require that JCE providers be signed.
 %package javadoc
 Summary:        Java Security Services (JSS) Javadocs
 Group:          Development/Java
-Requires:       jss = %{version}-%{release}
+Requires:       jss = %{version}
 BuildArch: noarch
 
 %description javadoc
@@ -94,6 +97,8 @@ This package contains the API documentation for JSS.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1
+%patch26 -p1
 %patch33 -p1
 
 %build
@@ -142,7 +147,7 @@ sed -i -e 's;LINUX3_1;LINUX3_6;' mozilla/security/coreconf/Linux3.6.mk
 
 
 # 3.0(t6), 3.5(SIS) kernels support
-for i in 0 3 4 5 6 7 8 9 10; do
+for i in 0 `seq 3 20`; do
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
 sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
 done
@@ -161,7 +166,7 @@ fix_kversion
 # The Makefile is not thread-safe
 make -C mozilla/security/coreconf
 make -C mozilla/security/jss
-make -C mozilla/security/jss javadoc
+make -C mozilla/security/jss javadoc ||:
 
 %install
 rm -rf $RPM_BUILD_ROOT docdir
@@ -200,7 +205,7 @@ popd
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -rp mozilla/dist/jssdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 mkdir -p %buildroot%_javadir/
-ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
+ln -s %_jnidir/jss4.jar %buildroot%_javadir/jss4.jar
 
 %files
 %doc mozilla/security/jss/jss.html MPL-1.1.txt gpl.txt lgpl.txt
@@ -214,6 +219,9 @@ ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt6_37jpp8
+- new version
+
 * Wed Nov 18 2015 Andrey Cherepanov <cas@altlinux.org> 4.2.6-alt6_31jpp7
 - Provide Tomcat support for TLS v1.1 and TLS v1.2 via NSS through JSS
 
