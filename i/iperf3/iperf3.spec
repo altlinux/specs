@@ -2,8 +2,8 @@
 %define abiversion 0
 
 Name: iperf3
-Version: 3.1.1
-Release: alt3
+Version: 3.1.2
+Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: %bsd
@@ -101,6 +101,10 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 
 
 %changelog
+* Sat Feb 13 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.1.2-alt1
+- New version
+- Added lsb init header (fixed repocop's warninig)
+
 * Sat Nov 28 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.1.1-alt3
 - removed listen port from $ARGS (5201 is default for iperf3)
 - removed --displayname from start_daemon in init script
