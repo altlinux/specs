@@ -1,4 +1,3 @@
-%define __global_ldflags %nil
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
@@ -16,7 +15,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          native-platform
 Version:       0.10
-Release:       alt1_7jpp8
+Release:       alt1_8jpp8
 Summary:       Java bindings for various native APIs
 License:       ASL 2.0
 URL:           https://github.com/adammurdoch/native-platform
@@ -35,6 +34,7 @@ BuildRequires: javapackages-local
 BuildRequires: ncurses-devel
 BuildRequires: jopt-simple
 Source44: import.info
+Patch33: native-platform-0.10-as-needed.patch
 
 %description
 A collection of cross-platform Java APIs
@@ -68,12 +68,12 @@ sed -i 's/\r//' readme.md
 # TODO
 mv src/curses/cpp/*.cpp src/main/cpp
 mv src/shared/cpp/* src/main/cpp
+%patch33 -p1
 
 %build
 CFLAGS="${CFLAGS:-%optflags}" ; export CFLAGS ;
 CPPFLAGS="${CPPFLAGS:-%optflags}" ; export CPPFLAGS ;
 CXXFLAGS="${CXXFLAGS:-%optflags}" ; export CXXFLAGS ;
-LDFLAGS="${LDFLAGS:-%__global_ldflags}"; export LDFLAGS;
 make %{?_smp_mflags} JAVA_HOME=%{_jvmdir}/java
 
 %mvn_artifact net.rubygrapefruit:%{name}:%{version} build/%{name}.jar
@@ -94,6 +94,9 @@ install -pm 0755 build/binaries/libnative-platform.so %{buildroot}%{_libdir}/%{n
 %doc LICENSE
 
 %changelog
+* Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_8jpp8
+- fixed linkage
+
 * Wed Feb 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_7jpp8
 - new version
 
