@@ -101,8 +101,9 @@ Requires: test-interface
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 Source: sbt-0.13.1-8.fc23.cpio
+Source2: sbt.patch
 
 %description
 sbt is the simple build tool for Scala and Java projects.
@@ -121,9 +122,14 @@ for i in usr var etc; do
 [ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
 
+patch %buildroot%_bindir/sbt < %{SOURCE2}
+
 %files -f %name-list
 
 %changelog
+* Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt0.2jpp
+- patched sbt bin
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
