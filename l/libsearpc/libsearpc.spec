@@ -1,5 +1,5 @@
 Name: libsearpc
-Version: 3.0.4
+Version: 3.0.7
 Release: alt1
 
 Summary: RPC library for Seafile
@@ -8,7 +8,7 @@ Group: Networking/File transfer
 License: GPLv3
 Url: https://github.com/haiwen/libsearpc
 
-Packager: Konstantin Artyushkin <akv@altlinux.org> 
+Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 # Source-url: https://github.com/haiwen/libsearpc/archive/v%version.tar.gz
 Source: %name-%version.tar
@@ -56,6 +56,9 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt1
+- new version 3.0.7 (with rpmrb script)
+
 * Sun Aug 24 2014 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt1
 - new version (3.0.4) with rpmgs script
 - cleanup spec, drop extraneous files
