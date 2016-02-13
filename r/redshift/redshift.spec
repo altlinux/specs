@@ -2,8 +2,8 @@
 %def_enable geoclue2
 
 Name: 	 redshift
-Version: 1.10
-Release: alt3
+Version: 1.11
+Release: alt1
 
 Summary: Redshift adjusts the color temperature of your screen
 Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета вашего экрана для снижения утомляемости глаз
@@ -101,6 +101,9 @@ fi
 rm -f %_sysconfdir/xdg/autostart/gtk-redshift.desktop
 
 %changelog
+* Sat Feb 13 2016 Andrey Cherepanov <cas@altlinux.org> 1.11-alt1
+- New version
+
 * Wed May 06 2015 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt3
 - truly built with geoclue2
 
