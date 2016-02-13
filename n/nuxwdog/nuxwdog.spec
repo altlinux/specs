@@ -1,6 +1,6 @@
 Name: nuxwdog
 Version: 1.0.3
-Release: alt2
+Release: alt3
 
 Summary: Watchdog server to start and stop processes, and prompt for passwords
 License: %lgpl2plus, %perl_license
@@ -54,7 +54,7 @@ Summary: Nuxwdog Watchdog client JNI Package
 License: %lgpl2plus
 Group: Development/Java
 Requires: lib%name = %version-%release
-Provides: %name-java-client = %version-%release
+Provides: %name-client-java = %version-%release
 
 %description -n lib%name-java
 This package contains a JNI interface to the nuxwdog
@@ -66,7 +66,7 @@ Summary: Nuxwdog Watchdog client perl bindings
 License: %perl_license
 Group: Development/Perl
 Requires: lib%name = %version-%release
-Provides: %name-perl-client = %version-%release
+Provides: %name-client-perl = %version-%release
 
 
 %description -n lib%name-perl
@@ -94,9 +94,17 @@ make licensedir=%nuxwdog_docdir
 
 %install
 %makeinstall_std licensedir=%nuxwdog_docdir
+
+# java stuff #
+mkdir -p %buildroot/%_libdir/nuxwdog-jni
+mv %buildroot%_libdir/libnuxwdog-jni.so %buildroot/%_libdir/nuxwdog-jni
+mv %buildroot%{_prefix}/jars/nuxwdog.jar %buildroot/%_libdir/nuxwdog-jni/nuxwdog-%{version}.jar
 mkdir -p %buildroot%_jnidir/
-mv %buildroot/usr/jars/nuxwdog.jar %buildroot%_libdir/*-jni.so %buildroot%_jnidir/
+ln -s `relative %_libdir/nuxwdog-jni/nuxwdog-%{version}.jar %_jnidir/nuxwdog.jar` \
+   %buildroot%_jnidir/nuxwdog.jar
 rmdir %buildroot/usr/jars
+# end java #
+
 chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 
 %files
@@ -112,6 +120,7 @@ chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 %_libdir/libnuxwdog.so
 
 %files -n lib%name-java
+%_libdir/nuxwdog-jni
 %_jnidir/*
 
 %files -n lib%name-perl
@@ -120,6 +129,9 @@ chrpath -d %buildroot%_libdir/perl5/auto/Nuxwdogclient/Nuxwdogclient.so
 #_man3dir/Nuxwdogclient.3pm*
 
 %changelog
+* Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt3
+- NMU: fixed java stuff location
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2
 - NMU:
   * fixes in java BR: && R:
