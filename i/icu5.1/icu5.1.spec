@@ -3,7 +3,7 @@
 
 Name: %_name%ver_major
 Version: %ver_major.1
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -90,6 +90,7 @@ rm -f %buildroot%_bindir/icuinfo
 %files -n %libicu
 %_libdir/*.so.*
 
+%if 0
 %files -n lib%name-devel
 %_includedir/*
 %_bindir/icu-config
@@ -100,7 +101,6 @@ rm -f %buildroot%_bindir/icuinfo
 %exclude %_datadir/icu/samples
 %_man1dir/icu-config.1*
 
-%if 0
 %files utils
 %_bindir/*
 %exclude %_bindir/icu-config
@@ -114,6 +114,9 @@ rm -f %buildroot%_bindir/icuinfo
 %endif
 
 %changelog
+* Sat Feb 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1:5.1.1-alt5
+- removed -devel subpackage
+
 * Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1:5.1.1-alt4
 - compat library
 
