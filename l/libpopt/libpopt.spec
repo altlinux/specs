@@ -1,6 +1,6 @@
 Name: libpopt
 Version: 1.14
-Release: alt9
+Release: alt10
 Epoch: 1
 
 %def_with apidocs
@@ -109,7 +109,7 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %define docdir %_docdir/popt-%version
 mkdir -p %buildroot%docdir
 install -pm644 README CHANGES *.ps %buildroot%docdir/
-bzip2 -9 %buildroot%docdir/*.ps
+xz -9 %buildroot%docdir/*.ps
 %{?_with_apidocs:cp -a doxygen/html %buildroot%docdir/}
 
 %find_lang popt
@@ -130,10 +130,14 @@ bzip2 -9 %buildroot%docdir/*.ps
 
 %files doc
 %dir %docdir
-%docdir/html
-%docdir/*.ps.bz2
+%{?_with_apidocs:%docdir/html}
+%docdir/*.ps.xz
 
 %changelog
+* Tue Feb 09 2016 Michael Shigorin <mike@altlinux.org> 1:1.14-alt10
+- BOOTSTRAP: fixed --without apidocs build.
+- Replaced bzip2 with xz while at that.
+
 * Wed Oct 30 2013 Dmitry V. Levin <ldv@altlinux.org> 1:1.14-alt9
 - Fixed build with new automake.
 
