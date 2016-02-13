@@ -6,11 +6,11 @@ BuildRequires: gcc-c++ swig unzip
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%global reldate 20150511
+%global reldate 20150929
 %global rcver %{nil}
 
 Name:          apache-poi
-Version:       3.12
+Version:       3.13
 Release:       alt1_2jpp8
 Summary:       The Java API for Microsoft Documents
 # ASLv2 + GPLv3 src/resources/scratchpad/org/apache/poi/hdgf/chunks_parse_cmds.tbl
@@ -61,6 +61,8 @@ BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on)
 BuildRequires: mvn(org.hamcrest:hamcrest-core)
 BuildRequires: mvn(org.ow2.asm:asm-all)
 BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(rhino:js)
+
 #Fonts for testing
 BuildRequires: fontconfig fonts-ttf-liberation fonts-ttf-liberation
 
@@ -132,6 +134,7 @@ cp -p %SOURCE7 .
 cp -p %SOURCE8 .
 popd
 
+# Customize pom file
 cp -p %SOURCE11 .
 %pom_xpath_inject "pom:dependencies/pom:dependency[pom:artifactId ='ant']" "
 <scope>provided</scope>" poi-excelant-%{version}.pom
@@ -187,6 +190,9 @@ ant -propertyfile build.properties test || :
 %doc LICENSE NOTICE
 
 %changelog
+* Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.13-alt1_2jpp8
+- new version
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:3.12-alt1_2jpp8
 - new version
 
