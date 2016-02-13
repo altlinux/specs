@@ -1,5 +1,5 @@
 Name: hdu
-Version: 0.2.2.5
+Version: 0.2.3.9
 Release: alt1
 Summary: Human-friendly summary of disk usage
 
@@ -12,7 +12,7 @@ Patch: %name-%version-alt.patch
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools python-module-setuptools_scm
 
 %description
 Human-friendly summary of disk usage.
@@ -21,6 +21,7 @@ Human-friendly summary of disk usage.
 %setup
 
 %build
+subst 's/version=None/version="%version"/' setup.py
 %python_build
 
 %install
@@ -32,5 +33,8 @@ Human-friendly summary of disk usage.
 %doc README
 
 %changelog
+* Sat Feb 13 2016 Terechkov Evgenii <evg@altlinux.org> 0.2.3.9-alt1
+- 0.2.3.9
+
 * Wed Feb 10 2016 Terechkov Evgenii <evg@altlinux.org> 0.2.2.5-alt1
 - Initial build for ALT Linux Sisyphus
