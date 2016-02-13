@@ -1,5 +1,5 @@
 Name: seafile
-Version: 3.1.11
+Version: 5.0.4
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -28,17 +28,18 @@ BuildRequires: intltool libssl-devel libuuid-devel python-module-mwlib python-mo
 BuildRequires: zlib-devel libfuse-devel vala libjansson-devel libjson-glib-devel
 
 BuildRequires: libsearpc-devel >= 3.0.4
-BuildRequires: libccnet-devel >= 3.1.11
+BuildRequires: libccnet-devel >= %version
 
 BuildRequires: libsqlite3-devel >= 3.7
 BuildRequires: libevent-devel >= 2.0
 BuildRequires: libarchive-devel >= 2.8.5
+BuildRequires: libcurl-devel >= 7.17
 
 # server requires
 BuildRequires: libzdb-devel >= 2.12
 BuildRequires: libevhtp-devel >= 1.2.9
 
-Requires: ccnet >= 3.1.11
+Requires: ccnet >= %version
 
 %description
 Seafile is a next-generation open source cloud storage system
@@ -118,19 +119,13 @@ cp %SOURCE1 .
 install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.conf.example
 
 %files
-%_bindir/seafile
 %_bindir/seaf-cli
 %_bindir/seaf-daemon
 %_man1dir/seaf-cli.1.*
 %_man1dir/seaf-daemon*.1.*
 
-# man pages for other packages
-%_man1dir/ccnet*.1.*
-%_man1dir/seafile-applet*.1.*
-
 %files server
 %doc README.ALT.utf8.txt
-%_bindir/fileserver
 %_bindir/seaf-fsck
 %_bindir/seaf-migrate
 %_bindir/seaf-server
@@ -138,7 +133,6 @@ install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.
 %_bindir/seafile-admin
 %_bindir/seafile-controller
 %_bindir/seafserv-gc
-%_bindir/seafserv-tool
 
 %python_sitelibdir/seaserv/
 
@@ -158,6 +152,9 @@ install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 5.0.4-alt1
+- new version 5.0.4 (with rpmrb script)
+
 * Fri Nov 21 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.11-alt1
 - new version 3.1.11 (with rpmrb script)
 
