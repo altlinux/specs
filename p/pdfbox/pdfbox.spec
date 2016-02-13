@@ -6,10 +6,9 @@ BuildRequires: unzip
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
-%define fedora 23
 Name:           pdfbox
-Version:        1.8.8
-Release:        alt1_5jpp8
+Version:        1.8.10
+Release:        alt1_1jpp8
 Summary:        Java library for working with PDF documents
 License:        ASL 2.0
 URL:            http://pdfbox.apache.org/
@@ -19,36 +18,27 @@ Patch0:         %{name}-nodownload.patch
 #Use sysytem bitream-vera-sans-fonts instead of bundled fonts
 Patch1:         %{name}-1.2.0-bitstream.patch
 
-Patch2:         pdfbox-1.8.8-port-to-bouncycastle1.50.patch
+Patch2:         pdfbox-1.8.10-port-to-bouncycastle1.50.patch
 
-BuildRequires:  ant
-BuildRequires:  maven-local
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-war-plugin
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-rat-plugin
 BuildRequires:  fonts-ttf-vera
-BuildRequires:  bouncycastle-mail
 BuildRequires:  fontconfig
-BuildRequires:  icu4j
-BuildRequires:  javacc-maven-plugin
-BuildRequires:  junit
-%if 0%{?fedora} >= 18
-BuildRequires:  lucene
-%else
-BuildRequires:  lucene-demo >= 2.4.1
-%endif
-BuildRequires:  pcfi
-BuildRequires:  log4j12
-
-BuildRequires:  maven-local >= 4.3.2-3
+BuildRequires:  maven-local >= 4.3.2
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.adobe.pdf:pcfi)
+BuildRequires:  mvn(com.ibm.icu:icu4j)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(log4j:log4j:1.2.17)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.rat:apache-rat-plugin)
+BuildRequires:  mvn(org.bouncycastle:bcmail-jdk15on)
+BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 
 BuildArch:      noarch
 
 Requires:       fonts-ttf-vera
-
-Obsoletes:      %{name}-app <= 1.6.0-4
-Provides:       %{name}-app = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -68,10 +58,6 @@ This package contains examples for %{name}.
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
-Provides:       fontbox-javadoc = %{version}-%{release}
-Obsoletes:      fontbox-javadoc < %{version}-%{release}
-Provides:       jempbox-javadoc = %{version}-%{release}
-Obsoletes:      jempbox-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -121,8 +107,46 @@ XmpBox is a subproject of Apache PDFBox.
 
 %prep
 %setup -q
+find -name '*.class' -delete
+find -name '*.jar' -delete
+
 %patch0 -p1 -b .nodownload
 %patch1 -p1 -b .bitstream
+%patch2 -p1 -b .bouncycastle1.50
+
+%pom_disable_module war
+#Disable lucene, not compatible with lucene 3.6
+%pom_disable_module lucene
+# Don't build app (it's just a bundle of everything)
+%pom_disable_module preflight-app
+%pom_disable_module app
+
+# cobertura-maven-plugin has been retired
+%pom_remove_plugin :cobertura-maven-plugin preflight
+%pom_remove_dep javax.activation:activation preflight
+
+%pom_change_dep -r :ant-nodeps :ant
+%pom_xpath_set -r "pom:dependency[pom:artifactId = 'log4j']/pom:version" 1.2.17
+
+#Fix line endings
+sed -i -e 's|\r||' RELEASE-NOTES.txt
+#Remove META-INF file that does not exist
+
+#Use jdk15on version of bcprov
+%pom_change_dep -r :bcmail-jdk15 :bcmail-jdk15on:1.50
+%pom_change_dep -r :bcprov-jdk15 :bcprov-jdk15on:1.50
+%pom_add_dep org.bouncycastle:bcpkix-jdk15on:1.50 %{name}
+
+sed -i -e '/META-INF/d' pdfbox/pom.xml
+#Remove included fonts
+rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
+
+# TODO
+rm -rf examples/src/main/java/org/apache/pdfbox/examples/signature/CreateSignature.java \
+ examples/src/main/java/org/apache/pdfbox/examples/signature/CreateVisibleSignature.java \
+ examples/src/test/java/org/apache/pdfbox/examples/pdfa/CreatePDFATest.java
+# IllegalArgumentException: Parameter 'directory' is not a directory
+rm -r preflight/src/test/java/org/apache/pdfbox/preflight/integration/TestValidFiles.java
 
 # Skip testImageIOUtils
 # https://issues.apache.org/jira/browse/PDFBOX-2084
@@ -137,39 +161,6 @@ rm -rf pdfbox/src/test/java/org/apache/pdfbox/util/TestImageIOUtils.java \
 sed -i -e /PDJpegTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
 sed -i -e /PDCcittTest/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
 sed -i -e /TestImageIOUtils/d pdfbox/src/test/java/org/apache/pdfbox/TestAll.java
-
-# cobertura-maven-plugin has been retired
-%pom_remove_plugin :cobertura-maven-plugin preflight
-
-%pom_remove_dep javax.activation:activation preflight
-
-%pom_disable_module war
-
-sed -i.ant "s|<artifactId>ant-nodeps</artifactId>|<artifactId>ant</artifactId>|" pom.xml */pom.xml
-
-sed -i.log4j12 "s|<version>1.2.12</version>|<version>1.2.17</version>|" preflight*/pom.xml
-
-#Disable lucene, not compatible with lucene 3.6
-%pom_disable_module lucene
-#Use jdk16 version of bcprov
-sed -i -e s/jdk15/jdk16/g */pom.xml
-# Don't build app (it's just a bundle of everything)
-sed -i -e /app/d pom.xml
-find -name '*.class' -delete
-find -name '*.jar' -delete
-#Fix line endings
-sed -i -e 's|\r||' RELEASE-NOTES.txt
-#Remove META-INF file that does not exist
-sed -i -e '/META-INF/d' pdfbox/pom.xml
-#Remove included fonts
-rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
-
-%pom_add_dep org.bouncycastle:bcpkix-jdk15on:1.50 %{name}
-%patch2 -p1 -b .bouncycastle1.50
-
-# TODO
-rm -rf examples/src/main/java/org/apache/pdfbox/examples/signature/CreateSignature.java \
- examples/src/main/java/org/apache/pdfbox/examples/signature/CreateVisibleSignature.java
 
 # Disable filtering
 sed -i -e /filtering/d examples/pom.xml
@@ -198,7 +189,7 @@ sed -i -e /filtering/d examples/pom.xml
 
 %build
 
-%mvn_build -- -Dadobefiles.jar=$(build-classpath pcfi) -Dmaven.test.skip.exec=true
+%mvn_build -- -Dadobefiles.jar=$(build-classpath pcfi)
 
 %install
 %mvn_install
@@ -231,6 +222,9 @@ sed -i -e /filtering/d examples/pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.10-alt1_1jpp8
+- new version
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.8-alt1_5jpp8
 - java 8 mass update
 
