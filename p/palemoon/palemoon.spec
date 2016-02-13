@@ -2,8 +2,8 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 26.0.3
-Release: alt1.1.5e83
+Version: 26.1.0
+Release: alt1.1.fc37
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -34,11 +34,11 @@ Patch16: firefox-cross-desktop.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
+Patch23: palemoon_version.patch
 # Patch22: palemoon-26.01.patch
 
 
 BuildRequires(pre): mozilla-common-devel
-BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
 # Automatically added by buildreq on Sun Jan 10 2016
@@ -78,6 +78,7 @@ These helper macros provide possibility to rebuild
 %setup -n %name-%version -c
 %patch21 -p1
 %patch20 -p1
+%patch23 -p1
 
 cd %name
 
@@ -95,6 +96,7 @@ tar -xf %SOURCE2
 popd
 
 #patch22 -p1
+
 
 #patch5  -p1
 %patch6  -p1
@@ -308,6 +310,10 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Feb 12 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt1.1.fc37
+- Update from git
+= Remove rpm-build-mozilla.org from deps  ( Bug #31791 )
+
 * Fri Feb 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.0.3-alt1.1.5e83
 - Update from git
 
@@ -377,3 +383,4 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
