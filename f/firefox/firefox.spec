@@ -8,7 +8,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        44.0.1
+Version:        44.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -222,6 +222,12 @@ for s in 16 22 24 32 48 256; do
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/firefox.png
 done
 
+# ALT#30572
+if [ ! -e "%buildroot/%firefox_prefix/plugins" ]; then
+	what="$(relative %browser_plugins_path %firefox_prefix/plugins)"
+	ln -s -- "$what" %buildroot/%firefox_prefix/plugins
+fi
+
 # install rpm-build-firefox
 mkdir -p -- \
 	%buildroot/%_rpmmacrosdir
@@ -300,6 +306,12 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Feb 12 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.2-alt1
+- New release (44.0.2).
+- Add symlink to browser-plugins from firefox home directory (ALT#30572)
+- Fixed:
+  + 2016-13 Same-origin-policy violation using Service Workers with plugins 
+
 * Wed Feb 10 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.1-alt1
 - New release (44.0.1).
 - Use system cairo.
