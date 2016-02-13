@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 3.1.11
+Version: 5.0.4
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -13,22 +13,22 @@ Packager: Denis Baranov <baraka@altlinux.ru>
 # Source-url: https://github.com/haiwen/seafile-client/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Requires: seafile >= 3.1.11
+Requires: seafile >= %version
 
 # Automatically added by buildreq on Sun Nov 10 2013
 # optimized out: cmake cmake-modules fontconfig glib2-devel libevent-devel libgio-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libsearpc-devel libssl-devel libstdc++-devel mariadb-client mariadb-common pkg-config
-BuildRequires: ccmake gcc-c++ libjansson-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite3-devel phonon-devel
+BuildRequires: ccmake gcc-c++ libjansson-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite3-devel phonon-devel
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: libccnet-devel >= 3.1.11
-BuildRequires: libseafile-devel >= 3.1.11
+BuildRequires: libccnet-devel >= %version
+BuildRequires: libseafile-devel >= %version
 
 Conflicts: libseafile <= 2.0.4
 
 %description
-Seafile is a full-fledged document collaboration platform
-Seafile desktop gui client
+Seafile desktop gui client.
+Seafile is a full-fledged document collaboration platform.
 
 %prep
 %setup
@@ -49,6 +49,9 @@ Seafile desktop gui client
 %_pixmapsdir/*
 
 %changelog
+* Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 5.0.4-alt1
+- new version 5.0.4 (with rpmrb script)
+
 * Fri Nov 21 2014 Vitaly Lipatov <lav@altlinux.ru> 3.1.11-alt1
 - new version 3.1.11 (with rpmrb script)
 
