@@ -1,6 +1,6 @@
 Name: libsearpc
 Version: 3.0.7
-Release: alt1
+Release: alt2
 
 Summary: RPC library for Seafile
 
@@ -15,7 +15,8 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Aug 24 2014
 # optimized out: libcloog-isl4 pkg-config python-base python-devel python-module-distribute python-module-zope python-modules python3-base
-BuildRequires: glib2-devel glibc-devel libjansson-devel python-module-cmd2 python-module-mwlib python-module-protobuf
+BuildRequires: glib2-devel glibc-devel libjansson-devel
+# python-module-cmd2 python-module-mwlib python-module-protobuf
 
 BuildRequires: libgio-devel
 
@@ -38,7 +39,7 @@ developing applications that use %name.
 
 %build
 %autoreconf
-%configure --disable-static --disable-compile-demo
+%configure --disable-static --disable-compile-demo --enable-server-pkg
 %make_build
 
 %install
@@ -47,15 +48,19 @@ developing applications that use %name.
 %files
 %doc AUTHORS README.markdown
 %_libdir/*.so.*
-%_bindir/searpc-codegen.py
 %python_sitelibdir/pysearpc/
 
 %files devel
+%_bindir/searpc-codegen.py
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt2
+- move searpc-codegen.py to devel subpackage
+- fix build requires
+
 * Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt1
 - new version 3.0.7 (with rpmrb script)
 
