@@ -1,5 +1,5 @@
 Name: filesystem
-Version: 2.3.12
+Version: 2.3.13
 Release: alt1
 
 Summary: The basic directory layout for a GNU/Linux system
@@ -57,6 +57,9 @@ done
 %files -f list
 
 %changelog
+* Wed Feb 10 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.13-alt1
+- Added /usr/share/appdata directory.
+
 * Thu Oct 01 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.12-alt1
 - Made lib64 conditions same for %%build and %%install stages.
 
