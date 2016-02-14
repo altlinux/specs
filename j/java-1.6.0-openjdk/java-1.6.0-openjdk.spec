@@ -158,7 +158,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt22_65.1.11jpp6
+Release: alt23_65.1.11jpp6
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -228,7 +228,7 @@ BuildRequires: fonts-type1-xorg
 BuildRequires: fonts-bitmap-misc
 BuildRequires: libfreetype-devel >= 2.3.0
 BuildRequires: fontconfig
-BuildRequires: eclipse-ecj
+BuildRequires: ecj
 # Java Access Bridge for GNOME build requirements.
 #BuildRequires: libat-spi-devel
 BuildRequires: gawk
@@ -947,6 +947,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt23_65.1.11jpp6
+- fixed build
+
 * Sun Nov 22 2015 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt22_65.1.11jpp6
 - fixed build
 
