@@ -1,6 +1,6 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             staxmapper
 Version:          1.1.0
-Release:          alt2_10jpp8
+Release:          alt2_13jpp8
 Summary:          StAX Mapper
 License:          LGPLv2+
 URL:              https://github.com/jbossas/staxmapper
@@ -25,17 +25,8 @@ Source0:          %{name}-%{namedversion}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-source-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    jboss-parent
+BuildRequires:    mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
 %description
@@ -43,7 +34,7 @@ This package contains the StAX Mapper.
 
 %package javadoc
 Group: Development/Java
-Summary:          Javadocs for %{name}
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -51,6 +42,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{namedversion}
+# Unneeded
+%pom_remove_plugin :maven-source-plugin
 
 %build
 %mvn_build
@@ -58,12 +51,14 @@ This package contains the API documentation for %{name}.
 %install
 %mvn_install
 
+# Not available license file reported @ https://issues.jboss.org/browse/STXM-14
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_13jpp8
+- updated gradle support
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_10jpp8
 - new version
 
