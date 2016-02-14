@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Dependency Management Utility
 Name:           jaranalyzer
 Version:        1.1
-Release:	alt4_2jpp5
+Release:	alt5_2jpp6
 Epoch:          0
 License:        BSD-style
 URL:            http://www.kirkk.com/main/Main/JarAnalyzer
@@ -96,7 +96,7 @@ ln -sf $(build-classpath regexp) jakarta-regexp-1.3.jar
 ln -sf $(build-classpath bcel) bcel-5.1.jar
 popd
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 
 
 %install
 
@@ -106,53 +106,37 @@ install -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/runxmlsummary
 # jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
 
-install -m 0644 bin/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+install -m 0644 bin/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-# pom and depmap frags
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-%add_to_maven_depmap com.kirkk %{name} %{version} JPP %{name}
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-install -d -m 0755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-install -m 0644 bin/license.txt \
-    $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %if %{gcj_support}
 export CLASSPATH=$(build-classpath gnu-crypto)
 %{_bindir}/aot-compile-rpm
 %endif
 
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
+# pom and depmap frags
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%postun javadoc
-if [ "$1" = "0" ]; then
-    rm -f %{_javadocdir}/%{name}
-fi
-
-%files
+%files -f .mfiles
+%doc bin/license.txt
 %attr(755,root,root) %{_bindir}/runxmlsummary
 %{_javadir}/*.jar
-%doc %{_docdir}/%{name}-%{version}
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
 %endif
 
 %files javadoc
-%ghost %doc %{_javadocdir}/%{name}
-%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt5_2jpp6
+- build with java8
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt4_2jpp5
 - use junit 4
 
