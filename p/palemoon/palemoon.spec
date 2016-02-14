@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.1.0
-Release: alt2
+Release: alt3
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -34,8 +34,7 @@ Patch16: firefox-cross-desktop.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
-Patch23: palemoon_version.patch
-# Patch22: palemoon-26.01.patch
+Patch23: palemoon_version-26.1.0.patch
 
 
 BuildRequires(pre): mozilla-common-devel
@@ -48,10 +47,17 @@ BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXSc
 BuildRequires: autoconf_2.13
 BuildRequires: libpixman-devel
 
+BuildRequires: gstreamer-devel gst-plugins-devel 
+
+BuildRequires: libx264-devel
+
 %set_autoconf_version 2.13
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss
+
+Requires: gstreamer
+Requires: gst-plugins-base gst-plugins-good
 
 %description
 The %name project is a redesign of Mozilla's  Firefox browser component,
@@ -132,8 +138,10 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 %endif
 
 %ifarch %ix86
-echo 'ac_add_options "--enable-optimize=-O2  -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
+echo 'ac_add_options "--enable-optimize=-O3  -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
+
+echo "ac_add_options --enable-gstreamer" >> .mozconfig
 
 %build
 cd %name
@@ -311,6 +319,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Feb 14 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt3
+- Add option enable-gstreamer
+
 * Sat Feb 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt2
 - New Version
 
