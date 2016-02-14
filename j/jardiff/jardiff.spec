@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jardiff
 Version:        0.2
-Release:	alt7_3jpp6
+Release:	alt8_3jpp6
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -91,7 +91,7 @@ for j in $(find . -name "*.jar"); do
 done
 
 %patch1 -p1
-# TODO for asm4
+# TODO for objectweb-asm4
 #patch2 -p1
 
 %build
@@ -105,27 +105,28 @@ ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  -Dbuild.sysclassp
 
 %install
 # jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -d -m 755 %buildroot%{_javadir}
+install -m 644 target/%{name}-%{version}.jar %buildroot%{_javadir}/%{name}.jar
 
 # TODO maven support
-#add_maven_depmap %{name} %{name} %{version} JPP %{name}
-#install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+install -d -m 755 %buildroot%{_mavenpomdir}
+install -m 644 %{SOURCE1} %buildroot%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+%jpackage_script org.osjava.jardiff.Main "" "" jardiff:commons-cli:objectweb-asm3/asm:objectweb-asm3/asm-commons %name true
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 %buildroot%{_javadocdir}/%{name}
+cp -pr dist/docs/api/* %buildroot%{_javadocdir}/%{name}
 
 %if %{gcj_support}
 export CLASSPATH=$(build-classpath gnu-crypto)
 %{_bindir}/aot-compile-rpm
 %endif
 
-%files
+%files -f .mfiles
+%{_bindir}/%name
 %{_javadir}/*
-#%{_mavenpomdir}/*
-#%{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
@@ -135,6 +136,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt8_3jpp6
+- added maven metadata and script
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt7_3jpp6
 - fixed build
 - TODO: script
