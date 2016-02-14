@@ -1,6 +1,7 @@
 Epoch: 1
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -13,9 +14,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:          jboss-jms-1.1-api
 Version:       1.0.1
-Release:       alt2_9jpp8
+Release:       alt2_12jpp8
 Summary:       JBoss JMS API 1.1 Spec
-Group:         Development/Java
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org
 
@@ -24,16 +24,7 @@ URL:           http://www.jboss.org
 Source0:       %{name}-%{namedversion}.tar.xz
 
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-checkstyle-plugin
-BuildRequires: maven-plugin-cobertura
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-ear-plugin
-BuildRequires: maven-eclipse-plugin
+BuildRequires: mvn(org.jboss:jboss-parent:pom:)
 
 BuildArch:     noarch
 Source44: import.info
@@ -42,8 +33,8 @@ Source44: import.info
 The Java Messaging Service 1.1 API classes
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -51,6 +42,8 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n jboss-jms-1.1-api
+# Unneeded plugin
+%pom_remove_plugin :maven-source-plugin
 
 %build
 %mvn_build
@@ -59,13 +52,17 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE README
+%doc README
+%doc LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE README
+%doc README
+%doc LICENSE
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_12jpp8
+- updated gradle support
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_9jpp8
 - new version
 
