@@ -5,13 +5,13 @@ BuildRequires: java-devel-default
 
 Name:           junixsocket
 Version:        1.3
-Release:        alt4
+Release:        alt5
 Summary:        Java/JNI library that allows the use of Unix Domain Sockets
 License:        Apache Software License 2.0
 Group:          Development/Java
 URL:            http://junixsocket.googlecode.com/
 Source0:        http://junixsocket.googlecode.com/files/%{name}-%{version}-src.tar.bz2
-BuildRequires: jpackage-utils rpm-build-java ant ant-nodeps junit4 ant-junit
+BuildRequires: jpackage-utils rpm-build-java ant junit ant-junit
 
 %description
 junixsocket is a Java/JNI library that allows the use of Unix Domain Sockets (AF_UNIX sockets) from Java.
@@ -31,16 +31,18 @@ Group:          Development/Documentation
 #grep -v 'param name="gccM" value="-m32"' build.xml > build.xml.0
 #mv build.xml.0 build.xml
 
+sed -i -e 's!name="jars" depends="test"!name="jars" depends="init,compile,javah,gcc"!' build.xml
+
 %build
 export LANG=en_US.ISO8859-1
-export CLASSPATH=`build-classpath junit4`
+export CLASSPATH=`build-classpath junit hamcrest/core`
 %ifarch %ix86
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dskip64=true dist javadoc
+ant  -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -Dskip64=true jars javadoc
 %else
 %ifarch x86_64
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dskip32=true dist javadoc
+ant  -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -Dskip32=true jars javadoc
 %else
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist javadoc
+ant  -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 jars javadoc
 %endif
 %endif
 
@@ -71,6 +73,9 @@ install -m 755 lib-native/libjunixsocket-linux*.so $RPM_BUILD_ROOT%{_libdir}/
 %doc %{_javadocdir}/*
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt5
+- fixed build with java8
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4
 - fixed build with java7
 
