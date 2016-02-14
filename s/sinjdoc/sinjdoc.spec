@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           sinjdoc
 Version:        0.5
-Release:        alt1_15jpp7
+Release:        alt2_15jpp6
 Summary:        Documentation generator for Java source code
 
 Group:          Development/Java
@@ -19,7 +19,7 @@ Patch1:         sinjdoc-autotools-changes.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: eclipse-ecj >= 3.2.1
+BuildRequires: ecj 
 BuildRequires: gcc-java >= 4.0.2
 BuildRequires: java-gcj-compat-devel >= 1.0.70
 BuildRequires: java_cup >= 0.10
@@ -74,6 +74,9 @@ aot-compile-rpm
 %{_libdir}/gcj/%{name}
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.5-alt2_15jpp6
+- fixed build
+
 * Tue Aug 26 2014 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_15jpp7
 - new release
 
