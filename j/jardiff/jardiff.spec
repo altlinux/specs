@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jardiff
 Version:        0.2
-Release:	alt6_3jpp5
+Release:	alt7_3jpp6
 Epoch:          0
 Summary:        Jar Diff Util
 License:        BSD
@@ -44,6 +44,10 @@ Group:          Development/Java
 URL:            http://www.osjava.org/jardiff/
 Source0:        http://dist.osjava.org/releases/official/jardiff/jardiff-0.2-src.tar.gz
 Source1:        %{name}-%{version}.pom
+
+# debian patches from jardiff_0.2-4.debian
+Patch1: 01_fix_build_with_asm3.diff
+Patch2: 02_fix_build_with_asm4.diff
 
 %if %{gcj_support}
 BuildRequires: gnu-crypto
@@ -60,10 +64,10 @@ BuildArch:      noarch
 BuildRequires: jpackage-utils 
 BuildRequires: ant 
 BuildRequires: ant-junit
-BuildRequires: asm2
+BuildRequires: objectweb-asm3
 BuildRequires: apache-commons-cli
 
-Requires: asm2
+Requires: objectweb-asm3
 Requires: apache-commons-cli
 
 %description
@@ -86,60 +90,56 @@ for j in $(find . -name "*.jar"); do
     mv $j $j.no
 done
 
+%patch1 -p1
+# TODO for asm4
+#patch2 -p1
+
 %build
 export CLASSPATH=$(build-classpath \
-asm2/asm2 \
-asm2/asm2-commons \
+objectweb-asm3/asm \
+objectweb-asm3/asm-commons \
 commons-cli \
 )
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar test javadoc
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  -Dbuild.sysclasspath=only jar test javadoc
 
 
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 target/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+  $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+# TODO maven support
+#add_maven_depmap %{name} %{name} %{version} JPP %{name}
+#install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -sf %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %if %{gcj_support}
 export CLASSPATH=$(build-classpath gnu-crypto)
 %{_bindir}/aot-compile-rpm
 %endif
 
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-  rm -f %{_javadocdir}/%{name}
-fi
-
 %files
 %{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}
+#%{_mavenpomdir}/*
+#%{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
 %endif
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt7_3jpp6
+- fixed build
+- TODO: script
+- TODO: properly install maven pom
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt6_3jpp5
 - use junit 4
 
