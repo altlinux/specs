@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           glassfish-jaf
 Version:        1.1.0
-Release:        alt4_6jpp6
+Release:        alt5_6jpp6
 Epoch:          0
 Summary:        Glassfish - JavaBeans Activation Framework
 License:        CDDL
@@ -81,17 +81,6 @@ BuildArch: noarch
 %description javadoc
 %{summary}.
 
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
 %prep
 %setup -q -n %{name}
 %setup -q -n %{name} -T -D -a 1
@@ -100,14 +89,14 @@ can be extracted through rpm2cpio.
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 release
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 release
 
 %install
 
 # jars
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
 install -p -m 0644 build/release/%{jar_name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-%add_to_maven_depmap javax.activation activation %{version} JPP %{name}
+
 
 pushd $RPM_BUILD_ROOT%{_javadir}
 ln -sf %{name}-%{version}.jar %{name}.jar
@@ -131,25 +120,13 @@ touch $RPM_BUILD_ROOT%{_javadir}/jaf_1_1_api.jar
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 %{SOURCE2} \
     $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}.pom
+#add_to_maven_depmap javax.activation activation %{version} JPP %{name}
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr build/release/docs/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %with repolib
-install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-sed -i "s/@VERSION@/%{version}-brew/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{PATCH0} $RPM_BUILD_ROOT%{repodirsrc}
-cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{repodirlib}/%{jar_name}.jar
-%endif
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaf_%{name}<<EOF
 %{_javadir}/jaf.jar	%{_javadir}/%{name}.jar	10100
 EOF
@@ -163,15 +140,6 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jaf_1_1_api_%
 %{_javadir}/jaf_1_1_api.jar	%{_javadir}/%{name}.jar	10100
 EOF
 
-%if %with repolib
-%define compatrepodir %{_javadir}/repository.jboss.com/glassfish/jaf/%{version}-brew
-install -d -m 755 $RPM_BUILD_ROOT%{compatrepodir}/
-ln -s $(relative %{repodir}/lib %{compatrepodir}/lib) $RPM_BUILD_ROOT%{compatrepodir}/lib
-ln -s $(relative %{repodir}/src %{compatrepodir}/src) $RPM_BUILD_ROOT%{compatrepodir}/src
-cp -a $RPM_BUILD_ROOT%{repodir}/component-info.xml $RPM_BUILD_ROOT%{compatrepodir}/component-info.xml
-sed -i s,sun-jaf,glassfish/jaf, $RPM_BUILD_ROOT%{compatrepodir}/component-info.xml
-%endif
-
 %files
 %_altdir/jaf_1_1_api_%{name}
 %_altdir/jaf_api_%{name}
@@ -180,8 +148,8 @@ sed -i s,sun-jaf,glassfish/jaf, $RPM_BUILD_ROOT%{compatrepodir}/component-info.x
 %doc build/META-INF/LICENSE.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+#%{_mavenpomdir}/*
+#%{_mavendepmapfragdir}/*
 #%{_javadir}/jaf-%{jafver}.jar
 %exclude %{_javadir}/jaf.jar
 # Do not ghost (which would be the right thing) because of a bug in the
@@ -194,12 +162,10 @@ sed -i s,sun-jaf,glassfish/jaf, $RPM_BUILD_ROOT%{compatrepodir}/component-info.x
 %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
-
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt5_6jpp6
+- fixed build
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt4_6jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
