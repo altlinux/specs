@@ -5,7 +5,7 @@ License: LGPL v2.1
 Group: Development/Java
 Summary: Java library that implements a fairly large subset of Common LISP
 Version: %majver.0
-Release: alt3.cvs20100623_jpp7
+Release: alt4.cvs20100623_jpp7
 Url: http://jatha.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -14,8 +14,8 @@ Source: %name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-java
-BuildPreReq: ant
+BuildRequires(pre): rpm-macros-java
+BuildRequires: ant java-devel-default rpm-build-java
 
 %description
 Jatha is a Java library that implements a large subset 
@@ -92,6 +92,9 @@ ln -s %_javadocdir/%name %buildroot%_docdir/%name/doc/api
 %_javadocdir/%name
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt4.cvs20100623_jpp7
+- NMU: fixed build
+
 * Mon Mar 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.0-alt3.cvs20100623_jpp7
 - Fixed build with java7 (thnx viy@)
 
