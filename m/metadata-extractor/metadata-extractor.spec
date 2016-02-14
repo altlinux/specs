@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           metadata-extractor
 Version:        2.3.1
-Release:        alt1_11jpp7
+Release:        alt1_11jpp8
 Summary:        JPEG metadata extraction framework
 
 Group:          Development/Java
@@ -69,7 +69,8 @@ sed -i 's/depends="clean, compile, test"/depends="clean, compile"/' build.xml
 
 
 %build
-ant dist-binaries javadoc
+ant dist-binaries 
+#javadoc
 
 
 %install
@@ -85,8 +86,8 @@ popd
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -rp javadoc/*  \
-  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+#cp -rp javadoc/*  \
+#  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 #javadoc alias
 pushd $RPM_BUILD_ROOT%{_javadocdir}
@@ -100,12 +101,15 @@ popd
 %doc ChangeLog.txt
 
 
-%files javadoc
-%{_javadocdir}/%{name}
-%{_javadocdir}/%{name}-%{version}
+#%files javadoc
+#%{_javadocdir}/%{name}
+#%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_11jpp8
+- fixed build with java8
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_11jpp7
 - new release
 
