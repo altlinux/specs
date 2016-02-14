@@ -1,11 +1,14 @@
 Epoch: 0
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_15jpp8
+Release:	alt2_16jpp8
 Summary:	Compile and link task for ant
 
 License:	ASL 2.0
@@ -66,27 +69,18 @@ cp -p %{SOURCE1} ./README.fedora
 # Place a file into ant's config dir
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/
 echo "ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
-# jpp compat
-ln -s ant/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-%add_to_maven_depmap ant-contrib %{name} %{namedversion} JPP %{name}
-
-# poms
-install -D -m 644 pom.xml $RPM_BUILD_ROOT%_mavenpomdir/JPP-%{name}.pom
-
 
 %files -f .mfiles
 %doc LICENSE NOTICE README.fedora
 %{_sysconfdir}/ant.d/%{name}
 
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/*
-%_mavenpomdir/*
-
-
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_16jpp8
+- updated gradle support
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_15jpp8
 - new version
 
