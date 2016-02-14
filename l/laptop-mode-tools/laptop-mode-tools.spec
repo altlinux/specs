@@ -1,6 +1,6 @@
 Name: 	  laptop-mode-tools
 Version:  1.68.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL
@@ -56,6 +56,9 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install ./i
 %_man8dir/*
 
 %changelog
+* Sun Feb 14 2016 Andrey Cherepanov <cas@altlinux.org> 1.68.1-alt2
+- Bump release number to correct upgrade from Autoimports to Sisyphus
+
 * Sun Jan 31 2016 Andrey Cherepanov <cas@altlinux.org> 1.68.1-alt1
 - Inital build in Sisyphus
 
