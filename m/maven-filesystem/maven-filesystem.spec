@@ -1,11 +1,12 @@
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 Name: maven-filesystem
 Version: 0.01
 Summary: Maven 3 system repository architecture-dependent symlinks.
 License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Group: Development/Java
-Release: alt1
+Release: alt2
+BuildArch: noarch
 
 %description
 Maven is a software project management and comprehension tool. Based on the
@@ -27,5 +28,8 @@ ln -sf %_jnidir %buildroot/usr/share/maven/repository-jni/JPP
 /usr/share/maven/repository-jni/JPP
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2
+- rebuild with new _jnidir location
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - first build
