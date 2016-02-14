@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           saxon8
 Version:        B.8.7
-Release:	alt3_4jpp6
+Release:	alt4_4jpp6
 Epoch:          0
 Summary:        Java  Basic XPath 2.0, XSLT 2.0, and XQuery 1.0 implementation
 License:        MPL
@@ -214,11 +214,12 @@ Utility scripts for %{name}.
 %{_bindir}/find . -name '*.exe' -o -name  '*.jar' | %{_bindir}/xargs -t %{__rm}
 
 %build
+export LANG=en_US
 export CLASSPATH=$(build-classpath xml-commons-apis jdom bea-stax-api)
 %if %with xom
 export  CLASSPATH=$CLASSPATH:$(build-classpath xom)
 %endif
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 \
   -Dj2se.javadoc=%{_javadocdir}/java \
   -Djdom.javadoc=%{_javadocdir}/jdom
 
@@ -264,6 +265,7 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
 #%{__ln_s} %{_sysconfdir}/alternatives \
 #  %{buildroot}%{_javadir}/jaxp_parser_impl.jar
 
+%if 0
 # maven
 %add_to_maven_depmap net.sf.saxon saxon %{version} JPP %{stdname}
 %{__install} -D -p -m 0644 %{SOURCE6} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}.pom
@@ -279,6 +281,7 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
 %endif
 %add_to_maven_depmap net.sf.saxon saxon-xpath %{version} JPP %{stdname}-xpath
 %{__install} -D -p -m 0644 %{SOURCE11} %{buildroot}%{_mavenpomdir}/JPP-%{stdname}-xpath.pom
+%endif
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
@@ -292,8 +295,6 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %_altdir/jaxp_transform_impl_%{name}
 %{_javadir}/%{stdname}.jar
 %{_javadir}/%{stdname}-%{version}.jar
-%{_mavenpomdir}/JPP-%{stdname}.pom
-%{_mavendepmapfragdir}/%{name}
 %exclude %{_javadir}/jaxp_transform_impl.jar
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
@@ -303,7 +304,6 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files xpath
 %{_javadir}/%{stdname}-xpath*
-%{_mavenpomdir}/JPP-%{stdname}-xpath.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-xpath*
 %endif
@@ -311,7 +311,6 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %if %with xom
 %files xom
 %{_javadir}/%{stdname}-xom*
-%{_mavenpomdir}/JPP-%{stdname}-xom.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-xom*
 %endif
@@ -319,21 +318,18 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 
 %files sql
 %{_javadir}/%{stdname}-sql*
-%{_mavenpomdir}/JPP-%{stdname}-sql.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-sql*
 %endif
 
 %files jdom
 %{_javadir}/%{stdname}-jdom*
-%{_mavenpomdir}/JPP-%{stdname}-jdom.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-jdom*
 %endif
 
 %files dom
 %{_javadir}/%{stdname}-dom*
-%{_mavenpomdir}/JPP-%{stdname}-dom.pom
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{stdname}-dom*
 %endif
@@ -356,6 +352,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %attr(0644,root,root) %{_mandir}/man1/%{stdname}q.1*
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:B.8.7-alt4_4jpp6
+- fixed build
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:B.8.7-alt3_4jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
