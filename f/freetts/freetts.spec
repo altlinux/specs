@@ -1,7 +1,7 @@
 
 Name: freetts
 Version: 1.2.1
-Release: alt3
+Release: alt3.1
 BuildArch: noarch
 License: Custom, see license.terms for further information
 Group: Development/Java
@@ -16,7 +16,7 @@ Source1: jsapi_license.txt
 Patch0: %name-1.2.1-alt-confirm.patch
 
 # Automatically added by buildreq on Thu Sep 11 2008
-BuildRequires: ant jakarta-commons-logging log4j sharutils unzip xalan-j2
+BuildRequires: ant apache-commons-logging log4j sharutils unzip xalan-j2
 
 BuildRequires: java-devel-default
 
@@ -115,6 +115,9 @@ cd ..
 
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt3.1
+- NMU: corrected java BuildRequires.
+
 * Mon Oct 27 2008 Michael Pozhidaev <msp@altlinux.ru> 1.2.1-alt3
 - Added java-devel-default
 
