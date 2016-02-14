@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           glassfish-javamail
 Version:        1.4.0
-Release:        alt3_5jpp6
+Release:        alt4_5jpp6
 Epoch:          0
 Summary:        Glassfish - JavaMail API
 License:        CDDL
@@ -106,7 +106,7 @@ can be extracted through rpm2cpio.
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Djavaee.jar=$(build-classpath glassfish-jaf) release
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 -Djavaee.jar=$(build-classpath glassfish-jaf) release ||:
 
 %install
 
@@ -119,12 +119,12 @@ install -m 644 build/release/lib/mailapi.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/
 install -m 644 build/release/lib/pop3.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/pop3-%{version}.jar
 install -m 644 build/release/lib/smtp.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/smtp-%{version}.jar
 
-%add_to_maven_depmap javax.mail mail %{version} JPP %{name}-monolithic
-%add_to_maven_depmap javax.mail dsn %{version} JPP/%{name} dsn
-%add_to_maven_depmap javax.mail imap %{version} JPP/%{name} imap
-%add_to_maven_depmap javax.mail mailapi %{version} JPP/%{name} mailapi
-%add_to_maven_depmap javax.mail pop3 %{version} JPP/%{name} pop3
-%add_to_maven_depmap javax.mail smtp %{version} JPP/%{name} smtp
+#add_to_maven_depmap javax.mail mail %{version} JPP %{name}-monolithic
+#add_to_maven_depmap javax.mail dsn %{version} JPP/%{name} dsn
+#add_to_maven_depmap javax.mail imap %{version} JPP/%{name} imap
+#add_to_maven_depmap javax.mail mailapi %{version} JPP/%{name} mailapi
+#add_to_maven_depmap javax.mail pop3 %{version} JPP/%{name} pop3
+#add_to_maven_depmap javax.mail smtp %{version} JPP/%{name} smtp
 
 pushd $RPM_BUILD_ROOT%{_javadir}
 ln -sf %{name}-monolithic-%{version}.jar %{name}.jar
@@ -158,31 +158,10 @@ mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr build/release/docs/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %with repolib
-install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-sed -i "s/@VERSION@/%{version}-brew/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-install -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{repodirsrc}
-install -m 644 %{PATCH0} $RPM_BUILD_ROOT%{repodirsrc}
-cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}.jar $RPM_BUILD_ROOT%{repodirlib}/mail.jar
-%endif
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/javamail_%{name}<<EOF
 %{_javadir}/javamail.jar	%{_javadir}/%{name}-monolithic-%{version}.jar	10100
 EOF
 
-%if %with repolib
-%define compatrepodir %{_javadir}/repository.jboss.com/glassfish/javamail/%{version}-brew
-install -d -m 755 $RPM_BUILD_ROOT%{compatrepodir}/
-ln -s $(relative %{repodir}/lib %{compatrepodir}/lib) $RPM_BUILD_ROOT%{compatrepodir}/lib
-ln -s $(relative %{repodir}/src %{compatrepodir}/src) $RPM_BUILD_ROOT%{compatrepodir}/src
-cp -a $RPM_BUILD_ROOT%{repodir}/component-info.xml $RPM_BUILD_ROOT%{compatrepodir}/component-info.xml
-sed -i s,sun-javamail,glassfish/javamail, $RPM_BUILD_ROOT%{compatrepodir}/component-info.xml
-%endif
 
 %files
 %_altdir/javamail_%{name}
@@ -190,8 +169,8 @@ sed -i s,sun-javamail,glassfish/javamail, $RPM_BUILD_ROOT%{compatrepodir}/compon
 %{_javadir}/%{name}-monolithic-%{version}.jar
 %{_javadir}/%{name}-monolithic.jar
 %{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+#%{_mavenpomdir}/*
+#%{_mavendepmapfragdir}/*
 %{_javadir}/%{name}
 %exclude %{_javadir}/javamail.jar
 
@@ -199,12 +178,10 @@ sed -i s,sun-javamail,glassfish/javamail, $RPM_BUILD_ROOT%{compatrepodir}/compon
 %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
-
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt4_5jpp6
+- fixed build
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:1.4.0-alt3_5jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
