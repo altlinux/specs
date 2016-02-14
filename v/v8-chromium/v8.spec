@@ -8,7 +8,7 @@
 
 Name:    v8-chromium
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
-Release: alt1
+Release: alt2
 
 Summary: V8 is Google's open source JavaScript engine.
 License: BSD
@@ -42,17 +42,20 @@ License: BSD
 Group:   System/Libraries
 Provides: %libname = %version
 Provides: %libname = %MAJOR_VERSION.%MINOR_VERSION
-Obsoletes: libv8-4.3
-Obsoletes: libv8-4.4
-Obsoletes: libv8-4.5
-Conflicts: libv8-4.3
-Conflicts: libv8-4.4
-Conflicts: libv8-4.5
 
 %description -n lib%name
 V8 is Google's open source JavaScript engine. V8 is written in C++ and
 is used in Google Chrome, the open source browser from Google. V8
 implements ECMAScript as specified in ECMA-262, 5rd edition.
+
+%package -n lib%name-bin
+Summary: Bin files for Google's JavaScript Engine
+License: BSD
+Group:   System/Libraries
+Requires: lib%name = %version-%release
+
+%description -n lib%name-bin
+Bin files for Google's JavaScript Engine
 
 %package -n lib%name-devel
 Group:   Development/C++
@@ -119,6 +122,9 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %files -n lib%name
 %doc AUTHORS ChangeLog LICENSE LICENSE.*
 %_libdir/*.so.*
+
+%files -n lib%name-bin
+%dir %_libdir/v8
 %_libdir/v8/*.bin
 
 %files -n lib%name-devel
@@ -127,6 +133,10 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Sun Feb 14 2016 Andrey Cherepanov <cas@altlinux.org> 4.8.271.19-alt2
+- Remove obsoletes and conflicts (ALT #31782)
+- Package .bin files in separate package libv8-chromium-bin
+
 * Wed Feb 10 2016 Andrey Cherepanov <cas@altlinux.org> 4.8.271.19-alt1
 - New version for chromium-48.0.2564.109
 
