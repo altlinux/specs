@@ -1,5 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +13,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-jaxws-2.2-api
 Version:          2.0.2
-Release:          alt2_0.8.20120507gitd6937fjpp8
+Release:          alt2_0.11.20120507gitd6937fjpp8
 Summary:          Java API for XML-Based Web Services 2.2
-Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
 URL:              http://www.jboss.org/
 
@@ -26,22 +26,15 @@ Source0:          %{name}-%{namedversion}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-source-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    jboss-specs-parent
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
 Source44: import.info
 
 %description
 Java API for XML-Based Web Services 2.2 classes.
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -50,6 +43,9 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n %{name}
 
+# Unneeded plugin
+%pom_remove_plugin :maven-source-plugin
+
 %build
 %mvn_build
 
@@ -57,8 +53,6 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
-
 %doc src/main/resources/LICENSE.txt
 %doc src/main/resources/NOTE.txt
 
@@ -67,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc src/main/resources/NOTE.txt
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_0.11.20120507gitd6937fjpp8
+- updated gradle support
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2_0.8.20120507gitd6937fjpp8
 - new version
 
