@@ -30,7 +30,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           javapackages-tools
 Version:        4.6.0
-Release:        alt8_12jpp8
+Release:        alt9_12jpp8
 
 Summary:        Macros and scripts for Java packaging support
 
@@ -197,7 +197,7 @@ This package provides non-essential macros and scripts to support Java packaging
 
 %prep
 %setup -q -n javapackages-%{version}
-%patch0 -p1
+#patch0 -p1
 %patch1 -p1
 
 sed -i '/fedora-review/d' install
@@ -289,6 +289,9 @@ popd
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt9_12jpp8
+- temporatily disabled gradle patch
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.6.0-alt8_12jpp8
 - %%_jnidir set to /usr/lib/java
 
