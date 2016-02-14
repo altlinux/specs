@@ -38,7 +38,7 @@ BuildRequires: unzip
 Summary:        Java XSLT processor
 Name:           saxon6
 Version:        6.5.5
-Release:        alt5_3jpp6
+Release:        alt6_3jpp6
 Epoch:          0
 License:        MPL
 Group:          Development/Java
@@ -162,6 +162,7 @@ cp -p build/lib/%{oldname}-aelfred.jar \
 cp -p build/lib/%{oldname}-jdom.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}-jdom.jar
 
+%if 0
 # poms
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 644 %{SOURCE4} \
@@ -173,6 +174,7 @@ install -m 644 %{SOURCE5} \
 install -m 644 %{SOURCE6} \
          $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-jdom.pom
 %add_to_maven_depmap %{oldname} %{oldname}-jdom %{version} JPP %{name}
+%endif
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -202,8 +204,6 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %files
 %_altdir/jaxp_transform_impl_saxon6
 %{_javadir}/%{name}.jar
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
 %files aelfred
 %{_javadir}/%{name}-aelfred*
@@ -226,6 +226,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %attr(0644,root,root) %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0:6.5.5-alt6_3jpp6
+- fixed build
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:6.5.5-alt5_3jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
