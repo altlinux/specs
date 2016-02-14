@@ -1,5 +1,6 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
@@ -12,9 +13,8 @@ BuildRequires: jpackage-generic-compat
 
 Name:             jboss-iiop-client
 Version:          1.0.0
-Release:          alt2_10jpp8
+Release:          alt2_13jpp8
 Summary:          JBoss IIOP Client
-Group:            Development/Java
 License:          LGPLv2+
 URL:              http://www.jboss.org/jbossiiop
 Source0:          https://github.com/jbossas/jboss-iiop-client/archive/1.0.0.Final.tar.gz
@@ -22,30 +22,19 @@ Source0:          https://github.com/jbossas/jboss-iiop-client/archive/1.0.0.Fin
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
-BuildRequires:    jboss-ejb-3.1-api
-BuildRequires:    jboss-parent
-BuildRequires:    maven-surefire-provider-junit
-BuildRequires:    junit
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.jboss:jboss-parent:pom:)
+BuildRequires:    mvn(org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec)
 Source44: import.info
+
 
 %description
 Client library for EJB applications working against JBoss AS using
 the IIOP protocol
 
 %package javadoc
-Summary:          Javadocs for %{name}
-Group:            Development/Java
+Group: Development/Java
+Summary:          Javadoc for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -61,11 +50,13 @@ This package contains the API documentation for %{name}.
 %mvn_install
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_13jpp8
+- updated gradle support
+
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_10jpp8
 - java 8 mass update
 
