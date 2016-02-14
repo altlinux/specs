@@ -1,24 +1,35 @@
-Name: gpars
-Version: 1.2.1
-Summary: Groovy Parallel Systems
-License: ASL 2.0 and Public Domain
-Url: http://gpars.codehaus.org
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: gpars = 1.2.1-4.fc23
-Provides: mvn(org.codehaus.gpars:gpars) = 1.2.1
-Provides: mvn(org.codehaus.gpars:gpars:pom:) = 1.2.1
-Requires: java-headless
-Requires: jpackage-utils
-Requires: mvn(org.codehaus.groovy:groovy-all)
-Requires: mvn(org.codehaus.jcsp:jcsp)
-Requires: mvn(org.codehaus.jsr166-mirror:extra166y)
-Requires: mvn(org.jboss.netty:netty:3)
-Requires: mvn(org.multiverse:multiverse-core)
-
-BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
-Source: gpars-1.2.1-4.fc23.cpio
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+Name:           gpars
+Version:        1.2.1
+Release:        alt1_4jpp8
+Summary:        Groovy Parallel Systems
+License:        ASL 2.0 and Public Domain
+URL:            http://gpars.codehaus.org
+BuildArch:      noarch
+
+# ./generate-tarball.sh %{version}
+Source0:        %{name}-%{version}.tar.bz2
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
+Source2:        generate-tarball.sh
+
+Patch0:         0001-JSR-166.patch
+Patch1:         0002-Enable-XMvn-local-mode.patch
+Patch2:         0001-Port-build-script-to-current-gradle.patch
+
+BuildRequires:  gradle-local >= 2.1
+BuildRequires:  apache-parent
+BuildRequires:  extra166y
+BuildRequires:  jcsp
+BuildRequires:  netty3
+BuildRequires:  groovy-lib
+BuildRequires:  multiverse
+Source44: import.info
 
 %description
 The GPars framework offers Java developers intuitive and safe ways to
@@ -32,24 +43,36 @@ mutually cooperating high-level concurrency abstractions, such as
 Dataflow operators, Promises, CSP, Actors, Asynchronous Functions,
 Agents and Parallel Collections.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+cp %{SOURCE1} .
+rm -rf lib/ gradle/wrapper/
+rm -rf src/main/groovy/groovyx/gpars/extra166y/
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+gradle-local -s install --offline
+
+repo=$HOME/.m2/repository
+pom=$repo/org/codehaus/gpars/gpars/%{version}/gpars-%{version}.pom
+jar=$repo/org/codehaus/gpars/gpars/%{version}/gpars-%{version}.jar
+%mvn_artifact $pom $jar
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+%mvn_install
 
-
-%files -f %name-list
+%files -f .mfiles
+%dir %{_javadir}/%{name}
+%dir %{_mavenpomdir}/%{name}
+%doc LICENSE-2.0.txt
+%doc README.md
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_4jpp8
+- unbootstrap build
+
 * Fri Jan 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
