@@ -1,5 +1,5 @@
 Name: ca-certificates
-Version: 2015.08.04
+Version: 2015.10.29
 Release: alt1
 
 Summary: Common CA Certificates
@@ -41,11 +41,21 @@ cat {mozilla,alt}/crt >ca-bundle.crt
 
 %install
 install -pDm644 ca-bundle.crt %buildroot%_datadir/%name/ca-bundle.crt
+mkdir -p %{buildroot}%_sysconfdir/pki/tls/certs
+ln -s %_datadir/%name/ca-bundle.crt %{buildroot}%_sysconfdir/pki/tls/certs
 
 %files
+%dir %_sysconfdir/pki/tls
+%dir %_sysconfdir/pki/tls/certs
+%_sysconfdir/pki/tls/certs/*
 %_datadir/%name
 
 %changelog
+* Sun Feb 14 2016 L.A. Kostis <lakostis@altlinux.ru> 2015.10.29-alt1
+- mozilla: updated to October 2015 batch root CA changes
+  (#bmo 1214729).
+- added /etc/pki/tls/certs dir (closes: #31213).
+
 * Fri Aug 28 2015 L.A. Kostis <lakostis@altlinux.ru> 2015.08.04-alt1
 - mozilla/certdata.txt: updated ca-certificates to v2.5.
 - mozilla/mk-ca-bundle.pl:
