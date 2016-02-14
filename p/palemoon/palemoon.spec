@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.1.0
-Release: alt1.1.fc37
+Release: alt2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -78,7 +78,7 @@ These helper macros provide possibility to rebuild
 %setup -n %name-%version -c
 %patch21 -p1
 %patch20 -p1
-%patch23 -p1
+#patch23 -p1
 
 cd %name
 
@@ -96,6 +96,7 @@ tar -xf %SOURCE2
 popd
 
 #patch22 -p1
+%patch23 -p1
 
 
 #patch5  -p1
@@ -310,6 +311,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Feb 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt2
+- New Version
+
 * Fri Feb 12 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt1.1.fc37
 - Update from git
 = Remove rpm-build-mozilla.org from deps  ( Bug #31791 )
