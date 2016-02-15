@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ne
 Summary: Nepali hunspell dictionaries
 Version: 20080425
-Release: alt2_11
+Release: alt2_12
 Source: http://nepalinux.org/downloads/ne_NP_dict.zip
 Group: Text tools
 URL: http://nepalinux.org/downloads
@@ -44,6 +44,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 20080425-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20080425-alt2_11
 - update to new release by fcimport
 
