@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ln
 Summary: Lingala hunspell dictionaries
 Version: 0.02
-Release: alt2_9
+Release: alt2_10
 Group: Text tools
 Source: http://downloads.sourceforge.net/lingala/hunspell-ln-0.02.zip
 URL: http://lingala.sourceforge.net/
@@ -30,6 +30,9 @@ cp -p ln_CD.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_9
 - update to new release by fcimport
 
