@@ -2,7 +2,7 @@ Name: mythes-mi
 Summary: Maori thesaurus
 %define upstreamid 20080630
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_12
 Source: http://packages.papakupu.maori.nz/mythes/mythes-mi-0.1.%{upstreamid}-beta.tar.gz
 Group: Text tools
 URL: http://papakupu.maori.nz/
@@ -29,6 +29,9 @@ cp -p mi.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_mi_NZ_v2.idx
 %{_datadir}/mythes/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt1_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt1_11
 - update to new release by fcimport
 
