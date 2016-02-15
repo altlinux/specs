@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(Shell.pm)
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(Shell.pm)
 # END SourceDeps(oneline)
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt2_15
+Release:  alt2_16
 Summary: 2D air combat game
 
 Group: Games/Other
@@ -85,6 +85,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_15
 - update to new release by fcimport
 
