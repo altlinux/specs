@@ -5,7 +5,7 @@ Name: hunspell-br
 Summary: Breton hunspell dictionaries
 #Epoch: 1
 Version: 0.8
-Release: alt1_7
+Release: alt1_8
 Group: Text tools
 URL: http://www.drouizig.org/
 Source: http://extensions.services.openoffice.org/e-files/2207/6/dict-br_0.8.oxt
@@ -33,6 +33,9 @@ cp -p dictionaries/br_FR.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_7
 - update to new release by fcimport
 
