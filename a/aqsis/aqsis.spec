@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ python-devel swig
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ python-devel swig
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_21
+Release:	alt2_22
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -26,7 +26,7 @@ BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flex >= 2.5.4
-BuildRequires:  libfltk-devel >= 1.1.0 libfltk-devel
+BuildRequires:  libfltk-devel >= 1.1.0, libfltk-devel
 BuildRequires:  libjpeg-devel
 BuildRequires: libtiffxx-devel libtiff-devel
 BuildRequires:  libpng-devel
@@ -37,8 +37,8 @@ BuildRequires:  openexr-devel
 BuildRequires:  python-module-sphinx
 BuildRequires:  zlib-devel >= 1.1.4
 
-Requires: aqsis-core = %{version}-%{release}
-Requires: aqsis-data = %{version}-%{release}
+Requires: aqsis-core = %{version}
+Requires: aqsis-data = %{version}
 Source44: import.info
 
 
@@ -51,7 +51,7 @@ This package contains graphical utilities and desktop integration.
 
 
 %package core
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs = %{version}
 Summary:	Command-line tools for Aqsis Renderer
 Group:		Video
 
@@ -78,7 +78,7 @@ This package contains the shared libraries for Aqsis Renderer.
 
 
 %package data
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}
 Summary:	Example content for Aqsis Renderer
 Group:		Video
 BuildArch:      noarch
@@ -94,10 +94,10 @@ scenes, procedurals and shaders.
 
 
 %package devel
-Requires:	%{name} = %{version}-%{release}
-Requires:	aqsis-core = %{version}-%{release}
-Requires:	aqsis-libs = %{version}-%{release}
-Requires:	aqsis-data = %{version}-%{release}
+Requires:	%{name} = %{version}
+Requires:	aqsis-core = %{version}
+Requires:	aqsis-libs = %{version}
+Requires:	aqsis-data = %{version}
 Summary:	Development files for Aqsis Renderer
 Group:		Development/C
 
@@ -172,17 +172,6 @@ desktop-file-install --vendor "" --delete-original \
   $RPM_BUILD_ROOT%{_datadir}/applications/piqsl.desktop
 
 
-%post
-/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
-
-
-%postun
-if [ $1 -eq 0 ] ; then
-  /bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
-
-
-fi
-
 %files
 %doc AUTHORS README
 %doc COPYING
@@ -240,6 +229,9 @@ fi
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_22
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_21
 - update to new release by fcimport
 
