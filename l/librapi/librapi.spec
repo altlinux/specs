@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/pyrexc gcc-c++ pkgconfig(dbus-1) pkgconfig(dbus-glib-1) python-devel
+BuildRequires: /usr/bin/pyrexc gcc-c++ pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(libsynce) python-devel
 # END SourceDeps(oneline)
-%define fedora 22
+%add_optflags %optflags_shared
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:           librapi
 Version:        0.15.2
-Release:        alt2_7
+Release:        alt2_10
 Summary:        Library to connect to Pocket PC devices
 
 Group:          System/Libraries
@@ -19,9 +19,6 @@ Patch0:         librapi2-dso.patch
 BuildRequires:  libsynce-devel >= 0.15.1
 BuildRequires:  python-module-Pyrex
 BuildRequires:  libdbus-devel libdbus-glib-devel
-%if 0%{?fedora} < 16
-BuildRequires:  hal-devel
-%endif
 BuildRequires:  libudev-devel
 BuildRequires:  libtool
 
@@ -40,7 +37,7 @@ running on the computer using librapi.
 %package devel
 Summary: Development libraries and header files for librapi
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 Requires: pkgconfig
 
 %description devel
@@ -49,7 +46,7 @@ This package contains the header files and link libraries for librapi
 %package -n python-module-rapi
 Summary: Python bindings to librapi (part of SynCE)
 Group: Development/Python
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 
 %description -n python-module-rapi
 This package contains the python bindings to librapi, a component
@@ -61,11 +58,14 @@ The python module to import is named "pyrapi2"
 %setup -q -n librapi2-%{version}
 %patch0
 
+# Prevent configure from killing CFLAGS
+sed -i -e 's,^\(CFLAGS=\"\"\),#\1,' configure*
+# Fix up timestamps to avoid re-running autotools
+touch -r aclocal.m4 configure*
+
 %build
 %configure \
-%if 0%{?fedora} >= 16
 --disable-hal-support \
-%endif
 --enable-udev-support \
 --disable-static --disable-rpath
 make LIBTOOL=/usr/bin/libtool %{?_smp_mflags}
@@ -94,6 +94,9 @@ rm -f $RPM_BUILD_ROOT%{python_sitelibdir}/pyrapi2.{la,a}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_10
+- update to new release by fcimport
+
 * Tue Nov 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_7
 - rebuild
 
