@@ -3,7 +3,7 @@
 Summary: Hebrew dictionary for Aspell
 Name: aspell-%{lang}
 Version: 1.0
-Release: alt2_14
+Release: alt2_15
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -41,6 +41,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14
 - update to new release by fcimport
 
