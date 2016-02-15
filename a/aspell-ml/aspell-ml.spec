@@ -1,21 +1,20 @@
-%define lang ml
-%define langrelease 1
+Group: Text tools
+%global lang ml
+%global langrelease 1
 
 Name: aspell-%{lang}
 Version: 0.03
-Release: alt2_12
+Release: alt2_13
 Summary: GNU Aspell Malayalam Dictionary Package
 
-Group: Text tools
 License: GPLv3+
 URL: http://aspell.net/
 Source0: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell6-%{lang}-%{version}-%{langrelease}.tar.bz2
 
-
 Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
-%define debug_package %{nil}
+%global debug_package %{nil}
 Source44: import.info
 
 %description
@@ -45,11 +44,15 @@ make %{?_smp_mflags}
 make install DESTDIR=$RPM_BUILD_ROOT
 
 %files
-%doc COPYING Copyright README
+%doc Copyright README
+%doc COPYING
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_12
 - update to new release by fcimport
 
