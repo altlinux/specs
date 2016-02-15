@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
+BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind pkgconfig(flac) pkgconfig(oggz) pkgconfig(sndfile) pkgconfig(speex) pkgconfig(vorbis) pkgconfig(vorbisenc)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -31,7 +31,8 @@ and Ogg Vorbis files.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -41,7 +42,7 @@ developing applications that use %{name}.
 Summary:        Documentation for %{name}
 Group:          Documentation
 # note: intentionally not noarch; contains a target-specific Makefile
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    doc
 The %{name}-doc package contains the documentation for %{name}.
@@ -49,7 +50,7 @@ The %{name}-doc package contains the documentation for %{name}.
 %package        tools
 Summary:        Sample programs bundled with %{name}
 Group:          Sound
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    tools
 The %{name}-tools package contains sample programs that use %{name}.
@@ -107,6 +108,9 @@ mv src/examples .
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_10
 - update to new release by fcimport
 
