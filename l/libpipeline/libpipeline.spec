@@ -1,16 +1,19 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(check)
+# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %global gnulib_ver 20140202
 
 Summary: A pipeline manipulation library
 Name: libpipeline
 Version: 1.4.1
-Release: alt1_1
+Release: alt1_2
 License: GPLv3+
 Group: Development/C
 URL: http://libpipeline.nongnu.org/
 Source: http://download.savannah.gnu.org/releases/libpipeline/libpipeline-%{version}.tar.gz
 
-BuildRequires: libtool libcheck-devel
+BuildRequires: libtool, libcheck-devel
 
 # FPC exception for gnulib - copylib - https://fedorahosted.org/fpc/ticket/174
 Provides: bundled(gnulib) = %{gnulib_ver}
@@ -26,7 +29,8 @@ and execve(2).
 %package devel
 Summary: Header files and libraries for pipeline manipulation library
 Group: Development/C
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}
+Requires: pkgconfig
 
 %description devel
 libpipeline-devel contains the header files and libraries needed
@@ -59,6 +63,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1_1
 - update to new release by fcimport
 
