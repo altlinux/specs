@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/pkg-config gcc-c++
 %add_optflags %optflags_shared
 Name:		libvidcap
 Version:	0.2.1
-Release:	alt1_14
+Release:	alt1_15
 Summary:	Cross-platform video capture library
 Group:		System/Libraries
 License:	LGPLv2+
@@ -20,7 +20,8 @@ capture devices.
 %package devel
 Summary:	Development files for %{name}
 Group:		Development/Perl
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}
+Requires:	pkgconfig
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -47,6 +48,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_includedir}/vidcap/
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_14
 - update to new release by fcimport
 
