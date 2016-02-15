@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsilc-deve
 Summary: SILC Client Library
 Name:    libsilc
 Version: 1.1.10
-Release: alt3_14
+Release: alt3_15
 License: GPLv2 or BSD
 Group:   System/Libraries
 URL:     http://www.silcnet.org/
@@ -14,7 +14,7 @@ Patch0:  silc-toolkit-1.1-wordsize.patch
 Patch1:  silc-toolkit-1.1.5-docinst.patch
 Patch2:  silc-toolkit-1.1.10-libs.patch
 BuildRequires: libidn-devel
-BuildRequires: libtool autoconf automake
+BuildRequires: libtool, autoconf, automake
 
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 Source44: import.info
@@ -28,7 +28,8 @@ secure conferencing services on the Internet over insecure channel.
 %package devel
 Summary: Headers and shared libraries for %{name}
 Group:   Development/C
-Requires: libsilc = %{version}-%{release}
+Requires: libsilc = %{version}
+Requires: pkgconfig
 
 %description devel
 The SILC Toolkit development libraries and headers. Required for building
@@ -53,7 +54,7 @@ applications.
 autoreconf -f -i
 %configure --libdir=%{_libdir} --enable-shared --without-libtoolfix \
            --includedir=%{_includedir}/silc --with-simdir=%{_libdir}/silc/modules \
-           --docdir="%{_pkgdocdir}" CFLAGS="$RPM_OPT_FLAGS"
+           --docdir="%{_docdir}/%{name}" CFLAGS="$RPM_OPT_FLAGS"
 
 # WARNING! smp flags cause bad binaries!
 make
@@ -67,7 +68,7 @@ chmod 0755 ${RPM_BUILD_ROOT}%{_libdir}/lib* ${RPM_BUILD_ROOT}%{_libdir}/silc/mod
 
 # move doc files that would be deleted by rpm
 mkdir docinst
-mv $RPM_BUILD_ROOT%{_pkgdocdir}/{toolkit,tutorial} docinst/
+mv $RPM_BUILD_ROOT%{_docdir}/%{name}/{toolkit,tutorial} docinst/
 # fix encoding of zlib.html
 mv docinst/toolkit/zlib.html docinst/toolkit/zlib.html.orig
 iconv -f iso-8859-15 -t utf8 -o docinst/toolkit/zlib.html docinst/toolkit/zlib.html.orig
@@ -91,8 +92,8 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 [ -d $RPM_BUILD_ROOT%{_libdir}/silc/modules ]
 
 %files
-%{_pkgdocdir}
-%exclude %{_pkgdocdir}/INSTALL
+%{_docdir}/%{name}
+%exclude %{_docdir}/%{name}/INSTALL
 %{_libdir}/libsilc-1.1.so.*
 %{_libdir}/libsilcclient-1.1.so.*
 %dir %_libdir/silc
@@ -115,6 +116,9 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt3_14
 - update to new release by fcimport
 
