@@ -1,6 +1,6 @@
 Name:           ascii
 Version:        3.8
-Release:        alt2_9
+Release:        alt2_10
 URL:            http://www.catb.org/~esr/ascii/
 Source0:        http://www.catb.org/~esr/ascii/ascii-3.8.tar.gz
 Patch1:         ascii-3.8-makefile.patch
@@ -37,6 +37,9 @@ cp ascii.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 %doc README COPYING
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.8-alt2_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.8-alt2_9
 - update to new release by fcimport
 
