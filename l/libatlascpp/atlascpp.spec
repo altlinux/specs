@@ -5,7 +5,7 @@ BuildRequires: bzlib-devel gcc-c++
 %define oldname atlascpp
 Name:           libatlascpp
 Version:        0.6.3
-Release:        alt1_5
+Release:        alt1_6
 Summary:        WorldForge message protocol library
 
 Group:          Development/C++
@@ -30,7 +30,7 @@ message encode and decode and the overlying Objects layer.
 %package devel
 Summary:        Development files for Atlas-C++
 Group:   Development/C++
-Requires: %{name} = %{version}-%{release}
+Requires: pkgconfig %{oldname} = %{version}
 Provides: atlascpp-devel = %{version}-%{release}
 # Atlas-C++ includes simple tutorial that uses skstream
 
@@ -81,6 +81,9 @@ make %{?_smp_mflags} check
 %{_mandir}/man3/Atlas*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1_5
 - update to new release by fcimport
 
