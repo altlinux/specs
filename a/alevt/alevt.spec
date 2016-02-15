@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Proc/Simple.pm) perl(Tk.pm)
+BuildRequires: /usr/bin/desktop-file-install perl(Proc/Simple.pm) perl(Tk.pm)
 # END SourceDeps(oneline)
 Name: alevt
 Version: 1.6.2
-Release: alt2_25
+Release: alt2_26
 Summary: Teletext decoder/browser
 Group: Video
 License: GPLv2
@@ -63,6 +63,9 @@ desktop-file-install \
 %doc README CHANGELOG COPYRIGHT
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_26
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_25
 - update to new release by fcimport
 
