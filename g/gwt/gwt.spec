@@ -1,6 +1,6 @@
 Name: gwt
 Version: 2.5.1
-Release: alt2
+Release: alt3
 Summary: Google Web Toolkit
 Group: Development/Java
 License: ASL 2.0
@@ -84,6 +84,9 @@ ln -s %name-%version %buildroot%_javadocdir/%name
 %_javadocdir/%name
 
 %changelog
+* Mon Feb 15 2016 Konstantin Artyushkin <akv@altlinux.org> 2.5.1-alt3
+- fix symlink for new destination of jcommon.jar
+
 * Sun Oct 11 2015 Konstantin Artyushkin <akv@altlinux.org> 2.5.1-alt2
 - initial build for ALT Linux Sisyphus
 - import from ROSA 2014
