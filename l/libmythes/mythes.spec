@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ pkgconfig(hunspell)
 # END SourceDeps(oneline)
 %define oldname mythes
 Name:      libmythes
 Summary:   A thesaurus library
 Version:   1.2.4
-Release:   alt1_4
+Release:   alt1_5
 Source:    http://downloads.sourceforge.net/hunspell/%{oldname}-%{version}.tar.gz
 Group:     System/Libraries
 URL:       http://hunspell.sourceforge.net/
@@ -19,7 +19,7 @@ index file with binary search to look up words and phrases and return
 information on part of speech, meanings, and synonyms.
 
 %package devel
-Requires: libmythes = %{version}-%{release}
+Requires: libmythes = %{version}, pkgconfig
 Summary: Files for developing with mythes
 Group: Development/C
 
@@ -56,6 +56,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_4
 - update to new release by fcimport
 
