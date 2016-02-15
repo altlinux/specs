@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3) pkgconfig(wfmath-1.0)
+BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(sigc++-2.0) pkgconfig(skstream-0.3) pkgconfig(wfmath-1.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname eris
 Name:           liberis
 Version:        1.3.23
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/C++
@@ -34,7 +34,7 @@ quickly tie game objects to whatever output representation they are using.
 %package devel
 Summary:        Development files for Eris
 Group:          Development/C++
-Requires:       %{name} = %{version}-%{release}
+Requires:       pkgconfig %{oldname} = %{version}
 Provides: eris-devel = %{version}-%{release}
 
 
@@ -56,12 +56,6 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 # 2014-05-17 - Tests disabled because one of 42 failed, will work w/ upstream to fix
-%check
-# Run tests in debug mode so asserts won't be skipped
-#sed -i -e 's/-DNDEBUG/-DDEBUG/' test/Makefile
-#make %{?_smp_mflags} check
-
-
 %files
 %doc AUTHORS ChangeLog CHANGES-1.4 COPYING NEWS README TODO
 %{_libdir}/lib%{oldname}-1.3.so.*
@@ -74,6 +68,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-1.3.la
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.23-alt1_5
 - update to new release by fcimport
 
