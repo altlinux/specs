@@ -1,50 +1,55 @@
-Name: jgoodies-looks
-Version: 2.5.2
-Release: alt2
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
+BuildRequires: /proc
+BuildRequires: jpackage-generic-compat
+%global shortname looks
 
-License: BSD style
-Group: Development/Java
-Summary: JGoodies Looks is a library that makes your Swing applications and applets look better
+Name:           jgoodies-looks
+Version:        2.6.0
+Release:        alt1_3jpp8
+Summary:        Free high-fidelity Windows and multi-platform appearance
 
-Url: http://www.jgoodies.com/downloads/libraries.html
-Packager: Michael Pozhidaev <msp@altlinux.ru>
-
-Source: looks-%version.zip
-
-Patch0: %{name}-2.5.2-build.patch
-
-BuildRequires: rpm-build-java ant unzip
-BuildRequires: java-devel-default
+Group:          Development/Java
+License:        BSD
+URL:            http://www.jgoodies.com/freeware/looks/
+Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-%(tr "." "_" <<<%{version}).zip
 
 # Fontconfig and DejaVu fonts needed for tests
 BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
-BuildRequires:  jgoodies-common >= 1.4.0
+BuildRequires:  jgoodies-common >= 1.8.0
+BuildRequires:  jpackage-utils
 BuildRequires:  maven-local
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-surefire-provider-junit4
-Requires:       jgoodies-common >= 1.4.0
-
-
-BuildArch: noarch
+Requires:       jgoodies-common >= 1.8.0
+Requires:       jpackage-utils
+# JGoodies Looks <= 2.4.2 doesn't provide demo jars anymore
+Provides:       %{name}-demo = %{version}-%{release}
+Obsoletes:      %{name}-demo < 2.4.2
+BuildArch:      noarch
+Source44: import.info
 
 %description
-JGoodies Looks is a library that makes your Swing applications and applets look better. The package
-consists of a Windows look&feel and the Plastic look&feel family. These
-have been optimized for readability, precise micro-design and
-usability.
+The JGoodies look&feels make your Swing applications and applets look better.
+They have been optimized for readability, precise micro-design and usability.
+
 
 %package javadoc
-Summary: API documentation for %name
-Group: Development/Java
-Requires: java-common
+Summary:        Javadoc for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch: noarch
+
 %description javadoc
-Auto-generated API documentation for the %name.jar.
+This package contains the API documentation for %{name}.
+
 
 %prep
-%setup -q -n looks-%version
-%patch0 -p1 -b .build
+%setup -q
 
 # Unzip source and test files from provided JARs
 mkdir -p src/main/java/ src/test/java/
@@ -72,27 +77,28 @@ for file in LICENSE.txt RELEASE-NOTES.txt; do
   rm $file.orig
 done
 
+%mvn_file :%{name} %{name} %{name}
+
+
 %build
-mvn-rpmbuild install javadoc:aggregate 
+%mvn_build
+
 
 %install
-install -Dpm 0644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -Dpm 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-install -dm 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
-cp -a target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
+%mvn_install
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt README.html RELEASE-NOTES.txt
-%{_javadir}/%{name}.jar
-%{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}.pom
 
-%files javadoc
-%{_javadocdir}/%{name}/
+
+%files javadoc -f .mfiles-javadoc
+
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.0-alt1_3jpp8
+- new version
+
 * Fri Aug 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt2
 - NMU: BR: maven-local
 
