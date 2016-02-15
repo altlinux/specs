@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen
+BuildRequires: /usr/bin/doxygen pkgconfig(libthai)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sombok
-%define fedora 21
+%define fedora 23
 Name:           libsombok
 Version:        2.4.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Unicode Text Segmentation Package
 
 Group:          System/Libraries
@@ -37,7 +37,8 @@ Annex #29 (UAX #29).
 %package        devel
 Summary:        Development files for %{oldname}
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
+Requires:       pkgconfig
 Provides: sombok-devel = %{version}-%{release}
 
 %description    devel
@@ -74,6 +75,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_1
 - update to new release by fcimport
 
