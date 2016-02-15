@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 Name:           beneath-a-steel-sky-cd
 Version:        0.0372
-Release:        alt4_11
+Release:        alt4_12
 Summary:        Beneath a Steel Sky - Adventure Game - CD version
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -14,7 +14,7 @@ Source0:        http://sourceforge.net/projects/scummvm/files/extras/Beneath%%20
 Source1:        %{name}.desktop
 BuildRequires:  desktop-file-utils
 BuildArch:      noarch
-Requires:       scummvm >= 0.9.1 icon-theme-hicolor
+Requires:       scummvm >= 0.9.1, icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -49,6 +49,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.0372-alt4_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.0372-alt4_11
 - update to new release by fcimport
 
