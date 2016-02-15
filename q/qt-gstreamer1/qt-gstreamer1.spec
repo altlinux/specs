@@ -1,12 +1,13 @@
 Name:    qt-gstreamer1
 Version: 1.2.0
-Release: alt3
+Release: alt4
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
 Group:   System/Libraries
 URL:     http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
 
+Obsoletes: qt-gstreamer < %version-%release
 Requires: gst-plugins-base1.0 gst-plugins-good1.0
 
 Source: %name-%version.tar
@@ -83,7 +84,7 @@ then
 fi
 popd
 done
-%Kmake VERBOSE=1
+%Kmake
 
 %install
 %Kinstall
@@ -112,6 +113,9 @@ done
 
 
 %changelog
+* Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt4
+- obsolete qt-gstreamer
+
 * Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt3
 - fix against ugly gstreamer includes placement
 
