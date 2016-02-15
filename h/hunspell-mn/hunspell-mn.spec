@@ -5,7 +5,7 @@ Name: hunspell-mn
 Summary: Mongolian hunspell dictionaries
 %define upstreamid 20080709
 Version: 0.%{upstreamid}
-Release: alt2_10
+Release: alt2_11
 Source: http://extensions.services.openoffice.org/files/1408/0/dict-mn_0.06-5.oxt
 Group: Text tools
 URL: http://mnspell.openmn.org
@@ -32,6 +32,9 @@ cp -p mn_MN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080709-alt2_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20080709-alt2_10
 - update to new release by fcimport
 
