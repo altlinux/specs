@@ -4,7 +4,7 @@ Group: Development/Other
 
 Name:           amqp
 Version:        1.0
-Release:        alt1_4.%{date}svn%{revision}
+Release:        alt1_5.%{date}svn%{revision}
 # increase Epoch to 1 cause of modified Release logic
 Epoch:          1
 Summary:        The AMQP specification
@@ -57,6 +57,9 @@ install -p -m0644 *.xml *.dtd %{buildroot}%{_datadir}/%{name}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_5.20150701svn1688630
+- update to new release by fcimport
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_4.20150701svn1688630
 - to Sisyphus
 
