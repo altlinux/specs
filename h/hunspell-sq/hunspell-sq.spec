@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-sq
 Summary: Albanian hunspell dictionaries
 Version: 1.6.4
-Release: alt1_7
+Release: alt1_8
 Source: http://www.shkenca.org/shkarkime/myspell-sq_AL-%{version}.zip
 Group: Text tools
 URL: http://www.shkenca.org/k6i/albanian_dictionary_for_myspell_en.html
@@ -31,6 +31,9 @@ cp -p sq_AL.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt1_7
 - update to new release by fcimport
 
