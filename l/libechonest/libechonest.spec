@@ -10,7 +10,7 @@ Group: System/Libraries
 
 Name:		libechonest
 Version: 	2.3.0
-Release:	alt1_3
+Release:	alt1_4
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
@@ -33,7 +33,7 @@ life easy when trying to use the APIs provided by The Echo Nest.
 %package	devel
 Group: Development/C
 Summary:	Development files for %{name}
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
 %description	devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -49,7 +49,7 @@ life easy when trying to use the APIs provided by The Echo Nest.
 %package -n libechonest-qt5-devel
 Group: System/Libraries
 Summary: Development files for libechonest-qt5
-Requires: libechonest-qt5%{?_isa} = %{version}-%{release}
+Requires: libechonest-qt5%{?_isa} = %{version}
 %description -n libechonest-qt5-devel
 %{summary}.
 %endif
@@ -122,6 +122,9 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_3
 - update to new release by fcimport
 
