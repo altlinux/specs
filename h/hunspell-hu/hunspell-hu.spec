@@ -1,7 +1,7 @@
 Name: hunspell-hu
 Summary: Hungarian hunspell dictionaries
 Version: 1.6.1
-Release: alt2_8
+Release: alt2_9
 Source: http://downloads.sourceforge.net/magyarispell/hu_HU-%{version}.tar.gz
 Group: Text tools
 URL: http://magyarispell.sourceforge.net
@@ -29,6 +29,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt2_8
 - update to new release by fcimport
 
