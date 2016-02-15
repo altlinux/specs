@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ unzip
 %add_optflags %optflags_shared
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_19
+Release:        alt2_22
 
 Summary:        3D Studio file format library
 
@@ -42,14 +42,16 @@ Group:          Graphics
 Some tools to process 3ds files.
 
 %files          tools
-%doc AUTHORS COPYING ChangeLog README
+%doc AUTHORS ChangeLog README
+%doc COPYING
 %{_bindir}/3dsdump
 %{_mandir}/man1/3dsdump.1*
 
 %package        devel
 Summary:        %summary
 Group:          Development/C
-Requires:	lib3ds = %{version}-%{release}
+Requires:	pkgconfig
+Requires:	lib3ds = %{version}
 
 %description    devel
 Development files for lib3ds
@@ -86,7 +88,8 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %files
-%doc AUTHORS COPYING ChangeLog README
+%doc AUTHORS ChangeLog README
+%doc COPYING
 %{_libdir}/*.so.*
 
 %files devel
@@ -98,6 +101,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/aclocal/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_22
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt2_19
 - update to new release by fcimport
 
