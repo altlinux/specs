@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libacpi
 Version:        0.2
-Release:        alt2_24
+Release:        alt2_25
 Summary:        General purpose library for ACPI 
 
 Group:          System/Libraries
@@ -25,7 +25,7 @@ Note: This is no portable code, it will only run on i386/x86_64 Linux systems.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -37,7 +37,7 @@ developing applications that use %{name}.
 %patch0 -p1
 %patch1 -p1
 sed -i "s|CFLAGS += .*|CFLAGS += -fPIC $RPM_OPT_FLAGS|;s&usr/local&usr&" config.mk
-sed -i "s&\${PREFIX}/share/doc/%{name}&%{_pkgdocdir}&g" Makefile
+sed -i "s&\${PREFIX}/share/doc/%{name}&%{_docdir}/%{name}&g" Makefile
 
 
 %build
@@ -52,22 +52,25 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
 %{_mandir}/man3/*
-%dir %{_pkgdocdir}
-%doc %{_pkgdocdir}/AUTHORS
-%doc %{_pkgdocdir}/CHANGES
-%doc %{_pkgdocdir}/README
-%doc %{_pkgdocdir}/LICENSE
+%dir %{_docdir}/%{name}
+%doc %{_docdir}/%{name}/AUTHORS
+%doc %{_docdir}/%{name}/CHANGES
+%doc %{_docdir}/%{name}/README
+%doc %{_docdir}/%{name}/LICENSE
 %{_libdir}/*.so.*
 
 %files devel
-%dir %{_pkgdocdir}/doc
-%doc %{_pkgdocdir}/doc/*
+%dir %{_docdir}/%{name}/doc
+%doc %{_docdir}/%{name}/doc/*
 %{_bindir}/test-libacpi
 %{_includedir}/*
 %{_libdir}/*.so
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_25
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_24
 - update to new release by fcimport
 
