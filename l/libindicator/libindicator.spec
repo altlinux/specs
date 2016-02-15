@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:		libindicator
 Version:	12.10.1
-Release:	alt1_5
+Release:	alt1_7
 Summary:	Shared functions for Ayatana indicators
 
 Group:		System/Libraries
@@ -20,9 +20,10 @@ BuildRequires:	libtool
 BuildRequires:	libdbus-glib-devel
 BuildRequires:	gtk2-devel
 BuildRequires:	libgtk+3-devel
+
+BuildRequires:	gnome-common
 Source44: import.info
 Patch33: libindicator-fix-deprecated.patch
-
 
 %description
 A set of symbols and convenience functions that all Ayatana indicators are
@@ -32,7 +33,8 @@ likely to use.
 %package devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
+Requires:	pkgconfig
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -42,7 +44,8 @@ developing applications that use %{name}.
 %package tools
 Summary:	Shared functions for Ayatana indicators - Tools
 Group:		Development/Tools
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
+Requires:	pkgconfig
 
 %description tools
 This package contains tools used by the %{name} package, the
@@ -63,7 +66,8 @@ by GTK+ 3 apps.
 Summary:	Development files for %{name}-gtk3
 Group:		Development/C
 
-Requires:	%{name}-gtk3%{?_isa} = %{version}-%{release}
+Requires:	%{name}-gtk3%{?_isa} = %{version}
+Requires:	pkgconfig
 
 %description gtk3-devel
 The %{name}-gtk3-devel package contains libraries and header files for
@@ -74,7 +78,8 @@ developing applications that use %{name}-gtk3.
 Summary:	Shared functions for Ayatana indicators - GTK3 Tools
 Group:		Development/Tools
 
-Requires:	%{name}-gtk3%{?_isa} = %{version}-%{release}
+Requires:	%{name}-gtk3%{?_isa} = %{version}
+Requires:	pkgconfig
 
 %description gtk3-tools
 This package contains tools used by the %{name}-gtk3 package, the
@@ -84,7 +89,29 @@ tools for the GTK+3 build of %{name}.
 
 %prep
 %setup -q
+
+sed -i.addvar configure.ac \
+	-e '\@LIBINDICATOR_LIBS@s|\$LIBM| \$LIBM|'
+
+# http://bazaar.launchpad.net/~indicator-applet-developers/libindicator/trunk.12.10/view/head:/autogen.sh
+cat > autogen.sh <<EOF
+#!/bin/sh
+
+PKG_NAME="libindicator"
+
+which gnome-autogen.sh || {
+	echo "You need gnome-common from GNOME SVN"
+	exit 1
+}
+
+USE_GNOME2_MACROS=1 \
+. gnome-autogen.sh
+EOF
+
+NOCONFIGURE=1 \
+	sh autogen.sh
 %patch33 -p2
+
 
 %build
 %global _configure_script ../configure
@@ -93,7 +120,7 @@ mkdir build-gtk2 build-gtk3
 
 pushd build-gtk2
 export CFLAGS="%{optflags} -Wno-error=deprecated-declarations"
-%configure --with-gtk=2 --disable-static
+%configure --with-gtk=2 --disable-static --disable-silent-rules
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -102,7 +129,7 @@ popd
 
 pushd build-gtk3
 export CFLAGS="%{optflags} -Wno-error=deprecated-declarations"
-%configure --with-gtk=3 --disable-static
+%configure --with-gtk=3 --disable-static --disable-silent-rules
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -167,6 +194,9 @@ done
 %{_libexecdir}/indicator-loader3
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 12.10.1-alt1_5
 - update to new release by fcimport
 
