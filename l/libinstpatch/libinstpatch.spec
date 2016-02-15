@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(pygtk-2.0) python-module-pygobject-devel
+BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(pygtk-2.0) pkgconfig(sndfile) python-module-pygobject-devel
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 Name:		libinstpatch
 Summary:	MIDI instrument patch library
 Version:	1.0.0
-Release:	alt3_10.20110806svn386
+Release:	alt3_11.20110806svn386
 URL:		http://www.swamiproject.org/
 License:	LGPLv2+
 # Fetch source via
@@ -35,7 +35,7 @@ patch files into, which can then be edited, converted, compressed and saved.
 %package devel
 Group: Development/C
 Summary:	Development package for %{name}
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
 
 %description devel
 This package includes the development libraries and header files for
@@ -73,6 +73,9 @@ make install DESTDIR=%{buildroot} -C %{_target_platform}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_11.20110806svn386
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_10.20110806svn386
 - update to new release by fcimport
 
