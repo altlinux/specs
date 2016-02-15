@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 BuildRequires: gcc-c++
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -103,6 +106,14 @@ SentUpstream: 2014-09-24
 </application>
 EOF
 
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_var}/games/%{name}/EgoHighScores %{_var}/games/%{name}/PsycheHighScores %{_var}/games/%{name}/IdHighScores %{_var}/games/%{name}/ExtendedHighScores
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
+
+
 %files
 # Note the game is SETGID games for the hi-scores.
 %{_datadir}/%{name}
@@ -119,6 +130,9 @@ EOF
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_11
 - update to new release by fcimport
 
