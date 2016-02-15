@@ -5,7 +5,7 @@ Group: Text tools
 
 Name:           aspell-ta
 Version:        20040424
-Release:        alt2_14
+Release:        alt2_15
 Summary:        GNU Aspell Tamil Dictionary Package
 
 License:        GPLv2+
@@ -47,6 +47,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 20040424-alt2_15
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 20040424-alt2_14
 - update to new release by fcimport
 
