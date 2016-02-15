@@ -1,6 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libvtemm
 %define version 0.25.0
@@ -9,7 +10,7 @@ BuildRequires: gcc-c++
 
 Name:           libvtemm
 Version:        0.25.0
-Release:        alt4_10
+Release:        alt4_11
 
 Summary:        C++ interface for VTE (a GTK2 terminal emulator widget)
 
@@ -31,7 +32,7 @@ libvtemm provides a C++ interface to the VTE library.
 %package        devel
 Summary:        Headers for developing programs that will use %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       pkgconfig
 
 %description devel
@@ -80,6 +81,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %doc %{_datadir}/devhelp/
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.25.0-alt4_11
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 0.25.0-alt4_10
 - new release
 
