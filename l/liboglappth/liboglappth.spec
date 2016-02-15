@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 Name:           liboglappth
 Summary:        An OpenGL wrapper library
 Version:        0.98
-Release:        alt2_17
+Release:        alt2_18
 License:        GPLv2+
 Group:          Engineering
 URL:            http://www.uku.fi/~thassine/ghemical
@@ -22,7 +22,8 @@ scene setup and selection operations.
 %package devel
 Summary:    Libraries and header files from %{name}
 Group:      Development/C
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}
+Requires:   pkgconfig
 
 %description devel
 Libraries and header include files for developing programs
@@ -53,6 +54,9 @@ find %{buildroot}%{_libdir} -name *.la -exec rm -rf {} \;
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2_17
 - update to new release by fcimport
 
