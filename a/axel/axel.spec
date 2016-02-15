@@ -5,7 +5,7 @@
 
 Name:		axel		
 Version:	2.5
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Light command line download accelerator for Linux and Unix
 
 Group:		Networking/WWW
@@ -50,6 +50,9 @@ install -m 755 -p %{name} %{buildroot}%{_bindir}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_1
 - update to new release by fcimport
 
