@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.1
-Release: alt6
+Release: alt7
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -49,6 +49,7 @@ Patch104: xcb-fix-yet-another-crash-when-screens-are-disconnected.patch
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
 Patch1002: alt-dont-require-plugin-file.patch
+Patch1003: alt-ca-certificates-path.patch
 
 # macros
 %define _qt5 %gname
@@ -340,6 +341,7 @@ EGL integration library for the Qt%major toolkit
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
+%patch1003 -p1 -b .ca-bundle
 bin/syncqt.pl -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -733,6 +735,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt7
+- fix find ca-bundle.crt
+
 * Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt6
 - disable annoing qdbusconnection debug mesaage
 
