@@ -10,7 +10,7 @@ BuildRequires: gcc-c++
 Name:		libyuv
 Summary:	YUV conversion and scaling functionality library
 Version:	0
-Release:	alt1_0.24.20121221svn522
+Release:	alt1_0.25.20121221svn522
 License:	BSD
 Group:		Development/C
 Url:		http://code.google.com/p/libyuv/
@@ -40,7 +40,8 @@ with point, bilinear or box filter.
 %package devel
 Summary: The development files for %{name}
 Group: Development/C
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: pkgconfig
+Requires: %{name}%{?_isa} = %{version}
 
 
 %description devel
@@ -81,6 +82,9 @@ make check
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.25.20121221svn522
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.24.20121221svn522
 - update to new release by fcimport
 
