@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: liballegro-devel
 %define oldname ants
 Name:           Ants
 Version:        1.4
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Guide the insects safely home before they drop of the cliff
 Group:          Games/Other
 License:        Public Domain
@@ -32,7 +32,7 @@ The game is presented in a 2D side view.
 %package        level-editor
 Summary:        Ants level editor
 Group:          Games/Other
-Requires:       Ants = %{version}-%{release}
+Requires:       Ants = %{version}
 
 %description    level-editor
 This package contains a level editor for ants, notice that you must run this
@@ -75,6 +75,9 @@ install -p -m 644 %{SOURCE3} \
 %{_datadir}/applications/%{oldname}-level-editor.desktop
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_17
 - update to new release by fcimport
 
