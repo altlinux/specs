@@ -2,7 +2,7 @@
 
 Name: finlib
 Version: 2.33.1
-Release: alt1
+Release: alt2
 
 Summary: Fast indexing library
 License: LGPLv2+
@@ -63,6 +63,9 @@ autoreconf -iv
 %endif
 
 %changelog
+* Mon Feb 15 2016 Kirill Maslinsky <kirill@altlinux.org> 2.33.1-alt2
+- rebuilt with libicu 5.6
+
 * Sat Dec 05 2015 Kirill Maslinsky <kirill@altlinux.org> 2.33.1-alt1
 - 2.33.1
 
