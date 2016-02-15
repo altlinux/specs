@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen gcc-c++
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 23
 Name:           amoebax
 Version:        0.2.1
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -110,6 +110,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_8
 - update to new release by fcimport
 
