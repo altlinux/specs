@@ -3,7 +3,7 @@
 Summary: Finnish dictionaries for Aspell
 Name: aspell-%{lang}
 Version: 0.7
-Release: alt1_5
+Release: alt1_6
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net
@@ -34,6 +34,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_5
 - update to new release by fcimport
 
