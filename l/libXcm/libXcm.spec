@@ -1,7 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(x11) pkgconfig(xfixes) pkgconfig(xmu)
+# END SourceDeps(oneline)
 Group: System/Libraries
+%add_optflags %optflags_shared
 Name:           libXcm
 Version:        0.5.3
-Release:        alt1_5
+Release:        alt1_6
 Summary:        X Color Management Library
 License:        MIT
 URL:            http://www.oyranos.org
@@ -25,7 +29,7 @@ servers.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 Requires:       libX11-devel%{?_isa}
 
 %description    devel
@@ -58,6 +62,9 @@ find %{buildroot} -name '*.la' -delete -print
 %{_mandir}/man3/*.3*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_6
+- update to new release by fcimport
+
 * Sat Oct 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt1_5
 - new version
 
