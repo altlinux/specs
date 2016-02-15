@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ pkgconfig(gnutls) pkgconfig(sigc++-2.0)
 %define oldname net6
 Name:           libnet6
 Version:        1.3.14
-Release:        alt1_11
+Release:        alt1_12
 Summary:        A TCP protocol abstraction for library C++
 
 Group:          Development/C
@@ -28,7 +28,7 @@ the Windows and Unix-like platforms.
 %package devel
 Summary:        Development libraries for net6
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       pkgconfig
 Provides: net6-devel = %{version}-%{release}
 
@@ -73,6 +73,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_12
+- update to new release by fcimport
+
 * Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.14-alt1_11
 - new version
 
