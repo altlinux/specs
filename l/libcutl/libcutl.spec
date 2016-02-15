@@ -2,13 +2,13 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 22
+%define fedora 23
 # The base of the version (just major and minor without point)
 %global base_version 1.10
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_1
+Release:        alt1_3
 Summary:        C++ utility library from Code Synthesis
 
 Group:          System/Libraries
@@ -41,7 +41,7 @@ fairly independent components.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -89,6 +89,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_3
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_1
 - update to new release by fcimport
 
