@@ -1,19 +1,22 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 Name: bombardier
-Version:  0.8.2.2
-Release:  alt2_19
+Version:  0.8.3
+Release:  alt1_2
 Summary: The GNU Bombing utility
 
 Group: Games/Other
 License: GPLv2+        
 URL: http://packages.debian.org/stable/source/bombardier
-Source0: http://ftp.debian.org/debian/pool/main/b/bombardier/bombardier_0.8.2.2.tar.gz
+Source0: http://http.debian.net/debian/pool/main/b/bombardier/bombardier_0.8.3+nmu1.tar.gz
 Source1: bombardier.desktop
 Source2: bombardier-logo.png
 Patch0: bombardier-height.patch
 Patch1: bombardier-rpm_opt_flags.patch
-Patch2: bombardier-hof-open-mode.patch
+#Patch2: bombardier-hof-open-mode.patch
 Patch3: bombardier-0.8.2-string-format.patch
-BuildRequires: ncurses-devel desktop-file-utils
+BuildRequires: ncurses-devel, desktop-file-utils
 Requires: icon-theme-hicolor
 Source44: import.info
 
@@ -24,11 +27,11 @@ Fly an ncurses plane over an ncurses city, and try to level the buildings.
 %prep
 
 
-%setup -qn bombardier-0.8.2
+%setup -qn bombardier-0.8.3+nmu1
 
 %patch0 -p0
 %patch1 -p0
-%patch2 -p0
+#%patch2 -p0
 %patch3 -p0
 
 # link with --as-needed
@@ -60,6 +63,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_19
 - update to new release by fcimport
 
