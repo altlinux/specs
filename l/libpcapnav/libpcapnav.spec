@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdoc-mkdb gcc-c++ libpcapnav-devel
 %add_optflags %optflags_shared
 Name:           libpcapnav
 Version:        0.8
-Release:        alt1_12
+Release:        alt1_13
 Summary:        Wrapper library for libpcap offering navigation inside of a tracefile
 
 Group:          System/Libraries
@@ -12,7 +12,7 @@ License:        MIT with advertising
 URL:            http://netdude.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/netdude/libpcapnav-%{version}.tar.gz
 
-BuildRequires:  libpcap-devel gtk-doc >= 0.6 /bin/sed
+BuildRequires:  libpcap-devel, gtk-doc >= 0.6, /bin/sed
 Source44: import.info
 
 %description
@@ -24,7 +24,7 @@ offsets. It was originally based on Vern Paxson's tcpslice tool.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -59,6 +59,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/gtk-doc/html/pcapnav/
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_12
 - update to new release by fcimport
 
