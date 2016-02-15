@@ -5,7 +5,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libzdb
 Version:        3.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Small, easy to use Database Connection Pool Library
 License:        GPLv3+ and MIT
 URL:            http://www.tildeslash.com/libzdb/
@@ -25,7 +25,7 @@ specified via a standard URL scheme.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 This package contains libraries and header files for
@@ -55,6 +55,9 @@ make install DESTDIR=%{buildroot}
 %doc doc/api-docs
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.0-alt1_4
 - update to new release by fcimport
 
