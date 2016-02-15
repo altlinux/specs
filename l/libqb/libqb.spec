@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ libsocket pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ libsocket pkgconfig(check) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libqb
 Version:        0.17.2
-Release:        alt1_1
+Release:        alt1_2
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
@@ -45,7 +45,7 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version} pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -61,6 +61,9 @@ developing applications that use %{name}.
 %{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.17.2-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.17.2-alt1_1
 - update to new release by fcimport
 
