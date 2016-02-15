@@ -11,7 +11,7 @@ BuildRequires: swig waf
 Name:			libslv2
 Summary:		LV2 host library
 Version:		0.6.6
-Release:		alt4_18
+Release:		alt4_19
 License:		GPLv2+
 Group:			System/Libraries
 Source0:		http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
@@ -21,6 +21,7 @@ URL:			http://drobilla.net/software/slv2/
 
 BuildRequires:		doxygen
 BuildRequires:		lv2-devel
+BuildRequires:		python
 BuildRequires:		libredland-devel
 BuildRequires:		libjack-devel
 # To provide a clean upgrade path from PlanetCCRMA:
@@ -40,7 +41,8 @@ libraries, avoiding the associated risks).
 %package devel
 Summary:	Development libraries and headers for %{oldname}
 Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	pkgconfig
+Requires:	%{name}%{?_isa} = %{version}
 Provides: slv2-devel = %{version}-%{release}
 
 %description devel
@@ -71,7 +73,7 @@ export CFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
 ./waf configure --prefix=%{_prefix} \
 	--libdir=%{_libdir} \
-	--htmldir=%{_pkgdocdir} \
+	--htmldir=%{_docdir}/%{oldname} \
 	--build-docs
 ./waf build -v %{?_smp_mflags}
 
@@ -81,30 +83,33 @@ rm -f build/default/doc/man/man3/_*
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}.so*
-install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_pkgdocdir}
+install -pm 644 AUTHORS ChangeLog COPYING README %{buildroot}%{_docdir}/%{oldname}
 
 %files
-%dir %{_pkgdocdir}
-%{_pkgdocdir}/AUTHORS
-%{_pkgdocdir}/ChangeLog
-%{_pkgdocdir}/COPYING
-%{_pkgdocdir}/README
+%dir %{_docdir}/%{oldname}
+%{_docdir}/%{oldname}/AUTHORS
+%{_docdir}/%{oldname}/ChangeLog
+%{_docdir}/%{oldname}/COPYING
+%{_docdir}/%{oldname}/README
 %{_bindir}/lv2*
 %{_libdir}/lib%{oldname}.so.*
 %{_mandir}/man1/*
 
 %files devel
-%{_pkgdocdir}/*
-%exclude %{_pkgdocdir}/AUTHORS
-%exclude %{_pkgdocdir}/ChangeLog
-%exclude %{_pkgdocdir}/COPYING
-%exclude %{_pkgdocdir}/README
+%{_docdir}/%{oldname}/*
+%exclude %{_docdir}/%{oldname}/AUTHORS
+%exclude %{_docdir}/%{oldname}/ChangeLog
+%exclude %{_docdir}/%{oldname}/COPYING
+%exclude %{_docdir}/%{oldname}/README
 %{_includedir}/%{oldname}/
 %{_libdir}/pkgconfig/%{oldname}.pc
 %{_libdir}/lib%{oldname}.so
 %{_mandir}/man3/%{oldname}*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.6-alt4_18
 - update to new release by fcimport
 
