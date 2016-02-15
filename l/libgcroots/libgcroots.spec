@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:		libgcroots
 Version:	0.2.3
-Release:	alt2_10
+Release:	alt2_11
 License:	MIT
 URL:		http://code.google.com/p/sigscheme/wiki/libgcroots
 
@@ -24,7 +24,8 @@ experimental ideas.
 %package devel
 Summary:	Development files for libgcroots
 Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
+Requires:	pkgconfig
 
 %description devel
 libgcroots abstracts architecture-dependent part of garbage collector
@@ -60,6 +61,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/gcroots.pc
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_11
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.3-alt2_10
 - update to new release by fcimport
 
