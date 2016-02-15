@@ -1,22 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libexpat-devel libssl-devel
+BuildRequires: libexpat-devel libssl-devel pkgconfig(gnutls)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libisds
-Version:        0.10.1
-Release:        alt1_1
+Version:        0.10.2
+Release:        alt1_3
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
 URL:            http://xpisar.wz.cz/%{name}/
 Source0:        %{url}dist/%{name}-%{version}.tar.xz
+# Fix a GCC 6 warning, bug #1305760, in upstream after 0.10
+Patch0:         libisds-0.10.2-test-Fix-indentation.patch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  libxml2-devel
 BuildRequires:  libcurl-devel
 BuildRequires:  libgcrypt-devel
-BuildRequires:  make
 BuildRequires:  libgpgme-devel
 BuildRequires:  expat-devel >= 2.0.0
 # Run-time:
@@ -34,8 +35,9 @@ Data Box Information System) SOAPa..services as defined in Czech ISDS Act
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 Requires:       gcc
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -43,6 +45,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure \
@@ -75,6 +78,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.2-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.10.1-alt1_1
 - update to new release by fcimport
 
