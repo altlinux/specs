@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison gcc-c++ libossp-uuid-devel pkgconfig(libcurl)
+BuildRequires: /usr/bin/bison gcc-c++ libossp-uuid-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.15.1
+Version: 3.17.0
 Release: alt1_1
 
 License: LGPLv2+
@@ -14,6 +14,8 @@ URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
 Patch0:  libdap-offline.patch
+# Fix gcc6/c++11 compile errors
+Patch1:  libdap-gcc6.patch
 
 # For autoreconf
 BuildRequires: libtool
@@ -33,10 +35,6 @@ BuildRequires: valgrind
 Provides: bundled(gnulib)
 Source44: import.info
 
-# This package could be relocatable. In that case uncomment the following
-# line
-#Prefix: %{_prefix}
-
 
 %description
 The libdap++ library contains an implementation of DAP2. This package
@@ -49,7 +47,8 @@ library and demonstrates simple uses of it.
 %package devel
 Summary: Development and header files from libdap
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
+Requires: pkgconfig
 # for the /usr/share/aclocal directory ownership
 Requires: automake
 
@@ -69,6 +68,7 @@ Documentation of the libdap library.
 %prep
 %setup -q
 %patch0 -p1 -b .offline
+%patch1 -p1 -b .libdap
 iconv -f latin1 -t utf8 < COPYRIGHT_W3C > COPYRIGHT_W3C.utf8
 touch -r COPYRIGHT_W3C COPYRIGHT_W3C.utf8
 mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
@@ -107,7 +107,7 @@ done
 %files
 %{_bindir}/getdap
 %{_bindir}/getdap4
-%{_libdir}/libdap.so.17*
+%{_libdir}/libdap.so.21*
 %{_libdir}/libdapclient.so.6*
 %{_libdir}/libdapserver.so.7*
 %{_mandir}/man1/getdap.1*
@@ -132,6 +132,9 @@ done
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.17.0-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_1
 - update to new release by fcimport
 
