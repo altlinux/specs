@@ -1,5 +1,5 @@
 Name: dos2unix
-Version: 7.3.2
+Version: 7.3.3
 Release: alt1
 
 Summary: Text file format converter
@@ -13,7 +13,9 @@ Source100: %name.watch
 Obsoletes: unix2dos
 Provides: unix2dos = %version-%release
 
-BuildRequires: perl-HTML-Parser perl-Pod-Parser perl-Pod-Checker perl-podlators perl-devel
+# Automatically added by buildreq on Mon Feb 15 2016
+# optimized out: perl-Encode perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Pod-Usage perl-parent perl-podlators
+BuildRequires: perl-Pod-Checker po4a
 
 %description
 %name - DOS/Mac to Unix and vice versa text file format converter.
@@ -40,6 +42,10 @@ rm -rf man/{es,nl}
 %doc *.txt
 
 %changelog
+* Sun Feb 14 2016 Michael Shigorin <mike@altlinux.org> 7.3.3-alt1
+- new version (watch file uupdate)
+- buildreq
+
 * Mon Nov 23 2015 Michael Shigorin <mike@altlinux.org> 7.3.2-alt1
 - new version (watch file uupdate)
 
