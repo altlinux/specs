@@ -1,10 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ /proc
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+BuildRequires: /proc
+%add_optflags %optflags_shared
 Name:           libclaw
 Version:        1.7.4
-Release:        alt1_12
+Release:        alt1_13
 Summary:        C++ Library of various utility functions
 Group:          System/Libraries
 License:        LGPLv2
@@ -33,7 +35,7 @@ anyone.
 %package devel
 Summary:        Development files for Claw library
 Group:          Development/C
-Requires:       libclaw = %{version}-%{release}
+Requires:       libclaw = %{version}
 Requires: ctest cmake
 
 %description devel
@@ -51,9 +53,6 @@ Claw (C++ Library Absolutely Wonderful).
 %build
 %{fedora_cmake} .
 make %{?_smp_mflags} VERBOSE=1
-#make install DESTDIR=%{buildroot} VERBOSE=1
-#make clean
-#make %{?_smp_mflags} VERBOSE=1
 find examples -type f |
 while read F
 do
@@ -85,6 +84,9 @@ make install DESTDIR=%{buildroot} VERBOSE=1
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.4-alt1_13
+- update to new release by fcimport
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.4-alt1_12
 - fixed build
 
