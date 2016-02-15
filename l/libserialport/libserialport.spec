@@ -1,15 +1,12 @@
 Group: Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(libudev)
-# END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name:           libserialport
-Version:        0.1.0
-Release:        alt1_2
+Version:        0.1.1
+Release:        alt1_0
 Summary:        Library for accessing serial ports
 License:        LGPLv3+
 URL:            http://sigrok.org/wiki/%{name}
 Source0:        http://sigrok.org/download/source/%{name}/%{name}-%{version}.tar.gz
-BuildRequires:  libudev-devel
 BuildRequires:  doxygen graphviz
 
 Provides: bundled(jquery) = 1.7.1
@@ -34,7 +31,7 @@ The operations that are supported are:
 %package        devel
 Group: Other
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -44,7 +41,7 @@ developing applications that use %{name}.
 Group:          Documentation
 Summary:        API documentation for %{name}
 BuildArch:      noarch
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    doc
 The %{name}-doc package contains documentation for developing software
@@ -81,6 +78,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1_0
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt1_2
 - new version
 
