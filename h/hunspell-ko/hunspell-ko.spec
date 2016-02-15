@@ -1,13 +1,13 @@
 Name: hunspell-ko
 Summary: Korean hunspell dictionaries
 Version: 0.5.5
-Release: alt1_7
+Release: alt1_8
 Source: http://spellcheck-ko.googlecode.com/files/hunspell-dict-ko-%{version}.tar.gz
 Group: Text tools
 URL: http://code.google.com/p/spellcheck-ko/
 License: MPLv1.1 or GPLv2 or LGPLv2
 BuildArch: noarch
-BuildRequires: python-module-lxml hunspell
+BuildRequires: python-module-lxml, hunspell
 Requires: hunspell
 Source44: import.info
 
@@ -33,6 +33,9 @@ make test
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_7
 - update to new release by fcimport
 
