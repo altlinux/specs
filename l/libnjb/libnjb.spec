@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/doxygen libncurses-devel
 
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_11
+Release:	alt3_12
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
@@ -33,7 +33,7 @@ Creative Nomad Jukebox line of MP3 players.
 %package examples
 Summary:        Example programs for libnjb
 Group:          Sound
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description examples
 This package provides example programs for communicating with the
@@ -42,7 +42,7 @@ Creative Nomad Jukebox and Dell DJ line of MP3 players.
 %package devel
 Summary:        Development files for libnjb
 Group:          System/Libraries
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 # doc subpackage removed in newer releases, and included
 # in the -devel package.
 Provides:	libnjb-doc
@@ -60,17 +60,17 @@ library for Creative Nomad/Zen/Jukebox and Dell DJ line of MP3 players.
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{_pkgdocdir}
+make install DESTDIR=$RPM_BUILD_ROOT pkgdocdir=%{_docdir}/%{name}
 # Remove libtool archive remnant
 rm -f $RPM_BUILD_ROOT%{_libdir}/libnjb.la
 # Install udev rules file.
 install -p -D -m0644 libnjb.rules $RPM_BUILD_ROOT%{_udevrulesdir}/60-libnjb.rules
 # Copy documentation to a good place
 install -p -m 644 AUTHORS ChangeLog ChangeLog-old FAQ \
-        INSTALL HACKING $RPM_BUILD_ROOT%{_pkgdocdir}
+        INSTALL HACKING $RPM_BUILD_ROOT%{_docdir}/%{name}
 # Touch generated files to make them always have the same time stamp.
 touch -r configure.ac \
-      $RPM_BUILD_ROOT%{_pkgdocdir}/html/* \
+      $RPM_BUILD_ROOT%{_docdir}/%{name}/html/* \
       $RPM_BUILD_ROOT%{_includedir}/*.h \
       $RPM_BUILD_ROOT%{_libdir}/pkgconfig/*.pc
 # Remove the Doxygen HTML documentation, this get different
@@ -90,13 +90,16 @@ touch -r configure.ac \
 
 %files devel
 %{_libdir}/*.so
-%dir %{_pkgdocdir}
-%{_pkgdocdir}/*
+%dir %{_docdir}/%{name}
+%{_docdir}/%{name}/*
 %{_includedir}/*.h
 %{_libdir}/pkgconfig/*.pc
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_11
 - update to new release by fcimport
 
