@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsord
 Version:    0.12.2
-Release:    alt1_6
+Release:    alt1_8
 Summary:    A lightweight Resource Description Framework (RDF) C library
 
 Group:      System/Libraries
@@ -23,6 +23,7 @@ BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave
 BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: glib2-devel
+BuildRequires: python
 BuildRequires: serd-devel >= 0.14.0
 Source44: import.info
 Provides: sord = %{version}-%{release}
@@ -36,7 +37,7 @@ applications.
 %package devel
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}
 Provides: sord-devel = %{version}-%{release}
 
 %description devel
@@ -60,7 +61,7 @@ export CFLAGS="%{optflags}"
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --datadir=%{_datadir} \
-    --docdir=%{_pkgdocdir} \
+    --docdir=%{_docdir}/%{oldname} \
     --test \
     --docs 
 ./waf build -v %{?_smp_mflags}
@@ -68,24 +69,27 @@ export CFLAGS="%{optflags}"
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
-install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_pkgdocdir}
+install -pm 644 AUTHORS NEWS README COPYING %{buildroot}%{_docdir}/%{oldname}
 
 %files
-%{_pkgdocdir}
-%exclude %{_pkgdocdir}/%{oldname}-%{maj}/
+%{_docdir}/%{oldname}
+%exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/sordi
 %{_bindir}/sord_validate
 %{_mandir}/man1/%{oldname}*.1*
 
 %files devel
-%{_pkgdocdir}/%{oldname}-%{maj}/
+%{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
 %{_mandir}/man3/%{oldname}*.3*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.12.2-alt1_6
 - update to new release by fcimport
 
