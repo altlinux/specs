@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-haw
 Summary: Hawaiian hunspell dictionaries
 Version: 0.02
-Release: alt1_6
+Release: alt1_7
 Group: Text tools
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/204309/hawaiian_spell_checker-%{version}-tb+fx+sm.xpi
 URL: http://borel.slu.edu/crubadan/
@@ -31,6 +31,9 @@ cp -p dictionaries/haw-US.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/haw.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_6
 - update to new release by fcimport
 
