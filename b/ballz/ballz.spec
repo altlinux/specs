@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-validate gcc-c++
 # END SourceDeps(oneline)
 Name:           ballz
 Version:        1.0.3
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Platform game with some puzzle elements
 Group:          Games/Other
 License:        BSD
@@ -47,6 +47,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_1
 - update to new release by fcimport
 
