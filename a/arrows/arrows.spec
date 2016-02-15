@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 Name:           arrows
 Version:        0.6
-Release:        alt3_17
+Release:        alt3_18
 Summary:        Neat little maze game
 Group:          Games/Other
 License:        GPLv2+
@@ -49,6 +49,9 @@ install -p -m 644 %{SOURCE2}\
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_17
 - update to new release by fcimport
 
