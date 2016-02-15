@@ -6,7 +6,7 @@
 
 Name:           libunshield
 Version:        1.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Install InstallShield applications on a Pocket PC
 
 Group:          Communications
@@ -31,7 +31,8 @@ that is rather less likely to be the primary use case.
 %package devel
 Group:          Development/C
 Summary:        Files needed for software development with %{oldname}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
+Requires:       pkgconfig
 Provides: unshield-devel = %{version}-%{release}
 
 %description devel
@@ -62,6 +63,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libunshield.{,l}a
 %{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_4
 - update to new release by fcimport
 
