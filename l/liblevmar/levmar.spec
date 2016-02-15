@@ -10,7 +10,7 @@ BuildRequires: libblas-devel
 
 Name:		liblevmar
 Version:	2.5
-Release:	alt1_12
+Release:	alt1_13
 Summary:	Levenberg-Marquardt nonlinear least squares algorithm
 URL:		http://www.ics.forth.gr/~lourakis/levmar/
 
@@ -44,7 +44,7 @@ becomes a Gauss-Newton method.
 %package devel
 Summary:	Development files for levmar library, and demo program
 Group:		Development/C
-Requires:	levmar = %{version}-%{release}
+Requires:	levmar = %{version}
 Provides: levmar-devel = %{version}-%{release}
 
 %description devel
@@ -77,6 +77,9 @@ ln -s liblevmar.so.%{major}.%{minor} %{buildroot}%{_libdir}/liblevmar.so
 %{_bindir}/lmdemo
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_12
 - update to new release by fcimport
 
