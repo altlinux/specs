@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ak
 Summary: Akan hunspell dictionaries
 Version: 0.6
-Release: alt2_9
+Release: alt2_10
 Group: Text tools
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/9978/akan_ns__mfuaasekyer__-%{version}-fx.xpi
 URL: http://kasahorow.org/content/akan-nsɛmfuaasekyerɛ
@@ -37,6 +37,9 @@ cp -p dictionaries/ak-GH.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ak_GH.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_9
 - update to new release by fcimport
 
