@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-python
 %add_optflags %optflags_shared
 Name:           libpagemap
 Version:        0.0.1 
-Release:        alt1_17
+Release:        alt1_18
 Summary:        Pagemap interface library
 
 Group:          System/Libraries
@@ -20,7 +20,7 @@ Package contains library and headers for using kernel pagemap interface
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 Development files for %{name}.
@@ -51,6 +51,9 @@ install -D -p -m 755 pagemapdata.py $RPM_BUILD_ROOT/%{python_sitelibdir_noarch}/
 %{_libdir}/libpagemap.so
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt1_17
 - update to new release by fcimport
 
