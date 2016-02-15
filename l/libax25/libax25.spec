@@ -2,7 +2,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 Name:		libax25
 Version:        1.0.5
-Release:        alt1_1
+Release:        alt1_2
 Summary:	AX.25 library for hamradio applications
 
 License:	LGPLv2+
@@ -23,7 +23,7 @@ config file parsing, etc.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -69,6 +69,9 @@ rm -f %{buildroot}%{_includedir}/{netax25/ax25.h,netrom/netrom.h,netrose/rose.h}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
 - update to new release by fcimport
 
