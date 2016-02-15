@@ -5,7 +5,7 @@ Name: hunspell-hil
 Summary: Hiligaynon hunspell dictionaries
 #Epoch: 1
 Version: 0.14
-Release: alt2_8
+Release: alt2_9
 Group: Text tools
 Source: http://borel.slu.edu/obair/%{name}-%{version}.oxt
 URL: http://extensions.services.openoffice.org/project/hunspell-hil
@@ -42,6 +42,9 @@ cp -p dictionaries/hil_PH.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_8
 - update to new release by fcimport
 
