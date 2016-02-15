@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/desktop-file-install libX11-devel
 # END SourceDeps(oneline)
 Name:           alltray
 Version:        0.71b
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Dock any application in the tray
 
 Group:          Accessibility
@@ -52,6 +52,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_11
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_10
 - new version
 
