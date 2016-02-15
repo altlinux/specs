@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 Name:           bam
 Version:        0.4.0
 
-Release:        alt2_9
+Release:        alt2_10
 Summary:        A build-system
 
 Group:          Games/Other
@@ -38,6 +38,9 @@ install -D -m 0755 %{name} \
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt2_9
 - update to new release by fcimport
 
