@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 3.18
 %define ver_base 3.18
 %define gst_api_ver 1.0
@@ -17,16 +19,19 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPLv2+
 Group: Office
 Url: https://wiki.gnome.org/Apps/Evolution
 
-#Source: %name-%version.tar
+%if_enabled snapshot
+Source: %name-%version.tar
+%else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 Patch: %name-3.13.90-alt-link.patch
 
 ### Patches ###
@@ -315,6 +320,12 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Feb 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.5-alt1
+- 3.18.5
+
+* Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt3
+- updated to 3.18.4-18-g34b9382
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt2
 - rebuilt against libical.so.2
 
