@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /u
 %add_optflags %optflags_shared
 Name:           libcmml
 Version:        0.9.1
-Release:        alt3_16
+Release:        alt3_17
 Summary:        Library for handling Continuous Media Markup Language
 
 Group:          System/Libraries
@@ -34,6 +34,7 @@ Annodexer for creating ANNODEX(tm) format documents (ANX).
 Summary:	Files needed for development using libcmml
 Group:          Development/C
 Requires:       libcmml = %{version}
+Requires:       pkgconfig
 
 %description devel
 Libcmml is a library which enables the handling of documents
@@ -82,6 +83,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/doc/libcmml/doxygen-build.stamp
 %{_includedir}/cmml.h
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt3_16
 - update to new release by fcimport
 
