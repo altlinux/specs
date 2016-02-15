@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libomxil-bellagio-devel
 %add_optflags %optflags_shared
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        alt1_11
+Release:        alt1_12
 Summary:        OpenMAX Integration Layer
 
 Group:          System/Libraries
@@ -38,7 +38,7 @@ component, OMX mp3,aac,ogg decoder component and OMX volume control component.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -47,7 +47,7 @@ developing applications that use %{name}.
 %package        test
 Summary:        Test cases for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    test
 The %{name}-test package contains binaries for testing %{name}.
@@ -118,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_11
 - update to new release by fcimport
 
