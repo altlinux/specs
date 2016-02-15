@@ -10,7 +10,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -226,6 +226,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 6.9.2.4-alt1.1.1
+- don't show menu item in KDE
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 6.9.2.4-alt1.1
 - rebuild with new perl 5.22.0
 
