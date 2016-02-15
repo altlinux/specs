@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libmodman
 Version:        2.0.1
-Release:        alt2_11
+Release:        alt2_12
 Summary:        A simple library for managing C++ modules (plug-ins)
 
 Group:          System/Libraries
@@ -23,7 +23,8 @@ libmodman is a simple library for managing C++ modules (plug-ins).
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
+Requires:       pkgconfig
 Requires: ctest cmake
 
 %description    devel
@@ -55,6 +56,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/cmake/Modules/Findlibmodman.cmake
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_11
 - update to new release by fcimport
 
