@@ -8,7 +8,7 @@ Group: Development/C
 
 Name: libapogee
 Version: 2.2
-Release: alt2_17
+Release: alt2_18
 Summary: Library for Apogee CCD Cameras
 
 License: GPLv2+
@@ -34,7 +34,7 @@ Apogee library is used by applications to control Apogee CCDs.
 %package devel
 Group: Development/C
 Summary: Libraries, includes, etc. used to develop an application with %{name}
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}
 %description devel
 These are the header files needed to develop a %{name} application
 
@@ -65,6 +65,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_18
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_17
 - update to new release by fcimport
 
