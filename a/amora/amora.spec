@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pkg-config
+BuildRequires: /usr/bin/pkg-config pkgconfig(bluez) pkgconfig(dbus-1) pkgconfig(imlib2) pkgconfig(x11) pkgconfig(xtst)
 # END SourceDeps(oneline)
 Name:           amora
 Version:        1.1
-Release:        alt2_15
+Release:        alt2_16
 Summary:        A mobile remote assistant
 
 Group:          Communications
@@ -55,6 +55,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 %{_mandir}/man8/amorad.8*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_15
 - update to new release by fcimport
 
