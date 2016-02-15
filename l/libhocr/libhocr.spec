@@ -3,6 +3,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/pkg-config /usr/bin/swig gcc-c++ libhocr-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+%add_optflags %optflags_shared
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libhocr
 %define version 0.10.17
@@ -15,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_21
+Release:	alt2_22
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -37,7 +38,7 @@ BuildRequires:	swig, python-devel, gtk2-devel, gettext
 # Fix #925761
 # Upstream use very old autoconf, breaks aarm64 builds
 # So we use autoreconf
-BuildRequires:	autoconf, automake, libtool, pkgconfig
+BuildRequires:	autoconf, automake, libtool
 Source44: import.info
 
 %description
@@ -50,7 +51,7 @@ text, ready for your blog, word processor or any other use.
 %package        devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}
 # We ship *.pc files (requires the -devel of contained libs)
 Requires:	pkgconfig
 
@@ -62,9 +63,8 @@ developing applications that use %{name}.
 %package        gtk
 Summary:	GTK+ application for %{name}
 Group:		Text tools
-Requires:	%{name} = %{version}-%{release}
-Requires:	python-module-sane, python-module-pygtk
-Requires:	python(hocr) = %{version}-%{release}
+Requires:	%{name} = %{version}
+Requires:	python(hocr) = %{version}
 # We use gtktextbuffer which uses gtkspell which have a runtime
 # check of the spellcheck backends... so here it is:
 Requires:	hspell
@@ -75,7 +75,7 @@ The %{name}-gtk package contains a GUI application that uses %{name}.
 %package        -n python-module-libhocr
 Summary:	Python bindings for %{name}
 Group:		System/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}
 Requires:	python > 2.5
 Provides:	python(hocr) = %{version}-%{release}
 
@@ -176,6 +176,9 @@ done
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_22
+- update to new release by fcimport
+
 * Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_21
 - new version
 
