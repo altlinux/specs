@@ -2,9 +2,10 @@
 BuildRequires: pkgconfig(HBAAPI) pkgconfig(pciaccess)
 # END SourceDeps(oneline)
 BuildRequires: pkgconfig(libudev)
+%add_optflags %optflags_shared
 Name:               libhbalinux
 Version:            1.0.17
-Release:            alt1_2
+Release:            alt1_3
 Summary:            FC-HBAAPI implementation using scsi_transport_fc interfaces
 Group:              System/Libraries
 License:            LGPLv2
@@ -12,9 +13,9 @@ URL:                http://www.open-fcoe.org
 Source0:            %{name}-%{version}.tar.gz
 Patch0:             libhbalinux-1.0.13-conf.patch
 Patch1:             libhbalinux-fix-non-pci-netdev.patch
-BuildRequires:      libhbaapi-devel >= 2.2.9-6
+BuildRequires:      libhbaapi-devel >= 2.2.9
 BuildRequires:      libpciaccess-devel libtool automake systemd-devel
-Requires:           libhbaapi >= 2.2.9-6
+Requires:           libhbaapi >= 2.2.9
 Requires(post):     grep
 Requires(postun):   grep
 Source44: import.info
@@ -25,7 +26,7 @@ SNIA HBAAPI vendor library built on top of the scsi_transport_fc interfaces.
 %package devel
 Summary:            A file needed for libhbalinux application development
 Group:              Development/C
-Requires:           %{name}%{?_isa} = %{version}-%{release}
+Requires:           %{name}%{?_isa} = %{version}
 Requires:           pkgconfig
 
 %description devel
@@ -74,6 +75,9 @@ fi
 %{_libdir}/%{name}.so
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt1_3
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.17-alt1_2
 - new version
 
