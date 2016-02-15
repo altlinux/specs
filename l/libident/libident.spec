@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libident
 Version:        0.32
-Release:        alt2_12
+Release:        alt2_13
 Summary:        New LibIdent C library
 Group:          System/Libraries
 License:        Public Domain
@@ -27,7 +27,7 @@ running on the system from which they are connected.
 %package        tools
 Summary:        A small daemon that can be used to test Ident servers
 Group:          System/Servers
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    tools
 in.identtestd is a small daemon (to be started from inetd) that does an 
@@ -38,7 +38,7 @@ your Ident server is working correctly.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 LibIdent is a small C library for interfacing with RFC 1413 
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_12
 - update to new release by fcimport
 
