@@ -5,7 +5,7 @@ Name: hunspell-xh
 Summary: Xhosa hunspell dictionaries
 %define upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_8
+Release: alt2_9
 Source: http://extensions.services.openoffice.org/e-files/3133/0/dict-xh_ZA-2009.10.30.oxt
 Group: Text tools
 URL: http://www.translate.org.za/
@@ -42,6 +42,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_8
 - update to new release by fcimport
 
