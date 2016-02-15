@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libst2205
 Version:        1.4.3
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Library for accessing the display of hacked st2205 photo frames
 Group:          System/Libraries
 License:        GPLv3+
@@ -26,7 +26,7 @@ the display from the PC, for st2205 frames with the hacked firmware.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -36,7 +36,7 @@ developing applications that use %{name}.
 %package tools
 Summary:        Tools for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description tools
 This package contains the st2205 set picture utility which can be used to
@@ -79,6 +79,9 @@ install -p -m 644 libst2205/st2205.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_10
 - update to new release by fcimport
 
