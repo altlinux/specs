@@ -5,16 +5,16 @@
 #   --with static            creates the -static subpckage
 #
 
-%define static  0
+%global static  0
 
-%{?_with_static:%define static 1}
+%{?_with_static:%global static 1}
 
-%define libcgi_somajor 1
-%define libcgi_sominor 0
+%global libcgi_somajor 1
+%global libcgi_sominor 0
 
 Name:           libcgi
 Version:        1.0
-Release:        alt3_18
+Release:        alt3_20
 Summary:        CGI easy as C
 
 Group:          System/Libraries
@@ -33,7 +33,7 @@ LibCGI is a library written from scratch to easily make CGI applications in C.
 %package devel
 Summary:        Header files and libraries for LibCGI development
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description devel
 The libcgi-devel package contains the header files and libraries needed
@@ -44,6 +44,7 @@ to develop programs that use the LibCGI library.
 %package static
 Summary:        LibCGI static library
 Group:          Development/C
+Requires:       %{name}-devel%{?_isa} = %{version}
 
 %description static
 The libcgi-static package contains the static library needed
@@ -67,7 +68,6 @@ make SOMAJOR=%{libcgi_somajor} \
 
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
 make SOMAJOR=%{libcgi_somajor} \
      SOMINOR=%{libcgi_sominor} \
      DESTDIR=$RPM_BUILD_ROOT \
@@ -124,6 +124,9 @@ fi
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_20
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_18
 - update to new release by fcimport
 
