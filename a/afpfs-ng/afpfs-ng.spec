@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ libncurses-devel libreadline-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_19
+Release:        alt3_20
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -103,6 +103,9 @@ cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_20
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_19
 - new version
 
