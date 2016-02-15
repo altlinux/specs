@@ -1,6 +1,6 @@
 Name: paexec
-Version: 0.19.1
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: paexec distributes tasks over network or CPUs
 License: MIT
@@ -8,11 +8,11 @@ Group: Networking/Other
 
 Url: http://paexec.sourceforge.net/
 Source: %name-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 BuildRequires: %_bindir/pod2man %_bindir/pod2html
-BuildRequires: pkgsrc-mk-files bmake groff-base
-BuildRequires: mk-configure >= 0.24.0
+BuildRequires: pkgsrc-mk-files groff-base
+BuildRequires: mk-configure >= 0.27.0
 BuildRequires: runawk
 
 Requires: runawk
@@ -57,7 +57,7 @@ export DESTDIR=%buildroot
 mkcmake install
 
 %files
-%doc doc/NEWS doc/README doc/COPYRIGHT doc/TODO presentation/paexec.pdf
+%doc doc/NEWS README doc/LICENSE doc/TODO presentation/paexec.pdf
 %_bindir/*
 %_man1dir/*
 
@@ -68,6 +68,9 @@ mkcmake install
 # - investigate and re-enable tests
 
 %changelog
+* Sat Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Sat Aug 31 2013 Michael Shigorin <mike@altlinux.org> 0.19.1-alt2
 - rebuilt for Sisyphus (thanks upstream; closes: #29308)
 
