@@ -5,7 +5,7 @@ Summary: Irish dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 4.5
-Release: alt2_9
+Release: alt2_10
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -35,6 +35,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 4.5-alt2_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4.5-alt2_9
 - update to new release by fcimport
 
