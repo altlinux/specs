@@ -2,7 +2,7 @@ Name: hunspell-sw
 Summary: Swahili hunspell dictionaries
 %define upstreamid 20050819
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Group: Text tools
 Source: http://www.it46.se/downloads/openoffice/dictionary/dictionary_myspell_sw_TZ_1.1.tar.gz
 URL: http://www.it46.se
@@ -47,6 +47,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050819-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20050819-alt2_11
 - update to new release by fcimport
 
