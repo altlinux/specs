@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libfap
 Version:        1.5
-Release:        alt1_1
+Release:        alt1_2
 Summary:        An APRS parser written in C
 
 Group:          Communications
@@ -19,7 +19,7 @@ objects, items, messages, telemetry and most weather packets.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -51,6 +51,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_1
 - update to new release by fcimport
 
