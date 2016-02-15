@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsocket pkgconfig(dbus-1) pkgconfig(dbus-glib-1)
 # END SourceDeps(oneline)
-%define fedora 22
+%add_optflags %optflags_shared
+%define fedora 23
 Name:           libsynce
 Version:        0.15.1
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Connection library for Pocket PC devices
 
 Group:          System/Libraries
@@ -31,7 +32,7 @@ FreeBSD or a similar operating system.
 %package devel
 Summary: Development libraries and header files for SynCE
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 Requires: pkgconfig
 
 %description devel
@@ -72,6 +73,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.15.1-alt2_10
+- update to new release by fcimport
+
 * Tue Nov 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.15.1-alt2_9
 - rebuild
 
