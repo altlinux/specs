@@ -11,13 +11,14 @@ BuildRequires: waf
 
 Name:       libsratom
 Version:    0.4.6
-Release:    alt1_3
+Release:    alt1_4
 Summary:    A C library for serializing LV2 plugins
 
 Group:      System/Libraries
 License:    MIT
 URL:        http://drobilla.net/software/%{oldname}/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
+BuildRequires:  python
 BuildRequires:  doxygen
 BuildRequires:  graphviz
 BuildRequires:  sord-devel >= 0.12.0
@@ -37,7 +38,7 @@ control with network transparency.
 %package devel
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}
 Provides: sratom-devel = %{version}-%{release}
 
 %description devel
@@ -63,7 +64,7 @@ export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --datadir=%{_datadir} \
-    --docdir=%{_pkgdocdir} \
+    --docdir=%{_docdir}/%{oldname} \
     --test \
     --docs 
 ./waf build -v %{?_smp_mflags}
@@ -71,25 +72,28 @@ export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
-install -pm 644 COPYING NEWS README %{buildroot}%{_pkgdocdir}
+install -pm 644 COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 
 # tests failing - see http://dev.drobilla.net/ticket/832
 #%%check
 #./build/sratom_test
 
 %files
-%{_pkgdocdir}
-%exclude %{_pkgdocdir}/%{oldname}-%{maj}/
+%{_docdir}/%{oldname}
+%exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 
 %files devel
-%{_pkgdocdir}/%{oldname}-%{maj}/
+%{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.6-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.6-alt1_3
 - update to new release by fcimport
 
