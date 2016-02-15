@@ -1,12 +1,12 @@
-BuildRequires: gcc-c++ libgnutls-devel
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ pkgconfig(avahi-client)
 # END SourceDeps(oneline)
+BuildRequires: libgnutls-devel
 %add_optflags %optflags_shared
 %define oldname obby
 Name:           libobby
 Version:        0.4.8
-Release:        alt1_11
+Release:        alt1_12
 Summary:        A library which provides synced document buffers
 
 Group:          Development/C
@@ -27,7 +27,7 @@ Unix-like platforms.
 %package devel
 Summary:        Development libraries for obby
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Requires:       pkgconfig
 Provides: obby-devel = %{version}-%{release}
 
@@ -63,6 +63,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_12
+- update to new release by fcimport
+
 * Sun Nov 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt1_11
 - new version
 
