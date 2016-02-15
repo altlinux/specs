@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/xmlto boost-devel-headers gcc-c++ libpq5.7-devel libsocket
+BuildRequires: /usr/bin/dot /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/xmlto boost-devel-headers gcc-c++ libpq5.8-devel libsocket
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -8,7 +8,7 @@ Name:           libpqxx
 Summary:        C++ client API for PostgreSQL
 Epoch:          1
 Version:        4.0.1
-Release:        alt1_5
+Release:        alt1_6
 
 License:        BSD
 URL:            http://pqxx.org/
@@ -29,7 +29,7 @@ Supersedes older libpq++ interface.
 %package devel
 Group: Development/C
 Summary:        Development tools for %{name} 
-Requires:       %{name}%{?_isa} = %{epoch}:%{version}-%{release}
+Requires:       %{name}%{?_isa} = %{epoch}:%{version}
 %description devel
 %{summary}.
 
@@ -83,6 +83,9 @@ make %{?_smp_mflags} check ||:
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_6
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1:4.0.1-alt1_5
 - update to new release by fcimport
 
