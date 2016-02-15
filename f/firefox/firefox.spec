@@ -9,7 +9,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        44.0.2
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -72,9 +72,9 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.10.9-alt1
-BuildRequires: libnss-devel        >= 3.20.1-alt1
-BuildRequires: libnss-devel-static >= 3.20.1-alt1
+BuildRequires: libnspr-devel
+BuildRequires: libnss-devel
+BuildRequires: libnss-devel-static
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -306,6 +306,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Mon Feb 15 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.2-alt2
+- Rollback to GTK2.
+
 * Fri Feb 12 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.2-alt1
 - New release (44.0.2).
 - Add symlink to browser-plugins from firefox home directory (ALT#30572)
