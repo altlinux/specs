@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libXNVCtrl
 Version:        352.21
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Library providing the NV-CONTROL API
 Group:          System/Libraries
 License:        GPLv2+
@@ -10,7 +10,6 @@ Source0:        ftp://download.nvidia.com/XFree86/nvidia-settings/nvidia-setting
 Patch0:         libxnvctrl_so_0.patch
 Patch1:         libxnvctrl_optflags.patch
 
-BuildRequires: make
 BuildRequires: libX11-devel
 BuildRequires: libXext-devel
 BuildRequires: coreutils
@@ -27,7 +26,7 @@ themselves.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -70,6 +69,9 @@ popd
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 352.21-alt1_2
 - update to new release by fcimport
 
