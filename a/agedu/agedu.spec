@@ -5,7 +5,7 @@ BuildRequires: libsocket
 
 Name:		agedu
 Version:	0
-Release:	alt2_9.%{rel}
+Release:	alt2_10.%{rel}
 Summary:	An utility for tracking down wasted disk space
 Group:		File tools
 License:	MIT
@@ -39,6 +39,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_10.r9153
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0-alt2_9.r9153
 - update to new release by fcimport
 
