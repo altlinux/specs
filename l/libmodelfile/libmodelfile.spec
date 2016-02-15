@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libmodelfile
 Version:        0.1.92
-Release:        alt3_15
+Release:        alt3_16
 Summary:        Library for accessing various model file formats
 
 Group:          Development/C
@@ -25,7 +25,7 @@ models of various file formats. So far the range of model formats is limited.
 %package        devel
 Summary:        Development files for libmodelfile
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       pkgconfig %{name} = %{version}
 
 %description    devel
 This package contains libraries and header files for developing applications
@@ -64,6 +64,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_15
 - update to new release by fcimport
 
