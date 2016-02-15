@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libGL-devel libGLU-devel libSDL-devel
+BuildRequires: /usr/bin/desktop-file-install libGL-devel libGLU-devel libSDL-devel
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 23
 %define prever pre2
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.20.%{prever}
+Release:        alt5_0.21.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 Group:          Games/Other
 License:        GPL+
@@ -61,6 +61,9 @@ install -p -m 644 pixmaps/%{name}_icon.png \
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.21.pre2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.20.pre2
 - update to new release by fcimport
 
