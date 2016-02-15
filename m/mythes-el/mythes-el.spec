@@ -5,7 +5,7 @@ Name: mythes-el
 Summary: Greek thesaurus
 %define upstreamid 20070412
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_14
 Source: http://www.ellak.gr/pub/oo_extras/th_el.zip
 Group: Text tools
 URL: http://www.openthesaurus.gr/
@@ -48,6 +48,9 @@ done
 %{_datadir}/mythes/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_13
 - update to new release by fcimport
 
