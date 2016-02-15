@@ -4,7 +4,7 @@ BuildRequires: libsysfs-devel
 %add_optflags %optflags_shared
 Name:    libcxgb4
 Version: 1.3.3
-Release: alt1_4
+Release: alt1_5
 Summary: Chelsio T4 iWARP HCA Userspace Driver
 Group:   System/Libraries
 License: GPLv2 or BSD
@@ -12,7 +12,7 @@ Url:     http://www.openfabrics.org/
 Source:  http://www.openfabrics.org/downloads/cxgb4/%{name}-%{version}.tar.gz
 Source1: libcxgb4-modprobe.conf
 
-BuildRequires: libibverbs-devel >= 1.1.3 libtool
+BuildRequires: libibverbs-devel >= 1.1.3, libtool
 Obsoletes: %{name}-devel
 ExcludeArch: s390 s390x
 Provides: libibverbs-driver.%{_arch}
@@ -25,7 +25,7 @@ library.  This driver enables Chelsio T4 based iWARP capable Ethernet devices.
 %package static
 Summary: Static version of the libcxgb4 driver
 Group: System/Libraries
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 %description static
 Static version of libcxgb4 that may be linked directly to an application.
 
@@ -52,6 +52,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.a
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt1_4
 - update to new release by fcimport
 
