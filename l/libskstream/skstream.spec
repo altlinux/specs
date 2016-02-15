@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/zip gcc-c++
+BuildRequires: /usr/bin/zip gcc-c++ pkgconfig(cppunit)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname skstream
@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/zip gcc-c++
 
 Name:           libskstream
 Version:        0.3.9
-Release:        alt1_8
+Release:        alt1_9
 Summary:        C++ I/O library for WorldForge clients/servers
 
 Group:          Development/C++
@@ -32,7 +32,7 @@ connections for both clients and servers.
 %package devel
 Summary:        Development files for skstream
 Group:   Development/C++
-Requires: %{name} = %{version}-%{release}
+Requires: pkgconfig %{oldname} = %{version}
 Provides: skstream-devel = %{version}-%{release}
 
 
@@ -59,34 +59,31 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}-0.3.la
 # Fix one file that gets installed incorrectly
 mv $RPM_BUILD_ROOT%{_libdir}/%{oldname}-0.3/include/%{oldname}/*.h $RPM_BUILD_ROOT%{_includedir}/%{oldname}-0.3/%{oldname}
 
-install -dm 755 $RPM_BUILD_ROOT%{_pkgdocdir}
-cp -pR AUTHORS ChangeLog COPYING README README.FreeSockets TODO doc/* $RPM_BUILD_ROOT%{_pkgdocdir}
-
-%check
-# The tests hang on the koji builders so we need to skip them
-# Run tests in debug mode so asserts won't be skipped
-# sed -i -e 's/-DNDEBUG/-DDEBUG/' test/Makefile
-# make %{?_smp_mflags} check || :
+install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{oldname}
+cp -pR AUTHORS ChangeLog COPYING README README.FreeSockets TODO doc/* $RPM_BUILD_ROOT%{_docdir}/%{oldname}
 
 %files
-%dir %{_pkgdocdir}
-%{_pkgdocdir}/AUTHORS
-%{_pkgdocdir}/ChangeLog
-%{_pkgdocdir}/COPYING
-%{_pkgdocdir}/README
-%{_pkgdocdir}/README.FreeSockets
-%{_pkgdocdir}/TODO
+%dir %{_docdir}/%{oldname}
+%{_docdir}/%{oldname}/AUTHORS
+%{_docdir}/%{oldname}/ChangeLog
+%{_docdir}/%{oldname}/COPYING
+%{_docdir}/%{oldname}/README
+%{_docdir}/%{oldname}/README.FreeSockets
+%{_docdir}/%{oldname}/TODO
 %{_libdir}/lib%{oldname}-0.3.so.*
 
 %files devel
-%{_pkgdocdir}/html
-%{_pkgdocdir}/latex
+%{_docdir}/%{oldname}/html
+%{_docdir}/%{oldname}/latex
 %{_includedir}/%{oldname}-0.3
 %{_libdir}/lib%{oldname}-0.3.so
 %{_libdir}/pkgconfig/*.pc
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_8
 - update to new release by fcimport
 
