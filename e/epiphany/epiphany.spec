@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -36,7 +36,7 @@ BuildPreReq: libSM-devel
 BuildPreReq: libxml2-devel >= 2.6.12
 BuildPreReq: libxslt-devel >= 1.1.7
 BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: libsoup-gnome-devel >= 2.42.1
+BuildPreReq: libsoup-devel >= 2.48.0
 BuildPreReq: libsecret-devel >= 0.14
 BuildPreReq: gcr-libs-devel >= 3.5.5
 BuildRequires: libwnck3-devel libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
@@ -104,6 +104,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Mon Feb 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt1
+- 3.18.4
+
 * Sat Jan 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 
