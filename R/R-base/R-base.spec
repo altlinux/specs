@@ -1,6 +1,6 @@
 Name: R-base
 Version: 3.2.3
-Release: alt1
+Release: alt2
 
 Summary: A language for data analysis and graphics
 License: GPL
@@ -322,6 +322,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Mon Feb 15 2016 Kirill Maslinsky <kirill@altlinux.org> 3.2.3-alt2
+- rebuilt with libicu 5.6
+
 * Sat Dec 12 2015 Kirill Maslinsky <kirill@altlinux.org> 3.2.3-alt1
 - Version 3.2.3
 
