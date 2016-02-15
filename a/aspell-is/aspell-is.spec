@@ -5,7 +5,7 @@ Summary: Icelandic dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.51.1
-Release: alt2_15
+Release: alt2_16
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -38,6 +38,9 @@ mv $RPM_BUILD_ROOT/%{_libdir}/aspell/*slenska.alias $RPM_BUILD_ROOT/%{_libdir}/a
 %{_datadir}/aspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.51.1-alt2_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.51.1-alt2_15
 - update to new release by fcimport
 
