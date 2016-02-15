@@ -2,7 +2,7 @@ Name: hunspell-et
 Summary: Estonian hunspell dictionaries
 %define upstreamid 20030606
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 Source: http://www.meso.ee/~jjpp/speller/ispell-et_%{upstreamid}.tar.gz
 Group: Text tools
 URL: http://www.meso.ee/~jjpp/speller/
@@ -46,6 +46,9 @@ cp -p hyph_et.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_et_EE.dic
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_13
 - update to new release by fcimport
 
