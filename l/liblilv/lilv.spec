@@ -14,7 +14,7 @@ BuildRequires: gcc-c++
 
 Name:       liblilv
 Version:    0.20.0
-Release:    alt1_4
+Release:    alt1_5
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
@@ -43,7 +43,7 @@ faster and have minimal dependencies.
 %package devel
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}
 Provides: lilv-devel = %{version}-%{release}
 
 %description devel
@@ -55,7 +55,7 @@ This package contains the headers and development libraries for %{oldname}.
 %package -n python-module-lilv
 Summary:    Python bindings for %{oldname}
 Group:      Development/Python
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}
 
 %description -n python-module-lilv 
 %{oldname} is a lightweight C library for Resource Description Syntax which 
@@ -76,7 +76,7 @@ sed -i -e "s|'-ftest-coverage'\]|\
 export CFLAGS="%{optflags}" CXXFLAGS="%{optflags}"
 ./waf configure -v --prefix=%{_prefix}\
  --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir}\
- --docdir=%{_pkgdocdir}\
+ --docdir=%{_docdir}/%{oldname}\
  --docs --test --dyn-manifest --bindings 
 ./waf -v build %{?_smp_mflags}
 
@@ -89,7 +89,7 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 
 %files
 %doc AUTHORS NEWS README COPYING
-%exclude %{_pkgdocdir}/%{oldname}-%{maj}/
+%exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/lilv-bench
 %{_bindir}/lv2info
@@ -103,7 +103,7 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_pkgdocdir}/%{oldname}-%{maj}/
+%{_docdir}/%{oldname}/%{oldname}-%{maj}/
 %{_mandir}/man3/*
 
 %files -n python-module-lilv
@@ -111,6 +111,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_4
 - update to new release by fcimport
 
