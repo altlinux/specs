@@ -5,7 +5,7 @@ Group: Development/C
 %add_optflags %optflags_shared
 Name:           libtpcmisc
 Version:        1.4.8
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Miscellaneous PET functions
 
 License:        LGPLv2+
@@ -27,7 +27,7 @@ data processing.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -91,6 +91,9 @@ popd
 %{_libdir}/%{name}.a
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_11
 - update to new release by fcimport
 
