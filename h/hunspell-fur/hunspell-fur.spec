@@ -5,7 +5,7 @@ Name: hunspell-fur
 Summary: Friulian hunspell dictionaries
 %define upstreamid 20050912
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://digilander.libero.it/paganf/coretors/myspell-fur-12092005.zip
 Group: Text tools
 URL: http://digilander.libero.it/paganf/coretors/dizionaris.html
@@ -43,6 +43,9 @@ cp -p fur_IT.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050912-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20050912-alt2_11
 - update to new release by fcimport
 
