@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libvoikko
 Version:        3.7.1
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -37,7 +37,8 @@ Hunspell.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -46,7 +47,7 @@ developing applications that use %{name}.
 %package -n     voikko-tools
 Summary:        Test tools for %{name}
 Group:          Text tools
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description -n voikko-tools
 This package contains voikkospell and voikkohyphenate, small command line
@@ -56,7 +57,7 @@ scripts.
 %package -n python-module-libvoikko
 Summary:        Python interface to %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 # Note: noarch subpackage, only works in Fedora >= 11
 BuildArch:      noarch
 
@@ -111,6 +112,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.7.1-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.7.1-alt1_3
 - update to new release by fcimport
 
