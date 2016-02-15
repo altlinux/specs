@@ -5,7 +5,7 @@ Name: mythes-da
 Summary: Danish thesaurus
 %define upstreamid 20100629.15.16
 Version: 0.%{upstreamid}
-Release: alt1_8
+Release: alt1_9
 Source: http://extensions.services.openoffice.org/e-files/1388/12/DanskeSynonymer.oxt
 Group: Text tools
 URL: http://synonym.oooforum.dk
@@ -37,6 +37,9 @@ cp -p th_da_DK.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_da_DK_v2.idx
 %{_datadir}/mythes/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20100629.15.16-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20100629.15.16-alt1_8
 - update to new release by fcimport
 
