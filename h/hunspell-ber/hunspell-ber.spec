@@ -2,7 +2,7 @@ Name: hunspell-ber
 Summary: Amazigh hunspell dictionaries
 %define upstreamid 20080210
 Version: 0.%{upstreamid}
-Release: alt2_10
+Release: alt2_11
 Source: http://ayaspell.sourceforge.net/data/hunspell-am_test.tar.gz
 Group: Text tools
 URL: http://ayaspell.sourceforge.net/am.html
@@ -30,6 +30,9 @@ cp -p tifinagh.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ber_MA.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080210-alt2_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20080210-alt2_10
 - update to new release by fcimport
 
