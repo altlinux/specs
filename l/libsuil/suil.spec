@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ waf
 
 Name:       libsuil
 Version:    0.8.2
-Release:    alt1_3
+Release:    alt1_4
 Summary:    A lightweight C library for loading and wrapping LV2 plugin UIs
 
 Group:      System/Libraries
@@ -21,6 +21,7 @@ Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
 BuildRequires:  doxygen
 BuildRequires:  graphviz
+BuildRequires:  python
 BuildRequires:  lv2-devel
 # we need to track changess to these toolkits manually due to the 
 # requires filtering below
@@ -51,7 +52,7 @@ loaded modules).
 %package devel
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name} = %{version}
 Provides: suil-devel = %{version}-%{release}
 
 %description devel
@@ -68,18 +69,18 @@ export CXXFLAGS="%{optflags}"
     --prefix=%{_prefix} \
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
-    --docdir=%{_pkgdocdir} \
+    --docdir=%{_docdir}/%{oldname} \
     --docs 
 ./waf build -v %{?_smp_mflags}
 
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
-install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
+install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 
 %files
-%{_pkgdocdir}
-%exclude %{_pkgdocdir}/%{oldname}-%{maj}
+%{_docdir}/%{oldname}
+%exclude %{_docdir}/%{oldname}/%{oldname}-%{maj}
 %dir %{_libdir}/suil-%{maj}
 %{_libdir}/lib%{oldname}-*.so.*
 %{_libdir}/suil-%{maj}/libsuil_gtk2_in_qt4.so
@@ -91,10 +92,13 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_pkgdocdir}
 %{_libdir}/lib%{oldname}-%{maj}.so
 %{_libdir}/pkgconfig/%{oldname}-%{maj}.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_pkgdocdir}/%{oldname}-%{maj}
+%{_docdir}/%{oldname}/%{oldname}-%{maj}
 %{_mandir}/man3/%{oldname}.3*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1_3
 - update to new release by fcimport
 
