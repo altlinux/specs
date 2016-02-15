@@ -5,7 +5,7 @@ Name: hunspell-gv
 Summary: Manx hunspell dictionaries
 %define upstreamid 20040505
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Group: Text tools
 Source: http://ftp.gnu.org/gnu/aspell/dict/gv/aspell-gv-0.50-0.tar.bz2
 URL: http://borel.slu.edu/crubadan/apps.html
@@ -47,6 +47,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040505-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20040505-alt2_11
 - update to new release by fcimport
 
