@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdoc-mkdb /usr/sbin/tcpdump gcc-c++ libmagic-devel lib
 %add_optflags %optflags_shared
 Name:           libnetdude
 Version:        0.11
-Release:        alt1_12
+Release:        alt1_13
 Summary:        Management framework for pcap packet traces
 
 Group:          System/Libraries
@@ -15,7 +15,7 @@ Source1:        libnetdude-lndtool-wrapper.sh
 # -Werror=format-security
 Patch0:         libnetdude-0.11-format-security.patch
 
-BuildRequires:  glib-devel libpcapnav-devel gtk-doc >= 0.6 tcpdump /bin/sed
+BuildRequires:  glib-devel, libpcapnav-devel, gtk-doc >= 0.6, tcpdump, /bin/sed
 BuildRequires:  libpcap-devel
 Source44: import.info
 
@@ -28,7 +28,7 @@ mangling capabilities provided by the set of plugins you have installed.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -80,6 +80,9 @@ rm -rf %{buildroot}%{_datadir}/gtk-doc/html/%{name}/%{name}/
 %{_datadir}/gtk-doc/html/%{name}/
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_12
 - update to new release by fcimport
 
