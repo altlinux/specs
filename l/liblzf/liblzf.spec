@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           liblzf
 Version:        3.6
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Small data compression library
 
 Group:          System/Libraries
@@ -26,9 +26,10 @@ is very, very fast, yet still written in portable C.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %if 0%{?el4}%{?el5}
+Requires:       pkgconfig
 %endif
 
 
@@ -73,6 +74,9 @@ rm -f %{buildroot}%{_libdir}/liblzf.la
 %{_libdir}/pkgconfig/liblzf.pc
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_10
 - update to new release by fcimport
 
