@@ -1,6 +1,6 @@
 Name: xpilot
 Version: 4.5.4
-Release: alt3.2
+Release: alt4
 
 Summary: An X Window System based multiplayer aerial combat game
 License: GPL
@@ -33,8 +33,11 @@ the server on one machine, and then set up xpilot clients on all of the players'
 machines.
 
 %prep
-%setup -q
+%setup
 %patch -p0
+
+# FIXME: a "port" of xpilot-ng-4.7.3-alt-getline.patch
+sed -i 's,getline,my_getline,g' src/client/textinterface.c
 
 %build
 xmkmf
@@ -66,6 +69,9 @@ bzcat %SOURCE4 > %buildroot%_liconsdir/%name.png
 %_iconsdir/*.png
 
 %changelog
+* Mon Feb 15 2016 Michael Shigorin <mike@altlinux.org> 4.5.4-alt4
+- fix build (getline)
+
 * Tue Apr 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 4.5.4-alt3.2
 - fix build
 
