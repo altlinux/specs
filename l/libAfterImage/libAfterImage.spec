@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/find /usr/bin/perl /usr/bin/pkg-config /usr/bin/xargs gcc-c++ libXpm-devel libgif-devel pkgconfig(librsvg-2.0)
+BuildRequires: /usr/bin/find /usr/bin/perl /usr/bin/pkg-config /usr/bin/xargs gcc-c++ libXpm-devel libgif-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_13
+Release:        alt1_14
 Summary:        A generic image manipulation library
 
 Group:          System/Libraries
@@ -52,7 +52,7 @@ from X window system.
 %package devel
 Summary:  Files needed for software development with %{name}
 Group:    Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 
 %description devel
 The %{name}-devel package contains the files needed for development with
@@ -100,6 +100,9 @@ touch -r ChangeLog $RPM_BUILD_ROOT%{_bindir}/afterimage-{config,libs}
 %{_libdir}/*.so
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1_13
 - update to new release by fcimport
 
