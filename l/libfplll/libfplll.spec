@@ -5,7 +5,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libfplll
 Version:        4.0.4
-Release:        alt1_7
+Release:        alt1_8
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/dstehle/fplll
@@ -30,7 +30,7 @@ reduction algorithm.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -40,7 +40,7 @@ developing applications that use %{name}.
 %package        tools
 Group: Engineering
 Summary:        Command line tools that use %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    tools
 The %{name}-tools package contains command-line tools that expose
@@ -88,6 +88,9 @@ make check
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_7
 - update to new release by fcimport
 
