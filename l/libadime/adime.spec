@@ -1,7 +1,7 @@
 %define oldname adime
 Name:           libadime
 Version:        2.2.1
-Release:        alt2_19
+Release:        alt2_20
 Summary:        Allegro Dialogs Made Easy
 Group:          System/Libraries
 License:        zlib
@@ -21,7 +21,7 @@ data.
 %package devel
 Summary: Development libraries and headers for adime
 Group: Development/C
-Requires: libadime = %{version}-%{release}
+Requires: libadime = %{version}
 
 %description devel
 The developmental files that must be installed in order to compile
@@ -67,6 +67,9 @@ ln -s libadime.so.0 $RPM_BUILD_ROOT%{_libdir}/libadime.so
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_20
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_19
 - update to new release by fcimport
 
