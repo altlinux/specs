@@ -1,6 +1,6 @@
 Name: libbelle-sip
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: Linphone sip stack
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ License: GPL
 Url: http://www.belle-sip.org
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: belle-sip-1.4.2-antlr34.patch
 # Automatically added by buildreq on Fri Jul 31 2015
 # optimized out: antlr3-C antlr3-java gnu-config java jpackage-utils libstdc++-devel pkg-config stringtemplate4 tzdata-java
 BuildRequires: antlr3-C-devel antlr3-tool gcc-c++ java-devel
@@ -31,6 +32,7 @@ Libraries and headers required to develop software with belle-sip
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 pushd polarssl
@@ -74,6 +76,9 @@ popd
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Mon Feb 15 2016 Alexei Takaseev <taf@altlinux.org> 1.4.2-alt2
+- Add patch for antlr >= 3.4
+
 * Tue Nov 03 2015 Alexei Takaseev <taf@altlinux.org> 1.4.2-alt1
 - 1.4.2
 
