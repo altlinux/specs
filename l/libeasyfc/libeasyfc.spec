@@ -1,17 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(freetype2)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(harfbuzz) pkgconfig(libxml-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libeasyfc
-Version:	0.13.0
-Release:	alt1_6
+Version:	0.13.1
+Release:	alt1_1
 Summary:	Easy configuration generator interface for fontconfig
 
 Group:		System/Libraries
 License:	LGPLv3+
 URL:		http://tagoh.bitbucket.org/libeasyfc/
 Source0:	https://bitbucket.org/tagoh/libeasyfc/downloads/%{name}-%{version}.tar.bz2
-Patch0:		%{name}-fix-crash-no-fonts.patch
 
 BuildRequires:	glib2-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.10.92 libharfbuzz-devel
 BuildRequires:	gettext
@@ -25,7 +24,7 @@ fontconfig configuration on demand.
 %package	gobject
 Summary:	GObject interface for libeasyfc
 Group:		System/Libraries
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
 
 %description	gobject
 libeasyfc aims to provide an easy interface to generate
@@ -36,7 +35,8 @@ This package contains an interface for GObject.
 %package	devel
 Summary:	Development files for libeasyfc
 Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}
+Requires:	pkgconfig
 
 %description	devel
 libeasyfc aims to provide an easy interface to generate
@@ -48,8 +48,9 @@ applications with libeasyfc.
 %package	gobject-devel
 Summary:	Development files for libeasyfc-gobject
 Group:		Development/C
-Requires:	%{name}-gobject%{?_isa} = %{version}-%{release}
-Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
+Requires:	%{name}-gobject%{?_isa} = %{version}
+Requires:	%{name}-devel%{?_isa} = %{version}
+Requires:	pkgconfig
 
 %description	gobject-devel
 libeasyfc aims to provide an easy interface to generate
@@ -60,7 +61,6 @@ applications with libeasyfc-gobject.
 
 %prep
 %setup -q
-%patch0 -p1 -b .0-crash-no-fonts
 
 
 %build
@@ -95,6 +95,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_6
 - update to new release by fcimport
 
