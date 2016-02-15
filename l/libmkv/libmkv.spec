@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:      libmkv
 Version:   0.6.5.1
-Release:   alt2_8
+Release:   alt2_9
 Summary:   An alternative to the official libmatroska library
 
 Group:     System/Libraries
@@ -14,7 +14,7 @@ Source0:   %{name}-%{version}.tar.gz
 Patch0:    A01-hbmv-pgs.patch
 
 
-BuildRequires: autoconf automake libtool
+BuildRequires: autoconf, automake, libtool
 Source44: import.info
 
 %description
@@ -45,7 +45,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %package devel
 Summary:   An alternative to the official libmatroska library - devel files
 Group:     Development/C
-Requires:  %{name} = %{version}-%{release}
+Requires:  %{name} = %{version}
 
 %description devel
 This library is meant to be an alternative to the official libmatroska library.
@@ -57,6 +57,9 @@ development files.
 %{_libdir}/libmkv.so
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.5.1-alt2_8
 - update to new release by fcimport
 
