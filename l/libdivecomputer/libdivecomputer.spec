@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(libusb-1.0)
+# END SourceDeps(oneline)
 Group: Other
 %add_optflags %optflags_shared
 #global        snapdate   20120717
@@ -7,7 +10,7 @@ Group: Other
 Name:           libdivecomputer
 Version:        0.4.2
 #Release:        2.{snapver}{?dist}
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Library for communication with dive computers
 
 License:        LGPLv2+
@@ -70,7 +73,7 @@ source code.
 %package        devel
 Group: Other
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -85,7 +88,7 @@ developing applications that use %{name}.
 %package        static
 Group: Other
 Summary:        Static files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    static
 The %{name}-static package contains static files for
@@ -130,6 +133,9 @@ rm $RPM_BUILD_ROOT/%{_bindir}/{veo250,vtpro,vyper,vyper2}
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_4
 - update to new release by fcimport
 
