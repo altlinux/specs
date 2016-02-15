@@ -1,19 +1,23 @@
 %define somver 1
 %define sover %somver.1.18
+%def_with doc
+
 Name: sowing
 Version: 1.1.18
-Release: alt1
+Release: alt1.1
+
 Summary: The program development and maintenance environment
 License: Free
 Group: Development/Tools
-Url: http://ftp.mcs.anl.gov/pub/sowing/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+Url: http://ftp.mcs.anl.gov/pub/sowing/
 Source: http://ftp.mcs.anl.gov/pub/sowing/sowing.tar.gz
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Requires: %name-common = %version-%release
 
-BuildPreReq: ghostscript-utils gcc-c++
+BuildPreReq: gcc-c++
+%{?_with_doc:BuildPreReq: ghostscript-utils}
 
 %description
 The tools that are part of the program development and maintenance environment.
@@ -80,7 +84,9 @@ This package contains static libraries of Sowing.
 	--enable-strict \
 	--enable-memorycheck \
 	--with-wwwdir=$PWD/www/www1
-%make_build
+
+# potentially SMP incompatible build
+make
 
 %install
 %makeinstall \
@@ -129,6 +135,10 @@ sed -i '1s|/sh|/bash|' %buildroot%_bindir/pstoxbm
 %_libdir/*.a
 
 %changelog
+* Mon Feb 15 2016 Michael Shigorin <mike@altlinux.org> 1.1.18-alt1.1
+- BOOTSTRAP: require ghostscript-utils conditionally (doc knob)
+- disable parallel build (at least lcc might choke)
+
 * Tue Dec 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.18-alt1
 - NMU: new version - bugfix for perl 5.22
 
