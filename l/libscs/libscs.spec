@@ -2,10 +2,10 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 21
+%define fedora 23
 Name:           libscs
 Version:        1.4.1
-Release:        alt3_11.2
+Release:        alt3_12.2
 Summary:        Software Carry-Save Multiple-Precision Library
 
 Group:          System/Libraries
@@ -14,7 +14,7 @@ URL:            http://www.ens-lyon.fr/LIP/Arenaire/Ware/SCSLib/
 Source0:        http://www.ens-lyon.fr/LIP/Arenaire/Ware/SCSLib/scslib-%{version}.tar.gz
 Patch0:         scslib-1.4.1-shared.patch
 
-BuildRequires:  autoconf automake libtool
+BuildRequires:  autoconf, automake, libtool
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
 BuildRequires:  libmpfr-devel libgmp-devel libgmp_cxx-devel
 %endif
@@ -54,7 +54,7 @@ operations on most architectures.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
 %endif
 
@@ -96,6 +96,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_12.2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_11.2
 - update to new release by fcimport
 
