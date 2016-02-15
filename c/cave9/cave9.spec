@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(IO/Socket.pm) perl(Time/HiRes.pm)
+BuildRequires: /usr/bin/desktop-file-install perl(IO/Socket.pm) perl(Time/HiRes.pm)
 # END SourceDeps(oneline)
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cave9
@@ -9,7 +9,7 @@ BuildRequires: perl(IO/Socket.pm) perl(Time/HiRes.pm)
 
 Name:           cave9
 Version:        0.4
-Release:        alt3_13
+Release:        alt3_14
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -20,7 +20,7 @@ Source1:        http://cave9.googlecode.com/files/cave9_data-4.tgz
 Source2:        cave9.desktop
 Source4:        %{fontname}.metainfo.xml
 
-BuildRequires:  libSDL_image-devel libSDL_net-devel libSDL_ttf-devel libGL-devel desktop-file-utils fontpackages-devel
+BuildRequires:  libSDL_image-devel, libSDL_net-devel, libSDL_ttf-devel, libGL-devel, desktop-file-utils, fontpackages-devel
 Requires:       fonts-ttf-cave9-mutante
 Source44: import.info
 Patch33: cave9-0.4-alt-as-needed.patch
@@ -162,6 +162,9 @@ fi
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_14
+- update to new release by fcimport
+
 * Sun Oct 18 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_13
 - new version
 
