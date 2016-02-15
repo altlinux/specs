@@ -6,7 +6,7 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 Name:           libctl
 Version:        3.2.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Guile-based support for flexible control files
 # integrator.c and cintergrator.c contain code licensed under GPLv2+
 # The rest of the code is LGPLv2+, but most restrictive license wins
@@ -30,7 +30,7 @@ flexible control files in scientific simulations.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description    devel
 This package contains libraries and header files for
@@ -74,6 +74,9 @@ done
 %{_datadir}/libctl/
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_3
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 3.2.2-alt1_2
 - update to new release by fcimport
 
