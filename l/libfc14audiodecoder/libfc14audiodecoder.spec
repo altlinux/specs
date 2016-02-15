@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libfc14audiodecoder
 Version: 1.0.3
-Release: alt1_6
+Release: alt1_7
 
 Summary: C wrapper library for Future Composer audio decoding
 Group: System/Libraries
@@ -22,7 +22,7 @@ BMP, Audacious and GStreamer.
 %package devel
 Summary: Files needed for developing with %{name}
 Group: Development/C
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}
 
 %description devel
 This package contains the files that are needed when building
@@ -52,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_6
 - update to new release by fcimport
 
