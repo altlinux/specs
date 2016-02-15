@@ -3,7 +3,7 @@ BuildRequires: pkgconfig(fuse)
 # END SourceDeps(oneline)
 Name:          archivemount
 Version:       0.8.7
-Release:       alt1_1
+Release:       alt1_2
 Summary:       FUSE based filesystem for mounting compressed archives
 
 Group:         System/Libraries
@@ -40,6 +40,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_bindir}/archivemount
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.7-alt1_1
 - update to new release by fcimport
 
