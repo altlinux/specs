@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.1.0
-Release: alt3
+Release: alt4
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -35,7 +35,7 @@ Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
 Patch23: palemoon_version-26.1.0.patch
-
+Patch24: palemoon-Pref-gstreamer.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -84,7 +84,7 @@ These helper macros provide possibility to rebuild
 %setup -n %name-%version -c
 %patch21 -p1
 %patch20 -p1
-#patch23 -p1
+
 
 cd %name
 
@@ -103,7 +103,7 @@ popd
 
 #patch22 -p1
 %patch23 -p1
-
+%patch24 -p1
 
 #patch5  -p1
 %patch6  -p1
@@ -319,6 +319,10 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Feb 15 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt4
+- Closes: Bug #31791)
+- Fix media.gstreamer.enabled
+
 * Sun Feb 14 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt3
 - Add option enable-gstreamer
 
@@ -327,7 +331,7 @@ done
 
 * Fri Feb 12 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt1.1.fc37
 - Update from git
-= Remove rpm-build-mozilla.org from deps  ( Bug #31791 )
+= Remove rpm-build-mozilla.org from deps
 
 * Fri Feb 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.0.3-alt1.1.5e83
 - Update from git
@@ -398,4 +402,5 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
 
