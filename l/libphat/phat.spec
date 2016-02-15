@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(gtk+-2.0) pkgconfig(libgnomecanvas-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname phat
 Summary: A collection of GTK+ widgets useful for audio applications
 Name:          libphat
 Version:       0.4.1
-Release:       alt1_14
+Release:       alt1_15
 License:       GPLv2+
 Group:         System/Libraries
 URL:           http://phat.berlios.de/
@@ -16,7 +16,7 @@ Patch0:        phat-unused-but-set-variable.patch
 Patch1:        phat-fix-fsf-address.patch
 Patch2:        phat-gdk-unref.patch
 
-BuildRequires: gtk2-devel
+BuildRequires: gtk2-devel 
 BuildRequires: libgnomecanvas-devel
 Source44: import.info
 Provides: phat = %{version}-%{release}
@@ -29,7 +29,7 @@ standardization (well, at least for GTK+ apps).
 %package devel
 Summary:       Header files for PHAT 
 Group:         Development/C
-Requires:      %{name}%{?_isa} = %{version}-%{release}
+Requires:      %{name}%{?_isa} = %{version}
 Provides: phat-devel = %{version}-%{release}
 
 %description devel
@@ -74,6 +74,9 @@ rm %{buildroot}%{_libdir}/libphat.*a
 %{_datadir}/gtk-doc/html/%{oldname}
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_14
 - update to new release by fcimport
 
