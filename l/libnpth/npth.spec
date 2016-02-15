@@ -3,7 +3,7 @@ Group: System/Libraries
 %define oldname npth
 Name:           libnpth
 Version:        1.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        The New GNU Portable Threads library
 # software uses dual licensing (or both in parallel)
 License:        LGPLv3+ or GPLv2+ or (LGPLv3+ and GPLv2+)
@@ -25,7 +25,7 @@ the use of libraries which are not compatible to GNU Pth.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{oldname}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 Provides: npth-devel = %{version}-%{release}
 
 %description    devel
@@ -63,6 +63,9 @@ make check
 %{_datadir}/aclocal/*
 
 %changelog
+* Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2
 - update to new release by fcimport
 
