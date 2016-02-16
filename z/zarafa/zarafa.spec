@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.14
-Release: alt1
+Release: alt3
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -27,6 +27,7 @@ Patch2: zarafa-7.1.14-alt-php-ext-makefile.patch
 Patch3: zarafa-7.1.8-alt-fix-userscript-path.patch
 Patch4: zarafa-7.1.14-alt-configure.patch
 Patch5: zarafa-7.1.14-alt-boost.m4-update.patch
+Patch6: zarafa-7.1.14-wrong-assert.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires(pre): rpm-build-apache2
@@ -260,6 +261,7 @@ modern web browser.
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
 
 %build
 %add_optflags -fPIC -L%_libdir
@@ -631,6 +633,7 @@ export LDFLAGS=-lphp-%_php5_version
 %files -n php5-mapi
 %dir %_docdir/php-mapi/
 %dir %php5_datadir/%php5_extension/
+%verify(not mode) %config(noreplace) %_sysconfdir/%name/php-mapi.cfg
 %php5_extconf/%php5_extension
 %php5_extdir/*
 %php5_datadir/%php5_extension/*
@@ -687,6 +690,13 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Tue Feb 16 2016 Lenar Shakirov <snejok@altlinux.ru> 7.1.14-alt3
+- zarafa-7.1.14-wrong-assert.patch added:
+  * wrong result checking fixed
+
+* Tue Feb 16 2016 Lenar Shakirov <snejok@altlinux.ru> 7.1.14-alt2
+- package /etc/zarafa/php-mapi.cfg
+
 * Tue Dec 22 2015 Anton Farygin <rider@altlinux.ru> 7.1.14-alt1
 - new version
 
