@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 Name:           gemdropx
 Version:        0.9
-Release:        alt6_15
+Release:        alt6_16
 Summary:        Falling blocks puzzlegame
 Group:          Games/Other
 License:        GPL+
@@ -55,6 +55,9 @@ convert data/images/%{name}-icon.xpm \
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_15
 - update to new release by fcimport
 
