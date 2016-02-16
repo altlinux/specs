@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize pkgconfig(
 # END SourceDeps(oneline)
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_13.20130730git819bed
+Release:        alt2_14.20130730git819bed
 
 Summary:        Swapping gem game
 
@@ -122,6 +122,9 @@ EOF
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_14.20130730git819bed
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_13.20130730git819bed
 - update to new release by fcimport
 
