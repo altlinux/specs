@@ -4,7 +4,7 @@ Group: Text tools
 Name: hyphen-sa
 Summary: Sanskrit hyphenation rules
 Version: 0.%{upstreamid}
-Release: alt1_8
+Release: alt1_9
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-sa.tex?view=co
 Source: hyph-sa.tex
@@ -40,6 +40,9 @@ cp -p hyph_sa_IN.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/hyph_sa_IN.dic
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20110915-alt1_9
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.20110915-alt1_8
 - update to new release by fcimport
 
