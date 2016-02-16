@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 Summary: Utility to create fonts.scale files for truetype fonts
 Name: ttmkfdir
 Version: 3.0.9
-Release: alt1_46
+Release: alt2_46
 # Only licensing attribution is in README, no version.
 License: LGPLv2+
 Group: File tools
@@ -49,8 +49,9 @@ by the font server.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
+#patch10 -p1
 %patch33 -p0
+
 
 %build
 make %{?_smp_mflags} OPTFLAGS="$RPM_OPT_FLAGS"
@@ -66,6 +67,9 @@ cp -p %{SOURCE10} %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/ttmkfdir.1*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt2_46
+- fixed build
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt1_46
 - update to new release by fcimport
 
