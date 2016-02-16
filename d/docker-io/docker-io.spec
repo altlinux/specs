@@ -10,8 +10,8 @@
 %global shortcommit 590d510
 
 Name:       %{repo}-io
-Version:    1.10.0
-Release: alt1.1
+Version:    1.10.1
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -251,8 +251,7 @@ exit 0
 %{_unitdir}/docker.service
 %{_unitdir}/docker.socket
 %_initdir/docker
-# Feel free to fix it for bash 3.2
-%exclude %{_datadir}/bash-completion/completions/docker
+%{_datadir}/bash-completion/completions/docker
 %dir %{_sharedstatedir}/docker
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 %{_datadir}/vim/vimfiles/doc/dockerfile.txt
@@ -268,6 +267,10 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Tue Feb 16 2016 Vladimir Didenko <cow@altlinux.org> 1.10.1-alt1
+- New version
+- Restore bash completions
+
 * Wed Feb 10 2016 Vladimir Didenko <cow@altlinux.org> 1.10.0-alt1.1
 - fix provides
 
