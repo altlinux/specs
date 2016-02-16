@@ -1,20 +1,23 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ pkgconfig(libgda-bdb-5.0)
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
-%global api_ver 4.0
+%global api_ver 5.0
 
-Name:		libgdamm
-Version:	4.1.3
-Release:	alt2_4
-Summary:	C++ wrappers for libgda
-Group:		System/Libraries
-License:	LGPLv2+
-URL:		http://www.gtkmm.org/
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgdamm/3.99/%{name}-%{version}.tar.bz2
-BuildRequires:	libglibmm-devel >= 2.12.8
-BuildRequires:	mm-common >= 0.9.5
-BuildRequires:  libgda4-devel >= 4.1.7
+%global glibmm_version 2.46.1
+
+Name:           libgdamm
+Version:        4.99.10
+Release:        alt1_2
+Summary:        C++ wrappers for libgda
+License:        LGPLv2+
+URL:            http://www.gtkmm.org/
+Source0:        http://ftp.gnome.org/pub/GNOME/sources/libgdamm/4.99/%{name}-%{version}.tar.xz
+BuildRequires:  libglibmm-devel >= %{glibmm_version}
+BuildRequires:  libgda5-devel
+BuildRequires:  libgda5-bdb
+
+Requires:       libglibmm >= %{glibmm_version}
 Source44: import.info
 
 %description
@@ -23,20 +26,20 @@ C++ bindings for the GNOME libraries, which provide additional
 functionality above GTK+/gtkmm.
 
 %package devel
-Summary:	Headers/Libraries for developing programs that use libgdamm
-Group:		Development/C
-Requires:       libgdamm = %{version}-%{release}
+Group: Development/C
+Summary:        Headers/Libraries for developing programs that use libgdamm
+Requires:       %{name}%{?_isa} = %{version}
 
 %description devel
 This package contains headers and libraries that programmers will need 
 to develop applications which use libgdamm.
 
 %package        doc
+Group: Documentation
 Summary:        API documentation for %{name}
-Group:          Documentation
 BuildArch:      noarch
 BuildRequires:  doxygen graphviz
-Requires:       libgtkmm2-doc
+Requires:       libglibmm-doc
 
 %description    doc
 This package contains the full API documentation for %{name}.
@@ -45,22 +48,24 @@ This package contains the full API documentation for %{name}.
 %setup -q
 
 %build
+%add_optflags -std=c++11
 %configure --disable-static
 make %{?_smp_mflags}
 
 %install
-make DESTDIR=${RPM_BUILD_ROOT} install
-find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
+%makeinstall_std
+find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
 %files
-%doc AUTHORS COPYING ChangeLog NEWS
+%doc COPYING
+%doc AUTHORS NEWS
 %{_libdir}/*.so.*
 
 
 %files devel
-%{_includedir}/libgdamm-4.0
+%{_includedir}/libgdamm-%{api_ver}
 %{_libdir}/*.so
-%{_libdir}/libgdamm-4.0
+%{_libdir}/libgdamm-%{api_ver}
 %{_libdir}/pkgconfig/*.pc
 
 %files doc
@@ -70,6 +75,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.99.10-alt1_2
+- fixed build
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt2_4
 - update to new release by fcimport
 
