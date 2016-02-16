@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 Name:		drascula
 Version:	1.0
-Release:	alt2_13
+Release:	alt2_14
 Summary:	The Vampire Strikes Back
 Group:		Games/Other
 # For further discussion on distribution rights see:
@@ -59,6 +59,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13
 - update to new release by fcimport
 
