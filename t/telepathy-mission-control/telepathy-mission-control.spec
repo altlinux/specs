@@ -1,5 +1,7 @@
 %define _libexecdir %_prefix/libexec
 %define api_ver 5.5
+%define plugin_abi_ver 0
+
 %def_enable gnome_keyring
 #monitor device suspending and resuming
 %def_disable upower
@@ -9,14 +11,14 @@
 
 Name: telepathy-mission-control
 Version: 5.16.3
-Release: alt1
+Release: alt1.1
 
 Summary: Telepathy mission control plugin library
 License: LGPL v2.1
 Group: System/Libraries
 Url: http://mission-control.sourceforge.net/
 
-Source:http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
 
 BuildRequires: gtk-doc libgio-devel >= 2.28.0 libdbus-glib-devel libtelepathy-glib-devel >= 0.22.0
 %{?_enable_upower:BuildRequires: libupower-devel}
@@ -73,6 +75,8 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 
 %install
 %makeinstall_std
+# plugin dir
+mkdir %buildroot%_libdir/mission-control-plugins.%plugin_abi_ver
 
 %check
 %{?_enable_check:%make check}
@@ -81,6 +85,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 %_bindir/*
 %_libdir/libmission-control-plugins.so.*
 %_libexecdir/mission-control-5
+%dir %_libdir/mission-control-plugins.%plugin_abi_ver
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/im.telepathy.MissionControl.FromEmpathy.gschema.xml
 %_man1dir/*
@@ -94,6 +99,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags glib-2.0` `pkg-config --cflags dbus-
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 5.16.3-alt1.1
+- packaged %%_libdir/mission-control-plugins.0 (ALT #31378)
+
 * Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 5.16.3-alt1
 - 5.16.3
 
