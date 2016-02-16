@@ -1,4 +1,4 @@
-#set_verify_elf_method relaxed
+%set_verify_elf_method relaxed
 
 %define firefox_cid                    \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix                 %_libdir/firefox
@@ -9,7 +9,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        44.0.2
-Release:        alt2
+Release:        alt3
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -30,8 +30,16 @@ Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1220399
-Patch20:        mozilla-bug-1220399-building-with-libproxy-support-fails.patch
+# Upstream
+Patch200:       mozilla-bug-1205199.patch
+Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
+Patch202:       mozilla-bug-1234026.patch
+
+# Red Hat
+Patch300:       rhbz-1219542-s390-build.patch
+Patch301:       rhbz-1291190-appchooser-crash.patch
+Patch302:       rhbz-966424.patch
+Patch303:       rh-firefox-gtk3-20.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -85,6 +93,9 @@ Conflicts:	firefox-settings-desktop
 Provides:	webclient
 Requires:	mozilla-common
 
+# ALT#30732
+Requires:	gst-plugins-ugly
+
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss >= 3.12.11-alt3
 
@@ -121,7 +132,16 @@ tar -xf %SOURCE2
 %patch14 -p1
 %patch16 -p1
 %patch17 -p2
-%patch20 -p1
+
+%patch200 -p1
+%patch201 -p1
+%patch202 -p1
+
+%patch300 -p1
+%patch301 -p1
+%patch302 -p1
+#patch303 -p1
+
 
 #echo firefox_version > browser/config/version.txt
 
@@ -154,14 +174,13 @@ EOF
 #
 # Disable C++ exceptions since Mozilla code is not exception-safe
 #
-MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
-                sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
+MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now | \
+                sed \
+                    -e 's/-Wall//' \
+                    -e 's/-fexceptions/-fno-exceptions/g'
+)
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
-
-# Add fake RPATH
-rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
@@ -240,11 +259,6 @@ install -m755 firefox %buildroot/%_bindir/firefox
 
 cd %buildroot
 
-#sed -i \
-#	-e 's,\(MinVersion\)=.*,\1=5.0.1,g' \
-#	-e 's,\(MaxVersion\)=.*,\1=5.0.1,g' \
-#	./%firefox_prefix/application.ini
-
 mv -f ./%firefox_prefix/application.ini ./%firefox_prefix/browser/application.ini
 
 # install menu file
@@ -264,24 +278,6 @@ rm -rf -- \
 	./%_datadir/idl/%name \
 	./%_libdir/%name-devel \
 #
-
-# Add real RPATH
-(set +x
-	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-
-	find \
-		%buildroot/%firefox_prefix \
-	-type f |
-	while read f; do
-		t="$(readlink -ev "$f")"
-
-		file "$t" | fgrep -qs ELF || continue
-
-		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
-			chrpath -r "%firefox_prefix" "$t"
-		fi
-	done
-)
 
 %pre
 for n in defaults browserconfig.properties; do
@@ -306,6 +302,13 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Feb 16 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.2-alt3
+- Use GTK3 again.
+- Add RedHat patches.
+- Add require gst-plugins-ugly (ALT#30732).
+- Fix javascript crash (ALT#31787).
+- Fix flash player crash (ALT#31744).
+
 * Mon Feb 15 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.2-alt2
 - Rollback to GTK2.
 
