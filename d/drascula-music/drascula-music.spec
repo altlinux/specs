@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           drascula-music
 Version:        1.0
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Background music for Drascula: The Vampire Strikes Back
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -38,6 +38,9 @@ install -p -m 644 audio/*.ogg $RPM_BUILD_ROOT%{_datadir}/drascula
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_10
 - update to new release by fcimport
 
