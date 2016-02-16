@@ -1,7 +1,7 @@
 Group: Text tools
 Name:           colordiff
 Version:        1.0.16
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -50,6 +50,9 @@ sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.16-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.16-alt1_1
 - update to new release by fcimport
 
