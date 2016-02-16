@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 23
 Name:           lacewing
 Version:        1.10
-Release:        alt2_25
+Release:        alt2_26
 Summary:        Arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -82,6 +82,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_26
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_25
 - update to new release by fcimport
 
