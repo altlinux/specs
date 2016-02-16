@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 Name:           crystal-stacker
 Version:        1.5
-Release:        alt2_20
+Release:        alt2_21
 Summary:        Falling blocks, match 3 or more of the same color crystals
 Group:          Games/Other
 License:        Crystal Stacker
@@ -83,6 +83,9 @@ install -p -m 644 %{name}.png %{name}-theme-editor.png \
 %{_datadir}/icons/hicolor/32x32/apps/%{name}-theme-editor.png
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_21
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_20
 - update to new release by fcimport
 
