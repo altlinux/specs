@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hyphen-ro
 Summary: Romanian hyphenation rules
 Version: 3.3.6
-Release: alt1_8
+Release: alt1_9
 Source: http://downloads.sourceforge.net/rospell/hyph_ro_RO.3.3.6.zip
 Group: Text tools
 URL: http://rospell.sourceforge.net/
@@ -31,6 +31,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.3.6-alt1_8
 - update to new release by fcimport
 
