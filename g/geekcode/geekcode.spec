@@ -1,7 +1,7 @@
 Group: Games/Other
 Name:           geekcode
 Version:        1.7.3
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Geek Code generator
 Summary(pl):    Generator Geek Code
 License:        GPLv2+
@@ -14,7 +14,6 @@ Patch1:         %{name}-1.7.3-choice.patch
 BuildRequires:  binutils
 BuildRequires:  coreutils
 BuildRequires:  gcc
-BuildRequires:  make
 Source44: import.info
 
 %description
@@ -46,6 +45,9 @@ install -m 755 geekcode %{buildroot}%{_bindir}
 %{_bindir}/%{name}
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_17
 - update to new release by fcimport
 
