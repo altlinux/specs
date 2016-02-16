@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Name:           gamazons
 Version:        0.83
-Release:        alt4_15
+Release:        alt4_16
 Summary:        GNOME Amazons
 
 Group:          Games/Other
@@ -60,6 +60,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.83-alt4_15
 - update to new release by fcimport
 
