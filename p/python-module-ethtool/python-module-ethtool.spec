@@ -3,7 +3,7 @@
 
 Name: python-module-ethtool
 Version: 0.11
-Release: alt1
+Release: alt1.1
 
 Summary: Ethernet settings python bindings
 Group: Development/Python
@@ -11,6 +11,7 @@ License: GPLv2
 Url: http://git.fedorahosted.org/cgit/%_name.git
 
 Source: https://fedorahosted.org/releases/p/y/%_name/%_name-%version.tar.bz2
+Patch: python-ethtool-0.11-alt-include.patch
 
 BuildRequires: python-devel libnl-devel
 %{?_with_man:BuildRequires: asciidoc-a2x >= 8.6.8}
@@ -22,6 +23,7 @@ auto-negotiation, and PCI locations.
 
 %prep
 %setup -n %_name-%version
+%patch
 
 %build
 %python_build
@@ -48,6 +50,9 @@ install -m644 man/pifconfig.8 %buildroot%_man8dir/pifconfig.8
 %{?_with_man:%_man8dir/*}
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1.1
+- fixed build
+
 * Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - 0.11
 
