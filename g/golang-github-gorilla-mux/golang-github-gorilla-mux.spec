@@ -1,60 +1,63 @@
 %global import_path     github.com/gorilla/mux
-%global gopath          %_datadir/gocode
+
+%global commit 26a6070f849969ba72b72256e9f14cf519751690
+%global abbrev %(c=%{commit}; echo ${c:0:8})
+
 
 Name: golang-github-gorilla-mux
 Version: 0
-Release: alt3
-Summary: A powerful URL router and dispatcher for golang
+Release: alt4.git%abbrev
+Summary: Package `gorilla/mux` implements a request router and dispatcher.
 License: BSD
 Group: Development/Other
-Url: http://www.gorillatoolkit.org/pkg/mux
-Source0: %name-%version.tar
+Url: https://godoc.org/%import_path
+Source: %name-%version.tar
+
+Packager: Denis Pynkin <dans@altlinux.ru>
+
+ExclusiveArch:  %go_arches
+BuildRequires(pre): rpm-build-golang
+
 BuildArch: noarch
+BuildRequires: golang-tools
+BuildRequires: golang(github.com/gorilla/context)
 
 %description
-Package gorilla/mux implements a request router and dispatcher.
-
-The name mux stands for "HTTP request multiplexer". Like the standard
-http.ServeMux, mux.Router matches incoming requests against a list of
-registered routes and calls a handler for the route that matches the URL or
-other conditions.
+Package `gorilla/mux` implements a request router and dispatcher.
 
 %package devel
-Summary: A powerful URL router and dispatcher for golang
+Summary: Package `gorilla/mux` implements a request router and dispatcher.
 Group: Development/Other
-Provides: golang(%import_path) = %version-%release
 Requires: golang
 Requires: golang(github.com/gorilla/context)
+Provides: golang(%import_path) = %version-%release
 
 %description devel
-Package gorilla/mux implements a request router and dispatcher.
-
-The name mux stands for "HTTP request multiplexer". Like the standard
-http.ServeMux, mux.Router matches incoming requests against a list of
-registered routes and calls a handler for the route that matches the URL or
-other conditions.
-
-This package contains library source intended for building other packages
-which use gorilla/mux.
+Package `gorilla/mux` implements a request router and dispatcher.
 
 %prep
-%setup
+%setup -q
 
 %build
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+
+%golang_prepare
+
 %install
-install -d %buildroot/%gopath/src/%import_path
-cp -av *.go %buildroot/%gopath/src/%import_path
+export BUILDDIR="$PWD/.build"
+export GOPATH="%go_path"
+
+%golang_install
 
 %files devel
-%doc LICENSE README.md
-%dir %attr(755,root,root) %gopath
-%dir %attr(755,root,root) %gopath/src
-%dir %attr(755,root,root) %gopath/src/github.com
-%dir %attr(755,root,root) %gopath/src/github.com/gorilla
-%dir %attr(755,root,root) %gopath/src/github.com/gorilla/mux
-%gopath/src/%import_path/*.go
+%doc README.md LICENSE
+%go_path/src/*
 
 %changelog
+* Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 0-alt4.git26a6070f
+- Update for lxd
+
 * Wed Jun 11 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0-alt3
 - update to commit 136d54f81f (required for docker 1.0
    https://github.com/dotcloud/docker/issues/5908)

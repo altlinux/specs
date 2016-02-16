@@ -1,15 +1,25 @@
 %global import_path     github.com/gorilla/context
-%global gopath          %_datadir/gocode
+
+%global commit 1c83b3eabd45b6d76072b66b746c20815fb2872d
+%global abbrev %(c=%{commit}; echo ${c:0:8})
+
 
 Name: golang-github-gorilla-context
 Version: 0
-Release: alt2.git20140604
-Summary: A golang registry for global request variables
+Release: alt3.git%abbrev
+Summary: Package context stores values shared during a request lifetime.
 License: BSD
 Group: Development/Other
-Url: http://www.gorillatoolkit.org/pkg/context
-Source0: %name-%version.tar
+Url: https://godoc.org/%import_path
+Source: %name-%version.tar
+
+Packager: Denis Pynkin <dans@altlinux.ru>
+
+ExclusiveArch:  %go_arches
+BuildRequires(pre): rpm-build-golang
+
 BuildArch: noarch
+BuildRequires: golang-tools
 
 %description
 Package gorilla/context stores values shared during a request lifetime.
@@ -20,10 +30,10 @@ sessions values to be saved at the end of a request. There are several
 other common uses.
 
 %package devel
-Summary: A golang registry for global request variables
+Summary: %summary
 Group: Development/Other
-Provides: golang(%import_path) = %version-%release
 Requires: golang
+Provides: golang(%import_path) = %version-%release
 
 %description devel
 Package gorilla/context stores values shared during a request lifetime.
@@ -33,27 +43,29 @@ application handlers can access those values, or it can be used to store
 sessions values to be saved at the end of a request. There are several
 other common uses.
 
-This package contains library source intended for building other packages
-which use gorilla/context.
-
 %prep
-%setup
+%setup -q
 
 %build
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+
+%golang_prepare
+
 %install
-install -d %buildroot/%gopath/src/%import_path
-cp -av *.go %buildroot/%gopath/src/%import_path
+export BUILDDIR="$PWD/.build"
+export GOPATH="%go_path"
+
+%golang_install
 
 %files devel
-%doc LICENSE README.md
-%dir %attr(755,root,root) %gopath
-%dir %attr(755,root,root) %gopath/src
-%dir %attr(755,root,root) %gopath/src/github.com
-%dir %attr(755,root,root) %gopath/src/github.com/gorilla
-%dir %attr(755,root,root) %gopath/src/github.com/gorilla/context
-%gopath/src/%import_path/*.go
+%doc README.md LICENSE
+%go_path/src/*
 
 %changelog
+* Thu Feb 25 2016 Denis Pynkin <dans@altlinux.ru> 0-alt3.git1c83b3ea
+- Initial build
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0-alt2.git20140604
 - New snapshot
 
