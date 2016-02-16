@@ -5,7 +5,7 @@
 
 Summary: AVR libc
 Name: avr-libc
-Version: 1.8.1
+Version: 2.0.0
 Release: alt1
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
@@ -100,6 +100,10 @@ done
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Tue Feb 16 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt1
+- new version released
+- fix bug #31800
+
 * Thu Feb 12 2015 Grigory Milev <week@altlinux.ru> 1:1.8.1-alt1
 - new version released
 - update Atmel headers
