@@ -5,7 +5,7 @@ Name: hyphen-ca
 Summary: Catalan hyphenation rules
 #Epoch: 1
 Version: 0.9.3
-Release: alt1_8
+Release: alt1_9
 Source: http://extensions.services.openoffice.org/e-files/2010/7/hyph-ca.oxt
 Group: Text tools
 URL: http://extensions.services.openoffice.org/project/ca_hyph
@@ -43,6 +43,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_8
 - update to new release by fcimport
 
