@@ -1,7 +1,10 @@
-%define fedora 21
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-validate
+# END SourceDeps(oneline)
+%define fedora 23
 Name:		fbg2
 Version:	0.4
-Release:	alt3_14
+Release:	alt3_15
 Summary:	A falling block stacking game
 Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -20,7 +23,7 @@ Source2:	README.music
 # 64 x 64 public domain image for logo
 Source3:	fbg2.png
 Patch0:		fbg2-0.4-desktop-fix.patch
-BuildRequires:	radius-engine-devel >= 0.7 desktop-file-utils zip
+BuildRequires:	radius-engine-devel >= 0.7, desktop-file-utils, zip
 # rhbz#949506, also see rhbz#949167
 %if 0%{?fedora} >= 19
 Obsoletes:	fbg < 0.9.1-13
@@ -95,6 +98,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_14
 - update to new release by fcimport
 
