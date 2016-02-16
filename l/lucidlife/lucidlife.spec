@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_17
+Release:        alt3_18
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
@@ -17,7 +17,7 @@ BuildRequires:  gtk2-devel >= 2.6.0
 BuildRequires:	gnome-vfs-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	perl(XML/Parser.pm)
-BuildRequires:	gettext
+BuildRequires:	gettext	
 Source44: import.info
 Patch33: lucidlife-0.9.2-alt-DSO.patch
 
@@ -66,6 +66,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_17
 - update to new release by fcimport
 
