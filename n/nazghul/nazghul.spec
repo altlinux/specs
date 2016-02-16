@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(SDL/Surface.pm)
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(SDL/Surface.pm)
 # END SourceDeps(oneline)
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_14.20120228gitb0a402a
+Release:        alt2_16.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
@@ -11,7 +11,7 @@ URL:            http://sourceforge.net/projects/nazghul/
 Group:          Games/Other
 
 # Occasionally upstream names things with an underscore.
-%define         version_us %(echo %{version} | sed -e 's/\\./_/g')
+%global         version_us %(echo %{version} | sed -e 's/\\./_/g')
 
 #Source0:        nazghul-20120228gitb0a402a.txz
 
@@ -24,9 +24,9 @@ Patch1:         nazghul-format-security.patch
 Patch2:         nazghul-armbuild.patch
 
 # For building from a CVS snapshot
-BuildRequires:  automake autoconf
-BuildRequires:  libSDL_image-devel libSDL_mixer-devel desktop-file-utils
-BuildRequires:  libpng-devel xcftools
+BuildRequires:  automake, autoconf
+BuildRequires:  libSDL_image-devel, libSDL_mixer-devel, desktop-file-utils
+BuildRequires:  libpng-devel, xcftools
 Source44: import.info
 
 %description
@@ -142,6 +142,9 @@ EOF
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_16.20120228gitb0a402a
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_14.20120228gitb0a402a
 - update to new release by fcimport
 
