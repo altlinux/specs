@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ pkgconfig(sigc++-2.0)
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Name:           libpar2
 Version:        0.2       
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Library for performing comman tasks related to PAR recovery sets
      
 Group:          System/Libraries
@@ -28,7 +27,7 @@ sets and is the basis for GUI applications such as GPar2.
 %package devel
 Summary: Development files for %{name}
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -52,6 +51,7 @@ sed -i 's/\r//' AUTHORS
 touch -r tmpfile AUTHORS
 
 %build
+%add_optflags -std=c++11
 #fix aarch64 build
 libtoolize
 autoreconf -i
@@ -76,6 +76,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}/include/
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_23
+- fixed build
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_22
 - update to new release by fcimport
 
