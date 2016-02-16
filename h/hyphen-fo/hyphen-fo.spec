@@ -5,7 +5,7 @@ Name: hyphen-fo
 Summary: Faroese hyphenation rules
 %define upstreamid 20040420
 Version: 0.%{upstreamid}
-Release: alt1_8
+Release: alt1_9
 Source: http://fo.speling.org/filer/hyph_fo_FO-20040420a.zip
 Group: Text tools
 URL: http://fo.speling.org/
@@ -41,6 +41,9 @@ cp -p hyph_fo_FO.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040420-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20040420-alt1_8
 - update to new release by fcimport
 
