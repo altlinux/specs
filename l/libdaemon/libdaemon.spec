@@ -1,8 +1,9 @@
 %def_disable static
+%def_with apidocs
 
 Name: libdaemon
 Version: 0.14
-Release: alt2
+Release: alt2.1
 
 Summary: Lightweight C library which eases the writing of UNIX daemons
 License: LGPL
@@ -11,7 +12,7 @@ Url: http://0pointer.de/lennart/projects/libdaemon/
 
 Source: %name-%version-%release.tar
 
-BuildRequires: doxygen lynx
+%{?_with_apidocs:BuildRequires: doxygen lynx}
 
 %description
 libdaemon is a leightweight C library which eases the writing of UNIX daemons.
@@ -52,19 +53,23 @@ applications.
 %build
 %autoreconf
 %configure %{subst_enable static} 
-make all doxygen
+make all %{?_with_apidocs:doxygen}
 
 %install
 %makeinstall
 install -d %buildroot%_man3dir
+%if_with apidocs
 cp -a doc/reference/man/* %buildroot%_mandir/
+%endif
 
 %files
 %_libdir/*.so.*
 
 %files devel
+%if_with apidocs
 %doc doc/README doc/reference/html/
 %_man3dir/*
+%endif
 %_libdir/*.so
 %_pkgconfigdir/*
 %_includedir/%name/
@@ -75,6 +80,9 @@ cp -a doc/reference/man/* %buildroot%_mandir/
 %endif
 
 %changelog
+* Tue Feb 16 2016 Michael Shigorin <mike@altlinux.org> 0.14-alt2.1
+- BOOTSTRAP: added apidocs knob (enabled by default)
+
 * Fri Nov 11 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14-alt2
 - rebuilt for debuginfo
 
