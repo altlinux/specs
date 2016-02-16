@@ -1,4 +1,5 @@
 %def_without devel
+%def_with doc
 
 %define vrs	3.0
 %define tstamp 	20121213
@@ -6,7 +7,7 @@
 
 Name: libedit
 Version: %vrs.%tstamp
-Release: alt2
+Release: alt2.1
 
 Summary: libedit is a replacement or alternative to the GNU readline commandline editing functionality.
 License: BSD
@@ -20,7 +21,8 @@ Patch1: libedit-alt-configure-fix.patch
 Patch2: libedit-alt-fix-warnings.patch
 
 # Automatically added by buildreq on Tue Feb 15 2011
-BuildRequires: groff-base libncurses-devel
+BuildRequires: libncurses-devel
+%{?_with_doc:BuildRequires: groff-base}
 
 %description
 This is an autotool- and libtoolized port of the NetBSD Editline
@@ -67,6 +69,9 @@ command line interface for users.
 %endif
 
 %changelog
+* Mon Feb 15 2016 Michael Shigorin <mike@altlinux.org> 3.0.20121213-alt2.1
+- BOOTSTRAP: doc knob to drop BR: groff-base (enabled by default).
+
 * Thu Oct 30 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.20121213-alt2
 - Packaged libedit0 as a legacy library.
 
