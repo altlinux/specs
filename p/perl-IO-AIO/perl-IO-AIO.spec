@@ -1,8 +1,10 @@
+BuildRequires: perl-podlators
+%define _unpackaged_files_terminate_build 1
 Epoch: 1
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.32
-Release: alt1.1
+Version: 4.33
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -12,7 +14,7 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/IO-AIO-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: perl-common-sense perl-devel
+BuildRequires: perl-common-sense perl-devel perl(Canary/Stability.pm)
 
 %description
 This module implements asynchronous I/O using whatever means your
@@ -28,6 +30,15 @@ normally done sequentially, e.g. stat'ing many files, which is much faster
 on a RAID volume or over NFS when you do a number of stat operations
 concurrently.
 
+%package scripts
+Summary: %name scripts
+Group: Development/Perl
+Requires: %name = %{?epoch:%epoch:}%version-%release
+
+%description scripts
+scripts for %name
+
+
 %prep
 %setup -q -n %dist-%version
 
@@ -42,7 +53,15 @@ concurrently.
 %perl_vendor_autolib/IO
 %perl_vendor_archlib/IO
 
+%files scripts
+%_bindir/*
+#%_man1dir/*
+
+
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1:4.33-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1:4.32-alt1.1
 - rebuild with new perl 5.22.0
 
