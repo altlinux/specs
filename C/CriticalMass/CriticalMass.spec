@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libGL-devel libSDL-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libGL-devel libSDL-devel zlib-devel
 # END SourceDeps(oneline)
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_15
+Release:        alt2_16
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -14,6 +14,7 @@ Patch0:         CriticalMass-1.0.2-res-change-rh566533.patch
 Patch1:         CriticalMass-1.5-libpng15.patch
 Patch2:         CriticalMass-1.5-gcc47.patch
 Patch3:         CriticalMass-1.5-cflags.patch
+Patch4:         CriticalMass-1.5-gcc6.patch
 BuildRequires:  libSDL_image-devel libSDL_mixer-devel libpng-devel curl-devel
 BuildRequires:  tinyxml-devel desktop-file-utils libtool
 Requires:       icon-theme-hicolor opengl-games-utils
@@ -35,6 +36,7 @@ a tiny spacecraft and sent after them.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 sed -i 's/curl-gnutls/curl/g' configure.in
 touch NEWS README AUTHORS ChangeLog
 autoreconf -ivf
@@ -100,7 +102,8 @@ SentUpstream: 2014-09-17
 EOF
 
 %files
-%doc COPYING Readme.html TODO
+%doc Readme.html TODO
+%doc COPYING
 %{_bindir}/critter*
 %{_datadir}/Critical_Mass
 %{_mandir}/man6/critter.6*
@@ -109,6 +112,9 @@ EOF
 %{_datadir}/icons/hicolor/256x256/apps/critter.png
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_15
 - update to new release by fcimport
 
