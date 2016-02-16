@@ -38,16 +38,14 @@ Name:		json
 Summary:	JavaScript Object Notation
 Url:		http://www.json.org/java/index.html
 Version:	20080425
-Release:	alt3_2jpp6
+Release:	alt4_2jpp6
 Epoch:		0
 License:	Open Source
 Group:		Development/Java
 BuildArch:	noarch
 Source0:	http://www.json.org/java/json.zip
 Source1:	json-20080425.pom
-BuildRequires:  jpackage-utils >= 0:1.7.5
-Requires(post):   jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+BuildRequires:  jpackage-utils
 Source44: import.info
 
 
@@ -79,37 +77,40 @@ mv org src
 
 %build
 mkdir -p target/classes
-%{_jvmdir}/java/bin/javac  -target 1.5 -source 1.5 -d target/classes $(find src -name "*.java")
+%{_jvmdir}/java/bin/javac  -target 1.6 -source 1.6 -d target/classes $(find src -name "*.java")
 %{_jvmdir}/java/bin/jar cf target/%{name}.jar -C target/classes org
-mkdir -p target/site/apidocs
-%{_jvmdir}/java/bin/javadoc -d target/site/apidocs $(find src -name "*.java")
+#mkdir -p target/site/apidocs
+#%{_jvmdir}/java/bin/javadoc -d target/site/apidocs $(find src -name "*.java")
 
 %install
+%define installname %{name}-%{version}
+%define installname %{name}
+
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+install -m 644 target/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{installname}.jar
 
 # poms
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-json.pom
-%add_to_maven_depmap org.json json %{version} JPP json
+%add_maven_depmap -v %{version} JPP-json.pom %{installname}.jar
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+#install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+#cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+#ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
-%files
+%files -f .mfiles
 %{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
 
-%files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+#%files javadoc
+#%doc %{_javadocdir}/%{name}-%{version}
+#%doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0:20080425-alt4_2jpp6
+- build as compat
+
 * Fri Jul 11 2014 Igor Vlasenko <viy@altlinux.ru> 0:20080425-alt3_2jpp6
 - NMU rebuild to move _mavenpomdir and _mavendepmapfragdir
 
