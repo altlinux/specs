@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 Name:           overgod
 Version:        1.0
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Another arcade-style shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -70,6 +73,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_24
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_23
 - update to new release by fcimport
 
