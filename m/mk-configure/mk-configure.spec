@@ -1,6 +1,6 @@
 Name: mk-configure
-Version: 0.28.0
-Release: alt5
+Version: 0.29.1
+Release: alt1
 
 Summary: Lightweight replacement for GNU autotools
 License: BSD
@@ -64,6 +64,9 @@ bmake test
 %_man7dir/*
 
 %changelog
+* Tue Feb 16 2016 Michael Shigorin <mike@altlinux.org> 0.29.1-alt1
+- new version 0.29.1
+
 * Sat Nov 29 2014 Aleksey Cheusov <cheusov@altlinux.org> 0.28.0-alt5
 - Fix .gear/rules
 
