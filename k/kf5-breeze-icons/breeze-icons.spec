@@ -1,7 +1,7 @@
 %define rname breeze-icons
 
 Name: kf5-%rname
-Version: 5.18.0
+Version: 5.19.0
 Release: alt1
 %K5init no_altplace
 
@@ -42,13 +42,13 @@ Group: Graphics
 %install
 %K5install
 
-# 5068 5056
+# 6619
 for t in %buildroot/%_iconsdir/* ; do
     [ -d $t ] || continue
     pushd $t
     ls -1d */* | \
     while read ctx ; do
-	[ -d $t ] || continue
+	[ -d $ctx ] || continue
 	%_libexecdir/icon-name-mapping -c $ctx
     done
     popd
@@ -64,6 +64,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
+- new version
+
 * Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt1
 - new version
 

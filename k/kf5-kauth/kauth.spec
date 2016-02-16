@@ -1,7 +1,7 @@
 %define rname kauth
 
 Name: kf5-%rname
-Version: 5.18.0
+Version: 5.19.0
 Release: alt1
 %K5init altplace
 
@@ -78,6 +78,9 @@ KF5 library
 %_K5plug/kauth/
 
 %changelog
+* Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
+- new version
+
 * Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt1
 - new version
 

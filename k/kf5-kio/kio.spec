@@ -1,8 +1,8 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.18.0
-Release: alt2
+Version: 5.19.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -56,6 +56,13 @@ Requires: %name-common = %version-%release
 %description -n libkf5kiocore
 KF5 library
 
+%package -n libkf5kiogui
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5kiogui
+KF5 library
+
 %package -n libkf5kiowidgets
 Group: System/Libraries
 Summary: KF5 library
@@ -106,7 +113,7 @@ KF5 library
 %_K5plug/*.so
 %_K5xdgapp/*.desktop
 %_K5srv/*
-#%_K5dbus_srv/*.service
+%_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
 
 %files devel
@@ -121,6 +128,8 @@ KF5 library
 
 %files -n libkf5kiocore
 %_K5lib/libKF5KIOCore.so.*
+%files -n libkf5kiogui
+%_K5lib/libKF5KIOGui.so.*
 %files -n libkf5kiowidgets
 %_K5lib/libKF5KIOWidgets.so.*
 %files -n libkf5kiofilewidgets
@@ -129,6 +138,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
+- new version
+
 * Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt2
 - add fallback to KDE4 docs to kio-help
 
