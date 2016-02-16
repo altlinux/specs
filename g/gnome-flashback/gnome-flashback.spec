@@ -1,8 +1,9 @@
 %define ver_major 3.18
 %define _libexecdir %_prefix/libexec
+%def_without compiz
 
 Name: gnome-flashback
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -29,12 +30,14 @@ Requires: dbus-tools-gui
 Requires: gnome-filesystem
 Requires: xdg-user-dirs
 Requires: gnome-icon-theme gnome-icon-theme-symbolic
+Requires: fonts-otf-abattis-cantarell gnome-backgrounds
 Requires: gnome-screensaver
 Requires: gnome-keyring
 Requires: gnome-control-center
 Requires: nautilus
 # since 3.18
 Requires: polkit accountsservice
+Requires: pinentry-gnome3
 Requires: upower
 Requires: bluez
 Requires: NetworkManager-applet-gtk
@@ -65,6 +68,17 @@ our session, but has been removed from GNOME and/or moved to mutter or
 gnome-shell.
 
 NOTE: This session is not supported by GNOME in any way!
+
+%package session-compiz
+Summary: A Compiz session for the GNOME Flashback
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: compiz
+
+%description session-compiz
+This package permits to log into GNOME Flashback with Compiz.
+
 
 %prep
 %setup
@@ -104,10 +118,20 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_xdgconfigdir/autostart/%name-screensaver.desktop
 %doc AUTHORS NEWS README
 
-%exclude %_datadir/xsessions/%name-compiz.desktop
+%if_with compiz
+%files session-compiz
+%_datadir/xsessions/%name-compiz.desktop
+%endif
 
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
+* Thu Oct 29 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt2
+- updated dependencies
+- prepared new session-compiz subpackage
+
 * Thu Oct 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 
