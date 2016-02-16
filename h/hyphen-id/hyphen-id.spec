@@ -5,7 +5,7 @@ Name: hyphen-id
 Summary: Indonesian hyphenation rules
 %define upstreamid 20040812
 Version: 0.%{upstreamid}
-Release: alt1_10
+Release: alt1_11
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_id_ID.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -33,6 +33,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt1_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt1_10
 - update to new release by fcimport
 
