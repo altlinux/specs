@@ -6,7 +6,7 @@
 %def_enable modemlights
 
 Name: gnome-applets
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -510,6 +510,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_iconsdir/hicolor/*/*/invest-applet*
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 
