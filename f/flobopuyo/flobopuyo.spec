@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 Name:           flobopuyo
 Version:        0.20
-Release:        alt4_16
+Release:        alt4_17
 Summary:        2-player falling bubbles game
 
 Group:          Games/Other
@@ -22,10 +22,10 @@ Patch0:         %{name}-0.20-64bit.patch
 # Andrea Musuruane
 Patch1:         %{name}-0.20-Makefile.patch
 
-BuildRequires:  flex
-BuildRequires:  bison
-BuildRequires:  libSDL_mixer-devel
-BuildRequires:  libSDL_image-devel
+BuildRequires:  flex 
+BuildRequires:  bison 
+BuildRequires:  libSDL_mixer-devel 
+BuildRequires:  libSDL_image-devel 
 BuildRequires:  desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -82,6 +82,9 @@ install -p -m 644 %{SOURCE2} %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20-alt4_16
 - update to new release by fcimport
 
