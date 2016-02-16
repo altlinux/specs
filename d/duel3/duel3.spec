@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 %global snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.20.%{snapshot}
+Release:        alt3_0.21.%{snapshot}
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -91,6 +91,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.21.20060225
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.20.20060225
 - update to new release by fcimport
 
