@@ -33,7 +33,7 @@
 
 Name: pidgin
 Version: 2.10.12
-Release: alt1
+Release: alt2
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -126,7 +126,7 @@ and plugins.
 
 %package -n libpurple
 Summary: libpurple library for IM clients like Pidgin and Finch
-Group: Networking/Instant messaging
+Group: System/Libraries
 Requires: ca-certificates
 Conflicts: libpurple-mini
 
@@ -241,11 +241,19 @@ and plugins.
 Summary: D-Bus client utilities for Pidgin
 Group: Networking/Instant messaging
 Requires: %name = %version-%release
+Requires: libpurple-client = %version-%release
 Obsoletes: gaim-dbus
 Provides: gaim-dbus = %version
 
 %description -n libpurple-dbus
 D-Bus client utilities for Pidgin.
+
+%package -n libpurple-client
+Summary: Client library for IM clients like Pidgin and Finch
+Group: System/Libraries
+
+%description -n libpurple-client
+This package provides client library for purple-based IM like Pidgin and Finch
 %endif
 
 %prep
@@ -388,6 +396,8 @@ fi
 %_bindir/purple-send
 %_bindir/purple-send-async
 %_bindir/purple-url-handler
+
+%files -n libpurple-client
 %_libdir/libpurple-client.so.*
 %endif
 
@@ -447,6 +457,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10.12-alt2
+- new libpurple-client subpackage
+
 * Wed Feb 10 2016 Alexey Shabalin <shaba@altlinux.ru> 2.10.12-alt1
 - 2.10.12
 
