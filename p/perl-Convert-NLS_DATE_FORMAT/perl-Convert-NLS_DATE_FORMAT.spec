@@ -1,18 +1,24 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Convert-NLS_DATE_FORMAT
-Version:        0.05
-Release:        alt2_10
+Version:        0.06
+Release:        alt1_11
 Summary:        Convert Oracle NLS_DATE_FORMAT <-> strftime Format Strings
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Convert-NLS_DATE_FORMAT/
 Source0:        http://www.cpan.org/authors/id/K/KO/KOLIBRIE/Convert-NLS_DATE_FORMAT-%{version}.tar.gz
 BuildArch:      noarch
+# Build
+BuildRequires:  perl
+BuildRequires:  perl(Module/Build/Tiny.pm)
+BuildRequires:  perl(strict.pm)
+# Runtime
 BuildRequires:  perl(Exporter.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests only
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
 
@@ -24,23 +30,25 @@ the reverse.
 %setup -q -n Convert-NLS_DATE_FORMAT-%{version}
 
 %build
-perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
-make %{?_smp_mflags}
+perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
+./Build
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} +
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+./Build install --destdir=%{buildroot} --create_packlist=0
 # %{_fixperms} %{buildroot}/*
 
 %check
-make test
+./Build test
 
 %files
-%doc Changes README t/
+%doc LICENSE
+%doc Changes README.md
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_11
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_10
 - update to new release by fcimport
 
