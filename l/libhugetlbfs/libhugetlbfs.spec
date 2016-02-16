@@ -1,18 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(base.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Name: libhugetlbfs
-Version: 2.19
-Release: alt1_1
+Version: 2.20
+Release: alt1_2
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
 License: LGPLv2+
 URL: https://github.com/libhugetlbfs/libhugetlbfs
 Source0: https://www.mgebm.net/~emunson/%{name}-%{version}.tar.gz
-Patch0: libhugetlbfs-2.19-restrict-is-keyword.patch
-Patch1: libhugetlbfs-2.19-gcc-5.patch
 
 BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
@@ -30,14 +27,14 @@ modifications to load BSS or BSS, data, and text segments into large pages.
 %package devel
 Summary:	Header files for libhugetlbfs
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}
 %description devel
 Contains header files for building with libhugetlbfs.
 
 %package utils
 Summary:	Userspace utilities for configuring the hugepage environment
 Group:		File tools
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}
 %description utils
 This packages contains a number of utilities that will help administrate the
 use of huge pages on your system.  hugeedit modifies binaries to set default
@@ -47,8 +44,6 @@ pool size control. pagesize lists page sizes available on the machine.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .restrct
-%patch1 -p1 -b .gcc5
 
 %build
 # Parallel builds are not reliable
@@ -64,6 +59,14 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/security/limits.d/hugepages.conf
 rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
 # remove unused sbin directory
 rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
+
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_sysconfdir}/security/limits.d/hugepages.conf
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
+
 
 %files
 %{_libdir}/libhugetlbfs.so*
@@ -102,10 +105,13 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %{_mandir}/man8/hugeadm.8*
 %{_mandir}/man1/pagesize.1*
 %{_mandir}/man1/ld.hugetlbfs.1*
-%exclude %{_mandir}/man8/cpupcstat.8.gz
+%exclude %{_mandir}/man8/cpupcstat.8*
 %exclude %{_libdir}/perl5/TLBC
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1_2
+- fixed build
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1_1
 - update to new release by fcimport
 
