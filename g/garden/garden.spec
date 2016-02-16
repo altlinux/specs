@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/update-desktop-database
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/update-desktop-database
 # END SourceDeps(oneline)
 Name:           garden
-Version:        1.0.8
-Release:        alt2_15
+Version:        1.0.9
+Release:        alt1_1
 Summary:        An innovative old-school 2D vertical shoot-em-up
 
 Group:          Games/Other
 License:        GPLv3+
 URL:            http://garden.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Patch0:         garden-dso.patch
-Patch1:         garden-printf-format.patch
+#Patch0:         garden-dso.patch
+#Patch1:         garden-printf-format.patch
 Patch2:         garden-1.0.8-inline.patch
 
 BuildRequires:  liballegro-devel
@@ -33,8 +33,8 @@ you are dealing with a true piece of art...
 
 # patch for DSO-linking
 # https://sourceforge.net/tracker/?func=detail&aid=2982590&group_id=242667&atid=1121672
-%patch0 -p1 -b .dso
-%patch1 -p0 -b .format
+#%%patch0 -p1 -b .dso
+#%%patch1 -p0 -b .format
 %patch2 -p1
 
 %build
@@ -98,6 +98,9 @@ desktop-file-validate \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt2_15
 - update to new release by fcimport
 
