@@ -2,7 +2,6 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: chrpath
-%add_optflags %optflags_shared
 %define oldname gtkglextmm
 %define gtkglext_major 1.0
 %define gtkglextmm_major 1.2
@@ -11,7 +10,7 @@ BuildRequires: chrpath
 Summary: C++ wrapper for GtkGlExt
 Name: libgtkglextmm
 Version: 1.2.0
-Release: alt2_23
+Release: alt2_24
 License: LGPLv2+
 Group: System/Libraries
 URL: http://projects.gnome.org/gtkglext/
@@ -25,7 +24,6 @@ Patch3: fix_ftbfs_gtk_2_37.patch
 BuildRequires: gtkglext-devel >= %{gtkglext_major}
 BuildRequires: libgtkmm2-devel >= %{gtkmm_major}
 Source44: import.info
-Provides: gtkglextmm = %{version}-%{release}
 Patch33: gtkglextmm-1.2.0-fix-deprecated.patch
 
 
@@ -37,7 +35,6 @@ Summary: Development tools for gtkglextmm
 Group: Development/C
 
 Requires: %{name} = %{version}
-Provides: gtkglextmm-devel = %{version}-%{release}
 
 %description devel
 The gtkglextmm-devel package contains the header files, static libraries,
@@ -59,6 +56,7 @@ echo '# Nothing' >> tools/m4/convert_gtkglext.m4
 %patch33 -p2
 
 %build
+%add_optflags -std=c++11
 %configure --disable-static --disable-dependency-tracking
 
 # remove rpath
@@ -89,6 +87,9 @@ done
 %doc %{_datadir}/doc/%{oldname}-%{gtkglextmm_major}/html/
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_24
+- fixed build
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_23
 - update to new release by fcimport
 
