@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Name:           londonlaw
 Version:        0.3.0
-Release:        alt1_0.2.pre2
+Release:        alt1_0.3.pre2
 Summary:        Online multiplayer version of a well known detective boardgame
 License:        GPLv2
 Group:          Games/Other
@@ -16,7 +17,7 @@ Source2:        %{name}-server.desktop
 BuildRequires:  python-devel python-module-wx ghostscript-utils ghostscript ImageMagick
 BuildRequires: /usr/bin/latex texlive-latex-recommended texlive-latex-recommended desktop-file-utils
 BuildArch:      noarch
-Requires:       icon-theme-hicolor
+Requires:       python-module-wx python-module-twisted-core python-module-twisted-core-gui python-module-twisted-core-gui-gnome python-module-twisted-core-gui-tk python-module-twisted-core-gui-wx icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -62,6 +63,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_0.3.pre2
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt1_0.2.pre2
 - update to new release by fcimport
 
