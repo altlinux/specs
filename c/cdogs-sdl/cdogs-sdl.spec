@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ libdevil-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libdevil-devel
 # END SourceDeps(oneline)
 Name:           cdogs-sdl
 Version:        0.5.8
-Release:        alt1_2
+Release:        alt1_4
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
 # The game-engine is GPLv2+
@@ -75,7 +75,8 @@ done
 
 
 %files
-%doc doc/*
+%doc doc/AUTHORS doc/CREDITS doc/original_readme.txt
+%doc doc/COPYING.BSD doc/COPYING.GPL
 %{_bindir}/%{name}*
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -84,6 +85,9 @@ done
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1_2
 - update to new release by fcimport
 
