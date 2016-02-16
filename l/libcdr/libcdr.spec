@@ -1,6 +1,6 @@
 
 Name: libcdr
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Summary: A library providing ability to interpret and import Corel Draw drawings
 Group: System/Libraries
@@ -13,7 +13,7 @@ BuildRequires: pkgconfig(librevenge-0.0) >= 0.0.1 pkgconfig(librevenge-generator
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(icu-i18n)
-
+BuildRequires: pkgconfig(cppunit)
 BuildRequires: boost-devel
 BuildRequires: doxygen
 
@@ -60,6 +60,9 @@ mkdir -p m4
 %install
 %makeinstall_std
 
+%check
+%make_build check
+
 %files
 %doc AUTHORS COPYING.* README
 %_libdir/*.so.*
@@ -78,6 +81,10 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Tue Feb 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt1
+- 0.1.2
+- enable tests
+
 * Wed Dec 17 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.1-alt1
 - 0.1.1
 
