@@ -2,7 +2,7 @@ Name: hyphen-tk
 Summary: Turkmen hyphenation rules
 %define upstreamid 20110620
 Version: 0.%{upstreamid}
-Release: alt1_7
+Release: alt1_8
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-tk.tex?view=co
 Source: hyph-tk.tex
@@ -39,6 +39,9 @@ cp -p hyph_tk_TM.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/hyph_tk_TM.dic
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20110620-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20110620-alt1_7
 - update to new release by fcimport
 
