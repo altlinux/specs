@@ -1,7 +1,7 @@
 Name: 	 qcad
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
-Version: 3.12.4.9
+Version: 3.12.6.1
 Release: alt1
 
 Url: 	 http://www.ribbonsoft.com/qcad.html
@@ -112,6 +112,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Feb 15 2016 Andrey Cherepanov <cas@altlinux.org> 3.12.6.1-alt1
+- New version
+
 * Wed Jan 20 2016 Andrey Cherepanov <cas@altlinux.org> 3.12.4.9-alt1
 - New version
 - Disable debug output in runtime
