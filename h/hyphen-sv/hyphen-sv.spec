@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hyphen-sv
 Summary: Swedish hyphenation rules
 Version: 1.00.1
-Release: alt1_12
+Release: alt1_13
 Source: http://extensions.services.openoffice.org/files/1966/4/hyph_sv_SE.oxt
 Group: Text tools
 URL: http://extensions.services.openoffice.org/node/1968
@@ -48,6 +48,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_12
 - update to new release by fcimport
 
