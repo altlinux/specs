@@ -5,7 +5,7 @@ Name: hyphen-sk
 Summary: Slovak hyphenation rules
 %define upstreamid 20031227
 Version: 0.%{upstreamid}
-Release: alt1_12
+Release: alt1_13
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_sk_SK.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -43,6 +43,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20031227-alt1_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20031227-alt1_12
 - update to new release by fcimport
 
