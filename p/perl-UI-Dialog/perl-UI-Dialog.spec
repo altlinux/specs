@@ -1,20 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+%filter_from_requires /^perl.UI.Dialog.Backend.NotifySend.pm./d
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(FileHandle.pm) perl(Gnome2/GConf.pm) perl(Test/More.pm) perl(Time/HiRes.pm) perl(diagnostics.pm) perl-devel perl-podlators
+BuildRequires: perl(Config.pm) perl(FileHandle.pm) perl(File/Slurp.pm) perl(Gnome2/GConf.pm) perl(Test/More.pm) perl(Time/HiRes.pm) perl(diagnostics.pm) perl(String/ShellQuote.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %filter_from_requires /^perl.Gnome2.GConf.pm/d
 %define upstream_name    UI-Dialog
-%define upstream_version 1.09_2
+%define upstream_version 1.16
 
 Name:       perl-%{upstream_name}
-Version:    1.09_2
+Version:    1.16
 Release:    alt1
 
 Summary:    OOPerl wrapper for the various dialog applications
 License:    GPL
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/K/KC/KCK/UI-Dialog-1.09-2.tar.gz
+Source:    http://www.cpan.org/authors/id/K/KC/KCK/UI-Dialog-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Text/Wrap.pm)
@@ -44,10 +46,10 @@ was done to break away from the bad choice of name (UserDialogPerlModule) and
 to implement a cleaner, more detached, OOPerl interface.
 
 %prep
-%setup -q -n %{upstream_name}-1.09
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %make
 
 %check
@@ -61,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
+- automated CPAN update
+
 * Fri Nov 13 2015 Igor Vlasenko <viy@altlinux.ru> 1.09_2-alt1
 - automated CPAN update
 
