@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen
+BuildRequires: /usr/bin/doxygen pkgconfig(zlib)
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
 Name:		libtelnet
 Version:	0.21
-Release:	alt1_8
+Release:	alt1_9
 Summary:	TELNET protocol parsing framework
 
 Group:		System/Libraries
@@ -26,7 +25,8 @@ MSSP protocols used by MUD servers and clients.
 %package devel
 Summary: Header files for libtelnet
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
+Requires: pkgconfig
 
 %description devel
 Header files for developing applications making use of libtelnet.
@@ -34,7 +34,7 @@ Header files for developing applications making use of libtelnet.
 %package utils
 Summary: TELNET utility programs from libtelnet
 Group: Networking/WWW
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 
 %description utils
 Provides three utilities based on the libtelnet library.
@@ -59,8 +59,8 @@ rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
 %{_libdir}/*.so.*
 
 %files devel
-%doc %{_datadir}/man/man1/*.1.gz
-%doc %{_datadir}/man/man3/*.3.gz
+%doc %{_datadir}/man/man1/*.1*
+%doc %{_datadir}/man/man3/*.3*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/*
@@ -69,6 +69,9 @@ rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
 %{_bindir}/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_9
+- fixed build
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_8
 - update to new release by fcimport
 
