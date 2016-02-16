@@ -5,7 +5,7 @@ Name: hyphen-is
 Summary: Icelandic hyphenation rules
 %define upstreamid 20030920
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_is_IS.zip
 Patch0: hyphen-is-lppl-license-fix.patch
 Group: Text tools
@@ -45,6 +45,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20030920-alt1_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20030920-alt1_13
 - update to new release by fcimport
 
