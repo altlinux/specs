@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 Name:		gnujump
 Version:	1.0.8
-Release:	alt1_6
+Release:	alt1_7
 Summary:	A jumping game which is a clone of xjump
 
 Group:		Games/Other
@@ -10,7 +13,7 @@ Source0:	http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.gz
 Source1:	%{name}.desktop
 Patch1:		%{name}-Makefile.in.patch
 
-BuildRequires:	libSDL-devel >= 1.2 libSDL_mixer-devel libSDL_image-devel
+BuildRequires:	libSDL-devel >= 1.2, libSDL_mixer-devel, libSDL_image-devel
 BuildRequires:	desktop-file-utils
 Source44: import.info
 
@@ -50,6 +53,9 @@ desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_6
 - update to new release by fcimport
 
