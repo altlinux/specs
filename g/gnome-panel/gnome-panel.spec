@@ -7,8 +7,8 @@
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -192,6 +192,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt2
 - rebuilt against libical.so.2
 
