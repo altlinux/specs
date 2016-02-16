@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(libpcre) zlib-devel
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gconf-2.0) pkgconfig(gmodule-2.0) pkgconfig(gnet-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(libpcre) pkgconfig(vte) zlib-devel
 # END SourceDeps(oneline)
 Name:		gnome-mud
 Version:	0.11.2
-Release:	alt2_16
+Release:	alt2_17
 Summary:	A MUD client for GNOME
 
 Group:		Games/Other
@@ -86,6 +86,9 @@ fi
 %{_mandir}/man6/%{name}.6*
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_16
 - update to new release by fcimport
 
