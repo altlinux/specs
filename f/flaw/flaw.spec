@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
 # END SourceDeps(oneline)
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name flaw
@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel
 
 Name:		flaw
 Version:	1.3.2a
-Release:	alt2_12
+Release:	alt2_13
 Summary:	Free top-down wizard battle game
 Group:		Games/Other
 License:	GPLv3+
@@ -16,7 +16,7 @@ URL:		http://flaw.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		flaw-aarch64.patch
 
-BuildRequires:	libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL-devel fonts-ttf-gnu-freefont-serif
+BuildRequires:	libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL-devel fonts-ttf-gnu-freefont-serif 
 BuildRequires:	libSDL_gfx-devel desktop-file-utils fonts-ttf-gnu-freefont-sans gettext intltool
 Requires:	fonts-ttf-gnu-freefont-sans fonts-ttf-gnu-freefont-serif
 Source44: import.info
@@ -42,7 +42,7 @@ chmod 644 src/*.h
 sed -i -e '2d' data/flaw.desktop
 
 %build
-%configure --docdir=%{_pkgdocdir}
+%configure --docdir=%{_docdir}/%{name}
 make %{?_smp_mflags}
 
 %install
@@ -102,10 +102,13 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/flaw.png
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/flaw.desktop
-%exclude %{_pkgdocdir}/INSTALL
-%doc %{_pkgdocdir}
+%exclude %{_docdir}/%{name}/INSTALL
+%doc %{_docdir}/%{name}
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt2_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.2a-alt2_12
 - update to new release by fcimport
 
