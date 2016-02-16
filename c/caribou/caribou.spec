@@ -5,7 +5,7 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.19
+Version: %ver_major.20
 Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
@@ -14,7 +14,7 @@ License: LGPLv2+
 Url: https://live.gnome.org/Caribou
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch2: %name-0.4.7-alt-russian_layouts.patch
+Patch2: %name-0.4.20-alt-russian_layouts.patch
 Patch4: %name-0.4.2-use-reserved-bar-keycode.patch
 Patch5: %name-0.4.2-fix-keys.patch
 
@@ -74,7 +74,7 @@ GObject introspection devel data for the Caribou library.
 
 %prep
 %setup
-%patch2 -p1
+%patch2 -p1 -b .rus
 %patch4 -p2
 #%%patch5 -p2
 
@@ -130,6 +130,9 @@ make clean
 %_girdir/Caribou-%api_ver.gir
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.20-alt1
+- 0.4.20
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.19-alt1
 - 0.4.19
 
