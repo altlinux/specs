@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 Name:		naturette
 Version:	1.3
-Release:	alt4_11
+Release:	alt4_12
 Summary:	An AGI adventure game
 
 Group:		Games/Other
@@ -20,7 +20,7 @@ Source4:	naturette-LICENSE.fedora
 BuildArch:	noarch
 
 BuildRequires:	desktop-file-utils
-Requires:	nagi icon-theme-hicolor
+Requires:	nagi, icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -70,6 +70,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/naturette-wrapper.sh
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_11
 - update to new release by fcimport
 
