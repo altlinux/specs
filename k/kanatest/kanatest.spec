@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/xml2-config
 # END SourceDeps(oneline)
 Name:           kanatest
 Version:        0.4.8
-Release:        alt2_15
+Release:        alt2_17
 Summary:        Hiragana and Katakana drill tool
 
 Group:          Games/Other
@@ -36,9 +36,11 @@ statistics are provided
 %patch1 -p1 -b gtkfixes
 %patch2 -p1 -b .format
 
+sed -i src/Makefile.in \
+	-e 's|DISABLE_DEPRECATED|ENABLE_DEPRECATED|g'
 
 %build
-export PLATFORM_CFLAGS="$RPM_OPT_FLAGS"
+export PLATFORM_CFLAGS="$RPM_OPT_FLAGS -Werror-implicit-function-declaration"
 %configure
 make %{?_smp_mflags}
 
@@ -62,6 +64,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_15
 - update to new release by fcimport
 
