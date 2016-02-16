@@ -1,6 +1,8 @@
+%define _libexecdir %_prefix/libexec
+
 Name: telepathy-haze
 Version: 0.8.0.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: a connection manager built around libpurple
 License: GPL v2 or later
@@ -10,6 +12,7 @@ Url: http://developer.pidgin.im/wiki/TelepathyHaze
 # VCS: git://anongit.freedesktop.org/telepathy/telepathy-haze
 Source: %name-%version.tar
 #Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
+Patch: %name-0.8.0-alt-purple_2.0.12.patch
 
 BuildPreReq: glib2-devel >= 2.22 libgio-devel libdbus-glib-devel >= 0.73
 BuildRequires: libpurple-devel >= 2.7.0 libtelepathy-glib-devel >= 0.13.9
@@ -26,6 +29,7 @@ work acceptably, and others will probably work too.
 
 %prep
 %setup
+%patch -b .purple
 
 %build
 %autoreconf
@@ -45,6 +49,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.2
+- fixed build against libpurple-2.10.12
+
 * Sat Sep 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.1
 - updated to 0.8.0.1_83589722
 - fixed buildreqs for check stage
