@@ -1,20 +1,20 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/msgfmt /usr/bin/msgmerge /usr/bin/xgettext
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/msgfmt /usr/bin/msgmerge /usr/bin/xgettext pkgconfig(libmb) pkgconfig(libstartup-notification-1.0)
 # END SourceDeps(oneline)
 BuildRequires: desktop-file-utils
 Summary: 	Panel for the Matchbox Desktop
 Name: 		matchbox-panel
 Version: 	0.9.3
-Release: 	alt1_10
+Release: 	alt1_11
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
 Source0: 	http://matchbox-project.org/sources/%name/0.9/%name-%version.tar.bz2
 Patch0:		matchbox-panel-0.9.3-linking.patch
 Patch1:		matchbox-panel-0.9.3-automake-1.13.patch
-BuildRequires:	libmatchbox-devel
-BuildRequires:	libapm-devel
-BuildRequires:	libstartup-notification-devel
+BuildRequires:	libmatchbox-devel 
+BuildRequires:	libapm-devel 
+BuildRequires:	libstartup-notification-devel 
 BuildRequires:	libwireless-devel
 Source44: import.info
 Patch33: matchbox-panel-0.9.3-alt-xvt.patch
@@ -28,7 +28,6 @@ This package contains the panel from Matchbox.
 
 %prep
 %setup -q
-#%%apply_patches
 %patch0 -p1
 %patch1 -p1
 
@@ -69,6 +68,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Feb 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_11
+- new release
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt1_10
 - update by mgaimport
 
