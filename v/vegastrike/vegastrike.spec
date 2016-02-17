@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libexpat-devel perl(English.pm) zlib-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libexpat-devel perl(English.pm) zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt4_25.r1
+Release:        alt5_25.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -33,10 +33,11 @@ BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk2-dev
 BuildRequires:  libjpeg-devel libpng-devel boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel expat-devel python-devel
 BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
 BuildRequires:  libvorbis-devel libogre-devel cegui-devel desktop-file-utils
-Requires:       %{name}-data = %{version} icon-theme-hicolor xdg-utils
+Requires:       %{name}-data = %{version}, icon-theme-hicolor, xdg-utils
 Requires:       opengl-games-utils
 Source44: import.info
 Patch33: vegastrike-0.5.1-alt-SharedPool.patch
+Patch34: vegastrike-0.5.1.r1-alt-perl522.patch
 
 %description
 Vega Strike is a GPL 3D OpenGL Action RPG space sim that allows a player to
@@ -68,6 +69,7 @@ sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 # we want to use the system version of expat.h
 rm objconv/mesher/expat.h
 %patch33 -p2
+%patch34 -p1
 
 
 %build
@@ -112,6 +114,9 @@ desktop-file-install            \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_25.r1
+- fixed build
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt4_25.r1
 - update to new release by fcimport
 
