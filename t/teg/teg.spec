@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/gconftool-2 /usr/bin/glib-gettextize ElectricFence gcc-c++ libreadline-devel libsocket perl(Text/Wrap.pm) pkgconfig(glib-2.0) pkgconfig(libgnomeui-2.0) pkgconfig(libxml-2.0) python-devel
 # END SourceDeps(oneline)
-%define fedora 22
+%define fedora 23
 Name:           teg
 Version:        0.11.2
-Release:        alt2_35
+Release:        alt2_36
 Summary:        Turn based strategy game
 Group:          Games/Other
 License:        GPLv2
@@ -17,7 +17,7 @@ Patch0:         teg_libxml.patch
 Patch3:		teg_fixwording.patch
 Source2:         teg-fix-help.patch
 
-BuildRequires:  tidy pkgconfig glib2-devel libxml2-devel libgnomeui-devel
+BuildRequires:  tidy glib2-devel libxml2-devel libgnomeui-devel
 BuildRequires:  gettext
 BuildRequires:  perl(XML/Parser.pm)
 BuildRequires:  desktop-file-utils
@@ -53,7 +53,7 @@ mv -f $RPM_BUILD_ROOT/%{_datadir}/pixmaps/teg_icono.png $RPM_BUILD_ROOT/%{_datad
 rm -rf $RPM_BUILD_ROOT/%{_datadir}/gnome/apps/Games/teg.desktop
 desktop-file-install \
 %if 0%{?fedora} && 0%{?fedora} < 19
-  --vendor="fedora"               \
+                 \
 %endif
   --dir=$RPM_BUILD_ROOT/%{_datadir}/applications %{SOURCE1}
 patch -p1 < %{SOURCE2}
@@ -70,7 +70,7 @@ mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/
 %{_datadir}/pixmaps/teg.png
 %{_datadir}/gnome/help/teg/
 %if 0%{?fedora} && 0%{?fedora} < 19
-%{_datadir}/applications/fedora-teg.desktop
+%{_datadir}/applications/teg.desktop
 %else
 %{_datadir}/applications/teg.desktop
 %endif
@@ -96,6 +96,9 @@ gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_36
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_35
 - new version
 
