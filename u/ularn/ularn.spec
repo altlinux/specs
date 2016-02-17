@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_23
+Release:        alt2_24
 Summary:        Simple roguelike game
 
 Group:          Games/Other
@@ -74,6 +77,9 @@ install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/app
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_24
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_23
 - update to new release by fcimport
 
