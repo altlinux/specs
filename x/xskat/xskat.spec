@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 %global           upstream_version 4.0
 
 Summary:          The card game Skat
@@ -5,7 +8,7 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_14
+Release:          alt2_15
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
 Group:            Games/Other
@@ -111,6 +114,9 @@ EOF
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_14
 - update to new release by fcimport
 
