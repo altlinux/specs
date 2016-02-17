@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		%r_name-esr
-Version:	38.5.1
+Version:	38.6.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -456,6 +456,15 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Feb 17 2016 Andrey Cherepanov <cas@altlinux.org> 38.6.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2016-14 Vulnerabilities in Graphite 2
+  + MFSA 2016-03 Buffer overflow in WebGL after out of memory allocation
+  + MFSA 2016-01 Miscellaneous memory safety hazards (rv:44.0 / rv:38.6)
+  + MFSA 2015-150 MD5 signatures accepted within TLS 1.2
+    ServerKeyExchange in server signature
+
 * Thu Jan 14 2016 Andrey Cherepanov <cas@altlinux.org> 38.5.1-alt1
 - New ESR version
 
