@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_3
+Release:    alt1_4
 
 Summary:    Recursively copy Perl datatypes
 License:    Artistic/GPL
@@ -50,6 +50,9 @@ variables and objects.
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1_4
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1_3
 - update by mgaimport
 
