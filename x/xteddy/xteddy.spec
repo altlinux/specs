@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libX11-devel
+BuildRequires: libICE-devel libSM-devel libX11-devel pkgconfig(imlib2)
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel
 Name:           xteddy
 Version:        2.2
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Tool to sit around silently, look cute, and make you smile
 
 Group:          Games/Other
@@ -69,6 +69,9 @@ EOF
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_4
 - update to new release by fcimport
 
