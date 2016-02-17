@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 54796
+%define svnrev 58460
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 2.4.7
+Version: 3.0.0
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -128,6 +128,11 @@ Summary: %name network monitor (additional scripts)
 Group: Monitoring
 BuildArch: noarch
 
+%package source
+Summary: %name network monitor (files for zabbix modules)
+Group: Development/C
+BuildArch: noarch
+
 %description
 ZABBIX is software for monitoring of your applications, network and servers.
 ZABBIX supports both polling and trapping techniques to collect data from
@@ -198,6 +203,9 @@ zabbix web frontend, edition for php5
 
 %description contrib
 %name network monitor (additional scripts)
+
+%description source
+%name network monitor (files for zabbix modules)
 
 %prep
 %setup
@@ -293,6 +301,7 @@ install -dm0750 %buildroot%_sysconfdir/%name
 install -dm0750 %buildroot%_sysconfdir/%name/zabbix_agentd.conf.d
 install -dm0755 %buildroot%webserver_webappsdir/%name
 install -dm0755 %buildroot%_unitdir
+install -dm0755 %buildroot%_includedir/%name
 
 # binaries
 install -m0755 src/%{name}_*/%{name}_{mysql,agentd} %buildroot%_sbindir
@@ -328,9 +337,6 @@ install -pDm0644 sources/%{name}_mysql.service %buildroot%_unitdir/%{name}_mysql
 install -pDm0755 sources/%{name}_proxy.init %buildroot%_initdir/%{name}_proxy
 install -pDm0644 sources/%{name}_proxy.service %buildroot%_unitdir/%{name}_proxy.service
 
-# migrator
-install -m0755 sources/zabbix.migrate.sh migrate.sh
-
 # sudo entry
 install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudoers.d/%name
 
@@ -343,8 +349,8 @@ mv upgrades/dbpatches-final/dbpatches/1.6/postgresql upgrades-postgresql/1.6
 mv upgrades/dbpatches-final/dbpatches/1.8/postgresql upgrades-postgresql/1.8
 mv upgrades/dbpatches-final/dbpatches/2.0/postgresql upgrades-postgresql/2.0
 
-# UPGRADING
-cp sources/UPGRADING.ALT .
+# include files
+cp include/* %buildroot%_includedir/%name
 
 # ChangeLog
 bzip2 ChangeLog
@@ -409,7 +415,6 @@ fi
 %_unitdir/*mysql*
 %doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql
 %doc upgrades-mysql
-%doc UPGRADING.ALT
 
 %if_with pgsql
 %files server-pgsql
@@ -418,7 +423,6 @@ fi
 %_unitdir/*pgsql*
 %doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql
 %doc upgrades-postgresql
-%doc UPGRADING.ALT
 %endif
 
 %files proxy
@@ -437,7 +441,6 @@ fi
 %_bindir/%{name}_sender
 %_man8dir/%{name}_agentd.*
 %_man1dir/%{name}_sender.*
-%exclude %_sbindir/%{name}_agent
 
 %files agent-sudo
 %config(noreplace) %attr(0400,root,root) %_sysconfdir/sudoers.d/%name
@@ -455,12 +458,21 @@ fi
 
 %files phpfrontend-apache2-mod_php5
 %files doc
-%doc AUTHORS NEWS README UPGRADING.ALT INSTALL ChangeLog.bz2
+%doc AUTHORS NEWS README INSTALL ChangeLog.bz2
 
 %files contrib
-%doc misc/snmptrap/* migrate.sh
+%doc misc/snmptrap/*
+
+%files source
+%_includedir/%name
 
 %changelog
+* Wed Feb 17 2016 Alexei Takaseev <taf@altlinux.org> 1:3.0.0-alt1
+- 3.0.0
+- Remove deprecated script and docs.
+- Add group setting for zabbix-agent (ALT#31627)
+- Add subpackage -source (ALT#31340)
+
 * Fri Nov 13 2015 Alexei Takaseev <taf@altlinux.org> 1:2.4.7-alt1
 - 2.4.7
 
