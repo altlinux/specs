@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libpng-devel
 # END SourceDeps(oneline)
 Name:           matchbox-keyboard
 Version:        0.1
-Release:        alt1_9
+Release:        alt1_10
 Summary:        On screen virtual keyboard
 Group:          Accessibility
 License:        GPLv2+
@@ -59,6 +59,9 @@ find %{buildroot} -name '*.la' | xargs rm
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_10
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_9
 - update by mgaimport
 
