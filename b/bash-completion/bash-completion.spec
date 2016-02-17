@@ -4,8 +4,7 @@ Name: bash-completion
 Epoch: 1
 # actualy it is version 1.3-109-g0f39d41
 Version: 1.99
-Release: alt5
-#TODO: control(8) for avahi-browse
+Release: alt6
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -60,9 +59,12 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %_sysconfdir/bashrc.d/bash_completion.sh
 %_rpmlibdir/*
 %_datadir/%name
-#FIXME add more
+%exclude %_datadir/%name/completions/rtcwake
 
 %changelog
+* Wed Feb 17 2016 Ildar Mulyukov <ildar@altlinux.ru> 1:1.99-alt6
+- exclude `rtcwake` file conflicting with bash-completion-util-linux (closes: #31796)
+
 * Wed Feb 10 2016 Ildar Mulyukov <ildar@altlinux.ru> 1:1.99-alt5
 - fix rpm completion (ALT-specific)
 
