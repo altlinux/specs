@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl-devel perl-po
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    Automated OS testing, also virtualized
 License:    GPL+ or Artistic
@@ -47,6 +47,9 @@ testing infrastructure, extending it with automation and advanced querying.
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_7
+- update by mgaimport
+
 * Thu Oct 16 2014 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_6
 - update by mgaimport
 
