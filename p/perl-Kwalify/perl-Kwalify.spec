@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(IPC/Run.pm) perl(JSON.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Kwalify schema for data structures
 License:    GPL+ or Artistic
@@ -52,6 +52,9 @@ validate($schema_data, $data)
 /usr/share/man/man1/pkwalify.1*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1_4
 - update by mgaimport
 
