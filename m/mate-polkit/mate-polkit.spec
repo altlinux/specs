@@ -1,17 +1,42 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgtk+3-gir-devel libpolkit-gir-devel pkgconfig(appindicator-0.1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-introspection-1.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(polkit-agent-1) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-introspection-1.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(polkit-agent-1) pkgconfig(polkit-gobject-1)
 # END SourceDeps(oneline)
-BuildRequires: libgtk+2-gir-devel
-BuildRequires: mate-common
+BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %define _libexecdir %_prefix/libexec
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-polkit
+%define version 1.12.0
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.12
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit 8e0c8e17e0138afa7757a1bdf8edd6f2c7b47a14}
+%{!?rel_build:%global commit_date 20150930}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
 Name:		mate-polkit
-Version:	1.10.2
-Release:	alt2_1
+Version:    %{branch}.0
+%if 0%{?rel_build}
+Release:	alt1_1
+%else
+Release:    alt1_1
+%endif
 Summary:	Integrates polkit authentication for MATE desktop
 License:	LGPLv2+
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.10/%name-%version.tar.xz
+
+# for downloading the tarball use 'spectool -g -R mate-polkit.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:	libgtk+3-devel
 BuildRequires:	mate-common
@@ -39,7 +64,15 @@ Summary:	Integrates polkit with the MATE Desktop environment
 Development libraries for mate-polkit
 
 %prep
-%setup -q
+%setup -q%{!?rel_build:n %{name}-%{commit}}
+
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# for snapshots
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 %build
 %configure  \
@@ -79,6 +112,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
 - fixed dependencies
 

@@ -1,15 +1,41 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize libSM-devel libgio-devel pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/glib-gettextize libSM-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libxklavier)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name libmatekbd
+%define version 1.12.1
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.12
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit 5e8b69cf7c6d031cbb0b0f01a7518e72146c0af1}
+%{!?rel_build:%global commit_date 20151009}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
 Name:           libmatekbd
-Version:        1.10.0
-Release:        alt1_2
+Version:        %{branch}.1
+%if 0%{?rel_build}
+Release:        alt1_1
+%else
+Release:        alt1_1
+%endif
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.9/%{name}-%{version}.tar.xz
+
+# for downloading the tarball use 'spectool -g -R libmatekbd.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gsettings-desktop-schemas-devel
@@ -17,6 +43,7 @@ BuildRequires:  gtk2-devel
 BuildRequires:  libICE-devel
 BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
+BuildRequires:  gobject-introspection-devel
 Source44: import.info
 Requires: iso-codes
 
@@ -32,18 +59,25 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 Development libraries for libmatekbd
 
 %prep
-%setup -q
+%setup -q%{!?rel_build:n %{name}-%{commit}}
+
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# for snapshots
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 %build
 autoreconf -fisv
-# To work around rpath issue
-#autoreconf -fi
 
 %configure                   \
    --disable-static          \
    --with-gtk=2.0            \
    --disable-schemas-compile \
-   --with-x
+   --with-x                  \
+   --enable-introspection=yes
   
 make %{?_smp_mflags} V=1
 
@@ -65,6 +99,8 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/matekbd.convert
 %{_datadir}/glib-2.0/schemas/org.mate.peripherals-keyboard-xkb.gschema.xml
 %{_libdir}/libmatekbd.so.4*
 %{_libdir}/libmatekbdui.so.4*
+%{_libdir}/girepository-1.0/Matekbd-1.0.typelib
+%{_datadir}/gir-1.0/Matekbd-1.0.gir
 
 %files devel
 %{_includedir}/libmatekbd
@@ -74,6 +110,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/matekbd.convert
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new fc release
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
 - new fc release
 

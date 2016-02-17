@@ -2,17 +2,22 @@ Group: Networking/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(libgtop-2.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(mate-desktop-2.0)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:           mate-netspeed
-Version:        1.10.2
+Version:        1.12.0
 Release:        alt1_1
 Summary:        MATE netspeed
 License:        GPLv2+
 URL:            http://www.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar.xz
-Source44: import.info
+Source0:        http://pub.mate-desktop.org/releases/1.12/%{name}-%{version}.tar.xz
 
+BuildRequires:  mate-common
+BuildRequires:  libgtop2-devel
+BuildRequires:  mate-panel-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  mate-desktop-devel
+BuildRequires:  wireless-tools-devel
+Source44: import.info
 
 
 %description
@@ -52,6 +57,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_1
 - new version
 

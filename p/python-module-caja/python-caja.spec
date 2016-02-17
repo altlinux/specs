@@ -1,13 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc pkgconfig(libcaja-extension) pkgconfig(pygobject-3.0) python-devel python-module-pygobject-devel
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc pkgconfig(libcaja-extension)
 # END SourceDeps(oneline)
 %py_provides caja
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname python-caja
 Name:           python-module-caja
-Version:        1.10.0
+Version:        1.12.0
 Release:        alt1_1
 Epoch:          1
 Summary:        Python bindings for Caja
@@ -16,8 +15,12 @@ Group:          Development/C
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.10/%{oldname}-%{version}.tar.xz
-Source44: import.info
 
+BuildRequires:  python-devel
+BuildRequires:  mate-file-manager-devel
+BuildRequires:  python-module-pygobject3-devel
+BuildRequires:  mate-common
+Source44: import.info
 
 
 %description
@@ -26,6 +29,7 @@ Python bindings for Caja
 %package -n python-module-caja-devel
 Summary:        Python bindings for Caja
 Group:          Development/C
+Requires:       python-module-caja = %{epoch}:%{version}-%{release}
 
 %description -n python-module-caja-devel
 Python bindings for Caja
@@ -53,8 +57,6 @@ make %{?_smp_mflags}
 %{makeinstall_std}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/caja-python/extensions
 find $RPM_BUILD_ROOT -name '*.la' -delete
-rm -rf %buildroot%{_docdir}/python-caja
-rm examples/Makefile*
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -64,13 +66,16 @@ rm examples/Makefile*
 %{_datadir}/caja/extensions/libcaja-python.caja-extension
 %dir %{_datadir}/caja-python
 %dir %{_datadir}/caja-python/extensions
+%{_docdir}/python-caja/examples/
 
 %files -n python-module-caja-devel
-%doc examples
 %{_libdir}/pkgconfig/caja-python.pc
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.12.0-alt1_1
+- new version
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.10.0-alt1_1
 - new version
 

@@ -1,28 +1,23 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/xsltproc libX11-devel libgio-devel libsensors3-devel pkgconfig(cairo) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/xsltproc libX11-devel libgio-devel libsensors3-devel pkgconfig(cairo) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libatasmart) pkgconfig(libmatepanelapplet-4.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
 # dlopen plugins with plugin_name ?
 %set_verify_elf_method unresolved=relaxed
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-sensors-applet
-Version:        1.10.4
+Version:        1.12.1
 Release:        alt1_1
 Summary:        MATE panel applet for hardware sensors
 Group:          Graphical desktop/MATE
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar.xz
-
-# http://git.mate-desktop.org/mate-sensors-applet/commit/?id=1d5f590
-Patch1:         mate-sensors-applet_new-nvidia-sensor.patch
-# http://git.mate-desktop.org/mate-sensors-applet/commit/?id=cba9085
-Patch2:         mate-sensors-applet_udisks.patch
+Source0:        http://pub.mate-desktop.org/releases/1.11/%{name}-%{version}.tar.xz
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libatasmart-devel
 BuildRequires:  libnotify-devel
-BuildRequires:  libXNVCtrl-devel
+BuildRequires:  libXNVCtrl-devel   
 BuildRequires:  lm_sensors3-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-panel-devel
@@ -52,9 +47,6 @@ developing applications that use mate-sensors-applet.
 %prep
 %setup -q
 
-%patch1 -p1 -b .nvidia
-%patch2 -p1 -b .udisks
-
 %build
 autoreconf -fisv
 %configure \
@@ -62,9 +54,6 @@ autoreconf -fisv
     --disable-schemas-compile \
     --enable-libnotify \
     --with-nvidia
-
-# remove unused-direct-shlib-dependency
-#sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
 make %{?_smp_mflags}
 
@@ -96,6 +85,9 @@ find $RPM_BUILD_ROOT -name "*.la" -exec rm -rf {} ';'
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt1_1
 - update to mate 1.10
 

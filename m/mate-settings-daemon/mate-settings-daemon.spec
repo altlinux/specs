@@ -3,17 +3,16 @@ Group: System/Servers
 BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(libmatemixer) pkgconfig(libnotify) pkgconfig(libpulse) pkgconfig(libxklavier) pkgconfig(mate-desktop-2.0) pkgconfig(nss) pkgconfig(polkit-gobject-1)
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel libXi-devel
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define fedora 22
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-settings-daemon
-%define version 1.10.2
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 83fe1f587f5c6328b10a899a880275d79bf88921}
@@ -24,11 +23,11 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-settings-daemon
-Version:        %{branch}.2
+Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt2_1
+Release:        alt1_1
 %else
-Release:        alt2_0.1%{?git_rel}
+Release:        alt1_1
 %endif
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
@@ -39,10 +38,6 @@ URL:            http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
-
-# http://git.mate-desktop.org/mate-settings-daemon/commit/?id=ed55854
-# http://git.mate-desktop.org/mate-settings-daemon/commit/?id=33cb903
-Patch0:         mate-settings-daemon_touchpad.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libdconf-devel
@@ -66,7 +61,7 @@ BuildRequires:  libpulseaudio-devel
 
 Requires:       libmatekbd%{?_isa} >= 0:1.6.1-1
 # needed for xrandr capplet
-#Requires:       mate-control-center-filesystem
+Requires:       mate-control-center-filesystem
 Source44: import.info
 Requires: dconf
 
@@ -87,8 +82,6 @@ under it.
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
-
-%patch0 -p1 -b .touchpad
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -122,6 +115,9 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 
 %find_lang %{name} --with-gnome --all-name
 
+%post
+/bin/touch --no-create %{_datadir}/hicolor/mate &> /dev/null || :
+
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %dir %{_sysconfdir}/mate-settings-daemon
@@ -137,6 +133,7 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 %{_datadir}/dbus-1/services/org.mate.SettingsDaemon.service
 %{_datadir}/dbus-1/system-services/org.mate.SettingsDaemon.DateTimeMechanism.service
 %{_datadir}/icons/mate/*/*/*
+%{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/mate-settings-daemon
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/polkit-1/actions/org.mate.settingsdaemon.datetimemechanism.policy
@@ -148,6 +145,9 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
 - fixed dependencies
 

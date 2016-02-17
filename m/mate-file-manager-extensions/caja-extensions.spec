@@ -2,17 +2,16 @@ Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gupnp-1.0) pkgconfig(libcaja-extension) pkgconfig(mate-desktop-2.0)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname caja-extensions
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja-extensions
-%define version 1.10.1
+%define version 1.12.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 298c7255b82986eeba72fff06f59479deae0b9d0}
@@ -24,11 +23,11 @@ BuildRequires: mate-common
 
 Name:           mate-file-manager-extensions
 Summary:        Set of extensions for caja file manager
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt2_1
+Release:        alt1_1
 %else
-Release:        alt2_0.4%{?git_rel}
+Release:        alt1_1
 %endif
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -128,7 +127,6 @@ Caja wallpaper extension, allows to quickly set wallpaper.
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 %patch0 -p1 -b .beesu
 
-autoreconf -fi
 cp %{SOURCE1} SETUP
 
 %if 0%{?rel_build}
@@ -223,6 +221,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/caja-open-terminal.convert
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt2_1
 - fixed dependencies
 

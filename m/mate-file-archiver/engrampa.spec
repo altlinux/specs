@@ -3,17 +3,16 @@ Group: Archiving/Other
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(json-glib-1.0) pkgconfig(libcaja-extension)
 # END SourceDeps(oneline)
 BuildRequires: libmagic-devel libSM-devel
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname engrampa
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name engrampa
-%define version 1.10.2
+%define version 1.12.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit f4611c3411c44e792f729a0780c31b0aa55fe004}
@@ -24,7 +23,7 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-file-archiver
-Version:       %{branch}.2
+Version:       %{branch}.0
 %if 0%{?rel_build}
 Release:       alt1_2
 %else
@@ -40,10 +39,18 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-# http://git.mate-desktop.org/engrampa/commit/?h=1.10&id=483f7b7
-Patch0:         engrampa_extract-multiple-files.patch
-Source44: import.info
+# https://github.com/mate-desktop/engrampa/commit/4f65bde
+Patch0:         engrampa_fix-for-p7zip.patch
 
+BuildRequires:  mate-common
+BuildRequires:  desktop-file-utils
+BuildRequires:  libmagic-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  libjson-glib-devel
+BuildRequires:  mate-file-manager-devel
+BuildRequires:  mate-desktop-devel
+BuildRequires:  libSM-devel
+Source44: import.info
 
 
 %description
@@ -54,7 +61,7 @@ such as zip, xv, bzip2, cab, rar and other compress formats.
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
-%patch0 -p1 -b .engrampa_extract-multiple-files
+%patch0 -p1 -b .p7zip
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -109,6 +116,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/engrampa.convert
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_2
+- new version
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_2
 - new version
 

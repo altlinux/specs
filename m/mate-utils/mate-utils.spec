@@ -2,16 +2,15 @@ Group: File tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(x11) pkgconfig(xext) zlib-devel pkgconfig(libcanberra-gtk)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-utils
-%define version 1.10.3
+%define version 1.12.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit d3538696e2b4e4372e9f526a0a4e2e4be08fc832}
@@ -22,11 +21,11 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-utils
-Version:        %{branch}.3
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt2_1
+Release:        alt1_1
 %else
-Release:        alt2_0.1%{?git_rel}
+Release:        alt1_1
 %endif
 Summary:        MATE utility programs
 License:        GPLv2+ and LGPLv2+
@@ -124,6 +123,7 @@ Requires: %{name}-common = %{version}-%{release}
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage.
 
+
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
@@ -135,9 +135,7 @@ An application to help analyze disk usage.
 NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 
-
 %build
-NOCONFIGURE=1 ./autogen.sh
 %configure \
     --disable-static            \
     --disable-schemas-compile   \
@@ -211,6 +209,8 @@ desktop-file-install                          \
 %{_datadir}/glib-2.0/schemas/org.mate.system-log.gschema.xml
 %{_datadir}/applications/mate-system-log.desktop
 %{_mandir}/man1/mate-system-log.1*
+%{_datadir}/icons/hicolor/*/apps/*.png
+%{_datadir}/icons/hicolor/scalable/apps/mate-system-log-symbolic.svg
 
 %files -n mate-screenshot
 %{_bindir}/mate-screenshot
@@ -258,6 +258,9 @@ desktop-file-install                          \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.3-alt2_1
 - fixed dependencies
 
