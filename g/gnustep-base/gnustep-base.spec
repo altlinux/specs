@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt5.svn20140226
+Release: alt6.svn20140226
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -152,6 +152,9 @@ rm -f /etc/services.orig
 %_infodir/*
  
 %changelog
+* Wed Feb 17 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.24.6-alt6.svn20140226
+- Rebuild with libicu56
+
 * Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.24.6-alt5.svn20140226
 - Build with gcc instead of clang
 
