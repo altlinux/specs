@@ -5,7 +5,7 @@
 
 Name:           PySolFC-music
 Version:        4.40
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Music for PySolFC
 
 Group:          Games/Other
@@ -13,6 +13,8 @@ License:        GPLv2+
 URL:            http://www.pysol.org/
 Source0:        ftp://ibiblio.org/pub/linux/games/solitaires/pysol-music-%{version}.tar.gz
 
+Requires:       python-module-PySolFC >= %{mainversion}
+Requires:       python-module-pygame
 
 BuildArch: noarch
 Source44: import.info
@@ -36,6 +38,9 @@ cp -a data/music/* $RPM_BUILD_ROOT%{_datadir}/PySolFC/music
 %{_datadir}/PySolFC/music/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4.40-alt2_13
 - update to new release by fcimport
 
