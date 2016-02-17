@@ -1,6 +1,6 @@
 Name: apt-cacher-ng
 Version: 0.8.5
-Release: alt1
+Release: alt2
 
 Summary: Caching HTTP download proxy for software packages
 
@@ -97,6 +97,9 @@ chmod ug+rw %_logdir/%name/* ||:
 %preun_service acng
 
 %changelog
+* Thu Feb 18 2016 Terechkov Evgenii <evg@altlinux.org> 0.8.5-alt2
+- Add git.alt task support in vfilepattern
+
 * Mon Aug 31 2015 Terechkov Evgenii <evg@altlinux.org> 0.8.5-alt1
 - 0.8.5
 - vfilepattern patch updated
