@@ -1,12 +1,14 @@
-%filter_from_requires /^python2...VS.$/d
-%filter_from_requires /^python2...Director.$/d
-%filter_from_requires /^python2...Briefing.$/d
 %define _unpackaged_files_terminate_build 1
 %add_python_req_skip Base
-%define fedora 19
+%filter_from_requires /^python2...Briefing.$/d
+%filter_from_requires /^python2...Director.$/d
+%filter_from_requires /^python2...VS.$/d
+%add_python_compile_include %_datadir/vegastrike
+%add_python_lib_path %_datadir/vegastrike
+%define fedora 23
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_7.r1
+Release:        alt2_8.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -77,6 +79,8 @@ grep '\.py"$' data.files | sed -e 's;\.py"$;.pyo";' > data.pyo
 grep '\.py"$' extra.files | sed -e 's;\.py"$;.pyc";' > extra.pyc
 grep '\.py"$' extra.files | sed -e 's;\.py"$;.pyo";' > extra.pyo
 
+sed -i -e /webpageize.py/d data.pyc data.pyo
+sed -i -e /findunits.py/d data.pyc data.pyo
 
 %build
 # nothing to build data only
@@ -90,8 +94,12 @@ for i in .vegastrike ai animations bases cockpits communications \
          *.xml *.csv *.config *.cur *.xpm New_Game Version.txt; do
   cp -a $i $RPM_BUILD_ROOT%{_datadir}/vegastrike
 done
+%if 0%{?fedora} && 0%{?fedora} < 20
 ln -s ../doc/%{name}-%{version} \
   $RPM_BUILD_ROOT%{_datadir}/vegastrike/documentation
+%else
+ln -s ../doc/%{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/vegastrike/documentation
+%endif
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 install -p -m 644 vegastrike.xpm \
@@ -99,13 +107,13 @@ install -p -m 644 vegastrike.xpm \
 # multiple -f flags in %files: merging -f data.dirs into -f data.files
 cat data.dirs >> data.files
 # multiple -f flags in %files: merging -f data.pyc into -f data.files
-#cat data.pyc >> data.files
+cat data.pyc >> data.files
 # multiple -f flags in %files: merging -f data.pyo into -f data.files
-#cat data.pyo >> data.files
+cat data.pyo >> data.files
 # multiple -f flags in %files: merging -f extra.pyc into -f extra.files
-#cat extra.pyc >> extra.files
+cat extra.pyc >> extra.files
 # multiple -f flags in %files: merging -f extra.pyo into -f extra.files
-#cat extra.pyo >> extra.files
+cat extra.pyo >> extra.files
 
 
 %files -f data.files   
@@ -118,6 +126,9 @@ cat data.dirs >> data.files
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_8.r1
+- fixed build
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_7.r1
 - update to new release by fcimport
 
