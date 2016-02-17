@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_4
+Release:    alt2_5
 
 Summary:    No summary found
 License:    GPL+ or Artistic
@@ -52,6 +52,9 @@ If you use the module in your program in the usual way
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_4
 - update by mgaimport
 
