@@ -7,7 +7,7 @@ BuildRequires: perl(English.pm) perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_4
+Release:    alt2_5
 
 Summary:    %{upstream_name} perl module
 License:    GPL or Artistic
@@ -48,6 +48,9 @@ make PREFIX=$RPM_BUILD_ROOT%{_prefix} install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.017-alt2_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.017-alt2_4
 - update by mgaimport
 
