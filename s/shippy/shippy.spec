@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-%define fedora 21
 Name:           shippy
 Version:        1.3.3.7
-Release:        alt2_19
+Release:        alt2_21
 Summary:        Space invaders / Galaxians like game with powerups
 Group:          Games/Other
 License:        GPL+
@@ -13,9 +12,12 @@ Source0:        http://downloads.sourceforge.net/ship84/shipv%{version}UNIX.zip
 Source1:        shippy.png
 Source2:        shippy.desktop
 Source3:        shippy.sh
+Source4:        %{name}.appdata.xml
 Patch0:         shippy-merged.patch
-BuildRequires:  dumb-devel libSDL_mixer-devel desktop-file-utils
-Requires:       %{name}-common = %{version} icon-theme-hicolor
+Patch1:         shippy-improved-splash.patch
+BuildRequires:  dumb-devel libSDL_mixer-devel
+BuildRequires:  desktop-file-utils libappstream-glib
+Requires:       %{name}-common = %{version}
 Provides:       %{name}-engine = %{version}
 Source44: import.info
 
@@ -41,6 +43,7 @@ Alternative version of Shippy1984 compiled to use the allegro display library.
 Summary:	Shippy1984 common files
 Group:		Games/Other
 Requires:       %{name}-engine = %{version}
+Requires:       icon-theme-hicolor
 
 %description common
 Data files, desktop entry and icon, docs and wrapper-script for the
@@ -49,9 +52,11 @@ Shippy1984 game.
 
 %prep
 %setup -q -c
-%patch0 -p1 -z .merged
+%patch0 -p1
+%patch1 -p1
 sed -i 's/\r//' NOTES.txt LICENSE.txt docs/manual.html
 mv docs html
+mv data/splash2.bmp data/splash.bmp
 #see comment in %%install
 rm data/scores.lst
 
@@ -80,18 +85,16 @@ install -p -m 644 data/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 # and fill it with data in platform format after the first run.
 mkdir -p $RPM_BUILD_ROOT%{_var}/lib/games
 touch $RPM_BUILD_ROOT%{_var}/lib/games/%{name}.hs
-
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-              \
-%endif
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE2}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE2}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 %{SOURCE1} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
@@ -101,19 +104,20 @@ install -p -m 644 %{SOURCE1} \
 %attr(2711,root,games) %{_bindir}/%{name}-allegro
 
 %files common
-%doc NOTES.txt LICENSE.txt html
+%doc NOTES.txt html
+%doc LICENSE.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%if 0%{?fedora} && 0%{?fedora} < 19
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%else
-%{_datadir}/applications/%{name}.desktop
-%endif
-%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 %config(noreplace) %attr (0664,root,games) %{_var}/lib/games/%{name}.hs
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_21
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_19
 - update to new release by fcimport
 
