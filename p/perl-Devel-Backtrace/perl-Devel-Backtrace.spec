@@ -7,7 +7,7 @@ BuildRequires: perl(Class/Accessor/Fast.pm) perl(ExtUtils/MakeMaker.pm) perl(Mod
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_8
 
 Summary:    Object-oriented backtrace
 License:    GPL+ or Artistic
@@ -46,6 +46,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_8
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_6
 - update by mgaimport
 
