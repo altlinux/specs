@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip zlib-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_27
+Release:        alt2_28
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -81,6 +81,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_28
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_27
 - update to new release by fcimport
 
