@@ -1,46 +1,44 @@
 Name: lsdvd
-Version: 0.16
-Release: alt3.qa1
+Version: 0.17
+Release: alt1
 
 Summary: list contents of DVD disks
-
-License: GPL
 Group: Video
-Url: http://untrepid.com/lsdvd
+License: GPLv2
+Url: https://sourceforge.net/projects/lsdvd/
 
-Packager: Evgenii Terechkov <evg@altlinux.ru>
+# VCS: git://git.code.sf.net/p/lsdvd/git
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-Source: %name-%version.tar.gz
-Patch0: %name-0.16-configure.patch
-Patch1: %name-0.16-cell_sizes.patch
-
-# Automatically added by buildreq on Sat Oct 07 2006
-BuildRequires: libdvdread-devel
+BuildRequires: libdvdread-devel >= 4.1.3
 
 %description
-List contents of DVD disks. May be used by AcidRip, Ogle or
-standalone.
+lsdvd is a program that reads information about a DVD and outputs it to
+the console in various formats: human-readable, perl, python, ruby and
+XML.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+%setup
+%patch -p1
 
 %build
-%configure --prefix=%buildroot
+%autoreconf
+%configure
 %make_build
 
 %install
-mkdir -p %buildroot/%_bindir
-%makeinstall
+%makeinstall_std
 
 %files
-%_bindir/*
+%_bindir/%name
 %_man1dir/%name.1*
-
-%doc AUTHORS NEWS README
+%doc AUTHORS ChangeLog README
 
 %changelog
+* Wed Feb 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17-alt1
+- pre0.18 from new upstream git (ALT #31771)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.16-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
