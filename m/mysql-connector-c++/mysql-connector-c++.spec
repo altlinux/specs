@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 Summary:	A MySQL database connector for C++
 Name:		mysql-connector-c++
 Version:	1.1.6
-Release:	alt2_1
+Release:	alt2_2
 Group:		System/Libraries
 License:	GPLv2
 URL:		http://dev.mysql.com/downloads/connector/cpp/
@@ -131,6 +131,9 @@ rm -f %{buildroot}%{_libdir}/libmysqlcppconn-static.a
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt2_2
+- update by mgaimport
+
 * Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt2_1
 - devel bugfixes
 
