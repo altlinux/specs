@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(IPC/Cmd.pm) perl-devel perl
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Perl extension for starting a text editor
 License:    GPL+ or Artistic
@@ -60,6 +60,9 @@ editor. A shell is not used but this should cover most simple cases.
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_4
 - update by mgaimport
 
