@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Tes
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -55,6 +55,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_4
 - update by mgaimport
 
