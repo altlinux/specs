@@ -8,7 +8,7 @@ BuildRequires: /proc
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    An easy-to-use daemon(izing) toolkit
 License:    GPL+ or Artistic
@@ -59,6 +59,9 @@ A note about the 'close' option
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.0052-alt1_7
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.0052-alt1_6
 - update by mgaimport
 
