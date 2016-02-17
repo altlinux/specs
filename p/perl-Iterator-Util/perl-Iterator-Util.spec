@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(Test/More.pm) perl(base.pm) perl-devel per
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_6
 
 Summary:    Essential utilities for the Iterator class
 License:    GPL+ or Artistic
@@ -53,6 +53,9 @@ the the Iterator manpage documentation.
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_6
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_5
 - update by mgaimport
 
