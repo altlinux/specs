@@ -1,7 +1,10 @@
-%define fedora 21
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
+%define fedora 23
 Name:           tunneler
 Version:        1.1.1
-Release:        alt2_16
+Release:        alt2_17
 Summary:        Clone of legendary Tunneler game
 
 Group:          Games/Other
@@ -55,6 +58,9 @@ desktop-file-install %{SOURCE2} \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_16
 - update to new release by fcimport
 
