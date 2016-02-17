@@ -8,7 +8,7 @@ BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(Exporter.pm) 
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    Tapper - Install everything needed for a test
 License:    GPL+ or Artistic
@@ -89,6 +89,9 @@ popd
 /usr/share/man/man1/tapper-installer-simnow.pl.1*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_7
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_6
 - update by mgaimport
 
