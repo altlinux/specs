@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           zasx
 Version:        1.30
-Release:        alt2_19
+Release:        alt2_20
 Summary:        Asteroid like game with powerups
 Group:          Games/Other
 License:        GPLv2+ and Freely redistributable without restriction
@@ -63,6 +63,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_20
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.30-alt2_19
 - update to new release by fcimport
 
