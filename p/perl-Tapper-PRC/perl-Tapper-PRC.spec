@@ -1,6 +1,8 @@
+BuildRequires: perl(File/Slurp.pm)
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(Hash/Merge.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(File/Slurp.pm)
 %define upstream_name    Tapper-PRC
@@ -8,7 +10,7 @@ BuildRequires: perl(File/Slurp.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
@@ -73,6 +75,9 @@ Tapper - Program run control for test program automation.
 /usr/share/man/man1/tapper-client.1*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_7
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_6
 - update by mgaimport
 
