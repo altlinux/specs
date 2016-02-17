@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 Name:		professor-is-missing
 Version:	0.1
-Release:	alt4_12
+Release:	alt4_13
 Summary:	The Professor is Missing, an AGI adventure game
 
 Group:		Games/Other
@@ -20,7 +20,7 @@ Source4:	professor-is-missing-LICENSE.fedora
 BuildArch:	noarch
 
 BuildRequires:	desktop-file-utils
-Requires:	nagi icon-theme-hicolor
+Requires:	nagi, icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -72,6 +72,9 @@ install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%
 %{_bindir}/professor-is-missing-wrapper.sh
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_12
 - update to new release by fcimport
 
