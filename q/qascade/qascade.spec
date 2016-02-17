@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 Name:           qascade
 Version:        0.1
-Release:        alt2_21
+Release:        alt2_22
 Summary:        Classic puzzle game
 
 Group:          Games/Other
@@ -56,6 +56,9 @@ install -D -p -m 644 blue.png \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_22
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_21
 - update to new release by fcimport
 
