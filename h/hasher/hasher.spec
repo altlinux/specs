@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.27
+Version: 1.3.28
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -56,6 +56,11 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Feb 17 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3.28-alt1
+- hsh-initroot: prepare /sys/fs/cgroup mountpoint.
+- hsh-rebuild --query-repackage: install BuildRequires(pre)
+  dependencies first.
+
 * Fri Jan 23 2015 Dmitry V. Levin <ldv@altlinux.org> 1.3.27-alt1
 - hsh-mkchroot: changed chroot/dev/shm group ownership
   to make it a valid mountpoint for hasher-priv >= 1.5.1.
