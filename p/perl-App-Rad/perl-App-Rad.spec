@@ -7,7 +7,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Extend the App::Rad framework!
 License:    GPL+ or Artistic
@@ -60,6 +60,9 @@ Extending App::Rad - Plugins!
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_5
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_4
 - update by mgaimport
 
