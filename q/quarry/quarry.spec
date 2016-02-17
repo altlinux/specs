@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/scrollkeeper-config pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/scrollkeeper-config pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(librsvg-2.0)
 # END SourceDeps(oneline)
 Name:           quarry
 Version:        0.2.0
-Release:        alt5_18
+Release:        alt5_19
 Summary:        A multi-purpose board game GUI
 
 Group:          Games/Other
@@ -49,16 +49,6 @@ desktop-file-install \
 
 %find_lang %{name}
 
-%post
-/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
-
-
-%postun
-if [ $1 -eq 0 ]; then
-/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
-
-fi
-
 %files -f %{name}.lang
 %doc AUTHORS ChangeLog COPYING COPYING-DOC NEWS README THANKS TODO
 %{_bindir}/quarry
@@ -70,6 +60,9 @@ fi
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_18
 - update to new release by fcimport
 
