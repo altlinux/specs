@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/convert /usr/bin/glib-gettextize /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(libnotify)
+BuildRequires: /usr/bin/convert /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgnome-2.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 23
 Name:           pioneers
 Version:        15.3
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
@@ -30,7 +30,7 @@ client as well as both a GUI and CLI version of the server for local games.
 %package editor
 Summary:        Pioneers Game Editor
 Group:          Games/Other
-Requires:       pioneers = %{version}-%{release}
+Requires:       pioneers = %{version}
 
 %description editor
 Pioneers is a computerized version of a well known strategy board game. The
@@ -145,6 +145,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 15.3-alt1_3
 - update to new release by fcimport
 
