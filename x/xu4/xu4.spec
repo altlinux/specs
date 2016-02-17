@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
-%define svndate 20150221
-%define svnrev 3087
+%global svndate 20150221
+%global svnrev 3087
 
 Name:           xu4
 Version:        1.1
-Release:        alt2_0.25.%{svndate}svn%{svnrev}
+Release:        alt2_0.26.%{svndate}svn%{svnrev}
 Summary:        Ultima IV recreated
 Group:          Games/Other
 License:        GPLv2+
@@ -94,6 +94,9 @@ rm -rf %{buildroot}/%{_datadir}/pixmaps
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.26.20150221svn3087
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.25.20150221svn3087
 - update to new release by fcimport
 
