@@ -1,7 +1,7 @@
 Name:           ember-media
 Version:        0.7.2.1
 # No dist tag because this is large noarch game data
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Media files for the ember WorldForge client
 
 Group:          Games/Other
@@ -54,6 +54,9 @@ ln -s ../../../../fonts/ttf/dejavu/DejaVuSans.ttf .
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.7.2.1-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.7.2.1-alt1_3
 - update to new release by fcimport
 
