@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel perl(find.pl)
+BuildRequires: /usr/bin/desktop-file-install libICE-devel libSM-devel libX11-devel libXext-devel perl(find.pl)
 # END SourceDeps(oneline)
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_22
+Release:        alt2_23
 Summary:        Arcade game: shoot down the space ships attacking the planet
 Group:          Games/Other
 License:        GPL+
@@ -19,7 +19,7 @@ Patch4:         %{name}-2.0.34-fullscreen-viewport.patch
 Patch5:         %{name}-2.0.34-alsa.patch
 Patch6:         %{name}-2.0.34-dga-compile-fix.patch
 BuildRequires:  libXt-devel libXpm-devel libXmu-devel libXxf86vm-devel
-BuildRequires:  libalsa-devel desktop-file-utils ImageMagick
+BuildRequires:  libalsa-devel desktop-file-utils ImageMagick 
 Requires:       icon-theme-hicolor
 Obsoletes:      xgalaga <= %{version}
 Provides:       xgalaga = %{version}-%{release}
@@ -102,6 +102,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_23
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_22
 - update to new release by fcimport
 
