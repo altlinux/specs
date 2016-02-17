@@ -14,7 +14,7 @@
 
 %define major 4
 %define minor 14
-%define bugfix 16
+%define bugfix 17
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -284,7 +284,7 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 
 # disable annoing autostart
 mkdir -p %buildroot/%_K4start/
-for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store ; do
+for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store gnome-mplayer mplayer gmplayer ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_K4start/$n.desktop
 done
 
@@ -351,6 +351,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed Feb 17 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.17-alt1
+- new version
+
 * Thu Jan 14 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.16-alt1
 - new version
 
