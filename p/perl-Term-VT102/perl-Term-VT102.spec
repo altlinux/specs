@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Pty.pm)
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_6
 
 Summary:	Term::VT102 - a class to emulate a DEC VT102 terminal
 License:	GPL+ or Artistic
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/Term/VT102/examples/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_6
+- update by mgaimport
+
 * Thu Oct 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.91-alt1_5
 - update by mgaimport
 
