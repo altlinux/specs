@@ -7,7 +7,7 @@ BuildRequires: perl(Module/Build.pm) perl(URI/Escape.pm) perl(base.pm) perl-deve
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_6
+Release:    alt2_7
 
 Summary:    No summary found
 License:    GPL+ or Artistic
@@ -53,6 +53,9 @@ web service objects;
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_7
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_6
 - update by mgaimport
 
