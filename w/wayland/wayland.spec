@@ -2,7 +2,7 @@
 %def_disable doc
 
 Name: wayland
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -14,7 +14,7 @@ Url: http://%name.freedesktop.org/
 #Source: %name-%version.tar
 Source: http://%name.freedesktop.org/releases/%name-%version.tar.xz
 
-BuildRequires: /proc doxygen libexpat-devel libffi-devel xsltproc docbook-style-xsl
+BuildRequires: /proc doxygen libexpat-devel libffi-devel libxml2-devel xsltproc docbook-style-xsl
 %{?_enable_doc:BuildRequires: /proc graphviz xmlto}
 
 %description
@@ -146,6 +146,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Wed Feb 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
