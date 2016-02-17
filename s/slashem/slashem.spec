@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++
 # END SourceDeps(oneline)
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.19.E0F1
+Release:        alt2_0.20.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
 Group:          Games/Other
@@ -21,10 +21,10 @@ Patch2:         slashem-format-security.patch
 BuildRequires:  /usr/bin/appstream-util
 BuildRequires:  /usr/bin/convert
 BuildRequires:  ncurses-devel
-BuildRequires:  bison flex desktop-file-utils
-BuildRequires:  bdftopcf libX11-devel libXext-devel
-BuildRequires:  libXmu-devel libXpm-devel libXt-devel
-BuildRequires:  libSDL-devel libGL-devel libpng-devel zlib-devel
+BuildRequires:  bison, flex, desktop-file-utils
+BuildRequires:  bdftopcf, libX11-devel, libXext-devel
+BuildRequires:  libXmu-devel, libXpm-devel, libXt-devel
+BuildRequires:  libSDL-devel  libGL-devel libpng-devel zlib-devel
 BuildRequires:  pkgconfig(xaw7)
 # to compress save files
 Requires:       bzip2
@@ -164,6 +164,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.20.E0F1
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.19.E0F1
 - update to new release by fcimport
 
