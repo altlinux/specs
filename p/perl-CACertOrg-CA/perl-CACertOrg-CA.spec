@@ -7,7 +7,7 @@ BuildRequires: perl(Test/More.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_3
+Release:    alt2_4
 
 Summary:    CACert.org's CA root certificate in PEM format
 License:    GPL+ or Artistic
@@ -46,6 +46,9 @@ md5 A6:1B:37:5E:39:0D:9C:36:54:EE:BD:20:31:46:1F:6B
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 20110724.004-alt2_4
+- update by mgaimport
+
 * Thu Oct 16 2014 Igor Vlasenko <viy@altlinux.ru> 20110724.004-alt2_3
 - update by mgaimport
 
