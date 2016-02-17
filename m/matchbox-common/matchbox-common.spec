@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(libmb)
+# END SourceDeps(oneline)
 %filter_from_requires /^.etc.matchbox.session/d
 Summary: 	Shared files for the Matchbox Desktop
 Name: 		matchbox-common
 Version: 	0.9.1
-Release: 	alt1_9
+Release: 	alt1_10
 Url: 		http://matchbox.handhelds.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -40,6 +43,9 @@ This package contains graphics and scripts required by Matchbox.
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_10
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_9
 - update by mgaimport
 
