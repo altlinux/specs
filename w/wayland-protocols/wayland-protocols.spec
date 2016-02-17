@@ -1,4 +1,4 @@
-%define ver_major 1.0
+%define ver_major 1.1
 
 Name: wayland-protocols
 Version: %ver_major
@@ -13,6 +13,8 @@ Url: http://wayland.freedesktop.org/
 Source: http://wayland.freedesktop.org/releases/%name-%version.tar.xz
 
 BuildArch: noarch
+# wayland-scanner required
+BuildRequires: wayland-devel
 
 %description
 wayland-protocols contains Wayland protocols that adds functionality not
@@ -38,6 +40,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README
 
 %changelog
+* Wed Feb 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
 * Thu Nov 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - first build for Sisyphus
 
