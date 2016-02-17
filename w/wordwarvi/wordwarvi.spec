@@ -1,14 +1,23 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
+%global commit 6beed311c2ecb3f9662f35ecc06948bd89ed9455
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 Name:           wordwarvi
-Version:        0.25
-Release:        alt2_12
+Version:        1.1
+Release:        alt1_2.git6beed31
 Summary:        Side-scrolling shoot 'em up '80s style arcade game
 Group:          Games/Other
 License:        GPLv2+ and CC-BY and CC-BY-SA
-URL:            http://wordwarvi.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+URL:            https://smcameron.github.io/wordwarvi/
+# The 1.1 release never got a tag in git, so we use the commit-id
+Source0:        https://github.com/smcameron/wordwarvi/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}.png
-BuildRequires:  gtk2-devel libportaudio2-devel libvorbis-devel desktop-file-utils
+Source3:        %{name}.appdata.xml
+BuildRequires:  gtk2-devel libportaudio2-devel libvorbis-devel
+BuildRequires:  desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -25,11 +34,11 @@ vi, mmm-kay?
 
 
 %prep
-%setup -q
+%setup -qn %{name}-%{commit}
 
 
 %build
-make %{?_smp_mflags} PREFIX=%{_prefix} OPTIMIZE_FLAG="$RPM_OPT_FLAGS"
+make %{?_smp_mflags} PREFIX=%{_prefix} CFLAGS="$RPM_OPT_FLAGS"
 
 
 %install
@@ -37,12 +46,14 @@ make install PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install           \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
 install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
@@ -50,11 +61,15 @@ install -p -m 644 %{SOURCE2} \
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_mandir}/man6/%{name}.6*
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2.git6beed31
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.25-alt2_12
 - update to new release by fcimport
 
