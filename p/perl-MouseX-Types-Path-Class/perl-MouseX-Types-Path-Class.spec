@@ -7,7 +7,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt3_6
+Release:    alt3_7
 
 Summary:    A Path::Class type library for Mouse
 License:    GPL+ or Artistic
@@ -54,6 +54,9 @@ Path::Class::Dir manpage and the Path::Class::File manpage.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3_7
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3_6
 - update by mgaimport
 
