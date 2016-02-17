@@ -1,7 +1,10 @@
-%define fedora 21
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
+%define fedora 23
 Name: pipepanic
 Version: 0.1.3
-Release: alt4_17
+Release: alt4_18
 Summary: A pipe connecting game
 
 Group: Games/Other
@@ -97,6 +100,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_17
 - update to new release by fcimport
 
