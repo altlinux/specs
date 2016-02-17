@@ -1,28 +1,22 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
-%define fedora 21
 Name:           scorchwentbonkers
-Version:        1.1
-Release:        alt2_19
+Version:        1.3
+Release:        alt1_1
 Summary:        Realtime remake of Scorched Earth
 Group:          Games/Other
 License:        zlib
-URL:            http://www.allegro.cc/depot/ScorchWentBonkers
-# should be
-# http://www.allegro.cc/files/depot/537/%{name}-src-%{version}.tar.gz
-# but that is powered by a script which breaks every other day.
-Source0:        %{name}-src-%{version}.tar.gz
+URL:            http://wasyl.eu/games/scorch-went-bonkers.html
+Source0:        http://wasyl.eu/assets/dls/scorch-went-bonkers-src.zip
 Source1:        %{name}.desktop
 Source2:        %{name}.png
+Source3:        %{name}.appdata.xml
 Patch0:         %{name}-no-fmod.patch
 Patch1:         %{name}-support-16bpp.patch
 Patch2:         %{name}-unixify.patch
-Patch3:         %{name}-fullscreen.patch
-Patch4:         %{name}-divbyzero.patch
-Patch5:         %{name}-1.1-al-4.4.patch
-BuildRequires:  liballegro-devel liballegro-devel dumb-devel AllegroOGG-devel
-BuildRequires:  libGLU-devel desktop-file-utils
+BuildRequires:  liballegro-devel liballegro-devel dumb-devel AllegroOGG-devel 
+BuildRequires:  libGLU-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -39,46 +33,41 @@ for controlling your tank. The game is real-time instead of turn based.
 %patch0 -p1 -z .no-fmod
 %patch1 -p1 -z .16bpp
 %patch2 -p1 -z .unix
-%patch3 -p1 -z .fs
-%patch4 -p1 -z .dbz
-%patch5 -p1
-sed -i 's/\r//' doc/readme.htm
+mv src/menu/Splashscreen.h src/menu/SplashScreen.h
 
 
 %build
-make %{?_smp_mflags} -f Makefile.linux PREFIX=%{_prefix} \
-  OPTFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-non-virtual-dtor"
+make %{?_smp_mflags} PREFIX=%{_prefix} OPTFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 
 
 %install
-make -f Makefile.linux install PREFIX=$RPM_BUILD_ROOT%{_prefix}
+make install PREFIX=$RPM_BUILD_ROOT%{_prefix}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install \
-%if 0%{?fedora} && 0%{?fedora} < 19
-              \
-%endif
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 install -p -m 644 %{SOURCE2} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
-%doc README doc/readme.htm
-%{_bindir}/swb
-%{_datadir}/swb
-%if 0%{?fedora} && 0%{?fedora} < 19
+%doc LICENSE
+%{_bindir}/%{name}
+%{_datadir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%else
-%{_datadir}/applications/%{name}.desktop
-%endif
-%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_19
 - update to new release by fcimport
 
