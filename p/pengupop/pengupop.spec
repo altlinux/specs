@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_14
+Release:        alt4_15
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
 Group:          Games/Other
@@ -8,7 +11,7 @@ License:        GPLv2+
 URL:            http://www.junoplay.com/pengupop
 Source0:        http://www.junoplay.com/files/%{name}-%{version}.tar.gz
 
-BuildRequires:  libSDL-devel zlib-devel desktop-file-utils
+BuildRequires:  libSDL-devel, zlib-devel, desktop-file-utils
 Source44: import.info
 
 %description
@@ -47,6 +50,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_14
 - update to new release by fcimport
 
