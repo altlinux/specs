@@ -1,20 +1,24 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 Name: slingshot
-Version:  0.8.1p
-Release:  alt4_13
+Version:  0.9
+Release:  alt1_2
 Summary: A Newtonian strategy game
 
 Group: Games/Other
 License: GPLv2+        
-URL: http://slingshot.wikispot.org/
-Source0: http://downloads.sourceforge.net/slingshot-game/slingshot-%{version}.tar.gz
+URL: https://github.com/ryanakca/slingshot
+Source0: https://github.com/ryanakca/slingshot/archive/slingshot-%{version}.tar.gz
 Source1: slingshot.desktop
-Source2: slingshot
+#Source2: slingshot
 Source3: slingshot.appdata.xml
-Patch0: slingshot-font-path.patch
-Patch1: slingshot-0.8.1p-type-mismatch.patch
+#Patch0: slingshot-font-path.patch
+#Patch1: slingshot-0.8.1p-type-mismatch.patch
 BuildArchitectures: noarch
-BuildRequires: desktop-file-utils
-Requires: icon-theme-hicolor fonts-ttf-gnu-freefont-sans
+BuildRequires: desktop-file-utils, python-module-setuptools, python-devel
+Requires: icon-theme-hicolor, python-module-pygame, fonts-ttf-gnu-freefont-sans
 Source44: import.info
 
 %description
@@ -26,32 +30,30 @@ randomly generated playing fields.
 %prep
 %setup -q
 
-%patch0 -p0
-%patch1 -p1
+#%%patch0 -p0
+#%%patch1 -p1
 
 %build
+%python_build
 
 rm -f slingshot/data/FreeSansBold.ttf
 
 %install
+%python_install
 
-mkdir -p  %{buildroot}%{_bindir}
-install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/slingshot
-
-mkdir -p  %{buildroot}%{_datadir}/slingshot
-install -m 644 slingshot/*.py %{buildroot}%{_datadir}/slingshot
-mkdir -p  %{buildroot}%{_datadir}/slingshot/data
-install -m 644 slingshot/data/* %{buildroot}%{_datadir}/slingshot/data
+rm -rf $RPM_BUILD_ROOT/slingshot
+rm -rf $RPM_BUILD_ROOT/home
+rm -rf $RPM_BUILD_ROOT/builddir
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 
-mv slingshot/data/icon64x64.png slingshot/data/slingshot.png
+mv src/slingshot/data/icon64x64.png src/slingshot/data/slingshot.png
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
-install -p -m 644 slingshot/data/slingshot.png \
+install -p -m 644 src/slingshot/data/slingshot.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 
 #install appdata
@@ -60,13 +62,17 @@ install -p -m 664 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/appdata
 
 %files
 %{_bindir}/slingshot
-%{_datadir}/slingshot/
-%doc Readme.txt slingshot/licence.txt
+%{python_sitelibdir_noarch}/*
+%doc README
+%doc LICENSE
 %{_datadir}/applications/slingshot.desktop
 %{_datadir}/icons/hicolor/64x64/apps/slingshot.png
 %{_datadir}/appdata/slingshot.appdata.xml
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.1p-alt4_13
 - update to new release by fcimport
 
