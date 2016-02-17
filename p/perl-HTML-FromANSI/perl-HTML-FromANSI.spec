@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(Scalar/Util.pm) perl(base.pm) perl(ok.pm) 
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    Mark up ANSI sequences as HTML
 License:    GPL+ or Artistic
@@ -57,6 +57,9 @@ that you no longer import any functions by doing:
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_7
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_6
 - update by mgaimport
 
