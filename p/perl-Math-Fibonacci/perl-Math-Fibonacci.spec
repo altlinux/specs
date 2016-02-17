@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(Test.pm) perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_5
+Release:    alt2_6
 
 Summary:    Fibonacci numbers
 License:    GPL+ or Artistic
@@ -44,6 +44,9 @@ This module provides a few functions related to Fibonacci numbers.
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_6
+- update by mgaimport
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_5
 - update by mgaimport
 
