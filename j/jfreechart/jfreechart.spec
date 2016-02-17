@@ -9,7 +9,7 @@ BuildRequires: jpackage-generic-compat
 %define fedora 23
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_3jpp8
+Release:        alt1_4jpp8
 Summary:        Java chart library
 
 Group:          Development/Java
@@ -101,7 +101,7 @@ MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
 %if 0%{?fedora}
 # /usr/lib/java/swt.jar is an arch independent path to swt
 ant -f ant/build-swt.xml \
-        -Dswt.jar=%_libdir/java/swt.jar \
+        -Dswt.jar=%_jnidir/swt.jar \
         -Djcommon.jar=$(build-classpath jcommon) \
         -Djfreechart.jar=target/jfreechart-%{version}.jar
 %endif
@@ -126,6 +126,9 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_4jpp8
+- fixed build
+
 * Mon Feb 08 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.0.19-alt1_3jpp8
 - java8 mass update
 
