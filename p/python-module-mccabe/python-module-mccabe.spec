@@ -4,7 +4,7 @@
 
 Name:               python-module-mccabe
 Version:            0.3.1
-Release:            alt1
+Release:            alt1.1
 Summary:            McCabe complexity checker
 
 Group:              Development/Python
@@ -13,10 +13,14 @@ URL:                http://pypi.python.org/pypi/mccabe
 Source0:            %{name}-%{version}.tar
 
 BuildArch:          noarch
-BuildRequires:      python-devel, python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires:      python-devel, python-module-setuptools
 
 %if_with python3
-BuildRequires:      rpm-build-python3, python3-module-setuptools
+#BuildRequires:      rpm-build-python3, python3-module-setuptools
 %endif
 
 %description
@@ -89,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1
 - Version 0.3.1
 

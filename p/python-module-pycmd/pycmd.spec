@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.hg20140627
+Release: alt1.hg20140627.1
 Summary: Command line tools for helping with Python development
 License: MIT
 Group: Development/Python
@@ -16,13 +16,17 @@ BuildArch: noarch
 Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 Conflicts: py
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 Collection of command line tools for dealing with python files
@@ -84,6 +88,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1-alt1.hg20140627.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.hg20140627
 - Version 1.1
 - Added module for Python 3

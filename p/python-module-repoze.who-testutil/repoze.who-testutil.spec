@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt2.svn20100816
+Release: alt2.svn20100816.1
 Summary: Test utilities for repoze.who-powered applications
 License: BSD
 Group: Development/Python
@@ -14,18 +14,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://svn.repoze.org/whoplugins/whotestutil/trunk/
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-PasteDeploy
-BuildPreReq: python-module-zope.interface python-module-repoze.who
-BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-PasteDeploy
+#BuildPreReq: python-module-zope.interface python-module-repoze.who
+#BuildPreReq: python-module-nose python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides repoze.who-testutil
 %py_requires repoze.who zope.interface paste paste.deploy
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-paste python-module-pytz python-module-repoze python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base
+BuildRequires: python-module-PasteDeploy python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-repoze.who python3-module-setuptools rpm-build-python3 time
 
 %description
 repoze.who-testutil is a repoze.who plugin which modifies repoze.who's
@@ -160,6 +165,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt2.svn20100816.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt2.svn20100816
 - Added module for Python 3
 

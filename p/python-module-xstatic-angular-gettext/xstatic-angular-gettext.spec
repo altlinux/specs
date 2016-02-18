@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.1.0.2
-Release: alt1
+Release: alt1.1
 Summary: Angular-Gettext (XStatic packaging standard)
 License: MIT
 Group: Development/Python
@@ -13,16 +13,20 @@ Url: https://pypi.python.org/pypi/XStatic-Angular-Gettext/
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-%mname
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-%mname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-%mname
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-%mname
 %endif
 
 %py_provides %mname.pkg.angular_gettext
 %py_requires %mname.pkg
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python-module-xstatic python3-module-setuptools-tests python3-module-xstatic rpm-build-python3
 
 %description
 Angular-Gettext javascript library packaged for setuptools (easy_install) / pip.
@@ -90,5 +94,8 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.0.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 2.1.0.2-alt1
 - Initial build for Sisyphus

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.git20120117
+Release: alt1.git20120117.1
 Summary: An Object-Oriented Python Interface for RRDTool
 License: BSD
 Group: Development/Python
@@ -17,19 +17,23 @@ Source: %name-%version.tar
 Patch: pyrrd-0.1.1-fix.patch
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests rrd-utils
-BuildPreReq: python-module-docutils python-module-RRDtool
-BuildPreReq: python-modules-xml
+#BuildPreReq: python-devel python-module-setuptools-tests rrd-utils
+#BuildPreReq: python-module-docutils python-module-RRDtool
+#BuildPreReq: python-modules-xml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-docutils python3-module-RRDtool
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-docutils python3-module-RRDtool
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 Requires: rrd-utils
 %py_requires xml rrdtool
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-RRDtool python-module-docutils python-module-html5lib python-module-setuptools-tests python3-module-RRDtool python3-module-html5lib python3-module-setuptools-tests python3-module-sphinx rpm-build-python3 time
 
 %description
 PyRRD lets you use RRDTool from Python code that takes advantage of
@@ -130,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1.git20120117.1
+- NMU: Use buildreq for BR.
+
 * Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20120117
 - Initial build for Sisyphus
 

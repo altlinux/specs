@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.git20150811
+Release: alt1.git20150811.1
 Summary: A GDAL wrapper with Python conveniences
 License: BSD
 Group: Development/Python
@@ -15,18 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-gdal python-module-numpy
-BuildPreReq: python-module-Pillow python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-gdal python-module-numpy
+#BuildPreReq: python-module-Pillow python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-gdal python3-module-numpy
-BuildPreReq: python3-module-Pillow
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-gdal python3-module-numpy
+#BuildPreReq: python3-module-Pillow
 %endif
 
 %py_provides %oname
 %py_requires gdal numpy PIL json
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: gdal libhdf5-8-seq libnetcdf7-seq libsasl2-3 python-base python-devel python-module-cffi python-module-numpy python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-numpy python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-Pillow python-module-gdal python-module-numpy-testing python-module-setuptools-tests python-modules-json python3-module-cffi python3-module-gdal python3-module-pytest rpm-build-python3 time
 
 %description
 Adding Python conveniences to the wonderful world of GDAL.
@@ -96,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1.git20150811.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20150811
 - Initial build for Sisyphus
 

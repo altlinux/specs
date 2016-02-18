@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.9.14
-Release: alt1.git20141201
+Release: alt1.git20141201.1
 
 %setup_python_module %modulename
 
@@ -17,15 +17,20 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildPreReq: %py_dependencies setuptools
-BuildPreReq: python-module-sphinx-devel python-module-twisted-core
-BuildPreReq: python-module-tornado
+#BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-twisted-core
+#BuildPreReq: python-module-tornado
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires twisted.internet tornado
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-tornado python-module-twisted-logger python3-module-setuptools rpm-build-python3 time
 
 %description
 Pika is a pure-Python implementation of the AMQP 0-9-1 protocol that
@@ -100,6 +105,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.14-alt1.git20141201.1
+- NMU: Use buildreq for BR.
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.14-alt1.git20141201
 - New snapshot
 

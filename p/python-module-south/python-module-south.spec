@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version:%version
-Release: %release
+Release: %release.1
 BuildArch: noarch
 
 Summary: Migrations for Django
@@ -20,15 +20,17 @@ Url: http://south.aeracode.org
 # https://bitbucket.org/andrewgodwin/south/overview
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Mon Mar 01 2010
-BuildRequires: python-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-psycopg2 python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-psycopg2 python3-module-pytest python3-module-setuptools python3-module-yaml
+BuildRequires: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python3-module-django python3-module-setuptools-tests rpm-build-python3 time
 
-BuildPreReq: python-module-sphinx-devel python-module-setuptools-tests
-BuildPreReq: python-module-django
+#BuildPreReq: python-module-sphinx-devel python-module-setuptools-tests
+#BuildPreReq: python-module-django
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-django
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-django
 %endif
 
 %description
@@ -162,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Version 1.0.2
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20141204
+Release: alt1.git20141204.1
 Summary: The asyncio client for beanstalkd work queue
 License: MIT
 Group: Development/Python
@@ -17,19 +17,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-modules-json
-BuildPreReq: python-module-yaml
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-modules-json
+#BuildPreReq: python-module-yaml
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
-BuildPreReq: python3-module-yaml
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-module-yaml
 %endif
 
 %py_provides aiobeanstalk
 %py_requires asyncio json yaml
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python3-module-asyncio python3-module-pytest python3-module-yaml rpm-build-python3 time
 
 %description
 Asyncio-based client for beanstalkd task server.
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.git20141204.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20141204
 - Initial build for Sisyphus
 

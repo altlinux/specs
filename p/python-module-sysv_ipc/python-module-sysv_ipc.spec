@@ -3,19 +3,23 @@
 
 Name: python-module-%oname
 Version: 0.6.8
-Release: alt1
+Release: alt1.1
 Summary: System V IPC for Python - Semaphores, Shared Memory and Message Queues
 Group: Development/Python
 License: GPLv3+
 Url: http://semanchuk.com/philip/%oname/
 Source: %name-%version.tar
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python3-devel rpm-build-python3
+
+#BuildRequires: python-devel
+#BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+#BuildRequires: python3-devel
+#BuildRequires: python3-module-setuptools
 %endif
 
 %description
@@ -80,5 +84,8 @@ popd
 %doc demo demo2 demo4
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.8-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Mar 13 2015 Alexey Shabalin <shaba@altlinux.ru> 0.6.8-alt1
 - Initial build

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt1.git20150215
+Release: alt1.git20150215.1
 Summary: Graph transformations in Python
 License: MIT
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-networkx python-module-pyparsing
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-networkx python-module-pyparsing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-networkx python3-module-pyparsing
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-networkx python3-module-pyparsing
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires networkx pyparsing
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-decorator python-module-future python-module-matplotlib python-module-mpmath python-module-networkx-core python-module-numpy python-module-pluggy python-module-py python-module-pydot python-module-pygraphviz python-module-pyparsing python-module-pytest python-module-scipy python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-decorator python3-module-matplotlib python3-module-networkx-core python3-module-numpy python3-module-pluggy python3-module-py python3-module-pydot python3-module-pygraphviz python3-module-pyparsing python3-module-pytest python3-module-scipy python3-module-setuptools python3-module-yaml xz
+BuildRequires: python-module-networkx-drawing python-module-numpy-testing python-module-setuptools-tests python3-module-networkx-drawing python3-module-numpy-testing python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 projx provides a simple and extensible API for interacting with graphs
@@ -98,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.6-alt1.git20150215.1
+- NMU: Use buildreq for BR.
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20150215
 - Initial build for Sisyphus
 

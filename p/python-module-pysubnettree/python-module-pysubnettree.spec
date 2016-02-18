@@ -5,7 +5,7 @@
 Summary: Provides maps subnets given in CIDR notation to Python objects
 Name: python-module-%oname
 Version: 0.23
-Release: alt1
+Release: alt1.1
 Source: pysubnettree-%version.tar.gz
 License: BSD-style
 Group: Development/Python
@@ -13,13 +13,17 @@ Url: http://www.icir.org/robin/pysubnettree
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Obsoletes: pysubnettree <= 0.12-alt1
 
-BuildPreReq: python-devel rpm-build-python libstdc++-devel gcc-c++
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-devel rpm-build-python libstdc++-devel gcc-c++
+#BuildPreReq: python-module-setuptools
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libstdc++-devel python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: gcc-c++ python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
 
 %description
 The PySubnetTree package provides a Python data structure SubnetTree
@@ -82,6 +86,9 @@ unset RPM_PYTHON
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.23-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23-alt1
 - Version 0.23
 - Added module for Python 3

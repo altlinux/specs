@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.dev0.git20150127
+Release: alt1.dev0.git20150127.1
 Summary: REST API framework powered by Flask, SQLAlchemy and good intentions
 License: GPL / BSD
 Group: Development/Python
@@ -16,18 +16,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-eve-tests python-module-SQLAlchemy
-BuildPreReq: python-module-flask_sqlalchemy python-modules-sqlite3
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-eve-tests python-module-SQLAlchemy
+#BuildPreReq: python-module-flask_sqlalchemy python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-eve-tests python3-module-SQLAlchemy
-BuildPreReq: python3-module-flask_sqlalchemy python3-modules-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-eve-tests python3-module-SQLAlchemy
+#BuildPreReq: python3-module-flask_sqlalchemy python3-modules-sqlite3
 %endif
 
 %py_provides eve_sqlalchemy
 %py_requires eve sqlalchemy flask_sqlalchemy
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-jinja2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-jinja2 python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 Powered by Eve, SQLAlchemy and good intentions this extenstion allows to
@@ -89,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.3-alt1.dev0.git20150127.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.dev0.git20150127
 - Version 0.3.dev0
 

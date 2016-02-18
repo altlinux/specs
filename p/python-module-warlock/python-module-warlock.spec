@@ -2,7 +2,7 @@
 
 Name: python-module-warlock
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: Python object model built on top of JSON schema
 
 Group: Development/Python
@@ -11,19 +11,23 @@ Url: http://pypi.python.org/pypi/warlock
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-jsonschema >= 0.7
-BuildRequires: python-module-jsonpatch >= 0.10
-BuildRequires: python-module-six
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-functools32 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-jsonpointer python-module-jsonschema python3-module-jsonpointer python3-module-jsonschema rpm-build-python3
+
+#BuildRequires: python-devel
+#BuildRequires: python-module-setuptools
+#BuildRequires: python-module-jsonschema >= 0.7
+#BuildRequires: python-module-jsonpatch >= 0.10
+#BuildRequires: python-module-six
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-jsonschema >= 0.7
-BuildRequires: python3-module-jsonpatch >= 0.10
-BuildRequires: python3-module-six
+#BuildRequires: python3-devel
+#BuildRequires: python3-module-setuptools
+#BuildRequires: python3-module-jsonschema >= 0.7
+#BuildRequires: python3-module-jsonpatch >= 0.10
+#BuildRequires: python3-module-six
 %endif
 
 %if_with python3
@@ -76,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Mar 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 - add python3 package

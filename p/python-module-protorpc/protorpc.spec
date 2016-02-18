@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.0
-Release: alt1.git20150723
+Release: alt1.git20150723.1
 Summary: Google Protocol RPC
 License: ASLv2.0
 Group: Development/Python
@@ -15,20 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six python-module-nose
-BuildPreReq: python-module-mox python-module-simplejson
-BuildPreReq: python-module-unittest2
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-six python-module-nose
+#BuildPreReq: python-module-mox python-module-simplejson
+#BuildPreReq: python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six python3-module-nose
-BuildPreReq: python3-module-mox python3-module-simplejson
-BuildPreReq: python3-module-unittest2
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-six python3-module-nose
+#BuildPreReq: python3-module-mox python3-module-simplejson
+#BuildPreReq: python3-module-unittest2
 %endif
 
 %py_provides %oname
 %py_requires six simplejson
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-linecache2 python-module-pytest python-module-setuptools python-module-six python-module-traceback2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-linecache2 python3-module-pytest python3-module-setuptools python3-module-six python3-module-traceback2 xz
+BuildRequires: python-module-mox python-module-nose python-module-setuptools-tests python-module-simplejson python-module-unittest2 python3-module-mox python3-module-nose python3-module-setuptools-tests python3-module-unittest2 rpm-build-python3 time
 
 %description
 Google Protocol RPC.
@@ -102,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.10.0-alt1.git20150723.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1.git20150723
 - Initial build for Sisyphus
 

@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
 
 Name:           python-module-pymongo
 Version:        3.0.3
-Release:        alt1
+Release:        alt1.1
 Summary:        Python driver for MongoDB
 
 Group:          Development/Python
@@ -32,14 +32,18 @@ Source0:        http://pypi.python.org/packages/source/p/pymongo/pymongo-%{versi
 Provides:       pymongo = %{version}-%{release}
 Obsoletes:      pymongo <= 2.1.1-4
 
-BuildRequires:  python-devel
-BuildRequires:  python-module-nose
-BuildRequires:  python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-nose python3-devel python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires:  python-devel
+#BuildRequires:  python-module-nose
+#BuildRequires:  python-module-setuptools
 
 %if 0%{?with_python3}
-BuildRequires: python-tools-2to3 python-tools-i18n python-tools-idle python-tools-pynche python-tools-smtpd
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-distribute
+#BuildRequires: python-tools-2to3 python-tools-i18n python-tools-idle python-tools-pynche python-tools-smtpd
+#BuildRequires:  python3-devel
+#BuildRequires:  python3-module-distribute
 %endif # if with_python3
 
 # Mongodb must run on a little-endian CPU (see bug #630898)
@@ -237,6 +241,9 @@ nosetests --exclude="$exclude"
 popd
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.0.3-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt1
 - Version 3.0.3
 

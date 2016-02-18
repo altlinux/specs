@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.git20141016
+Release: alt1.git20141016.1
 Summary: Returns a unicode slugs
 License: BSD
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-unidecode python-tools-pep8
-BuildPreReq: python-module-nose
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-unidecode python-tools-pep8
+#BuildPreReq: python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-unidecode python3-tools-pep8
-BuildPreReq: python3-module-nose python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-unidecode python3-tools-pep8
+#BuildPreReq: python3-module-nose python-tools-2to3
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools xz
+BuildRequires: python-module-nose python-module-pytest python-module-unidecode python-tools-pep8 python3-module-nose python3-module-unidecode python3-tools-pep8 rpm-build-python3 time
 
 %description
 A Python Slugify application that handles Unicode.
@@ -96,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1.git20141016.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20141016
 - Initial build for Sisyphus
 

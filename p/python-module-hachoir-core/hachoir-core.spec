@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt2.hg20140628
+Release: alt2.hg20140628.1
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -19,13 +19,17 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-docutils
-BuildPreReq: python-module-setuptools python-module-PyQt4
+#BuildPreReq: python-devel python-module-docutils
+#BuildPreReq: python-module-setuptools python-module-PyQt4
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-docutils
-BuildPreReq: python3-module-setuptools python-tools-2to3
-BuildPreReq: python3-module-PyQt4
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libqt4-core python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-sip python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-PyQt4 python-module-docutils python-module-html5lib python3-module-html5lib python3-module-sphinx rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-docutils
+#BuildPreReq: python3-module-setuptools python-tools-2to3
+#BuildPreReq: python3-module-PyQt4
 %endif
 
 %description
@@ -474,6 +478,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:1.3.4-alt2.hg20140628.1
+- NMU: Use buildreq for BR.
+
 * Thu Apr 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.4-alt2.hg20140628
 - Added requirement on %name for %mname-metadata-gtk (ALT #30895)
 

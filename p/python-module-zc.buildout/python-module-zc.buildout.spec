@@ -11,19 +11,23 @@ Name: python-module-%oname
 URL: https://pypi.python.org/pypi/zc.buildout/
 Version: %version
 %ifdef subver
-Release: %release.%subver
+Release: %release.%subver.1
 Source0: zc.buildout-%version%subver.tar
 %else
-Release: %release
+Release: %release.1
 Source0: zc.buildout-%version.tar
 %endif
 License: ZPL
 Group: Development/Python
 
-BuildRequires: %py_dependencies setuptools
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: %py_dependencies setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires zc.zlibstorage zc.recipe.egg
@@ -150,6 +154,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.3.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt1
 - Version 2.3.1
 

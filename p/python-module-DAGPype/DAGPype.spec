@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.5.1
-Release: alt1
+Release: alt1.1
 Summary: Low-footprint flexible data-processing and data-preparation pipelines
 License: BSD
 Group: Development/Python
@@ -14,26 +14,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++ swig xvfb-run
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-matplotlib libnumpy-devel
-BuildPreReq: python-module-UnittestRandGenState
-BuildPreReq: python-module-nose python-module-pygobject3
-BuildPreReq: python-module-pycairo
-BuildPreReq: python-modules-xml
+#BuildPreReq: gcc-c++ swig xvfb-run
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-matplotlib libnumpy-devel
+#BuildPreReq: python-module-UnittestRandGenState
+#BuildPreReq: python-module-nose python-module-pygobject3
+#BuildPreReq: python-module-pycairo
+#BuildPreReq: python-modules-xml
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-matplotlib libnumpy-py3-devel
-BuildPreReq: python3-module-UnittestRandGenState
-BuildPreReq: python3-module-nose python3-module-pygobject3
-BuildPreReq: python3-module-pycairo
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-matplotlib libnumpy-py3-devel
+#BuildPreReq: python3-module-UnittestRandGenState
+#BuildPreReq: python3-module-nose python3-module-pygobject3
+#BuildPreReq: python3-module-pycairo
 %endif
 
 %py_provides dagpype
 %py_requires numpy matplotlib xml
 # for tests:
 %py_requires unittest_rand_gen_state
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils libnumpy-devel libstdc++-devel python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-dev python3-module-numpy
+BuildRequires: gcc-c++ libnumpy-py3-devel python-module-numpy-testing python3-module-numpy-testing rpm-build-python3
 
 %description
 This is a Python framework for scientific data-processing and
@@ -135,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.1.5.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5.1-alt1
 - Initial build for Sisyphus
 

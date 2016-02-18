@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt1.dev0.git20150420
+Release: alt1.dev0.git20150420.1
 Summary: CouchDB client built on top of aiohttp
 License: BSD
 Group: Development/Python
@@ -18,21 +18,25 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-oauthlib python-module-nose
-BuildPreReq: python-module-aiohttp python-module-trollius
-BuildPreReq: python-module-flake8
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-oauthlib python-module-nose
+#BuildPreReq: python-module-aiohttp python-module-trollius
+#BuildPreReq: python-module-flake8
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-oauthlib python3-module-nose
-BuildPreReq: python3-module-aiohttp python3-module-asyncio
-BuildPreReq: python3-module-flake8
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-oauthlib python3-module-nose
+#BuildPreReq: python3-module-aiohttp python3-module-asyncio
+#BuildPreReq: python3-module-flake8
 %endif
 
 %py_provides %oname
 %py_requires trollius oauthlib aiohttp
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-django python3-module-dns python3-module-enum34 python3-module-greenlet python3-module-gunicorn python3-module-mccabe python3-module-paste python3-module-psycopg2 python3-module-pycares python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-yaml python3-module-zope python3-module-zope.interface python3-pyflakes python3-tools-pep8
+BuildRequires: python3-module-flake8 python3-module-nose python3-module-pycrypto rpm-build-python3
 
 %description
 CouchDB client built on top of aiohttp (asyncio).
@@ -136,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1.dev0.git20150420.1
+- NMU: Use buildreq for BR.
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.dev0.git20150420
 - Version 0.9.0.dev0
 

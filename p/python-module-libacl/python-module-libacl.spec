@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: POSIX.1e ACLs for python
 License: LGPLv2.1+
@@ -16,12 +16,17 @@ URL: http://pylibacl.sourceforge.net/
 Source: %name-%version.tar
 Patch: libacl-0.5.2-alt-doc.patch
 
-BuildPreReq: libacl-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: libacl-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: libacl-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel python3-module-setuptools rpm-build-python3 time
 
 %description
 python-libacl is a C extension module for Python which implements
@@ -81,6 +86,9 @@ export PYTHONPATH=%buildroot%python-sitelibdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1
 - Version 0.5.2
 - Added module for Python 3

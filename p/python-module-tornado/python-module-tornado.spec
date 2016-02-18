@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 4.2.1
-Release: alt1
+Release: alt1.1
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
@@ -14,10 +14,14 @@ Url: http://www.tornadoweb.org
 # https://github.com/tornadoweb/tornado.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel python-module-distribute
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: ca-certificates elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 Requires: python-module-simplejson
 Requires: ca-certificates
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.2.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
 - Version 4.2.1
 

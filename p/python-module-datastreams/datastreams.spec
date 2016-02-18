@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.6
-Release: alt1.git20150113
+Release: alt1.git20150113.1
 Summary: A module for managing data in streams
 License: AGPLv3
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pymongo python-modules-wsgiref
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pymongo python-modules-wsgiref
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pymongo
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pymongo
 %endif
 
 %py_provides %oname
 %py_requires pymongo wsgiref
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 A module for managing data in streams.
@@ -74,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.6-alt1.git20150113.1
+- NMU: Use buildreq for BR.
+
 * Wed Jan 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt1.git20150113
 - Initial build for Sisyphus
 

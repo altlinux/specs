@@ -3,7 +3,7 @@
 
 Name: python-module-%{pypi_name}
 Version: 1.3.0
-Release: alt1.git20150731
+Release: alt1.git20150731.1
 Summary: A Python Mocking and Patching Library for Testing
 
 Group: Development/Python
@@ -14,8 +14,12 @@ Url: https://pypi.python.org/pypi/%{pypi_name}
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-devel python-module-setuptools git
-BuildRequires: python-module-pbr
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: git-core python-module-pbr python3-module-html5lib python3-module-pbr rpm-build-python3
+
+#BuildRequires: python-devel python-module-setuptools git
+#BuildRequires: python-module-pbr
 
 %py_requires funcsigs
 
@@ -32,7 +36,7 @@ Summary:        A Python Mocking and Patching Library for Testing
 Group:		Development/Python
 BuildArch:      noarch
 BuildRequires(pre):  rpm-build-python3
-BuildRequires: python3-module-pbr python3-module-setuptools
+#BuildRequires: python3-module-pbr python3-module-setuptools
 %py3_requires funcsigs
 
 %description -n python3-module-%{pypi_name}
@@ -88,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1.git20150731.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20150731
 - Snapshot from git
 

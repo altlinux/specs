@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.a0.git20150318
+Release: alt1.a0.git20150318.1
 Summary: Redis data structures wrapped with Python 3
 License: MIT
 Group: Development/Python
@@ -17,19 +17,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-redis-py python-module-ujson
-BuildPreReq: python-module-pip
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-redis-py python-module-ujson
+#BuildPreReq: python-module-pip
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-redis-py python3-module-ujson
-BuildPreReq: python3-module-pip python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-redis-py python3-module-ujson
+#BuildPreReq: python3-module-pip python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires redis ujson
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-logging python3 python3-base python3-module-OpenSSL python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-idna python3-module-lxml python3-module-ntlm python3-module-pluggy python3-module-py python3-module-pyasn1 python3-module-pycparser python3-module-setuptools python3-module-six xz
+BuildRequires: python-modules-compiler python-modules-encodings python-tools-2to3 python3-module-html5lib python3-module-pip python3-module-pytest python3-module-redis-py python3-module-ujson rpm-build-python3 time
 
 %description
 Pythonic data structures backed by Redis.
@@ -96,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.1-alt1.a0.git20150318.1
+- NMU: Use buildreq for BR.
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.a0.git20150318
 - Initial build for Sisyphus
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.5
-Release: alt1.git20140901
+Release: alt1.git20140901.1
 Summary: Python resque clone
 License: MIT
 Group: Development/Python
@@ -16,19 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-module-simplejson
-BuildPreReq: python-module-redis-py python-module-setproctitle
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose python-module-simplejson
+#BuildPreReq: python-module-redis-py python-module-setproctitle
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-simplejson
-BuildPreReq: python3-module-redis-py python3-module-setproctitle
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose python3-module-simplejson
+#BuildPreReq: python3-module-redis-py python3-module-setproctitle
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-redis-py python-module-setproctitle python-module-setuptools-tests python3-module-nose python3-module-setproctitle python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Resque is a great implementation of a job queue by the people at github.
@@ -147,6 +152,9 @@ rm -f requirements*
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.5-alt1.git20140901.1
+- NMU: Use buildreq for BR.
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.git20140901
 - Initial build for Sisyphus
 

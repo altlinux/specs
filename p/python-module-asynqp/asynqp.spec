@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.git20141203
+Release: alt1.git20141203.1
 Summary: An AMQP library for asyncio
 License: MIT
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio-tests python-module-contexts
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio-tests python-module-contexts
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio-tests python3-module-contexts
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio-tests python3-module-contexts
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-asyncio python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
+BuildRequires: python3-module-asyncio-tests python3-module-contexts python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 asynqp is an AMQP (aka RabbitMQ) client library for Python 3.x's new
@@ -99,6 +103,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3-alt1.git20141203.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20141203
 - Initial build for Sisyphus
 

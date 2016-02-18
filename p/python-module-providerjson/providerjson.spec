@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.28
-Release: alt1.git20141120
+Release: alt1.git20141120.1
 Summary: Provider JSON - Command Line Utitlity and Python Library
 License: Public domain
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides pjson
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-tools-2to3 python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3 time
 
 %description
 Outputs a JSON array of errors and warnings found in a Provider JSON
@@ -95,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.28-alt1.git20141120.1
+- NMU: Use buildreq for BR.
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.28-alt1.git20141120
 - Version 0.0.28
 

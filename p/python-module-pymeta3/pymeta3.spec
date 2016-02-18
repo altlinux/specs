@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.git20150114
+Release: alt1.git20150114.1
 Summary: Pattern-matching language based on OMeta for Python 2 and 3
 License: MIT
 Group: Development/Python
@@ -16,15 +16,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-twisted-core-test
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-twisted-core-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-twisted-core-test
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-twisted-core-test
 %endif
 
 %py_provides %oname pymeta
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python3-module-zope rpm-build-python3 python3-module-pytest
 
 %description
 This is a fork of PyMeta 0.5.0 that supports Python 2 and 3.
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1.git20150114.1
+- NMU: Use buildreq for BR.
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20150114
 - Initial build for Sisyphus
 

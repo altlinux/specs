@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt1.git20150803
+Release: alt1.git20150803.1
 Summary: Wraps (asynchronous) Psycopg2 for Tornado
 License: MIT
 Group: Development/Python
@@ -16,19 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tornado python-module-psycopg2cffi
-BuildPreReq: python-module-unittest2 python-module-psycopg2
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-tornado python-module-psycopg2cffi
+#BuildPreReq: python-module-unittest2 python-module-psycopg2
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tornado python3-module-psycopg2cffi
-BuildPreReq: python3-module-unittest2 python3-module-psycopg2
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-tornado python3-module-psycopg2cffi
+#BuildPreReq: python3-module-unittest2 python3-module-psycopg2
 %endif
 
 %py_provides %oname
 %py_requires tornado psycopg2cffi psycopg2
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libsasl2-3 python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pycares python-module-pycurl python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-pycparser python3-module-setuptools python3-module-zope.interface
+BuildRequires: python-module-alabaster python-module-cffi python-module-docutils python-module-html5lib python-module-objects.inv python-module-psycopg2 python-module-pytest python-module-tornado python-module-unittest2 python3-module-cffi python3-module-psycopg2 python3-module-pycares python3-module-pytest python3-module-unittest2 python3-module-zope rpm-build-python3 time
 
 %description
 Momoko wraps Psycopg2's functionality for use in Tornado.
@@ -111,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt1.git20150803.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1.git20150803
 - Initial build for Sisyphus
 

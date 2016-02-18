@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.29
-Release: alt1.git20140730
+Release: alt1.git20140730.1
 
 Summary: Python interface to Graphiz's Dot
 
@@ -18,14 +18,15 @@ BuildArch: noarch
 
 %setup_python_module %oname
 
-# Automatically added by buildreq on Sun Sep 16 2007
-BuildRequires: python-devel python-module-pyparsing python-modules-compiler
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python-module-pyparsing python3-module-pyparsing rpm-build-python3
 
-BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-pyparsing
-BuildPreReq: python3-module-setuptools-tests
+#BuildRequires: python3-devel python3-module-pyparsing
+#BuildPreReq: python3-module-setuptools-tests
 %endif
 
 Requires: %_bindir/dot
@@ -89,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.29-alt1.git20140730.1
+- NMU: Use buildreq for BR.
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.29-alt1.git20140730
 - Version 1.0.29
 

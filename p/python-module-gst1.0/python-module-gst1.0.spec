@@ -5,7 +5,7 @@
 
 Name: python-module-gst%gst_api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: GStreamer overrides for PyGobject
 Group: Development/Python
@@ -17,12 +17,16 @@ Provides: %_name = %version-%release
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Patch: %name-1.5.2-python-libs.patch
 
-BuildRequires: gst-plugins%gst_api_ver-devel
-BuildRequires: python-module-pygobject3-devel python-modules-compiler
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils glib2-devel gnu-config gobject-introspection pkg-config python-base python-devel python-modules python3 python3-base rpm-build-gir xz
+BuildRequires: gstreamer1.0-devel python-module-pygobject3 python-module-pygobject3-common-devel python3-devel python3-module-pygobject3 rpm-build-python3
+
+#BuildRequires: gst-plugins%gst_api_ver-devel
+#BuildRequires: python-module-pygobject3-devel python-modules-compiler
 # for python3
-BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
+#BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 # for check
-BuildRequires: /proc gstreamer%gst_api_ver gst-plugins-base%gst_api_ver
+#BuildRequires: /proc gstreamer%gst_api_ver gst-plugins-base%gst_api_ver
 
 %description
 This package provides GStreamer overrides for PyGobject.
@@ -75,6 +79,9 @@ popd
 
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.6.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.7.2
-Release: alt2
+Release: alt2.1
 
 Summary: Caching decorator and django cache backend with advanced invalidation ability and dog-pile effect prevention
 
@@ -16,10 +16,14 @@ Source: %module_name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
+BuildRequires: python-devel rpm-build-python3
+
+#BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+#BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %setup_python_module %module_name
@@ -72,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt2.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt2
 - Added module forPython 3
 

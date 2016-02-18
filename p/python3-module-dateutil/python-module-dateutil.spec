@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.2
-Release: alt1.git20150728
+Release: alt1.git20150728.1
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -22,8 +22,12 @@ Source: python-dateutil-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: pytz-zoneinfo python3-module-six
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-setuptools
+BuildRequires: python3-module-pytest rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: pytz-zoneinfo python3-module-six
 # texlive-base-bin
 
 %description
@@ -56,6 +60,9 @@ python3 dateutil/test/test.py
 
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.4.2-alt1.git20150728.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1.git20150728
 - Version 2.4.2
 

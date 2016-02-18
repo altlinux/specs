@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
@@ -15,21 +15,26 @@ Url: https://pypi.python.org/pypi/cryptography/
 # Source-url: https://pypi.python.org/packages/source/c/cryptography/cryptography-0.5.2.tar.gz
 Source: %oname-%version.tar
 
-BuildPreReq: rpm-build-python rpm-build-licenses
-BuildRequires: python-devel python-module-distribute python-module-setuptools-tests
-BuildRequires: python-module-six python-module-cffi python-module-pycparser
-BuildRequires: libssl-devel
-BuildRequires: python-module-pyasn1
-BuildRequires: python-module-enum34
-BuildRequires: python-module-ipaddress
-BuildRequires: python-module-idna
+#BuildPreReq: rpm-build-python rpm-build-licenses
+BuildRequires(pre): rpm-build-licenses
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: elfutils libcom_err-devel libkrb5-devel python-base python-devel python-module-pycparser python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pycparser python3-module-pytest python3-module-setuptools
+BuildRequires: libssl-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools-tests python3-devel python3-module-cffi python3-module-enum34 python3-module-setuptools-tests rpm-build-python3
+
+#BuildRequires: python-devel python-module-distribute python-module-setuptools-tests
+#BuildRequires: python-module-six python-module-cffi python-module-pycparser
+#BuildRequires: libssl-devel
+#BuildRequires: python-module-pyasn1
+#BuildRequires: python-module-enum34
+#BuildRequires: python-module-ipaddress
+#BuildRequires: python-module-idna
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
-BuildRequires: python3-module-six python3-module-cffi python3-module-pycparser
-BuildRequires: python3-module-pyasn1
-BuildRequires: python3-module-enum34
-BuildRequires: python3-module-idna
+#BuildRequires: python3-devel python3-module-distribute python3-module-setuptools-tests
+#BuildRequires: python3-module-six python3-module-cffi python3-module-pycparser
+#BuildRequires: python3-module-pyasn1
+#BuildRequires: python3-module-enum34
+#BuildRequires: python3-module-idna
 %endif
 
 Requires: python-module-cffi
@@ -95,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 10 2016 Vladimir Didenko <cow@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 

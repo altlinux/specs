@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.4.4
-Release: alt1.git20141111
+Release: alt1.git20141111.1
 Summary: Python interface to coveralls.io API
 License: ASLv2.0
 Group: Development/Python
@@ -16,18 +16,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-yaml python-module-requests
-BuildPreReq: python-module-coverage python-module-six
-BuildPreReq: python-module-sh python-module-pytest-pep8
-BuildPreReq: python-module-pytest-cov python-module-httpretty
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-yaml python-module-requests
+#BuildPreReq: python-module-coverage python-module-six
+#BuildPreReq: python-module-sh python-module-pytest-pep8
+#BuildPreReq: python-module-pytest-cov python-module-httpretty
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-yaml python3-module-requests
-BuildPreReq: python3-module-coverage python3-module-six
-BuildPreReq: python3-module-sh python3-module-pytest-pep8
-BuildPreReq: python3-module-pytest-cov python3-module-httpretty
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-yaml python3-module-requests
+#BuildPreReq: python3-module-coverage python3-module-six
+#BuildPreReq: python3-module-sh python3-module-pytest-pep8
+#BuildPreReq: python3-module-pytest-cov python3-module-httpretty
 %endif
 
 %py_provides %mname z4r_%mname
@@ -35,6 +35,10 @@ Conflicts: python-module-%mname < %EVR
 Conflicts: python-module-%mname > %EVR
 Provides: python-module-%mname = %EVR
 %py_requires yaml requests coverage six sh
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-coverage python-module-cryptography python-module-enum34 python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pytest python-module-pytest-cache python-module-requests python-module-rlcompleter2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-tools-pep8 python3 python3-base python3-module-cffi python3-module-chardet python3-module-coverage python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ndg-httpsclient python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-pytest-cache python3-module-pytest-pep8 python3-module-requests python3-module-setuptools python3-module-sh python3-module-urllib3
+BuildRequires: python-module-pytest-cov python-module-pytest-pep8 python-module-setuptools-tests python-module-sh python-module-yaml python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytest-cov python3-module-setuptools-tests python3-module-unittest2 python3-module-yaml python3-tools-pep8 rpm-build-python3
 
 %description
 This package provides a module to interface with the https://coveralls.io
@@ -141,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.4.4-alt1.git20141111.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt1.git20141111
 - Initial build for Sisyphus
 

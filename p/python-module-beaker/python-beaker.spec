@@ -4,17 +4,21 @@
 
 Name: python-module-%oname
 Version: 1.7.0
-Release: alt1.dev
+Release: alt1.dev.1
 Summary: WSGI middleware layer to provide sessions
 
 Group:  Development/Python
 License: BSD
 URL: http://pypi.python.org/pypi/Beaker
 Source0: http://pypi.python.org/packages/source/B/Beaker/%{name}-%{version}.tar.gz
-BuildPreReq: python-devel python-module-setuptools rpm-build-python
+#BuildPreReq: python-devel python-module-setuptools rpm-build-python
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 BuildArch: noarch
@@ -81,6 +85,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt1.dev.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.dev
 - Version 1.7.0dev
 

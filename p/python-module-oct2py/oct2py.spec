@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python to GNU Octave bridge --> run m-files from python
 License: MIT
@@ -18,13 +18,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-scipy octave
-BuildPreReq: python-module-sphinx-devel python-module-numpydoc
-BuildPreReq: python-module-sphinx-bootstrap-theme
+#BuildPreReq: python-devel python-module-scipy octave
+#BuildPreReq: python-module-sphinx-devel python-module-numpydoc
+#BuildPreReq: python-module-sphinx-bootstrap-theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-scipy
+#BuildPreReq: python3-devel python3-module-scipy
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-Fabric python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-ecdsa python-module-future python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-mpmath python-module-nose python-module-numpy python-module-pycrypto python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-html5lib python-module-numpydoc python-module-objects.inv python-module-scipy python-module-sphinx-bootstrap-theme rpm-build-python3 time
 
 %description
 Oct2py is a means to seemlessly call m-files and Octave functions from
@@ -170,6 +175,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2
 - Moved all tests into tests subpackage
 

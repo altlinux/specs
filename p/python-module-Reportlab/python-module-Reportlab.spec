@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt1.1
 License: BSD license (see LICENSE.txt for details)
 Summary: The Reportlab Toolkit
 Group: Development/Python
@@ -14,11 +14,16 @@ Url: http://www.reportlab.org
 
 Source: %name-%version.tar
 
-BuildRequires: rpm-build-python >= 0.8
-BuildRequires: python-devel python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
+
+#BuildRequires: rpm-build-python >= 0.8
+#BuildRequires: python-devel python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+#BuildRequires: python3-devel
 %endif
 
 %add_python_req_skip rlextra
@@ -128,6 +133,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 3.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Added module for Python 3
 

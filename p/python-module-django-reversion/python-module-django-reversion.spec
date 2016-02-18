@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.8.4
-Release: alt1.git20140907
+Release: alt1.git20140907.1
 
 Summary: Comprehensive version control facilities for Django
 
@@ -19,11 +19,16 @@ BuildArch: noarch
 
 %setup_python_module %module_name
 
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv rpm-build-python3 time
 
 %description
 Reversion is an extension to the Django web framework that provides
@@ -126,6 +131,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.8.4-alt1.git20140907.1
+- NMU: Use buildreq for BR.
+
 * Mon Sep 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.4-alt1.git20140907
 - Version 1.8.4
 - Added module for Python 3

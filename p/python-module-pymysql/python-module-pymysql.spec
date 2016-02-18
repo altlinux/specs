@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.6.6
-Release: alt1.git20150727
+Release: alt1.git20150727.1
 
 %setup_python_module %modulename
 
@@ -18,11 +18,15 @@ BuildArch: noarch
 # https://github.com/PyMySQL/PyMySQL.git
 Source: %name-%version.tar
 
-BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: %py_dependencies setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 This pure Python MySQL client provides a DB-API to a MySQL database by
@@ -104,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.6-alt1.git20150727.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.6-alt1.git20150727
 - Version 0.6.6
 

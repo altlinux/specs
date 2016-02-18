@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1
+Release: alt1.1
 Summary: Python bindings for sigprocmask(2) and signalfd(2)
 License: MIT
 Group: Development/Python
@@ -13,14 +13,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-unittest2
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-linecache2 python-module-pluggy python-module-py python-module-setuptools python-module-six python-module-traceback2 python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python-module-pytest python-module-unittest2 python3-devel python3-module-pytest rpm-build-python3 time
 
 %description
 Python bindings for sigprocmask(2) and signalfd(2).
@@ -109,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Jan 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
 

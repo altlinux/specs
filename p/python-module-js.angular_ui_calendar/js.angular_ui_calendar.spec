@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt1.beta.1
+Release: alt1.beta.1.1
 Summary: Fanstatic packaging of angular-ui ui-calendar
 License: BSD
 Group: Development/Python
@@ -13,18 +13,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-fanstatic python-module-js.angular
-BuildPreReq: python-module-js.fullcalendar python-module-shutilwhich
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-fanstatic python-module-js.angular
+#BuildPreReq: python-module-js.fullcalendar python-module-shutilwhich
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-fanstatic python3-module-js.angular
-BuildPreReq: python3-module-js.fullcalendar python3-module-shutilwhich
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-fanstatic python3-module-js.angular
+#BuildPreReq: python3-module-js.fullcalendar python3-module-shutilwhich
 %endif
 
 %py_provides %oname
 %py_requires js js.angular js.fullcalendar
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-fanstatic python-module-js python-module-js.momentjs python-module-js.query python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-module-shutilwhich python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-fanstatic python3-module-js python3-module-js.momentjs python3-module-js.query python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools python3-module-webob xz
+BuildRequires: python-module-js.angular python-module-js.fullcalendar python-module-setuptools-tests python3-module-js.angular python3-module-js.fullcalendar python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 This library packages angular-ui-calendar for fanstatic.
@@ -92,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1.beta.1.1
+- NMU: Use buildreq for BR.
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.beta.1
 - Initial build for Sisyphus
 

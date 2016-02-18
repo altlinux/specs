@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.2
-Release: alt1
+Release: alt1.1
 Summary: Better living through Python with decorators
 License: BSD
 Group: Development/Python
@@ -16,10 +16,14 @@ Source: %oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -103,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.0.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 

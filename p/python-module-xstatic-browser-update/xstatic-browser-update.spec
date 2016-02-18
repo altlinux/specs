@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 Summary: browser-update 1.0 (XStatic packaging standard)
 License: MIT
 Group: Development/Python
@@ -14,16 +14,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-%mname-jquery
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-%mname-jquery
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-%mname-jquery
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-%mname-jquery
 %endif
 
 %py_provides %mname.pkg.browser_update
 %py_requires %mname.pkg %mname.pkg.jquery
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-module-xstatic python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-xstatic
+BuildRequires: python-module-setuptools-tests python-module-xstatic-jquery python3-module-setuptools-tests python3-module-xstatic-jquery rpm-build-python3
 
 %description
 jquery-ui javascript library packaged for setuptools (easy_install) /
@@ -95,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Nov 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt3
+Release: alt3.1
 
 Summary: Python implementation of RFC6570, URI Template
 License: Apache Software License
@@ -18,11 +18,15 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+#BuildPreReq: python3-devel
 %endif
 
 %setup_python_module %oname
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 This is a Python implementation of RFC6570, URI Template, and can expand
@@ -73,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6-alt3.1
+- NMU: Use buildreq for BR.
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt3
 - Added provides %oname
 

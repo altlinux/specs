@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt2
+Release: alt2.1
 Summary: Jupyter core package
 License: BSD
 Group: Development/Python
@@ -14,16 +14,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
-BuildRequires: python-module-objects.inv
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-zope rpm-build-python3 time python3-module-pytest
+
+#BuildRequires: python-module-objects.inv
 
 #BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-traitlets python-module-mock ipython
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-traitlets python3-module-mock ipython3
-BuildRequires: python3 python3-module-zope
+#BuildRequires: python3 python3-module-zope
 %endif
 
 %py_provides %oname
@@ -133,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.0.4-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 4.0.4-alt2
 - Rebuild with "def_disable check"
 - Cleanup buildreq

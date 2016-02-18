@@ -1,7 +1,7 @@
 %define oname htmltemplate
 Name: python3-module-%oname
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 Summary: A simple, powerful [X]HTML templating library for Python 3
 License: MIT
 Group: Development/Python3
@@ -12,9 +12,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 
 %py3_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python3-module-pytest rpm-build-python3 time
 
 %description
 htmltemplate converts [X]HTML documents into simple template object
@@ -51,6 +55,9 @@ py.test-%_python3_version
 %doc doc sample
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.2.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Nov 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus
 

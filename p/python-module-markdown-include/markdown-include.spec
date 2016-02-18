@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1.git20150126
+Release: alt1.git20150126.1
 Summary: Provides an "include" function, similar to that found in LaTeX
 License: GPLv3
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-markdown python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-markdown python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-markdown
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-markdown
 %endif
 
 %py_provides markdown_include
 %py_requires markdown json
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-markdown python-module-setuptools-tests python3-module-markdown python3-module-setuptools-tests rpm-build-python3
 
 %description
 This is an extension to Python-Markdown which provides an "include"
@@ -88,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1.git20150126.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.git20150126
 - Version 0.4.2
 

@@ -9,7 +9,7 @@
 
 Name: python-module-%modulename
 Version: 1.3.0
-Release: alt1.git20150207
+Release: alt1.git20150207.1
 Epoch: 1
 
 %setup_python_module %modulename
@@ -25,22 +25,27 @@ BuildArch: noarch
 # git://github.com/formencode/formencode.git
 Source0: %name-%version.tar
 
-BuildPreReq: %py_dependencies setuptools
-BuildPreReq: python-module-docutils python-module-sphinx-devel
-BuildPreReq: python-module-pycountry
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-dns
+#BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: python-module-docutils python-module-sphinx-devel
+#BuildPreReq: python-module-pycountry
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-dns
 
 %if_with python3
-BuildPreReq: rpm-build-python3
-BuildPreReq: python-tools-2to3
-BuildPreReq: python3-devel
-BuildPreReq: python3-module-distribute
-BuildPreReq: python3-module-docutils
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-pycountry
-BuildPreReq: python3-module-dns
+#BuildPreReq: rpm-build-python3
+#BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel
+#BuildPreReq: python3-module-distribute
+#BuildPreReq: python3-module-docutils
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-module-pycountry
+#BuildPreReq: python3-module-dns
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-alabaster python-module-dns python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pycountry python3-module-dns python3-module-html5lib python3-module-nose python3-module-sphinx rpm-build-python3 time
 
 %description
 FormEncode validates and converts nested structures. It allows for
@@ -130,6 +135,9 @@ popd
 %python_sitelibdir/*/pickle
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1:1.3.0-alt1.git20150207.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt1.git20150207
 - 1.3.0 released
 

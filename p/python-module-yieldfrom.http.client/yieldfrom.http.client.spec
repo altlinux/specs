@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20150311
+Release: alt1.git20150311.1
 Summary: asyncio version of http.client
 License: PSFL
 Group: Development/Python
@@ -17,18 +17,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 Requires: python-module-%mname.http = %EVR
 %py_requires asyncio
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python3-module-setuptools-tests rpm-build-python3
 
 %description
 Asyncio conversion of http.client.
@@ -136,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1.git20150311.1
+- NMU: Use buildreq for BR.
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20150311
 - Version 0.1.2
 

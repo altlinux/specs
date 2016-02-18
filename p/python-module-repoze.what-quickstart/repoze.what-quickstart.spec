@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.10
-Release: alt2.git20111129
+Release: alt2.git20111129.1
 Summary: The repoze.what Quickstart plugin
 License: BSD
 Group: Development/Python
@@ -14,25 +14,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.what-quickstart.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel python-module-repoze.what-sql
-BuildPreReq: python-module-repoze.who.plugins.sa python-module-webob
-BuildPreReq: python-module-repoze.what python-module-zope.interface
-BuildPreReq: python-module-SQLAlchemy python-module-repoze.who-testutil
-BuildPreReq: python-module-PasteDeploy python-module-nose
-BuildPreReq: python-module-coverage python-module-pysqlite2
-BuildPreReq: python-module-repoze.who-friendlyform
-BuildPreReq: python-module-repoze.who
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel python-module-repoze.what-sql
+#BuildPreReq: python-module-repoze.who.plugins.sa python-module-webob
+#BuildPreReq: python-module-repoze.what python-module-zope.interface
+#BuildPreReq: python-module-SQLAlchemy python-module-repoze.who-testutil
+#BuildPreReq: python-module-PasteDeploy python-module-nose
+#BuildPreReq: python-module-coverage python-module-pysqlite2
+#BuildPreReq: python-module-repoze.who-friendlyform
+#BuildPreReq: python-module-repoze.who
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires repoze.what.plugins repoze.what repoze.who
 Requires: python-module-repoze.who.plugins.sa
 Requires: python-module-repoze.what-sql
 Requires: python-module-repoze.who-friendlyform
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: ca-certificates python-base python-devel python-module-PasteDeploy python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-paste python-module-pytest python-module-pytz python-module-repoze python-module-repoze.what python-module-repoze.what.plugins python-module-repoze.who python-module-repoze.who-testutil python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pysqlite2 python-module-repoze.what-sql python-module-repoze.who-friendlyform python-module-repoze.who.plugins.sa python-module-setuptools-tests python3-module-setuptools rpm-build-python3 time
 
 %description
 This is an extras plugin for repoze.what.
@@ -175,6 +180,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.10-alt2.git20111129.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt2.git20111129
 - Added module for Python 3
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.1
-Release: alt1.git20131114
+Release: alt1.git20131114.1
 Summary: A Python library implementing the Data Access Protocol (DAP, aka OPeNDAP or DODS)
 License: MIT
 Group: Development/Python
@@ -15,24 +15,29 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-httplib2
-BuildPreReq: python-module-paste python-module-cheetah
-BuildPreReq: python-module-Paver python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel libnumpy-devel
-BuildPreReq: python-module-PasteScript python-module-PasteDeploy
-BuildPreReq: python-module-genshi
+#BuildPreReq: python-devel python-module-httplib2
+#BuildPreReq: python-module-paste python-module-cheetah
+#BuildPreReq: python-module-Paver python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel libnumpy-devel
+#BuildPreReq: python-module-PasteScript python-module-PasteDeploy
+#BuildPreReq: python-module-genshi
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-httplib2
-BuildPreReq: python3-module-setuptools-tests libnumpy-py3-devel
-BuildPreReq: python3-module-paste python3-module-Paver
-BuildPreReq: python3-module-PasteScript python3-module-PasteDeploy
-BuildPreReq: python3-module-genshi
+#BuildPreReq: python3-devel python3-module-httplib2
+#BuildPreReq: python3-module-setuptools-tests libnumpy-py3-devel
+#BuildPreReq: python3-module-paste python3-module-Paver
+#BuildPreReq: python3-module-PasteScript python3-module-PasteDeploy
+#BuildPreReq: python3-module-genshi
 %endif
 
 Requires: python-modules-email
 %py_requires paste.deploy
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: bzr python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-numpy python-module-paste python-module-pbr python-module-pyasn1 python-module-pyparsing python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy python3-module-paste python3-module-setuptools xz
+BuildRequires: python-module-PasteDeploy python-module-PasteScript python-module-Paver python-module-alabaster python-module-docutils python-module-html5lib python-module-httplib2 python-module-matplotlib python-module-numpy-testing python-module-objects.inv python-module-pytest python3-module-PasteDeploy python3-module-PasteScript python3-module-Paver python3-module-genshi python3-module-httplib2 python3-module-pytest rpm-build-python3 time
 
 %description
 Pydap is an implementation of the Opendap/DODS protocol, written from
@@ -187,6 +192,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.1.1-alt1.git20131114.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1.git20131114
 - Version 3.1.1
 - Added module for Python 3

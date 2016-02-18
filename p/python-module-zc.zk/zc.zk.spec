@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.1.0
-Release: alt1.git20141020
+Release: alt1.git20141020.1
 Summary: Service registration and discovery with ZooKeeper
 License: ZPLv2.1
 Group: Development/Python
@@ -15,24 +15,28 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zc.zk.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zc.thread python-module-kazoo
-BuildPreReq: python-module-zope.testing python-module-mock
-BuildPreReq: python-module-manuel python-module-zope.event
-BuildPreReq: python-module-netifaces python-module-zope.component
-BuildPreReq: python-module-zc.monitor
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-zc.thread python-module-kazoo
+#BuildPreReq: python-module-zope.testing python-module-mock
+#BuildPreReq: python-module-manuel python-module-zope.event
+#BuildPreReq: python-module-netifaces python-module-zope.component
+#BuildPreReq: python-module-zc.monitor
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zc.thread python3-module-kazoo
-BuildPreReq: python3-module-zope.testing python3-module-mock
-BuildPreReq: python3-module-manuel python3-module-zope.event
-BuildPreReq: python3-module-netifaces python3-module-zope.component
-BuildPreReq: python3-module-zc.monitor python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zc.thread python3-module-kazoo
+#BuildPreReq: python3-module-zope.testing python3-module-mock
+#BuildPreReq: python3-module-manuel python3-module-zope.event
+#BuildPreReq: python3-module-netifaces python3-module-zope.component
+#BuildPreReq: python3-module-zc.monitor python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires zc zc.thread zope.event
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-persistent python-module-setuptools python-module-zc.ngi python-module-zope.component python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.interface python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-zc.ngi python3-module-zope python3-module-zope.component python3-module-zope.event python3-module-zope.exceptions python3-module-zope.interface python3-module-zope.testing
+BuildRequires: python-module-pbr python-module-pytest python-module-unittest2 python-module-zc.monitor python-module-zc.thread python3-module-html5lib python3-module-pbr python3-module-pytest python3-module-unittest2 python3-module-zc.monitor python3-module-zc.thread rpm-build-python3 time
 
 %description
 The zc.zk package provides support for registering and discovering
@@ -147,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt1.git20141020.1
+- NMU: Use buildreq for BR.
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.git20141020
 - Initial build for Sisyphus
 

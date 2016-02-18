@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.1.0
-Release: alt1.git20150823
+Release: alt1.git20150823.1
 Summary: py.test plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
 Group: Development/Python
@@ -16,20 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-coverage python-module-cov-core
-BuildPreReq: python-module-virtualenv python-module-pytest-xdist
-BuildPreReq: python-module-process-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-coverage python-module-cov-core
+#BuildPreReq: python-module-virtualenv python-module-pytest-xdist
+#BuildPreReq: python-module-process-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-coverage python3-module-cov-core
-BuildPreReq: python3-module-virtualenv python3-module-pytest-xdist
-BuildPreReq: python3-module-process-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-coverage python3-module-cov-core
+#BuildPreReq: python3-module-virtualenv python3-module-pytest-xdist
+#BuildPreReq: python3-module-process-tests
 %endif
 
 %py_provides pytest_cov
 %py_requires pytest cov_core
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-cryptography python-module-enum34 python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-pytest python-module-rlcompleter2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-chardet python3-module-pytest python3-module-setuptools python3-module-yieldfrom.http.client python3-module-yieldfrom.requests python3-module-yieldfrom.urllib3
+BuildRequires: python-module-coverage python-module-pytest-xdist python-module-virtualenv python3-module-coverage python3-module-pytest-xdist python3-module-virtualenv rpm-build-python3
 
 %description
 This plugin produces coverage reports. It supports centralised testing
@@ -102,6 +106,9 @@ exit 1
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt1.git20150823.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.git20150823
 - Version 2.1.0
 

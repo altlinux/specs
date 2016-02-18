@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.4.8
-Release: alt1
+Release: alt1.1
 Summary: YUI Compressor packaged for Python
 License: BSD
 Group: Development/Python
@@ -14,14 +14,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests jre /proc
+#BuildPreReq: python-devel python-module-setuptools-tests jre /proc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 Requires: jre /proc
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 YUI Compressor is a JavaScript and CSS minifier written in Java. This
@@ -93,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.4.8-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.8-alt1
 - Initial build for Sisyphus
 

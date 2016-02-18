@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt1.git20150210
+Release: alt1.git20150210.1
 Summary: asyncio (PEP 3156) Gibson cache support
 License: MIT
 Group: Development/Python
@@ -18,19 +18,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-coverage
-BuildPreReq: python-module-flake8 python-module-nose
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-coverage
+#BuildPreReq: python-module-flake8 python-module-nose
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-coverage
-BuildPreReq: python3-module-flake8 python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-coverage
+#BuildPreReq: python3-module-flake8 python3-module-nose
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python3 python3-base python3-module-mccabe python3-module-pytest python3-module-setuptools python3-pyflakes python3-tools-pep8
+BuildRequires: python3-module-coverage python3-module-flake8 python3-module-nose rpm-build-python3
 
 %description
 aiogibson is a library for accessing a gibson cache database from the
@@ -104,6 +108,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1.git20150210.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt1.git20150210
 - Version 0.1.3
 

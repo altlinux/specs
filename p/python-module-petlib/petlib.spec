@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.23
-Release: alt1
+Release: alt1.1
 Summary: A library implementing a number of Privacy Enhancing Technologies (PETs)
 License: BSD
 Group: Development/Python
@@ -14,19 +14,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests libssl-devel
-BuildPreReq: python-module-cffi python-module-future
-BuildPreReq: python-module-Paver python-module-pytest-cov
+#BuildPreReq: python-devel python-module-setuptools-tests libssl-devel
+#BuildPreReq: python-module-cffi python-module-future
+#BuildPreReq: python-module-Paver python-module-pytest-cov
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-cffi python3-module-future
-BuildPreReq: python3-module-Paver python3-module-pytest-cov
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-cffi python3-module-future
+#BuildPreReq: python3-module-Paver python3-module-pytest-cov
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires cffi future pytest paver pytest_cov
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-pycparser python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-tools-2to3 python3 python3-base python3-module-pycparser
+BuildRequires: libssl-devel python-module-cffi python-module-pytest-cov python3-devel python3-module-cffi python3-module-pytest-cov rpm-build-python3 time
 
 %description
 A library wrapping Open SSL low-level cryptographic libraries to build
@@ -93,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.23-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.23-alt1
 - Version 0.0.23
 

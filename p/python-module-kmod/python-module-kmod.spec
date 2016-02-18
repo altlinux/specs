@@ -6,13 +6,17 @@ License:        LGPLv2+
 Group:          Development/Python
 Summary:        Python module to work with kernel modules
 Version:        0.9
-Release:        alt1
+Release:        alt1.1
 URL:            https://github.com/agrover/python-kmod/
 Source0:        %{name}-%{version}.tar
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools
-BuildRequires:  python-module-Cython
-BuildRequires:  kmod-devel
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-xml python3 python3-base python3-dev python3-module-zope
+BuildRequires: libkmod-devel python-module-Cython python3-module-Cython rpm-build-python3
+
+#BuildRequires:  python-devel
+#BuildRequires:  python-module-setuptools
+#BuildRequires:  python-module-Cython
+#BuildRequires:  kmod-devel
 
 %description
 Python module to allow listing, loading, and unloading
@@ -23,9 +27,9 @@ Linux kernel modules, using libkmod.
 %package -n python3-module-%{pypi_name}
 Summary:        Python module to work with kernel modules
 Group:		Development/Python
-BuildRequires:  rpm-build-python3 python3-dev
-BuildRequires:  python3-module-setuptools
-BuildRequires:  python3-module-Cython
+#BuildRequires:  rpm-build-python3 python3-dev
+#BuildRequires:  python3-module-setuptools
+#BuildRequires:  python3-module-Cython
 
 %description -n python3-module-%{pypi_name}
 Python module to allow listing, loading, and unloading
@@ -72,5 +76,8 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Jul 31 2014 Lenar Shakirov <snejok@altlinux.ru> 0.9-alt1
 - First build for ALT (based on Fedora 0.9-4.fc21.src)

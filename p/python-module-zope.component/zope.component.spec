@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.3
-Release: alt1.dev0.git20150604
+Release: alt1.dev0.git20150604.1
 Summary: Zope Component Architecture
 License: ZPLv2.1
 Group: Development/Python
@@ -13,12 +13,16 @@ Url: http://pypi.python.org/pypi/zope.component/
 # git://github.com/zopefoundation/zope.component.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
-BuildPreReq: python-module-zope
+#BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-module-zope
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-zope python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-zope.interface
+BuildRequires: python-module-setuptools python3-module-setuptools python3-module-zope rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-zope python-tools-2to3
 %endif
 
 %py_requires zope.interface zope.event zope.hookable
@@ -137,6 +141,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.2.3-alt1.dev0.git20150604.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.3-alt1.dev0.git20150604
 - Version 4.2.3.dev0
 

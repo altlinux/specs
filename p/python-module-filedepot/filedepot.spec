@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1.git20150209
+Release: alt1.git20150209.1
 Summary: Toolkit for storing files and attachments in web applications
 License: MIT
 Group: Development/Python
@@ -16,25 +16,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-mock python-module-pymongo
-BuildPreReq: python-module-SQLAlchemy python-module-Pillow
-BuildPreReq: python-module-Ming python-module-TurboGears2
-BuildPreReq: python-module-webtest python-module-nose
-BuildPreReq: python-module-boto python-module-repoze.lru
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-mock python-module-pymongo
+#BuildPreReq: python-module-SQLAlchemy python-module-Pillow
+#BuildPreReq: python-module-Ming python-module-TurboGears2
+#BuildPreReq: python-module-webtest python-module-nose
+#BuildPreReq: python-module-boto python-module-repoze.lru
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-mock python3-module-pymongo
-BuildPreReq: python3-module-SQLAlchemy python3-module-Pillow
-BuildPreReq: python3-module-Ming python3-module-TurboGears2
-BuildPreReq: python3-module-webtest python3-module-nose
-BuildPreReq: python3-module-boto python3-module-repoze.lru
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-mock python3-module-pymongo
+#BuildPreReq: python3-module-SQLAlchemy python3-module-Pillow
+#BuildPreReq: python3-module-Ming python3-module-TurboGears2
+#BuildPreReq: python3-module-webtest python3-module-nose
+#BuildPreReq: python3-module-boto python3-module-repoze.lru
 %endif
 
 %py_provides %oname depot
 %py_requires pymongo sqlalchemy PIL ming boto
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-FormEncode python-module-Ming python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-backports python-module-beaker python-module-bson python-module-cffi python-module-chardet python-module-crank python-module-cryptography python-module-cssselect python-module-ecdsa python-module-ed25519 python-module-enum34 python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-nose python-module-nss python-module-ntlm python-module-pyasn1 python-module-pycrypto python-module-pymongo python-module-pymongo-gridfs python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-tgming python-module-transaction python-module-waitress python-module-yaml python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base python3-module-Ming python3-module-beaker python3-module-cffi python3-module-chardet python3-module-crank python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-html5lib python3-module-nose python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pycrypto python3-module-pytz python3-module-setuptools python3-module-tgming python3-module-transaction python3-module-waitress python3-module-yieldfrom.http.client python3-module-yieldfrom.urllib3 python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-Pillow python-module-TurboGears2 python-module-alabaster python-module-boto python-module-docutils python-module-objects.inv python-module-pbr python-module-pytest python-module-repoze.lru python-module-unittest2 python-module-webtest python3-module-TurboGears2 python3-module-ecdsa python3-module-pbr python3-module-pytest python3-module-repoze.lru python3-module-unittest2 python3-module-webtest python3-module-yaml python3-module-yieldfrom.requests rpm-build-python3 time
 
 %description
 DEPOT is a framework for easily storing and serving files in web
@@ -133,6 +138,9 @@ exit 1
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.3-alt1.git20150209.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20150209
 - Initial build for Sisyphus
 

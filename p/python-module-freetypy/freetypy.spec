@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20150408
+Release: alt1.git20150408.1
 Summary: Fast and modern Python wrappers for freetype, written in Python/C API 
 License: BSD
 Group: Development/Python
@@ -15,19 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/matplotlib/freetypy.git
 Source: %name-%version.tar
 
-BuildPreReq: libfreetype-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-numpy python-module-matplotlib
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: libfreetype-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-numpy python-module-matplotlib
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy python3-module-matplotlib
-BuildPreReq: python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-numpy python3-module-matplotlib
+#BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils pkg-config python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: libfreetype-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-devel rpm-build-python3 time
 
 %description
 Fast and modern Python wrappers for freetype, written in Python/C API.
@@ -152,6 +157,9 @@ nosetests3 -v --processes=-1 freetypy.tests
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.git20150408.1
+- NMU: Use buildreq for BR.
+
 * Wed Apr 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20150408
 - Initial build for Sisyphus
 

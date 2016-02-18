@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.6
-Release: alt1.dev.git20150415
+Release: alt1.dev.git20150415.1
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: MIT / BSD
 Group: Development/Python
@@ -14,17 +14,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/Blosc/python-blosc.git
 Source: %name-%version.tar
 
-BuildPreReq: libblosc-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose libnumpy-devel
-BuildPreReq: python-module-sphinx-devel python-module-numpydoc
+#BuildPreReq: libblosc-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose libnumpy-devel
+#BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose libnumpy-py3-devel
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose libnumpy-py3-devel
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-numpy python3-module-setuptools xz
+BuildRequires: libblosc-devel python-module-alabaster python-module-html5lib python-module-nose python-module-numpy-testing python-module-numpydoc python-module-objects.inv python-module-pytest python3-devel python3-module-nose python3-module-numpy-testing python3-module-pytest rpm-build-python3 time
 
 %description
 Blosc (http://blosc.org) is a high performance compressor optimized for
@@ -185,6 +190,9 @@ nosetests3 -v --with-doctest %oname
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1.dev.git20150415.1
+- NMU: Use buildreq for BR.
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.dev.git20150415
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -15,11 +15,15 @@ Source: SQLAlchemy-%version.tar
 %py_provides SQLAlchemy
 
 #BuildArch: noarch
-BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -120,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt1
 - Version 1.0.8
 

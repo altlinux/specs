@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.1
-Release: alt1.git20150331
+Release: alt1.git20150331.1
 Summary: Start fancy debugger in a single statement
 License: Free
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-ipdb python-module-see
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-ipdb python-module-see
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-ipdb python3-module-see
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-ipdb python3-module-see
 %endif
 
 %py_provides %oname
 %py_requires ipdb see
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel python3-module-zope rpm-build-python3
 
 %description
 Start fancy debugger in a single statement.
@@ -106,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1.git20150331.1
+- NMU: Use buildreq for BR.
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20150331
 - Initial build for Sisyphus
 

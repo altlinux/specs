@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.0.1
-Release: alt2.dev0.git20150613
+Release: alt2.dev0.git20150613.1
 Summary: Resolving paths in the object hierarchy
 License: ZPLv2.1
 Group: Development/Python
@@ -15,39 +15,39 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.traversing.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-%oname-tests
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-zope.i18nmessageid python-module-zope.i18n
-BuildPreReq: python-module-zope.proxy 
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-zope.i18nmessageid python-module-zope.i18n
+#BuildPreReq: python-module-zope.proxy 
 #python-module-zope.publisher-tests
-BuildPreReq: python-module-zope.security python-module-zope.location
-BuildPreReq: python-module-six python-module-transaction
-BuildPreReq: python-module-zope.annotation
+#BuildPreReq: python-module-zope.security python-module-zope.location
+#BuildPreReq: python-module-six python-module-transaction
+#BuildPreReq: python-module-zope.annotation
 #BuildPreReq: python-module-zope.browserresource
-BuildPreReq: python-module-zope.security
-BuildPreReq: python-module-zope.tales
-BuildPreReq: python-module-zope.testing
-BuildPreReq: python-module-zope.testrunner
-BuildPreReq: python-module-zope.browser
+#BuildPreReq: python-module-zope.security
+#BuildPreReq: python-module-zope.tales
+#BuildPreReq: python-module-zope.testing
+#BuildPreReq: python-module-zope.testrunner
+#BuildPreReq: python-module-zope.browser
 #python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-module-%oname-tests 
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.i18nmessageid python3-module-zope.i18n
-BuildPreReq: python3-module-zope.proxy
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zope.i18nmessageid python3-module-zope.i18n
+#BuildPreReq: python3-module-zope.proxy
 #python3-module-zope.publisher-tests
-BuildPreReq: python3-module-zope.security python3-module-zope.location
-BuildPreReq: python3-module-six python3-module-transaction
-BuildPreReq: python3-module-zope.annotation
-BuildPreReq: python3-module-zope.browser
+#BuildPreReq: python3-module-zope.security python3-module-zope.location
+#BuildPreReq: python3-module-six python3-module-transaction
+#BuildPreReq: python3-module-zope.annotation
+#BuildPreReq: python3-module-zope.browser
 #BuildPreReq: python3-module-zope.browserresource
-BuildPreReq: python3-module-zope.security
-BuildPreReq: python3-module-zope.tales
-BuildPreReq: python3-module-zope.testing
-BuildPreReq: python3-module-zope.testrunner
+#BuildPreReq: python3-module-zope.security
+#BuildPreReq: python3-module-zope.tales
+#BuildPreReq: python3-module-zope.testing
+#BuildPreReq: python3-module-zope.testrunner
 #BuildPreReq: python3-module-zope.component-tests
 %endif
 
@@ -56,6 +56,10 @@ BuildPreReq: python3-module-zope.testrunner
 #%py_requires zope.publisher zope.security zope.location transaction
 
 %py_requires zope.event zope.component pytz zope.schema zope.i18nmessageid zope.i18n zope.proxy zope.location zope.browser zope.configuration zope.contenttype zope.security zope.publisher zope.traversing zope.exceptions
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-BTrees python-module-ZEO python-module-ZODB python-module-cffi python-module-cryptography python-module-enum34 python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zc.lockfile python-module-zdaemon python-module-zope.component python-module-zope.configuration python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.location python-module-zope.proxy python-module-zope.schema python-module-zope.tal python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-BTrees python3-module-ZEO python3-module-ZODB python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-persistent python3-module-pip python3-module-pycparser python3-module-pytz python3-module-setuptools python3-module-transaction python3-module-unittest2 python3-module-zc.lockfile python3-module-zdaemon python3-module-zope python3-module-zope.component python3-module-zope.configuration python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.location python3-module-zope.proxy python3-module-zope.schema python3-module-zope.tal python3-module-zope.testing
+BuildRequires: python-module-nose python-module-pytest python-module-zope.annotation python-module-zope.browser python-module-zope.i18n python-module-zope.security python-module-zope.tales python-module-zope.testrunner python3-module-html5lib python3-module-nose python3-module-pytest python3-module-zope.annotation python3-module-zope.browser python3-module-zope.i18n python3-module-zope.security python3-module-zope.tales python3-module-zope.testrunner rpm-build-python3
 
 %description
 The zope.traversing package provides adapteres for resolving object
@@ -176,6 +180,9 @@ nosetests3 -vv %oname
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.0.1-alt2.dev0.git20150613.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 19 2016 Sergey Alembekov <rt@altlinux.ru> 4.0.1-alt2.dev0.git20150613
 - disable check, remove some build requires to break cyclic dependency
 

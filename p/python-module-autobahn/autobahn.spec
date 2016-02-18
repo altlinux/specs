@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.5
-Release: alt1.git20150111
+Release: alt1.git20150111.1
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -14,27 +14,32 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/tavendo/AutobahnPython.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-trollius python-module-futures
-BuildPreReq: python-module-six python-module-zope.interface
-BuildPreReq: python-module-twisted-core-test python-module-twisted-web
-BuildPreReq: python-module-twisted-words python-module-wsaccel
-BuildPreReq: python-module-ujson python-module-snappy
-BuildPreReq: python-module-lz4 python-module-msgpack
-BuildPreReq: python-module-sphinx-devel scons python-module-boto
-BuildPreReq: python-module-taschenmesser python-module-scour
-BuildPreReq: python-module-sphinx-bootstrap-theme
-BuildPreReq: python-module-sphinxcontrib-spelling libenchant
-BuildPreReq: inkscape
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-trollius python-module-futures
+#BuildPreReq: python-module-six python-module-zope.interface
+#BuildPreReq: python-module-twisted-core-test python-module-twisted-web
+#BuildPreReq: python-module-twisted-words python-module-wsaccel
+#BuildPreReq: python-module-ujson python-module-snappy
+#BuildPreReq: python-module-lz4 python-module-msgpack
+#BuildPreReq: python-module-sphinx-devel scons python-module-boto
+#BuildPreReq: python-module-taschenmesser python-module-scour
+#BuildPreReq: python-module-sphinx-bootstrap-theme
+#BuildPreReq: python-module-sphinxcontrib-spelling libenchant
+#BuildPreReq: inkscape
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3 python3-module-asyncio
-BuildPreReq: python3-module-six python3-module-zope.interface
-BuildPreReq: python3-module-twisted-core-test python3-module-twisted-web
-BuildPreReq: python3-module-twisted-words python3-module-wsaccel
-BuildPreReq: python3-module-ujson python3-module-snappy
-BuildPreReq: python3-module-lz4 python3-module-msgpack
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-Fabric python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-docutils python-module-ecdsa python-module-enchant python-module-enum34 python-module-futures python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-nose python-module-ntlm python-module-pyasn1 python-module-pycrypto python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-yaml python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-zope.interface scons
+BuildRequires: inkscape python-module-alabaster python-module-boto python-module-html5lib python-module-msgpack python-module-objects.inv python-module-scour python-module-setuptools-tests python-module-snappy python-module-sphinx-bootstrap-theme python-module-sphinxcontrib-spelling python-module-taschenmesser python-module-trollius python-module-twisted-logger python-module-twisted-web python-module-ujson python-module-wsaccel python3-module-cryptography python3-module-pygobject3 python3-module-serial python3-module-setuptools-tests python3-module-snappy python3-module-zope rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3 python3-module-asyncio
+#BuildPreReq: python3-module-six python3-module-zope.interface
+#BuildPreReq: python3-module-twisted-core-test python3-module-twisted-web
+#BuildPreReq: python3-module-twisted-words python3-module-wsaccel
+#BuildPreReq: python3-module-ujson python3-module-snappy
+#BuildPreReq: python3-module-lz4 python3-module-msgpack
 %endif
 
 %py_requires twisted.internet twisted.web twisted.words
@@ -189,6 +194,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.5-alt1.git20150111.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.git20150111
 - Version 0.9.5
 

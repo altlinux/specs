@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2.git20110412
+Release: alt2.git20110412.1
 Summary: The repoze.what 1.0 SQLAlchemy plugin
 License: BSD
 Group: Development/Python
@@ -14,18 +14,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.what-sql.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-SQLAlchemy
-BuildPreReq: python-module-repoze.what python-module-PasteDeploy
-BuildPreReq: python-module-repoze.who-testutil python-module-nose
-BuildPrereq: python-module-zope.interface python-module-coverage
-BuildPrereq: python-module-pysqlite2
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-SQLAlchemy
+#BuildPreReq: python-module-repoze.what python-module-PasteDeploy
+#BuildPreReq: python-module-repoze.who-testutil python-module-nose
+#BuildPrereq: python-module-zope.interface python-module-coverage
+#BuildPrereq: python-module-pysqlite2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires repoze.what.plugins repoze.what sqlalchemy
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PasteDeploy python-module-PyStemmer python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-paste python-module-pytz python-module-repoze python-module-repoze.who python-module-repoze.who-testutil python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pysqlite2 python-module-repoze.what rpm-build-python3 time
 
 %description
 This is an adapters plugin for repoze.what.
@@ -179,6 +184,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2.git20110412.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt2.git20110412
 - Added module for Python 3
 

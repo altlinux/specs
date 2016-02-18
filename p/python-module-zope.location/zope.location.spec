@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.4
-Release: alt2.dev0.git20150128
+Release: alt2.dev0.git20150128.1
 Summary: Zope Location
 License: ZPL
 Group: Development/Python
@@ -14,34 +14,39 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zope.location.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-repoze.sphinx.autointerface
-BuildPreReq: python-module-zope.interface-tests
-BuildPreReq: python-module-zope.schema-tests
-BuildPreReq: python-module-zope.proxy-tests
-BuildPreReq: python-module-zope.configuration-tests
-BuildPreReq: python-module-zope.component-tests
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-coverage
-BuildPreReq: python-module-zope.copy-tests
-BuildPreReq: python-module-%oname-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-repoze.sphinx.autointerface
+#BuildPreReq: python-module-zope.interface-tests
+#BuildPreReq: python-module-zope.schema-tests
+#BuildPreReq: python-module-zope.proxy-tests
+#BuildPreReq: python-module-zope.configuration-tests
+#BuildPreReq: python-module-zope.component-tests
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-coverage
+#BuildPreReq: python-module-zope.copy-tests
+#BuildPreReq: python-module-%oname-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.interface
-BuildPreReq: python3-module-zope.schema
-BuildPreReq: python3-module-zope.proxy
-BuildPreReq: python3-module-zope.configuration-tests
-BuildPreReq: python3-module-zope.component
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-coverage
-BuildPreReq: python3-module-zope.copy-tests
-BuildPreReq: python3-module-%oname-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zope.interface
+#BuildPreReq: python3-module-zope.schema
+#BuildPreReq: python3-module-zope.proxy
+#BuildPreReq: python3-module-zope.configuration-tests
+#BuildPreReq: python3-module-zope.component
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-module-coverage
+#BuildPreReq: python3-module-zope.copy-tests
+#BuildPreReq: python3-module-%oname-tests
 %endif
 
 %py_requires zope zope.interface zope.schema zope.component zope.proxy
 %py_requires zope.configuration
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-BTrees python-module-PyStemmer python-module-Pygments python-module-ZODB python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-pytest python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zc.lockfile python-module-zdaemon python-module-zope python-module-zope.component python-module-zope.configuration python-module-zope.copy python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.location python-module-zope.proxy python-module-zope.schema python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zope python3-module-zope.component python3-module-zope.configuration python3-module-zope.copy python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.location python3-module-zope.proxy python3-module-zope.schema python3-module-zope.testing
+BuildRequires: python-module-ZEO python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-repoze.sphinx.autointerface python-module-setuptools-tests python-module-zope.location-tests python-module-zope.testrunner python3-module-coverage python3-module-nose python3-module-setuptools-tests python3-module-zope.location-tests rpm-build-python3 time
 
 %description
 In Zope3, location are special objects that has a structural location.
@@ -147,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.0.4-alt2.dev0.git20150128.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2.dev0.git20150128
 - New snapshot
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.16
-Release: alt1.dev0.git20150414
+Release: alt1.dev0.git20150414.1
 Summary: A helper package for creating tests for ripozo and its extensions
 License: UNKNOWN
 Group: Development/Python
@@ -15,20 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six
-BuildPreReq: python-module-ripozo
-BuildPreReq: python-modules-logging
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-six
+#BuildPreReq: python-module-ripozo
+#BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six
-BuildPreReq: python3-module-ripozo
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-six
+#BuildPreReq: python3-module-ripozo
 %endif
 
 %py_provides ripozo_tests
 %py_requires six logging
 %py_requires ripozo
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-jinja2 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-jinja2 python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 These are the common tests that can be used for various common
@@ -91,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.16-alt1.dev0.git20150414.1
+- NMU: Use buildreq for BR.
+
 * Fri Apr 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.16-alt1.dev0.git20150414
 - Version 0.1.16.dev0
 

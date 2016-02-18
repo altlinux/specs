@@ -5,7 +5,7 @@
 
 Name:		python-module-%oname
 Version:	0.6
-Release:	alt4.1
+Release:	alt4.1.1
 
 Summary:	A helper class for handling configuration defaults of packaged apps gracefully
 
@@ -17,14 +17,18 @@ BuildArch:	noarch
 
 Source0:	%name-%version.tar
 
-BuildRequires:	python-devel
-BuildRequires:	python-module-sphinx
-BuildRequires:	python-module-six
-BuildRequires:	python-module-objects.inv
-BuildRequires:	python-module-django
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-psycopg2 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base
+BuildRequires: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires:	python-devel
+#BuildRequires:	python-module-sphinx
+#BuildRequires:	python-module-six
+#BuildRequires:	python-module-objects.inv
+#BuildRequires:	python-module-django
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPReReq: python3-devel python3-module-setuptools
+#BuildPReReq: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -84,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6-alt4.1.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt4.1
 - Added module for Python 3
 

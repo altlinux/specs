@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.1.6
-Release: alt1
+Release: alt1.1
 Summary: Null values and sentinels like, but not, None
 License: ASLv2.0
 Group: Development/Python
@@ -14,15 +14,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tox python-module-virtualenv
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-tox python-module-virtualenv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tox python3-module-virtualenv
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-tox python3-module-virtualenv
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
+BuildRequires: python-module-tox python-module-virtualenv python3-module-tox python3-module-virtualenv rpm-build-python3 time python3-module-pytest
 
 %description
 Helps define "null" values and sentinels parallel to, but different
@@ -113,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.6-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.6-alt1
 - Initial build for Sisyphus
 

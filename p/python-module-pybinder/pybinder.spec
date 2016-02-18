@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.1
-Release: alt1.git20141209
+Release: alt1.git20141209.1
 Summary: Dependency injection and management tool for Python
 License: BSD
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six python-module-coverage
-BuildPreReq: python-module-unittest2
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-six python-module-coverage
+#BuildPreReq: python-module-unittest2
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six python3-module-coverage
-BuildPreReq: python3-module-unittest2
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-six python3-module-coverage
+#BuildPreReq: python3-module-unittest2
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-linecache2 python-module-pytest python-module-setuptools python-module-six python-module-traceback2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
+BuildRequires: python-module-coverage python-module-setuptools-tests python-module-unittest2 python3-module-coverage python3-module-setuptools-tests python3-module-unittest2 rpm-build-python3 time
 
 %description
 Dependency injection and management tool for Python.
@@ -86,6 +90,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.5.1-alt1.git20141209.1
+- NMU: Use buildreq for BR.
+
 * Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt1.git20141209
 - Version 1.5.1
 

@@ -3,7 +3,7 @@
 
 Name: python-module-distutils-extra
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: Integrate more support into Python's distutils
 Group: Development/Python
@@ -15,8 +15,12 @@ Source: http://launchpad.net/%_name/trunk/%ver_major/+download/%_name-%version.t
 
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools rpm-build-python
-BuildPreReq: python3-devel python3-module-setuptools rpm-build-python3
+#BuildPreReq: python-devel python-module-setuptools rpm-build-python
+#BuildPreReq: python3-devel python3-module-setuptools rpm-build-python3
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 Enables you to easily integrate gettext support, themed icons and
@@ -62,6 +66,9 @@ chmod a+x %buildroot{%python_sitelibdir,%python3_sitelibdir}/DistUtilsExtra/comm
 
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.38-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.38-alt1
 - 2.38
 - new python3 module

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.7.0
-Release: alt1.git20150812
+Release: alt1.git20150812.1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: git mercurial
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: git mercurial
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 Requires: git mercurial
 %py_requires setuptools
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
+BuildRequires: git-core mercurial python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 setuptools_scm is a simple utility for the setup_requires feature of
@@ -112,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt1.git20150812.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20150812
 - Version 1.7.0
 

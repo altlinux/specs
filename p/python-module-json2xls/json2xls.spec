@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20150116
+Release: alt1.git20150116.1
 Summary: Generate excel by json
 License: BSD
 Group: Development/Python
@@ -16,20 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-requests python-module-click
-BuildPreReq: python-module-xlwt
-BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-requests python-module-click
+#BuildPreReq: python-module-xlwt
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-requests python3-module-click
-BuildPreReq: python3-module-xlwt-future
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-requests python3-module-click
+#BuildPreReq: python3-module-xlwt-future
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires json requests click xlwt
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-cryptography python-module-enum34 python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-setuptools python-module-urllib3 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-enum34 python3-module-future python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-setuptools python3-module-urllib3
+BuildRequires: python-module-click python-module-pytest python-module-requests python-module-xlwt python3-module-click python3-module-pytest python3-module-requests python3-module-xlwt-future rpm-build-python3 time
 
 %description
 json2xls: Generate Excel by JSON data.
@@ -101,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1.git20150116.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20150116
 - Initial build for Sisyphus
 

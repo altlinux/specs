@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1
+Release: alt1.1
 Summary: Smart random-generation state persistence for unittest
 License: BSD
 Group: Development/Python
@@ -14,16 +14,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-numpy
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-numpy
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-numpy
 %endif
 
 %py_provides unittest_rand_gen_state
 %py_requires numpy.random
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-numpy
+BuildRequires: python-devel python-module-numpy-testing python3-module-numpy-testing rpm-build-python3
 
 %description
 This library provides a simple metaclass for dropping into
@@ -91,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1
 - Initial build for Sisyphus
 

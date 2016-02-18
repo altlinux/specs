@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.61
-Release: alt2.git20140303
+Release: alt2.git20140303.1
 Summary: Scikits data smoothing package
 License: BSD
 Group: Development/Python
@@ -15,20 +15,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/jjstickel/scikit-datasmooth.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
-BuildPreReq: libnumpy-devel python-module-scipy
-BuildPreReq: python-module-pygobject3 python-module-pycairo
-BuildPreReq: python-module-cvxopt python-module-matplotlib
+#BuildPreReq: python-devel python-module-setuptools-tests xvfb-run
+#BuildPreReq: libnumpy-devel python-module-scipy
+#BuildPreReq: python-module-pygobject3 python-module-pycairo
+#BuildPreReq: python-module-cvxopt python-module-matplotlib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: libnumpy-py3-devel python3-module-scipy
-BuildPreReq: python3-module-pygobject3 python3-module-pycairo
-BuildPreReq: python3-module-cvxopt python3-module-matplotlib
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: libnumpy-py3-devel python3-module-scipy
+#BuildPreReq: python3-module-pygobject3 python3-module-pycairo
+#BuildPreReq: python3-module-cvxopt python3-module-matplotlib
 %endif
 
 %py_provides %oname
 %py_requires %mname numpy scipy cvxopt
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libnumpy-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-future python-module-genshi python-module-jinja2 python-module-matplotlib python-module-mpmath python-module-numpy python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-numpy python3-module-pyparsing python3-module-pytest python3-module-setuptools
+BuildRequires: libnumpy-py3-devel python-module-html5lib python-module-numpy-testing python-module-pygobject3 python-module-scipy python-module-setuptools-tests python3-module-cvxopt python3-module-matplotlib python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-scipy python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 This is a scikit intended to include numerical methods for smoothing
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.61-alt2.git20140303.1
+- NMU: Use buildreq for BR.
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.61-alt2.git20140303
 - Rebuilt with updated NumPy
 

@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.2
-Release: alt1.git20150120
+Release: alt1.git20150120.1
 Summary: Kids file management library
 License: BSD
 Group: Development/Python
@@ -15,18 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/0k/kids.file.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests git
-BuildPreReq: python-module-d2to1 python-module-nose
-BuildPreReq: python-module-minimock python-module-coverage
+#BuildPreReq: python-devel python-module-setuptools-tests git
+#BuildPreReq: python-module-d2to1 python-module-nose
+#BuildPreReq: python-module-minimock python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-d2to1 python3-module-nose
-BuildPreReq: python3-module-minimock python3-module-coverage
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-d2to1 python3-module-nose
+#BuildPreReq: python3-module-minimock python3-module-coverage
 %endif
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
+BuildRequires: git-core python-module-coverage python-module-d2to1 python-module-minimock python-module-nose python-module-setuptools-tests python3-module-coverage python3-module-d2to1 python3-module-minimock python3-module-nose python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 This very small module is part of KIDS (Keep It Dead Simple), and
@@ -134,6 +138,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.2-alt1.git20150120.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.2-alt1.git20150120
 - Initial build for Sisyphus
 

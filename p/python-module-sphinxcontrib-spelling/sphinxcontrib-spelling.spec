@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.1.1
-Release: alt2
+Release: alt2.1
 
 Summary: Sphinx "spelling" extension
 License: BSD
@@ -19,17 +19,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-enchant
-BuildPreReq: python-module-setuptools python-module-pbr
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-enchant
+#BuildPreReq: python-module-setuptools python-module-pbr
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-enchant
-BuildPreReq: python3-module-setuptools python3-module-pbr
+#BuildPreReq: python3-devel python3-module-enchant
+#BuildPreReq: python3-module-setuptools python3-module-pbr
 %endif
 
 %py_provides %mname.spelling
 Requires: python-module-%mname = %EVR
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pbr python3-module-html5lib python3-module-pbr rpm-build-python3 time
 
 %description
 This package contains sphinxcontrb.spelling, a spelling checker for
@@ -192,6 +197,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt2.1
+- NMU: Use buildreq for BR.
+
 * Wed Apr 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt2
 - Added module for Python 3
 

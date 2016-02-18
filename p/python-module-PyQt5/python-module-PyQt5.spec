@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.5
-Release: alt1
+Release: alt1.1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -14,22 +14,26 @@ Group: Development/Python
 Source0: PyQt-gpl.tar
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
-BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
-BuildPreReq: %py_package_dependencies dbus-devel
+#BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
+#BuildPreReq: %py_package_dependencies dbus-devel
 
-BuildRequires: gcc-c++ qt5-base-devel lout
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: elfutils gcc-c++ libGL-devel libdbus-devel libgpg-error libgst-plugins1.0 libjson-c libqt5-bluetooth libqt5-clucene libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-help libqt5-location libqt5-multimedia libqt5-network libqt5-nfc libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sensors libqt5-serialport libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-websockets libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel pkg-config python-base python-devel python-module-dbus python-module-sip python-modules python-modules-compiler python-modules-logging python-modules-xml python3 python3-base python3-dev python3-module-sip qt5-base-devel qt5-declarative-devel rpm-build-gir
+BuildRequires: python-module-dbus-devel python-module-sip-devel python3-module-dbus python3-module-sip-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel rpm-build-python3
+
+#BuildRequires: gcc-c++ qt5-base-devel lout
 #BuildPreReq: python-module-qscintilla2-qt5-devel libqscintilla2-qt5-devel
-BuildPreReq: libqscintilla2-qt5-devel
-BuildRequires: python-module-sip-devel python-devel
-BuildPreReq: python-module-dbus-devel libqt5-help qt5-multimedia-devel
-BuildPreReq: qt5-declarative-devel qt5-svg-devel qt5-webkit-devel
-BuildPreReq: qt5-xmlpatterns-devel qt5-tools-devel qt5-sensors-devel
-BuildPreReq: qt5-serialport-devel qt5-x11extras-devel qt5-location-devel
-BuildPreReq: qt5-connectivity-devel qt5-websockets-devel
+#BuildPreReq: libqscintilla2-qt5-devel
+#BuildRequires: python-module-sip-devel python-devel
+#BuildPreReq: python-module-dbus-devel libqt5-help qt5-multimedia-devel
+#BuildPreReq: qt5-declarative-devel qt5-svg-devel qt5-webkit-devel
+#BuildPreReq: qt5-xmlpatterns-devel qt5-tools-devel qt5-sensors-devel
+#BuildPreReq: qt5-serialport-devel qt5-x11extras-devel qt5-location-devel
+#BuildPreReq: qt5-connectivity-devel qt5-websockets-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sip-devel python3-devel
-BuildPreReq: python3-module-dbus
+#BuildRequires: python3-module-sip-devel python3-devel
+#BuildPreReq: python3-module-dbus
 %endif
 
 %description
@@ -201,6 +205,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 5.5-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5-alt1
 - Version 5.5
 

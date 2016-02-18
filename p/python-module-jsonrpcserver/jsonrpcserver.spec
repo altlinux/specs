@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.11
-Release: alt1
+Release: alt1.1
 Summary: JSON-RPC 2.0 server library
 License: LGPL
 Group: Development/Python
@@ -16,18 +16,22 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-jsonschema python-module-flask
-BuildPreReq: python-module-nose
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-jsonschema python-module-flask
+#BuildPreReq: python-module-nose
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-jsonschema python3-module-flask
-BuildPreReq: python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-jsonschema python3-module-flask
+#BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-jinja2 python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python3-module-jsonschema python3-module-nose python3-module-pytest rpm-build-python3 time
 
 %description
 A JSON-RPC 2.0 server library for Python 3.
@@ -124,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.11-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.11-alt1
 - Version 1.0.11
 

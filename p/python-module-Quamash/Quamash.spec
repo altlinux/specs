@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt1.git20150118
+Release: alt1.git20150118.1
 Summary: Implementation of the PEP 3156 event-loop (tulip) api using the Qt Event-Loop
 License: BSD
 Group: Development/Python
@@ -17,21 +17,25 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: xvfb-run
+#BuildPreReq: xvfb-run
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-pathlib
-BuildPreReq: python-module-PyQt4 xvfb-run
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-pathlib
+#BuildPreReq: python-module-PyQt4 xvfb-run
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-pathlib
-BuildPreReq: python3-module-PyQt4
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-pathlib
+#BuildPreReq: python3-module-PyQt4
 %endif
 
 %py_provides quamash
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: fontconfig libqt4-core libqt4-gui python-base python3 python3-base python3-module-setuptools python3-module-sip
+BuildRequires: python3-module-PyQt4 python3-module-asyncio python3-module-pathlib python3-module-pytest rpm-build-python3
 
 %description
 Implementation of the PEP 3156 Event-Loop with Qt.
@@ -103,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1.git20150118.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.git20150118
 - Version 0.5.1
 

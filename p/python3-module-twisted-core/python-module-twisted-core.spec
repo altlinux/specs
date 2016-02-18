@@ -4,7 +4,7 @@
 %define prefx python3-module-twisted
 Name: %prefx-core
 Version: 12.1.0
-Release: alt2.hg20120710.1
+Release: alt2.hg20120710.1.1
 Summary: An asynchronous networking framework written in Python 3
 
 Group: Development/Python3
@@ -16,7 +16,11 @@ Source1: README.ALT-ru_RU.UTF-8
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python3 python3-base
+BuildRequires: python3-devel python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
 Requires: python3-module-OpenSSL
 
 %add_python3_req_skip AppKit Carbon Foundation GDK PAM cfsupport
@@ -516,6 +520,9 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %exclude %python3_sitelibdir/twisted/pair/test
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 12.1.0-alt2.hg20120710.1.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 30 2014 Vladimir Didenko <cow@altlinux.org> 12.1.0-alt2.hg20120710.1
 - Rebuild with new pyOpenSSL
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt3
+Release: alt3.1
 Summary: Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License: BSD
 Group: Development/Python
@@ -15,13 +15,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: libnumpy-devel
+#BuildPreReq: libnumpy-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel python-tools-2to3
+#BuildPreReq: python3-devel libnumpy-py3-devel python-tools-2to3
 %endif
 
 %add_python_req_skip lazylinker_ext pycuda scan_perform gnumpy pygpu
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-docutils python-module-html5lib python-module-matplotlib rpm-build-python3 time
 
 %description
 Theano is a Python library that allows you to define, optimize, and
@@ -187,6 +191,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt3.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt3
 - Disabled version check for numpy & scipy
 

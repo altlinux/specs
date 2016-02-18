@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1.git20150511
+Release: alt1.git20150511.1
 Summary: Simple Python socket pool
 License: BSD
 Group: Development/Python
@@ -16,18 +16,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-eventlet python-module-gevent
-BuildPreReq: python-module-py
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-eventlet python-module-gevent
+#BuildPreReq: python-module-py
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-eventlet python3-module-gevent
-BuildPreReq: python3-module-py
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-eventlet python3-module-gevent
+#BuildPreReq: python3-module-py
 %endif
 
 %py_provides %oname
 %py_requires eventlet gevent
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-enum34 python-module-pyasn1 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-cryptography python-module-dns python-module-greenlet python-module-psycopg2 python-module-pytest python3-module-cryptography python3-module-dns python3-module-greenlet python3-module-psycopg2 python3-module-pytest rpm-build-python3
 
 %description
 Socket pool is a simple socket pool that suports multiple factories and
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1.git20150511.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1.git20150511
 - New snapshot
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20140528
+Release: alt1.git20140528.1
 Summary: Extension of the fixtures test framework
 License: Free
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-mox python-module-fixtures
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-mox python-module-fixtures
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-mox python3-module-fixtures
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-mox python3-module-fixtures
 %endif
 
 %py_provides %oname
 %py_requires mox fixtures
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-extras python-module-linecache2 python-module-mimeparse python-module-pbr python-module-pluggy python-module-py python-module-pyasn1 python-module-serial python-module-setuptools python-module-six python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-extras python3-module-genshi python3-module-linecache2 python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pluggy python3-module-py python3-module-pycparser python3-module-setuptools python3-module-six python3-module-testtools python3-module-traceback2 python3-module-unittest2 xz
+BuildRequires: python-module-fixtures python-module-mox python-module-pytest python3-module-fixtures python3-module-html5lib python3-module-mox python3-module-pytest rpm-build-python3 time
 
 %description
 Fixtures2 is an extension of the fixtures test framework.
@@ -88,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1.git20140528.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20140528
 - Initial build for Sisyphus
 

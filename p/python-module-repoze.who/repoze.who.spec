@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.2
-Release:        alt1.git20140327
+Release:        alt1.git20140327.1
 Summary:        Identification and authentication framework for WSGI
 Group:          Development/Python
 License:        BSD-derived
@@ -13,18 +13,23 @@ URL:            http://pypi.python.org/pypi/repoze.who/
 Source:         %name-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: python-devel python-module-sphinx-devel
-BuildPreReq: texlive-latex-recommended gif2png
-BuildPreReq: python-module-zope.interface
-BuildPreReq: python-module-paste python-module-distribute
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-zope.interface
+BuildRequires: gif2png python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-paste python-module-repoze.sphinx.autointerface python-modules-wsgiref python3-module-paste python3-module-setuptools python3-module-zope rpm-build-python3 time
+
+#BuildRequires: python-devel python-module-sphinx-devel
+#BuildPreReq: texlive-latex-recommended gif2png
+#BuildPreReq: python-module-zope.interface
+#BuildPreReq: python-module-paste python-module-distribute
 # for docs
-BuildPreReq: %py_dependencies webob
-BuildPreReq: %py_dependencies repoze.sphinx.autointerface
+#BuildPreReq: %py_dependencies webob
+#BuildPreReq: %py_dependencies repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-zope.interface
-BuildPreReq: python3-module-paste python3-module-distribute
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-zope.interface
+#BuildPreReq: python3-module-paste python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires paste zope.interface
@@ -252,6 +257,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.2-alt1.git20140327.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.git20140327
 - New snapshot
 

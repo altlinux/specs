@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.6
-Release: alt1
+Release: alt1.1
 Summary: FileChunkIO represents a chunk of an OS-level file containing bytes data
 License: MIT
 Group: Development/Python
@@ -14,13 +14,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
+BuildRequires: python-devel python-modules-unittest rpm-build-python3
 
 %description
 FileChunkIO represents a chunk of an OS-level file containing bytes
@@ -131,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.6-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1
 - Initial build for Sisyphus
 

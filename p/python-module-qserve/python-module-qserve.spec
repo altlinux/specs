@@ -4,7 +4,7 @@
 
 Name: python-module-qserve
 Version: 0.2.8
-Release: alt1
+Release: alt1.1
 
 Summary: job queue server used in mwlib
 
@@ -15,15 +15,19 @@ Url: https://github.com/pediapress/qserve
 
 Source: %name-%version.tar
 
-BuildPreReq: rpm-build-python
+#BuildPreReq: rpm-build-python
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-devel python-tools-2to3
 %endif
 
 BuildArch: noarch
 
 %setup_python_module %modulename
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
 
 %description
 job queue server used in mwlib
@@ -70,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt1
 - Version 0.2.8
 - Added module for Python 3

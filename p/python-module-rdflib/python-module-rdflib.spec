@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.2
-Release: alt1
+Release: alt1.1
 
 Summary: RDFLib is a Python library for working with RDF
 
@@ -21,11 +21,13 @@ BuildArch: noarch
 
 #add_python_req_skip FOPLRelationalModel RDF
 
-# Automatically added by buildreq on Tue Sep 18 2007
-BuildRequires: pybliographic python-module-MySQLdb python-module-PyXML python-module-Pyrex python-module-setuptools python-module-zope.interface python-modules-email
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-numpy python-module-pyasn1 python-module-serial python-module-setuptools python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-BeautifulSoup python-module-PyXML python-module-Pyrex python-module-bibtex python3-module-setuptools rpm-build-python3
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -95,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.1.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1
 - Version 4.1.2
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.10.3
-Release: alt2
+Release: alt2.1
 Group: Development/Python
 License: MIT License
 Summary: The Python interface to the Redis key-value store
@@ -13,11 +13,15 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-distribute
+#BuildPreReq: rpm-build-python
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %setup_python_module %oname
@@ -72,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.10.3-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.3-alt2
 - Don't exclude .egg-info
 

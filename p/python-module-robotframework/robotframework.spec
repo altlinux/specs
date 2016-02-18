@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.9
-Release: alt1.dev20150202
+Release: alt1.dev20150202.1
 Summary: A generic test automation framework
 License: ASLv2.0
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-logging
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_provides robot
 %add_python_req_skip java javax org System
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
 
 %description
 Robot Framework is a generic test automation framework for acceptance
@@ -118,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.9-alt1.dev20150202.1
+- NMU: Use buildreq for BR.
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt1.dev20150202
 - Version 2.9.dev20150202
 - Added module for Python 3

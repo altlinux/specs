@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.0.7
-Release: alt1.git20141222
+Release: alt1.git20141222.1
 Summary: Damned fast YIFY parser using Asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -18,21 +18,25 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-aiohttp python-module-lxml
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-aiohttp python-module-lxml
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-aiohttp python3-module-lxml
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-aiohttp python3-module-lxml
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %mname
 Conflicts: python-module-%mname > %EVR
 Conflicts: python-module-%mname < %EVR
 Provides: python-module-%mname = %EVR
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-cssselect python3-module-django python3-module-dns python3-module-enum34 python3-module-genshi python3-module-greenlet python3-module-gunicorn python3-module-paste python3-module-psycopg2 python3-module-pycares python3-module-pycparser python3-module-setuptools python3-module-yaml python3-module-zope python3-module-zope.interface
+BuildRequires: python3-module-html5lib python3-module-pytest rpm-build-python3
 
 %description
 Damned fast YIFY parser using Asyncio.
@@ -90,6 +94,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.7-alt1.git20141222.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1.git20141222
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.git20150226
+Release: alt1.git20150226.1
 Summary: DB-API 2.0 interface for SQLCIPHER 3.x
 License: zlib/libpng
 Group: Development/Python
@@ -14,14 +14,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/rigglemania/pysqlcipher3.git
 Source: %name-%version.tar
 
-BuildPreReq: libssl-devel libsqlite3-devel libsqlcipher-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-test
+#BuildPreReq: libssl-devel libsqlite3-devel libsqlcipher-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose python-test
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-test
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose python3-test
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
+BuildRequires: libsqlcipher-devel python-module-nose python-module-setuptools-tests python3-devel python3-module-nose python3-module-setuptools-tests python3-test rpm-build-python3 time
 
 %description
 This library is a fork of pysqlcipher targeted for use with Python 3,
@@ -133,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.git20150226.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.git20150226
 - Initial build for Sisyphus
 

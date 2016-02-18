@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.3
-Release: alt1.git20130703
+Release: alt1.git20130703.1
 Group: Development/Python
 License: MIT License
 Summary: Fast, simple object-to-object and broadcast signaling
@@ -13,12 +13,17 @@ URL: http://discorporate.us/projects/Blinker/
 Source: %module_name-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv rpm-build-python3 time
 
 %description
 Blinker provides a fast dispatching system that allows any number of
@@ -80,6 +85,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3-alt1.git20130703.1
+- NMU: Use buildreq for BR.
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20130703
 - Shapshot from git
 - Added module for Python 3

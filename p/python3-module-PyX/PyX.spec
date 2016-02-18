@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.13
-Release: alt2
+Release: alt2.1
 Summary: Python graphics package
 License: GPLv2+
 Group: Development/Python3
@@ -13,10 +13,14 @@ Source: %oname-%version.tar
 
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel /usr/bin/tex /usr/bin/gs
-BuildPreReq: libkpathsea-devel python-module-imaging
-BuildPreReq: python3-module-sphinx
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
+#BuildPreReq: python3-devel /usr/bin/tex /usr/bin/gs
+#BuildPreReq: libkpathsea-devel python-module-imaging
+#BuildPreReq: python3-module-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: fontconfig ghostscript-classic libgpg-error python-base python-modules python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx python3-module-sphinx_rtd_theme tex-common texlive-base texlive-common texlive-latex-base xz
+BuildRequires: ghostscript-common libkpathsea-devel python3-devel python3-module-html5lib python3-module-jinja2-tests python3-module-sphinx-sphinx-build-symlink rpm-build-python3 texlive-base-bin time
+
+#BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 PyX is a Python package for the creation of PostScript and PDF files. It
@@ -79,6 +83,9 @@ mv faq/_build/html faq/_build/faq
 %doc examples
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.13-alt2.1
+- NMU: Use buildreq for BR.
+
 * Thu Jan 28 2016 Denis Medvedev <nbr@altlinux.org> 0.13-alt2
 - NMU make buildable
 

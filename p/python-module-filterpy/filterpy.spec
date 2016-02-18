@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.16
-Release: alt1.git20150217
+Release: alt1.git20150217.1
 Summary: Kalman filtering and optimal estimation library
 License: MIT
 Group: Development/Python
@@ -15,22 +15,27 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-scipy python-module-matplotlib
-BuildPreReq: python-module-mock libnumpy-devel
-BuildPreReq: python-module-nose python-module-pytz
-BuildPreReq: python-module-pygobject3 python-module-pycairo
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-scipy python-module-matplotlib
+#BuildPreReq: python-module-mock libnumpy-devel
+#BuildPreReq: python-module-nose python-module-pytz
+#BuildPreReq: python-module-pygobject3 python-module-pycairo
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-scipy python3-module-matplotlib
-BuildPreReq: python3-module-mock libnumpy-py3-devel
-BuildPreReq: python3-module-nose python3-module-pytz
-BuildPreReq: python3-module-pygobject3 python3-module-pycairo
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-scipy python3-module-matplotlib
+#BuildPreReq: python3-module-mock libnumpy-py3-devel
+#BuildPreReq: python3-module-nose python3-module-pytz
+#BuildPreReq: python3-module-pygobject3 python3-module-pycairo
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-cycler python-module-dateutil python-module-funcsigs python-module-future python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mpmath python-module-numpy python-module-pbr python-module-pyparsing python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-cycler python3-module-dateutil python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-numpy python3-module-pip python3-module-pycparser python3-module-pyparsing python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib python-module-mock python-module-nose python-module-objects.inv python-module-pygobject3 python-module-scipy python-module-setuptools-tests python3-module-html5lib python3-module-matplotlib python3-module-nose python3-module-pbr python3-module-pycairo python3-module-pygobject3 python3-module-pytz python3-module-scipy python3-module-setuptools-tests python3-module-unittest2 rpm-build-python3 time
 
 %description
 This library provides Kalman filtering and various related optimal and
@@ -184,6 +189,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.16-alt1.git20150217.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.16-alt1.git20150217
 - Version 0.0.16
 

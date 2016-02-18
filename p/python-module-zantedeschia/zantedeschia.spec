@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20150208
+Release: alt1.git20150208.1
 Summary: ZeroMQ sockets integrated with the AsyncIO event loop
 License: BSD
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zmq python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-zmq python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zmq python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zmq python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires zmq asyncio
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-cffi python3-module-greenlet python3-module-pluggy python3-module-py python3-module-pycparser python3-module-setuptools xz
+BuildRequires: python3-module-asyncio python3-module-pytest python3-module-zmq rpm-build-python3 time
 
 %description
 Zantedeschia is an experimental alternative integration between asyncio
@@ -95,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.git20150208.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.git20150208
 - Initial build for Sisyphus
 

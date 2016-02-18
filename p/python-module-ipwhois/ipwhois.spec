@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.3
-Release: alt1.git20150814
+Release: alt1.git20150814.1
 Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
 License: BSD
 Group: Development/Python
@@ -16,20 +16,25 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-dns python-module-ipaddr
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
-BuildPreReq: python-module-sphinxcontrib-napoleon
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-dns python-module-ipaddr
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-sphinx-devel python-module-sphinx_rtd_theme
+#BuildPreReq: python-module-sphinxcontrib-napoleon
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-dns
-BuildPreReq: python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-dns
+#BuildPreReq: python3-module-nose
 %endif
 
 %py_provides %oname
 %py_requires dns ipaddr
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: bzr python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-enum34 python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base
+BuildRequires: python-module-alabaster python-module-dns python-module-docutils python-module-html5lib python-module-ipaddr python-module-objects.inv python-module-sphinxcontrib-napoleon rpm-build-python3 time
 
 %description
 ipwhois is a Python package focused on retrieving and parsing whois data
@@ -146,6 +151,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.10.3-alt1.git20150814.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.3-alt1.git20150814
 - Initial build for Sisyphus
 

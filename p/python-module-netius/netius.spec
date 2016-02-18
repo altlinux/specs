@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.5.3
-Release: alt1.git20150202
+Release: alt1.git20150202.1
 Summary: Fast and readable async non-blocking network apps
 License: ASLv2.0
 Group: Development/Python
@@ -16,15 +16,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires json
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 Netius is a Python network library that can be used for the rapid
@@ -125,6 +129,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.5.3-alt1.git20150202.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.3-alt1.git20150202
 - Initial build for Sisyphus
 

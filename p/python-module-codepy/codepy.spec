@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2013.1.2
-Release: alt1.git20140620
+Release: alt1.git20140620.1
 Summary: C metaprogramming toolkit for Python
 License: MIT
 Group: Development/Python
@@ -14,12 +14,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # http://git.tiker.net/trees/codepy.git
 Source: %oname-%version.tar
 
-BuildPreReq: python-devel boost-python-devel
-BuildPreReq: python-module-sphinx-devel python-module-distribute
+#BuildPreReq: python-devel boost-python-devel
+#BuildPreReq: python-module-sphinx-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python-tools-2to3
-BuildPreReq: python3-module-distribute
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python-tools-2to3
+#BuildPreReq: python3-module-distribute
 %endif
 BuildArch: noarch
 %py_requires decorator
@@ -125,6 +130,9 @@ cp -fR doc/build/pickle \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2013.1.2-alt1.git20140620.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2013.1.2-alt1.git20140620
 - New snapshot
 

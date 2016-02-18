@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt1
+Release: alt1.1
 Summary: A sphinx theme for Basicstrap style
 License: MIT
 Group: Development/Python
@@ -16,18 +16,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-sphinx-devel python-module-sphinxjp.themecore
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-sphinx-devel python-module-sphinxjp.themecore
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-sphinx-devel python3-module-sphinxjp.themecore
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-sphinx-devel python3-module-sphinxjp.themecore
+#BuildPreReq: python-tools-2to3
 %endif
 
 Requires: python-module-%sname
 Requires: python-module-%mname = %EVR
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxjp python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-setuptools-tests python-module-sphinxjp.themecore python3-module-html5lib python3-module-nose python3-module-setuptools-tests python3-module-sphinx python3-module-sphinxjp.themecore rpm-build-python3 time
 
 %description
 Basicstrap style theme for Sphinx. Using Twitter Bootstrap.
@@ -158,6 +163,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Apr 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1
 - Verson 0.4.2
 - Added module for Python 3

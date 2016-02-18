@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 7
-Release: alt1.git20140918
+Release: alt1.git20140918.1
 Summary: Call asynchronous functions of asyncio infrastructure from synchronous code
 License: MIT
 Group: Development/Python
@@ -18,17 +18,21 @@ BuildArch: noarch
 Patch: aioawait-alt-py3.3.patch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python3-module-asyncio python3-module-setuptools-tests rpm-build-python3
 
 %description
 This package implements two primitives (await and spawn) on top of
@@ -103,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 7-alt1.git20140918.1
+- NMU: Use buildreq for BR.
+
 * Thu Jan 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7-alt1.git20140918
 - Initial build for Sisyphus
 

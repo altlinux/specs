@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20150209
+Release: alt1.git20150209.1
 Summary: Utilities to read/write Python types to/from HDF5 files, including MATLAB v7.3 MAT files
 License: BSD
 Group: Development/Python
@@ -16,19 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-numpy python-module-h5py
-BuildPreReq: python-module-scipy python-module-nose
-BuildPreReq: python-module-sphinx-devel python-module-numpydoc
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-numpy python-module-h5py
+#BuildPreReq: python-module-scipy python-module-nose
+#BuildPreReq: python-module-sphinx-devel python-module-numpydoc
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy python3-module-h5py
-BuildPreReq: python3-module-scipy python3-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-numpy python3-module-h5py
+#BuildPreReq: python3-module-scipy python3-module-nose
 %endif
 
 %py_provides %oname
 %py_requires numpy h5py scipy
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libhdf5-8-seq python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-future python-module-genshi python-module-h5py python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-mpmath python-module-numpy python-module-pyinotify python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-numpy python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-h5py-tests python-module-html5lib python-module-nose python-module-numpy-testing python-module-numpydoc python-module-objects.inv python-module-pytest python-module-scipy python3-module-nose python3-module-pytest python3-module-scipy rpm-build-python3 time
 
 %description
 This Python package provides high level utilities to read/write a
@@ -137,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.git20150209.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20150209
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.15
-Release: alt1.beta
+Release: alt1.beta.1
 Summary: Fanstatic packaging of NVD3
 License: BSD
 Group: Development/Python
@@ -13,18 +13,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-js.d3 python-module-fanstatic
-BuildPreReq: python-module-shutilwhich
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-js.d3 python-module-fanstatic
+#BuildPreReq: python-module-shutilwhich
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-js.d3 python3-module-fanstatic
-BuildPreReq: python3-module-shutilwhich
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-js.d3 python3-module-fanstatic
+#BuildPreReq: python3-module-shutilwhich
 %endif
 
 %py_provides %oname
 %py_requires js js.d3
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-fanstatic python-module-js python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-module-shutilwhich python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-fanstatic python3-module-js python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools python3-module-webob xz
+BuildRequires: python-module-js.d3 python-module-setuptools-tests python3-module-js.d3 python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 This library packages NVD3 for fanstatic.
@@ -94,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.15-alt1.beta.1
+- NMU: Use buildreq for BR.
+
 * Tue Nov 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.15-alt1.beta
 - Initial build for Sisyphus
 

@@ -2,7 +2,7 @@
 Summary: Python bindings for the libvirt library
 Name: python-module-libvirt
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 Url: http://libvirt.org
 #http://libvirt.org/git/?p=libvirt-python.git
 Source: %name-%version.tar
@@ -10,10 +10,14 @@ License: LGPLv2+
 Group: Development/Python
 
 Requires: libvirt-client
-BuildRequires: libvirt-devel >= 0.9.11
-BuildPreReq: rpm-build-python rpm-build-python3
-BuildRequires: python-devel python-module-distribute python-module-nose
-BuildRequires: python3-devel python3-module-distribute python3-module-nose
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libcap-ng libgpg-error libp11-kit libsasl2-3 libvirt-client pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-xml python3 python3-base
+BuildRequires: libvirt-devel python-devel python3-devel rpm-build-python3
+
+#BuildRequires: libvirt-devel >= 0.9.11
+#BuildPreReq: rpm-build-python rpm-build-python3
+#BuildRequires: python-devel python-module-distribute python-module-nose
+#BuildRequires: python3-devel python3-module-distribute python3-module-nose
 
 Obsoletes: libvirt-python < %version-%release
 Provides: libvirt-python = %version-%release
@@ -58,6 +62,9 @@ of recent versions of Linux (and other OSes).
 %doc  NEWS README COPYING COPYING.LESSER examples
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 

@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20150101
+Release: alt1.git20150101.1
 Summary: Test your translation files
 License: MIT
 Group: Development/Python
@@ -17,16 +17,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-polib
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-polib
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-polib
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-polib
 %endif
 
 %py_provides pytest_translations
 %py_requires polib
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-polib python-module-pytest python3-module-polib python3-module-pytest rpm-build-python3
 
 %description
 py.test plugin to test your translation files.
@@ -84,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1.git20150101.1
+- NMU: Use buildreq for BR.
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20150101
 - Initial build for Sisyphus
 

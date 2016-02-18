@@ -4,7 +4,7 @@
 
 Name: python-module-lcms
 Version: 1.19
-Release: alt1
+Release: alt1.1
 
 Summary: Python binding for little cms color engine
 
@@ -17,12 +17,13 @@ Source: %url/%oname-%version.tar.bz2
 Patch: %name.patch
 Patch1: lcms-1.19-alt-python3.patch
 
-# Automatically added by buildreq on Thu Feb 21 2008
-BuildRequires: gcc-c++ glibc-devel libjpeg-devel liblcms-devel libtiff-devel python-devel swig zlib-devel
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libstdc++-devel python-base python-modules python-modules-compiler python-modules-encodings python-modules-logging python3 python3-base swig-data
+BuildRequires: gcc-c++ libjpeg-devel liblcms-devel libtiff-devel python-devel python-tools-2to3 python3-devel rpm-build-python3 swig time zlib-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-devel python-tools-2to3
 %endif
 
 %description
@@ -109,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.19-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.19-alt1
 - Version 1.19
 - Added module for Python 3

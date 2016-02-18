@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt2
+Release: alt2.1
 
 Summary: Add test information to .egg-info
 License: ZPL
@@ -16,13 +16,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %setup_python_module %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
 
 %description
 This package is a setuptools plugin: it adds a file to the generated
@@ -74,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3-alt2.1
+- NMU: Use buildreq for BR.
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
 - Added module for Python 3
 

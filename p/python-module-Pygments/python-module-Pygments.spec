@@ -4,7 +4,7 @@
 
 Name: python-module-Pygments
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Pygments is a syntax highlighting package written in Python
 
@@ -20,14 +20,17 @@ BuildArch: noarch
 %setup_python_module %oname
 
 # manually removed: pybliographic python-module-Rabbyt python-module-pybliographer
-# Automatically added by buildreq on Sat Jan 05 2008
-BuildRequires: python-module-MySQLdb python-module-Pyrex python-module-lxml
-BuildPreReq: python-module-RuleDispatch python-module-setuptools
-BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-peak python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base xz
+BuildRequires: python-module-Pyrex python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python3-module-setuptools rpm-build-python3 time
+
+#BuildPreReq: python-module-RuleDispatch python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %description
@@ -202,6 +205,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/pygments/
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 2.0.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
 - Version 2.0.2
 

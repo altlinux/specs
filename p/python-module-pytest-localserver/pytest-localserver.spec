@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.3
-Release: alt2
+Release: alt2.1
 Summary: py.test plugin to test server connections locally
 License: MIT
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-werkzeug python-module-OpenSSL
-BuildPreReq: python-module-six python-module-requests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-werkzeug python-module-OpenSSL
+#BuildPreReq: python-module-six python-module-requests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-werkzeug python3-module-OpenSSL
-BuildPreReq: python3-module-six python3-module-requests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-werkzeug python3-module-OpenSSL
+#BuildPreReq: python3-module-six python3-module-requests
 %endif
 
 %py_provides pytest_localserver
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-pyasn1 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-chardet python-module-ndg-httpsclient python-module-ntlm python-module-pytest python3-module-chardet python3-module-pytest python3-module-urllib3 rpm-build-python3
 
 %description
 pytest-localserver is a plugin for the pytest testing framework which
@@ -84,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt2.1
+- NMU: Use buildreq for BR.
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt2
 - Fixed requirements
 

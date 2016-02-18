@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20141011
+Release: alt1.git20141011.1
 Summary: rrdtool bindings for Python
 License: LGPLv3
 Group: Development/Python
@@ -14,15 +14,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/commx/python-rrdtool.git
 Source: %name-%version.tar
 
-BuildPreReq: librrd-devel
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: librrd-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname rrdtool
 Conflicts: python-module-rrd python-module-rrdtool
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils fontconfig libwayland-client libwayland-server python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: librrd-devel python-devel python3-devel rpm-build-python3
 
 %description
 rrdtool binding for Python 2.6+ and 3.3+.
@@ -80,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1.git20141011.1
+- NMU: Use buildreq for BR.
+
 * Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141011
 - Initial build for Sisyphus
 

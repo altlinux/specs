@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt2.git20140831
+Release: alt2.git20140831.1
 Summary: Python bindings to augeas
 Group: Development/Python
 License: LGPLv2+
@@ -13,10 +13,14 @@ Source0: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools python-devel libaugeas-devel
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python3 python3-base
+BuildRequires: libaugeas python-devel python-modules-unittest rpm-build-python3
+
+#BuildRequires: python-module-setuptools python-devel libaugeas-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools python3-devel
+#BuildPreReq: python3-module-setuptools python3-devel
 %endif
 
 Requires: libaugeas
@@ -80,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt2.git20140831.1
+- NMU: Use buildreq for BR.
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2.git20140831
 - Added requirement on libaugeas (ALT #30455)
 

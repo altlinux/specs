@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.17.4
-Release: alt1.git20150722
+Release: alt1.git20150722.1
 Summary: Highly concurrent networking library
 License: MIT
 Group: Development/Python
@@ -16,21 +16,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-greenlet python-module-nose
-BuildPreReq: python-module-OpenSSL python-module-six
-BuildPreReq: python-module-mysqlclient
-BuildPreReq: python-modules-json
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-greenlet python-module-nose
+#BuildPreReq: python-module-OpenSSL python-module-six
+#BuildPreReq: python-module-mysqlclient
+#BuildPreReq: python-modules-json
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-greenlet python3-module-nose
-BuildPreReq: python3-module-OpenSSL python3-module-six
-BuildPreReq: python3-module-mysqlclient
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-greenlet python3-module-nose
+#BuildPreReq: python3-module-OpenSSL python3-module-six
+#BuildPreReq: python3-module-mysqlclient
 %endif
 %py_requires greenlet six json OpenSSL MySQLdb
 %add_python_req_skip stackless
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-pycparser python3-module-setuptools python3-module-six
+BuildRequires: python-module-OpenSSL python-module-alabaster python-module-docutils python-module-greenlet python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python3-module-OpenSSL python3-module-greenlet python3-module-nose python3-module-pytest rpm-build-python3 time
 
 %description
 Eventlet is a concurrent networking library for Python that allows you
@@ -156,6 +161,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.17.4-alt1.git20150722.1
+- NMU: Use buildreq for BR.
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17.4-alt1.git20150722
 - Version 0.17.4
 

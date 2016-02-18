@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1
+Release: alt1.1
 Summary: Betfair Next Generation asyncio API
 License: Free
 Group: Development/Python
@@ -16,14 +16,18 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base
+BuildRequires: rpm-build-python3
 
 %description
 Betfair Next Generation asyncio API.
@@ -78,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Jan 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus
 

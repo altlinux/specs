@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8
-Release: alt1.dev0.git20141115
+Release: alt1.dev0.git20141115.1
 Summary: A Bower-centric static file server for WSGI
 License: BSD
 Group: Development/Python
@@ -15,18 +15,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-webob python-module-pytest-cov
-BuildPreReq: python-module-webtest
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-webob python-module-pytest-cov
+#BuildPreReq: python-module-webtest
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-webob python3-module-pytest-cov
-BuildPreReq: python3-module-webtest
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-webob python3-module-pytest-cov
+#BuildPreReq: python3-module-webtest
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: libgpg-error python-base python-devel python-module-BeautifulSoup4 python-module-PyStemmer python-module-Pygments python-module-babel python-module-coverage python-module-cssselect python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-waitress python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base python3-module-BeautifulSoup4 python3-module-coverage python3-module-cssselect python3-module-genshi python3-module-html5lib python3-module-lxml python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools python3-module-six python3-module-waitress python3-module-webob xz
+BuildRequires: python-module-alabaster python-module-docutils python-module-objects.inv python-module-pytest-cov python-module-setuptools-tests python-module-webtest python3-module-pytest-cov python3-module-setuptools-tests python3-module-webtest rpm-build-python3 time
 
 %description
 BowerStatic is a WSGI-based framework that you can integrate with your
@@ -162,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.8-alt1.dev0.git20141115.1
+- NMU: Use buildreq for BR.
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.dev0.git20141115
 - Version 0.8.dev0
 

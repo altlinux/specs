@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1.git20150120
+Release: alt1.git20150120.1
 Summary: Scraping tool for asyncio
 License: MIT
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-aiohttp python-module-BeautifulSoup4
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-aiohttp python-module-BeautifulSoup4
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-aiohttp python3-module-BeautifulSoup4
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-aiohttp python3-module-BeautifulSoup4
 %endif
 
 %py_provides %oname
 %py_requires asyncio aiohttp bs4
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base
+BuildRequires: python3-module-zope rpm-build-python3
 
 %description
 aiocutter is scraping tool for asyncio.
@@ -83,6 +87,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.3-alt1.git20150120.1
+- NMU: Use buildreq for BR.
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20150120
 - Version 0.0.3
 

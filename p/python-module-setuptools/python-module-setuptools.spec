@@ -5,7 +5,7 @@
 Name: python-module-%modulename
 Epoch: 1
 Version: 18.1
-Release: alt1
+Release: alt2
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
@@ -148,6 +148,10 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Wed Feb 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:18.1-alt2
+- command/test.py: added hack to skip search for install_requires and
+  tests_require during rpmbuild.
+
 * Wed Aug 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:18.1-alt1
 - Version 18.1
 

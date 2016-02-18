@@ -8,7 +8,7 @@
 Summary: Python/Twisted client for Redis key-value store
 Name: %packagename
 Version: %version
-Release: %release
+Release: %release.1
 Source0: %origname-%version.tar
 License: BSD
 Group: Development/Python
@@ -16,12 +16,16 @@ BuildArch: noarch
 URL: http://ooici.net/packages/txredis/
 Packager: Sergey Alembekov <rt@altlinux.org>
 
-BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: %py_dependencies setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
 %description
 %summary
@@ -72,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.3-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1
 - Version 2.3
 - Added module for Python 3

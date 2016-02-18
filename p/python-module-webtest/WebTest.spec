@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.19
-Release: alt1.dev0.git20150724
+Release: alt1.dev0.git20150724.1
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python
@@ -16,14 +16,19 @@ Source: WebTest-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-BeautifulSoup4 python-module-webob
-BuildPreReq: python-module-waitress
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-Pygments
+#BuildPreReq: python-module-BeautifulSoup4 python-module-webob
+#BuildPreReq: python-module-waitress
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-sphinx python3-module-Pygments
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libgpg-error python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-BeautifulSoup4 python-module-alabaster python-module-docutils python-module-objects.inv python-module-waitress python-module-webob python3-module-html5lib python3-module-sphinx rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-sphinx python3-module-Pygments
 %endif
 
 %description
@@ -113,6 +118,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.19-alt1.dev0.git20150724.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.19-alt1.dev0.git20150724
 - New snapshot
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt1.git20150122
+Release: alt1.git20150122.1
 Summary: pyScss, a Scss compiler for Python
 License: MIT
 Group: Development/Python
@@ -14,23 +14,28 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/Kronuz/pyScss.git
 Source: %name-%version.tar
 
-BuildPreReq: libpcre-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six python-module-enum34
-BuildPreReq: python-module-pathlib python-module-Pillow
-BuildPreReq: python-module-pytest-cov
-BuildPreReq: python-module-sphinx-devel python-modules-logging
+#BuildPreReq: libpcre-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-six python-module-enum34
+#BuildPreReq: python-module-pathlib python-module-Pillow
+#BuildPreReq: python-module-pytest-cov
+#BuildPreReq: python-module-sphinx-devel python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-six python3-module-enum34
-BuildPreReq: python3-module-pathlib python3-module-Pillow
-BuildPreReq: python3-module-pytest-cov
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-six python3-module-enum34
+#BuildPreReq: python3-module-pathlib python3-module-Pillow
+#BuildPreReq: python3-module-pytest-cov
 %endif
 
 %py_provides %oname scss
 Requires: python-module-enum34
 %py_requires six pathlib logging PIL
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-coverage python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-coverage python3-module-pluggy python3-module-py python3-module-pycparser python3-module-pytest python3-module-setuptools xz
+BuildRequires: libpcre-devel python-module-Pillow python-module-alabaster python-module-docutils python-module-enum34 python-module-html5lib python-module-objects.inv python-module-pathlib python-module-pytest-cov python-module-setuptools-tests python3-devel python3-module-Pillow python3-module-enum34 python3-module-pathlib python3-module-pytest-cov python3-module-setuptools-tests python3-module-six rpm-build-python3 time
 
 %description
 pyScss is a compiler for the Sass language, a superset of CSS3 that adds
@@ -147,6 +152,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3.4-alt1.git20150122.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.git20150122
 - Initial build for Sisyphus
 

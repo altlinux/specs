@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0
-Release: alt1.a7.git20150730
+Release: alt1.a7.git20150730.1
 Summary: A tool for measuring code coverage of Python programs
 License: BSD
 Group: Development/Python
@@ -15,10 +15,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-sphinx python-module-Pygments
-BuildPreReq: python-module-enchant libenchant
-BuildPreReq: python-module-sphinxcontrib-napoleon
-BuildPreReq: python-module-sphinxcontrib-spelling
+#BuildPreReq: python-devel python-module-sphinx python-module-Pygments
+#BuildPreReq: python-module-enchant libenchant
+#BuildPreReq: python-module-sphinxcontrib-napoleon
+#BuildPreReq: python-module-sphinxcontrib-spelling
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: bzr elfutils python-base python-devel python-module-Paver python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-docutils python-module-enchant python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-pbr python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base
+BuildRequires: libenchant python-module-alabaster python-module-html5lib python-module-sphinxcontrib-napoleon python-module-sphinxcontrib-spelling python3-devel python3-module-setuptools rpm-build-python3 time
 
 %description
 Coverage.py is a tool for measuring code coverage of Python programs. It
@@ -60,7 +64,7 @@ This package contains pickles for Coverage.py.
 Summary: A tool for measuring code coverage of Python3 programs
 Group: Development/Python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 
 %description -n python3-module-%oname
 Coverage.py is a tool for measuring code coverage of Python programs. It
@@ -134,6 +138,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.0-alt1.a7.git20150730.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0-alt1.a7.git20150730
 - Version 4.0a7
 

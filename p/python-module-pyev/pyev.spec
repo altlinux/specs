@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 Summary: Python libev interface
 License: GPLv3
 Group: Development/Python
@@ -13,11 +13,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools libev-devel
+#BuildPreReq: python-module-setuptools libev-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-ctypes python-modules-email python3 python3-base
+BuildRequires: libev-devel python-devel python3-devel rpm-build-python3
 
 %description
 Python libev interface.
@@ -78,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.17
-Release: alt1
+Release: alt1.1
 Summary: General MultiPrecision arithmetic for Python
 License: LGPL
 Group: Development/Python
@@ -14,10 +14,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel libgmp-devel
+#BuildPreReq: python-devel libgmp-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python3 python3-base
+BuildRequires: libgmp-devel python-devel python-modules-unittest python3-devel rpm-build-python3
+
+#BuildRequires: python3-devel
 %endif
 
 %description
@@ -91,6 +95,9 @@ rm -f test/*.pyc
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.17-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Sep 17 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.17-alt1
 - Version 1.17
 

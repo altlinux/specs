@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20150322
+Release: alt1.git20150322.1
 Summary: Geo coordinates, reverse geo coding and getting city names out of coordinates
 License: MIT
 Group: Development/Python
@@ -15,19 +15,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-module-coverage
-BuildPreReq: python-module-msgpack
-BuildPreReq: python-modules-logging
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose python-module-coverage
+#BuildPreReq: python-module-msgpack
+#BuildPreReq: python-modules-logging
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-coverage
-BuildPreReq: python3-module-msgpack
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose python3-module-coverage
+#BuildPreReq: python3-module-msgpack
 %endif
 
 %py_provides %oname
 %py_requires logging msgpack
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-pytest python3-module-setuptools xz
+BuildRequires: python-module-coverage python-module-nose python-module-setuptools-tests python3-module-coverage python3-module-nose python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Functions to work with Geo coordinates, reverse geo coding and getting
@@ -102,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.git20150322.1
+- NMU: Use buildreq for BR.
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20150322
 - Initial build for Sisyphus
 

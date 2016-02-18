@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt2.a0.git20150813
+Release: alt2.a0.git20150813.1
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -24,23 +24,28 @@ Source4: refcounting.py
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python python-module-objects.inv
-BuildRequires: python-devel python-module-setuptools python-module-simplejson
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python3-module-html5lib python3-module-nose python3-module-objects.inv python3-module-sphinx rpm-build-python3 time
+
+#BuildRequires: python-devel python-module-setuptools python-module-simplejson
 # for docs
 #BuildRequires: texlive-latex-extra 
-BuildRequires: python-module-Pygments
-BuildRequires: python-module-docutils python-module-jinja2 texlive-latex-base
+#BuildRequires: python-module-Pygments
+#BuildRequires: python-module-docutils python-module-jinja2 texlive-latex-base
 # for tests
-BuildRequires:  python-module-nose python-modules-json
-BuildRequires: python-module-snowballstemmer python-module-babel
-BuildRequires: python-module-alabaster python-module-sphinx_rtd_theme
+#BuildRequires:  python-module-nose python-modules-json
+#BuildRequires: python-module-snowballstemmer python-module-babel
+#BuildRequires: python-module-alabaster python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3 python3-module-objects.inv
-BuildRequires: python3-devel python3-module-distribute
-BuildRequires: python3-module-Pygments python3-module-docutils
-BuildRequires: python3-module-jinja2 python3-module-nose
-BuildRequires: python-tools-2to3 python3-module-jinja2-tests
-BuildRequires: python3-module-snowballstemmer python3-module-babel
-BuildRequires: python3-module-alabaster python3-module-sphinx_rtd_theme
+#BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-module-Pygments python3-module-docutils
+#BuildRequires: python3-module-jinja2 python3-module-nose
+#BuildRequires: python-tools-2to3 python3-module-jinja2-tests
+#BuildRequires: python3-module-snowballstemmer python3-module-babel
+#BuildRequires: python3-module-alabaster python3-module-sphinx_rtd_theme
 %endif
 
 %py_requires simplejson
@@ -377,6 +382,9 @@ install -p -m644 conf.py.template \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:1.4-alt2.a0.git20150813.1
+- NMU: Use buildreq for BR.
+
 * Wed Jan 13 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt2.a0.git20150813
 - spec cleanup: *PreReq -> Requires, dropped rpm-macros-* deps.
 

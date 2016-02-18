@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.1
-Release: alt1
+Release: alt1.1
 Summary: Zope Internationalization Support
 License: ZPLv2.1
 Group: Development/Python
@@ -13,11 +13,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-zope python-module-setuptools
+#BuildPreReq: python-devel python-module-zope python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-zope python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-zope.interface
+BuildRequires: python-module-setuptools python3-module-setuptools python3-module-zope rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-zope python-tools-2to3
 %endif
 
 %py_requires zope pytz zope.schema zope.i18nmessageid zope.component
@@ -137,6 +141,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.0.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1
 - Version 4.0.1
 

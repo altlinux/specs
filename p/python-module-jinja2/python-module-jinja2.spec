@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.9
-Release: alt1.dev.git20150726
+Release: alt1.dev.git20150726.1
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -20,14 +20,18 @@ Source0: %name-%version.tar
 
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 # for docs
-BuildPreReq: python-module-sphinx python-module-Pygments
-BuildPreReq: python-module-jinja2-tests python-module-markupsafe
+#BuildPreReq: python-module-sphinx python-module-Pygments
+#BuildPreReq: python-module-jinja2-tests python-module-markupsafe
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-pytest python3-module-pytest rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 Requires: %name-tests = %version-%release
@@ -167,6 +171,9 @@ make test
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.9-alt1.dev.git20150726.1
+- NMU: Use buildreq for BR.
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt1.dev.git20150726
 - Version 2.9.dev
 

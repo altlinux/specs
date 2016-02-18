@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.2
-Release: alt2.git20130426
+Release: alt2.git20130426.1
 Summary: Python indexing and searching framework, useful outside Zope ecosystem
 License: BSD
 Group: Development/Python
@@ -14,19 +14,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/repoze/repoze.catalog.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-zope.component
-BuildPreReq: python-module-zope.interface python-module-ZODB3
-BuildPreReq: python-module-zope.event python-module-zdaemon
-BuildPreReq: python-module-zconfig python-module-zc.lockfile
-BuildPreReq: python-module-transaction python-module-nose
+#BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-zope.component
+#BuildPreReq: python-module-zope.interface python-module-ZODB3
+#BuildPreReq: python-module-zope.event python-module-zdaemon
+#BuildPreReq: python-module-zconfig python-module-zc.lockfile
+#BuildPreReq: python-module-transaction python-module-nose
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires repoze zope.component zope.index
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-BTrees python-module-PyStemmer python-module-Pygments python-module-ZODB python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-persistent python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-module-transaction python-module-zc.lockfile python-module-zdaemon python-module-zope.event python-module-zope.hookable python-module-zope.interface python-module-zope.proxy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-ZEO python-module-docutils python-module-html5lib python-module-nose python-module-zope.component python3-module-setuptools rpm-build-python3 time
 
 %description
 A Python indexing and searching system based on `zope.index`.
@@ -162,6 +166,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt2.git20130426.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt2.git20130426
 - Added module for Python 3
 

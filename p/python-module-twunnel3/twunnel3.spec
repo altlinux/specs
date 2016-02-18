@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt1.git20140701
+Release: alt1.git20140701.1
 Summary: A HTTPS/SOCKS4/SOCKS5 tunnel for AsyncIO
 License: MIT
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python3-module-setuptools-tests rpm-build-python3
 
 %description
 A HTTPS/SOCKS4/SOCKS5 tunnel for AsyncIO.
@@ -103,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1.git20140701.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20140701
 - Initial build for Sisyphus
 

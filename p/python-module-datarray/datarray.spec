@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.7
-Release: alt1.git20111119
+Release: alt1.git20111119.1
 Summary: NumPy arrays with named axes and named indices
 License: BSD
 Group: Development/Python
@@ -16,19 +16,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-numpy python-module-matplotlib
-BuildPreReq: python-module-networkx python-module-nose
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-numpy python-module-matplotlib
+#BuildPreReq: python-module-networkx python-module-nose
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy python3-module-matplotlib
-BuildPreReq: python3-module-networkx python-module-nose
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-numpy python3-module-matplotlib
+#BuildPreReq: python3-module-networkx python-module-nose
 %endif
 
 %py_provides %oname
 %py_requires numpy matplotlib
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mpmath python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-numpy
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-matplotlib python-module-nose python-module-numpy-testing python-module-objects.inv python-module-pydot python-module-pygraphviz python-module-scipy python-module-yaml python3-module-numpy-testing rpm-build-python3 time
 
 %description
 Scientists, engineers, mathematicians and statisticians don't just work
@@ -176,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.7-alt1.git20111119.1
+- NMU: Use buildreq for BR.
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.7-alt1.git20111119
 - Initial build for Sisyphus
 

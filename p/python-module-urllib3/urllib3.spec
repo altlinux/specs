@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 20150503
-Release: alt1
+Release: alt1.1
 
 Epoch: 1
 
@@ -22,12 +22,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildRequires:  python-module-six python-module-backports.ssl_match_hostname
-BuildRequires: python-module-ndg-httpsclient
-BuildPreReq: python-module-sphinx-devel
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg python-module-pyasn1 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-ndg-httpsclient python-module-objects.inv rpm-build-python3 time
+
+#BuildRequires:  python-module-six python-module-backports.ssl_match_hostname
+#BuildRequires: python-module-ndg-httpsclient
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+#BuildPreReq: python3-devel
 %endif
 
 %setup_python_module %oname
@@ -158,6 +163,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:20150503-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Sep 18 2015 Lenar Shakirov <snejok@altlinux.ru> 1:20150503-alt1
 - Build old snapshot - 20150503 (1.10.4)
   * Problem between python-requests and urllib3

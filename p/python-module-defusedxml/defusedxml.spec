@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.hg20130328
+Release: alt1.hg20130328.1
 Summary: XML bomb protection for Python stdlib modules
 License: Python
 Group: Development/Python
@@ -15,11 +15,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 defusedxml -- defusing XML bombs and other exploits.
@@ -67,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1.hg20130328.1
+- NMU: Use buildreq for BR.
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.hg20130328
 - Initial build for Sisyphus
 

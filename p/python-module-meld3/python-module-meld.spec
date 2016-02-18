@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.6.5
-Release: alt1.2
+Release: alt1.2.1
 
 Summary: Elementree based templating system
 License: ZPL
@@ -13,11 +13,15 @@ Url: http://www.plope.com/software/meld3/
 Packager: Maxim Ivanov <redbaron at altlinux.org>
 BuildArch: noarch
 
-BuildRequires: python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
+
+#BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildRequires: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 Requires: python-module-elementtree
 Source: %modulename-%version.tar
@@ -82,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.5-alt1.2.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.5-alt1.2
 - Added module for Python 3
 

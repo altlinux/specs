@@ -7,7 +7,7 @@ Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
 Version: 2.1.0
-Release: alt1.dev.git20141209
+Release: alt1.dev.git20141209.1
 License: MIT
 Group: Development/Python
 
@@ -20,14 +20,19 @@ Source2: nitest-minc2.tar
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: libnumpy-devel liblapack-devel python-module-nose
-BuildRequires: python-devel swig libniftilib-devel zlib-devel
-BuildRequires: gcc-c++ python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-pydicom python-modules-sqlite3
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: fontconfig python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-docutils python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-tkinter python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-numpy
+BuildRequires: python-module-alabaster python-module-html5lib python-module-nose python-module-numpy-testing python-module-numpydoc python-module-objects.inv python-module-pydicom python-module-sphinx-pickles python-modules-sqlite3 python3-module-numpy-testing rpm-build-python3 time
+
+#BuildRequires: libnumpy-devel liblapack-devel python-module-nose
+#BuildRequires: python-devel swig libniftilib-devel zlib-devel
+#BuildRequires: gcc-c++ python-module-sphinx-devel python-module-Pygments
+#BuildPreReq: python-module-pydicom python-modules-sqlite3
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel python3-modules-sqlite3
+#BuildPreReq: python3-devel libnumpy-py3-devel python3-modules-sqlite3
 %endif
 
 %description
@@ -215,6 +220,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt1.dev.git20141209.1
+- NMU: Use buildreq for BR.
+
 * Wed Dec 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.dev.git20141209
 - Version 2.1.0.dev
 

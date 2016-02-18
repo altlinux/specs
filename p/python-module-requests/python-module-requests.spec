@@ -3,7 +3,7 @@
 
 Name:           python-module-requests
 Version:        2.7.0
-Release:        alt1.git20150719
+Release:        alt1.git20150719.1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
@@ -22,9 +22,13 @@ Patch1:         python-requests-system-chardet-not-charade.patch
 Patch2:         python-requests-system-urllib3.patch
 
 BuildArch:      noarch
-BuildRequires:  python-devel python-modules-json
-BuildRequires:  python-module-chardet
-BuildRequires:  python-module-urllib3 >= 1.8.2
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-pyasn1 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-chardet python-module-ndg-httpsclient python-module-ntlm python3-module-chardet python3-module-urllib3 rpm-build-python3
+
+#BuildRequires:  python-devel python-modules-json
+#BuildRequires:  python-module-chardet
+#BuildRequires:  python-module-urllib3 >= 1.8.2
 
 Requires:       ca-certificates
 Requires:       python-module-chardet
@@ -42,9 +46,9 @@ designed to make HTTP requests easy for developers.
 Summary: HTTP library, written in Python, for human beings
 Group:   Development/Python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel python3-base
-BuildRequires:  python3-module-chardet
-BuildRequires:  python3-module-urllib3 >= 1.8.2
+#BuildRequires:  python3-devel python3-base
+#BuildRequires:  python3-module-chardet
+#BuildRequires:  python3-module-urllib3 >= 1.8.2
 Requires:       ca-certificates
 Requires:       python3-module-chardet
 Requires:       python3-module-urllib3 >= 1.8.2
@@ -122,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.7.0-alt1.git20150719.1
+- NMU: Use buildreq for BR.
+
 * Fri Jul 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.git20150719
 - Version 2.7.0
 

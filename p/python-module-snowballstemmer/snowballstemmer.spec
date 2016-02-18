@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 Summary: 16 stemmer algorithms (15 + Poerter English stemmer) generated from Snowball algorithms
 License: BSD
 Group: Development/Python
@@ -16,11 +16,15 @@ BuildArch: noarch
 
 Requires: python-module-PyStemmer
 
-BuildPreReq: python-devel
+#BuildPreReq: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-devel python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 This package provides 16 stemmer algorithms (15 + Poerter English
@@ -106,6 +110,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1
 - Version 1.2.0
 

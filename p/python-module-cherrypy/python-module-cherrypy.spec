@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 3.5.1
-Release: alt1.hg20140627
+Release: alt1.hg20140627.1
 
 %setup_python_module %modulename
 
@@ -20,13 +20,18 @@ Source: http://download.cherrypy.org/cherrypy/%version/%name-%version.tar
 
 Conflicts: python-module-cherrypy2 >= 2.3.0-alt1
 
-BuildPreReq: %py_dependencies setuptools
-BuildPreReq: python-module-sphinx-devel python-module-nose
-BuildPreReq: python-module-coverage
+#BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-nose
+#BuildPreReq: python-module-coverage
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %add_python_req_skip win32api
@@ -178,6 +183,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%modulename/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.5.1-alt1.hg20140627.1
+- NMU: Use buildreq for BR.
+
 * Sun Jul 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt1.hg20140627
 - Version 3.5.1
 

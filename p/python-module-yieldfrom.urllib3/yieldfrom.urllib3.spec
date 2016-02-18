@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt2.git20141229
+Release: alt2.git20141229.1
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python
@@ -17,23 +17,27 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-nose
-BuildPreReq: python-module-yieldfrom.http.client
-BuildPreReq: python-module-tornado
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-nose
+#BuildPreReq: python-module-yieldfrom.http.client
+#BuildPreReq: python-module-tornado
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-nose
-BuildPreReq: python3-module-yieldfrom.http.client
-BuildPreReq: python3-module-tornado
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-nose
+#BuildPreReq: python3-module-yieldfrom.http.client
+#BuildPreReq: python3-module-tornado
 %endif
 
 %py_provides %oname
 Requires: python-module-%mname = %EVR
 %py_requires asyncio
 %py_requires yieldfrom.http.client
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zope.interface
+BuildRequires: python3-module-nose python3-module-pycares python3-module-setuptools-tests python3-module-yieldfrom.http.client python3-module-zope rpm-build-python3
 
 %description
 Yieldfrom is a project to port various useful Python 3 libraries, both
@@ -158,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt2.git20141229.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.git20141229
 - Added necessary requirements
 - Enabled testing

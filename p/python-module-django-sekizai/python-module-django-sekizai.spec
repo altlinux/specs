@@ -7,7 +7,7 @@
 
 Name: python-module-django-%modulename
 Version: 0.7
-Release: alt4.git20140813
+Release: alt4.git20140813.1
 
 %setup_python_module %modulename
 
@@ -27,22 +27,27 @@ Source: %name-%version.tar
 #Requires: python-module-django-classy-tags >= 0.3.1
 
 
-BuildPreReq: rpm-build-licenses
+#BuildPreReq: rpm-build-licenses
 #BuildPreReq: Django >= 1.2.7
 #BuildPreReq: python-module-django-tests
 #BuildPreReq: python-module-django-dbbackend-sqlite3 >= 1.2.7
 #BuildPreReq: python-module-django-classy-tags >= 0.3.1
 #BuildPreReq: python-module-setupdocs
 #BuildPreReq: python-module-sphinx
-BuildPreReq: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python-module-setupdocs
+#BuildPreReq: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python-module-setupdocs
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-module-django-tests python3-devel
 #BuildPreReq: python3-module-django-dbbackend-sqlite3
 #BuildPreReq: python3-module-django-classy-tags
 #BuildPreReq: python3-module-setupdocs
-BuildPreReq: python3-module-django python3-module-setupdocs
+#BuildPreReq: python3-module-django python3-module-setupdocs
 %endif
+
+BuildRequires(pre): rpm-build-licenses
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-psycopg2 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-psycopg2 python3-module-setuptools python3-module-yaml
+BuildRequires: python-module-alabaster python-module-django python-module-docutils python-module-html5lib python-module-setupdocs python3-module-django python3-module-setupdocs rpm-build-python3 time
 
 %description
 Sekizai means "blocks" in Japanese, and that's what this app provides.
@@ -119,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt4.git20140813.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.7-alt4.git20140813
 - Rebuild with "def_disable check"
 - Clean buildreq

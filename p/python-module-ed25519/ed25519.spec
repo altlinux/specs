@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.git20140928
+Release: alt1.git20140928.1
 Summary: Python bindings to the Ed25519 public-key signature system
 License: MIT
 Group: Development/Python
@@ -14,13 +14,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/warner/python-ed25519.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests git
+#BuildPreReq: python-devel python-module-setuptools-tests git
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: git-core python-devel python-modules-unittest python3-devel rpm-build-python3
 
 %description
 This offers a comfortable python interface to a C implementation of the
@@ -149,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3-alt1.git20140928.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.git20140928
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.7
-Release: alt1.git20120412
+Release: alt1.git20120412.1
 Summary: Simple library that allows to use Redis as a message queue.
 Group: Development/Python
 License: MIT
@@ -14,11 +14,16 @@ Source: %name-%version-%release.tar
 Patch: hotqueye-alt-docs.patch
 Patch1: hotqueye-alt-setuptools.patch
 BuildArch:      noarch
-BuildRequires:  python-devel python-module-setuptools
-BuildPreReq: python-module-sphinx-devel python-module-redis-py
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-redis-py python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires:  python-devel python-module-setuptools
+#BuildPreReq: python-module-sphinx-devel python-module-redis-py
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -77,6 +82,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1.git20120412.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.7-alt1.git20120412
 - Version 0.2.7
 - Added module for Python 3

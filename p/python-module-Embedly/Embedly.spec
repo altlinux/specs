@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt1.git20141215
+Release: alt1.git20141215.1
 Summary: Python Library for Embedly
 License: BSD
 Group: Development/Python
@@ -16,17 +16,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-httplib2 python-module-mock
-BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-httplib2 python-module-mock
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-httplib2 python3-module-mock
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-httplib2 python3-module-mock
 %endif
 
 %py_provides embedly
 %py_requires httplib2 json
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-httplib2 python-module-pbr python-module-pytest python-module-unittest2 python3-module-html5lib python3-module-httplib2 python3-module-pbr python3-module-pytest python3-module-unittest2 rpm-build-python3
 
 %description
 Python library for interacting with Embedly's API. To get started sign
@@ -118,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1.git20141215.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20141215
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt2.git20150423
+Release: alt2.git20150423.1
 Summary: Specification-style output for nose
 License: MIT
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python-module-django python-module-nose python-module-pytest
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-six
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: python-base python-devel python-module-psycopg2 python-module-pytest python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-psycopg2 python3-module-pytest python3-module-setuptools python3-module-yaml
+BuildRequires: python-module-django python-module-nose python-module-setuptools-tests python3-module-django python3-module-nose python3-module-setuptools-tests rpm-build-python3
+
+#BuildRequires: python-module-django python-module-nose python-module-pytest
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-six
 #BuildPreReq: python-module-invoke python-module-invocations
 #BuildPreReq: python-module-semantic_version
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildRequires: python3-module-django python3-module-nose python3-module-pytest
-BuildPreReq: python3-module-six
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildRequires: python3-module-django python3-module-nose python3-module-pytest
+#BuildPreReq: python3-module-six
 #BuildPreReq: python3-module-invoke python3-module-invocations
 #BuildPreReq: python3-module-semantic_version
 %endif
@@ -96,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt2.git20150423.1
+- NMU: Use buildreq for BR.
+
 * Fri Jan 29 2016 Sergey Alembekov <rt@altlinux.ru> 1.2.2-alt2.git20150423
 - Rebuild with fixed build requires
 

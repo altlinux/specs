@@ -4,7 +4,7 @@
 
 Name:		python-module-%modname
 Version:	0.10.0
-Release:	alt1
+Release:	alt1.1
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
 Group:		Development/Python
@@ -14,19 +14,23 @@ Source0:	%name-%version.tar
 
 BuildArch:	noarch
 
-BuildRequires:    python-devel
-BuildRequires:    python-module-setuptools
-BuildRequires:    python-module-pbr
-BuildRequires:    python-module-yaml
-BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: pyflakes python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-flake8 python-module-genshi python-module-jinja2 python-module-mccabe python-module-pbr python-module-pyasn1 python-module-pytz python-module-setuptools python-module-simplejson python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python-tools-pep8 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-chardet python-module-docutils python-module-hacking python-module-html5lib python-module-ndg-httpsclient python-module-ntlm python-module-yaml python3-module-html5lib python3-module-pbr python3-module-yaml rpm-build-python3 time
+
+#BuildRequires:    python-devel
+#BuildRequires:    python-module-setuptools
+#BuildRequires:    python-module-pbr
+#BuildRequires:    python-module-yaml
+#BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:    python-tools-2to3
-BuildRequires:    python3-devel
-BuildRequires:    python3-module-setuptools
-BuildRequires:    python3-module-pbr
-BuildRequires:    python3-module-yaml
+#BuildRequires:    python-tools-2to3
+#BuildRequires:    python3-devel
+#BuildRequires:    python3-module-setuptools
+#BuildRequires:    python3-module-pbr
+#BuildRequires:    python3-module-yaml
 %endif
 
 %description
@@ -109,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.10.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
 - 0.10.0
 - cleanup spec

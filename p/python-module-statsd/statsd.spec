@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0.1
-Release: alt1.git20141105
+Release: alt1.git20141105.1
 Summary: A simple statsd client
 License: MIT
 Group: Development/Python
@@ -16,18 +16,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-nose python-module-mock
-BuildPreReq: python-module-flake8
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-nose python-module-mock
+#BuildPreReq: python-module-flake8
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose python3-module-mock
-BuildPreReq: python3-module-flake8
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose python3-module-mock
+#BuildPreReq: python3-module-flake8
 %endif
 
 %py_provides %oname
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: pyflakes python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mccabe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-pep8 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mccabe python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-pytest python3-module-setuptools python3-pyflakes python3-tools-pep8
+BuildRequires: python-module-alabaster python-module-docutils python-module-flake8 python-module-html5lib python-module-nose python-module-objects.inv python-module-pbr python-module-pytest python-module-unittest2 python3-module-flake8 python3-module-html5lib python3-module-nose python3-module-pbr python3-module-unittest2 rpm-build-python3 time
 
 %description
 statsd is a friendly front-end to Graphite. This is a Python client for
@@ -142,6 +147,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.0.1-alt1.git20141105.1
+- NMU: Use buildreq for BR.
+
 * Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.git20141105
 - Initial build for Sisyphus
 

@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.14.1
-Release: alt1.git20150808
+Release: alt1.git20150808.1
 Summary: PEP 3156 implementation of the redis protocol
 License: BSD
 Group: Development/Python
@@ -18,17 +18,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-hiredis python-module-asyncio-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-hiredis python-module-asyncio-tests
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-hiredis python3-module-asyncio-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-hiredis python3-module-asyncio-tests
 %endif
 
 %py_provides %oname
 %py_requires asyncio hiredis
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-setuptools
+BuildRequires: python3-module-pytest rpm-build-python3
 
 %description
 Redis client for the PEP 3156 Python event loop.
@@ -102,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.14.1-alt1.git20150808.1
+- NMU: Use buildreq for BR.
+
 * Sat Aug 08 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14.1-alt1.git20150808
 - Version 0.14.1
 

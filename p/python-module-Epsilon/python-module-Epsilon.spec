@@ -6,7 +6,7 @@
 
 Name: %packagename
 Version:%version
-Release: %release
+Release: %release.1
 BuildArch: noarch
 
 Summary: A set of utility modules used by Divmod projects
@@ -18,16 +18,20 @@ Url: http://divmod.org/trac/wiki/DivmodEpsilon
 Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%modulename-%version.tar.gz
 Patch: Epsilon-0.7.0-alt-python3.patch
 
-BuildPreReq: rpm-build-python
-BuildRequires: python-devel python-module-setuptools
-BuildPreReq: python-module-twisted python-module-OpenSSL
-BuildPreReq: python-modules-email
-BuildPreReq: python-module-zope.interface
+#BuildPreReq: rpm-build-python
+# Automatically added by buildreq on Mon Feb 01 2016 (-bi)
+# optimized out: python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-setuptools python3-module-zope.interface
+BuildRequires: python-module-pycrypto python-module-setuptools python-module-wx python3-module-cryptography python3-module-zope rpm-build-python3 time
+
+#BuildRequires: python-devel python-module-setuptools
+#BuildPreReq: python-module-twisted python-module-OpenSSL
+#BuildPreReq: python-modules-email
+#BuildPreReq: python-module-zope.interface
 %if_with python3
-BuildPreReq: rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-OpenSSL
-BuildPreReq: python3-module-zope.interface python-tools-2to3
+#BuildPreReq: rpm-build-python3
+#BuildRequires: python3-devel python3-module-setuptools
+#BuildPreReq: python3-module-OpenSSL
+#BuildPreReq: python3-module-zope.interface python-tools-2to3
 %endif
 
 %description
@@ -111,6 +115,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1
 - Version 0.7.0
 - Added module for Python 3

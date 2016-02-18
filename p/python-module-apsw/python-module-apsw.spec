@@ -4,7 +4,7 @@
 
 Name: python-module-%_name
 Version: 3.8.3.1
-Release: alt1.%rel
+Release: alt1.%rel.1
 
 Summary: Another Python SQLite Wrapper
 License: zlib/libpng License
@@ -12,12 +12,16 @@ Group: Development/Python
 Url: http://rogerbinns.github.io/apsw
 Source: https://github.com/rogerbinns/apsw/releases/download/%version-%rel/%_name-%version-%rel.zip
 
-BuildPreReq: unzip rpm-build-python
-BuildRequires: libsqlite3-devel
-BuildRequires: python-devel python-module-setuptools
+#BuildPreReq: unzip rpm-build-python
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: libsqlite3-devel python-devel python3-devel rpm-build-python3 unzip
+
+#BuildRequires: libsqlite3-devel
+#BuildRequires: python-devel python-module-setuptools
 %if_with python3
-BuildPreReq: rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: rpm-build-python3
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -74,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.8.3.1-alt1.r1.1
+- NMU: Use buildreq for BR.
+
 * Wed Jul 09 2014 Alexey Shabalin <shaba@altlinux.ru> 3.8.3.1-alt1.r1
 - 3.8.3.1
 - add python3 package

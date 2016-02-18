@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: Back-to-front web development in Python
 
@@ -14,7 +14,7 @@ Url: http://www.turbogears.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-BuildPreReq: python-module-distribute
+#BuildPreReq: python-module-distribute
 BuildArch: noarch
 
 %py_requires setuptools
@@ -22,8 +22,12 @@ BuildArch: noarch
 %setup_python_module tg
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 Source: http://www.turbogears.org/2.2/downloads/%version/%oname-%version.tar
@@ -146,6 +150,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 2.3.3-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt1
 - Version 2.3.3
 - Added module for Python 3

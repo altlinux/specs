@@ -4,7 +4,7 @@
 
 Name: python-module-ping
 Version: 0.2
-Release: alt2
+Release: alt2.1
 Group: Development/Python
 License: GPLv2
 Summary: implementation of the standard ICMP ping in pure Python
@@ -13,12 +13,16 @@ Source: http://bitbucket.org/delroth/python-ping/downloads/python-%module_name-%
 
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
 
 %description
 This library is a fork of George Notaras' python-ping library, which is
@@ -69,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt2.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt2
 - Added module for Python 3
 

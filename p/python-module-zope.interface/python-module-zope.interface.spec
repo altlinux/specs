@@ -12,29 +12,34 @@ Name: python-module-%oname
 Version: %version
 Url: http://www.python.org/pypi/zope.interface
 %ifdef subver
-Release: %release.%subver
+Release: %release.%subver.1
 %else
-Release: %release
+Release: %release.1
 %endif
 # git://github.com/zopefoundation/zope.interface.git
 Source0: %name-%version.tar
 License: ZPL
 Group: Development/Python
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-zope.fixers-tests
-BuildPreReq: python-module-zope.event-tests
-BuildPreReq: python-module-nose
-BuildPreReq: python-module-coverage
-BuildPreReq: python-module-sphinx-devel
-BuildPreReq: python-module-repoze.sphinx.autointerface
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-zope.fixers-tests
+#BuildPreReq: python-module-zope.event-tests
+#BuildPreReq: python-module-nose
+#BuildPreReq: python-module-coverage
+#BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-module-repoze.sphinx.autointerface
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.fixers-tests
-BuildPreReq: python3-module-zope.event-tests
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-coverage
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Fri Jan 29 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-module-repoze.sphinx.autointerface python-module-zope.event python-module-zope.fixers python3-devel python3-module-coverage python3-module-nose python3-module-pytest python3-module-zope.event python3-module-zope.fixers rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zope.fixers-tests
+#BuildPreReq: python3-module-zope.event-tests
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-module-coverage
 %endif
 
 %description
@@ -171,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.1.3-alt1.dev0.git20150601.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1.dev0.git20150601
 - New snapshot
 

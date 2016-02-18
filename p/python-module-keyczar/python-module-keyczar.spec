@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.715
-Release: alt1
+Release: alt1.1
 
 Summary: Toolkit for safe and simple cryptography
 
@@ -15,18 +15,22 @@ Url: http://www.keyczar.org/
 Source: python-%module_name-%version.tar
 
 BuildArch: noarch
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pycrypto python-module-pyasn1
-BuildPreReq: python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pycrypto python-module-pyasn1
+#BuildPreReq: python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pycrypto python3-module-pyasn1
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pycrypto python3-module-pyasn1
+#BuildPreReq: python-tools-2to3
 %endif
 
 %setup_python_module %module_name
 %py_requires Crypto pyasn1 json
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-pyasn1 python-module-pycrypto python-module-setuptools-tests python-modules-json python3-module-pycrypto python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 Keyczar is an open source cryptographic toolkit designed to make it
@@ -107,6 +111,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.715-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.715-alt1
 - Version 0.715
 - Added module for Python 3

@@ -6,7 +6,7 @@
 
 Name:    python-module-%oname
 Version: 2.1.1
-Release: alt1
+Release: alt1.1
 Epoch:   1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -21,16 +21,21 @@ Source1: CLDR.tar
 Patch1:	fix-import_cldr.patch
 
 BuildArch: noarch
-BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
-BuildPreReq: python-module-pytest-cov
+#BuildPreReq: python-module-setuptools-tests python-module-sphinx-devel
+#BuildPreReq: python-module-pytest-cov
 %{?!_without_check:%{?!_disable_check:BuildRequires: %py_dependencies setuptools.command.test pytz}}
 
 %setup_python_module babel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pytest-cov
-BuildPreReq: python3-module-pytz python-tools-2to3
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-coverage python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-coverage python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest-cov python-module-setuptools-tests python3-module-pytest-cov python3-module-pytz python3-module-setuptools-tests rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pytest-cov
+#BuildPreReq: python3-module-pytz python-tools-2to3
 %endif
 %py_requires pytz
 
@@ -129,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:2.1.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 1:2.1.1-alt1
 - Return to stable release 2.1.1
 - Set Epoch to 1

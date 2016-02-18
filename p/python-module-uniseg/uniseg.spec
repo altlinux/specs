@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt1.1
 Summary: A pure Python library to determine Unicode text segmentations
 License: MIT
 Group: Development/Python
@@ -16,16 +16,20 @@ Source: %name-%version.tar
 Source1: data.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests sqlite3
-BuildPreReq: python-modules-sqlite3
+#BuildPreReq: python-devel python-module-setuptools-tests sqlite3
+#BuildPreReq: python-modules-sqlite3
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-modules-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-modules-sqlite3
 %endif
 
 %py_provides %oname
 %py_requires sqlite3
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python-modules-sqlite3 python3-module-setuptools-tests rpm-build-python3 sqlite3
 
 %description
 This package provides:
@@ -142,6 +146,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus
 

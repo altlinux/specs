@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.2
-Release: alt1.git20150123
+Release: alt1.git20150123.1
 Summary: Handlebars.js templating for Python 3 and 2
 License: LGPLv3
 Group: Development/Python
@@ -15,18 +15,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-pymeta3 python-module-fixtures
-BuildPreReq: python-module-testtools
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-pymeta3 python-module-fixtures
+#BuildPreReq: python-module-testtools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pymeta3 python3-module-fixtures
-BuildPreReq: python3-module-testtools
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pymeta3 python3-module-fixtures
+#BuildPreReq: python3-module-testtools
 %endif
 
 %py_provides %oname pybars
 %py_requires pymeta3
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-extras python-module-linecache2 python-module-mimeparse python-module-pbr python-module-pluggy python-module-py python-module-pyasn1 python-module-serial python-module-setuptools python-module-six python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-extras python3-module-genshi python3-module-linecache2 python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pluggy python3-module-py python3-module-pycparser python3-module-setuptools python3-module-six python3-module-traceback2 python3-module-unittest2 xz
+BuildRequires: python-module-pymeta3 python-module-pytest python-module-testtools python3-module-html5lib python3-module-pymeta3 python3-module-pytest python3-module-testtools rpm-build-python3 time
 
 %description
 Handlebars.js template support for Python 3 and 2.
@@ -114,6 +118,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1.git20150123.1
+- NMU: Use buildreq for BR.
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.git20150123
 - Initial build for Sisyphus
 

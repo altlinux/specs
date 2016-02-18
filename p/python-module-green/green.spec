@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.7.1
-Release: alt1.git20141125
+Release: alt1.git20141125.1
 Summary: Clean, colorful test runner for Python unit tests
 License: MIT
 Group: Development/Python
@@ -16,13 +16,17 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-termstyle python-module-mock
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-termstyle python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-termstyle
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-termstyle
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pbr python-module-pytest python-module-unittest2 python3-module-pytest rpm-build-python3
 
 %description
 Green is a colorful, clean, fast and powerful test runner for Python
@@ -113,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7.1-alt1.git20141125.1
+- NMU: Use buildreq for BR.
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt1.git20141125
 - Version 1.7.1
 

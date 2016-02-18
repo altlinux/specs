@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 2.1.10
-Release: alt2
+Release: alt2.1
 
 Summary: Library for working with IP addressess, both IPv4 and IPv6
 License: Apache License, Version 2.0
@@ -16,12 +16,16 @@ BuildArch: noarch
 
 Source0: %modulename-%version.tar
 
-BuildPreReq: %py_dependencies setuptools
+#BuildPreReq: %py_dependencies setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-modules-unittest python-tools-2to3 rpm-build-python3 time
 
 %description
 An IPv4/IPv6 manipulatin library in Python/This library is used to create/poke/manipulate IPv4 and IPv6 addresses and prefixes.
@@ -72,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.10-alt2.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug  6 2015 Terechkov Evgenii <evg@altlinux.org> 2.1.10-alt2
 - Update sources to current trunk (git commit c813f47)
 

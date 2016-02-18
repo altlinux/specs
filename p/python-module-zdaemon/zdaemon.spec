@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt1.dev0.git20150416
+Release: alt1.dev0.git20150416.1
 Summary: Daemon process control library and tools for Unix-based systems
 License: ZPL
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zconfig python-module-zope.testing
-BuildPreReq: python-module-zope.testrunner python-module-manuel
-BuildPreReq: python-module-zc.customdoctests python-module-mock
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-zconfig python-module-zope.testing
+#BuildPreReq: python-module-zope.testrunner python-module-manuel
+#BuildPreReq: python-module-zc.customdoctests python-module-mock
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
-BuildPreReq: python3-module-zconfig python3-module-zope.testing
-BuildPreReq: python3-module-zope.testrunner python3-module-manuel
-BuildPreReq: python3-module-zc.customdoctests python3-module-mock
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-extras python-module-funcsigs python-module-linecache2 python-module-manuel python-module-manuel-tests python-module-mimeparse python-module-numpy python-module-pbr python-module-pyasn1 python-module-pytest python-module-serial python-module-setuptools python-module-six python-module-subunit python-module-testtools python-module-traceback2 python-module-twisted-core python-module-unittest2 python-module-zc python-module-zope python-module-zope.exceptions python-module-zope.interface python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-unittest2 python3-module-zope python3-module-zope.exceptions python3-module-zope.interface python3-module-zope.testing
+BuildRequires: python-module-mock python-module-setuptools-tests python-module-zc.customdoctests python-module-zconfig python-module-zope.testrunner python3-module-html5lib python3-module-pytest python3-module-zc.customdoctests python3-module-zope.testrunner rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-module-zconfig python3-module-zope.testing
+#BuildPreReq: python3-module-zope.testrunner python3-module-manuel
+#BuildPreReq: python3-module-zc.customdoctests python3-module-mock
 %endif
 
 %description
@@ -129,6 +133,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt1.dev0.git20150416.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150416
 - Version 4.1.1.dev0
 

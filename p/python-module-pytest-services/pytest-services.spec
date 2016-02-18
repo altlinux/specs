@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt1.git20150725
+Release: alt1.git20150725.1
 Summary: Services plugin for pytest testing framework
 License: MIT
 Group: Development/Python
@@ -15,25 +15,29 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: libmemcached-devel libmysqlclient-devel
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-requests python-module-subprocess32
-BuildPreReq: python-module-tox python-module-mock
-BuildPreReq: python-module-mysqlclient python-module-pylibmc
-BuildPreReq: python-module-pytest-cov python-module-pytest-pep8
-BuildPreReq: python-module-psutil
+#BuildPreReq: libmemcached-devel libmysqlclient-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-requests python-module-subprocess32
+#BuildPreReq: python-module-tox python-module-mock
+#BuildPreReq: python-module-mysqlclient python-module-pylibmc
+#BuildPreReq: python-module-pytest-cov python-module-pytest-pep8
+#BuildPreReq: python-module-psutil
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-requests
-BuildPreReq: python3-module-tox python3-module-mock
-BuildPreReq: python3-module-mysqlclient python3-module-pylibmc
-BuildPreReq: python3-module-pytest-cov python3-module-pytest-pep8
-BuildPreReq: python3-module-psutil
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-requests
+#BuildPreReq: python3-module-tox python3-module-mock
+#BuildPreReq: python3-module-mysqlclient python3-module-pylibmc
+#BuildPreReq: python3-module-pytest-cov python3-module-pytest-pep8
+#BuildPreReq: python3-module-psutil
 %endif
 
 %py_provides pytest_services
 %py_requires requests psutil subprocess32
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-coverage python-module-cryptography python-module-enum34 python-module-execnet python-module-ndg-httpsclient python-module-ntlm python-module-pluggy python-module-py python-module-pyasn1 python-module-pytest python-module-pytest-cache python-module-rlcompleter2 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-pep8 python3 python3-base python3-module-cffi python3-module-chardet python3-module-coverage python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-execnet python3-module-genshi python3-module-ndg-httpsclient python3-module-ntlm python3-module-pip python3-module-pluggy python3-module-py python3-module-pycparser python3-module-pytest python3-module-pytest-cache python3-module-pytest-pep8 python3-module-setuptools python3-module-urllib3 xz
+BuildRequires: python-module-mysqlclient python-module-pbr python-module-pylibmc python-module-pytest-cov python-module-pytest-pep8 python-module-subprocess32 python-module-tox python-module-unittest2 python3-module-html5lib python3-module-mysqlclient python3-module-pbr python3-module-pylibmc python3-module-pytest-cov python3-module-tox python3-module-unittest2 python3-tools-pep8 rpm-build-python3 time
 
 %description
 The plugin provides a set of fixtures and utility functions to start
@@ -93,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt1.git20150725.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1.git20150725
 - Version 1.1.3
 

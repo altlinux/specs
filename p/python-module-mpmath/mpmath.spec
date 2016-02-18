@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.19
-Release: alt1.git20150621
+Release: alt1.git20150621.1
 Summary: Python library for arbitrary-precision floating-point arithmetic
 License: New BSD License
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-all-%version.tar
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-gmpy python-module-matplotlib
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: python-module-pygobject3 python-module-pycairo
-BuildPreReq: texlive-latex-recommended xvfb-run
+#BuildPreReq: python-devel python-module-gmpy python-module-matplotlib
+#BuildPreReq: python-module-sphinx-devel python-module-Pygments
+#BuildPreReq: python-module-pygobject3 python-module-pycairo
+#BuildPreReq: texlive-latex-recommended xvfb-run
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-gmpy python-tools-2to3
-BuildPreReq: python3-module-matplotlib python3-module-pycairo
-BuildPreReq: python3-module-pygobject3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: at-spi2-atk at-spi2-core colord dbus dbus-tools-gui fakeroot fontconfig fonts-bitmap-misc glib-networking gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libcap-ng libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl libwayland-server python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-cycler python-module-dateutil python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib-gtk3 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base shared-mime-info xauth xkbcomp xkeyboard-config xorg-server-common xorg-xvfb
+BuildRequires: fonts-type1-urw python-module-alabaster python-module-docutils python-module-gmpy python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-pycairo python-module-pygobject3 rpm-build-python3 time xvfb-run
+
+#BuildRequires: python3-devel python3-module-gmpy python-tools-2to3
+#BuildPreReq: python3-module-matplotlib python3-module-pycairo
+#BuildPreReq: python3-module-pygobject3
 %endif
 
 BuildArch: noarch
@@ -210,6 +214,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.19-alt1.git20150621.1
+- NMU: Use buildreq for BR.
+
 * Mon Aug 31 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.19-alt1.git20150621
 - Version 0.19
 

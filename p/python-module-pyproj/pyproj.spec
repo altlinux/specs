@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.9.4
-Release: alt3.git20141229
+Release: alt3.git20141229.1
 Summary: Pyrex generated python interface to PROJ.4 library
 License: MIT
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: libproj-devel python-devel python-module-setuptools-tests
-BuildPreReq: python-module-numpy
+#BuildPreReq: libproj-devel python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-numpy
 %setup_python_module %oname
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
-BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python3-module-numpy
+#BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-module-setuptools-tests
+#BuildPreReq: python3-module-numpy
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 python3-devel rpm-build-python3 time
 
 %description
 Pyrex generated python interface to PROJ.4 library
@@ -153,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt3.git20141229.1
+- NMU: Use buildreq for BR.
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.4-alt3.git20141229
 - New snapshot
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: r243
-Release: alt1.svn20150119
+Release: alt1.svn20150119.1
 Summary: A collection of Python equations
 License: BSD
 Group: Development/Python
@@ -15,11 +15,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel
+#BuildPreReq: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python-tools-2to3
+#BuildPreReq: python3-devel python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-logging python3 python3-base
+BuildRequires: python-modules-compiler python-modules-encodings python-tools-2to3 rpm-build-python3 time
 
 %description
 The fitting code for zunzun.com as a collection of Python equations that
@@ -153,6 +157,9 @@ cp -fR * %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> r243-alt1.svn20150119.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r243-alt1.svn20150119
 - New snapshot
 

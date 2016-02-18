@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.31
-Release: alt1.git20120510
+Release: alt1.git20120510.1
 Summary: HTML,XHTML,CSS,JavaScript optimizer
 License: Python
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-CommandLineApp
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-CommandLineApp
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 %py_requires CommandLineApp
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pluggy python3-module-py python3-module-pytest python3-module-setuptools xz
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 slimmer.py is a whitespace optimizer for CSS, HTML and XHTML output.
@@ -131,6 +135,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.31-alt1.git20120510.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.31-alt1.git20120510
 - Initial build for Sisyphus
 

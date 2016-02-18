@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.3
-Release: alt2
+Release: alt2.1
 Summary: Web Error handling and exception catching
 License: MIT
 Group: Development/Python
@@ -15,12 +15,16 @@ BuildArch: noarch
 Source: WebError-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: python-devel python-module-setuptools
+#BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
 %description
 Web Error handling and exception catching.
@@ -69,6 +73,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.10.3-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.3-alt2
 - Added module for Python 3
 

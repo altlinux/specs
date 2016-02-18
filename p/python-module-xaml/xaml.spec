@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.05
-Release: alt1
+Release: alt1.1
 Summary: XML Abstract Markup Language
 License: BSD
 Group: Development/Python
@@ -14,20 +14,24 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-antipathy python-module-scription
-BuildPreReq: python-module-enum34
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-antipathy python-module-scription
+#BuildPreReq: python-module-enum34
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-antipathy python3-module-scription
-BuildPreReq: python3-module-enum34
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-antipathy python3-module-scription
+#BuildPreReq: python3-module-enum34
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 Requires: python-module-enum34
 %py_requires antipathy scription
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-module-enum34 python-modules-unittest python-tools-2to3 python3-module-enum34 rpm-build-python3 time
 
 %description
 An easier way for humans to write xml.
@@ -119,6 +123,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.05-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Feb 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.05-alt1
 - Version 0.3.05
 

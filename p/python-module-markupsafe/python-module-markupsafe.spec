@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.23
-Release: alt1
+Release: alt1.1
 Summary: implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Python
@@ -14,10 +14,14 @@ Url: http://pypi.python.org/pypi/MarkupSafe
 Source: %name-%version.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -97,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.23-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23-alt1
 - Version 0.23
 

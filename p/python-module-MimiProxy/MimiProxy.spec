@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt1.git20140416
+Release: alt1.git20140416.1
 Summary: Small SOCKS5 proxy server on python3 and asyncio
 License: MIT
 Group: Development/Python
@@ -18,17 +18,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base
+BuildRequires: rpm-build-python3
 
 %description
 Small SOCKS5 proxy server on python3 and asyncio.
@@ -110,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.0.5-alt1.git20140416.1
+- NMU: Use buildreq for BR.
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.git20140416
 - Initial build for Sisyphus
 

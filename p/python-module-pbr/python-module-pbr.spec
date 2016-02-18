@@ -4,7 +4,7 @@
 
 Name:		python-module-%pypi_name
 Version:	1.8.1
-Release:	alt1
+Release:	alt1.1
 Summary:	Python Build Reasonableness
 Group:		Development/Python
 
@@ -14,16 +14,20 @@ Source0:	%name-%version.tar.gz
 BuildArch:	noarch
 
 
-BuildRequires:	python-devel
-BuildRequires:	python-module-d2to1 >= 0.2.10
-BuildRequires:	python-module-testtools
-BuildRequires:	python-module-sphinx >= 1.1.3
-BuildRequires:	python-module-objects.inv
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-alabaster python-module-d2to1 python-module-docutils python-module-html5lib python-module-mimeparse python-module-pbr python-module-unittest2 python3-module-d2to1 python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-unittest2 rpm-build-python3 time
+
+#BuildRequires:	python-devel
+#BuildRequires:	python-module-d2to1 >= 0.2.10
+#BuildRequires:	python-module-testtools
+#BuildRequires:	python-module-sphinx >= 1.1.3
+#BuildRequires:	python-module-objects.inv
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:	python3-devel
-BuildRequires:	python3-module-d2to1
-BuildRequires:	python3-module-testtools
+#BuildRequires:	python3-devel
+#BuildRequires:	python3-module-d2to1
+#BuildRequires:	python3-module-testtools
 %endif
 
 %description
@@ -133,6 +137,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Oct 27 2015 Alexey Shabalin <shaba@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 - add tests subpackage

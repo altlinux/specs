@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.8
-Release: alt1.git20140910
+Release: alt1.git20140910.1
 Summary: Threading and multiprocessing eye-candy
 License: LGPLv3
 Group: Development/Python
@@ -15,15 +15,19 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-modules-multiprocessing
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-modules-multiprocessing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 %py_requires multiprocessing
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 Pebble provides a neat API to manage threads and processes within an
@@ -85,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.1.8-alt1.git20140910.1
+- NMU: Use buildreq for BR.
+
 * Wed Jan 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.8-alt1.git20140910
 - Initial build for Sisyphus
 

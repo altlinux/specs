@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.dev0.git20140409
+Release: alt1.dev0.git20140409.1
 Summary: Leverage doctest / manuel hooks to support other languages, such as JavaScript
 License: ZPLv2.1
 Group: Development/Python
@@ -14,17 +14,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/zopefoundation/zc.customdoctests.git
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-spidermonkey
-BuildPreReq: python-module-manuel-tests python-module-zope.testing
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-spidermonkey
+#BuildPreReq: python-module-manuel-tests python-module-zope.testing
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests
-BuildPreReq: python3-module-manuel-tests python3-module-zope.testing
+#BuildPreReq: python3-module-setuptools-tests
+#BuildPreReq: python3-module-manuel-tests python3-module-zope.testing
 %endif
 
 %py_provides %oname
 %py_requires zc manuel.testing zope.testing
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-manuel python-module-pytest python-module-setuptools python-module-six python-module-zc python-module-zope.exceptions python-module-zope.interface python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools python3-module-zc python3-module-zope python3-module-zope.exceptions python3-module-zope.interface
+BuildRequires: python-module-manuel-tests python-module-setuptools-tests python-module-spidermonkey python3-module-manuel python3-module-setuptools-tests python3-module-zope.testing rpm-build-python3
 
 %description
 doctest (and recently manuel) provide hooks for using custom doctest
@@ -92,6 +96,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.dev0.git20140409.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.dev0.git20140409
 - Initial build for Sisyphus
 

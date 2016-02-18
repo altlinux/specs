@@ -5,26 +5,30 @@
 
 Name: python-module-%module_name
 Version: 3.2.0
-Release: alt1.a1.git20150124
+Release: alt1.a1.git20150124.1
 Group: Development/Python
 License: BSD License
 Summary: django-celery provides Celery integration for Django
 URL: https://github.com/celery/django-celery
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools-tests
-BuildPreReq: python-module-pytest python-module-django-tests
-BuildPreReq: python-module-celery python-module-django-nose
-BuildPreReq: python-module-django-dbbackend-sqlite3
-BuildPreReq: python-module-nose-cover3 python-module-py
+#BuildPreReq: python-module-setuptools-tests
+#BuildPreReq: python-module-pytest python-module-django-tests
+#BuildPreReq: python-module-celery python-module-django-nose
+#BuildPreReq: python-module-django-dbbackend-sqlite3
+#BuildPreReq: python-module-nose-cover3 python-module-py
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-pytest python3-module-django-tests
-BuildPreReq: python3-module-celery python3-module-django-nose
-BuildPreReq: python3-module-django-dbbackend-sqlite3
-BuildPreReq: python3-module-nose-cover3 python3-module-py
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-pytest python3-module-django-tests
+#BuildPreReq: python3-module-celery python3-module-django-nose
+#BuildPreReq: python3-module-django-dbbackend-sqlite3
+#BuildPreReq: python3-module-nose-cover3 python3-module-py
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-cryptography python-module-django python-module-ecdsa python-module-enum34 python-module-ndg-httpsclient python-module-nose python-module-ntlm python-module-psycopg2 python-module-pyasn1 python-module-pycrypto python-module-pytz python-module-setuptools python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-chardet python3-module-django python3-module-ecdsa python3-module-nose python3-module-psycopg2 python3-module-pycrypto python3-module-pytz python3-module-setuptools python3-module-yaml python3-module-yieldfrom.http.client python3-module-yieldfrom.requests python3-module-yieldfrom.urllib3
+BuildRequires: python-module-celery python-module-nose-cover3 python-module-pytest python3-module-celery python3-module-nose-cover3 python3-module-pytest rpm-build-python3
 
 %description
 Using the Django ORM and cache backend for storing results,
@@ -85,6 +89,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.2.0-alt1.a1.git20150124.1
+- NMU: Use buildreq for BR.
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1.a1.git20150124
 - New snapshot
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1.git20130330
+Release: alt1.git20130330.1
 Summary: Modern, Pythonic unit testing
 License: BSD
 Group: Development/Python
@@ -15,21 +15,26 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-progressbar python-module-Pygments
-BuildPreReq: python-module-six
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-progressbar python-module-Pygments
+#BuildPreReq: python-module-six
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-progressbar python3-module-Pygments
-BuildPreReq: python3-module-six
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-progressbar python3-module-Pygments
+#BuildPreReq: python3-module-six
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides %oname
 Requires: python-module-progressbar
 %py_requires pygments six
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: libgpg-error python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-lxml python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-progressbar python-module-pytest python3-module-html5lib python3-module-progressbar python3-module-pytest python3-module-sphinx rpm-build-python3 time
 
 %description
 Attest is a unit testing framework built from the ground up with
@@ -153,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6-alt1.git20130330.1
+- NMU: Use buildreq for BR.
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.git20130330
 - Initial build for Sisyphus
 

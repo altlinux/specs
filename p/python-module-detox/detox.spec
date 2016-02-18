@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.9.4
-Release: alt2
+Release: alt2.1
 Summary: Distributing activities of the tox tool
 License: MIT
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 #BuildPreReq: python-module-tox python-module-eventlet
 #BuildPreReq: python-module-greenlet 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-tox python3-module-eventlet
 #BuildPreReq: python3-module-greenlet python3-module-virtualenv
 %endif
 
 %py_provides %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-setuptools
+BuildRequires: python-module-pytest python3-module-pytest rpm-build-python3
 
 %description
 detox is the distributed version of "tox". It makes efficient use of
@@ -102,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.4-alt2.1
+- NMU: Use buildreq for BR.
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.9.4-alt2
 - Rebuild with "def_disable check"
 - Turn off some build dependencies

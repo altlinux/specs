@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.7.5.1
-Release: alt3.hg20140319
+Release: alt3.hg20140319.1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 License: MIT
@@ -16,11 +16,15 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3 time
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python-tools-2to3
 %endif
 
 %setup_python_module %modulename
@@ -94,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7.5.1-alt3.hg20140319.1
+- NMU: Use buildreq for BR.
+
 * Sat Feb 07 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.5.1-alt3.hg20140319
 - Deteled bad suffix from version
 

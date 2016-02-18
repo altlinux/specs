@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4.14
-Release: alt1.dev0.git20141112
+Release: alt1.dev0.git20141112.1
 Summary: Fanstatic package for D3.js
 License: BSD
 Group: Development/Python
@@ -14,16 +14,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/mgood/js.d3.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-fanstatic python-module-shutilwhich
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-fanstatic python-module-shutilwhich
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-fanstatic python3-module-shutilwhich
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-fanstatic python3-module-shutilwhich
 %endif
 
 %py_provides %oname
 %py_requires js
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-module-webob python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python-modules-wsgiref python3 python3-base python3-module-pytest python3-module-setuptools python3-module-webob
+BuildRequires: python-module-fanstatic python-module-setuptools-tests python3-module-fanstatic python3-module-setuptools-tests rpm-build-python3
 
 %description
 Fanstatic package for D3.js.
@@ -94,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.4.14-alt1.dev0.git20141112.1
+- NMU: Use buildreq for BR.
+
 * Wed Nov 12 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.14-alt1.dev0.git20141112
 - Version 3.4.14.dev0
 

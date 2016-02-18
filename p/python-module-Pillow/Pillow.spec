@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0.0
-Release: alt1.dev0.git20150806
+Release: alt1.dev0.git20150806.1
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
@@ -16,23 +16,28 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: PIL.pth
 
-BuildPreReq: python-devel python-module-setuptools-tests liblcms2-devel
-BuildPreReq: python-module-nose
-BuildPreReq: zlib-devel libjpeg-devel libtiff-devel libfreetype-devel
-BuildPreReq: tcl-devel tk-devel libwebp-devel libwebp-tools
-BuildPreReq: python-modules-tkinter
-BuildPreReq: python-module-sphinx-devel python3-module-sphinx
-BuildPreReq: python3-module-sphinx-better-theme
+#BuildPreReq: python-devel python-module-setuptools-tests liblcms2-devel
+#BuildPreReq: python-module-nose
+#BuildPreReq: zlib-devel libjpeg-devel libtiff-devel libfreetype-devel
+#BuildPreReq: tcl-devel tk-devel libwebp-devel libwebp-tools
+#BuildPreReq: python-modules-tkinter
+#BuildPreReq: python-module-sphinx-devel python3-module-sphinx
+#BuildPreReq: python3-module-sphinx-better-theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-modules-tkinter
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-nose
+#BuildPreReq: python3-modules-tkinter
 %endif
 
 Conflicts: python-module-imaging < %EVR
 Obsoletes: python-module-imaging < %EVR
 Provides: python-module-imaging = %EVR
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils fontconfig libX11-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx_rtd_theme tcl-devel xorg-xproto-devel xz
+BuildRequires: libfreetype-devel libjpeg-devel liblcms2-devel libtiff-devel libwebp-devel python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-modules-tkinter python3-devel python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pytest python3-module-sphinx python3-module-sphinx-better-theme python3-modules-tkinter rpm-build-python3 time tk-devel zlib-devel
 
 %description
 Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
@@ -181,6 +186,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1.dev0.git20150806.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.dev0.git20150806
 - Version 3.0.0.dev0
 

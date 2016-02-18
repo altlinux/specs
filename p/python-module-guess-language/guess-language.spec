@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2
-Release: alt1.svn20100801
+Release: alt1.svn20100801.1
 Summary: Guess the natural language of a text
 License: LGPLv2.1
 Group: Development/Python
@@ -15,14 +15,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides guess_language
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pluggy python-module-py python-module-setuptools python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-pytest rpm-build-python3 time python3-module-pytest
 
 %description
 Attempts to determine the natural language of a selection of Unicode
@@ -130,6 +134,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2-alt1.svn20100801.1
+- NMU: Use buildreq for BR.
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.svn20100801
 - Initial build for Sisyphus
 

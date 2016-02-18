@@ -4,7 +4,7 @@
 
 Name:             python-module-%modname
 Version:          1.15.0
-Release:          alt2
+Release:          alt2.1
 Summary:          Command Line Interface Formulation Framework
 
 Group:            Development/Python
@@ -20,40 +20,45 @@ Requires:    python-module-argparse
 Requires:    python-module-prettytable >= 0.7
 Requires:    python-module-yaml >= 3.1.0
 
-BuildRequires:    python-devel
-BuildRequires:    python-module-setuptools
-BuildRequires:    python-module-pbr >= 1.6
-BuildRequires:    python-module-prettytable >= 0.7
-BuildRequires:    python-module-argparse
-BuildRequires:    python-module-cmd2 >= 0.6.7
-BuildRequires:    python-module-stevedore >= 1.5.0
-BuildRequires:    python-module-unicodecsv >= 0.8.0
-BuildRequires:    python-module-yaml >= 3.1.0
-BuildRequires:    python-module-six >= 1.9.0
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: pyflakes python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-docutils python-module-enum34 python-module-flake8 python-module-funcsigs python-module-genshi python-module-hacking python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mccabe python-module-ndg-httpsclient python-module-ntlm python-module-pbr python-module-pyasn1 python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-unittest2 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-pep8 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-docutils python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pyparsing python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx python3-module-unittest2 xz
+BuildRequires: python-module-alabaster python-module-cmd2 python-module-html5lib python-module-mock python-module-nose python-module-objects.inv python-module-oslosphinx python-module-prettytable python-module-stevedore python-module-unicodecsv python-module-yaml python3-module-cmd2 python3-module-html5lib python3-module-jinja2-tests python3-module-mock python3-module-nose python3-module-prettytable python3-module-stevedore python3-module-yaml rpm-build-python3 time
+
+#BuildRequires:    python-devel
+#BuildRequires:    python-module-setuptools
+#BuildRequires:    python-module-pbr >= 1.6
+#BuildRequires:    python-module-prettytable >= 0.7
+#BuildRequires:    python-module-argparse
+#BuildRequires:    python-module-cmd2 >= 0.6.7
+#BuildRequires:    python-module-stevedore >= 1.5.0
+#BuildRequires:    python-module-unicodecsv >= 0.8.0
+#BuildRequires:    python-module-yaml >= 3.1.0
+#BuildRequires:    python-module-six >= 1.9.0
 
 # Required for the test suite
-BuildRequires:    python-module-nose
-BuildRequires:    python-module-mock
+#BuildRequires:    python-module-nose
+#BuildRequires:    python-module-mock
 
-BuildRequires:    bash
-BuildRequires:    bash-completion
-BuildRequires:    python-module-argparse
+#BuildRequires:    bash
+#BuildRequires:    bash-completion
+#BuildRequires:    python-module-argparse
 
-BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
+#BuildPreReq: python-module-sphinx-devel python-module-oslosphinx
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires:    python3-devel
-BuildRequires:    python3-module-setuptools
-BuildRequires:    python3-module-pbr >= 1.6
-BuildRequires:    python3-module-prettytable >= 0.7
-BuildRequires:    python3-module-cmd2 >= 0.6.7
-BuildRequires:    python3-module-stevedore  >= 1.5.0
-BuildRequires:    python3-module-six  >= 1.9.0
-BuildRequires:    python3-module-yaml >= 3.1.0
-BuildRequires:    python3-module-nose
-BuildRequires:    python3-module-mock
-BuildRequires:    python3-module-argparse
+#BuildRequires:    python3-devel
+#BuildRequires:    python3-module-setuptools
+#BuildRequires:    python3-module-pbr >= 1.6
+#BuildRequires:    python3-module-prettytable >= 0.7
+#BuildRequires:    python3-module-cmd2 >= 0.6.7
+#BuildRequires:    python3-module-stevedore  >= 1.5.0
+#BuildRequires:    python3-module-six  >= 1.9.0
+#BuildRequires:    python3-module-yaml >= 3.1.0
+#BuildRequires:    python3-module-nose
+#BuildRequires:    python3-module-mock
+#BuildRequires:    python3-module-argparse
 %endif
 
 %description
@@ -140,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.15.0-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Nov 10 2015 Alexey Shabalin <shaba@altlinux.ru> 1.15.0-alt2
 - update R:
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.1
-Release: alt1.1
+Release: alt1.1.1
 Summary: A password hashing framework with bcrypt and pbkdf2
 License: MIT
 Group: Development/Python
@@ -13,10 +13,14 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
 %endif
 
 %description
@@ -150,6 +154,9 @@ touch %buildroot%python3_sitelibdir/%oname/__init__.py
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1.1.1
+- NMU: Use buildreq for BR.
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4.1-alt1.1
 - Rebuild with Python-3.3
 

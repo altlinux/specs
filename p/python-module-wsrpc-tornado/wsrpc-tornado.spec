@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20150119
+Release: alt1.git20150119.1
 Summary: WSRPC is WebSocket Remote procedure call for tornado and javascript
 License: LGPLv3
 Group: Development/Python
@@ -15,17 +15,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-tornado
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-tornado
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-tornado
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-tornado
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides wsrpc
 %py_requires tornado
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-setuptools python3-module-zope.interface
+BuildRequires: python-module-pycares python-module-pycurl python-module-pytest python-modules-wsgiref python3-module-pycares python3-module-pytest python3-module-zope rpm-build-python3 time
 
 %description
 Remote Procedure call through WebSocket between browser and tornado.
@@ -78,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1.git20150119.1
+- NMU: Use buildreq for BR.
+
 * Wed Jan 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20150119
 - Initial build for Sisyphus
 

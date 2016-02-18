@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 20101207
-Release: alt1
+Release: alt1.1
 Summary: Python identicon implementation
 License: BSD
 Group: Development/Python
@@ -15,14 +15,18 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_requires PIL
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python3 python3-base
+BuildRequires: python-devel python-tools-2to3 rpm-build-python3 time
 
 %description
 identicon.py: identicon python implementation.
@@ -72,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 20101207-alt1.1
+- NMU: Use buildreq for BR.
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20101207-alt1
 - Initial build for Sisyphus
 

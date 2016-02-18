@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.6.2
-Release: alt1
+Release: alt1.1
 Summary: A simple and efficient access to R from Python, version 2
 License: MPL/GPL/LGPL
 Group: Development/Python
@@ -16,24 +16,28 @@ Source: %oname-%version.tar.gz
 Requires: R-base
 
 BuildRequires(pre): rpm-build-python
-BuildPreReq: libpcre-devel liblzma-devel bzlib-devel zlib-devel
-BuildPreReq: libicu-devel
-BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
-BuildPreReq: python-module-setuptools-tests python-module-singledispatch
-BuildPreReq: python-module-six python-modules-sqlite3
-BuildPreReq: python-module-sphinx-devel python-module-Pygments
-BuildPreReq: graphviz
+#BuildPreReq: libpcre-devel liblzma-devel bzlib-devel zlib-devel
+#BuildPreReq: libicu-devel
+#BuildPreReq: python-devel R-devel liblapack-devel libreadline-devel
+#BuildPreReq: python-module-setuptools-tests python-module-singledispatch
+#BuildPreReq: python-module-six python-modules-sqlite3
+#BuildPreReq: python-module-sphinx-devel python-module-Pygments
+#BuildPreReq: graphviz
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-singledispatch
-BuildPreReq: python3-module-six python3-modules-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-singledispatch
+#BuildPreReq: python3-module-six python3-modules-sqlite3
 %endif
 %setup_python_module %oname
 
 #add_python_req_skip pandas
 Requires: %oname-common = %EVR
 %py_requires singledispatch sqlite3
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: R-base elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ordereddict python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-setuptools python3-module-six
+BuildRequires: R-devel bzlib-devel libicu-devel liblzma-devel libpcre-devel libreadline-devel python-module-alabaster python-module-docutils python-module-html5lib python-module-pytest python-module-singledispatch python-module-sphinx-pickles python-modules-sqlite3 python3-devel python3-module-pytest python3-module-singledispatch python3-modules-sqlite3 rpm-build-python3 time zlib-devel
 
 %description
 RPy is a very simple, yet robust, Python interface to the R Programming
@@ -254,6 +258,9 @@ python3 -m unittest discover -v rpy2.robjects
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.6.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Aug 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1
 - Version 2.6.2
 

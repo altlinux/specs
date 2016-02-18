@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.2.2
-Release: alt2
+Release: alt2.1
 Summary: SP (Simple Parser), Python parser generator
 License: LGPL v3 or later
 Group: Development/Python
@@ -14,11 +14,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-BuildPreReq: python-devel
+#BuildPreReq: python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+#BuildPreReq: python3-devel
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python3 python3-base
+BuildRequires: rpm-build-python3
 
 %description
 SP (Simple Parser) is a Python parser generator. It is aimed at easy
@@ -80,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.2.2-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.2-alt2
 - Added module for Python 3
 

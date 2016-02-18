@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.0
-Release: alt2.git20140720
+Release: alt2.git20140720.1
 Summary: Robot Framework keyword library for capturing annotated screenshots with Selenium2Library
 License: GPL
 Group: Development/Python
@@ -15,19 +15,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-module-setuptools-tests python-module-robotframework
-BuildPreReq: python-module-robotframework-selenium2library
-BuildPreReq: python-module-Pillow python-module-docutils
-BuildPreReq: python-module-decorator
+#BuildPreReq: python-module-setuptools-tests python-module-robotframework
+#BuildPreReq: python-module-robotframework-selenium2library
+#BuildPreReq: python-module-Pillow python-module-docutils
+#BuildPreReq: python-module-decorator
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools-tests python3-module-robotframework
-BuildPreReq: python3-module-robotframework-selenium2library
-BuildPreReq: python3-module-Pillow python3-module-docutils
-BuildPreReq: python3-module-decorator
+#BuildPreReq: python3-module-setuptools-tests python3-module-robotframework
+#BuildPreReq: python3-module-robotframework-selenium2library
+#BuildPreReq: python3-module-Pillow python3-module-docutils
+#BuildPreReq: python3-module-decorator
 %endif
 
 %py_requires PIL
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytest python-module-pytz python-module-robotframework python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pycparser python3-module-pytest python3-module-pytz python3-module-robotframework python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-cffi python-module-docutils python-module-html5lib python-module-robotframework-selenium2library python-module-setuptools-tests python3-module-cffi python3-module-html5lib python3-module-robotframework-selenium2library python3-module-setuptools-tests python3-module-sphinx rpm-build-python3
 
 %description
 Robot Framework keyword library for capturing annotated screenshots with
@@ -88,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt2.git20140720.1
+- NMU: Use buildreq for BR.
+
 * Fri Mar 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt2.git20140720
 - Added module for Python 3
 

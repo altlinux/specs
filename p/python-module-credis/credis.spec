@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.5
-Release: alt1.git20150211
+Release: alt1.git20150211.1
 Summary: High performance redis client implemented with cython
 License: Free
 Group: Development/Python
@@ -14,18 +14,22 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/yihuang/credis.git
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Cython python-module-hiredis
-BuildPreReq: python-module-redis-py
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-Cython python-module-hiredis
+#BuildPreReq: python-module-redis-py
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-Cython python3-module-hiredis
-BuildPreReq: python3-module-redis-py
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-Cython python3-module-hiredis
+#BuildPreReq: python3-module-redis-py
 %endif
 
 %py_provides %oname
 %py_requires hiredis
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-xml python3 python3-base python3-dev python3-module-zope
+BuildRequires: python-module-Cython python3-module-Cython rpm-build-python3
 
 %description
 Minimal redis client written in cython, 5X faster than redis-py.
@@ -76,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt1.git20150211.1
+- NMU: Use buildreq for BR.
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1.git20150211
 - Initial build for Sisyphus
 

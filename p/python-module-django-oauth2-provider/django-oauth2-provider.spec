@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.7
-Release: alt1.dev.git20140318
+Release: alt1.dev.git20140318.1
 Summary: Provide OAuth2 access to your app
 License: MIT
 Group: Development/Python
@@ -15,22 +15,27 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-django-tests python-module-shortuuid
-BuildPreReq: python-module-django-dbbackend-sqlite3
-BuildPreReq: python-module-oauth2
-BuildPreReq: python-module-sphinx-devel
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-django-tests python-module-shortuuid
+#BuildPreReq: python-module-django-dbbackend-sqlite3
+#BuildPreReq: python-module-oauth2
+#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-django-tests python3-module-shortuuid
-BuildPreReq: python3-module-django-dbbackend-sqlite3
-BuildPreReq: python3-module-oauth2
-BuildPreReq: python-tools-2to3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-django-tests python3-module-shortuuid
+#BuildPreReq: python3-module-django-dbbackend-sqlite3
+#BuildPreReq: python3-module-oauth2
+#BuildPreReq: python-tools-2to3
 %endif
 
 %py_provides provider
 %py_requires oauth2
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-django python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-psycopg2 python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-yaml python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base python3-module-psycopg2 python3-module-pytest python3-module-setuptools python3-module-yaml tzdata
+BuildRequires: python-module-alabaster python-module-django-dbbackend-sqlite3 python-module-django-tests python-module-docutils python-module-html5lib python-module-httplib2 python-module-objects.inv python-module-setuptools-tests python-module-shortuuid python3-module-django python3-module-httplib2 python3-module-setuptools-tests rpm-build-python3 time
 
 %description
 django-oauth2-provider is a Django application that provides
@@ -169,6 +174,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1.dev.git20140318.1
+- NMU: Use buildreq for BR.
+
 * Mon Nov 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.7-alt1.dev.git20140318
 - Initial build for Sisyphus
 

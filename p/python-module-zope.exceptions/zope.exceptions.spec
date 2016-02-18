@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.8
-Release: alt1
+Release: alt1.1
 Summary: Zope Exceptions
 License: ZPL
 Group: Development/Python
@@ -13,11 +13,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-distribute
+#BuildPreReq: python-devel python-module-distribute
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-BuildPreReq: python3-module-zope.fixers python-tools-2to3
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-zope python3-module-zope.interface
+BuildRequires: python-module-setuptools python3-module-setuptools python3-module-zope.fixers rpm-build-python3
+
+#BuildRequires: python3-devel python3-module-distribute
+#BuildPreReq: python3-module-zope.fixers python-tools-2to3
 %endif
 
 %py_requires zope zope.interface
@@ -118,6 +122,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.0.8-alt1.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.8-alt1
 - Version 4.0.8
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.git20150717
+Release: alt1.git20150717.1
 Summary: High-Level DynamoDB Interface for Pythonwrapping Low-Level Interface of boto
 License: MIT
 Group: Development/Python
@@ -15,16 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-boto python-modules-json
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-boto python-modules-json
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-boto
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-boto
 %endif
 
 %py_provides %oname
 %py_requires boto
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-pyasn1 python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-chardet python3-module-pytest python3-module-setuptools python3-module-yieldfrom.http.client python3-module-yieldfrom.urllib3
+BuildRequires: python-module-chardet python-module-ecdsa python-module-ndg-httpsclient python-module-ntlm python-module-pycrypto python-module-setuptools-tests python-module-yaml python3-module-ecdsa python3-module-pycrypto python3-module-setuptools-tests python3-module-yaml python3-module-yieldfrom.requests rpm-build-python3
 
 %description
 High-Level DynamoDB Interface for Python wrapping Low-Level Interface of
@@ -84,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt1.git20150717.1
+- NMU: Use buildreq for BR.
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20150717
 - New snapshot
 

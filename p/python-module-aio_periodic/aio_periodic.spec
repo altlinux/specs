@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1.git20141231
+Release: alt1.git20141231.1
 Summary: The periodic task system client for python3 base on asyncio
 License: Free
 Group: Development/Python
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python3-module-setuptools-tests rpm-build-python3
 
 %description
 The periodic task system client for python3 base on asyncio.
@@ -93,6 +97,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt1.git20141231.1
+- NMU: Use buildreq for BR.
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.6-alt1.git20141231
 - Initial build for Sisyphus
 

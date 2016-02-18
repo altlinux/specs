@@ -5,7 +5,7 @@
 
 Name:           python-module-%oname
 Version:        1.3.0
-Release:        alt2.hg20141215
+Release:        alt2.hg20141215.1
 Summary:        Python command line parser
 
 Group:          Development/Python
@@ -17,11 +17,15 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 %setup_python_module %oname
 
 BuildArch:      noarch
-BuildRequires: python-module-setuptools-tests python-devel
-BuildPreReq: python-module-setupdocs python-module-sphinx-devel
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python3-base
+BuildRequires: python3
+
+#BuildRequires: python-module-setuptools-tests python-devel
+#BuildPreReq: python-module-setupdocs python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools-tests
+#BuildRequires: python3-devel python3-module-setuptools-tests
 %endif
 
 %py_requires %oname
@@ -123,6 +127,9 @@ This package contains pickles for argparse.
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt2.hg20141215.1
+- NMU: Use buildreq for BR.
+
 * Wed Mar 11 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.hg20141215
 - Removed content
 

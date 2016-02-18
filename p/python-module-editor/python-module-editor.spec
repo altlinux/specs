@@ -4,7 +4,7 @@
 
 Name: python-module-editor
 Version: 0.4
-Release: alt1
+Release: alt1.1
 
 Summary: Programmatically open an editor, capture the result
 
@@ -18,10 +18,14 @@ Source: https://pypi.python.org/packages/source/p/%pypi_name/%pypi_name-%version
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-python3 python3-module-distribute
+#BuildPreReq: rpm-build-python3 python3-module-distribute
 
-BuildRequires: python-devel
-BuildRequires: python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
+BuildRequires: python-module-setuptools python3-module-setuptools rpm-build-python3
+
+#BuildRequires: python-devel
+#BuildRequires: python-module-setuptools
 
 %description
 An python module which provides a convenient example.
@@ -29,7 +33,7 @@ An python module which provides a convenient example.
 %if 0%with_python3
 %package -n python3-module-editor
 Summary: Programmatically open an editor, capture the result
-BuildRequires: python3-devel
+#BuildRequires: python3-devel
 Group: Development/Python
 
 %description -n python3-module-editor
@@ -74,6 +78,9 @@ chmod a+x %buildroot%python3_sitelibdir/editor.py
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4-alt1.1
+- NMU: Use buildreq for BR.
+
 * Thu Oct 29 2015 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - initial build for ALT Linux Sisyphus
 

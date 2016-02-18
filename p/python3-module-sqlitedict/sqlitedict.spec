@@ -1,7 +1,7 @@
 %define oname sqlitedict
 Name: python3-module-%oname
 Version: 1.2.0
-Release: alt1.git20140727
+Release: alt1.git20140727.1
 Summary: Persistent dict in Python, backed up by sqlite3 and pickle, multithread-safe
 License: Public domain
 Group: Development/Python3
@@ -13,11 +13,15 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-modules-sqlite3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-modules-sqlite3
 
 %py3_provides %oname
 %py3_requires sqlite3
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
+BuildRequires: python3-module-pytest python3-modules-sqlite3 rpm-build-python3 time
 
 %description
 A lightweight wrapper around Python's sqlite3 database, with a dict-like
@@ -41,6 +45,9 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.git20140727.1
+- NMU: Use buildreq for BR.
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.git20140727
 - Initial build for Sisyphus
 

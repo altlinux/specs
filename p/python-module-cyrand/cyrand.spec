@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.git20150228
+Release: alt1.git20150228.1
 Summary: Wrapper to Boost random numbers
 License: Free
 Group: Development/Python
@@ -15,21 +15,25 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/andrewcron/cyrand.git
 Source: %name-%version.tar
 
-BuildPreReq: gcc-c++
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-Cython libnumpy-devel
-BuildPreReq: python-module-scipy python-module-matplotlib
-BuildPreReq: boost-python-devel
+#BuildPreReq: gcc-c++
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-Cython libnumpy-devel
+#BuildPreReq: python-module-scipy python-module-matplotlib
+#BuildPreReq: boost-python-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-Cython libnumpy-py3-devel
-BuildPreReq: python3-module-scipy python3-module-matplotlib
-BuildPreReq: boost-python3-devel
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-Cython libnumpy-py3-devel
+#BuildPreReq: python3-module-scipy python3-module-matplotlib
+#BuildPreReq: boost-python3-devel
 %endif
 
 %py_provides %oname
 %py_requires numpy scipy matplotlib
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: elfutils libboost_python3-1.58.0 libstdc++-devel python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python-modules-xml python3 python3-base python3-dev python3-module-numpy python3-module-zope
+BuildRequires: boost-devel-headers boost-python-devel boost-python3-devel gcc-c++ libnumpy-devel python-module-Cython python-module-numpy-testing python3-module-Cython python3-module-numpy-testing rpm-build-python3
 
 %description
 This is simply a set of cython definitions for the Boost TR1 Random
@@ -95,6 +99,9 @@ exit 1
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3-alt1.git20150228.1
+- NMU: Use buildreq for BR.
+
 * Mon Mar 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20150228
 - Initial build for Sisyphus
 

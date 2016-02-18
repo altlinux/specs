@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt2
+Release: alt2.1
 
 Summary: Framework for making good API client libraries using urllib3
 License: MIT
@@ -18,10 +18,14 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+#BuildPreReq: python3-devel
 %endif
 
 %setup_python_module %oname
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 Framework for making good API client libraries using urllib3.
@@ -67,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt2.1
+- NMU: Use buildreq for BR.
+
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt2
 - Added module for Python 3
 

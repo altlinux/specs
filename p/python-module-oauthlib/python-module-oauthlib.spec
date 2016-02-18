@@ -3,7 +3,7 @@
 
 Name:               python-module-oauthlib
 Version:            0.7.2
-Release:            alt1
+Release:            alt1.1
 Summary:            An implementation of the OAuth request-signing logic
 
 Group:              Development/Python
@@ -16,14 +16,18 @@ Patch0:             python-oauthlib-dont-require-unittest2.patch
 
 BuildArch:          noarch
 
-BuildRequires:      python-devel python-module-pytest
-BuildRequires:      python-module-setuptools
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
+BuildRequires: python-module-nose python-module-pbr python-module-pycrypto python-module-pytest python-module-unittest2 python3-module-html5lib python3-module-nose python3-module-pbr python3-module-pycrypto python3-module-pytest python3-module-unittest2 rpm-build-python3
 
-BuildRequires:      python-module-nose
-BuildRequires:      python-module-unittest2
-BuildRequires:      python-module-mock
+#BuildRequires:      python-devel python-module-pytest
+#BuildRequires:      python-module-setuptools
 
-BuildRequires:      python-module-Crypto >= 2.6
+#BuildRequires:      python-module-nose
+#BuildRequires:      python-module-unittest2
+#BuildRequires:      python-module-mock
+
+#BuildRequires:      python-module-Crypto >= 2.6
 Requires:           python-module-Crypto >= 2.6
 
 %description
@@ -39,15 +43,15 @@ very little effort.
 Summary:        An implementation of the OAuth request-signing logic
 Group:		Development/Python3
 BuildArch:      noarch
-BuildRequires:  rpm-build-python3
-BuildRequires:  python3-module-pytest
-BuildRequires:  python3-module-setuptools
+#BuildRequires:  rpm-build-python3
+#BuildRequires:  python3-module-pytest
+#BuildRequires:  python3-module-setuptools
 
-BuildRequires:  python3-module-nose
-BuildRequires:  python3-module-unittest2
-BuildRequires:  python3-module-mock
+#BuildRequires:  python3-module-nose
+#BuildRequires:  python3-module-unittest2
+#BuildRequires:  python3-module-mock
 
-BuildRequires:  python3-module-Crypto >= 2.6
+#BuildRequires:  python3-module-Crypto >= 2.6
 Requires:       python3-module-Crypto >= 2.6
 
 %description -n python3-module-%{modname}
@@ -110,6 +114,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1.1
+- NMU: Use buildreq for BR.
+
 * Sun Nov 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1
 - Version 0.7.2
 

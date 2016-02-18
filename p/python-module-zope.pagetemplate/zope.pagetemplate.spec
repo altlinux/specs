@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1
+Release: alt1.1
 Summary: Zope Page Templates
 License: ZPL
 Group: Development/Python
@@ -13,26 +13,30 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-zope.component python-module-zope.security
-BuildPreReq: python-module-zope.tales python-module-zope.proxy
-BuildPreReq: python-module-zope.untrustedpython
-BuildPreReq: python-module-zope.i18n python-module-zope.i18nmessageid
-BuildPreReq: python-module-zope.traversing python-module-zope.testing
-BuildPreReq: python-module-zope.component-tests
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-zope.component python-module-zope.security
+#BuildPreReq: python-module-zope.tales python-module-zope.proxy
+#BuildPreReq: python-module-zope.untrustedpython
+#BuildPreReq: python-module-zope.i18n python-module-zope.i18nmessageid
+#BuildPreReq: python-module-zope.traversing python-module-zope.testing
+#BuildPreReq: python-module-zope.component-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-zope.component python3-module-zope.security
-BuildPreReq: python3-module-zope.tales python3-module-zope.proxy
-BuildPreReq: python3-module-zope.i18n python3-module-zope.i18nmessageid
-BuildPreReq: python3-module-zope.traversing python3-module-zope.testing
-BuildPreReq: python3-module-zope.component-tests
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-zope.component python3-module-zope.security
+#BuildPreReq: python3-module-zope.tales python3-module-zope.proxy
+#BuildPreReq: python3-module-zope.i18n python3-module-zope.i18nmessageid
+#BuildPreReq: python3-module-zope.traversing python3-module-zope.testing
+#BuildPreReq: python3-module-zope.component-tests
 %endif
 
 %py_requires zope zope.interface zope.component zope.security zope.tales
 %py_requires zope.tal zope.i18n zope.i18nmessageid zope.traversing
 %py_requires zope.untrustedpython
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-BTrees python-module-RestrictedPython python-module-ZEO python-module-ZODB python-module-cffi python-module-cryptography python-module-enum34 python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zc.lockfile python-module-zdaemon python-module-zope python-module-zope.browser python-module-zope.component python-module-zope.configuration python-module-zope.contenttype python-module-zope.event python-module-zope.exceptions python-module-zope.hookable python-module-zope.i18n python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.location python-module-zope.proxy python-module-zope.publisher python-module-zope.schema python-module-zope.security python-module-zope.tal python-module-zope.testing python-module-zope.testrunner python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-xml python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pycparser python3-module-pytz python3-module-setuptools python3-module-transaction python3-module-unittest2 python3-module-zope python3-module-zope.browser python3-module-zope.component python3-module-zope.configuration python3-module-zope.contenttype python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18n python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.location python3-module-zope.proxy python3-module-zope.publisher python3-module-zope.schema python3-module-zope.security python3-module-zope.tal python3-module-zope.testing
+BuildRequires: python-module-setuptools-tests python-module-zope.component-tests python-module-zope.tales python-module-zope.traversing python-module-zope.untrustedpython python3-module-html5lib python3-module-pytest python3-module-zope.tales python3-module-zope.testrunner python3-module-zope.traversing rpm-build-python3
 
 %description
 Page Templates provide an elegant templating mechanism that achieves a
@@ -145,6 +149,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.2.1-alt1.1
+- NMU: Use buildreq for BR.
+
 * Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
 - Version 4.2.1
 - Enabled check

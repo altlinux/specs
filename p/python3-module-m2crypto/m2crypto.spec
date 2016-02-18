@@ -2,7 +2,7 @@
 
 Summary: M2Crypto: A Python crypto and SSL toolkit
 Version: 0.22
-Release: alt1.git20131121
+Release: alt1.git20131121.1
 Name: python3-module-%oname
 # https://github.com/mcepl/M2Crypto.git - branch python3
 Source0: %name-%version.tar
@@ -11,9 +11,13 @@ Group: Development/Python3
 URL: https://github.com/mcepl/m2crypto
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libssl-devel python3-module-py swig
-BuildPreReq: python3-module-setuptools-tests /proc
-BuildPreReq: python3-module-py python-tools-2to3 libnumpy-py3-devel
+#BuildPreReq: python3-devel libssl-devel python3-module-py swig
+#BuildPreReq: python3-module-setuptools-tests /proc
+#BuildPreReq: python3-module-py python-tools-2to3 libnumpy-py3-devel
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils libcom_err-devel libkrb5-devel pkg-config python-base python-modules python3 python3-base python3-module-numpy python3-module-setuptools swig-data
+BuildRequires: libssl-devel python3-devel python3-module-pytest rpm-build-python3 swig
 
 %description
 M2Crypto is the most complete Python wrapper for OpenSSL featuring RSA,
@@ -54,6 +58,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.22-alt1.git20131121.1
+- NMU: Use buildreq for BR.
+
 * Wed Aug 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt1.git20131121
 - Initial build for Sisyphus
 

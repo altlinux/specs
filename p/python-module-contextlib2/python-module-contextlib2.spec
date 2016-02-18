@@ -4,7 +4,7 @@
 
 Name: python-module-contextlib2
 Version: 0.4.0
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Backports and enhancements for the contextlib module
 
@@ -20,12 +20,13 @@ Source: http://pypi.python.org/packages/source/c/%modulename/%modulename-%versio
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Apr 08 2013
-# optimized out: python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules python-modules-compiler python-modules-email
-BuildRequires: python-module-mwlib python-module-paste
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-module-mwlib rpm-build-python3
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-paste
+#BuildRequires: python3-devel python3-module-paste
 %endif
 
 %description
@@ -83,6 +84,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1.1.1
+- NMU: Use buildreq for BR.
+
 * Sat Nov 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.1
 - Added module for Python 3
 

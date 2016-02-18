@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.1.4
-Release: alt1.svn20130102
+Release: alt1.svn20130102.1
 Group: Development/Python
 License: BSD License
 Summary: A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges
@@ -12,11 +12,15 @@ URL: http://pypi.python.org/pypi/mimeparse
 # http://mimeparse.googlecode.com/svn/trunk/
 Source: %module_name-%version.tar.gz
 
-BuildPreReq: python-module-setuptools
+#BuildPreReq: python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+#BuildPreReq: python3-devel python3-module-setuptools
 %endif
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-modules python-modules-compiler python-modules-email python3 python3-base
+BuildRequires: python-devel rpm-build-python3
 
 %description
 This module provides basic functions for handling mime-types. It can handle
@@ -99,6 +103,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.svn20130102.1
+- NMU: Use buildreq for BR.
+
 * Sun Aug 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.svn20130102
 - Version 0.1.4
 - Added module for Python 3

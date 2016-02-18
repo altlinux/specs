@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt1.git20141105
+Release: alt1.git20141105.1
 Summary: pytest plugin for Qt (PyQt and PySide) application testing
 License: LGPLv3
 Group: Development/Python
@@ -16,16 +16,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-PyQt4 python-module-PySide
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-PyQt4 python-module-PySide
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-PyQt4 python3-module-PySide
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-PyQt4 python3-module-PySide
 %endif
 
 %py_provides pytestqt
 %py_requires PyQt4 PySide
+
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3
 
 %description
 pytest-qt is a pytest plugin that allows programmers to write tests for
@@ -85,6 +89,9 @@ popd
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1.git20141105.1
+- NMU: Use buildreq for BR.
+
 * Thu Nov 06 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20141105
 - Initial build for Sisyphus
 

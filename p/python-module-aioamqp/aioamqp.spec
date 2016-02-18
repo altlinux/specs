@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1.git20141217
+Release: alt1.git20141217.1
 Summary: AMQP implementation using asyncio
 License: BSD
 Group: Development/Python
@@ -17,19 +17,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %if_with python2
-BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-asyncio python-module-nose
-BuildPreReq: python-module-coverage pylint
+#BuildPreReq: python-devel python-module-setuptools-tests
+#BuildPreReq: python-module-asyncio python-module-nose
+#BuildPreReq: python-module-coverage pylint
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools-tests
-BuildPreReq: python3-module-asyncio python3-module-nose
-BuildPreReq: python3-module-coverage pylint-py3
+#BuildPreReq: python3-devel python3-module-setuptools-tests
+#BuildPreReq: python3-module-asyncio python3-module-nose
+#BuildPreReq: python3-module-coverage pylint-py3
 %endif
 
 %py_provides %oname
 %py_requires asyncio
+
+# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
+# optimized out: python-base python3 python3-base python3-module-logilab-common python3-module-pytest python3-module-setuptools
+BuildRequires: pylint-py3 python3-module-coverage python3-module-nose python3-module-setuptools-tests rpm-build-python3
 
 %description
 aioamqp library is a pure-Python implementation of the AMQP 0.9.1
@@ -105,6 +109,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1.git20141217.1
+- NMU: Use buildreq for BR.
+
 * Sat Jan 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20141217
 - Initial build for Sisyphus
 

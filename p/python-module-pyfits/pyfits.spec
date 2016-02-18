@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: Reads FITS images and tables into numpy arrays and manipulates FITS headers
 License: BSD
@@ -17,16 +17,21 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: python-devel python-module-sphinx-devel
-BuildPreReq: libnumpy-devel python-module-d2to1
-BuildPreReq: python-module-stsci.distutils python-module-stsci.sphinxext
-BuildPreReq: python-module-matplotlib-sphinxext graphviz
-BuildPreReq: python-module-sphinxcontrib-programoutput /usr/bin/latex
+#BuildPreReq: python-devel python-module-sphinx-devel
+#BuildPreReq: libnumpy-devel python-module-d2to1
+#BuildPreReq: python-module-stsci.distutils python-module-stsci.sphinxext
+#BuildPreReq: python-module-matplotlib-sphinxext graphviz
+#BuildPreReq: python-module-sphinxcontrib-programoutput /usr/bin/latex
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel python3-module-d2to1
-BuildPreReq: python3-module-stsci.distutils
+#BuildPreReq: python3-devel libnumpy-py3-devel python3-module-d2to1
+#BuildPreReq: python3-module-stsci.distutils
 %endif
+
+BuildRequires(pre): rpm-macros-sphinx
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: elfutils fontconfig fonts-bitmap-misc libwayland-client libwayland-server python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-cycler python-module-dateutil python-module-docutils python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-matplotlib python-module-numpy python-module-numpydoc python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-stsci.core python-module-zest.releaser python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-numpy python3-module-setuptools python3-module-stsci.core python3-module-zest.releaser tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base
+BuildRequires: graphviz libnumpy-devel python-module-alabaster python-module-d2to1 python-module-html5lib python-module-matplotlib-sphinxext python-module-numpy-testing python-module-objects.inv python-module-sphinxcontrib-programoutput python-module-stsci.distutils python-module-stsci.sphinxext python3-devel python3-module-d2to1 python3-module-numpy-testing python3-module-stsci.distutils rpm-build-python3 time
 
 %description
 Reads FITS images and tables into numpy arrays and manipulates FITS
@@ -153,6 +158,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.2.4-alt1.1
+- NMU: Use buildreq for BR.
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt1
 - Version 3.2.4
 - Added module for Python 3
