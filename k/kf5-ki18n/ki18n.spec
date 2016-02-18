@@ -1,8 +1,8 @@
 %define rname ki18n
 
 Name: kf5-%rname
-Version: 5.18.0
-Release: alt3
+Version: 5.19.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -79,6 +79,9 @@ KF5 library
 %_K5plug/kf5/ktranscript.so
 
 %changelog
+* Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
+- new version
+
 * Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt3
 - reduce searching for translation
 

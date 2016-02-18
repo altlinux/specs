@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf5-%rname
-Version: 5.18.0
+Version: 5.19.0
 Release: alt1
 %K5init altplace
 
@@ -14,11 +14,12 @@ Requires: kf5-filesystem
 
 Source: %rname-%version.tar
 
-# Automatically added by buildreq on Thu Feb 05 2015 (-bi)
-# optimized out: cmake cmake-modules elfutils ilmbase-devel libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-printsupport libqt5-widgets libstdc++-devel pkg-config python-base ruby ruby-stdlibs
-#BuildRequires: extra-cmake-modules gcc-c++ openexr-devel python-module-google qt5-base-devel rpm-build-ruby
+# Automatically added by buildreq on Wed Feb 17 2016 (-bi)
+# optimized out: cmake cmake-modules elfutils gcc-c++ ilmbase-devel libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-printsupport libqt5-widgets libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
+#BuildRequires: extra-cmake-modules kf5-karchive-devel openexr-devel python-module-google qt5-base-devel rpm-build-kf5 rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ openexr-devel qt5-base-devel
+BuildRequires: extra-cmake-modules openexr-devel qt5-base-devel
+BuildRequires: kf5-karchive-devel
 
 %description
 This framework provides additional image format plugins for QtGui.  As
@@ -53,6 +54,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
+- new version
+
 * Mon Jan 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.18.0-alt1
 - new version
 
