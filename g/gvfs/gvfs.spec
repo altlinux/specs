@@ -27,7 +27,7 @@
 %def_enable google
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -203,6 +203,7 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %package utils
 Summary: Command line applications for gvfs.
 Group: Development/GNOME and GTK+
+Requires(post): libcap-utils
 Requires: %name = %version-%release
 
 %package -n bash-completion-gvfs
@@ -336,6 +337,10 @@ export ac_cv_path_SSH_PROGRAM=%_bindir/ssh
 
 %post
 killall -USR1 gvfsd >&/dev/null || :
+
+%post utils
+# for mount secure NFS shares
+setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
 %files -f %name.lang
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
@@ -529,6 +534,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Thu Feb 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.26.3-alt1
+- 1.26.3
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1
 - 1.26.2
 
