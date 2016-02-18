@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.13.1
-Release: alt0.1
+Release: alt0.2
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -161,6 +161,13 @@ export CMAKE_LIBRARY_PATH=%_libdir
 mkdir -p %buildroot/%_libdir/akonadi/contact/editorpageplugins/
 install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 
+%files common
+%_K4xdg_mime/akonadi-mime.xml
+%dir %_sysconfdir/akonadi/
+%dir %_libdir/akonadi/
+%dir %_libdir/akonadi/*/
+%dir %_libdir/akonadi/*/*/
+
 %files
 %_bindir/akonadi_rds
 %_bindir/akonadi_control
@@ -168,8 +175,8 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_bindir/akonadiserver
 %_bindir/akonadi_agent_launcher
 %_bindir/akonadi_agent_server
-%dir %_sysconfdir/akonadi/
 %config(noreplace) %_sysconfdir/akonadi/*
+%_K4dbus_services/org.freedesktop.Akonadi.Control.service
 
 %files -n libqt4-sql-sqlite3
 %_qt4dir/plugins/sqldrivers/libqsqlite3.so
@@ -179,11 +186,6 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %files database-5-postgresql
 %files database-8-mysql
 %_bindir/akonadi_mysql_install_db
-
-%files common
-%_K4dbus_services/org.freedesktop.Akonadi.Control.service
-%_K4xdg_mime/akonadi-mime.xml
-%_libdir/akonadi
 
 #%files -n libakonadiprivate
 #%_libdir/libakonadiprivate.so.*
@@ -199,6 +201,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Feb 18 2016 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.2
+- fix package dbus service file
+
 * Thu Sep 10 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.1
 - update from 1.13 branch
 
