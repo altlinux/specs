@@ -19,7 +19,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.5
+Version: %ver_major.5.1
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -52,7 +52,6 @@ Provides: camel
 %define eds_ver 3.18.4
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
-%define gtkhtml_ver 4.8.4
 %define libsoup_ver 2.42.0
 %define libnotify_ver 0.7.0
 %define gweather_ver 3.5.0
@@ -76,7 +75,6 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgail3-devel >= %gtk_ver
 BuildPreReq: gnome-icon-theme >= %gnome_icon_ver
 BuildPreReq: evolution-data-server-devel >= %eds_ver
-BuildPreReq: libgtkhtml4-devel >= %gtkhtml_ver
 BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
 BuildPreReq: libsoup-gnome-devel >= %libsoup_ver
 BuildPreReq: libnotify-devel >= %libnotify_ver
@@ -320,6 +318,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Thu Feb 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.5.1-alt1
+- 3.18.5.1
+
 * Mon Feb 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.5-alt1
 - 3.18.5
 
