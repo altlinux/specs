@@ -1,7 +1,7 @@
 Name: nfqfilter
 Version: 0.2
-Release: alt4
-Summary: Filtration system packages based on patterns
+Release: alt5
+Summary: Pattern-based packet filtering system
 Group: Networking/Other
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -14,8 +14,11 @@ BuildRequires: gcc-c++ libnetfilter_queue-devel libnfnetlink-devel
 BuildRequires: libpoco-devel >= 1.6
 BuildRequires: libnDPI-devel >= 1.7
 
+# Temporary, while upstream fix
+ExclusiveArch: x86_64
+
 %description
-Filtration system packages based on patterns
+Pattern-based packet filtering system
 
 %prep
 %setup
@@ -44,6 +47,7 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %files
 %doc README COPYING
 %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%name.ini
 %_sysconfdir/sysconfig/%name
 %_initdir/%name
 %_unitdir/*
@@ -51,6 +55,9 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Thu Feb 18 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt5
+- update to git:bacd85c4cb4c20dc7a68c228a61f3152c4f291f9
+
 * Mon Jan 25 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt4
 - update to git:f9f292a7f73e7378e3ce46c3ce0b61aa17c62897
 
