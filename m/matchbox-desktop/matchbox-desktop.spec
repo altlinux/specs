@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(libstartup-notification-1.0)
+# END SourceDeps(oneline)
 Summary: 	Desktop for the Matchbox Desktop
 Name: 		matchbox-desktop
 Version: 	2.0
-Release: 	alt1_10
+Release: 	alt1_11
 Url: 		http://matchbox-project.org/
 License: 	GPLv2+
 Group: 		Graphical desktop/Other
@@ -26,7 +29,6 @@ This package contains the main desktop from Matchbox.
 
 %prep
 %setup -q
-#%%apply_patches
 %patch0 -p1
 
 %build
@@ -56,6 +58,9 @@ EOF
 
 
 %changelog
+* Thu Feb 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_11
+- new release
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_10
 - update by mgaimport
 
