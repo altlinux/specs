@@ -1,5 +1,5 @@
 Name: picolisp
-Version: 15.11
+Version: 16.2
 Release: alt1
 
 Summary: Interpreted Lisp
@@ -53,6 +53,9 @@ ln -s ../lib/%name %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Thu Feb 18 2016 Michael Shigorin <mike@altlinux.org> 16.2-alt1
+- new version (watch file uupdate)
+
 * Tue Nov 24 2015 Michael Shigorin <mike@altlinux.org> 15.11-alt1
 - new version (watch file uupdate)
 
