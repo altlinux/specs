@@ -1,5 +1,5 @@
 Name: sg3_utils
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
@@ -8,7 +8,7 @@ Group: System/Kernel and hardware
 Url: http://sg.danny.cz/sg/sg3_utils.html
 # http://sg.danny.cz/sg/p/%name-%version.tgz
 Source: %name-%version.tar
-Requires: libsgutils = %version-%release
+Requires: libsgutils = %EVR
 
 %description
 Collection of Linux utilities for devices that use the SCSI command set.
@@ -34,7 +34,7 @@ This package contains the shared library for %name.
 %package -n libsgutils-devel
 Summary: Development library and header files for the sgutils library
 Group: Development/C
-Requires: libsgutils = %version-%release
+Requires: libsgutils = %EVR
 
 %description -n libsgutils-devel
 This package contains the development %name library and its header files
@@ -67,6 +67,9 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 %_libdir/*.so
 
 %changelog
+* Thu Feb 18 2016 Dmitry V. Levin <ldv@altlinux.org> 1.42-alt1
+- 1.41 -> 1.42.
+
 * Mon Jan 18 2016 Dmitry V. Levin <ldv@altlinux.org> 1.41-alt1
 - 1.40 -> 1.41.
 
