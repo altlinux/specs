@@ -4,7 +4,7 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.4.7
+Version: 1.3.4.8
 Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
@@ -185,6 +185,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Thu Feb 18 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.4.8-alt1
+- New version
+
 * Thu Jan 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.4.7-alt1
 - New version
 - Conflicts: lprng
