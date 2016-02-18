@@ -10,6 +10,7 @@
 %def_disable v8_internal
 %def_disable libchromiumcontent
 %def_enable  vaapi
+%def_enable  widevine
 
 %define v8_version 4.8.271.19
 
@@ -21,7 +22,7 @@
 
 Name:           chromium
 Version:        48.0.2564.109
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -89,6 +90,8 @@ Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
 # Experimental patches
 # https://bugs.launchpad.net/ubuntu/+source/chromium-browser/+bug/1424201
 Patch300:	chromium-enable_vaapi_on_linux.patch
+# If exterior-sourced widevine library exists at run-time, use it.
+Patch301:	chromium-fix_building_widevinecdm_with_chromium.patch
 
 BuildRequires: /proc
 
@@ -138,7 +141,8 @@ BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
 %if_disabled v8_internal
 BuildRequires:  libv8-chromium-devel = %v8_version
-Requires:       libv8-chromium = %v8_version
+BuildRequires:  libv8-chromium-bin = %v8_version
+Requires:       libv8-chromium-bin = %v8_version
 %endif
 BuildRequires:  libvpx-devel
 BuildRequires:  libwebp-devel
@@ -264,6 +268,9 @@ cp -a src/libchromiumcontent/chromiumcontent src
 %if_enabled vaapi
 %patch300 -p1 -d src
 %endif
+%if_enabled widevine
+%patch301 -p1 -d src
+%endif
 
 %if_disabled v8_internal
 # Replace anywhere v8 to system package
@@ -283,7 +290,7 @@ cp -a src/AUTHORS src/LICENSE .
 cd src
 
 # Set fake version for some components
-sed '11i#define WIDEVINE_CDM_VERSION_STRING "The Cake Is a Lie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
+#sed '11i#define WIDEVINE_CDM_VERSION_STRING "The Cake Is a Lie"' -i third_party/widevine/cdm/stub/widevine_cdm_version.h
 echo > "third_party/adobe/flash/flapper_version.h"
 
 # Rebuild configuration of bundled ffmpeg
@@ -380,6 +387,7 @@ cd src
 %ifarch arm armh
 	-Dtarget_arch=arm \
 	-Denable_webrtc=0 \
+	-Denable_widevine=0 \
 	-Duse_cups=1 \
 %ifarch arm
 	-Dv8_use_arm_eabi_hardfloat=false \
@@ -398,8 +406,12 @@ cd src
 %endif
 %endif
 %ifnarch arm armh
-	-Denable_webrtc=0 \
+        -Denable_webrtc=1 \
+%if_enabled widevine
+	-Denable_widevine=1 \
+%else
 	-Denable_widevine=0 \
+%endif
 %endif
 	-Duse_pulseaudio=1 \
 	-Duse_system_bzip2=1 \
@@ -454,9 +466,9 @@ ninja-build -C out/Release \
 	chrome \
 	chrome_sandbox \
 	chromedriver \
-	clearkeycdm
+	clearkeycdm \
+	widevinecdmadapter
 # Obsoleted or failed to build target
-#	widevinecdmadapter
 #	pdf
 
 %install
@@ -589,6 +601,16 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Wed Feb 17 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.109-alt2
+- Require libv8-chromium-bin as separate package
+
+* Mon Feb 15 2016 L.A. Kostis <lakostis@altlinux.ru> 48.0.2564.109-alt1.1
+- Enabled WebRTC support on non-ARM platforms.
+- Restored build of widevine (support of DRM-protected content playback).
+- Added patches from Debian:
+  + fix_building_widevinecdm_with_chromium.patch: If exterior-sourced 
+    widevine library exists at run-time, use it.
+
 * Wed Feb 10 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.109-alt1
 - New version
 - Security fixes:
