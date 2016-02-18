@@ -1,5 +1,5 @@
-%define		softver 36.0
-%define		buildver 2129.0
+%define		softver 37.0
+%define		buildver 2142.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
@@ -65,6 +65,9 @@ subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g'
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Thu Feb 18 2016 Motsyo Gennadi <drool@altlinux.ru> 37.0.2142.0-alt1
+- packaged 37.0.2142.0 snapshot
+
 * Fri Feb 05 2016 Motsyo Gennadi <drool@altlinux.ru> 36.0.2129.0-alt1
 - packaged 36.0.2129.0 snapshot
 
