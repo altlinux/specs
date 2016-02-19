@@ -1,15 +1,21 @@
+
+%define _libexecdir %prefix/libexec
+
 %def_disable check
 %def_with python
 
 Name: libsemanage
-Version: 2.3
+Version: 2.4
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
 Url: http://userspace.selinuxproject.org
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch1: alt-extra-homedirs.patch
+Patch2: alt-linking.patch
+Patch3: alt-pkgconfig.patch
+Patch4: alt-lib-install-dir.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
 BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.1 libselinux-devel >= 2.1 libaudit-devel
@@ -48,7 +54,6 @@ Requires: %name-devel = %version
 %description devel-static
 Static libraries for SELinux policy manipulation tools.
 
-
 %if_with python
 %package -n python-module-semanage
 Summary: Python module for %name
@@ -59,17 +64,33 @@ Requires: %name = %version
 Python bindings  for SELinux policy manipulation tools
 This package provides python bindings for the manipulation of SELinux
 binary policies.
+
+%package utils
+Summary: Utils for checking and mainplating policy binaries Security-enhanced Linux
+Group: System/Configuration/Other
+Provides: semanage_migrate_store = %version-%release
+Requires: %name = %version-%release
+Requires: python-module-selinux python-module-semanage
+
+%description utils
+libsepol provides an API for the manipulation of SELinux binary policies.
+It is used by checkpolicy (the policy compiler) and similar tools, as well
+as by programs like load_policy that need to perform specific transformations
+on binary policies such as customizing policy boolean settings.
 %endif
 
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 
 %build
-%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib all
-%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib pywrap}
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir all
+%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir pywrap}
 
 
 %install
@@ -102,10 +123,15 @@ ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
 %if_with python
 %files -n python-module-semanage
 %python_sitelibdir/*
+%files utils
+%_libexecdir/selinux/*
 %endif
 
 
 %changelog
+* Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
+- new version
+
 * Thu Feb 05 2015 Anton Farygin <rider@altlinux.ru> 2.3-alt1
 - new version
 

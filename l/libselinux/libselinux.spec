@@ -1,14 +1,15 @@
 %def_with python
 
 Name: libselinux
-Version: 2.3
+Version: 2.4
 Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch1: alt-man-selinuxconlist.patch
+Patch2: alt-linking.patch
 
 %{?_with_python:BuildPreReq: rpm-build-python}
 BuildRequires: libpcre-devel libsepol-devel >= 2.1.4
@@ -64,7 +65,8 @@ This package contains SELinux python bindings.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
@@ -116,6 +118,9 @@ fi
 
 
 %changelog
+* Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
+- new version
+
 * Thu Feb 05 2015 Anton Farygin <rider@altlinux.ru> 2.3-alt1
 - new version
 

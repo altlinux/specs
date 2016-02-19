@@ -1,6 +1,9 @@
+
+%define _libexecdir %prefix/libexec
+
 Summary: SELinux policy core utilities
 Name: policycoreutils
-Version: 2.3
+Version: 2.4
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -17,11 +20,15 @@ Source8: selinux-polgengui.console
 Source9: mcstrans.init
 Source11: restorecond.service
 Source12: mcstransd.service
-Patch0: %name-%version-%release.patch
-Patch1: policycoreutils-alt-autorelabel-fix-path.patch
-Patch2: policycoreutils-alt-fix-free-groups.patch
-Patch3: policycoreutils-alt-mcstrans.patch
-Patch4: policycoreutils-alt-newrole.patch
+Patch1: alt-autorelabel-fix-path.patch
+Patch2: alt-fix-free-groups.patch
+Patch3: alt-mcstrans.patch
+Patch4: alt-cap-setgid.patch
+Patch5: alt-symlink.patch
+Patch6: alt-semodule-path.patch
+Patch7: alt-newrole.patch
+Patch8: alt-fix-compile.patch
+
 %define mcstrans_ver 0.3.3
 Requires: python-module-semanage python-module-audit
 
@@ -121,17 +128,20 @@ system-config-selinux is a utility for managing the SELinux environment.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 sed -i '/^override CFLAGS/s/ -Werror//g' sandbox/Makefile
 sed -i 's/\( awk \)-S /\1/g' setfiles/Makefile
 
 
 %build
-%make_build LSPP_PRIV=y LIBDIR="%_libdir" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
 %make_build -C mcstrans LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)"
 
 
@@ -320,6 +330,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %add_python_req_skip templates
 
 %files devel
+%_libexecdir/selinux/hll/
 %_bindir/sepolgen
 %_bindir/sepolgen-ifgen
 %_bindir/sepolgen-ifgen-attr-helper
@@ -387,6 +398,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
+- new version
+
 * Thu Feb 05 2015 Anton Farygin <rider@altlinux.ru> 2.3-alt1
 - new version
 
