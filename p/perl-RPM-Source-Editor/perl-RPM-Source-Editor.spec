@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.854
+Version: 0.855
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -17,7 +17,7 @@ Url: http://search.cpan.org/dist/%module
 # Recommends: rpm-build
 
 # Automatically added by buildreq on Wed Nov 06 2010
-BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-RPM perl(Clone.pm)
+BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-RPM perl(Clone.pm) perl(Tie/Hash.pm)
 # for RPM::Source::Tools
 BuildRequires: perl(RPM/uscan.pm) perl-DistroMap perl(Pod/Strip.pm)
 
@@ -73,6 +73,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Fri Feb 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.855-alt1
+- development release
+
 * Fri Feb 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.854-alt1
 - development release
 
