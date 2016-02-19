@@ -1,23 +1,24 @@
 %define ver_major 3.0
+%define xdg_name org.gnome.gconf-editor
 
 Name: gconf-editor
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: An editor for the GConf configuration system.
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 %define GConf_ver 2.32.1-alt2
 %define gtk_ver 3.0.5
 
 Requires(post,preun): GConf >= %GConf_ver
 
-BuildPreReq: rpm-build-gnome >= 0.5
+BuildPreReq: rpm-build-gnome >= 0.5 gnome-common
 # From configure.in
 BuildPreReq: intltool >= 0.35.0 librarian gnome-doc-utils
 BuildPreReq: libGConf-devel >= %GConf_ver
@@ -29,16 +30,18 @@ An editor for the GConf configuration system.
 Directly edit your entire configuration database.
 
 %prep
-%setup -q
+%setup
 
 %build
+gnome-doc-prepare -f
+%autoreconf
 %configure --disable-scrollkeeper \
     --disable-schemas-install
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -57,9 +60,13 @@ fi
 %_man1dir/*
 %_datadir/%name
 %config %gconf_schemasdir/*
-%doc AUTHORS ChangeLog README
+%_datadir/appdata/%xdg_name.appdata.xml
+%doc AUTHORS NEWS README
 
 %changelog
+* Fri Feb 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt2
+- updated to 3.0.1-18-g41abb9a
+
 * Mon Nov 21 2011 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
