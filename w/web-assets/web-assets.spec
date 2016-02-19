@@ -1,12 +1,12 @@
-Group: Other
+Group: Development/Other
 %filter_from_requires /^.usr.share.fonts$/d
 #disable the httpd stuff while we're waiting on getting the path issues
 #cleared up
-%global enable_httpd 1
+%global enable_httpd 0
 
 Name:           web-assets
 Version:        5
-Release:        alt3_3
+Release:        alt3_4
 Summary:        A simple framework for bits pushed to browsers
 BuildArch:      noarch
 
@@ -31,13 +31,14 @@ License:        Public Domain
 %description filesystem
 %{summary}.
 
-%package devel
+%package -n rpm-macros-%name
 Group: Other
 Summary:        RPM macros for Web Assets packaging
 License:        MIT
-Requires:       web-assets-filesystem = %{version}-%{release}
+#Requires:       web-assets-filesystem = %{version}
+Provides: %name-devel = %{?epoch:%epoch:}%{version}-%{release}
 
-%description devel
+%description -n rpm-macros-%name
 %{summary}.
 
 %if 0%{?enable_httpd}
@@ -45,7 +46,7 @@ Requires:       web-assets-filesystem = %{version}-%{release}
 Group: Other
 Summary:        Web Assets aliases for the Apache HTTP daemon
 License:        MIT
-Requires:       web-assets-filesystem = %{version}-%{release}
+Requires:       web-assets-filesystem = %{version}
 Requires:       httpd
 
 %description httpd
@@ -68,7 +69,7 @@ ln -sf ../javascript %{buildroot}%{_datadir}/web-assets/javascript
 ln -sf ../javascript %{buildroot}%{_datadir}/web-assets/js
 ln -sf ../fonts %{buildroot}%{_datadir}/web-assets/fonts
 
-install -Dpm0644 %{SOURCE2} %{buildroot}%{_rpmmacrosdir}/macros.web-assets
+install -Dpm0644 %{SOURCE2} %{buildroot}%{_rpmmacrosdir}/web-assets
 
 %if 0%{?enable_httpd}
 install -Dpm0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/httpd/conf.d/web-assets.conf
@@ -78,8 +79,8 @@ install -Dpm0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/httpd/conf.d/web-assets.c
 %{_datadir}/web-assets
 %{_datadir}/javascript
 
-%files devel
-%{_rpmmacrosdir}/macros.web-assets
+%files -n rpm-macros-%name
+%{_rpmmacrosdir}/web-assets
 %doc LICENSE README.devel
 
 %if 0%{?enable_httpd}
@@ -89,6 +90,9 @@ install -Dpm0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/httpd/conf.d/web-assets.c
 %endif
 
 %changelog
+* Fri Feb 19 2016 Igor Vlasenko <viy@altlinux.ru> 5-alt3_4
+- added rpm-macros-web-assets
+
 * Thu Dec 31 2015 Igor Vlasenko <viy@altlinux.ru> 5-alt3_3
 - to Sisyphus as BR: for mathjax
 
