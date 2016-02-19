@@ -1,67 +1,79 @@
 %define rname mscore
+%define mversion 2.0
 
 Name: musescore
-Version: 1.3
+Version: 2.0.2
 Release: alt1
 
-Summary: A free WYSIWYG music score typesetter
+Summary: Music notation and composition software
 
 License: GPL2
 Group: Sound
-Url: http://mscore.sourceforge.net/
+Url: https://musescore.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%rname/%rname-%version.tar.bz2
-Source1: mscore.desktop
-Patch1: mscore-dso-linking.patch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildPreReq: chrpath
 
 # Automatically added by buildreq on Thu Jan 06 2011
-BuildRequires: ccmake doxygen gcc-c++ ghostscript-utils graphviz latex2html libalsa-devel libjack-devel libportaudio2-devel libsndfile-devel qt4-designer
-
-# needed for qt.core and so on in JavaScript plugins
-Requires: qtscriptbindings
+BuildRequires: ccmake doxygen gcc-c++ ghostscript-utils graphviz latex2html
+BuildRequires: libalsa-devel libjack-devel libportaudio2-devel libsndfile-devel
+BuildRequires: qt5-designer qt5-base-devel libpulseaudio-devel libfreetype-devel
+BuildRequires: liblame-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel
+BuildRequires: qt5-script-devel qt5-xmlpatterns-devel qt5-quick1-devel qt5-svg-devel
+BuildRequires: qt5-tools-devel-static zlib-devel libvorbis-devel
 
 %description
-MuseScore is a graphical music typesetter. It allows for fast
-and easy note entry on a virtual note sheet. It has an
-integrated sequencer to allow for immediate play of the score.
-MuseScore can import and export MusicXml and standard Midi files.
+Music notation and composition software
 
-Run
-"modprobe snd-seq" as root
-if you get ALSA lib seq_hw.c:457:(snd_seq_hw_open) open /dev/snd/seq failed: No such file or directory
+* WYSIWYG design, notes are entered on a "virtual notepaper"
+* TrueType font(s) for printing & display allows for high quality scaling to all sizes
+* easy & fast note entry
+* many editing functions
+* MusicXML import/export
+* Midi (SMF) import/export
+* MuseData import
+* Midi input for note entry
+* integrated sequencer and software synthesizer to play the score
+* print or create pdf files
 
 %prep
-%setup -n %rname-%version
-sed -i "s| -m32||g" mscore/CMakeLists.txt
-%patch1 -p1 -b .dso
-sed -i 's@":/fonts@"%_datadir/mscore-%version/fonts@g' mscore/mscore/mscore.cpp
+%setup
+%patch -p1
+
+sed -i 's@":/fonts@"%_datadir/mscore-%mversion/fonts@g' libmscore/mscore.cpp libmscore/figuredbass.cpp libmscore/sym.cpp libmscore/stafftype.cpp
 
 %build
-export PATH=$PATH:%_qt4dir/bin
-mkdir build && cd build
+export PATH=$PATH:%%_qt5dir/bin
+mkdir build.debug && cd build.debug
 cmake \
 	-DCMAKE_BUILD_TYPE=RELEASE \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
         -DBUILD_SCRIPTGEN=FALSE \
-	../mscore
-# compile translations
-make lupdate
+	..
+
 make lrelease
-# run build
+make manpages
 %make_build
-make doxy
-cp %SOURCE1 .
 
 %install
-cd build
+cd build.debug
 %makeinstall_std
-for f in ../mscore/mscore/fonts/*.ttf; do
-	install -D $f %buildroot%_datadir/mscore-%version/fonts/$(basename $f)
+for f in ../fonts/*.ttf ../fonts/*.xml; do
+     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/$(basename $f)
+done
+for f in ../fonts/bravura/*.otf ../fonts/bravura/*.json; do
+     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/bravura/$(basename $f)
+done
+for f in ../fonts/gootville/*.otf ../fonts/gootville/*.json; do
+     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/gootville/$(basename $f)
+done
+for f in ../fonts/mscore/*.ttf ../fonts/mscore/*.otf ../fonts/mscore/*.json; do
+     install -D $f %buildroot%_datadir/mscore-%mversion/fonts/mscore/$(basename $f)
 done
 
 chrpath -d %buildroot%_bindir/mscore
@@ -69,11 +81,19 @@ chrpath -d %buildroot%_bindir/mscore
 %files
 %_bindir/mscore
 %_desktopdir/mscore.desktop
-%_datadir/mscore-%version
-%_qt4dir/plugins/designer/libawlplugin.so
-%_pixmapsdir/mscore.*
+%_datadir/mscore-%mversion
+%_man1dir/mscore.1.*
+%_xdgmimedir/packages/musescore.xml
+%_iconsdir/hicolor/48x48/mimetypes/*
+%_iconsdir/hicolor/64x64/apps/*
+%_iconsdir/hicolor/scalable/mimetypes/*
+%_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Tue Feb 16 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.2-alt1
+- 2.0.2
+- build from upstream git repo
+
 * Mon Apr 15 2013 Fr. Br. George <george@altlinux.ru> 1.3-alt1
 - Version up
 - Fix broken fonts usage in 1.2
