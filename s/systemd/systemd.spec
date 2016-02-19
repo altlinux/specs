@@ -30,7 +30,7 @@
 %def_enable lz4
 
 %def_disable smack
-%def_disable seccomp
+%def_enable seccomp
 %def_disable ima
 %def_enable selinux
 %def_disable apparmor
@@ -56,8 +56,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 228
-Release: alt2
+Version: 229
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -82,6 +82,7 @@ Source21: 40-ignore-remove.rules
 Source22: scsi_id.config
 Source23: var-lock.mount
 Source24: var-run.mount
+Source25: udevd-final.service
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 Source30: 49-coredump-null.conf
@@ -156,7 +157,7 @@ BuildRequires: pkgconfig(mount) >= 2.27
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 1.6.0}
-%{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5}
+%{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
@@ -555,6 +556,7 @@ Group: System/Configuration/Hardware
 License: GPLv2+
 BuildArch: noarch
 PreReq: udev-rules = %EVR
+PreReq: udev = %EVR
 Provides: udev-rule-generator = %EVR
 Obsoletes: udev-rule-generator < %EVR
 
@@ -567,6 +569,7 @@ Group: System/Configuration/Hardware
 License: GPLv2+
 BuildArch: noarch
 PreReq: udev-rules = %EVR
+PreReq: udev = %EVR
 
 %description -n udev-rule-generator-net
 This package contains Net rule generator for udev
@@ -715,6 +718,7 @@ ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
 ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
 ln -s systemd-reboot.service %buildroot%_unitdir/reboot.service
 ln -s systemd-halt.service %buildroot%_unitdir/halt.service
+ln -s systemd-tmpfiles-setup.service %buildroot%_unitdir/tmpfiles.service
 
 # restore bind-mounts /var/run -> run and /var/lock -> /run/lock
 # we don't have those directories symlinked
@@ -887,10 +891,10 @@ EOF
 #######
 mkdir -p %buildroot%_initdir
 install -p -m755 %SOURCE19 %buildroot%_initdir/udevd
-#install -p -m755 %SOURCE20 %buildroot%_initdir/udevd-final
+install -p -m755 %SOURCE20 %buildroot%_initdir/udevd-final
 
 ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
-#ln -s systemd-udev-settle.service %buildroot%_unitdir/udevd-final.service
+install -p -m644 %SOURCE25 %buildroot%_unitdir/udevd-final.service
 
 # compatibility symlinks to udevd binary
 ln -r -s %buildroot/lib/systemd/systemd-udevd %buildroot/lib/udev/udevd
@@ -1042,6 +1046,13 @@ if [ $1 -eq 0 ] ; then
 fi
 %endif
 
+%if_enabled coredump
+%pre coredump
+%_sbindir/groupadd -r -f systemd-coredump >/dev/null 2>&1 ||:
+%_sbindir/useradd -g systemd-coredump -c 'systemd Core Dumper' \
+    -d /var/empty -s /dev/null -r -l -M systemd-coredump >/dev/null 2>&1 ||:
+%endif
+
 %if_enabled timesyncd
 %pre timesyncd
 %_sbindir/groupadd -r -f systemd-timesync >/dev/null 2>&1 ||:
@@ -1169,10 +1180,22 @@ update_chrooted all
 
 %post -n udev
 %post_service udevd
+if [ $1 -eq 1 ]; then
+/sbin/chkconfig --add udevd-final
+fi
 /sbin/udevadm hwdb --update >/dev/null 2>&1 || :
 
 %preun -n udev
 %preun_service udevd
+if [ $1 -eq 0 ]; then
+/sbin/chkconfig --del udevd-final
+fi
+
+%triggerin -n udev -- udev-rule-generator-cdrom
+/sbin/chkconfig udevd-final on
+
+%triggerin -n udev -- udev-rule-generator-net
+/sbin/chkconfig udevd-final on
 
 %files -f %name.lang
 %dir %_sysconfdir/systemd/system
@@ -1259,6 +1282,11 @@ update_chrooted all
 %if_enabled libcurl
 %exclude %_unitdir/systemd-journal-upload*
 %endif
+%if_enabled coredump
+%exclude %_unitdir/systemd-coredump*
+%exclude %_unitdir/*/systemd-coredump*
+%endif
+
 %exclude %_unitdir/*udev*
 %exclude %_unitdir/*/*udev*
 
@@ -1537,7 +1565,7 @@ update_chrooted all
 /lib/systemd/systemd-networkd
 /lib/systemd/systemd-networkd-wait-online
 /lib/systemd/systemd-resolved
-/lib/systemd/systemd-resolve-host
+%_bindir/systemd-resolve
 /lib/tmpfiles.d/systemd-network.conf
 %_unitdir/systemd-networkd.*
 %_unitdir/systemd-resolved.*
@@ -1552,6 +1580,10 @@ update_chrooted all
 %_mandir/*/*network*
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
+%_man1dir/systemd-resolve.*
+%_man5dir/dnssec-trust-anchors.d.*
+%_man5dir/systemd.negative.*
+%_man5dir/systemd.positive.*
 %endif
 
 %if_enabled timesyncd
@@ -1599,6 +1631,8 @@ update_chrooted all
 /lib/systemd/systemd-coredump
 %_bindir/*coredumpctl
 /lib/sysctl.d/50-coredump.conf
+%_unitdir/systemd-coredump*
+%_unitdir/*/systemd-coredump*
 %_man1dir/*coredumpctl.*
 %_man5dir/coredump.conf.*
 %_man8dir/systemd-coredump.*
@@ -1732,6 +1766,13 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Feb 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:229-alt1
+- 229
+- enable seccomp support
+- useradd systemd-coredump to systemd-coredump package
+- add alias tmpfiles.service for systemd-tmpfiles-setup.service
+- return udevd-final service for copy generated rules to /etc/udev/rules.d/
+
 * Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 1:228-alt2
 - package dir /etc/systemd/network to systemd-networkd
 
