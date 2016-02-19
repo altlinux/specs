@@ -1,15 +1,15 @@
 %define cfg %_builddir/%name-%version/
-%define rev 49992
+%define rev 51665
 
 Name:       lazarus
-Version:    1.4.4
-Release:    alt2
+Version:    1.6.0
+Release:    alt1
 Epoch:      1
 
 Summary:    Lazarus Component Library and IDE
 License:    GPL and modified LGPL
 Group:      Development/Other
-Url:        http://www.lazarus.freepascal.org/
+Url:        http://www.lazarus-ide.org/
 
 Packager:   Andrey Cherepanov <cas@altlinux.org>
 
@@ -189,6 +189,10 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 %dir %_datadir/fpcsrc/packages/fcl-base
 
 %changelog
+* Fri Feb 19 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.6.0-alt1
+- New version (http://wiki.lazarus.freepascal.org/Lazarus_1.6.0_release_notes)
+- Change project URL
+
 * Mon Dec 14 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.4.4-alt2
 - Rebuild with fpc-3.0.0
 
