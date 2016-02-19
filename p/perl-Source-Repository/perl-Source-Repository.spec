@@ -1,8 +1,8 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.29
-Release: alt3
+Version: 0.30
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -14,7 +14,7 @@ Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport
-Requires: perl-RPM-Source-Editor > 0.829
+Requires: perl-RPM-Source-Editor > 0.853
 Conflicts: perl-RPM-Source-Convert < 0.48
 
 %description
@@ -36,6 +36,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Fri Feb 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- development release
+
 * Thu Feb 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.29-alt3
 - stable release
 
