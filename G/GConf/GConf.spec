@@ -12,7 +12,7 @@
 
 Name: GConf
 Version: %ver_major.6
-Release: alt2
+Release: alt3
 
 Provides: %oldname = %version
 Obsoletes: %oldname < %version
@@ -20,12 +20,10 @@ Obsoletes: %oldname < %version
 Obsoletes: %name-sanity-check
 
 Summary: Gnome Config System
-Summary(ru_RU.KOI8-R): óÉÓÔÅÍÁ ËÏÎÆÉÇÕÒÁÃÉÉ Gnome
+Summary(ru_RU.UTF-8): Ð¡Ð¸ÑÑ‚ÐµÐ¼Ð° ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸ Gnome
 License: %lgpl2plus
 Group: System/Servers
 Url: http://projects.gnome.org/gconf/
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar
 #Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -306,6 +304,9 @@ install -pD -m644 gconftool-2.man %buildroot%_man1dir/gconftool-2.1
 %endif
 
 %changelog
+* Fri Feb 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt3
+- updated to 3.2.5-43-g0780809
+
 * Mon May 06 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt2
 - updated to b0895e1
 - applied fix for ALT #28916 from fc
