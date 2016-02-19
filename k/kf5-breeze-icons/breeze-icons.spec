@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.19.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -42,17 +42,41 @@ Group: Graphics
 %install
 %K5install
 
-# 6619
+# 5858 7498
 for t in %buildroot/%_iconsdir/* ; do
     [ -d $t ] || continue
+    theme_subdir=`basename $t`
+    mkdir %buildroot/%_iconsdir/tmp-$theme_subdir
     pushd $t
     ls -1d */* | \
-    while read ctx ; do
-	[ -d $ctx ] || continue
-	%_libexecdir/icon-name-mapping -c $ctx
+    while read subdir ; do
+	[ -d $subdir ] || continue
+	ctx=`dirname $subdir`
+	sz=`basename $subdir`
+	mkdir -p %buildroot/%_iconsdir/tmp-$theme_subdir/$sz
+	ln -s $t/$ctx/$sz %buildroot/%_iconsdir/tmp-$theme_subdir/$sz/$ctx
     done
     popd
 done
+
+for t in %buildroot/%_iconsdir/tmp-* ; do
+    [ -d $t ] || continue
+    pushd $t
+	ls -1d * | \
+	while read sz ; do
+	    [ -d $sz ] || continue
+	    pushd $sz
+	    ls -1d * | \
+	    while read ctx ; do
+		[ -d $ctx ] || continue
+		%_libexecdir/icon-name-mapping -c $ctx
+	    done
+	    popd
+	done
+    popd
+done
+
+rm -rf %buildroot/%_iconsdir/tmp-*
 
 # fix broken symlinks
 find %buildroot/%_iconsdir -type l | \
@@ -64,6 +88,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Fri Feb 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt2
+- fix icon-name-mapping usage
+
 * Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
 - new version
 
