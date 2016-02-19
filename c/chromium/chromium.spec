@@ -12,7 +12,7 @@
 %def_enable  vaapi
 %def_enable  widevine
 
-%define v8_version 4.8.271.19
+%define v8_version 4.8.271.20
 
 %if_enabled debug
 %define buildtype Debug
@@ -21,8 +21,8 @@
 %endif
 
 Name:           chromium
-Version:        48.0.2564.109
-Release:        alt2
+Version:        48.0.2564.116
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -601,6 +601,11 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Fri Feb 19 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.116-alt1
+- New version
+- Security fixes:
+  - Critical CVE-2016-1629: Same-origin bypass in Blink and Sandbox escape in Chrome.
+
 * Wed Feb 17 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.109-alt2
 - Require libv8-chromium-bin as separate package
 
