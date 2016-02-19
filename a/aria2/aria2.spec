@@ -1,6 +1,6 @@
 Name: aria2
-Version: 1.19.3
-Release: alt2
+Version: 1.20.0
+Release: alt1
 
 Summary: aria2 - a simple utility for downloading files faster
 License: GPLv2+ with exceptions
@@ -109,6 +109,9 @@ mv %buildroot%_docdir/aria2/* %buildroot%_docdir/%name-%version
 
 
 %changelog
+* Fri Feb 19 2016 Ilya Mashkin <oddity@altlinux.ru> 1.20.0-alt1
+- 1.20.0
+
 * Fri Dec 11 2015 Ilya Mashkin <oddity@altlinux.ru> 1.19.3-alt2
 - spec updates
 
