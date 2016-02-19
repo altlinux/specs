@@ -1,6 +1,6 @@
 %define module_name lsadrv
-%define module_version 2.0.1
-%define module_release	alt5
+%define module_version 1.2.3
+%define module_release	alt1
 
 %define module_source	%module_name-%module_version.tar
 
@@ -8,11 +8,13 @@
 Name: kernel-source-%module_name
 Version: %module_version
 Release: %module_release
+Epoch: 1
+
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name modules sources for Hitachi StarBoard.
 License: GPL
 Group: Development/Kernel
-URL: http://nixtech.ru/
+URL: http://www.charmexdocs.com/int/software/SBS0962_LINUX.zip
 BuildArch: noarch
 
 BuildRequires: kernel-build-tools
@@ -27,21 +29,24 @@ This is usable for Hitachi StarBoard interactive whiteboard.
     FX-DUO-63/77/88W Wired
     FX-TRIO-77/77(S)/88W
 
-
 %prep
 %setup -n %module_name-%module_version
 
 %install
-%__mkdir_p %kernel_srcdir
+mkdir -p %kernel_srcdir
 cd ..
-%__mv %module_name-%module_version kernel-source-%module_name-%module_version
-%__tar -c  kernel-source-%module_name-%module_version | %__bzip2 -c > \
+mv %module_name-%module_version kernel-source-%module_name-%module_version
+tar -c  kernel-source-%module_name-%module_version | %__bzip2 -c > \
 	%kernel_srcdir/kernel-source-%module_name-%module_version.tar.bz2
 
 %files
 %_usrsrc/*
 
 %changelog
+* Fri Feb 19 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.2.3-alt1
+- New version (ALT #31825)
+- Change project homepage
+
 * Sat Feb 5 2011 Rinat Bikov <becase@altlinux.ru> 2.0.1-alt5
 - tar.xz replaceb by tar
 
