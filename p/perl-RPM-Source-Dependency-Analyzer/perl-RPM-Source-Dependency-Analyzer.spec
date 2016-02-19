@@ -3,7 +3,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.007
+Version: 0.008
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -15,7 +15,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
 BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-RPM-Source-Editor perl(Pod/Strip.pm)
-BuildRequires: perl-DistroMap 
+BuildRequires: perl-DistroMap perl-Marpa-R2
 
 %description
 %summary
@@ -40,6 +40,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/%module/headers-ignore/stdhead
 #%_man1dir/buildreq-*
 
 %changelog
+* Fri Feb 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- development release
+
 * Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.007-alt1
 - bugfix release
 
