@@ -1,5 +1,5 @@
 Name: glibc
-Version: 2.22
+Version: 2.23
 Release: alt1
 Epoch: 6
 
@@ -27,6 +27,14 @@ Url: http://www.gnu.org/software/glibc/
 %endif
 
 %define enablekernel 2.6.32
+
+%ifarch aarch64
+%define enablekernel 3.7.0
+%endif
+
+%ifarch x32
+%define enablekernel 3.4.0
+%endif
 
 %define basever 2.5.1
 
@@ -492,10 +500,7 @@ export test-xfail-ISO/math.h/linknamespace=yes
 export test-xfail-ISO/setjmp.h/linknamespace=yes
 export test-xfail-ISO/signal.h/linknamespace=yes
 export test-xfail-ISO/stdio.h/linknamespace=yes
-export test-xfail-test-double=yes
-export test-xfail-test-double-vlen2=yes
-export test-xfail-test-double-vlen4=yes
-export test-xfail-test-idouble=yes
+export test-xfail-tst-malloc-thread-exit=yes
 %endif
 %ifarch %ix86
 export test-xfail-ISO/assert.h/linknamespace=yes
@@ -507,10 +512,12 @@ export test-xfail-ISO/setjmp.h/linknamespace=yes
 export test-xfail-ISO/signal.h/linknamespace=yes
 export test-xfail-ISO/stdio.h/linknamespace=yes
 export test-xfail-test-double=yes
-export test-xfail-test-float=yes
 export test-xfail-test-idouble=yes
-export test-xfail-test-ifloat=yes
 export test-xfail-tst-cleanupx4=yes
+export test-xfail-test-double-finite=yes
+export test-xfail-test-ildoubl=yes
+export test-xfail-test-ldouble=yes
+export test-xfail-test-ldouble-finite=yes
 %endif
 
 include Makefile
@@ -518,6 +525,8 @@ include Makefile
 
 make %PARALLELMFLAGS -C %buildtarget -f xfail.mk -k check fast-check=yes LDFLAGS=-Wl,--no-as-needed || {
   rc=$?
+  grep '^FAIL:' %buildtarget/tests.sum | cut -d" " -f2- |
+    xargs -i tail -v -n 100 %buildtarget/{}.test-result %buildtarget/{}.out ||:
   if grep -qs '^export test-xfail' %buildtarget/xfail.mk; then
     exit $rc
   fi
@@ -697,6 +706,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Fri Feb 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.23-alt1
+- Updated to 2.23 branch with backports from master and fedora.
+
 * Tue Dec 08 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.22-alt1
 - Updated to 2.22 branch with backports from master and fedora.
 
