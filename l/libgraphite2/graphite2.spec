@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: lib%_name
-Version: 1.2.4
+Version: 1.3.5
 Release: alt1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
@@ -21,7 +21,7 @@ Patch1: graphite2-1.2.0-cmakepath.patch
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
 %{?_enable_docs:BuildRequires: doxygen asciidoc-a2x}
 # for tests
-BuildRequires: python-modules-json
+BuildRequires: python-modules-json python-module-fonttools
 
 %description
 Graphite2 is a project within SIL's Non-Roman Script Initiative and
@@ -74,6 +74,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.5-alt1
+- 1.3.5
+
 * Tue Feb 25 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
