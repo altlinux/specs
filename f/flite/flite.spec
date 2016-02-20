@@ -1,5 +1,5 @@
 Name: flite
-Version: 1.5.4
+Version: 2.0.0
 Release: alt1
 
 Summary: flite - a small, fast speech synthesis engine
@@ -32,7 +32,7 @@ development files for flite, a small, fast speech synthesis engine
 
 %build
 %autoreconf
-%configure --enable-shared --with-vox=cmu_us_kal16
+%configure --enable-shared --with-audio=alsa --with-vox=cmu_us_kal16
 make
 
 %install
@@ -40,6 +40,9 @@ make
 	INSTALLBINDIR=%buildroot%_bindir \
 	INSTALLLIBDIR=%buildroot%_libdir  \
 	INSTALLINCDIR=%buildroot%_includedir 
+mkdir -p %buildroot%_pkgconfigdir
+sed -e 's,@libdir@,%_libdir,' -e 's,@version@,%version,' \
+	< flite.pc.in > %buildroot%_pkgconfigdir/flite.pc
 
 %files
 %doc ACKNOWLEDGEMENTS README COPYING doc/html
@@ -49,8 +52,12 @@ make
 %files -n %name-devel
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/flite.pc
 
 %changelog
+* Fri Feb 19 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
+- 2.0.0 released
+
 * Mon May 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.4-alt1
 - 1.5.4 released
 
