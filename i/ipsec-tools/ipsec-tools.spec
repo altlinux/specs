@@ -1,6 +1,6 @@
 Summary: IPsec-Tools package use the IPsec functionality in the linux-2.5+ kernels.
 Name: ipsec-tools
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 URL: http://ipsec-tools.sourceforge.net/
 License: BSD
@@ -33,6 +33,10 @@ Patch18: ipsec-tools-0.7.3-gssapi-mech.patch
 Patch19: ipsec-tools-0.7.3-build.patch
 # Silence strict aliasing warnings
 Patch20: ipsec-tools-0.8.0-aliasing.patch
+# CVE-2015-4047
+Patch21: ipsec-tools-0.8.2-CVE-2015-4047.patch
+# Calling_station-Id attribute for xauth RADIUS requests
+Patch22: ipsec-tools-0.8.2-952413.patch
 
 Patch100: ipsec-tools-0.7.2-alt-werror.patch
 Patch101: ipsec-tools-0.8.0-alt-makefile.patch
@@ -83,6 +87,8 @@ IPSec-Tools development files package.
 %patch18 -p1 -b .gssapi-mech
 %patch19 -p1 -b .build
 %patch20 -p1 -b .aliasing
+%patch21 -p1 -b .cve_2015_4047
+%patch22 -p1 -b .station_id
 
 #%patch100 -p1 -b .werror
 %patch101 -p1 -b .altmake
@@ -154,11 +160,8 @@ install -p -m0644 %SOURCE6 %buildroot%_unitdir/racoon.service
 %_sbindir/racoonctl
 %_sbindir/setkey
 %_man3dir/*
-%_man5dir/racoon.conf.5*
-%_man8dir/plainrsa-gen.8.gz
-%_man8dir/racoon.8.gz
-%_man8dir/racoonctl.8.gz
-%_man8dir/setkey.8.gz
+%_man5dir/*
+%_man8dir/*
 %doc ChangeLog NEWS README src/racoon/doc/* src/racoon/samples/roadwarrior src/racoon/samples/*sample*
 %dir %_localstatedir/racoon
 
@@ -176,6 +179,10 @@ install -p -m0644 %SOURCE6 %buildroot%_unitdir/racoon.service
 
 
 %changelog
+* Sun Feb 21 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt1
+- 0.8.2
+- fixed CVE-2015-4047
+
 * Thu May 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.1-alt1
 - 0.8.1
 - add systemd unit file
