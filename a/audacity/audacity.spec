@@ -1,6 +1,6 @@
 Name: audacity
 Version: 2.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform audio editor
 License: GPL
@@ -120,6 +120,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/%name/help
 
 %changelog
+* Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1.1
+- rebuilt against libSoundTouch.so.1
+
 * Fri Oct 09 2015 Michael Shigorin <mike@altlinux.org> 2.1.1-alt1
 - 2.1.1
 - manual moved to a separate subpackage (not unlike fedora)

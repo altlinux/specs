@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt1.rc
+Release: alt1.rc.1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -66,6 +66,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1.rc.1
+- rebuilt against libSoundTouch.so.1
+
 * Mon Aug 03 2015 Nazarov Denis <nenderus@altlinux.org> 5.0-alt1.rc
 - Version 5.0 RC
 

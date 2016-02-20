@@ -1,7 +1,7 @@
 %define oname soundtouch
 
 Name: libsoundtouch
-Version: 1.8.0
+Version: 1.9.2
 Release: alt1
 
 Summary: SoundTouch audio processing library
@@ -9,9 +9,7 @@ Group: System/Libraries
 License: LGPLv2.1
 Url: http://www.surina.net/soundtouch/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://www.surina.net/%oname/%{oname}-%version.tar.bz2
+Source: http://www.surina.net/%oname/%{oname}-%version.tar.gz
 
 BuildRequires: gcc-c++ libstdc++-devel
 
@@ -32,7 +30,7 @@ Requires: %name = %version-%release
 Libraries/include files for development with %name.
 
 %prep
-%setup -n %oname-%version
+%setup -n %oname
 
 %build
 #touch NEWS README AUTHORS ChangeLog
@@ -57,6 +55,9 @@ rm -rf %buildroot/%_prefix/doc
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Fri Feb 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
+- 1.9.2
+
 * Tue Nov 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 - removed obsolete patches

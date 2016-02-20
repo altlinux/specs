@@ -8,7 +8,8 @@
 
 Name: %gst_plugins-bad
 Version: %ver_major.23
-Release: alt3
+Release: alt4
+
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
 License: LGPL
@@ -106,6 +107,9 @@ gtkdocize
 %endif
 
 %changelog
+* Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.23-alt4
+- rebuilt against libSoundTouch.so.1
+
 * Wed Nov 19 2014 Yuri N. Sedunov <aris@altlinux.org> 0.10.23-alt3
 - rebuilt with libsoundtouch-1.8.0
 
