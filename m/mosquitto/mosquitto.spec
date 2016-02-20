@@ -2,8 +2,8 @@
 %define mosquitto_group     mosquitto
 
 Name: mosquitto
-Version: 1.4.7
-Release: alt3
+Version: 1.4.8
+Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -87,6 +87,25 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 %_libdir/*.so
 
 %changelog
+* Sat Feb 20 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.8-alt1
+- build new version (ChangeLog.txt):
+Broker:
+- Wills published by clients connected to a listener with mount_point defined
+  now correctly obey the mount point. This was a potential security risk
+  because it allowed clients to publish messages outside of their restricted
+  mount point. This is only affects brokers where the mount_point option is in
+  use. Closes #487178.
+- Fix detection of broken connections on Windows. Closes #485143.
+- Close stdin etc. when daemonised. Closes #485589.
+- Fix incorrect detection of FreeBSD and OpenBSD. Closes #485131.
+
+Client library:
+- mosq->want_write should be cleared immediately before a call to SSL_write,
+  to allow clients using mosquitto_want_write() to get accurate results.
+
+* Mon Feb 08 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt4
+- set default bind address 'localhost'
+
 * Mon Feb 08 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.7-alt3
 - remove /var/lib/mosquitto (not used)
 
