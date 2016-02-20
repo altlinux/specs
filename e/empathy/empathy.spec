@@ -15,15 +15,15 @@
 
 Name: empathy
 Version: %ver_major.11
-Release: alt2
+Release: alt3
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
 Group: Networking/Instant messaging
 Url: https://live.gnome.org/Empathy
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Conflicts: telepathy-haze-aim
 Obsoletes: libempathy libempathy-gtk python-module-empathy
@@ -128,7 +128,8 @@ NOCONFIGURE=1 ./autogen.sh
 	%{?_enable_geocode:--enable-geocode=yes} \
 	%{?_enable_location:--enable-location=yes} \
 	%{?_enable_gudev:--enable-gudev=yes} \
-	%{subst_with cheese}
+	%{subst_with cheese} \
+	--disable-Werror
 # SMP-incompatible build
 %make
 
@@ -147,9 +148,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_libexecdir/empathy-call
 %_libexecdir/empathy-chat
 %dir %_libdir/%name
-%_libdir/%name/lib%name-%version.so
+%_libdir/%name/lib%name-%{version}*.so
 %_libdir/%name/lib%name.so
-%_libdir/%name/lib%name-gtk-%version.so
+%_libdir/%name/lib%name-gtk-%{version}*.so
 %_libdir/%name/lib%name-gtk.so
 %exclude %_libdir/%name/*.la
 %if_enabled goa
@@ -185,6 +186,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt3
+- updated to 3.12.11-10-ga7ad339
+
 * Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt2
 - rebuilt against libgnutls.so.30
 
