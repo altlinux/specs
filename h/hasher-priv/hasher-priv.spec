@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -59,6 +59,11 @@ groupadd -r -f hashman
 %doc DESIGN
 
 %changelog
+* Wed Feb 17 2016 Dmitry V. Levin <ldv@altlinux.org> 1.5.2-alt1
+- chrootuid: Implemented /dev/pts/ptmx support.
+- Hardened default mount options for builtin mount points.
+- Changed builtin devpts mount options to use "newinstance" feature.
+
 * Fri Jan 23 2015 Dmitry V. Levin <ldv@altlinux.org> 1.5.1-alt1
 - Allowed group writable sticky directories to be used as
   mount points when mount namespace isolation is in effect.
