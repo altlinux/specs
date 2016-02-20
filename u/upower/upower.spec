@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec/upower
 
 Name: upower
-Version: 0.99.3
+Version: 0.99.4
 Release: alt1
 
 Summary: Power Management Service
@@ -17,8 +17,11 @@ Requires: lib%name = %version-%release
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gtk-doc intltool libdbus-glib-devel libgio-devel libgudev-devel
-BuildRequires: libpolkit1-devel libudev-devel libusb-devel gobject-introspection-devel
+%define glib_ver 2.34
+
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: gtk-doc intltool libusb-devel libgudev-devel
+BuildRequires: libpolkit1-devel libudev-devel gobject-introspection-devel
 BuildRequires: libimobiledevice-devel systemd-devel libsystemd-daemon-devel
 
 %description
@@ -120,6 +123,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.99.4-alt1
+- 0.99.4
+
 * Sun May 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.99.3-alt1
 - 0.99.3 release
 
