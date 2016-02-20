@@ -1,6 +1,6 @@
 Name: SimGear
-Version: 3.6.0
-Release: alt0.1
+Version: 2016.1.1
+Release: alt1
 
 Summary: Simulator Construction Tools
 License: GPL
@@ -57,6 +57,9 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Sat Feb 20 2016 Michael Shigorin <mike@altlinux.org> 2016.1.1-alt1
+- 2016.1
+
 * Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 3.6.0-alt0.1
 - 3.6.0-RC
 - updated fedora patches
