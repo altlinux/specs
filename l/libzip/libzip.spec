@@ -3,7 +3,7 @@
 %define libname libzip%sover
 %define utilsname libzip-utils
 Name: libzip
-Version: 1.0.1
+Version: 1.1.2
 Release: alt1
 Summary: C library for reading, creating, and modifying zip archives
 
@@ -67,12 +67,12 @@ developing applications that use %name.
 
 
 %files -n %utilsname
-%doc AUTHORS NEWS README THANKS TODO
+%doc AUTHORS NEWS THANKS
 %_bindir/*
 %_man1dir/*zip*
 
 %files -n %libname
-%doc AUTHORS NEWS README THANKS TODO
+%doc AUTHORS NEWS THANKS
 %_libdir/*.so.%sover
 %_libdir/*.so.%sover.*
 
@@ -85,6 +85,9 @@ developing applications that use %name.
 %_man3dir/*ZIP*
 
 %changelog
+* Sat Feb 20 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt1
+- new version
+
 * Mon Dec 14 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1
 - new version
 
