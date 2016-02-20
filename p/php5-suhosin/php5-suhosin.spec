@@ -1,7 +1,7 @@
 %define		php5_extension	suhosin
 
 Name:	 	php5-%php5_extension
-Version:	0.9.35
+Version:	0.9.38
 Release:	alt%php5_version.%php5_release
 
 Summary:	Advanced PHP5 protection system
