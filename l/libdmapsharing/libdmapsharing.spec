@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: libdmapsharing
-Version: 2.9.32
+Version: 2.9.34
 Release: alt1
 
 Summary: A DMAP client and server library
@@ -11,7 +11,7 @@ Url: http://www.flyn.org/projects/libdmapsharing/
 
 Source: http://www.flyn.org/projects/libdmapsharing/%name-%version.tar.gz
 
-BuildRequires: gtk-doc libgdk-pixbuf-devel libsoup-devel >= 2.32
+BuildRequires: gtk-doc libgdk-pixbuf-devel libsoup-devel >= 2.48
 BuildRequires: gst-plugins1.0-devel libavahi-glib-devel zlib-devel
 BuildRequires: gobject-introspection-devel vala-tools libsoup-gir-devel
 BuildRequires: libgtk+2-devel libgee0.8-devel
@@ -95,6 +95,9 @@ GObject introspection devel data for the %name.
 %_girdir/DMAP-%api_ver.gir
 
 %changelog
+* Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.9.34-alt1
+- 2.9.34
+
 * Mon Oct 19 2015 Yuri N. Sedunov <aris@altlinux.org> 2.9.32-alt1
 - 2.9.32
 
