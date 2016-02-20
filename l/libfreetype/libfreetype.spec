@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.6.2
-Release: alt2
+Version: 2.6.3
+Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
 Group: System/Libraries
@@ -152,6 +152,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Sat Feb 20 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.3-alt1
+- 2.6.3
+
 * Thu Jan 14 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.2-alt2
 - fixed ftconfig.h
 
