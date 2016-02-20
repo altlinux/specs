@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.4.26
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -707,6 +707,9 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.26-alt1.1
+- rebuilt against libSoundTouch.so.1
+
 * Mon Dec 07 2015 Anton Farygin <rider@altlinux.ru> 1:1.4.26-alt1
 - new version
 
