@@ -3,7 +3,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.009
+Version: 0.010
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,6 +13,8 @@ Group: Development/Perl
 License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
+
+Conflicts: perl-RPM-Source-Editor < 0.855
 
 BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-RPM-Source-Editor perl(Pod/Strip.pm)
 BuildRequires: perl-DistroMap perl-Marpa-R2
@@ -36,10 +38,13 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/%module/headers-ignore/stdhead
 %doc Changes
 %perl_vendor_privlib/R*
 %_datadir/%module
-#%_bindir/buildreq-*
-#%_man1dir/buildreq-*
+%_bindir/buildreq-*
+%_man1dir/buildreq-*
 
 %changelog
+* Sun Feb 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- development release
+
 * Sat Feb 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
 - development release
 
