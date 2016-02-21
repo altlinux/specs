@@ -5,7 +5,7 @@ BuildRequires: perl(Test/Pod.pm) perl-podlators
 BuildRequires: perl-Filter
 Name:           perl-YAML-LibYAML
 Version:        0.71
-Release:        alt1_1
+Release:        alt1_1.1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 Group:          Development/Other
@@ -15,7 +15,9 @@ Source0:        http://search.cpan.org/CPAN/authors/id/R/RU/RURBAN/YAML-LibYAML-
 # Build
 BuildRequires:  coreutils
 BuildRequires:  findutils
+%ifnarch e2k
 BuildRequires:  gcc-common
+%endif
 BuildRequires:  perl
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -33,6 +35,8 @@ BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 BuildRequires:  perl(XSLoader.pm)
 
+%if_without check
+%else
 # Tests
 BuildRequires:  perl(blib.pm)
 BuildRequires:  perl(Devel/Peek.pm)
@@ -51,6 +55,7 @@ BuildRequires:  perl(utf8.pm)
 
 # Optional Tests
 BuildRequires:  perl(Path/Class.pm)
+%endif
 
 # Dependencies
 
@@ -86,6 +91,10 @@ make test
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Thu Dec 22 2016 Michael Shigorin <mike@altlinux.org> 0.71-alt1_1.1
+- E2K: drop gcc-common
+- BOOTSTRAP: avoid test BRs when --without check
+
 * Mon Dec 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.71-alt1_1
 - update to new release by fcimport
 
