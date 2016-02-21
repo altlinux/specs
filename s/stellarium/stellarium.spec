@@ -1,7 +1,7 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.14.0
+Version: 0.14.2
 Release: alt1
 
 Group: Education
@@ -14,9 +14,9 @@ Source0: %name-%version.tar.gz
 BuildPreReq: cmake rpm-macros-cmake
 
 
-# Automatically added by buildreq on Mon Dec 29 2014
-# optimized out: cmake-modules libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-declarative libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-sql libqt5-test libqt5-widgets libqt5-xml libqt5-xmlpatterns libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage qt5-base-devel qt5-script-devel qt5-tools
-BuildRequires: cmake gcc-c++ perl-podlators qt5-quick1-devel qt5-tools-devel zlib-devel
+# Automatically added by buildreq on Sun Feb 07 2016
+# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-script libqt5-serialport libqt5-test libqt5-widgets libqt5-xml libstdc++-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators qt5-base-devel qt5-tools qt5-script-devel
+BuildRequires: cmake perl-Pod-Usage qt5-script-devel qt5-serialport-devel qt5-tools-devel zlib-devel libdrm-devel
 
 
 %description
@@ -44,13 +44,17 @@ popd
 %doc AUTHORS ChangeLog README
 %_bindir/%name
 %_datadir/%name
-%_mandir/man1/%name.1.gz
+%_mandir/man1/%name.1.xz
 %_datadir/applications/%name.desktop
 %_datadir/appdata/%name.appdata.xml
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/pixmaps/%name.xpm
 
 %changelog
+* Sun Feb 21 2016 Mikhail E. Rudachenko (ali) <ali@altlinux.org> 0.14.2-alt1
+ - new version
+
+
 * Sun Oct 25 2015 Alexei Takaseev <taf@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
