@@ -1,20 +1,19 @@
-# Need to fix
-# Bugs:
-#	815297 Breaking signatures in message/rfc822 attachement!
+# Features/TODO:
+#	add systemd init support
+#       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.12
-Release: alt2.1.1
+Version: 2.1.21
+Release: alt3.rc2
 Epoch: 5
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 %define mm_user %name
 %define mm_group %name
 
-%define contentdir /var/www
-%define httpdconfdir %_sysconfdir/httpd/conf/addon-modules.d
 %define crontabdir %_sysconfdir/cron.d
 %define logrotate %_sysconfdir/logrotate.d
-
+%define ngxconfdir %_sysconfdir/nginx/sites-enabled.d
+%define confdir %_sysconfdir/%name
 %define _prefix /usr/share/%name
 %define _exec_prefix %_libdir/%name
 %define _var_prefix %_localstatedir/%name
@@ -25,17 +24,20 @@ Group: System/Servers
 Url: http://www.list.org/
 
 # http://prdownloads.sourceforge.net/%name/%name-%version.tar.tgz
-Source: %name-%version.tar
+Source: %name-%{version}rc2.tar
 # ALT Linux cummulative patch
-Patch:  %name-%version-%release-alt.patch
-
+Patch:  %name-%{version}rc2-%release-alt.patch
 
 PreReq: mktemp, setup, shadow-utils, sendmail-common, vixie-cron
-Requires: webserver, python
-BuildRequires: python-devel
+Requires: python, webserver-common, MTA
+BuildRequires: python-devel python-module-dns
 
 BuildRequires(pre): python
 AutoProv: yes, nopython
+
+BuildRequires(pre): rpm-macros-webserver-common
+BuildRequires(pre): rpm-macros-apache
+BuildRequires(pre): rpm-macros-apache2
 
 %add_python_req_skip Defaults Mailman mm_config
 %define _python_compile_include %_datadir/%name
@@ -43,85 +45,109 @@ AutoProv: yes, nopython
 %description
 Mailman, the GNU Mailing List Management System, is a mailing list
 management system written mostly in Python. Features:
-- Web based list administration for nearly all tasks.  Web based            
-  subscriptions and user configuration management.  A customizable          
-  "home page" for each mailing list.                                        
-- Privacy features such as moderation, open and closed list                 
-  subscription policies, private membership rosters, and                    
-  sender-based filters.                                                     
-- Automatic web based archiving built-in with support for private           
-  and public archives, and hooks for external archivers.                    
-- Per-user configuration optional digest delivery for either                
-  MIME-compliant or RFC 1153 style "plain text" digests.                    
-- Integrated mail/Usenet gateways.                                          
-- Integrated auto-replies.                                                  
-- Majordomo-style email based commands.                                     
-- Integrated bounce detection within an extensible framework.               
-- Integrated spam detection, and MIME-based content filtering.              
-- An extensible mail delivery pipeline.                                     
-- Support for virtual domains.                                              
+
+- Web based list administration for nearly all tasks.  Web based
+  subscriptions and user configuration management. A customizable
+  "home page" for each mailing list.
+- Privacy features such as moderation, open and closed list
+  subscription policies, private membership rosters, and sender-based
+  filters.
+- Automatic web based archiving built-in with support for private
+  and public archives, and hooks for external archivers.
+- Per-user configuration optional digest delivery for either
+  MIME-compliant or RFC 1153 style "plain text" digests.
+- Integrated mail/Usenet gateways.
+- Integrated auto-replies.
+- Majordomo-style email based commands.
+- Integrated bounce detection within an extensible framework.
+- Integrated spam detection, and MIME-based content filtering.
+- An extensible mail delivery pipeline.
+- Support for virtual domains.
 
 See the Mailman home site for current status, including new releases
 and known problems: %url
 
+%package apache
+Group: System/Servers
+Summary: Mailman configuration for Apache
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: apache-base
+Obsoletes: %name <= 2.1.21-alt0.1rc2
+Conflicts: %name <= 2.1.21-alt0.1rc2
+
+%description apache
+Mailman configuration files for Apache
+
+%package apache2
+Group: System/Servers
+Summary: Mailman configuration for Apache2
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: apache2-base
+
+%description apache2
+Mailman configuration files for Apache2
+
+%package nginx
+Group: System/Servers
+Summary: Mailman configuration for nginx
+BuildArch: noarch
+Requires: %name = %version-%release
+Requires: nginx
+
+%description nginx
+Mailman configuration files for nginx
+
 %package docs
 Group: System/Servers
 Summary: Mailing list manager with built in web access
-
+BuildArch: noarch
 
 %description docs
 Documentation for mailman
 
 %prep
-%setup -q
+%setup -q -n %name-%{version}rc2
 # ALT Linux cummulative patch
 %patch -p1
 
-%__install -pD -m644 alt-linux/mm_cfg.py Mailman/mm_cfg.py.dist.in
-%__install -pD -m644 alt-linux/README.ALT README.ALT
+install -pD -m644 alt-linux/mm_cfg.py Mailman/mm_cfg.py.dist.in
+install -pD -m644 alt-linux/README.ALT README.ALT
 
 sed -i -e 's,@LOCKFILE@,%_lockdir/%name/master-qrunner,g' cron/crontab.in.in
 
 # Debian patches
 # see http://packages.qa.debian.org/m/mailman.html
 for patch in \
-07_snooze.patch \
-15_mailmanctl_daemonize.patch \
+10_wrapper_uid.patch \
 16_update_debian.patch \
-20_qmail_to_mailman.debian.patch \
-30_pipermail_threads.patch \
+51_nocompile.pyc.patch \
 52_check_perms_lstat.patch \
 53_disable_addons.patch \
-59_fix_missing_language_crash.patch \
 63_update_default_server_language.patch \
-64_correct_html_nesting.patch \
-65_handle_templates_directories.patch \
 66_donot_let_cache_html_pages.patch \
-70_invalid_utf8_dos.patch \
-71_date_overflows.patch \
-74_admin_non-ascii_emails.patch \
-77_header_folding_in_attachments.patch \
 79_archiver_slash.patch \
-99_js_templates.patch
+90_gettext_errors.patch
 do
 	echo "Patch ($patch):"
-	%__patch -s -p1 < debian/patches/$patch
+	patch -s -p1 < debian/patches/$patch
 done
 
 touch src/*.c
 
 %build
-autoreconf -fisv
+%autoreconf
 %configure \
 	--with-var-prefix=%_var_prefix \
-	--with-config-dir=%_sysconfdir/%name \
+	--with-config-dir=%confdir \
 	--with-lock-dir=%_lockdir/%name \
 	--with-log-dir=%_logdir/%name \
 	--with-pid-dir=%_var/run/%name \
 	--with-queue-dir=%_spooldir/%name \
 	--with-python=%__python \
-	--with-mail-groupfile=%_sysconfdir/%name/mail.groups \
-	--with-cgi-groupfile=%_sysconfdir/%name/cgi.groups \
+	--with-mail-groupfile=%confdir/mail.groups \
+	--with-cgi-groupfile=%confdir/cgi.groups \
 	--with-mailhost=localhost.localdomain \
 	--with-urlhost=localhost.localdomain \
 	--without-permcheck
@@ -133,77 +159,91 @@ autoreconf -fisv
 
 %install
 find bin -type f -print0 |
-	xargs -r0 %__grep -Zl '%__python$' |
-	xargs -r0 %__subst 's|%__python$|%__python -O|g'
+	xargs -r0 grep -Zl '%__python$' |
+	xargs -r0 subst 's|%__python$|%__python -O|g'
 
 %make_install doinstall \
-	DESTDIR=$RPM_BUILD_ROOT \
+	DESTDIR=%buildroot \
 	prefix=%prefix \
 	exec_prefix=%_exec_prefix \
 	var_prefix=%_var_prefix
 
-chmod -R go-w $RPM_BUILD_ROOT{%prefix,%_exec_prefix}
-find $RPM_BUILD_ROOT{%prefix,%_exec_prefix} -type d -print0 |
+chmod -R go-w %buildroot{%prefix,%_exec_prefix}
+find %buildroot{%prefix,%_exec_prefix} -type d -print0 |
 	xargs -r0 chmod a-s,o-r
-chmod a-s,go-r $RPM_BUILD_ROOT%_var_prefix
+chmod a-s,go-r %buildroot%_var_prefix
 
 # Create directories we'll use for log and spool files. Create links
-%__install -d -m2771 $RPM_BUILD_ROOT%_logdir/%name
-%__install -d -m2770 $RPM_BUILD_ROOT%_spooldir/%name
-%__install -d -m2771 $RPM_BUILD_ROOT%_spooldir/%name/{archive,bounces,commands,in,news,out,qfiles,retry,shunt,virgin}
+install -d -m3771 %buildroot%_logdir/%name
+install -d -m2770 %buildroot%_spooldir/%name
+install -d -m2771 %buildroot%_spooldir/%name/{archive,bounces,commands,in,news,out,qfiles,retry,shunt,virgin}
 
-ln -s ../../log/%name $RPM_BUILD_ROOT%_var_prefix/logs
-ln -s ../../spool/%name $RPM_BUILD_ROOT%_var_prefix/qfiles
+ln -s ../../log/%name %buildroot%_var_prefix/logs
+ln -s ../../spool/%name %buildroot%_var_prefix/qfiles
 
 # Copy an icons into the web server's icons directory.
-%__mkdir_p $RPM_BUILD_ROOT%contentdir
-%__mv $RPM_BUILD_ROOT%prefix/icons $RPM_BUILD_ROOT%contentdir/
+mkdir -p %buildroot%webserver_iconsdir
+cp -a %buildroot%prefix/icons/* %buildroot%webserver_iconsdir
 
 # Install a logrotate control file.
-%__install -pD -m644 alt-linux/%name.logrotate \
-	$RPM_BUILD_ROOT%logrotate/%name
+install -pD -m644 alt-linux/%name.logrotate \
+	%buildroot%logrotate/%name
 
 # Install the httpd configuration file.
-%__install -pD -m644 /dev/null $RPM_BUILD_ROOT%httpdconfdir/%name.conf
-%__sed -e 's|@CODEDIR@|%_exec_prefix|g;s|@DATADIR@|%_var_prefix|g' \
-	alt-linux/%name-httpd.conf > $RPM_BUILD_ROOT%httpdconfdir/%name.conf
+install -pD -m644 /dev/null %buildroot%apache_modconfdir/%name.conf
+sed -e 's|@CODEDIR@|%_exec_prefix|g;s|@DATADIR@|%_var_prefix|g' \
+	alt-linux/%name-httpd.conf > %buildroot%apache_modconfdir/%name.conf
+
+# Install the httpd2 configuration file.
+install -d %buildroot%apache2_mods_start
+install -d %buildroot%apache2_sites_available
+install -d %buildroot%apache2_sites_start
+install -d %buildroot%apache2_ports_start
+install -p -m644 alt-linux/apache2.mods-start %buildroot%apache2_mods_start/%name.conf
+install -p -m644 alt-linux/apache2.sites-start %buildroot%apache2_sites_start/%name.conf
+install -p -m644 alt-linux/apache2.ports-start %buildroot%apache2_ports_start/%name.conf
+sed -e 's|@CODEDIR@|%_exec_prefix|g;s|@DATADIR@|%_var_prefix|g' \
+	alt-linux/apache2.sites-available > %buildroot%apache2_sites_available/%name.conf
+
+# Install the nginx configuration file.
+install -pD -m644 /dev/null %buildroot%ngxconfdir/%name.conf
+sed -e 's|@CODEDIR@|%_exec_prefix|g;s|@DATADIR@|%_var_prefix|g' \
+	alt-linux/%name-nginx.conf > %buildroot%ngxconfdir/%name.conf
 
 # Install crontab file
-install -pD -m644 cron/crontab.in $RPM_BUILD_ROOT%crontabdir/%name
+install -pD -m644 cron/crontab.in %buildroot%crontabdir/%name
 
 # Install init script
-install -pD -m755 misc/mailman $RPM_BUILD_ROOT%_initdir/%name
+install -pD -m755 misc/mailman %buildroot%_initdir/%name
 
 # Install config files for postfix
-%__install -pD -m644 alt-linux/mm_config.py $RPM_BUILD_ROOT%_sysconfdir/%name/mm_config.py
-%__install -pD -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/%name/aliases
-%__install -pD -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/%name/virtual-mailman
-%__install -pD -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/%name/aliases.db
-%__install -pD -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/%name/virtual-mailman.db
-install -pD -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/%name/aliases.cdb
-install -pD -m644 /dev/null $RPM_BUILD_ROOT%_sysconfdir/%name/virtual-mailman.cdb
+install -pD -m644 alt-linux/mm_config.py %buildroot%confdir/mm_config.py
+touch %buildroot%confdir/{aliases,virtual-mailman}
+touch %buildroot%confdir/{aliases,virtual-mailman}.cdb
 
-cat <<EOF > $RPM_BUILD_ROOT%_sysconfdir/%name/mail.groups
+cat <<EOF > %buildroot%confdir/mail.groups
 mail
 postman
 %mm_group
 EOF
 
-cat <<EOF > $RPM_BUILD_ROOT%_sysconfdir/%name/cgi.groups
+cat <<EOF > %buildroot%confdir/cgi.groups
 apache
+apache2
+_spawn_fcgi
 EOF
 
 # Install man pages
-install -m755 -pd $RPM_BUILD_ROOT%_man8dir
-install -m644 debian/manpages/*.8 $RPM_BUILD_ROOT%_man8dir/
+install -m755 -pd %buildroot%_man8dir
+install -m644 debian/manpages/*.8 %buildroot%_man8dir/
 
 # Install lockdir and piddir
-install -m755 -pd $RPM_BUILD_ROOT%_lockdir/%name
-install -m755 -pd $RPM_BUILD_ROOT%_var/run/%name
+install -m755 -pd %buildroot%_lockdir/%name
+install -m755 -pd %buildroot%_var/run/%name
 
 # Remove unused files
-%__rm -f $RPM_BUILD_ROOT%_sysconfdir/%name/sitelist.cfg
-%__rm -rf $RPM_BUILD_ROOT%_datadir/%name/tests
+rm -f %buildroot%confdir/sitelist.cfg
+rm -rf %buildroot%_datadir/%name/tests
 
 %pre
 /usr/sbin/groupadd -rf %mm_group ||:
@@ -212,7 +252,7 @@ install -m755 -pd $RPM_BUILD_ROOT%_var/run/%name
 
 %post
 %post_service mailman
-# Fix file premissions
+# Fix file permissions
 if [ -f %_localstatedir/%name/data/last_mailman_version ]; then
 	chown %mm_user:%mm_group %_localstatedir/%name/data/last_mailman_version ||:
 	chmod 644 %_localstatedir/%name/data/last_mailman_version ||:
@@ -222,6 +262,20 @@ else
 	%_prefix/bin/update &> /dev/null ||:
 fi
 
+%post apache
+%post_apacheconf
+
+%post apache2
+%apache2_sbindir/a2chkconfig
+%post_apache2conf
+
+%postun apache
+%postun_apacheconf
+
+%postun apache2
+%apache2_sbindir/a2chkconfig
+%postun_apache2conf
+
 %preun
 %preun_service mailman
 
@@ -229,25 +283,30 @@ fi
 # Generate aliases
 %_prefix/bin/genaliases
 
+%triggerpostun -- mailman = 5:2.1.12-alt2.1.1
+echo "WARNING! Upgrading from legacy version!"
+echo "Please check README.ALT for possible"
+echo "problems and solutions."
+
 %triggerun -- mailman < 5:2.1.9-alt2
 if [ $1 != 0 ]; then
 # Move old configs and passwords and change group
 	for file in aliases virtual-mailman mm_config.py; do
 		if [ -f %_localstatedir/%name/etc/$file ]; then
-			mv %_localstatedir/%name/etc/$file %_sysconfdir/%name/$file ||:
-			chgrp %mm_group %_sysconfdir/%name/$file ||:
+			mv %_localstatedir/%name/etc/$file %confdir/$file ||:
+			chgrp %mm_group %confdir/$file ||:
 		fi
 	done
 	for file in adm.pw creator.pw; do
 		if [ -f %_localstatedir/%name/data/$file ]; then
-			mv %_localstatedir/%name/data/$file %_sysconfdir/%name/$file ||:
-			chgrp %mm_group %_sysconfdir/%name/$file ||:
+			mv %_localstatedir/%name/data/$file %confdir/$file ||:
+			chgrp %mm_group %confdir/$file ||:
 		fi
 	done
 # Change paths in Postfix config
 	if [ -f %_sysconfdir/postfix/main.cf ]; then
-		sed  -i -e 's,%_localstatedir/%name/etc/aliases,%_sysconfdir/%name/aliases,g' \
-			-e 's,%_localstatedir/%name/etc/virtual-mailman,%_sysconfdir/%name/virtual-mailman,g' \
+		sed  -i -e 's,%_localstatedir/%name/etc/aliases,%confdir/aliases,g' \
+			-e 's,%_localstatedir/%name/etc/virtual-mailman,%confdir/virtual-mailman,g' \
 			%_sysconfdir/postfix/main.cf ||:
 	fi
 # Move lockfiles and pidfile
@@ -260,13 +319,11 @@ fi
 # Restart mailman again with configs at the new place
 %post_service mailman
 
-
 %files
 %config(noreplace) %logrotate/%name
-%config(noreplace) %httpdconfdir/%name.conf
 %config(noreplace) %crontabdir/%name
 %attr(0755,root,root) %_initdir/%name
-%contentdir/icons/*
+%webserver_iconsdir/*
 %dir %prefix
 %prefix/bin
 %prefix/cron
@@ -289,27 +346,64 @@ fi
 %dir %_var_prefix/spam
 %dir %_var_prefix/lists
 %dir %_var_prefix/data
-%dir %attr(2771,root,%mm_group) %_sysconfdir/%name
-%config(noreplace) %attr(0664,root,%mm_group) %_sysconfdir/%name/mm_config.*
-%config(noreplace) %attr(0664,root,%mm_group) %_sysconfdir/%name/aliases
-%config(noreplace) %attr(0664,root,%mm_group) %_sysconfdir/%name/virtual-mailman
-%config(noreplace) %attr(0664,root,%mm_group) %_sysconfdir/%name/mail.groups
-%config(noreplace) %attr(0664,root,%mm_group) %_sysconfdir/%name/cgi.groups
-%ghost %_sysconfdir/%name/aliases.db
-%ghost %_sysconfdir/%name/virtual-mailman.db
-%ghost %_sysconfdir/%name/aliases.cdb
-%ghost %_sysconfdir/%name/virtual-mailman.cdb
+%dir %attr(2771,root,%mm_group) %confdir
+%config(noreplace) %attr(0664,root,%mm_group) %confdir/mm_config.*
+%config(noreplace) %attr(0664,root,%mm_group) %confdir/aliases
+%config(noreplace) %attr(0664,root,%mm_group) %confdir/virtual-mailman
+%config(noreplace) %attr(0664,root,%mm_group) %confdir/*groups
+%ghost %attr(644,root,root) %config(missingok) %verify(not md5 mtime size) %confdir/*.cdb
 %_var_prefix/logs
 %_var_prefix/qfiles
 %_logdir/%name
 %dir %_spooldir/%name
 %dir %_spooldir/%name/*
 
+%files apache
+%config(noreplace) %apache_modconfdir/%name.conf
+
+%files apache2
+%config(noreplace) %apache2_mods_start/%name.conf
+%config(noreplace) %apache2_sites_available/%name.conf
+%config(noreplace) %apache2_sites_start/%name.conf
+%config(noreplace) %apache2_ports_start/%name.conf
+
+%files nginx
+%config(noreplace) %ngxconfdir/%name.conf
+
 %files docs
 %doc doc
 
-
 %changelog
+* Sun Feb 21 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.21-alt3.rc2
+- Updated README.ALT (small style fixes).
+
+* Fri Feb 19 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.21-alt2.rc2
+- Updated README.ALT (add upgrade notes).
+- Added trigger to show a warning after upgrade from 2.1.12.
+
+* Wed Feb 17 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.21-alt1.rc2
+- .spec cleanup:
+  + use existing rpm-macros instead hardcoded values;
+  + update buildreq (added MTA);
+  + split out web configuration to separate packages
+    (apache/apache2/nginx);
+  + fix access rights for logdir to make logrotate happy.
+
+* Fri Feb 05 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.21-alt0.1.rc2
+- Updated to 2.1.21rc2.
+- Security fixes:
+  + CVE-2015-2775 (path traversal vulnerability);
+  + DMARC support.
+- Sync debian patches up to 1:2.1.20-1.
+
+* Wed Oct 17 2012 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.15-alt0.2
+- New upstream release (2.1.15).
+- Security fixes:
+  + CVE-2011-0707,
+  + many fixes in web interface against XSS attacks,
+  + web admin interface has been hardened against CSRF attacks.
+- Re-merge debian patches.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 5:2.1.12-alt2.1.1
 - Rebuild with Python-2.7
 
@@ -351,9 +445,9 @@ fi
 - Update and fix fuzzy Russian translations.
 
 * Mon Mar 05 2007 Grigory Batalov <bga@altlinux.ru> 5:2.1.9-alt2
-- Move configs and passwords to %_sysconfdir/%name.
-- Store allowed groups in %_sysconfdir/%name/cgi.groups
-  and %_sysconfdir/%name/mail.groups.
+- Move configs and passwords to %%_sysconfdir/%%name.
+- Store allowed groups in %%_sysconfdir/%%name/cgi.groups
+  and %%_sysconfdir/%%name/mail.groups.
 - Check Postfix config with 'postconf' during alias update.
 - Update alias maps on upgrade/install.
 - Custom fix_bounce.py script.
@@ -510,7 +604,7 @@ fi
 - Relocated log directory from %_var_prefix/logs to %_logdir/%name.
 - Relocated queue directory from %_var_prefix/qfiles to %_spooldir/%name/qfiles.
 - Added logrotate script.
-- Added %httpdconfdir/%name.conf, updated INSTALL instructions.
+- Added %%httpdconfdir/%%name.conf, updated INSTALL instructions.
 - Added more READMEs.
 
 * Fri Aug 09 2002 Dmitry V. Levin <ldv@altlinux.org> 3:2.0.12-alt2
@@ -607,7 +701,7 @@ fi
 - drop bugs and arch patches (integrated into beta3)
 
 * Tue Jun 27 2000 Nalin Dahyabhai <nalin@redhat.com>
-- move web files to reside under %contentdir
+- move web files to reside under %%contentdir
 - move files from /usr/share to %%_datadir
 - integrate spot-fixes from mailman lists via gnome.org
 
