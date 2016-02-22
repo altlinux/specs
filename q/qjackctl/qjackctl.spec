@@ -3,12 +3,12 @@
 %define cvsdate 20060910
 %define prerel %nil
 
-%def_disable qt5
+%def_enable qt5
 # enable/disable JACK version support
 %def_disable jack_version
 
 Name: qjackctl
-Version: 0.4.0
+Version: 0.4.1
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -33,7 +33,7 @@ Requires: jackd >= %jack_ver
 BuildRequires(pre): jackit-devel >= %jack_ver
 BuildRequires: gcc-c++ libalsa-devel libX11-devel libXext-devel
 %if_enabled qt5
-BuildRequires: libqt5-devel
+BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools
 %else
 BuildRequires: libqt4-devel
 %endif
@@ -60,8 +60,10 @@ JACK-клиентов.
 %endif
 
 %build
+%if_disabled qt5
 export QTDIR=%_qt4dir
 export PATH=%_qt4dir/bin:$PATH
+%endif
 %configure \
 	--localedir=%_datadir/%name/locale \
 	%{?_enable_jack_version:--enable-jack-version} \
@@ -84,6 +86,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Wed Jul 15 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
