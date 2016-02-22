@@ -6,15 +6,13 @@
 
 Name: python-module-pygnome-extras
 Version: %major.3
-Release: alt4
+Release: alt5
 
 Summary: Set of extra bindings for the GNOME2 platform library
 
 License: LGPL
 Group: Development/Python
 Url: http://www.pygtk.org/
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: http://ftp.gnome.org/pub/GNOME/sources/gnome-python-extras/%major/gnome-python-extras-%version.tar.bz2
 # GNOME bug #584126
@@ -30,7 +28,7 @@ Patch2: gnome-python-extras-2.25.3-update-for-gdl-2.27.2.part2.patch
 %{?_enable_docs:BuildRequires: gtk-doc}
 BuildRequires: gcc-c++ glibc-devel libgtkhtml2-devel
 BuildRequires: libgtk+2-devel libbonoboui-devel libgnomeui-devel gnome-vfs-devel libgtkspell-devel
-BuildRequires: python-module-pygnome-devel xulrunner-devel
+BuildRequires: python-module-pygnome-devel
 # style.css from this package required to build documentation
 BuildRequires: python-module-pygobject-devel-doc
 BuildPreReq: python-module-pygtk-devel
@@ -128,6 +126,9 @@ rm -f %buildroot%python_sitelibdir/gtk-2.0/*.la
 %endif
 
 %changelog
+* Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.25.3-alt5
+- fixed buildreqs
+
 * Fri Mar 15 2013 Yuri N. Sedunov <aris@altlinux.org> 2.25.3-alt4
 - gda, gdl, gksu2 modules disabled
 
