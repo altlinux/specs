@@ -1,6 +1,6 @@
 Name: kumir-console
 Version: 1.7.2
-Release: alt1.qa1
+Release: alt2
 
 Summary: Console interpreter of Kumir programming language
 Summary(ru_RU.UTF-8): Консольный интерпретатор языка программирования Кумир
@@ -14,6 +14,8 @@ BuildPreReq: libqt4-devel gcc-c++
 Requires: libqt4-core
 
 Source: ckumir-20101122.tar.gz
+
+Patch1: kumir-console-build.patch
 
 %description
 Console interpreter of Kumir programming language. Useful for running
@@ -29,6 +31,7 @@ control system, such as ejudge.
 
 %prep
 %setup -n ckumir
+%patch1 -p1
 cd src
 sed -i "s/-Werror//" *.pro
 
@@ -48,8 +51,12 @@ cp -r share/kumir %buildroot%_datadir/
 %_datadir/kumir
 
 %changelog
+* Mon Feb 22 2016 Denis Kirienko <dk@altlinux.org> 1.7.2-alt2
+- Build fix
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
 * Wed Dec 01 2010 Denis Kirienko <dk@altlinux.ru> 1.7.2-alt1
 - Initial build for Sisyphus
+
