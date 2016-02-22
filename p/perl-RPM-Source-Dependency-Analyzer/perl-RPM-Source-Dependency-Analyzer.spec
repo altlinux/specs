@@ -1,9 +1,10 @@
 #define module Source-Text-Dependency-Analyser
 %define module RPM-Source-Dependency-Analyzer
-%def_without hashertarbuild
+# useful for testexpect updates
+#define _without_test 1
 
 Name: perl-%module
-Version: 0.010
+Version: 0.011
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -42,6 +43,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/%module/headers-ignore/stdhead
 %_man1dir/buildreq-*
 
 %changelog
+* Mon Feb 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- development release
+
 * Sun Feb 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - development release
 
