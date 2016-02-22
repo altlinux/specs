@@ -2,7 +2,7 @@
 
 Name: telepathy-haze
 Version: 0.8.0.1
-Release: alt0.2
+Release: alt0.3
 
 Summary: a connection manager built around libpurple
 License: GPL v2 or later
@@ -16,9 +16,11 @@ Patch: %name-0.8.0-alt-purple_2.0.12.patch
 
 BuildPreReq: glib2-devel >= 2.22 libgio-devel libdbus-glib-devel >= 0.73
 BuildRequires: libpurple-devel >= 2.7.0 libtelepathy-glib-devel >= 0.13.9
+BuildRequires: xsltproc
 # for check:
 BuildRequires: python-module-twisted-words python-module-twisted-core-gui
 BuildRequires: python-module-cffi python-module-service-identity
+BuildRequires: /proc dbus-tools-gui python-module-dbus
 
 %description
 telepathy-haze is a connection manager built around libpurple, the
@@ -49,6 +51,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.3
+- updated buildreqs
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.0.1-alt0.2
 - fixed build against libpurple-2.10.12
 
