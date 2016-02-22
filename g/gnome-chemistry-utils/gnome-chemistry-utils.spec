@@ -1,7 +1,7 @@
 %define ver_major 0.14
 %define api_ver 0.14
 %define _libexecdir %_prefix/libexec
-%def_enable mozilla
+%def_disable mozilla
 %def_enable gnumeric
 %if_enabled gnumeric
 %define goffice_api_ver 0.10
@@ -11,7 +11,7 @@
 
 Name: gnome-chemistry-utils
 Version: %ver_major.10
-Release: alt10
+Release: alt10.1
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -133,6 +133,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.10-alt10.1
+- disabled mozilla plugin
+
 * Sat Feb 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.10-alt10
 - rebuilt for new gnumeric-1.12.27
 
