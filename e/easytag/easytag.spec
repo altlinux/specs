@@ -1,5 +1,8 @@
+%define xdg_name org.gnome.EasyTAG
+%def_enable nautilus
+
 Name: easytag
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: Audio files tag viewer/editor
@@ -12,7 +15,7 @@ Packager: Afanasov Dmitry <ender@altlinux.org>
 Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 
-BuildRequires: intltool gcc-c++
+BuildRequires: rpm-build-gnome intltool gcc-c++
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: desktop-file-utils
 BuildRequires: yelp-tools
@@ -27,6 +30,7 @@ BuildRequires: pkgconfig(id3tag) id3lib-devel
 BuildRequires: pkgconfig(taglib) >= 1.9.1
 BuildRequires: pkgconfig(wavpack) >= 4.40
 BuildRequires: pkgconfig(gio-2.0) >= 2.32.0
+%{?_enable_nautilus:BuildRequires: libnautilus-devel}
 
 %description
 EasyTAG is a utility for viewing, editing and writing the tags of MP4, MP3,
@@ -46,7 +50,8 @@ Monkey's звуковых файлов.
 
 %build
 %autoreconf
-%configure
+%configure \
+	%{?_enable_nautilus:--enable-nautilus-actions}
 
 %make_build
 
@@ -61,16 +66,25 @@ Monkey's звуковых файлов.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/glib-2.0/schemas/org.gnome.EasyTAG.enums.xml
-%_datadir/glib-2.0/schemas/org.gnome.EasyTAG.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.enums.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%name.*
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/appdata/%name.appdata.xml
+
+%if_enabled nautilus
+%nautilus_extdir/*.so
+%exclude %nautilus_extdir/*.la
 %_datadir/appdata/%name-nautilus.metainfo.xml
+%endif
+
 %_man1dir/%name.1*
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+
 * Tue Jan 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
