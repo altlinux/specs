@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.1.0
-Release: alt4
+Release: alt5
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -35,7 +35,6 @@ Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
 Patch23: palemoon_version-26.1.0.patch
-Patch24: palemoon-Pref-gstreamer.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -44,12 +43,8 @@ BuildRequires(pre): browser-plugins-npapi-devel
 # optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libpango-devel libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-modules-json unzip xorg-cf-files yasm zip
 
-BuildRequires: autoconf_2.13
-BuildRequires: libpixman-devel
+BuildRequires: autoconf_2.13 
 
-BuildRequires: gstreamer-devel gst-plugins-devel 
-
-BuildRequires: libx264-devel
 
 %set_autoconf_version 2.13
 
@@ -101,9 +96,7 @@ tar -xf %SOURCE2
 #popd
 popd
 
-#patch22 -p1
 %patch23 -p1
-%patch24 -p1
 
 #patch5  -p1
 %patch6  -p1
@@ -141,7 +134,6 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 echo 'ac_add_options "--enable-optimize=-O3  -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
-echo "ac_add_options --enable-gstreamer" >> .mozconfig
 
 %build
 cd %name
@@ -172,7 +164,7 @@ export LIBIDL_CONFIG=%_bindir/libIDL-config-2
 export srcdir="$PWD"
 export SHELL=/bin/sh
 
-#__autoconf
+%__autoconf
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
 MOZ_SMP_FLAGS=-j1
@@ -319,9 +311,12 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
-* Mon Feb 15 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt4
-- Closes: Bug #31791)
+* Mon Feb 22 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt5
 - Fix media.gstreamer.enabled
+- Update from git
+
+* Mon Feb 15 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt4
+- Closes: Bug #31791
 
 * Sun Feb 14 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt3
 - Add option enable-gstreamer
