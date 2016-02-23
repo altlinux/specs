@@ -1,11 +1,13 @@
-%set_automake_version 1.11
-
+%define _libexecdir %_prefix/libexec
 %define _name dbus-python
 %def_enable check
+# required dbus_py_test.so for both pythons
+%def_disable installed_tests
+%add_findreq_skiplist %_libexecdir/installed-tests/%_name/test/*.py
 
 Name: python-module-dbus
-Version: 1.2.0
-Release: alt1.1
+Version: 1.2.2
+Release: alt1
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -14,7 +16,7 @@ Url: http://www.freedesktop.org/wiki/Software/DBusBindings
 
 ##Source: dbus-python-%version.tar
 Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
-Patch: dbus-python-1.1.1-1-alt-link.patch
+Patch: dbus-python-1.2.2-alt-link.patch
 Patch2: dbus-python-1.1.1-alt-usc4-impaired-python-hack2-around.patch
 
 %setup_python_module dbus
@@ -24,15 +26,11 @@ Provides: %_name = %version-%release
 Provides: %name-data = %version-%release
 Obsoletes: %name-data < %version-%release
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: dbus elfutils glib2-devel gnu-config gobject-introspection libcap-ng libdbus-devel libdbus-glib libgpg-error pkg-config python-base python-devel python-modules python-modules-compiler python-modules-encodings python-modules-logging python-modules-xml python3 python3-base rpm-build-gir
-BuildRequires: dbus-tools dbus-tools-gui libdbus-glib-devel python-module-pygobject3 python-modules-unittest python3-devel python3-module-pygobject3 rpm-build-python3
-
-#BuildRequires: libdbus-devel >= 1.6 libdbus-glib-devel
-#BuildRequires: python-devel python3-devel
-#BuildRequires: python-module-pygobject3
+BuildRequires: autoconf-archive libdbus-devel >= 1.6 libdbus-glib-devel
+BuildRequires: python-devel python3-devel python-modules-unittest
+BuildRequires: python-module-pygobject3
 # for python3
-#BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3
+BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3
 %{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata}
 
 %description
@@ -58,24 +56,41 @@ Provides: python3-module-dbus-devel = %version-%release
 D-Bus python bindings for use with python programs.
 Development package.
 
+%package tests
+Summary: Tests for the %name package
+Group: Development/Python
+Requires: %name = %version-%release
+Requires: dbus-tools
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed python-dbus package.
+
+
 %prep
 %setup -n %_name-%version -a0
 mv %_name-%version py3build
-%patch -p1
 %patch2 -p1
 
 %build
+%define options %{?_enable_installed_tests:--enable-installed-tests}
+
 # Install python code into arch-specific dir for PyQt4 (ALT#23134)
 export am_cv_python_pythondir=%python_sitelibdir
+export am_cv_python_pyexecdir=%python_sitelibdir
 
 %autoreconf
-%configure PYTHON=%__python
+%configure %options \
+	PYTHON=%__python \
+	PYTHON_LIBS="$(python-config --libs)"
 %make_build
 
 pushd py3build
 export am_cv_python_pythondir=%python3_sitelibdir
+export am_cv_python_pyexecdir=%python3_sitelibdir
 %autoreconf
-%configure PYTHON=/usr/bin/python3 \
+%configure %options \
+	PYTHON=/usr/bin/python3 \
 	PYTHON_LIBS="$(python3-config --libs)"
 %make_build
 popd
@@ -111,9 +126,19 @@ done
 
 %exclude %python3_sitelibdir/*.la
 
-%exclude %_docdir/dbus-python
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%_name/
+%exclude %_libexecdir/installed-tests/%_name/test/__pycache__
+%_datadir/installed-tests/%_name/
+%endif
+
+%exclude %_docdir/%_name
 
 %changelog
+* Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.1
 - NMU: Use buildreq for BR.
 
