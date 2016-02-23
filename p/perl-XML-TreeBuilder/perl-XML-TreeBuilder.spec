@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl(Test.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl(Test.pm) perl-devel perl-podlators perl(XML/Catalog.pm)
 # END SourceDeps(oneline)
 Summary:	Parser that builds a tree of XML::Element objects
 Name:		perl-XML-TreeBuilder
-Version:	4.3
+Version:	5.4
 Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -45,6 +46,9 @@ find $RPM_BUILD_ROOT -name .packlist -exec %{__rm} {} \;
 %{perl_vendor_privlib}/XML/
 
 %changelog
+* Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1
 - automated CPAN update
 
