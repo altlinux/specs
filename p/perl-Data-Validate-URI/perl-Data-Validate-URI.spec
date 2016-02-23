@@ -1,6 +1,6 @@
 %define bname Data-Validate-URI
 Name: perl-%bname
-Version: 0.06
+Version: 0.07
 Release: alt1
 Summary: Common url validation methods
 Group: Development/Perl
@@ -42,5 +42,8 @@ If you have a specialized scheme you'd like to have supported, let me know.
 
 
 %changelog
+* Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Sun Jan 26 2014 Led <led@altlinux.ru> 0.06-alt1
 - initial build
