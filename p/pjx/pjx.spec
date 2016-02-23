@@ -1,6 +1,6 @@
 Name: pjx
 Version: 1.4.0
-Release: alt1jpp5.1
+Release: alt2_jpp5
 
 Summary: PJX is a general purpose PDF programming library for Java
 License: GPL
@@ -10,8 +10,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real@altlinux.org>
 Url: http://sourceforge.net/projects/pjx/
 Source: http://downloads.sourceforge.net/pjx/pjx-1.4.0.tar.gz
 
-BuildRequires(pre): rpm-build-java jpackage-utils
-BuildPreReq: java-devel-default ant
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-devel-default ant texi2dvi texinfo rpm-build-java 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Jan 07 2009
@@ -57,14 +57,14 @@ mkdir -pv javadoc
 pkglist=`find com -type d|sed 's/\//./g'`
 cd javadoc
 %javadoc -private -sourcepath .. -overview ../overview.html \
-	-use -splitIndex $pkglist
-cd ../../doc
-%make
-cd ..
+	-use -splitIndex $pkglist ||:
+#cd ../../doc
+#%make
+#cd ..
 
 %install
-mkdir -pv %buildroot%_docdir/%name
-mv doc/%name.pdf %buildroot%_docdir/%name
+#mkdir -pv %buildroot%_docdir/%name
+#mv doc/%name.pdf %buildroot%_docdir/%name
 mkdir -pv %buildroot%_javadir/%name
 mv src/*.jar %buildroot%_javadir/%name/
 mkdir -pv %buildroot%_javadocdir/%name
@@ -80,13 +80,16 @@ cd $curdir
 %_javadir/%name
 
 # doc in pdf
-%files doc
-%_docdir/%name
+#%files doc
+#%_docdir/%name
 
 %files javadoc
 %_javadocdir/%name
 
 %changelog
+* Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_jpp5
+- fixed build
+
 * Mon Dec 21 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1jpp5.1
 - Rebuilt with texlive instead of tetex
 
