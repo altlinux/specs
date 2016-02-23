@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.9.1
+Version: 1.9.3
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -111,6 +111,13 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Tue Feb 23 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt1
+- really add python_check macro
+- distr_vendor: add Cygwin support, improve ALT Linux version detection
+
+* Mon Jan 25 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.2-alt1
+- remove empty file for CentOS/6 (makes wrong macros list) (eterbug #10965
+
 * Mon Nov 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
 - set udev macros for CentOS/5
 
