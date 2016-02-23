@@ -33,7 +33,7 @@ BuildRequires: /proc
 
 Name:		ht2html
 Version:	2.0
-Release:	alt4_2jpp5.1
+Release:	alt5_2jpp5
 URL:		http://ht2html.sourceforge.net
 Source0:	%{name}-%{version}.tar.bz2
 Source1:	%{name}.bz2
@@ -80,6 +80,9 @@ install -m 644 StandardGenerator.py $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_bindir}/*
 
 %changelog
+* Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt5_2jpp5
+- rebuild
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0-alt4_2jpp5.1
 - Rebuild with Python-2.7
 
