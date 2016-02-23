@@ -1,7 +1,7 @@
 %define dist XML-Catalog
 Name: perl-%dist
-Version: 0.02
-Release: alt1.1
+Version: 1.03
+Release: alt1
 
 Summary: Resolve public identifiers and remap system identifiers
 License: %perl_license
@@ -17,7 +17,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Tue Jan 19 2010
-BuildRequires: perl-XML-Parser perl-devel
+BuildRequires: perl-XML-Parser perl-devel perl(Module/Build.pm)
 
 %description
 This module implements draft 0.4 of John Cowan's XML Catalog (formerly
@@ -41,6 +41,9 @@ XML syntax.
 %perl_vendor_privlib/XML/
 
 %changelog
+* Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update (closes: #31781)
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
