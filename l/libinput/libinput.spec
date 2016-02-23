@@ -1,8 +1,9 @@
 %define _libexecdir %_prefix/libexec
+%def_enable libwacom
 %def_disable gui
 
 Name: libinput
-Version: 1.1.8
+Version: 1.2.0
 Release: alt1
 
 Summary: Input devices library
@@ -17,7 +18,10 @@ Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 
 BuildRequires: gcc-c++ libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
 BuildRequires: libudev-devel libcheck-devel
+%{?_enable_libwacom:BuildRequires: libwacom-devel}
 %{?_enable_gui:BuildRequires: libgtk+3-devel}
+# for check
+#BuildRequires: libunwind-devel valgrind
 
 %description
 libinput is a library that handles input devices for display servers and
@@ -55,6 +59,7 @@ This package contains GUI event viewer from %name.
 %build
 %autoreconf
 %configure --disable-static \
+           %{subst_enable libwacom} \
            %{?_enable_gui:--enable-event-gui} \
            --with-udev-dir=/lib/udev
 %make_build
@@ -88,6 +93,9 @@ This package contains GUI event viewer from %name.
 
 
 %changelog
+* Tue Feb 23 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Feb 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1
 - 1.1.8
 
