@@ -2,11 +2,11 @@
 %define oname pygobject
 %define gtk_api_ver 2.0
 %def_disable introspection
+%set_verify_elf_skiplist %_libdir/libpyglib-2.0-python3.so.0.0.0 
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt6
-
+Release: alt7
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -22,6 +22,8 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
 
 %define glib_ver 2.28.0
 
+BuildPreReq: strace
+BuildPreReq: /dev/pts
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: python3-devel python3-module-pycairo-devel python-tools-2to3
@@ -97,12 +99,16 @@ sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 #	%buildroot%_bindir/py3_pygobject-codegen-2.0
 
 # hack to avoid verify-elf errors
-export LD_PRELOAD=%_libdir/libpython%{_python3_version}%_python3_abiflags.so
 
 #for i in $(find %buildroot -name '*.py'); do
 #	2to3 -w $i
 #done
-find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
+#find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
+find %buildroot -type f -name '*.py' -print  >file 
+cat file |  xargs   2to3 -w 
+rm -f file
+
+#`export LD_PRELOAD=%_libdir/libpython%{_python3_version}%_python3_abiflags.so
 
 %files
 %_libdir/libpyglib-2.0-python3*.so.*
@@ -136,6 +142,9 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Wed Feb 24 2016 Denis Medvedev <nbr@altlinux.org> 2.28.6-alt7
+- added  xargs to find  when 2to3
+
 * Tue Apr 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.28.6-alt6
 - Don't ignore errors when 2to3 & sed run
 
