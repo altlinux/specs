@@ -1,7 +1,7 @@
 %define module RPM-Source-BundleImport
 
 Name: perl-%module
-Version: 0.025
+Version: 0.026
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,6 +35,9 @@ Requires: perl-RPM-Source-Editor > 0.854
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Wed Feb 24 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
+- bugfix release
+
 * Sat Feb 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.025-alt1
 - development release
 
