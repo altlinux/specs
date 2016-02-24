@@ -1,5 +1,5 @@
 Name: genbackupdata
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: A program to generate test data for testing backup software
@@ -73,6 +73,9 @@ make check
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt1
+- new version 1.9 (with rpmrb script)
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8-alt1
 - new version 1.8 (with rpmrb script)
 
