@@ -9,14 +9,14 @@
 %def_with gtkmm
 
 %global majorversion    10.0
-%global minorversion    5
+%global minorversion    7
 %global toolsbuild      3227872
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt1.%toolsbuild
+Release: alt2
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -207,6 +207,13 @@ fi
 %_libdir/libvmtools.so
 
 %changelog
+* Wed Feb 24 2016 Sergey V Turchin <zerg@altlinux.org> 10.0.7-alt2
+- fix search for alt linux
+- clean package release from toolsbuild
+
+* Wed Feb 24 2016 Sergey V Turchin <zerg@altlinux.org> 10.0.7-alt1.3227872
+- new version
+
 * Fri Dec 25 2015 Alexey Shabalin <shaba@altlinux.ru> 10.0.5-alt1.3227872
 - 10.0.5
 
