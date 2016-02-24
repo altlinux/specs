@@ -1,11 +1,11 @@
 %define oname pyFltk
 %define mname pyfltk
 %define _python_egg_info %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
-%define oversion 1.3.2
+%define oversion 1.3.3.1
 
 Name: python3-module-%mname
-Version: 1.3.2rc1
-Release: alt2
+Version: 1.3.3.1
+Release: alt1
 
 Summary: Python 3 bindings for FLTK library
 
@@ -14,7 +14,7 @@ License: LGPL
 Url: http://pyfltk.sourceforge.net
 
 Source: http://prdownloads.sf.net/pyfltk/%oname-%oversion.tar.bz2
-Patch10: pyfltk-1.3.1rc1-alt-fix-platform.patch
+#Patch10: pyfltk-1.3.1rc1-alt-fix-platform.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -55,6 +55,9 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Wed Feb 24 2016 Denis Medvedev <nbr@altlinux.org> 1.3.3.1-alt1
+- Imported new sources 1.3.3.1_py3
+
 * Tue Jul 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2rc1-alt2
 - Fixed build
 
