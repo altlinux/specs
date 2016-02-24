@@ -1,5 +1,5 @@
 Name: kodi-platform
-Version: 15.0
+Version: 16.0
 Release: alt1
 
 Summary: Kodi plugin development support
@@ -47,5 +47,8 @@ make
 %_includedir//kodi/util
 
 %changelog
+* Wed Feb 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.0-alt1
+- updated for Jarvis
+
 * Wed Jul 29 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt1
 - initial
