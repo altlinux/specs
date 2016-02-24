@@ -1,6 +1,6 @@
 Name: asymptote
-Version: 2.35
-Release: alt1.1
+Version: 2.36
+Release: alt1
 
 Summary: Descriptive vector graphics language
 
@@ -17,7 +17,14 @@ Patch2: asymptote-2.28-alt-gsl1.16.patch
 
 # manually removed: libsubversion-auth-gnome-keyring libsubversion-auth-kwallet subversion tetex-core
 # Automatically added by buildreq on Sat Feb 20 2010
-BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libfreeglut-devel libgc-devel libgsl-devel libncurses-devel libreadline-devel zlib-devel
+BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libfreeglut-devel libgsl-devel libncurses-devel libreadline-devel zlib-devel
+
+# TODO:
+# instead tarball from the sources
+#BuildRequires: libgc-devel >= 7.4.2
+# for libgc only?
+#BuildRequires: libatomic_ops-devel-static
+#	--enable-gc=system \
 
 BuildPreReq: texlive-latex-recommended ghostscript-utils /proc rpm-build-texmf
 # explicitly added texinfo for info files
@@ -40,7 +47,7 @@ Documentation and examples for %name.
 %setup
 #patch0 -p2
 #patch1 -p2
-%patch2 -p2
+#patch2 -p2
 # some incompatibilities?
 %__subst "s|@printindex cp||g" doc/%name.texi
 gzip ChangeLog
@@ -48,7 +55,8 @@ gzip ChangeLog
 %build
 %configure --with-docdir=%_docdir/%name-doc-%version \
 	--with-latex=%_texmfmain/tex/latex \
-	--with-context=%_texmfmain/tex/context/third
+	--with-context=%_texmfmain/tex/context/third \
+	--disable-gsl
 %make_build
 
 %install
@@ -69,6 +77,10 @@ gzip ChangeLog
 %_infodir/%name/*.info*
 
 %changelog
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.36-alt1
+- new version 2.36 (with rpmrb script)
+- build without libgsl support
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.35-alt1.1
 - NMU: added BR: texinfo
 
