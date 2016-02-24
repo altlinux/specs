@@ -1,17 +1,19 @@
+Group: Development/Java
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 # Eclipse does not yet export virtual maven provides, so filter out the requires
 
 
 Name:           maven-eclipse-plugin
 Version:        2.9
-Release:        alt5_9jpp7
+Release:        alt5_15jpp8
 Summary:        Maven Eclipse Plugin
 
-Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-eclipse-plugin/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
@@ -25,35 +27,31 @@ ExclusiveArch: %{ix86} x86_64
 BuildArch: noarch
 %endif
 
-# Basic stuff
-BuildRequires: jpackage-utils
-
 # Maven and its dependencies
 BuildRequires: maven-local
 BuildRequires: maven-test-tools
 BuildRequires: maven-plugin-testing-tools
+BuildRequires: maven-osgi
 # Others
 BuildRequires: apache-commons-io
 BuildRequires: xmlunit
-BuildRequires: eclipse-platform
+BuildRequires: eclipse-equinox-servlet
 BuildRequires: plexus-resources
+BuildRequires: plexus-interactivity-jline
 BuildRequires: bsf
 BuildRequires: jaxen
 BuildRequires: dom4j
 BuildRequires: xom
 BuildRequires: saxpath
-
-Provides:       maven2-plugin-eclipse = 0:%{version}-%{release}
-Obsoletes:      maven2-plugin-eclipse <= 0:2.0.8
 Source44: import.info
-%filter_from_requires /mvn.org.eclipse.core:resources./d
+%filter_from_requires /mvn\\(org\\.eclipse\\.core:resources\\)/d
 
 %description
 The Eclipse Plugin is used to generate Eclipse IDE files (.project, .classpath 
 and the .settings folder) from a POM.
 
 %package javadoc
-Group:          Development/Java
+Group: Development/Java
 Summary:        Javadoc for %{name}
 BuildArch: noarch
 
@@ -69,6 +67,8 @@ API documentation for %{name}.
 
 sed -i -e "s|3.3.0-v20070604|3.7.100.v20110510-0712|g" pom.xml
 
+sed -i 's/aQute\.lib\.osgi/aQute.bnd.osgi/g' src/main/java/org/apache/maven/plugin/eclipse/EclipseToMavenMojo.java
+
 # Remove easymock dependency (tests are skipped)
 %pom_remove_dep easymock:
 
@@ -80,9 +80,12 @@ CORE_FAKE_VERSION="3.7.100.v20110510-0712"
 CORE_PLUGIN_DIR=$MAVEN_REPO_LOCAL/org/eclipse/core/resources/$CORE_FAKE_VERSION
 
 mkdir -p $CORE_PLUGIN_DIR
-plugin_file=`ls /usr/lib{,64}/eclipse/plugins/org.eclipse.core.resources_*jar || :`
+#plugin_file=`ls /usr/lib{,64}/eclipse/plugins/org.eclipse.core.resources_*jar || :`
+plugin_file=`ls /usr/share/java/eclipse/org.eclipse.core.resources_*jar || :`
 
 ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
+
+%pom_xpath_inject "pom:dependencies/pom:dependency[pom:groupId[text()='org.eclipse.core']]" "<scope>provided</scope>"
 
 # Skip tests because they do not compile
 %mvn_build -- -Dmaven.test.skip=true -Dmaven.repo.local=$MAVEN_REPO_LOCAL
@@ -92,11 +95,16 @@ ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
 
 %files -f .mfiles
 %doc LICENSE NOTICE DEPENDENCIES README-testing.txt
+%dir %{_javadir}/maven-eclipse-plugin
+%dir %{_mavenpomdir}/maven-eclipse-plugin
 
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Feb 24 2016 Igor Vlasenko <viy@altlinux.ru> 2.9-alt5_15jpp8
+- jpp8 update
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.9-alt5_9jpp7
 - new release
 
