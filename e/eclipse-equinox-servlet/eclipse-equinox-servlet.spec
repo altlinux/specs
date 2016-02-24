@@ -10,7 +10,7 @@ Provides: mvn(org.eclipse.equinox.http:servlet:pom:) = 1.2.1.v20151005.1500
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.2jpp
+Release: alt0.3jpp
 Source: eclipse-equinox-servlet-4.5.1-1.tar
 
 %description
@@ -34,6 +34,9 @@ done
 %files -f %name-list
 
 %changelog
+* Wed Feb 24 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt0.3jpp
+- added org.eclipse.core.resources (for maven-eclipse-plugin)
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 4.5.1-alt0.2jpp
 - added mvn provides
 
