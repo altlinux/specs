@@ -1,7 +1,7 @@
 %define oname userspace-rcu
 Name: libuserspace-rcu
-Version: 0.8.7
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -46,11 +46,11 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 
 %build
 # Patch for AArch64 and PPC64LE needs it
-autoreconf -vif
+#autoreconf -vif
 %configure --disable-static
 #Remove Rpath from build system
 %__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -74,13 +74,17 @@ cd doc/examples && make clean
 %_libdir/liburcu*.so.*
 
 %files devel
-%doc README doc/*.txt doc/examples/
+%doc README.md doc/*.md doc/examples/
 %_includedir/urcu/
 %_includedir/urcu*.h
 %_libdir/*.so
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version 0.9.1 (with rpmrb script)
+- move sources to subdir
+
 * Sun Jun 14 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8.7-alt2
 - clean examples before packing
 
