@@ -1,6 +1,9 @@
+%define gecko_version 2.44
+%define mono_version 4.5.6
+
 Name: wine-vanilla
-Version: 1.8.0
-Release: alt0rc4
+Version: 1.9.4
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -38,7 +41,7 @@ BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
-BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
+BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel libpulseaudio-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libv4l-devel
@@ -70,7 +73,7 @@ Requires: glibc-pthread glibc-nss
 #ExclusiveArch:  %{ix86}
 Requires: webclient
 
-Requires: wine-gecko = 2.40
+Requires: wine-gecko = %gecko_version
 
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
@@ -112,11 +115,12 @@ Warning: it may kill your X server suddenly.
 Summary: Wine meta package
 Summary(ru_RU.UTF-8): Мета пакет Wine
 Group: Emulators
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: lib%name-gl = %version-%release
 
-Requires: wine-mono >= 4.5.6
-Requires: wine-gecko = 2.40
+Requires: wine-mono >= %mono_version
+Requires: wine-gecko = %gecko_version
 
 %description full
 Wine meta package
@@ -197,6 +201,12 @@ develop programs which make use of Wine.
 %setup
 
 %build
+# Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
+%if_with build64
+%remove_optflags -fomit-frame-pointer
+%add_optflags -fno-omit-frame-pointer
+%endif
+
 %configure --with-x \
 %if_with build64
 	--enable-win64 \
@@ -365,6 +375,17 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt2
+- fix packing issues
+- make wine-vanilla-full noarch
+- add libpulseaudio-devel buildreq
+
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt1
+- new version 1.9.4 (requires wine-gecko = 2.44)
+
+* Tue Jan 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
+- new version 1.9.1
+
 * Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt0rc4
 - new version 1.8-rc4
 
