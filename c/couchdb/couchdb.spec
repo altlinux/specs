@@ -1,14 +1,19 @@
 %define oname apache-couchdb
+
 Name: couchdb
-Version: 1.0.2
-Release: alt1.1
-Packager: Mikhail Pokidko <pma@altlinux.org>
-Url: http://couchdb.apache.org/
-License: Apache
-Group: Databases
+Version: 1.6.1
+Release: alt1
+
 Summary: A peer based distributed database system
 
-Source: %name-%version-%release.tar
+License: Apache
+Group: Databases
+Url: http://couchdb.apache.org/
+
+Packager: Mikhail Pokidko <pma@altlinux.org>
+
+# Source-url: https://github.com/apache/couchdb/archive/%version.tar.gz
+Source: %name-%version.tar
 Source1: couch.init
 
 BuildRequires: erlang erlang-devel erlang-otp-devel libicu-devel libcurl-devel help2man libjs-devel
@@ -33,11 +38,11 @@ the efficient and robust disk layout are all carefully integrated for a reliable
 efficient system.
 
 %prep
-%setup -q
+%setup
 
 %build
 ./bootstrap
-%configure --with-js-include=%_includedir/js --localstatedir=/var --libdir=%_libexecdir 
+%configure --with-js-include=%_includedir/js --localstatedir=/var --libdir=%_libexecdir
 %make_build
 
 %install
@@ -58,6 +63,8 @@ sed -i s@lib/lib@lib@g %buildroot%_sbindir/%name
 sed -i s@%name/erlang@erlang@g %buildroot%_sbindir/%name
 sed -i s#HEART_COMMAND=\"/usr/bin#HEART_COMMAND=\"/usr/sbin#g %buildroot%_sbindir/%name
 sed -i s#/usr/lib/couchdb#/usr/lib# %buildroot%_sysconfdir/%name/default.ini
+
+rm -f %buildroot/etc/rc.d/couchdb
 
 %pre
 %_sbindir/groupadd -r -f _couchdb &>/dev/null ||:
@@ -91,8 +98,12 @@ sed -i s#/usr/lib/couchdb#/usr/lib# %buildroot%_sysconfdir/%name/default.ini
 %_man1dir/*
 
 
-
 %changelog
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
+- new version 1.6.1 (with rpmrb script)
+- build with icu 5.6
+- jump to build from source tarball
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.1
 - Rebuilt with icu 5.1
 
