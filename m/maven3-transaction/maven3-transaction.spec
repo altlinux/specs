@@ -5,11 +5,8 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.1jpp
+Release: alt0.2jpp
 
-# to drop jakarta-taglibs-standard
-Provides: tomcat-jsp-2.2-api
-Provides: tomcat-servlet-3.0-api
 #i586-runawfe-gpd.32bit#3.6.0-alt1.svn4700       i586-eclipse-swt
 #i586-runawfe-notifier.32bit#3.6.0-alt1.svn4700  i586-eclipse-swt
 Provides: i586-eclipse-swt = 4.0
@@ -26,6 +23,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Thu Feb 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt0.2jpp
+- updated dependencies
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt0.1jpp
 - updated dependencies
 
