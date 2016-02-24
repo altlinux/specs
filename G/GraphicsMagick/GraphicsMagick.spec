@@ -44,7 +44,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.20
-Release: alt1.1.1.1
+Release: alt2
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -505,6 +505,9 @@ __MENU__
 %endif
 
 %changelog
+* Wed Feb 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.20-alt2
+- rebuilt with new libwebp
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.3.20-alt1.1.1.1
 - rebuild with new perl 5.22.0
 
