@@ -10,10 +10,11 @@
 # or $ rpmbph wine.spec for other distro
 #
 %define debug %nil
+%define gecko_version 2.44
 
 Name: wine
-Version: 1.8.0
-Release: alt0.rc4
+Version: 1.9.3
+Release: alt1
 Epoch: 1
 
 Summary: Environment for running Windows applications (Etersoft edition)
@@ -42,7 +43,7 @@ BuildRequires: zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
-BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
+BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel libpulseaudio-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libv4l-devel
@@ -93,7 +94,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 2.40
+Requires: wine-gecko = %gecko_version
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -228,6 +229,12 @@ develop programs which make use of Wine.
 %build
 %remove_optflags -fomit-frame-pointer
 %remove_optflags -D_FORTIFY_SOURCE=2
+
+# Workaround for https://bugzilla.altlinux.org/show_bug.cgi?id=31834
+%ifarch x86_64
+%add_optflags -fno-omit-frame-pointer
+%endif
+
 %configure --with-x \
 %ifarch x86_64
 	--enable-win64 \
@@ -438,6 +445,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1:1.9.3-alt1
+- new version 1.9.3 (uses wine-gecko 2.44)
+
 * Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.0-alt0.rc4
 - new version 1.8-rc4
 
