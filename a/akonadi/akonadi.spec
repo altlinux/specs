@@ -1,7 +1,7 @@
 
 Name: akonadi
 Version: 1.13.1
-Release: alt0.2
+Release: alt0.3
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -120,7 +120,7 @@ Requires: %name-common = %EVR
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: libqt4-devel libxml2-devel
+Requires: libqt4-devel libxml2-devel dbus
 Conflicts: kde4pimlibs-devel < 4.0.70
 Conflicts: kde4pim-devel < 4.0.70
 %description devel
@@ -201,6 +201,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Feb 24 2016 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.3
+- fix requires
+
 * Thu Feb 18 2016 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt0.2
 - fix package dbus service file
 
