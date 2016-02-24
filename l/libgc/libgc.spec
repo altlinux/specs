@@ -1,15 +1,20 @@
 Name: libgc
-Version: 7.2d
-Release: alt3
+Version: 7.4.2
+Release: alt1
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
+
 License: MIT and GPLv2+
 Group: System/Libraries
-Url: http://www.hpl.hp.com/personal/Hans_Boehm/gc/
-Source: %url/gc_source/gc-%version.tar.gz
+Url: http://www.hboehm.info/gc/
+
+# Source-url: http://www.hboehm.info/gc/gc_source/gc-%version.tar.gz
+Source: gc-%version.tar
 Patch: gc-aarch64.patch
 
 BuildRequires: gcc-c++
+BuildRequires: libatomic_ops-devel-static
+
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 %def_disable static
@@ -42,8 +47,8 @@ Requires: %name-devel = %version-%release
 This package contains static libgc library.
 
 %prep
-%setup -n gc-7.2
-%patch -p1
+%setup -n gc-%version
+#patch -p1
 
 %build
 # see bugzilla.redhat.com/689877
@@ -52,7 +57,7 @@ export CPPFLAGS='-DUSE_GET_STACKBASE_FOR_MAIN=1 -DUSE_LIBC_PRIVATES=1'
 	--enable-cplusplus \
 	--enable-large-config \
 	--enable-threads=posix \
-	--with-libatomic-ops=no \
+	--with-libatomic-ops=yes \
 	--enable-shared=yes \
 	%{subst_enable static} \
 %ifarch %{ix86}
@@ -74,18 +79,20 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 
 %files
 %_libdir/*.so.*
-%doc ChangeLog README.QUICK doc/README
-%doc doc/README.changes doc/README.contributors 
-%doc doc/README.environment doc/README.linux
+%doc ChangeLog README.QUICK README.md doc/README.cords
+%doc doc/README.environment
 
 %files devel
 %_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*.pc
+%_includedir/gc/
+%_includedir/gc.h
+%_includedir/gc_cpp.h
+%_pkgconfigdir/bdw-gc.pc
 %_man3dir/*
 # exclude docs from the wrong place
 %exclude %_datadir/gc/
-%doc doc/*.html doc/barrett_diagram
+%doc doc/README.linux doc/README.arm.cross doc/README.autoconf doc/README.cmake
+%doc doc/*.html
 
 %if_enabled static
 %files devel-static
@@ -93,6 +100,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 7.4.2-alt1
+- new version (7.4.2) with rpmgs script
+- build with external libatomic-ops
+
 * Fri Sep 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2d-alt3
 - Added aarch64 architecture support.
 
