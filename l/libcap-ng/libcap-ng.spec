@@ -3,7 +3,7 @@
 
 Name: libcap-ng
 Version: 0.7.4
-Release: alt1.2
+Release: alt1.3
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
@@ -16,7 +16,10 @@ BuildRequires: kernel-headers >= 2.6.11
 BuildRequires: libattr-devel
 
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+# not BR(pre) as we don't need those macros to rpm -bs
+# (only used within setup/build/install/files sections);
+# see also https://bugzilla.altlinux.org/8579
+BuildPreReq: rpm-build-python3
 BuildPreReq: python3-devel
 %endif
 
@@ -154,6 +157,10 @@ popd
 %endif
 
 %changelog
+* Wed Feb 24 2016 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1.3
+- fix BR(pre): rpm-build-python3 towards a simple BR
+  (makes --without python3 work again with hasher >= 1.3.28)
+
 * Sun Feb 07 2016 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1.2
 - fix knobs so that both python modules get built by default
   (thx ldv@ for spotting the breakage)
