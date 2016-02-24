@@ -1,9 +1,10 @@
 %def_enable pulse
 %define ver_major 2
-%define api_ver 1.0
+%define api_ver 1.1
+%def_disable qt5
 
 Name: guvcview
-Version: %ver_major.0.1
+Version: %ver_major.0.3
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -16,12 +17,16 @@ Source: http://download.sourceforge.net/%name/%name-src-%version.tar.gz
 Requires: lib%name = %version-%release
 
 BuildPreReq: libSDL2-devel >= 2.0.0
+BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils intltool
 BuildRequires: libavutil-devel libavcodec-devel
 BuildRequires: libgtk+3-devel libportaudio2-devel
 BuildRequires: libv4l-devel libpng-devel libudev-devel libusb-devel
 BuildRequires: libgsl-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
+%{?_enable_qt5:BuildRequires: qt5-base-devel qt5-tools}
+# for autoreconf
+BuildRequires: autoconf-archive
 
 %description
 This project aims at providing a simple GTK interface for capturing and
@@ -55,11 +60,13 @@ This package contains files necessary to develop applications that use
 
 %build
 export LIBS="$LIBS -lm"
+%{?_enable_qt5: export ac_cv_prog_MOC=%_bindir/moc-qt5}
 %autoreconf
 %configure \
 	--disable-static \
 	--disable-debian-menu \
-	%{?_disable_pulse:--enable-pulse=no}
+	%{?_disable_pulse:--enable-pulse=no} \
+	%{subst_enable qt5}
 %make_build
 
 %install
@@ -99,6 +106,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Feb 24 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Sun Nov 30 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
