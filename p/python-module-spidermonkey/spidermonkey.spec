@@ -1,16 +1,15 @@
 Name: python-module-spidermonkey
 Version: 0.0.10
-Release: alt4.1.1
+Release: alt4.1.2
 Summary: JavaScript/python bridge
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/python-spidermonkey
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source0: python-spidermonkey-%version.tar
 
 BuildPreReq: python-module-setuptools python-module-Pyrex
-BuildRequires: libnspr-devel xulrunner-devel python-module-nose
+BuildRequires: libnspr-devel python-module-nose
 
 %description
 Python/JavaScript bridge module, making use of Mozilla's spidermonkey
@@ -33,6 +32,9 @@ mkdir -p %buildroot
 %files -f INSTALLED_FILES
 
 %changelog
+* Wed Feb 24 2016 Denis Medvedev <nbr@altlinux.org> 0.0.10-alt4.1.2
+- removed xulrunner 
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.0.10-alt4.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
