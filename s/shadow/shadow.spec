@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.2.1
-Release: alt4
+Release: alt5
 Serial: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -204,7 +204,7 @@ grep -qs ^ACLOCAL_AMFLAGS Makefile.am ||
 
 %build
 %autoreconf
-%add_optflags -Werror -Wno-error=address -DEXTRA_CHECK_HOME_DIR
+%add_optflags -Werror -Wno-error=address -Wno-error=cpp -DEXTRA_CHECK_HOME_DIR
 %configure \
 	%{subst_enable shared} \
 	--with-tcb \
@@ -391,6 +391,10 @@ fi
 %exclude %_man8dir/nologin.8.*
 
 %changelog
+* Wed Feb 24 2016 Mikhail Efremov <sem@altlinux.org> 1:4.2.1-alt5
+- Don't treat cpp warnings as error.
+- Fix build without selinux support.
+
 * Wed Dec 23 2015 Mikhail Efremov <sem@altlinux.org> 1:4.2.1-alt4
 - Lazy link with -lsemanage (by Dmitry V. Levin).
 
