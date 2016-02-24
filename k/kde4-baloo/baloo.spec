@@ -4,7 +4,7 @@
 %define rname baloo
 Name: kde4-baloo
 Version: 4.14.3
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: A framework for searching and managing metadata
@@ -26,7 +26,7 @@ Patch2: alt-indexing-checkbox-up.patch
 # Automatically added by buildreq on Tue Apr 29 2014 (-bi)
 # optimized out: automoc boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libakonadi4-calendar libakonadi4-contact libakonadi4-kabc libakonadi4-kcal libakonadi4-kde libakonadi4-kmime libakonadi4-notes libakonadi4-socialutils libakonadi4-xml libcloog-isl4 libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgpgmexx4-pthread libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4-baloo kde4-kfilemetadata-devel kde4base-runtime-core kde4pimlibs-devel libxapian-devel python-module-protobuf qjson-devel qt4-designer rpm-build-ruby zlib-devel-static
-BuildRequires: akonadi-devel gcc-c++ kde4-kfilemetadata-devel kde4pimlibs-devel libxapian-devel qjson-devel
+BuildRequires: dbus akonadi-devel gcc-c++ kde4-kfilemetadata-devel kde4pimlibs-devel libxapian-devel qjson-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -150,6 +150,9 @@ Requires: %name-common = %EVR
 %_K4libdir/libbalooqueryparser.so.*
 
 %changelog
+* Wed Feb 24 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt4
+- fix build requires
+
 * Tue Oct 13 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt3
 - don't use separate polkit files
 
