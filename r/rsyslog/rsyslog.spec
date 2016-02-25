@@ -6,19 +6,12 @@
 
 Name: rsyslog
 Version: 8.16.0
-Release: alt1
+Release: alt3
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+ ASL2.0
 Group: System/Kernel and hardware
 Url: http://www.rsyslog.com
-Provides: syslogd-daemon
-Provides: /etc/rsyslog.d
-PreReq: syslog-common
-
-Conflicts: syslogd klogd
-Conflicts: syslog-ng
-
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -67,6 +60,19 @@ while  at the same time being very easy to setup for the novice user.
  o immark.so   - This is the implementation of the build-in mark message input
                  module.
  o imfile.so   - This is the input module for reading text file data.
+
+%package classic
+Summary: Classic configuration
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+Provides: syslogd-daemon
+Provides: /etc/rsyslog.d
+PreReq: syslog-common
+Conflicts: syslogd klogd
+Conflicts: syslog-ng
+
+%description classic
+This package containes a classic syslog configuration with logging to /var/log.
 
 %package crypto
 Summary: Encryption support
@@ -363,7 +369,7 @@ export HIREDIS_LIBS=-lhiredis
 	--enable-unlimited-select \
 	--enable-usertools \
 	--enable-generate-man-pages \
-	--with-systemdsystemunitdir=%systemd_unitdir
+	--with-systemdsystemunitdir=%_unitdir
 
 %make_build
 
@@ -378,14 +384,16 @@ install -m640 rsyslogd.alt %buildroot%_sysconfdir/sysconfig/rsyslogd
 install -m755 rsyslogd.init %buildroot%_initdir/rsyslogd
 install -m640 *_*.conf %buildroot%_sysconfdir/rsyslog.d/
 install -m640 syslog.conf %buildroot%_sysconfdir/syslog.conf
-install -m755 rsyslog-systemd.prestart %buildroot%systemd_unitdir/../altlinux-rsyslog-extrasockets
+install -m755 rsyslog-systemd.prestart %buildroot%_unitdir/../altlinux-rsyslog-extrasockets
 touch %buildroot%_sysconfdir/rsyslog.d/00_extrasockets.conf
 
 # add aliase rsyslogd to rsyslog for systemd
-ln -s rsyslog.service %buildroot%systemd_unitdir/rsyslogd.service
+ln -s rsyslog.service %buildroot%_unitdir/rsyslogd.service
 # add default start for systemd
-mkdir -p %buildroot%systemd_unitdir/syslog.target.wants
-ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.service
+mkdir -p %buildroot%_unitdir/syslog.target.wants
+ln -s ../rsyslog.service %buildroot%_unitdir/syslog.target.wants/rsyslog.service
+mkdir -p %buildroot%_unitdir/rsyslog.service.d
+install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/classic.conf
 
 %post
 %post_service rsyslogd
@@ -396,16 +404,13 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %files
 %doc AUTHORS ChangeLog README
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/%name.conf
-%config(noreplace) %attr(640,root,adm) %_sysconfdir/syslog.conf
 %dir %_sysconfdir/%name.d/
 %dir %_var/spool/%name
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_common.conf
-%config(noreplace) %verify(not md5 size mtime) %attr(640,root,adm)  %ghost %_sysconfdir/rsyslog.d/00_extrasockets.conf
 %config(noreplace) %_sysconfdir/sysconfig/rsyslogd
 %config %_initdir/rsyslogd
-%systemd_unitdir/*.service
-%systemd_unitdir/../altlinux-rsyslog-extrasockets
-%systemd_unitdir/syslog.target.wants/rsyslog.service
+%_unitdir/*.service
+%_unitdir/syslog.target.wants/rsyslog.service
 %dir %mod_dir
 %mod_dir/imfile.so
 %mod_dir/imklog.so
@@ -427,6 +432,13 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 
 /sbin/rsyslogd
 %_mandir/man?/rsyslog*
+
+%files classic
+%config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_classic.conf
+%config(noreplace) %attr(640,root,adm) %_sysconfdir/syslog.conf
+%config(noreplace) %verify(not md5 size mtime) %attr(640,root,adm)  %ghost %_sysconfdir/rsyslog.d/00_extrasockets.conf
+%_unitdir/../altlinux-rsyslog-extrasockets
+%_unitdir/rsyslog.service.d/classic.conf
 
 %files crypto
 %_bindir/rscryutil
@@ -522,6 +534,18 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %mod_dir/mmsnmptrapd.so
 
 %changelog
+* Thu Feb 25 2016 Alexey Shabalin <shaba@altlinux.ru> 8.16.0-alt3
+- add load imuxsock module to rsyslog-classic config
+- upadte altlinux-rsyslog-extrasockets script
+- move altlinux-rsyslog-extrasockets script to rsyslog-classic
+- add drop-in config rsyslog.service.d/classic.conf to rsyslog-classic
+- drop $IncludeConfig /etc/syslog.conf from rsyslog.conf (in 00_classic.conf now)
+
+* Wed Feb 24 2016 Eugene Prokopiev <enp@altlinux.ru> 8.16.0-alt2
+- extract rsyslog-classic
+- comment all input modules and add commented imjournal
+- unit cleanup
+
 * Tue Jan 26 2016 Alexey Shabalin <shaba@altlinux.ru> 8.16.0-alt1
 - 8.16.0
 - add pmpanngfw to extra package
