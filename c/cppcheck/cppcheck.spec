@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.71
-Release: alt2
+Version: 1.72
+Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 
@@ -15,6 +15,7 @@ Source: %name-%version.tar.bz2
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.67-norebuild.patch
 Patch3: cppcheck-1.67-appPath.patch
+Patch4: cppcheck-1.72-test_32.patch
 
 # Automatically added by buildreq on Sun Nov 01 2015
 # optimized out: docbook-dtds fontconfig libgpg-error libqt4-core libqt4-devel libqt4-gui libstdc++-devel phonon-devel pkg-config python-base python-modules xml-common
@@ -37,6 +38,11 @@ Requires: %name = %version-%release
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
+%ifnarch x86_64
+%patch4 -p1
+%endif
+
 
 cat > %name.desktop <<@@@
 [Desktop Entry]
@@ -109,6 +115,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Feb 25 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.72-alt1
+- Version 1.72
+
 * Sat Nov 21 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.71-alt2
 - Fix Version in help
 
@@ -198,4 +207,5 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 * Tue May 05 2009 Slava Semushin <php-coder@altlinux.ru> 1.31-alt1
 - Initial build for ALT Linux
+
 
