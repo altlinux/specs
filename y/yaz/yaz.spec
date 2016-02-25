@@ -8,7 +8,7 @@
 
 Name: yaz
 Version: 5.13.0
-Release: alt1
+Release: alt2
 
 Summary: Z39.50/SRW/SRU toolkit
 
@@ -142,6 +142,9 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Thu Feb 25 2016 Vitaly Lipatov <lav@altlinux.ru> 5.13.0-alt2
+- rebuilt with libicuuc.so.56
+
 * Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 5.13.0-alt1
 - new version 5.13.0 (with rpmrb script)
 
