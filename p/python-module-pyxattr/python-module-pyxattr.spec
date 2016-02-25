@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.3
-Release: alt1
+Release: alt2
 
 Summary: A python module for accessing filesystem Extended Attributes
 
@@ -48,6 +48,7 @@ cp -fR . ../python3
 ln -s ../objects.inv doc/
 
 %build
+%add_optflags -Wno-error=cpp
 %python_build_debug
 
 %if_with python3
@@ -79,6 +80,9 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 0.5.3-alt2
+- Fix includes. Bug in includes.
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt1
 - Version 0.5.3
 - Added module for Python 3
