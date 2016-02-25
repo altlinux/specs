@@ -58,12 +58,12 @@
 %define pkgdir64		%{libdir64}/%{name}
 
 # define mozilla plugin dir and back up dir for 32-bit browsers
-%define pluginsourcedir32	%{libdir32}/mozilla/plugins
-%define plugindir32 		%{libdir32}/mozilla/plugins-wrapped
+%define pluginsourcedir32	%{libdir32}/browser-plugins
+%define plugindir32 		%{libdir32}/browser-plugins-wrapped
 
 # define mozilla plugin dir and back up dir for 64-bit browsers
-%define pluginsourcedir64	%{libdir64}/mozilla/plugins
-%define plugindir64 		%{libdir64}/mozilla/plugins-wrapped
+%define pluginsourcedir64	%{libdir64}/browser-plugins
+%define plugindir64 		%{libdir64}/browser-plugins-wrapped
 
 %define build_dir 		objs-%{target_bits}
 
@@ -86,7 +86,7 @@
 Summary:	A compatibility layer for Netscape 4 plugins
 Name:		nspluginwrapper
 Version:	1.4.4
-Release:	alt1
+Release:	alt2
 License:	GPLv2+
 Group:		Networking/WWW
 Url:		http://nspluginwrapper.org/
@@ -96,6 +96,9 @@ Source0:	http://nspluginwrapper.org/download/%name-%version.tar.gz
 Source1:	%{plugin_config_name}.tar.gz
 Source2:	plugin-config.sh.in
 Source3:	%{name}.sh.in
+Source4:	nspluginplayer.1.gz
+Source5:        nspluginwrapper.1.gz
+
 Patch1:		nspluginwrapper-1.4.4-make.patch
 Patch3:		nspluginwrapper-1.3.0-directory.patch
 Patch6:		nspluginwrapper-1.3.0-compiz.patch
@@ -114,7 +117,7 @@ Patch106:	plugin-config-help.patch
 Provides:	%{name} = %{version}-%{release}
 BuildRequires:	pkgconfig gtk2-devel glib2-devel nspr-devel
 BuildRequires:	libX11-devel libXt-devel libcairo-devel pango-devel libcurl-devel
-BuildRequires:	xulrunner-devel
+#BuildRequires:	xulrunner-devel
 
 %description
 nspluginwrapper makes it possible to use Netscape 4 compatible plugins
@@ -151,6 +154,11 @@ pushd %plugin_config_name
 %patch106 -p2 -b .help
 popd
 %patch105 -p1 -b .dlopen
+
+# Set ALT-specific plugins place
+subst 's,mozilla/plugins,browser-plugins,' \
+	src/npw-config.c \
+	plugin-config-1.9/src/plugin-path.h
 
 %build
 # Build wrapper
@@ -235,9 +243,9 @@ export MOZ_PLUGIN_PATH=%{pluginsourcedir}
 EOF
 chmod 755 $RPM_BUILD_ROOT%{pkgdir}/nspluginplayer
 
-# Remove conflicting files
-rm -rf $RPM_BUILD_ROOT%{_bindir}/nspluginplayer
-rm -rf $RPM_BUILD_ROOT%{_bindir}/nspluginwrapper
+# Install man pages
+mkdir -p %buildroot%_man1dir
+cp %SOURCE4 %SOURCE5 %buildroot%_man1dir/
 
 %post
 /usr/bin/mozilla-plugin-config -i -f > /dev/null 2>&1 || :
@@ -249,23 +257,24 @@ fi;
 
 %files
 %doc README COPYING NEWS
-%dir %{pkgdir}
-%dir %{plugindir}
+%dir %pkgdir
+%dir %plugindir
+%_man1dir/*.*
 
-%{pkgdir}/%{plugin_config_binary}
-%{pkgdir}/npconfig
-%{pkgdir}/npwrapper.so
-%{pkgdir}/npviewer.bin
-%{pkgdir}/npviewer.sh
-%{pkgdir}/npviewer
-%{pkgdir}/npplayer
-%{pkgdir}/libnoxshm.so
-%{pkgdir}/nspluginplayer
-%{plugindir}/npwrapper.so
-%{_bindir}/mozilla-plugin-config
+%_bindir/nsplugin*
+%_bindir/mozilla-plugin-config
+%pkgdir/%plugin_config_binary
+%pkgdir/*
+%plugindir/npwrapper.so
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 
 
 %changelog
+* Mon Mar 03 2014 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt2
+- Restore nspluginwrapper and nspluginviewer in /usr/bin
+- Add man pages from Debian
+- Fix path to plugin directory
+- Build without xulrunner
+
 * Fri Feb 28 2014 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
 - Import to Sisyphus from Fedora (ALT #23877, #29244, #29246)
