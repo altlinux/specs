@@ -5,13 +5,11 @@
 
 Name: python-module-%oname
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Summary: JSON-RPC 2.0 client library for Python 3
 License: LGPL
 Group: Development/Python
 Url: https://pypi.python.org/pypi/jsonrpcclient/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -130,6 +128,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 1.1.2-alt2
+- Rebuild into Sisyphus
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1
 - Version 1.1.2
 
