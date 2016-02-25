@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 11.1.1
+Version: 11.1.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -385,6 +385,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Feb 25 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:11.1.2-alt1
+- 11.1.2
+
 * Thu Jan 14 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:11.1.1-alt1
 - 11.1.1
 
