@@ -1,7 +1,7 @@
 %define oname pytest-ansible
 Name: python-module-%oname
 Version: 1.2.4
-Release: alt1.git20150318
+Release: alt2.git20150318
 Summary: Plugin for py.test to allow running ansible
 License: MIT
 Group: Development/Python
@@ -52,6 +52,9 @@ python setup.py test
 %python_sitelibdir/*
 
 %changelog
+* Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 1.2.4-alt2.git20150318
+- Recompile.
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt1.git20150318
 - Initial build for Sisyphus
 
