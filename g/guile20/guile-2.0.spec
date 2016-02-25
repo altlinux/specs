@@ -6,7 +6,7 @@
 
 Name: %{_name}20
 Version: %api_ver.11
-Release: alt1
+Release: alt2
 
 Summary: A GNU implementation of Scheme (version 2.0)
 License: GPL
@@ -126,6 +126,7 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 
 %files -n lib%name
 %_libdir/lib%_name-%api_ver.so.*
+%exclude %_libdir/lib%_name-%api_ver.so.*-gdb.scm
 %_libdir/libguilereadline-v-%gl_ver.so.*
 %_libdir/%_name/%api_ver/
 %_datadir/%_name/%api_ver/
@@ -133,8 +134,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 %files -n lib%name-devel
 %_includedir/%_name/%api_ver/
 %_libdir/lib%_name-%api_ver.so
+#%_libdir/lib%_name-%api_ver.so.*-gdb.scm
 %_libdir/libguilereadline-v-%gl_ver.so
-%_libdir/pkgconfig/%_name-%api_ver.pc
+%_pkgconfigdir/%_name-%api_ver.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -148,6 +150,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Thu Feb 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.11-alt2
+- removed lib%%_name-%%api_ver.so.*-gdb.scm (ALT #31097)
+
 * Fri Nov 07 2014 Yuri N. Sedunov <aris@altlinux.org> 2.0.11-alt1
 - 2.0.11
 
