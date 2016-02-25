@@ -1,8 +1,8 @@
 %define rname kcalcore
 
 Name: kde5-%rname
-Version: 15.12.1
-Release: alt2
+Version: 15.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -79,6 +79,9 @@ KF5 library
 %_K5lib/libKF5CalendarCore.so.*
 
 %changelog
+* Thu Feb 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Mon Feb 08 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
 - rebuild with new libical
 

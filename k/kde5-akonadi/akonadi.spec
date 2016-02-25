@@ -1,8 +1,8 @@
 %define rname akonadi
 
 Name: kde5-%rname
-Version: 15.12.1
-Release: alt2
+Version: 15.12.2
+Release: alt1
 %K5init altplace
 
 Group: Databases
@@ -175,6 +175,9 @@ mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 %_K5lib/libKF5AkonadiPrivate.so.*
 
 %changelog
+* Thu Feb 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Mon Feb 08 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
 - add fix for agents desktop-files reading encoding
 
