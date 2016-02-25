@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 6.0
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -22,7 +22,8 @@ Source: %name-%version-%release.tar
 Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
 
 BuildRequires(pre):rpm-build-licenses
-BuildRequires: asciidoc-a2x
+BuildRequires: publican
+BuildRequires: perl-podlators
 
 %description
 %Variant documentation.
@@ -42,6 +43,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Thu Feb 25 2016 Artem Zolochevskiy <azol@altlinux.org> 6.0-alt4
+- switch to publican
+
 * Wed Mar 21 2012 Artem Zolochevskiy <azol@altlinux.ru> 6.0-alt3
 - some tiny fixes
 
