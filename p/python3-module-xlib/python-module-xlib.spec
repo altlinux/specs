@@ -1,7 +1,7 @@
 %define oname xlib
 Name: python3-module-xlib
 Version: 0.15
-Release: alt1.git20140628
+Release: alt2.git20140628
 
 Summary: Python X Library
 
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
+BuildRequires: makeinfo
 
 %description
 The Python X Library is a complete X11R6 client-side implementation,
@@ -53,9 +54,12 @@ test -d %buildroot%_libdir || mv %buildroot%prefix/lib %buildroot%_libdir || :
 %python3_sitelibdir/*
 
 %files docs
-%doc examples doc/html/*.html
+%doc examples  doc/html/python-xlib/*.html
 
 %changelog
+* Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 0.15-alt2.git20140628
+- Changed texi2html to texi2any 
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15-alt1.git20140628
 - Initial build for Sisyphus
 
