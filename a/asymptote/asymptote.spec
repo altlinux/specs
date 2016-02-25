@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 2.36
-Release: alt1
+Release: alt2
 
 Summary: Descriptive vector graphics language
 
@@ -19,12 +19,7 @@ Patch2: asymptote-2.28-alt-gsl1.16.patch
 # Automatically added by buildreq on Sat Feb 20 2010
 BuildRequires: flex gcc-c++ libGL-devel libfftw3-devel libfreeglut-devel libgsl-devel libncurses-devel libreadline-devel zlib-devel
 
-# TODO:
-# instead tarball from the sources
-#BuildRequires: libgc-devel >= 7.4.2
-# for libgc only?
-#BuildRequires: libatomic_ops-devel-static
-#	--enable-gc=system \
+BuildRequires: libgc-devel >= 7.4.2
 
 BuildPreReq: texlive-latex-recommended ghostscript-utils /proc rpm-build-texmf
 # explicitly added texinfo for info files
@@ -52,10 +47,14 @@ Documentation and examples for %name.
 %__subst "s|@printindex cp||g" doc/%name.texi
 gzip ChangeLog
 
+# sure we do not using internal libgc
+rm -fv *.tar.gz
+
 %build
 %configure --with-docdir=%_docdir/%name-doc-%version \
 	--with-latex=%_texmfmain/tex/latex \
 	--with-context=%_texmfmain/tex/context/third \
+	--enable-gc=system \
 	--disable-gsl
 %make_build
 
@@ -77,6 +76,9 @@ gzip ChangeLog
 %_infodir/%name/*.info*
 
 %changelog
+* Thu Feb 25 2016 Vitaly Lipatov <lav@altlinux.ru> 2.36-alt2
+- build with system libgc
+
 * Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.36-alt1
 - new version 2.36 (with rpmrb script)
 - build without libgsl support
