@@ -1,6 +1,6 @@
 
 Name:       opencc
-Version:    1.0.2
+Version:    1.0.3
 Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
@@ -10,7 +10,7 @@ URL:        http://code.google.com/p/opencc/
 Source0:    %{name}-%{version}.tar
 # VCS:      https://github.com/BYVoid/OpenCC.git
 
-Patch1:     opencc-fixes-cmake.patch
+Patch:      %name-%version-%release.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -51,11 +51,11 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch1 -p1
+%patch -p1
 
 %build
-%cmake -DENABLE_GETTEXT:BOOL=ON \
-       -DBUILD_DOCUMENTATION:BOOL=ON
+%cmake -DBUILD_DOCUMENTATION=ON
+
 export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
 %cmake_build #VERBOSE=1
 
@@ -64,7 +64,7 @@ export LD_LIBRARY_PATH=%_builddir/%name-%version/BUILD/src
 rm -f %buildroot%_libdir/*.a
 
 %check
-ctest
+make test -C BUILD
 
 %find_lang %name
 
@@ -87,6 +87,9 @@ ctest
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Feb 23 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
+- New version
+
 * Mon Jan 12 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
 - New version
 - Build from upstream Git repository https://github.com/BYVoid/OpenCC.git
