@@ -1,3 +1,4 @@
+%filter_from_requires /.usr.bin.java/d
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -259,7 +260,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}
-Release: alt2_1.b15jpp8
+Release: alt3_1.b15jpp8
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1416,6 +1417,9 @@ $java -Xshare:dump >/dev/null 2>/dev/null
 %endif
 
 %changelog
+* Thu Feb 25 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt3_1.b15jpp8
+- cleaned parasyte dep on /usr/bin/java
+
 * Sat Jan 30 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0.71-alt2_1.b15jpp8
 - dropped dependency on maven-local
 
