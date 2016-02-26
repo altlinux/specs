@@ -1,6 +1,6 @@
 Name:           kamoso
 Version:        2.0.2
-Release:        alt10
+Release:        alt11
 
 Group:          Video
 Summary:        Application for taking pictures and videos from a webcam
@@ -15,14 +15,13 @@ Patch1: kamoso-2.0.2-libkipi-4.8.80.patch
 Patch2: kamoso-2.0.2-libkipi-4.9.50.patch
 # ALT
 Patch10: kamoso-2.0.2-alt-desktop-i18n-ru.patch
+Patch11: kamoso-2.0.2-alt-disable-nepomuk.patch
 
 BuildRequires(pre): kde4libs-devel >= 4.6.0
 BuildRequires:  gcc-c++ 
 BuildRequires:  libkipi4-devel 
 BuildRequires:  qt-gstreamer1-devel
 BuildRequires:  gstreamer1.0-devel
-BuildRequires:  libsoprano-devel
-BuildRequires:  soprano-backend-redland soprano-backend-virtuoso soprano
 
 %description
 Kamoso is an application to take pictures and videos out of your webcam.
@@ -33,6 +32,7 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %patch1 -p1
 %patch2 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 %add_optflags -I%_libdir/gstreamer-1.0/include
@@ -54,6 +54,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_iconsdir/hicolor/*/actions/youtube.*
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt11
+- Build without nepomuk
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt10
 - Fix build with gstreamer1.0
 
