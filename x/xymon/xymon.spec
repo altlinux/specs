@@ -61,7 +61,7 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.21
+Version:	4.3.26
 Release:	alt1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
@@ -178,13 +178,6 @@ Patch16: xymon437.launchopts.patch
 # see https://sourceforge.net/mailarchive/message.php?msg_id=28657398
 Patch18: xymon.nullfollowsincl.patch
 
-# remove localclient.cfg from server invocations of client
-Patch19: xymon.nolocalclient.patch
-
-
-# don't print default env file name unless running xymoncmd with --debug
-# see: https://sourceforge.net/tracker/?func=detail&aid=3170846&group_id=128058&atid=710490
-Patch30: xymon.quietcmd.patch
 
 # XYMONCLIENTHOME was not being set on clients running xymoncmd
 # see: https://sourceforge.net/tracker/?func=detail&aid=3170916&group_id=128058&atid=710490
@@ -197,18 +190,12 @@ Patch41: xymon.xymonmsg.patch
 # prevent refresh loop when loading "trends" page when locator is enabled
 Patch44: xymon.trendsloop.patch
 
-# Have mercy on those who type /xymon instead of /xymon/
-Patch47: xymon.dirredir.patch
-
 # Try harder to send a xymon message when segfaulting
 Patch48: xymon.sigbetter.patch
 
 # Silence an rpmlint warning about packaging an empty file
 Patch49: xymon.confreport_back.patch
 
-
-# allow xymoncmd to be run without XYMONHOME env variable pre-set
-Patch50: xymon.homelesscmd.patch
 
 # point apache-writable /rep and /snap to /var/cache/xymon
 Patch51: xymon.wwwcachedir.patch
@@ -241,7 +228,6 @@ Patch203: xymon.usrlibs.patch
 # DIFFERING VERSIONS ONLY
 # allow custom http headers to be specified for http tests for a given host
 Patch326: xymon_trunk.httpheaders.patch
-Patch26: xymon.httpheaders.patch
 
 # TRUNK ONLY
 # use distribution fping instead of building included one
@@ -450,19 +436,15 @@ the Xymon server in NCV format.
 %patch15 -b .nosleep
 %patch16 -b .launchopts
 %patch18 -b .nullfollowsincl
-%patch19 -b .nolocalclient
 
-%patch30 -b .quietcmd
 %patch36 -b .clienthomecheck
 
 %patch41 -b .xymonmsg
 %patch44 -b .trendsloop
-%patch47 -b .dirredir
 %patch48 -b .sigbetter
 # confreport_back.patch
 %patch49
 
-%patch50 -b .homelesscmd
 %patch51 -b .wwwcachedir
 %patch52 -b .alwaysmultiservers
 %patch53 -b .usesysconfig
@@ -474,7 +456,6 @@ the Xymon server in NCV format.
 %patch203 -b .usrlibs
 
 %if_disabled trunk
-%patch26 -b .httpheaders
 %patch3 -b .rundir
 %else # trunk
 %patch326 -b .httpheaders
@@ -1271,6 +1252,10 @@ done
 ################ end extra clients ################
 
 %changelog
+* Fri Feb 26 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.3.26-alt1
+- new version (CVE-2016-2054, CVE-2016-2055, CVE-2016-2056,
+  CVE-2016-2057, CVE-2016-2058 was fixed in previous 4.3.25)
+
 * Fri Jul 17 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.3.21-alt1
 - new version (CVE-2015-1430 was fixed in previous 4.3.18)
 - moved binaries from /usr/lib to /usr/libexec
