@@ -1,7 +1,7 @@
 %define rname kdepimlibs
 
 Name: kde5-pimlibs
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init altplace
 
@@ -137,6 +137,8 @@ done
 %_K5bin/akonadi*
 %_K5plug/kf5/kio/*.so
 %_K5plug/*akonadi*.so
+%_K5data/akonadi_knut_resource/
+%_datadir/akonadi5/agents/*
 %_datadir/akonadi5/contact/*
 %_datadir/akonadi5/plugins/*
 %_K5cfg/*.kcfg
@@ -176,6 +178,9 @@ done
 
 
 %changelog
+* Thu Feb 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
