@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.19.0
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -28,6 +28,7 @@ BuildRequires: icon-naming-utils
 %package -n icon-theme-breeze
 Summary: Breeze icons theme
 Group: Graphics
+Provides: kde4-icon-theme = %version-%release
 %description -n icon-theme-breeze
 %summary
 
@@ -88,6 +89,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt3
+- provide kde4-icon-theme
+
 * Fri Feb 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt2
 - fix icon-name-mapping usage
 
