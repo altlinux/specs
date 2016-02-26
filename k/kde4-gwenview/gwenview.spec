@@ -4,7 +4,7 @@
 %define rname gwenview
 Name: kde4-gwenview
 Version: 4.14.3
-Release: alt2
+Release: alt3
 
 Group: Graphics
 Summary: Image viewer for KDE
@@ -22,7 +22,6 @@ Source: %rname-%version.tar
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ glib2-devel kde4base-devel libexiv2-devel libjpeg-devel libkipi4-devel zlib-devel kde-common-devel
 BuildRequires: kde4-kactivities-devel kde4base-runtime-devel liblcms2-devel libkdcraw4-devel
-BuildRequires: soprano soprano-backend-redland
 BuildRequires: kde4-baloo-devel
 
 %description
@@ -51,6 +50,11 @@ KDE 4 core library.
 %install
 %K4install
 
+find %buildroot/%_K4xdg_apps -type f -name \*.desktop | \
+while read f ; do
+    sed -i '/^Exec=/s/-caption[[:space:]]*%%c//' $f
+done
+
 
 %files
 %doc NEWS
@@ -76,6 +80,9 @@ KDE 4 core library.
 
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt3
+- remove captions from desktop-files Exec
+
 * Tue Jun 30 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
 - rebuild with new exiv2
 
