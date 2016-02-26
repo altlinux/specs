@@ -10,7 +10,7 @@
 %define utilsshell changeDBAPassword.sh createAliasDB.sh
 Name: firebird
 Version: %major.%minor
-Release: alt2
+Release: alt2.1
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -525,6 +525,9 @@ if [ -z "$oldLine" ]; then
 fi
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.5.18497.0-alt2.1
+- Rebuild with new icu
+
 * Thu Apr 04 2013 Dmitry V. Levin <ldv@altlinux.org> 2.1.5.18497.0-alt2
 - Fixed build.
 
