@@ -9,7 +9,7 @@
 %define bugfix 5
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 %define theme %name
@@ -478,6 +478,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg at altlinux dot org> 7.0.5-alt4
+- return default gtk3 icon theme to oxygen
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg at altlinux dot org> 7.0.5-alt3
 - update GTK3 defaults
 
