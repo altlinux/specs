@@ -5,7 +5,7 @@
 
 Name: 	 kde4-%rname
 Version: 2.10
-Release: alt0_2beta.git%git_rev
+Release: alt0_3beta.git%git_rev
 
 Summary: multi-purpose note-taking application
 License: GPLv2+
@@ -22,7 +22,6 @@ BuildRequires: gcc-c++ glib2-devel glibc-devel kde4pimlibs-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libpth-devel
 BuildRequires: libqimageblitz-devel
-BuildRequires: soprano
 
 %description
 This multi-purpose note-taking application can helps you to:
@@ -69,6 +68,9 @@ KDE 4 core library.
 %_K4libdir/libbasketcommon.so.*
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 2.10-alt0_3beta.gite93519c
+- Build without nepomuk
+
 * Wed May 06 2015 Andrey Cherepanov <cas@altlinux.org> 2.10-alt0_2beta.gite93519c
 - New snapshot
 - Implement user configurable plaintext pasting
