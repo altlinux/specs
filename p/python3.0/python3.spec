@@ -8,10 +8,10 @@
 
 # To make this package an exception for sisyphus_check,
 # its SRPM name must be like a "base" python package;
-# cf. 220-check-python :
+# cf. 220-check-python (%%s is to avoid RPM warnings):
 #
 #	# python base packages are exception.
-#	if printf %s "$rpm_sourcerpm" |
+#	if printf %%s "$rpm_sourcerpm" |
 #	   egrep -qx 'python([2-9](\.[0-9])?)?-[^-]+-[^-]+'; then
 #		return 0
 #	fi
@@ -20,7 +20,7 @@
 Summary: ONLY site-packages SUBPACKAGE IS BUILT
 Name: python%pybasever.0
 Version: %old_pybasever.1
-Release: alt100
+Release: alt101
 License: Python
 Group: Development/Python3
 
@@ -78,9 +78,13 @@ install -m 0644 sitecustomize.py $RPM_BUILD_ROOT%old_pylibdir/site-packages/
 %endif
 
 %old_pylibdir/site-packages/*
-%exclude %old_pylibdir/site-packages/__pycache__
+%exclude %dir %old_pylibdir/site-packages/__pycache__
 
 %changelog
+* Fri Feb 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt101
+- don't loose __pycache__.
+- .spec: avoid RPM warnings (because of a macro in comments).
+
 * Fri Feb 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt100
 - Stripped everything from python3 packages, but left only the
   site-packages dirs (at the new common location).
