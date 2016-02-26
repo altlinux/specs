@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.1.1
-Release: alt1.git20140510
+Release: alt2.git20140510
 Summary: Python3 client for accessing tv show information from www.tvrage.com
 License: BSD
 Group: Development/Python3
@@ -18,7 +18,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-xmltodict
-BuildPreReq: python3-module-sphinx-devel rpm-macros-sphinx
+BuildPreReq: python3-module-sphinx-devel rpm-macros-sphinx3
 
 %py3_provides %oname
 
@@ -38,8 +38,8 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-%prepare_sphinx .
-ln -s ../objects.inv docs/
+%prepare_sphinx3 .
+#ln -s ../objects.inv docs/
 
 %build
 %python3_build_debug
@@ -60,6 +60,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Feb 26 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt2.git20140510
+- Fix sphinx doc build.
+
 * Fri Nov 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20140510
 - Initial build for Sisyphus
 
