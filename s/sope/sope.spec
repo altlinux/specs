@@ -7,7 +7,7 @@
 
 Summary:      SOPE is an extensive set of frameworks which form a complete Web application server environment
 Name:         sope
-Version:      2.3.7
+Version:      3.0.1
 Release:      alt1
 License:      GPL
 URL:          http://sogo.nu/
@@ -477,6 +477,9 @@ fi
 
 
 %changelog
+* Mon Feb 08 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
+- New version
+
 * Tue Jan 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.7-alt1
 - New version
 

@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo
-Version:      2.3.7
-Release:      alt1
+Version:      3.0.1
+Release:      alt2
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -106,11 +106,12 @@ Group:        Communications
 Requires:     sogo = %version-%release
 
 %description tool
-Administrative tool for SOGo that provides the following internal commands:
-  backup          -- backup user folders
-  restore         -- restore user folders
-  remove-doubles  -- remove duplicate contacts from the user addressbooks
-  check-doubles   -- list user addressbooks with duplicate contacts
+Administrative tool for SOGo that provides the following internal
+commands:
+  backup          - backup user folders
+  restore         - restore user folders
+  remove-doubles  - remove duplicate contacts from the user addressbooks
+  check-doubles   - list user addressbooks with duplicate contacts
 
 %package slapd-sockd
 Summary:      SOGo backend for slapd and back-sock
@@ -236,7 +237,7 @@ touch %buildroot%apache2_sites_enabled/SOGo.conf
 install -Dm 600 Scripts/sogo.cron %buildroot/etc/cron.d/sogo
 subst 's, sogo, %sogo_user,g' %buildroot/etc/cron.d/sogo
 install -Dm 755 Scripts/tmpwatch %buildroot/etc/cron.daily/sogo-tmpwatch
-install -D      Scripts/logrotate %buildroot%_logrotatedir/sogo
+install -Dm 644 Scripts/logrotate %buildroot%_logrotatedir/sogo
 install -Dm 644 Scripts/sogo-systemd-redhat %buildroot%_unitdir/sogo.service
 subst "s/^User=.*/User=%sogo_user/" %buildroot%_unitdir/sogo.service
 install -Dm 644 Scripts/sogo-systemd.conf %buildroot%_tmpfilesdir/sogo.conf
@@ -280,6 +281,7 @@ popd
 %dir %attr(0700, %sogo_user, %sogo_user) %_spooldir/sogo
 %dir %attr(0750, root, %sogo_user) %_sysconfdir/sogo
 %_sbindir/sogod
+%dir %_libdir/sogo
 %_libdir/sogo/libSOGo.so.*
 %_libdir/sogo/libSOGoUI.so.*
 %_libdir/GNUstep/SOGo/AdministrationUI.SOGo
@@ -368,6 +370,18 @@ fi
 %preun_service sogo
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt2
+- Rebuild with new icu
+
+* Tue Feb 16 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
+- New version
+
+* Tue Feb 02 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
+- Fix permission of /etc/logrotate.d/sogo (ALT #31750)
+
+* Thu Jan 28 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version
+
 * Tue Jan 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.7-alt1
 - New version
 - Move apache bindings to package sogo-apache2

@@ -5,7 +5,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt4.zentyal19
+Release: alt4.zentyal21
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -305,6 +305,12 @@ popd
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Mon Feb 08 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal21
+- New version
+
+* Thu Jan 28 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal20
+- New version
+
 * Tue Jan 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal19
 - New version
 

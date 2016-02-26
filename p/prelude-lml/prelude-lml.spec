@@ -1,7 +1,7 @@
 Summary:        Prelude Hybrid Intrusion Detection System - Log Analyzer Sensor
 Name:           prelude-lml
 Version:        1.2.6
-Release:        alt2.rc1.git20140916
+Release:        alt2.rc1.git20140916.1
 License:        GPLv2
 Group:          Networking/Other
 URL:            http://www.prelude-ids.org/
@@ -186,6 +186,9 @@ find %buildroot -type f -name '*.la' -exec rm -f '{}' +
 %endif
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.6-alt2.rc1.git20140916.1
+- Rebuild with new icu
+
 * Tue Sep 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt2.rc1.git20140916
 - Version 1.2.6rc1
 

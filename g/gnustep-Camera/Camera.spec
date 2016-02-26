@@ -2,7 +2,7 @@
 
 Name: gnustep-Camera
 Version: 0.8
-Release: alt6
+Release: alt7
 Summary: Camera downloads files from your digital camera
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -50,6 +50,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.8-alt7
+- Rebuild with new icu
+
 * Fri Jan 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt6
 - Rebuilt with new libgphoto2
 
