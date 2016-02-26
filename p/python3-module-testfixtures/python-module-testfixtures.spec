@@ -1,8 +1,8 @@
 %define  modulename testfixtures
 
 Name:    python3-module-%modulename
-Version: 4.1.2
-Release: alt1.git20150130
+Version: 4.9.0
+Release: alt1.git20160225
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
@@ -55,6 +55,9 @@ py.test-%_python3_version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 4.9.0-alt1.git20160225
+- New version 
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1.git20150130
 - Version 4.1.2
 
