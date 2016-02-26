@@ -7,9 +7,9 @@
 Name: kde4-okular
 %define major 15
 %define minor 12
-%define bugfix 1
+%define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: Office
 Summary: KDE document viewer
@@ -140,6 +140,9 @@ done
 
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt3
 - remove captions from desktop-files Exec
 
