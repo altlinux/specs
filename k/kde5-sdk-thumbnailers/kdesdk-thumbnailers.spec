@@ -1,7 +1,7 @@
 %define rname kdesdk-thumbnailers
 
 Name: kde5-sdk-thumbnailers
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init
 
@@ -43,6 +43,9 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
 %_K5srv/*thumbnail*.desktop
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 

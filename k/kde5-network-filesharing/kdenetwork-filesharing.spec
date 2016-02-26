@@ -2,8 +2,8 @@
 %define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 15.12.1
-Release: alt2
+Version: 15.12.2
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -51,6 +51,9 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 %_K5srv/*shareplugin.desktop
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
 - fix find samba
 

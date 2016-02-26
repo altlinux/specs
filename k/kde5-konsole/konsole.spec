@@ -4,7 +4,7 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init
 
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
