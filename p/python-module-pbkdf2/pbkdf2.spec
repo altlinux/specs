@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.1
+Release: alt2
 Summary: PKCS#5 v2.0 PBKDF2 Module
 License: MIT
 Group: Development/Python
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 
 BuildRequires: python3-devel python3-module-distribute
 %endif
 
@@ -45,7 +45,7 @@ cp -a . ../python3
 %python_build_debug
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 %endif
 
@@ -68,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 26 2016 Denis Medvedev <nbr@altlinux.org> 1.3-alt2
+- Restoring python3 provides
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.3-alt1.1
 - Rebuild with Python-3.3
 
