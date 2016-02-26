@@ -1,6 +1,6 @@
 Name: ltris
 Version: 1.0.19
-Release: alt1
+Release: alt2
 Serial: 1
 
 Group: Games/Arcade
@@ -10,6 +10,7 @@ License: GPL
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source0: http://download.sourceforge.net/lgames/ltris-%version.tar.gz
+Patch1: ltris-1.0.19-inlines.patch
 
 #BuildRequires: XFree86-libs aalib esound libSDL-devel libSDL_mixer-devel
 #BuildRequires: libalsa libarts libaudiofile libogg libslang libsmpeg libvorbis
@@ -34,6 +35,7 @@ o Two game modes
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir --localstatedir=%{_localstatedir}/games
@@ -68,6 +70,9 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %_liconsdir/%name.xpm
 
 %changelog
+* Fri Feb 26 2016 Ilya Mashkin <oddity@altlinux.ru> 1:1.0.19-alt2
+- fix build
+
 * Tue Nov 12 2013 Ilya Mashkin <oddity@altlinux.ru> 1:1.0.19-alt1
 - 1.0.19
 
