@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.40
+Version: 0.8.41
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,11 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Fri Feb 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.41-alt1
+- 220-check-python: disallow having files in tools/ and lib-dynload/
+  subdirs of %%python_libdir (for all except pythonN.src.rpm's
+  subpkgs).
+
 * Fri Nov 13 2015 Dmitry V. Levin <ldv@altlinux.org> 0.8.40-alt1
 - 090-check-nvr (check_nvr):
   + allowed single symbol package names (closes: #28834, #31481).
