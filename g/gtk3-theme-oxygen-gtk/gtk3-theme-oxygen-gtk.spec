@@ -3,7 +3,7 @@
 
 Name: %gtk3_prefix-%real_name
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Serial: 1
 
 Group: Graphical desktop/GNOME
@@ -48,6 +48,9 @@ This is GTK3 port of default KDE4 Oxygen style.
 %_datadir/themes/%real_name
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 1:1.4.1-alt2
+- update from gtk3-1.4 branch
+
 * Mon Oct 27 2014 Sergey V Turchin <zerg@altlinux.org> 1:1.4.1-alt1
 - new version
 
