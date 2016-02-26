@@ -7,7 +7,7 @@
 %def_disable memphis
 
 Name: lib%_name
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -30,7 +30,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libclutter-devel >= %clutter_ver
-BuildPreReq: libsoup-gnome-devel >= %soup_ver
+BuildPreReq: libsoup-devel >= %soup_ver
 BuildRequires: libclutter-gtk3-devel libsoup-devel libsqlite3-devel gtk-doc
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_memphis:BuildRequires: libmemphis-devel >= %memphis_ver}
@@ -192,6 +192,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Fri Feb 26 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.13-alt1
+- 0.12.13
+
 * Thu Dec 03 2015 Yuri N. Sedunov <aris@altlinux.org> 0.12.12-alt1
 - 0.12.12
 
