@@ -1,12 +1,11 @@
 %define oname amqpy
 Name: python3-module-%oname
-Version: 0.9.4
-Release: alt1.git20150215
+Version: 0.12.4
+Release: alt1.git20160226
 Summary: Pure-Python 3 AMQP client library
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/amqpy/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/veegee/amqpy.git
 Source: %name-%version.tar
@@ -70,6 +69,9 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Feb 26 2016 Denis Medvedev <nbr@altlinux.org> 0.12.4-alt1.git20160226
+- New version.
+
 * Mon Feb 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4-alt1.git20150215
 - Version 0.9.4
 
