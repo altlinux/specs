@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1
+Release: alt2
 Summary: Python SVG Charting Library
 License: MIT
 Group: Development/Python
@@ -162,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Fri Feb 26 2016 Denis Medvedev <nbr@altlinux.org> 3.0-alt2
+- Fixed build by removing mercurial version check.
+
 * Fri Apr 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1
 - Initial build for Sisyphus
 
