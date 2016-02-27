@@ -1,7 +1,7 @@
 %define oname zope.ucol
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt3
+Release: alt3.1
 Summary: Python access to ICU text collation
 License: ZPLv2.1
 Group: Development/Python
@@ -48,6 +48,9 @@ This package contains tests for Python access to ICU text collation.
 %python_sitelibdir/zope/*/tests.*
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt3.1
+- Rebuild with new icu
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt3
 - Rebuilt with icu 5.1
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-FisicaLab
 Version: 0.3.3
-Release: alt3.1
+Release: alt3.2
 Summary: FisicaLab.app is an educational application to solve physics problems
 License: GPLv3
 Group: Graphical desktop/GNUstep
@@ -63,6 +63,9 @@ install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt3.2
+- Rebuild with new icu
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.3.3-alt3.1
 - NMU: Rebuild with libgnutls30.
 

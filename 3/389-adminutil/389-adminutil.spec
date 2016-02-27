@@ -1,6 +1,6 @@
 Name:    389-adminutil
 Version: 1.1.22
-Release: alt1
+Release: alt2
 License: LGPLv2
 Url:     http://port389.org
 # VCS: 	 https://git.fedorahosted.org/git/389/adminutil.git
@@ -64,6 +64,9 @@ rm -f %buildroot%_libdir/lib*.la
 %_includedir/libadmsslutil
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.22-alt2
+- Rebuild with new icu
+
 * Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.22-alt1
 - New version
 

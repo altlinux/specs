@@ -2,7 +2,7 @@
 
 Name: gnustep-Zillion
 Version: 0.1
-Release: alt5.1
+Release: alt5.2
 Summary: Zillion distributed computing Project
 License: BSD
 Group: Graphical desktop/GNUstep
@@ -54,14 +54,15 @@ features are as follows:
 
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
-#install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
-
 %files
 %_bindir/*
 %_libdir/GNUstep
 #_menudir/*
 
 %changelog
+* Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.1-alt5.2
+- Rebuild with new icu
+
 * Thu Jan 14 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt5.1
 - NMU: Rebuild with libgnutls30.
 
