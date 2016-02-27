@@ -1,6 +1,6 @@
 Name: phantomjs
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: headless WebKit with JavaScript API
 License: BSD
@@ -38,6 +38,9 @@ chrpath -d %buildroot%_bindir/%name
 %doc ChangeLog LICENSE.BSD examples
 
 %changelog
+* Sat Feb 27 2016 Vladimir Lettiev <crux@altlinux.ru> 2.0.0-alt2
+- Rebuild with libicu56
+
 * Mon Nov 02 2015 Vladimir Lettiev <crux@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 
