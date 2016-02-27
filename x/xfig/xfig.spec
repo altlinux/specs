@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.5c
-Release:      alt1
+Release:      alt2
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -87,6 +87,14 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sat Feb 27 2016 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5c-alt2
+- a few patches from Roland Rosenfeld (debian):
+  - Fix problems with creating PS, EPS and PDF
+    when using a locale that uses "," as decimal separator.
+  - Revert the change of X-Spline parameter made in 3.2.5c.
+  - Fix a hack in arcs and ellipses editing wich does not work with
+    position independent executables (PIE).
+
 * Sat Nov 29 2014 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5c-alt1
 - 3.2.5c
 
