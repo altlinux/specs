@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 2.35.0
-Release: alt1
+Release: alt2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -71,6 +71,8 @@ BuildRequires: python-module-cssselect >= 0.7.1
 BuildRequires: python-module-dbus >= 1.2.0
 BuildRequires: python-module-apsw >= 3.7.17
 
+BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
+
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
 in most of the major e-book formats. It can also talk to e-book reader
@@ -126,6 +128,10 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Fri Feb 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.35.0-alt2
+- fix buildreqs
+- rebuild with libicu56
+
 * Mon Aug 24 2015 Vitaly Lipatov <lav@altlinux.ru> 2.35.0-alt1
 - new version (2.35.0) with rpmgs script
 - build with Qt5, update build requires

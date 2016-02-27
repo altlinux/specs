@@ -1,6 +1,6 @@
 %define major 1.7
 Name: sword
-Version: %major.4
+Version: %major.5a1
 Release: alt1
 
 Summary: The SWORD Project framework for manipulating Bible texts
@@ -14,15 +14,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source0: http://www.crosswire.org/download/ftpmirror.tmp/pub/sword/source/v1.5/%name-%version.tar.bz2
 Source: http://www.crosswire.org/ftpmirror/pub/sword/source/v%major/%name-%version.tar
-Source1: ftp://ftp.zedz.net/pub/crypto/libraries/sapphire/sapphire.zip
 Source2: sword_icons.tar
-Patch: %name-gcc44.patch
-Patch1: %name-curl-7.21.7.patch
 
 Requires: lib%name = %version
 
-# Automatically added by buildreq on Fri Mar 30 2007
-BuildRequires: bc cppunit-devel gcc-c++ glibc-devel libclucene-devel libcurl-devel libicu-devel unzip
+BuildRequires: bc cppunit-devel gcc-c++ glibc-devel libclucene-devel libcurl-devel libicu-devel zlib-devel
 
 %description
 The SWORD Project is an effort to create an ever expanding software package
@@ -52,15 +48,10 @@ will need to develop applications which will use the SWORD Bible Framework.
 
 %prep
 %setup
-#patch -p0
-#patch1 -p2
-
-unzip -d sapphire %SOURCE1
-cp sapphire/SAPPHIRE.H include/sapphire.h
-cp sapphire/SAPPHIRE.CPP src/modules/common/sapphire.cpp
 
 %build
 %add_optflags -fpermissive
+%autoreconf
 %configure --with-lucene --with-icu --with-curl --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
@@ -80,7 +71,7 @@ popd
 %doc samples doc/*.*
 
 %files -n lib%name
-%_libdir/lib%name-%version.so
+%_libdir/lib%name-%major.*.so
 #_libdir/%name/
 
 %files -n lib%name-devel
@@ -89,6 +80,12 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Feb 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.5a1-alt1
+- new version 1.7.5a1 (with rpmrb script)
+- cleanup build (drop obsoleted saphire files)
+- this update resolves DataPath issue (ALT bug #31279)
+- rebuild with libicu56
+
 * Thu Jan 29 2015 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
 - new version 1.7.4 (with rpmrb script) (ALT bug #30670)
 
