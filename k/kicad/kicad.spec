@@ -3,18 +3,19 @@
 Summary: An open source software for the creation of electronic schematic diagrams
 Name: kicad
 Version: r4029
-Release: alt1
+Release: alt2
 Source0: ~registry-%name-stable-%version.tgz
+Source1: %name.desktop
 License: GPLv2+
 Group: Sciences/Computer science
 Url: https://code.launchpad.net/kicad
 #Url: https://code.launchpad.net/~registry/kicad/stable
 
-BuildRequires: boost-devel ccmake cmake >= 2.6.4 cmake-modules gcc-c++ libGL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel
+BuildRequires: boost-devel ccmake cmake >= 2.6.4 cmake-modules gcc4.7-c++ libGL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel
 BuildRequires: libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel
 BuildRequires: libXxf86misc-devel libxkbfile-devel wxGTK-devel xorg-xf86vidmodeproto-devel zlib-devel
 BuildRequires: fontconfig glibc-pthread libGLU-devel libICE-devel libSM-devel libX11-devel libXdamage-devel libXfixes-devel libXrender-devel
-BuildRequires: libgtk+2-common libstdc++-devel wxGTK xorg-inputproto-devel xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel
+BuildRequires: libgtk+2-common libstdc++4.7-devel wxGTK xorg-inputproto-devel xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel
 BuildRequires: xorg-xf86miscproto-devel xorg-xineramaproto-devel xorg-xproto-devel
 
 BuildRequires: ImageMagick
@@ -58,6 +59,8 @@ install -p -m 644 resources/linux/mime/applications/* %buildroot%_datadir/applic
 mkdir -p %buildroot%_datadir/icons/
 cp -r resources/linux/mime/icons/hicolor %buildroot%_datadir/icons/
 
+install -m 0644 %SOURCE1 %buildroot/%_desktopdir/
+
 #mv %{buildroot}usr/lib/kicad/plugins/netlist_form_pads-pcb.xsl %buildroot%_datadir/%name/
 %ifarch x86_64
 mkdir -p %buildroot%_libdir/%name/plugins/
@@ -68,7 +71,7 @@ mv -f %buildroot/usr/lib/%name/plugins/ %buildroot%_libdir/%name/plugins/
 %_bindir/*
 %_datadir/%name/
 %_liconsdir/%name.png
-%_datadir/applications/*.desktop
+%_desktopdir/%name.desktop
 %_datadir/icons/hicolor/*/*/*kicad*
 %_datadir/mimelnk/application/*kicad*
 %_datadir/mime/packages/kicad.xml
@@ -76,6 +79,9 @@ mv -f %buildroot/usr/lib/%name/plugins/ %buildroot%_libdir/%name/plugins/
 %doc %_datadir/doc/%name
 
 %changelog
+* Sat Feb 27 2016 barssc <barssc@altlinux.ru> r4029-alt2
+- fix build for Sisyphus
+
 * Sat Nov 29 2014 barssc <barssc@altlinux.ru> r4029-alt1
 - new version
 
