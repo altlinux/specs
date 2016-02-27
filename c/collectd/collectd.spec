@@ -30,7 +30,7 @@
 
 Name: collectd
 Version: 5.5.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -836,6 +836,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Sat Feb 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.5.0-alt1.3
+- fix configfile path in systemd unit (closes: #31652)
+
 * Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt1.2
 - rebuild with new libmemcached 1.0.18
 
