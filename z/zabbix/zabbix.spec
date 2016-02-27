@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 58460
+%define svnrev 58734
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -31,10 +31,10 @@ BuildPreReq: /proc
 BuildPreReq: libelf-devel
 BuildRequires(pre): rpm-build-webserver-common
 
-# Automatically added by buildreq on Fri Feb 27 2009 (-bi)
-BuildRequires: libmysqlclient-devel libcurl-devel libiksemel-devel libldap-devel
-BuildRequires: libnet-snmp-devel libsqlite3-devel perl-Switch libopenipmi-devel gettext-tools
-BuildRequires: libxml2-devel
+# Automatically added by buildreq on Sat Feb 27 2016 (-bi)
+# optimized out: elfutils libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config pkg-config python-base xz
+BuildRequires: libcurl-devel libelf-devel libiksemel-devel libldap-devel libmysqlclient-devel
+BuildRequires: libnet-snmp-devel libopenipmi-devel libsqlite3-devel libxml2-devel perl-Switch
 
 %if_with pgsql
 BuildRequires: postgresql-devel
@@ -231,6 +231,7 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h
 	--with-libxml2 \
 	--with-jabber \
 	--with-openipmi \
+	--with-openssl \
 	--sysconfdir=/etc/zabbix
 %make dbschema
 %make
@@ -248,6 +249,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 	--with-libxml2 \
 	--with-jabber \
 	--with-openipmi \
+	--with-openssl \
 	--sysconfdir=/etc/zabbix
 %make dbschema
 %make
@@ -266,6 +268,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	--enable-agent \
 	--with-jabber \
 	--with-openipmi \
+	--with-openssl \
 	--sysconfdir=/etc/zabbix
 %make
 
@@ -467,6 +470,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Sat Feb 27 2016 Alexei Takaseev <taf@altlinux.org> 1:3.0.1-alt1
+- 3.0.1
+- Enable SSL (ALT#31828)
+
 * Wed Feb 17 2016 Alexei Takaseev <taf@altlinux.org> 1:3.0.0-alt1
 - 3.0.0
 - Remove deprecated script and docs.
