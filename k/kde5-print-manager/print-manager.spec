@@ -4,7 +4,7 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init altplace
 
@@ -13,7 +13,7 @@ Summary: Printer management for KDE
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: cups system-config-printer-udev
+Requires: cups system-config-printer-udev printer-drivers-X11
 
 Source: %rname-%version.tar
 Patch1: alt-lib-sover.patch
@@ -64,7 +64,6 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data printmanager
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -76,17 +75,20 @@ KF5 library
 %_K5bin/kde-print-queue
 %_K5plug/*print*.so
 %_K5xdgapp/*Print*.desktop
-%_K5data/printmanager/
 %_K5data/plasma/plasmoids/org.kde.plasma.printmanager/
 %_K5qml/org/kde/plasma/printmanager/
 %_K5srv/kded/*.desktop
 %_K5srv/*.desktop
+%_K5notif/printmanager.notifyrc
 
 %files -n %libkcupslib
 %_K5lib/libkcupslib.so.%sover
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 

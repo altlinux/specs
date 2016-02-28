@@ -1,7 +1,7 @@
 %define rname ffmpegthumbs
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init
 
@@ -41,5 +41,8 @@ Video thumbnail generator for KDE.
 %_K5srv/ffmpegthumbs.desktop
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - initial build

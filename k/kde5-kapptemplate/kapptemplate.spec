@@ -1,7 +1,7 @@
 %define rname kapptemplate
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init altplace
 
@@ -47,6 +47,9 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 %_K5xdgapp/*kapptemplate.desktop
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Wed Jan 20 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
