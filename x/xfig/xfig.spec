@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.5c
-Release:      alt2
+Release:      alt3
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -87,6 +87,10 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sun Feb 28 2016 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5c-alt3
+- fix reading png files with libpng16
+  See: https://bugzilla.redhat.com/show_bug.cgi?id=1150330
+
 * Sat Feb 27 2016 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5c-alt2
 - a few patches from Roland Rosenfeld (debian):
   - Fix problems with creating PS, EPS and PDF
