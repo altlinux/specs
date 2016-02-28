@@ -36,7 +36,7 @@
 
 Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4.1
+Release: alt4.2
 Epoch: 1
 
 Summary: Boost libraries
@@ -1725,6 +1725,9 @@ done
 
 
 %changelog
+* Sun Feb 28 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.57.0-alt4.2
+- Rebuild with new icu
+
 * Tue May 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.57.0-alt4.1
 - Rebuilt as compat package without development files.
 
