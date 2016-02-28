@@ -1,4 +1,4 @@
-%define		svn 7387
+%define		svn 7460
 
 %define		rel alt1
 
@@ -104,6 +104,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Sun Feb 28 2016 Motsyo Gennadi <drool@altlinux.ru> 16.1.0-alt1.7460
+- 16.1.0 version (svn7460)
+
 * Sat Feb 06 2016 Motsyo Gennadi <drool@altlinux.ru> 16.1.0-alt1.7387
 - 16.1.0 version (svn7387)
 
