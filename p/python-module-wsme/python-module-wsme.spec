@@ -4,7 +4,7 @@
 
 Name:           python-module-%lpypi_name
 Version:        0.8.0
-Release:        alt1.1
+Release:        alt2
 Summary:        Web Services Made Easy
 Group:          Development/Python
 
@@ -18,6 +18,8 @@ BuildArch:      noarch
 # optimized out: python-base python-devel python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
 BuildRequires: python-module-netaddr python-module-pbr python-module-pytz python-modules-wsgiref python3-module-html5lib python3-module-netaddr python3-module-pbr python3-module-pytz rpm-build-python3
 
+#see wsmeext/soap/simplegeneric.py
+Requires: python-module-simplegeneric
 #BuildRequires:  python-devel
 #BuildRequires:  python-module-setuptools
 #BuildRequires:  python-module-pbr
@@ -55,6 +57,8 @@ manipulate the request and the response objects.
 %package -n python3-module-%lpypi_name
 Summary:        Web Services Made Easy
 Group:          Development/Python3
+
+Requires: python3-module-simplegeneric
 
 %add_python3_req_skip flask
 %add_python3_req_skip pecan
@@ -110,6 +114,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 28 2016 Lenar Shakirov <snejok@altlinux.ru> 0.8.0-alt2
+- add Req: python-module-simplegeneric
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1.1
 - NMU: Use buildreq for BR.
 
