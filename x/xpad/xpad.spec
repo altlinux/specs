@@ -1,28 +1,25 @@
-BuildRequires: desktop-file-utils
 Name: xpad
-Version: 4.1
-Release: alt2.qa1
+Version: 4.6.0
+Release: alt1
 
-Summary: Sticky notepad for GTK+2
-License: GPLv3+
+Summary: F virtual sticky pad system using GTK+-3
 Group: Office
+License: GPLv3+
 
 URL: https://launchpad.net/xpad
 Source0: http://launchpad.net/xpad/trunk/%version/+download/xpad-%version.tar.bz2
 
-# Automatically added by buildreq on Mon Jan 09 2012
-BuildRequires: imake intltool libSM-devel libgtk+2-devel xorg-cf-files
+BuildRequires: intltool libgtksourceview3-devel >= 3.10 at-spi2-atk-devel
+BuildRequires: libSM-devel
+BuildRequires: desktop-file-utils
 
 %description
-Xpad is a sticky note application that strives to be simple, fault-tolerant, 
-and customizable. It consists of independent pad windows; each is basically a 
-text box in which notes can be written. Despite being called xpad, all that is
-needed to run or compile it is the GTK+ 2.0 libraries.
+Xpad is a sticky note application that strives to be simple, fault-tolerant,
+and customizable. It consists of independent pad windows; each is basically
+a text box in which notes can be written.
 
 %prep
 %setup
-
-subst "/include <glib\/glist.h>/d" src/xpad-undo.c
 
 %build
 %configure
@@ -32,17 +29,24 @@ subst "/include <glib\/glist.h>/d" src/xpad-undo.c
 %makeinstall_std
 
 %find_lang %name
+
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=TextTools \
 	%buildroot%_desktopdir/xpad.desktop
 
 %files -f %name.lang
-%_bindir/*
-%_desktopdir/*
+%_bindir/%name
+%_datadir/%name/
+%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
-%_man1dir/*
+%_man1dir/%name.1.*
+%_sysconfdir/xdg/autostart/%name.desktop
+%doc README NEWS ChangeLog TODO
 
 %changelog
+* Sun Feb 28 2016 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 4.1-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
