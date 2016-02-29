@@ -6,7 +6,7 @@
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt4
+Release: alt5
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
@@ -20,6 +20,12 @@ Patch6: %name-swig-2x.patch
 Patch7: %name-swig-2.0.7.patch
 Patch8: %name-am121.patch
 Patch9: %name-3.3.6-libsepol.patch
+Patch10: %name-fedora-fix-wformat-security-issues.patch
+
+# From upstream git 
+Patch11: %name-selinux-2.4.patch
+Patch12: %name-fix-parentheses.patch
+
 Summary: Policy analysis tools for SELinux
 Group: System/Base
 Requires: lib%name = %version-%release lib%name-tcl = %version-%release %name-gui = %version-%release %name-console = %version-%release
@@ -199,6 +205,9 @@ This package includes the following graphical tools:
 %patch7 -p0
 %patch8 -p1
 #patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 find . -name Makefile.am -exec sed -i -e 's/ -fpic/ -fPIC/' \{} \;
 
@@ -299,14 +308,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %setoolsdir/seaudit-report-service
 %setoolsdir/seaudit-report.conf
 %setoolsdir/seaudit-report.css
-%_mandir/man1/findcon.1.gz
-%_mandir/man1/indexcon.1.gz
-%_mandir/man1/replcon.1.gz
-%_mandir/man1/sechecker.1.gz
-%_mandir/man1/sediff.1.gz
-%_mandir/man1/seinfo.1.gz
-%_mandir/man1/sesearch.1.gz
-%_mandir/man8/seaudit-report.8.gz
+%_mandir/man1/findcon.1.*
+%_mandir/man1/indexcon.1.*
+%_mandir/man1/replcon.1.*
+%_mandir/man1/sechecker.1.*
+%_mandir/man1/sediff.1.*
+%_mandir/man1/seinfo.1.*
+%_mandir/man1/sesearch.1.*
+%_mandir/man8/seaudit-report.8.*
 
 %files gui
 %_bindir/seaudit
@@ -325,15 +334,21 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %setoolsdir/*.png
 %setoolsdir/apol.gif
 %setoolsdir/dot_seaudit
-%_mandir/man1/apol.1.gz
-%_mandir/man1/sediffx.1.gz
-%_mandir/man8/seaudit.8.gz
+%_mandir/man1/apol.1.*
+%_mandir/man1/sediffx.1.*
+%_mandir/man8/seaudit.8.*
 %_sbindir/seaudit
 %config(noreplace) %_sysconfdir/pam.d/seaudit
 %config(noreplace) %_sysconfdir/security/console.apps/seaudit
 %_datadir/applications/*
 
 %changelog
+* Mon Feb 29 2016 Mikhail Efremov <sem@altlinux.org> 3.3.8-alt5
+- Fix -Wformat-security issues (patch from Fedora).
+- Fix missing parentheses in policy_define.c (patch from upstream).
+- Update for 2015-02-02 Userspace release (2.4) (patch from upstream).
+- Fix manpages packaging.
+
 * Fri Nov 22 2013 Anton Farygin <rider@altlinux.ru> 3.3.8-alt4
 - Rebuild with new libsepol
 
