@@ -6,7 +6,7 @@
 
 Name: %{_name}20
 Version: %api_ver.11
-Release: alt2
+Release: alt3
 
 Summary: A GNU implementation of Scheme (version 2.0)
 License: GPL
@@ -22,6 +22,7 @@ Requires: lib%name = %version-%release
 BuildRequires: /proc
 BuildRequires: gcc-c++ libgmp-devel libltdl-devel libncurses-devel libreadline-devel
 BuildRequires: libffi-devel libunistring-devel libgc-devel ccache
+BuildRequires: makeinfo
 %{?_enable_static:BuildRequires: glibc-devel-static}
 #%%add_findreq_skiplist %_datadir/%_name/%api_ver/scripts/*
 
@@ -150,6 +151,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Mon Feb 29 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.11-alt3
+- updated buildreqs
+
 * Thu Feb 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.11-alt2
 - removed lib%%_name-%%api_ver.so.*-gdb.scm (ALT #31097)
 
