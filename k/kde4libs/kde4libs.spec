@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -114,7 +114,7 @@ Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
 Patch1031: kdelibs-4.8.5-alt-add-desktop-translations.patch
 Patch1032: kdelibs-4.9.1-alt-policy-dir.patch
 Patch1033: kdelibs-4.9.1-alt-cmake-spaces.patch
-#
+Patch1034: alt-def-icon-theme.patch
 Patch1035: kdelibs-4.10.2-alt-flags.patch
 Patch1036: kdelibs-4.10.2-alt-add-protocol-all.patch
 Patch1037: kdelibs-4.10.4-alt-def-plasma-theme-bg.patch
@@ -124,8 +124,8 @@ Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
 # security
 
-BuildRequires(pre): kde-common-devel libqt4-devel libsoprano-devel libstrigi-devel attica-devel
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires(pre): kde-common-devel libqt4-devel libstrigi-devel attica-devel
+#BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel >= 2.1
 BuildRequires: bzlib-devel cmake libalsa-devel libselinux-devel
 %if_enabled hupnp
 BuildRequires: herqq-devel
@@ -145,7 +145,7 @@ BuildRequires: xml-utils libutempter-devel phonon-devel automoc
 BuildRequires: libacl-devel libattr-devel flex libqca2-devel
 BuildRequires: libdbusmenu-qt-devel
 BuildRequires: kde-common-devel >= %major.%minor
-BuildRequires: libqt4-devel >= 4.4 libsoprano-devel >= 2.1 libstrigi-devel >= 0.5.9
+BuildRequires: libqt4-devel >= 4.4
 
 %description
 Libraries for the K Desktop Environment 4.
@@ -217,7 +217,7 @@ applications for KDE 4.
 %patch1031 -p1
 %patch1032 -p1
 %patch1033 -p1
-#
+%patch1034 -p1
 %patch1035 -p1
 %patch1036 -p1
 %patch1037 -p1
@@ -284,8 +284,13 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 
 # disable annoing autostart
 mkdir -p %buildroot/%_K4start/
-for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store gnome-mplayer mplayer gmplayer ; do
+for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_K4start/$n.desktop
+done
+# disable annoing menus
+mkdir -p %buildroot/%_kde4_xdg_apps/
+for n in gnome-mplayer mplayer gmplayer ; do
+    echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_kde4_xdg_apps/$n.desktop
 done
 
 
@@ -351,6 +356,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.17-alt2
+- completely disable nepomuk
+
 * Wed Feb 17 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.17-alt1
 - new version
 
