@@ -6,7 +6,7 @@
 
 Name:    kde4mobile-regular
 Version: 4.10
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: KDE4 mobile common collection
@@ -56,7 +56,7 @@ Requires: kde4-i18n-kk
 Requires: kde4-i18n-ru
 Requires: kde4-i18n-uk
 
-Requires: bangarang
+Requires: kde4multimedia-dragonplayer
 Requires: kamoso
 Requires: kde4-telepathy
 Requires: bluedevil
@@ -79,6 +79,9 @@ KDE Active package to easy select packages during install
 %files
 
 %changelog
+* Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 4.10-alt6
+- change bangarang to dragonplayer
+
 * Tue Jul 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt5
 - don't require kde4-startactive by default because KDE was build with Desktop profile
 
