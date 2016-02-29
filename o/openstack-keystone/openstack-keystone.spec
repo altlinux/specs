@@ -2,7 +2,7 @@
 
 Name: openstack-keystone
 Version: 8.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: OpenStack Identity Service
 
@@ -237,9 +237,9 @@ install -p -D -m 644 httpd/wsgi-keystone.conf  %buildroot%_datadir/keystone/
 install -m 0644 -D -p %SOURCE5 %buildroot%apache2_sites_available/openstack-keystone.conf
 mkdir -p %buildroot%apache2_sites_enabled
 touch %buildroot%apache2_sites_enabled/openstack-keystone.conf
-mkdir -p %buildroot%webserver_cgibindir
-ln -s %_datadir/keystone/keystone.wsgi %buildroot%webserver_cgibindir/keystone-wsgi-public
-ln -s %_datadir/keystone/keystone.wsgi %buildroot%webserver_cgibindir/keystone-wsgi-admin
+mkdir -p %buildroot%webserver_cgibindir/keystone/
+ln -s %_datadir/keystone/keystone.wsgi %buildroot%webserver_cgibindir/keystone/main
+ln -s %_datadir/keystone/keystone.wsgi %buildroot%webserver_cgibindir/keystone/admin
 
 install -d -m 755 %buildroot%_sharedstatedir/keystone
 install -d -m 750 %buildroot%_logdir/keystone
@@ -294,7 +294,7 @@ fi
 %_datadir/keystone/wsgi-keystone.conf
 %config(noreplace) %apache2_sites_available/*.conf
 %ghost %apache2_sites_enabled/*.conf
-%webserver_cgibindir/*
+%webserver_cgibindir/keystone/
 %_unitdir/%name.service
 %_initdir/%name
 %_tmpfilesdir/openstack-keystone.conf
@@ -332,6 +332,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Sat Feb 27 2016 Lenar Shakirov <snejok@altlinux.ru> 1:8.0.1-alt2
+- links to wsgi-script fixed 
+
 * Tue Dec 29 2015 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt1
 - 8.0.1
 
