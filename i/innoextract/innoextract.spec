@@ -1,6 +1,6 @@
 Name: innoextract
 Version: 1.4
-Release: alt1
+Release: alt1.1
 
 Summary: A tool to extract installers created by Inno Setup
 License: Zlib
@@ -37,6 +37,9 @@ non-windows systems without running the actual installer using wine.
 %_man1dir/innoextract.*
 
 %changelog
+* Mon Feb 29 2016 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1.1
+- NMU: rebuild with new boost
+
 * Thu Oct 10 2013 Igor Zubkov <icesik@altlinux.org> 1.4-alt1
 - build for Sisyphus
 
