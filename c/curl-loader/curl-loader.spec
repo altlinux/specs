@@ -1,7 +1,7 @@
 Summary: An HTTP and FTP simulating application load
 Name: curl-loader
 Version: 0.56
-Release: alt1
+Release: alt2
 Url: http://curl-loader.sourceforge.net/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -38,11 +38,14 @@ mkdir obj
 
 %files
 %_bindir/curl-loader
-%_man1dir/curl-loader.1.gz
-%_man5dir/curl-loader-config.5.bz2
+%_man1dir/curl-loader.1*
+%_man5dir/curl-loader-config.5*
 %doc doc/* conf-examples
 
 %changelog
+* Mon Feb 29 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.56-alt2
+- Rebuilded to fix man pages archiving method.
+
 * Sat Feb 16 2013 Valentin Rosavitskiy <valintinr@altlinux.org> 0.56-alt1
 - Initial build
 
