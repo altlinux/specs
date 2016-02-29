@@ -12,7 +12,7 @@
 
 Name:		lxd
 Version:	2.0.0
-Release:	alt0.beta4
+Release:	alt1.beta4
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -152,9 +152,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %doc AUTHORS COPYING
 %_bindir/*
 %go_root/bin/*
-%attr(0750,%lxduser,%lxdgroup) %dir %_localstatedir/%name
-%attr(0750,%lxduser,%lxdgroup) %dir %_localstatedir/%name/lxd-bridge
-%attr(0750,%lxduser,%lxdgroup) %dir %_logdir/%name
+%attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name
+%attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name/lxd-bridge
+%attr(0751,%lxduser,%lxdgroup) %dir %_logdir/%name
 %dir %_libexecdir/lxd
 %_libexecdir/lxd/*
 
@@ -171,6 +171,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Mon Feb 29 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt1.beta4
+- rebuild with new lxc
+
 * Thu Feb 25 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt0.beta4
 - Version update
 

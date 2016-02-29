@@ -1,9 +1,6 @@
-%define lxdgroup lxd
-%define lxduser lxd
-
 Name:		lxcfs
 Version:	2.0.0
-Release:	alt0.rc2
+Release:	alt1.rc2
 Summary:	FUSE filesystem for LXC
 
 Group:		Development/Other
@@ -31,13 +28,6 @@ FUSE filesystem for LXC, offering the following features:
 
 %set_pam_name pam_cgfs
 
-%package devel
-Summary: %summary
-Group: Development/Other
-
-%description devel
-%summary
-
 %package -n %pam_name
 Summary: %summary
 Group: Development/Other
@@ -64,7 +54,7 @@ mkdir -p %buildroot%_localstatedir/%name
 %files
 %doc AUTHORS COPYING README.md
 %_bindir/*
-%_libdir/*.so.*
+%_libdir/*.so*
 %_man1dir/*
 %_unitdir/*
 %_datadir/lxc/config/common.conf.d/*
@@ -72,14 +62,15 @@ mkdir -p %buildroot%_localstatedir/%name
 %_datadir/%name/*
 %dir %_localstatedir/%name
 
-%files devel
-%_libdir/*.so
-
 %files -n %pam_name
 %doc AUTHORS COPYING
 %_pam_modules_dir/*
 
 %changelog
+* Tue Mar 01 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt1.rc2
+- Removed devel package.
+  liblxcfs.so is loaded via dlopen.
+
 * Thu Feb 25 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt0.rc2
 - Version update
 

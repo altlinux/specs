@@ -26,8 +26,8 @@
 %define init_script systemd
 
 Name: lxc
-Version: 1.1.4
-Release: alt1
+Version: 2.0.0
+Release: alt0.rc4
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -46,6 +46,10 @@ Requires: iproute2 bridge-utils dnsmasq
 BuildRequires: libcap-devel docbook-utils glibc-kernheaders
 BuildRequires: docbook2X xsltproc
 BuildRequires: rpm-macros-alternatives
+BuildRequires: libcgmanager-devel
+BuildRequires: libnih-devel
+BuildRequires: libdbus-devel
+BuildRequires: libgnutls-devel
 
 # Needed to disable auto requirements from distro templates
 %add_findreq_skiplist %_datadir/%name/*
@@ -75,13 +79,14 @@ Group:		System/Configuration/Other
 %description	libs
 The %{name}-libs package contains libraries for running %{name} applications.
 
-%package	python3
+%package	-n python3-module-%name
 Summary:	Python 3 bindings to %{name}
 Group:		System/Configuration/Other
+Obsoletes: %name-python3
 Requires: python3
 BuildRequires: python3-devel
 BuildRequires: rpm-build-python3
-%description	python3
+%description	-n python3-module-%name
 The %{name}-python package contains %{name} bindings for Python 3.
 
 %package devel
@@ -100,6 +105,7 @@ development of the linux containers.
 CFLAGS+=-I%_includedir/linux-default/include/
 %autoreconf
 %configure -disable-rpath \
+    --enable-cgmanager \
     --localstatedir=%_var \
     --with-config-path=%_var/lib/lxc \
     --enable-python \
@@ -114,31 +120,10 @@ CFLAGS+=-I%_includedir/linux-default/include/
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_cachedir/%name
 
-#find %buildroot -type f -name '*.la' -exec rm -f {} ';'
-
-# rename python version of lxc-ls and install legacy one
-%__mv %buildroot%{_bindir}/lxc-ls %buildroot%{_bindir}/lxc-ls.py
-%__install -m 0755 src/lxc/legacy/lxc-ls %buildroot%{_bindir}/lxc-ls.sh
-
-# add alternatives
-%__install -d %buildroot/etc/alternatives/packages.d
-cat >%buildroot%_altdir/%name-legacy <<__EOF__
-%{_bindir}/lxc-ls	%{_bindir}/lxc-ls.sh	100
-__EOF__
-
-cat >%buildroot%_altdir/%name <<__EOF__
-%{_bindir}/lxc-ls	%{_bindir}/lxc-ls.py	1000
-__EOF__
-
 %__install -m 0644 %SOURCE1 %buildroot/%_sysconfdir/sysconfig/lxc-net
 
 %files
 %defattr(-,root,root)
-%exclude %{_bindir}/lxc-ls.py
-%exclude %{_bindir}/lxc-start-ephemeral
-%exclude %{_mandir}/man1/lxc-start-ephemeral*
-%exclude %{_mandir}/ja/man1/lxc-start-ephemeral*
-%exclude %{_bindir}/lxc-device
 %{_bindir}/*
 %{_mandir}/man1/lxc*
 %{_mandir}/man5/lxc*
@@ -146,14 +131,17 @@ __EOF__
 %{_mandir}/ja/man1/lxc*
 %{_mandir}/ja/man5/lxc*
 %{_mandir}/ja/man7/lxc*
+%{_mandir}/ko/man1/lxc*
+%{_mandir}/ko/man5/lxc*
+%{_mandir}/ko/man7/lxc*
 %{_datadir}/doc/*
 %{_datadir}/lxc/*
 %{_sysconfdir}/bash_completion.d/*
 %config(noreplace) %{_sysconfdir}/lxc/*
 %config(noreplace) %{_sysconfdir}/sysconfig/lxc*
 %{_unitdir}/lxc.service
+%{_unitdir}/lxc@.service
 %{_unitdir}/lxc-net.service
-%config %_altdir/%name-legacy
 
 %files libs
 %defattr(-,root,root)
@@ -167,17 +155,12 @@ __EOF__
 %attr(555,root,root) %{_libexecdir}/%{name}/lxc-devsetup
 %attr(555,root,root) %{_libexecdir}/%{name}/lxc-net
 %attr(4111,root,root) %{_libexecdir}/%{name}/lxc-user-nic
+%{_libexecdir}/%{name}/hooks/*
 
-%files python3
+%files -n python3-module-%name
 %defattr(-,root,root)
-%{_bindir}/lxc-ls.py
-%{_bindir}/lxc-start-ephemeral
-%{_bindir}/lxc-device
 %{python3_sitelibdir}/_lxc*
 %{python3_sitelibdir}/lxc/*
-%config %_altdir/%name
-%{_mandir}/man1/lxc-start-ephemeral*
-%{_mandir}/ja/man1/lxc-start-ephemeral*
 
 %files devel
 %defattr(-,root,root)
@@ -187,6 +170,10 @@ __EOF__
 
 
 %changelog
+* Mon Feb 29 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt0.rc4
+- Version updated
+- Added cgmanager support (for lxd)
+
 * Mon Nov 09 2015 Denis Pynkin <dans@altlinux.org> 1.1.4-alt1
 - New version.
 

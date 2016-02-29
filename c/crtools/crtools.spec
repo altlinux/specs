@@ -1,5 +1,5 @@
 Name: crtools
-Version: 1.5.1
+Version: 1.8
 #define pre 
 %define ver %version%{?pre:%pre}
 Release: alt1
@@ -23,6 +23,7 @@ An utility to checkpoint/restore tasks.
 %package -n libcriu
 Summary: Shared library of checkpoint/restore
 Group: System/Libraries
+License: LGPLv2
 
 %description -n libcriu
 Shared library of checkpoint/restore.
@@ -37,7 +38,7 @@ Requires: libcriu = %version-%release
 Files for development with libcriu.
 
 
-%package pycriu
+%package -n python-module-criu
 Summary: Python library of checkpoint/restore
 Group: System/Libraries
 BuildArch: noarch
@@ -45,8 +46,9 @@ Requires: python
 BuildRequires: python-devel
 BuildRequires: rpm-build-python
 Provides: crit = %version-%release
+Obsoletes: pycriu
 
-%description pycriu
+%description -n python-module-criu
 Python library library of checkpoint/restore.
 
 
@@ -65,14 +67,12 @@ export CFLAGS="%optflags"
 
 
 %files
-%doc README
+%doc README.md COPYING CREDITS
 %_sbindir/*
 %_man8dir/*
-%_unitdir/*
-%_logrotatedir/*
 
 
-%files pycriu
+%files -n python-module-criu
 %{_bindir}/crit
 %{python_sitelibdir_noarch}/*
 
@@ -88,6 +88,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Tue Mar 01 2016 Denis Pynkin <dans@altlinux.org> 1.8-alt1
+- New upstream version
+
 * Sat Apr 11 2015 Denis Pynkin <dans@altlinux.org> 1.5.1-alt1
 - New upstream version
 - Subpackage pycriu added
