@@ -2,7 +2,7 @@
 
 Name: wxGTK3.1
 Version: 3.1.0
-Release: alt6.git20150312
+Release: alt7
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -343,6 +343,10 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Feb 29 2016 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt7
+- New release
+- Rename wxGTK3.0.spec to wxGTK3.1.spec
+
 * Tue Feb 02 2016 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt6.git20150312
 - Disabled ABI checking.
 
