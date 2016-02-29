@@ -9,7 +9,7 @@ BuildRequires: gcc-c++
 Name: fcitx
 Summary: Free Chinese Input Toy for X (XIM)
 Version: 4.2.7
-Release: alt2
+Release: alt2.1
 License: GPLv2+
 Group: Graphical desktop/Other
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -283,6 +283,9 @@ EOF
 %_libdir/qt4/plugins/inputmethods/qtim-fcitx.so
 
 %changelog
+* Mon Feb 29 2016 Andrey Cherepanov <cas@altlinux.org> 4.2.7-alt2.1
+- rebuild with new icu
+
 * Fri Sep 05 2014 Ilya Mashkin <oddity@altlinux.ru> 4.2.7-alt2
 - build for Sisyphus
 
