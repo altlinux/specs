@@ -1,6 +1,6 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2015.5.5
+Version: 2015.8.7
 Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
@@ -205,6 +205,9 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Mon Feb 29 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2015.8.7-alt1
+- New version
+
 * Mon Aug 31 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 2015.5.5-alt1
 - New version
 
