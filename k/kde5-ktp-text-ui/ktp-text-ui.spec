@@ -1,7 +1,7 @@
 %define rname ktp-text-ui
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init altplace
 
@@ -34,7 +34,7 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-deve
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf5-filesystem kde5-ktp-common-internals-common
 %description common
 %name common package
 
@@ -108,6 +108,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
