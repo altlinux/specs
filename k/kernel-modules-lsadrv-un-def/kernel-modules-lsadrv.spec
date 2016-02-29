@@ -1,6 +1,6 @@
 %define module_name             lsadrv
-%define module_version          2.0.1
-%define module_release alt3
+%define module_version          1.2.3
+%define module_release 		alt1
 
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
@@ -13,11 +13,12 @@ BuildRequires(pre): kernel-headers-modules-un-def
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
+Epoch: 1
 
 Summary: Linux Kernel drivers supporting Hitachi StarBoard interactive whiteboard
 License: GPL
 Group: System/Kernel and hardware
-Url: http://nixtech.ru/
+Url: http://www.charmexdocs.com/int/software/SBS0962_LINUX.zip
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
@@ -67,8 +68,12 @@ cp -a %kversion-%flavour-%krelease/%module_name.ko %buildroot/%module_dir/
 %module_dir
 
 %changelog
-* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %epoch:%version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Feb 24 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.2.3-alt1
+- new version
+- change project homepage
 
 * Wed Jul 17 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.0.1-alt3
 - build with kernel 3.10 fixed
