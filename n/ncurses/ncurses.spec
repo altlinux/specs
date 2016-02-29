@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt7
+Release: alt8
 
 %define rootdatadir /lib
 
@@ -22,8 +22,7 @@ Obsoletes: ncurses3
 Requires: termutils-devel = %version-%release
 
 # Automatically added by buildreq on Thu Nov 12 2009
-BuildRequires: libgpm-devel libncurses-devel gcc4.9-c++
-%set_gcc_version 4.9
+BuildRequires: libgpm-devel libncurses-devel gcc-c++
 
 #build parameters
 %def_with utf8
@@ -674,6 +673,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Mon Feb 29 2016 Fr. Br. George <george@altlinux.ru> 5.9-alt8
+- Rebuild with new GCC
+
 * Wed Sep 16 2015 Fr. Br. George <george@altlinux.ru> 5.9-alt7
 - Package .pc files (Closes: #30312)
 
