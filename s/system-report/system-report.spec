@@ -1,5 +1,5 @@
 Name: system-report
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 BuildArch: noarch
 
@@ -23,6 +23,9 @@ cp -f -- %SOURCE0 %buildroot/%_bindir/
 %_bindir/*
 
 %changelog
+* Mon Feb 29 2016 Alexey Gladkov <legion@altlinux.ru> 0.0.8-alt1
+- Fix command arguments.
+
 * Fri Oct 15 2010 Alexey Gladkov <legion@altlinux.ru> 0.0.7-alt1
 - Obtain:
   + /etc/*-release;
