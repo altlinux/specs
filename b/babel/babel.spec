@@ -3,7 +3,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt1.1
+Release: alt2
 Summary: Language tool for high-performance scientific computing community
  
 License: LGPL v2.1
@@ -246,6 +246,7 @@ This package contains user manual for Babel.
 export JAVAPREFIX="%_libexecdir/jvm/java"
 export CLASSPATH=".:$(build-classpath gnu-getopt):$(pwd)/compiler"
 export JAVACFLAGS="-classpath $CLASSPATH"
+export JAVAFLAGS=""
 export MPI_VENDOR=%mpiimpl
 source %mpidir/bin/mpivars.sh
 
@@ -363,6 +364,9 @@ done
 %_docdir/%name
 
 %changelog
+* Mon Feb 29 2016 Denis Medvedev <nbr@altlinux.org> 2.0.0-alt2
+- Documentation recompiled without doclint. 
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1.1
 - NMU: clean-up of java deps
 
