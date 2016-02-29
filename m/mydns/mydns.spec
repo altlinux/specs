@@ -1,6 +1,6 @@
 Name: mydns
-Version: 1.2.8.31
-Release: alt3
+Version: 1.2.8.32
+Release: alt1
 License: GPL
 Summary: A MySQL-based Internet DNS server
 Group: System/Servers
@@ -11,7 +11,7 @@ Source1: %name.alt
 Source2: %name.service
 
 # Automatically added by buildreq on Sat Jul 05 2008
-BuildRequires: cvs libMySQL-devel libssl-devel-static zlib-devel texlive-latex-recommended
+BuildRequires: cvs libMySQL-devel libssl-devel-static zlib-devel texlive-latex-recommended makeinfo texi2dvi
 
 %define webadminroot /var/www/html/admin
 %define admin 0
@@ -122,6 +122,10 @@ export DONT_GPRINTIFY=1
 %endif
 
 %changelog
+* Mon Feb 29 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.2.8.32-alt1
+- Added makeinfo, texi1dvi to BuildReq list
+- Commit [32f667] master
+
 * Fri Oct 31 2014 Valentin Rosavitskiy <valintinr@altlinux.org> 1.2.8.31-alt3
 - Some repocop warning fixed, taked package also
 
