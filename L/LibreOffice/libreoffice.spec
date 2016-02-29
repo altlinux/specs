@@ -1,17 +1,17 @@
-# 5.0.3.2
+# 5.1.1.1
 %def_with forky
 %def_with parallelism
 %def_without fetch
 %def_without lto
 
 Name: LibreOffice
-Version: 5.0
-%define urelease 3.2
+Version: 5.1
+%define urelease 1.1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -45,41 +45,37 @@ Source200:	oasis-master-document-template.icns
 Source300:	update_from_fc
 
 # FC patches files
-Patch8: 0001-disable-failing-test-on-rhel-6.patch
-Patch10: 0001-disable-libe-book-support.patch
-Patch12: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch13: 0001-disable-firebird-unit-test.patch
-Patch14: 0001-never-run-autogen.sh.patch
-Patch15: 0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch16: 0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
-Patch17: 0001-Resolves-tdf-89905-don-t-copy-palettes-from-shared-t.patch
-Patch18: 0001-Resolves-tdf-49407-enable-CaseMap-property-in-impres.patch
-Patch19: 0001-rhbz-1233420-handle-inexistent-cond.-format.patch
-Patch20: 0001-allow-slide-design-to-affect-multiple-standard-pages.patch
-Patch21: 0001-implement-equalize-width-and-height-for-impress-draw.patch
-Patch22: 0001-f22-openjdk-for-ppc64le-has-both-these-dirs-but-jawt.patch
-Patch23: 0001-implement-undo-for-equalize-marked-objects.patch
-Patch24: 0001-time-stamp-object-selections-and-use-newest-as-ref-f.patch
-Patch25: 0001-Resolves-rhbz-1256843-no-obvious-means-to-close-temp.patch
-Patch26: 0001-implement-undo-of-delete-impress-cell-contents.patch
-Patch28: 0001-Fix-export-of-tdf-93675-to-.docx-as-much-as-is-possi.patch
-Patch29: 0001-default-to-as-character-caption-contents.patch
-Patch30: 0001-Related-tdf-93676-msword-wraps-slightly-differently-.patch
-Patch31: 0002-Related-tdf-93676-msword-wraps-slightly-differently-.patch
-Patch33: 0001-implement-save-slide-background-for-impress.patch
-Patch34: 0001-Related-tdf-72880-presumably-using-startcenter-as-ge.patch
-Patch35: 0001-implement-dialog-control-over-enhanced-shape-control.patch
-
-
+Patch3: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch4: 0001-disable-firebird-unit-test.patch
+Patch5: 0001-never-run-autogen.sh.patch
+Patch6: 0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch7: 0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
+Patch8: 0001-Related-rhbz-1281906-set-a-min-size-on-un-resizeable.patch
+Patch9: 0001-but-only-for-dialog.patch
+Patch10: 0003-gtk3-wayland-start-floating-windows-hidden.patch
+Patch11: 0001-tdf-95450-avoid-double-swap-on-big-endian-arches.patch
+Patch12: 0001-these-popups-should-start-invisible-and-take-default.patch
+Patch13: 0002-disable-tearability-of-color-window.patch
+Patch14: 0001-rhbz-1168757-propagate-selected-slides-to-print-dial.patch
+Patch15: 0001-hack-out-optimization-to-build.patch
+Patch16: 0001-generate-better-unit-test-assert-message.patch
+Patch17: 0001-gtk3-adapt-to-3.20-style-changes.patch
+Patch18: 0001-unused-vcl-IsWindowSystemAvailable.patch
+Patch19: 0002-split-the-gtk2-and-gtk3-gtkobjects.patch
+Patch20: 0003-rename-X11WindowProvider-to-a-NativeWindowHandle-pro.patch
+Patch21: 0004-implement-wayland-handle-passing-for-gstreamer.patch
+Patch22: 0005-gtk3-wayland-play-video-via-gtksink-gstreamer-elemen.patch
+Patch500: 0001-disable-libe-book-support.patch
+Patch501: 0001-fix-build-with-gcc-4.8.patch
 
 
 # Long-term FC patches
 
 # ALT patches
-Patch401:	alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
+Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
-Patch404: alt-003-SAL_DLLPUBLIC_EXPORT.patch
+Patch404: alt-004-isnan.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -91,6 +87,8 @@ BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-dev
 # 4.4
 BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
 BuildRequires: libe-book-devel
+# 5.1
+BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
 
 %description
 LibreOffice is a productivity suite that is compatible with other major
@@ -121,6 +119,7 @@ Summary: GNOME Extensions for %name
 Group:  Office
 Requires: %uname = %version-%release
 Requires: %name-common = %version-%release
+Obsoletes: LibreOffice4-gnome
 %description gnome
 GNOME extensions for %name
 
@@ -129,6 +128,7 @@ Summary: KDE4 Extensions for %name
 Group:  Office
 Requires: %uname = %version-%release
 Requires: %name-common = %version-%release
+Obsoletes: LibreOffice4-kde4
 %description kde4
 KDE4 extensions for %name
 
@@ -137,6 +137,7 @@ Summary: Additional extensions for %name
 Group:  Office
 Requires: %uname = %version-%release
 AutoReqProv: yes, noshell, nopython
+Obsoletes: LibreOffice4-extensions
 %description extensions
 Additional extensions for %name.
 One can choose either to install this package at once,
@@ -146,6 +147,7 @@ or to download and install (possibly newer) extensions manually.
 Summary: Mimetype keys support for %name
 Group: Office
 BuildArch: noarch
+Obsoletes: LibreOffice4-mimetypes
 %description mimetypes
 %name is distributed along with some mimetype settings and files.
 This package installs them.
@@ -161,6 +163,7 @@ This package installs them.
 Summary: %{langname} language pack for %name \
 Group:  Office \
 Requires: %uname = %version-%release \
+Obsoletes: LibreOffice4-%{pkgname} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
 \
@@ -177,33 +180,31 @@ echo Direct build
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p2
-##patch404 -p0
+%patch404 -p1
 
 # FC patches applying (## -- unsuccsessful but seems meaningful)
-%patch8 -p1
-#patch10 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-##patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
+##patch3 -p1
+##patch4 -p1
+##patch5 -p1
+##patch6 -p1
+##patch7 -p1
+##patch8 -p1
+##patch9 -p1
+##patch10 -p1
+##patch11 -p1
+##patch12 -p1
+##patch13 -p1
+##patch14 -p1
+##patch15 -p1
+##patch16 -p1
+##patch17 -p1
+##patch18 -p1
+##patch19 -p1
+##patch20 -p1
+##patch21 -p1
+##patch22 -p1
+#patch500 -p1
+##patch501 -p1
 
 
 # Long-term FC patches applying
@@ -213,7 +214,7 @@ cp %SOURCE300 sysui/desktop/icons/
 
 # Unhack liborcus version from configure
 # TODO check after 5.0.2.1
-sed -Ei 's/(libo_CHECK_SYSTEM_MODULE.*liborcus)-[0-9.]+/\1/' configure.ac
+#sed -Ei 's/(libo_CHECK_SYSTEM_MODULE.*liborcus)-[0-9.]+/\1/' configure.ac
 
 rm -fr %name-tnslations/git-hooks
 
@@ -247,7 +248,6 @@ export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
 ./autogen.sh \
         --with-vendor="ALT Linux Team" \
-        --disable-gnome-vfs \
         --disable-odk \
         --disable-systray \
 	--disable-firebird-sdbc \
@@ -294,14 +294,19 @@ export CXX=%_target_platform-g++
 %endif
 %if_with parallelism
 	--with-parallelism \
+%else   
+        --without-parallelism \
 %endif
 %if_with fetch
+	--enable-python=internal \
 	--enable-fetch-external
 %else
 	--with-system-libs \
-	--without-system-orcus \
+	--enable-python=internal \
 	--disable-fetch-external
 %endif
+
+#        --disable-gnome-vfs \
 
 %if_with forky
 # Make forky
@@ -313,10 +318,10 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 %if_with forky
 # TODO prefect forky_max tune
 echo Using forky
-export forky_divider=16
+export forky_divider=21
 export forky_max_procs=`awk '/^Max processes/{print int(5*$3/'$forky_divider')}' < /proc/self/limits`
 export forky_max_rss=6400000
-export forky_max_vsz=$((2*$forky_max_rss))
+export forky_max_vsz=9600000
 export forky_verbose=1
 echo "max_procs $forky_max_procs / max_vsz $forky_max_vsz / max_rss $forky_max_rss" | tee $HOME/forky.log
 export LD_PRELOAD=`pwd`/forky.so
@@ -329,6 +334,8 @@ test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delaye
 
 %install
 %makeinstall DESTDIR=%buildroot INSTALLDIR=%lodir
+# Ignore dull /usr/local/bin/python hack
+chmod -x %buildroot%lodir/program/python-core*/lib/cgi.py
 
 # Pick up LOO-generated file lists
 for l in %with_lang; do
@@ -410,7 +417,6 @@ install -D libreoffice.config %buildroot%conffile
 %files extensions
 %lodir/share/extensions/*
 %exclude %lodir/share/extensions/package.txt
-#exclude %lodir/share/extensions/presentation-minimizer
 
 %files mimetypes
 %_datadir/mime-info/*
@@ -428,6 +434,10 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l tt -n Tatar
 
 %changelog
+* Wed Feb 10 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt1
+- Update to 5.1.1.1
+- Build with internal Python3
+
 * Wed Nov 04 2015 Fr. Br. George <george@altlinux.ru> 5.0-alt2
 - Update to 5.0.3.2
 
