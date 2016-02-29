@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.5.4
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -94,6 +94,8 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+sed -i 's|isnan(|std::isnan(|g' signalplotter/ksignalplotter.cpp
+sed -i 's|isinf(|std::isinf(|g' signalplotter/ksignalplotter.cpp
 
 %build
 %K5build \
@@ -143,6 +145,9 @@ KF5 library
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
+- fix to compile with new gcc
+
 * Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
 - new version
 
