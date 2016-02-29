@@ -6,7 +6,7 @@
 
 Name: zlm-cython
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: Zabbix Loadable Module which embedding Python interpreter in Zabbix server proxy or an agent
 
 Group: Development/Python
@@ -64,5 +64,8 @@ echo "LoadModule=zlm_python.so" > %buildroot%z_dir/zabbix_agentd.conf.d/%name.co
 %doc ROADMAP.md README.md doc/*.pdf
 
 %changelog
+* Mon Feb 29 2016 Terechkov Evgenii <evg@altlinux.org> 0.1-alt2
+- git-20160229 (with experimental fix for https://github.com/vulogov/zlm-cython/issues/4)
+
 * Thu Feb 25 2016 Terechkov Evgenii <evg@altlinux.org> 0.1-alt1
 - Initial build for ALT Linux Sisyphus
