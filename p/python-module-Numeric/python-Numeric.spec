@@ -1,6 +1,6 @@
 %define name numeric
 %define version 24.2
-%define release alt5
+%define release alt6
 %setup_python_module Numeric
 
 Summary: Numerical Extension to Python
@@ -80,7 +80,7 @@ Summary: Python numerical facilities - demo
 A collection of extension modules to provide high-performance multidimensional
 numeric arrays to the Python programming language.
 
-Demonstartion and testing utilites
+Demonstration and testing utilites
 
 %define python_libdir %_libdir/python%_python_version
 %define python_site_packages_dir %python_libdir/site-packages
@@ -107,11 +107,11 @@ cat > %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name << EOF
 ^/usr/lib/python[^/]*/site-packages/Numeric$
 EOF
 
-install -d $RPM_BUILD_ROOT/%python_libdir/tools/numeric
-install -d $RPM_BUILD_ROOT/%python_libdir/tools/numeric/NumTut
-install -D -m 755 Demo/*py $RPM_BUILD_ROOT/%python_libdir/tools/numeric
-install -D -m 644 Demo/NumTut/* $RPM_BUILD_ROOT/%python_libdir/tools/numeric/NumTut 
-install -D -m 755 Test/*test.py $RPM_BUILD_ROOT/%python_libdir/tools/numeric
+install -d $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/numeric
+install -d $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/numeric/NumTut
+install -D -m 755 Demo/*py $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/numeric
+install -D -m 644 Demo/NumTut/* $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/numeric/NumTut 
+install -D -m 755 Test/*test.py $RPM_BUILD_ROOT/%python_sitelibdir/Numeric/tools/numeric
 
 %add_python_lib_path  %_libdir/python%_python_version/site-packages/Numeric
 
@@ -131,9 +131,12 @@ install -D -m 755 Test/*test.py $RPM_BUILD_ROOT/%python_libdir/tools/numeric
 %doc numpy.pdf
 
 %files demo
-%python_libdir/tools/numeric
+%python_sitelibdir/Numeric/tools/numeric
 
 %changelog
+* Mon Feb 29 2016 Denis Medvedev <nbr@altlinux.org> 24.2-alt6
+- Moved demo stuff to python_sitelibdir.
+
 * Fri Oct 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 24.2-alt5
 - Restored in Sisyphus
 
