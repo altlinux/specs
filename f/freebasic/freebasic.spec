@@ -1,15 +1,15 @@
-
 Name:		freebasic
-Version:	1.03.0
+Version:	1.05.0
 Release:	alt1
 
 Summary:	FreeBASIC language compiler
-License:	GPL
+License:	GPLv2+ and LGPLv2+ with exception
 Group:		Education
 
 Source:		FreeBASIC-%version-source.tar.gz
 Source1:	FB-manual-%version-html.zip
 URL: 		http://freebasic.net
+#VCS:           https://github.com/freebasic/fbc
 
 Provides:	FreeBASIC = %version-%release
 %ifarch x86_64
@@ -75,6 +75,9 @@ cp -a doc/html/* %buildroot%_docdir/freebasic
 %_man1dir/*
 
 %changelog
+* Mon Feb 29 2016 Andrey Cherepanov <cas@altlinux.org> 1.05.0-alt1
+- New version
+
 * Wed Aug 19 2015 Andrey Cherepanov <cas@altlinux.org> 1.03.0-alt1
 - New version 1.03.0
 
