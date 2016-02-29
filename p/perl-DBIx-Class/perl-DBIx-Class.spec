@@ -1,5 +1,5 @@
 Name: perl-DBIx-Class
-Version: 0.082820
+Version: 0.082821
 Release: alt1
 
 Summary: Extensible and flexible object <-> relational mapper
@@ -48,6 +48,9 @@ HAVING support.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Mon Feb 29 2016 Vladimir Lettiev <crux@altlinux.ru> 0.082821-alt1
+- 0.082821
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.082820-alt1
 - automated CPAN update
 
