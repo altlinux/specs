@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.23
-Release: alt1.1
+Release: alt1.2
 Summary: implements a XML/HTML/XHTML Markup safe string for Python
 
 Group: Development/Python
@@ -101,6 +101,10 @@ popd
 %endif
 
 %changelog
+* Mon Feb 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.23-alt1.2
+- rebuild with rpm-build-python3-0.1.9
+  (to conform to the new Python3 deps and location "policy")
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.23-alt1.1
 - NMU: Use buildreq for BR.
 

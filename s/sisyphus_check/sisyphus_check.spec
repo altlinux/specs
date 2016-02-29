@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.41
+Version: 0.8.42
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,12 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Mon Feb 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.42-alt1
+- check-python: minor version is not allowed in
+  /usr/lib(64)?/python3[.][0-9]/site-packages/.
+- check-python: adapted to the possibility of having modules in
+  /usr/lib(64)?/python[23]/ without the minor version.
+
 * Fri Feb 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.41-alt1
 - 220-check-python: disallow having files in tools/ and lib-dynload/
   subdirs of %%python_libdir (for all except pythonN.src.rpm's

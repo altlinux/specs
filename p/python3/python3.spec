@@ -59,11 +59,12 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %pybasever.1
-Release: alt5
+Release: alt6
 License: Python
 Group: Development/Python3
 
-BuildRequires(pre): rpm-build-python3 >= 0.1.7
+# new common location for site-packages is supported since 0.1.9
+BuildRequires(pre): rpm-build-python3 >= 0.1.9
 BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
@@ -86,7 +87,9 @@ Source: %name-%version.tar
 # Was Patch0 in ivazquez' python3000 specfile:
 Patch1: Python-3.1.1-rpath.patch
 
-Patch102: python-3.3.0b1-lib64.patch
+# The lib64 patch
+# on top of ALT's python3-site-packages.patch (Patch1005)
+Patch102: python3-site-packages-lib64.patch
 
 # 00104 #
 # Only used when "%_lib" == "lib64"
@@ -300,15 +303,35 @@ Patch202: python-3.3.0-skip-test_posix_fadvise-alt.patch
 # RLIMIT 1000000 unavailable in hasher
 Patch203: python-3.3.1-skip-test_setrusage_refcount-alt.patch
 
+# Use a common /usr/lib/python3/site-packages (without the minor version)
+Patch1005: python3-site-packages.patch
+# %%python3_sitelibdir{,_noarch} from rpm-build-python3 >= 0.1.9
+# are consistent with this.
+# (TODO: Perhaps, we should consider substituting the value of the macros into the patch,
+# so that we have a single point of control and a guarantee of consistency.)
+
 # ======================================================
 # Additional metadata, and subpackages
 # ======================================================
 
 Url: http://www.python.org/
 
+# Like in Fedora:
 Provides: python(abi) = %pybasever
+# ALT's special name:
+%if "%_lib" == "lib64"
+Provides: python%pybasever-ABI(64bit)
+%else
+Provides: python%pybasever-ABI
+%endif
 
 Requires: %name-base = %EVR
+
+# ALT Sisyphus RPM Macros Packaging Policy
+# makes sure that the RPM support for building
+# the language-specific modules comes together with
+# the compiler/-devel pkgs:
+Requires: rpm-build-python3 >= 0.1.9
 
 %description
 Python 3 is a new version of the language that is incompatible with the 2.x
@@ -325,6 +348,12 @@ Obsoletes: %name-libs < %EVR
 %filter_from_requires /^%name[[:space:]]/d
 %filter_from_requires /^\/usr\/bin\/%name/d
 
+# The package that may have provided the common
+# /usr/lib{,64}/python3/site-packages
+# before we patched python3 itself for supporting this path.
+%define python3_sitebasename %(basename %(dirname %python3_sitelibdir))
+Obsoletes: %python3_sitebasename-site-packages
+
 %description base
 This package contains files used to embed Python 3 into applications.
 
@@ -335,6 +364,12 @@ Requires: %name = %EVR
 Conflicts: %name < %EVR
 Provides: %name-devel = %pybasever
 Provides: lib%name-devel = %EVR
+
+# ALT Sisyphus RPM Macros Packaging Policy
+# makes sure that the RPM support for building
+# the language-specific modules comes together with
+# the compiler/-devel pkgs:
+Requires: rpm-build-python3 >= 0.1.9
 
 %description dev
 This package contains libraries and header files used to build applications
@@ -437,6 +472,7 @@ done
 # Apply patches:
 #
 %patch1 -p1
+%patch1005 -p1
 
 %if "%_lib" == "lib64"
 %patch102 -p1
@@ -537,8 +573,6 @@ popd
 
 make install DESTDIR=%buildroot INSTALL="install -p"
 
-install -d -m 0755 $RPM_BUILD_ROOT%pylibdir/site-packages/__pycache__
-
 mv $RPM_BUILD_ROOT%_bindir/2to3 $RPM_BUILD_ROOT%_bindir/python3-2to3
 
 # Development tools
@@ -559,9 +593,17 @@ cp -ar Tools/demo %buildroot%pylibdir/Tools/
 # Fix for bug #136654
 rm -f %buildroot%pylibdir/email/test/data/audiotest.au %buildroot%pylibdir/test/audiotest.au
 
+install -d -m 0755 %buildroot%python3_sitelibdir/__pycache__
 %if "%_lib" == "lib64"
-install -d -m 0755 %buildroot/usr/lib/python%pybasever/site-packages/__pycache__
+install -d -m 0755 %buildroot%python3_sitelibdir_noarch/__pycache__
 %endif
+# The install scripts put a README in the old-style %pylibdir/site-packages
+# (actually, they copy the tree from the sources).
+# So, we move it by force (like in rpm-build-python for other python3 packages,
+# but in a more controlled way: we make sure that we know exactly what we copy,
+# otherwise rmdir would fail):
+mv -t %buildroot%python3_sitelibdir/ %buildroot%pylibdir/site-packages/README
+rmdir %buildroot%pylibdir/site-packages
 
 # Make python3-devel multilib-ready (bug #192747, #139911)
 %global _pyconfig32_h pyconfig-32.h
@@ -696,16 +738,23 @@ sed -i 's,/usr/local/bin/python,/usr/bin/python3,' %buildroot%_libdir/python%pyb
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%name-base-files.req.list
 # %name dirlist for %_rpmlibdir/files.req
-%pylibdir/	%name-base
 %dynload_dir/	%name-base
 %pylibdir/__pycache__/	%name-base
-%pylibdir/site-packages/	%name-base
-%pylibdir/site-packages/__pycache__/	%name-base
 %pylibdir/Tools/	%name-tools
 %pylibdir/Tools/__pycache__/	%name-tools
-%pylibdir_noarch/	%name-base
-%pylibdir_noarch/site-packages/	%name-base
-%pylibdir_noarch/site-packages/__pycache__/	%name-base
+EOF
+# rpm-build-python3 has a dep on exactly this file with the list
+# (for modularity: there used to be a separate package
+# with these directories and the corresponding site customization):
+cat <<\EOF >%buildroot%_rpmlibdir/%python3_sitebasename-site-packages-files.req.list
+%(dirname %python3_sitelibdir)	%name-base
+%python3_sitelibdir/	%name-base
+%python3_sitelibdir/__pycache__/	%name-base
+%if "%_lib" == "lib64"
+%(dirname %python3_sitelibdir_noarch)/	%name-base
+%python3_sitelibdir_noarch/	%name-base
+%python3_sitelibdir_noarch/__pycache__/	%name-base
+%endif
 EOF
 
 #Do not recompile .py files with old python3
@@ -734,6 +783,19 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %files base
 %doc LICENSE README
 %_rpmlibdir/%name-base-files.req.list
+%_rpmlibdir/%python3_sitebasename-site-packages-files.req.list
+
+%dir %(dirname %python3_sitelibdir)
+%dir %python3_sitelibdir/
+%dir %python3_sitelibdir/__pycache__/
+%python3_sitelibdir/README
+
+%if "%_lib" == "lib64"
+%dir %(dirname %python3_sitelibdir_noarch)
+%dir %python3_sitelibdir_noarch/
+%dir %python3_sitelibdir_noarch/__pycache__/
+%endif
+
 %dir %pylibdir
 %dir %dynload_dir
 %dynload_dir/_bisect.cpython-%pyshortver%pyabi.so
@@ -791,9 +853,6 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/xxlimited.cpython-%pyshortver%pyabi.so
 %dynload_dir/zlib.cpython-%pyshortver%pyabi.so
 
-%dir %pylibdir/site-packages/
-%dir %pylibdir/site-packages/__pycache__/
-%pylibdir/site-packages/README
 %pylibdir/*.py
 %dir %pylibdir/__pycache__/
 %pylibdir/__pycache__/*%bytecode_suffixes
@@ -878,12 +937,6 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/xml
 %pylibdir/xmlrpc
 
-%if "%_lib" == "lib64"
-%attr(0755,root,root) %dir %prefix/lib/python%pybasever
-%attr(0755,root,root) %dir %prefix/lib/python%pybasever/site-packages
-%attr(0755,root,root) %dir %prefix/lib/python%pybasever/site-packages/__pycache__/
-%endif
-
 # "Makefile" and the config-32/64.h file are needed by
 # distutils/sysconfig.py:_init_posix(), so we include them in the core
 # package, along with their parent directories (bug 531901):
@@ -957,6 +1010,14 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/Tools/scripts/run_tests.py
 
 %changelog
+* Sun Mar  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt6
+- Switch to a common /usr/lib{,64}/python3/site-packages
+  (without the minor version).
+- Provide python3.3-ABI: compatible .so in Python modules rely on it.
+- Require rpm-build-python3 (as per ALT Sisyphus RPM Macros Packaging Policy).
+- This package does not "strictly" own /usr/lib{,64}/python3.3 anymore
+  (for convenience of the transition and because it makes little sense).
+
 * Sat Mar  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt5
 - do not test SSL (this is currently broken in Sisyphus anyway, but we
   need to be able to rebuild; the SSL-bugs haven't gone away and need

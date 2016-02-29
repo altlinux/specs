@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.a18
+Release: alt1.a18.2
 Summary: Data analysis utilities
 License: MIT
 Group: Development/Python
@@ -94,6 +94,10 @@ popd
 %endif
 
 %changelog
+* Mon Feb 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt1.a18.2
+- rebuild with rpm-build-python3-0.1.9
+  (to conform to the new Python3 deps and location "policy")
+
 * Mon Aug 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.a18
 - Initial build for Sisyphus
 

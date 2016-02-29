@@ -1,9 +1,6 @@
 Name: rpm-build-python3
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
-
-%define python3_version %(LC_ALL=C python3 -c 'python3 -c 'import sys; print("{0}.{1}".format(sys.version_info[0],sys.version_info[1]))' 2>/dev/null || echo 2.7)
-%define python3_libdir %_target_libdir/python%python3_version
 
 Summary: RPM helper macros to rebuild python3 packages
 License: GPL
@@ -12,9 +9,16 @@ Group: Development/Other
 Source: %name-%version.tar
 BuildArch: noarch
 
-Requires: python3
 Requires: file >= 4.26-alt11
 Requires: rpm >= 4.0.4-alt100.45
+# Since the .so handling code in python3.req.py with the help of
+# objdump is borrowed from rpm-build, we borrow the dependency, too:
+Requires: binutils >= 1:2.20.51.0.7
+
+# We want that the following directory gets detected as a dep of the built python3 pkgs;
+# this happens automatically of the packages that owns it is installed.
+Requires: %_rpmlibdir/python3-site-packages-files.req.list
+# (The lib64 variant must be owned by the same package; thus it must be detected as well.)
 
 AutoReqProv: yes, nopython
 
@@ -38,6 +42,7 @@ install -pD -m755 python3.req.py %buildroot%_rpmlibdir/python3.req.py
 install -pD -m755 python3.req.files %buildroot%_rpmlibdir/python3.req.files
 install -pD -m755 python3.compileall.py %buildroot%_rpmlibdir/python3.compileall.py
 install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-bytecompile_python3.brp
+install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
 #install -pd -m755 %buildroot%python_tooldir/rpm-build
 #install -pD -m644 bdist_altrpm.py %buildroot%_libdir/python%__python_version/distutils/command/bdist_altrpm.py
 #install -pD -m755 tools/*py %buildroot%python_tooldir/rpm-build
@@ -59,6 +64,7 @@ install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-byteco
 %_rpmmacrosdir/python3.env
 %_sysconfdir/buildreqs/files/ignore.d/%name
 %_rpmlibdir/brp.d/096-bytecompile_python3.brp
+%_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
 %_rpmlibdir/python3.compileall.py
 %_rpmlibdir/python3.req
 %_rpmlibdir/python3.req.py
@@ -68,6 +74,29 @@ install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-byteco
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.9-alt1
+- if there is an .so (in /*/python3*/), generate a req like:
+  python(abi)(64bit) = 3.3
+- python3 RPM macros: adapt for the new common site-packages/
+  and cleanup unused ones. (TODO: Check that the packages still build!)
+- move the installed stuff to the new common site-packages/ by force
+  (except "base" python packages).
+- use only the major Python version number for pythonN(*) provides.
+  (This is mostly a cosmetic change in essence: the numbers in the
+  pythonN(*) provs and reqs don't mean much. The guarantee that the
+  module was run by exactly the same version of python used to be given
+  by the dep on python3.3/site-packages/; we are about to change this.)
+  (The corresponding cosmetic change of reqs is scheduled for later;
+  and we'll let it go on its own, without forcing.)
+- python3.compileall.py: remove unused variable.
+
+* Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.8-alt100
+- provide python3.3(*) always (for the transition from python3.3).
+  (NB: Revert this hack when the transition is done.)
+  (This is useful, given that old modules can be "run" with
+  python3-3.5.1-alt2, which has been hacked to be able to use modules
+  from the old site-packages/.)
+
 * Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.8-alt1
 - python3.req: identify myself (in error messages) distinctively
   from python.req.
