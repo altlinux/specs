@@ -1,12 +1,12 @@
 Name: rpm-build-python
-Version: 0.36.2
+Version: 0.36.4
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
 %define python_libdir %_target_libdir/python%__python_version
 
 Summary: RPM helper macros to rebuild python packages
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 Source: %name-%version.tar
@@ -26,15 +26,6 @@ BuildRequires: python-dev python-modules-encodings
 These helper macros provide possibility to rebuild
 python modules by some Alt Linux Team Policy compatible way.
 
-%package tools
-Summary: diagnostic tools
-Group: Development/Python
-Requires: %name = %version-%release
-AutoReqProv: yes, nopython
-
-%description tools
-Package consist small toolset to diaganostic common problem of requires in python modules.
-
 %prep
 %setup
 
@@ -53,16 +44,6 @@ install -pD -m755 python.req %buildroot%_rpmlibdir/python.req
 install -pD -m755 python.req.py %buildroot%_rpmlibdir/python.req.py
 install -pD -m755 python.req.files %buildroot%_rpmlibdir/python.req.files
 install -pD -m755 python.compileall.py %buildroot%_rpmlibdir/python.compileall.py
-install -pd -m755 %buildroot%python_tooldir/rpm-build
-#install -pD -m644 bdist_altrpm.py %buildroot%_libdir/python%__python_version/distutils/command/bdist_altrpm.py
-install -pD -m755 tools/*py %buildroot%python_tooldir/rpm-build
-install -pd -m755 %buildroot%python_tooldir/rpm-build/find
-install -pD -m644 tools/find/*py %buildroot%python_tooldir/rpm-build/find
-install -pd -m755 %buildroot%_bindir
-
-ln -s `relative %buildroot%python_tooldir/rpm-build/imalyzer.py %buildroot%_bindir/` %buildroot%_bindir/imalyzer
-ln -s `relative %buildroot%python_tooldir/rpm-build/requires.py %buildroot%_bindir/` %buildroot%_bindir/py_requires
-ln -s `relative %buildroot%python_tooldir/rpm-build/provides.py %buildroot%_bindir/` %buildroot%_bindir/py_provides
 
 unset RPM_PYTHON
 
@@ -77,14 +58,16 @@ unset RPM_PYTHON
 %_rpmlibdir/python.prov
 %_rpmlibdir/python.prov.py
 %_rpmlibdir/python.prov.files
-#%_libdir/python%__python_version/distutils/command/bdist_altrpm.py
 %doc python-module-SAMPLE.spec policy notes doc
 
-%files tools
-%_bindir/*
-%python_tooldir/rpm-build
-
 %changelog
+* Mon Feb 29 2016 Dmitry V. Levin <ldv@altlinux.org> 0.36.4-alt1
+- Unpackaged tools subpackage.
+
+* Fri Nov 22 2013 Dmitry V. Levin <ldv@altlinux.org> 0.36.3-alt1
+- python.prov.files: assume that all python extensions are located
+  in /usr/lib*/python2*/ or $RPM_PYTHON_LIB_PATH.
+
 * Sat Apr 06 2013 Dmitry V. Levin <ldv@altlinux.org> 0.36.2-alt1
 - python.compileall.py:
   + removed python version <= 2.2 py_compile workaround;
