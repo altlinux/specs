@@ -3,7 +3,7 @@
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
 Version: 2.1.21
-Release: alt3.rc2
+Release: alt4.rel
 Epoch: 5
 Packager: Grigory Batalov <bga@altlinux.ru>
 
@@ -24,9 +24,9 @@ Group: System/Servers
 Url: http://www.list.org/
 
 # http://prdownloads.sourceforge.net/%name/%name-%version.tar.tgz
-Source: %name-%{version}rc2.tar
+Source: %name-%{version}.tar
 # ALT Linux cummulative patch
-Patch:  %name-%{version}rc2-%release-alt.patch
+Patch:  %name-%{version}-%release-alt.patch
 
 PreReq: mktemp, setup, shadow-utils, sendmail-common, vixie-cron
 Requires: python, webserver-common, MTA
@@ -108,7 +108,7 @@ BuildArch: noarch
 Documentation for mailman
 
 %prep
-%setup -q -n %name-%{version}rc2
+%setup -q -n %name-%{version}
 # ALT Linux cummulative patch
 %patch -p1
 
@@ -121,7 +121,6 @@ sed -i -e 's,@LOCKFILE@,%_lockdir/%name/master-qrunner,g' cron/crontab.in.in
 # see http://packages.qa.debian.org/m/mailman.html
 for patch in \
 10_wrapper_uid.patch \
-16_update_debian.patch \
 51_nocompile.pyc.patch \
 52_check_perms_lstat.patch \
 53_disable_addons.patch \
@@ -374,6 +373,12 @@ fi
 %doc doc
 
 %changelog
+* Mon Feb 29 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.21-alt4.rel
+- Updated to 2.1.21.
+- Added patch from 2.1.22-dev:
+  + Don't collapse multipart with a single sub-part
+    inside multipart/signed parts.
+
 * Sun Feb 21 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.21-alt3.rc2
 - Updated README.ALT (small style fixes).
 
