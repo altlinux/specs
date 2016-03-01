@@ -1,6 +1,6 @@
 Name: xfce4
 Version: 4.12
-Release: alt2
+Release: alt3
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -133,9 +133,6 @@ Group: Graphical desktop/XFce
 BuildArch: noarch
 Requires: %name-full = %version-%release
 Requires: gnome-icon-theme
-Requires: firefox
-Requires: firefox-ru
-Requires: firefox-uk
 
 %description regular
 %summary
@@ -160,6 +157,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %files regular
 
 %changelog
+* Tue Mar 01 2016 Mikhail Efremov <sem@altlinux.org> 4.12-alt3
+- regular: Drop firefox.
+
 * Mon Feb 08 2016 Mikhail Efremov <sem@altlinux.org> 4.12-alt2
 - full: Add xfce4-calculator-plugin.
 - Move pavucontrol from regular to full.
