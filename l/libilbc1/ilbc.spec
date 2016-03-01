@@ -1,6 +1,6 @@
 Name: libilbc1
 Version: 0.0.2
-Release: alt2
+Release: alt3
 
 Summary: iLBC is a library for the iLBC low bit rate speech codec.
 License: Global IP Sound iLBC Public License, v2.0
@@ -47,6 +47,16 @@ make install DESTDIR=%buildroot
 mkdir -p %buildroot%_defaultdocdir/%name-%version/
 cp -p COPYING INSTALL README AUTHORS gips_iLBClicense.pdf %buildroot%docdir/
 cp -pr doc/api/html %buildroot%docdir/
+mkdir -p %buildroot%_libdir/pkgconfig
+cat > %buildroot%_libdir/pkgconfig/ilbc.pc << EOF
+Name: ilbc
+Description: iLBC codec for voice communication
+Version: 0.0.2
+Libs: -lilbc
+Libs.private: -lm
+Cflags: -I/usr/include/ilbc
+EOF
+
 
 %files
 %dir %docdir
@@ -59,8 +69,12 @@ cp -pr doc/api/html %buildroot%docdir/
 %_includedir/ilbc.h
 %_includedir/ilbc
 %_libdir/libilbc.so
+%_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Mar 01 2016 Anton Farygin <rider@altlinux.ru> 0.0.2-alt3
+- add pkgconfig support
+
 * Mon Apr 22 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.2-alt2
 - fixed build on arm
 
