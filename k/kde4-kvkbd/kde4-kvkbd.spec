@@ -5,7 +5,7 @@
 %define		rname kvkbd
 Name:		kde4-%rname
 Version:	0.7.2
-Release:	alt5
+Release:	alt6
 
 Group:		Accessibility
 Summary:	Virtual Keyboard for KDE4
@@ -67,6 +67,12 @@ mv src/standart-old.css colors/light.css
 %_K4apps/%rname/
 
 %changelog
+* Tue Mar 01 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt6
+- reduce height in login helper mode
+
+* Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt4.M70P.1
+- build for M70P
+
 * Fri Dec 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.7.2-alt5
 - update default look
 
