@@ -1,6 +1,6 @@
 %define dist Term-ReadLine-Gnu
 Name: perl-%dist
-Version: 1.28
+Version: 1.30
 Release: alt1
 
 Summary: Perl interface to the GNU Readline library
@@ -18,7 +18,6 @@ Patch2: perl-Term-ReadLine-Gnu-at-Gnu.pm-debian-20new.patch
 # hist/perl-Term-ReadLine-Gnu-at-Gnu.xs-use-curses.patch
 # hist/perl-Term-ReadLine-Gnu-at-dont-use-xmalloc.patch
 Patch3: perl-Term-ReadLine-Gnu-1.22-at-xmalloc-at-curses.patch
-Patch4: perl-Term-ReadLine-Gnu-at-Gnu.xs-debian-30outstream.patch
 Patch5: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-remove-AutoLoader.patch
 Patch6: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-pass-syntax-check.patch
 Patch7: perl-Term-ReadLine-Gnu-at-Gnu_XS.pm-debian-10term.patch
@@ -29,7 +28,7 @@ Patch11: Term-ReadLine-1.15-at.patch
 
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libncurses-devel libreadline-devel perl-devel
+BuildRequires: libncurses-devel libreadline-devel perl-devel perl-Encode
 
 %description
 Term::ReadLine::Gnu is an implementation of the interface to the GNU
@@ -44,7 +43,6 @@ cp -f %{SOURCE2} Makefile.PL
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -66,6 +64,9 @@ cp -f %{SOURCE2} Makefile.PL
 %perl_vendor_autolib/Term
 
 %changelog
+* Tue Mar 01 2016 Vladimir Lettiev <crux@altlinux.ru> 1.30-alt1
+- 1.30
+
 * Sat Nov 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
 - automated CPAN update
 
