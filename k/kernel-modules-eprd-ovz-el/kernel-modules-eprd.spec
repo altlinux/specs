@@ -1,6 +1,6 @@
 %define module_name	eprd
 %define module_version	0.5.0
-%define module_release	alt3
+%define module_release	alt4
 
 %define flavour		ovz-el
 BuildRequires(pre): kernel-headers-modules-ovz-el
@@ -58,7 +58,6 @@ install -D -m 755 eprd_setup %buildroot%_sbindir/eprd_setup
 install -D -m 644 README %buildroot%_docdir/%module_name-%module_version/README
 
 %files
-%defattr(644,root,root,755)
 %module_dir
 %_sbindir/eprd_setup
 %_docdir/%module_name-%module_version/README
@@ -67,6 +66,9 @@ install -D -m 644 README %buildroot%_docdir/%module_name-%module_version/README
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Mar 01 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.0-alt4
+- Fixed repocop warning about %_sbindir/eprd_setup permissions
 
 * Mon Dec 15 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 0.5.0-alt3
 - Minor .spec updates
