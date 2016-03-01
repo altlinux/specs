@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.13.0
-Release: alt3
+Release: alt4
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -124,6 +124,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Tue Mar 01 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt4
+- hardcode HideShells from default config file
+
 * Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt3
 - add upstream fix for config reader (ALT#31737)
 
