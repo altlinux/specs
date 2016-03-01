@@ -4,13 +4,14 @@
 %define _localstatedir %_var
 
 %def_enable introspection
+%def_enable acl
 # since 2.1.5 it is possible to configure udisks to mount devices
 # in /media instead of /run/media but we use own control-based mechanism,
 # so this option should never be enabled
 %def_disable fhs_media
 
 Name: %{_name}2
-Version: 2.1.6
+Version: 2.1.7
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -36,15 +37,18 @@ Requires: lib%name = %version-%release
 Requires: /lib/udev/rules.d
 Requires: /usr/sbin/cryptsetup
 Requires: dbus >= %dbus_ver dbus-tools-gui
-Requires: mdadm ntfsprogs parted gdisk acl dosfstools
+Requires: mdadm ntfsprogs parted gdisk dosfstools
+%{?_enable_acl:Requires: acl}
 
 BuildRequires: intltool gtk-doc gnome-common
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
 BuildRequires: libudev-devel libgudev-devel >= %udev_ver
-BuildRequires: libacl-devel systemd-devel libsystemd-login-devel libsystemd-daemon-devel
+BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
+%{?_enable_acl:BuildRequires: libacl-devel}
+
 
 %description
 The udisks project provides a daemon, tools and libraries to access
@@ -106,8 +110,9 @@ This package contains development documentation for lib%name.
 #%%add_optflags -D_GNU_SOURCE
 %configure --disable-static \
 	--enable-gtk-doc \
+	%{subst_enable acl} \
 	%{?_enable_fhs_media:--enable-fhs-media}
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -177,6 +182,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 01 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.7-alt1
+- 2.1.7
+
 * Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
 - 2.1.6 release
 - removed upstreamed udisks-1.92.0-alt-udiskd_dir.patch
