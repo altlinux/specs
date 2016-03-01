@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.2f
+Version: 1.0.2g
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -276,6 +276,9 @@ ADD_ARGS=%_os-%_arch
 %ifarch %arm
 ADD_ARGS=linux-generic32
 %endif
+%ifarch x32
+ADD_ARGS=linux-x32
+%endif
 
 if echo 'extern __uint128_t i;' |
    gcc %optflags -Werror -c -o/dev/null -xc -; then
@@ -294,6 +297,7 @@ fi
 %endif
 	enable-md2 \
 	enable-rfc3779 \
+	enable-ssl2 \
 	zlib \
 	$ADD_ARGS
 
@@ -395,7 +399,7 @@ rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
 
 # Create default cipher-list.conf from SSL_DEFAULT_CIPHER_LIST
 sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
-	> %buildroot%_sysconfdir/openssl/cipher-list.conf
+	ssl/ssl.h > %buildroot%_sysconfdir/openssl/cipher-list.conf
 
 %check
 LD_LIBRARY_PATH=%buildroot/%_lib make test
@@ -458,6 +462,12 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Tue Mar 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2g-alt1
+- Updated to 1.0.2g (fixes CVE-2016-0701 CVE-2016-0702
+  CVE-2016-0705 CVE-2016-0797 CVE-2016-0798
+  CVE-2016-0799 CVE-2016-0800).
+- Added default ciphers to system profile.
+
 * Thu Jan 28 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2f-alt1
 - Updated to 1.0.2f (fixes CVE-2015-3197 CVE-2016-0701).
 
