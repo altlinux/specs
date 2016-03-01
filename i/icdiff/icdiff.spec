@@ -4,7 +4,7 @@
 Summary:        Improved Colored Difference Tool
 Name:           %oname
 Version:        1.7.3
-Release:        alt1
+Release:        alt2
 URL:            http://www.jefftk.com/icdiff
 Packager: 	Valentin Rosavitskiy <valintinr@altlinux.org>
 License:        PSF
@@ -23,16 +23,19 @@ Show differences between two files in a two column colored view.
 %build
 
 %install
-mkdir -p %buildroot%_sbindir
-install -p -m755 %oname %buildroot%_sbindir/%oname
-install -p -m755 git-%oname %buildroot%_sbindir/git-%oname
+mkdir -p %buildroot%_bindir
+install -p -m755 %oname %buildroot%_bindir/%oname
+install -p -m755 git-%oname %buildroot%_bindir/git-%oname
 
 %files
 %doc README.md ChangeLog
-%_sbindir/%oname
-%_sbindir/git-%oname
+%_bindir/%oname
+%_bindir/git-%oname
 
 %changelog
+* Tue Mar 01 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.7.3-alt2
+- Moved from binaries from %_sbindir to %_bindir (ALT #31848)
+
 * Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 1.7.3-alt1
 - New version
 
