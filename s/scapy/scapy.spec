@@ -1,17 +1,26 @@
 %define module_name scapy
-Name:		scapy
-Summary:	Scapy is a powerful interactive packet manipulation program written in Python
-Version:	2.1.0
-Release:	alt1.1
-Group:		Networking/Other
-License:	GPL3
-URL:		http://www.secdev.org/projects/scapy/	
-Source:		%name-%version.tar.gz
-BuildArch: 	noarch
-Requires:	python >= 2.5
 
-# Automatically added by buildreq on Thu Oct 16 2008 (-bi)
-BuildRequires: python-devel python-module-setuptools
+Name: scapy
+Version: 2.3.2
+Release: alt1
+
+Summary: Scapy is a powerful interactive packet manipulation program written in Python
+
+Group: Networking/Other
+License: GPL3
+Url: http://www.secdev.org/projects/scapy/
+
+# Source-url: https://github.com/secdev/scapy/archive/v%version.zip
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: %name-%version.tar
+BuildArch: noarch
+Requires: python-base >= 2.5
+Requires: python-module-scapy = %version-%release
+
+Requires: tcpdump
+
+BuildRequires: python-devel python-module-distribute
 
 %description
 Scapy is a powerful interactive packet manipulation program.
@@ -21,6 +30,13 @@ much more.
 It can easily handle most classical tasks like scanning, tracerouting,
 probing, unit tests, attacks or network discovery.
 
+%package -n python-module-%name
+Summary: Python module for %name.
+Group: Development/Python
+
+%description -n python-module-%name
+Powerful interactive packet manipulation python module scapy.
+
 %prep
 %setup
 
@@ -29,14 +45,24 @@ probing, unit tests, attacks or network discovery.
 
 %install
 %python_install
+rm -rf %buildroot%python_sitelibdir/%name/arch/windows
 
 %files
 %_bindir/*scapy
 %_man1dir/*
-%python_sitelibdir/%name
-%exclude %python_sitelibdir/%name/arch/windows
+
+%files -n python-module-scapy
+%python_sitelibdir/%name/
+%python_sitelibdir/%name-*egg-info
 
 %changelog
+* Tue Mar 01 2016 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
+- new version 2.3.2 (with rpmrb script)
+
+* Tue Mar 01 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt2
+- cleanup spec, separate python module
+- add tcpdump require
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.0-alt1.1
 - Rebuild with Python-2.7
 
