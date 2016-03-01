@@ -4,10 +4,11 @@
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
+%def_enable 3g
 %def_enable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -23,9 +24,10 @@ Source: http://www.freedesktop.org/software/%_name/releases/%ver_major/%_name-%v
 %define soup_ver 2.42
 
 BuildRequires: intltool yelp-tools gtk-doc libgio-devel >= %glib_ver
-BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver libmm-glib-devel >= %mm_ver
+BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver
 BuildRequires: libdbus-devel libavahi-glib-devel libnotify-devel systemd-devel
 BuildRequires: gobject-introspection-devel
+%{?_enable_3g:BuildRequires: libmm-glib-devel >= %mm_ver}
 # for check
 BuildRequires: /proc dbus-tools-gui
 
@@ -114,7 +116,8 @@ rm -f demo/*.desktop.in
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_enable_network_manager:--enable-network-manager} \
 	--with-dbus-service-user=%_name \
-	--enable-demo-agent
+	--enable-demo-agent \
+	%{?_disable_3g:--disable-3g-source}
 %make_build
 
 %install
@@ -122,7 +125,7 @@ rm -f demo/*.desktop.in
 mkdir -p %buildroot%_localstatedir/%_name
 
 %check
-#%make check
+%make check
 
 %pre
 %_sbindir/groupadd -r -f %_name
@@ -175,6 +178,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Tue Mar 01 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+
 * Thu Dec 17 2015 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
