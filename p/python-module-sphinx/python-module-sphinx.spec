@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt2.a0.git20150813.1
+Release: alt2.a0.git20150813.2
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -23,11 +23,11 @@ Source4: refcounting.py
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python python-module-objects.inv
+BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python3-module-html5lib python3-module-nose python3-module-objects.inv python3-module-sphinx rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python3-module-html5lib python3-module-nose python-sphinx-objects.inv rpm-build-python3 time
 
 #BuildRequires: python-devel python-module-setuptools python-module-simplejson
 # for docs
@@ -39,7 +39,7 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 #BuildRequires: python-module-snowballstemmer python-module-babel
 #BuildRequires: python-module-alabaster python-module-sphinx_rtd_theme
 %if_with python3
-BuildRequires(pre): rpm-build-python3 python3-module-objects.inv
+BuildRequires(pre): rpm-build-python3
 #BuildRequires: python3-devel python3-module-distribute
 #BuildRequires: python3-module-Pygments python3-module-docutils
 #BuildRequires: python3-module-jinja2 python3-module-nose
@@ -73,7 +73,6 @@ Requires: python3-module-%oname = %epoch:%version-%release
 #Requires: python3-module-%oname-pickles = %epoch:%version-%release
 Requires: python3-module-%oname-tests
 Requires: rpm-macros-%{oname}3 >= %epoch:%version-%release
-Requires: python3-module-objects.inv
 Requires: python3-module-jinja2-tests
 
 %description -n python3-module-%oname-devel
@@ -113,7 +112,7 @@ This packages contains tests for Sphinx.
 %package -n rpm-macros-%{oname}3
 Summary: RPM macros for build with Sphinx (Python 3)
 Group: Development/Python3
-#Requires: rpm-build-python3 python3-module-objects.inv
+#Requires: rpm-build-python3
 #Requires: python3-module-%oname = %epoch:%version-%release
 
 %description -n rpm-macros-%{oname}3
@@ -130,7 +129,6 @@ Group: Development/Python
 Requires: %name = %epoch:%version-%release
 Requires: %name-pickles = %epoch:%version-%release
 Requires: rpm-macros-%oname >= %epoch:%version-%release
-Requires: python-module-objects.inv
 
 %description devel
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -142,7 +140,7 @@ This package destinated for development of Python modules.
 %package -n rpm-macros-%oname
 Summary: RPM macros for build with Sphinx
 Group: Development/Python
-#Requires: rpm-build-python python-module-objects.inv
+#Requires: rpm-build-python
 #Requires: %name = %epoch:%version-%release
 
 %description -n rpm-macros-%oname
@@ -193,24 +191,20 @@ This packages contains pickles for Sphinx.
 
 %prep
 %setup
+install -pm644 %_sourcedir/conf.py.template .
+
+ln -s %_datadir/python-sphinx/objects.inv doc/
+ln -s %_datadir/python-sphinx/objects.inv tests/
 
 cp %SOURCE4 sphinx/ext/
 
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
+install -pm644 %_sourcedir/macro3 ../python3/
 %endif
 
-install -p -m644 %SOURCE1 %SOURCE2 .
-install -p -m644 %SOURCE1 %SOURCE3 ../python3
-
-install -p -m644 %python_sitelibdir/%oname/objects.inv doc
-install -p -m644 %python_sitelibdir/%oname/objects.inv tests
-
-%if_with python3
-install -p -m644 %python3_sitelibdir/%oname/objects.inv ../python3/doc
-install -p -m644 %python3_sitelibdir/%oname/objects.inv ../python3/tests
-%endif
+install -pm644 %_sourcedir/macro .
 
 %build
 %python_build
@@ -252,6 +246,11 @@ do
 	touch $i/__init__.py
 done
 
+ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
+	%buildroot%python3_sitelibdir/%oname/
+ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
+	%buildroot%python3_sitelibdir/%oname/tests/
+
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
@@ -269,6 +268,11 @@ for i in $(find %buildroot%python_sitelibdir/%oname/tests -type d)
 do
 	touch $i/__init__.py
 done
+
+ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
+	%buildroot%python_sitelibdir/%oname/
+ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
+	%buildroot%python_sitelibdir/%oname/tests/
 
 # docs
 
@@ -382,6 +386,9 @@ install -p -m644 conf.py.template \
 %endif
 
 %changelog
+* Tue Mar 01 2016 Dmitry V. Levin <ldv@altlinux.org> 1:1.4-alt2.a0.git20150813.2
+- NMU: replaced python*-module-objects.inv with python-sphinx-objects.inv.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:1.4-alt2.a0.git20150813.1
 - NMU: Use buildreq for BR.
 
