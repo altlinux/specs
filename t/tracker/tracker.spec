@@ -49,8 +49,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -90,6 +90,7 @@ Requires: lib%name = %version-%release
 %define libosinfo_ver 0.2.9
 %define libpng_ver 0.89
 %define libmediaart_ver 1.9
+%define sqlite_ver 3.11.0
 
 BuildPreReq: gcc-c++ gnome-common rpm-build-gnome gtk-doc docbook-utils
 BuildPreReq: glibc-devel
@@ -110,7 +111,7 @@ BuildPreReq: libuuid-devel
 BuildPreReq: libenca-devel >= 1.9
 BuildPreReq: vala >= 0.18.0
 BuildPreReq: intltool >= 0.35.0
-BuildPreReq: sqlite3 libsqlite3-devel
+BuildPreReq: sqlite3 libsqlite3-devel >= %sqlite_ver
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 BuildRequires: libgupnp-dlna-devel >= %gupnp_dlna_ver
 BuildRequires: libavformat-devel >= 0.8.4 libavcodec-devel >= 0.8.4  libavutil-devel >= 0.8.4
@@ -398,6 +399,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Tue Mar 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Tue Feb 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt2
 - rebuild against libicu*.so.56
 
