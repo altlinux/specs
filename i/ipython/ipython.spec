@@ -2,7 +2,7 @@
 
 Name: ipython
 Version: 4.0.0
-Release: alt2
+Release: alt3
 
 %setup_python_module IPython
 
@@ -119,7 +119,6 @@ This package contains examples for IPython.
 %prep
 %setup
 #patch0 -p1
-rm -f IPython/Extensions/{PhysicalQInteractive.py,scitedirector.py,ipy_render.py,ipy_synchronize_with.py,ipy_traits_completer.py,ipy_winpdb.py,win32clip.py}
 
 mkdir -p pushd IPython/html/static
 pushd IPython/html/static
@@ -149,8 +148,8 @@ popd
 pushd ../python3
 export LANG="en_US.UTF-8"
 %python3_install
-rm -rf %buildroot%python3_sitelibdir/IPython/{tests,frontend/cocoa,*/tests,kernel/core/tests}
-rm -f %buildroot%_bindir/iptest3
+rm -r %buildroot%python3_sitelibdir/IPython/*/tests
+rm %buildroot%_bindir/iptest3
 popd
 pushd %buildroot%_bindir
 for i in $(ls)
@@ -162,14 +161,14 @@ popd
 %endif
 
 %python_install
-rm -rf %buildroot%python_sitelibdir/IPython/{tests,frontend/cocoa,*/tests,kernel/core/tests}
-rm -f %buildroot%_bindir/iptest
+rm -r %buildroot%python_sitelibdir/IPython/*/tests
+rm %buildroot%_bindir/iptest
 install -d %buildroot%_docdir/%name
 cp docs/source/*.txt %buildroot%_docdir/%name/
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 %make -C docs html
-cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
+cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 
 %files
 %_bindir/*
@@ -200,6 +199,11 @@ cp -fR docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Wed Mar  2 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt3
+- .spec: fail if the maintainer's intentions are not fulfilled
+  (because the sources or the build environment have changed since the
+  spec was written): rm/cp without -f
+
 * Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt2
 - %_bindir/ipython33 -> %_bindir/ipython3
 
