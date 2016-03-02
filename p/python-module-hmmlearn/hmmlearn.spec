@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt1.git20150423
+Version: 0.2.0
+Release: alt1
 Summary: Hidden Markov Models in Python, with scikit-learn like API
 License: BSD
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/hmmlearn/hmmlearn.git
 Source: %name-%version.tar
+Patch:  alt-fix-doc-build.patch
 
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-Cython python-module-scikit-learn
@@ -72,13 +73,13 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+%prepare_sphinx doc
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -107,15 +108,13 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export PYTHONPATH=%buildroot%python_sitelibdir
-py.test
-rm -fR %oname
-%make test-coverage
+python setup.py build_ext --inplace
+py.test --doctest-modules hmmlearn
 %if_with python3
 pushd ../python3
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version
-rm -fR %oname
-%make test-coverage PYTHON=python3 NOSETESTS=nosetests3
+python3 setup.py build_ext --inplace
+py.test-%_python3_version --doctest-modules hmmlearn
 popd
 %endif
 
@@ -137,6 +136,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 02 2016 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
+- New version
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20150423
 - Version 0.1.1
 
