@@ -1,5 +1,5 @@
 Name: shotcut
-Version: 16.01
+Version: 16.03
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
@@ -9,7 +9,7 @@ Url: http://www.shotcut.org/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: https://github.com/mltframework/shotcut/archive/%name-%version.tar.gz
 Source1: %name.desktop
-BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick
+BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools
 
 %description
 These are all currently implemented features:
@@ -92,5 +92,8 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Wed Mar 02 2016 Anton Midyukov <antohami@altlinux.org> 16.03-alt1
+- New version.
+
 * Fri Jan 08 2016 Anton Midyukov <antohami@altlinux.org> 16.01-alt1
 - Initial build for ALT Linux Sisyphus
