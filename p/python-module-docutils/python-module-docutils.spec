@@ -3,7 +3,7 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.13
-Release: alt3.git20150716
+Release: alt4.git20150716
 %setup_python_module %oname
 Name: %packagename
 # git://repo.or.cz/docutils.git
@@ -17,7 +17,9 @@ Conflicts: Zope-docutils
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python-tools-2to3
+%add_python3_req_skip pygments
 %endif
+%add_python_req_skip pygments
 
 %description
 Docutils is a modular system for processing documentation
@@ -74,21 +76,19 @@ pushd ../python3
 %python3_install
 popd
 pushd %buildroot%_bindir
-for i in $(ls); do
+for i in *; do
 	mv $i py3_$i
 done
 popd
 %endif
-%python_install --optimize=2 --record=INSTALLED_FILES
-install -d %buildroot%_datadir/%modulename
-cp -rp tools %buildroot%_datadir/%modulename
+%python_install --optimize=2
+mkdir -p %buildroot%_datadir/%modulename
+cp -a tools %buildroot%_datadir/%modulename
 
 #install -p -m644 docutils/utils/roman.py \
 #	%buildroot%python_sitelibdir
 
-export LC_ALL=en_US.UTF-8
-
-#check
+%check
 #export LC_ALL=en_US.UTF-8
 #python test/alltests.py
 #if_with python3
@@ -98,10 +98,11 @@ python3 %buildroot%python3_sitelibdir/test/alltests.py
 popd
 %endif
 
-%files -f INSTALLED_FILES
+%files
 %doc docs *.txt
 %_datadir/%modulename
-#python_sitelibdir/roman.py*
+%python_sitelibdir/*
+%_bindir/rst*
 %if_with python3
 %exclude %_bindir/py3_*
 
@@ -120,6 +121,10 @@ popd
 %endif
 
 %changelog
+* Wed Mar 02 2016 Dmitry V. Levin <ldv@altlinux.org> 0.13-alt4.git20150716
+- Remove pygments from requirements.
+- Packages subdirectories.
+
 * Thu Aug 06 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13-alt3.git20150716
 - Disabled bad assert
 
