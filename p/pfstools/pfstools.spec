@@ -3,7 +3,7 @@
 
 Name: pfstools
 Version: 1.8.5
-Release: alt1.8.2
+Release: alt1.8.3
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -195,6 +195,9 @@ export CXXFLAGS="$CFLAGS"
 %_man1dir/pfsingdal.*
 
 %changelog
+* Wed Mar 02 2016 Andrey Cherepanov <cas@altlinux.org> 1.8.5-alt1.8.3
+- Rebuild with new gdal
+
 * Wed Jul 08 2015 Paul Wolneykien <manowar@altlinux.org> 1.8.5-alt1.8.2
 - Disable Octave package (rebuilding with Octave v4.0.0 fails).
 
