@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20150921
+%define date 20160303
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.23
+Version: 0.0.24
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Wed Mar 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.24-alt1
+- allow transition from officer_r:officet_t to generic_r:generic_t
+
 * Mon Sep 21 2015 Andriy Stepanov <stanv@altlinux.ru> 0.0.23-alt1
 - Deny untrasted network connections
   Deny write protected data RW USB devices
