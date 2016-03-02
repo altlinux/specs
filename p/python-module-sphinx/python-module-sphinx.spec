@@ -4,15 +4,14 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt2.a0.git20150813.2
+Release: alt3.a0.git20150813
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
 Group: Development/Python
 Url: http://sphinx.pocoo.org/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 # https://github.com/sphinx-doc/sphinx.git
 Source0: %name-%version.tar
@@ -50,6 +49,9 @@ BuildRequires(pre): rpm-build-python3
 
 %py_requires simplejson
 
+Provides: python-module-objects.inv
+Obsoletes: python-module-objects.inv
+
 %description
 Sphinx is a tool that makes it easy to create intelligent and beautiful
 documentation for Python projects (or other documents consisting of
@@ -60,6 +62,8 @@ multiple reStructuredText sources)
 Summary: Tool for producing documentation for Python 3 projects
 Group: Development/Python3
 %add_python3_req_skip xapian
+Provides: python3-module-objects.inv
+Obsoletes: python3-module-objects.inv
 
 %description -n python3-module-%oname
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -350,10 +354,12 @@ install -p -m644 conf.py.template \
 %files devel
 
 %files pickles
+%dir %python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 %python_sitelibdir/%oname/doctrees
 
 %files tests
+%dir %python_sitelibdir/%oname/
 %python_sitelibdir/%oname/tests
 %python_sitelibdir/%oname/tests
 
@@ -375,10 +381,12 @@ install -p -m644 conf.py.template \
 %files -n python3-module-%oname-devel
 
 #files -n python3-module-%oname-pickles
-#python3_sitelibdir/%oname/pickle
-#python3_sitelibdir/%oname/doctrees
+#%dir %python3_sitelibdir/%oname/
+#%python3_sitelibdir/%oname/pickle
+#%python3_sitelibdir/%oname/doctrees
 
 %files -n python3-module-%oname-tests
+%dir %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %files -n rpm-macros-%{oname}3
@@ -386,6 +394,10 @@ install -p -m644 conf.py.template \
 %endif
 
 %changelog
+* Wed Mar 02 2016 Dmitry V. Levin <ldv@altlinux.org> 1:1.4-alt3.a0.git20150813
+- Added Provides/Obsoletes for python*-module-objects.inv.
+- Cleaned up %%sphinx* macros.
+
 * Tue Mar 01 2016 Dmitry V. Levin <ldv@altlinux.org> 1:1.4-alt2.a0.git20150813.2
 - NMU: replaced python*-module-objects.inv with python-sphinx-objects.inv.
 
