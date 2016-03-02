@@ -1,9 +1,11 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/gm /usr/bin/gmake /usr/bin/gs /usr/bin/svn /usr/bin/xz libpcre-devel zlib-devel
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/share/gmt/tools/gmt5syntax
 BuildRequires: gcc-c++
+BuildRequires: chrpath
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,22 +18,33 @@ BuildRequires: gcc-c++
 
 %bcond_with octave
 %if %with octave
-%{!?octave_api: %define octave_api %(octave-config -p API_VERSION 2>/dev/null || echo 0)}
-%define octave_mdir %(octave-config -p LOCALAPIFCNFILEDIR || echo)
-%define octave_octdir %(octave-config -p LOCALAPIOCTFILEDIR || echo)
+%{!?octave_api: %global octave_api %(octave-config -p API_VERSION 2>/dev/null || echo 0)}
+%global octave_mdir %(octave-config -p LOCALAPIFCNFILEDIR || echo)
+%global octave_octdir %(octave-config -p LOCALAPIOCTFILEDIR || echo)
+%endif
+
+%global completion_dir %(pkg-config --variable=completionsdir bash-completion)
+%if "%{completion_dir}" == ""
+%global completion_dir "/etc/bash_completion.d"
 %endif
 
 Name:           GMT
-Version:        5.1.1
-Release:        alt2_1
+Version:        5.2.1
+Release:        alt1_3
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
 URL:            http://gmt.soest.hawaii.edu/
-Source0:        ftp://ftp.soest.hawaii.edu/gmt/gmt-%{version}-src.tar.bz2
+Source0:        ftp://ftp.soest.hawaii.edu/gmt/gmt-%{version}-src.tar.xz
+# Upstream patch to fix GCC 5.2 error
+# http://gmt.soest.hawaii.edu/projects/gmt/repository/revisions/15261
+Patch0:         changeset_r15261.diff
 
 BuildRequires: ctest cmake
+BuildRequires:  bash-completion
+BuildRequires:  libfftw3-devel
 BuildRequires:  libgdal-devel
+BuildRequires:  glib2-devel
 BuildRequires:  libXt-devel libXaw-devel libXmu-devel libXext-devel
 BuildRequires:  libnetcdf-devel
 BuildRequires:  pcre-devel
@@ -43,7 +56,7 @@ BuildRequires:  octave-devel
 # less is detected by configure, and substituted in GMT.in
 BuildRequires:  less
 Requires:       less
-Requires:       %{name}-common = %{version}-%{release}
+Requires:       %{name}-common = %{version}
 Requires:       dcw-gmt
 Requires:       gshhg-gmt-nc4
 Provides:       gmt = %{version}-%{release}
@@ -87,7 +100,7 @@ Mapping Tools) package.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Provides:       gmt-devel = %{version}-%{release}
 Obsoletes:      GMT-static <= 4.5.11
 
@@ -99,7 +112,7 @@ developing applications that use %{name}.
 %package        doc
 Group: Documentation
 Summary:        Documentation for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Provides:       gmt-doc = %{version}-%{release}
 Provides:       %{name}-examples = %{version}-%{release}
 Obsoletes:      %{name}-examples < %{version}-%{release}
@@ -114,7 +127,7 @@ Mapping Tools) package.
 %package        octave
 Group: Development/C
 Summary:        Octave libraries for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 Provides:       gmt-octave = %{version}-%{release}
 
 %description    octave
@@ -125,6 +138,7 @@ applications that use %{name}.
 
 %prep
 %setup -q -n gmt-%{version}
+%patch0 -p1
 
 
 %build
@@ -132,7 +146,6 @@ mkdir build
 pushd build
 %{fedora_cmake} \
   -DGSHHG_ROOT=%{_prefix} \
-  -DFLOCK=on \
   -DGMT_INSTALL_MODULE_LINKS=on \
   -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES=off \
   -DGMT_MANDIR=%{_mandir} \
@@ -141,6 +154,8 @@ pushd build
   -DGMT_OCTAVE=BOOL:ON \
 %endif
   -DGMT_OPENMP=BOOL:ON \
+  -DGMT_USE_THREADS=BOOL:ON \
+  -DBASH_COMPLETION_DIR=%{completion_dir} \
   ..
 make %{?_smp_mflags}
 
@@ -160,6 +175,10 @@ popd
 
 # Don't ship .bat files
 find $RPM_BUILD_ROOT -name \*.bat -delete
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+	chrpath -d $i ||:
+done
 
 
 %files
@@ -180,6 +199,7 @@ find $RPM_BUILD_ROOT -name \*.bat -delete
 %config(noreplace) %{gmtconf}/dbase/grdraster.info 
 %config(noreplace) %{gmtconf}/mgd77/mgd77_paths.txt
 %{gmthome}/
+%{completion_dir}
 %{_mandir}/man1/*.1*
 %{_mandir}/man5/*.5*
 
@@ -199,6 +219,9 @@ find $RPM_BUILD_ROOT -name \*.bat -delete
 
 
 %changelog
+* Wed Mar 02 2016 Igor Vlasenko <viy@altlinux.ru> 5.2.1-alt1_3
+- rebuild with libgdal
+
 * Mon Apr 07 2014 Igor Vlasenko <viy@altlinux.ru> 5.1.1-alt2_1
 - DGMT_INSTALL_MODULE_LINKS=on
 
