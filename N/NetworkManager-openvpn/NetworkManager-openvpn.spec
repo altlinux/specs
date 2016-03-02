@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openvpn
-Version: 1.1.90
+Version: 1.1.91
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -97,6 +97,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Mar 02 2016 Mikhail Efremov <sem@altlinux.org> 1.1.91-alt1
+- Updated to 1.1.91 (1.2-beta2).
+
 * Wed Jan 20 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
 - Updated BR.
 - Fix build on i586.

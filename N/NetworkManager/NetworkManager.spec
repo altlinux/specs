@@ -33,7 +33,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.1.90
+Version: 1.1.91
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -546,7 +546,6 @@ fi
 %{?_enable_systemd:/lib/systemd/system/network-online.target.wants/NetworkManager-wait-online.service}
 
 %exclude %_man1dir/nmtui*
-%exclude %_man5dir/nm-settings-ifcfg-rh.*
 %exclude %_libdir/%name/libnm-device-plugin-*.so
 %exclude %_libdir/%name/libnm-wwan.so
 
@@ -653,6 +652,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Mar 01 2016 Mikhail Efremov <sem@altlinux.org> 1.1.91-alt1
+- etcnet-alt: convert tests to g_assert().
+- etcnet-alt: Replace config.h with nm-default.h.
+- Updated to 1.1.91 (1.2-beta2).
+
 * Tue Jan 19 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
 - etcnet-alt: Fix tests build.
 - etcnet-alt: Fix build.
