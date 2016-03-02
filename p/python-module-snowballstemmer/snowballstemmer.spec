@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt1.1
+Release: alt2
 Summary: 16 stemmer algorithms (15 + Poerter English stemmer) generated from Snowball algorithms
 License: BSD
 Group: Development/Python
@@ -78,7 +78,8 @@ It includes following language algorithms:
 %setup
 
 %if_with python3
-cp -fR ../%name-%version ../python3
+rm -rf ../python3
+cp -R ../%name-%version ../python3
 %endif
 
 %build
@@ -110,6 +111,14 @@ popd
 %endif
 
 %changelog
+* Wed Mar  2 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.0-alt2
+
+- (.spec) Safer build: cleanup ../python3/ before use.
+  (Nevertheless, beware: using ../python3/ for the build is very dirty
+  because it is not cleaned up automatically afterwards and can cause
+  side-effects in other unsafe specs, similar to this one. This dirty
+  use of ../python3/ is very wide-spread in Sisyphus packages.)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.1
 - NMU: Use buildreq for BR.
 
