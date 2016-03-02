@@ -7,7 +7,7 @@
 %def_without appindicator
 
 Name: NetworkManager-applet-gtk
-Version: 1.1.90
+Version: 1.1.91
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -209,6 +209,11 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Tue Mar 01 2016 Mikhail Efremov <sem@altlinux.org> 1.1.91-alt1
+- Use nm-dbus-compat.h instead of dbus/dbus.h.
+- Fix adsl connections hiding.
+- Updated to 1.1.91 (1.2-beta2).
+
 * Tue Jan 19 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
 - Updated BR.
 - Updated gnome-keyring patch.

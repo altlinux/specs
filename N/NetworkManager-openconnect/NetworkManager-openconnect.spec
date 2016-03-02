@@ -7,7 +7,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openconnect
-Version: 1.1.90
+Version: 1.1.91
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -94,6 +94,9 @@ NetworkManager panel applet.
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Wed Mar 02 2016 Mikhail Efremov <sem@altlinux.org> 1.1.91-alt1
+- Updated to 1.1.91 (1.2-beta2).
+
 * Thu Jan 21 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
 - Updated BR.
 - 1.1.90.

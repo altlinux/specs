@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-vpnc
-Version: 1.1.90
+Version: 1.1.91
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -92,12 +92,14 @@ make check
 %endif
 %_libexecdir/NetworkManager/nm-vpnc-auth-dialog
 %_datadir/gnome-vpn-properties/*
-%_desktopdir/nm-vpnc-auth-dialog.desktop
 %_libdir/NetworkManager/libnm-vpn-plugin-vpnc.so
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Mar 02 2016 Mikhail Efremov <sem@altlinux.org> 1.1.91-alt1
+- Updated to 1.1.91 (1.2-beta2).
+
 * Thu Jan 21 2016 Mikhail Efremov <sem@altlinux.org> 1.1.90-alt1
 - Updated to 1.1.90.
 
