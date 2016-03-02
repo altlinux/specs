@@ -1,6 +1,6 @@
 Name: postfix
 Version: 2.11.7
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -692,6 +692,11 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Mar 02 2016 Fr. Br. George <george@altlinux.ru> 1:2.11.7-alt2
+- Making /etc/sysconfig/network optional (closes: #31827)
+- Extra/chroot.conf: added support for alias_maps (closes: #31822)
+- Disable TLS micro version check (closes: #31752)
+
 * Wed Oct 14 2015 Fr. Br. George <george@altlinux.ru> 1:2.11.7-alt1
 - Version upgrade (still on legacy branch)
 - Test tools package addded (closes: #28476)
