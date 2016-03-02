@@ -1,5 +1,5 @@
 Name: cgmanager
-Version: 0.35
+Version: 0.39
 Release: alt1
 
 Summary: Linux cgroup manager
@@ -14,6 +14,7 @@ Source2: cgproxy.init
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): libpam-devel
 
 BuildRequires: libdbus-devel libnih-dbus-devel help2man
 
@@ -94,6 +95,9 @@ fi
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Feb 29 2016 Denis Pynkin <dans@altlinux.org> 0.39-alt1
+- Updated to 0.39.
+
 * Mon Jan 12 2015 Mikhail Efremov <sem@altlinux.org> 0.35-alt1
 - Updated to 0.35.
 
