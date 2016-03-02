@@ -1,6 +1,6 @@
 Name: qlandkartegt
-Version: 1.7.0
-Release: alt2
+Version: 1.8.1
+Release: alt1
 Summary: GPS mapping (GeoTiff and vector) and GPSr management
 
 Group: Sciences/Geosciences
@@ -9,8 +9,6 @@ Url: http://www.qlandkarte.org
 
 Source: qlandkartegt-%version.tar
 
-# Automatically added by buildreq on Wed Jun 05 2013
-# optimized out: cmake-modules fontconfig libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libgst-plugins libhdf5-7-seq libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-webkit libqt4-xml libqt4-xmlpatterns libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: cmake gcc-c++ gdal gpsbabel libXScrnSaver-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXft-devel libXmu-devel libXpm-devel
 BuildRequires: libXres-devel libXxf86misc-devel libXxf86vm-devel libgdal-devel
@@ -35,7 +33,6 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 
 %install
 %makeinstall_std
-# make install DESTDIR=%buildroot
 
 %files
 %doc INSTALL changelog.txt
@@ -47,6 +44,9 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 %_datadir/%name/*
 
 %changelog
+* Wed Mar 02 2016 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
+- New version
+
 * Thu Jun 06 2013 Grigory Milev <week@altlinux.ru> 1.7.0-alt2
 - build fixes
 
