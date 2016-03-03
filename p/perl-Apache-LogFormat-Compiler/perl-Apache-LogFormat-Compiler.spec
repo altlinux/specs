@@ -1,5 +1,5 @@
 Name: perl-Apache-LogFormat-Compiler
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Compile a log format string to perl-code 
@@ -29,6 +29,9 @@ BuildRequires: perl(Test/Requires.pm) perl(Try/Tiny.pm) perl(URI/Escape.pm) perl
 %doc Changes LICENSE README.md
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
