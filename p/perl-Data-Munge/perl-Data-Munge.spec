@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.095
+%define module_version 0.096
 %define module_name Data-Munge
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm) perl(strict.pm) perl(warnings.pm) perl(Test/Warnings.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.095
+Version: 0.096
 Release: alt1
 Summary: various utility functions
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.096-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.095-alt1
 - automated CPAN update
 
