@@ -1,33 +1,16 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
-%add_optflags %optflags_shared
-%ifarch %{arm}
-%global with_neon --enable-neon
-%endif
-
-
-Name:		libyuv
-Summary:	YUV conversion and scaling functionality library
-Version:	0
-Release:	alt1_0.25.20121221svn522
-License:	BSD
-Group:		Development/C
-Url:		http://code.google.com/p/libyuv/
-## svn -r 522 export http://libyuv.googlecode.com/svn/trunk libyuv-0
-## tar -cjvf libyuv-0.tar.bz2 libyuv-0
-Source0:	%{name}-%{version}.tar.bz2
-# Fedora-specific. Upstream isn't interested in this.
-Patch1:		libyuv-0001-Initial-autotools-support.patch
-# big endian fix - http://code.google.com/p/libyuv/issues/detail?id=171
-Patch2:		libyuv-endian.patch
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	libtool
-BuildRequires:	libgtest-devel
-BuildRequires:	libjpeg-devel
-Source44: import.info
-
+Name: libyuv
+Summary: YUV conversion and scaling functionality library
+Version: 0.0.1433
+Release: alt1
+License: BSD
+Group: Development/C
+Url: http://code.google.com/p/libyuv/
+# https://freeswitch.org/stash/scm/sd/libyuv.git
+# http://files.freeswitch.org/repo/deb/debian/pool/main/liby/libyuv/
+Source0: %name-%version.tar
+Patch0: libyuv-alt-buildfix.patch
+BuildRequires: libgtest-devel gcc-c++
+BuildRequires: libjpeg-devel cmake
 
 %description
 This is an open source project that includes YUV conversion and scaling
@@ -36,52 +19,43 @@ formats for rendering/effects. Rotate by 90 degrees to adjust for mobile
 devices in portrait mode. Scale YUV to prepare content for compression,
 with point, bilinear or box filter.
 
-
 %package devel
-Summary: The development files for %{name}
+Summary: The development files for %name
 Group: Development/C
 Requires: pkgconfig
-Requires: %{name}%{?_isa} = %{version}
-
+Requires: %name = %version-%release
 
 %description devel
-Additional header files for development with %{name}.
-
+Additional header files for development with %name.
 
 %prep
-%setup -q
-%patch1 -p1 -b .autotools
-%patch2 -p1 -b .endian
-
+%setup
+%patch0 -p2
 
 %build
-sh autogen.sh
-%configure --disable-static --with-pic --with-test --with-mjpeg %{?with_neon}
-make %{?_smp_mflags}
-
+%ifarch %ix86
+    %add_optflags -msse2
+%endif
+%cmake
+%make -C BUILD
 
 %install
-make install DESTDIR=%{buildroot}
-rm -f %{buildroot}%{_libdir}/*.la
-
-
-%check
-make check
-
+%make -C BUILD install DESTDIR=%buildroot
 
 %files
 %doc AUTHORS LICENSE PATENTS
-%{_libdir}/%{name}.so.*
-
+%_libdir/%name.so.*
 
 %files devel
-%{_includedir}/%{name}
-%{_includedir}/%{name}.h
-%{_libdir}/%{name}.so
-%{_libdir}/pkgconfig/%{name}.pc
-
+%_includedir/%name
+%_includedir/%name.h
+%_libdir/%name.so
+%_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sat Feb 20 2016 Anton Farygin <rider@altlinux.ru> 0.0.1433-alt1
+- build new version from Freeswitch fork
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.25.20121221svn522
 - update to new release by fcimport
 
