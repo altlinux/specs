@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(Module/Build.pm)
+BuildRequires: perl(Module/Build.pm) perl(Module/Build/Tiny.pm)
 %define dist Readonly
 %def_without bootstrap
 
 Name: perl-%dist
-Version: 2.00
+Version: 2.01
 Release: alt1
 
 Summary: Readonly - facility for creating read-only scalars, arrays, hashes
@@ -43,6 +43,9 @@ should not be changed.
 %perl_vendor_privlib/Readonly*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Tue Jul 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
