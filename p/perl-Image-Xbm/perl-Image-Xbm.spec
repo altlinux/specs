@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Image-Xbm
 Name: perl-%dist
-Version: 1.09
+Version: 1.10
 Release: alt1
 
 Summary: Load, create, manipulate and save xbm image files.
@@ -42,6 +42,9 @@ additional manipulation functionality.
 %perl_vendor_privlib/Image/Xbm.pm
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
