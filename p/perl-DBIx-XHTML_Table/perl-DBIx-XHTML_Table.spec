@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.47
+%define module_version 1.48
 %define module_name DBIx-XHTML_Table
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(DBD/CSV.pm) perl(DBI.pm) perl(ExtUtils/MakeMaker.pm) perl(FindBin.pm) perl(Test/More.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(DBD/CSV.pm) perl(DBI.pm) perl(ExtUtils/MakeMaker.pm) perl(Fi
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.47
+Version: 1.48
 Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1
+- automated CPAN update
+
 * Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.47-alt1
 - automated CPAN update
 
