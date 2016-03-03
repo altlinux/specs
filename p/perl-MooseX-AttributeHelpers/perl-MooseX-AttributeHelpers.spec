@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-AttributeHelpers
-Version:        0.24
-Release:        alt1_1
+Version:        0.25
+Release:        alt1
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/MooseX-AttributeHelpers/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-AttributeHelpers-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-AttributeHelpers-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -50,6 +51,9 @@ used attribute helper methods for more specific types of data.
 %{perl_vendor_privlib}/MooseX*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_1
 - update to new release by fcimport
 
