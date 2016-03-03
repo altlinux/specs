@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-Diff
 Name: perl-%dist
-Version: 1.43
+Version: 1.44
 Release: alt1
 
 Summary: Perform diffs on files and record sets
@@ -37,6 +37,9 @@ generally slower on larger files.
 %perl_vendor_privlib/Text
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.44-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.43-alt1
 - automated CPAN update
 
