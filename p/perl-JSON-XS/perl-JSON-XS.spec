@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist JSON-XS
 Name: perl-%dist
-Version: 3.01
-Release: alt1.1.1
+Version: 3.02
+Release: alt1
 Epoch: 1
 
 Summary: JSON serialising/deserialising, done correctly and fast
@@ -13,7 +13,7 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/JSON-XS-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-Encode perl-common-sense perl-devel perl(Types/Serialiser.pm)
+BuildRequires: perl-Encode perl-common-sense perl-devel perl(Types/Serialiser.pm) perl(Canary/Stability.pm)
 
 %description
 This module converts Perl data structures to JSON and vice versa. Its
@@ -36,6 +36,9 @@ primary goal is to be *correct* and its secondary goal is to be
 %perl_vendor_autolib/JSON
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.02-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.01-alt1.1.1
 - rebuild with new perl 5.22.0
 
