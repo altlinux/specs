@@ -1,5 +1,5 @@
 Name: openssh
-Version: 7.1p1
+Version: 7.2p1
 Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
@@ -302,7 +302,6 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %config(noreplace) %_sysconfdir/X11/profile.d/*
 %_bindir/rescp
 %_bindir/sftp
-%_bindir/slogin
 %_bindir/ssh
 %_bindir/ssh-add
 %attr(2711,root,sshagent) %_bindir/ssh-agent
@@ -311,7 +310,6 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 %_libexecdir/ssh-pkcs11-helper
 %_man1dir/sftp.*
-%_man1dir/slogin.*
 %_man1dir/ssh.*
 %_man1dir/ssh-add.*
 %_man1dir/ssh-agent.*
@@ -350,6 +348,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Mar 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2p1-alt1
+- Updated to 7.2p1.
+
 * Wed Jan 13 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1p1-alt1
 - Updated to 7.1p1.
 
