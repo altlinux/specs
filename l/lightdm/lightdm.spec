@@ -5,8 +5,8 @@
 %def_enable qt5
 
 Name: lightdm
-Version: 1.14.0
-Release: alt1.1
+Version: 1.16.7
+Release: alt1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -37,6 +37,8 @@ BuildRequires: libdbus-glib-devel
 BuildRequires: gtk-doc yelp-tools itstool
 BuildRequires: libpam-devel
 BuildRequires: libgcrypt-devel
+BuildRequires: libvala-devel vala-tools
+BuildRequires: libaudit-devel
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) >= 2.26 pkgconfig(gio-unix-2.0) pkgconfig(gobject-2.0) pkgconfig(libxklavier) pkgconfig(x11)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_qt:BuildRequires: pkgconfig(QtCore) pkgconfig(QtDBus) pkgconfig(QtGui) /usr/bin/moc-qt4}
@@ -236,12 +238,15 @@ fi
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-%_datadir/vala/vapi/*.vapi
+%_datadir/vala/vapi/*
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Mar 03 2016 Alexey Shabalin <shaba@altlinux.ru> 1.16.7-alt1
+- 1.16.7
+
 * Fri Oct 09 2015 Sergey V Turchin <zerg@altlinux.org> 1.14.0-alt1.1
 - NMU: rebuild with new libgcrypt (ALT#31350)
 
