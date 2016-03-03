@@ -1,6 +1,6 @@
 %define m_distro Shell
 Name: perl-Shell
-Version: 0.72
+Version: 0.73
 Release: alt1
 Summary: Shell - run shell commands transparently within perl
 
@@ -31,5 +31,8 @@ BuildRequires: perl-devel
 %doc Changes README 
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
+- automated CPAN update
+
 * Tue Nov 02 2010 Vladimir Lettiev <crux@altlinux.ru> 0.72-alt1
 - initial build
