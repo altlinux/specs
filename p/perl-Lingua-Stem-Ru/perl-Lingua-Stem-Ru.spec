@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Lingua-Stem-Ru
 Name: perl-%dist
-Version: 0.03
+Version: 0.04
 Release: alt1
 
 Summary: Porter's stemming algorithm for Russian
@@ -34,6 +34,9 @@ returning the stemmed words.
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - automated CPAN update
 
