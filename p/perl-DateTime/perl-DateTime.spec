@@ -2,8 +2,8 @@
 %def_without bootstrap
 %define dist DateTime
 Name: perl-%dist
-Version: 1.21
-Release: alt1.2
+Version: 1.24
+Release: alt1
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -46,6 +46,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.24-alt1
+- automated CPAN update
+
 * Sat Nov 28 2015 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1.2
 - unbootstrap
 
