@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-File-Touch
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: update access and modification timestamps, creating nonexistent files where necessary
@@ -76,6 +76,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/File/*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Mon Oct 26 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
