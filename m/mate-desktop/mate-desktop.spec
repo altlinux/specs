@@ -1,17 +1,16 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11) pkgconfig(libstartup-notification-1.0) pkgconfig(xrandr)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libstartup-notification-1.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-desktop
-%define version 1.10.2
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit a6a0a5879533b0915901ab69703eaf327bbca846 }
@@ -24,11 +23,11 @@ BuildRequires: mate-common
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
-Version:        %{branch}.2
+Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt3_0
+Release:        alt2_1
 %else
-Release:        alt1_0.1%{?git_rel}
+Release:        alt2_1
 %endif
 URL:            http://mate-desktop.org
 
@@ -40,10 +39,6 @@ URL:            http://mate-desktop.org
 
 Source1:        mate-fedora-f23.gschema.override
 
-# overlay scrollbars
-# http://git.mate-desktop.org/mate-desktop/commit/?id=f66c53e
-Patch0:         mate-desktop_overlay-scrollbars.patch
-
 BuildRequires:  libdconf-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  mate-common
@@ -51,15 +46,15 @@ BuildRequires:  libstartup-notification-devel
 BuildRequires:  libunique-devel
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  libcairo-gobject-devel
-BuildRequires:  itstool
 
 Requires: lib%{name} = %{version}-%{release}
 Requires: altlinux-freedesktop-menu-common
 Requires: pygtk2
 Requires: xdg-user-dirs-gtk
-#Requires: mate-control-center-filesystem
+Requires: mate-control-center-filesystem
 Requires: mate-panel
 Requires: mate-notification-daemon
+Requires: mate-user-guide
 
 Obsoletes: libmate
 Obsoletes: libmate-devel
@@ -96,9 +91,9 @@ Obsoletes: libmatewnck-devel
 Obsoletes: mate-dialogs
 #Obsoletes: mate-user-share
 Source44: import.info
-Patch33: mate-desktop-1.5.0-alt-settings.patch
-Patch34: mate-desktop-1.5.5-alt-default_background_path.patch
-Requires:      altlinux-mime-defaults >= 0.30
+Patch33: mate-desktop-1.12.1-alt-font-settings.patch
+Patch34: mate-desktop-1.12.1-alt-default_background_path.patch
+Requires:      altlinux-mime-defaults > 0.31
 
 
 %description
@@ -128,10 +123,9 @@ libmatedesktop.
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-%patch0 -p1 -b .overlay-scrollbars
-%patch33 -p1
-%patch34 -p1
-
+# for releases
+%patch33 -p0
+%patch34 -p0
 
 %build
 # needed for git snapshots
@@ -162,11 +156,6 @@ desktop-file-install                                         \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-about.desktop
 
-desktop-file-install                              \
-    --delete-original                             \
-    --dir=%{buildroot}%{_datadir}/applications \
-%{buildroot}%{_datadir}/applications/mate-user-guide.desktop
-
 desktop-file-install                                         \
         --delete-original                                    \
         --dir=%{buildroot}%{_datadir}/applications           \
@@ -174,6 +163,7 @@ desktop-file-install                                         \
 
 #install -D -m 0644 %SOURCE1 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
 
+mkdir -p %{buildroot}%{_datadir}/applications
 
 # remove needless gsettings convert file
 rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-desktop.convert
@@ -181,7 +171,6 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-desktop.convert
 %find_lang %{name} --with-gnome --all-name
 
 mkdir -p %buildroot%{_datadir}/mate-about
-
 
 mkdir -p %buildroot%{_datadir}/X11/xorg.conf.d/
 ln -sf %{_datadir}/X11/xorg.conf.d/50-synaptics.conf %buildroot%{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
@@ -204,6 +193,7 @@ that is a hack around this problem.
 %{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
 
 
+
 %files
 %doc AUTHORS COPYING COPYING.LIB NEWS README
 %{_bindir}/mate-about
@@ -211,9 +201,10 @@ that is a hack around this problem.
 %{_bindir}/mate-color-select
 %{_datadir}/applications/mate-about.desktop
 %{_datadir}/applications/mate-color-select.desktop
-%{_datadir}/applications/mate-user-guide.desktop
 %{_datadir}/mate-about
 #%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+%{_datadir}/icons/hicolor/*/apps/*.png
+%{_datadir}/icons/hicolor/scalable/apps/mate-symbolic.svg
 %{_mandir}/man1/*
 
 %files -n libmate-desktop -f %{name}.lang
@@ -230,6 +221,12 @@ that is a hack around this problem.
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2_1
+- no need to obsolete mate-user-share
+
+* Tue Dec 29 2015 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Fri Nov 06 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt3_0
 - updated dependencies (added xrandr)
 - not yet Obsoletes: mate-user-share

@@ -2,20 +2,19 @@ Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 1.10.6
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
-#%%global rel_build 1
+%global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 %global gtk3_ver gtk3.18
 
-%global rel_ver 1.10.6
+%global rel_ver 1.12.1
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5fec16803c5ff06fa31b7cab47c6d51a99f1acc7}
@@ -28,9 +27,9 @@ BuildRequires: mate-common
 Name:           mate-themes
 Version:        %{rel_ver}
 %if 0%{?rel_build}
-Release:        alt2_1
+Release:        alt1_1
 %else
-Release:        alt2_0.1%{?git_rel}
+Release:        alt1_1
 %endif
 Summary:        MATE Desktop themes
 License:        GPLv2+
@@ -116,6 +115,9 @@ fi
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.6-alt2_0.1.git20151005.5fec168
 - fixed dependencies
 

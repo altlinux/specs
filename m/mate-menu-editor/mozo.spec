@@ -1,19 +1,19 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache pkgconfig(libmate-menu)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache pkgconfig(libmate-menu) pkgconfig(pygobject-3.0)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname mozo
 %define fedora 22
 Name:           mate-menu-editor
-Version:        1.10.1
-Release:        alt2_2
+Version:        1.12.0
+Release:        alt1_1
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.10/%{oldname}-%{version}.tar.xz
+# source is from gtk3 branch at http://git.mate-desktop.org/mozo/?h=gtk3
+Source0:        https://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-gtk3-%{version}.tar.xz
 
 # rhbz (#1202674)
 # https://github.com/infirit/mozo/commit/acf2f98
@@ -22,7 +22,7 @@ Patch0:         mozo_Use-Gtk-selection-mode.patch
 BuildRequires:  desktop-file-utils
 BuildRequires:  mate-common 
 BuildRequires:  mate-menus-devel
-BuildRequires: python-module-pygobject python-module-pygobject-devel
+BuildRequires:  python-module-pygobject3-devel
 BuildRequires:  python-devel
 
 Requires:       mate-menus
@@ -31,18 +31,19 @@ Requires:       mate-menus
 %endif
 
 BuildArch:  noarch
-Patch33: alacarte-0.13.2-alt-xfce.patch
+Patch33: mozo-gtk3-1.12.0-alt-xfce.patch
 Source44: import.info
 
 %description
 MATE Desktop menu editor
 
 %prep
-%setup -n %{oldname}-%{version} -q
+%setup -n %{oldname}-%{version} -qn %{oldname}-gtk3-%{version}
+%patch33 -p1
 #NOCONFIGURE=1 ./autogen.sh
 
-%patch0 -p1 -b .selection-mode
-%patch33 -p1
+# disable for gtk3
+# %patch0 -p1 -b .selection-mode
 
 %build
 %configure
@@ -70,6 +71,9 @@ desktop-file-install                                  \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt2_2
 - fixed dependencies
 

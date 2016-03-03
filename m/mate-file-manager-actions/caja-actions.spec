@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/db2html
 %define _libexecdir %_prefix/libexec
 %define oldname caja-actions
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
-Version:	1.8.0
-Release:	alt1_2
+Version:	1.8.1
+Release:	alt1_1
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
 
@@ -83,7 +83,7 @@ rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/ChangeLog-2012
 rm -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}/MAINTAINERS
 
 # move doc dir for > f19
-mv -f $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version} $RPM_BUILD_ROOT%_docdir/%name-%version
+mv $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version} $RPM_BUILD_ROOT%{_docdir}/%{oldname}
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -93,12 +93,7 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %files
-#doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
-%doc %_docdir/%name-%version/AUTHORS
-%doc %_docdir/%name-%version/COPYING*
-%doc %_docdir/%name-%version/ChangeLog
-%doc %_docdir/%name-%version/NEWS
-%doc %_docdir/%name-%version/README
+%doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README
 %{_bindir}/caja-actions-run
 %{_bindir}/caja-actions-config-tool
 %{_bindir}/caja-actions-new
@@ -112,9 +107,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 %{_datadir}/applications/cact.desktop
 
 %files doc -f %{oldname}.lang
-%{_docdir}/*/html/
-%{_docdir}/*/pdf/
-%{_docdir}/*/objects-hierarchy.odg
+%{_docdir}/caja-actions/html/
+%{_docdir}/caja-actions/pdf/
+%{_docdir}/caja-actions/objects-hierarchy.odg
 
 %files devel
 %{_includedir}/caja-actions/
@@ -122,6 +117,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1
+- new version
+
 * Wed Oct 21 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2
 - new version
 

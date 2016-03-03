@@ -1,18 +1,17 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(appindicator-0.1) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmarco-private) pkgconfig(libmate-menu) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(librsvg-2.0) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xcursor) pkgconfig(xi) xorg-kbproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(appindicator-0.1) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmarco-private) pkgconfig(libmate-menu) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(librsvg-2.0) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xcursor) pkgconfig(xi) xorg-kbproto-devel
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-control-center
-%define version 1.10.2
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 922d0e0219b1bedcece8624e4b5fd7e15e7a9bd5}
@@ -23,9 +22,9 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-control-center
-Version:       %{branch}.2
+Version:       %{branch}.1
 %if 0%{?rel_build}
-Release:       alt2_1
+Release:       alt1_2
 %else
 #Release:       0.6%{?git_rel}%{?dist}
 %endif
@@ -64,7 +63,6 @@ Provides: %{name}-filesystem%{?_isa} = %{version}-%{release}
 Source44: import.info
 Patch33: gnome-control-center-2.22.1-alt-background-location.patch
 Patch34: gnome-control-center-2.28.0-passwd.patch
-Patch35: mate-control-center-1.10.2-alt-ru.po.patch
 
 
 %description 
@@ -104,7 +102,6 @@ NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 %patch33 -p1
 %patch34 -p1
-%patch35 -p1
 
 %build
 autoreconf -fisv
@@ -132,6 +129,9 @@ desktop-file-install                                \
 
 # delete mime cache
 rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
+
+# mate-preferences-categories.menu is back in mate-menus
+rm -f  %{buildroot}%{_sysconfdir}/xdg/menus/mate-preferences-categories.menu
 
 # remove needless gsettings convert file
 rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
@@ -174,6 +174,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt1_2
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.10.2-alt2_1
 - fixed dependencies
 

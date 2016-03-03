@@ -1,22 +1,20 @@
 Group: Publishing
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgdk-pixbuf-gir-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(ddjvuapi) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-introspection-1.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libcaja-extension) pkgconfig(libgxps) pkgconfig(libsecret-1) pkgconfig(libspectre) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(poppler-glib) pkgconfig(webkit-1.0) pkgconfig(webkit2gtk-4.0) pkgconfig(zlib)
-BuildRequires: t1lib-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgio-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(ddjvuapi) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-introspection-1.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libcaja-extension) pkgconfig(libgxps) pkgconfig(libsecret-1) pkgconfig(libspectre) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(poppler-glib) pkgconfig(sm) pkgconfig(webkit-1.0) pkgconfig(webkit2gtk-4.0) pkgconfig(x11) pkgconfig(zlib) t1lib-devel zlib-devel
 # END SourceDeps(oneline)
 ## important!!! # https://bugzilla.altlinux.org/show_bug.cgi?id=28634
 Requires: mate-desktop
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname atril
 %define fedora 22
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name atril
-%define version 1.10.2
+%define version 1.12.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5bba3723566489763aafaad3669c77f60a23d2e0}
@@ -28,8 +26,11 @@ BuildRequires: mate-common
 
 Name:          mate-document-viewer
 Version:       %{branch}.2
-Release:       alt2_1
-#Release:       0.1%{?git_rel}%{?dist}
+%if 0%{?rel_build}
+Release:       alt1_1
+%else
+Release:       alt1_1
+%endif
 Summary:       Document viewer
 License:       GPLv2+ and LGPLv2+ and MIT
 URL:           http://mate-desktop.org
@@ -50,7 +51,6 @@ BuildRequires:  libjpeg-devel
 BuildRequires:  libspectre-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  mate-desktop-devel
-BuildRequires:  mate-icon-theme-devel
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  libcairo-gobject-devel
@@ -70,6 +70,7 @@ BuildRequires:  webkitgtk-devel
 Requires:       mate-document-viewer-libs = %{version}-%{release}
 #  fix (#974791)
 Requires:       libmate-desktop
+Requires:       mathjax
 
 %if 0%{?fedora} && 0%{?fedora} <= 24
 Provides: mate-document-viewe%{?_isa} = %{version}-%{release}
@@ -178,13 +179,12 @@ caja file manager.
 
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+
 %patch33 -p0
 %patch34 -p1
 
 %build
-# needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
-
 %configure \
         --disable-static \
         --disable-schemas-compile \
@@ -302,6 +302,9 @@ fi
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.2-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
 - fixed dependencies
 

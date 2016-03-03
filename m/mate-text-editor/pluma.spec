@@ -1,19 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel libsocket pkgconfig(enchant) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-2.0) pkgconfig(gtksourceview-3.0) pkgconfig(iso-codes) pkgconfig(libsoup-2.4) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pygtk-2.0) pkgconfig(pygtksourceview-2.0) pkgconfig(sm) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel pkgconfig(enchant) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-2.0) pkgconfig(gtksourceview-3.0) pkgconfig(iso-codes) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pygtk-2.0) pkgconfig(pygtksourceview-2.0) pkgconfig(sm) pkgconfig(x11) python-module-pygobject-devel
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname pluma
 %define fedora 22
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name pluma
-%define version 1.10.2
+%define version 1.12.1
 %add_python_req_skip pluma
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c1ca209172a8b3a0751ac0a1e2dbec33c1894290}
@@ -25,12 +24,8 @@ BuildRequires: mate-common
 
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
-Version:  %{branch}.2
-%if 0%{?rel_build}
+Version:  %{branch}.1
 Release:  alt2_1
-%else
-Release:  alt2_0.1%{?git_rel}
-%endif
 License:  GPLv2+ and LGPLv2+
 Group:    Editors
 URL:      http://mate-desktop.org
@@ -41,20 +36,22 @@ URL:      http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
+# disable non working python plugins for gtk3
+Patch1:        pluma_diasable-python-plugins.patch
+
 BuildRequires: desktop-file-utils
 BuildRequires: libenchant-devel
 BuildRequires: libsoup-devel
-BuildRequires: gtk2-devel
-BuildRequires: libgtksourceview-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libgtksourceview3-devel
 BuildRequires: iso-codes-devel
 BuildRequires: libSM-devel
 BuildRequires: mate-common
-BuildRequires: python-module-pygobject-devel
+BuildRequires: python-module-pygobject3-devel
 BuildRequires: python-module-pygtksourceview-devel
 BuildRequires: python-devel
 BuildRequires: rarian-compat
 BuildRequires: yelp-tools
-BuildRequires: mate-desktop-devel
 
 Requires: %{name}-data = %{version}-%{release}
 Requires: pygtk2
@@ -107,6 +104,10 @@ Development files for mate-text-editor
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
+%patch1 -p1 -b .diasable-python-plugins
+
+NOCONFIGURE=1 ./autogen.sh
+
 %if 0%{?rel_build}
 # for releases
 #NOCONFIGURE=1 ./autogen.sh
@@ -125,9 +126,12 @@ find ./*/*/* -type f -exec chmod 644 {} \;
         --disable-static          \
         --enable-gtk-doc-html     \
         --enable-gvfs-metadata    \
-        --enable-python           \
+        --disable-python           \
         --disable-schemas-compile \
-        --with-gtk=2.0
+        --with-gtk=2.0            \
+
+
+#--without-matedesktop
 
 make %{?_smp_mflags} V=1
 
@@ -180,6 +184,12 @@ fi
 
 
 %changelog
+* Fri Feb 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2_1
+- built with gtk 2
+
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
 - fixed dependencies
 

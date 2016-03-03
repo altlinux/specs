@@ -2,17 +2,17 @@ Group: Graphics
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:		mate-backgrounds
-Version:	1.10.0
-Release:	alt1_2
+Version:	1.12.0
+Release:	alt1_1
 Summary:	MATE Desktop backgrounds
 License:	GPLv2+
 URL:		http://mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.9/%{name}-%{version}.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/1.12/%{name}-%{version}.tar.xz
 
 BuildArch:	noarch
+BuildRequires:	mate-common
 Source44: import.info
 
 %description
@@ -39,6 +39,9 @@ make %{?_smp_mflags} V=1
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
 - new version
 

@@ -1,18 +1,17 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libgio-devel pkgconfig(cairo) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gnome-keyring-1) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmatepanelapplet-4.0) pkgconfig(libnotify) pkgconfig(mate-desktop-2.0) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libgio-devel pkgconfig(cairo) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gnome-keyring-1) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(libnotify) pkgconfig(mate-desktop-2.0) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender) pkgconfig(libcanberra-gtk)
 # END SourceDeps(oneline)
 %filter_from_requires /^hal$/d
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-power-manager
-%define version 1.10.2
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 3a68372f379644cc50d4cd9bb6f012653eddb683}
@@ -23,21 +22,41 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-power-manager
-Version:       %{branch}.2
-Release:       alt2
-#Release:       0.1%{?git_rel}%{?dist}
+Version:       %{branch}.1
+%if 0%{?rel_build}
+Release:       alt1_1
+%else
+Release:       alt1_1
+%endif
 Summary:       MATE power management service
 License:       GPLv2+
 URL:           http://pub.mate-desktop.org
-Requires:	upower
 
 # for downloading the tarball use 'spectool -g -R mate-power-manager.spec'
 # Source for release-builds.
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
-Source44: import.info
 
+BuildRequires: libcairo-devel
+BuildRequires: libdbus-glib-devel
+BuildRequires: desktop-file-utils
+BuildRequires: libcanberra-devel
+BuildRequires: glib2-devel
+BuildRequires: gtk2-devel
+BuildRequires: libgnome-keyring-devel
+BuildRequires: libnotify-devel
+BuildRequires: mate-common
+BuildRequires: mate-control-center-devel
+BuildRequires: mate-panel-devel
+BuildRequires: libGL-devel
+BuildRequires: libpangox-compat-devel
+BuildRequires: popt-devel
+BuildRequires: libunique-devel
+BuildRequires: libupower-devel
+BuildRequires: xmlto
+Source44: import.info
+Requires: upower
 
 
 %description
@@ -48,8 +67,12 @@ displaying icons and handling user callbacks in an interactive MATE session.
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
-# needed for git snapshots
+%if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 %build
 %configure --disable-static --enable-applets \
@@ -95,6 +118,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Tue Dec 29 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.2-alt2
 - requires: upower added (closes: #31672)
 

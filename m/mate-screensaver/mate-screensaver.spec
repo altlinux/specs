@@ -1,18 +1,18 @@
 Group: Toys
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libgio-devel libpam0-devel pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmate-menu) pkgconfig(libmatekbdui) pkgconfig(libnotify) pkgconfig(libsystemd-login) pkgconfig(mate-desktop-2.0) pkgconfig(x11) pkgconfig(xscrnsaver)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libgio-devel libpam0-devel pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmate-menu) pkgconfig(libmatekbdui) pkgconfig(libnotify) pkgconfig(libsystemd) pkgconfig(mate-desktop-2.0) pkgconfig(x11) pkgconfig(xscrnsaver)
 # END SourceDeps(oneline)
 BuildRequires: libsystemd-login-devel
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
+%define fedora 22
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-screensaver
-%define version 1.10.2
+%define version 1.12.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit d5b35083e4de1d7457ebd937172bb0054e1fa089}
@@ -23,11 +23,11 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-screensaver
-Version:        %{branch}.2
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt2_2
+Release:        alt1_1
 %else
-Release:        alt2_0.2%{?git_rel}
+Release:        alt1_1
 %endif
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
@@ -38,9 +38,6 @@ URL:            http://pub.mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
-
-# https://github.com/mate-desktop/mate-screensaver/pull/80
-Patch0:         mate-screensaver_fix-broken-systemd-support.patch
 
 Requires:       altlinux-freedesktop-menu-common
 Requires:       pam_gnome-keyring
@@ -85,8 +82,6 @@ Development files for mate-screensaver
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
-
-%patch0 -p1 -b .systemd
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -157,7 +152,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 %{_datadir}/glib-2.0/schemas/org.mate.screensaver.gschema.xml
 %{_datadir}/mate-background-properties/cosmos.xml
 %{_datadir}/dbus-1/services/org.mate.ScreenSaver.service
+%if 0%{?fedora} > 22
 %{_docdir}/mate-screensaver/mate-screensaver.html
+%endif
 %{_mandir}/man1/*
 %attr(2511,root,chkpwd) %_libexecdir/%name/%name-chkpwd-helper
 
@@ -166,6 +163,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_2
 - fixed dependencies
 

@@ -2,18 +2,26 @@ Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmatemixer) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(unique-1.0) pkgconfig(unique-3.0)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:           mate-media
-Version:        1.10.0
-Release:        alt1_2
+Version:        1.12.1
+Release:        alt1_1
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.10/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.12/%{name}-%{version}.tar.xz
+
+BuildRequires:  desktop-file-utils
+BuildRequires:  gtk2-devel
+BuildRequires:  libmatemixer-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  libcanberra-devel
+BuildRequires:  mate-desktop-devel
+BuildRequires:  mate-common
+BuildRequires:  libpulseaudio-devel
+BuildRequires:  libunique-devel
 Source44: import.info
 Patch33: mate-media-1.10.0-alt-gst-mixer.patch
-
 
 %description
 This package contains a few media utilities for the MATE desktop,
@@ -58,6 +66,9 @@ desktop-file-install                                                    \
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_2
 - new version
 

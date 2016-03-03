@@ -2,16 +2,15 @@ Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(alsa) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmatemixer
-%define version 1.10.0
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -23,9 +22,12 @@ BuildRequires: mate-common
 
 Name:        libmatemixer
 Summary:     Mixer library for MATE desktop
-Version:     %{branch}.0
-Release:     alt2_2
-#Release:     0.1%{?git_rel}%{?dist}
+Version:     %{branch}.1
+%if 0%{?rel_build}
+Release:     alt1_1
+%else
+Release:     alt1_1
+%endif
 License:     GPLv2+
 URL:         http://mate-desktop.org
 
@@ -57,10 +59,15 @@ Development libraries for libmatemixer
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# for snapshots
 # needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 
 %build
-NOCONFIGURE=1 ./autogen.sh
 %configure \
         --disable-static \
         --enable-pulseaudio \
@@ -94,6 +101,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt2_2
 - rebuild
 

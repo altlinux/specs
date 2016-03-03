@@ -2,18 +2,17 @@ Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libSM-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dbus-glib-1) pkgconfig(exempi-2.0) pkgconfig(gmodule-2.0) pkgconfig(lcms2) pkgconfig(libexif) pkgconfig(librsvg-2.0) pkgconfig(libxml-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-xproto-devel
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname eom
 %define fedora 22
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eom
-%define version 1.10.5
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 7ba7e03f4d5e2ecd3c77f9d9394521b7608ca05f}
@@ -24,11 +23,11 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-image-viewer
-Version:       %{branch}.5
+Version:       %{branch}.1
 %if 0%{?rel_build}
-Release:       alt2_1
+Release:       alt1_1
 %else
-Release:       alt2_0.2%{?git_rel}
+Release:       alt1_1
 %endif
 Summary:       Eye of MATE image viewer
 License:       GPLv2+ and LGPLv2+ 
@@ -40,6 +39,9 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
+# https://github.com/mate-desktop/eom/pull/113
+Patch0:        eom_fix-gir-compilation.patch
+
 BuildRequires: zlib-devel
 BuildRequires: libcairo-gobject-devel
 BuildRequires: gtk2-devel
@@ -50,7 +52,6 @@ BuildRequires: libxml2-devel
 BuildRequires: librsvg-devel
 BuildRequires: mate-desktop-devel
 BuildRequires: liblcms2-devel
-BuildRequires: mate-icon-theme-devel
 BuildRequires: python-module-pygtk-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libjpeg-devel
@@ -87,6 +88,9 @@ Development files for eom
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
+%patch0 -p1 -b .fix-gir-compilation
+NOCONFIGURE=1 ./autogen.sh
+
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
 %else # 0%{?rel_build}
@@ -100,7 +104,7 @@ NOCONFIGURE=1 ./autogen.sh
    --enable-python \
    --with-x \
    --disable-schemas-compile \
-   --enable-introspection=no
+   --enable-introspection=yes
            
 make %{?_smp_mflags} V=1
 
@@ -127,7 +131,7 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/eom.convert
 %dir %{_libdir}/eom
 %dir %{_libdir}/eom/plugins
 %{_libdir}/eom/plugins/*
-#%{_libdir}/girepository-1.0/Eom-1.0.typelib
+%{_libdir}/girepository-1.0/Eom-1.0.typelib
 %{_datadir}/applications/eom.desktop
 %{_datadir}/eom/
 %_iconsdir/hicolor/*/*/*
@@ -141,10 +145,13 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/eom.convert
 %dir %{_includedir}/eom-2.20/eom
 %{_includedir}/eom-2.20/eom/*.h
 %{_datadir}/gtk-doc/html/eom/
-#%{_datadir}/gir-1.0/*.gir
+%{_datadir}/gir-1.0/*.gir
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.5-alt2_1
 - fixed dependencies
 

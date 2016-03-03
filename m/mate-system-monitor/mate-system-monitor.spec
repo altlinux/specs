@@ -1,19 +1,36 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtkmm-2.4) pkgconfig(gtkmm-3.0) pkgconfig(libgtop-2.0) pkgconfig(librsvg-2.0) pkgconfig(libsystemd-login) pkgconfig(libwnck-1.0) pkgconfig(libwnck-3.0) pkgconfig(libxml-2.0) pkgconfig(mate-icon-theme)
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libgio-devel pkgconfig(giomm-2.4) pkgconfig(glib-2.0) pkgconfig(glibmm-2.4) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtkmm-2.4) pkgconfig(gtkmm-3.0) pkgconfig(libgtop-2.0) pkgconfig(librsvg-2.0) pkgconfig(libsystemd) pkgconfig(libwnck-1.0) pkgconfig(libwnck-3.0) pkgconfig(libxml-2.0)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:           mate-system-monitor
-Version:        1.10.1
+Version:        1.12.1
 Release:        alt1_1
 Summary:        Process and resource monitor
 License:        GPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.9/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.12/%{name}-%{version}.tar.xz
+
+Patch3:         mate-system-monitor_Replaced-sysinfo-gtk-tables-with-gtk-grids.patch
+Patch4:         mate-system-monitor_several-deprecations.patch
+Patch5:         mate-system-monitor_deprecated-gtk_style_context_get_font.patch
+Patch6:         mate-system-monitor_deprecated-gtk_tree_view_set_rules_hint.patch
+Patch7:         mate-system-monitor_deprecated-usage-o-non-zero-pages.patch
+Patch8:         mate-system-monitor_deprecated-gtk_v-h-box.patch
+Patch9:         mate-system-monitor_deprecated-GtkMisc.patch
+
+BuildRequires: libdbus-glib-devel
+BuildRequires: desktop-file-utils
+BuildRequires: libgtk+3-devel
+BuildRequires: libgtkmm3-devel
+BuildRequires: libgtop2-devel
+BuildRequires: librsvg-devel
+BuildRequires: libwnck3-devel
+BuildRequires: libxml2-devel
+BuildRequires: mate-common
+
+Requires: mate-desktop
 Source44: import.info
-
-
 
 %description
 mate-system-monitor allows to graphically view and manipulate the running
@@ -23,18 +40,26 @@ such as CPU and memory.
 %prep
 %setup -q
 
+%patch3 -p1 -b .Replaced-sysinfo-gtk-tables-with-gtk-grids
+%patch4 -p1 -b .several-deprecations.patch
+%patch5 -p1 -b .deprecated-gtk_style_context_get_font.patch
+%patch6 -p1 -b .deprecated-gtk_tree_view_set_rules_hint.patch
+%patch7 -p1 -b .deprecated-usage-o-non-zero-pages.patch
+%patch8 -p1 -b .deprecated-gtk_v-h-box.patch
+%patch9 -p1 -b .deprecated-GtkMisc.patch
+
 %build
 %add_optflags -std=c++11
 %configure \
         --disable-static \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --disable-schemas-compile 
 
 make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%{makeinstall_std}
 
 desktop-file-install --delete-original             \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
@@ -56,6 +81,9 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/mate-system-monitor.convert
 
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new version
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_1
 - new version
 

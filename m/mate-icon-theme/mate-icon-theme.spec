@@ -1,13 +1,16 @@
 Group: Graphical desktop/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(icon-naming-utils)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-icon-theme
-%define version 1.10.1
+%define version 1.12.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit cdb0d70862035cd1b65c4deb495ea1016ea2d206}
@@ -18,11 +21,11 @@ Group: Graphical desktop/Other
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-icon-theme
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt1_2
+Release:        alt1_1
 %else
-Release:        alt1_2
+Release:        alt1_1
 %endif
 Summary:        Icon theme for MATE Desktop
 License:        GPLv2+ and LGPLv2+
@@ -36,20 +39,15 @@ URL:            http://mate-desktop.org
 
 BuildArch:      noarch
 
-BuildRequires:  mate-common
+BuildRequires:  mate-common 
 BuildRequires:  icon-naming-utils
-Source44: import.info
 
+Obsoletes: mate-icon-theme-devel
+Source44: import.info
 
 %description
 Icon theme for MATE Desktop
 
-%package devel
-Group: Graphical desktop/Other
-Summary: Development files for mate-icon-theme
-
-%description devel
-Development files for mate-icon-theme
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
@@ -76,11 +74,11 @@ make %{?_smp_mflags} V=1
 %{_datadir}/icons/mate
 %{_datadir}/icons/menta
 
-%files devel
-%{_datadir}/pkgconfig/mate-icon-theme.pc
-
 
 %changelog
+* Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
+- new version
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_2
 - new fc release
 
