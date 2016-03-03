@@ -17,7 +17,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:        jmol
 Version:     14.2.12
-Release:     alt1_3.2015.01.22jpp8
+Release:     alt2_3.2015.01.22jpp8
 Summary:     An open-source Java viewer for chemical structures in 3D
 Group:       Engineering
 # most is LGPLv2+, src/com/obrador is combination of IJG and BSD
@@ -42,8 +42,8 @@ BuildRequires:    jspecview >= 2-6.1464svn
 BuildRequires:    naga
 # In newer releases some of the necessary Java classes are
 # in the browser plugin package
-BuildRequires:    mozilla-plugin-java-1.7.0-openjdk
-Requires:         mozilla-plugin-java-1.7.0-openjdk
+BuildRequires:    icedtea-web
+Requires:         icedtea-web
 Requires:         jpackage-utils
 Requires:         apache-commons-cli
 Requires:         jspecview >= 2-6.1464svn
@@ -193,6 +193,9 @@ touch $RPM_BUILD_ROOT/etc/java/%name.conf
 %doc build/doc/*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 14.2.12-alt2_3.2015.01.22jpp8
+- rebuild with mozilla-plugin-java-1.8.0-openjdk
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 14.2.12-alt1_3.2015.01.22jpp8
 - new version
 
