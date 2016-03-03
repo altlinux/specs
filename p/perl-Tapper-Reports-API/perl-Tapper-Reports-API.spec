@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm)
 %define upstream_name    Tapper-Reports-API
-%define upstream_version 4.1.2
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_6
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Tapper - Remote network API for result evaluation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-API-%{version}.tar.gz
 
 BuildRequires: perl(Class/C3.pm)
 BuildRequires: perl(Cwd.pm)
@@ -70,6 +71,9 @@ This package provides Tapper's Remote network API for result evaluation.
 
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_6
 - update by mgaimport
 
