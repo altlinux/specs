@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(Exporter.pm) perl(File/Find/Rule.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/bin/tapper-installer-*.pl
 %define upstream_name    Tapper-Installer
-%define upstream_version 4.1.1
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_7
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Tapper - Install everything needed for a test
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Installer-%{version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Daemon/Daemonize.pm)
@@ -89,6 +90,9 @@ popd
 /usr/share/man/man1/tapper-installer-simnow.pl.1*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_7
 - update by mgaimport
 
