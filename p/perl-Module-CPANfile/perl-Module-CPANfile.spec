@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 1.1001
+%define module_version 1.1002
 %define module_name Module-CPANfile
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.1001
+Version: 1.1002
 Release: alt1
 Summary: Parse cpanfile
 Group: Development/Perl
@@ -47,6 +47,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.1002-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.1001-alt1
 - automated CPAN update
 
