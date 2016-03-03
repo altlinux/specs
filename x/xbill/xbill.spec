@@ -2,7 +2,7 @@ Summary: Stop Bill from loading his OS into all the computers
 Summary(ru_RU.KOI8-R): Помешайте Биллу поставить свою ОС на все компьютеры
 Name: xbill
 Version: 2.1
-Release: alt4.qa2
+Release: alt5
 
 Packager: Grigory Batalov <bga@altlinux.ru>
 
@@ -11,8 +11,9 @@ Group: Games/Arcade
 Source: ftp://ftp.xbill.org/pub/xbill/%name-%version.tar.gz
 Url: http://www.xbill.org/
 
-# Automatically added by buildreq on Tue Sep 09 2008
-BuildRequires: flex gcc-c++ imake libXaw-devel
+Patch: xbill-fix-build-with-gtk.patch
+
+BuildRequires: flex gcc-c++ imake libXt-devel gtk+-devel
 
 %description
 The xbill game tests your reflexes as you seek out and destroy all
@@ -27,13 +28,14 @@ and it is very popular at Red Hat.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
-%configure --bindir=%_bindir --localstatedir=%_localstatedir/games --disable-motif --disable-gtk
+%configure --bindir=%_bindir --localstatedir=%_localstatedir/games --disable-motif --enable-gtk
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # Menu entry
 mkdir -p %buildroot%_desktopdir
@@ -51,14 +53,19 @@ Categories=Game;ArcadeGame;
 EOF
 
 %files
-%attr(2711,root,games) %_x11bindir/xbill
+%attr(0755,root,games) %_x11bindir/xbill
 %dir %_localstatedir/games/%name
 %attr(664,root,games) %_localstatedir/games/%name/scores
 %config(noreplace) %_localstatedir/games/%name/scores
 %_datadir/%name
 %_desktopdir/%{name}.desktop
+%_man6dir/%name.*
 
 %changelog
+* Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.1-alt5
+- Build with GUI (gtk) (ALT #26006)
+- Package man page
+
 * Tue Apr 05 2011 Igor Vlasenko <viy@altlinux.ru> 2.1-alt4.qa2
 - NMU: converted debian menu to freedesktop
 
