@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.4.9
+Version: 3.4.10
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -13,6 +13,9 @@ Group: System/Libraries
 Url: http://gnutls.org/
 # ftp://ftp.gnutls.org/pub/gnutls/gnutls-%version.tar.bz2
 Source: gnutls-%version.tar
+
+# Skip test-hash-large for overridden CPU flags
+Patch1: gnutls-patch-test-hash-large.patch
 
 %define libcxx libgnutlsxx%libgnutlsxx28_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
@@ -177,6 +180,7 @@ This package contains the GnuTLS API Reference Manual.
 
 %prep
 %setup -n gnutls-%version
+%patch1 -p2
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
@@ -279,6 +283,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Thu Mar 03 2016 Mikhail Efremov <sem@altlinux.org> 3.4.10-alt1
+- Skip test-hash-large for overridden CPU flags.
+- Updated to 3.4.10.
+
 * Wed Feb 03 2016 Mikhail Efremov <sem@altlinux.org> 3.4.9-alt1
 - Updated to 3.4.9.
 
