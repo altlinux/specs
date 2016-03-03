@@ -2,9 +2,14 @@
 
 %def_with python3
 
+%define sphinx_dir %python_sitelibdir_noarch/%oname
+%if_with python3
+%define sphinx3_dir %python3_sitelibdir_noarch/%oname
+%endif
+
 Name: python-module-%oname
 Version: 1.4
-Release: alt3.a0.git20150813
+Release: alt4.a0.git20150813
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -23,10 +28,10 @@ Source4: refcounting.py
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
-BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-sphinx-objects.inv
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python3-module-html5lib python3-module-nose python-sphinx-objects.inv rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose time
 
 #BuildRequires: python-devel python-module-setuptools python-module-simplejson
 # for docs
@@ -39,6 +44,7 @@ BuildRequires: python-module-alabaster python-module-docutils python-module-html
 #BuildRequires: python-module-alabaster python-module-sphinx_rtd_theme
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-html5lib python3-module-nose
 #BuildRequires: python3-devel python3-module-distribute
 #BuildRequires: python3-module-Pygments python3-module-docutils
 #BuildRequires: python3-module-jinja2 python3-module-nose
@@ -76,7 +82,7 @@ Group: Development/Python3
 Requires: python3-module-%oname = %epoch:%version-%release
 #Requires: python3-module-%oname-pickles = %epoch:%version-%release
 Requires: python3-module-%oname-tests
-Requires: rpm-macros-%{oname}3 >= %epoch:%version-%release
+Requires: rpm-macros-sphinx3 >= %epoch:%version-%release
 Requires: python3-module-jinja2-tests
 
 %description -n python3-module-%oname-devel
@@ -113,13 +119,15 @@ multiple reStructuredText sources)
 
 This packages contains tests for Sphinx.
 
-%package -n rpm-macros-%{oname}3
+%package -n rpm-macros-sphinx3
 Summary: RPM macros for build with Sphinx (Python 3)
 Group: Development/Python3
 #Requires: rpm-build-python3
 #Requires: python3-module-%oname = %epoch:%version-%release
 
-%description -n rpm-macros-%{oname}3
+Requires: %sphinx3_dir
+
+%description -n rpm-macros-sphinx3
 Sphinx is a tool that makes it easy to create intelligent and beautiful
 documentation for Python projects (or other documents consisting of
 multiple reStructuredText sources)
@@ -132,7 +140,7 @@ Summary: Development package for Sphinx
 Group: Development/Python
 Requires: %name = %epoch:%version-%release
 Requires: %name-pickles = %epoch:%version-%release
-Requires: rpm-macros-%oname >= %epoch:%version-%release
+Requires: rpm-macros-sphinx >= %epoch:%version-%release
 
 %description devel
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -141,13 +149,15 @@ multiple reStructuredText sources)
 
 This package destinated for development of Python modules.
 
-%package -n rpm-macros-%oname
+%package -n rpm-macros-sphinx
 Summary: RPM macros for build with Sphinx
 Group: Development/Python
 #Requires: rpm-build-python
 #Requires: %name = %epoch:%version-%release
 
-%description -n rpm-macros-%oname
+Requires: %sphinx_dir
+
+%description -n rpm-macros-sphinx
 Sphinx is a tool that makes it easy to create intelligent and beautiful
 documentation for Python projects (or other documents consisting of
 multiple reStructuredText sources)
@@ -162,7 +172,7 @@ Requires: %name = %epoch:%version-%release
 %add_python_req_skip compiler
 %add_python_req_skip missing_module missing_package1 missing_package2
 %add_python_req_skip missing_package3
-%add_findreq_skiplist %python_sitelibdir/%oname/tests/typing_test_data.py
+%add_findreq_skiplist %sphinx_dir/tests/typing_test_data.py
 
 %description tests
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -244,16 +254,16 @@ popd
 pushd ../python3
 %python3_install
 
-cp -fR tests %buildroot%python3_sitelibdir/%oname/
-for i in $(find %buildroot%python3_sitelibdir/%oname/tests -type d)
+cp -fR tests %buildroot%sphinx3_dir/
+for i in $(find %buildroot%sphinx3_dir/tests -type d)
 do
 	touch $i/__init__.py
 done
 
 ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
-	%buildroot%python3_sitelibdir/%oname/
+	%buildroot%sphinx3_dir/
 ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
-	%buildroot%python3_sitelibdir/%oname/tests/
+	%buildroot%sphinx3_dir/tests/
 
 popd
 pushd %buildroot%_bindir
@@ -267,16 +277,16 @@ popd
 
 # tests
 
-cp -fR tests %buildroot%python_sitelibdir/%oname/
-for i in $(find %buildroot%python_sitelibdir/%oname/tests -type d)
+cp -fR tests %buildroot%sphinx_dir/
+for i in $(find %buildroot%sphinx_dir/tests -type d)
 do
 	touch $i/__init__.py
 done
 
 ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
-	%buildroot%python_sitelibdir/%oname/
+	%buildroot%sphinx_dir/
 ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
-	%buildroot%python_sitelibdir/%oname/tests/
+	%buildroot%sphinx_dir/tests/
 
 # docs
 
@@ -293,29 +303,29 @@ install -p -m644 AUTHORS CHANGES* EXAMPLES LICENSE README.rst \
 # macros
 
 install -d %buildroot%_rpmmacrosdir
-install -p -m644 macro %buildroot%_rpmmacrosdir/%oname
-install -p -m644 ../python3/macro3 %buildroot%_rpmmacrosdir/%{oname}3
+sed -e 's:@SPHINX_DIR@:%sphinx_dir:g' < macro > %buildroot%_rpmmacrosdir/sphinx
+sed -e 's:@SPHINX3_DIR@:%sphinx3_dir:g' < ../python3/macro3 > %buildroot%_rpmmacrosdir/sphinx3
 
 #install -p -m644 %oname/directives/desc.py \
-#	%buildroot%python_sitelibdir/%oname/directives/
+#	%buildroot%sphinx_dir/directives/
 
 #if_with python3
 #install -p -m644 %oname/directives/desc.py \
-#	%buildroot%python3_sitelibdir/%oname/directives/
+#	%buildroot%sphinx3_dir/directives/
 #endif
 
 # add pickle files
 
 %make_build -C doc pickle
 
-install -d %buildroot%python_sitelibdir/%oname/doctrees
+install -d %buildroot%sphinx_dir/doctrees
 install -p -m644 doc/_build/doctrees/*.pickle \
-	%buildroot%python_sitelibdir/%oname/doctrees/
+	%buildroot%sphinx_dir/doctrees/
 install -p -m644 %oname/pycode/*.pickle \
-	%buildroot%python_sitelibdir/%oname/pycode/
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+	%buildroot%sphinx_dir/pycode/
+cp -fR doc/_build/pickle %buildroot%sphinx_dir/
 install -p -m644 conf.py.template \
-	%buildroot%python_sitelibdir/%oname/
+	%buildroot%sphinx_dir/
 
 %ifarch x86_64
 LIBSUF=64
@@ -327,12 +337,12 @@ LIBSUF=64
 #export PATH=$PATH:%buildroot%_bindir
 #sed -i 's|^SPHINXBUILD.*|SPHINXBUILD = py3_sphinx-build|' doc/Makefile
 #make_build -C doc pickle
-#install -d %buildroot%python3_sitelibdir/%oname/doctrees
+#install -d %buildroot%sphinx3_dir/doctrees
 #install -p -m644 doc/_build/doctrees/*.pickle \
-#	%buildroot%python3_sitelibdir/%oname/doctrees/
-#cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
+#	%buildroot%sphinx3_dir/doctrees/
+#cp -fR doc/_build/pickle %buildroot%sphinx3_dir/
 install -p -m644 conf.py.template \
-	%buildroot%python3_sitelibdir/%oname/
+	%buildroot%sphinx3_dir/
 #popd
 #endif
 
@@ -344,56 +354,60 @@ install -p -m644 conf.py.template \
 %files
 %_bindir/*
 %exclude %_bindir/py3_*
-%python_sitelibdir/%oname/
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/pickle
-%exclude %python_sitelibdir/%oname/doctrees
+%sphinx_dir/
+%exclude %sphinx_dir/tests
+%exclude %sphinx_dir/pickle
+%exclude %sphinx_dir/doctrees
 %python_sitelibdir/*.egg-info
 #_man1dir/*
 
 %files devel
 
 %files pickles
-%dir %python_sitelibdir/%oname/
-%python_sitelibdir/%oname/pickle
-%python_sitelibdir/%oname/doctrees
+%dir %sphinx_dir/
+%sphinx_dir/pickle
+%sphinx_dir/doctrees
 
 %files tests
-%dir %python_sitelibdir/%oname/
-%python_sitelibdir/%oname/tests
-%python_sitelibdir/%oname/tests
+%dir %sphinx_dir/
+%sphinx_dir/tests
+%sphinx_dir/tests
 
 %files doc
 %doc %_docdir/%name
 
-%files -n rpm-macros-%oname
-%_rpmmacrosdir/%oname
+%files -n rpm-macros-sphinx
+%_rpmmacrosdir/sphinx
 
 %if_with python3
 %files -n python3-module-%oname
 %_bindir/py3_*
-%python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/%oname/tests
-#exclude %python3_sitelibdir/%oname/pickle
-#exclude %python3_sitelibdir/%oname/doctrees
+%sphinx3_dir/
+%exclude %sphinx3_dir/tests
+#exclude %sphinx3_dir/pickle
+#exclude %sphinx3_dir/doctrees
 %python3_sitelibdir/*.egg-info
 
 %files -n python3-module-%oname-devel
 
 #files -n python3-module-%oname-pickles
-#%dir %python3_sitelibdir/%oname/
-#%python3_sitelibdir/%oname/pickle
-#%python3_sitelibdir/%oname/doctrees
+#%dir %sphinx3_dir/
+#%sphinx3_dir/pickle
+#%sphinx3_dir/doctrees
 
 %files -n python3-module-%oname-tests
-%dir %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname/tests
+%dir %sphinx3_dir/
+%sphinx3_dir/tests
 
-%files -n rpm-macros-%{oname}3
-%_rpmmacrosdir/%{oname}3
+%files -n rpm-macros-sphinx3
+%_rpmmacrosdir/sphinx3
 %endif
 
 %changelog
+* Thu Mar 03 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt4.a0.git20150813
+- rpm-macros-sphinx{,3}: save the real path %%__sphinx{,3}_dir
+  (when built) and require it (when used).
+
 * Wed Mar 02 2016 Dmitry V. Levin <ldv@altlinux.org> 1:1.4-alt3.a0.git20150813
 - Added Provides/Obsoletes for python*-module-objects.inv.
 - Cleaned up %%sphinx* macros.
