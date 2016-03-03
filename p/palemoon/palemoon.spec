@@ -2,8 +2,8 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 26.1.0
-Release: alt5
+Version: 26.1.1
+Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -34,7 +34,7 @@ Patch16: firefox-cross-desktop.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
-Patch23: palemoon_version-26.1.0.patch
+Patch23: palemoon_version-26.1.1.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -79,7 +79,7 @@ These helper macros provide possibility to rebuild
 %setup -n %name-%version -c
 %patch21 -p1
 %patch20 -p1
-
+%patch23 -p1
 
 cd %name
 
@@ -96,7 +96,7 @@ tar -xf %SOURCE2
 #popd
 popd
 
-%patch23 -p1
+
 
 #patch5  -p1
 %patch6  -p1
@@ -131,7 +131,7 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 %endif
 
 %ifarch %ix86
-echo 'ac_add_options "--enable-optimize=-O3  -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
+echo 'ac_add_options --enable-optimize="-O2 -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
 
@@ -311,6 +311,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Mar 03 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt1
+- Version 26.1.1.
+
 * Mon Feb 22 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.0-alt5
 - Fix media.gstreamer.enabled
 - Update from git
