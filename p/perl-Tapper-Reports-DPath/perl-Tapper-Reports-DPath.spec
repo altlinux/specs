@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
@@ -5,17 +6,17 @@ BuildRequires: perl-devel perl-podlators
 %add_findreq_skiplist %perl_vendor_privlib/auto/Tapper/Reports/DPath/Mason/mason_include.pl
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(File/Slurp.pm)
 %define upstream_name    Tapper-Reports-DPath
-%define upstream_version 4.1.1
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_6
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Extended DPath functionality for Tapper reports
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-DPath-%{version}.tar.gz
 
 BuildRequires: perl(CHI.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -71,6 +72,9 @@ This distributions provides extended DPath functionality for Tapper reports.
 
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt2_6
 - NMU: fixed build
 
