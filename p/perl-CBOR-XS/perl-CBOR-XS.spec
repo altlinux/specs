@@ -1,60 +1,56 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Types/Serialiser.pm) perl(XSLoader.pm) perl(common/sense.pm) perl(Math/BigFloat.pm) perl(Time/Piece.pm)
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Time/Piece.pm) perl(Types/Serialiser.pm) perl(URI.pm) perl(XSLoader.pm) perl(common/sense.pm)
 # END SourceDeps(oneline)
-%define module_version 1.4
+%define module_version 1.41
 %define module_name CBOR-XS
+Serial: 1
+%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Serial: 1
-Version: 1.4
+Version: 1.41
 Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/CBOR-XS-%{version}.tar.gz
+Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/ML/MLEHMANN/%{module_name}-%{module_version}.tar.gz
 
 %description
-WARNING! This module is very new, and not very well tested (that's up to
-you to do). Furthermore, details of the implementation might change freely
-before version 1.0. And lastly, the object serialisation protocol depends
-on a pending IANA assignment, and until that assignment is official, this
-implementation is not interoperable with other implementations (even
-future versions of this module) until the assignment is done.
-
-You are still invited to try out CBOR, and this module.
-
 This module converts Perl data structures to the Concise Binary Object
 Representation (CBOR) and vice versa. CBOR is a fast binary serialisation
-format that aims to use a superset of the JSON data model, i.e. when you
-can represent something in JSON, you should be able to represent it in
-CBOR.
+format that aims to use an (almost) superset of the JSON data model, i.e.
+when you can represent something useful in JSON, you should be able to
+represent it in CBOR.
 
-In short, CBOR is a faster and very compact binary alternative to JSON,
+In short, CBOR is a faster and quite compact binary alternative to JSON,
 with the added ability of supporting serialisation of Perl objects. (JSON
 often compresses better than CBOR though, so if you plan to compress the
-data later you might want to compare both formats first).
+data later and speed is less important you might want to compare both
+formats first).
 
 To give you a general idea about speed, with texts in the megabyte range,
 `CBOR::XS' usually encodes roughly twice as fast as the Storable manpage or
 the JSON::XS manpage and decodes about 15%%-30%% faster than those. The shorter the
 data, the worse the Storable manpage performs in comparison.
 
-As for compactness, `CBOR::XS' encoded data structures are usually about
-20%% smaller than the same data encoded as (compact) JSON or the Storable manpage.
+Regarding compactness, `CBOR::XS'-encoded data structures are usually
+about 20%% smaller than the same data encoded as (compact) JSON or
+the Storable manpage.
+
+In addition to the core CBOR data format, this module implements a
+number of extensions, to support cyclic and shared data structures
+(see `allow_sharing' and `allow_cycles'), string deduplication (see
+`pack_strings') and scalar references (always enabled).
 
 The primary goal of this module is to be *correct* and the secondary goal
 is to be *fast*. To reach the latter goal it was written in C.
 
 See MAPPING, below, on how CBOR::XS maps perl values to CBOR values and
 vice versa.
-
-
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{module_version}
 
 %build
 %perl_vendor_build
@@ -63,11 +59,14 @@ vice versa.
 %perl_vendor_install
 
 %files
-%doc README Changes COPYING
+%doc COPYING README Changes
 %perl_vendor_archlib/C*
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.41-alt1
+- new version
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt1
 - automated CPAN update
 
