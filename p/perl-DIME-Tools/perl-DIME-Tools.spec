@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module DIME-Tools
 %define m_distro DIME-Tools
 %define m_name DIME::Tools
@@ -5,8 +6,8 @@
 %def_disable test
 
 Name: perl-DIME-Tools
-Version: 0.03
-Release: alt3.1
+Version: 0.04
+Release: alt1
 
 Summary: modules for parsing and generate DIME messages
 
@@ -17,7 +18,7 @@ Url: http://www.cpan.org
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/DIME-Tools-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 26 2006
 BuildRequires: perl-devel
@@ -42,6 +43,9 @@ find . -name '*.pm' -print0  | xargs -r0 subst "s,\r,,"
 %perl_vendor_privlib/DIME
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.03-alt3.1
 - repair after perl 5.12 upgrade using girar-nmu
 
