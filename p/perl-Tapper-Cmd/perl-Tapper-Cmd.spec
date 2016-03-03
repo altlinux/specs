@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
@@ -9,17 +10,17 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %add_findreq_skiplist %perl_vendor_privlib/auto/Tapper/Cmd/Init/hello-world/01-executing-tests/*
 
 %define upstream_name    Tapper-Cmd
-%define upstream_version 4.1.8
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_4
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Tapper - Backend functions for CLI and Web
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Cmd-%{version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(DBI.pm)
@@ -74,6 +75,9 @@ Tapper backend functions for the command line and the Web.
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Wed Dec 17 2014 Igor Vlasenko <viy@altlinux.ru> 4.1.8-alt1_4
 - update by mgaimport
 
