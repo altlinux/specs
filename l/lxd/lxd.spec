@@ -12,7 +12,7 @@
 
 Name:		lxd
 Version:	2.0.0
-Release:	alt1.beta4
+Release:	alt2.rc1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -24,18 +24,21 @@ Packager:	Denis Pynkin <dans@altlinux.ru>
 Source0:	%name-%version.tar
 Source2:	lxd-image-update.cron
 Source3:	lxd.default
+Source4:	lxd.dnsmasq
 
 # services
 Source11:	lxd.service
 Source12:	lxd.socket
 Source13:	lxd-startup.service
+Source14:	lxd-bridge.service
 
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
 
-Requires:	python3
+Requires:	shadow-submap
 Requires:	lxc-libs
+Requires:	cgmanager
 Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
@@ -121,6 +124,8 @@ ln -fs -- "$what" %buildroot/%go_root/bin/lxd-bridge-proxy
 
 # configuration
 %__install -D %SOURCE3 %buildroot/%_sysconfdir/sysconfig/lxd
+# configuration for dnsmasq called in lxd-bridge
+%__install -D %SOURCE4 %buildroot/%_sysconfdir/lxd/dnsmasq.conf
 
 #services
 # systemd
@@ -128,6 +133,7 @@ mkdir -p %buildroot/%_unitdir
 cp -av %SOURCE11 %buildroot/%_unitdir/
 cp -av %SOURCE12 %buildroot/%_unitdir/
 cp -av %SOURCE13 %buildroot/%_unitdir/
+cp -av %SOURCE14 %buildroot/%_unitdir/
 
 # install bash completion
 mkdir -p %buildroot/%_datadir/bash-completion/completions/
@@ -137,7 +143,7 @@ cp -av config/bash/lxd-client %buildroot/%_datadir/bash-completion/completions/
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_logdir/%name
 # /var/lib/lxd/lxd-bridge
-mkdir -p %buildroot%_localstatedir/%name/lxd-bridge
+mkdir -p %buildroot%_localstatedir/%name/lxd-bridge/misc
 
 mkdir -p %buildroot/%_bindir/
 cp -av scripts/lx* %buildroot/%_bindir/
@@ -154,6 +160,7 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_root/bin/*
 %attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name
 %attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name/lxd-bridge
+%attr(0751,%lxduser,%lxdgroup) %dir %_localstatedir/%name/lxd-bridge/misc
 %attr(0751,%lxduser,%lxdgroup) %dir %_logdir/%name
 %dir %_libexecdir/lxd
 %_libexecdir/lxd/*
@@ -165,12 +172,18 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %_sysconfdir/cron.hourly/*
 
 %_sysconfdir/sysconfig/*
+%dir %_sysconfdir/lxd
+%config(noreplace) %_sysconfdir/lxd/dnsmasq.conf
 
 
 %files devel
 %go_path/src/*
 
 %changelog
+* Thu Mar 03 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt2.rc1
+- Added LXD bridge start/stop and configuration
+- Version update
+
 * Mon Feb 29 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt1.beta4
 - rebuild with new lxc
 
