@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Module/Build.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Getopt/OptionTypeMap.pm) perl(POE.pm) perl(Sub/Exporter.pm) perl(Test/Builder.pm) perl(YAML.pm) perl(namespace/autoclean.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Daemonize
-Version:        0.20
-Release:        alt1_2
+Version:        0.21
+Release:        alt1
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/MooseX-Daemonize/
-Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-Daemonize-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Daemonize-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Devel/AssertOS.pm)
 BuildRequires:  perl(Module/Build/Tiny.pm)
@@ -53,6 +54,9 @@ roles as an infrastructure to do that.
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_2
 - update to new release by fcimport
 
