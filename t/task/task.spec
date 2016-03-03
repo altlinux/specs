@@ -1,5 +1,5 @@
 Name:           task
-Version:        2.4.0
+Version:        2.5.1
 Release:        alt1
 Summary:        A command-line todo list manager
 
@@ -14,7 +14,7 @@ Requires: zsh-completion-%name = %version-%release %name-core = %version-%releas
 # TODO Requires: vim-plugin-syntax
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires:  gcc-c++ libncurses-devel cmake libuuid-devel perl-devel
+BuildRequires:  gcc-c++ libncurses-devel cmake libuuid-devel perl-devel libgnutls-devel python-devel
 
 %description
 Task is a command-line todo list manager. It has
@@ -74,6 +74,9 @@ make test
 %_datadir/zsh/Completion/Unix/_task
 
 %changelog
+* Thu Mar 03 2016 Kirill Maslinsky <kirill@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Sun Jan 11 2015 Kirill Maslinsky <kirill@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
