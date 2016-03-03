@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.15.3
-Release: alt4.git20150425.2
+Release: alt5.git20150425
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -110,7 +110,8 @@ This package contains documentation for %oname.
 %setup
 
 %if_with python3
-cp -fR . ../python3
+rm -rf ../python3
+cp -R . ../python3
 %endif
 
 %if_with python2
@@ -168,9 +169,9 @@ popd
 %endif
 
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -R docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
-rm -f requirements*
+rm requirements*
 
 %check
 %if_with python2
@@ -216,6 +217,16 @@ popd
 %endif
 
 %changelog
+* Thu Mar  3 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.3-alt5.git20150425
+- (.spec) Safer build: cleanup ../python3/ before use.
+  (Nevertheless, beware: using ../python3/ for the build is very dirty
+  because it is not cleaned up automatically afterwards and can cause
+  side-effects in other unsafe specs, similar to this one. This dirty
+  use of ../python3/ is very wide-spread in Sisyphus packages.)
+- (.spec) Fail if the maintainer's intentions are not fulfilled
+  (because the sources or the build environment have changed since the
+  spec was written): rm/cp without -f
+
 * Thu Mar 03 2016 Denis Medvedev <nbr@altlinux.org> 0.15.3-alt4.git20150425.2
 - Remove self dependence.
 
