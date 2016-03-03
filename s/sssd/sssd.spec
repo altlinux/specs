@@ -2,7 +2,7 @@
 
 Name: sssd
 Version: 1.13.3
-Release: alt1.1
+Release: alt1.2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 
 # Determine the location of the LDB modules directory
 %define ldb_modulesdir %(pkg-config --variable=modulesdir ldb)
-%define ldb_version 1.1.25
+%define ldb_version 1.1.26
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -629,6 +629,9 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_altdir/libwbclient-sss-devel
 
 %changelog
+* Fri Mar 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.13.3-alt1.2
+- Rebuild with libldb-1.1.26
+
 * Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.13.3-alt1.1
 - Rebuild with libldb-1.1.25
 
