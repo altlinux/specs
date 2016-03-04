@@ -13,8 +13,8 @@
 %define nv_version 361
 %define nv_release 28
 %define nv_minor %nil
-%define pkg_rel alt158
-%define set_gl_nvidia_ver 0.12.0
+%define pkg_rel alt159
+%define set_gl_nvidia_ver 0.12.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -265,6 +265,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt159
+- fix 32-bit symlinks on x86_64
+
 * Fri Feb 19 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt158
 - add libglvnd support
 - add nvidia-modeset.ko support
