@@ -1,7 +1,7 @@
 %define req_ver_mlt 0.9.0
 
 Name: kdenlive
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 %K5init no_altplace man
 
@@ -73,6 +73,9 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
