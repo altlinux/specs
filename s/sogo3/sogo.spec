@@ -2,9 +2,9 @@
 %define sogo_user _sogo
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
-Name:         sogo
+Name:         sogo3
 Version:      3.0.1
-Release:      alt2
+Release:      alt3
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -37,6 +37,7 @@ BuildRequires: python-module-samba-DC
 
 Requires:      stmpclean
 Requires:      zip
+Conflicts:     sogo
 
 %filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
 %{!?sogo_major_version: %global sogo_major_version %(/bin/echo %version | /bin/cut -f 1 -d .)}
@@ -58,20 +59,21 @@ applications, and to reduce the load of the transactions on the server.
 Summary: SOGo configuration for Apache2
 Group: System/Servers
 BuildArch: noarch
-Requires: sogo = %version-%release
+Requires: sogo3 = %version-%release
+Conflicts: sogo3-apache2
 
 %description apache2
 SOGo configuration for Apache2
 
-%package -n task-sogo
-Summary: SOGo is a groupware server
+%package -n task-sogo3
+Summary: SOGo is a groupware server (version 3.x)
 Group: System/Servers
 BuildArch: noarch
-Requires: sogo
-Requires: sogo-activesync
-Requires: sogo-tool
-Requires: sope-cards
-Requires: sogo-apache2
+Requires: %name
+Requires: %name-activesync
+Requires: %name-tool
+Requires: sope-cards-%name
+Requires: %name-apache2
 Requires: apache2-base
 Requires: apache2-mod_ngobjweb
 Requires: memcached 
@@ -81,8 +83,9 @@ Requires: openchange-server
 Requires: openchange-ocsmanager
 Requires: openchange-rpcproxy
 %endif
+Conflicts: task-sogo
 
-%description -n task-sogo
+%description -n task-sogo3
 SOGo is a groupware server built around OpenGroupware.org (OGo) and
 the SOPE application server.  It focuses on scalability.
 
@@ -103,7 +106,8 @@ configuration.
 %package tool
 Summary:      Command-line toolsuite for SOGo
 Group:        Communications
-Requires:     sogo = %version-%release
+Requires:     %name = %version-%release
+Conflicts:    sogo-tool
 
 %description tool
 Administrative tool for SOGo that provides the following internal
@@ -116,6 +120,7 @@ commands:
 %package slapd-sockd
 Summary:      SOGo backend for slapd and back-sock
 Group:        Communications
+Conflicts:    sogo-slapd-sockd
 
 %description slapd-sockd
 SOGo backend for slapd and back-sock, enabling access to private
@@ -124,6 +129,7 @@ addressbooks via LDAP.
 %package ealarms-notify
 Summary:      SOGo utility for executing email alarms
 Group:        Communications
+Conflicts:    sogo-ealarms-notify
 
 %description ealarms-notify
 SOGo utility executed each minute via a cronjob for executing email
@@ -132,7 +138,8 @@ alarms.
 %package activesync
 Summary:      SOGo module to handle ActiveSync requests
 Group:        Communications
-Requires:     sogo = %version-%release
+Requires:     %name = %version-%release
+Conflicts:    sogo-activesync
 
 %description activesync
 SOGo module to handle ActiveSync requests
@@ -140,47 +147,52 @@ SOGo module to handle ActiveSync requests
 %package devel
 Summary:      Development headers and libraries for SOGo
 Group:        Development/Objective-C
+Conflicts:    sogo-devel
 
 %description devel
 Development headers and libraries for SOGo. Needed to create modules.
 
-%package -n sope-gdl1-contentstore
+%package -n sope-gdl1-contentstore-sogo3
 Summary:      Storage backend for folder abstraction.
 Group:        Development/Objective-C
 Requires:     sope-gdl1
+Conflicts:    sope-gdl1-contentstore
 
-%description -n sope-gdl1-contentstore
+%description -n sope-gdl1-contentstore-sogo3
 The storage backend implements the "low level" folder abstraction, which
 is basically an arbitary "BLOB" containing some document.
 
 SOPE is a framework for developing web applications and services. The
 name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 
-%package -n sope-gdl1-contentstore-devel
+%package -n sope-gdl1-contentstore-sogo3-devel
 Summary:      Development files for the GNUstep database libraries
 Group:        Development/Objective-C
 Requires:     sope-gdl1
+Conflicts:    sope-gdl1-contentstore-devel
 
-%description -n sope-gdl1-contentstore-devel
+%description -n sope-gdl1-contentstore-sogo3-devel
 This package contains the header files for SOPE's GDLContentStore
 library.
 
 SOPE is a framework for developing web applications and services. The
 name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 
-%package -n sope-cards
+%package -n sope-cards-sogo3
 Summary:      SOPE versit parsing library for iCal and VCard formats
 Group:        Development/Objective-C
+Conflicts:    sope-cards
 
-%description -n sope-cards
+%description -n sope-cards-sogo3
 SOPE versit parsing library for iCal and VCard formats
 
-%package -n sope-cards-devel
+%package -n sope-cards-sogo3-devel
 Summary:      SOPE versit parsing library for iCal and VCard formats
 Group:        Development/Objective-C
-Requires:     sope-cards
+Requires:     sope-cards-sogo3
+Conflicts:    sope-cards-devel
 
-%description -n sope-cards-devel
+%description -n sope-cards-sogo3-devel
 SOPE versit parsing library for iCal and VCard formats
 
 %if_with openchange
@@ -188,6 +200,7 @@ SOPE versit parsing library for iCal and VCard formats
 Summary:      SOGo backend for OpenChange
 Group:        Communications
 Requires:     samba-DC-libs
+Conflicts:    sogo-openchange-backend
 
 %description openchange-backend
 SOGo backend for OpenChange
@@ -333,20 +346,20 @@ popd
 %_libdir/GNUstep/Frameworks/SOGo.framework/Versions/%{sogo_major_version}/sogo/libSOGo.so
 %_libdir/GNUstep/Frameworks/SOGo.framework/Versions/%{sogo_major_version}/sogo/SOGo
 
-%files -n sope-gdl1-contentstore
+%files -n sope-gdl1-contentstore-sogo3
 %_libdir/sogo/libGDLContentStore*.so.*
 
-%files -n sope-gdl1-contentstore-devel
+%files -n sope-gdl1-contentstore-sogo3-devel
 %_includedir/GDLContentStore
 %_libdir/sogo/libGDLContentStore*.so
 
-%files -n sope-cards
+%files -n sope-cards-sogo3
 %_libdir/sogo/libNGCards.so.*
 %_libdir/GNUstep/SaxDrivers-*
 %_libdir/GNUstep/SaxMappings
 %_libdir/GNUstep/Libraries/Resources/NGCards
 
-%files -n sope-cards-devel
+%files -n sope-cards-sogo3-devel
 %_includedir/NGCards
 %_libdir/sogo/libNGCards.so
 
@@ -356,7 +369,7 @@ popd
 %_libdir/mapistore_backends/*
 %endif
 
-%files -n task-sogo
+%files -n task-sogo3
 
 %pre
 if ! id %sogo_user >& /dev/null; then
@@ -370,6 +383,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Fri Mar 04 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt3
+- New package sogo3 (ALT #31854)
+
 * Fri Feb 26 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt2
 - Rebuild with new icu
 
