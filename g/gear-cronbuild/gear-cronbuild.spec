@@ -1,5 +1,5 @@
 Name: gear-cronbuild
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: gear repository automated build utility
@@ -45,6 +45,9 @@ install -m 644 *.1 %buildroot%_man1dir/
 %_mandir/man?/*
 
 %changelog
+* Fri Mar 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
+- new version
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.31-alt1
 - new version
 
