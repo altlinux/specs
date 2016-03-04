@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.15.3
-Release: alt5.git20150425
+Release: alt6.git20150425
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -24,7 +24,8 @@ BuildRequires: python-sphinx-objects.inv
 #BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-trollius python-module-nose
 #BuildPreReq: python-module-gunicorn 
-BuildPreReq: python-module-gunicorn python-module-chardet
+#BuildPreReq: python-module-gunicorn 
+BuildPreReq: python-module-chardet
 BuildPreReq: python3-module-objects
 #BuildPreReq: python-module-flake8 python-module-coverage
 #BuildPreReq: python-module-path 
@@ -45,7 +46,8 @@ BuildPreReq:  python3-module-setuptools-tests
 BuildPreReq: python3-module-asyncio
 BuildPreReq: python-sphinx-objects.inv
 BuildPreReq: python3-module-trollius python3-module-nose
-BuildPreReq: python3-module-gunicorn python3-module-chardet
+#BuildPreReq: python3-module-gunicorn
+BuildPreReq: python3-module-chardet
 #BuildPreReq: python3-module-flake8 python3-module-coverage
 #BuildPreReq: python3-module-path 
 #python3-module-bumpversion
@@ -217,6 +219,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 04 2016 Denis Medvedev <nbr@altlinux.org> 0.15.3-alt6.git20150425
+- Removed dependence to python-module-gunicorn, which created selfdeps.
+
 * Thu Mar  3 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.3-alt5.git20150425
 - (.spec) Safer build: cleanup ../python3/ before use.
   (Nevertheless, beware: using ../python3/ for the build is very dirty
