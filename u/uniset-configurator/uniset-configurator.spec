@@ -1,6 +1,6 @@
 Name: uniset-configurator
-Version: 0.9
-Release: alt14.1
+Version: 1.0
+Release: alt6
 Summary: UniSet configurator
 Group: Development/Python
 License: GPL
@@ -45,6 +45,7 @@ mv -f %buildroot%python_sitelibdir_noarch/*.py %buildroot%python_sitelibdir_noar
 mkdir -p %buildroot/%_bindir/
 ln -s %python_sitelibdir_noarch/%name/%name.py %buildroot/%_bindir/%name
 ln -s %python_sitelibdir_noarch/%name/%name.py %buildroot/%_bindir/uniset-linkeditor
+ln -s %python_sitelibdir_noarch/%name/%name.py %buildroot/%_bindir/uniset-apeditor
 ln -s %python_sitelibdir_noarch/%name/uniset_io_conf.py %buildroot/%_bindir/uniset-ioconf
 ln -s %python_sitelibdir_noarch/%name/lcaps_conf.py %buildroot/%_bindir/uniset-lcaps-conf
 ln -s %python_sitelibdir_noarch/%name/apspanel_conf.py %buildroot/%_bindir/uniset-apspanel-conf
@@ -60,6 +61,39 @@ ln -s %python_sitelibdir_noarch/%name/can_conf.py %buildroot/%_bindir/uniset-can
 %_bindir/*
 
 %changelog
+* Tue Mar 24 2015 Pavel Vainerman <pv@altlinux.ru> 1.0-alt6
+- Use 'xml.dom.minidom' replaced by the use 'lxml'
+
+* Mon Feb 17 2014 Pavel Vainerman <pv@altlinux.ru> 1.0-alt5
+- fixed minor bug in LinkEditor
+
+* Tue Oct 15 2013 Pavel Vainerman <pv@altlinux.ru> 1.0-alt4
+- added "comment" for io-card 
+
+* Mon Mar 18 2013 Pavel Vainerman <pv@altlinux.ru> 1.0-alt3
+- added check the channel type in the editor 
+
+* Wed Mar 13 2013 Pavel Vainerman <pv@altlinux.ru> 1.0-alt2
+- rename uniset --> uniset-comm (fix conflict with new python-modules-uniset)
+- rename uniset_io --> uniset-io
+- minor fixes
+
+* Tue Sep 04 2012 Pavel Vainerman <pv@altlinux.ru> 1.0-alt1
+- remove unused modules 'ses' and 'geu' (use LinkEditor)
+- LinkEditor: added support for the selection ID or name
+
+* Tue Sep 04 2012 Pavel Vainerman <pv@altlinux.ru> 0.9-alt19
+- add ID column for uniset-linkeditor
+
+* Sat Aug 18 2012 Pavel Vainerman <pv@altlinux.ru> 0.9-alt18
+- add uniset-apeditor (apspanel editor)
+
+* Thu Aug 02 2012 Pavel Vaynerman <pv@server> 0.9-alt17
+- remove display jack-number for AIxx5a
+
+* Sun Jul 01 2012 Pavel Vainerman <pv@altlinux.ru> 0.9-alt15
+- added to the display of channel number and subdev (eterbug #8573)
+
 * Fri Jun 01 2012 Pavel Vainerman <pv@altlinux.ru> 0.9-alt14.1
 - update changelog
 
