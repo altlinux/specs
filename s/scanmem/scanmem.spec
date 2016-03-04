@@ -1,7 +1,7 @@
 Summary: Simple debugging utility
 Name: scanmem
 Version: 0.15.4
-Release: alt2
+Release: alt3
 Url: http://taviso.decsystem.org/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -10,7 +10,6 @@ Group: Development/Debuggers
 Patch0: scanmem-0.15.4-alt2-fix-desktop-files.patch
 
 BuildRequires: libreadline-devel intltool /proc
-%brp_strip_none %_bindir/*
 
 %description
 scanmem is a simple interactive debugging utility for linux, used to
@@ -44,14 +43,6 @@ Group: Development/C
 %description -n lib%name-devel
 The devel package contains the symlincs for sharedlib
 
-%package -n lib%name-devel-static
-Summary: Static library for %name
-Group: System/Libraries
-
-%description -n lib%name-devel-static
-This package contains static library used by %name
-
-
 %prep
 %setup
 %patch0 -p1
@@ -60,7 +51,9 @@ This package contains static library used by %name
 ./autogen.sh
 %configure \
 	--enable-gui \
-	--docdir=%_docdir//%name-%version
+	--docdir=%_docdir/%name-%version \
+	--disable-static \
+	#
 %make
 
 %install
@@ -74,14 +67,10 @@ This package contains static library used by %name
 %doc ChangeLog COPYING NEWS README TODO
 
 %files -n lib%name
-%_libdir/libscanmem.so.1.0.0
+%_libdir/libscanmem.so.*
 
 %files -n lib%name-devel
-%exclude %_libdir/libscanmem.so.1.0.0
-%_libdir/libscanmem.so*
-
-%files -n lib%name-devel-static
-%_libdir/libscanmem.a
+%_libdir/libscanmem.so
 
 %files -n gameconqueror -f GameConqueror.lang
 %_bindir/gameconqueror
@@ -93,6 +82,10 @@ This package contains static library used by %name
 %_datadir/appdata/GameConqueror.appdata.xml
 
 %changelog
+* Fri Mar 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.15.4-alt3
+- Moved %%_libdir/libscanmem.so.1 to libscanmem.
+- Dropped devel-static subpackage.
+
 * Tue Mar 01 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 0.15.4-alt2
 - Minor packaging changes
 - Fixed some repocop warnings
