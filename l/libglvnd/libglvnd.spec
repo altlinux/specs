@@ -4,7 +4,7 @@
 
 Name: libglvnd
 Version: 0.0.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: OpenGL vendor-neutral dispatch layer
@@ -87,25 +87,27 @@ Static GL entrypoints which use the context defined in libGLdispatch, while EGL 
 %install
 %make install DESTDIR=%buildroot
 
-%if_enabled package_all
 %files -n glvnd
 %_libdir/X11/modules/extensions/x11glvnd.so
+
+%if_enabled package_all
+%files -n libGLES1
+%_libdir/libGLESv1_CM.so.1
+%_libdir/libGLESv1_CM.so.1.*
 %files -n libGL
 %_libdir/libGL.so.1
 %_libdir/libGL.so.1.*
 %files -n libGLES
 %_libdir/libGLESv2.so.2
 %_libdir/libGLESv2.so.2.*
-%files -n libGLES1
-%_libdir/libGLESv1_CM.so.1
-%_libdir/libGLESv1_CM.so.1.*
+%endif
+
 %files -n libOpenGL
 %_libdir/libOpenGL.so.0
 %_libdir/libOpenGL.so.0.*
 %files -n libGLX
 %_libdir/libGLX.so.0
 %_libdir/libGLX.so.0.*
-%endif
 
 %files -n libGLdispatch
 %_libdir/libGLdispatch.so.0
@@ -116,10 +118,15 @@ Static GL entrypoints which use the context defined in libGLdispatch, while EGL 
 %_libdir/lib*.so
 %else
 %_libdir/libGLdispatch.so
+%_libdir/libOpenGL.so
+%_libdir/libGLX.so
 %endif
 %_includedir/glvnd/
 %_pkgconfigdir/libglvnd.pc
 
 %changelog
+* Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 0.0.0-alt2
+- update from master branch
+
 * Sat Feb 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.0.0-alt1
 - initial build
