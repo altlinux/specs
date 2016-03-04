@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build	1
 
 %define module_name	dahdi
-%define module_version	2.11.0
+%define module_version	2.11.1
 %define module_release alt1
 
 %define flavour	un-def
