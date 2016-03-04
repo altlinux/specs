@@ -32,7 +32,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.3.4
+Version: 4.3.5
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1329,6 +1329,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.5-alt1
+- New version (https://www.samba.org/samba/history/samba-4.3.5.html)
+
 * Tue Jan 12 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.4-alt1
 - New version (https://www.samba.org/samba/history/samba-4.3.4.html)
 

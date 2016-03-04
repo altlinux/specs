@@ -1,14 +1,14 @@
 %def_enable tests
 
 Name: libtevent
-Version: 0.9.26
+Version: 0.9.28
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
 Url: http://tevent.samba.org/
 
-Source: tevent-%version.tar.gz
+Source: http://samba.org/ftp/tevent/tevent-%{version}.tar.gz
 
 BuildRequires: libtalloc-devel >= 2.1.0
 BuildRequires: libpytalloc-devel >= 2.1.0
@@ -73,6 +73,9 @@ make test
 %python_sitelibdir/tevent.py*
 
 %changelog
+* Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.28-alt1
+- New version
+
 * Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 0.9.26-alt1
 - 0.9.26
 - Enable tests
