@@ -1,6 +1,6 @@
 Name:		lxcfs
 Version:	2.0.0
-Release:	alt1.rc2
+Release:	alt2.rc2
 Summary:	FUSE filesystem for LXC
 
 Group:		Development/Other
@@ -51,6 +51,13 @@ management using cgroup process tracking.
 %makeinstall_std
 mkdir -p %buildroot%_localstatedir/%name
 
+%post
+[ -d "%_localstatedir/%name" ] || mkdir -p %_localstatedir/%name
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %doc AUTHORS COPYING README.md
 %_bindir/*
@@ -60,13 +67,16 @@ mkdir -p %buildroot%_localstatedir/%name
 %_datadir/lxc/config/common.conf.d/*
 %dir %_datadir/%name
 %_datadir/%name/*
-%dir %_localstatedir/%name
+%ghost %dir %_localstatedir/%name
 
 %files -n %pam_name
 %doc AUTHORS COPYING
 %_pam_modules_dir/*
 
 %changelog
+* Thu Mar 03 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt2.rc2
+- Added service restart
+
 * Tue Mar 01 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt1.rc2
 - Removed devel package.
   liblxcfs.so is loaded via dlopen.
