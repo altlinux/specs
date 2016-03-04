@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ pkgconfig(x11) xsltproc zlib-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 %def_enable javaws
 %def_enable moz_plugin
@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	1.6.2
-Release:	alt1_1jpp8
+Release:	alt2_1jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 
 Group:      Networking/WWW
@@ -50,10 +50,7 @@ BuildRequires:      rhino
 
 # For functionality and the OpenJDK dirs
 Requires:      java-%{javaver}-openjdk
-Requires:      maven-local
 #maven fragments
-Requires(post):      maven-local
-Requires(postun):      maven-local
 
 # For the mozilla plugin dir
 Requires:       browser-plugins-npapi
@@ -315,6 +312,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Fri Mar 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_1jpp8
+- fixed requires
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt1_1jpp8
 - new version
 
