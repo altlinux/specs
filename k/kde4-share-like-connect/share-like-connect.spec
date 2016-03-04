@@ -1,9 +1,10 @@
 %define _kde_alternate_placement 1
+%def_disable nepomuk
 
 %define rname share-like-connect
 Name: kde4-share-like-connect
 Version: 0.4
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: Social-Semantic Features for Active
@@ -13,13 +14,16 @@ License: GPLv2 / LGPLv2.1+ / BSD
 #Requires: kde4base-workspace-core
 
 Source: %rname-%version.tar
+Patch1: alt-cut-nepomuk.patch
 
 # Automatically added by buildreq on Wed Feb 08 2012 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4-kactivities-devel kde4base-runtime-devel libicu libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel kde4-kactivities-devel kde4-nepomuk-core-devel kde4base-runtime-devel
-BuildRequires: libsoprano-devel
+BuildRequires: gcc-c++ glib2-devel kde4-kactivities-devel kde4base-runtime-devel
 BuildRequires: kde-common-devel
+%if_enabled nepomuk
+BuildRequires: libsoprano-devel kde4-nepomuk-core-devel
+%endif
 
 %description
 Share * Like * Connect Social-Semantic Features for Plasma Active
@@ -45,7 +49,11 @@ Developmet files and headers for share-like-connect
 
 %prep
 %setup -qn %rname-%version
+%if_enabled nepomuk
 sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLists.txt
+%else
+%patch1 -p1
+%endif
 
 %build
 %K4build
@@ -56,7 +64,9 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %files
 #%_K4lib/imports/org/kde/plasma/slccomponents/
 %_K4lib/plasma_dataengine_sharelikeconnect.so
+%if_enabled nepomuk
 %_K4lib/sharelikeconnect_provider_*.so
+%endif
 
 %_K4apps/plasma/plasmoids/
 %_K4apps/plasma/services/*
@@ -71,6 +81,9 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 #%_K4includedir/activecontentservice
 
 %changelog
+* Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 0.4-alt3
+- cut nepomuk with stuff
+
 * Fri Oct 16 2015 Sergey V Turchin <zerg@altlinux.org> 0.4-alt2
 - fix build requires
 
