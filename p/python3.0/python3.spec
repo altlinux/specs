@@ -1,10 +1,24 @@
-%global pybasever 3
-%global old_pybasever 3.3
+%global std_pyversion %_python3_version
 
-%global pylibdir %_libdir/python%pybasever
-%global pylibdir_noarch %_libexecdir/python%pybasever
-%global old_pylibdir %_libdir/python%old_pybasever
-%global old_pylibdir_noarch %_libexecdir/python%old_pybasever
+# %%std_site is a place where we can put *.py
+# to be read and executed by the system python3
+# (in the target "output" system).
+#
+# %%std_basename is some kind of unique name
+# we use to name the specific version of the system python3.
+# (Here, it happens to occur in the path to %%std_site,
+# but in the general case this might not hold.)
+%global std_basename python%std_pyversion
+%global std_site %python3_libdir/site-packages
+
+# %%ext_sitelibdir{,_noarch} is the extension we are adding to the
+# system python search path.
+#
+# %%ext_basename is its "base" path component.
+# It also appears in the name of the package.
+%global ext_basename python3
+%global ext_sitelibdir %_libdir/%ext_basename/site-packages
+%global ext_sitelibdir_noarch %_libexecdir/%ext_basename/site-packages
 
 # To make this package an exception for sisyphus_check,
 # its SRPM name must be like a "base" python package;
@@ -18,69 +32,109 @@
 #
 # Hopefully, we can take 0 as a non-conflicting minor version.
 Summary: ONLY site-packages SUBPACKAGE IS BUILT
-Name: python%pybasever.0
-Version: %old_pybasever.1
-Release: alt101
+Name: %ext_basename.0
+Version: %std_pyversion.1
+Release: alt105
 License: Python
 Group: Development/Python3
 
-BuildRequires(pre): rpm-build-python3 >= 0.1.7
+BuildRequires(pre): rpm-build-python3 = 0.1.7
 # Possibly, our autoprovs make no sense:
 #AutoProv: no
 
-Source: sitecustomize.py
-Patch: sitecustomize-lib64.patch
-
-%package -n python%pybasever-site-packages
-Summary: Setup the common python%pybasever/site-packages directory
+%package -n %ext_basename-site-packages
+Summary: Setup the common %ext_basename/site-packages directory
 Group: Development/Python3
 
+# According the ALT Sisyphus RPM Macros Packaging policy, the
+# development tools (like the compiler) should depend on the
+# corresponding rpm-macros/build-*. (To shorten specs and make the
+# builds consistent with the LANGUAGE packaging policy always.)
+#
+# This dependency seems to be omitted in python3 (the compiler) and
+# python3-dev (used when linking with libpython3 etc) in 3.3.1-alt4.
+#
+# We (temporarily) workaround this in this supplementary package.
+Requires: rpm-build-python3
+
 %description
-ONLY %name-site-packages PACKAGE IS BUILT AND USED!
+ONLY %ext_basename-site-packages PACKAGE IS BUILT AND USED!
 
-%description -n python%pybasever-site-packages
-This is a customization of the python%pybasever site
-which makes python%old_pybasever use the new common
-python%pybasever/site-packages directory as the search path
-for modules.
+%description -n %ext_basename-site-packages
+This is a customization of the %std_basename site
+which makes python3 use the additional
+%ext_basename/site-packages directory as the search path
+for modules, too.
 
-New releases of python%pybasever in Sisyphus will do this by default.
-
-This package is needed for the transition only.
-
-%prep
-cp %SOURCE0 ./
-%if "%_lib" == "lib64"
-%patch0 -p1
-%endif
+New releases of python3 in Sisyphus will use it as the default common
+path. This package is needed for the transition only.
 
 %install
 
-install -d -m 0755 $RPM_BUILD_ROOT%pylibdir/site-packages/__pycache__
-
+mkdir -p %buildroot%ext_sitelibdir/__pycache__
 %if "%_lib" == "lib64"
-install -d -m 0755 %buildroot/usr/lib/python%pybasever/site-packages/__pycache__
+mkdir -p %buildroot%ext_sitelibdir_noarch/__pycache__
 %endif
 
-install -d -m 0755 $RPM_BUILD_ROOT%old_pylibdir/site-packages/
-install -m 0644 sitecustomize.py $RPM_BUILD_ROOT%old_pylibdir/site-packages/
+mkdir -p %buildroot%std_site/
+cat <<\EOF >%buildroot%std_site/sitecustomize.py
+import sys
+import os
+import site
 
-%files -n python%pybasever-site-packages
+known_paths = set()
+for prefix in site.PREFIXES:
+    site.addsitedir(os.path.join("%ext_sitelibdir"),
+                    known_paths)
+%if "%_lib" == "lib64"
+    site.addsitedir(os.path.join("%ext_sitelibdir_noarch"),
+                    known_paths)
+%endif
+EOF
 
-%dir %pylibdir
-%dir %pylibdir/site-packages/
-%dir %pylibdir/site-packages/__pycache__/
+mkdir -p %buildroot%_rpmlibdir
+cat <<\EOF >%buildroot%_rpmlibdir/%ext_basename-site-packages-files.req.list
+# %name dirlist for %_rpmlibdir/files.req
+%(dirname %ext_sitelibdir)/		%ext_basename-site-packages
+%ext_sitelibdir/			%ext_basename-site-packages
+%ext_sitelibdir/__pycache__/		%ext_basename-site-packages
+%(dirname %ext_sitelibdir_noarch)/	%ext_basename-site-packages
+%ext_sitelibdir_noarch/			%ext_basename-site-packages
+%ext_sitelibdir_noarch/__pycache__/	%ext_basename-site-packages
+EOF
+
+%files -n %ext_basename-site-packages
+%_rpmlibdir/%ext_basename-site-packages-files.req.list
+
+%dir %(dirname %ext_sitelibdir)
+%dir %ext_sitelibdir/
+%dir %ext_sitelibdir/__pycache__/
 
 %if "%_lib" == "lib64"
-%attr(0755,root,root) %dir %prefix/lib/python%pybasever
-%attr(0755,root,root) %dir %prefix/lib/python%pybasever/site-packages
-%attr(0755,root,root) %dir %prefix/lib/python%pybasever/site-packages/__pycache__/
+%attr(0755,root,root) %dir %(dirname %ext_sitelibdir_noarch)
+%attr(0755,root,root) %dir %ext_sitelibdir_noarch
+%attr(0755,root,root) %dir %ext_sitelibdir_noarch/__pycache__/
 %endif
 
-%old_pylibdir/site-packages/*
-%exclude %dir %old_pylibdir/site-packages/__pycache__
+%std_site/*
+%exclude %dir %std_site/__pycache__
 
 %changelog
+* Fri Mar  4 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt105
+- (.spec) simplify: substitute the macros into sitecustomize.py
+
+* Fri Mar  4 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt104
+- (.spec) macro code cleanup (easier to understand and extend)
+
+* Mon Feb 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt103
+- fill out python3-site-packages-files.req.list to make other pkgs
+  depend on the listed directories (like in the real python3-base)
+
+* Mon Feb 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt102
+- workaround the missing dep on rpm-build-python3 in
+  python3-3.3.1-alt4 (required by the ALT Sisyphus RPM Macros
+  Packaging policy)
+
 * Fri Feb 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt101
 - don't loose __pycache__.
 - .spec: avoid RPM warnings (because of a macro in comments).
