@@ -13,7 +13,7 @@
 %define nv_version 361
 %define nv_release 28
 %define nv_minor %nil
-%define pkg_rel alt159
+%define pkg_rel alt160
 %define set_gl_nvidia_ver 0.12.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -265,6 +265,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt160
+- fix nvidia-modeset symlink
+
 * Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt159
 - fix 32-bit symlinks on x86_64
 
