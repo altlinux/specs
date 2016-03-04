@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.25
+Version: 2.9.26
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,10 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Mar 04 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.26-alt1
+- Update Autologin label in alterator-users
+- Small fix in Russian translations of alterator-mass-management help
+
 * Wed Feb 10 2016 Michael Shigorin <mike@altlinux.org> 2.9.25-alt1
 - Added German translation (courtesy of Armin Schafer)
 

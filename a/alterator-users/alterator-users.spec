@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-users
-Version: 10.9
+Version: 10.10
 Release: alt1
 
 Source: %name-%version.tar
@@ -43,6 +43,9 @@ alterator module for system users administration
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Mar 04 2016 Andrey Cherepanov <cas@altlinux.org> 10.10-alt1
+- Return Autologin label
+
 * Mon Jan 25 2016 Andrey Cherepanov <cas@altlinux.org> 10.9-alt1
 - do not show autologin checkbox if system does not support it
 
