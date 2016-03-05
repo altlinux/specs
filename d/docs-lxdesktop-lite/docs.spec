@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 6.0
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,6 +43,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Fri Mar 04 2016 Artem Zolochevskiy <azol@altlinux.org> 6.0-alt5
+- rebuild with publclian4
+
 * Thu Feb 25 2016 Artem Zolochevskiy <azol@altlinux.org> 6.0-alt4
 - switch to publican
 
