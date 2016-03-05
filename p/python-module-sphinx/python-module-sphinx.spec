@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt4.a0.git20150813
+Release: alt5.a0.git20150813
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -82,7 +82,7 @@ Group: Development/Python3
 Requires: python3-module-%oname = %epoch:%version-%release
 #Requires: python3-module-%oname-pickles = %epoch:%version-%release
 Requires: python3-module-%oname-tests
-Requires: rpm-macros-sphinx3 >= %epoch:%version-%release
+Requires: rpm-macros-sphinx3 = %epoch:%version-%release
 Requires: python3-module-jinja2-tests
 
 %description -n python3-module-%oname-devel
@@ -125,7 +125,9 @@ Group: Development/Python3
 #Requires: rpm-build-python3
 #Requires: python3-module-%oname = %epoch:%version-%release
 
-Requires: %sphinx3_dir
+# W.r.t. to the content of the macros (see the substitution in %%install):
+#Requires: %sphinx3_dir
+# ...but -- see the comment for rpm-macros-sphinx.
 
 %description -n rpm-macros-sphinx3
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -140,7 +142,7 @@ Summary: Development package for Sphinx
 Group: Development/Python
 Requires: %name = %epoch:%version-%release
 Requires: %name-pickles = %epoch:%version-%release
-Requires: rpm-macros-sphinx >= %epoch:%version-%release
+Requires: rpm-macros-sphinx = %epoch:%version-%release
 
 %description devel
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -153,9 +155,15 @@ This package destinated for development of Python modules.
 Summary: RPM macros for build with Sphinx
 Group: Development/Python
 #Requires: rpm-build-python
-#Requires: %name = %epoch:%version-%release
 
-Requires: %sphinx_dir
+# W.r.t. to the content of the macros (see the substitution in %%install):
+#Requires: %sphinx_dir
+# ...but we do not add such a formal dependency,
+# because it is not needed at all
+# given the intended usage of rpm-macros-* packages.
+# The guarantee that a macro doesn't refer to a path other
+# than the current valid %%sphinx_dir
+# is given by the strict dep of the main pkg (on EVR of the macros pkg).
 
 %description -n rpm-macros-sphinx
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -233,7 +241,7 @@ sed -i 's|%_bindir/python|%_bindir/python3|' tests/coverage.py
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/path.py tests/run.py
 
-#cp -fR tests %oname/
+#cp -R tests %oname/
 #for i in $(find %oname/tests -type d)
 #do
 #	touch $i/__init__.py
@@ -254,7 +262,7 @@ popd
 pushd ../python3
 %python3_install
 
-cp -fR tests %buildroot%sphinx3_dir/
+cp -R tests %buildroot%sphinx3_dir/
 for i in $(find %buildroot%sphinx3_dir/tests -type d)
 do
 	touch $i/__init__.py
@@ -262,6 +270,7 @@ done
 
 ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
 	%buildroot%sphinx3_dir/
+# There is some objects.inv there already; probably, we want to update it:
 ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
 	%buildroot%sphinx3_dir/tests/
 
@@ -277,7 +286,7 @@ popd
 
 # tests
 
-cp -fR tests %buildroot%sphinx_dir/
+cp -R tests %buildroot%sphinx_dir/
 for i in $(find %buildroot%sphinx_dir/tests -type d)
 do
 	touch $i/__init__.py
@@ -285,6 +294,7 @@ done
 
 ln -rs %buildroot%_datadir/python-sphinx/objects.inv \
 	%buildroot%sphinx_dir/
+# There is some objects.inv there already; probably, we want to update it:
 ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
 	%buildroot%sphinx_dir/tests/
 
@@ -294,7 +304,7 @@ install -d %buildroot%_docdir/%name
 #install -d %buildroot%_docdir/%name/pdf
 install -d %buildroot%_man1dir
 
-cp -fR doc/_build/html %buildroot%_docdir/%name/
+cp -R doc/_build/html %buildroot%_docdir/%name/
 #install -p -m644 doc/_build/latex/*.pdf %buildroot%_docdir/%name/pdf
 install -p -m644 AUTHORS CHANGES* EXAMPLES LICENSE README.rst \
 	%buildroot%_docdir/%name
@@ -323,7 +333,7 @@ install -p -m644 doc/_build/doctrees/*.pickle \
 	%buildroot%sphinx_dir/doctrees/
 install -p -m644 %oname/pycode/*.pickle \
 	%buildroot%sphinx_dir/pycode/
-cp -fR doc/_build/pickle %buildroot%sphinx_dir/
+cp -R doc/_build/pickle %buildroot%sphinx_dir/
 install -p -m644 conf.py.template \
 	%buildroot%sphinx_dir/
 
@@ -340,7 +350,7 @@ LIBSUF=64
 #install -d %buildroot%sphinx3_dir/doctrees
 #install -p -m644 doc/_build/doctrees/*.pickle \
 #	%buildroot%sphinx3_dir/doctrees/
-#cp -fR doc/_build/pickle %buildroot%sphinx3_dir/
+#cp -R doc/_build/pickle %buildroot%sphinx3_dir/
 install -p -m644 conf.py.template \
 	%buildroot%sphinx3_dir/
 #popd
@@ -348,8 +358,20 @@ install -p -m644 conf.py.template \
 
 #check
 # test_autosummary work only with installed Sphinx
-#rm -f tests/test_autosummary.py
+#rm tests/test_autosummary.py
 #make test
+
+mkdir -p %buildroot%_rpmlibdir
+cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
+# %name dirlist for %_rpmlibdir/files.req
+%sphinx_dir	%name
+EOF
+%if_with python3
+cat <<\EOF >%buildroot%_rpmlibdir/python3-module-%oname-files.req.list
+# python3-module-%oname dirlist for %_rpmlibdir/files.req
+%sphinx3_dir	python3-module-%oname
+EOF
+%endif
 
 %files
 %_bindir/*
@@ -364,12 +386,12 @@ install -p -m644 conf.py.template \
 %files devel
 
 %files pickles
-%dir %sphinx_dir/
+#dir %sphinx_dir/
 %sphinx_dir/pickle
 %sphinx_dir/doctrees
 
 %files tests
-%dir %sphinx_dir/
+#dir %sphinx_dir/
 %sphinx_dir/tests
 %sphinx_dir/tests
 
@@ -378,6 +400,7 @@ install -p -m644 conf.py.template \
 
 %files -n rpm-macros-sphinx
 %_rpmmacrosdir/sphinx
+%_rpmlibdir/%name-files.req.list
 
 %if_with python3
 %files -n python3-module-%oname
@@ -391,19 +414,30 @@ install -p -m644 conf.py.template \
 %files -n python3-module-%oname-devel
 
 #files -n python3-module-%oname-pickles
-#%dir %sphinx3_dir/
+#dir %sphinx3_dir/
 #%sphinx3_dir/pickle
 #%sphinx3_dir/doctrees
 
 %files -n python3-module-%oname-tests
-%dir %sphinx3_dir/
+#dir %sphinx3_dir/
 %sphinx3_dir/tests
 
 %files -n rpm-macros-sphinx3
 %_rpmmacrosdir/sphinx3
+%_rpmlibdir/python3-module-%oname-files.req.list
 %endif
 
 %changelog
+* Sat Mar  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt5.a0.git20150813
+- rpm-macros-* shouldn't have a formal dep on the main pkg (via %%sphinx_dir);
+  the guarantee of compatibility is given by other formal deps
+  (of the main pkgs on EVR of the macros pkg; see RPM Macros Packaging Policy
+  and https://lists.altlinux.org/pipermail/devel/2016-March/201042.html).
+- Declare with a *-files.req.list that we own %%sphinx{,3}_dir
+  (just in case other pkgs happen to need to do something inside it).
+- (.spec) When the various subpkgs owned %%sphinx_dir, too,
+  this caused unwanted installation of them by APT/hsh for %%sphinx_dir.
+
 * Thu Mar 03 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt4.a0.git20150813
 - rpm-macros-sphinx{,3}: save the real path %%__sphinx{,3}_dir
   (when built) and require it (when used).
