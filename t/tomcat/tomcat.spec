@@ -1,7 +1,9 @@
-%define _libexecdir %{_prefix}/libexec
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
+# fc script use systemctl calls -- gives dependency on systemctl :(
+%add_findreq_skiplist %{_sbindir}/tomcat
+%define _libexecdir %_prefix/libexec
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 %filter_from_requires /^java-headless/d
@@ -9,7 +11,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 8.0.26
+%define version 8.0.32
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -43,11 +45,14 @@ BuildRequires: jpackage-generic-compat
 %global jspspec 2.3
 %global major_version 8
 %global minor_version 0
-%global micro_version 26
+%global micro_version 32
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 3.1
 %global elspec 3.0
 %global tcuid 91
+#Recommended version is specified in java/org/apache/catalina/core/AprLifecycleListener.java
+%global native_version 1.1.33
+
 
 # FHS 2.3 compliant tree structure - http://www.pathname.com/fhs/2.3/
 %global basedir %{_var}/lib/%{name}
@@ -66,7 +71,7 @@ BuildRequires: jpackage-generic-compat
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt2_1jpp8
+Release:       alt1_4jpp8
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         System/Servers
@@ -81,7 +86,6 @@ Source6:       %{name}-%{major_version}.%{minor_version}-digest.script
 Source7:       %{name}-%{major_version}.%{minor_version}-tool-wrapper.script
 Source8:       servlet-api-OSGi-MANIFEST.MF
 Source9:       jsp-api-OSGi-MANIFEST.MF
-Source10:      %{name}-%{major_version}.%{minor_version}-log4j.properties
 Source11:      %{name}-%{major_version}.%{minor_version}.service
 Source12:      el-api-OSGi-MANIFEST.MF
 Source13:      jasper-el-OSGi-MANIFEST.MF
@@ -109,7 +113,6 @@ BuildRequires: apache-commons-pool
 BuildRequires: tomcat-taglibs-standard
 BuildRequires: jpackage-utils >= 0:1.7.0
 BuildRequires: junit
-BuildRequires: log4j
 BuildRequires: geronimo-jaxrpc
 BuildRequires: wsdl4j
 Requires:      apache-commons-daemon
@@ -120,8 +123,14 @@ Requires:      apache-commons-pool
 Requires:      jpackage-utils
 Requires:      procps
 Requires:      %{name}-lib = %{epoch}:%{version}
+Requires:    tomcat-native >= %{native_version}
 Requires(pre):    shadow-utils
+
+# added after log4j sub-package was removed
+Provides:         %{name}-log4j = %{epoch}:%{version}-%{release}
 Source44: import.info
+Source45: tomcat.init
+Source46: tomcat-sysv.wrapper
 
 %description
 Tomcat is the servlet container that is used in the official Reference
@@ -179,14 +188,6 @@ Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}
 
 %description jsp-%{jspspec}-api
 Apache Tomcat JSP API implementation classes.
-
-%package log4j
-Group: Networking/WWW
-Summary: Log4j support for Apache Tomcat
-Requires: log4j
-
-%description log4j
-Log4j support for Apache Tomcat
 
 %package lib
 Group: Development/Java
@@ -327,6 +328,8 @@ zip -u output/build/bin/tomcat-juli.jar META-INF/MANIFEST.MF
 %{__install} -d -m 0755 ${RPM_BUILD_ROOT}%{bindir}
 %{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{confdir}
 %{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{confdir}/Catalina/localhost
+%{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{confdir}/conf.d
+/bin/echo "Place your custom *.conf files here. Shell expansion is supported." > ${RPM_BUILD_ROOT}%{confdir}/conf.d/README
 %{__install} -d -m 0755 ${RPM_BUILD_ROOT}%{libdir}
 %{__install} -d -m 0775 ${RPM_BUILD_ROOT}%{logdir}
 /bin/touch ${RPM_BUILD_ROOT}%{logdir}/catalina.out
@@ -344,7 +347,6 @@ zip -u output/build/bin/tomcat-juli.jar META-INF/MANIFEST.MF
 # First copy supporting libs to tomcat lib
 pushd output/build
     %{__cp} -a bin/*.{jar,xml} ${RPM_BUILD_ROOT}%{bindir}
-    %{__cp} %{SOURCE10} conf/log4j.properties
     %{__cp} -a conf/*.{policy,properties,xml} ${RPM_BUILD_ROOT}%{confdir}
     %{__cp} -a lib/*.jar ${RPM_BUILD_ROOT}%{libdir}
     %{__cp} -a webapps/* ${RPM_BUILD_ROOT}%{appdir}
@@ -420,7 +422,6 @@ pushd ${RPM_BUILD_ROOT}%{libdir}
     %{__ln_s} $(build-classpath apache-commons-collections) commons-collections.jar
     %{__ln_s} $(build-classpath apache-commons-dbcp) commons-dbcp.jar
     %{__ln_s} $(build-classpath apache-commons-pool) commons-pool.jar
-    %{__ln_s} $(build-classpath log4j) log4j.jar
     %{__ln_s} $(build-classpath ecj) jasper-jdt.jar
 
     # Temporary copy the juli jar here from /usr/share/java/tomcat (for maven depmap)
@@ -447,8 +448,10 @@ popd
 # Allow linking for example webapp
 %{__mkdir_p} ${RPM_BUILD_ROOT}%{appdir}/examples/META-INF
 pushd ${RPM_BUILD_ROOT}%{appdir}/examples/META-INF
-echo '<?xml version="1.0" encoding="UTF-8"?>'>context.xml
-echo '<Context allowLinking="true"/>'>>context.xml
+echo '<?xml version="1.0" encoding="UTF-8"?>' > context.xml
+echo '<Context>' >> context.xml
+echo '  <Resources allowLinking="true" />' >> context.xml
+echo '</Context>' >> context.xml
 popd
 
 pushd ${RPM_BUILD_ROOT}%{appdir}/examples/WEB-INF/lib
@@ -527,12 +530,14 @@ EOF
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/elspec_tomcat-el-3.0-api<<EOF
 %{_javadir}/elspec.jar	%{_javadir}/%{name}-el-%{elspec}-api.jar	20300
 EOF
+install -D -m 755 %{S:45} %buildroot%_initdir/%name
+install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 
 
 %pre
 %{_sbindir}/groupadd -g %{tcuid} -r tomcat 2>/dev/null || :
 %{_sbindir}/useradd -c "Apache Tomcat" -u %{tcuid} -g tomcat \
-    -s /bin/nologin -r -d %{apphomedir} tomcat 2>/dev/null || :
+    -s /sbin/nologin -r -d %{apphomedir} tomcat 2>/dev/null || :
 
 %post
 %post_service %{name}
@@ -542,7 +547,7 @@ EOF
 %preun_service %{name}
 
 %files 
-%defattr(0664,root,tomcat,0755)
+%defattr(0644,root,tomcat,0755)
 %attr(0755,root,root) %doc {LICENSE,NOTICE,RELEASE*}
 %attr(0755,root,root) %{_bindir}/%{name}-digest
 %attr(0755,root,root) %{_bindir}/%{name}-tool-wrapper
@@ -560,35 +565,37 @@ EOF
 %attr(0755,root,tomcat) %dir %{confdir}
 %defattr(0664,tomcat,root,0770)
 %attr(0770,tomcat,root) %dir %{logdir}
-%defattr(0664,root,tomcat,0770)
-%attr(0660,tomcat,tomcat) %{logdir}/catalina.out
+%defattr(0644,root,tomcat,0770)
+%attr(0640,tomcat,tomcat) %{logdir}/catalina.out
 %attr(0644,tomcat,tomcat) %{_var}/run/%{name}.pid
 %attr(0770,root,tomcat) %dir %{cachedir}
 %attr(0770,root,tomcat) %dir %{tempdir}
 %attr(0770,root,tomcat) %dir %{workdir}
-%defattr(0664,root,tomcat,0775)
+%defattr(0644,root,tomcat,0775)
 %attr(0775,root,tomcat) %dir %{appdir}
 %attr(0775,root,tomcat) %dir %{confdir}/Catalina
 %attr(0775,root,tomcat) %dir %{confdir}/Catalina/localhost
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/%{name}.conf
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/*.policy
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/*.properties
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/context.xml
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/server.xml
-%attr(0660,tomcat,tomcat) %config(noreplace) %{confdir}/tomcat-users.xml
-%attr(0664,tomcat,tomcat) %config(noreplace) %{confdir}/web.xml
+%attr(0775,root,tomcat) %dir %{confdir}/conf.d
+%attr(0644,tomcat,tomcat) %{confdir}/conf.d/README
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/%{name}.conf
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/*.policy
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/*.properties
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/context.xml
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/server.xml
+%attr(0640,tomcat,tomcat) %config(noreplace) %{confdir}/tomcat-users.xml
+%attr(0644,tomcat,tomcat) %config(noreplace) %{confdir}/web.xml
 %attr(0755,root,root) %dir %{apphomedir}
 %{_tmpfilesdir}/%{name}.conf
-%attr(0644,root,root) %{bindir}/bootstrap.jar
-%attr(0644,root,root) %{bindir}/catalina-tasks.xml
+%{bindir}/bootstrap.jar
+%{bindir}/catalina-tasks.xml
 %{apphomedir}/lib
 %{apphomedir}/temp
 %{apphomedir}/webapps
 %{apphomedir}/work
 %{apphomedir}/logs
 %{apphomedir}/conf
-
-%exclude %{confdir}/log4j.properties
+%attr(0755,root,root) %_initdir/%name
+%attr(0755,root,root) %_sbindir/%{name}-sysv
 %attr(0755,root,root) %dir %{bindir}
 
 %files admin-webapps
@@ -606,11 +613,6 @@ EOF
 %_altdir/jsp_tomcat-jsp-2.3-api
 %{_javadir}/%{name}-jsp-%{jspspec}*.jar
 
-%files log4j
-%defattr(0664,root,tomcat,0755)
-%config(noreplace) %{confdir}/log4j.properties
-%{libdir}/log4j.jar
-
 %files lib -f output/dist/src/res/maven/.mfiles-tomcat-lib
 %{libdir}
 %{bindir}/tomcat-juli.jar
@@ -627,7 +629,6 @@ EOF
 %{_mavenpomdir}/JPP.%{name}-tomcat-jdbc.pom
 %{_datadir}/maven-metadata/tomcat.xml
 %exclude %{libdir}/%{name}-el-%{elspec}-api.jar
-%exclude %{libdir}/log4j.jar
 
 %files servlet-%{servletspec}-api -f output/dist/src/res/maven/.mfiles-tomcat-servlet-api
 %_altdir/servlet_tomcat-servlet-3.1-api
@@ -651,6 +652,9 @@ EOF
 %attr(0644,root,root) %{_unitdir}/%{name}-jsvc.service
 
 %changelog
+* Sat Mar 05 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.32-alt1_4jpp8
+- new version
+
 * Fri Feb 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.26-alt2_1jpp8
 - fixed relative links in CATALINA_HOME
 
