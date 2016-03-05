@@ -1,5 +1,5 @@
 Name: sdparm
-Version: 1.09
+Version: 1.10
 Release: alt1
 
 Summary: Utility for listing and changing SCSI disk parameters
@@ -52,6 +52,9 @@ cp -a %SOURCE1 .
 %doc AUTHORS CREDITS ChangeLog README notes.txt sdparm.html
 
 %changelog
+* Sat Mar 05 2016 Michael Shigorin <mike@altlinux.org> 1.10-alt1
+- new version (watch file uupdate)
+
 * Sun Mar 22 2015 Michael Shigorin <mike@altlinux.org> 1.09-alt1
 - new version (watch file uupdate)
 
