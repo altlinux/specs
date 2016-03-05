@@ -1,6 +1,6 @@
 Name: repocop-report-distrodb
-Version: 0.18
-Release: alt3
+Version: 0.19
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -39,6 +39,9 @@ ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 #%_man1dir/repocop-report-prometeus-*
 
 %changelog
+* Sat Mar 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- libsocket-devel support
+
 * Sat Jan 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.18-alt3
 - bugfixes
 
