@@ -1,5 +1,5 @@
 Name: tvtime
-Version: 1.0.8
+Version: 1.0.10
 Release: alt1
 
 Summary: A high quality TV viewer
@@ -54,7 +54,8 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
 %config(noreplace) %_sysconfdir/%name/*
 %_bindir/*
 %_datadir/%name
-%_datadir/pixmaps/%name.*
+#_datadir/pixmaps/%name.*
+%_datadir/appdata/tvtime.appdata.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %_man1dir/*.1*
@@ -62,6 +63,11 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
 %_mandir/*/man?/*.*
 
 %changelog
+* Sat Mar 05 2016 Michael Shigorin <mike@altlinux.org> 1.0.10-alt1
+- new version (watch file uupdate)
+  + dropped pixmap
+  + added appdata
+
 * Fri Oct 30 2015 Michael Shigorin <mike@altlinux.org> 1.0.8-alt1
 - 1.0.8
 - updated source url
