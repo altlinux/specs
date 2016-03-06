@@ -1,7 +1,7 @@
 %define ver_major 0.4
 
 Name: orc
-Version: %ver_major.24
+Version: %ver_major.25
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -10,7 +10,8 @@ License: BSD
 URL: http://code.entropywave.com/projects/orc/
 
 # VCS: git://anongit.freedesktop.org/gstreamer/orc
-Source: %name-%version.tar
+Source: https://gstreamer.freedesktop.org/src/orc/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 BuildRequires: gtk-doc valgrind-devel
 BuildRequires: glib2-devel >= 2.10.0
@@ -132,6 +133,9 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Mon Mar 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.25-alt1
+- 0.4.25
+
 * Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.24-alt1
 - 0.4.24
 
