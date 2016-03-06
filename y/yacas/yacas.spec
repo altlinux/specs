@@ -1,5 +1,5 @@
 Name: yacas
-Version: 1.3.6
+Version: 1.4.1
 Release: alt1
 
 Summary: Yet Another Computer Algebra System
@@ -49,6 +49,8 @@ YACAS intro, algos, coding, essays and reference manuals
 
 %prep
 %setup
+# https://sourceforge.net/p/yacas/tickets/96/
+touch README
 
 %build
 %autoreconf
@@ -83,6 +85,14 @@ rm -rf %buildroot%_datadir/%name/include
 # - JavaYacas?
 
 %changelog
+* Sun Mar 06 2016 Michael Shigorin <mike@altlinux.org> 1.4.1-alt1
+- new version (watch file uupdate)
+
+* Sat Mar 05 2016 Michael Shigorin <mike@altlinux.org> 1.4.0-alt1
+- new version (watch file uupdate)
+  + repackaged tarball from zipfile, see also
+    https://sourceforge.net/p/yacas/tickets/95/
+
 * Sun Mar 22 2015 Michael Shigorin <mike@altlinux.org> 1.3.6-alt1
 - new version (watch file uupdate)
 - added shared library subpackage
