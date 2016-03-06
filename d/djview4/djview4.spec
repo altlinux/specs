@@ -1,5 +1,5 @@
 Name: djview4
-Version: 4.10.5
+Version: 4.10.6
 Release: alt1
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
@@ -106,6 +106,9 @@ ln -s %buildroot%_bindir/djview4 djview
 %_mandir/man?/nsdejavu*
 
 %changelog
+* Sun Mar 06 2016 Andrey Bergman <vkni@altlinux.org> 4.10.6-alt1
+- Updated to 4.10.6.
+
 * Mon Jan 11 2016 Andrey Bergman <vkni@altlinux.org> 4.10.5-alt1
 - Updated to 4.10.5.
 
