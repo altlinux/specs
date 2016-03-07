@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ia
 Summary: Interlingua hunspell dictionaries
-%define upstreamid 20050226
+%global upstreamid 20050226
 Version: 0.%{upstreamid}
-Release: alt2_12
-Group: Text tools
+Release: alt2_13
 Source: http://download.savannah.gnu.org/releases/interlingua/ia_myspell.zip
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries#Interlingua_.28x-register.29
 License: LGPLv2+
@@ -30,11 +30,15 @@ mv -f README_ia.txt.new README_ia.txt
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p ia.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README_ia.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050226-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050226-alt2_12
 - update to new release by fcimport
 
