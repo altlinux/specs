@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(ExtUtils/MakeMaker.pm) perl(Imager.pm) perl(Math/Complex.pm) perl(Time/HiRes.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Imager.pm) perl(Math/Complex.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-Symbolic
 Version:        0.612
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Symbolic calculations
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -62,6 +62,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_7
 - update to new release by fcimport
 
