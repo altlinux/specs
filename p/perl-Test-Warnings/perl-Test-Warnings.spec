@@ -1,16 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
+%define fedora 23
 Name:		perl-Test-Warnings
 Version:	0.026
-Release:	alt1
+Release:	alt1_2
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Warnings
-Source:	http://www.cpan.org/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/Test-Warnings-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -25,16 +25,19 @@ BuildRequires:	perl(parent.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(warnings.pm)
 # Test Suite
-BuildRequires:	perl(CPAN/Meta/Check.pm)
-BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
-BuildRequires:	perl(CPAN/Meta/Requirements.pm)
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(if.pm)
+BuildRequires:	perl(lib.pm)
 BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Test/Tester.pm)
 # Optional Tests
 BuildRequires:	perl(CPAN/Meta.pm)
+%if 0%{?fedora} || 0%{?rhel} > 7
+BuildRequires:	perl(CPAN/Meta/Check.pm)
+%endif
+BuildRequires:	perl(CPAN/Meta/Prereqs.pm)
+BuildRequires:	perl(CPAN/Meta/Requirements.pm)
 BuildRequires:	perl(PadWalker.pm)
 # Runtime
 Requires:	perl(Carp.pm)
@@ -83,6 +86,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1_2
+- update to new release by fcimport
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
 - automated CPAN update
 
