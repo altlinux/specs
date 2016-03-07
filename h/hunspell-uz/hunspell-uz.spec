@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Encode.pm)
 # END SourceDeps(oneline)
 Name: hunspell-uz
 Summary: Uzbek hunspell dictionaries
 Version: 0.6
-Release: alt2_11
+Release: alt2_12
 Source0: http://www-user.uni-bremen.de/~kmashrab/uzbek-word-list/uzbek-wordlist-%{version}.tar.bz2
-Group: Text tools
 URL: http://www-user.uni-bremen.de/~kmashrab/uzbek-word-list
 License: GPLv2+
 BuildArch: noarch
@@ -29,11 +29,15 @@ cp -p README ../README.hunspell
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p hunspell/uz_UZ* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 
+
 %files
 %doc ChangeLog Copyright README README.hunspell COPYING TODO
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_11
 - update to new release by fcimport
 
