@@ -1,29 +1,26 @@
-%define _unpackaged_files_terminate_build 1
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-MySQL
 Version:        0.06
-Release:        alt1
+Release:        alt1_1
 Summary:        Parse and format MySQL dates and times
-Group:          Development/Perl
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/DateTime-Format-MySQL
-Source:        http://www.cpan.org/authors/id/X/XM/XMIKEW/DateTime-Format-MySQL-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/X/XM/XMIKEW/DateTime-Format-MySQL-%{version}.tar.gz
 BuildArch:      noarch
-# Module Build
+# Build
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
-# Module Runtime
+# Runtime
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Format/Builder.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(vars.pm)
-# Test Suite
+# Tests only
 BuildRequires:  perl(Test/More.pm)
-# Runtime
-Requires:       perl(DateTime/Format/Builder.pm)
 Source44: import.info
 
 %description
@@ -47,15 +44,14 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build test
 
 %files
-%if 0%{?_licensedir:1}
 %doc LICENSE
-%else
-%doc LICENSE
-%endif
 %doc Changes README
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
