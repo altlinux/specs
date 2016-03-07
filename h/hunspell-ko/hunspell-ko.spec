@@ -1,9 +1,9 @@
+Group: Text tools
 Name: hunspell-ko
 Summary: Korean hunspell dictionaries
 Version: 0.5.5
-Release: alt1_8
+Release: alt1_9
 Source: http://spellcheck-ko.googlecode.com/files/hunspell-dict-ko-%{version}.tar.gz
-Group: Text tools
 URL: http://code.google.com/p/spellcheck-ko/
 License: MPLv1.1 or GPLv2 or LGPLv2
 BuildArch: noarch
@@ -28,11 +28,15 @@ cp -p ko.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ko_KR.dic
 %check
 make test
 
+
 %files
 %doc README LICENSE LICENSE.GPL LICENSE.LGPL LICENSE.MPL
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_9
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_8
 - update to new release by fcimport
 
