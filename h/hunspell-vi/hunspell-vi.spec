@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-vi
 Summary: Vietnamese hunspell dictionaries
-%define upstreamid 20080604
+%global upstreamid 20080604
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://hunspell-spellcheck-vi.googlecode.com/files/vi_VN.zip
-Group: Text tools
 URL: http://code.google.com/p/hunspell-spellcheck-vi
 License: GPL+
 BuildArch: noarch
@@ -27,11 +27,15 @@ Vietnamese hunspell dictionaries.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README_vi_VN.txt Copyright
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080604-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080604-alt2_11
 - update to new release by fcimport
 
