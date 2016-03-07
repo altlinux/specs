@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-zu
 Summary: Zulu hunspell dictionaries
-%define upstreamid 20100126
+%global upstreamid 20100126
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/46490/zulu__south_africa__dictionary-20100125-fx+tb.xpi
-Group: Text tools
 URL: http://www.translate.org.za/
 License: GPLv3+
 BuildArch: noarch
@@ -38,12 +38,16 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/zu-ZA.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/zu.aff
 cp -p dictionaries/zu-ZA.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/zu.dic
 
+
 %files
 %doc README-zu-ZA.txt
 
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20100126-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20100126-alt2_11
 - update to new release by fcimport
 
