@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Benchmark.pm) perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(Getopt/Long.pm) perl(HTML/TokeParser.pm) perl(IO/All.pm) perl(LWP.pm) perl(Pod/Usage.pm) perl(Test/Run/CmdLine/Iface.pm) perl(Time/HiRes.pm) perl-devel perl-podlators
+BuildRequires: perl(Devel/Size.pm) perl(File/Find/Object.pm) perl(HTML/TokeParser.pm) perl(IO/All.pm) perl(LWP.pm) perl(Pod/Usage.pm) perl(Test/Run/CmdLine/Iface.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %filter_from_requires /^perl.Graph.Easy.As_svg/d
 # fedora bcond_with macro
@@ -11,7 +11,7 @@ BuildRequires: perl(Benchmark.pm) perl(Devel/Size.pm) perl(File/Find/Object.pm) 
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 Name:           perl-Graph-Easy
 Version:        0.75
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Convert or render graphs as ASCII, HTML, SVG or via Graphviz
 License:        GPLv2+ and ASL 1.1
 Group:          Development/Perl
@@ -90,6 +90,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1_3
 - update to new release by fcimport
 
