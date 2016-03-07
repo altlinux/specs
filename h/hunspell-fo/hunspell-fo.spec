@@ -1,9 +1,9 @@
+Group: Text tools
 Name: hunspell-fo
 Summary: Faroese hunspell dictionaries
 Version: 0.4.2
-Release: alt1_4
+Release: alt1_5
 Source: http://fo.speling.org/filer/myspell-fo-%{version}.tar.bz2
-Group: Text tools
 URL: http://fo.speling.org/
 License: GPLv2+
 BuildArch: noarch
@@ -34,11 +34,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README Copyright contributors COPYING
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_5
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt1_4
 - update to new release by fcimport
 
