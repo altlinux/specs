@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt1.b1.1
+Release: alt2.b1
 
 Summary: Demonstration and testing contexts for PyOpenGL
 
@@ -29,7 +29,8 @@ BuildArch: noarch
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-module-setuptools python3-devel
-#BuildPreReq: libnumpy-py3-devel python-tools-2to3
+#BuildPreReq: libnumpy-py3-devel
+BuildPreReq: python-tools-2to3
 %endif
 
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
@@ -100,8 +101,8 @@ This package contains tests for %name.
 %setup -n %oname-%version%pre
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -109,6 +110,7 @@ find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %if_with python3
 pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 popd
 %endif
@@ -140,6 +142,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.0-alt2.b1
+- NMU: added python-tools-2to3 to BRs.
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 2.3.0-alt1.b1.1
 - NMU: Use buildreq for BR.
 

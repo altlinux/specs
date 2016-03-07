@@ -2,17 +2,16 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.1
-Release: alt1.1
+Version: 1.2.3
+Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
 
 License: %asl
 Group: Development/Python
 Url: https://pypi.python.org/pypi/cryptography/
-
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://pypi.python.org/packages/source/c/cryptography/cryptography-0.5.2.tar.gz
+Packager: Vladimir Didenko <cow@altlinux.org>
+# Source-url: https://pypi.python.org/packages/source/c/cryptography/%oname-%version.tar.gz
 Source: %oname-%version.tar
 
 #BuildPreReq: rpm-build-python rpm-build-licenses
@@ -100,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.3-alt1
+- NMU: 1.2.1 -> 1.2.3 (fixes FTBFS).
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1.1
 - NMU: Use buildreq for BR.
 

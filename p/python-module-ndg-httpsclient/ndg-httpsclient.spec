@@ -4,13 +4,13 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1.1
+Release: alt2
 
 Summary: Provides enhanced HTTPS support for httplib and urllib2 using PyOpenSSL
 License: BSD
 Group: Development/Python
-
 Url: https://pypi.python.org/pypi/ndg-httpsclient/
+Packager: Python Development Team <python@packages.altlinux.org>
 
 Source: %name-%version.tar
 
@@ -27,8 +27,8 @@ BuildRequires(pre): rpm-build-python3
 Requires: python-module-ndg = %EVR
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
-BuildRequires: python-module-epydoc python-module-html5lib python3-module-setuptools rpm-build-python3 time
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-pytz python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base
+BuildRequires: python-module-epydoc python-module-setuptools python-module-html5lib python3-module-setuptools rpm-build-python3 time
 
 %description
 This is a HTTPS client implementation for httplib and urllib2 based on
@@ -103,6 +103,7 @@ This package contains core module of ndg.
 %setup
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 %endif
 
@@ -189,6 +190,9 @@ rm -f documentation/Makefile
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt2
+- NMU: added python-module-setuptools to BRs.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1.1
 - NMU: Use buildreq for BR.
 

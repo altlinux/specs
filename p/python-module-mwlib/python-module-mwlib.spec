@@ -2,15 +2,13 @@
 
 Name: python-module-mwlib
 Version: 0.15.14
-Release: alt1.1
+Release: alt1.2
 
 Summary: MediaWiki conversion library for Python
-
 Group: Development/Python
 License: BSD
 Url: http://pypi.python.org/pypi/%modulename
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Packager: Vitaly Lipatov <lav@altlinux.org>
 
 # Source-url: https://pypi.python.org/packages/source/m/mwlib/mwlib-%version.zip
 Source: %name-%version.tar
@@ -24,6 +22,7 @@ BuildRequires: rpm-build-python
 BuildRequires: gcc-c++ re2c python-devel >= 2.5 python-module-docutils
 BuildRequires: python-module-flup python-module-odfpy
 BuildRequires: python-module-pyparsing python-module-simplejson python-module-imaging
+BuildRequires: python-module-setuptools
 Requires: python-module-twisted-core >= 8.2.0 python-module-twisted-web >= 8.2.0
 Requires: python-module-flup >= 1.0 python-module-qserve
 
@@ -81,6 +80,9 @@ install -m 0640 -- mwserve.logrotate %buildroot%_sysconfdir/logrotate.d/mwserve
 
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.15.14-alt1.2
+- NMU: added python-module-setuptools to BRs.
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.15.14-alt1.1
 - bugfixes for perl 5.22
 

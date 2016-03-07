@@ -4,21 +4,19 @@
 
 Name: python-module-%module_name
 Version: 2.0.5
-Release: alt1.1
+Release: alt2
 
 Summary: Library to implement a well-behaved Unix daemon process
-
-
 License: Apache-2
 Group: Development/Python
 Url: http://pypi.python.org/pypi/python-daemon/
-
+Packager: Python Development Team <python@packages.altlinux.org>
 Source: python-%module_name-%version.tar
 
 BuildArch: noarch
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-docutils python-module-html5lib python3-module-html5lib python3-module-sphinx rpm-build-python3
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-docutils python-module-html5lib python-modules-json python-module-setuptools python3-module-html5lib python3-module-sphinx rpm-build-python3
 
 #BuildRequires: python-module-setuptools
 #BuildRequires: python-module-lockfile > 0.10 python-module-json python-module-docutils
@@ -47,6 +45,7 @@ Library to implement a well-behaved Unix daemon process.
 %setup
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 %endif
 
@@ -82,6 +81,9 @@ popd
 
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.5-alt2
+- NMU: added python-modules-json and python-module-setuptools to BRs.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.5-alt1.1
 - NMU: Use buildreq for BR.
 

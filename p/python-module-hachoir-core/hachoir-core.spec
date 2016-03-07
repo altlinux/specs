@@ -5,14 +5,14 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt2.hg20140628.1
+Release: alt3.hg20140628
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
 Group: Development/Python
 License: GPLv2
 Url: http://bitbucket.org/haypo/hachoir/wiki/hachoir-core
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 # hg clone https://bitbucket.org/haypo/hachoir
 Source: %oname-%version.tar
@@ -21,14 +21,15 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python
 #BuildPreReq: python-devel python-module-docutils
 #BuildPreReq: python-module-setuptools python-module-PyQt4
+# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
+# optimized out: libqt4-core python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-sip python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-xml python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
+BuildRequires: python-module-PyQt4 python-module-docutils python-module-html5lib python-module-setuptools python3-module-html5lib python3-module-sphinx rpm-build-python3 time
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: libqt4-core python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-sip python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-xml python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-pytz python3-module-setuptools python3-module-snowballstemmer
-BuildRequires: python-module-PyQt4 python-module-docutils python-module-html5lib python3-module-html5lib python3-module-sphinx rpm-build-python3 time
-
+BuildRequires: python-tools-2to3
 #BuildRequires: python3-devel python3-module-docutils
-#BuildPreReq: python3-module-setuptools python-tools-2to3
+#BuildPreReq: python3-module-setuptools
 #BuildPreReq: python3-module-PyQt4
 %endif
 
@@ -478,6 +479,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.3.4-alt3.hg20140628
+- NMU: added python-module-setuptools and python-tools-2to3 to BRs.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:1.3.4-alt2.hg20140628.1
 - NMU: Use buildreq for BR.
 
