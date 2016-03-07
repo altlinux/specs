@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-id
 Summary: Indonesian hyphenation rules
-%define upstreamid 20040812
+%global upstreamid 20040812
 Version: 0.%{upstreamid}
-Release: alt1_11
+Release: alt1_12
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_id_ID.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: GPL+
 BuildArch: noarch
@@ -28,11 +28,15 @@ chmod -x *
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc README_id_ID.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt1_12
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt1_11
 - update to new release by fcimport
 
