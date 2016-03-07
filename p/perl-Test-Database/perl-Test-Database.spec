@@ -4,7 +4,7 @@ BuildRequires: perl(DBD/mysql.pm) perl(Pod/Coverage/TrustPod.pm) perl(SQL/Statem
 # END SourceDeps(oneline)
 Name:           perl-Test-Database
 Version:        1.113
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -72,6 +72,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.113-alt1_3
 - update to new release by fcimport
 
