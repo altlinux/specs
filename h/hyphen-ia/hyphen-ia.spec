@@ -1,10 +1,10 @@
+Group: Text tools
 Name: hyphen-ia
 Summary: Interlingua hyphenation rules
-%define upstreamid 20050628
+%global upstreamid 20050628
 Version: 0.%{upstreamid}
-Release: alt1_10
+Release: alt1_11
 Source: http://www.ctan.org/get/language/hyphenation/iahyphen.tex
-Group: Text tools
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/iahyphen.html
 License: LPPL
 BuildArch: noarch
@@ -31,11 +31,15 @@ head -n 25 iahyphen.tex >> README
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_ia.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc README
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050628-alt1_11
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050628-alt1_10
 - update to new release by fcimport
 
