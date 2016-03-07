@@ -4,7 +4,7 @@ BuildRequires: perl(DynaLoader.pm) perl(Encode.pm) perl(Exporter.pm) perl(utf8.p
 # END SourceDeps(oneline)
 Name:           perl-String-Similarity
 Version:        1.04
-Release:        alt4_15.1
+Release:        alt4_16
 Summary:        Calculates the similarity of two strings
 License:        GPLv2+
 Group:          Development/Perl
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_archlib}/String*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.04-alt4_16
+- update to new release by fcimport
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.04-alt4_15.1
 - rebuild with new perl 5.22.0
 
