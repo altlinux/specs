@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-sr
 Summary: Serbian hunspell dictionaries
-%define upstreamid 20130330
+%global upstreamid 20130330
 Version: 0.%{upstreamid}
-Release: alt1_5
+Release: alt1_6
 Source: http://extensions.services.openoffice.org/e-files/ext/1572/10/dict-sr.oxt
-Group: Text tools
 URL: http://extensions.services.openoffice.org/project/dict-sr
 License: LGPLv3
 BuildArch: noarch
@@ -19,9 +19,9 @@ Source44: import.info
 Serbian hunspell dictionaries.
 
 %package -n hyphen-sr
+Group: Text tools
 Requires: libhyphen
 Summary: Serbian hyphenation rules
-Group: Text tools
 Provides: hyphen-bs = %{version}-%{release}
 
 %description -n hyphen-sr
@@ -66,6 +66,7 @@ for lang in $sh_YU_aliases; do
 done
 popd
 
+
 %files
 %doc registration/license*.txt
 %{_datadir}/myspell/*
@@ -75,6 +76,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130330-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130330-alt1_5
 - update to new release by fcimport
 
