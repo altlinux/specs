@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-nds
 Summary: Lowlands Saxon hunspell dictionaries
 Version: 0.1
-Release: alt2_11
+Release: alt2_12
 Source: http://downloads.sourceforge.net/aspell-nds/hunspell-nds-0.1.zip
-Group: Text tools
 URL: http://aspell-nds.sourceforge.net/
 License: GPLv2+
 BuildArch: noarch
@@ -34,11 +34,15 @@ for lang in $nds_DE_aliases; do
 done
 popd
 
+
 %files
 %doc README_nds.txt Copyright COPYING
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_11
 - update to new release by fcimport
 
