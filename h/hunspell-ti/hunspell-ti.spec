@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ti
 Summary: Tigrigna hunspell dictionaries
-%define upstreamid 20090911
+%global upstreamid 20090911
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Source: http://www.cs.ru.nl/~biniam/geez/dict/ti_ER.zip
-Group: Text tools
 URL: http://www.cs.ru.nl/~biniam/geez/index.php
 License: GPL+
 BuildArch: noarch
@@ -36,11 +36,15 @@ for lang in $ti_ER_aliases; do
         ln -s ti_ER.dic $lang.dic
 done
 
+
 %files
 %doc README.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090911-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090911-alt2_9
 - update to new release by fcimport
 
