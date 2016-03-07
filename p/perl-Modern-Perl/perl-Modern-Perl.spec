@@ -1,11 +1,11 @@
 Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-base perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Modern-Perl
 Version:        1.20150127
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -54,6 +54,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Modern/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.20150127-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.20150127-alt1_3
 - update to new release by fcimport
 
