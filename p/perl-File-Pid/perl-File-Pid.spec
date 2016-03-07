@@ -1,21 +1,33 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_17
+Release:        alt3_19
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/File-Pid/
 Source0:        http://www.cpan.org/authors/id/C/CW/CWEST/File-Pid-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Class/Accessor/Fast.pm)
+# Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Class/Accessor/Fast.pm)
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Tests only
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(Class/Accessor/Fast.pm) >= 0.19
+
+
 Source44: import.info
+%filter_from_requires /^perl\\(Class.Accessor.Fast.pm\\)$/d
 
 %description
 This software manages a pid file for you. It will create a pid file,
@@ -26,17 +38,12 @@ the pid file.
 %setup -q -n File-Pid-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -46,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_17
 - update to new release by fcimport
 
