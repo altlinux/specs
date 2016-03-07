@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-af
 Summary: Afrikaans hunspell dictionary
-%define upstreamid 20080825
+%global upstreamid 20080825
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://downloads.translate.org.za/spellchecker/afrikaans/myspell-af_ZA-0.%{upstreamid}.zip
-Group: Text tools
 URL: http://www.translate.org.za/
 License: LGPLv2+
 BuildArch: noarch
@@ -35,11 +35,15 @@ for lang in $af_ZA_aliases; do
 done
 popd
 
+
 %files
 %doc README_af_ZA.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080825-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080825-alt2_11
 - update to new release by fcimport
 
