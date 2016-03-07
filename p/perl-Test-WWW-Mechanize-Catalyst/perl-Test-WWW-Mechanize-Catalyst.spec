@@ -1,12 +1,12 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Catalyst/Controller.pm) perl(Catalyst/Plugin/Session.pm) perl(Catalyst/ScriptRunner.pm) perl(Catalyst/Test.pm) perl(Class/Load.pm) perl(Compress/Zlib.pm) perl(Config.pm) perl(Cwd.pm) perl(Encode.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(HTML/Entities.pm) perl(HTTP/Request/Common.pm) perl(IO/Socket/INET.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(POSIX.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Class/Load.pm) perl(Compress/Zlib.pm) perl(Config.pm) perl(Cwd.pm) perl(Encode.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(HTML/Entities.pm) perl(HTTP/Request/Common.pm) perl(IO/Socket/INET.pm) perl(JSON.pm) perl(MIME/Base64.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(POSIX.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(URI.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.60
-Release:        alt1_4
+Release:        alt1_5
 License:        GPL+ or Artistic
 
 Source0:        http://search.cpan.org/CPAN/authors/id/I/IL/ILMARI/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
@@ -79,6 +79,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1_4
 - update to new release by fcimport
 
