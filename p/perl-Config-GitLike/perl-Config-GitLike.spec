@@ -1,12 +1,12 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/Command.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Moose.pm)
 Name:           perl-Config-GitLike
 Version:        1.16
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Git-compatible config file parsing
 License:        GPL+ or Artistic
 
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1_3
 - update to new release by fcimport
 
