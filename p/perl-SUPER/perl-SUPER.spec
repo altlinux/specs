@@ -4,7 +4,7 @@ BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-SUPER
 Version:	1.20141117
-Release:	alt2_3
+Release:	alt2_4
 Summary:	Sane superclass method dispatcher
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/SUPER.pm
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_4
+- update to new release by fcimport
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.20141117-alt2_3
 - moved to Sisyphus
 
