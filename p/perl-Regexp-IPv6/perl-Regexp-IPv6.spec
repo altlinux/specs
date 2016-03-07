@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Regexp-IPv6
 Version:        0.03
-Release:        alt1_13
+Release:        alt1_15
 Summary:        Regular expression for IPv6 addresses
 License:        GPLv2+ or Artistic
 Group:          Development/Perl
@@ -24,14 +24,11 @@ Addresses" but ::. Any string not compliant with such RFC will be rejected.
 %setup -q -n Regexp-IPv6-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 # %{_fixperms} $RPM_BUILD_ROOT/*
@@ -44,6 +41,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1_13
 - update to new release by fcimport
 
