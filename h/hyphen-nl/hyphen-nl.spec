@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-nl
 Summary: Dutch hyphenation rules
-%define upstreamid 20050617
+%global upstreamid 20050617
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_nl_NL.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: GPLv2
 BuildArch: noarch
@@ -37,11 +37,15 @@ for lang in $nl_NL_aliases; do
         ln -s hyph_nl_NL.dic hyph_$lang.dic
 done
 
+
 %files
 %doc README_hyph_nl_NL.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_14
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050617-alt1_13
 - update to new release by fcimport
 
