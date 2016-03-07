@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-sl
 Summary: Slovenian hunspell dictionaries
-%define upstreamid 20070127
+%global upstreamid 20070127
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/sl_SI.zip
-Group: Text tools
 URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
 License: GPL+ or LGPLv2+
 BuildArch: noarch
@@ -28,11 +28,15 @@ chmod -x *
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README_sl_SI.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt2_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt2_13
 - update to new release by fcimport
 
