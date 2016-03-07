@@ -1,20 +1,42 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Carp.pm) perl(File/Compare.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(IO/CaptureOutput.pm) perl(Test/More.pm) perl-devel perl-podlators
+BuildRequires: perl(IO/CaptureOutput.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Assertions
 Version:        1.054
-Release:        alt2_18
+Release:        alt2_20
 Summary:        Simple set of building blocks for both unit and runtime testing
 License:        GPLv2
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Assertions/
 Source0:        http://www.cpan.org/authors/id/B/BB/BBC/Test-Assertions-%{version}.tar.gz
 BuildArch:      noarch
+# Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Compare.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(Getopt/Long.pm)
+# XXX: BuildRequires:  perl(IO::CaptureOutput)
 BuildRequires:  perl(Log/Trace.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(vars.pm)
+# Tests only
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(Getopt/Std.pm)
+BuildRequires:  perl(lib.pm)
+# Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+Requires:       perl(Carp.pm)
+Requires:       perl(File/Compare.pm)
+Requires:       perl(File/Spec.pm)
+Requires:       perl(IO/CaptureOutput.pm)
+Requires:       perl(Test/More.pm)
 Source44: import.info
 
 %description
@@ -30,26 +52,25 @@ unit tests, it generates output in the standard form for CPAN unit testing
 %setup -q -n Test-Assertions-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes COPYING README
+%doc COPYING
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_20
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.054-alt2_18
 - update to new release by fcimport
 
