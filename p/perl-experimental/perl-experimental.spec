@@ -4,7 +4,7 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-experimental
 Version:        0.016
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -16,7 +16,6 @@ Source1:        Makefile.PL
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 # Run-time:
@@ -55,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1_1
 - update to new release by fcimport
 
