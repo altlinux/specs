@@ -4,7 +4,7 @@ BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-ExtUtils-Typemaps-Default
 Version:        1.05
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Set of useful typemaps
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -15,7 +15,7 @@ BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/Typemaps.pm)
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Test/More.pm)
-Requires:       perl(ExtUtils/Typemaps.pm) >= 3.18-292
+Requires:       perl(ExtUtils/Typemaps.pm) >= 3.18
 
 # Filtering unversioned requires
 
@@ -56,6 +56,9 @@ sed -i 's/3.18_03/3.18/' Build.PL
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_5
 - update to new release by fcimport
 
