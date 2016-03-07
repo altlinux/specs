@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-pl
 Summary: Polish hunspell dictionaries
-%define upstreamid 20130130
+%global upstreamid 20130130
 Version: 0.%{upstreamid}
-Release: alt1_5
+Release: alt1_6
 Source: http://sjp.pl/slownik/ort/sjp-myspell-pl-%{upstreamid}.zip
-Group: Text tools
 URL: http://www.kurnik.pl/dictionary/
 License: LGPLv2+ or GPL+ or MPLv1.1 or CC-BY-SA
 BuildArch: noarch
@@ -28,11 +28,15 @@ unzip pl_PL.zip
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README_pl_PL.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_5
 - update to new release by fcimport
 
