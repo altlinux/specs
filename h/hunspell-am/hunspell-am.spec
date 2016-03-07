@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-am
 Summary: Amharic hunspell dictionaries
-%define upstreamid 20090704
+%global upstreamid 20090704
 Version: 0.%{upstreamid}
-Release: alt2_10
+Release: alt2_11
 Source: http://www.cs.ru.nl/~biniam/geez/dict/am_ET.zip
-Group: Text tools
 URL: http://www.cs.ru.nl/~biniam/geez/index.php
 License: GPL+
 BuildArch: noarch
@@ -30,11 +30,15 @@ mv -f README.txt.new README.txt
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p am_ET.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 
+
 %files
 %doc README.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090704-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090704-alt2_10
 - update to new release by fcimport
 
