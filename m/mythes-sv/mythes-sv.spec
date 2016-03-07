@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-sv
 Summary: Swedish thesaurus
 Version: 1.3
-Release: alt1_9
+Release: alt1_10
 Source: http://extensions.services.openoffice.org/files/934/3/SwedishThesaurus.oxt
-Group: Text tools
 URL: http://extensions.services.openoffice.org/project/SweThes
 License: MIT
 BuildArch: noarch
@@ -33,11 +33,15 @@ for lang in $sv_SE_aliases; do
 done
 popd
 
+
 %files
 %doc Info-en.txt
 %{_datadir}/mythes/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_9
 - update to new release by fcimport
 
