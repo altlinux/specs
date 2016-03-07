@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-it
 Summary: Italian hyphenation rules
-%define upstreamid 20071127
+%global upstreamid 20071127
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_it_IT.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: LGPLv2+
 BuildArch: noarch
@@ -35,11 +35,15 @@ for lang in $it_IT_aliases; do
         ln -s hyph_it_IT.dic "hyph_"$lang".dic"
 done
 
+
 %files
 %doc README_hyph_it_IT.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20071127-alt1_14
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20071127-alt1_13
 - update to new release by fcimport
 
