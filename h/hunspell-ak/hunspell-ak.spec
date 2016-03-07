@@ -1,11 +1,11 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ak
 Summary: Akan hunspell dictionaries
 Version: 0.6
-Release: alt2_10
-Group: Text tools
+Release: alt2_11
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/9978/akan_ns__mfuaasekyer__-%{version}-fx.xpi
 URL: http://kasahorow.org/content/akan-nsɛmfuaasekyerɛ
 #https://addons.mozilla.org/en-US/firefox/versions/license/73122
@@ -32,11 +32,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/ak-GH.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ak_GH.aff
 cp -p dictionaries/ak-GH.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ak_GH.dic
 
+
 %files
 %doc CREDITS
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_10
 - update to new release by fcimport
 
