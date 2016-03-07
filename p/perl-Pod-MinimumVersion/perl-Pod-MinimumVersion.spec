@@ -1,24 +1,37 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(FindBin.pm) perl(Pod/Simple/HTML.pm) perl(Scalar/Util.pm) perl(Smart/Comments.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-MinimumVersion
 Version:        50
-Release:        alt3_13
+Release:        alt3_15
 Summary:        Perl version for POD directives used
 License:        GPLv3+
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Pod-MinimumVersion/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Pod-MinimumVersion-%{version}.tar.gz
 BuildArch:      noarch
-# See Makefile.PL for dependencies; META.yml is out-dated.
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(strict.pm)
+# inc/my_pod2html not executed
+# Run-time:
+# Getopt::Long not used at tests
 BuildRequires:  perl(IO/String.pm)
 BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(overload.pm)
 BuildRequires:  perl(Pod/Parser.pm)
+BuildRequires:  perl(vars.pm)
 BuildRequires:  perl(version.pm)
-# Tests only
+# Tests:
 BuildRequires:  perl(Data/Dumper.pm)
+# Devel::FindRef not used
+# Devel::StackTrace not used
+BuildRequires:  perl(Exporter.pm)
+# Scalar::Util not used
 BuildRequires:  perl(Test.pm)
 Requires:       perl(IO/String.pm) >= 1.02
 # This module has been divided from perl-Perl-Critic-Pulp
@@ -34,25 +47,28 @@ it with pod2man etc.
 %setup -q -n Pod-MinimumVersion-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc Changes COPYING
+%doc COPYING
+%doc Changes
 %{perl_vendor_privlib}/*
 %{_bindir}/*
 %{_mandir}/man1/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 50-alt3_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 50-alt3_13
 - update to new release by fcimport
 
