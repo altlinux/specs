@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-la
 Summary: Latin hunspell dictionaries
-%define upstreamid 20130331
+%global upstreamid 20130331
 Version: 0.%{upstreamid}
-Release: alt1_5
-Group: Text tools
+Release: alt1_6
 Source: http://extensions.services.openoffice.org/e-files/ext/1141/3/dict-la_2013-03-31.oxt
 URL: http://extensions.services.openoffice.org/project/dict-la
 License: GPLv2+ and LGPLv2+
@@ -38,11 +38,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p la/la.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/la.dic
 cp -p la/la.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/la.aff
 
+
 %files
 %doc README_extension_owner-la.txt la/README_la.txt la/COPYING_*
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130331-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130331-alt1_5
 - update to new release by fcimport
 
