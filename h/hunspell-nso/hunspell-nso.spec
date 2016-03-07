@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-nso
 Summary: Northern Sotho hunspell dictionaries
-%define upstreamid 20091201
+%global upstreamid 20091201
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Source: http://extensions.services.openoffice.org/files/3139/1/dict-ns_ZA-2009.12.01.oxt
-Group: Text tools
 URL: http://www.translate.org.za/
 License: LGPLv2+
 BuildArch: noarch
@@ -38,11 +38,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p ns_ZA.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/nso_ZA.dic
 cp -p ns_ZA.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/nso_ZA.aff
 
+
 %files
 %doc README-ns_ZA.txt package-description.txt release-notes-ns_ZA.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091201-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091201-alt2_9
 - update to new release by fcimport
 
