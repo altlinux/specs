@@ -1,14 +1,14 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ur
 Summary: Urdu hunspell dictionaries
 Version: 0.64
-Release: alt2_10
+Release: alt2_11
 #http://urdudictionary.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=30004#DownloadId=74761
 #and click yes to agree to LGPLv2+, which stinks as a download-url :-(
 Source: UrduDictionary.xpi
-Group: Text tools
 URL: http://urdudictionary.codeplex.com
 License: LGPLv2+
 BuildArch: noarch
@@ -39,11 +39,15 @@ for lang in $ur_PK_aliases; do
 done
 popd
 
+
 %files
 %doc CREDITS
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.64-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.64-alt2_10
 - update to new release by fcimport
 
