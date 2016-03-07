@@ -1,18 +1,19 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Data/Dumper.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-AttributeHelpers
 Version:        0.25
-Release:        alt1
+Release:        alt1_1
 Summary:        Extended Moose attribute interfaces
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/MooseX-AttributeHelpers/
-Source:        http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-AttributeHelpers-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/MooseX-AttributeHelpers-%{version}.tar.gz
 
 BuildArch:      noarch
+Requires:       sed
+Requires:       perl
 
 BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Moose.pm)
@@ -37,6 +38,7 @@ used attribute helper methods for more specific types of data.
 %build
 %{__perl} Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
+sed -i '1s,#!perl,#!%{__perl},' t/*.t
 
 %install
 ./Build install --destdir=$RPM_BUILD_ROOT --create_packlist=0
@@ -51,6 +53,9 @@ used attribute helper methods for more specific types of data.
 %{perl_vendor_privlib}/MooseX*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - automated CPAN update
 
