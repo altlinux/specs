@@ -1,10 +1,10 @@
+Group: Text tools
 Name: hunspell-et
 Summary: Estonian hunspell dictionaries
-%define upstreamid 20030606
+%global upstreamid 20030606
 Version: 0.%{upstreamid}
-Release: alt2_14
+Release: alt2_15
 Source: http://www.meso.ee/~jjpp/speller/ispell-et_%{upstreamid}.tar.gz
-Group: Text tools
 URL: http://www.meso.ee/~jjpp/speller/
 License: LGPLv2+ and LPPL
 BuildArch: noarch
@@ -18,9 +18,9 @@ Source44: import.info
 Estonian hunspell dictionaries.
 
 %package -n hyphen-et
+Group: Text tools
 Requires: libhyphen
 Summary: Estonian hyphenation rules
-Group: Text tools
 
 %description -n hyphen-et
 Estonian hyphenation rules.
@@ -36,6 +36,7 @@ cp -p latin-1/et_EE.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_et.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_et_EE.dic
 
+
 %files
 %doc README COPYRIGHT ChangeLog
 %{_datadir}/myspell/*
@@ -46,6 +47,9 @@ cp -p hyph_et.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_et_EE.dic
 
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_14
 - update to new release by fcimport
 
