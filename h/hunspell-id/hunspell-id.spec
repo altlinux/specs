@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-id
 Summary: Indonesian hunspell dictionaries
-%define upstreamid 20040812
+%global upstreamid 20040812
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/id_ID.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries#Indonesian_.28Indonesia.29
 License: GPLv2
 BuildArch: noarch
@@ -28,11 +28,15 @@ chmod -x *
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README_id_ID.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040812-alt2_11
 - update to new release by fcimport
 
