@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ca
 Summary: Catalan hunspell dictionaries
 Version: 2.3
-Release: alt1_7
+Release: alt1_8
 Source: http://www.softcatala.org/diccionaris/actualitzacions/OOo/catalan.oxt
-Group: Text tools
 URL: http://www.softcatala.org/wiki/Projectes/Corrector_ortogràfic
 License: GPLv2+
 BuildArch: noarch
@@ -37,11 +37,15 @@ for lang in $ca_ES_aliases; do
 done
 popd
 
+
 %files
 %doc LICENSES-en.txt LLICENCIES-ca.txt       
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_7
 - update to new release by fcimport
 
