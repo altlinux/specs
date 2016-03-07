@@ -4,14 +4,13 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Class-Field
 Version:        0.23
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Class Field Accessor Generator
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Class-Field/
 Source0:        http://www.cpan.org/authors/id/I/IN/INGY/Class-Field-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  make
 BuildRequires:  findutils
 BuildRequires:  perl
 BuildRequires:  perl(base.pm)
@@ -58,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_1
 - update to new release by fcimport
 
