@@ -1,6 +1,6 @@
 Name: libcxxtools
-Version: 2.1.1
-Release: alt1.1
+Version: 2.2.1
+Release: alt1
 
 Summary: Set of reusable C++ components
 License: LGPL
@@ -27,7 +27,11 @@ Requires: %name = %version-%release
 
 %build
 %autoreconf
-%configure --disable-static --with-atomictype=generic
+%configure --disable-static \
+%ifnarch %ix86 x86_64
+	--with-atomictype=pthread \
+%endif
+	#
 %make_build
 
 %install
@@ -41,8 +45,12 @@ Requires: %name = %version-%release
 %_bindir/cxxtools-config
 %_includedir/cxxtools
 %_libdir/libcxxtools*.so
+%_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt1
+- 2.2.1 released
+
 * Wed Jun 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.1-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 

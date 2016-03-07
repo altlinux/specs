@@ -1,6 +1,6 @@
 Name: vdr
-Version: 2.0.7
-Release: alt1.2
+Version: 2.2.0
+Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -9,7 +9,7 @@ Url: http://www.tvdr.de
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ 
+BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel libalsa-devel libcap-devel libfreetype-devel libjpeg-devel
 BuildRequires: libncursesw-devel libssl-devel libbluray-devel libalsa-devel libudev-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libpostproc-devel
@@ -125,10 +125,6 @@ Requires: vdr = %version-%release
 Summary: Xine plugins for use with VDR frontends
 Group: Video
 
-%package plugin-xvdr
-Summary: VDR Network streaming plugin
-Group: Video
-
 %package fbfe
 Summary: VDR framebuffer frontend
 Group: Video
@@ -204,9 +200,6 @@ Support for local and remote frontends.
 Built-in image and media player supports playback of most known 
 media files (avi/mp3/divx/jpeg/...), DVDs and radio/video streams
 (http, rtsp, ...) directly from VDR.
-
-%description plugin-xvdr
-Another network streaming interface for the Video Disk Recorder (VDR).
 
 %description fbfe
 Linux framebuffer front-end for VDR.
@@ -326,13 +319,11 @@ make install -C PLUGINS/src/xineliboutput DESTDIR=%buildroot
 mkdir -p %buildroot%docdir/xineliboutput
 cp -p PLUGINS/src/xineliboutput/{README,examples/remote.conf.example} %buildroot%docdir/xineliboutput
 
-mkdir -p %buildroot%docdir/xvdr
-cp -p PLUGINS/src/xvdr/README %buildroot%docdir/xvdr
-cp -a PLUGINS/src/xvdr/xvdr %buildroot%confdir/plugins
-
 touch %buildroot%confdir/setup.conf
 install -pD -m0755 vdr.init %buildroot%_initdir/vdr
-install -pD -m0755 vdr.sysconfig %buildroot%_sysconfdir/sysconfig/vdr
+install -pD -m0644 vdr.service %buildroot%_unitdir/vdr.service
+install -pD -m0644 vdr.tmpfiles %buildroot%_tmpfilesdir/vdr.conf
+install -pD -m0644 vdr.sysconfig %buildroot%_sysconfdir/sysconfig/vdr
 install -pm0755 contrib/xmltv2vdr/xmltv2vdr.pl %buildroot%_bindir/xmltv2vdr
 install -pm0644 contrib/xmltv2vdr/README %buildroot%docdir/README.xmltv2vdr
 
@@ -361,7 +352,6 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %find_lang --output=vnsiserver.lang vdr-vnsiserver
 %find_lang --output=wirbelscan.lang vdr-wirbelscan
 %find_lang --output=xineliboutput.lang vdr-xineliboutput
-%find_lang --output=xvdr.lang vdr-xvdr
 
 mkdir -p %buildroot%_libexecdir/rpm
 cat << __EOF__ > %buildroot%_libexecdir/rpm/vdr.filetrigger
@@ -402,6 +392,8 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %config(noreplace) %attr(0600,_vdr,_vdr) %confdir/*.conf
 
 %_initdir/vdr
+%_unitdir/vdr.service
+%_tmpfilesdir/vdr.conf
 %config(noreplace) %_sysconfdir/sysconfig/vdr
 
 %_bindir/vdr
@@ -566,13 +558,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %confdir/plugins/xineliboutput/*.mpg
 %plugindir/libvdr-xineliboutput.so.%version
 
-%files plugin-xvdr -f xvdr.lang
-%docdir/xvdr
-%dir %attr(0770,root,_vdr) %confdir/plugins/xvdr
-%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/xvdr/allowed_hosts.conf
-%config(noreplace) %attr(0600,_vdr,_vdr) %confdir/plugins/xvdr/xvdr.conf
-%plugindir/libvdr-xvdr.so.%version
-
 %files fbfe
 %_bindir/vdr-fbfe
 %dir %plugindir
@@ -592,6 +577,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vdr.filetrigger
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Sun Mar 06 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
+- 2.2.0 released
+
 * Tue Jun 23 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.7-alt1.2
 - Reenabled FFdecsa testsuite on %%ix86.
 
