@@ -1,11 +1,11 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ht
 Summary: Haitian Creole hunspell dictionaries
 Version: 0.06
-Release: alt2_9
-Group: Text tools
+Release: alt2_10
 Source: http://extensions.services.openoffice.org/files/3247/3/%{name}-%{version}.oxt
 URL: http://kok.logipam.org/
 License: GPLv3+
@@ -26,11 +26,15 @@ Haitian Creole hunspell dictionaries.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/ht_HT.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc dictionaries/README_ht_HT.txt LICENSES-en.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_9
 - update to new release by fcimport
 
