@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-da
 Summary: Danish hyphenation rules
-%define upstreamid 20070903
+%global upstreamid 20070903
 Version: 0.%{upstreamid}
-Release: alt1_12
+Release: alt1_13
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_da_DK.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 Patch0: hyphen-da-lppl-license-fix.patch
 License: LGPLv2+
@@ -29,11 +29,15 @@ chmod -x *
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_da_DK.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc README_hyph_da_DK.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070903-alt1_13
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070903-alt1_12
 - update to new release by fcimport
 
