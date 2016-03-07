@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: gcc-c++ perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Path/Tiny.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
+BuildRequires: gcc-c++ perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Path/Tiny.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Syntax-Highlight-Engine-Kate
 Version:        0.10
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Port to Perl of the syntax highlight engine of the Kate text editor
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -75,6 +75,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_2
+- update to new release by fcimport
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
 - new version
 
