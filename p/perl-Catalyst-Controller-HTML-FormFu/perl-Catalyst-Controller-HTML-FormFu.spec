@@ -1,12 +1,12 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/Aggregate/Nested.pm) perl-devel perl-podlators
+BuildRequires: perl(Test/Aggregate/Nested.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
 Version:        1.00
-Release:        alt1_4
+Release:        alt1_5
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
@@ -17,7 +17,6 @@ Patch0:         Catalyst-Controller-HTML-FormFu-1.00-Execute-tests-recusively-un
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(inc/Module/Install.pm)
 BuildRequires:  perl(Module/Install/Metadata.pm)
@@ -111,6 +110,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_4
 - update to new release by fcimport
 
