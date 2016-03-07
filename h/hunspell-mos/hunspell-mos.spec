@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-mos
 Summary: Mossi hunspell dictionaries
-%define upstreamid 20101130
+%global upstreamid 20101130
 Version: 0.%{upstreamid}
-Release: alt2_9
-Group: Text tools
+Release: alt2_10
 Source: http://www.abcburkina.net/ancien/documents/lingu/DicoMoore.zip
 URL: http://www.abcburkina.net/content/view/377/48/lang,fr
 License: LGPLv3
@@ -26,11 +26,15 @@ Mossi hunspell dictionaries.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p mos_BF.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc lgpl-3.0.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20101130-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20101130-alt2_9
 - update to new release by fcimport
 
