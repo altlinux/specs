@@ -1,3 +1,4 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,8 +6,7 @@ Name: hunspell-hil
 Summary: Hiligaynon hunspell dictionaries
 #Epoch: 1
 Version: 0.14
-Release: alt2_9
-Group: Text tools
+Release: alt2_10
 Source: http://borel.slu.edu/obair/%{name}-%{version}.oxt
 URL: http://extensions.services.openoffice.org/project/hunspell-hil
 License: GPLv3+
@@ -37,11 +37,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/hil_PH.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc LICENSES-en.txt dictionaries/README_hil_PH.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_9
 - update to new release by fcimport
 
