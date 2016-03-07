@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-tn
 Summary: Tswana hunspell dictionaries
-%define upstreamid 20091101
+%global upstreamid 20091101
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/46617/tswana__south_africa__dictionary-%{upstreamid}-fx+tb.xpi
-Group: Text tools
 URL: http://www.translate.org.za/
 License: GPLv2+
 BuildArch: noarch
@@ -35,11 +35,15 @@ for lang in $tn_ZA_aliases; do
 done
 popd
 
+
 %files
 %doc README-tn-ZA.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091101-alt2_9
 - update to new release by fcimport
 
