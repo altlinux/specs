@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-bg
 Summary: Bulgarian hyphenation rules
 Version: 4.3
-Release: alt1_9
+Release: alt1_10
 Source: http://downloads.sourceforge.net/bgoffice/OOo-hyph-bg-%{version}.zip
-Group: Text tools
 URL: http://bgoffice.sourceforge.net/
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
@@ -39,11 +39,15 @@ mv hyph_bg_BG.dic.new hyph_bg_BG.dic
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc ChangeLog Copyright GPL-2.0.txt LGPL-2.1.txt MPL-1.1.txt README.bulgarian
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_10
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_9
 - update to new release by fcimport
 
