@@ -1,22 +1,35 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Hash-Flatten
 Version:        1.19
-Release:        alt3_14
+Release:        alt3_16
 Summary:        Flatten/unflatten complex data hashes
 License:        GPLv2
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Hash-Flatten/
 Source0:        http://www.cpan.org/authors/id/B/BB/BBC/Hash-Flatten-%{version}.tar.gz
 BuildArch:      noarch
+# Build
+BuildRequires:  glibc-utils
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(overload.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Tests only
+BuildRequires:  perl(Getopt/Std.pm)
 BuildRequires:  perl(Log/Trace.pm)
 BuildRequires:  perl(Test/Assertions.pm)
 BuildRequires:  perl(Test/More.pm)
+# Optional tests only
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+Requires:     perl(overload.pm)
 Source44: import.info
 
 %description
@@ -26,30 +39,30 @@ pairs (such as CGI and DBMs).
 
 %prep
 %setup -q -n Hash-Flatten-%{version}
-
-# fix file encoding
-iconv --from=ISO-8859-1 --to=UTF-8 Changes >Changes.tmp && mv Changes.tmp Changes
+iconv -f latin1 -t utf8 Changes > Changes.utf && \
+    touch Changes.utf -r Changes && \
+    mv Changes.utf Changes
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes COPYING README
+%doc COPYING
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_14
 - update to new release by fcimport
 
