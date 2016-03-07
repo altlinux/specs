@@ -1,21 +1,28 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl(inc/Module/Install/DSL.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Find-Rule-VCS
 Version:        1.08
-Release:        alt3_13
+Release:        alt3_15
 Summary:        Exclude files/directories for Version Control Systems
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/File-Find-Rule-VCS/
 Source0:        http://www.cpan.org/authors/id/A/AD/ADAMK/File-Find-Rule-VCS-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(inc/Module/Install/DSL.pm)
+BuildRequires:  perl(Module/Install/Metadata.pm)
+# Run-time
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(File/Find/Rule.pm)
-BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Text/Glob.pm)
+BuildRequires:  perl(vars.pm)
+# Tests
+BuildRequires:  perl(Test/More.pm)
 Source44: import.info
 
 %description
@@ -25,27 +32,32 @@ that has been checked out from revision control systems.
 %prep
 %setup -q -n File-Find-Rule-VCS-%{version}
 
+# Remove bundled libraries
+rm -r inc
+sed -i -e '/^inc\// d' MANIFEST
+find -type f -exec chmod -x {} +
+
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
+make pure_install DESTDIR=$RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc Changes LICENSE README
+%doc LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt3_13
 - update to new release by fcimport
 
