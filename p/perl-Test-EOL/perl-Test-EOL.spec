@@ -2,10 +2,10 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 23
 Name:		perl-Test-EOL
 Version:	1.6
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Check the correct line endings in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -15,7 +15,6 @@ BuildArch:	noarch
 # Module Build
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	make
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
@@ -78,6 +77,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1
 - update to new release by fcimport
 
