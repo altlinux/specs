@@ -1,10 +1,10 @@
+Group: Text tools
 Name: hyphen-hu
 Summary: Hungarian hyphenation rules
-%define upstreamid 20090612
+%global upstreamid 20090612
 Version: 0.%{upstreamid}
-Release: alt1_14
+Release: alt1_15
 Source: http://download.github.com/nagybence-huhyphn-aa3fc85.tar.gz
-Group: Text tools
 URL: http://www.tipogral.hu/
 License: GPLv2
 BuildArch: noarch
@@ -28,11 +28,15 @@ make
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_hu.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hu_HU.dic
 
+
 %files
 %doc gpl.txt README doc/huhyphn.pdf
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_15
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_14
 - update to new release by fcimport
 
