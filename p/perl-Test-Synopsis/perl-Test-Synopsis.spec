@@ -1,27 +1,28 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(Test/CPAN/Meta/JSON.pm)
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 # noarch, but to avoid debug* files interfering with manifest test:
 %global debug_package %{nil}
 
 Name:		perl-Test-Synopsis
 Version:	0.15
-Release:	alt1
+Release:	alt1_1
 Summary:	Test your SYNOPSIS code
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Synopsis/
-Source:	http://www.cpan.org/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
+Source0:	http://search.cpan.org/CPAN/authors/id/Z/ZO/ZOFFIX/Test-Synopsis-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module Runtime
-BuildRequires:	perl(base.pm)
 BuildRequires:	perl(ExtUtils/Manifest.pm)
-BuildRequires:	perl(Pod/Parser.pm)
+BuildRequires:	perl(parent.pm)
+BuildRequires:	perl(Pod/Simple.pm)
 BuildRequires:	perl(strict.pm)
 BuildRequires:	perl(Test/Builder/Module.pm)
 BuildRequires:	perl(warnings.pm)
@@ -39,6 +40,7 @@ BuildRequires:	perl(Pod/Coverage/TrustPod.pm)
 BuildRequires:	perl(Pod/Wordlist.pm)
 BuildRequires:	perl(Test/CPAN/Changes.pm)
 BuildRequires:	perl(Test/CPAN/Meta.pm)
+BuildRequires:	perl(Test/CPAN/Meta/JSON.pm)
 BuildRequires:	perl(Test/DistManifest.pm)
 BuildRequires:	perl(Test/EOL.pm)
 BuildRequires:	perl(Test/Kwalitee.pm)
@@ -49,16 +51,10 @@ BuildRequires:	perl(Test/NoTabs.pm)
 BuildRequires:	perl(Test/Pod.pm)
 BuildRequires:	perl(Test/Pod/Coverage.pm)
 BuildRequires:	perl(Test/Portability/Files.pm)
-BuildRequires:	perl(Test/Spelling.pm) hunspell-en
-# Disable using of Test::Vars, because it failed with Perl 5.22.0
-# There is not a properly fix for it yet
-%if ! 0%(perl -e 'print $] >= 5.022')
-BuildRequires:	perl(Test/Vars.pm)
-%endif
+BuildRequires:	perl(Test/Spelling.pm), hunspell-en
 BuildRequires:	perl(Test/Version.pm)
 %endif
 # Runtime
-Requires:	perl(Pod/Parser.pm)
 Requires:	perl(Test/Builder/Module.pm)
 Source44: import.info
 
@@ -98,6 +94,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
+- update to new release by fcimport
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
