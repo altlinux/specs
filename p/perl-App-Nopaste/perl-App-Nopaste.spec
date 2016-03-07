@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
 Version:        1.004
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/App-Nopaste/
@@ -59,7 +59,7 @@ Epoch:          1
 License:        GPL+ or Artistic
 Group:          Development/Perl
 Summary:        Access pastebins from the command line
-Requires:       %{name} = 0:%{version}-%{release}
+Requires:       %{name} = 0:%{version}
 
 %description -n nopaste
 This application lets you post text to pastebins from the command line.
@@ -93,6 +93,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_3
 - update to new release by fcimport
 
