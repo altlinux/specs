@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-gl
 Summary: Galician hunspell dictionaries
-%define upstreamid 20080515
+%global upstreamid 20080515
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://openoffice.mancomun.org/libreeengalego/Corrector/gl_ES-pack.zip
-Group: Text tools
 URL: http://wiki.mancomun.org/index.php/Corrector_ortogr%%C3%%A1fico_para_OpenOffice.org#Descrici.C3.B3n
 License: GPLv2
 BuildArch: noarch
@@ -29,11 +29,15 @@ chmod -x *
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README_gl_ES.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080515-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080515-alt2_11
 - update to new release by fcimport
 
