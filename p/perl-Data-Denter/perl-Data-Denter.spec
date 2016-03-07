@@ -1,23 +1,28 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(diagnostics.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-Name:       perl-Data-Denter 
-Version:    0.15 
-Release:    alt2_17
-# Denter.pod -> GPL+ or Artistic
-License:    GPL+ or Artistic 
-Group:      Development/Perl
-Summary:    An alternative to Data::Dumper and Storable 
-Source:     http://search.cpan.org/CPAN/authors/id/I/IN/INGY/Data-Denter-%{version}.tar.gz
-Url:        http://search.cpan.org/dist/Data-Denter
-BuildArch:  noarch
-
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildRequires: perl(YAML.pm)
-# test
-BuildRequires: perl(Data/Dumper.pm)
-BuildRequires: perl(Test.pm)
+Name:           perl-Data-Denter
+Version:        0.15
+Release:        alt2_19
+License:        GPL+ or Artistic
+Summary:        An alternative to Data::Dumper and Storable
+Source:         http://search.cpan.org/CPAN/authors/id/I/IN/INGY/Data-Denter-%{version}.tar.gz
+Url:            http://search.cpan.org/dist/Data-Denter
+BuildArch:      noarch
+# Build
+BuildRequires:  perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Exporter.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Tests only
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(diagnostics.pm)
+BuildRequires:  perl(Test.pm)
 Source44: import.info
 
 %description
@@ -27,7 +32,7 @@ This is great if you can trust the data you're evaling, but horrible if
 you can't. A good alternative is Storable.pm. It can safely thaw your
 frozen data.  But if you want to read/edit the frozen data, you're out of
 luck, because Storable uses a binary format. Even Data::Dumper's output
-can be a little cumbersome for larger data objects. Enter Data::Denter. 
+can be a little cumbersome for larger data objects. Enter Data::Denter.
 
 Data::Denter is yet another Perl data serializer/deserializer. It formats
 nested data structures in an indented fashion. It is optimized for human
@@ -38,25 +43,24 @@ readability/editability, safe deserialization, and (eventually) speed.
 %setup -q -n Data-Denter-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
-
+make pure_install DESTDIR=%{buildroot}
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes README 
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2_17
 - update to new release by fcimport
 
