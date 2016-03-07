@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-YAML-Meta
 Version:        0.22
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Validation of the META.yml file in a distribution
 License:        Artistic 2.0
 Group:          Development/Perl
@@ -64,6 +64,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_3
 - update to new release by fcimport
 
