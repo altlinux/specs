@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-fa
 Summary: Farsi hunspell dictionaries
-%define upstreamid 20070116
+%global upstreamid 20070116
 Version: 0.%{upstreamid}
-Release: alt2_12
-Group: Text tools
+Release: alt2_13
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/fa/aspell6-fa-0.11-0.tar.bz2
 URL: http://aspell.net/
 License: GPLv2+
@@ -32,11 +32,15 @@ wordlist2hunspell farsi.wordlist fa_IR
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc COPYING Copyright doc/README doc/ChangeLog
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070116-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070116-alt2_12
 - update to new release by fcimport
 
