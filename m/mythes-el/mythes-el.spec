@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-el
 Summary: Greek thesaurus
-%define upstreamid 20070412
+%global upstreamid 20070412
 Version: 0.%{upstreamid}
-Release: alt1_14
+Release: alt1_15
 Source: http://www.ellak.gr/pub/oo_extras/th_el.zip
-Group: Text tools
 URL: http://www.openthesaurus.gr/
 License: GPLv2+
 BuildArch: noarch
@@ -43,11 +43,15 @@ for lang in $el_GR_aliases; do
         ln -s th_el_GR_v2.idx "th_"$lang"_v2.idx"
 done
 
+
 %files
 %doc README_th_el_GR_v2.txt
 %{_datadir}/mythes/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_14
 - update to new release by fcimport
 
