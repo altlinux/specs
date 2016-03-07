@@ -1,9 +1,10 @@
 %define mosquitto_user      mosquitto
 %define mosquitto_group     mosquitto
+%define lname     libmosquitto
 
 Name: mosquitto
 Version: 1.4.8
-Release: alt1
+Release: alt2
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
@@ -19,18 +20,28 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Mon Feb 01 2016
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel
 BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel
+Requires: %lname = %version-%release
 
 %description
 The Mosquitto project has been created to provide a light weight, open-source
 implementation, of an MQTT broker to allow new, existing, and emerging
 applications for Machine-to-Machine (M2M) and Internet of Things (IoT).
 
-%package devel
+%package -n %lname
 Group: Development/C
-Summary: Libraries needed to develop for mosquitto
+Summary: Libraries for mosquitto
 Requires: %name = %version-%release
 
-%description devel
+%description -n %lname
+Libraries for mosquitto
+
+%package -n %lname-devel
+Group: Development/C
+Summary: Libraries needed to develop for mosquitto
+Requires: %lname = %version-%release
+Obsoletes: %name-devel
+
+%description -n %lname-devel
 Libraries needed to develop for mosquitto
 
 %prep
@@ -72,7 +83,6 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 %dir %_sysconfdir/%name
 %config %dir %_sysconfdir/%name/*
 %config %_sysconfdir/sysconfig/%name
-%_libdir/*.so.*
 %_bindir/*
 %_sbindir/*
 %_man1dir/*
@@ -82,11 +92,17 @@ mv .gear/%name.conf %buildroot%_sysconfdir/%name
 %_man8dir/*
 %_initdir/*
 
-%files devel
+%files -n %lname
+%_libdir/*.so.*
+
+%files -n %lname-devel
 %_includedir/*.h
 %_libdir/*.so
 
 %changelog
+* Mon Mar 07 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.8-alt2
+- make libmosquitto and libmosquitto-devel packages
+
 * Sat Feb 20 2016 Pavel Vainerman <pv@altlinux.ru> 1.4.8-alt1
 - build new version (ChangeLog.txt):
 Broker:
