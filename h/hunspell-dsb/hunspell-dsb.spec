@@ -1,11 +1,11 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-dsb
 Summary: Lower Sorbian hunspell dictionaries
 Version: 1.4.6
-Release: alt1_7
-Group: Text tools
+Release: alt1_8
 Source: http://extensions.services.openoffice.org/e-files/3045/12/lower_sorbian_spelling_dictionary-1.4.6.oxt
 URL: http://dsb-spell.sourceforge.net
 License: GPLv2+
@@ -26,12 +26,16 @@ Lower Sorbian hunspell dictionaries.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dsb_DE.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc description/desc_de.txt description/desc_en.txt description/desc_pl.txt registration/license_en.txt  
 
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.6-alt1_7
 - update to new release by fcimport
 
