@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ms
 Summary: Malay hunspell dictionaries
-%define upstreamid 20050117
+%global upstreamid 20050117
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_13
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/ms_MY.zip
-Group: Text tools
 URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
 License: GFDL and GPL+
 BuildArch: noarch
@@ -35,11 +35,15 @@ for lang in $ms_MY_aliases; do
         ln -s ms_MY.dic $lang.dic
 done
 
+
 %files
 %doc README_ms_MY.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050117-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050117-alt2_12
 - update to new release by fcimport
 
