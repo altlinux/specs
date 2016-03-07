@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Spec/Functions.pm) perl-base perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-MinimumVersion
 Version:        1.38
-Release:        alt1_7
+Release:        alt1_9
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -36,7 +36,6 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Script.pm)
 %endif
 
-
 # Remove under-specified dependencies
 
 
@@ -53,12 +52,11 @@ Find a minimum required version of perl for Perl code
 %setup -q -n Perl-MinimumVersion-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -67,12 +65,16 @@ make test
 %endif
 
 %files
-%doc Changes LICENSE
+%doc Changes
+%doc LICENSE
 %{_bindir}/*
 %{perl_vendor_privlib}/Perl
 %{_mandir}/man1/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1_7
 - update to new release by fcimport
 
