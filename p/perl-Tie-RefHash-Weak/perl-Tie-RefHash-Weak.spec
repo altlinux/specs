@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(B.pm) perl(Config.pm) perl(Symbol.pm) perl(overload.pm) perl(threads.pm) perl(warnings/register.pm) perl-devel perl-podlators
+BuildRequires: perl(threads.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Tie-RefHash-Weak
 Version:	0.09
-Release:	alt3_19
+Release:	alt3_20
 Summary:	Tie::RefHash subclass with weakened references in the keys
 License:	GPL+ or Artistic
 Group:		Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/Tie/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_20
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_19
 - update to new release by fcimport
 
