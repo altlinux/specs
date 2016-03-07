@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
 Version:        0.3600
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -64,6 +64,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.3600-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.3600-alt1_1
 - update to new release by fcimport
 
