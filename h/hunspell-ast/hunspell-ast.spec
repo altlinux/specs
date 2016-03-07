@@ -1,3 +1,4 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,8 +6,7 @@ Name: hunspell-ast
 Summary: Asturian hunspell dictionaries
 #Epoch: 1
 Version: 0.02
-Release: alt1_9
-Group: Text tools
+Release: alt1_10
 Source: http://extensions.services.openoffice.org/e-files/3932/1/asturianu.oxt
 URL: http://softastur.org/
 License: GPLv3+
@@ -29,11 +29,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/ast.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ast_ES.aff
 cp -p dictionaries/ast.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ast_ES.dic
 
+
 %files
 %doc LICENSES-en.txt LICENCES-ast.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_9
 - update to new release by fcimport
 
