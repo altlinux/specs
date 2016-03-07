@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Data-GUID
 Version:        0.048
-Release:        alt2_5
+Release:        alt2_7
 Summary:        Globally unique identifiers
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -16,10 +16,13 @@ BuildRequires:  perl(Data/UUID.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Sub/Exporter.pm)
 BuildRequires:  perl(Sub/Install.pm)
-BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
+
+# tests
+BuildRequires:  perl(Test/More.pm)
 Source44: import.info
+
 
 %description
 Data::GUID provides a simple interface for generating and using globally
@@ -29,25 +32,25 @@ unique identifiers.
 %setup -q -n Data-GUID-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 make test
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
+%doc LICENSE
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.048-alt2_5
 - update to new release by fcimport
 
