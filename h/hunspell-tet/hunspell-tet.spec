@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-tet
 Summary: Tetum hunspell dictionaries
-%define upstreamid 20050108
+%global upstreamid 20050108
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/tet_ID.zip
-Group: Text tools
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
 BuildArch: noarch
@@ -44,11 +44,15 @@ for lang in $tet_ID_aliases; do
 done
 popd
 
+
 %files
 %doc README_tet_ID.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050108-alt2_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050108-alt2_13
 - update to new release by fcimport
 
