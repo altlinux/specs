@@ -1,9 +1,9 @@
+Group: Text tools
 Name: hunspell-si
 Summary: Sinhala hunspell dictionaries
 Version: 0.2.1
-Release: alt2_12
+Release: alt2_13
 Source: http://www.sandaru1.com/si-LK.tar.gz
-Group: Text tools
 #Following URL is down since few months informed to upstream
 URL: http://www.sandaru1.com/2009/08/29/sinhala-spell-checker-for-firefox/
 License: GPLv2+
@@ -30,6 +30,9 @@ cp -p dictionaries/si-LK.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/si_LK.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt2_12
 - update to new release by fcimport
 
