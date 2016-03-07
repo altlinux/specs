@@ -8,16 +8,17 @@
 %def_enable logicproc
 #%def_enable modbus
 %def_disable tests
+%def_disable mqtt
 
 %define oname uniset2
 
 Name: libuniset2
 Version: 2.2
-Release: alt26
+Release: alt29
 
 Summary: UniSet - library for building distributed industrial control systems
 
-License: GPL
+License: LGPL
 Group: Development/C++
 Url: http://wiki.etersoft.ru/UniSet
 
@@ -57,6 +58,10 @@ BuildRequires: libpqxx-devel
 
 %if_enabled rrd
 BuildRequires: librrd-devel
+%endif
+
+%if_enabled mqtt
+BuildRequires: libmosquitto-devel
 %endif
 
 %if_enabled python
@@ -263,6 +268,25 @@ Requires: %name-extension-common-devel = %version-%release
 Libraries needed to develop for uniset IOControl (io)
 %endif
 
+%if_enabled mqtt
+%package extension-mqtt
+Group: Development/C++
+Summary: MQTTpublisher from UniSet
+Requires: %name-extension-common = %version-%release
+
+%description extension-mqtt
+MQTT for %name
+
+%package extension-mqtt-devel
+Group: Development/C++
+Summary: Libraries needed to develop for uniset MQTT extension
+Requires: %name-extension-common-devel = %version-%release
+
+%description extension-mqtt-devel
+Libraries needed to develop for uniset MQTT extension
+%endif
+
+
 %package extension-smplus
 Group: Development/C++
 Summary: libUniSet2 SharedMemoryPlus extension ('all in one')
@@ -271,12 +295,13 @@ Requires: %name-extension-common = %version-%release
 %description extension-smplus
 SharedMemoryPlus extension ('all in one') for libuniset
 
+
 %prep
 %setup
 
 %build
 %autoreconf
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt}
 %make
 
 %install
@@ -427,6 +452,17 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %_includedir/%oname/extensions/io/
 %endif
 
+%if_enabled mqtt
+%files extension-mqtt
+%_bindir/%oname-mqtt*
+%_libdir/libUniSet2MQTTPublisher*.so.*
+
+%files extension-mqtt-devel
+%_pkgconfigdir/libUniSet2MQTTPublisher*.pc
+%_libdir/libUniSet2MQTTPublisher*.so
+%_includedir/%oname/extensions/mqtt/
+%endif
+
 %files extension-common-devel
 %_includedir/%oname/extensions/*.*
 %_libdir/libUniSet2Extensions.so
@@ -451,6 +487,16 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Mon Mar 07 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt29
+- minor fixes
+
+* Sun Feb 21 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt28
+- build with MQTTPublisher
+- default mqtt extention disabled
+
+* Sat Feb 20 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt27
+- (ModbusTCP): add forceDisconnect() func for tcp connection
+
 * Fri Feb 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt26
 - (codegen): revert waitSM logic..
 
