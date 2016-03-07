@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-ro
 Summary: Romanian hunspell dictionaries
 Version: 3.3.7
-Release: alt1_8
+Release: alt1_9
 Source: http://downloads.sourceforge.net/rospell/ro_RO.%{version}.zip
-Group: Text tools
 URL: http://rospell.sourceforge.net/
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
@@ -26,11 +26,15 @@ Romanian hunspell dictionaries.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p ro_RO.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc COPYING.GPL COPYING.LGPL COPYING.MPL README
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.7-alt1_9
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.3.7-alt1_8
 - update to new release by fcimport
 
