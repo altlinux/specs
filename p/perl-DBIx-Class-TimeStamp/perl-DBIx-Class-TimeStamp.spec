@@ -1,34 +1,65 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(DBIx/Class/Core.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dump.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(Test/Builder/Module.pm) perl(Test/More.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DBIx-Class-TimeStamp
 Version:        0.14
-Release:        alt2_13
+Release:        alt2_15
 Summary:        DBIx::Class extension to update and create date and time based fields
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DBIx-Class-TimeStamp/
 Source0:        http://search.cpan.org/CPAN/authors/id/R/RI/RIBASUSHI/DBIx-Class-TimeStamp-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Class/Accessor/Grouped.pm)
+# Build
+BuildRequires:  perl
+BuildRequires:  perl(Config.pm)
+BuildRequires:  perl(CPAN.pm)
+BuildRequires:  perl(Cwd.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(ExtUtils/Manifest.pm)
+BuildRequires:  perl(ExtUtils/MM_Unix.pm)
+BuildRequires:  perl(Fcntl.pm)
+BuildRequires:  perl(File/Find.pm)
+BuildRequires:  perl(File/Path.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Runtime
+BuildRequires:  perl(base.pm)
 BuildRequires:  perl(DateTime.pm)
-BuildRequires:  perl(DateTime/Format/MySQL.pm)
-BuildRequires:  perl(DateTime/Format/SQLite.pm)
-BuildRequires:  perl(DBD/SQLite.pm)
 BuildRequires:  perl(DBIx/Class.pm)
 BuildRequires:  perl(DBIx/Class/DynamicDefault.pm)
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(DBIx/Class/InflateColumn/DateTime.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests only
+BuildRequires:  perl(Class/Accessor/Grouped.pm)
+BuildRequires:  perl(Data/Dump.pm)
+BuildRequires:  perl(DateTime/Format/MySQL.pm)
+BuildRequires:  perl(DateTime/Format/SQLite.pm)
+BuildRequires:  perl(DBIx/Class/Core.pm)
+BuildRequires:  perl(DBIx/Class/Schema.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(FindBin.pm)
+BuildRequires:  perl(lib.pm)
+BuildRequires:  perl(Test/Builder/Module.pm)
+BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Time/HiRes.pm)
 BuildRequires:  perl(Time/Warp.pm)
+# Optional tests only
+BuildRequires:  perl(DBD/SQLite.pm)
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
-# not picked up automatically
+Requires:       perl(DateTime.pm) >= 0.55
 Requires:       perl(DBIx/Class.pm) >= 0.080.090
 Requires:       perl(DBIx/Class/DynamicDefault.pm) >= 0.03
+Requires:       perl(DBIx/Class/InflateColumn/DateTime.pm)
+
 
 
 Source44: import.info
+%filter_from_requires /^perl\\(DateTime.pm\\)$/d
+%filter_from_requires /^perl\\(DBIx.Class.pm\\)$/d
 
 %description
 Works in conjunction with InflateColumn::DateTime to automatically set
@@ -38,16 +69,12 @@ update and create date and time based fields in a table.
 %setup -q -n DBIx-Class-TimeStamp-%{version}
 
 %build
-PERL5_CPANPLUS_IS_RUNNING=1 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+# %{_fixperms} %{buildroot}/*
 
 %check
 TEST_POD=1 make test
@@ -57,6 +84,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2_13
 - update to new release by fcimport
 
