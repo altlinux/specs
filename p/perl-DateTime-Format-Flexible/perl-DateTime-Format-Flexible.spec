@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-DateTime-Format-Flexible
 Version:    0.26
-Release:    alt1_5
+Release:    alt1_6
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Flexibly parse strings and turn them into DateTime objects
@@ -61,6 +61,9 @@ TEST_POD=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1_5
 - update to new release by fcimport
 
