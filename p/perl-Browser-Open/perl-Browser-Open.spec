@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Browser-Open
 Version:        0.04
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Open a browser in a given URL
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -57,6 +57,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_11
 - update to new release by fcimport
 
