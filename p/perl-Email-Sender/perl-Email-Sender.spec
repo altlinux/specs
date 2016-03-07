@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Email-Sender
 Version:        1.300021
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 
@@ -85,6 +85,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Email*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.300021-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.300021-alt1_1
 - update to new release by fcimport
 
