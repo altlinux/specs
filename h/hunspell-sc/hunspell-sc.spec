@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-sc
 Summary: Sardinian hunspell dictionaries
-%define upstreamid 20081101
+%global upstreamid 20081101
 Version: 0.%{upstreamid}
-Release: alt2_14
-Group: Text tools
+Release: alt2_15
 Source: http://extensions.services.openoffice.org/files/1446/2/Dict_sc_IT03.oxt
 URL: http://extensions.services.openoffice.org/project/Dict_sc
 #The license included is AGPLv3 and pkg-desc/pkg-description.txt
@@ -31,11 +31,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p sc_IT.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/sc_IT.aff
 cp -p sc_it.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/sc_IT.dic
 
+
 %files
 %doc registration/agpl3-en.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20081101-alt2_15
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20081101-alt2_14
 - update to new release by fcimport
 
