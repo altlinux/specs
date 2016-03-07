@@ -1,25 +1,25 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-IO-Null
 Version:        1.01
-Release:        alt2_22
+Release:        alt2_24
 Summary:        Class for null filehandles
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/IO-Null/
 Source0:        http://www.cpan.org/authors/id/S/SB/SBURKE/IO-Null-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  coreutils
-BuildRequires:  findutils
-BuildRequires:  make
+# Build
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(strict.pm)
-BuildRequires:  perl(Test.pm)
+# Runtime
+BuildRequires:  perl(IO/Handle.pm)
 BuildRequires:  perl(vars.pm)
+# Tests only
+BuildRequires:  perl(Test.pm)
 Source44: import.info
 
 %description
@@ -33,17 +33,12 @@ and returns empty-string or empty-list, as appropriate.
 %setup -q -n IO-Null-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+# %{_fixperms} %{buildroot}/*
 
 %check
 make test
@@ -53,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_24
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_22
 - update to new release by fcimport
 
