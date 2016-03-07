@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-ca
 Summary: Catalan thesaurus
 Version: 1.5.0
-Release: alt1_12
+Release: alt1_13
 Source: http://www.softcatala.org/diccionaris/actualitzacions/sinonims/thesaurus-ca.oxt
-Group: Text tools
 URL: http://www.softcatala.org/wiki/Projectes/Openthesaurus-ca
 License: GPL+
 BuildArch: noarch
@@ -38,11 +38,15 @@ for lang in $ca_ES_aliases; do
 done
 popd
 
+
 %files
 %doc dictionaries/README_th_ca_ES_v3.txt LICENCES-fr.txt LICENSES-en.txt LICENCIAS-es.txt LLICENCIES-ca.txt release_note-ca.txt
 %{_datadir}/mythes/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_12
 - update to new release by fcimport
 
