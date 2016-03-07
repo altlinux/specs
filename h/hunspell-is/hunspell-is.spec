@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-is
 Summary: Icelandic hunspell dictionaries
-%define upstreamid 20090823
+%global upstreamid 20090823
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Source: http://extensions.services.openoffice.org/files/2829/1/Icelandic-dict-2009-08-23.oxt
-Group: Text tools
 URL: http://extensions.services.openoffice.org/project/dict-is
 License: GPLv2+
 BuildArch: noarch
@@ -37,11 +37,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/is_IS.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc LICENSE_en_US.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090823-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20090823-alt2_9
 - update to new release by fcimport
 
