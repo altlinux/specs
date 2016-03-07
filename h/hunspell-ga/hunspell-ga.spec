@@ -1,11 +1,11 @@
+Group: Text tools
 Name: hunspell-ga
 Summary: Irish hunspell dictionaries
 Version: 4.6
-Release: alt1_10
+Release: alt1_11
 Source0: http://gaelspell.googlecode.com/files/ispell-gaeilge-%{version}.tar.gz
 Source1: myspell-header
 Source2: hunspell-header
-Group: Text tools
 URL: http://borel.slu.edu/ispell/index.html
 License: GPLv2+
 BuildArch: noarch
@@ -33,11 +33,15 @@ ispellaff2myspell gaeilge.aff.iso-8859-1 --myheader header | sed -e "s/\"\"/0/g"
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p ga_IE.dic ga_IE.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README COPYING ChangeLog
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 4.6-alt1_10
 - update to new release by fcimport
 
