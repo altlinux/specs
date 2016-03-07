@@ -4,7 +4,7 @@ BuildRequires: perl(CGI/Simple.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Captcha-reCAPTCHA
 Version:        0.97
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Perl implementation of the reCAPTCHA API
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.97-alt2_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.97-alt2_8
 - update to new release by fcimport
 
