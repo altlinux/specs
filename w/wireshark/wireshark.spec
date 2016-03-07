@@ -5,8 +5,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.0.1
-Release: alt3
+Version: 2.0.2
+Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -274,6 +274,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Mon Mar  7 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Fri Jan  1 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.1-alt3
 - doc subpackage made noarch (thanks, repocop)
 - add alternatives support for gtk+/qt5
