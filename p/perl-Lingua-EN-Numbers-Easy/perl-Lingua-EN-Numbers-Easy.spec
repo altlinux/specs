@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2014120401
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
 URL:            http://search.cpan.org/dist/Lingua-EN-Numbers-Easy/
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2014120401-alt1_3
 - update to new release by fcimport
 
