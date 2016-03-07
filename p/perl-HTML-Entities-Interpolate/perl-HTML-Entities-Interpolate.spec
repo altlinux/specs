@@ -1,39 +1,56 @@
-%define _unpackaged_files_terminate_build 1
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Capture/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurper.pm) perl(HTML/Entities.pm) perl(Test/Pod.pm) perl(Test/Stream.pm) perl(Tie/Function.pm)
-# END SourceDeps(oneline)
-%define module_version 1.09
-%define module_name HTML-Entities-Interpolate
-BuildRequires: rpm-build-perl perl-devel perl-podlators
-
-Name: perl-%module_name
-Version: 1.09
-Release: alt1
-Summary: Call HTML::Entities::encode_entities, via a hash, within a string
 Group: Development/Perl
-License: artistic_2
-Url: %CPAN %module_name
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-devel perl-podlators
+# END SourceDeps(oneline)
+Name:           perl-HTML-Entities-Interpolate
+Version:        1.09
+Release:        alt1_1
+Summary:        Call HTML::Entities::encode_entities via a hash within a string
+License:        Artistic 2.0
+URL:            http://search.cpan.org/dist/HTML-Entities-Interpolate/
+Source0:        http://www.cpan.org/authors/id/R/RS/RSAVAGE/HTML-Entities-Interpolate-%{version}.tgz
+BuildArch:      noarch
+BuildRequires:  perl(Capture/Tiny.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(File/Slurper.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(HTML/Entities.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Test/Stream.pm)
+BuildRequires:  perl(Tie/Function.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/HTML-Entities-Interpolate-%{version}.tgz
-BuildArch: noarch
+
+Source44: import.info
 
 %description
-From summary: %summary
+This is a pure perl module which calls HTML::Entities::encode_entities 
+via a hash within a string.
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n HTML-Entities-Interpolate-%{version}
 
 %build
-%perl_vendor_build
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
+make %{?_smp_mflags}
 
 %install
-%perl_vendor_install
+make pure_install DESTDIR=$RPM_BUILD_ROOT
+# %{_fixperms} $RPM_BUILD_ROOT/*
+
+%check
+make test
 
 %files
-%doc README Changes Changelog.ini LICENSE
-%perl_vendor_privlib/H*
+%doc Changes README
+%{perl_vendor_privlib}/HTML*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
