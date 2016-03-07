@@ -1,10 +1,10 @@
+Group: Text tools
 Name: hunspell-mi
 Summary: Maori hunspell dictionaries
-%define upstreamid 20080630
+%global upstreamid 20080630
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://packages.papakupu.maori.nz/hunspell/hunspell-mi-0.1.%{upstreamid}-beta.tar.gz
-Group: Text tools
 URL: http://papakupu.maori.nz/
 License: GPLv3+
 BuildArch: noarch
@@ -25,11 +25,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p mi.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/mi_NZ.aff
 cp -p mi.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/mi_NZ.dic
 
+
 %files
 %doc mi.AUTHORS mi.LICENSE mi.README
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080630-alt2_11
 - update to new release by fcimport
 
