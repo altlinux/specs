@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-gl
 Summary: Galician hyphenation rules
 Version: 0.99
-Release: alt1_10
+Release: alt1_11
 Source: http://extensions.services.openoffice.org/files/2004/0/hyph_gl.oxt
-Group: Text tools
 URL: https://forxa.mancomun.org/projects/hyphenation-gl
 License: GPLv3
 BuildArch: noarch
@@ -26,11 +26,15 @@ chmod -x *
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_gl_ANY.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_gl_ES.dic
 
+
 %files
 %doc LEME-gl_ANY.txt LICENCES-gl.txt LICENSES-en.txt  
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1_11
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1_10
 - update to new release by fcimport
 
