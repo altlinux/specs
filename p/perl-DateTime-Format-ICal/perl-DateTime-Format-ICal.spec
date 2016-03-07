@@ -1,27 +1,43 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(DateTime/Span.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-ICal
 Version:        0.09
-Release:        alt2_19
+Release:        alt2_21
 Summary:        Parse and format iCal datetime and duration strings
 License:        GPL+ or Artistic
-Group:          Development/Perl
 URL:            http://search.cpan.org/dist/DateTime-Format-ICal/
 Source0:        http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-Format-ICal-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Class/ISA.pm)
+# Build
+BuildRequires:  perl
+BuildRequires:  perl(Module/Build.pm)
+# Runtime
 BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(DateTime/Event/ICal.pm)
 BuildRequires:  perl(DateTime/Set.pm)
+BuildRequires:  perl(DateTime/Span.pm)
 BuildRequires:  perl(DateTime/TimeZone.pm)
-BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(Params/Validate.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+# Tests only
 BuildRequires:  perl(Test/More.pm)
+Requires:       perl(DateTime.pm) >= 0.17
+Requires:       perl(DateTime/Event/ICal.pm) >= 0.03
 Requires:       perl(DateTime/Set.pm) >= 0.1
 Requires:       perl(DateTime/TimeZone.pm) >= 0.22
+Requires:       perl(Params/Validate.pm) >= 0.59
+
+
+
+
 Source44: import.info
+%filter_from_requires /^perl\\(DateTime.pm\\)$/d
+%filter_from_requires /^perl\\(DateTime.Event.ICal.pm\\)$/d
+%filter_from_requires /^perl\\(Params.Validate.pm\\)$/d
 
 %description
 This module understands the ICal date/time and duration formats, as defined
@@ -32,24 +48,25 @@ appropriate objects.
 %setup -q -n DateTime-Format-ICal-%{version}
 
 %build
-%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 ./Build
 
 %install
-
-./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-# %{_fixperms} $RPM_BUILD_ROOT/*
+./Build install destdir=%{buildroot} create_packlist=0
+# %{_fixperms} %{buildroot}/*
 
 %check
 ./Build test
 
 %files
-%doc Changes LICENSE TODO
+%doc LICENSE
+%doc Changes TODO
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_21
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_19
 - update to new release by fcimport
 
