@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(ExtUtils/MM_Unix.pm) perl(File/Basename.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Socket.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-NoTabs
 Version:	1.4
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Check the presence of tabs in your project
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_4
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3
 - update to new release by fcimport
 
