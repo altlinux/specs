@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Moose/Meta/Method/Accessor.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(Test/Aggregate/Nested.pm) perl(Try/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(Catalyst.pm) perl(Catalyst/Controller/HTML/FormFu.pm) perl(Catalyst/Engine/HTTP.pm) perl(Catalyst/Helper.pm) perl(Catalyst/Model/DBIC/Schema.pm) perl(Catalyst/Runtime.pm) perl(Catalyst/Test.pm) perl(Catalyst/View/TT.pm) perl(Catalyst/View/TT/Alloy.pm) perl(DBD/SQLite.pm) perl(DBIx/Class.pm) perl(DBIx/Class/Schema.pm) perl(Pod/Usage.pm) perl(Regexp/Assemble.pm) perl(Test/Aggregate/Nested.pm) perl(Try/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Encode/JP.pm)
 Name:           perl-HTML-FormFu
 Version:        2.01
-Release:        alt1_6
+Release:        alt1_7
 Summary:        HTML Form Creation, Rendering and Validation Framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -16,7 +16,6 @@ Patch0:         HTML-FormFu-2.01-Execute-tests-recusively-under-t.patch
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(CGI.pm)
@@ -139,6 +138,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_7
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1_6
 - update to new release by fcimport
 
