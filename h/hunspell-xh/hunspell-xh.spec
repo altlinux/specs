@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-xh
 Summary: Xhosa hunspell dictionaries
-%define upstreamid 20091030
+%global upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_9
+Release: alt2_10
 Source: http://extensions.services.openoffice.org/e-files/3133/0/dict-xh_ZA-2009.10.30.oxt
-Group: Text tools
 URL: http://www.translate.org.za/
 License: LGPLv2+
 BuildArch: noarch
@@ -37,11 +37,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README-xh_ZA.txt release-notes-xh_ZA.txt package-description.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_9
 - update to new release by fcimport
 
