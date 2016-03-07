@@ -1,11 +1,11 @@
+Group: Text tools
 Name: hunspell-eu
 Summary: Basque hunspell dictionaries
-%define upstreamid 20080507
+%global upstreamid 20080507
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source0: http://www.euskara.euskadi.net/r59-20660/eu/contenidos/informacion/euskarazko_softwarea/eu_9567/adjuntos/eu-ES-hunspell.tar.gz
 Source1: http://www.euskara.euskadi.net/r59-20660/eu/contenidos/informacion/euskarazko_softwarea/eu_9567/adjuntos/XUXEN_kode_irekia_eskuliburua-LINUX-OO.pdf
-Group: Text tools
 URL: http://www.euskara.euskadi.net/r59-20660/eu/contenidos/informacion/euskarazko_softwarea/eu_9567/xuxen.html
 License: GPLv2
 BuildArch: noarch
@@ -27,11 +27,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p eu-ES/eu-ES.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/eu_ES.dic
 cp -p eu-ES/eu-ES.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/eu_ES.aff
 
+
 %files
 %doc XUXEN_kode_irekia_eskuliburua-LINUX-OO.pdf
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080507-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080507-alt2_11
 - update to new release by fcimport
 
