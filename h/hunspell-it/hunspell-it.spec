@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-it
 Summary: Italian hunspell dictionaries
-%define upstreamid 20070901
+%global upstreamid 20070901
 Version: 2.4
-Release: alt2_0.13.%{upstreamid}
+Release: alt2_0.14.%{upstreamid}
 Source: http://downloads.sourceforge.net/sourceforge/linguistico/italiano_2_4_2007_09_01.zip
-Group: Text tools
 URL: http://linguistico.sourceforge.net
 License: GPLv3+
 BuildArch: noarch
@@ -38,11 +38,15 @@ for lang in $it_IT_aliases; do
 done
 
 
+
 %files
 %doc it_IT_README.txt it_IT_COPYING it_IT_AUTHORS it_IT_license.txt it_IT_notes.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_0.14.20070901
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_0.13.20070901
 - update to new release by fcimport
 
