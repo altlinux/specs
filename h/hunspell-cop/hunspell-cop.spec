@@ -1,11 +1,11 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-cop
 Summary: Coptic hunspell dictionaries
 Version: 0.3
-Release: alt2_8
-Group: Text tools
+Release: alt2_9
 Source: http://extensions.services.openoffice.org/e-files/793/2/dict-cop_EG_v03.oxt
 URL: http://www.moheb.de/coptic_oo.html
 License: GPLv3+
@@ -32,11 +32,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p cop_EG-Bohairic/cop_EG.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc README.txt license-gpl.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_9
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_8
 - update to new release by fcimport
 
