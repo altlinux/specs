@@ -4,7 +4,7 @@ BuildRequires: perl(autodie.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Safe-Isa
 Version:        1.000005
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Call isa, can, does and DOES safely on things that may not be objects
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/Safe/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.000005-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.000005-alt1_4
 - update to new release by fcimport
 
