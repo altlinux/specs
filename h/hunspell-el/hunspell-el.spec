@@ -1,3 +1,4 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ Name: hunspell-el
 Summary: Greek hunspell dictionaries
 #Epoch: 1
 Version: 0.8
-Release: alt2_10
+Release: alt2_11
 Source: http://ispell.math.upatras.gr/files/ooffice/el_GR-%{version}.zip
-Group: Text tools
 URL: http://ispell.math.upatras.gr/?section=oofficespell&subsection=howto
 License: GPLv2+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
@@ -35,11 +35,15 @@ for lang in $el_GR_aliases; do
         ln -s el_GR.dic $lang.dic
 done
 
+
 %files
 %doc README_el_GR.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_10
 - update to new release by fcimport
 
