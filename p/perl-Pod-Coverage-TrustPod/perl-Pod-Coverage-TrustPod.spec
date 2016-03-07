@@ -5,7 +5,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Coverage-TrustPod
 Version:        0.100003
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Allow a module's pod to contain Pod::Coverage hints
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/Pod-Coverage-TrustPod/
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/Pod/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.100003-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.100003-alt1_3
 - update to new release by fcimport
 
