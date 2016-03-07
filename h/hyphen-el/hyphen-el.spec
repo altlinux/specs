@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-el
 Summary: Greek hyphenation rules
-%define upstreamid 20051018
+%global upstreamid 20051018
 Version: 0.%{upstreamid}
-Release: alt1_12
+Release: alt1_13
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_el_GR.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: LGPLv2+
 BuildArch: noarch
@@ -33,11 +33,15 @@ for lang in $el_GR_aliases; do
         ln -s hyph_el_GR.dic hyph_$lang.dic
 done
 
+
 %files
 %doc README_hyph_el_GR.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20051018-alt1_13
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20051018-alt1_12
 - update to new release by fcimport
 
