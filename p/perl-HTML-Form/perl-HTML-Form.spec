@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Form
 Version:        6.03
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -13,7 +13,6 @@ Source0:        http://www.cpan.org/authors/id/G/GA/GAAS/HTML-Form-%{version}.ta
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
-BuildRequires:  make
 BuildRequires:  perl
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(Encode.pm)
@@ -66,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_12
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_11
 - update to new release by fcimport
 
