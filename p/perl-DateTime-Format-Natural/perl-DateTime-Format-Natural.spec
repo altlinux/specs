@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Term/ReadLine.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Term/ReadLine.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Natural
 Version:        1.03
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,7 +50,7 @@ and creates a machine readable one by applying natural parsing logic.
 %package -n perl-DateTime-Format-Natural-Test
 Group: Development/Perl
 Summary:        Common test routines/data for perl-DateTime-Format-Natural
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
 
 %description -n perl-DateTime-Format-Natural-Test
 The DateTime::Format::Natural::Test class exports common test routines.
@@ -84,6 +84,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_2
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_1
 - update to new release by fcimport
 
