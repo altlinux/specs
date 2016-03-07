@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Attribute/Handlers.pm) perl(B.pm) perl(B/Utils.pm) perl(FindBin.pm) perl(Glib.pm) perl(POSIX.pm) perl(Package/Constants.pm) perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl(Sub/Identify.pm) perl(base.pm) perl(constant.pm) perl(constant/lexical.pm) perl(lib/abs.pm) perl-devel perl-podlators
+BuildRequires: perl(Attribute/Handlers.pm) perl(B/Utils.pm) perl(Devel/FindRef.pm) perl(Glib.pm) perl(Package/Constants.pm) perl(Pod/Simple/HTML.pm) perl(Smart/Comments.pm) perl(Sub/Identify.pm) perl(constant/lexical.pm) perl(lib/abs.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-constant-defer
 Version:        6
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Perl
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 6-alt2_4
+- update to new release by fcimport
+
 * Sat Nov 21 2015 Igor Vlasenko <viy@altlinux.ru> 6-alt2_3
 - dropped BR: perl(Devel/FindRef.pm)
 
