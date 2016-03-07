@@ -1,12 +1,12 @@
+Group: Text tools
 Name: hyphen-grc
 Summary: Ancient Greek hyphenation rules
-%define upstreamid 20110913
+%global upstreamid 20110913
 Version: 0.%{upstreamid}
-Release: alt1_8
+Release: alt1_9
 #? in a url causes trouble
 #http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-grc.tex?view=co
 Source: hyph-grc.tex
-Group: Text tools
 URL: http://tug.org/tex-hyphen
 License: LPPL
 BuildArch: noarch
@@ -35,11 +35,15 @@ head -n 37 hyph-grc.tex >> README
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc README
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20110913-alt1_9
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20110913-alt1_8
 - update to new release by fcimport
 
