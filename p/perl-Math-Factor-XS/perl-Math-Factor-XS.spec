@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(base.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Math-Factor-XS
 Version:        0.40
-Release:        alt3_13.1
+Release:        alt3_14
 Summary:        Factorize numbers and calculate matching multiplications
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -54,6 +54,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Math*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.40-alt3_14
+- update to new release by fcimport
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.40-alt3_13.1
 - rebuild with new perl 5.22.0
 
