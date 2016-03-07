@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-CPAN-Meta-JSON
 Version:	0.16
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Validate a META.json file within a CPAN distribution
 Group:		Development/Perl
 License:	Artistic 2.0
@@ -68,6 +68,9 @@ make test AUTOMATED_TESTING=1
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_3
 - update to new release by fcimport
 
