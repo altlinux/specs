@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: vcmi
-Version: 0.98
+Version: 0.98h
 Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
@@ -11,8 +11,7 @@ Group: Games/Strategy
 URL: http://wiki.vcmi.eu/index.php?title=Main_Page
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source0: http://download.vcmi.eu/%name-%version.tar.gz
-Patch1:	vcmi-0.98-fix-boost-1.58-build.patch
-BuildPreReq: cmake rpm-macros-cmake
+BuildPreReq: cmake rpm-macros-cmake gcc-c++
 
 # Automatically added by buildreq on Wed Feb 10 2016
 # optimized out: boost-devel boost-devel-headers cmake-modules gcc-c++ libEGL-devel libGL-devel libSDL2-devel libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-network libqt5-widgets libstdc++-devel pkg-config zlib-devel
@@ -49,7 +48,6 @@ VCMI это фанатский проект с открытым исходным
 
 %prep
 %setup -q
-%patch1 -p1
 
 %cmake_insource \
 	-DCMAKE_SKIP_RPATH=OFF \
@@ -71,6 +69,9 @@ mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/
 %_datadir/icons/*/*/apps/*
 
 %changelog
+* Thu Mar 03 2016 Anton Midyukov <antohami@altlinux.org> 0.98h-alt1
+- New version.
+
 * Sun Aug 23 2015 Anton Midyukov <antohami@altlinux.org> 0.98-alt1
 - New version (Closes: 31364);
 - Fix build with boost-1.58.
