@@ -1,58 +1,71 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Data/Dumper.pm) perl(Data/Serializer.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(Time/HiRes.pm) perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
-Name:       perl-Log-Trace 
-Version:    1.070 
-Release:    alt2_18
-# lib/Log/Trace.pm -> GPLv2+ 
-License:    GPLv2+
-Group:      Development/Perl
-Summary:    A unified approach to tracing 
-Source:     http://search.cpan.org/CPAN/authors/id/B/BB/BBC/Log-Trace-%{version}.tar.gz
-Url:        http://search.cpan.org/dist/Log-Trace
-BuildArch:  noarch
+Name:           perl-Log-Trace
+Version:        1.070
+Release:        alt2_20
+License:        GPLv2+
+Summary:        A unified approach to tracing
+Source:         http://search.cpan.org/CPAN/authors/id/B/BB/BBC/Log-Trace-%{version}.tar.gz
+Url:            http://search.cpan.org/dist/Log-Trace
+BuildArch:      noarch
+# Build
+BuildRequires:  perl
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(Data/Dumper.pm)
+BuildRequires:  perl(Data/Serializer.pm)
+BuildRequires:  perl(Fcntl.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Sys/Syslog.pm)
+BuildRequires:  perl(Time/HiRes.pm)
+# Tests only
+BuildRequires:  perl(File/Basename.pm)
+BuildRequires:  perl(File/Spec.pm)
+BuildRequires:  perl(File/Spec/Functions.pm)
+BuildRequires:  perl(Test/More.pm)
+Requires:     perl(Data/Dumper.pm)
+Requires:     perl(Data/Serializer.pm)
+Requires:     perl(Sys/Syslog.pm)
+Requires:     perl(Time/HiRes.pm)
 
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildRequires: perl(Test/More.pm)
 
-# autoprov detects perl(DB), which is just wrong.  In this specific case,
-# it's easier just to turn autoprov off.
-AutoProv:   no
-Provides:   perl(Log/Trace.pm) = %{version}
 Source44: import.info
+%filter_from_provides /^perl\\(DB.pm\\)$/d
 
 %description
 This module provides a unified approach to tracing. A script can 'use
 Log::Trace qw( < mode > )' to set the behaviour of the TRACE function.By
 default, the trace functions are exported to the calling package only.
 You can export the trace functions to other packages with the 'Deep'
-option. See the "OPTIONS" manpage for more information. 
-
+option. See the "OPTIONS" manpage for more information.
 
 %prep
 %setup -q -n Log-Trace-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
-
+make pure_install DESTDIR=%{buildroot}
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc README Changes COPYING 
+%doc COPYING
+%doc README Changes
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_20
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.070-alt2_18
 - update to new release by fcimport
 
