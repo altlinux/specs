@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl(IO/Socket/INET.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Growl-GNTP
 Version:        0.20
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -47,6 +47,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_7
 - update to new release by fcimport
 
