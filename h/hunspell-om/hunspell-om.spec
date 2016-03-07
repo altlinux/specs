@@ -1,3 +1,4 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,8 +6,7 @@ Name: hunspell-om
 Summary: Oromo hunspell dictionaries
 #Epoch: 1
 Version: 0.04
-Release: alt2_9
-Group: Text tools
+Release: alt2_10
 Source: http://borel.slu.edu/obair/%{name}-%{version}.oxt
 URL: http://borel.slu.edu/crubadan/apps.html
 License: LGPLv3+
@@ -33,11 +33,15 @@ for lang in $om_ET_aliases; do
         ln -s om_ET.dic $lang.dic
 done
 
+
 %files
 %doc dictionaries/README_om_ET.txt LICENSES-en.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_9
 - update to new release by fcimport
 
