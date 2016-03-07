@@ -2,10 +2,10 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 23
 Name:		perl-ExtUtils-InstallPaths
 Version:	0.011
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Build.PL install path logic made easy
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -80,6 +80,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1_4
 - update to new release by fcimport
 
