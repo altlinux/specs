@@ -1,10 +1,10 @@
+Group: Text tools
 Name: hunspell-ber
 Summary: Amazigh hunspell dictionaries
-%define upstreamid 20080210
+%global upstreamid 20080210
 Version: 0.%{upstreamid}
-Release: alt2_11
+Release: alt2_12
 Source: http://ayaspell.sourceforge.net/data/hunspell-am_test.tar.gz
-Group: Text tools
 URL: http://ayaspell.sourceforge.net/am.html
 License: GPL+ or LGPLv2+ or MPLv1.1
 BuildArch: noarch
@@ -25,11 +25,15 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p tifinagh.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/ber_MA.dic
 cp -p tifinagh.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/ber_MA.aff
 
+
 %files
 %doc README
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080210-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20080210-alt2_11
 - update to new release by fcimport
 
