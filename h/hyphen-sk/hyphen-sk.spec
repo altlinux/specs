@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-sk
 Summary: Slovak hyphenation rules
-%define upstreamid 20031227
+%global upstreamid 20031227
 Version: 0.%{upstreamid}
-Release: alt1_13
+Release: alt1_14
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_sk_SK.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: GPL+
 BuildArch: noarch
@@ -38,11 +38,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc README_hyph_sk_SK.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20031227-alt1_14
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20031227-alt1_13
 - update to new release by fcimport
 
