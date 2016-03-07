@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-sv
 Summary: Swedish hyphenation rules
 Version: 1.00.1
-Release: alt1_13
+Release: alt1_14
 Source: http://extensions.services.openoffice.org/files/1966/4/hyph_sv_SE.oxt
-Group: Text tools
 URL: http://extensions.services.openoffice.org/node/1968
 License: LGPLv2+ or GPLv2+
 BuildArch: noarch
@@ -43,11 +43,15 @@ for lang in $sv_SE_aliases; do
 done
 popd
 
+
 %files
 %doc README_sv_SE.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_14
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.00.1-alt1_13
 - update to new release by fcimport
 
