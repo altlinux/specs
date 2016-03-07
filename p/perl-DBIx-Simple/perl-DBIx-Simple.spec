@@ -1,21 +1,38 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBD/SQLite.pm) perl(DBIx/XHTML_Table.pm) perl(Object/Accessor.pm) perl(SQL/Abstract.pm) perl(SQL/Interp.pm) perl(Text/Table.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(DBIx/XHTML_Table.pm) perl(SQL/Abstract.pm) perl(Text/Table.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DBIx-Simple
 Summary:        Easy-to-use OO interface to DBI
 Version:        1.35
-Release:        alt2_13
+Release:        alt2_15
 License:        Public Domain
-Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/J/JU/JUERD/DBIx-Simple-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/DBIx-Simple/
 BuildArch:      noarch
 
-BuildRequires:  perl(DBI.pm)
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Run-time
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(DBI.pm)
+# DBIx::XHTML_Table - not used for test
+BuildRequires:  perl(Object/Accessor.pm)
+BuildRequires:  perl(overload.pm)
+# SQL::Abstract - not used for test
+BuildRequires:  perl(SQL/Interp.pm)
+BuildRequires:  perl(strict.pm)
+# Text::Table - not used for test
+# Tests
+BuildRequires:  perl(DBD/SQLite.pm)
 BuildRequires:  perl(Test/More.pm)
 Requires:       perl(DBI.pm) >= 1.21
+Requires:       perl(DBIx/XHTML_Table.pm)
+Requires:       perl(SQL/Abstract.pm)
+Requires:       perl(SQL/Interp.pm)
+Requires:       perl(Text/Table.pm)
 
 
 
@@ -29,15 +46,11 @@ database module.
 %setup -q -n DBIx-Simple-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -48,6 +61,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.35-alt2_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.35-alt2_13
 - update to new release by fcimport
 
