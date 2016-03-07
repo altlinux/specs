@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(B.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(Test/Builder/Module.pm) perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl(B.pm) perl(Module/Build.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(base.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Refcount
 Version:        0.08
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Assert reference counts on objects
 
 Group:          Development/Perl
@@ -57,6 +57,9 @@ make test
 
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_5
 - update to new release by fcimport
 
