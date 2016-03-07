@@ -1,13 +1,14 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Carp-Always
 Version:        0.13
-Release:        alt2_5
+Release:        alt2_7
 Summary:        Warn and die in Perl noisily with stack backtraces
 License:        GPL+ or Artistic
-Group:          Development/Perl
+
 URL:            http://search.cpan.org/dist/Carp-Always/
 Source0:        http://www.cpan.org//authors/id/F/FE/FERREIRA/Carp-Always-%{version}.tar.gz
 BuildArch:      noarch
@@ -34,7 +35,7 @@ complain loudly with stack backtraces when warn()ing or die()ing.
 
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 # Recode
@@ -45,10 +46,6 @@ mv README.utf8 README
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 
@@ -62,6 +59,9 @@ make test
 
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_5
 - update to new release by fcimport
 
