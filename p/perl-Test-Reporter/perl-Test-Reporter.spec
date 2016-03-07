@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Reporter
 Version:        1.62
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Sends test results to cpan-testers@perl.org
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +65,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.62-alt1_3
 - update to new release by fcimport
 
