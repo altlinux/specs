@@ -1,3 +1,4 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,8 +6,7 @@ Name: hunspell-ny
 Summary: Chichewa hunspell dictionaries
 #Epoch: 1
 Version: 0.01
-Release: alt2_9
-Group: Text tools
+Release: alt2_10
 Source: http://extensions.services.openoffice.org/e-files/4052/0/hunspell-chichewa-ny-dict-%{version}.oxt
 URL: http://extensions.services.openoffice.org/en/project/chicspell
 License: GPLv3+
@@ -38,11 +38,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/ny_MW.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 
+
 %files
 %doc LICENSES-en.txt dictionaries/README_ny_MW.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_9
 - update to new release by fcimport
 
