@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-tl
 Summary: Tagalog hunspell dictionaries
-%define upstreamid 20050109
+%global upstreamid 20050109
 Version: 0.%{upstreamid}
-Release: alt2_12
+Release: alt2_13
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/tl_PH.zip
-Group: Text tools
 URL: http://borel.slu.edu/crubadan/apps.html
 License: GPLv2+
 BuildArch: noarch
@@ -44,11 +44,15 @@ for lang in $tl_PH_aliases; do
 done
 popd
 
+
 %files
 %doc README_tl_PH.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_12
 - update to new release by fcimport
 
