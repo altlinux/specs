@@ -1,13 +1,13 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hyphen-pl
 Summary: Polish hyphenation rules
-%define upstreamid 20060726
+%global upstreamid 20060726
 Version: 0.%{upstreamid}
-Release: alt1_12
+Release: alt1_13
 Source: http://pl.openoffice.org/pliki/hyph_pl_PL.zip
-Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
 License: LGPLv2+
 BuildArch: noarch
@@ -37,11 +37,15 @@ done
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_pl_PL.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc README_hyph_pl_PL.txt
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20060726-alt1_13
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20060726-alt1_12
 - update to new release by fcimport
 
