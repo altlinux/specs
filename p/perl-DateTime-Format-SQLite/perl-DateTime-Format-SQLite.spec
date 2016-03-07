@@ -1,3 +1,4 @@
+Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBD/SQLite.pm) perl-devel perl-podlators
@@ -5,25 +6,27 @@ BuildRequires: perl(DBD/SQLite.pm) perl-devel perl-podlators
 Name:           perl-DateTime-Format-SQLite 
 Summary:        Parse and format SQLite dates and times 
 Version:        0.11
-Release:        alt2_16
+Release:        alt2_18
 License:        GPL+ or Artistic 
-Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFAERBER/DateTime-Format-SQLite-%{version}.tar.gz
-URL:            http://search.cpan.org/dist/
+URL:            http://search.cpan.org/dist/DateTime-Format-SQLite/
 BuildArch:      noarch
-
-BuildRequires:  perl(Class/ISA.pm)
-BuildRequires:  perl(DateTime.pm)
-BuildRequires:  perl(DateTime/Format/Builder.pm)
+# Build
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Runtime
+BuildRequires:  perl(DateTime/Format/Builder.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
+# Tests only
+BuildRequires:  perl(DateTime.pm)
 BuildRequires:  perl(Test/More.pm)
-
-Requires:       perl(DateTime.pm) >= 0.1
 Requires:       perl(DateTime/Format/Builder.pm) >= 0.6
 
 
-%{?perl_default_subpackage_tests}
 Source44: import.info
+%filter_from_requires /^perl\\(DateTime.Format.Builder.pm\\)$/d
 
 %description
 This module understands the formats used by SQLite for its 'date',
@@ -36,30 +39,29 @@ understood/returned by SQLite's 'date', 'time', 'datetime', 'julianday'
 and 'strftime' SQL functions. You will usually want to store your dates
 in one of these formats.
 
-
 %prep
 %setup -q -n DateTime-Format-SQLite-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
-
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
-
 # %{_fixperms} %{buildroot}/*
 
 %check
 make test
 
 %files
-%doc Changes README LICENSE 
+%doc LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_18
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt2_16
 - update to new release by fcimport
 
