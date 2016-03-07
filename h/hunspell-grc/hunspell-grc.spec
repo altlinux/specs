@@ -1,11 +1,11 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-grc
 Summary: Ancient Greek hunspell dictionaries
 Version: 2.1.5
-Release: alt2_11
-Group: Text tools
+Release: alt2_12
 Source: http://extensions.services.openoffice.org/e-files/2313/1/grc.oxt
 URL: http://www.himeros.eu/
 License: GPL+ or LGPLv2+
@@ -27,12 +27,16 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p dictionaries/grc_GR.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/grc.aff
 cp -p dictionaries/grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/grc.dic
 
+
 %files
 %doc LICENSES-en.txt         
 
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_12
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.1.5-alt2_11
 - update to new release by fcimport
 
