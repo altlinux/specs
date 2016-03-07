@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Alien/SeleniumRC.pm) perl(App/Prove.pm) perl(CPAN.pm) perl(Cwd.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(IO/File.pm) perl(TAP/Base.pm) perl(TAP/Harness.pm) perl(TAP/Parser/Aggregator.pm) perl(Time/HiRes.pm) perl(URI/file.pm) perl(base.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Alien/SeleniumRC.pm) perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-TAP-Formatter-HTML
 Version:        0.11
-Release:        alt1_8
+Release:        alt1_9
 Summary:        TAP Test Harness output delegate for html output
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -52,6 +52,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_9
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_8
 - update to new release by fcimport
 
