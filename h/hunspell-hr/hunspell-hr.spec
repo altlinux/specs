@@ -1,14 +1,14 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-hr
 Summary: Croatian hunspell dictionaries
-%define upstreamid 20040608
+%global upstreamid 20040608
 Version: 0.%{upstreamid}
-Release: alt2_13
+Release: alt2_14
 #Epoch: 1
 Source: http://cvs.linux.hr/spell/myspell/hr_HR.zip
-Group: Text tools
 URL: http://cvs.linux.hr/spell/
 License: LGPLv2+ or SISSL
 BuildArch: noarch
@@ -20,9 +20,9 @@ Source44: import.info
 Croatian hunspell dictionaries.
 
 %package -n hyphen-hr
+Group: Text tools
 Requires: libhyphen
 Summary: Croatian hyphenation rules
-Group: Text tools
 
 %description -n hyphen-hr
 Croatian hyphenation rules.
@@ -39,6 +39,7 @@ cp -p hr_HR.dic hr_HR.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_hr.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hr_HR.dic
 
+
 %files
 %doc README_hr_HR.txt
 %{_datadir}/myspell/*
@@ -48,6 +49,9 @@ cp -p hyph_hr.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hr_HR.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040608-alt2_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20040608-alt2_13
 - update to new release by fcimport
 
