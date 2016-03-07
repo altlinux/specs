@@ -1,10 +1,10 @@
+Group: Text tools
 Name: hyphen-mn
 Summary: Mongolian hyphenation rules
-%define upstreamid 20100531
+%global upstreamid 20100531
 Version: 0.%{upstreamid}
-Release: alt1_9
+Release: alt1_10
 Source: http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-mn-cyrl.tex?view=co#/hyph-mn-cyrl.tex
-Group: Text tools
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/mnhyphn.html
 License: LPPL
 BuildArch: noarch
@@ -32,11 +32,15 @@ head -n 83 hyph-mn-cyrl.tex >> README
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 cp -p hyph_mn_MN.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
+
 %files
 %doc README
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_10
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.20100531-alt1_9
 - update to new release by fcimport
 
