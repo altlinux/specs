@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-MockTime
 Version:        0.15
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Replaces actual time with simulated time
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -40,15 +40,11 @@ calls to gmtime,time or localtime.
 chmod -x lib/Test/MockTime.pm t/test.t
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -59,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_1
 - update to new release by fcimport
 
