@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-sq
 Summary: Albanian hunspell dictionaries
 Version: 1.6.4
-Release: alt1_8
+Release: alt1_9
 Source: http://www.shkenca.org/shkarkime/myspell-sq_AL-%{version}.zip
-Group: Text tools
 URL: http://www.shkenca.org/k6i/albanian_dictionary_for_myspell_en.html
 License: GPLv2+
 BuildArch: noarch
@@ -26,11 +26,15 @@ Albanian hunspell dictionaries.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p sq_AL.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 
+
 %files
 %doc README.txt Copyright
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt1_9
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt1_8
 - update to new release by fcimport
 
