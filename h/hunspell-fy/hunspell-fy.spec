@@ -1,12 +1,12 @@
+Group: Text tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-fy
 Summary: Frisian hunspell dictionaries
 Version: 2.0.1
-Release: alt2_9
+Release: alt2_10
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/5679/frysk_wurdboek-2.0.1-fx+tb+sm.xpi
-Group: Text tools
 URL: http://www.mozilla-nl.org/projecten/frysk
 License: LGPLv2+
 BuildArch: noarch
@@ -41,11 +41,15 @@ for lang in $fy_NL_aliases; do
 done
 popd
 
+
 %files
 %doc README-fy.txt
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_10
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_9
 - update to new release by fcimport
 
