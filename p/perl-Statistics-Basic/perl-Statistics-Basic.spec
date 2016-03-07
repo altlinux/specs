@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Perl/Critic.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Statistics-Basic
 Version:        1.6611
-Release:        alt1_3
+Release:        alt1_4
 Summary:        A collection of very basic statistics modules
 License:        LGPLv2+
 Group:          Development/Perl
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.6611-alt1_3
 - update to new release by fcimport
 
