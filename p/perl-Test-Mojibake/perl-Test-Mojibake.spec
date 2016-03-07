@@ -1,8 +1,8 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Encode.pm) perl(English.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(open.pm) perl-devel perl-podlators
+BuildRequires: perl(Encode.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 23
 # We need to patch the test suite if we have an old version of Test::More and/or Test::Pod
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.96) ? 1 : 0);' 2>/dev/null || echo 0)
 %global old_test_pod %(perl -MTest::Pod -e 'print (($Test::Pod::VERSION < 1.41) ? 1 : 0);' 2>/dev/null || echo 0)
@@ -12,22 +12,22 @@ BuildRequires: perl(Encode.pm) perl(English.pm) perl(IO/Handle.pm) perl(IPC/Open
 
 Name:		perl-Test-Mojibake
 Version:	1.1
-Release:	alt1_1
+Release:	alt1_3
 Summary:	Check your source for encoding misbehavior
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Test-Mojibake/
 Source0:	http://search.cpan.org/CPAN/authors/id/S/SY/SYP/Test-Mojibake-%{version}.tar.gz
-Patch0:		Test-Mojibake-1.1-no-Test::Version.patch
+Patch0:		Test-Mojibake-1.1-synopsis.patch
 Patch1:		Test-Mojibake-1.1-old-Test::More.patch
 Patch2:		Test-Mojibake-1.0-old-Test::Pod.patch
+Patch3:		Test-Mojibake-1.1-no-Test::Version.patch
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
 # ===================================================================
 BuildRequires:	coreutils
 BuildRequires:	findutils
-BuildRequires:	make
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # ===================================================================
@@ -70,7 +70,7 @@ BuildRequires:	perl(Test/Portability/Files.pm)
 BuildRequires:	perl(Test/Synopsis.pm)
 # Modules only available from EL-6
 %if 0%{?fedora} || 0%{?rhel} > 5
-BuildRequires:	perl(Test/Perl/Critic.pm) perl(Perl/Critic.pm)
+BuildRequires:	perl(Test/Perl/Critic.pm), perl(Perl/Critic.pm)
 BuildRequires:	perl(Test/Vars.pm)
 %endif
 # Modules only available from EL-7
@@ -123,6 +123,9 @@ Enter the Test::Mojibake ;)
 %prep
 %setup -q -n Test-Mojibake-%{version}
 
+# Make SYNOPSIS compilable perl (#1309966)
+%patch0
+ 
 # We need to patch the test suite if we have an old version of Test::More
 %if %{old_test_more}
 %patch1
@@ -135,7 +138,7 @@ Enter the Test::Mojibake ;)
 
 # Test::Version not always available
 %if !0%{?fedora} && 0%{?rhel} < 7
-%patch0
+%patch3
 %endif
 
 %build
@@ -154,12 +157,20 @@ make test %{!?perl_bootstrap:AUTHOR_TESTING=1 RELEASE_TESTING=1} \
 %endif
 
 %files
-%doc Changes LICENSE README
+%if 0%{?_licensedir:1}
+%doc LICENSE
+%else
+%doc LICENSE
+%endif
+%doc Changes README
 %{_bindir}/scan_mojibake
 %{perl_vendor_privlib}/Test/
 %{_mandir}/man1/scan_mojibake.1*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
 - update to new release by fcimport
 
