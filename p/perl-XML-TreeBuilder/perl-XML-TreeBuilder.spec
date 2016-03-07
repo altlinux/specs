@@ -1,24 +1,35 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl(Test.pm) perl-devel perl-podlators perl(XML/Catalog.pm)
+BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	Parser that builds a tree of XML::Element objects
 Name:		perl-XML-TreeBuilder
 Version:	5.4
-Release:	alt1
+Release:	alt1_5
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/XML-TreeBuilder/
-Source:		http://www.cpan.org/authors/id/J/JF/JFEARN/XML-TreeBuilder-%{version}.tar.gz
+# have to:
+#  push the patch upstream
+Source:		http://www.cpan.org/modules/by-module/XML/XML-TreeBuilder-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl
-BuildRequires:	perl(ExtUtils/MakeMaker.pm)
-BuildRequires:  perl(Test/More.pm)
+BuildRequires:	perl(Carp.pm)
+BuildRequires:	perl(File/Basename.pm)
+BuildRequires:	perl(File/Spec.pm)
 BuildRequires:	perl(HTML/Element.pm)
 BuildRequires:	perl(HTML/Tagset.pm)
+BuildRequires:	perl(Module/Build.pm)
+BuildRequires:	perl(strict.pm)
+BuildRequires:	perl(Test.pm)
+BuildRequires:	perl(Test/More.pm)
+BuildRequires:	perl(Test/Pod.pm)
+BuildRequires:	perl(Test/Pod/Coverage.pm)
+BuildRequires:	perl(Test/Perl/Critic.pm)
+BuildRequires:	perl(vars.pm)
+BuildRequires:	perl(warnings.pm)
+BuildRequires:	perl(XML/Catalog.pm)
 BuildRequires:	perl(XML/Parser.pm)
-Requires:	perl(HTML/Element.pm) >= 4.1 perl(HTML/Tagset.pm) perl(XML/Parser.pm)
 Source44: import.info
 
 %description
@@ -29,23 +40,24 @@ that builds a tree of XML::Element objects.
 %setup -q -n XML-TreeBuilder-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS="vendor"
-%{__make} %{?_smp_mflags}
+%{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+./Build
 
 %check
-%{__make} test
+./Build test
 
 %install
-%{__make} pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT create_packlist=0
-
-### Clean up buildroot
-find $RPM_BUILD_ROOT -name .packlist -exec %{__rm} {} \;
+./Build pure_install destdir=$RPM_BUILD_ROOT create_packlist=0
+find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
 
 %files
 %doc Changes README
 %{perl_vendor_privlib}/XML/
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_5
+- update to new release by fcimport
+
 * Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1
 - automated CPAN update
 
