@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(Exporter.pm) perl(FileHandle.pm) perl(threads.pm) perl(threads/shared.pm) perl-devel perl-pod perl-podlators perldoc
+BuildRequires: perl(threads.pm) perl(threads/shared.pm) perl-pod perl-podlators perldoc
 # END SourceDeps(oneline)
 Name:           perl-Net-Jabber
 Version:        2.0
-Release:        alt3_27
+Release:        alt3_28
 Summary:        Net::Jabber - Jabber Perl Library
 Group:          Development/Perl
 License:        (GPL+ or Artistic) or LGPLv2+
@@ -76,6 +76,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_28
+- update to new release by fcimport
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_27
 - replaced by imported version
 
