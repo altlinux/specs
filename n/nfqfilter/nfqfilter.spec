@@ -1,6 +1,6 @@
 Name: nfqfilter
 Version: 0.2
-Release: alt7
+Release: alt8
 Summary: Pattern-based packet filtering system
 Group: Networking/Other
 
@@ -55,6 +55,9 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Tue Mar 08 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt8
+- Rebuild with poco 1.7.0
+
 * Tue Mar 01 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt7
 - update to git:01a639d6a8dc3040db1c4cf876df15001bb85839
 
