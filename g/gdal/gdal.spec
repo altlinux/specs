@@ -8,23 +8,21 @@
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 2.0.0
-Release: alt2.1
+Version: 2.0.2
+Release: alt1
 Group: Sciences/Geosciences
 
 License: MIT
-URL: http://www.gdal.org/
-
+URL: http://www.gdal.org
+Packager: ALT QA Team <qa@packages.altlinux.org>
+# ftp://ftp.remotesensing.org/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
 Patch0: %name-1.7.1-alt-swig_python.patch
-# Patch1: %name-1.7.1-alt-pydir.patch
 Patch2: %name-1.7.1-alt-apps_install.patch
 Patch3: %name-1.7.1-alt-inst_docs.patch
-# Patch4: %name-1.8.0-alt-libpng15.patch
 Patch5: %name-1.8.0-alt-libproj.so_name.patch
 Patch6: %name-1.11.2-alt-python3.patch
-Patch7: %name-2.0.0-alt-swig_perl.patch
 
 %define libname lib%name
 
@@ -113,18 +111,14 @@ Perl modules for GDAL/OGR.
 
 %prep
 %setup
-%patch7 -p2
 %patch0 -p1
-# %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-# %patch4 -p2
 %patch5 -p2
 %patch6 -p2
 
 %if_with python3
 cp -fR swig/python swig/python3
-find swig/python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -183,6 +177,7 @@ make -B man
 
 %if_with python3
 pushd swig/python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build_debug
 popd
 %endif
@@ -253,6 +248,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Tue Mar 08 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.2-alt1
+- NMU: 2.0.0 -> 2.0.2 (fixes FTBFS).
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2.1
 - rebuild with new perl 5.22.0
 
