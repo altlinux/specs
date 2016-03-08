@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: darktable
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -18,7 +18,7 @@ BuildRequires: gcc-c++ libgomp-devel
 
 BuildPreReq:  rpm-build-gnome
 BuildRequires: /proc
-BuildRequires: libgio-devel >= 2.30 libgtk+3-devel >= 3.10
+BuildRequires: libgio-devel >= 2.40 libgtk+3-devel >= 3.10
 BuildRequires: cmake intltool libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
@@ -50,7 +50,6 @@ light table. It also enables you to develop raw images and enhance them.
 -DCMAKE_BUILD_TYPE=Release \
 -DBINARY_PACKAGE_BUILD:BOOL=ON
 %cmake_build VERBOSE=1
-
 %install
 %cmakeinstall_std
 
@@ -74,6 +73,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Tue Mar 08 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Wed Feb 03 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
