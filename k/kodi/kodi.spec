@@ -1,5 +1,5 @@
 Name: kodi
-Version: 15.2
+Version: 16.0
 Release: alt1
 
 Summary: Kodi Media Center
@@ -25,14 +25,15 @@ BuildRequires: libcec-devel >= 2.2.0 libcdio-devel libcurl-devel libdbus-devel l
 BuildRequires: libexpat-devel libfaad-devel libflac-devel libfreetype-devel libfribidi-devel
 BuildRequires: libgnutls-devel libjasper-devel libjpeg-devel liblzo2-devel libyajl-devel
 BuildRequires: libmicrohttpd-devel libmms-devel libmodplug-devel libmpeg2-devel
-BuildRequires: libpcrecpp-devel libgif-devel libpng-devel libsmbclient-devel
+BuildRequires: libpcrecpp-devel libgif-devel libpng-devel libsmbclient-devel libdcadec-devel
 BuildRequires: libsqlite3-devel libtiff-devel libvorbis-devel libwavpack-devel
 BuildRequires: libplist-devel libpulseaudio-devel libssh-devel librtmp-devel python-devel
-BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel
+BuildRequires: libbluez-devel libtag-devel tinyxml-devel libudev-devel libuuid-devel
 BuildRequires: fontconfig-devel libgcrypt-devel liblame-devel libxml2-devel libxslt-devel
-BuildRequires: java-1.7.0-openjdk-devel /proc zlib-devel
+BuildRequires: libcrossguid-devel libdrm-devel zlib-devel
+BuildRequires: java-1.8.0-openjdk-devel /proc
 
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarch64
 BuildRequires: libva-devel libvdpau-devel libGL-devel libGLU-devel libGLEW-devel
 %endif
 %ifarch %arm
@@ -148,6 +149,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Wed Feb 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.0-alt1
+- 16.0 Jarvis released
+
 * Tue Oct 20 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.2-alt1
 - 15.2 Isengard released
 
