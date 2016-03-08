@@ -4,12 +4,12 @@
 
 Name: python-module-%oname
 Version: 1.0.6
-Release: alt1.git20131103.1
+Release: alt2.git20131103
 Summary: Munkres algorithm for the Assignment Problem
 License: BSD
 Group: Development/Python
 Url: https://pypi.python.org/pypi/munkres/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 # https://github.com/bmc/munkres.git
 Source: %name-%version.tar
@@ -25,8 +25,8 @@ BuildRequires(pre): rpm-build-python3
 %py_provides %oname
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-cssselect python-module-docutils python-module-pytz python-module-setuptools python-module-snowballstemmer python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml python3 python3-base
-BuildRequires: python-module-epydoc python-module-html5lib rpm-build-python3 time
+# optimized out: python-base python-module-PyStemmer python-module-Pygments python-module-cssselect python-module-docutils python-module-pytz python-module-setuptools python-module-snowballstemmer python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-xml python3 python3-base
+BuildRequires: python-devel python-module-epydoc python-module-html5lib rpm-build-python3 time
 
 %description
 The Munkres module provides an implementation of the Munkres algorithm
@@ -59,6 +59,7 @@ This package contains documentation for %oname.
 %setup
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 %endif
 
@@ -104,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.6-alt2.git20131103
+- NMU: added python-devel to BRs.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1.git20131103.1
 - NMU: Use buildreq for BR.
 

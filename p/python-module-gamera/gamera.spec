@@ -4,18 +4,18 @@
 
 Name: python-module-%oname
 Version: 3.4.2
-Release: alt1
+Release: alt2
 Summary: Framework for building document analysis applications
 License: GPLv2
 Group: Development/Python
 Url: http://gamera.informatik.hsnr.de/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 Source: %name-%version.tar
 
 BuildPreReq: gcc-c++ libtiff-devel libpng-devel libgomp-devel
 BuildPreReq: python-devel python-module-setuptools-tests
-BuildPreReq: python-module-wx python-module-docutils
+BuildPreReq: python-module-wx python-module-docutils python-module-Pygments
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -103,8 +103,8 @@ This package contains documentation for %oname.
 %setup
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -113,6 +113,7 @@ find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %if_with python3
 pushd ../python3
+find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build_debug --openmp=yes
 popd
 %endif
@@ -175,6 +176,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.2-alt2
+- NMU: added python-module-Pygments to BRs.
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt1
 - Initial build for Sisyphus
 

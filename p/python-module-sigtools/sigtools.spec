@@ -4,12 +4,12 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.b2.git20150217.1
+Release: alt2.b2.git20150217
 Summary: Python module to manipulate function signatures
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sigtools/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 # https://github.com/epsy/sigtools.git
 Source: %name-%version.tar
@@ -29,8 +29,8 @@ BuildRequires(pre): rpm-build-python3
 %py_requires six funcsigs sphinx
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer
-BuildRequires: python-module-docutils python-module-funcsigs python-module-html5lib python-module-setuptools-tests python3-module-html5lib python3-module-jinja2-tests python3-module-setuptools-tests python3-module-sphinx rpm-build-python3
+# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer
+BuildRequires: python-module-docutils python-module-funcsigs python-module-html5lib python-module-setuptools-tests python-module-sphinx python3-module-html5lib python3-module-jinja2-tests python3-module-setuptools-tests python3-module-sphinx rpm-build-python3
 
 %description
 Utilities for working with 3.3's inspect.Signature objects.
@@ -106,6 +106,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt2.b2.git20150217
+- NMU: added python-module-sphinx to BRs.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.b2.git20150217.1
 - NMU: Use buildreq for BR.
 

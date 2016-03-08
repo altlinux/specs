@@ -4,12 +4,12 @@
 
 Name: python-module-%oname
 Version: 2014.1
-Release: alt2.git20140706.1
+Release: alt3.git20140706
 Summary: Triangular and Tetrahedral Mesh Generator in Python
 License: MIT
 Group: Development/Python
 Url: http://mathema.tician.de/software/meshpy
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 # http://git.tiker.net/trees/meshpy.git
 Source: %oname-%version.tar
@@ -26,8 +26,8 @@ BuildRequires(pre): rpm-build-python3
 %endif
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils libboost_python3-1.58.0 libstdc++-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base python3-dev python3-module-numpy
-BuildRequires: boost-python-devel boost-python3-devel gcc-c++ python-module-epydoc python-module-html5lib python-module-matplotlib python-module-numpy-testing python3-module-setuptools rpm-build-python3 time
+# optimized out: elfutils libboost_python3-1.58.0 libstdc++-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-genshi python-module-jinja2 python-module-numpy python-module-pyparsing python-module-pytz python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python3 python3-base python3-dev python3-module-numpy
+BuildRequires: boost-python-devel boost-python3-devel gcc-c++ python-module-epydoc python-module-html5lib python-module-matplotlib python-module-numpy-testing python-module-setuptools python3-module-setuptools rpm-build-python3 time
 
 %description
 MeshPy offers quality triangular and tetrahedral mesh generation for
@@ -91,6 +91,7 @@ rm -fR bpl-subset
 tar -xf %SOURCE1
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 sed -i 's|boost_python|boost_python3|' ../python3/setup.py
 %endif
@@ -147,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2014.1-alt3.git20140706
+- NMU: added python-module-setuptools to BRs.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2014.1-alt2.git20140706.1
 - NMU: Use buildreq for BR.
 
