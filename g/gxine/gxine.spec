@@ -11,10 +11,10 @@
 
 Name:    gxine
 Summary: Mediaplayer - GTK-based GUI for xine libraries
-Summary(uk_UA.CP1251): Ìåä³àïðîãðàâà÷ - GTK+ GUI äëÿ á³áë³îòåê xine
-Summary(ru_RU.CP1251): Ìåäèàïðîèãðûâàòåëü - GTK+ GUI äëÿ áèáëèîòåê xine
+Summary(uk_UA.UTF-8): ÐœÐµÐ´Ñ–Ð°Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð²Ð°Ñ‡ - GTK+ GUI Ð´Ð»Ñ Ð±Ñ–Ð±Ð»Ñ–Ð¾Ñ‚ÐµÐº xine
+Summary(ru_RU.UTF-8): ÐœÐµÐ´Ð¸Ð°Ð¿Ñ€Ð¾Ð¸Ð³Ñ€Ñ‹Ð²Ð°Ñ‚ÐµÐ»ÑŒ - GTK+ GUI Ð´Ð»Ñ Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐº xine
 Version: 0.5.908
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group:   Video
 URL:     http://www.xine-project.org/home
@@ -27,6 +27,7 @@ Patch1:  gxine-0.5.902-non-separate-toolbar.patch
 Patch2:  gxine-0.5.907-linkage.patch
 Patch3:  gxine-0.5.907-lirc.patch
 Patch4:  gxine-build-with-mozjs185.patch
+Patch5:  gxine-improve-l10n-of-desktop-file.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: imake libgtk+2-devel libxine-devel zlib-devel
@@ -59,19 +60,19 @@ formats that libxine supports. Currently, this includes MPEG1/2, some
 AVI and Quicktime files, some network streaming methods and disc based
 media (VCD, SVCD, DVD).
 
-%description -l uk_UA.CP1251
-%name - GTK+ GUI äëÿ á³áë³îòåêè â³äåîïðîãðàâàííÿ libxine.
-Â³í íàäàº %name - ìåä³à-ïðîãðàâà÷ äëÿ ïðîãðàâàííÿ àóä³î/â³äåî ôîðìàò³â,
-ÿê³ ï³äòðèìóº libxine. Â äàíèé ÷àñ öå MPEG1/2, äåÿê³ ôàéëè AVI òà
-Quicktime, äåÿê³ ìåðåæåâ³ ïîòîêîâ³ ñïîñîáè ³ äèñêîâ³ çàñîáè (VCD, SVCD,
+%description -l uk_UA.UTF-8
+%name - GTK+ GUI Ð´Ð»Ñ Ð±Ñ–Ð±Ð»Ñ–Ð¾Ñ‚ÐµÐºÐ¸ Ð²Ñ–Ð´ÐµÐ¾Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð²Ð°Ð½Ð½Ñ libxine.
+Ð’Ñ–Ð½ Ð½Ð°Ð´Ð°Ñ” %name - Ð¼ÐµÐ´Ñ–Ð°-Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð²Ð°Ñ‡ Ð´Ð»Ñ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð²Ð°Ð½Ð½Ñ Ð°ÑƒÐ´Ñ–Ð¾/Ð²Ñ–Ð´ÐµÐ¾ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ñ–Ð²,
+ÑÐºÑ– Ð¿Ñ–Ð´Ñ‚Ñ€Ð¸Ð¼ÑƒÑ” libxine. Ð’ Ð´Ð°Ð½Ð¸Ð¹ Ñ‡Ð°Ñ Ñ†Ðµ MPEG1/2, Ð´ÐµÑÐºÑ– Ñ„Ð°Ð¹Ð»Ð¸ AVI Ñ‚Ð°
+Quicktime, Ð´ÐµÑÐºÑ– Ð¼ÐµÑ€ÐµÐ¶ÐµÐ²Ñ– Ð¿Ð¾Ñ‚Ð¾ÐºÐ¾Ð²Ñ– ÑÐ¿Ð¾ÑÐ¾Ð±Ð¸ Ñ– Ð´Ð¸ÑÐºÐ¾Ð²Ñ– Ð·Ð°ÑÐ¾Ð±Ð¸ (VCD, SVCD,
 DVD).
 
-%description -l ru_RU.CP1251
-%name - GTK+ GUI äëÿ áèáëèîòåêè âèäåîïðîèãðûâàíèÿ libxine.
-Îí ïðåäîñòàâëÿåò %name - ìåäèà-ïðîèãðûâàòåëü äëÿ ïðîèãðûâàíèÿ
-àóäèî/âèäåî ôîðìàòîâ, ïîääåðæèâàåìûõ libxine. Â äàííîå âðåìÿ ýòî
-MPEG1/2, íåêîòîðûå ôàéëû AVI è Quicktime, íåêîòîðûå ñåòåâûå ïîòîêîâûå
-ñïîñîáû è äèñêîâûå ñðåäñòâà (VCD, SVCD, DVD).
+%description -l ru_RU.UTF-8
+%name - GTK+ GUI Ð´Ð»Ñ Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ¸ Ð²Ð¸Ð´ÐµÐ¾Ð¿Ñ€Ð¾Ð¸Ð³Ñ€Ñ‹Ð²Ð°Ð½Ð¸Ñ libxine.
+ÐžÐ½ Ð¿Ñ€ÐµÐ´Ð¾ÑÑ‚Ð°Ð²Ð»ÑÐµÑ‚ %name - Ð¼ÐµÐ´Ð¸Ð°-Ð¿Ñ€Ð¾Ð¸Ð³Ñ€Ñ‹Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð´Ð»Ñ Ð¿Ñ€Ð¾Ð¸Ð³Ñ€Ñ‹Ð²Ð°Ð½Ð¸Ñ
+Ð°ÑƒÐ´Ð¸Ð¾/Ð²Ð¸Ð´ÐµÐ¾ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ð¾Ð², Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÐµÐ¼Ñ‹Ñ… libxine. Ð’ Ð´Ð°Ð½Ð½Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ ÑÑ‚Ð¾
+MPEG1/2, Ð½ÐµÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ñ„Ð°Ð¹Ð»Ñ‹ AVI Ð¸ Quicktime, Ð½ÐµÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ ÑÐµÑ‚ÐµÐ²Ñ‹Ðµ Ð¿Ð¾Ñ‚Ð¾ÐºÐ¾Ð²Ñ‹Ðµ
+ÑÐ¿Ð¾ÑÐ¾Ð±Ñ‹ Ð¸ Ð´Ð¸ÑÐºÐ¾Ð²Ñ‹Ðµ ÑÑ€ÐµÐ´ÑÑ‚Ð²Ð° (VCD, SVCD, DVD).
 
 
 %package -n mozilla-plugin-%name
@@ -84,13 +85,13 @@ Requires: browser-plugins-npapi
 Browser plugin for mozilla and other browsers using the same plugin
 infrastructure.
 
-%description -n mozilla-plugin-%name -l uk_UA.CP1251
-Ïëàã³í äëÿ mozilla òà ³íøèõ áðàóçåð³â ç òàêîþ æ ³íôðàñòðóêòóðîþ
-ïëàã³í³â.
+%description -n mozilla-plugin-%name -l uk_UA.UTF-8
+ÐŸÐ»Ð°Ð³Ñ–Ð½ Ð´Ð»Ñ mozilla Ñ‚Ð° Ñ–Ð½ÑˆÐ¸Ñ… Ð±Ñ€Ð°ÑƒÐ·ÐµÑ€Ñ–Ð² Ð· Ñ‚Ð°ÐºÐ¾ÑŽ Ð¶ Ñ–Ð½Ñ„Ñ€Ð°ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð¾ÑŽ
+Ð¿Ð»Ð°Ð³Ñ–Ð½Ñ–Ð².
 
-%description -n mozilla-plugin-%name -l ru_RU.CP1251
-Ïëàãèí äëÿ mozilla è äðóãèõ áðàóçåðîâ ñ òàêîé æå èíôðàñòðóêòóðîé
-ïëàãèíîâ.
+%description -n mozilla-plugin-%name -l ru_RU.UTF-8
+ÐŸÐ»Ð°Ð³Ð¸Ð½ Ð´Ð»Ñ mozilla Ð¸ Ð´Ñ€ÑƒÐ³Ð¸Ñ… Ð±Ñ€Ð°ÑƒÐ·ÐµÑ€Ð¾Ð² Ñ Ñ‚Ð°ÐºÐ¾Ð¹ Ð¶Ðµ Ð¸Ð½Ñ„Ñ€Ð°ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð¾Ð¹
+Ð¿Ð»Ð°Ð³Ð¸Ð½Ð¾Ð².
 
 
 %prep
@@ -99,13 +100,7 @@ infrastructure.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
-iconv -f cp1251 -t utf-8 >> %name.desktop.in <<__MENU__
-GenericName[ru]=Ïðîèãðûâàòåëü âèäåî
-GenericName[uk]=Ïðîãðàâà÷ â³äåî
-Comment[ru]=Ïðîèãðûâàíèå ôèëüìîâ è ïåñåí, èëè ïðîñìîòð öèôðîâîãî òåëåâèäåíèÿ
-Comment[uk]=Ïðîãðàâàííÿ ô³ëüì³â òà ï³ñåíü, àáî ïåðåãëÿä öèôðîâîãî òåëåáà÷åííÿ
-__MENU__
-
+%patch5 -p2
 
 %build
 # need for make configure with proper xine.m4
@@ -165,6 +160,11 @@ rm -rf %buildroot%_pixmapsdir
 
 
 %changelog
+* Tue Mar 08 2016 Andrey Cherepanov <cas@altlinux.org> 0.5.908-alt2
+- Convert spec to UTF-8
+- Add desktop file localization as patch to prevent fail of strange
+  desktop file generation
+
 * Sun Jun 14 2015 Andrey Cherepanov <cas@altlinux.org> 0.5.908-alt1
 - New version
 - Fix upstream URL
