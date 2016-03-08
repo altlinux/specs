@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.1.1
-Release: alt1
+Release: alt1.4e6e
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -311,6 +311,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Mar 08 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt1.4e6e
+- Update from git
+
 * Thu Mar 03 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt1
 - Version 26.1.1.
 
