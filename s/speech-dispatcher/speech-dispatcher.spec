@@ -1,6 +1,6 @@
 Name: speech-dispatcher
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: A speech output processing service
 License: %gpl2plus
@@ -23,6 +23,7 @@ BuildRequires: flite-devel  libespeak-devel svox-pico
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-base python3-devel
 BuildRequires: libsndfile-devel libpulseaudio-devel
+BuildRequires: makeinfo
 
 %add_python3_req_skip speechd_config
 %add_python3_req_skip xdg
@@ -179,6 +180,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Mar 08 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.3-alt2
+- NMU: added makeinfo to BRs (fixes FTBFS).
+
 * Tue Jun 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
