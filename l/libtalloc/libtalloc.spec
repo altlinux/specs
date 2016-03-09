@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libtalloc
-Version: 2.1.5
+Version: 2.1.6
 Release: alt1
 
 Summary: The talloc library
@@ -40,11 +40,12 @@ Requires: libpytalloc = %version-%release
 Development libraries for libpytalloc
 
 %description devel
-Header files needed to develop programs that link against the Talloc library.
+Header files needed to develop programs that link against the Talloc
+library.
 
 %prep
 %setup -q -n talloc-%version
-%patch1
+%patch1 -p2
 
 %build
 %undefine _configure_gettext
@@ -87,6 +88,9 @@ make test
 
 
 %changelog
+* Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1
+- 2.1.6
+
 * Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1
 - 2.1.5
 - Enable tests

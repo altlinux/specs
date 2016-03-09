@@ -32,7 +32,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.3.5
+Version: 4.3.6
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -720,7 +720,7 @@ TDB_NO_FSYNC=1 %make_build test
 %preun_service nmb
 
 %pre winbind
-%_sbindir/groupadd -g 88 wbpriv >/dev/null 2>&1 || :
+%_sbindir/groupadd -f -r wbpriv >/dev/null 2>&1 || :
 
 %post winbind
 %post_service winbind
@@ -1329,6 +1329,13 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.6-alt1
+- New version (https://www.samba.org/samba/history/samba-4.3.6.html)
+- Security fixes:
+  - CVE-2015-7560 (Incorrect ACL get/set allowed on symlink path)
+  - CVE-2016-0771 (Out-of-bounds read in internal DNS server)
+- Do not use specified GID for wbpriv group (ALT #31858)
+
 * Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.5-alt1
 - New version (https://www.samba.org/samba/history/samba-4.3.5.html)
 
