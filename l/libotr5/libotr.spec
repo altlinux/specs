@@ -1,7 +1,7 @@
 %define sover 5
 Name: libotr%sover
-Version: 4.1.0
-Release: alt2.1
+Version: 4.1.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Off-The-Record Messaging library and toolkit
@@ -10,7 +10,13 @@ Url: http://www.cypherpunks.ca/otr/
 
 Source0: http://www.cypherpunks.ca/otr/libotr-%version.tar.gz
 
-BuildRequires: libgcrypt-devel >= 1.2.0
+# Automatically added by buildreq on Wed Mar 09 2016
+# optimized out: gnu-config libgpg-error libgpg-error-devel
+BuildRequires: libgcrypt-devel
+
+BuildPreReq: libgcrypt-devel >= 1.2.0
+
+%{?!_without_check:%{?!_disable_check:BuildPreReq: perl-devel}}
 
 %description
 %name is a library and toolkit which implements Off-the-Record (OTR)
@@ -70,6 +76,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %install
 %make install DESTDIR=%buildroot
 
+%check
+LD_LIBRARY_PATH=$PWD/src/.libs %make check ||:
+
 %files -n %name
 %doc AUTHORS
 %_libdir/lib*.so.*
@@ -87,6 +96,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_man1dir/*
 
 %changelog
+* Wed Mar 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.1-alt1
+- Updated to 4.1.1 (fixes CVE-2016-2851).
+
 * Thu Jun 25 2015 Sergey V Turchin <zerg@altlinux.org> 4.1.0-alt2.1
 - Rebuild with new libgcrypt
 
