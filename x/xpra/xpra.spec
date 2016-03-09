@@ -1,6 +1,6 @@
 Name: xpra
 Version: 0.14.19
-Release: alt1
+Release: alt2
 
 Summary: X Persistent Remote Applications
 
@@ -86,6 +86,9 @@ patch -p1 <patches/old-libav-no0RGB.patch
 %_datadir/xpra/
 
 %changelog
+* Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.19-alt2
+- rebuilt with recent libx264
+
 * Thu Mar 05 2015 Michael Shigorin <mike@altlinux.org> 0.14.19-alt1
 - new version
 

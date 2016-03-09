@@ -32,7 +32,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt3.1
+Release: alt4
 
 Summary: A linux video stream processing utility
 
@@ -239,6 +239,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt4
+- rebuilt with recent libav and libx264
+
 * Tue Sep 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.7-alt3.1
 - Rebuilt with new mjpegtools
 

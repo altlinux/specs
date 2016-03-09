@@ -1,10 +1,10 @@
-Name: libx264
-Version: 148
-Release: alt1
+Name: libx264.142
+Version: 142
+Release: alt3
 
 Summary: H.264 codec shared library
 License: GPL
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.videolan.org/x264.html
 
 Source: %name-%version-%release.tar
@@ -32,34 +32,6 @@ Encoder features:
 - Parallel encoding of multiple slices.
 
 This package includes the shared library needed to run x264-based
-software.
-
-%package devel
-Summary: Development files of H.264 codec library
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-%name is a free library for encoding H264/AVC video streams. The code is
-written from scratch.
-Encoder features:
-- CAVLC/CABAC
-- Multi-references
-- Intra: all macroblock types (16x16, 8x8, and 4x4 with all
-  predictions)
-- Inter P: all partitions (from 16x16 down to 4x4)
-- Inter B: partitions from 16x16 down to 8x8 (including skip/direct)
-- Ratecontrol: constant quantizer, single or multipass ABR, optional
-  VBV
-- Scene cut detection
-- Adaptive B-frame placement
-- B-frames as references / arbitrary frame order
-- 8x8 and 4x4 adaptive spatial transform
-- Lossless mode
-- Custom quantization matrices
-- Parallel encoding of multiple slices.
-
-This package includes the header files needed to develop lib%name-based
 software.
 
 %prep
@@ -92,15 +64,9 @@ export ASFLAGS=' '
 %doc doc/*.txt AUTHORS
 %_libdir/libx264.so.*
 
-%files devel
-%_includedir/x264.h
-%_includedir/x264_config.h
-%_pkgconfigdir/*
-%_libdir/libx264.so
-
 %changelog
-* Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 148-alt1
-- API 148
+* Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 142-alt3
+- built shared library only
 
 * Sat Dec 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 142-alt2
 - updated up to 6a301b6

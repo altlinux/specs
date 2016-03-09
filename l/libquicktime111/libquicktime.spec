@@ -25,7 +25,7 @@
 %define corename %libname-core
 Name: %libname
 Version: 1.2.4
-Release: alt2
+Release: alt3
 
 Summary: A library for manipulating QuickTime files
 %if_with gpl
@@ -334,6 +334,9 @@ rm -f %buildroot%pluginsdir/*.la
 %endif
 
 %changelog
+* Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt3
+- rebuilt with recent libav/libx264
+
 * Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.4-alt2
 - rebuilt with libav11
 
