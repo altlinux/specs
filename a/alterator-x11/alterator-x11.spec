@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.9
+Version: 1.98.10
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,9 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 1.98.10-alt1
+- update display size option name (closes: #30829)
+
 * Fri Dec 11 2015 Mikhail Efremov <sem@altlinux.org> 1.98.9-alt1
 - Fix build with recent glibc.
 
