@@ -8,7 +8,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: kf5-%rname
-Version: 5.5.4
+Version: 5.5.5
 Release: alt1
 %K5init altplace
 
@@ -125,6 +125,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
-%define minor 14
+%define minor 19
 %define bugfix 0
 
 Name: kf5-filesystem
@@ -16,6 +16,8 @@ Group: System/Base
 Requires: filesystem qt5-base-common
 
 Source1: kde5
+Source2: dbus-session-dir.conf
+Source3: dbus-system-dir.conf
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -43,7 +45,10 @@ mkdir -p %buildroot/%_K5conf
 mkdir -p %buildroot/%_K5cfg
 mkdir -p %buildroot/%_K5cf_upd
 mkdir -p %buildroot/%_K5data/{color-schemes,solid/{actions,devices},widgets/pics,plasma/{packages,shells,updates,layout-templates}}
-mkdir -p %buildroot/%_K5data/dbus-1/{services,system-services}
+mkdir -p %buildroot/%_K5data/dbus-1/{interfaces,services,system-services}
+mkdir -p %buildroot/%_K5dbus_iface
+mkdir -p %buildroot/%_K5dbus_srv
+mkdir -p %buildroot/%_K5dbus_sys_srv
 #
 mkdir -p %buildroot/%_K5notif
 mkdir -p %buildroot/%_K5srv/ServiceMenus
@@ -83,7 +88,14 @@ ln -s `relative %_libdir %_K5data/lib` %buildroot/%_K5data/lib
 mkdir -p %buildroot/%_bindir/
 install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 
+# install dbus dirs
+mkdir -p %buildroot/{%_K5conf_dbus_sessd,%_K5conf_dbus_sysd}
+install -m 0644 %SOURCE2 %buildroot/%_K5conf_dbus_sessd/kf5.conf
+#install -m 0644 %SOURCE3 %buildroot/%_K5conf_dbus_sysd/kf5.conf
+
 %files
+%config %_K5conf_dbus_sessd/kf5.conf
+#%config %_K5conf_dbus_sysd/kf5.conf
 %_bindir/kde5
 %_datadir/k*5/
 %_K5plug/kf5
@@ -97,6 +109,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir/kde5
 %dir %_desktopdir/kf5
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
+- use kde own dbus services dir
+
 * Tue Sep 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
 - fix error message when execute kde5 script with arguments
 

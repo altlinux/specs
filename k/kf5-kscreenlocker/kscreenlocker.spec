@@ -4,8 +4,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
-Version: 5.5.4
-Release: alt2
+Version: 5.5.5
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -111,6 +111,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Sat Feb 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
 - update from 5.5 branch
 

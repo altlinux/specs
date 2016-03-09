@@ -1,7 +1,7 @@
 %define rname kscreen
 
 Name: kf5-%rname
-Version: 5.5.4
+Version: 5.5.5
 Release: alt1
 %K5init altplace
 
@@ -86,6 +86,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5lib/libKF5Screen.so.*
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
 - new version
 

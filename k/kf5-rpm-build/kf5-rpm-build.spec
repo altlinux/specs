@@ -1,6 +1,6 @@
 
 Name: kf5-rpm-build
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -38,6 +38,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- use kde own dbus services dir
+
 * Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - remove manpages and appdata by default
 

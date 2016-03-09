@@ -7,8 +7,8 @@
 %define libprocessui libprocessui%sover
 
 Name: kf5-%rname
-Version: 5.5.4
-Release: alt2
+Version: 5.5.5
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -145,6 +145,9 @@ sed -i 's|isinf(|std::isinf(|g' signalplotter/ksignalplotter.cpp
 %_K5lib/liblsofui.so.*
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
 - fix to compile with new gcc
 

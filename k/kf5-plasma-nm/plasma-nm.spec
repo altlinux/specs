@@ -2,7 +2,7 @@
 %def_disable openswan
 
 Name: kf5-%rname
-Version: 5.5.4
+Version: 5.5.5
 Release: alt1
 %K5init altplace
 
@@ -214,6 +214,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt1
 - new version
 

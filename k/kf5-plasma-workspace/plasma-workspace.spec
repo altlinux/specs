@@ -14,8 +14,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.5.4
-Release: alt2
+Version: 5.5.5
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -180,6 +180,18 @@ cat <<__EOF__ > %buildroot/%_menudir/kde5-session
 			icon="kwin.png"
 __EOF__
 
+# disable annoing autostart
+mkdir -p %buildroot/%_K5start/
+for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store ; do
+    echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_K5start/$n.desktop
+done
+# disable annoing menus
+mkdir -p %buildroot/%_kf5_xdgapp/
+for n in gnome-mplayer mplayer gmplayer ; do
+    echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_kf5_xdgapp/$n.desktop
+done
+
+
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -258,6 +270,9 @@ __EOF__
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
 - fix startup splash progress
 
