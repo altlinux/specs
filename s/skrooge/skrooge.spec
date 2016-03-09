@@ -1,65 +1,118 @@
 Name: 		skrooge
-Version: 	1.12.5
+Version: 	2.3.0
 Release: 	alt1
 License: 	%gpl2plus
-Summary: 	Personal finances manager for KDE4
+Summary: 	Personal finances manager for KF5
 Group: 		Office
 URL: 		http://skrooge.org/
 Packager: 	Andrey Cherepanov <cas@altlinux.org> 
 
-Source: 	%name-%version.tar.bz2
+Source: 	%name-%version.tar.xz
+Patch1:         %name-alt-fix-build-with-math.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): kde4libs-devel
-BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: grantlee5-devel
+BuildRequires: kf5-kactivities-devel
+BuildRequires: kf5-karchive-devel
+BuildRequires: kf5-kauth-devel
+BuildRequires: kf5-kbookmarks-devel
+BuildRequires: kf5-kcodecs-devel
+BuildRequires: kf5-kcompletion-devel
+BuildRequires: kf5-kconfig-devel
+BuildRequires: kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-kcrash-devel
+BuildRequires: kf5-kdbusaddons-devel
+BuildRequires: kf5-kdeclarative-devel
+BuildRequires: kf5-kdelibs4support
+BuildRequires: kf5-kdelibs4support-devel
+BuildRequires: kf5-kdesignerplugin-devel
+BuildRequires: kf5-kdoctools
+BuildRequires: kf5-kdoctools-devel
+BuildRequires: kf5-kdoctools-devel-static
+BuildRequires: kf5-kemoticons-devel
+BuildRequires: kf5-kguiaddons-devel
+BuildRequires: kf5-ki18n-devel
+BuildRequires: kf5-kiconthemes-devel
+BuildRequires: kf5-kinit-devel
+BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kitemmodels-devel
+BuildRequires: kf5-kitemviews-devel
+BuildRequires: kf5-kjobwidgets-devel
+BuildRequires: kf5-knewstuff-devel
+BuildRequires: kf5-knotifications-devel
+BuildRequires: kf5-knotifyconfig-devel
+BuildRequires: kf5-kpackage-devel
+BuildRequires: kf5-kparts-devel
+BuildRequires: kf5-krunner-devel
+BuildRequires: kf5-kservice-devel
+BuildRequires: kf5-ktextwidgets-devel
+BuildRequires: kf5-ktextwidgets-devel
+BuildRequires: kf5-kunitconversion-devel
+BuildRequires: kf5-kwallet-devel
+BuildRequires: kf5-kwidgetsaddons-devel
+BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: kf5-kxmlgui-devel
+BuildRequires: kf5-plasma-framework-devel
+BuildRequires: kf5-solid-devel
+BuildRequires: kf5-sonnet-devel
 BuildRequires: libofx-devel
-BuildRequires: libqca2-devel
+BuildRequires: libqca-qt5-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: kde4sdk-scripts
-BuildRequires: libqt4-sql-sqlite >= 4.7.0
-BuildRequires: libsqlite-devel
-BuildRequires: grantlee-devel
-BuildRequires: kde4pimlibs-devel
-BuildRequires: kde4-nepomuk-core-devel
-BuildRequires: qjson-devel
-BuildRequires: xsltproc
+#BuildRequires: libsqlcipher-devel
+BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-script-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: qt5-webkit-devel
+
+Requires: libgrantlee_templates5
+Requires: kf5-kinit kf5-kio
 
 %description
-Skrooge is a personal finances manager for KDE4, aiming at being simple
+Skrooge is a personal finances manager for KF5, aiming at being simple
 and intuitive.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
-%K4build
+%K5init no_altplace
+%K5build -DSKG_CIPHER:BOOL=OFF
 
 %install
-%K4install
-%K4find_lang --with-kde %name
+%K5install
+%find_lang --with-kde %name
 
 %files -f %name.lang
 %doc AUTHORS CHANGELOG COPYING README TODO
-%_K4bindir/*
-%_K4apps/*
-%_K4cfg/*
-%_K4conf/*.knsrc
-%_K4srv/*
-%_K4srvtyp/*
-%_K4libdir/libskg*
-%_K4lib/skrooge_*
-%_K4lib/*.so
-%_iconsdir/hicolor/*/*/*
-%_K4xdg_mime/*
-%_K4xdg_apps/*
-%_K4doc/pt_BR/%name/*
-%_datadir/akonadi/agents/skroogeakonadiresource.desktop
-%_K4plug/grantlee/*/grantlee_skgfilters.so
-%_K4link/*.so
-%_datadir/appdata/%name.appdata.xml
+%_K5bin/*
+%_K5xdgconf/%{name}_*.knsrc
+%_K5cfg/*
+%_K5srv/*
+%_K5srvtyp/*
+%_K5lib/libskg*
+%_qt5_plugindir/designer/libsk*.so
+#_qt5_plugindir/sqldrivers/libsk*.so
+%_qt5_plugindir/sk*.so
+%_K5xdgmime/*
+%_K5xdgapp/*%name.desktop
+%_iconsdir/*/*/*/*
+%_K5xmlgui/*
+%_K5doc/pt_BR/%name/*
+%_K5plug/grantlee/*/grantlee_skgfilters.so
+%_K5link/*.so
+%_K5notif/%name.notifyrc
+%_datadir/%name
 
 %changelog
+* Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
+- New version is based on KF5
+- Build without sqlcipher support
+
 * Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.12.5-alt1
 - New version 1.12.5
 - Fix watch file for new stable version tarball
