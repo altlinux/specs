@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.88
+Release: alt100.89
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -531,6 +531,11 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Wed Mar 09 2016 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.89
+- brp-bytecompile_python: exclude paths listed
+  in $RPM_PYTHON3_COMPILE_INCLUDE (ALT#28606).
+- ldd: pass --list to rtld.
+
 * Wed Dec 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4-alt100.88
 - compress_files: changed default method to xz.
 
