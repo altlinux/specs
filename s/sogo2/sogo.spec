@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo2
 Version:      2.3.8
-Release:      alt1
+Release:      alt2
 Epoch:        1
 
 License:      GPL
@@ -393,6 +393,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.8-alt2
+- Fix paths in apache2 config file
+
 * Fri Mar 04 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.8-alt1
 - Build new version of SOGo 2.x. For use SOGo 3.x use task-sogo3
 - Fix permission of /etc/logrotate.d/sogo
