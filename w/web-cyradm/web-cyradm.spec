@@ -1,6 +1,6 @@
 Name: web-cyradm
-Version: 0.5.5e2
-Release: alt1
+Version: 0.5.5e3
+Release: alt2
 
 Summary: Web Based Management tool for Postfix, Cyrus IMAP, and MySQL or PostgreSQL
 License: GPL
@@ -90,6 +90,13 @@ install -d -m1770 %buildroot%_var/log/%name
 %config(noreplace) %apache2_confdir/addon.d/A.%name.conf
 
 %changelog
+* Wed Mar 09 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.5e3-alt2
+- update create_mysql.sql (ALT bug #31860)
+- update README.ALT (ALT bug #31860)
+
+* Fri Feb 26 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.5e3-alt1
+- fix russian translation
+
 * Wed Feb 04 2015 Vitaly Lipatov <lav@altlinux.ru> 0.5.5e2-alt1
 - fix small errors
 - disable validation against _default_ quota size
