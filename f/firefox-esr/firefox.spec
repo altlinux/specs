@@ -9,7 +9,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        38.6.1
+Version:        38.7.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -288,6 +288,25 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 38.7.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2016-37 Font vulnerabilities in the Graphite 2 library
+  + MFSA 2016-35 Buffer overflow during ASN.1 decoding in NSS
+  + MFSA 2016-34 Out-of-bounds read in HTML parser following a failed allocation
+  + MFSA 2016-31 Memory corruption with malicious NPAPI plugin
+  + MFSA 2016-28 Addressbar spoofing though history navigation and Location protocol property
+  + MFSA 2016-27 Use-after-free during XML transformations
+  + MFSA 2016-25 Use-after-free when using multiple WebRTC data channels
+  + MFSA 2016-24 Use-after-free in SetBody
+  + MFSA 2016-23 Use-after-free in HTML5 string parser
+  + MFSA 2016-21 Displayed page address can be overridden
+  + MFSA 2016-20 Memory leak in libstagefright when deleting an array during MP4 processing
+  + MFSA 2016-17 Local file overwriting and potential privilege escalation through CSP reports
+  + MFSA 2016-16 Miscellaneous memory safety hazards
+  + MFSA 2015-136 Same-origin policy violation using performance.getEntries and history navigation
+  + MFSA 2015-81 Use-after-free in MediaStream playback
+
 * Fri Feb 12 2016 Andrey Cherepanov <cas@altlinux.org> 38.6.1-alt1
 - New ESR version
 - Security fixes:
