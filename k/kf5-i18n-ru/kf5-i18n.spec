@@ -3,8 +3,8 @@
 %define lngg Russian
 
 Name: kf5-i18n-%lng
-Version: 5.5.4
-Release: alt2
+Version: 5.5.5
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Workspace
@@ -93,6 +93,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt2
 - update user switcher translation
 
