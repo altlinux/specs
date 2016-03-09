@@ -1,4 +1,4 @@
-%define ver_major 0.6
+%define ver_major 0.7
 %define api_ver 1.0
 
 Name: gcab
@@ -108,6 +108,9 @@ GObject introspection devel data for the gcab library
 %_girdir/GCab-%api_ver.gir
 
 %changelog
+* Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
+- 0.7
+
 * Tue Mar 17 2015 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
 - 0.6
 
