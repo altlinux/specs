@@ -1,17 +1,17 @@
-# 5.1.1.1
-%def_with forky
+# 5.1.1.3
+%def_without forky
 %def_with parallelism
 %def_without fetch
 %def_without lto
 
 Name: LibreOffice
 Version: 5.1
-%define urelease 1.1
+%define urelease 1.3
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -44,34 +44,11 @@ Source100:	forky.c
 Source200:	oasis-master-document-template.icns
 Source300:	update_from_fc
 
-# FC patches files
-Patch3: 0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch4: 0001-disable-firebird-unit-test.patch
-Patch5: 0001-never-run-autogen.sh.patch
-Patch6: 0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch7: 0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
-Patch8: 0001-Related-rhbz-1281906-set-a-min-size-on-un-resizeable.patch
-Patch9: 0001-but-only-for-dialog.patch
-Patch10: 0003-gtk3-wayland-start-floating-windows-hidden.patch
-Patch11: 0001-tdf-95450-avoid-double-swap-on-big-endian-arches.patch
-Patch12: 0001-these-popups-should-start-invisible-and-take-default.patch
-Patch13: 0002-disable-tearability-of-color-window.patch
-Patch14: 0001-rhbz-1168757-propagate-selected-slides-to-print-dial.patch
-Patch15: 0001-hack-out-optimization-to-build.patch
-Patch16: 0001-generate-better-unit-test-assert-message.patch
-Patch17: 0001-gtk3-adapt-to-3.20-style-changes.patch
-Patch18: 0001-unused-vcl-IsWindowSystemAvailable.patch
-Patch19: 0002-split-the-gtk2-and-gtk3-gtkobjects.patch
-Patch20: 0003-rename-X11WindowProvider-to-a-NativeWindowHandle-pro.patch
-Patch21: 0004-implement-wayland-handle-passing-for-gstreamer.patch
-Patch22: 0005-gtk3-wayland-play-video-via-gtksink-gstreamer-elemen.patch
-Patch500: 0001-disable-libe-book-support.patch
-Patch501: 0001-fix-build-with-gcc-4.8.patch
+## FC patches
 
+## Long-term FC patches
 
-# Long-term FC patches
-
-# ALT patches
+## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
@@ -177,37 +154,16 @@ echo Using forky
 echo Direct build
 %endif
 %setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
+
+## FC apply patches
+
+## Long-term FC patches applying
+
+## ALT apply patches
 %patch401 -p0
 ##patch402 -p1
 %patch403 -p2
 %patch404 -p1
-
-# FC patches applying (## -- unsuccsessful but seems meaningful)
-##patch3 -p1
-##patch4 -p1
-##patch5 -p1
-##patch6 -p1
-##patch7 -p1
-##patch8 -p1
-##patch9 -p1
-##patch10 -p1
-##patch11 -p1
-##patch12 -p1
-##patch13 -p1
-##patch14 -p1
-##patch15 -p1
-##patch16 -p1
-##patch17 -p1
-##patch18 -p1
-##patch19 -p1
-##patch20 -p1
-##patch21 -p1
-##patch22 -p1
-#patch500 -p1
-##patch501 -p1
-
-
-# Long-term FC patches applying
 
 # Hacked git binary patch
 cp %SOURCE300 sysui/desktop/icons/
@@ -314,6 +270,10 @@ gcc -g -DHAVE_CONFIG_H -shared -O3 -fomit-frame-pointer -fPIC forky.c -oforky.so
 %endif
 
 %make bootstrap
+
+%if_with parallelism
+export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
+%endif
 
 %if_with forky
 # TODO prefect forky_max tune
@@ -434,6 +394,10 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l tt -n Tatar
 
 %changelog
+* Thu Mar 10 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt2
+- Update to 5.1.1.3
+- Build without forky (turns out -XX:ParallelGCThreads=2 fixes OOM)
+
 * Wed Feb 10 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt1
 - Update to 5.1.1.1
 - Build with internal Python3
