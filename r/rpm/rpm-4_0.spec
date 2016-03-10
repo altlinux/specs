@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.89
+Release: alt100.90
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -531,6 +531,15 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Thu Mar 10 2016 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.90
+- lib.req: made "no symbol bindings" condition fatal.
+- relative: fixed potential heap buffer overflow (by Gleb F-Malinovskiy).
+- rpmrc.in: armv7: do not force FPU kind, rely on compiler defaults
+  (by Sergey Bolshakov).
+
+* Thu Mar 10 2016 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.89.1
+- ldd: reverted recent change (closes: #31870).
+
 * Wed Mar 09 2016 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.89
 - brp-bytecompile_python: exclude paths listed
   in $RPM_PYTHON3_COMPILE_INCLUDE (ALT#28606).
