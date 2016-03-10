@@ -34,11 +34,12 @@
 Summary: ONLY site-packages SUBPACKAGE IS BUILT
 Name: %ext_basename.0
 Version: %std_pyversion.1
-Release: alt105
+Release: alt106
 License: Python
 Group: Development/Python3
 
-BuildRequires(pre): rpm-build-python3 = 0.1.7
+BuildRequires(pre): rpm-build-python3 >= 0.1.7
+BuildRequires(pre): rpm-build-python3 < 0.1.9
 # Possibly, our autoprovs make no sense:
 #AutoProv: no
 
@@ -94,13 +95,15 @@ EOF
 
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%ext_basename-site-packages-files.req.list
-# %name dirlist for %_rpmlibdir/files.req
+# %ext_basename-site-packages-%EVR dirlist for %_rpmlibdir/files.req
 %(dirname %ext_sitelibdir)/		%ext_basename-site-packages
 %ext_sitelibdir/			%ext_basename-site-packages
 %ext_sitelibdir/__pycache__/		%ext_basename-site-packages
+%if "%_lib" == "lib64"
 %(dirname %ext_sitelibdir_noarch)/	%ext_basename-site-packages
 %ext_sitelibdir_noarch/			%ext_basename-site-packages
 %ext_sitelibdir_noarch/__pycache__/	%ext_basename-site-packages
+%endif
 EOF
 
 %files -n %ext_basename-site-packages
@@ -120,6 +123,9 @@ EOF
 %exclude %dir %std_site/__pycache__
 
 %changelog
+* Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt106
+- (cosmetic tweak) _-files.req.list: no duplicate entries on non-lib64.
+
 * Fri Mar  4 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt105
 - (.spec) simplify: substitute the macros into sitecustomize.py
 
