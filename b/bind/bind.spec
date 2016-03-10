@@ -1,13 +1,13 @@
 Name: bind
 Version: 9.9.8
-Release: alt2
+Release: alt3
 
 Summary: ISC BIND - DNS server
 License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix -P3
+%define vsuffix -P4
 # NOTE: vsuffix removed from Source0
 # ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
 Source0: %name-%version.tar
@@ -220,6 +220,8 @@ s,@SBINDIR@,%_sbindir,g;
 # XXX oldish stuff introduced in 9.9.6
 sed -i 's/AC_DEFINE(\(.*\), 1)/AC_DEFINE(\1, 1, [\1])/' configure.in
 
+sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.in
+
 %build
 %autoreconf
 %configure \
@@ -231,6 +233,7 @@ sed -i 's/AC_DEFINE(\(.*\), 1)/AC_DEFINE(\1, 1, [\1])/' configure.in
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
 	--enable-rrl \
+	--enable-fetchlimit \
 	--enable-exportlib \
 	--with-export-libdir=%{_libdir} \
 	--with-export-includedir=%{_includedir} \
@@ -239,7 +242,8 @@ sed -i 's/AC_DEFINE(\(.*\), 1)/AC_DEFINE(\1, 1, [\1])/' configure.in
 	--with-libtool \
 	--with-gssapi=yes \
 	--disable-isc-spnego \
-	
+	#
+
 %make_build
 # Build queryperf
 pushd contrib/queryperf
@@ -285,11 +289,9 @@ for n in localhost localdomain 127.in-addr.arpa empty; do
 		"%buildroot%_chrootdir/zone/$n"
 done
 
-install -pm640 addon/rndc.key %buildroot%_chrootdir%_sysconfdir/
-rln %_chrootdir%_sysconfdir/named.conf %_sysconfdir/
-
-install -pm640 bind.keys %buildroot%_chrootdir%_sysconfdir/
-rln %_chrootdir%_sysconfdir/bind.keys %_sysconfdir/
+install -pm640 addon/rndc.key bind.keys %buildroot%_chrootdir%_sysconfdir/
+ln -snfr %buildroot%_chrootdir%_sysconfdir/{named.conf,bind.keys} \
+	%buildroot%_sysconfdir/
 
 # Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
 /usr/bin/mksock %buildroot%_chrootdir/dev/log
@@ -450,6 +452,10 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Thu Mar 10 2016 Fr. Br. George <george@altlinux.ru> 9.9.8-alt3
+- Update to ftp://ftp.isc.org/isc/bind9/9.9.8-P2/bind-9.9.8-P4.tar.gz
+- Build with --enable-fetchlimit (Closes: #31701)
+
 * Wed Jan 20 2016 Fr. Br. George <george@altlinux.ru> 9.9.8-alt2
 - Update to ftp://ftp.isc.org/isc/bind9/9.9.8-P2/bind-9.9.8-P3.tar.gz
 
