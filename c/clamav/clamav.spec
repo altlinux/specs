@@ -12,7 +12,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.99
+Version: 0.99.1
 Release: alt1
 %define abiversion 7
 
@@ -160,6 +160,9 @@ echo >> clamav-config.h
 echo "#ifndef SUPPORT_IPv6" >> clamav-config.h
 echo "#define SUPPORT_IPv6 1" >> clamav-config.h
 echo "#endif" >> clamav-config.h
+
+# needed for 0.99.1
+sed "s|pcre\.h|pcre/pcre.h|" -i libclamav/regex_pcre.h  # include <pcre.h>
 
 %make_build
 
@@ -313,6 +316,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Wed Mar 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.99.1-alt1
+- 0.99.1
+
 * Thu Dec 03 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99-alt1
 - 0.99
 - built with libpcre-devel
