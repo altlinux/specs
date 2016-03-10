@@ -1,12 +1,12 @@
 %global import_path github.com/gosexy/gettext
 
-%global commit d0176d33a571755ef6cd36796750ad48c9d21ee8
+%global commit 4a979356fe964fec12e18326a32a89661f93dea7 
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-gosexy-gettext
 Version: 0
-Release: alt1.git%abbrev
+Release: alt2.git%abbrev
 Summary: Go bindings for GNU gettext
 License: MIT
 Group: Development/Other
@@ -59,6 +59,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/xgettext
 %go_path/src/*
 
 %changelog
+* Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 0-alt2.git4a979356
+- Update
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 0-alt1.gitd0176d33
 - Initial package
 

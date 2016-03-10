@@ -1,12 +1,12 @@
 %global import_path     github.com/pborman/uuid
 
-%global commit cccd189d45f7ac3368a0d127efb7f4d08ae0b655
+%global commit c55201b036063326c5b1b89ccfe45a184973d073
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-pborman-uuid
 Version: 0
-Release: alt1.git%abbrev
+Release: alt2.git%abbrev
 Summary: Package `pborman/uuid` implements RFC4122.
 License: BSD
 Group: Development/Other
@@ -53,6 +53,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 0-alt2.gitc55201b0
+- Update
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 0-alt1.gitcccd189d
 - Initial package
 

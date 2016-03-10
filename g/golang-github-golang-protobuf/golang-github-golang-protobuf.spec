@@ -1,12 +1,12 @@
 %global import_path     github.com/golang/protobuf
 
-%global commit 89238a3245885ada85d2f4fdbe76adae392df69b
+%global commit b9504f23731d0b61ccfff7370a161d6c857ca00d
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-golang-protobuf
 Version: 0
-Release: alt1.git%abbrev
+Release: alt2.git%abbrev
 Summary: Go support for Protocol Buffers
 License: BSD
 Group: Development/Other
@@ -31,13 +31,13 @@ Group: Development/Other
 Requires: golang
 
 Provides: golang(%import_path) = %version-%release
-Provides: golang(%import_path/types) = %version-%release
-Provides: golang(%import_path/types/duration) = %version-%release
-Provides: golang(%import_path/types/struct) = %version-%release
-Provides: golang(%import_path/types/empty) = %version-%release
-Provides: golang(%import_path/types/any) = %version-%release
-Provides: golang(%import_path/types/timestamp) = %version-%release
-Provides: golang(%import_path/types/wrappers) = %version-%release
+Provides: golang(%import_path/ptypes) = %version-%release
+Provides: golang(%import_path/ptypes/duration) = %version-%release
+Provides: golang(%import_path/ptypes/struct) = %version-%release
+Provides: golang(%import_path/ptypes/empty) = %version-%release
+Provides: golang(%import_path/ptypes/any) = %version-%release
+Provides: golang(%import_path/ptypes/timestamp) = %version-%release
+Provides: golang(%import_path/ptypes/wrappers) = %version-%release
 Provides: golang(%import_path/jsonpb) = %version-%release
 Provides: golang(%import_path/protoc-gen-go/plugin) = %version-%release
 Provides: golang(%import_path/proto) = %version-%release
@@ -71,6 +71,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 0-alt2.gitb9504f23
+- Update
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 0-alt1.git89238a32
 - Initial package for development only
 
