@@ -13,7 +13,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt7
+Release: alt8
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -170,8 +170,10 @@ Various Plasma applets
 
 %install
 %K5install
-cp -arl %buildroot/%_K5data/konqueror/* %buildroot/%_datadir/konqueror/
-rm -rf %buildroot/%_K5data/konqueror/
+if [ -d %buildroot/%_K5data/konqueror ] ; then
+    cp -arl %buildroot/%_K5data/konqueror/* %buildroot/%_datadir/konqueror/
+    rm -rf %buildroot/%_K5data/konqueror/
+fi
 %K5install_move data akregator doc dolphinpart domtreeviewer fsview kcmcss kcontrol khtml konqsidebartng kwebkitpart templates konqueror
 
 mv %buildroot/%_includedir/konqsidebarplugin.h %buildroot/%_K5inc/
@@ -214,8 +216,8 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files
 %files common -f %name.lang
 %doc COPYING.LIB README
-%_K5tmpl/*.desktop
-%_K5tmpl/.source/
+#%_K5tmpl/*.desktop
+#%_K5tmpl/.source/
 
 %files -n kde5-konqueror
 %config /%_sysconfdir/alternatives/packages.d/kde5-konqueror
@@ -256,7 +258,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5srv/filebehavior.desktop
 %_K5srv/webarchivethumbnail.desktop
 %_K5srvtyp/konq*.desktop
-%_K5dbus_iface/org.kde.FavIcon.xml
+#%_K5dbus_iface/org.kde.FavIcon.xml
 %_K5dbus_iface/org.kde.?onqueror.*.xml
 %_K5xdgapp/Home.desktop
 %_K5xdgapp/kfmclient*.desktop
@@ -276,7 +278,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5plug/konq_sidebar.so
 %_K5plug/konqsidebar_*.so
 %_K5plug/kded_konqy_preloader.so
-%_K5plug/kf5/kded/favicons.so
+#%_K5plug/kf5/kded/favicons.so
 %_K5plug/khtmlsettingsplugin.so
 %if_enabled text2speech
 %_K5plug/khtmlttsplugin.so
@@ -351,6 +353,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Thu Mar 10 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt8
+- update from frameworks branch
+
 * Wed Jan 13 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt7
 - update from frameworks branch
 
