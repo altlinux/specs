@@ -1,13 +1,11 @@
-%def_without clamav
-
 Name: 	 c-icap
 Version: 0.4.2
-Release: alt1
+Release: alt2
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Summary: ICAP server
-License: LGPLv2
+License: %lgpl2only
 Group: 	 System/Servers
 Url: 	 http://c-icap.sourceforge.net/
 
@@ -15,10 +13,9 @@ Source0: %name-%version.tar.gz
 Source1: %name.init
 Source2: %name.watch
 
-BuildRequires: gcc-c++ libadns-devel libmemcache-devel opendbx-devel zlib-devel
-%if_with clamav
-BuildRequires: libclamav-devel
-%endif
+BuildRequires: rpm-build-licenses
+
+BuildRequires: libadns-devel libmemcache-devel opendbx-devel zlib-devel
 
 Requires(pre): shadow-utils
 
@@ -87,14 +84,6 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %preun
 %preun_service %name
 
-%if_with clamav
-%post clamav
-/sbin/service %name condrestart ||:
-
-%preun clamav
-/sbin/service %name condrestart ||:
-%endif
-
 %files
 %doc AUTHORS README TODO contrib/get_file.pl
 %config(noreplace) %_sysconfdir/%name.conf*
@@ -118,29 +107,30 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_includedir/c_icap
 %_libdir/libicapapi.so
 
-%if_with clamav
-%files clamav
-%_libdir/c_icap/srv_clamav.so
-%endif
-
 %changelog
+* Thu Mar 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:0.4.2-alt2
+- Spec's cleanup
+- Added LSB init header (fixed repocop's error)
+- Removed gcc-c++ from BuildRequires
+
 * Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 1:0.4.2-alt1
 - New version
-- Spec cleanup
-- Remove clamav support
-- Rename libdir and includedir to c_icap as in upstream
+- Spec's cleanup
+- Built without libclamav-devel
+  (modules was moved to separate c-icap-modules package)
+- Renamed libdir and includedir to c_icap as in upstream
 
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080706.01-alt2.3
 - Fixed build
 
 * Mon Apr 05 2010 Anton Pischulin <letanton@altlinux.ru> 20080706.01-alt2.2
-- Fix base64.c
+- Fixed base64.c
 
 * Fri Feb 26 2010 Andrey Cherepanov <cas@altlinux.org> 20080706-alt0.1.M50P.1
-- backport to p5
+- Backport to p5
 
 * Wed Nov 25 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20080706-alt1.1
-- build for sisyphus
+- Built for sisyphus
 
 * Mon Sep 28 2009 Grigory Batalov <bga@altlinux.ru> 20080706-alt2.M40.1
 - New upstream release (c_icap-20080706).

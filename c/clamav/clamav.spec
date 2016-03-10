@@ -13,13 +13,13 @@
 
 Name: clamav
 Version: 0.99.1
-Release: alt1
+Release: alt2
 %define abiversion 7
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
 Summary: Clam Antivirus scanner
-License: GPLv2 only
+License: GPLv2 and LGPLv2.1 with exeptions
 Group: File tools
 
 URL: http://www.clamav.net/
@@ -78,11 +78,13 @@ BuildRequires: git-core graphviz groff-extra gv zip doxygen flex
 
 %description
 Clam AntiVirus is an anti-virus toolkit for Unix. The main purpose of this
-software is the integration with mail servers (attachment scanning). The package
-provides a flexible and scalable multi-threaded daemon, a commandline scanner,
-and a tool for automatic updating via Internet. The programs are based on a
-shared library distributed with the Clam AntiVirus package, which you can use in
-your own software.
+software is the integration with mail servers (attachment scanning). The
+package provides a flexible and scalable multi-threaded daemon, a commandline
+scanner, and a tool for automatic updating via Internet. The programs are
+based on a shared library distributed with the Clam AntiVirus package, which
+you can use in your own software.
+
+Some parts of code have separate license.
 
 %package -n lib%{name}%{abiversion}
 Summary: Shared libraries for clamav
@@ -252,6 +254,7 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %files
 %doc docs/signatures.*
 %doc virusstat*
+%doc COPYING COPYING.*
 
 %_bindir/clamdscan
 %_bindir/clamscan
@@ -316,6 +319,10 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Thu Mar 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.99.1-alt2
+- rebuilt due ALT Bug #31870
+- fixed "License"
+
 * Wed Mar 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.99.1-alt1
 - 0.99.1
 
