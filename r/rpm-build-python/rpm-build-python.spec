@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.36.4
+Version: 0.36.5
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -61,6 +61,9 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.5-alt1
+- python.compileall.py: remove unused variable.
+
 * Mon Feb 29 2016 Dmitry V. Levin <ldv@altlinux.org> 0.36.4-alt1
 - Unpackaged tools subpackage.
 
