@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 5.3.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -215,7 +215,7 @@ Patch721: alt-alt-gcc-base-version.patch
 Patch722: alt-defaults-trampolines.patch
 Patch723: alt-libgo-Werror-unused-result.patch
 Patch724: alt-aarch64-ld-linux-path.patch
-Patch725: alt-move-liblto_plugin-to-libdir.patch
+Patch725: gcc5-pr69140.patch
 Patch800: alt-libtool.m4-gcj.patch
 
 Provides: gcc = %version, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
@@ -1889,7 +1889,6 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %gcc_target_libdir/libgcc_s.so
 %gcc_target_libdir/libgcc*.a
 %gcc_target_libdir/libgcov.a
-%gcc_target_libdir/liblto_plugin.so*
 %ifarch %libatomic_arches
 %gcc_target_libdir/libatomic.so
 %endif
@@ -1929,6 +1928,7 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %gcc_target_libexecdir/collect2
 %gcc_target_libexecdir/lto-wrapper
 %gcc_target_libexecdir/lto1
+%attr(0755,root,root) %gcc_target_libexecdir/liblto_plugin.so*
 %gcc_target_libexecdir/plugin/gengtype
 
 %if_with java
@@ -1950,7 +1950,7 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %exclude %gcc_target_libdir/libcaf_single.la
 %exclude %gcc_target_libdir/plugin/gtype.state
 %exclude %gcc_target_libdir/plugin/libcc1plugin.la
-%exclude %gcc_target_libdir/liblto_plugin.la
+%exclude %gcc_target_libexecdir/liblto_plugin.la
 %exclude %_datadir/locale/de/LC_MESSAGES/libstdc++.mo
 %exclude %_datadir/locale/fr/LC_MESSAGES/libstdc++.mo
 %exclude %_man7dir/fsf-funding.7*
@@ -2446,11 +2446,15 @@ ln -s libgccjit.so.0 %buildroot%_libdir/libgccjit.so
 %endif # _cross_platform
 
 %changelog
-* Wed Feb 24 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt2
-- Moved liblto_plugin.so into %%_libdir.
+* Thu Mar 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt3
+- Moved liblto_plugin.so back into %%_libexecdir.
+- Added executable bit to liblto_plugin.so.
 - Backported upstram fix:
  + Enable frame pointer for TARGET_64BIT_MS_ABI when stack is
-  misaligned (ALT#69140).
+  misaligned (ALT#31834).
+
+* Wed Feb 24 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt2
+- Moved liblto_plugin.so into %%_libdir.
 
 * Thu Dec 17 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.3.1-alt1
 - Updated to redhat/gcc-5-branch 231358.
