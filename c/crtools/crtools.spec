@@ -1,5 +1,5 @@
 Name: crtools
-Version: 1.8
+Version: 2.0
 #define pre 
 %define ver %version%{?pre:%pre}
 Release: alt1
@@ -44,7 +44,11 @@ Group: System/Libraries
 BuildArch: noarch
 Requires: python
 BuildRequires: python-devel
-BuildRequires: rpm-build-python
+BuildRequires: glibc-devel
+BuildRequires: libprotobuf-c-devel
+BuildRequires: libnl-devel
+BuildRequires: libcap-devel
+BuildRequires(pre): rpm-build-python
 Provides: crit = %version-%release
 Obsoletes: pycriu
 
@@ -88,6 +92,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 2.0-alt1
+- Version update 
+
 * Tue Mar 01 2016 Denis Pynkin <dans@altlinux.org> 1.8-alt1
 - New upstream version
 
