@@ -1,6 +1,6 @@
 Name: xse
 Version: 2.1
-Release: alt4
+Release: alt5
 Summary: Interface to XSendEvent
 Summary(uk_UA.CP1251): ²םעונפויס המ XSendEvent
 License: distributable
@@ -21,7 +21,7 @@ xev(1). It provides three interfaces depending on how it is invoked.
 %prep
 %setup
 %patch -p3
-
+for f in `grep -sl dprintf *.*`; do sed -i 's/dprintf/DPrintf/g' $f; done
 
 %build
 xmkmf -a -DHAVE_STRTOL
@@ -41,6 +41,9 @@ install -D -m 755 Ad2c/ad2c.script %buildroot%_bindir/ad2c
 
 
 %changelog
+* Thu Mar 10 2016 Fr. Br. George <george@altlinux.ru> 2.1-alt5
+- Fix dprintf redefinition
+
 * Sat Jun 18 2011 Fr. Br. George <george@altlinux.ru> 2.1-alt4
 - Resurrect from orphaned
 - Add ad2c
