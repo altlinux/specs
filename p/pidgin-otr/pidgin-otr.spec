@@ -1,6 +1,6 @@
 Name: pidgin-otr
 Version: 4.0.2
-Release: alt1
+Release: alt1.1
 License: GPLv2
 Group: Networking/Instant messaging
 Url: http://otr.cypherpunks.ca/
@@ -36,6 +36,9 @@ sed -i '/^AM_INIT_AUTOMAKE.*$/{s/-Werror//}' configure.ac
 %_libdir/pidgin/pidgin-otr.so
 
 %changelog
+* Thu Mar 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.2-alt1.1
+- Rebuilt to fix requires.
+
 * Wed Mar 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.2-alt1
 - Updated to 4.0.2.
 

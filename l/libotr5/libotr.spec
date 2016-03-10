@@ -1,7 +1,7 @@
 %define sover 5
 Name: libotr%sover
 Version: 4.1.1
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Off-The-Record Messaging library and toolkit
@@ -96,6 +96,9 @@ LD_LIBRARY_PATH=$PWD/src/.libs %make check ||:
 %_man1dir/*
 
 %changelog
+* Thu Mar 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.1-alt1.1
+- Rebuilt to fix requires.
+
 * Wed Mar 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.1-alt1
 - Updated to 4.1.1 (fixes CVE-2016-2851).
 
