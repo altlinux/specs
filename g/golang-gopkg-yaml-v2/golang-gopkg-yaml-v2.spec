@@ -1,12 +1,12 @@
 %global import_path gopkg.in/yaml.v2
 
-%global commit f7716cbe52baa25d2e9b0d0da546fcf909fc16b4
+%global commit a83829b6f1293c91addabc89d0571c246397bbf4
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-gopkg-yaml-v2
 Version: 2.0
-Release: alt1.git%abbrev
+Release: alt2.git%abbrev
 Summary: YAML support for the Go language
 License: LGPL v.3
 Group: Development/Other
@@ -61,6 +61,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 2.0-alt2.gita83829b6
+- Update
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 2.0-alt1.gitf7716cbe
 - Initial package
 
