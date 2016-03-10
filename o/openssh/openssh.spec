@@ -1,5 +1,5 @@
 Name: openssh
-Version: 7.2p1
+Version: 7.2p2
 Release: alt1
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
@@ -348,6 +348,9 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Mar 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2p2-alt1
+- Updated to 7.2p2 (security: fixes xauth command injection).
+
 * Thu Mar 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.2p1-alt1
 - Updated to 7.2p1.
 
