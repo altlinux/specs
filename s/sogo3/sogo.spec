@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
 Version:      3.0.2
-Release:      alt1
+Release:      alt2
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -37,7 +37,7 @@ BuildRequires: python-module-samba-DC
 
 Requires:      stmpclean
 Requires:      zip
-Conflicts:     sogo
+Conflicts:     sogo2
 
 %filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
 %{!?sogo_major_version: %global sogo_major_version %(/bin/echo %version | /bin/cut -f 1 -d .)}
@@ -157,6 +157,7 @@ Summary:      Storage backend for folder abstraction.
 Group:        Development/Objective-C
 Requires:     sope-gdl1
 Conflicts:    sope-gdl1-contentstore
+Conflicts:    sope-gdl1-contentstore-sogo2
 
 %description -n sope-gdl1-contentstore-sogo3
 The storage backend implements the "low level" folder abstraction, which
@@ -182,6 +183,7 @@ name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 Summary:      SOPE versit parsing library for iCal and VCard formats
 Group:        Development/Objective-C
 Conflicts:    sope-cards
+Conflicts:    sope-cards-sogo2
 
 %description -n sope-cards-sogo3
 SOPE versit parsing library for iCal and VCard formats
@@ -383,6 +385,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Mar 10 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt2
+- Rebuild with new rpm
+
 * Tue Mar 08 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
 - New version
 
