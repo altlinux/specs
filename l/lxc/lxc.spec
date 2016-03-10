@@ -27,7 +27,7 @@
 
 Name: lxc
 Version: 2.0.0
-Release: alt0.rc4
+Release: alt0.rc9
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -170,6 +170,10 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt0.rc9
+- Version updated
+- Fix of altlinux template
+
 * Mon Feb 29 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt0.rc4
 - Version updated
 - Added cgmanager support (for lxd)
