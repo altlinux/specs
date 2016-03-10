@@ -1,6 +1,6 @@
 Name: slock
 Version: 1.2
-Release: alt1
+Release: alt1.1
 
 Summary: Simple X display locker
 
@@ -30,5 +30,8 @@ make PREFIX=%buildroot%_prefix install
 
 
 %changelog
+* Thu Mar 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2-alt1.1
+- Rebuilt to fix requires.
+
 * Mon Dec 07 2015 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2-alt1
 - Initial build.
