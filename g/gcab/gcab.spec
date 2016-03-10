@@ -3,7 +3,7 @@
 
 Name: gcab
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: M$ Cabinet archive tool
 Group: File tools
@@ -108,6 +108,9 @@ GObject introspection devel data for the gcab library
 %_girdir/GCab-%api_ver.gir
 
 %changelog
+* Thu Mar 10 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt2
+- rebuilt for broken rpm-4.0.4-alt100.89
+
 * Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
 - 0.7
 
