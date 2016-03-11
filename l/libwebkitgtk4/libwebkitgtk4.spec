@@ -14,8 +14,8 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.10.7
-Release: alt2
+Version: 2.10.8
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -24,6 +24,7 @@ License: %bsd %lgpl2plus
 Url: http://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
+Patch: webkitgtk-2.10.7-alt-glibc-2.23.patch
 # fc
 Patch12: webkitgtk-2.8.4-youtube.patch
 
@@ -182,6 +183,7 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
+%patch
 %patch12 -p1
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
@@ -275,6 +277,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Fri Mar 11 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10.8-alt1
+- 2.10.8 (CVE-2016-1726)
+
 * Tue Feb 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10.7-alt2
 - rebuild against libicu*.so.56
 
