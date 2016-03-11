@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.19
+Version: 0.20
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,9 +36,13 @@ ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 #doc README ChangeLog
 %_bindir/repocop-report-distromap-db
 %_bindir/repocop-report-distrodb
-#%_man1dir/repocop-report-prometeus-*
+%_bindir/repocop-report-helper-distromap-db-preprocess
+#%_man1dir/repocop-report-*
 
 %changelog
+* Fri Mar 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- shell code moved to repocop-report-helper-distromap-db-preprocess
+
 * Sat Mar 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - libsocket-devel support
 
