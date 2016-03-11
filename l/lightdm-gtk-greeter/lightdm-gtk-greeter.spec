@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: lightdm-gtk-greeter
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
@@ -68,6 +68,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Thu Mar 03 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.1-alt1
+- 2.0.1
+
 * Wed May 13 2015 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 
