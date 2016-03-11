@@ -1,4 +1,4 @@
-%define ver_major 1.1
+%define ver_major 1.3
 
 Name: wayland-protocols
 Version: %ver_major
@@ -7,7 +7,6 @@ Release: alt1
 Summary: Wayland protocols
 License: MIT
 Group: System/X11
-
 Url: http://wayland.freedesktop.org/
 
 Source: http://wayland.freedesktop.org/releases/%name-%version.tar.xz
@@ -40,6 +39,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README
 
 %changelog
+* Fri Mar 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+
 * Wed Feb 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - 1.1
 
