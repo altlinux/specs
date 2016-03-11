@@ -1,5 +1,5 @@
 Name: installer-distro-altlinux-server
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 
 Summary: Installer configuration (server)
@@ -77,6 +77,13 @@ sed -i 's,^\(X-Alterator-URI=\).*$,\1/vm/ortodox,' \
 %files stage3
 
 %changelog
+* Fri Mar 11 2016 Michael Shigorin <mike@altlinux.org> 7.0.2-alt1
+- tweaked disk partitioning profiles towards capping the size
+  of partitions differing from the "main" one (otherwise it's
+  prone to e.g. three largish partitions of which two will be
+  likely mostly empty forever)
+- changed profile order so that "generic server" comes first
+
 * Mon Oct 28 2013 Michael Shigorin <mike@altlinux.org> 7.0.1-alt1
 - added a few more disk partitioning profiles (closes: #29483)
 - fixed silly typo in steps file (non-root user *is* added now)
