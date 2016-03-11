@@ -1,5 +1,6 @@
 %def_disable msits
 %def_disable activities
+%def_enable mobile
 
 %add_findpackage_path %_kde4_bindir
 
@@ -9,7 +10,7 @@ Name: kde4-okular
 %define minor 12
 %define bugfix 2
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Office
 Summary: KDE document viewer
@@ -32,7 +33,10 @@ BuildRequires: ebook-tools-devel gcc-c++ glib2-devel kde4libs-devel libdjvu-deve
 BuildRequires: libpoppler-qt4-devel libqca2-devel libqimageblitz-devel libspectre-devel zlib-devel
 BuildRequires: libkscreen-devel qjson-devel
 BuildRequires: libtiff-devel libjpeg-devel
-BuildRequires: kde-common-devel kde4-plasma-mobile-devel libkexiv24-devel
+BuildRequires: kde-common-devel libkexiv24-devel
+%if_enabled mobile
+BuildRequires: kde4-plasma-mobile-devel
+%endif
 %if_enabled activities
 BuildRequires: kde4-kactivities-devel
 %endif
@@ -93,6 +97,7 @@ Development files for %name
 find %buildroot/%_K4xdg_apps -type f -name \*.desktop | \
 while read f ; do
     sed -i '/^Exec=/s/-caption[[:space:]]*%%c//' $f
+    sed -i '/^Exec=/s/%%i//' $f
 done
 
 
@@ -122,6 +127,7 @@ done
 %_K4srv/msits*
 %endif
 
+%if_enabled mobile
 %files mobile
 %doc AUTHORS TODO
 %_K4bindir/active-documentviewer
@@ -129,6 +135,7 @@ done
 %_K4xdg_apps/active-documentviewer.desktop
 %_K4xdg_apps/active-documentviewer_*.desktop
 %_K4apps/plasma/packages/org.kde.active.documentviewer/
+%endif
 
 %files -n libokularcore4
 %_K4libdir/libokularcore.so.*
@@ -140,6 +147,9 @@ done
 
 
 %changelog
+* Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
+- clean desktop-files Exec entries
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
