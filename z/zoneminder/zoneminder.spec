@@ -5,7 +5,7 @@
 
 Name: zoneminder
 Version: 1.27.0
-Release: alt3
+Release: alt4
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPL
@@ -152,6 +152,9 @@ fi
 %config(noreplace) %_sysconfdir/nginx/sites-enabled.d/*
 
 %changelog
+* Fri Mar 11 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.27.0-alt4
+- rebuild with recent libav
+
 * Fri Aug 22 2014 Mikhail Efremov <sem@altlinux.org> 1.27.0-alt3
 - Rebuild with libgnutls28.
 
