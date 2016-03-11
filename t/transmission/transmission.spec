@@ -7,7 +7,7 @@
 
 Name: transmission
 Version: 2.92
-Release: alt2
+Release: alt3
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -263,10 +263,13 @@ fi
 %config %_initdir/%dname
 %attr(710,root,_%dname) %dir %_sysconfdir/%dname
 %config(noreplace) %_sysconfdir/%dname/settings.json
-%attr(770,root,_%dname) %dir %_localstatedir/%dname
+%attr(771,root,_%dname) %dir %_localstatedir/%dname
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Fri Mar 11 2016 Anton Farygin <rider@altlinux.ru> 2.92-alt3
+- fixed permission for access to the daemon Download directory  (closes: #26984)
+
 * Fri Mar 11 2016 Anton Farygin <rider@altlinux.ru> 2.92-alt2
 - fixed permission for the log directory (closes: #26710)
 - added condreload and reload targets to initscript (closes: #31046)
