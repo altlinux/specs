@@ -7,8 +7,8 @@
 
 %define rname kdebase
 %define major 15
-%define minor 08
-%define bugfix 0
+%define minor 12
+%define bugfix 2
 Name: kde4base
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -326,6 +326,11 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps \
 # add desktop categories
 desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-PersonalSettings %buildroot%_K4xdg_apps/kdepasswd.desktop
 
+find %buildroot/%_K4xdg_apps -type f -name \*.desktop | \
+while read f ; do
+    sed -i '/^Exec=/s/-caption[[:space:]]*%%c//' $f
+done
+
 
 %files
 %files common
@@ -608,6 +613,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- remove captions from desktop-files Exec
+
 * Mon Aug 31 2015 Sergey V Turchin <zerg@altlinux.org> 15.08.0-alt1
 - new version
 
