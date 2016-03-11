@@ -7,8 +7,8 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.3.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -146,6 +146,9 @@ python setup.py \
 %_man1dir/virt-xml.1*
 
 %changelog
+* Fri Mar 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Thu Dec 17 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt2
 - update requires (ALT #31635)
 
