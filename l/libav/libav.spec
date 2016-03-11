@@ -73,8 +73,8 @@
 # }}}
 
 Name: libav
-Version: 11.4
-Release: alt2
+Version: 11.6
+Release: alt1
 Epoch: 1
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
@@ -375,7 +375,6 @@ sed -i 's/UNKNOWN/%version/' version.sh
 %add_optflags %{?_enable_mmx:-DRUNTIME_CPUDETECT}
 %endif
 %endif
-%add_optflags -I%_includedir/freetype2/freetype
 ./configure \
     --prefix=%_prefix \
     --libdir=%_libdir \
@@ -427,7 +426,6 @@ sed -i 's/UNKNOWN/%version/' version.sh
 %else
     --disable-debug \
 %endif
-    --disable-demuxer='hls,applehttp' \
     --enable-pic \
     --extra-cflags="%optflags" \
     --extra-version='%release'
@@ -565,6 +563,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.6-alt1
+- 11.6 released
+
 * Wed Jan 13 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.4-alt2
 - disable applehttp demuxer
 
