@@ -1,7 +1,7 @@
 %define collectorname freedesktop-desktop
 
 Name: repocop-collector-%collectorname
-Version: 0.16
+Version: 0.17
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ install -m 644 %collectorname.filepattern $RPM_BUILD_ROOT%_datadir/repocop/pkgco
 %_datadir/repocop/pkgcollectors/%collectorname
 
 %changelog
+* Fri Mar 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- libreoffice5 support
+
 * Fri Mar 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - kf5 support 
 
