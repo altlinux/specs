@@ -6,7 +6,7 @@
 
 Name: kde4-%rname
 Version: 4.3.1
-Release: alt4
+Release: alt5
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
@@ -21,6 +21,8 @@ Source:   http://ktorrent.org/downloads/%version/%rname-%version.tar
 Patch1: ktorrent-4.2.0-mimetype_magnet.patch
 Patch2: 0026-Fix-compilation-of-ipblocklisttest-target.patch
 Patch3: 0015-Backport-ipfilter-extraction-fixes-from-master-branc.patch
+Patch4: 0037-Show-name-of-the-column-under-the-mouse-pointer-at-t.patch
+Patch5: 0046-webinterface-rename-major-minor-to-major_version-min.patch
 
 # Automatically added by buildreq on Tue Jun 01 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4base-workspace-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libktorrent-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby
@@ -37,6 +39,8 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
@@ -71,6 +75,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K4xdg_apps \
 
 
 %changelog
+* Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt5
+- sync patches with FC
+
 * Tue Nov 24 2015 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt4
 - rebuild (ALT#31153)
 - sync patches with FC
