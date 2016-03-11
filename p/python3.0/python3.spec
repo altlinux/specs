@@ -1,3 +1,12 @@
+%define shortdesc Setup the common %ext_basename/site-packages directory
+%define desc This is a customization of the %std_basename site\
+which makes python3 use the additional\
+%ext_basename/site-packages directory as the search path\
+for modules, too.\
+\
+New releases of python3 in Sisyphus will use it as the default common\
+path. This package is needed for the transition only.
+
 %global std_pyversion %_python3_version
 
 # %%std_site is a place where we can put *.py
@@ -31,10 +40,10 @@
 #	fi
 #
 # Hopefully, we can take 0 as a non-conflicting minor version.
-Summary: ONLY site-packages SUBPACKAGE IS BUILT
+Summary: %shortdesc (with the only built subpkg)
 Name: %ext_basename.0
 Version: %std_pyversion.1
-Release: alt106
+Release: alt107
 License: Python
 Group: Development/Python3
 
@@ -44,9 +53,8 @@ BuildRequires(pre): rpm-build-python3 < 0.1.9
 #AutoProv: no
 
 %package -n %ext_basename-site-packages
-Summary: Setup the common %ext_basename/site-packages directory
-Group: Development/Python3
-
+Summary: %shortdesc
+Group: %group
 # According the ALT Sisyphus RPM Macros Packaging policy, the
 # development tools (like the compiler) should depend on the
 # corresponding rpm-macros/build-*. (To shorten specs and make the
@@ -61,14 +69,10 @@ Requires: rpm-build-python3
 %description
 ONLY %ext_basename-site-packages PACKAGE IS BUILT AND USED!
 
-%description -n %ext_basename-site-packages
-This is a customization of the %std_basename site
-which makes python3 use the additional
-%ext_basename/site-packages directory as the search path
-for modules, too.
+%desc
 
-New releases of python3 in Sisyphus will use it as the default common
-path. This package is needed for the transition only.
+%description -n %ext_basename-site-packages
+%desc
 
 %install
 
@@ -123,6 +127,9 @@ EOF
 %exclude %dir %std_site/__pycache__
 
 %changelog
+* Fri Mar 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt107
+- (.spec) The summary of the main (non-built)/source package made nicer.
+
 * Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt106
 - (cosmetic tweak) _-files.req.list: no duplicate entries on non-lib64.
 
