@@ -1,5 +1,5 @@
 Name: libxml2
-Version: 2.9.3
+Version: 2.9.3.0.5.6511
 Release: alt1
 Epoch: 1
 
@@ -15,7 +15,7 @@ Url: http://xmlsoft.org/
 Source: %srcname.tar
 # http://www.w3.org/XML/Test/xmlts20080827.tar.gz
 Source1: xmlts.tar
-Patch: libxml2-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 Requires: xml-common
 
@@ -153,17 +153,21 @@ ln -s ../xmlconf
 
 %configure \
     --with-python \
+    --with-python-install-dir=%python_sitelibdir \
     --with-html-dir=%_docdir \
     --with-html-subdir=%name-%version \
     %{subst_enable static} \
     --disable-silent-rules
-%make_build
+%make_build DOC_MODULE=%name-%version
 
 %if_with python3
 mkdir ../python3
 cd ../python3
 %configure \
 	--with-python=%_bindir/python3 \
+	--with-python-install-dir=%python3_sitelibdir \
+	--with-html-dir=%_docdir \
+	--with-html-subdir=%name-%version \
 	--disable-static \
 	--disable-silent-rules
 cp -la ../build/{*.la,.libs} .
@@ -171,10 +175,10 @@ cp -la ../build/{*.la,.libs} .
 %endif
 
 %check
-%make_build -k check -C build
+%make_build DOC_MODULE=%name-%version -k check -C build
 
 %install
-%makeinstall_std -C build
+%makeinstall_std DOC_MODULE=%name-%version -C build
 %if_with python3
 %makeinstall_std -C python3/python
 rm %buildroot%python3_sitelibdir/*.la
@@ -244,6 +248,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Fri Mar 11 2016 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.3.0.5.6511-alt1
+- v2.9.3 -> v2.9.3-5-g65112cb.
+
 * Fri Nov 20 2015 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.3-alt1
 - Updated to v2.9.3.
 
