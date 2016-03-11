@@ -19,7 +19,7 @@
 %define bugfix 10
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -1746,6 +1746,9 @@ fi
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt6
+- update from 4.14 branch
+
 * Fri Jan 29 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.10-alt5
 - move oxygen icons to kde-specific place
 
