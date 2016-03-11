@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.33
+Version: 0.34
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -11,6 +11,7 @@ Source: mimeapps.list
 Source1: mimeapps-KDE.list
 Source2: defaults-GNOME.list
 Source3: defaults-MATE.list
+Source4: mimeapps-KF5.list
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 BuildArch: noarch
@@ -28,6 +29,7 @@ install -D -m 644 %{S:1} %buildroot/%_datadir/kde4/applications/kde4/mimeapps.li
 install -D -m 644 %{S:2} %buildroot/%_datadir/gnome/applications/defaults.list
 install -D -m 644 %{S:3} %buildroot/%_datadir/mate/applications/defaults.list
 ln -s kde4/mimeapps.list %buildroot/%_datadir/kde4/applications/mimeapps.list
+install -D -m 644 %{S:4} %buildroot/%_datadir/kf5/applications/mimeapps.list
 
 touch %buildroot/%_desktopdir/defaults.list
 
@@ -35,13 +37,17 @@ touch %buildroot/%_desktopdir/defaults.list
 %files
 #%doc README
 %_desktopdir/mimeapps.list
+%_desktopdir/defaults.list
+%_datadir/kf5/applications/mimeapps.list
 %_datadir/kde4/applications/kde4/mimeapps.list
 %_datadir/kde4/applications/mimeapps.list
 %_datadir/gnome/applications/defaults.list
 %_datadir/mate/applications/defaults.list
-%_desktopdir/defaults.list
 
 %changelog
+* Fri Mar 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
+- initial KF5 support
+
 * Thu Jan 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - updated priorities
 - fixed bug with applicatons/* (closes: #31725)
