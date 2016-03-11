@@ -1,5 +1,5 @@
 Name: cgmanager
-Version: 0.39
+Version: 0.41
 Release: alt1
 
 Summary: Linux cgroup manager
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): libpam-devel
 
 BuildRequires: libdbus-devel libnih-dbus-devel help2man
+
+Requires: libdbus
 
 %description
 CGManager is a central privileged daemon that manages all your
@@ -39,6 +41,19 @@ Requires: lib%name = %version-%release
 %description -n lib%name-devel
 This package contains header files and library needed for
 development with lib%name.
+
+%set_pam_name pam_cgm
+
+%package -n %pam_name
+Summary: %summary
+Group: System/Base
+
+%description -n %pam_name
+%summary
+This package provides a Pluggable Authentication Module (PAM) %pam_name
+When a user logs in, this pam module will create cgroups which
+the user may administer, for any controllers listed on the command
+line or, if none are listed, then all available controllers.
 
 %prep
 %setup
@@ -84,7 +99,8 @@ fi
 %_datadir/%name/
 %systemd_unitdir/cgmanager.service
 %systemd_unitdir/cgproxy.service
-
+%dir %_libexecdir/%name
+%_libexecdir/%name/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -94,7 +110,14 @@ fi
 %_libdir/*.so
 %_libdir/pkgconfig/*
 
+%files -n %pam_name
+%doc AUTHORS COPYING
+%_pam_modules_dir/*
+
 %changelog
+* Fri Mar 11 2016 Denis Pynkin <dans@altlinux.org> 0.41-alt1
+- Updated to 0.41
+
 * Mon Feb 29 2016 Denis Pynkin <dans@altlinux.org> 0.39-alt1
 - Updated to 0.39.
 
