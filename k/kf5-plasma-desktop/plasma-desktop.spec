@@ -9,8 +9,8 @@
 
 
 Name: kf5-%rname
-Version: 5.5.4
-Release: alt3
+Version: 5.5.5
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -205,6 +205,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
+- new version
+
 * Wed Feb 03 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.4-alt3
 - return set of available languages list by systemsettings translations
 
