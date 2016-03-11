@@ -8,7 +8,7 @@
 
 Name: wxGTK
 Version: %wxbranch.12
-Release: alt1.svn20131012.2
+Release: alt1.svn20131012.3
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -19,6 +19,8 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar.gz
 Source2: ld_shared_wrapper.pl
+
+Patch1: wxGTK-disable-ABI-checking.patch
 
 BuildPreReq: gcc-c++ libGL-devel libSDL-devel libSM-devel
 BuildPreReq: libXinerama-devel libesd-devel libexpat-devel
@@ -152,6 +154,8 @@ Header files for wxWidgets object graphics library.
 
 %prep
 %setup
+%patch1 -p1
+
 subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
 
 %build
@@ -319,6 +323,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Fri Mar 11 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.8.12-alt1.svn20131012.3
+- Disabled C++ ABI version checking (ALT#31120).
+
 * Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 2:2.8.12-alt1.svn20131012.2
 - Rebuilt for new gcc5 C++11 ABI
 
