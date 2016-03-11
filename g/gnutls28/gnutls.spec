@@ -1,5 +1,5 @@
 Name: gnutls28
-Version: 3.3.21
+Version: 3.3.22
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -9,6 +9,9 @@ Group: System/Legacy libraries
 Url: http://gnutls.org/
 # ftp://ftp.gnutls.org/pub/gnutls/gnutls-%version.tar.bz2
 Source: gnutls-%version.tar
+
+# Skip test-hash-large for overridden CPU flags
+Patch1: gnutls-patch-test-hash-large.patch
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel zlib-devel
@@ -41,6 +44,7 @@ This package contains the GnuTLS runtime library.
 
 %prep
 %setup -n gnutls-%version
+%patch1 -p2
 rm aclocal.m4 m4/{libtool,lt*}.m4
 # Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
 # tests with @LIBMULTITHREAD@ in --no-as-needed mode.
@@ -90,6 +94,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %exclude %_pkgconfigdir/gnutls.pc
 
 %changelog
+* Fri Mar 11 2016 Mikhail Efremov <sem@altlinux.org> 3.3.22-alt1
+- Skip test-hash-large for overridden CPU flags.
+- Updated to 3.3.22.
+
 * Wed Feb 03 2016 Mikhail Efremov <sem@altlinux.org> 3.3.21-alt1
 - Updated to 3.3.21.
 
