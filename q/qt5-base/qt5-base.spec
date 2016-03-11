@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.5.1
-Release: alt7
+Release: alt9
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -50,6 +50,7 @@ Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
 Patch1002: alt-dont-require-plugin-file.patch
 Patch1003: alt-ca-certificates-path.patch
+Patch1004: alt-timezone.patch
 
 # macros
 %define _qt5 %gname
@@ -342,6 +343,7 @@ EGL integration library for the Qt%major toolkit
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
+%patch1004 -p1 -b .timezone
 bin/syncqt.pl -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
@@ -735,6 +737,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt9
+- fix detect timezone
+
 * Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt7
 - fix find ca-bundle.crt
 
