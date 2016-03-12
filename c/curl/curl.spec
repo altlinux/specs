@@ -1,6 +1,6 @@
 Name: curl
-Version: 7.46.0
-Release: alt2
+Version: 7.47.1
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -142,6 +142,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Sat Mar 12 2016 Anton Farygin <rider@altlinux.ru> 7.47.1-alt1
+- new version
+
 * Sun Dec 13 2015 Anton Farygin <rider@altlinux.ru> 7.46.0-alt2
 - enabled http2 support (closes: #31617)
 
