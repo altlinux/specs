@@ -4,7 +4,7 @@
 
 Name: libaubio%sover
 Version: 0.4.1
-Release: alt1.git20140312
+Release: alt2.git20140312
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 License: GPL
@@ -148,6 +148,9 @@ mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %_docdir/lib%origname-doc
 
 %changelog
+* Sat Mar 12 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.1-alt2.git20140312
+- rebuilt with recent libav
+
 * Sat Sep 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20140312
 - Version 0.4.1
 
