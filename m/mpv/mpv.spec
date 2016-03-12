@@ -1,6 +1,6 @@
 Name: mpv
 Version: 0.16.0
-Release: alt1
+Release: alt2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 Summary(ru_RU.UTF8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
@@ -37,13 +37,28 @@ Requires: %name = %version-%release
 %description -n zsh-completion-%name
 Zsh completion for %name.
 
+%package -n libmpv-devel
+Summary: Header files for %name
+Group: Development/C
+Requires: %name = %version-%release
+
+%description -n libmpv-devel
+Header files for %name
+
+%package -n libmpv1
+Summary: %name shared library
+Group: System/Libraries
+
+%description -n libmpv1
+This package contains %name shared library
+
 %prep
 %setup -n %name-%version
 %patch0 -p1
 
 ls
 chmod ugo+rx waf
-./waf configure --bindir=%buildroot%_bindir --mandir=%buildroot/usr/share/man --datadir=%buildroot%_datadir --prefix=%buildroot \
+./waf configure --bindir=%_bindir --mandir=%_mandir --datadir=%_datadir --libdir=%_libdir --incdir=%_includedir --prefix= \
 --enable-pulse \
 --enable-enca \
 --enable-xss \
@@ -58,13 +73,14 @@ chmod ugo+rx waf
 --enable-libbluray \
 --enable-dvdnav \
 --enable-libsmbclient \
+--enable-libmpv-shared \
 
 %build
 
 ./waf build
 
 %install
-./waf install
+./waf install --destdir=%buildroot
 
 %files
 %dir %_sysconfdir/%name
@@ -80,7 +96,18 @@ chmod ugo+rx waf
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/_mpv
 
+%files -n libmpv-devel
+%_libdir/libmpv.so
+%_includedir/%name
+%_pkgconfigdir/*.pc
+
+%files -n libmpv1
+%_libdir/libmpv.so.*
+
 %changelog
+* Sat Mar 12 2016 Terechkov Evgenii <evg@altlinux.org> 0.16.0-alt2
+- Build libmpv as shared library (ALT#31876)
+
 * Mon Mar  7 2016 Terechkov Evgenii <evg@altlinux.org> 0.16.0-alt1
 - 0.16.0
 
