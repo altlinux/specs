@@ -1,6 +1,6 @@
 Name: libstfl0
 Version: 0.24
-Release: alt1
+Release: alt2
 
 %define oname stfl
 
@@ -71,6 +71,7 @@ make
 
 %install
 make DESTDIR=%buildroot prefix=%prefix libdir=%_lib install
+rm %buildroot%_libdir/*.a
 
 %files
 %doc README
@@ -78,7 +79,6 @@ make DESTDIR=%buildroot prefix=%prefix libdir=%_lib install
 
 %files devel
 %_includedir/*.h
-%_libdir/*.a
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
@@ -92,5 +92,8 @@ make DESTDIR=%buildroot prefix=%prefix libdir=%_lib install
 %python_sitelibdir/stfl.pyo
 
 %changelog
+* Sat Mar 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt2
+- remove libstfl.a from -devel package.
+
 * Tue Dec 08 2015 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt1
 - Initial build.
