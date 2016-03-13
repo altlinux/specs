@@ -1,7 +1,7 @@
 %def_with python3
 Name:           python-module-discover
 Version:        0.4.0
-Release:        alt2
+Release:        alt2.1
 Summary:        Test discovery for unittest. Backported from Python 2.7 for Python 24+
 License:        BSD-3-Clause
 Group:          Development/Python
@@ -69,6 +69,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Aug 18 2014 Lenar Shakirov <snejok@altlinux.ru> 0.4.0-alt2
 - Enable python3
 

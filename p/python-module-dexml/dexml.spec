@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt1.git20150420
+Release: alt1.git20150420.1
 Summary: A dead-simple Object-XML mapper for Python
 License: MIT
 Group: Development/Python
@@ -120,6 +120,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt1.git20150420.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Aug 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.git20150420
 - New snapshot
 

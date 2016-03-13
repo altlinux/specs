@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.2
-Release: alt1.beta.git20130109
+Release: alt1.beta.git20130109.1
 
 Summary: Dilla is a multi-purpose general testing tool
 
@@ -80,6 +80,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt1.beta.git20130109.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Sep 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.beta.git20130109
 - New snapshot
 - Added module for Python 3

@@ -6,7 +6,7 @@
 
 Name: python-module-%module_name
 Version: 1.3.9
-Release: alt1.dev.git%git_commit
+Release: alt1.dev.git%git_commit.1
 
 Summary: Management extensions for the Django Framework
 
@@ -97,6 +97,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.9-alt1.dev.git1fe658.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.9-alt1.dev.git1fe658
 - Version 1.3.9.dev
 - Added module for Python 3

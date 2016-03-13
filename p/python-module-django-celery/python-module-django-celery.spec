@@ -5,7 +5,7 @@
 
 Name: python-module-%module_name
 Version: 3.2.0
-Release: alt1.a1.git20150124.1
+Release: alt1.a1.git20150124.1.1
 Group: Development/Python
 License: BSD License
 Summary: django-celery provides Celery integration for Django
@@ -89,6 +89,10 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2.0-alt1.a1.git20150124.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.2.0-alt1.a1.git20150124.1
 - NMU: Use buildreq for BR.
 

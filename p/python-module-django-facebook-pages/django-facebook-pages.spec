@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.7
-Release: alt1.git20140408
+Release: alt1.git20140408.1
 Summary: Django implementation for Facebook Graph API Pages
 License: BSD
 Group: Development/Python
@@ -103,6 +103,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.7-alt1.git20140408.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.7-alt1.git20140408
 - Initial build for Sisyphus
 
