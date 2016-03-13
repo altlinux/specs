@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0
-Release: alt1.git20130530
+Release: alt1.git20130530.1
 Summary: A Python client for Facebook Scribe
 License: ASL v2.0
 Group: Development/Python
@@ -67,6 +67,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0-alt1.git20130530.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Sep 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.git20130530
 - Initial build for Sisyphus
 

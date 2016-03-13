@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.5
-Release: alt1.git20150209.1
+Release: alt1.git20150209.1.1
 Summary: Elasticsearch data layer for eve rest framework
 License: GPLv3
 Group: Development/Python
@@ -103,6 +103,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.5-alt1.git20150209.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1.git20150209.1
 - NMU: Use buildreq for BR.
 
