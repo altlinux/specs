@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.15.3
-Release: alt7.git20150425
+Release: alt7.git20150425.1
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -214,6 +214,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.3-alt7.git20150425.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Mar  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.3-alt7.git20150425
 - (.spec) cleanup unneeded BuildRequires(pre): rpm-macros-sphinx
   (and other BuildReq cleanups)
