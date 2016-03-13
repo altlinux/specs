@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.3
-Release: alt1.git20150114
+Release: alt1.git20150114.1
 Summary: A lightweight, object-oriented Python state machine implementation
 License: MIT
 Group: Development/Python
@@ -82,6 +82,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.3-alt1.git20150114.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt1.git20150114
 - Initial build for Sisyphus
 

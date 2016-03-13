@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1.git20150120
+Release: alt1.git20150120.1
 Summary: A jinja2 extension that adds a {%% markdown %%} tag to templates
 License: MIT
 Group: Development/Python
@@ -86,6 +86,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.3-alt1.git20150120.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jan 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.git20150120
 - Initial build for Sisyphus
 

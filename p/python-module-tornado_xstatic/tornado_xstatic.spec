@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20140929.1
+Release: alt1.git20140929.1.1
 Summary: Utilities for using XStatic in Tornado applications
 License: BSD
 Group: Development/Python
@@ -100,6 +100,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.git20140929.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.git20140929.1
 - NMU: Use buildreq for BR.
 

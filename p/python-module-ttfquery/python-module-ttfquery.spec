@@ -5,7 +5,7 @@
 
 Name: python-module-%sname
 Version: 1.0.5
-Release: alt1.bzr20120206
+Release: alt1.bzr20120206.1
 
 Summary: FontTools-based package for querying system fonts
 
@@ -123,6 +123,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.5-alt1.bzr20120206.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1.bzr20120206
 - Snapshot from bzr
 - Added module for Python 3

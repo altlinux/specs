@@ -9,7 +9,7 @@ Summary: Twisted client protocol for redis
 Name: %packagename
 Epoch: 1
 Version: %version
-Release: %release.1
+Release: alt1.git20140728.1.1
 Source0: %origname-%version.tar
 License: Apache
 Group: Development/Python
@@ -74,6 +74,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.2-alt1.git20140728.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1:1.2-alt1.git20140728.1
 - NMU: Use buildreq for BR.
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.4.18
-Release: alt1.git20141002
+Release: alt1.git20141002.1
 Summary: Asynchronous Redis client that works within Tornado IO loop
 License: ASLv2.0
 Group: Development/Python
@@ -88,6 +88,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.18-alt1.git20141002.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.18-alt1.git20141002
 - Initial build for Sisyphus
 

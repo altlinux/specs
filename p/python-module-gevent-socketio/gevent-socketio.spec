@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt2.git20140202.1
+Release: alt2.git20140202.1.1
 Summary: SocketIO server based on the Gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -117,6 +117,10 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/socketio/
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.6-alt2.git20140202.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.3.6-alt2.git20140202.1
 - NMU: Use buildreq for BR.
 
