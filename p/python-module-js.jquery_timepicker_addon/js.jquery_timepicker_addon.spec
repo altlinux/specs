@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 Summary: Fanstatic packaging of jQuery-Timepicker-Addon
 License: BSD
 Group: Development/Python
@@ -74,6 +74,10 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus
 

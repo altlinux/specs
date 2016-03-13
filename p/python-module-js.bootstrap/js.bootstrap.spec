@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4
-Release: alt1.dev0.git20150113
+Release: alt1.dev0.git20150113.1
 Summary: fanstatic twitter bootstrap
 License: BSD
 Group: Development/Python
@@ -77,6 +77,10 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4-alt1.dev0.git20150113.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.dev0.git20150113
 - Version 3.4.dev0
 
