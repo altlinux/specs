@@ -1,6 +1,6 @@
 Name: monetdb
 Version: 11.19.7
-Release: alt1
+Release: alt1.1
 
 Summary: MonetDB is an open source column-oriented database management system
 License: MonetDB Public License v1.1
@@ -158,6 +158,10 @@ cp %buildroot/%_bindir/malsample.* .
 %doc sqlsample.pl malsample.pl
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 11.19.7-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.19.7-alt1
 - Version 11.19.7 (ALT #30660)
 - Added module for Python 3

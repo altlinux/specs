@@ -4,7 +4,7 @@
 
 Name: python-module-acme
 Version: 0.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python library for the ACME protocol
 
@@ -172,6 +172,10 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 16 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - initial build for ALT Linux Sisyphus
 
