@@ -4,7 +4,7 @@
 
 Name: python-module-pyrfc3339
 Version: 1.0
-Release: alt1
+Release: alt1.1
 Summary: Generate and parse RFC 3339 timestamps
 
 License: MIT
@@ -80,6 +80,10 @@ RFC 3339-compliant timestamps using Python datetime.datetime objects.
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Linux Sisyphus
 

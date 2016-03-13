@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.0
-Release: alt1.git20141127
+Release: alt1.git20141127.1
 Summary: Databases fixtures plugin for py.test
 License: LGPLv3
 Group: Development/Python
@@ -142,6 +142,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.git20141127.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Nov 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.git20141127
 - Version 0.8.0
 
