@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 7.2
-Release: alt1.git20150122
+Release: alt1.git20150122.1
 
 Summary: A module wrapper for os.path
 License: MIT
@@ -81,6 +81,10 @@ mkdir docs/_static
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 7.2-alt1.git20150122.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.2-alt1.git20150122
 - Version 7.2
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.2.0
-Release: alt1.1
+Release: alt1.1.1
 Summary: OpenStack Sphinx Extensions and Theme
 License: ASLv2.0
 Group: Development/Python
@@ -149,6 +149,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2.0-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.2.0-alt1.1
 - NMU: Use buildreq for BR.
 

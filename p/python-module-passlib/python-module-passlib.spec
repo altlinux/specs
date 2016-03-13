@@ -6,7 +6,7 @@
 
 Name:		python-module-%oname
 Version:	1.7
-Release:	alt1.dev0.hg20131228.1
+Release:	alt1.dev0.hg20131228.1.1
 Summary:	Comprehensive password hashing framework supporting over 20 schemes
 Group:		Development/Python
 License:	BSD and Beerware and Copyright only
@@ -136,6 +136,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7-alt1.dev0.hg20131228.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7-alt1.dev0.hg20131228.1
 - NMU: Use buildreq for BR.
 

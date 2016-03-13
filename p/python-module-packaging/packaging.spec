@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 15.4
-Release: alt2.dev0.git20150801
+Release: alt2.dev0.git20150801.1
 Summary: Core utilities for Python packages
 License: ASLv2.0
 Group: Development/Python
@@ -113,6 +113,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 15.4-alt2.dev0.git20150801.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 15.4-alt2.dev0.git20150801
 - rebuild with clean buildreq
 - disable tests 

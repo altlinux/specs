@@ -10,7 +10,7 @@ Summary: SSH2 protocol for python
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 Name: python-module-paramiko
 Version: %version
-Release: %release.1
+Release: alt2.1.1
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -111,6 +111,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.16.0-alt2.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt2.1
 - NMU: Use buildreq for BR.
 
