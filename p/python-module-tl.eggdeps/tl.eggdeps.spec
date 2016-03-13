@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt2
+Release: alt2.1
 Summary: Compute a dependency graph between active Python eggs
 License: ZPLv2.1
 Group: Development/Python
@@ -164,6 +164,10 @@ touch %buildroot%python_sitelibdir/tl/__init__.py
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt2
 - Added module for Python 3
 

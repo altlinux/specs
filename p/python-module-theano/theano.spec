@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt3.2
+Release: alt3.2.1
 Summary: Optimizing compiler for evaluating mathematical expressions on CPUs and GPUs
 License: BSD
 Group: Development/Python
@@ -193,6 +193,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.0-alt3.2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Mar 07 2016 Denis Medvedev <nbr@altlinux.org> 0.6.0-alt3.2
 - Added missing dependence on python-dev
 
