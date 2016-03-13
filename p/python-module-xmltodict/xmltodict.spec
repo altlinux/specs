@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.1
-Release: alt1.git20150118
+Release: alt1.git20150118.1
 Summary: Makes working with XML feel like you are working with JSON
 License: MIT
 Group: Development/Python
@@ -86,6 +86,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.1-alt1.git20150118.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.git20150118
 - Version 0.9.1
 

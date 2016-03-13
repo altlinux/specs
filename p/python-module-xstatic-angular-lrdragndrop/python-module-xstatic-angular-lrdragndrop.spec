@@ -5,7 +5,7 @@
 
 Name:           python-module-%pypi_name
 Version:        %version
-Release:        alt1
+Release:        alt1.1
 Group:          Development/Python
 Summary:        Angular-lrdragndrop (XStatic packaging standard)
 
@@ -75,5 +75,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2.2-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Sep 09 2015 Lenar Shakirov <snejok@altlinux.ru> 1.0.2.2-alt1
 - First build for ALT (based on Fedora 1.0.2.2-2.fc23.src)
