@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.1.19
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %modulename
 
@@ -70,5 +70,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.19-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Mar 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.19-alt1
 - Initial build.
