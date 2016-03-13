@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.11
-Release: alt2.git20140308
+Release: alt2.git20140308.1
 Summary: Routing Recognition and Generation Tools
 License: MIT
 Group: Development/Python
@@ -136,6 +136,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.11-alt2.git20140308.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 2.11-alt2.git20140308
 - Disabled Docs
 
