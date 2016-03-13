@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8
-Release: alt1.git20141120
+Release: alt1.git20141120.1
 Summary: Extensible validation for Python dictionaries
 License: ISCL
 Group: Development/Python
@@ -126,6 +126,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8-alt1.git20141120.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.git20141120
 - Initial build for Sisyphus
 

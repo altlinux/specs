@@ -4,7 +4,7 @@
 Summary: A simple lightweight interface to Amazon Web Services
 Name: python-module-%{pkgname}
 Version: 2.38.0
-Release: alt1
+Release: alt1.1
 License: MIT
 Group: Development/Python
 Url: https://github.com/boto/boto
@@ -117,6 +117,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.38.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.38.0-alt1
 - Version 2.38.0
 

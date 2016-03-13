@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt1.git20141230
+Release: alt1.git20141230.1
 Summary: Extensible memoizing collections and decorators
 License: MIT
 Group: Development/Python
@@ -84,6 +84,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt1.git20141230.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Feb 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.git20141230
 - Initial build for Sisyphus
 

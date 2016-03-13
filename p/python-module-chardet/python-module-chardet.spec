@@ -32,7 +32,7 @@ popd \
 
 Name: python-module-chardet
 Version: 2.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Character encoding auto-detection in Python
 
@@ -92,6 +92,10 @@ rm -rf %buildroot%_bindir/
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1
 - Version 2.3.0
 
