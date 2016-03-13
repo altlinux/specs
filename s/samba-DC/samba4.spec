@@ -45,7 +45,7 @@
 
 Name:    samba-DC
 Version: 4.3.6
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1252,6 +1252,9 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Sun Mar 13 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.6-alt2
+- Rebuild with new libtalloc
+
 * Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.6-alt1
 - New version (https://www.samba.org/samba/history/samba-4.3.6.html)
 - Security fixes:

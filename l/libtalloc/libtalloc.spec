@@ -1,8 +1,9 @@
 %def_enable tests
 
 Name: libtalloc
-Version: 2.1.6
-Release: alt1
+Version: 2.1.5
+Release: alt2
+Epoch:   1
 
 Summary: The talloc library
 
@@ -45,7 +46,7 @@ library.
 
 %prep
 %setup -q -n talloc-%version
-%patch1 -p2
+%patch1
 
 %build
 %undefine _configure_gettext
@@ -88,6 +89,9 @@ make test
 
 
 %changelog
+* Sun Mar 13 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.1.5-alt2
+- Downgrade to 2.1.5
+
 * Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1
 - 2.1.6
 
