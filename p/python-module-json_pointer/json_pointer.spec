@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1
+Release: alt1.1
 Summary: Simple implementation of the json-pointer spec
 License: ASLv2.0
 Group: Development/Python
@@ -120,6 +120,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Nov 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1
 - Initial build for Sisyphus
 
