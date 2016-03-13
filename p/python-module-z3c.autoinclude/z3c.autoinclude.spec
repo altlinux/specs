@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.5
-Release: alt2
+Release: alt2.1
 Summary: Automatically include ZCML
 License: ZPL
 Group: Development/Python
@@ -168,6 +168,10 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.5-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt2
 - Added module for Python 3
 

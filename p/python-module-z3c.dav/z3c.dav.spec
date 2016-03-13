@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0b2
-Release: alt3
+Release: alt3.1
 Summary: Implementation of the WebDAV protocol for Zope3
 License: ZPL
 Group: Development/Python
@@ -157,6 +157,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0b2-alt3.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0b2-alt3
 - Added module for Python 3
 
