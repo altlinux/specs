@@ -10,7 +10,7 @@
 
 Name: python-module-%modulename
 Version: %version
-Release: %release
+Release: alt2.git20150620.1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python
@@ -120,6 +120,10 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.6.2-alt2.git20150620.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 2.6.2-alt2.git20150620
 - Disabled Doc, tests and unnecessary dependents
 

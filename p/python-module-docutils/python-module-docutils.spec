@@ -3,7 +3,7 @@
 
 Summary: Docutils -- Python Documentation Utilities
 Version: 0.13
-Release: alt4.git20150716
+Release: alt4.git20150716.1
 %setup_python_module %oname
 Name: %packagename
 # git://repo.or.cz/docutils.git
@@ -121,6 +121,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.13-alt4.git20150716.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Mar 02 2016 Dmitry V. Levin <ldv@altlinux.org> 0.13-alt4.git20150716
 - Remove pygments from requirements.
 - Packages subdirectories.
