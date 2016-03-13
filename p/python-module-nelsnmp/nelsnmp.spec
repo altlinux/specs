@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.git20150315
+Release: alt1.git20150315.1
 Summary: A wrapper module for pysnmp
 License: ASLv2.0
 Group: Development/Python
@@ -86,6 +86,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.git20150315.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Mar 15 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.4-alt1.git20150315
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt1.git20140925
+Release: alt1.git20140925.1
 Summary: A handler for urllib2 to enable multipart form uploading
 License: LGPL
 Group: Development/Python
@@ -75,6 +75,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.5-alt1.git20140925.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Sep 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.git20140925
 - Initial build for Sisyphus
 

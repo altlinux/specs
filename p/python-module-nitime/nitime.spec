@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Nitime: timeseries analysis for neuroscience data
 License: BSD
@@ -145,6 +145,10 @@ export PYTHONPATH=%buildroot%python_sitelibdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1
 - Version 0.5
 
