@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.9
-Release: alt2.1
+Release: alt2.1.1
 Epoch: 1
 Summary: rdflib wrapper for Python
 License: BSD
@@ -97,6 +97,10 @@ mv %buildroot%_bindir/sparql %buildroot%_bindir/sparql3
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.2.9-alt2.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1:0.2.9-alt2.1
 - NMU: Use buildreq for BR.
 
