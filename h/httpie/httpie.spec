@@ -4,7 +4,7 @@
 
 Name: httpie
 Version: 0.8.0
-Release: alt1
+Release: alt1.1
 Summary: A Curl-like tool for humans
 
 Group: Networking/WWW
@@ -96,5 +96,9 @@ help2man --no-discard-stderr %buildroot/%_bindir/http.python3 > %buildroot/%_man
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Sep  6 2014 Terechkov Evgenii <evg@altlinux.org> 0.8.0-alt1
 - Initial build for ALT Linux Sisyphus

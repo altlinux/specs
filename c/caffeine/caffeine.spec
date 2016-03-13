@@ -1,6 +1,6 @@
 Name: caffeine
 Version: 2.8.2
-Release: alt2
+Release: alt2.1
 Summary: Prevent screensaving and powersaving
 Group: Graphical desktop/Other
 License: GPLv3
@@ -48,6 +48,10 @@ Caffeine - маленькая служба, которая блокирует а
 %_datadir/%name-indicator/glade/GUI.glade
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.8.2-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Jan 25 2016 Anton Midyukov <antohami@altlinux.org> 2.8.2-alt2
 - Fix build.
 

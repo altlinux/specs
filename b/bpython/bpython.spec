@@ -9,7 +9,7 @@
 
 Name: bpython
 Version: 0.14.1
-Release: alt1
+Release: alt1.1
 
 Summary: Fancy curses interface to the Python 2 interactive interpreter
 License: MIT
@@ -234,6 +234,10 @@ python setup.py test ||:
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.14.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Mar 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.14.1-alt1
 - Updated to 0.14.1.
 

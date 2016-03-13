@@ -1,7 +1,7 @@
 
 Name: accerciser
 Version: 3.14.0
-Release: alt1
+Release: alt1.1
 
 Summary: An interactive Python tool for querying accessibility information
 Url: http://live.gnome.org/Accerciser
@@ -78,6 +78,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %python3_sitelibdir/%name/
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.14.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Sep 30 2014 Paul Wolneykien <manowar@altlinux.org> 3.14.0-alt1
 - Fresh up to v3.14.0 with the help of cronbuild and update-source-functions.
 

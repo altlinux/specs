@@ -2,7 +2,7 @@
 
 Name: ipython
 Version: 4.0.0
-Release: alt3
+Release: alt3.1
 
 %setup_python_module IPython
 
@@ -199,6 +199,10 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt3.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Mar  2 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt3
 - .spec: fail if the maintainer's intentions are not fulfilled
   (because the sources or the build environment have changed since the

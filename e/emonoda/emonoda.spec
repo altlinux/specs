@@ -2,7 +2,7 @@
 
 Name: emonoda
 Version: 1.9.19
-Release: alt1
+Release: alt1.1
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -56,6 +56,10 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.19-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Aug 14 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.19-alt1
 - fixed #34: cut short lines by terminal width
 - implemented option emload.set_customs

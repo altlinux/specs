@@ -34,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1.1
+Release: alt1.1.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -1728,6 +1728,10 @@ done
 
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.58.0-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.58.0-alt1.1
 - Rebuilt with libicui18n.so.56 and libicuuc.so.56.
 
