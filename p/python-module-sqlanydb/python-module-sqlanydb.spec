@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.6
-Release: alt1.git20140626
+Release: alt1.git20140626.1
 Epoch: 1
 License: Apache
 BuildArch: noarch
@@ -76,6 +76,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.0.6-alt1.git20140626.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.6-alt1.git20140626
 - Version 1.0.6
 - Added module for Python 3

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1b1
-Release: alt2
+Release: alt2.1
 Summary: Spam classification system
 License: Python
 Group: Development/Python
@@ -99,6 +99,10 @@ ln -s %_bindir/sb_server.py3 %buildroot%python3_sitelibdir/sb_server.py
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1b1-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1b1-alt2
 - Added module for Python 3
 

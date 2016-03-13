@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.dev1.git20120719
+Release: alt1.dev1.git20120719.1
 Summary: Storages: Abstract File Storage
 License: BSD
 Group: Development/Python
@@ -69,6 +69,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.dev1.git20120719.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.dev1.git20120719
 - Initial build for Sisyphus
 

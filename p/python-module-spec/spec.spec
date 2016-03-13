@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt2.git20150423.1
+Release: alt2.git20150423.1.1
 Summary: Specification-style output for nose
 License: MIT
 Group: Development/Python
@@ -100,6 +100,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt2.git20150423.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt2.git20150423.1
 - NMU: Use buildreq for BR.
 

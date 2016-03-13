@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt1.git20140609.1
+Release: alt1.git20140609.1.1
 Summary: Python 2.6+/3.1+ XMPP Library
 License: MIT
 Group: Development/Python
@@ -137,6 +137,10 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt1.git20140609.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1.git20140609.1
 - NMU: Use buildreq for BR.
 
