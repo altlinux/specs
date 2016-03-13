@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.4
-Release: alt1.1
+Release: alt1.1.1
 Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
 License: BSD
 Group: Development/Python
@@ -119,6 +119,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.4-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.4-alt1.1
 - NMU: Use buildreq for BR.
 

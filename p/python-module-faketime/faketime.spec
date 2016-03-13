@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.6.3
-Release: alt1.git20150622
+Release: alt1.git20150622.1
 Summary: Python wrapper around libfaketime
 License: GPLv2
 Group: Development/Python
@@ -96,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.6.3-alt1.git20150622.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6.3-alt1.git20150622
 - Initial build for Sisyphus
 

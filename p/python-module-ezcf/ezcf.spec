@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt1.dev1.git20150324
+Release: alt1.dev1.git20150324.1
 Summary: Import JSON/YAML like importing .py files
 License: MIT
 Group: Development/Python
@@ -110,6 +110,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt1.dev1.git20150324.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt1.dev1.git20150324
 - Initial build for Sisyphus
 
