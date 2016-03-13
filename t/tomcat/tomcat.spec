@@ -71,7 +71,7 @@ BuildRequires: jpackage-generic-compat
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt2_4jpp8
+Release:       alt3_4jpp8
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 Group:         System/Servers
@@ -652,6 +652,9 @@ install -D -m 755 %{S:46} %buildroot%_sbindir/%{name}-sysv
 %attr(0644,root,root) %{_unitdir}/%{name}-jsvc.service
 
 %changelog
+* Sun Mar 13 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.32-alt3_4jpp8
+- logrotate bugfix thanks to Chess@
+
 * Sun Mar 13 2016 Igor Vlasenko <viy@altlinux.ru> 1:8.0.32-alt2_4jpp8
 - sysVinit bugfixes thanks to Chess@
 
