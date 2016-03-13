@@ -4,7 +4,7 @@
 
 Name: python-module-memcached
 Version: 1.53
-Release: alt3
+Release: alt3.1
 
 Summary: A Python module for memcached daemon
 Group: Development/Python
@@ -79,6 +79,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.53-alt3.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.53-alt3
 - Added provides: memcache
 
