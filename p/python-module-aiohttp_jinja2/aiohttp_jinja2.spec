@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.4.1
-Release: alt1.git20150418.1
+Release: alt1.git20150418.1.1
 Summary: jinja2 template renderer for aiohttp.web
 License: ASLv2.0
 Group: Development/Python
@@ -104,6 +104,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.4.1-alt1.git20150418.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:0.4.1-alt1.git20150418.1
 - NMU: Use buildreq for BR.
 

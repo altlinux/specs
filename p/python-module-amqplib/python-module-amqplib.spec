@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.0.2
-Release: alt2.1
+Release: alt2.1.1
 Group: Development/Python
 License: GPLv2
 Summary: Python AMQP (Advanced Message Queuing Protocol) Client library
@@ -72,6 +72,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt2.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt2.1
 - NMU: Use buildreq for BR.
 
