@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.10.1
-Release: alt2.git20150730
+Release: alt2.git20150730.1
 Summary: Simple Python task execution
 License: BSD
 Group: Development/Python
@@ -151,6 +151,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.1-alt2.git20150730.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 0.10.1-alt2.git20150730
 - cleanup buildreq
 

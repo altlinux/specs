@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.4
-Release: alt3.hg20140628
+Release: alt3.hg20140628.1
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -479,6 +479,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.3.4-alt3.hg20140628.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:1.3.4-alt3.hg20140628
 - NMU: added python-module-setuptools and python-tools-2to3 to BRs.
 
