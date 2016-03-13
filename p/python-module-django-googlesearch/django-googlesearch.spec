@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20130114
+Release: alt1.git20130114.1
 Summary: Django Google linked custom search engine app
 License: BSD
 Group: Development/Python
@@ -113,6 +113,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt1.git20130114.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Oct 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.git20130114
 - Initial build for Sisyphus
 

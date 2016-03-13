@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.3.9
-Release: alt1.git20140105
+Release: alt1.git20140105.1
 Group: Development/Python
 License: BSD License
 Summary: Application that allow you to use WebSockets seamlessly with any Django project
@@ -71,6 +71,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.9-alt1.git20140105.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.9-alt1.git20140105
 - Version 0.3.9
 - Added module for Python 3
