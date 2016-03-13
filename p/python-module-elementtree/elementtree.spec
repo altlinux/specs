@@ -8,7 +8,7 @@
 Summary: ElementTree - a light-weight XML object model for Python.
 Name: %packagename
 Version: %version
-Release: %release.1.1.1
+Release: alt1.20050316.1.1.1.1
 URL: http://effbot.org/zone/element-index.htm
 Source: %modulename-%version-%rver.tar.gz
 Patch1: %modulename-TidyHTMLTreeBuilder-fix.patch
@@ -81,6 +81,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.6-alt1.20050316.1.1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jul 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.20050316.1.1.1
 - Added module for Python 3
 

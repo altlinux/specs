@@ -5,7 +5,7 @@
 
 Name: lib%_name
 Version: %ver_major.3
-Release: alt2
+Release: alt2.1
 
 Summary: GObject-based Exiv2 wrapper
 Group: System/Libraries
@@ -121,6 +121,10 @@ subst 's/0\.26/0.25/' configure*
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.3-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Jun 28 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt2
 - rebuilt against libexiv2.so.14
 

@@ -7,7 +7,7 @@
 
 Name: %{packagename}
 Version: %{version}
-Release: %{release}
+Release: alt1.1
 License: LGPL
 Source0: http://www.alcyone.com/software/%pname/%pname-latest.tar.gz
 Url: http://www.alcyone.com/software/empy
@@ -94,6 +94,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.2-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.2-alt1
 - Version 3.3.2
 - Added module for Python 3

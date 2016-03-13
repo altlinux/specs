@@ -5,7 +5,7 @@
 
 Name: gnome-shell
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -234,6 +234,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.18.4-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Mar 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt1
 - 3.18.4
 
