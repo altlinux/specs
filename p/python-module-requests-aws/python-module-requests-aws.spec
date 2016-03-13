@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.6
-Release: alt1
+Release: alt1.1
 Summary: AWS authentication for Amazon S3 for the python requests module
 License: BSD
 Group: Development/Python
@@ -64,5 +64,9 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.6-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu May 21 2015 Alexey Shabalin <shaba@altlinux.ru> 0.1.6-alt1
 - Initial build for Sisyphus

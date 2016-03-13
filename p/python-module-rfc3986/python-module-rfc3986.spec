@@ -4,7 +4,7 @@
 
 Name: python-module-%pypi_name
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 Summary: Validating URI References per RFC 3986
 Group: Development/Python
 License: ASL 2.0
@@ -80,5 +80,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Mar 13 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt1
 - Initial package

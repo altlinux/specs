@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.9
-Release: alt1.git20150226.1
+Release: alt1.git20150226.1.1
 Summary: Lets you use the page object pattern with Robot Framework and plain python
 License: Free
 Group: Development/Python
@@ -126,6 +126,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.9-alt1.git20150226.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.9-alt1.git20150226.1
 - NMU: Use buildreq for BR.
 
