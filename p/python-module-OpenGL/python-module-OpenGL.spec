@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: A Python module for interfacing with the OpenGL library
 Summary(ru_RU.KOI8-R): Расширение языка Python для работы с библиотекой OpenGL
@@ -133,6 +133,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.0-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt2
 - Added requirement on 'OpenGL_accelerate'
 

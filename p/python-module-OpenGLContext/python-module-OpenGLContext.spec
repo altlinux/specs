@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.3.0
-Release: alt2.b1
+Release: alt2.b1.1
 
 Summary: Demonstration and testing contexts for PyOpenGL
 
@@ -142,6 +142,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.0-alt2.b1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.3.0-alt2.b1
 - NMU: added python-tools-2to3 to BRs.
 
