@@ -1,5 +1,5 @@
 Name: freeciv
-Version: 2.4.2
+Version: 2.5.3
 Release: alt1
 
 Summary: Turn-based strategy game inspired by the history of human civilization
@@ -25,7 +25,7 @@ Requires: %name-server = %version-%release
 
 # Automatically added by buildreq on Tue Aug 09 2011 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: bzlib-devel gcc-c++ hardlink libcurl-devel liblua5-devel liblzma-devel libreadline-devel zlib-devel
+BuildRequires: bzlib-devel gcc-c++ hardlink libcurl-devel liblzma-devel libreadline-devel zlib-devel
 
 %package common
 Summary: The Freeciv multi-player strategy game common files
@@ -147,14 +147,13 @@ rm *.m4
 	--disable-static \
 	--enable-server \
 	--enable-client=no%{?_enable_gtk2:,gtk2}%{?_enable_gtk3:,gtk3} \
-	--enable-sys-lua \
+	--without-freeciv-manual \
 	--disable-silent-rules
 %make_build MSUBDIRS=
 
 %install
 %makeinstall_std MSUBDIRS=
 rm %buildroot%_libdir/libfreeciv.so
-%{?_enable_gtk2:mv %buildroot%_desktopdir/%name{,-gtk2}.desktop}
 
 install -pD -m755 %_sourcedir/freeciv-wrapper \
 	%buildroot%_libexecdir/%name/wrapper
@@ -164,11 +163,18 @@ mv %buildroot%_bindir/freeciv-server %buildroot%_libexecdir/%name/
 ln -rs %buildroot%_libexecdir/%name/wrapper %buildroot%_bindir/freeciv-server
 
 rm %buildroot%_man6dir/freeciv-{gtk2,gtk3,manual,qt,sdl,xaw}.6
-%{?_enable_gtk2:ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk2.6}
-%{?_enable_gtk3:ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk3.6}
+rm %buildroot%_man6dir/freeciv-mp-{cli,gtk2,gtk3,qt}.6
+%if_enabled gtk2
+ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk2.6
+ln -s freeciv-modpack.6 %buildroot%_man6dir/freeciv-mp-gtk2.6
+%endif
+%if_enabled gtk3
+ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk3.6
+ln -s freeciv-modpack.6 %buildroot%_man6dir/freeciv-mp-gtk3.6
+%endif
 
 hardlink -cv %buildroot
-%find_lang %name
+%find_lang --output=%name.lang %name %name-nations
 
 %files
 
@@ -194,6 +200,7 @@ hardlink -cv %buildroot
 %_man6dir/freeciv-server.*
 %_datadir/%name/cimpletoon*
 %_datadir/%name/civ*
+%_datadir/%name/classic*
 %_datadir/%name/default*
 %_datadir/%name/experimental*
 %_datadir/%name/multiplayer*
@@ -201,9 +208,14 @@ hardlink -cv %buildroot
 %_datadir/%name/scenarios
 
 %files client
-%{?_enable_gtk2:%_bindir/freeciv-gtk2}
-%{?_enable_gtk3:%_bindir/freeciv-gtk3}
-%_bindir/freeciv-modpack
+%if_enabled gtk2
+%_bindir/freeciv-gtk2
+%_bindir/freeciv-mp-gtk2
+%endif
+%if_enabled gtk3
+%_bindir/freeciv-gtk3
+%_bindir/freeciv-mp-gtk3
+%endif
 
 %files client-data
 %if_enabled gtk2
@@ -218,12 +230,13 @@ hardlink -cv %buildroot
 %_man6dir/freeciv-gtk3.*
 %endif
 %_iconsdir/hicolor/*/apps/%name-client.png
-%_datadir/appdata/%name-modpack.appdata.xml
-%_desktopdir/%name-modpack.desktop
 %_iconsdir/hicolor/*/apps/%name-modpack.png
 %_pixmapsdir/%name-client.png
 %_man6dir/freeciv-client.*
+%_datadir/appdata/%name-mp-*.appdata.xml
+%_desktopdir/%name-mp-*.desktop
 %_man6dir/freeciv-modpack.*
+%_man6dir/freeciv-mp-*
 %_datadir/%name/amplio*
 %_datadir/%name/buildings*
 %_datadir/%name/flags
@@ -238,6 +251,9 @@ hardlink -cv %buildroot
 %_datadir/%name/wonders*
 
 %changelog
+* Sun Mar 13 2016 Dmitry V. Levin <ldv@altlinux.org> 2.5.3-alt1
+- Updated to 2.5.3 release.
+
 * Sat Feb 22 2014 Dmitry V. Levin <ldv@altlinux.org> 2.4.2-alt1
 - Updated to 2.4.2 release.
 
