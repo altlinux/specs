@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt5.a0.git20150813
+Release: alt5.a0.git20150813.1
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -428,6 +428,10 @@ EOF
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt5.a0.git20150813.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Mar  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt5.a0.git20150813
 - rpm-macros-* shouldn't have a formal dep on the main pkg (via %%sphinx_dir);
   the guarantee of compatibility is given by other formal deps
