@@ -2,7 +2,7 @@
 
 Name: nuitka
 Version: 0.5.11
-Release: alt1.git20150318
+Release: alt1.git20150318.1
 Summary: Python compiler with full language support and CPython compatibility
 License: ASLv2.0
 Group: Development/Python
@@ -117,6 +117,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.11-alt1.git20150318.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Mar 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.11-alt1.git20150318
 - Initial build for Sisyphus
 

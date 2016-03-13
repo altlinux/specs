@@ -1,6 +1,6 @@
 Name:		patchdeps
 Version:	0.1
-Release:	alt1
+Release:	alt1.1
 Group:		Text tools
 License:	MIT
 Source:		%name-%version.tar
@@ -35,6 +35,10 @@ install -D -m755 patchdeps.py %buildroot%_bindir/patchdeps
 %_bindir/patchdeps
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Sep 23 2014 Fr. Br. George <george@altlinux.ru> 0.1-alt1
 - Initial build
 
