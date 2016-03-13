@@ -2,7 +2,7 @@
 
 Name: python-module-configargparse
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: A Python module with support for argparse, config files, and env variables
 
@@ -70,6 +70,10 @@ argparse to add these features.
 %python3_sitelibdir/__pycache__/configargparse*
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 17 2016 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
 - initial build for ALT Linux Sisyphus
 

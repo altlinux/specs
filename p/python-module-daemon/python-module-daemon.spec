@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 2.0.5
-Release: alt2
+Release: alt2.1
 
 Summary: Library to implement a well-behaved Unix daemon process
 License: Apache-2
@@ -81,6 +81,10 @@ popd
 
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.5-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.5-alt2
 - NMU: added python-modules-json and python-module-setuptools to BRs.
 

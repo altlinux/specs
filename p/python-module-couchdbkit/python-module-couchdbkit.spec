@@ -5,7 +5,7 @@
 Summary: A distributed, fault-tolerant and schema-free document-oriented database accessible via a RESTful HTTP/JSON API
 Name: python-module-%sname
 Version: 0.4.10
-Release: alt1.2
+Release: alt1.2.1
 Source0: %name-%version.tar
 #Source0: http://pypi.python.org/packages/source/c/%sname/%sname-%version.tar.gz
 License: Apache License v. 2.0
@@ -78,6 +78,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.10-alt1.2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jul 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.10-alt1.2
 - Added module for Python 3
 

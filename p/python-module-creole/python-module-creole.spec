@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Markup converter in pure Python for: creole2html, html2creole, html2ReSt, html2textile
 License: GPLv3+
@@ -91,6 +91,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1
 - Version 1.2.0
 - Added module for Python 3

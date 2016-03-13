@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.3
-Release: alt1.git20150709
+Release: alt1.git20150709.1
 Summary: Simple cross-platform colored terminal text in Python
 License: BSD
 Group: Development/Python
@@ -106,6 +106,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.3-alt1.git20150709.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt1.git20150709
 - Version 0.3.3
 
