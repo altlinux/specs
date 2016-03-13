@@ -1,24 +1,23 @@
-%define version 2.3.1
-#define subver b20
-%define release alt1
 %define oname zc.buildout
-%setup_python_module %oname
 
 %def_with python3
 
 Summary: The Buildout project provides support for creating Python applications.
 Name: python-module-%oname
 URL: https://pypi.python.org/pypi/zc.buildout/
-Version: %version
+Version: 2.3.1
+#define subver b20
 %ifdef subver
-Release: %release.%subver.1
+Release: alt0.%subver
 Source0: zc.buildout-%version%subver.tar
 %else
-Release: %release.1
+Release: alt1.2
 Source0: zc.buildout-%version.tar
 %endif
 License: ZPL
 Group: Development/Python
+
+%setup_python_module %oname
 
 # Automatically added by buildreq on Fri Jan 29 2016 (-bi)
 # optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
@@ -82,11 +81,7 @@ settings.
 This package contains tests for Buildout
 
 %prep
-%ifdef subver
 %setup
-%else
-%setup
-%endif
 
 %if_with python3
 cp -fR . ../python3
@@ -154,6 +149,10 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.1-alt1.2
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.3.1-alt1.1
 - NMU: Use buildreq for BR.
 
