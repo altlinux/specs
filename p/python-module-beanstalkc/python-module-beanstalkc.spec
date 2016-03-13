@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.4.0
-Release: alt1.git20140302
+Release: alt1.git20140302.1
 Group: Development/Python
 License: Apache License
 Summary: beanstalkc is a simple beanstalkd client library for Python
@@ -73,6 +73,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.git20140302.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Aug 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20140302
 - Version 0.4.0
 - Added module for Python 3
