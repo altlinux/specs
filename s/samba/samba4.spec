@@ -33,7 +33,7 @@
 
 Name: samba
 Version: 4.3.6
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -1329,6 +1329,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Sun Mar 13 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.6-alt2
+- Rebuild with downgraded libtalloc
+
 * Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.6-alt1
 - New version (https://www.samba.org/samba/history/samba-4.3.6.html)
 - Security fixes:
