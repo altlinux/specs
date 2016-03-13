@@ -7,7 +7,7 @@
 
 Name: python-module-django-%modulename
 Version: 0.7
-Release: alt4.git20140813.1
+Release: alt4.git20140813.1.1
 
 %setup_python_module %modulename
 
@@ -124,6 +124,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt4.git20140813.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt4.git20140813.1
 - NMU: Use buildreq for BR.
 
