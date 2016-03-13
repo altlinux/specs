@@ -2,7 +2,7 @@
 
 Name: engrid
 Version: 1.4
-Release: alt4.git20130518
+Release: alt4.git20130518.1
 Summary: Mesh generation software with CFD applications in mind
 License: GPL v3 or later
 Group: Sciences/Physics
@@ -96,6 +96,10 @@ install -p -m644 src/blender_scripts/2.4/* src/blender_scripts/2.63a/* \
 %doc manual tutorials
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4-alt4.git20130518.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jun 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt4.git20130518
 - Rebuilt with new netgen
 

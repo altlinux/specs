@@ -1,6 +1,6 @@
 Name: canto-next
 Version: 0.9.0
-Release: alt1.rc1.git20140903
+Release: alt1.rc1.git20140903.1
 Summary: The next generation Canto RSS daemon
 License: GPLv2
 Group: Networking/News
@@ -38,6 +38,10 @@ canto-curses is the default client.
 # TODO: SysV init-script
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.0-alt1.rc1.git20140903.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.rc1.git20140903
 - Initial build for Sisyphus
 
