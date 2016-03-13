@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.10
-Release: alt1
+Release: alt1.1
 Summary: This is a python class to create gantt chart using SVG
 License: GPLv3+
 Group: Development/Python
@@ -145,6 +145,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.10-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.10-alt1
 - Version 0.3.10
 

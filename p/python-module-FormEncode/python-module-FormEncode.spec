@@ -9,7 +9,7 @@
 
 Name: python-module-%modulename
 Version: 1.3.0
-Release: alt1.git20150207.1
+Release: alt1.git20150207.1.1
 Epoch: 1
 
 %setup_python_module %modulename
@@ -135,6 +135,10 @@ popd
 %python_sitelibdir/*/pickle
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.3.0-alt1.git20150207.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1:1.3.0-alt1.git20150207.1
 - NMU: Use buildreq for BR.
 

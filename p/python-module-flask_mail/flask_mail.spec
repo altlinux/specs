@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.1
-Release: alt1.git20141015
+Release: alt1.git20141015.1
 Summary: Flask extension for sending email
 License: BSD
 Group: Development/Python
@@ -94,6 +94,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.1-alt1.git20141015.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.git20141015
 - Initial build for Sisyphus
 

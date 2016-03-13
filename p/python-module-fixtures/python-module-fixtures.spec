@@ -4,7 +4,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        1.3.1
-Release:        alt2
+Release:        alt2.1
 Summary:        Fixtures, reusable state for writing clean tests and more
 
 Group:		Development/Python
@@ -95,6 +95,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 1.3.1-alt2
 - Rebuild with "def_disable check"
 - Clean buildreq

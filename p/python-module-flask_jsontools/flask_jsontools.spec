@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1.0
-Release: alt1.git20141008
+Release: alt1.git20141008.1
 Summary: JSON API tools for Flask
 License: BSD
 Group: Development/Python
@@ -115,6 +115,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1.0-alt1.git20141008.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1.0-alt1.git20141008
 - Initial build for Sisyphus
 
