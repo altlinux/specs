@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.1
-Release: alt3.dev120.git20150826
+Release: alt3.dev120.git20150826.1
 Summary: Partial differential equation (PDE) solver
 License: Public
 Group: Development/Python
@@ -225,6 +225,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1-alt3.dev120.git20150826.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 10 2016 Denis Medvedev <nbr@altlinux.org>  3.1-alt3.dev120.git20150826
 - NMU
 
