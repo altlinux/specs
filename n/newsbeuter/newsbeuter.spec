@@ -1,6 +1,6 @@
 Name: newsbeuter
 Version: 2.9
-Release: alt1
+Release: alt2
 
 Summary: Newsbeuter is an open-source RSS/Atom feed reader for text terminals
 
@@ -26,10 +26,10 @@ can be completely controlled via keyboard.
 
 %build
 export CXXFLAGS="%optflags"
-%make_build prefix=%buildroot%_prefix
+%make_build DESTDIR=%buildroot prefix=%_prefix
 
 %install
-%make_install prefix=%buildroot%_prefix install
+%make_install DESTDIR=%buildroot prefix=%_prefix install
 %find_lang %name
 
 %files -f %name.lang
@@ -39,5 +39,8 @@ export CXXFLAGS="%optflags"
 
 
 %changelog
+* Sun Mar 13 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9-alt2
+- fix locale path.
+
 * Thu Dec 10 2015 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9-alt1
 - Initial build.
