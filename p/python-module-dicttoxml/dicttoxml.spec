@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5.8
-Release: alt1.git20150106.1
+Release: alt1.git20150106.1.1
 Summary: Converts a Python dictionary or other native data type into a valid XML string
 License: GPLv2
 Group: Development/Python
@@ -96,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.8-alt1.git20150106.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.5.8-alt1.git20150106.1
 - NMU: Use buildreq for BR.
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.6
-Release: alt1.git20120918
+Release: alt1.git20120918.1
 Summary: Django slightly smarter than fixtures content generation app
 License: BSD
 Group: Development/Python
@@ -125,6 +125,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.6-alt1.git20120918.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Sep 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.6-alt1.git20120918
 - Initial build for Sisyphus
 

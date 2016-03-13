@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 3.0.1
-Release: alt1.git20141027
+Release: alt1.git20141027.1
 Group: Development/Python
 License: BSD License
 Summary: Provides a country field for Django models.
@@ -71,6 +71,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.1-alt1.git20141027.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.git20141027
 - Version 3.0.1
 

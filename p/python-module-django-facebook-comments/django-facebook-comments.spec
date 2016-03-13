@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.5
-Release: alt1.hg20120729
+Release: alt1.hg20120729.1
 Summary: Drop-in facebook comments for django
 License: MIT
 Group: Development/Python
@@ -79,6 +79,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.5-alt1.hg20120729.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Sep 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.hg20120729
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.4.6
-Release: alt1.git20140923
+Release: alt1.git20140923.1
 Summary: Django admin CKEditor integration
 License: BSD
 Group: Development/Python
@@ -117,6 +117,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.4.6-alt1.git20140923.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Sep 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.6-alt1.git20140923
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.7.2
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: Caching decorator and django cache backend with advanced invalidation ability and dog-pile effect prevention
 
@@ -76,6 +76,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.2-alt2.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt2.1
 - NMU: Use buildreq for BR.
 
