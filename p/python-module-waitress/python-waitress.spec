@@ -13,7 +13,7 @@
 
 Name: python-module-waitress
 Version: 0.8.10
-Release: alt2.dev0
+Release: alt2.dev0.1
 
 %setup_python_module %modulename
 
@@ -166,6 +166,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.10-alt2.dev0.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.8.10-alt2.dev0
 - Rebuild with "def_disable check"
 - Cleanup buildreq

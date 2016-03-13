@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.14.0.0
-Release: alt2.git20140715
+Release: alt2.git20140715.1
 Summary: Use version control tags to discover version numbers
 License: ISCL
 Group: Development/Python
@@ -107,6 +107,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.14.0.0-alt2.git20140715.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 2.14.0.0-alt2.git20140715
 - cleanup buildreq
 
