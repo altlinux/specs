@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt2.git20121029
+Release: alt2.git20121029.1
 Summary: Framework for fitting functions to data with SciPy
 License: BSD
 Group: Development/Python
@@ -133,6 +133,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt2.git20121029.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt2.git20121029
 - Rebuilt with updated NumPy
 

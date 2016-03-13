@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.dev.git20130212
+Release: alt1.dev.git20130212.1
 Summary: JSON RX Schema validation tool
 License: GPLv2
 Group: Development/Python
@@ -96,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.dev.git20130212.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.dev.git20130212
 - Initial build for Sisyphus
 

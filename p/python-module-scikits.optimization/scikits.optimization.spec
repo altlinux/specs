@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.3
-Release: alt2.git20130417
+Release: alt2.git20130417.1
 Summary: A python module for numerical optimization
 License: BSD
 Group: Development/Python
@@ -133,6 +133,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.3-alt2.git20130417.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.3-alt2.git20130417
 - Rebuilt with updated NumPy
 

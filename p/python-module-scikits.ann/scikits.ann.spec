@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2
-Release: alt2.dev.r803
+Release: alt2.dev.r803.1
 Summary: Approximate Nearest Neighbor library wrapper for Numpy
 License: LGPLv3
 Group: Development/Python
@@ -129,6 +129,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.2-alt2.dev.r803.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Apr 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2-alt2.dev.r803
 - Rebuilt with updated NumPy
 
