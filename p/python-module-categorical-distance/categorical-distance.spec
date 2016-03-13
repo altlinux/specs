@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.5
-Release: alt1.git20150304
+Release: alt1.git20150304.1
 Summary: Compare categorical variables
 License: MIT
 Group: Development/Python
@@ -88,6 +88,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5-alt1.git20150304.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1.git20150304
 - Version 1.5
 - Added module for Python 3

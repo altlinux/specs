@@ -3,7 +3,7 @@
 
 Name:       python-module-%oname
 Version:    1.2.37
-Release:    alt1
+Release:    alt1.1
 Summary:    Library for parses through Cisco IOS-style configurations
 License:    GPLv3
 URL:       http://github.com/mpenning/%oname
@@ -95,6 +95,10 @@ rm -fr %buildroot%python3_sitelibdir/*/*test*
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.37-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jul 28 2015 Terechkov Evgenii <evg@altlinux.org> 1.2.37-alt1
 - 1.2.37
 

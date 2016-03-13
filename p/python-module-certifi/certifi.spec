@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2015.04.28
-Release: alt1
+Release: alt1.1
 Summary: Python package for providing Mozilla's CA Bundle
 License: MPLv2
 Group: Development/Python
@@ -76,6 +76,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2015.04.28-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2015.04.28-alt1
 - Version 2015.04.28
 
