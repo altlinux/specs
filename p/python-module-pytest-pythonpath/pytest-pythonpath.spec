@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.git20140208
+Release: alt1.git20140208.1
 Summary: pytest plugin for adding to the PYTHONPATH from command line or configs
 License: MIT
 Group: Development/Python
@@ -84,6 +84,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.git20140208.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20140208
 - Initial build for Sisyphus
 

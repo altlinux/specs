@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.git20141120
+Release: alt1.git20141120.1
 Summary: py.test plugin for regression tests
 License: GPLv3
 Group: Development/Python
@@ -86,6 +86,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt1.git20141120.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20141120
 - Version 0.4.1
 

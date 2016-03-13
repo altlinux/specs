@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.git20141028
+Release: alt1.git20141028.1
 Summary: py.test plugin for reporting the number of SQLs executed per django testcase
 License: MIT
 Group: Development/Python
@@ -90,6 +90,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt1.git20141028.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.git20141028
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.6
-Release: alt1
+Release: alt1.1
 Summary: Run object-oriented tests in a simple format
 License: Free
 Group: Development/Python
@@ -79,6 +79,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.6-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.6-alt1
 - Version 0.2.6
 
