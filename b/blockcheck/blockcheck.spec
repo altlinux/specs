@@ -1,5 +1,5 @@
 Name: blockcheck
-Version: 0.0.6.4
+Version: 0.0.7.4
 Release: alt1
 Summary: Checks Russian ISP blocking type
 License: MIT
@@ -28,6 +28,9 @@ install -Dp -m 755 %name.py %buildroot%_bindir/%name.py
 %doc README.md
 
 %changelog
+* Sun Mar 13 2016 Terechkov Evgenii <evg@altlinux.org> 0.0.7.4-alt1
+- 0.0.7.4
+
 * Wed Feb 10 2016 Terechkov Evgenii <evg@altlinux.org> 0.0.6.4-alt1
 - 0.0.6.4
 
