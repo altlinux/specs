@@ -19,7 +19,7 @@
 
 %def_disable debug
 
-%def_with manual
+%def_without manual
 %def_with additions
 %def_with webservice
 %def_without java
@@ -53,11 +53,11 @@
 %set_verify_elf_method textrel=relaxed
 %add_findprov_lib_path %vboxdir
 
-%define gcc_version 4.5
+%define gcc_version 5
 
 Name: virtualbox
-Version: 4.3.30
-Release: alt3
+Version: 5.0.14
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -66,7 +66,6 @@ Url: http://www.virtualbox.org/
 
 ExclusiveArch: %ix86 x86_64
 
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %distarchive.tar
 
@@ -95,8 +94,11 @@ BuildPreReq: libIDL-devel libSDL-devel libpng-devel
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
 BuildPreReq: rpm-build-kernel
+BuildPreReq: rpm-macros-qt4
+BuildRequires: genisoimage
 BuildPreReq: libpulseaudio-devel
 BuildRequires: libdevmapper-devel
+BuildRequires: makeself
 BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: libqt4-devel libalsa-devel
 BuildRequires: libcap-devel libcurl-devel
@@ -298,6 +300,7 @@ cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 %build
 export GCC_VERSION=%gcc_version
 ./configure --ose \
+    --with-makeself="/usr/bin/makeself.sh" \
     --disable-kmods \
 %if_with webservice
     --enable-webservice \
@@ -409,7 +412,7 @@ cp -a \
     VirtualBox \
     iPxeBaseBin \
     xpidl \
-    *.gc \
+    *.rc \
     *.r0 \
     *.so \
     *.fd \
@@ -746,6 +749,12 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Thu Mar 10 2016 Denis Medvedev <nbr@altlinux.org> 5.0.14-alt2
+- added support for virtual machines with ALTLinux. 
+
+* Wed Feb 17 2016 Denis Medvedev <nbr@altlinux.org> 5.0.14-alt1
+- new version imported.
+
 * Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 4.3.30-alt3
 - removed requires XORG_ABI_VIDEODRV
 
