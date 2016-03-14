@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.1.1
-Release: alt2.git20140510
+Release: alt2.git20140510.1
 Summary: Python3 client for accessing tv show information from www.tvrage.com
 License: BSD
 Group: Development/Python3
@@ -60,6 +60,10 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt2.git20140510.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Feb 26 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt2.git20140510
 - Fix sphinx doc build.
 

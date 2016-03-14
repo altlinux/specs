@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.11.1
-Release: alt1
+Release: alt1.1
 
 Summary: PyBugz - Python Interface to Bugzilla
 
@@ -53,5 +53,9 @@ install -m644 contrib/bash-completion %buildroot%bash_completion/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.11.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Oct 13 2015 Vitaly Lipatov <lav@altlinux.ru> 0.11.1-alt1
 - initial build python3 version 0.11.1 (ALT bug #31355)

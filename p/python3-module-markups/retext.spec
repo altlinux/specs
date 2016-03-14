@@ -3,7 +3,7 @@
 
 Name:           python3-module-markups
 Version:        1.0.1
-Release:        alt1
+Release:        alt1.1
 License:        MIT
 Summary:        Wrapper around various text markups
 Group:          Development/Python3
@@ -50,6 +50,10 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 21 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - Initial build in Sisyphus
 

@@ -1,7 +1,7 @@
 %define oname sgmllib
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt1.hg20100824.1.1
+Release: alt1.hg20100824.1.1.1
 Summary: Py3k port of the old stdlib module
 License: BSD
 Group: Development/Python3
@@ -40,6 +40,10 @@ module to use.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt1.hg20100824.1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1.hg20100824.1.1
 - NMU: Use buildreq for BR.
 

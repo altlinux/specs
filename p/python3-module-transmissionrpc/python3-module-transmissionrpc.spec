@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 0.11
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Python module that implements the Transmission bittorent client RPC protocol
 
@@ -47,6 +47,10 @@ transmissionrpc is compatible with Transmission 1.31 and later.
 %python3_sitelibdir/%modulename-%version-*.egg-info
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.11-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.11-alt1.1
 - NMU: Use buildreq for BR.
 

@@ -1,7 +1,7 @@
 %define oname fudge
 Name: python3-module-%oname
 Version: 1.0.3
-Release: alt1
+Release: alt1.1
 Summary: Replace real objects with fakes (mocks, stubs, etc) while testing
 License: MIT
 Group: Development/Python3
@@ -71,6 +71,10 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.3-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jan 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus
 

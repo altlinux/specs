@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 3.8.3
-Release: alt1.1
+Release: alt1.1.1
 Summary: iCalendar parser/generator
 License: GPLv2.1
 Group: Development/Python3
@@ -52,6 +52,10 @@ This package contains tests for %modulename.
 %python3_sitelibdir/%modulename/tests
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.8.3-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 3.8.3-alt1.1
 - NMU: Use buildreq for BR.
 

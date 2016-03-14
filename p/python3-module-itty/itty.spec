@@ -1,7 +1,7 @@
 %define oname itty
 Name: python3-module-%oname
 Version: 0.8.2
-Release: alt1.git20140129
+Release: alt1.git20140129.1
 Summary: The itty-bitty Python web framework
 License: BSD
 Group: Development/Python3
@@ -38,6 +38,10 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.2-alt1.git20140129.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.git20140129
 - Initial build for Sisyphus
 

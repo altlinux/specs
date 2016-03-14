@@ -3,7 +3,7 @@
 Summary: High-level cross-protocol url-grabber
 Name: python3-module-urlgrabber
 Version: 3.10.1
-Release: alt1.git20140204
+Release: alt1.git20140204.1
 License: LGPL
 Group: Development/Python3
 URL: http://urlgrabber.baseurl.org/
@@ -47,6 +47,10 @@ popd
 %python3_sitelibdir/%real_name/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.10.1-alt1.git20140204.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.1-alt1.git20140204
 - Initial build for Sisyphus
 

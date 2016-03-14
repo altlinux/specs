@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 4.9.0
-Release: alt1.git20160225
+Release: alt1.git20160225.1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
@@ -55,6 +55,10 @@ py.test-%_python3_version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.9.0-alt1.git20160225.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 4.9.0-alt1.git20160225
 - New version 
 
