@@ -2,7 +2,7 @@
 
 Name:       python-module-magnumclient
 Version:    1.0.0
-Release:    alt0.b1.1
+Release:    alt0.b1.1.1
 Summary:    Client Library for OpenStack Magnum Container Management API
 License:    ASL 2.0
 URL:        http://pypi.python.org/pypi/python-magnumclient
@@ -140,6 +140,10 @@ rm -fr html/.doctrees html/.buildinfo
 %doc LICENSE html
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt0.b1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt0.b1.1
 - NMU: Use buildreq for BR.
 

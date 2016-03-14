@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 0.1.4
-Release: alt1.svn20130102.1
+Release: alt1.svn20130102.1.1
 Group: Development/Python
 License: BSD License
 Summary: A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges
@@ -103,6 +103,10 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.svn20130102.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.svn20130102.1
 - NMU: Use buildreq for BR.
 

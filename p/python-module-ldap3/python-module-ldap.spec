@@ -5,7 +5,7 @@
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python-module-%oname
 Version: 0.9.7.4
-Release: alt1.git20150203.1
+Release: alt1.git20150203.1.1
 # https://github.com/cannatag/ldap3.git
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -122,6 +122,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.7.4-alt1.git20150203.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.7.4-alt1.git20150203.1
 - NMU: Use buildreq for BR.
 

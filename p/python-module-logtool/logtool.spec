@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: %ver1.%ver2.%ver3
-Release: alt1.git20150224
+Release: alt1.git20150224.1
 Summary: Methods and tools that assist logging
 License: GPLv3+
 Group: Development/Python
@@ -93,6 +93,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.11-alt1.git20150224.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.11-alt1.git20150224
 - Version 0.2.11
 

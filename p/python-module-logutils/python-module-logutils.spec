@@ -4,7 +4,7 @@
 
 Name:               python-module-%{modname}
 Version:            0.3.3
-Release:            alt1
+Release:            alt1.1
 Summary:            Logging utilities
 
 Group:              Development/Python
@@ -94,6 +94,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.3-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Aug 11 2014 Lenar Shakirov <snejok@altlinux.ru> 0.3.3-alt1
 - First build for ALT (based on Fedora 0.3.3-3.fc21.src)
 
