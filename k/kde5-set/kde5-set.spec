@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt24
+Release: alt25
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -31,7 +31,7 @@ Requires: kde5-volume-control
 Requires: kde5-www-browser
 Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-powerdevil kf5-ksysguard
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kde-cli-tools
-Requires: kde5-ark kde5-konsole kde5-gwenview kde5-kwrite kde5-kwalletmanager
+Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kdepasswd kde5-kcalc kde5-kdebugsettings kde5-kross-python
 Requires: kf5-milou
 
@@ -44,6 +44,7 @@ Obsoletes: kde5-normal < %EVR kde5-default < %EVR
 Requires: kde5-small
 Requires: kde5-video-player
 #Requires: kde5-audio-player
+Requires: kde5-network-manager
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass kf5-oxygen
 Requires: kf5-systemsettings kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma
@@ -56,7 +57,7 @@ Group: Graphical desktop/KDE
 Requires: kde5
 #Requires: kde5-telepathy
 Requires: kf5-plasma-workspace-wallpapers
-Requires: kf5-kwrited kf5-plasma-nm-maxi
+Requires: kf5-kwrited
 Requires: kf5-user-manager
 Requires: kde5-konversation kde5-kate kde5-print-manager kde5-skanlite
 Requires: kde5-pim kde5-baseapps kde5-kcron kde5-kruler kde5-ffmpegthumbs
@@ -68,7 +69,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-big
 Requires: kdenlive
-Requires: kde5-konqueror kde5-dragon
+Requires: kde5-konqueror kde5-dragon kde5-connect
 
 %package -n kde5-somedevel
 Summary: %summary
@@ -104,6 +105,9 @@ Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
 %files -n kde5-somedevel
 
 %changelog
+* Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt25
+- update requires
+
 * Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt24
 - update requires
 
