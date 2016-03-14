@@ -10,7 +10,7 @@
 Name: kde4sdk
 %define major 15
 %define minor 12
-%define bugfix 1
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -582,6 +582,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 - temporary dont build kio-svn
