@@ -1,6 +1,6 @@
 Name: icu
 Version: 5.6.1
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: International Components for Unicode
@@ -68,7 +68,8 @@ ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains sample code for ICU
 
 %prep
-%setup -n icu
+%setup -c
+%setup -DT -n %name-%version/icu
 %patch1 -p2 -R -b .icu8198.revert.icu5431.patch
 %patch2 -p1 -b .icu8800.freeserif.crash.patch
 %patch3 -p1 -b .icu7601.Indic-ccmp.patch
@@ -118,6 +119,9 @@ rm -f %buildroot%_bindir/icuinfo
 %_datadir/icu/samples
 
 %changelog
+* Tue Mar 15 2016 Yuri N. Sedunov <aris@altlinux.org> 1:5.6.1-alt1.1
+- fixed altbug #31778
+
 * Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1:5.6.1-alt1
 - 5.6.1 (ALT #30950)
 
