@@ -2,7 +2,7 @@
 %define otrs_user otrs
 
 Name: otrs
-Version: 5.0.6
+Version: 5.0.7
 Release: alt1
 
 Summary: Open source Ticket Request System
@@ -150,6 +150,9 @@ cd %installdir/bin/
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Mon Mar 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 5.0.7-alt1
+- New version
+
 * Fri Feb 05 2016 Sergey Y. Afonin <asy@altlinux.ru> 5.0.6-alt1
 - New version
 
