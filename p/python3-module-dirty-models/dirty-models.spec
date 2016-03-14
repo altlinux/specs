@@ -1,7 +1,7 @@
 %define oname dirty-models
 Name: python3-module-%oname
 Version: 0.5.0
-Release: alt1.git20150420
+Release: alt1.git20150420.1
 Summary: Dirty models for python 3
 License: BSD
 Group: Development/Python3
@@ -64,6 +64,10 @@ nosetests3 -v --with-coverage -d --cover-package=dirty_models
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.0-alt1.git20150420.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt1.git20150420
 - Initial build for Sisyphus
 

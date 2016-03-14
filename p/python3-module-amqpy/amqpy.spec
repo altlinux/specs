@@ -1,7 +1,7 @@
 %define oname amqpy
 Name: python3-module-%oname
 Version: 0.12.4
-Release: alt1.git20160226
+Release: alt1.git20160226.1
 Summary: Pure-Python 3 AMQP client library
 License: MIT
 Group: Development/Python3
@@ -69,6 +69,10 @@ python3 setup.py test
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.12.4-alt1.git20160226.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Feb 26 2016 Denis Medvedev <nbr@altlinux.org> 0.12.4-alt1.git20160226
 - New version.
 

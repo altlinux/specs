@@ -1,7 +1,7 @@
 %define oname django-facebook
 Name: python3-module-%oname
 Version: 6.0.0
-Release: alt1.git20140618
+Release: alt1.git20140618.1
 Summary: Facebook open graph API client in python
 License: BSD
 Group: Development/Python3
@@ -60,6 +60,10 @@ python.
 %python3_sitelibdir/*/test_utils
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 6.0.0-alt1.git20140618.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.0-alt1.git20140618
 - Initial build for Sisyphus
 
