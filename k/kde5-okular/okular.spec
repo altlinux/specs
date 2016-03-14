@@ -1,0 +1,143 @@
+%define rname okular
+%def_enable msits
+%def_disable mobile
+
+%define sover 7
+%define libokularcore libokular5core%sover
+
+Name: kde5-%rname
+Version: 4.90.0
+Release: alt1
+%K5init
+
+Group: Office
+Summary: Document Viewer
+Url: http://www.kde.org
+License: GPLv2+ / LGPLv2+
+
+Requires: %name-core = %EVR
+
+Source: %rname-%version.tar
+
+# Automatically added by buildreq on Tue Jan 19 2016 (-bi)
+# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libpoppler1-qt5 libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xz zlib-devel
+#BuildRequires: ebook-tools-devel extra-cmake-modules kde5-libkexiv2-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel libchm-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel python-module-google qt5-declarative-devel qt5-phonon-devel qt5-svg-devel rpm-build-python3 rpm-build-ruby zlib-devel-static
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-phonon-devel qt5-svg-devel
+BuildRequires: zlib-devel
+BuildRequires: ebook-tools-devel libdjvu-devel libjpeg-devel libpoppler-qt5-devel libqca-qt5-devel libspectre-devel libtiff-devel
+BuildRequires: kde5-libkexiv2-devel
+BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
+BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel
+BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-khtml-devel
+BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
+BuildRequires: kf5-kjs-devel kf5-knotifications-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktextwidgets-devel
+BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel
+%if_enabled msits
+BuildRequires: libchm-devel
+%endif
+
+%description
+Document viewer; support different kinds of documents.
+
+%package mobile
+Summary: Mobile Document Viewer
+Group: Office
+Requires: %name-core = %EVR
+Requires: kf5-kdeclarative kf5-plasma-mobile
+%description mobile
+Document viewer; support different kinds of documents.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package core
+Summary: Core files for %name
+Group: Graphical desktop/KDE
+Requires: %name-common = %EVR
+%description core
+Core files for %name
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n %libokularcore
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %EVR
+%description -n %libokularcore
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K5build \
+    -DINCLUDE_INSTALL_DIR=%_K5inc \
+    #
+
+%install
+%K5install
+%K5install_move data okular kpackage kconf_update
+%find_lang %name --with-kde --all-name
+
+%files common -f %name.lang
+%doc COPYING*
+%_K5xdgconf/okular.categories
+%_K5srvtyp/*.desktop
+%_K5icon/hicolor/*/apps/okular.*
+
+%files
+%_K5bin/okular
+%_K5xmlgui/okular/
+%_K5xdgapp/org.kde.okular.desktop
+%_K5xdgapp/okularApplication_*.desktop
+
+%if_enabled mobile
+%files mobile
+%_K5data/kpackage/genericqml/org.kde.mobile.okular/
+%_K5xdgapp/org.kde.mobile.okular.desktop
+%_K5xdgapp/org.kde.mobile.okular_*.desktop
+%else
+%exclude %_K5data/kpackage/genericqml/org.kde.mobile.okular/
+%exclude %_K5xdgapp/org.kde.mobile.okular.desktop
+%exclude %_K5xdgapp/org.kde.mobile.okular_*.desktop
+%endif
+
+%files core
+%_K5data/okular/
+%_K5qml/org/kde/okular/
+%_K5plug/okular/
+%_K5plug/libokularpart.so
+%_K5srv/okular_*.desktop
+%_K5conf_up/okular*
+%_K5cfg/*okular*
+%_K5cfg/*settings*
+%if_enabled msits
+%_K5plug/kio_msits.so
+%_K5srv/msits.protocol
+%endif
+
+%files devel
+%_K5inc/okular/
+%_K5link/lib*.so
+%_K5lib/cmake/Okular5/
+
+%files -n %libokularcore
+%_K5lib/libOkular5Core.so.%sover
+%_K5lib/libOkular5Core.so.*
+
+%changelog
+* Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt1
+- initial build
