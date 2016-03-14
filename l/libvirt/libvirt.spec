@@ -31,6 +31,7 @@
 %def_with qemu
 %def_with openvz
 %def_with lxc
+%def_with login_shell
 %def_with vbox
 %def_without uml
 %def_with libxl
@@ -52,6 +53,7 @@
 %def_with storage_rbd
 %def_with storage_mpath
 %def_with storage_gluster
+%def_with storage_zfs
 %def_with numactl
 %def_with selinux
 
@@ -101,7 +103,7 @@
 %define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin:%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
 
 Name: libvirt
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -141,6 +143,7 @@ Requires: libvirt-client = %version-%release
 %{?_with_storage_iscsi:BuildRequires: open-iscsi}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
 %{?_with_storage_gluster:BuildRequires: glusterfs3-devel >= 3.4.1}
+%{?_with_storage_zfs:BuildRequires: zfs-utils}
 %{?_with_numactl:BuildRequires: libnuma-devel}
 %{?_with_capng:BuildRequires: libcap-ng-devel}
 %{?_with_phyp:BuildRequires: libssh2-devel}
@@ -540,6 +543,7 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{subst_with qemu} \
 		%{subst_with openvz} \
 		%{subst_with lxc} \
+		%{?_with_login_shell:--with-login-shell} \
 		%{subst_with vbox} \
 		%{subst_with uml} \
 		%{subst_with libxl} \
@@ -556,6 +560,7 @@ sed -i 's/vircgrouptest //' tests/Makefile.am
 		%{?_with_storage_rbd:--with-storage-rbd} \
 		%{?_with_storage_mpath:--with-storage-mpath} \
 		%{?_with_storage_gluster:--with-storage-gluster} \
+		%{?_with_storage_zfs:--with-storage-zfs} \
 		%{subst_with numactl} \
 		%{subst_with selinux} \
 		%{subst_with netcf} \
@@ -585,11 +590,7 @@ gzip -9 ChangeLog
 %install
 %makeinstall_std
 
-for i in apparmor object-events dominfo domsuspend hellolibvirt object-events openauth xml/nwfilter rename systemtap dommigrate domtop
-do
-  (cd examples/$i ; make clean ; rm -rf .deps .libs Makefile Makefile.in)
-done
-
+make -C examples distclean
 install -d -m 0755 %buildroot%_runtimedir/%name
 rm -f %buildroot%_libdir/*.{a,la}
 rm -f %buildroot%_libdir/%name/*/*.{a,la}
@@ -677,6 +678,16 @@ fi
 %preun_service virtlogd
 %preun_service virtlockd
 
+# In upgrade scenario we must explicitly enable virtlockd/virtlogd
+# sockets, if libvirtd is already enabled and start them if
+# libvirtd is running, otherwise you'll get failures to start
+# guests
+%triggerpostun daemon -- libvirt-daemon < 1.3.0
+if [ $1 -ge 1 ] ; then
+    if service libvirtd status; then
+        chkconfig virtlogd on && service virtlogd start
+        chkconfig virtlockd on && service virtlockd start
+fi
 
 %if_with network
 %post daemon-config-network
@@ -726,7 +737,7 @@ fi
 %_datadir/libvirt/cpu_map.xml
 %_datadir/libvirt/libvirtLogo.png
 
-%if_with lxc
+%if_with login_shell
 %config(noreplace) %_sysconfdir/libvirt/virt-login-shell.conf
 %_bindir/virt-login-shell
 %_man1dir/virt-login-shell.*
@@ -952,6 +963,10 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Mar 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+- build with zfs support
+
 * Fri Dec 18 2015 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 - fixed CVE-2015-5313
