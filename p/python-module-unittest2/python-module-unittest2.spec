@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt2.hg20150630
+Release: alt2.hg20150630.1
 
 Summary: Backport of Python 2.7 unittest module
 License: Same as Python
@@ -96,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt2.hg20150630.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.0-alt2.hg20150630
 - Rebuild with "def_disable check"
 - Cleanup buildreq

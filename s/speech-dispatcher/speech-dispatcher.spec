@@ -1,6 +1,6 @@
 Name: speech-dispatcher
 Version: 0.8.3
-Release: alt2
+Release: alt2.1
 
 Summary: A speech output processing service
 License: %gpl2plus
@@ -180,6 +180,10 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.3-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Mar 08 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.3-alt2
 - NMU: added makeinfo to BRs (fixes FTBFS).
 

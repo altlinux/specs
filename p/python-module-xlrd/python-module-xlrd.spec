@@ -1,7 +1,7 @@
 
 Name:           python-module-xlrd
 Version:        0.9.4
-Release:        alt1.1
+Release:        alt1.1.1
 Summary:        Library to extract data from Microsoft Excel (TM) spreadsheet files
 
 Group:          Development/Python
@@ -77,6 +77,10 @@ rm -rf %buildroot%_bindir/runxlrd.py* \
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.4-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.9.4-alt1.1
 - NMU: Use buildreq for BR.
 

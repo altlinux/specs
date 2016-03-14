@@ -1,6 +1,6 @@
 %define oname zope
 %define version 3.3.0
-%define release alt8.2
+%define release alt8.3
 
 %def_with python3
 
@@ -80,6 +80,10 @@ install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.0-alt8.3
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 3.3.0-alt8.2
 - Added requirement on python3-module-zope.interface
 
