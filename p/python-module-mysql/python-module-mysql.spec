@@ -3,7 +3,7 @@
 
 Name: python-module-mysql
 Version: 2.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: MySQL Connector for Python
 
@@ -89,6 +89,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.4-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Jul 26 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
 - new version 2.0.4 (with rpmrb script)
 

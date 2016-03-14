@@ -4,7 +4,7 @@
 
 Name:		python-module-%{pypi_name}
 Version:	0.7.13
-Release:	alt1.1
+Release:	alt1.1.1
 Summary:	A pure Python network address representation and manipulation library
 
 Group:		Development/Python
@@ -151,6 +151,10 @@ LANG=en_US.UTF-8 %{__python3} netaddr/tests/__init__.py
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.13-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.13-alt1.1
 - NMU: Use buildreq for BR.
 

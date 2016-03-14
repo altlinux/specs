@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.b.git20150202
+Release: alt1.b.git20150202.1
 Summary: Enumerator type supporting multiple equivalent names
 License: ASLv2.0
 Group: Development/Python
@@ -82,6 +82,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.b.git20150202.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.b.git20150202
 - Initial build for Sisyphus
 

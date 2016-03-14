@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.5.1
-Release: alt1.git20140925
+Release: alt1.git20140925.1
 Summary: Sort lists naturally
 License: MIT
 Group: Development/Python
@@ -130,6 +130,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt1.git20140925.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt1.git20140925
 - Initial build for Sisyphus
 

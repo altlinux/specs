@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2013.3
-Release: alt1.git20140704.1
+Release: alt1.git20140704.1.1
 Summary: Modes and nodes for high-order discretizations
 License: MIT
 Group: Development/Python
@@ -135,6 +135,10 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2013.3-alt1.git20140704.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2013.3-alt1.git20140704.1
 - NMU: Use buildreq for BR.
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2
+Release: alt2.1
 
 Summary: Provides enhanced HTTPS support for httplib and urllib2 using PyOpenSSL
 License: BSD
@@ -190,6 +190,10 @@ rm -f documentation/Makefile
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.0-alt2
 - NMU: added python-module-setuptools to BRs.
 

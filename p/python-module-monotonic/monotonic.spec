@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt1
+Release: alt1.1
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
 License: ASLv2.0
 Group: Development/Python
@@ -79,6 +79,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Oct 28 2015 Alexey Shabalin <shaba@altlinux.ru> 0.4-alt1
 - 0.4
 
