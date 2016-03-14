@@ -17,16 +17,16 @@
 %def_disable webkit2
 
 Name: libwebkitgtk3
-Version: 2.4.9
-Release: alt4
+Version: 2.4.10
+Release: alt1
 
 Summary: Web browser engine
 Group: System/Libraries
 License: %bsd %lgpl2plus
 
-Url: http://www.webkitgtk.org/
+Url: http://www.webkitgtk.org
 
-Source: %_name-%version.tar.xz
+Source: %url/releases/%_name-%version.tar.xz
 Patch1: webkitgtk-2.4.0-alt-link.patch
 
 Obsoletes: %name-webinspector
@@ -333,6 +333,15 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Mon Mar 14 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.10-alt1
+- 2.4.10 (CVE-2015-1120, CVE-2015-1076, CVE-2015-1071, CVE-2015-1081,
+  CVE-2015-1122, CVE-2015-1155, CVE-2014-1748, CVE-2015-3752,
+  CVE-2015-5809, CVE-2015-5928, CVE-2015-3749, CVE-2015-3659,
+  CVE-2015-3748, CVE-2015-3743, CVE-2015-3731, CVE-2015-3745,
+  CVE-2015-5822, CVE-2015-3658, CVE-2015-3741, CVE-2015-3727,
+  CVE-2015-5801, CVE-2015-5788, CVE-2015-3747, CVE-2015-5794,
+  CVE-2015-1127, CVE-2015-1153, CVE-2015-1083)
+
 * Wed Feb 10 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.9-alt4
 - rebuild against libicu*.so.56
 
