@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.1
-Release: alt1.git20150714
+Release: alt1.git20150714.1
 Summary: Fixture manager for httpretty
 License: MIT
 Group: Development/Python
@@ -110,6 +110,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.1-alt1.git20150714.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.git20150714
 - Initial build for Sisyphus
 

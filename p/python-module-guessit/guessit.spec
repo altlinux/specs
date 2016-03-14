@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.4
-Release: alt1.dev0.git20150427.1
+Release: alt1.dev0.git20150427.1.1
 Summary: GuessIt - a library for guessing information from video files
 License: LGPLv3
 Group: Development/Python
@@ -213,6 +213,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.4-alt1.dev0.git20150427.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.10.4-alt1.dev0.git20150427.1
 - NMU: Use buildreq for BR.
 
