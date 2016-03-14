@@ -1,8 +1,8 @@
 %def_without smb
 
 Name: mc
-Version: 4.8.15
-Release: alt2
+Version: 4.8.16
+Release: alt1
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -23,9 +23,9 @@ Source7: mc-f90.syntax
 
 Patch0: %name-%version-%release.patch
 
-Patch1: mc-4.7.5-alt-wrapper.patch
+Patch1: mc-4.8.16-alt-wrapper.patch
 Patch2: mc-4.7.5.1-alt-defaults.patch
-Patch3: mc-4.7.0.2-alt-menu.patch
+Patch3: mc-4.8.16-alt-menu.patch
 
 # Misc
 
@@ -33,7 +33,7 @@ Patch3: mc-4.7.0.2-alt-menu.patch
 Patch101: mc-4.7.0.2-savannah-edit-homekey.patch
 
 # http://www.midnight-commander.org/ticket/2496
-Patch102: mc-4.8.8-alt-forceexec.patch
+Patch102: mc-4.8.16-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
 Patch103: mc-4.8.6-alt-extfs-udar.patch
@@ -100,6 +100,10 @@ EOF
 
 sed 's|@@VERSION@@|%version-%release|' -i version.h
 
+# http://www.midnight-commander.org/ticket/3611
+sed 's#elseif (S_ISCHR#elsif (S_ISCHR#' -i src/vfs/fish/helpers/ls
+sed 's#rdev % 256#rdev %%%% 256#' -i src/vfs/fish/helpers/ls
+
 #%%autoreconf
 ./autogen.sh
 
@@ -127,9 +131,6 @@ install -m755 synce-mcfs/src/synce* %buildroot%_libexecdir/%name/extfs.d/
 
 # http://bugzilla.altlinux.org/31520
 cp -f %SOURCE7 %buildroot%_datadir/mc/syntax/f90.syntax
-
-# http://www.midnight-commander.org/ticket/3574
-sed 's#&) ||#) ||#' -i %buildroot%_libexecdir/mc/ext.d/*.sh
 
 # .desktop
 cat <<__EOF__>%name.desktop
@@ -166,7 +167,6 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %config(noreplace) %_sysconfdir/mc/mc.default.keymap
 %config(noreplace) %_sysconfdir/mc/mc.emacs.keymap
 %config(noreplace) %_sysconfdir/mc/mc.menu
-%config(noreplace) %_sysconfdir/mc/mc.menu.sr
 %config(noreplace) %_sysconfdir/mc/sfs.ini
 
 %_man1dir/*
@@ -183,6 +183,15 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Mon Mar 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.16-alt1
+- 4.8.16
+- droped fix for MC Ticket #3574 (fixed in upstream)
+- added fix for fish ls helper (MC Ticket 3611)
+- updated patches:
+    alt-wrapper.patch
+    alt-menu.patch
+    alt-forceexec.patch
+
 * Mon Nov 30 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.8.15-alt2
 - Fixed handling of MC_XDG_OPEN in ext.d/*.sh (MC Ticket #3574)
 
