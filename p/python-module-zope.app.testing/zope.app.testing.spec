@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 3.9.1
-Release: alt1.dev.git20141223
+Release: alt1.dev.git20141223.1
 Summary: Zope Application Testing Support
 License: ZPL
 Group: Development/Python
@@ -146,6 +146,10 @@ touch %buildroot%python3_sitelibdir/zope/app/__init__.py
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:3.9.1-alt1.dev.git20141223.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.9.1-alt1.dev.git20141223
 - Updated from github
 
