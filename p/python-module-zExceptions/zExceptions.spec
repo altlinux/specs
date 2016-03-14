@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1.dev0.git20150331
+Release: alt1.dev0.git20150331.1
 Summary: zExceptions contains common exceptions used in Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -127,6 +127,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0-alt1.dev0.git20150331.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Aug 26 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt1.dev0.git20150331
 - Version 3.0.dev0
 
