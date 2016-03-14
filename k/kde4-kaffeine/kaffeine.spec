@@ -1,8 +1,8 @@
 
 %define rname kaffeine
 Name: kde4-%rname
-Version: 1.2.2
-Release: alt3
+Version: 1.3.1
+Release: alt1
 
 Group: Video
 Summary: Multimedia Player
@@ -13,10 +13,12 @@ Requires: libqt4-sql-sqlite
 Conflicts: kaffeine <= 0.8.8-alt4
 
 # svn.kde.org/home/kde/trunk/extragear/multimedia/kaffeine
-Source0: %rname-%version.tar.bz2
-Patch1: alt-gcc47.patch
+Source0: %rname-%version.tar
 
-BuildRequires: gcc-c++ kde4libs-devel libxine-devel
+# Automatically added by buildreq on Mon Mar 14 2016 (-bi)
+# optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-sql libqt4-svg libqt4-xml libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base python3 python3-base rpm-build-python3 xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
+#BuildRequires: gcc-c++ glib2-devel kde4libs-devel libXxf86misc-devel libicu50 libqt3-devel libqt4-webkit-devel libvlc-devel python3.3-site-packages qt4-desi#gner ruby ruby-stdlibs zlib-devel-static
+BuildRequires: gcc-c++ glib2-devel kde4libs-devel libXxf86misc-devel libqt4-webkit-devel libvlc-devel zlib-devel
 
 %description
 Kaffeine plays all files and devices supported by Xine. For example,
@@ -26,7 +28,6 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 
 %build
 %K4cmake
@@ -41,7 +42,7 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 %files -f %rname.lang
 %doc Changelog NOTES
 %_K4bindir/kaffeine
-%_K4bindir/kaffeine-xbu
+%_K4bindir/dtvdaemon
 #%_K4lib/kaffeinedvb.so
 %_K4apps/kaffeine/
 %_K4iconsdir/hicolor/*/*/*.*
@@ -51,6 +52,9 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 %_K4xdg_apps/kaffeine.desktop
 
 %changelog
+* Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
+- new version
+
 * Thu Jul 23 2015 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt3
 - don't increase InitialPreference
 
