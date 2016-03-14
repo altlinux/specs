@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.2
-Release: alt2
+Release: alt2.1
 Summary: Tools for creating development sandboxes for web applications that primarily use Zope
 License: ZPL
 Group: Development/Python
@@ -80,6 +80,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.2-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Jul 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2
 - Added module for Python 3
 
