@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt4
+Release: alt5
 
 License: AGPLv3
 Summary: Network based backup program
@@ -269,6 +269,7 @@ autoconf -B autoconf autoconf/configure.in >configure
 	--enable-bat=yes \
 	--enable-bwx-console \
 	--with-mysql \
+	--with-logdir=%_logdir \
 	#
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
@@ -473,9 +474,9 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %dir %_datadir/bacula/scripts
 %dir %_docdir/bacula
 %_sysconfdir/tmpfiles.d/*
-%_man8dir/bacula.8.gz
+%_man8dir/bacula.8.*
 %_sbindir/bsmtp
-%_man1dir/bsmtp.1.gz
+%_man1dir/bsmtp.1.*
 %_docdir/bacula/ReleaseNotes
 %_docdir/bacula/LICENSE
 %_libdir/libbac-%version.so
@@ -491,13 +492,13 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %attr (0644,root,root) %_datadir/%name/sample-configs/bconsole.conf
 %config(noreplace) %attr (0600,root,root) %_sysconfdir/bacula/bconsole.conf
 %_bindir/bconsole
-%_man8dir/bconsole.8.gz
+%_man8dir/bconsole.8.*
 
 %if_enabled bwx
 %files console-wx
 %attr (0644,root,root) %_datadir/%name/sample-configs/bwx-console.conf
 %_bindir/bwx-console
-%_man1dir/bacula-bwxconsole.1.gz
+%_man1dir/bacula-bwxconsole.1.*
 %_miconsdir/bacula-wxwin.xpm
 %_liconsdir/bacula-wxwin.xpm
 %_niconsdir/bacula-wxwin.xpm
@@ -508,7 +509,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %files tray-monitor
 %attr (0644,root,root) %_datadir/%name/sample-configs/tray-monitor.conf
 %_bindir/bacula-tray-monitor
-%_man1dir/bacula-tray-monitor.1.gz
+%_man1dir/bacula-tray-monitor.1.*
 %_miconsdir/bacula-tray-monitor.xpm
 %_liconsdir/bacula-tray-monitor.xpm
 %_niconsdir/bacula-tray-monitor.xpm
@@ -520,7 +521,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %attr (0644,root,root) %_datadir/%name/sample-configs/bat.conf
 %doc %_defaultdocdir/%name/html
 %attr (0755,root,root) %_bindir/bat
-%_man1dir/bat.1.gz
+%_man1dir/bat.1.*
 %_miconsdir/bat.png
 %_liconsdir/bat.png
 %_niconsdir/bat.png
@@ -534,7 +535,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %_sbindir/bacula-fd
 %config %_initdir/bacula-fd
 %_libdir/bpipe-fd.so
-%_man8dir/bacula-fd.8.gz
+%_man8dir/bacula-fd.8.*
 
 %files storage
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/bacula-sd.conf
@@ -549,16 +550,16 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %_sbindir/mtx-changer
 %_sbindir/disk-changer
 %_sbindir/dvd-handler
-%_man8dir/bacula-sd.8.gz
-%_man8dir/bextract.8.gz
-%_man8dir/bls.8.gz
-%_man8dir/btape.8.gz
+%_man8dir/bacula-sd.8.*
+%_man8dir/bextract.8.*
+%_man8dir/bls.8.*
+%_man8dir/btape.8.*
 
 %files debug
 %_sbindir/btraceback
 %_datadir/%name/scripts/btraceback.dbx
 %_datadir/%name/scripts/btraceback.gdb
-%_man8dir/btraceback.8.gz
+%_man8dir/btraceback.8.*
 
 %files director-common
 %doc COPYING ChangeLog ReleaseNotes VERIFYING updatedb
@@ -638,6 +639,10 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %files
 
 %changelog
+* Mon Mar 14 2016 Michael Shigorin <mike@altlinux.org> 5.2.13-alt5
+- fixed logfile path (closes: #31884)
+- fixed manpage paths
+
 * Thu Feb 27 2014 Andrey Kolotov <qwest@altlinux.org> 5.2.13-alt4
 - fixed bug in the config for a local-backup
 
