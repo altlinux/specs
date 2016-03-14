@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.4
-Release: alt1
+Release: alt1.1
 Summary: Utility to debug Zope Page Templates
 License: GPL
 Group: Development/Python
@@ -98,6 +98,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.4-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Oct 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1
 - Initial build for Sisyphus
 

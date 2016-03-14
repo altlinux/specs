@@ -1,6 +1,6 @@
 Name: seat-inspect
 Version: 1.0
-Release: alt1
+Release: alt1.1
 Summary: Understand and troubleshoot systemd
 
 Group: System/Configuration/Other
@@ -55,5 +55,9 @@ everything.
 %doc %name.html README.md TODO
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jun 17 2015 Terechkov Evgenii <evg@altlinux.org> 1.0-alt1
 - Initial build for ALT Linux Sisyphus (git-1.0-1-gbc91524)

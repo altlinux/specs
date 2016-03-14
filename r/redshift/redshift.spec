@@ -6,7 +6,7 @@
 
 Name: redshift
 Version: 1.11
-Release: alt2
+Release: alt2.1
 
 Summary: Redshift adjusts the color temperature of your screen
 Summary(ru_RU.UTF-8): Redshift изменяет температуру цвета вашего экрана для снижения утомляемости глаз
@@ -90,6 +90,10 @@ Redshift изменяет температуру цвета экрана ваш�
 %doc DESIGN NEWS* README* redshift.conf.sample
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.11-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Feb 15 2016 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt2
 - some improvements & cleanups
 
