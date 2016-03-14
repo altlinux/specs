@@ -1,7 +1,7 @@
 %define dist Padre
 Name: perl-Padre
 Version: 1.00
-Release: alt3.be9d0b8
+Release: alt4.df25a95
 
 Summary: Padre - Perl Application Development and Refactoring Environment
 License: Perl
@@ -11,15 +11,14 @@ Url: %CPAN %dist
 Source: %name-%version.tar
 
 %add_findreq_skiplist */Padre/Wx/About.pm
+%add_findreq_skiplist */Padre/Wx/FunctionList.pm
 %add_findreq_skiplist */auto/share/dist/Padre/*
-%define _perl_req_method relaxed
 
 BuildArch: noarch
 BuildRequires: perl-Parse-Functions perl-unicore perl-HTML-Parser perl-pod perl-Text-FindIndent perl-List-MoreUtils perl-Test-NoWarnings perl-File-HomeDir perl-Test-Script perl-Parse-ErrorString-Perl perl-YAML-Tiny perl-threads perl-Class-Adapter perl-Wx perl-Class-Unload perl-Pod-POM perl-File-Find-Rule perldoc perl-Class-XSAccessor perl-PPI perl-File-Remove perl-Probe-Perl perl-Devel-Refactor perl-devel perl-Encode perl-Parse-ExuberantCTags perl-Debug-Client perl-Text-Balanced perl-Format-Human-Bytes perl-ack perl-File-Copy-Recursive perl-Pod-Abstract perl-ORLite perl-Term-ReadLine-Gnu perl-Module-Refresh perl-Test-Exception perl-Pod-Simple perl-File-ShareDir perl-IO-String perl-Module-Starter perl-Module-CoreList perl-Params-Util perl-Devel-Dumpvar perl-DBD-SQLite perl-File-Next perl-Text-Diff perl-File-Which perl-IO-stringy perl-Wx-Perl-ProcessStream perl-Template-Tiny perl-DBI perl-Capture-Tiny perl-URI perl-pip perl-PPIx-EditorTools perl-Locale-Msgfmt perl-Alien-wxWidgets perl-App-cpanminus perl-Readonly-XS perl-PPIx-Regexp perl-JSON-XS perl-Test-MockObject perl-IPC-Run perl-Module-Manifest perl-POD2-Base perl-File-Slurp perl-Wx-Scintilla perl-ORLite-Migrate perl-App-cpanminus perl-CGI perl-Test-Warn perl-Text-Patch
 BuildRequires: xvfb-run /usr/bin/convert
 
-# With relaxed perl.req method some deps are lost
-Requires: perl-Parse-Functions perl-unicore perl-POD2-Base perl(CGI.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(Class/Adapter/Builder.pm) perl(Class/Unload.pm) perl(Data/Dumper.pm) perl(Debug/Client.pm) perl(Devel/Dumpvar.pm) perl(Devel/Refactor.pm) perl(Digest/MD5.pm) perl(Encode/Guess.pm) perl(ExtUtils/Manifest.pm) perl(File/Copy.pm) perl(File/Find/Rule.pm) perl(File/Remove.pm) perl(File/Which.pm) perl(File/pushd.pm) perl(Getopt/Long.pm) perl(HTTP/Date.pm) perl(HTTP/Request.pm) perl(IO/Socket.pm) perl(IPC/Open2.pm) perl(IPC/Open3.pm) perl(IPC/Run.pm) perl(List/MoreUtils.pm) perl(Module/CoreList.pm) perl(Module/Manifest.pm) perl(PPI/Find.pm) perl(PPIx/EditorTools.pm) perl(PPIx/Regexp.pm) perl(Parse/ExuberantCTags.pm) perl(Probe/Perl.pm) perl(Template/Tiny.pm) perl(Text/Diff.pm) perl(Text/FindIndent.pm) perl(Wx.pm) perl(Wx/Perl/ProcessStream.pm) perl(warnings.pm)
+Requires: perl-unicore perl-POD2-Base
 
 %description
 %summary
@@ -54,6 +53,8 @@ Exec=/usr/bin/padre
 Categories=Development;IDE;TextTools;
 EOF
 
+%{expand:%%global __find_requires xvfb-run -a %__find_requires}
+
 %files
 %_bindir/padre
 %_miconsdir/padre.png
@@ -65,6 +66,10 @@ EOF
 %doc Changes README Artistic COPYING
 
 %changelog
+* Mon Mar 14 2016 Vladimir Lettiev <crux@altlinux.ru> 1.00-alt4.df25a95
+- commit df25a95 (Closes: #31841)
+- restored auto requires
+
 * Fri Oct 30 2015 Vladimir Lettiev <crux@altlinux.ru> 1.00-alt3.be9d0b8
 - commit be9d0b8
 
