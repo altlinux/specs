@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	38.6.0
+Version:	38.7.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -74,6 +74,9 @@ Obsoletes:	thunderbird-gnome-support
 Requires:	hunspell-en
 Requires:	browser-plugins-npapi
 
+Provides:	%name-esr = %version-%release
+Obsoletes:	%name-esr < %version-%release
+
 # Protection against fraudulent DigiNotar certificates
 Requires:	libnss >= 3.13.1-alt1
 
@@ -95,20 +98,22 @@ organizational needs.
 
 %if_with enigmail
 %package enigmail
-%define engimail_version 1.8.2
+%define engimail_version 1.9.1
 %define enigmail_ciddir %mozilla_arch_extdir/%tbird_cid/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
 Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
 Url: http://enigmail.mozdev.org/
 
 Provides: %name-enigmail = %engimail_version
+Provides:  %name-esr-enigmail = %version-%release
+Obsoletes: %name-esr-enigmail < %version-%release
 Requires: %name = %version-%release
 
 Obsoletes: thunderbird-enigmail < 0.95.7-alt2
 
 %description enigmail
-Enigmail is an extension to the mail client of Mozilla / Netscape 7.x 
-which allows users to access the authentication and encryption features 
+Enigmail is an extension to the mail client of Mozilla / Netscape 7.x
+which allows users to access the authentication and encryption features
 provided by the popular GnuPG software.
 %endif
 
@@ -120,6 +125,8 @@ Group: Office
 Url: http://www.mozilla.org/projects/calendar/lightning/
 
 Provides: %name-lightning = 1.9b1
+Provides:  %name-esr-lightning = %version-%release
+Obsoletes: %name-esr-lightning < %version-%release
 Requires: %name = %version-%release
 
 %description lightning
@@ -136,6 +143,9 @@ Requires: %name = %version-%release
 Requires: %name-lightning = %version-%release
 
 Provides: gdata-provider = %version-%release
+Provides:  %name-esr-google-calendar = %version-%release
+Obsoletes: %name-esr-google-calendar < %version-%release
+
 
 %description google-calendar
 Allows bidirectional access to Google Calendar
@@ -148,6 +158,9 @@ Requires:	%name = %version-%release
 
 Requires:	python-base
 AutoReq:	yes, nopython
+Provides:  	%name-esr-devel = %version-%release
+Obsoletes:	%name-esr-devel < %version-%release
+
 
 %description devel
 Thunderbird development kit.
@@ -451,6 +464,11 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Tue Mar 15 2016 Andrey Cherepanov <cas@altlinux.org> 38.7.0-alt1
+- New version (38.7.0)
+- Enigmail (1.9.1)
+- Obsoletes thunderbird-esr
+
 * Wed Feb 17 2016 Andrey Cherepanov <cas@altlinux.org> 38.6.0-alt1
 - New version
 - Security fixes:
