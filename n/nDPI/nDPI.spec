@@ -1,6 +1,6 @@
 Name: nDPI
 Version: 1.7.0
-Release: alt2
+Release: alt3
 Summary: Open source deep packet inspection
 Group: System/Libraries
 
@@ -100,6 +100,9 @@ rmdir %buildroot%_includedir/libndpi-%version
 %_bindir/ndpiReader
 
 %changelog
+* Tue Mar 15 2016 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt3
+- Fix detect http/https
+
 * Thu Feb 18 2016 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt2
 - Fix memory allocator type compatible with C++ on x686 platforms.
 - Fix detect ssl on ipv6
