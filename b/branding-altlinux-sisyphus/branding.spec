@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-%theme
-Version: 20151126
+Version: 20160315
 Release: alt1
 BuildArch: noarch
 
@@ -459,6 +459,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Tue Mar 15 2016 Michael Shigorin <mike@altlinux.org> 20160315-alt1
+- fixed license (see also #31748)
+  + copied from branding-altlinux-starterkit-p7-alt7.M70P.2
+
 * Thu Nov 26 2015 Aleksey Avdeev <solo@altlinux.org> 20151126-alt1
 - move themes to subpackages
 
