@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.3
-Release: alt1.git20140810.1
+Release: alt1.git20140810.1.1
 Summary: Easy build, distribution and deployment scripting
 License: BSD
 Group: Development/Python
@@ -138,6 +138,10 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/paver/
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.3-alt1.git20140810.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1.2.3-alt1.git20140810.1
 - NMU: Use buildreq for BR.
 

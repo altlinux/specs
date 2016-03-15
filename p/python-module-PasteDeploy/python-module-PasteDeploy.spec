@@ -8,7 +8,7 @@
 
 Name: %packagename
 Version:%version
-Release: alt1.hg20131227.1
+Release: alt1.hg20131227.1.1
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -95,6 +95,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.5.2-alt1.hg20131227.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1:1.5.2-alt1.hg20131227.1
 - NMU: Use buildreq for BR.
 

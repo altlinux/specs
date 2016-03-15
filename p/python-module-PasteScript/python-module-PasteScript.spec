@@ -8,7 +8,7 @@
 
 Name: %packagename
 Version:%version
-Release: %release
+Release: alt3.hg20120208.1
 Serial: 1
 
 Summary: A pluggable command-line frontend
@@ -97,6 +97,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.7.5-alt3.hg20120208.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Dec 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.7.5-alt3.hg20120208
 - Avoid check version of Paste when build another packages
 
