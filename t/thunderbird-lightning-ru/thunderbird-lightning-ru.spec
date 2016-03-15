@@ -4,7 +4,7 @@
 
 Name:		thunderbird-%rname
 Version:	4.0.0.1
-Release:	alt1
+Release:	alt2
 Serial: 	1
 Summary:	Russian (RU) Language Pack for Lightning
 Packager:	Andrey Cherepanov <cas@altlinux.org>
@@ -20,7 +20,10 @@ Patch0:		fix-metadata-for-languagepack-in-install.rdf.patch
 
 BuildRequires(pre):	rpm-build-thunderbird 
 BuildRequires:		unzip
+
 Requires:       thunderbird-lightning
+Provides:	thunderbird-esr-%rname = %version-%release
+Obsoletes:	thunderbird-esr-%rname < %version-%release
 
 %description
 The Mozilla Lightning in Russian.
@@ -35,6 +38,9 @@ patch -p2 < %PATCH0
 %ciddir
 
 %changelog
+* Mon Mar 14 2016 Andrey Cherepanov <cas@altlinux.org> 1:4.0.0.1-alt2
+- Obsoletes thunderbird-esr-lightning-ru
+
 * Mon Jun 15 2015 Andrey Cherepanov <cas@altlinux.org> 1:4.0.0.1-alt1
 - New version
 - Keep localizaion unpacked
