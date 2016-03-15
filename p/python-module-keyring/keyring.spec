@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.4
-Release: alt1
+Release: alt1.1
 
 Summary: Store and access your passwords safely
 License: PSF
@@ -130,6 +130,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.4-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Aug 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4-alt1
 - Version 5.4
 

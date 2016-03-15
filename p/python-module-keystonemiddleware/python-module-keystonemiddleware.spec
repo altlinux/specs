@@ -4,7 +4,7 @@
 
 Name: python-module-%pypi_name
 Version: 2.3.1
-Release: alt1.1
+Release: alt1.1.1
 Summary: Middleware for OpenStack Identity
 Group: Development/Python
 License: ASL 2.0
@@ -127,6 +127,10 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests
 #%doc html LICENSE
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.1-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.3.1-alt1.1
 - NMU: Use buildreq for BR.
 

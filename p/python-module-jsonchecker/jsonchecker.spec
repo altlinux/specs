@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1.git20150109
+Release: alt1.git20150109.1
 Summary: A script that validates JSON files and checks for duplicate keys
 License: Public domain
 Group: Development/Python
@@ -92,6 +92,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt1.git20150109.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.0-alt1.git20150109
 - Initial build for Sisyphus
 

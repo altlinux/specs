@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt1.git20150119
+Release: alt1.git20150119.1
 Summary: Use JSON files as if they're python modules
 License: MIT
 Group: Development/Python
@@ -112,6 +112,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.git20150119.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Jan 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20150119
 - Initial build for Sisyphus
 

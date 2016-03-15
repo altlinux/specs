@@ -7,7 +7,7 @@
 
 Name:           python-module-%{pypi_name}
 Version:        1.6
-Release:        alt1
+Release:        alt1.1
 Summary:        Resolve JSON Pointers in Python
 Group:          Development/Python
 
@@ -91,6 +91,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1
 - Version 1.6
 

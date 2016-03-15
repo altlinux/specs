@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.2
-Release: alt2
+Release: alt2.1
 Summary: JSON-RPC 2.0 client library for Python 3
 License: LGPL
 Group: Development/Python
@@ -128,6 +128,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.2-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 1.1.2-alt2
 - Rebuild into Sisyphus
 

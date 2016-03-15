@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.1
-Release: alt2.git20140614
+Release: alt2.git20140614.1
 Summary: Binary protocol of Kyoto Tycoon with asyncio for io batching
 License: MIT
 Group: Development/Python
@@ -134,6 +134,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.1-alt2.git20140614.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 0.0.1-alt2.git20140614
 - Disabled unnecessary dependents
 
