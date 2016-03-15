@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.10
-Release: alt1.git20140325
+Release: alt1.git20140325.1
 Summary: Extends nose.plugins.cover to add Cobertura-style XML reports
 License: BSD
 Group: Development/Python
@@ -90,6 +90,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.10-alt1.git20140325.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Oct 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt1.git20140325
 - Initial build for Sisyphus
 

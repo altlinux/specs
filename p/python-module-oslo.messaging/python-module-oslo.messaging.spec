@@ -5,7 +5,7 @@
 Name:       python-module-%sname
 Epoch:      1
 Version:    2.5.0
-Release:    alt1.1
+Release:    alt1.1.1
 Summary:    OpenStack common messaging library
 
 Group:      Development/Python
@@ -183,6 +183,10 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html LICENSE
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:2.5.0-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:2.5.0-alt1.1
 - NMU: Use buildreq for BR.
 

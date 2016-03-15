@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.4.12
-Release: alt2.git20150814
+Release: alt2.git20150814.1
 
 Summary: OAuth 2.0 client library
 License: Apache Software License
@@ -118,6 +118,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.12-alt2.git20150814.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 1.4.12-alt2.git20150814
 - cleanup buildreq
 
