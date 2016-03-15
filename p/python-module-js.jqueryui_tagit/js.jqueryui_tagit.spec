@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.24.2
-Release: alt1.git20130509
+Release: alt1.git20130509.1
 Summary: Fanstatic packaging of Tag-it!
 License: BSD
 Group: Development/Python
@@ -75,6 +75,10 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.24.2-alt1.git20130509.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Oct 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.24.2-alt1.git20130509
 - Initial build for Sisyphus
 

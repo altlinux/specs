@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.4
-Release: alt2
+Release: alt2.1
 Summary: Fanstatic packaging of AngularJS
 License: MIT
 Group: Development/Python
@@ -125,6 +125,10 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.4-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.4-alt2
 - Applied python-module-js.angular-1.1.4-alt1.diff
 

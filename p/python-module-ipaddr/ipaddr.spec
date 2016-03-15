@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 2.1.10
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: Library for working with IP addressess, both IPv4 and IPv6
 License: Apache License, Version 2.0
@@ -76,6 +76,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.10-alt2.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.1.10-alt2.1
 - NMU: Use buildreq for BR.
 

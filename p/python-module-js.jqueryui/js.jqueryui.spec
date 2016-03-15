@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.10.3
-Release: alt2
+Release: alt2.1
 Summary: fanstatic jQuery UI
 License: BSD
 Group: Development/Python
@@ -94,6 +94,10 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.3-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.3-alt2
 - Applied python-module-js.jqueryui-1.10.3-alt1.diff
 

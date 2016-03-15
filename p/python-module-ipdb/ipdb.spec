@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.1
-Release: alt1.dev0.git20130919
+Release: alt1.dev0.git20130919.1
 Summary: IPython-enabled pdb
 License: GPL
 Group: Development/Python
@@ -82,6 +82,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.1-alt1.dev0.git20130919.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt1.dev0.git20130919
 - Initial build for Sisyphus
 
