@@ -3,11 +3,11 @@
 %define lngg Ukrainian
 
 Name: kde5-i18n-%lng
-Version: 15.12.1
+Version: 15.12.2
 Release: alt1
 
 Group: Graphical desktop/KDE
-Summary: %lngg language support for KDE
+Summary: %lngg language support for KDE Applications
 License: GPL
 Url: http://www.kde.org/
 
@@ -22,7 +22,7 @@ BuildRequires: libdb4-devel qt5-tools-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel
 
 %description
-%lngg language support for KDE.
+%lngg language support for KDE Applications.
 
 
 %prep
@@ -77,5 +77,8 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Tue Jan 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - initial build
