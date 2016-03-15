@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.7
-Release: alt1.git20141125
+Release: alt1.git20141125.1
 Summary: A comprehensive, fast, pure Python memcached client
 License: ASLv2.0
 Group: Development/Python
@@ -143,6 +143,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.7-alt1.git20141125.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.7-alt1.git20141125
 - Initial build for Sisyphus
 

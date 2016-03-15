@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 15.01
-Release: alt2.git20150117
+Release: alt2.git20150117.1
 Summary: Python lib/cli for JSON/YAML schema validation
 License: MIT
 Group: Development/Python
@@ -111,6 +111,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 15.01-alt2.git20150117.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 15.01-alt2.git20150117
 - Rebuild with "def_disable check"
 - Cleanup buildreq

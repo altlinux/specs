@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.dev0.git20150728
+Release: alt1.dev0.git20150728.1
 Summary: py.test plugin to create a 'tmpdir' containing predefined files/directories
 License: MIT
 Group: Development/Python
@@ -84,6 +84,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.dev0.git20150728.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jul 29 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.dev0.git20150728
 - Initial build for Sisyphus
 

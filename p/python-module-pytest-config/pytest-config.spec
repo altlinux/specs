@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.0.11
-Release: alt1
+Release: alt1.1
 Summary: A plugin for pytest to aid setup and configuration
 License: BSD
 Group: Development/Python
@@ -123,6 +123,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.11-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.11-alt1
 - Initial build for Sisyphus
 
