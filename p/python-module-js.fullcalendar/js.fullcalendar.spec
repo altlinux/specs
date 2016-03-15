@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.2.6
-Release: alt1.dev.git20150107
+Release: alt1.dev.git20150107.1
 Summary: Fanstatic packaging of FullCalendar
 License: BSD
 Group: Development/Python
@@ -93,6 +93,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 2.2.6-alt1.dev.git20150107.1
+- NMU rebuild.
+
 * Fri Feb 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.6-alt1.dev.git20150107
 - Version 2.2.6-dev
 
