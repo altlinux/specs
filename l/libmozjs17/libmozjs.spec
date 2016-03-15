@@ -1,7 +1,7 @@
 Summary:	Mozilla SpiderMonkey (JavaScript-C) Engine
 Name:		libmozjs17
 Version:	17.0.0
-Release:	alt3
+Release:	alt4
 License:	MPL/GPL/LGPL
 URL:		http://www.mozilla.org/js/spidermonkey/
 Group:		System/Libraries
@@ -11,9 +11,10 @@ Source0:	%name-%version.tar
 Patch0:		libmozjs-DLL_SUFFIX.patch
 # (fc) makes mozjs to match js from xul 21
 Patch1:		js17-jsval.patch
-Patch2: 	mozbug746112-no-decommit-on-large-pages.patch
-Patch3: 	mozjs17-0001-Add-AArch64-support.patch
-Patch4: 	aarch64-64k-page.patch
+Patch2:		mozbug746112-no-decommit-on-large-pages.patch
+Patch3:		mozjs17-0001-Add-AArch64-support.patch
+Patch4:		aarch64-64k-page.patch
+Patch5:		mozjs17-perl522.patch
 
 BuildRequires: gcc-c++ libnspr-devel libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
@@ -58,6 +59,7 @@ rm -rf js/src/ctypes/libffi
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 sed -i -e 's/^MOZILLA_VERSION = @MOZILLA_VERSION@/MOZILLA_VERSION = %version/' js/src/config/autoconf.mk.in
 
@@ -128,6 +130,9 @@ EOF
 %_libdir/*.a
 
 %changelog
+* Tue Mar 15 2016 Alexey Gladkov <legion@altlinux.ru> 17.0.0-alt4
+- Fix build with Perl 5.22
+
 * Wed Sep 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 17.0.0-alt3
 - Added aarch64 support.
 
