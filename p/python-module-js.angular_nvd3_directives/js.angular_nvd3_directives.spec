@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.3.11
-Release: alt1.1
+Release: alt1.2
 Summary: Fanstatic packaging of angularjs-nvd3-directives
 License: BSD
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 2.3.11-alt1.2
+- NMU just rebuild.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.3.11-alt1.1
 - NMU: Use buildreq for BR.
 
