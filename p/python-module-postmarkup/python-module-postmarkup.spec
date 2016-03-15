@@ -6,7 +6,7 @@
 
 Name: %packagename
 Version: %version
-Release: %release
+Release: alt2.1
 
 Summary: Generates XHTML snippets from BBCode
 
@@ -66,6 +66,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.0-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2
 - Added module for Python 3
 

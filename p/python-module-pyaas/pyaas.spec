@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.0
-Release: alt1.git20150805.1
+Release: alt1.git20150805.1.1
 Summary: Python-as-a-Service is a set of utilities for creating Tornado applications
 License: MIT
 Group: Development/Python
@@ -86,6 +86,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.0-alt1.git20150805.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1.git20150805.1
 - NMU: Use buildreq for BR.
 

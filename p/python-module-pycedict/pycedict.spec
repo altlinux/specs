@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.1
-Release: alt1.git20150113
+Release: alt1.git20150113.1
 Summary: A library for parsing CEDict and adding tone marks to pinyin
 License: BSD
 Group: Development/Python
@@ -116,6 +116,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.1-alt1.git20150113.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jan 13 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.git20150113
 - Initial build for Sisyphus
 
