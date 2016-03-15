@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.7.0
-Release: alt1.dev.git20140925
+Release: alt1.dev.git20140925.1
 Summary: SPARQL Endpoint interface to Python
 License: W3C SOFTWARE NOTICE AND LICENSE
 Group: Development/Python
@@ -96,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.0-alt1.dev.git20140925.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Dec 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.dev.git20140925
 - Initial build for Sisyphus
 

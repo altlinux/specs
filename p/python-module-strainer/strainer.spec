@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.4
-Release: alt1.1
+Release: alt1.1.1
 Summary: Tools to allow developers to cleanup web objects (HTML, JSON, XHTML)
 License: MIT
 Group: Development/Python
@@ -91,6 +91,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.1
 - NMU: Use buildreq for BR.
 

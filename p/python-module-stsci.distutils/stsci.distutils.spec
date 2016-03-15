@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.7
-Release: alt1
+Release: alt1.1
 
 Summary: distutils/packaging-related utilities used by some of STScI's packages
 License: BSD
@@ -180,6 +180,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.7-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Jul 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.7-alt1
 - Version 0.3.7
 - Added module for Python 3
