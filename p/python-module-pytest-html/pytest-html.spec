@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.2
-Release: alt1.git20150727
+Release: alt1.git20150727.1
 Summary: Plugin for generating HTML reports for py.test results
 License: MPLv2.0
 Group: Development/Python
@@ -89,6 +89,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.2-alt1.git20150727.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Jul 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1.git20150727
 - Initial build for Sisyphus
 
