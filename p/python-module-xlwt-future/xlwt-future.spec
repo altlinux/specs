@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt1.1
 Summary: Library to create spreadsheet files compatible with MS Excel 97/2000/XP/2003 XLS files
 License: BSD
 Group: Development/Python
@@ -112,6 +112,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jul 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1
 - Initial build for Sisyphus
 

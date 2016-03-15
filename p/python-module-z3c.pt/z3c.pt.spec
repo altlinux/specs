@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.0.0
-Release: alt2.a2.dev0.git20130313.1
+Release: alt2.a2.dev0.git20130313.1.1
 Summary: Python template compiler which supports ZPT
 License: ZPLv2.1
 Group: Development/Python
@@ -219,6 +219,10 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.0-alt2.a2.dev0.git20130313.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt2.a2.dev0.git20130313.1
 - NMU: Use buildreq for BR.
 

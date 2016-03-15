@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.24.0
-Release: alt2
+Release: alt2.1
 Summary: A built-package format for Python
 License: MIT
 Group: Development/Python
@@ -150,6 +150,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.24.0-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 0.24.0-alt2
 - cleanup buildreq
 

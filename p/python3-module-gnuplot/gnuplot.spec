@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.8
-Release: alt1.git20120706.1
+Release: alt1.git20120706.1.1
 
 Summary: Python interface to Gnuplot
 
@@ -87,6 +87,10 @@ xvfb-run python3 test.py -v
 %_docdir/%name
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.8-alt1.git20120706.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.8-alt1.git20120706.1
 - NMU: Use buildreq for BR.
 

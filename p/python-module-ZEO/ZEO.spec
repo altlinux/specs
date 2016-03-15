@@ -7,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 4.2.0
-Release: alt3.dev0.git20150605
+Release: alt3.dev0.git20150605.1
 Summary: ZEO provides a client-server storage implementation for ZODB
 License: ZPL
 Group: Development/Python
@@ -165,6 +165,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2.0-alt3.dev0.git20150605.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 4.2.0-alt3.dev0.git20150605
 - Disabled tests and unnecessary buildreq
 

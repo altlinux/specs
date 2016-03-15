@@ -1,6 +1,6 @@
 %define oname zc
 %define version 1.0.0
-%define release alt6.1
+%define release alt6.2
 
 %def_with python3
 
@@ -66,6 +66,10 @@ install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt6.2
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Mar 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.0-alt6.1
 - Rebuild with Python-3.3
 

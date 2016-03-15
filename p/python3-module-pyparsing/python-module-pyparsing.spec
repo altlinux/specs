@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python 3 parsing module
 
@@ -39,6 +39,10 @@ that client code uses to construct the grammar directly in Python code.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.3-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Feb 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
