@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.29
-Release: alt1.git20140726
+Release: alt1.git20140726.1
 Summary: Scour SVG Optimizer
 License: ASLv2.0
 Group: Development/Python
@@ -92,6 +92,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.29-alt1.git20140726.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29-alt1.git20140726
 - Initial build for Sisyphus
 

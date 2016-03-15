@@ -12,7 +12,7 @@
 %def_with python3
 
 Version: %version
-Release: %release
+Release: alt1.svn20140804.1
 
 Summary: Serial port access for python
 Summary(ru_RU.UTF-8): Доступ к последовательному порту из python
@@ -195,6 +195,10 @@ subst '/win32/d' INSTALLED_FILES
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7-alt1.svn20140804.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1.svn20140804
 - New snapshot
 

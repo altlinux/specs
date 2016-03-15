@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.11
-Release: alt2.git20150621
+Release: alt2.git20150621.1
 Summary: Serializer for literal Python expressions
 License: MIT
 Group: Development/Python
@@ -89,6 +89,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.11-alt2.git20150621.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 1.11-alt2.git20150621
 - cleanup buildreq
 
