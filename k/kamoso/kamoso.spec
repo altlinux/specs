@@ -1,59 +1,77 @@
 Name:           kamoso
-Version:        2.0.2
-Release:        alt11
+Version:        3.1.0
+Release:        alt1
 
 Group:          Video
 Summary:        Application for taking pictures and videos from a webcam
-URL:            https://projects.kde.org/projects/extragear/multimedia/kamoso/
+URL:            http://projects.kde.org/kamoso/
+
 License:        GPLv2+
 
-Source0:        ftp://ftp.kde.org/pub/kde/stable/kamoso/%{version}/src/%{name}-%{version}.tar.bz2
-# upstream
-Patch0: kamoso-2.0.2-gst1.0.patch
-# FC
-Patch1: kamoso-2.0.2-libkipi-4.8.80.patch
-Patch2: kamoso-2.0.2-libkipi-4.9.50.patch
-# ALT
-Patch10: kamoso-2.0.2-alt-desktop-i18n-ru.patch
-Patch11: kamoso-2.0.2-alt-disable-nepomuk.patch
+Source0:        http://download.kde.org/stable/kamoso/3.1/src/%{name}-%{version}.tar.xz
 
-BuildRequires(pre): kde4libs-devel >= 4.6.0
-BuildRequires:  gcc-c++ 
-BuildRequires:  libkipi4-devel 
-BuildRequires:  qt-gstreamer1-devel
-BuildRequires:  gstreamer1.0-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: qt5-declarative-devel
+BuildRequires: kf5-kauth-devel
+BuildRequires: kf5-kbookmarks-devel
+BuildRequires: kf5-kcodecs-devel
+BuildRequires: kf5-kcompletion-devel
+BuildRequires: kf5-kconfig-devel
+BuildRequires: kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel
+BuildRequires: kf5-kdeclarative-devel
+BuildRequires: kf5-kdoctools-devel
+BuildRequires: kf5-ki18n-devel
+BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kitemviews-devel
+BuildRequires: kf5-kjobwidgets-devel
+BuildRequires: kf5-kpackage-devel
+BuildRequires: kf5-kservice-devel
+BuildRequires: kf5-kwidgetsaddons-devel
+BuildRequires: kf5-kxmlgui-devel
+BuildRequires: kf5-purpose-devel
+BuildRequires: kf5-solid-devel
+BuildRequires: libkf5quickaddons
+
+BuildRequires: kf5-kdoctools-devel-static
+BuildRequires: kf5-kdoctools
+
+BuildRequires: qt5-gstreamer1-devel
+BuildRequires: libudev-devel
+
+Requires: libkf5quickaddons
+Requires: kf5-purpose
 
 %description
 Kamoso is an application to take pictures and videos out of your webcam.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch10 -p1
-%patch11 -p1
 
 %build
 %add_optflags -I%_libdir/gstreamer-1.0/include
-%K4build
+%K5init no_altplace
+%K5build
 
 %install
-%K4install
-%K4find_lang %name
+%K5install
+install -Dm0644 %name.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
+
+%find_lang %name --all
 
 %files -f %name.lang
-%doc AUTHORS COPYING TODO
-%_K4bindir/%name
-%_K4bindir/kamosoPluginTester
-%_K4lib/kipiplugin_youtube.so
-%_desktopdir/kde4/%name.desktop
-%_K4srv/kipiplugin_youtube.desktop
-%_K4srvtyp/kamosoplugin.desktop
-%_iconsdir/hicolor/*/apps/%name.*
-%_iconsdir/hicolor/*/actions/youtube.*
+%doc AUTHORS COPYING* README TODO
+%_K5bin/%name
+%_K5icon/hicolor/*/*/*.*
+%_K5xdgapp/*%name.desktop
+%_datadir/appdata/%name.appdata.xml
+%doc %_K5doc/*/%name
 
 %changelog
+* Tue Mar 15 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version used KF5
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt11
 - Build without nepomuk
 
