@@ -2,7 +2,7 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.8
+Version: 1.1.11
 Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
@@ -69,6 +69,7 @@ touch config.rpath
 %configure \
 	%{subst_enable static} \
 	--disable-mtpz \
+	--with-udev=/lib/udev \
 	--with-udev-group=audio \
 	--with-udev-mode=0660
 
@@ -76,7 +77,6 @@ touch config.rpath
 
 %install
 %make DESTDIR=%buildroot install
-/bin/bzip2 -9 ChangeLog
 
 # Replace links with relative links
 rm -f %buildroot%_bindir/mtp-{delfile,getfile,newfolder,sendfile,sendtr}
@@ -92,9 +92,10 @@ rm -rf %buildroot%_docdir/%name-%version/html
 
 %files -n %name%sover
 %_libdir/*.so.*
+/lib/udev/hwdb.d/*
 /lib/udev/rules.d/*
 /lib/udev/mtp-probe
-%doc AUTHORS ChangeLog* README TODO
+%doc AUTHORS README TODO
 
 %files -n %name-devel
 %_includedir/*
@@ -110,6 +111,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Tue Mar 15 2016 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.11-alt1
+- 1.1.11
+
 * Thu Sep 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.1.8-alt1
 - 1.1.8
 
