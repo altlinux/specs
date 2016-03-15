@@ -1,7 +1,7 @@
 %define rname kdoctools
 
 Name: kf5-%rname
-Version: 5.19.0
+Version: 5.20.0
 Release: alt1
 %K5init altplace
 
@@ -35,6 +35,7 @@ Requires: kf5-filesystem
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %version-%release
+Requires: %name
 Requires: docbook-style-xsl
 %description devel
 The %name-devel package contains libraries and header files for
@@ -84,6 +85,9 @@ KF5 library
 %_K5lib/lib*.a
 
 %changelog
+* Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
+- new version
+
 * Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
 - new version
 
