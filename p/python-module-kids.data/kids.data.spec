@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1.git20150205.1
+Release: alt1.git20150205.2
 Summary: Kids data manipulation helpers
 License: BSD
 Group: Development/Python
@@ -119,6 +119,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 0.0.3-alt1.git20150205.2
+- NMU - just rebuild.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.0.3-alt1.git20150205.1
 - NMU: Use buildreq for BR.
 
