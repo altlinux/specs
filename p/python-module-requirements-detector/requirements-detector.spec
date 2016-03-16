@@ -4,8 +4,8 @@
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt1.git20160316
-Summary: Python tool to f\acind and list requirements of a Python project
+Release: alt2.git20160316
+Summary: Python tool to find and list requirements of a Python project
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/requirements-detector/
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 16 2016 Denis Medvedev <nbr@altlinux.org> 0.4.1-alt2.git20160316
+- typo in summary fixed.
+
 * Wed Mar 16 2016 Denis Medvedev <nbr@altlinux.org> 0.4.1-alt1.git20160316
 - Merged upstream version 0.4.1.
 
