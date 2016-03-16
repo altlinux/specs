@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.5.5
-Release: alt2.dev.git20150124
+Release: alt2.dev.git20150124.1
 Summary: A module to work with countries and languages
 License: BSD
 Group: Development/Python
@@ -110,6 +110,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.5-alt2.dev.git20150124.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 0.5.5-alt2.dev.git20150124
 - Delete unnecessary dependens
 

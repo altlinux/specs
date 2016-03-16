@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.0
-Release: alt1.2
+Release: alt1.2.1
 
 Summary: TurboGears support package which provides a template engine plug-in for the Cheetah templating engine
 License: MIT
@@ -80,6 +80,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt1.2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Aug 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.2
 - Added module for Python 3
 
