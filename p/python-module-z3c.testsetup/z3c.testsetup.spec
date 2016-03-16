@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.8.4
-Release: alt1.dev.svn20100915
+Release: alt1.dev.svn20100915.1
 Summary: Easier test setup for Zope 3 projects and other Python packages
 License: ZPLv2.1
 Group: Development/Python
@@ -139,6 +139,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.4-alt1.dev.svn20100915.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Oct 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.4-alt1.dev.svn20100915
 - Version 0.8.4dev
 

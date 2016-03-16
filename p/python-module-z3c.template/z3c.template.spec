@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt2.a2
+Release: alt2.a2.1
 Summary: A package implementing advanced Page Template patterns
 License: ZPLv2.1
 Group: Development/Python
@@ -180,6 +180,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt2.a2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.a2
 - Added module for Python 3
 

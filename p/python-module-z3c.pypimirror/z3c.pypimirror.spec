@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.16
-Release: alt3
+Release: alt3.1
 Summary: A module for building a complete or a partial PyPI mirror
 License: ZPLv2.1
 Group: Development/Python
@@ -132,6 +132,10 @@ install -p -m644 src/z3c/pypimirror/util.py \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.16-alt3.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.16-alt3
 - Added module for Python 3
 
