@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20141019
+Release: alt1.git20141019.1
 Summary: asyncio port of Requests: "Python HTTP for Humans"
 License: ASLv2.0
 Group: Development/Python
@@ -170,6 +170,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt1.git20141019.1
+- NMU just rebuild.
+
 * Sun Jan 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141019
 - Initial build for Sisyphus
 
