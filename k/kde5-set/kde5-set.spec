@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt25
+Release: alt26
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -12,7 +12,7 @@ BuildArch: noarch
 %package -n kde5-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: qt5-phonon-backend qt5-quickcontrols qt5-graphicaleffects
+Requires: qt5-phonon-backend qt5-quickcontrols qt5-graphicaleffects qt5-imageformats
 Requires: kf5-kio kf5-kded kf5-kwayland-integration
 
 %package -n kde5-mini
@@ -62,7 +62,7 @@ Requires: kf5-user-manager
 Requires: kde5-konversation kde5-kate kde5-print-manager kde5-skanlite
 Requires: kde5-pim kde5-baseapps kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kf5-plasma-mediacenter kde5-krfb
-Requires: kid3-ui-kde5
+Requires: kid3-ui-kde5 ring-client-kde5
 
 %package -n kde5-maxi
 Summary: %summary
@@ -105,6 +105,9 @@ Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
 %files -n kde5-somedevel
 
 %changelog
+* Wed Mar 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt26
+- update requires
+
 * Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt25
 - update requires
 
