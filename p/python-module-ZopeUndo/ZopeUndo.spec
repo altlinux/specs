@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.1
-Release: alt1.dev.git20130313
+Release: alt1.dev.git20130313.1
 Summary: ZODB undo support for Zope2
 License: ZPLv2.1
 Group: Development/Python
@@ -114,6 +114,10 @@ python setup.py test
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.1-alt1.dev.git20130313.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.dev.git20130313
 - Version 4.0.1dev
 - Enabled testing

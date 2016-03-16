@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.5.0
-Release: alt2.svn20090727
+Release: alt2.svn20090727.1
 Summary: Zope Release and Known-Good-Set (KGS) Support
 License: ZPLv2.1
 Group: Development/Python
@@ -136,6 +136,10 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt2.svn20090727.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt2.svn20090727
 - Added module for Python 3
 

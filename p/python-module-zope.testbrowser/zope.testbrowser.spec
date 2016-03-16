@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.0.0
-Release: alt2.dev0.git20150220.1
+Release: alt2.dev0.git20150220.1.1
 Summary: Programmable browser for functional black-box tests
 License: ZPLv2.1
 Group: Development/Python
@@ -119,6 +119,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.0.0-alt2.dev0.git20150220.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 5.0.0-alt2.dev0.git20150220.1
 - NMU: Use buildreq for BR.
 

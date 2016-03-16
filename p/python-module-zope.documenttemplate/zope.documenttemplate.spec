@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.4.3
-Release: alt2
+Release: alt2.1
 Summary: Document Templating Markup Language (DTML)
 License: ZPLv2.1
 Group: Development/Python
@@ -144,6 +144,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4.3-alt2.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt2
 - Added module for Python 3
 

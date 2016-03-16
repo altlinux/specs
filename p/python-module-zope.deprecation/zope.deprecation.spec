@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 4.1.3
-Release: alt1.dev0.git20150113.1
+Release: alt1.dev0.git20150113.1.1
 Summary: Zope 3 Deprecation Infrastructure
 License: ZPLv2.1
 Group: Development/Python
@@ -141,6 +141,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:4.1.3-alt1.dev0.git20150113.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1:4.1.3-alt1.dev0.git20150113.1
 - NMU: Use buildreq for BR.
 

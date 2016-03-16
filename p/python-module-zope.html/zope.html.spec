@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.4.2
-Release: alt1
+Release: alt1.1
 Summary: HTML and XHTML Editing Support
 License: ZPLv2.1
 Group: Development/Python
@@ -144,6 +144,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.2-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
 - Version 2.4.2
 - Added module for Python 3
