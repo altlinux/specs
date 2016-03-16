@@ -3,9 +3,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.git20150323
-Summary: Python tool to find and list requirements of a Python project
+Version: 0.4.1
+Release: alt1.git20160316
+Summary: Python tool to f\acind and list requirements of a Python project
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/requirements-detector/
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 16 2016 Denis Medvedev <nbr@altlinux.org> 0.4.1-alt1.git20160316
+- Merged upstream version 0.4.1.
+
 * Tue Mar 24 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.git20150323
 - Initial build for Sisyphus
 
