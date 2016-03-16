@@ -1,6 +1,6 @@
 %def_without gnome
 %def_with gnome3
-%def_with kde4
+%def_with kde
 %def_with networkmanager
 %def_with mozjs
 %def_without webkit
@@ -10,34 +10,35 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.11
+Version: 0.4.12
 Release: alt1
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
 License: %gpllgpl2plus
-Url: http://code.google.com/p/libproxy/
+Url: http://libproxy.github.io/libproxy
 
-Source: http://libproxy.googlecode.com/files/libproxy-%version.tar
+# https://github.com/libproxy/libproxy
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-licenses
-BuildPreReq: cmake ctest gcc-c++
+BuildPreReq: cmake ctest gcc-c++ zlib-devel
 
 %{?_with_python:BuildRequires: python-devel}
 # gnome
-%{?_with_gnome:BuildRequires: glib2-devel libGConf-devel}
+%{?_with_gnome:BuildRequires: pkgconfig(gconf-2.0) pkgconfig(gobject-2.0)}
 # gnome3
-%{?_with_gnome3:BuildRequires: glib2-devel libgio-devel >= 2.26}
+%{?_with_gnome3:BuildRequires: pkgconfig(gio-2.0) >= 2.26 pkgconfig(gobject-2.0)}
 # kde4
-%{?_with_kde4:BuildPreReq: libqt4-devel kde4libs-devel kde-common-devel}
+%{?_with_kde:BuildPreReq: /usr/bin/kreadconfig5}
 # libmozjs
-%{?_with_mozjs:BuildRequires: libmozjs-devel >= 1.8.5}
+%{?_with_mozjs:BuildRequires: pkgconfig(mozjs185)}
 # webkit (gtk)
-%{?_with_webkit:BuildRequires: libwebkitgtk2-devel}
-%{?_with_webkit3:BuildRequires: libjavascriptcoregtk3-devel}
+%{?_with_webkit:BuildRequires: pkgconfig(webkit-1.0)}
+%{?_with_webkit3:BuildRequires: pkgconfig(javascriptcoregtk-4.0)}
 # NetworkManager
-%{?_with_networkmanager:BuildRequires: NetworkManager-devel libdbus-devel}
+%{?_with_networkmanager:BuildRequires: pkgconfig(NetworkManager) pkgconfig(dbus-1)}
 # dotnet
 %{?_with_dotnet:BuildPreReq: mono-devel >= 2.0.0 /proc rpm-build-mono mono-mcs}
 
@@ -87,12 +88,15 @@ Requires: %name = %version-%release
 %description gnome3
 A module to extend libproxy with capabilities to query gnome/gsettings about the proxy settings
 
-%package kde4
-Summary: Libproxy module for kde4 configuration
+%package kde
+Summary: Libproxy module for kde configuration
 Group: System/Libraries
 Requires: %name = %version-%release
+#Requires: /usr/bin/kreadconfig5
+Provides: %name-kde4 = %version-%release
+Obsoletes: %name-kde4 < %version-%release
 
-%description kde4
+%description kde
 A module to extend libproxy with capabilities to query KDE4 about proxy settings
 
 %package mozjs
@@ -157,17 +161,12 @@ developing applications that use %name.
 	-DWITH_GNOME2=OFF \
 %endif
 	-DWITH_WEBKIT3=ON \
-	-DWITH_PERL=OFF \
+	-DWITH_PERL=OFF
 
-
-pushd BUILD
-%make_build
-popd
+%cmake_build
 
 %install
-pushd BUILD
-%make_install install DESTDIR=%buildroot
-popd
+%cmakeinstall_std
 
 #In case all modules are disabled
 mkdir -p %buildroot%modilesdir
@@ -205,9 +204,9 @@ popd
 %_usr/libexec/pxgsettings
 %endif
 
-%if_with kde4
-%files kde4
-%modilesdir/config_kde4.so
+%if_with kde
+%files kde
+%modilesdir/config_kde.so
 %endif
 
 %if_with mozjs
@@ -242,6 +241,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Wed Mar 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.12-alt1
+- 0.4.12
+
 * Tue Jan 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.4.11-alt1
 - 0.4.11
 
