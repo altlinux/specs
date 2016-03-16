@@ -1,6 +1,6 @@
 Name:		python-module-unidiff
 Version:	0.1
-Release:	alt1
+Release:	alt1.1
 License:	MIT
 Source:		v%{version}.tar.gz
 Group:		Development/Python
@@ -45,6 +45,10 @@ mv build2 build
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Sep 22 2014 Fr. Br. George <george@altlinux.ru> 0.1-alt1
 - Initial build
 

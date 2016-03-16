@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.0.4
-Release: alt1.git20150220
+Release: alt1.git20150220.1
 Summary: Content models for Universal Core
 License: BSD
 Group: Development/Python
@@ -127,6 +127,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.4-alt1.git20150220.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Mar 10 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1.git20150220
 - Initial build for Sisyphus
 

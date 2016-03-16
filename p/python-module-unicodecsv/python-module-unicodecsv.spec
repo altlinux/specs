@@ -4,7 +4,7 @@
 
 Name: python-module-%sname
 Version: 0.14.1
-Release: alt1
+Release: alt1.1
 Summary: Drop-in replacement for Python csv module which supports unicode strings
 Group: Development/Python
 License: BSD
@@ -76,6 +76,10 @@ rm -fr %buildroot%python3_sitelibdir/*/test*
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.14.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Oct 29 2015 Alexey Shabalin <shaba@altlinux.ru> 0.14.1-alt1
 - Initial release
 
