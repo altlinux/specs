@@ -1,10 +1,10 @@
-%define _name org.gnome.Calendar
+%define xdg_name org.gnome.Calendar
 %define ver_major 3.18
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calendar
-Version: %ver_major.2.1
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Calendar application for GNOME
 License: %gpl2plus
@@ -44,17 +44,21 @@ Calendar is a calendar application for GNOME.
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/dbus-1/services/%_name.service
-%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
-%_desktopdir/%_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
+%_desktopdir/%xdg_name.desktop
 #%_man1dir/*
 %_datadir/glib-2.0/schemas/org.gnome.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.calendar.enums.xml
 %_iconsdir/hicolor/*x*/apps/%name.png
-%_datadir/appdata/%_name.appdata.xml
+%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc NEWS README
 
 %changelog
+* Thu Mar 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
+- 3.18.3
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2.1-alt2
 - rebuilt against libical.so.2
 
