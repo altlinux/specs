@@ -8,7 +8,7 @@
 
 Name: python-module-%oname
 Version: 0.1.3
-Release: alt3.git20150428
+Release: alt3.git20150428.1
 Summary: asyncio port of botocore, the low-level, data-driven core of boto 3
 License: ASLv2.0
 Group: Development/Python
@@ -112,6 +112,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.3-alt3.git20150428.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 0.1.3-alt3.git20150428
 - disable sphinx
 

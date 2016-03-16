@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 Summary: Yet Another Python Parser System
 
 Group: Development/Python
@@ -133,6 +133,10 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jul 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1
 - Version 2.2.0
 

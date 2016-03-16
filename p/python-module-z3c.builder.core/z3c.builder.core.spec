@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt6
+Release: alt6.1
 Summary: A utility to help jump start Zope 3 projects
 License: ZPLv2.1
 Group: Development/Python
@@ -164,6 +164,10 @@ cp %buildroot%python_sitelibdir/z3c/builder/__init__.py \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt6.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt6
 - Added module for Python 3
 

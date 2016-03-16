@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0b1
-Release: alt4
+Release: alt4.1
 Summary: Define the WebDAV data model from the `zope.app.file' module.
 License: ZPL
 Group: Development/Python
@@ -144,6 +144,10 @@ touch %buildroot%python3_sitelibdir/z3c/davapp/__init__.py
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0b1-alt4.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Jul 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0b1-alt4
 - Added module for Python 3
 
