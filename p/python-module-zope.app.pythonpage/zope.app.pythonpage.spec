@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.5.1
-Release: alt3
+Release: alt3.1
 Summary: Python Page -- Zope 3 Content Components
 License: ZPLv2.1
 Group: Development/Python
@@ -120,6 +120,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt3.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt3
 - Added module for Python 3
 

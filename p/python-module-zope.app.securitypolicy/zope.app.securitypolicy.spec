@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.6.1
-Release: alt4
+Release: alt4.1
 Summary: ZMI-based management views for zope.securitypolicy
 License: ZPLv2.1
 Group: Development/Python
@@ -144,6 +144,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.6.1-alt4.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jul 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt4
 - Added module for Python 3
 
