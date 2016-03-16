@@ -4,7 +4,7 @@
 Name: python-module-%modname
 
 Version: 1.2.12
-Release: alt2.git20150625.1
+Release: alt2.git20150625.1.1
 
 Summary: Assertion toolbox for python
 
@@ -92,6 +92,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.12-alt2.git20150625.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt2.git20150625.1
 - NMU: Use buildreq for BR.
 

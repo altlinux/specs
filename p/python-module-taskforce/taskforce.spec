@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.14
-Release: alt1.git20141129
+Release: alt1.git20141129.1
 Summary: Starts and restarts daemon processes
 License: ASLv2.0
 Group: Development/Python
@@ -99,6 +99,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.14-alt1.git20141129.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Nov 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.14-alt1.git20141129
 - Version 0.1.14
 

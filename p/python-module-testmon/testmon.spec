@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.a6.git20150224
+Release: alt1.a6.git20150224.1
 Summary: Test Runner for Python
 License: MIT
 Group: Development/Python
@@ -100,6 +100,10 @@ popd
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.a6.git20150224.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.a6.git20150224
 - Version 0.1.1a6
 
