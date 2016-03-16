@@ -1,6 +1,6 @@
 Name: python3-module-billiard
 Version: 3.4.0.0
-Release: alt2.a1.git20141013
+Release: alt2.a1.git20141013.1
 
 Summary: billiard is a fork of the Python 2.7 multiprocessing package
 Source: %name-%version.tar
@@ -59,6 +59,10 @@ mv build/sphinx/html html
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4.0.0-alt2.a1.git20141013.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0.0-alt2.a1.git20141013
 - New snapshot
 

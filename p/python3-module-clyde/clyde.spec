@@ -1,7 +1,7 @@
 %define oname clyde
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1.git20141130.1
+Release: alt1.git20141130.1.1
 Summary: Command line interface designer
 License: MIT
 Group: Development/Python3
@@ -52,6 +52,10 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.git20141130.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1.git20141130.1
 - NMU: Use buildreq for BR.
 

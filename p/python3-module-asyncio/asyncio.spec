@@ -1,7 +1,7 @@
 %define oname asyncio
 Name: python3-module-%oname
 Version: 3.4.3
-Release: alt1
+Release: alt1.1
 Summary: Reference implementation of PEP 3156
 License: ASLv2.0
 Group: Development/Python3
@@ -56,6 +56,10 @@ python3 setup.py test
 %python3_sitelibdir/*/*/test*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4.3-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Tue Apr 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.3-alt1
 - Version 3.4.3
 

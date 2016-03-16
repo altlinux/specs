@@ -1,7 +1,7 @@
 %define oname dirty-validators
 Name: python3-module-%oname
 Version: 0.2.2
-Release: alt1.git20150429
+Release: alt1.git20150429.1
 Summary: Validate library for python 3
 License: MIT
 Group: Development/Python3
@@ -51,6 +51,10 @@ nosetests3 -v --with-coverage -d --cover-package=dirty_validators
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.2-alt1.git20150429.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.git20150429
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.2
-Release: alt1.git20150728.1
+Release: alt1.git20150728.1.1
 
 Summary: Extensions to the standard datetime module (Python 3)
 
@@ -60,6 +60,10 @@ python3 dateutil/test/test.py
 
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.2-alt1.git20150728.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.4.2-alt1.git20150728.1
 - NMU: Use buildreq for BR.
 
