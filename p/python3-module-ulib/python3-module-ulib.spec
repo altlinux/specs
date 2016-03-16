@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 0.21
-Release: alt1
+Release: alt1.1
 
 Summary: ulib: Useful python library
 
@@ -42,6 +42,10 @@ rm -f ulib/tools/lintfix.py
 %python3_sitelibdir/%modulename-%version-*.egg-info
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.21-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 10 2014 Vitaly Lipatov <lav@altlinux.ru> 0.21-alt1
 - build 0.21
 

@@ -1,7 +1,7 @@
 %define oname ez_setup
 Name: python3-module-%oname
 Version: 0.1
-Release: alt1.dev.git20101122
+Release: alt1.dev.git20101122.1
 Summary: ez_setup.py and distribute_setup.py
 License: MIT
 Group: Development/Python3
@@ -37,6 +37,10 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.dev.git20101122.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Oct 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.dev.git20101122
 - Initial build for Sisyphus
 

@@ -1,7 +1,7 @@
 %define oname protobuf3
 Name: python3-module-%oname
 Version: 0.3.0
-Release: alt1.git20141113
+Release: alt1.git20141113.1
 Summary: Protocol buffers library for Python 3
 License: MIT
 Group: Development/Python3
@@ -50,6 +50,10 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.0-alt1.git20141113.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Nov 13 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.git20141113
 - Initial build for Sisyphus
 

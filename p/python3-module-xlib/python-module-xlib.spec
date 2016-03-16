@@ -1,7 +1,7 @@
 %define oname xlib
 Name: python3-module-xlib
 Version: 0.15
-Release: alt2.git20140628
+Release: alt2.git20140628.1
 
 Summary: Python X Library
 
@@ -57,6 +57,10 @@ test -d %buildroot%_libdir || mv %buildroot%prefix/lib %buildroot%_libdir || :
 %doc examples  doc/html/python-xlib/*.html
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15-alt2.git20140628.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 0.15-alt2.git20140628
 - Changed texi2html to texi2any 
 

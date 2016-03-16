@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.2
-Release: alt1.svn20121111
+Release: alt1.svn20121111.1
 License: BSD
 Group: Development/Python3
 Summary: Pure Python library to create/load and manipulate SVG documents
@@ -40,6 +40,10 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.2-alt1.svn20121111.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.svn20121111
 - Initial build for Sisyphus
 

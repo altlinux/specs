@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.20.1
-Release: alt1.bzr20130802.1
+Release: alt1.bzr20130802.1.1
 
 Summary: Python module to handle audio metadata
 License: GPLv2
@@ -63,6 +63,10 @@ popd
 %_bindir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.20.1-alt1.bzr20130802.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.20.1-alt1.bzr20130802.1
 - NMU: Use buildreq for BR.
 

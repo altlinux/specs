@@ -1,7 +1,7 @@
 %define mname IPy
 Name: python3-module-%mname
 Version: 0.76
-Release: alt1.git20130319.1
+Release: alt1.git20130319.1.1
 Summary: Python module for handling IPv4 and IPv6 Addresses and Networks
 URL: https://github.com/haypo/python-ipy
 # https://github.com/haypo/python-ipy.git
@@ -37,6 +37,10 @@ Addresses and Networks.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.76-alt1.git20130319.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.76-alt1.git20130319.1
 - NMU: Use buildreq for BR.
 

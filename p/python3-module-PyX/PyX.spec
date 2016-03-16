@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.13
-Release: alt2.1
+Release: alt2.1.1
 Summary: Python graphics package
 License: GPLv2+
 Group: Development/Python3
@@ -83,6 +83,10 @@ mv faq/_build/html faq/_build/faq
 %doc examples
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.13-alt2.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.13-alt2.1
 - NMU: Use buildreq for BR.
 

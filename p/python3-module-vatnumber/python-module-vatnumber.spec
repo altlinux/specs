@@ -2,7 +2,7 @@
 
 Name:           python3-module-%realname
 Version:        1.1
-Release:        alt1
+Release:        alt1.1
 Summary:        Python module to validate VAT numbers
 
 Group:          Development/Python3
@@ -34,6 +34,10 @@ Python module to validate VAT numbers.
 %python3_sitelibdir/%{realname}*.egg-info
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
 

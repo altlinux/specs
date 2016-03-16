@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 1.12
-Release: alt1
+Release: alt1.1
 Summary: A Pure-Python library built as a PDF toolkit
 
 Group: Development/Python3
@@ -46,6 +46,10 @@ It is therefore a useful tool for websites that manage or manipulate PDFs.
 
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.12-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12-alt1
 - Initial build for Sisyphus
 

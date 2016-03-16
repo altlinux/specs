@@ -1,7 +1,7 @@
 %define oname simpleparse
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1.a1.bzr20140102
+Release: alt1.a1.bzr20140102.1
 
 Summary: A Parser Generator for Python (w/mxTextTools derivative)
 
@@ -64,6 +64,10 @@ popd
 %doc doc/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.0-alt1.a1.bzr20140102.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Aug 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt1.a1.bzr20140102
 - Initial build for Sisyphus
 

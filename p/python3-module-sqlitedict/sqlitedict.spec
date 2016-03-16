@@ -1,7 +1,7 @@
 %define oname sqlitedict
 Name: python3-module-%oname
 Version: 1.2.0
-Release: alt1.git20140727.1
+Release: alt1.git20140727.1.1
 Summary: Persistent dict in Python, backed up by sqlite3 and pickle, multithread-safe
 License: Public domain
 Group: Development/Python3
@@ -45,6 +45,10 @@ py.test-%_python3_version
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.0-alt1.git20140727.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1.git20140727.1
 - NMU: Use buildreq for BR.
 

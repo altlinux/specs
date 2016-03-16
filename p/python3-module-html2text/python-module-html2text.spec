@@ -1,6 +1,6 @@
 Name: python3-module-html2text
 Version: 2014.4.5
-Release: alt1.git20140524.1
+Release: alt1.git20140524.1.1
 
 Summary: Converts a page of HTML into clean, easy-to-read plain ASCII text
 Group: Development/Python
@@ -45,6 +45,10 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
 %exclude %python3_sitelibdir/test
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 2014.4.5-alt1.git20140524.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2014.4.5-alt1.git20140524.1
 - NMU: Use buildreq for BR.
 

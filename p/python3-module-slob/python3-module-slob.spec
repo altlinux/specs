@@ -1,6 +1,6 @@
 Name: python3-module-slob
 Version: 1.0
-Release: alt0.git.x.g81fbdc
+Release: alt0.git.x.g81fbdc.1
 Summary: Aard SLOB module
 BuildArch: noarch
 Group: Development/Python
@@ -29,5 +29,9 @@ Read-only compressed data store
 %doc LICENSE README*
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt0.git.x.g81fbdc.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Dec 07 2014 Ildar Mulyukov <ildar@altlinux.ru> 1.0-alt0.git.x.g81fbdc
 - initial build for ALT Linux Sisyphus

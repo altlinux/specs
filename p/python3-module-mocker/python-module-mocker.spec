@@ -1,6 +1,6 @@
 Name: python3-module-mocker
 Version: 1.1.1
-Release: alt1.bzr20130910.1
+Release: alt1.bzr20130910.1.1
 Summary: graceful creation of test doubles (mocks, stubs, fakes and dummies)
 
 Group: Development/Python3
@@ -38,6 +38,10 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %doc NEWS LICENSE README.md
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1.bzr20130910.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1.bzr20130910.1
 - NMU: Use buildreq for BR.
 
