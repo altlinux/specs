@@ -1,6 +1,6 @@
 Name:           solaar
 Version:        0.9.2
-Release:        alt1
+Release:        alt1.1
 
 Group:          System/Configuration/Hardware
 Summary:        Device manager for Logitech Unifying Receiver
@@ -63,5 +63,9 @@ Logitech's Unifying Receiver peripherals.
 %doc docs
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.2-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jul 17 2014 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
 - Build for Sisyphus from Fedora
