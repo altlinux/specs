@@ -1,5 +1,5 @@
 Name: installer-sdk
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Installer feature simple development kit ;)
@@ -19,10 +19,10 @@ AutoReq: no
 This package provides a simple installer feature template
 and a script to rename/substitute the stub with the name
 you chose for the module to be written; it's not any kind
-of "wizard" at all but should spare some time on doing 
+of "wizard" at all but should spare some time on doing
 redundant work.
 
-Any suggestions on template and processing as well as 
+Any suggestions on template and processing as well as
 other contributions are of course welcome!
 
 Recommended packages: git-core, tree
@@ -47,6 +47,9 @@ cp -a template %buildroot%_datadir/%name/
 #   both installer-sdk and alterator-sdk
 
 %changelog
+* Wed Mar 16 2016 Michael Shigorin <mike@altlinux.org> 0.1.2-alt1
+- cleaned up template a bit
+
 * Tue Aug 12 2008 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
 - updated Url: in both package and template specs
 
