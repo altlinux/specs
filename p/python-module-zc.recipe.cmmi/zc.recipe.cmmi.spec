@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.6
-Release: alt1
+Release: alt1.1
 Summary: ZC Buildout recipe for configure/make/make install
 License: ZPLv2.1
 Group: Development/Python
@@ -146,6 +146,10 @@ touch %buildroot%python3_sitelibdir/zc/recipe/__init__.py
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.6-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Wed Jul 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt1
 - Version 1.3.6
 - Added module for Python 3
