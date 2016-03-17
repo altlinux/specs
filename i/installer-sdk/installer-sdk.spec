@@ -1,5 +1,5 @@
 Name: installer-sdk
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Installer feature simple development kit ;)
@@ -47,6 +47,9 @@ cp -a template %buildroot%_datadir/%name/
 #   both installer-sdk and alterator-sdk
 
 %changelog
+* Thu Mar 17 2016 Michael Shigorin <mike@altlinux.org> 0.1.3-alt1
+- fixed template spec
+
 * Wed Mar 16 2016 Michael Shigorin <mike@altlinux.org> 0.1.2-alt1
 - cleaned up template a bit
 
