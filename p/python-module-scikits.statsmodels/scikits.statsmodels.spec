@@ -7,7 +7,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.7.0
-Release: alt4.git20150731
+Release: alt4.git20150731.1
 Summary: Statistical computations and models for use with SciPy
 License: BSD
 Group: Development/Python
@@ -199,6 +199,10 @@ popd
 %endif
 
 %changelog
+* Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.7.0-alt4.git20150731.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.7.0-alt4.git20150731
 - rm inessential BR: python3-module-pandas{,-tests} (incorrectly detected by buildreq).
 

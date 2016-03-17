@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.git20150619
+Release: alt1.git20150619.1
 Summary: Python interface for libuv
 License: MIT
 Group: Development/Python
@@ -131,6 +131,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt1.git20150619.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20150619
 - Version 1.1.0
 

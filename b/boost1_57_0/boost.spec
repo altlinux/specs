@@ -36,7 +36,7 @@
 
 Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt5
+Release: alt5.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -1730,6 +1730,10 @@ done
 
 
 %changelog
+* Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.57.0-alt5.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.57.0-alt5
 - (.spec) ugly LD_PRELOAD replaced with nice new
   %%requires_python{,3}_ABI. (Backported from 1.58.0-alt2.)

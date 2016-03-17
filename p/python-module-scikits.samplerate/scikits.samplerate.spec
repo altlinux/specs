@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.4.0
-Release: alt2.git20090722.1
+Release: alt2.git20090722.1.1
 Summary: A python module for high quality audio resampling
 License: GPLv2
 Group: Development/Python
@@ -182,6 +182,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.4.0-alt2.git20090722.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1:0.4.0-alt2.git20090722.1
 - NMU: Use buildreq for BR.
 

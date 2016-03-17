@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt3
+Release: alt3.1
 Summary: Mixing Twisted and ZODB
 License: ZPL
 Group: Development/Python
@@ -132,6 +132,10 @@ rm -f %buildroot%python3_sitelibdir/*/__init__.py
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt3.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Jul 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt3
 - Added module for Python 3
 

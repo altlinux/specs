@@ -11,26 +11,27 @@ Group: System/Libraries
 # Upstream does not maintain a soversion so we define one here.
 # abi-compliance-checker will be used to determine if an abi breakage occurs
 # and the soversion will be incremented.
-%global sover 0.1
+%global sover 0.3
 
-%global commit 18da7f4109a8eafaa290a33f5550501cc4c8bae8
+%global commit caad49c0945065f4b7bfa3ccb96523e4766a9727
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global upname OpenCOLLADA
 
-
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt4.git%{shortcommit}
+Release:        alt5.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
 Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
 
-Source0:        https://github.com/KhronosGroup/OpenCOLLADA/archive/%{commit}/%{upname}-%{shortcommit}.tar
-Source1:        Changelog
+Source0:        https://github.com/KhronosGroup/OpenCOLLADA/archive/%{commit}/%{upname}-%{shortcommit}.tar.gz
 
-Patch0:         openCOLLADA-svn863-cmake.patch
-Patch1:         openCOLLADA-svn863-libs.patch
-Patch5:         openCOLLADA-svn876-no_var_tracking_assigenments.patch
+# Force a soversion.
+Patch0:         OpenCOLLADA-cmake.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1307817
+Patch1:         openCOLLADA-narrowing_gcc6.patch
+
+Patch2:         OpenCOLLADA-caad49c-alt-fix-libbuffer-link.patch
 
 Source44: import.info
 Provides: openCOLLADA = %{version}-%{release}
@@ -85,8 +86,8 @@ XML validator for COLLADA files, based on the COLLADASaxFrameworkLoader.
 %prep
 %setup -q -n %{upname}-%{commit}
 %patch0 -p1 -b .cmake
-%patch1 -p1 -b .libs
-%patch5 -p1 -b .no_var_trk
+%patch1 -p1 -b .gcc6
+%patch2 -p2
 
 # Remove unused bundled libraries
 rm -rf Externals/{Cg,expat,lib3ds,LibXML,MayaDataModel,pcre,zlib,zziplib}
@@ -107,12 +108,9 @@ dos2unix -f -k README
 find htdocs/ -name *.php -exec dos2unix -f {} \;
 find htdocs/ -name *.css -exec dos2unix -f {} \;
 
-# Install Changelog
-install -p -m 0644 %{S:1} ./
-
 
 %build
-rm -rf Build && mkdir -p Build && pushd Build
+rm -rf build && mkdir -p build && pushd build
 %{fedora_cmake} -DUSE_STATIC=OFF \
        -DUSE_SHARED=ON \
        -Dsoversion=%{sover} \
@@ -120,12 +118,12 @@ rm -rf Build && mkdir -p Build && pushd Build
        -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
        ../
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-pushd Build
-make DESTDIR=%{buildroot} install
+pushd build
+%makeinstall_std
 
 # Manually install binary
 mkdir -p %{buildroot}%{_bindir}/
@@ -139,22 +137,25 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 
 %files
-%doc README LICENSE README.COLLADAStreamWriter COLLADAStreamWriter/AUTHORS Changelog
+%doc README LICENSE README.COLLADAStreamWriter COLLADAStreamWriter/AUTHORS
 %{_libdir}/lib*.so.%{sover}
 
 %files doc
-%doc htdocs/ README_OSX.rtf
+%doc htdocs/
 
 %files devel
 %{_libdir}/*.so
+%{_libdir}/cmake/*
 %{_includedir}/*
-%{_libdir}/cmake/OpenCOLLADA/*.cmake
 
 %files utils
 %{_bindir}/*
 
 
 %changelog
+* Tue Mar 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0-alt5.gitcaad49c
+- Updated to caad49c.
+
 * Sun Dec 08 2013 Andrey Liakhovets <aoliakh@altlinux.org> 0-alt4.git18da7f4
 - Collada 18da7f4 for blender 2.69
 
@@ -182,4 +183,3 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 * Sun Apr 28 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_14.svn871
 - initial fc import
-

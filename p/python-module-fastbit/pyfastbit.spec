@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 20100914
-Release: alt3
+Release: alt3.1
 Summary: Python bindings for FastBit, "An Efficient Compressed Bitmap Index Technology".
 License: LGPL
 Group: Development/Python
@@ -72,6 +72,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 20100914-alt3.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sat Aug 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100914-alt3
 - Added module for Python 3
 

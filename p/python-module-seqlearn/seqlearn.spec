@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.git20150324.2
+Release: alt1.git20150324.2.1
 Summary: Sequence learning toolkit for Python
 License: MIT
 Group: Development/Python
@@ -179,6 +179,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.git20150324.2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sat Mar 26 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt1.git20150324.2
 - NMU: Fixed BRs.
 

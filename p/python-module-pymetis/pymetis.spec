@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2011.1.1
-Release: alt5.git20120417.1
+Release: alt5.git20120417.1.1
 Summary: Python wrapper for the Metis graph partititioning software
 License: MIT
 Group: Development/Python
@@ -83,6 +83,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2011.1.1-alt5.git20120417.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2011.1.1-alt5.git20120417.1
 - rebuild with boost 1.57.0
 

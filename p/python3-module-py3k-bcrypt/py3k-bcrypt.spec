@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.3
-Release: alt1.git20120906
+Release: alt1.git20120906.1
 Summary: Python3 port of py-bcrypt
 License: BSD
 Group: Sciences/Mathematics
@@ -42,6 +42,10 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.git20120906.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20120906
 - Initial build for Sisyphus
 

@@ -34,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Boost libraries
@@ -1328,14 +1328,21 @@ $BJAM -q -j$NPROCS -d2 --layout=system --toolset=gcc    \
    --prefix=%{buildroot}%{_prefix} --libdir=%{buildroot}%{_libdir} install
 
 
-%if_with devel
-
 # install mpi python module
 %if_with mpi
+%if_with devel
 mkdir -p %buildroot/%python_sitelibdir/boost
 install -Dm644 libs/mpi/build/__init__.py %buildroot/%python_sitelibdir/boost/
 mv %buildroot%_libdir/mpi.so %buildroot/%python_sitelibdir/boost/
+%else
+# The python module won't be created
+# if we are a building just library compat pkgs.
+# (mpi.so belongs exclusively to the python module.)
+rm %buildroot%_libdir/mpi.so
 %endif
+%endif
+
+%if_with devel
 
 # make symbolic links for compatibility
 for i in %buildroot%_libdir/*.so; do
@@ -1725,6 +1732,11 @@ done
 
 
 %changelog
+* Fri Apr  1 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.58.0-alt3
+- rebuild with python3.5 (for ABI changes)
+- this will also rename the autoreqs to the new python3(*) form
+- (.spec) fix the build of lib compat pkgs (%%if_without devel)
+
 * Thu Mar 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.58.0-alt2
 - (.spec) ugly LD_PRELOAD replaced with nice new
   %%requires_python{,3}_ABI_for_files.

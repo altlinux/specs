@@ -9,7 +9,7 @@ Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 %define suff 12
 Name: %oname
 Version: 2.9
-Release: alt4
+Release: alt4.1
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -612,6 +612,10 @@ chrpath -d %buildroot%python_sitelibdir/PyQt4/Qsci.so
 %_docdir/%libname-%version
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.9-alt4.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Jul 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt4
 - Rebuilt with new SIP
 

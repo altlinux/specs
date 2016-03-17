@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2.6
-Release: alt1.dev.git20150415.1
+Release: alt1.dev.git20150415.1.1
 Summary: A Python wrapper for the extremely fast Blosc compression library
 License: MIT / BSD
 Group: Development/Python
@@ -190,6 +190,10 @@ nosetests3 -v --with-doctest %oname
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.6-alt1.dev.git20150415.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.6-alt1.dev.git20150415.1
 - NMU: Use buildreq for BR.
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 Summary: Package provides Binary-, RedBlack- and AVL-Trees in Python and Cython
 License: MIT
 Group: Development/Python
@@ -94,6 +94,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.2-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Feb 12 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1
 - Initial build for Sisyphus
 

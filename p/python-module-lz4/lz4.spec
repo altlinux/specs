@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1.git20140728.1
+Release: alt1.git20140728.1.1
 Summary: LZ4 Bindings for Python
 License: BSD
 Group: Development/Python
@@ -86,6 +86,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt1.git20140728.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1.git20140728.1
 - NMU: Use buildreq for BR.
 

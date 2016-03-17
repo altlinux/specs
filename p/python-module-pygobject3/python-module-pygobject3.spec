@@ -6,7 +6,7 @@
 
 Name: python-module-%{_name}3
 Version: %major.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python bindings for GObject
 
@@ -200,6 +200,10 @@ popd
 %endif
 
 %changelog
+* Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.20.0-alt2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 3.20.0-alt2
 - NMU LD_PRELOAD changes for Python 3.5
 

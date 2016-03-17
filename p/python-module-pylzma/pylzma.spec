@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.6.2
-Release: alt1.git20141116
+Release: alt1.git20141116.1
 Summary: Python bindings for the LZMA library by Igor Pavlov
 License: LGPLv2.1+
 Group: Development/Python
@@ -84,6 +84,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.6.2-alt1.git20141116.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Nov 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.6.2-alt1.git20141116
 - Initial build for Sisyphus
 

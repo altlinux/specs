@@ -1,6 +1,6 @@
 Name: borg
 Version: 0.24.0
-Release: alt1
+Release: alt1.1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -47,5 +47,9 @@ The authenticated encryption technique makes it suitable for backups to not full
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.24.0-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Aug 14 2015 Vitaly Lipatov <lav@altlinux.ru> 0.24.0-alt1
 - initial build for ALT Linux Sisyphus

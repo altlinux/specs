@@ -4,7 +4,7 @@
 
 Name: python-module-yaml
 Version: 3.11
-Release: alt1.hg20141128
+Release: alt1.hg20141128.1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 License: MIT/X Consortium
@@ -79,6 +79,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.11-alt1.hg20141128.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jul 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.11-alt1.hg20141128
 - New snapshot
 

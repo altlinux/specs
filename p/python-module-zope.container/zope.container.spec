@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt2.dev0.git20150608
+Release: alt2.dev0.git20150608.1
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
@@ -180,6 +180,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt2.dev0.git20150608.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt2.dev0.git20150608
 - BRs updated with buildreq (many non-essential deps have been cleared away with
   python-2.7.11-alt2 and the self-dep with python-module-setuptools-18.1-alt3)

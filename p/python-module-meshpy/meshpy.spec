@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2014.1
-Release: alt3.git20140706
+Release: alt3.git20140706.1
 Summary: Triangular and Tetrahedral Mesh Generator in Python
 License: MIT
 Group: Development/Python
@@ -148,6 +148,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2014.1-alt3.git20140706.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2014.1-alt3.git20140706
 - NMU: added python-module-setuptools to BRs.
 

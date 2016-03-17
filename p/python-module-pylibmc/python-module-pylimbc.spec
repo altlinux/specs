@@ -3,7 +3,7 @@
 
 Name: python-module-%oname
 Version: 1.5.0
-Release: alt1.1
+Release: alt1.1.1
 Summary: Quick and small memcached client for Python
 License: BSD
 Group: Development/Python
@@ -68,6 +68,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.0-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Dec 02 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1.1
 - Rebuild with new libmemcached 1.0.1
 

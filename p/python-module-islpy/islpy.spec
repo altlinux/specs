@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2014.2
-Release: alt2.1
+Release: alt2.1.1
 Summary: Wrapper around isl, an integer set library
 License: MIT
 Group: Development/Python
@@ -158,6 +158,10 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2014.2-alt2.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2014.2-alt2.1
 - NMU: Use buildreq for BR.
 

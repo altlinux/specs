@@ -5,7 +5,7 @@
 
 Name: gnome-builder
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -170,6 +170,10 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 
 %changelog
+* Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.20.0-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

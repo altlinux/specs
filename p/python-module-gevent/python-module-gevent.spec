@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt2.b4.dev0.git20150825.2
+Release: alt2.b4.dev0.git20150825.2.1
 
 Summary: Python network library that uses greenlet and libevent for easy and scalable concurrency
 
@@ -189,6 +189,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt2.b4.dev0.git20150825.2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 24 2016 Denis Medvedev <nbr@altlinux.org> 1.1.0-alt2.b4.dev0.git20150825.2
 - NMU dependencies organization.
 

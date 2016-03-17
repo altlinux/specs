@@ -1,7 +1,7 @@
 %define oname cnamedtuple
 Name: python3-module-%oname
 Version: 0.1.4
-Release: alt1.git20150119.1
+Release: alt1.git20150119.1.1
 Summary: collections.namedtuple implemented in c
 License: ASLv2.0
 Group: Development/Python3
@@ -37,6 +37,10 @@ An implementation of namedtuple written in c for warp speed.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.git20150119.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1.git20150119.1
 - NMU: Use buildreq for BR.
 

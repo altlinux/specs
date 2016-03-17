@@ -23,7 +23,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt2
+Release: alt2.1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -395,6 +395,10 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.3.1-alt2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 5.3.1-alt2
 - 5.3.1
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.5.1
-Release: alt2
+Release: alt2.1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -207,6 +207,10 @@ find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print 
 %endif
 
 %changelog
+* Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.5.1-alt2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.5.1-alt2
 - (.spec) %%__python3_includedir was fixed in rpm-build-python3-0.1.9.2-alt1.
 

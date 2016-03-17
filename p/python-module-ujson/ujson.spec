@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.34
-Release: alt1.git20140416
+Release: alt1.git20140416.1
 Summary: Ultra fast JSON encoder and decoder for Python
 License: BSD
 Group: Development/Python
@@ -60,6 +60,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.34-alt1.git20140416.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Sep 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.34-alt1.git20140416
 - Initial build for Sisyphus
 

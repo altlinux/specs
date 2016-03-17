@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.4.6
-Release: alt1.git20150323.1
+Release: alt1.git20150323.1.1
 
 Summary: A Python MessagePack (de)serializer
 
@@ -83,6 +83,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.6-alt1.git20150323.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.6-alt1.git20150323.1
 - NMU: Use buildreq for BR.
 

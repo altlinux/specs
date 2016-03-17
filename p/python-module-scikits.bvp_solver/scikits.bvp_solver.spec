@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt3.git20120926.1
+Release: alt3.git20120926.1.1
 Summary: Python package for solving two-point boundary value problems
 License: BSD
 Group: Development/Python
@@ -180,6 +180,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt3.git20120926.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Feb 29 2016 Denis Medvedev <nbr@altlinux.org> 1.1-alt3.git20120926.1
 - just rebuild.
 

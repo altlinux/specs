@@ -2,7 +2,7 @@
 
 Name: z3
 Version: 4.3.2
-Release: alt1.git20141024
+Release: alt1.git20141024.1
 Summary: High-performance theorem prover
 License: Noncommercial use only
 Group: Sciences/Mathematics
@@ -151,6 +151,10 @@ python3 build/example.py
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.3.2-alt1.git20141024.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Tue Mar 17 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1.git20141024
 - Initial build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.git20091202.1
+Release: alt1.git20091202.1.1
 Summary: Python ctypes wrapper around Bob Jenkins' hash functions
 License: MIT
 Group: Development/Python
@@ -75,6 +75,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.git20091202.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.git20091202.1
 - NMU: Use buildreq for BR.
 

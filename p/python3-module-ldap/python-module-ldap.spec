@@ -3,7 +3,7 @@
 Summary: LDAP client API for Python
 Name: python3-module-ldap
 Version: 2.3.13
-Release: alt1
+Release: alt1.1
 Source0: %oname-%version.tar
 License: Python-style license
 Group: Development/Python3
@@ -42,6 +42,10 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.13-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jul 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.13-alt1
 - Initial build for Sisyphus
 

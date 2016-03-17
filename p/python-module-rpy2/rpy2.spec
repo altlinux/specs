@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7.8
-Release: alt1
+Release: alt1.1
 Summary: A simple and efficient access to R from Python, version 2
 License: GPLv2
 Group: Development/Python
@@ -259,6 +259,10 @@ python3 -m unittest discover -v rpy2.robjects
 %endif
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7.8-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Mar 25 2016 Denis Medvedev <nbr@altlinux.org> 2.7.8-alt1
 - New version
 

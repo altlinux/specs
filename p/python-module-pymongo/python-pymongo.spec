@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
 
 Name:           python-module-pymongo
 Version:        3.0.3
-Release:        alt1.1
+Release:        alt1.1.1
 Summary:        Python driver for MongoDB
 
 Group:          Development/Python
@@ -241,6 +241,10 @@ nosetests --exclude="$exclude"
 popd
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.3-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.0.3-alt1.1
 - NMU: Use buildreq for BR.
 

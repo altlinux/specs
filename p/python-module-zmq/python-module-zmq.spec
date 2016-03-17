@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 14.7.0
-Release: alt2
+Release: alt2.1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -178,6 +178,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 14.7.0-alt2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Oct 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.7.0-alt2
 - Switched to build with default g++.
 

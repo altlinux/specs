@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.84
-Release: alt1.git20141109
+Release: alt1.git20141109.1
 Summary: Universal Python binding for the LMDB 'Lightning' Database
 License: OpenLDAP BSD
 Group: Development/Python
@@ -87,6 +87,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.84-alt1.git20141109.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.84-alt1.git20141109
 - Initial build for Sisyphus
 

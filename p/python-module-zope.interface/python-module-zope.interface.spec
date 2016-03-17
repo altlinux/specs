@@ -8,10 +8,10 @@ Name: python-module-%oname
 Version: 4.1.3
 #define subver c1
 Url: http://www.python.org/pypi/zope.interface
-%ifdef subver
-Release: alt0.%subver
+%ifndef subver
+Release: alt1.dev0.git20150601.4
 %else
-Release: alt1.dev0.git20150601.3
+Release: alt0.%subver
 %endif
 # git://github.com/zopefoundation/zope.interface.git
 Source0: %name-%version.tar
@@ -179,6 +179,10 @@ popd
 %endif
 
 %changelog
+* Tue Mar 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.3-alt1.dev0.git20150601.4
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Tue Mar 22 2016 Denis Medvedev <nbr@altlinux.org> 4.1.3-alt1.dev0.git20150601.3
 - Fix deps for python 3.5
 

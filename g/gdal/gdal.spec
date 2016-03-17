@@ -9,7 +9,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -248,6 +248,10 @@ sed -i 's|__bool__ = __nonzero__||' \
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.2-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Tue Mar 08 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.2-alt1
 - NMU: 2.0.0 -> 2.0.2 (fixes FTBFS).
 

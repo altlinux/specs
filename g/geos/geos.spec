@@ -2,7 +2,7 @@
 
 Name: geos
 Version: 3.6.0
-Release: alt1.dev.git20150816
+Release: alt1.dev.git20150816.1
 
 Summary: Geometry Engine - Open Source
 Group: Sciences/Geosciences
@@ -196,6 +196,10 @@ bzip2 ChangeLog
 %doc doc/doxygen_docs/html/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.6.0-alt1.dev.git20150816.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.0-alt1.dev.git20150816
 - Version 3.6.0dev
 

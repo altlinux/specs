@@ -1,6 +1,6 @@
 Name: libxml2
 Version: 2.9.3.0.5.6511
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -248,6 +248,10 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:2.9.3.0.5.6511-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Mar 11 2016 Dmitry V. Levin <ldv@altlinux.org> 1:2.9.3.0.5.6511-alt1
 - v2.9.3 -> v2.9.3-5-g65112cb.
 

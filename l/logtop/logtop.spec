@@ -1,6 +1,6 @@
 Name: logtop
 Version: 0.6.1
-Release: alt1.git20140901
+Release: alt1.git20140901.1
 Summary: Display real time statistics of whatever you want
 License: BSD
 Group: Text tools
@@ -85,6 +85,10 @@ sed -i '/^ogtop_swigregister/d' %buildroot%python3_sitelibdir/%name.py
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.1-alt1.git20140901.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri May 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20140901
 - Initial build for Sisyphus
 

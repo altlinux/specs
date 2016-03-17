@@ -2,7 +2,7 @@
 
 Name: cracklib
 Version: 2.9.6
-Release: alt1
+Release: alt1.1
 
 Summary: A password-checking library.
 License: %lgpl2plus
@@ -153,6 +153,10 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.9.6-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Oct 26 2015 Yuri N. Sedunov <aris@altlinux.org> 2.9.6-alt1
 - 2.9.6
 

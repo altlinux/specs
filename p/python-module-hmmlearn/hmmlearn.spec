@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2
+Release: alt2.1
 Summary: Hidden Markov Models in Python, with scikit-learn like API
 License: BSD
 Group: Development/Python
@@ -136,6 +136,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Mar 02 2016 Denis Medvedev <nbr@altlinux.org> 0.2.0-alt2
 - Rebuild.Looks like gcc or glibc on x86_64 decreased accuracy
 of calculations. Error only on Sisyphus, increased threshold

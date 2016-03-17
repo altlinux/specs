@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20141212
+Release: alt1.git20141212.1
 Summary: Python bindings for the XML Security Library
 License: MIT
 Group: Development/Python
@@ -96,6 +96,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20141212.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Feb 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20141212
 - Initial build for Sisyphus
 

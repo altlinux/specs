@@ -3,7 +3,7 @@
 %define oname sao
 Name: python3-module-%oname
 Version: 0.1
-Release: alt1.b1.git20130306
+Release: alt1.b1.git20130306.1
 Summary: Python interface for the SAO developed projects, such as XPA,DS9 & Funtools
 License: BSD
 Group: Development/Python
@@ -37,6 +37,10 @@ for ds9 based on the XPA module.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1.b1.git20130306.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.b1.git20130306
 - Initial build for Sisyphus
 

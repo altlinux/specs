@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.9
-Release: alt1.dev0.git20140903
+Release: alt1.dev0.git20140903.1
 Summary: A library to allow customization of the process title
 License: BSD
 Group: Development/Python
@@ -86,6 +86,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.9-alt1.dev0.git20140903.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Nov 21 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.9-alt1.dev0.git20140903
 - Initial build for Sisyphus
 

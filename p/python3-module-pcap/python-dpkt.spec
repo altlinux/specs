@@ -1,5 +1,5 @@
 Version: 1.1.1
-Release: alt1.git20141230
+Release: alt1.git20141230.1
 Summary: Simplified object-oriented Python extension module for libpcap
 Url: http://code.google.com/p/pypcap/
 License: BSD
@@ -48,6 +48,10 @@ python3 test.py -v
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1.git20141230.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 19 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141230
 - Initial build for Sisyphus
 

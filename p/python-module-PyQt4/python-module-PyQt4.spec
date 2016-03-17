@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.11.4
-Release: alt2.1
+Release: alt2.1.1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -225,6 +225,10 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.11.4-alt2.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.11.4-alt2.1
 - NMU: Use buildreq for BR.
 

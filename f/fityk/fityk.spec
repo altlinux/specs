@@ -6,7 +6,7 @@
 Summary: Tool for fitting and analyzing data
 Name: fityk
 Version: 1.3.0
-Release: alt4.git20141119
+Release: alt4.git20141119.1
 License: GPL
 Group: Sciences/Other
 Url: https://github.com/wojdyr/fityk
@@ -200,6 +200,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt4.git20141119.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Oct 04 2015 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt4.git20141119
 - Rebuilt for new gcc5 C++11 ABI.
 

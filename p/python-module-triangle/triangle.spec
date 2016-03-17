@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2013.04.05
-Release: alt1.git20141030.1
+Release: alt1.git20141030.1.1
 Summary: Python wrapper for libtriangle
 License: LGPL
 Group: Development/Python
@@ -143,6 +143,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2013.04.05-alt1.git20141030.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2013.04.05-alt1.git20141030.1
 - NMU: Use buildreq for BR.
 

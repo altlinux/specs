@@ -2,7 +2,7 @@
 %def_with python3
 
 Version: 2.7
-Release: alt1.dev0.git20150602.1
+Release: alt1.dev0.git20150602.1.1
 %setup_python_module %oname
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python
@@ -105,6 +105,10 @@ sed -i 's|_psycopg|%oname._psycopg|' \
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7-alt1.dev0.git20150602.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 2.7-alt1.dev0.git20150602.1
 - NMU: Use buildreq for BR.
 

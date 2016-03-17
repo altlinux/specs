@@ -2,7 +2,7 @@
 
 Name: log4cplus
 Version: 2.0.0
-Release: alt1.git20150807
+Release: alt1.git20150807.1
 Summary: Logging library to C++
 License: Apache License
 Group: Development/C++
@@ -176,6 +176,10 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt1.git20150807.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Aug 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.git20150807
 - New snapshot (ALT #31238)
 

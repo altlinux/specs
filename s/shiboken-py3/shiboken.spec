@@ -1,7 +1,7 @@
 %define oname shiboken
 Name: %oname-py3
 Version: 1.2.2
-Release: alt3.git20140422
+Release: alt3.git20140422.1
 Summary: Generates bindings for C++ libraries using CPython source code (Python 3)
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
@@ -122,6 +122,10 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt3.git20140422.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt3.git20140422
 - (.spec) Fixed %%_libpython3 path (a new macro).
 - Denis Medvedev changed environment for Python3.5 build.

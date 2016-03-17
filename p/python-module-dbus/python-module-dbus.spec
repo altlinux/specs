@@ -7,7 +7,7 @@
 
 Name: python-module-dbus
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -136,6 +136,10 @@ done
 %exclude %_docdir/%_name
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 

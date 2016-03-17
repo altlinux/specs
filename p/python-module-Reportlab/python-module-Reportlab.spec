@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0
-Release: alt1.1
+Release: alt1.1.1
 License: BSD license (see LICENSE.txt for details)
 Summary: The Reportlab Toolkit
 Group: Development/Python
@@ -133,6 +133,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 3.0-alt1.1
 - NMU: Use buildreq for BR.
 
