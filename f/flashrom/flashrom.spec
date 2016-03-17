@@ -1,5 +1,5 @@
 Name: flashrom
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Universal flash programming utility
@@ -52,6 +52,9 @@ install -dm755 %buildroot%_sbindir
 %_man8dir/*
 
 %changelog
+* Thu Mar 17 2016 Michael Shigorin <mike@altlinux.org> 0.9.9-alt1
+- new version (watch file uupdate)
+
 * Mon Mar 02 2015 Michael Shigorin <mike@altlinux.org> 0.9.8-alt1
 - new version (watch file uupdate)
 
