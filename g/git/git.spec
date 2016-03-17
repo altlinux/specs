@@ -1,6 +1,6 @@
 Name: git
-Version: 2.6.5
-Release: alt3
+Version: 2.6.6
+Release: alt1
 
 Summary: Git core and tools
 License: GPLv2
@@ -498,8 +498,12 @@ popd
 %endif #emacs
 
 %changelog
+* Thu Mar 17 2016 Dmitry V. Levin <ldv@altlinux.org> 2.6.6-alt1
+- 2.6.5 -> 2.6.6.
+
 * Thu Mar 17 2016 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt3
-- Merged jk/path-name-safety-2.6 (closes: #31896).
+- Merged jk/path-name-safety-2.6
+  (fixes CVE‑2016‑2315 and CVE-2016-2324; closes: #31896).
 
 * Mon Jan 11 2016 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt2
 - Backported commit v2.7.0-rc2~9^2~11 (closes: #31665).
