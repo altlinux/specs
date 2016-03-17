@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: WSGI Middleware for Managing ZODB Database Conections
 License: ZPLv2.1
 Group: Development/Python
@@ -154,6 +154,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sat Jul 26 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Version 1.1.0
 - Added module for Python 3

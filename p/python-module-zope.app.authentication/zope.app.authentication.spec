@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 3.9
-Release: alt3
+Release: alt3.1
 Summary: Principals and groups management for the pluggable authentication utility
 License: ZPLv2.1
 Group: Development/Python
@@ -136,6 +136,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.9-alt3.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9-alt3
 - Added module for Python 3
 

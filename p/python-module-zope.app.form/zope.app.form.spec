@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.0.2
-Release: alt4
+Release: alt4.1
 Summary: The Original Zope 3 Form Framework
 License: ZPLv2.1
 Group: Development/Python
@@ -144,6 +144,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.2-alt4.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Thu Jul 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt4
 - Added module for Python 3
 
