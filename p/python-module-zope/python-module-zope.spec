@@ -1,18 +1,15 @@
-%define oname zope
-%define version 3.3.0
-%define release alt8.3
-
-%def_with python3
-
-%setup_python_module %oname
-
 Summary: The ``zope`` package is a pure namespace package
-Name: %packagename
-Version: %version
-Release: %release
+Version: 3.3.0
+Release: alt8.4
 License: ZPL
 Group: Development/Python
 Packager: Python Development Team <python@packages.altlinux.org>
+
+%define oname zope
+%def_with python3
+%setup_python_module %oname
+Name: %packagename
+
 Requires: python-module-zope.interface >= 3.3.0-alt2
 Requires: python-module-zc
 %if_with python3
@@ -80,6 +77,9 @@ install -m644 %buildroot/%python_sitelibdir/%modulename/__init__.py \
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.0-alt8.4
+- (.spec) simplified the use of macros (It is better for girar-nmu, too).
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.0-alt8.3
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
