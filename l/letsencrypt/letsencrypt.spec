@@ -1,5 +1,5 @@
 Name: letsencrypt
-Version: 0.4.0
+Version: 0.4.2
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -17,6 +17,14 @@ BuildArch: noarch
 BuildRequires: python-devel python-module-distribute
 
 Requires: python-module-letsencrypt = %version-%release
+
+Requires: python-module-zope.component
+Requires: python-module-zope.interface >= 4.1.0
+Requires: python-module-pyasn1
+Requires: dialog
+# Due Prior to Python 2.7.9 the stdlib SSL module did not allow a user to configure
+# See /usr/lib/python2.7/site-packages/acme/client.py
+Requires: python-base >= 2.7.9
 
 # Required for documentation
 #BuildRequires: python-sphinx
@@ -124,6 +132,10 @@ mkdir -p %buildroot%_logdir/%name
 #%doc docs/_build/html
 
 %changelog
+* Fri Mar 18 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
+- new version 0.4.2 (with rpmrb script)
+- fix requires
+
 * Wed Feb 17 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - initial build for ALT Linux Sisyphus
 
