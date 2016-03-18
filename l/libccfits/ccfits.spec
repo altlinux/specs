@@ -1,8 +1,8 @@
 %define _name CCfits
 
 Name: libccfits
-Version: 2.4
-Release: alt2.1
+Version: 2.5
+Release: alt1
 
 Summary: A C++ interface for cfitsio
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits
 
 Source: http://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits/%_name-%version.tar.gz
 # fc
-Patch: CCfits-1.6-removerpath.patch
+Patch: CCfits-2.5-removerpath.patch
 
 BuildRequires: gcc-c++ gcc-fortran libcfitsio-devel
 
@@ -41,7 +41,8 @@ Conflicts: %name < %version
 This package contains the full API documentation for %name.
 
 %prep
-%setup -n %_name
+%setup -c
+%setup -DT -n %name-%version/%_name
 %patch -p1
 rm -rf html/*.pl
 
@@ -54,6 +55,7 @@ rm -rf html/*.pl
 %makeinstall_std
 mkdir -p %buildroot%_datadir/doc/%name
 cp -R html %buildroot%_datadir/doc/%name/
+
 %files
 %_libdir/*.so.*
 %doc License.txt
@@ -61,14 +63,17 @@ cp -R html %buildroot%_datadir/doc/%name/
 %files devel
 %exclude %_bindir/cookbook
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
-%_includedir/*
+%_pkgconfigdir/%_name.pc
+%_includedir/%_name/
 %doc CHANGES
 
 %files devel-doc
 %_datadir/doc/%name/
 
 %changelog
+* Fri Mar 18 2016 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
+- 2.5
+
 * Tue Jun 16 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
