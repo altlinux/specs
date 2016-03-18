@@ -1,8 +1,8 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.22
-Release: alt2
+Version: 0.23
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -33,8 +33,12 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 %perl_vendor_privlib/D*
 %_bindir/distromap*
 %_bindir/distrodb*
+%_man1dir/distro*
 
 %changelog
+* Fri Mar 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- stable release
+
 * Wed Nov 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.22-alt2
 - added texlive-python exception
 
