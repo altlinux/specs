@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.1.1
-Release: alt2.09e4
+Release: alt3.ec88
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -39,9 +39,15 @@ Patch23: palemoon_version-26.1.1.patch
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
-# Automatically added by buildreq on Sun Jan 10 2016
-# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libpango-devel libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-modules-json unzip xorg-cf-files yasm zip
+# BEGIN SourceDeps(oneline):
+# Automatically added by buildreq on Wed Mar 16 2016
+# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libpango-devel libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-beaker python-module-cssselect python-module-docutils python-module-ecdsa python-module-ed25519 python-module-genshi python-module-jinja2 python-module-lingua python-module-nss python-module-numpy python-module-polib python-module-pycrypto python-module-pytz python-module-snowballstemmer python-module-sphinx python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-module-html5lib python-module-mako unzip xorg-cf-files yasm zip
+
+BuildRequires: libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(CGI/Carp.pm) perl(Carp.pm) perl(DBI.pm) perl(Errno.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(GD.pm) perl(GD/Graph/Data.pm) perl(GD/Graph/colour.pm) perl(GD/Graph/lines.pm) perl(GD/Graph/linespoints.pm) perl(GD/Graph/mixed.pm) perl(GD/Graph/points.pm) perl(HTTP/Request/Common.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(List/Util.pm) perl(Test/Harness.pm) perl(Time/HiRes.pm) perl(Time/Local.pm) perl(Time/localtime.pm) perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(base.pm) perl(diagnostics.pm) perl(strict.pm) perl(subs.pm) python-devel texinfo
+# END SourceDeps(oneline)
+
+BuildRequires:  gstreamer1.0-devel
 
 BuildRequires: autoconf_2.13 
 
@@ -311,6 +317,10 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Mar 16 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt3.ec88
+- Version from https://github.com/trav90/Pale-Moon/tree/gstreamer1.x
+- Add Buildreq
+
 * Sun Mar 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt2.09e4
 - Update from git
 
@@ -406,5 +416,4 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
 
