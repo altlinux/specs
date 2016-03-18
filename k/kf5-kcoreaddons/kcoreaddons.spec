@@ -1,7 +1,7 @@
 %define rname kcoreaddons
 
 Name: kf5-%rname
-Version: 5.19.0
+Version: 5.20.0
 Release: alt1
 %K5init altplace
 
@@ -77,6 +77,9 @@ KF5 library
 %_K5lib/libKF5CoreAddons.so.*
 
 %changelog
+* Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
+- new version
+
 * Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
 - new version
 

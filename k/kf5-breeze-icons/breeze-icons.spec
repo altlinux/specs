@@ -1,8 +1,8 @@
 %define rname breeze-icons
 
 Name: kf5-%rname
-Version: 5.19.0
-Release: alt3
+Version: 5.20.0
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -89,6 +89,9 @@ done
 %_iconsdir/breeze*/
 
 %changelog
+* Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
+- new version
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt3
 - provide kde4-icon-theme
 

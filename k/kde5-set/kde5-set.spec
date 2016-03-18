@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.0.0
-Release: alt26
+Release: alt27
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -19,7 +19,7 @@ Requires: kf5-kio kf5-kded kf5-kwayland-integration
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
-Requires: qt5-dbus kf5-kwin kf5-kactivities kf5-plasma-desktop kf5-kinit kf5-kdeclarative
+Requires: qt5-dbus kf5-kwin kf5-plasma-desktop kf5-kinit kf5-kdeclarative
 Requires: kde5-dolphin
 
 %package -n kde5-small
@@ -105,6 +105,9 @@ Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
 %files -n kde5-somedevel
 
 %changelog
+* Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt27
+- update requires
+
 * Wed Mar 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt26
 - update requires
 

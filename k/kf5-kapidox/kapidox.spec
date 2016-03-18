@@ -1,7 +1,7 @@
 %define rname kapidox
 
 Name: kf5-%rname
-Version: 5.19.0
+Version: 5.20.0
 Release: alt1
 %K5init altplace
 %setup_python_module %rname
@@ -79,6 +79,9 @@ mv %buildroot/usr/lib/python* %buildroot/%_libdir/
 #%_K5archdata/mkspecs/modules/qt_kapidox.pri
 
 %changelog
+* Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
+- new version
+
 * Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
 - new version
 

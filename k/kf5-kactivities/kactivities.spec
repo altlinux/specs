@@ -1,7 +1,7 @@
 %define rname kactivities
 
 Name: kf5-%rname
-Version: 5.19.0
+Version: 5.20.0
 Release: alt1
 %K5init altplace
 
@@ -57,7 +57,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/core/libKActivities.pc.cmake
+sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/libKActivities.pc.cmake
 
 %build
 %K5build
@@ -70,16 +70,15 @@ sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/co
 %files common -f %name.lang
 %doc README.md
 
-%files
-%_K5bin/kactivitymanagerd
-%_K5lib/libkactivitymanagerd_plugin.so
-%_K5plug/kactivitymanagerd/
-%_K5plug/*.so
-%_K5qml/org/kde/activities/
-%_K5data/kactivitymanagerd/
-%_K5srv/*.protocol
-%_K5srv/*.desktop
-%_K5srvtyp/*.desktop
+#%files
+#%_K5bin/kactivitymanagerd
+#%_K5lib/libkactivitymanagerd_plugin.so
+#%_K5plug/kactivitymanagerd/
+#%_K5plug/*.so
+#%_K5data/kactivitymanagerd/
+#%_K5srv/*.protocol
+#%_K5srv/*.desktop
+#%_K5srvtyp/*.desktop
 
 %files devel
 %_K5inc/kactivities_version.h
@@ -91,8 +90,12 @@ sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/co
 
 %files -n libkf5activities
 %_K5lib/libKF5Activities.so.*
+%_K5qml/org/kde/activities/
 
 %changelog
+* Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
+- new version
+
 * Tue Feb 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.19.0-alt1
 - new version
 
