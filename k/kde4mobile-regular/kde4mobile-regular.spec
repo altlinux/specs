@@ -6,7 +6,7 @@
 
 Name:    kde4mobile-regular
 Version: 4.10
-Release: alt6
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: KDE4 mobile common collection
@@ -57,7 +57,7 @@ Requires: kde4-i18n-ru
 Requires: kde4-i18n-uk
 
 Requires: kde4multimedia-dragonplayer
-Requires: kamoso
+Requires: kde4-kamerka
 Requires: kde4-telepathy
 Requires: bluedevil
 Requires: kde4-webkitpart
@@ -79,6 +79,9 @@ KDE Active package to easy select packages during install
 %files
 
 %changelog
+* Fri Mar 18 2016 Sergey V Turchin <zerg@altlinux.org> 4.10-alt7
+- change kamoso to kde4-kamerka
+
 * Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 4.10-alt6
 - change bangarang to dragonplayer
 
