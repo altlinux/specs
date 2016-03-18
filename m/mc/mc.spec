@@ -2,7 +2,7 @@
 
 Name: mc
 Version: 4.8.16
-Release: alt1
+Release: alt2
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -16,7 +16,6 @@ Source3: mc-dark.color
 Source4: mc-16.png
 Source5: mc-32.png
 Source6: mc.zsh
-Source7: mc-f90.syntax
 
 %add_findreq_skiplist */lib/mc/ext.d/*
 %add_findreq_skiplist */lib/mc/extfs.d/*
@@ -37,6 +36,9 @@ Patch102: mc-4.8.16-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
 Patch103: mc-4.8.6-alt-extfs-udar.patch
+
+# http://www.midnight-commander.org/ticket/3621
+Patch104: mc-4.8.16-3621_cpio_segfault.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -91,6 +93,7 @@ needed for working all components (some vfs for example)
 #patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch104 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -128,9 +131,6 @@ install -m644 %SOURCE3 .
 
 # Install SynCE VFS ( http://www.midnight-commander.org/ticket/2905 )
 install -m755 synce-mcfs/src/synce* %buildroot%_libexecdir/%name/extfs.d/
-
-# http://bugzilla.altlinux.org/31520
-cp -f %SOURCE7 %buildroot%_datadir/mc/syntax/f90.syntax
 
 # .desktop
 cat <<__EOF__>%name.desktop
@@ -183,6 +183,13 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Fri Mar 18 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.16-alt2
+- merged with git://github.com/MidnightCommander/mc:
+   Ticket #3606 (fix segfault due to incorrect value of SHELL environment variable)
+   Ticket #3618 (update f90 syntax)
+   Ticket #3620 (patchfs: fix syntax error)
+- added mc-4.8.16-3621_cpio_segfault.patch (MC Ticket 3621)
+
 * Mon Mar 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.16-alt1
 - 4.8.16
 - droped fix for MC Ticket #3574 (fixed in upstream)
