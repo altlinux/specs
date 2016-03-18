@@ -2,8 +2,8 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.15
-Release: alt2
+Version: 0.16
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,9 @@ install -m 755 repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Fri Mar 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- stable release
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt2
 - NMU: added missing Pod dependencies
 
