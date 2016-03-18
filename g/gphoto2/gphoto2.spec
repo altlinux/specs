@@ -1,5 +1,5 @@
 Name: gphoto2
-Version: 2.5.8
+Version: 2.5.9
 Release: alt1
 
 Group: Graphics
@@ -42,7 +42,7 @@ gPhoto - универсальный комплект программ и биб�
 
 %install
 %make DESTDIR=%buildroot install
-
+/bin/cp {AUTHORS,NEWS,README} %buildroot%_datadir/doc/%name/
 %find_lang --output=%name.lang %name
 
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
@@ -50,12 +50,13 @@ gPhoto - универсальный комплект программ и биб�
 %files -f %name.lang
 %_bindir/%name
 %_man1dir/%{name}*
-#_docdir/%name-%version/*
-%doc AUTHORS NEWS README
-%dir %_docdir/%name
-%doc %_docdir/%name/test-hook.sh
+%dir %_datadir/doc/%name
+%_datadir/doc/%name
 
 %changelog
+* Fri Mar 18 2016 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.9-alt1
+- 2.5.9
+
 * Mon Jul 06 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.8-alt1
 - 2.5.8
 
