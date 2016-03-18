@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.20
+Version: 0.21
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -30,16 +30,17 @@ rm -f *.spec
 %install
 mkdir -p %buildroot/%_bindir
 install -m 755 repocop-report-* %buildroot/%_bindir/
-ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 
 %files
 #doc README ChangeLog
-%_bindir/repocop-report-distromap-db
 %_bindir/repocop-report-distrodb
-%_bindir/repocop-report-helper-distromap-db-preprocess
+%_bindir/repocop-report-helper-distrodb-preprocess
 #%_man1dir/repocop-report-*
 
 %changelog
+* Fri Mar 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- new version - cmake support
+
 * Fri Mar 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - shell code moved to repocop-report-helper-distromap-db-preprocess
 
