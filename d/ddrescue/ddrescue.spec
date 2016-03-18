@@ -1,8 +1,8 @@
 %def_without static
 
 Name: ddrescue
-Version: 1.20
-Release: alt1.1
+Version: 1.21
+Release: alt1
 
 Summary: Data copying in presence of I/O errors
 License: GPLv3+
@@ -64,6 +64,9 @@ make check
 %endif
 
 %changelog
+* Fri Mar 18 2016 Michael Shigorin <mike@altlinux.org> 1.21-alt1
+- new version (watch file uupdate)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1.1
 - NMU: added BR: texinfo
 
