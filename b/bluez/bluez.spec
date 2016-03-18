@@ -2,8 +2,8 @@
 %def_enable obex
 
 Name: bluez
-Version: 5.37
-Release: alt2
+Version: 5.38
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPLv2+
@@ -126,6 +126,9 @@ chkconfig bluetoothd on
 %_prefix/lib/cups/backend/bluetooth
 
 %changelog
+* Fri Mar 18 2016 Yuri N. Sedunov <aris@altlinux.org> 5.38-alt1
+- 5.38
+
 * Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 5.37-alt2
 - rebuilt against libical.so.2
 
