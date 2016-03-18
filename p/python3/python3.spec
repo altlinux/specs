@@ -59,7 +59,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %pybasever.1
-Release: alt6
+Release: alt7
 License: Python
 Group: Development/Python3
 
@@ -69,7 +69,7 @@ BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
 BuildPreReq: libbluez-devel
-BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel libffi-devel libGL-devel libX11-devel libncurses-devel libssl-devel libreadline-devel libsqlite3-devel tcl-devel tk-devel zlib-devel
+BuildRequires: bzip2-devel db4-devel libexpat-devel gcc-c++ libgmp-devel libffi-devel libGL-devel libX11-devel libncursesw-devel libssl-devel libreadline-devel libsqlite3-devel tcl-devel tk-devel zlib-devel
 
 %if %with_gdbm
 BuildRequires: gdbm-devel
@@ -591,7 +591,7 @@ cp -ar Doc/tools %buildroot%pylibdir/Doc/
 cp -ar Tools/demo %buildroot%pylibdir/Tools/
 
 # Fix for bug #136654
-rm -f %buildroot%pylibdir/email/test/data/audiotest.au %buildroot%pylibdir/test/audiotest.au
+rm %buildroot%pylibdir/test/test_email/data/audiotest.au %buildroot%pylibdir/test/audiotest.au
 
 install -d -m 0755 %buildroot%python3_sitelibdir/__pycache__
 %if "%_lib" == "lib64"
@@ -667,47 +667,44 @@ chmod a-x \
 find %buildroot -name \*.bat -exec rm {} \;
 
 # Get rid of backup files:
-find %buildroot/ -name "*~" -exec rm -f {} \;
-find . -name "*~" -exec rm -f {} \;
-rm -f %buildroot%pylibdir/LICENSE.txt
+find %buildroot/ -name "*~" -exec rm {} \;
+find . -name "*~" -exec rm {} \;
+rm %buildroot%pylibdir/LICENSE.txt
 # Junk, no point in putting in -test sub-pkg
-rm -f $RPM_BUILD_ROOT/%pylibdir/idlelib/testcode.py*
-
-# Get rid of stray patch file from buildroot:
-rm -f %buildroot%pylibdir/test/test_imp.py.apply-our-changes-to-expected-shebang # from patch 4
+rm $RPM_BUILD_ROOT/%pylibdir/idlelib/{,__pycache__/}testcode*.py*
 
 # Get rid of crappy code:
-rm -f %buildroot%pylibdir/Tools/scripts/abitype.py
-rm -f %buildroot%pylibdir/Tools/scripts/fixcid.py
-rm -f %buildroot%pylibdir/encodings/rot_13.py
+rm %buildroot%pylibdir/Tools/scripts/abitype.py
+rm %buildroot%pylibdir/Tools/scripts/fixcid.py
+rm %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
 
 # Get rid of lib2to3 tests (python2)
-rm -rf %buildroot%pylibdir/lib2to3/tests
+rm -r %buildroot%pylibdir/lib2to3/tests
 
 # Get rid of win tests
-rm -f %buildroot%pylibdir/test/test_winreg.py
-rm -f %buildroot%pylibdir/test/test_winsound.py
-rm -f %buildroot%pylibdir/test/win_console_handler.py
-rm -f %buildroot%pylibdir/distutils/tests/test_msvc9compyler.py
+rm %buildroot%pylibdir/test/{,__pycache__/}test_winreg*.py*
+rm %buildroot%pylibdir/test/{,__pycache__/}test_winsound*.py*
+rm %buildroot%pylibdir/test/{,__pycache__/}win_console_handler*.py*
+rm %buildroot%pylibdir/distutils/tests/{,__pycache__/}test_msvc9compiler*.py*
 
 # Get rid of bad* tests
-rm -rf %buildroot%pylibdir/test/bad*.py
+rm %buildroot%pylibdir/test/bad*.py
 
 # Get rid of windows-related stuff
-rm -rf %buildroot%pylibdir/distutils/msvccompiler.py
-rm -rf %buildroot%pylibdir/distutils/msvc9compiler.py
-rm -rf %buildroot%pylibdir/distutils/command/bdist_msi.py
-rm -rf %buildroot%pylibdir/distutils/command/*.exe
-rm -f %buildroot%pylibdir/Tools/scripts/win_add2path.py
+rm %buildroot%pylibdir/distutils/{,__pycache__/}msvccompiler*.py*
+rm %buildroot%pylibdir/distutils/{,__pycache__/}msvc9compiler*.py*
+rm %buildroot%pylibdir/distutils/command/{,__pycache__/}bdist_msi*.py*
+rm %buildroot%pylibdir/distutils/command/*.exe
+rm %buildroot%pylibdir/Tools/scripts/win_add2path.py
 
 # Get rid of crap
-rm -rf %buildroot%pylibdir/ctypes/macholib/fetch_macholib
-rm -f %buildroot%pylibdir/Tools/scripts/md5sum.py
-rm -f %buildroot%pylibdir/Tools/scripts/parseentities.py
+rm -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
+rm %buildroot%pylibdir/Tools/scripts/md5sum.py
+rm %buildroot%pylibdir/Tools/scripts/parseentities.py
 
 # Remove sphinxext (temporary)
-rm -rf %buildroot%pylibdir/Doc/tools/sphinxext
-rm -f %buildroot%pylibdir/Doc/tools/sphinx-build.py
+rm -r %buildroot%pylibdir/Doc/tools/sphinxext
+rm %buildroot%pylibdir/Doc/tools/sphinx-build.py
 
 # Fix end-of-line encodings:
 find %buildroot/ -name \*.py -exec sed -i 's/\r//' {} \;
@@ -727,7 +724,7 @@ find %buildroot \
 # libncurses.so (bug 539917)
 ldd %buildroot/%dynload_dir/_curses*.so \
     | grep curses \
-    | grep libncurses.so && (echo "_curses.so linked against libncurses.so" ; exit 1)
+    | grep libncurses.so && { echo "_curses.so linked against libncurses.so" ; exit 1; }
 
 export LD_LIBRARY_PATH=%buildroot%_libdir
 find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -wholename "*/tests/*" -a -not -wholename "*/scripts/*" -print0 | xargs -0 %buildroot%_bindir/%name -c 'import py_compile, sys; [py_compile.compile(f, dfile=f.partition("%buildroot")[2]) for f in sys.argv[1:]]'
@@ -1010,6 +1007,12 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/Tools/scripts/run_tests.py
 
 %changelog
+* Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt7
+- Unicode problem with ncurses fixed (RH#539917).
+- Unpackage garbage __pycache__/* left-over from unwanted files.
+- (.spec) Clean up to fail if the maintainer's intentions get not
+  fulfilled because the sources or the build environment have changed.
+
 * Sun Mar  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt6
 - Switch to a common /usr/lib{,64}/python3/site-packages
   (without the minor version).
