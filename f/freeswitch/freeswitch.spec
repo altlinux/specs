@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.4.26
-Release: alt1.1
+Version: 1.6.6
+Release: alt2
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -14,6 +14,7 @@ Source1: %name.init
 Source2: %name.tmpfiles
 Source3: %name.sysconfig
 Source4: modules.conf
+Source5: fs_cli.conf
 
 BuildRequires: gcc-c++ gsmlib-devel libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
@@ -21,15 +22,17 @@ BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
 BuildRequires: libspeex-devel libspeexdsp-devel libsqlite3-devel libX11-devel libmp4v2-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre-devel liblua5-devel
-BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel
+BuildRequires: libilbc1-devel >= 0.0.2-alt3 libjs-devel libjson-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
 BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel erlang-devel postgresql-devel
-BuildRequires: java-common java-1.7.0-openjdk-devel /proc
-BuildRequires: libmemcached-devel libopus-devel libv8-3.24-devel
+BuildRequires: java-common java-1.7.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
+BuildRequires: libmemcached-devel libopus-devel libv8-3.24-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel 
+BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libsilk-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
+
 %ifarch %ix86 x86_64
 BuildRequires: libsangoma-devel
 %endif
@@ -133,6 +136,10 @@ Requires: %name-daemon = %version-%release
 Summary: JavaScript support for the FreeSWITCH open source telephony platform
 Group: Development/Other
 
+%package vlc
+Summary: VLC support for the FreeSWITCH open source telephony platform
+Group: System/Servers
+
 %package webui
 Summary: Web-based UI for FreeSWITCH
 Group: System/Servers
@@ -178,6 +185,9 @@ Python support for the FreeSWITCH open source telephony platform
 
 %description v8
 JavaScript support for the FreeSWITCH open source telephony platform
+
+%description vlc
+VLC support for the FreeSWITCH open source telephony platform
 
 %description lang-de
 German language phrases module and directory structure for
@@ -248,6 +258,7 @@ cat %SOURCE4 >modules.conf
     --disable-static \
     #
 make
+make -C src/mod/formats/mod_vlc
 
 pushd libs/freetdm
 %configure --with-modinstdir=%_libdir/freeswitch --with-libpri --with-libisdn --with-pic
@@ -261,6 +272,7 @@ PERL_ARCHLIB=%perl_vendorarch %make_install sysconfdir=%_sysconfdir/freeswitch D
 (cd conf && find dialplan directory -type f | cpio -pmd %buildroot%_sysconfdir/%name)
 install -pm0644 src/mod/endpoints/mod_gsmopen/configs/gsmopen.conf.xml \
 	%buildroot%_sysconfdir/%name/autoload_configs/
+%make_install -C src/mod/formats/mod_vlc sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
 pushd libs/freetdm
 %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
 popd
@@ -270,14 +282,14 @@ mv %buildroot%_libdir/freeswitch/ftmod_* %buildroot%_libdir/freetdm/
 install -pm0755 -D %SOURCE1 %buildroot%_initdir/freeswitch
 install -pm0644 -D %SOURCE2 %buildroot%_tmpfilesdir/freeswitch.conf
 install -pm0644 -D %SOURCE3 %buildroot%_sysconfdir/sysconfig/freeswitch
+install -pm0640 -D %SOURCE5 %buildroot%_sysconfdir/fs_cli.conf
 
 mkdir -p \
-    %buildroot%_sbindir \
+    %buildroot%_datadir/%name/sounds \
     %buildroot%_sysconfdir/freeswitch/ssl \
     %buildroot%_var/lib/freeswitch/recordings \
     %buildroot%_logdir/freeswitch/{cdr-csv,xml_cdr}
 
-mv %buildroot%_bindir/freeswitch %buildroot%_sbindir/
 mv %buildroot/%_sysconfdir/freetdm/autoload_configs/* %buildroot%_sysconfdir/freeswitch/autoload_configs/
 
 find %buildroot%_libdir/%name  -name \*.la -delete
@@ -285,7 +297,17 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 
 %add_python_req_skip _freeswitch
 
+%triggerun daemon -- freeswitch-daemon < 1.6.6-alt2
+if [ $2 -gt 0 ]  && [ $1 -gt 0 ] && [ -f %_sysconfdir/%name/freeswitch.xml ];then 
+    mv %_sysconfdir/%name %_sysconfdir/%name-update-%version-%release
+fi
+
 #---------------------------------------------------------------
+%triggerpostun daemon -- freeswitch-daemon < 1.6.6-alt2
+if [ -f %_sysconfdir/%name-update-%version-%release/freeswitch.xml ];then
+    mv -Tf %_sysconfdir/%name-update-%version-%release %_sysconfdir/%name
+fi
+
 %pre daemon
 /usr/sbin/groupadd -r -f _pbx &>/dev/null
 /usr/sbin/useradd -r -g _pbx -d /dev/null -s /dev/null \
@@ -293,6 +315,9 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 
 %post daemon
 %post_service %name
+if [ ! -f %_sysconfdir/%name/freeswitch.xml ];then
+    cp -aR %_docdir/%name-daemon-%version/conf/vanilla/* %_sysconfdir/%name
+fi
 
 %preun daemon
 %preun_service %name
@@ -331,139 +356,22 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_pkgconfigdir/freetdm.pc
 
 %files daemon
+%doc conf
 %_initdir/freeswitch
 %_tmpfilesdir/freeswitch.conf
 
 %config(noreplace) %_sysconfdir/sysconfig/freeswitch
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/ssl
 
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/*.tpl
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/*.ttml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/*.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/*.conf
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/mime.types
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/autoload_configs
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/abstraction.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/acl.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/alsa.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/blacklist.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/callcenter.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cidlookup.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_csv.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_mongodb.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_pg_csv.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_sqlite.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/conference.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/console.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/db.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/dialplan_directory.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/dingaling.conf.xml 
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/directory.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/distributor.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/easyroute.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/enum.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/event_multicast.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/event_socket.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/erlang_event.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fax.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fifo.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/format_cdr.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/gsmopen.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/hash.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/httapi.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/http_cache.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/ivr.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/lcr.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/local_stream.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/logfile.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/memcache.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/modules.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/mongo.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/nibblebill.conf.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/opal.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/opus.conf.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/osp.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/oreka.conf.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/pocketsphinx.conf.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/portaudio.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/post_load_modules.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/presence_map.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/redis.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/rss.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/rtmp.conf.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/sangoma_codec.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/shout.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/skinny.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/sofia.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/spandsp.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/switch.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/syslog.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/timezones.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/translate.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/tts_commandline.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unicall.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unimrcp.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/verto.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/voicemail.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/voicemail_ivr.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_cdr.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_curl.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_rpc.conf.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_scgi.conf.xml
-#config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/zeroconf.conf.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/directory
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/directory/default
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default/default.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default/example.com.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default/skinny-example.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default/usertemplate.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/chatplan
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/chatplan/default.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan/default
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan/public
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/default.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/default/01_example.com.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/default/01_Talking_Clock.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns/20-Demo.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns/20-Local_extension.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns/90-External.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/skinny-patterns/99-Default_Drop.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/public.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/public/00_inbound_did.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/dialplan/features.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/ivr_menus
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/ivr_menus/*.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/jingle_profiles
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/jingle_profiles/*.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/mrcp_profiles
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/mrcp_profiles/*.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/sip_profiles
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/sip_profiles/external
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/sip_profiles/*.xml
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/sip_profiles/external/*.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/skinny_profiles
-%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/skinny_profiles/*.xml
-
-%dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang
+%dir %_datadir/freeswitch/fonts
+%_datadir/freeswitch/fonts/*.ttf
+%_datadir/freeswitch/fonts/OFL.txt
+%_datadir/freeswitch/fonts/README.fonts
 
 %_sbindir/freeswitch
 %_bindir/fs_cli
-%_bindir/fs_ivrd
+%_sbindir/fs_ivrd
 %_bindir/fs_encode
 %_bindir/tone2wav
 
@@ -481,7 +389,6 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_libdir/%name/mod_cdr_mongodb.so
 %_libdir/%name/mod_cdr_sqlite.so
 %_libdir/%name/mod_cdr_pg_csv.so
-%_libdir/%name/mod_celt.so
 %_libdir/%name/mod_cluechoo.so
 %_libdir/%name/mod_codec2.so
 %_libdir/%name/mod_commands.so
@@ -548,7 +455,6 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_libdir/%name/mod_sms.so
 %_libdir/%name/mod_snapshot.so
 %_libdir/%name/mod_sndfile.so
-%_libdir/%name/mod_snipe_hunt.so
 %_libdir/%name/mod_snmp.so
 %_libdir/%name/mod_snom.so
 %_libdir/%name/mod_stress.so
@@ -569,7 +475,6 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %_libdir/%name/mod_vmd.so
 %_libdir/%name/mod_voicemail.so
 %_libdir/%name/mod_voicemail_ivr.so
-%_libdir/%name/mod_vp8.so
 %_libdir/%name/mod_xml_cdr.so
 %_libdir/%name/mod_xml_curl.so
 %_libdir/%name/mod_xml_rpc.so
@@ -585,7 +490,8 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 
 %dir %attr(0770, root, _pbx) %_localstatedir/%name
 %dir %attr(0770, root, _pbx) %_localstatedir/%name/db
-
+%dir %attr(0770, root, _pbx) %_localstatedir/%name/images
+%_localstatedir/%name/images/*
 %dir %attr(0770, root, _pbx) %_logdir/%name
 %dir %attr(0770, root, _pbx) %_logdir/%name/cdr-csv
 %dir %attr(0770, root, _pbx) %_logdir/%name/xml_cdr
@@ -619,6 +525,9 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %files v8
 %_libdir/%name/mod_v8.so*
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/v8.conf.xml
+
+%files vlc
+%_libdir/%name/mod_vlc.so*
 
 %files lang-de
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/lang/de
@@ -703,10 +612,18 @@ find %buildroot%_libdir/freetdm  -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/lang/ru/vm/*.xml
 %_libdir/%name/mod_say_ru.so*
 
+
 %files webui
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Mar 18 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.6-alt2
+- removed default configuration from freeswitch-daemon package
+- added subpackage with mod_vlc 
+
+* Sat Mar 12 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.6-alt1
+- new version
+
 * Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.26-alt1.1
 - rebuilt against libSoundTouch.so.1
 
