@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt1.dev0.git20150228
+Release: alt1.dev0.git20150228.1
 Summary: File-system Representation Interfaces
 License: ZPLv2.1
 Group: Development/Python
@@ -144,6 +144,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150228.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.dev0.git20150228
 - Version 4.1.1.dev0
 - Enabled check
