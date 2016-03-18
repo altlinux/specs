@@ -1,25 +1,24 @@
-%define version 4.1.3
-#define subver c1
-%define release alt1.dev0.git20150601
 %define oname zope.interface
-%setup_python_module %oname
 
 %def_with python3
 %def_disable check
 
 Summary: Zope interfaces package
 Name: python-module-%oname
-Version: %version
+Version: 4.1.3
+#define subver c1
 Url: http://www.python.org/pypi/zope.interface
 %ifdef subver
-Release: %release.%subver.1
+Release: alt0.%subver
 %else
-Release: %release.1
+Release: alt1.dev0.git20150601.2
 %endif
 # git://github.com/zopefoundation/zope.interface.git
 Source0: %name-%version.tar
 License: ZPL
 Group: Development/Python
+
+%setup_python_module %oname
 
 #BuildPreReq: python-module-setuptools-tests
 #BuildPreReq: python-module-zope.fixers-tests
@@ -176,6 +175,10 @@ popd
 %endif
 
 %changelog
+* Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.3-alt1.dev0.git20150601.2
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 4.1.3-alt1.dev0.git20150601.1
 - NMU: Use buildreq for BR.
 
