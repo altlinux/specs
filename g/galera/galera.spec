@@ -1,6 +1,6 @@
 Name: galera
-Version: 25.3.12
-Release: alt3
+Version: 25.3.15
+Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
@@ -93,6 +93,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Fri Mar 18 2016 Alexey Shabalin <shaba@altlinux.ru> 25.3.15-alt1
+- 25.3.15
+
 * Fri Sep 04 2015 Alexey Shabalin <shaba@altlinux.ru> 25.3.12-alt3
 - run daemon garbd as nobody user
 

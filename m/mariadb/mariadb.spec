@@ -23,12 +23,10 @@
 %def_without mroonga
 %endif
 
-%if_with tokudb
 %def_with jemalloc
-%endif
 
 Name: mariadb
-Version: 10.1.10
+Version: 10.1.12
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -82,7 +80,6 @@ Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.1.8-alt-client.patch
 #Patch5: mariadb-10.0.21-alt-load_defaults.patch
 Patch7: mariadb-10.1.8-alt-config-libs.patch
-Patch8: mysql-5.5.43-alt-aarch64-lib64.patch
 
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
@@ -102,6 +99,7 @@ BuildRequires: chrooted control
 %{?_with_pcre:BuildRequires: libpcre-devel >= 8.35}
 BuildRequires: libxml2-devel
 BuildRequires: libsystemd-devel
+BuildRequires: libkrb5-devel
 
 Provides: %name-galera = %EVR
 Obsoletes: %name-galera < %EVR
@@ -274,7 +272,6 @@ version.
 %patch4 -p1
 #%patch5 -p1
 %patch7 -p1
-%patch8 -p1
 %patch30 -p1
 %patch31 -p1
 %patch32 -p1
@@ -604,7 +601,7 @@ fi
 
 %_sbindir/*
 %_libdir/mysql/plugin
-%attr(750,mysql,adm) %dir %_logdir/mysql
+%attr(3770,root,mysql) %dir %_logdir/mysql
 %ghost %verify(not md5 mtime size) %_logdir/mysql/*
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/README
@@ -732,6 +729,12 @@ fi
 %endif
 
 %changelog
+* Fri Mar 18 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.12-alt1
+- 10.1.12
+- fix log permitions (ALT #31899)
+- build with kerberos auth_gssapi plugin
+- add innodb_file_per_table to server.cnf (ALT #31885)
+
 * Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 10.1.10-alt1
 - 10.1.10
 - fix typo and cleanup sysv init script
