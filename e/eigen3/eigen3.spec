@@ -1,6 +1,6 @@
 %define oname eigen
 Name: %{oname}3
-Version: 3.2.1
+Version: 3.2.8
 Release: alt1
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -49,7 +49,7 @@ This package contains examples for Eigen.
 %setup
 
 %build
-mkdir BUILD
+mkdir -p BUILD
 pushd BUILD
 
 %add_optflags -I%_includedir/metis
@@ -73,6 +73,7 @@ cmake \
 	-DSCOTCH_LIBRARIES:STRING="$(pkg-config scotch --libs)" \
 	-DGOOGLEHASH_INCLUDES:PATH="%_includedir/google" \
 	-DGOOGLEHASH_COMPILE:STRING="g++ %optflags" \
+	-DPKGCONFIG_INSTALL_DIR=%_pkgconfigdir \
 	..
 popd
 
@@ -99,6 +100,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Fri Mar 18 2016 Sergey V Turchin <zerg@altlinux.org> 3.2.8-alt1
+- new version
+
 * Wed May 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
