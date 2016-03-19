@@ -5,10 +5,10 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators perl(TAP/Fo
 # END SourceDeps(oneline)
 BuildRequires: perl(YAML/Syck.pm) perl(parent.pm)
 %define upstream_name    Tapper-TAP-Harness
-%define upstream_version 5.0.5
+%define upstream_version 5.0.6
 
 Name:       perl-%{upstream_name}
-Version:    5.0.5
+Version:    5.0.6
 Release:    alt1
 
 Summary:    Tapper - Tapper specific TAP handling
@@ -62,6 +62,9 @@ This package provides a Tapper-specific TAP handling.
 
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.5-alt1
 - automated CPAN update
 
