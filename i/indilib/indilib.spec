@@ -2,8 +2,8 @@
 
 
 Name: indilib
-Version: 1.0.0
-Release: alt1
+Version: 1.1.0
+Release: alt2
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -24,7 +24,7 @@ Source: http://nchc.dl.sourceforge.net/sourceforge/indi/lib%{shortname}_%version
 # optimized out: cmake-modules elfutils libstdc++-devel pkg-config zlib-devel
 #BuildRequires: boost-devel-headers cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel-static
 BuildRequires: boost-devel cmake gcc-c++ libcfitsio-devel libnova-devel libusb-compat-devel zlib-devel
-BuildRequires: libusb-devel libjpeg-devel libgsl-devel
+BuildRequires: libusb-devel libjpeg-devel libgsl-devel libcurl-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -64,6 +64,7 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 
 %prep
 %setup -q -n lib%{shortname}_%version
+chmod -x drivers/telescope/lx200fs2.{h,cpp}
 
 %build
 %Kbuild \
@@ -82,7 +83,12 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 
 %files -n lib%shortname
 %doc ChangeLog README
-%_libdir/lib*.so.*
+%_libdir/libindi.so.1
+%_libdir/libindi.so.1.*
+%_libdir/libindiAlignmentDriver.so.1
+%_libdir/libindiAlignmentDriver.so.1.*
+%_libdir/libindidriver.so.1
+%_libdir/libindidriver.so.1.*
 
 #%files -n libsbigudrv
 #%_libdir/libsbigudrv.so.*
@@ -96,6 +102,12 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Sat Mar 19 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt2
+- fix build requires
+
+* Fri Mar 18 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
+- new version
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1
 - new version
 
