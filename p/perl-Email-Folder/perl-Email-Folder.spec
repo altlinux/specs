@@ -2,7 +2,7 @@
 %define module_name Email-Folder
 
 Name: perl-%module_name
-Version: 0.859
+Version: 0.860
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Folder-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/P/PA/PALI/Email-Folder-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ Read all the messages from a folder as Email::Simple objects.
 %perl_vendor_privlib/Email
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.860-alt1
+- automated CPAN update
+
 * Tue Oct 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.859-alt1
 - automated CPAN update
 
