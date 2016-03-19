@@ -4,7 +4,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt3
+Release: alt4
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -14,10 +14,10 @@ Source: cairo-dock-plug-ins-%version.tar.gz
 Patch1: netspeed.patch
 
 Requires: cairo-dock >= %version
-BuildPreReq: cmake rpm-macros-cmake
-# Automatically added by buildreq on Wed Sep 09 2015
-# optimized out: cmake-modules glib2-devel libGL-devel libGLU-devel libX11-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcurl-devel libdb4-devel libdbus-devel libdbus-glib libdbus-glib-devel libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnutls-devel libgpg-error libgpg-error-devel libgtk+3-devel libjavascriptcoregtk3-devel liblockfile-devel libpango-devel librsvg-devel libsasl2-3 libsasl2-devel libsoup-devel libstdc++-devel libwayland-client libwayland-client-devel libxml2-devel libzeitgeist-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email vala xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cairo-dock-devel cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libetpan-devel libexif-devel libfftw3-devel libical-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel lsb-release mono-mcs ruby
+BuildPreReq: cmake rpm-macros-cmake rpm-build-python3 python3-devel
+# Automatically added by buildreq on Fri Mar 18 2016
+# optimized out: cmake-modules glib2-devel libGL-devel libGLU-devel libX11-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcurl-devel libdb4-devel libdbus-devel libdbus-glib libdbus-glib-devel libdbusmenu-devel libdbusmenu-gtk3 libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnome-menus libgnutls-devel libgpg-error libgpg-error-devel libgtk+3-devel libindicator-gtk3 libjavascriptcoregtk3-devel liblockfile-devel libpango-devel librsvg-devel libsasl2-3 libsasl2-devel libsoup-devel libstdc++-devel libwayland-client libwayland-client-devel libxml2-devel pkg-config python-base python-devel python-modules python-modules-compiler python-modules-email python3 vala xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: cairo-dock-devel cmake gcc-c++ libXrandr-devel libXxf86vm-devel libalsa-devel libdbusmenu-gtk3-devel libetpan-devel libexif-devel libfftw3-devel libgnome-menus-devel libical-devel libindicator-gtk3-devel libpulseaudio-devel libsensors3-devel libupower-devel libvte3-devel libwebkitgtk3-devel libxklavier-devel libzeitgeist2.0-devel lsb-release mono-mcs python3-base
 
 BuildRequires: cairo-dock-devel >= %version
 Requires: %packagename-common
@@ -67,6 +67,13 @@ Requires: %packagename-rssreader
 Requires: %packagename-folders
 Requires: %packagename-Screenshot
 Requires: %packagename-Sound-Effects
+Requires: %packagename-Global-Menu
+Requires: %packagename-GMenu
+Requires: %packagename-Indicator-Generic
+Requires: %packagename-Messaging-Menu
+Requires: %packagename-Recent-Events
+Requires: %packagename-Status-Notifier
+Requires: %packagename-launcher-API-daemon
 
 %description
 cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -97,6 +104,7 @@ This plug-in provides many different animations for your icons.
 %_datadir/%packagename/plug-ins/shared-files
 %dir %_libdir/%packagename
 %_datadir/%packagename/gauges/*
+%_libdir/%packagename/appmenu-registrar
 
 #---------------------------------------------------------------------
 %package -n %packagename-animated-icons
@@ -890,6 +898,111 @@ This applet allows you to adjust sound notifications.
 
 #---------------------------------------------------------------------
 
+%package -n %packagename-GMenu
+Summary: That package provides plugin "GMenu"
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-GMenu
+This applet allows you to adjust gmenu.
+
+%files -n %packagename-GMenu
+%_datadir/%packagename/plug-ins/GMenu
+%_libdir/%packagename/libcd-GMenu.so
+
+#---------------------------------------------------------------------
+
+%package -n %packagename-Global-Menu
+Summary: That package provides plugin "Global-Menu"
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-Global-Menu
+This applet allows you to adjust global menu.
+
+%files -n %packagename-Global-Menu
+%_datadir/%packagename/plug-ins/Global-Menu
+%_libdir/%packagename/libcd-Global-Menu.so
+
+#---------------------------------------------------------------------
+
+%package -n %packagename-Indicator-Generic
+Summary: That package provides plugin "Indicator-Generic"
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-Indicator-Generic
+This applet allows you to adjust indicator generic.
+
+%files -n %packagename-Indicator-Generic
+%_datadir/%packagename/plug-ins/Indicator-Generic
+%_libdir/%packagename/libcd-Indicator-Generic.so
+
+#---------------------------------------------------------------------
+
+%package -n %packagename-Messaging-Menu
+Summary: That package provides plugin "Messaging-Menu"
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-Messaging-Menu
+This applet allows you to adjust messaging menu.
+
+%files -n %packagename-Messaging-Menu
+%_datadir/%packagename/plug-ins/Messaging-Menu
+%_libdir/%packagename/libcd-Messaging-Menu.so
+
+#---------------------------------------------------------------------
+
+%package -n %packagename-Recent-Events
+Summary: That package provides plugin "Recent-Events"
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-Recent-Events
+This applet allows you to adjust recent events.
+
+%files -n %packagename-Recent-Events
+%_datadir/%packagename/plug-ins/Recent-Events
+%_libdir/%packagename/libcd-Recent-Events.so
+
+#---------------------------------------------------------------------
+
+%package -n %packagename-Status-Notifier
+Summary: That package provides plugin "Status-Notifier"
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-Status-Notifier
+This applet allows you to adjust status notifier.
+
+%files -n %packagename-Status-Notifier
+%_datadir/%packagename/plug-ins/Status-Notifier
+%_libdir/%packagename/status-notifier-watcher
+%_libdir/%packagename/libcd-status-notifier.so
+
+#---------------------------------------------------------------------
+
+%package -n %packagename-launcher-API-daemon
+Summary: That package provides plugin "launcher-API-daemon"
+Group: Graphical desktop/Other
+Requires: %packagename = %version
+Requires: %packagename-common
+
+%description -n %packagename-launcher-API-daemon
+This applet allows you to adjust status notifier.
+
+%files -n %packagename-launcher-API-daemon
+%_libdir/%packagename/%packagename-launcher-API-daemon
+
+#---------------------------------------------------------------------
+
 %package -n python-module-cairo-dock
 Summary: Python2 binding for Cairo-Dock
 Group:Development/Python
@@ -906,6 +1019,25 @@ This package contains Python2 binding files for Cairo-Dock
 %python_sitelibdir_noarch/CDApplet.py*
 %python_sitelibdir_noarch/CDBashApplet.py*
 %python_sitelibdir_noarch/*.egg-info
+
+#---------------------------------------------------------------------
+
+%package -n python3-module-cairo-dock
+Summary: Python3 binding for Cairo-Dock
+Group:Development/Python3
+Requires: %packagename
+Requires: %packagename-common = %version
+Requires: %packagename-dbus = %version
+BuildArch: noarch
+
+%description -n python3-module-cairo-dock
+This package contains Python3 binding files for Cairo-Dock
+
+%files -n python3-module-cairo-dock
+%python3_sitelibdir_noarch/CairoDock.py*
+%python3_sitelibdir_noarch/CDApplet.py*
+%python3_sitelibdir_noarch/CDBashApplet.py*
+%python3_sitelibdir_noarch/*.egg-info
 
 #---------------------------------------------------------------------
 
@@ -954,6 +1086,7 @@ binding for Cairo-Dock.
 	-Denable-network-monitor=yes \
 	-Denable-old-gnome-integration=no \
 	-Denable-scooby-do=yes \
+	-Denable-global-menu=yes
 
 %make_build -C BUILD
 
@@ -963,6 +1096,21 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Fri Mar 18 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt4
+- Added missing buildrequires
+- Added plugin:
+    + Global-Menu
+    + GMenu
+    + Indicator-Generic
+    + Messaging-Menu
+    + Recent-Events
+    + Status-Notifier
+    + launcher-API-daemon
+Added:
+    + support zeitgeist-2.0
+    + bindings python3
+    
+
 * Mon Jan 25 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt3
 - Rebuild with libicall-2.0.0. 
 
