@@ -1,8 +1,8 @@
-%define ver_major 12.10
+%define ver_major 16.04
 %define api_ver 0.4
 
 Name: libdbusmenu
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library that passes a menu structure across DBus
@@ -11,8 +11,8 @@ License: LGPLv3
 Url: https://launchpad.net/%name
 
 # rev 477
-Source: %name-%version.tar
-#Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
+#Source: %name-%version.tar
+Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version.tar.gz
 
 BuildRequires: intltool gtk-doc vala-tools
 BuildRequires: libgtk+2-devel libgtk+3-devel libjson-glib-devel
@@ -254,6 +254,9 @@ popd
 %doc tools/README.dbusmenu-bench
 
 %changelog
+* Sat Mar 19 2016 Yuri N. Sedunov <aris@altlinux.org> 16.04.0-alt1
+- 16.04.0
+
 * Sat Sep 19 2015 Yuri N. Sedunov <aris@altlinux.org> 12.10.2-alt1
 - first build for Sisyphus
 
