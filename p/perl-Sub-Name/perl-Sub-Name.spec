@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sub-Name
 Name: perl-%dist
-Version: 0.14
-Release: alt1.1
+Version: 0.15
+Release: alt1
 Epoch: 1
 
 Summary: (re)name a sub
@@ -13,7 +13,7 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/E/ET/ETHER/Sub-Name-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-devel perl(Devel/CheckBin.pm)
+BuildRequires: perl-devel perl(Devel/CheckBin.pm) perl(Module/Metadata.pm)
 
 %description
 subname NAME, CODEREF
@@ -34,6 +34,9 @@ Assigns a new name to referenced sub.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.15-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.14-alt1.1
 - rebuild with new perl 5.22.0
 
