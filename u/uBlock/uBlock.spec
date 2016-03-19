@@ -3,12 +3,12 @@
 
 %define cidf_dir       %firefox_noarch_extensionsdir/%cid
 
-%def_disable firefox
-
+%def_disable git
+%def_enable firefox
 
 Name: uBlock
 Version: 1.6.4.0
-Release: alt1
+Release: alt2
 
 Summary: uBlock: an efficient blocker extension for your browser. Fast, potent, and lean
 License: GPLv3
@@ -73,20 +73,36 @@ uBock-origin - эффективный блокировщик: он исполь�
 %prep
 %setup -n %name
 
+%if_enabled git
 %build
 tools/make-firefox.sh
+tools/update-checksums.sh
+%endif
 
 %install
+%if_enabled git
 pushd dist/build/uBlock0.firefox/
+%endif
+
 mkdir -p %buildroot/%cid_dir
 cp -r * %buildroot/%cid_dir
 
 %if_enabled firefox
 mkdir -p %buildroot/%cidf_dir
 cp -r * %buildroot/%cidf_dir
+
+%if_enabled git
+popd
+
+pushd META-INF/
+install -d -m755  %buildroot/%cidf_dir/META-INF/
+install -Dp -m644  ./* %buildroot/%cidf_dir/META-INF/
+popd
 %endif
 
-popd
+
+%endif
+
 
 %files -n palemoon-uBlock
 %cid_dir
@@ -97,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 19 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.4.0-alt2
+- Version from xpi
+
 * Sat Mar 19 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.4.0-alt1
 - Version 1.6.4
 
