@@ -1,6 +1,6 @@
 Name: 	 c-icap
 Version: 0.4.2
-Release: alt2
+Release: alt3
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -13,11 +13,12 @@ Source0: %name-%version.tar.gz
 Source1: %name.init
 Source2: %name.watch
 
-BuildRequires: rpm-build-licenses
-
-BuildRequires: libadns-devel libmemcache-devel opendbx-devel zlib-devel
 
 Requires(pre): shadow-utils
+
+BuildRequires: rpm-build-licenses
+
+BuildRequires: doxygen libdb4-devel libldap-devel libmemcached-devel zlib-devel bzlib-devel
 
 %description
 Implementation of an Internet Content Adaptation Protocol (ICAP) server.
@@ -108,6 +109,9 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %_libdir/libicapapi.so
 
 %changelog
+* Sat Mar 19 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:0.4.2-alt3
+- Updated BuildRequires (gear-buildreq output used)
+
 * Thu Mar 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:0.4.2-alt2
 - Spec's cleanup
 - Added LSB init header (fixed repocop's error)

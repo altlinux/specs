@@ -1,6 +1,6 @@
 Name: 	 c-icap-modules
 Version: 0.4.2
-Release: alt2
+Release: alt3
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -16,8 +16,7 @@ Source0: c_icap_modules-%version.tar.gz
 
 BuildRequires: rpm-build-licenses
 
-BuildRequires: c-icap-devel libadns-devel libmemcache-devel opendbx-devel zlib-devel
-BuildRequires: libclamav-devel
+BuildRequires: c-icap-devel libclamav-devel libdb4-devel zlib-devel bzlib-devel
 
 %description
 Modules for Internet Content Adaptation Protocol (ICAP) server.
@@ -45,8 +44,13 @@ rm -f %buildroot%_libdir/c_icap/*.la
 %dir %_datadir/c_icap
 %_datadir/c_icap/templates
 %_man8dir/c-icap*.8*
+%_bindir/c-icap-mods-sguardDB
 
 %changelog
+* Sat Mar 19 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:0.4.2-alt3
+- Updated BuildRequires (gear-buildreq output used)
+- Packaged c-icap-mods-sguardDB binary
+
 * Thu Mar 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 1:0.4.2-alt2
 - Removed gcc-c++ from BuildRequires
 
