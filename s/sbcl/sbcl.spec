@@ -10,7 +10,7 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 1.2.16
+Version: 1.3.3
 Release: alt1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
@@ -95,12 +95,12 @@ Source202: sbcl-install-clc.lisp
 
 Patch1: %name-1.0-lib_dir.patch
 Patch2: sbcl-1.1.13-personality.patch
-Patch3: sbcl-1.2.11-optflags.patch
+Patch3: sbcl-1.3.2-optflags.patch
 Patch6: sbcl-0.9.5-verbose-build.patch
 
 
 ## upstreamable patches
-Patch50: sbcl-1.2.11-generate_version.patch
+Patch50: sbcl-1.3.0-generate_version.patch
 
 
 
@@ -217,7 +217,8 @@ for CONTRIB in $CONTRIBS ; do
 done
 pushd tests
 # verify --version output
-test "$(source ./subr.sh; SBCL_ARGS= run_sbcl --version 2>/dev/null | cut -d' ' -f2)" = "%version-%release"
+#test "$(source ./subr.sh; SBCL_ARGS= run_sbcl --version 2>/dev/null | cut -d' ' -f2)" = "%version-%release"
+test "$(. ./subr.sh; "$SBCL_RUNTIME" --core "$SBCL_CORE" --version --version 2>/dev/null | cut -d' ' -f2)" = "%{version}-%{release}"
 # still seeing Failure: threads.impure.lisp / (DEBUGGER-NO-HANG-ON-SESSION-LOCK-IF-INTERRUPTED)
 time %{?sbcl_shell} ./run-tests.sh ||:
 popd
@@ -248,7 +249,7 @@ popd
 %_bindir/sbcl
 %dir %_libdir/sbcl/
 %_libdir/sbcl/contrib/
-%_libdir/sbcl/site-systems/
+#_libdir/sbcl/site-systems/
 %_man1dir/sbcl.1*
 %if 0%{?docs}
 %doc doc/manual/sbcl.html
@@ -267,6 +268,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 19 2016 Ilya Mashkin <oddity@altlinux.ru> 1.3.3-alt1
+- 1.3.3
+
 * Tue Oct 06 2015 Ilya Mashkin <oddity@altlinux.ru> 1.2.16-alt1
 - 1.2.16
 
