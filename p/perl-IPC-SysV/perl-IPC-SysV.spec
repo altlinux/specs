@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define dist IPC-SysV
 Name: perl-%dist
-Version: 2.04
-Release: alt2.1.1
+Version: 2.06
+Release: alt1
 
 Summary: System V IPC constants and system calls
 License: GPL or Artistic
@@ -33,6 +34,9 @@ IPC::SysV - Provides the constants required to use the system SysV IPC calls
 %perl_vendor_autolib/IPC
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.04-alt2.1.1
 - rebuild with new perl 5.22.0
 
