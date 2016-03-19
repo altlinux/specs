@@ -5,10 +5,10 @@ BuildRequires: perl-devel perl-podlators perl(File/Slurp.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 %define upstream_name    Tapper-Schema
-%define upstream_version 5.0.3
+%define upstream_version 5.0.6
 
 Name:       perl-%{upstream_name}
-Version:    5.0.3
+Version:    5.0.6
 Release:    alt1
 
 Summary:    Database schemas for Tapper
@@ -73,6 +73,9 @@ Database schemas for Tapper.
 
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1
 - automated CPAN update
 
