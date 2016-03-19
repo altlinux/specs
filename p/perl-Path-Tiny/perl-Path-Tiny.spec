@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Cwd.pm) perl(Digest.pm) perl(Digest/SHA.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/Copy.pm) perl(File/Path.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(File/Temp.pm) perl(File/stat.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(List/Util.pm) perl(Test/More.pm) perl(autodie/exception.pm) perl(open.pm) perl(overload.pm)
 # END SourceDeps(oneline)
-%define module_version 0.082
+%define module_version 0.084
 %define module_name Path-Tiny
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.082
+Version: 0.084
 Release: alt1
 Summary: File path utility
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/P*
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.084-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.082-alt1
 - automated CPAN update
 
