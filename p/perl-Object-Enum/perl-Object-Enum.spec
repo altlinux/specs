@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Scalar/Util.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Object-Enum
-%define upstream_version 0.074
+%define upstream_version 0.075
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_4
+Version:    0.075
+Release:    alt1
 
 Summary:    Perl Enum Replacement
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Object/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/J/JM/JMMILLS/Object-Enum-%{version}.tar.gz
 
 BuildRequires: perl(Class/Accessor/Fast.pm)
 BuildRequires: perl(Class/Data/Inheritable.pm)
@@ -50,6 +51,9 @@ rm -f %{buildroot}%{perl_vendor_privlib}/.DS_Store
 
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.075-alt1
+- automated CPAN update
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.074-alt1_4
 - update by mgaimport
 
