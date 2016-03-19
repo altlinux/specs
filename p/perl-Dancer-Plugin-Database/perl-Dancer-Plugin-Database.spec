@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Dancer-Plugin-Database
-Version: 2.11
+Version: 2.12
 Release: alt1
 Summary: Dancer::Plugin::Database - easy database connections for Dancer applications
 
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl-DBI perl-Dancer perl(Dancer/Plugin/Database/Core.
 %doc Changes README 
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
 - automated CPAN update
 
