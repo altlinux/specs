@@ -1,21 +1,22 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Test/Pod.pm) perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    LWP-Protocol-PSGI
-%define upstream_version 0.08
+%define upstream_version 0.09
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    0.09
+Release:    alt1
 
 Summary:    Override LWP's HTTP/HTTPS backend with your own PSGI applciation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/LWP/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/M/MI/MIYAGAWA/LWP-Protocol-PSGI-%{version}.tar.gz
 
 BuildRequires: perl(Guard.pm)
 BuildRequires: perl(HTTP/Message/PSGI.pm)
@@ -59,6 +60,9 @@ without modifying the calling code or its internals.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_1
 - update by mgaimport
 
