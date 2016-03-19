@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-MakeMaker-Awesome
 
 Name: perl-Dist-Zilla-Plugin-MakeMaker-Awesome
-Version: 0.35
-Release: alt2
+Version: 0.36
+Release: alt1
 
 Summary: a more awesome MakeMaker plugin for Dist::Zilla
 
@@ -32,7 +32,7 @@ It is limited, if you want to stray from the marked path and do
 something that would normally be done in a package MY section or
 otherwise run custom code in your Makefile.PL you're out of luck.
 
-This plugin is 100% compatible with Dist::Zilla::Plugin::MakeMaker -
+This plugin is 100%% compatible with Dist::Zilla::Plugin::MakeMaker -
 we add additional customization hooks by subclassing it.
 
 
@@ -50,6 +50,9 @@ we add additional customization hooks by subclassing it.
 %perl_vendor_privlib/Dist/Zilla/Plugin/MakeMaker/Awesome*
 
 %changelog
+* Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.36-alt1
+- New version
+
 * Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.35-alt2
 - Bump release to override package from the autoimports/Sisyphus repository
 
