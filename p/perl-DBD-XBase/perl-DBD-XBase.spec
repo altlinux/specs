@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist DBD-XBase
 Name: perl-%dist
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: XBase driver for DBI interface in Perl
@@ -49,6 +50,9 @@ supported by the DBI interface.
 	%_bindir/*
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1
 - automated CPAN update
 
