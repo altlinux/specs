@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(DateTime/Format/SQLite.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(File/Slurp.pm)
 %define upstream_name    Tapper-Model
-%define upstream_version 4.1.2
+%define upstream_version 5.0.1
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_5
+Version:    5.0.1
+Release:    alt1
 
 Summary:    Tapper - Context sensitive connected DBIC schema
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Model-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -57,6 +58,9 @@ Context sensitive and connected DBIC schema for Tapper.
 %perl_vendor_privlib/*
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt2_5
 - NMU: fixed build
 
