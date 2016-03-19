@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MIME-Types
 Name: perl-MIME-Types
-Version: 2.12
-Release: alt2
+Version: 2.13
+Release: alt1
 
 Summary: Definition of MIME types
 License: GPL or Artistic
@@ -55,6 +55,9 @@ Requires: %name = %version-%release
 %doc	%perl_vendor_privlib/MojoX/MIME/*.pod
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Vladimir Lettiev <crux@altlinux.ru> 2.12-alt2
 - separated package for MojoX::MIME::Types (Closes: #31614)
 
