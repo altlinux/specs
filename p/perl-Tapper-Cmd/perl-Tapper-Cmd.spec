@@ -10,10 +10,10 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 %add_findreq_skiplist %perl_vendor_privlib/auto/Tapper/Cmd/Init/hello-world/01-executing-tests/*
 
 %define upstream_name    Tapper-Cmd
-%define upstream_version 5.0.0
+%define upstream_version 5.0.3
 
 Name:       perl-%{upstream_name}
-Version:    5.0.0
+Version:    5.0.3
 Release:    alt1
 
 Summary:    Tapper - Backend functions for CLI and Web
@@ -75,6 +75,9 @@ Tapper backend functions for the command line and the Web.
 %perl_vendor_privlib/*
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.3-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
 - automated CPAN update
 
