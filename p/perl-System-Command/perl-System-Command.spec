@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-System-Command
-Version: 1.115
+Version: 1.117
 Release: alt1
 
 Summary: System::Command - Object for running system commands
@@ -31,6 +31,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.117-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.115-alt1
 - automated CPAN update
 
