@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Capture-Tiny
 Name: perl-Capture-Tiny
-Version: 0.30
+Version: 0.36
 Release: alt1
 
 Summary: Capture::Tiny - Capture STDOUT and STDERR from Perl, XS or external programs
@@ -31,6 +31,9 @@ BuildRequires: perl-devel perl-Module-Build perl-Test-Differences
 %doc Changes Todo LICENSE README 
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
