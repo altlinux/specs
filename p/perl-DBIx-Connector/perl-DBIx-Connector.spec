@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-DBIx-Connector
-Version: 0.55
+Version: 0.56
 Release: alt1
 
 Summary: Fast, safe DBI connection and transaction management
@@ -46,6 +46,9 @@ BuildRequires: perl-DBI-devel perl-Module-Build perl-Test-Pod-Coverage perl-Test
 %perl_vendor_privlib/DBIx/*
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
 - automated CPAN update
 
