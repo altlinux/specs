@@ -3,7 +3,7 @@
 %define real_name Courriel
 
 Name: perl-Courriel
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: Perl module for high level email parsing and manipulation
@@ -47,6 +47,9 @@ and manipulation, particular for processing incoming email.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.41-alt1
+- New version
+
 * Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.40-alt1
 - New version
 
