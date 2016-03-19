@@ -3,11 +3,11 @@
 
 Name: switchboard
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: GPLv2.1+
-Group: System/Libraries
+Group: Graphical desktop/Other
 Url: https://launchpad.net/%name
 
 Source: https://launchpad.net/%name/2.x/%version/+download/%name-%version.tgz
@@ -40,6 +40,8 @@ This package contains files that are needed to develop Switchboard plugins.
 
 %prep
 %setup
+# fix pc-file
+subst 's@\(\/include\)\/@\1@' lib/%name.pc.cmake
 
 %build
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
@@ -67,6 +69,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2
+- fixed pc-file
+
 * Fri Sep 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - first build for Sisyphus
 
