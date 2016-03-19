@@ -3,8 +3,11 @@
 
 %define cidf_dir       %firefox_noarch_extensionsdir/%cid
 
+%def_disable firefox
+
+
 Name: uBlock
-Version: 1.3.5.0
+Version: 1.6.4.0
 Release: alt1
 
 Summary: uBlock: an efficient blocker extension for your browser. Fast, potent, and lean
@@ -26,16 +29,21 @@ BuildRequires: python-modules-json
 
 %package -n palemoon-uBlock
 Group: System/Libraries
-Summary: Plugin  uBlock for palemoon
+Summary: Plugin  uBlock for Pale Moon
 Requires: palemoon
 
+%if_enabled firefox
 %package -n firefox-uBlock
 Group: System/Libraries
-Summary: Plugin  uBlock for fitefox
+Summary: Plugin  uBlock for Firefox
 Requires: firefox
+%endif
 
 BuildRequires(pre):	rpm-build-palemoon
+
+%if_enabled firefox
 BuildRequires(pre):	rpm-build-firefox
+%endif
 
 %description
 An efficient blocker: easy on memory and CPU footprint, and yet can load and enforce
@@ -53,12 +61,14 @@ Plugin uBlock: an efficient blocker extension for palemoon. Fast, potent, and le
 Плагин uBlock  эффективный блокировщик: он использует меньше оперативной памяти и меньше нагружает ЦП, 
 чем другие популярные блокировщики, при этом используя больше фильтров.
 
+%if_enabled firefox
 %description -n firefox-uBlock
 Plugin uBlock: an efficient blocker extension for palemoon. Fast, potent, and lean.
 
 %description  -l ru_RU.utf8 -n firefox-uBlock
 uBock-origin - эффективный блокировщик: он использует меньше оперативной памяти и меньше нагружает ЦП, 
 чем другие популярные блокировщики, при этом используя больше фильтров.
+%endif
 
 %prep
 %setup -n %name
@@ -71,18 +81,25 @@ pushd dist/build/uBlock0.firefox/
 mkdir -p %buildroot/%cid_dir
 cp -r * %buildroot/%cid_dir
 
+%if_enabled firefox
 mkdir -p %buildroot/%cidf_dir
 cp -r * %buildroot/%cidf_dir
+%endif
 
 popd
 
 %files -n palemoon-uBlock
 %cid_dir
 
+%if_enabled firefox
 %files -n firefox-uBlock
 %cidf_dir
+%endif
 
 %changelog
+* Sat Mar 19 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.4.0-alt1
+- Version 1.6.4
+
 * Sun Nov 22 2015 Hihin Ruslan <ruslandh@altlinux.ru> 1.3.5.0-alt1
 - new Version
 
