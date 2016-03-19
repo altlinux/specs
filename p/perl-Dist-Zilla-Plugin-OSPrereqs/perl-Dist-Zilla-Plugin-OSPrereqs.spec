@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-OSPrereqs
 
 Name: perl-Dist-Zilla-Plugin-OSPrereqs
-Version: 0.005
-Release: alt3
+Version: 0.006
+Release: alt1
 
 Summary: List prereqs conditional on operating system
 
@@ -46,6 +46,9 @@ be conditionally added to "PREREQ_PM" in the Makefile.
 %perl_vendor_privlib/Dist/Zilla/Plugin/OSPrereqs*
 
 %changelog
+* Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.006-alt1
+- New version
+
 * Sun Jan 10 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.005-alt3
 - Bump release to override package from autoimports/Sisyphus repository
 
