@@ -3,7 +3,7 @@
 %define real_name Devel-CheckLib
 
 Name: perl-Devel-CheckLib
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: check that a library is available
@@ -48,6 +48,9 @@ attempting to compile a simple program and link against it.
 %perl_vendor_privlib/Devel/CheckLib*
 
 %changelog
+* Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.06-alt1
+- New version
+
 * Mon Sep 28 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.05-alt1
 - New version
 
