@@ -6,10 +6,10 @@ BuildRequires: perl-devel perl-podlators perl(Hash/Merge.pm)
 %add_findreq_skiplist %perl_vendor_privlib/Tapper/Config.pm
 BuildRequires: perl-Tapper
 %define upstream_name    Tapper-Config
-%define upstream_version 5.0.1
+%define upstream_version 5.0.2
 
 Name:       perl-%{upstream_name}
-Version:    5.0.1
+Version:    5.0.2
 Release:    alt1
 
 Summary:    Tapper - Context sensitive configuration hub for all Tapper libs
@@ -52,6 +52,9 @@ libraries.
 %perl_vendor_privlib/*
 
 %changelog
+* Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1
 - automated CPAN update
 
