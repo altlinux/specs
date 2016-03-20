@@ -1,11 +1,11 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
 %def_with menu
-%define gitrev .gitb3bd220
+%define gitrev .gitb60d6d4
 
 Name: %realname-githubmod
 Version: 1.3.12
-Release: alt1
+Release: alt2%gitrev
 
 Summary: X11 Window Manager
 Group: Graphical desktop/Icewm
@@ -59,6 +59,9 @@ Recommends: iftop, mutt
 %patch0 -p1
 
 %build
+# workaround for installing locales
+LC_ALL=ru_RU.UTF-8 msgfilter -i po/ru.po -o po/%realname.pot true
+
 %cmake	-DCFGDIR=%_sysconfdir/X11/%realname -DPREFIX=%_prefix \
 	-DLIBDIR=%_x11x11dir/%realname -DCONFIG_GUIEVENTS=on  \
 	-DICESOUND="ALSA,OSS,ESound"
@@ -135,6 +138,9 @@ rm -rf %buildroot/%_datadir/xsessions
 %doc AUTHORS NEWS README.ALT README.md BUILD/doc/*.html icewm-old-changelog.bz2
 
 %changelog
+* Sun Mar 20 2016 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12-alt2.gitb60d6d4
+- git snapshot b60d6d4
+
 * Sun Dec 20 2015 Dmitriy Khanzhin <jinn@altlinux.org> 1.3.12-alt1
 - 1.3.12 release
 
