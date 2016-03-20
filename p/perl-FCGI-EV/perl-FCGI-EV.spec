@@ -3,8 +3,8 @@
 %define real_name FCGI-EV
 
 Name: perl-FCGI-EV
-Version: 1.0.9
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary:  Perl FastCGI protocol implementation for use in EV-based applications
 
@@ -24,9 +24,9 @@ Requires: perl(EV/ADNS.pm)
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Fri Feb 21 2014
-# optimized out: perl-Devel-Symdump perl-EV perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-common-sense perl-devel
-BuildRequires: perl-EV-ADNS perl-IO-Stream perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sun Mar 20 2016
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-EV perl-Encode perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-JSON-PP perl-Module-Load perl-Parse-CPAN-Meta perl-Term-ANSIColor perl-common-sense perl-devel python3 python3-base
+BuildRequires: perl-EV-ADNS perl-IO-Stream perl-Module-Build-Tiny
 
 %description
 Perl module FCGI::EV implements FastCGI protocol for use
@@ -46,6 +46,9 @@ in EV-based applications.
 %perl_vendor_privlib/FCGI/EV*
 
 %changelog
+* Sun Mar 20 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.0-alt1
+- New version
+
 * Tue Feb 25 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.9-alt2
 - Adding missed dependancy on EV::ADNS module
 
