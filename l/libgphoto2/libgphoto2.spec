@@ -6,7 +6,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.8
+Version: 2.5.9
 Release: alt1
 
 Group: System/Libraries
@@ -147,13 +147,15 @@ export utilsdir=%_libexecdir/%name
 %makeinstall_std
 
 # create udev support
-/bin/mkdir -p %buildroot/lib/udev/rules.d/
+/bin/mkdir -p %buildroot/lib/udev/rules.d
 /bin/touch %buildroot/lib/udev/rules.d/40-%name.rules
+/bin/mkdir -p %buildroot/lib/udev/hwdb.d
+/bin/touch %buildroot/lib/udev/hwdb.d/40-%name.hwdb
 
 %if_enabled hal
 # create hal support
-/bin/mkdir -p %buildroot%_datadir/hal/fdi/information/20thirdparty/
-/bin/touch %buildroot%_datadir/hal/fdi/information/20thirdparty/10-camera-%name.fdi
+/bin/mkdir -p %buildroot%_datadir/hal/fdi/information/20thirdparty
+/bin/touch %buildroot%_datadir/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 %endif
 
 # correct content of doc. directory
@@ -172,13 +174,14 @@ export utilsdir=%_libexecdir/%name
 
 ##### PRE/POST INSTALL SCRIPTS #####
 
-%pre
+%pre -n %name-%sover
 # create group
 /usr/sbin/groupadd -fr camera || :
 
-%post
+%post -n %name-%sover
 # create udev rules
-%_libexecdir/%name/print-camera-list --verbose udev-rules version 175 owner root mode 0660 group camera > /lib/udev/rules.d/40-%name.rules
+%_libexecdir/%name/print-camera-list --verbose udev-rules version 201 owner root mode 0660 group camera > /lib/udev/rules.d/40-%name.rules 2> /dev/null
+%_libexecdir/%name/print-camera-list hwdb > /lib/udev/hwdb.d/40-%name.hwdb 2> /dev/null
 %if_enabled hal
 # create .fdi file
 %_libexecdir/%name/print-camera-list hal-fdi > %_datadir/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
@@ -198,6 +201,7 @@ export utilsdir=%_libexecdir/%name
 %dir %_libexecdir/%name
 %_libexecdir/%name/print-camera-list
 %_datadir/%name
+%ghost /lib/udev/hwdb.d/*
 %ghost /lib/udev/rules.d/*
 %dir %_datadir/doc/%name
 %_datadir/doc/%name/AUTHORS
@@ -205,7 +209,7 @@ export utilsdir=%_libexecdir/%name
 %_datadir/doc/%name/README
 %exclude %_datadir/locale/*/LC_MESSAGES/%{name}_port*
 %if_enabled hal
-%_datadir/hal/fdi/information/20thirdparty/*
+%ghost %_datadir/hal/fdi/information/20thirdparty/*
 %endif
 
 %files -n %{name}_port-%sover_port -f %name.lang
@@ -238,6 +242,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Fri Mar 18 2016 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.9-alt1
+- 2.5.9
+
 * Mon Jul 06 2015 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.8-alt1
 - 2.5.8
 
