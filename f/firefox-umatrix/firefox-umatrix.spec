@@ -1,7 +1,7 @@
 # SPEC file for uMatrix extension
 
 %define rname	umatrix
-%define version 0.9.3.2
+%define version 0.9.3.3
 %define release alt1
 %define cid 	uMatrix@raymondhill.net
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -53,6 +53,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Mar 20 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.3.3-alt1
+- New version
+
 * Sun Feb 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.3.2-alt1
 - New version
 
