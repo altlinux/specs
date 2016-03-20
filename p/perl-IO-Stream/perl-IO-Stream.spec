@@ -3,7 +3,7 @@
 %define real_name IO-Stream
 
 Name: perl-IO-Stream
-Version: 1.0.10
+Version: 2.0.2
 Release: alt1
 
 Summary:  Perl module for non-blocking I/O streams based on EV
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Fri Feb 21 2014
-# optimized out: perl-Devel-Symdump perl-EV perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Sub-Uplevel perl-common-sense perl-devel
-BuildRequires: perl-Data-Alias perl-EV-ADNS perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sun Mar 20 2016
+# optimized out: perl-Algorithm-Diff perl-AnyEvent perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-Guard perl-IO-AIO perl-JSON-PP perl-Module-Load perl-Parse-CPAN-Meta perl-Sub-Uplevel perl-Term-ANSIColor perl-Text-Diff perl-common-sense perl-devel perl-parent python3 python3-base
+BuildRequires: perl-AnyEvent-AIO perl-Data-Alias perl-EV perl-Module-Build-Tiny perl-Test-Differences perl-Test-Exception
 
 %description
 Perl module IO::Stream designed to give user ability to work
@@ -58,6 +58,9 @@ rm -f -- t/err-rw.t t/timeout-write-slowclient.t
 %perl_vendor_privlib/IO/Stream*
 
 %changelog
+* Sun Mar 20 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.2-alt1
+- New version
+
 * Sat Jan 23 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.0.10-alt1
 - New version
 
