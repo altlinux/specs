@@ -1,4 +1,4 @@
-%def_disable palemoon
+%def_disable palemoon   # Only compatible versions
 
 %define cid     \{73a6fe31-595d-460b-a920-fcc0f8843232\}
 
@@ -12,7 +12,7 @@ Summary: NoScript extension for Firefox and Pale Moon
 Summary (ru_RU.utf8): Дополнение NoScript для  Firefox и Pale Moon
 Name: firefox-noscript
 Version: 2.9.0.7
-Release: alt1
+Release: alt2
 Source: noscript-%version.xpi
 License: GPL
 Group: Networking/WWW
@@ -26,7 +26,7 @@ BuildRequires: unzip
 %if_enabled palemoon
 %package -n palemoon-noscript
 Group: System/Libraries
-Summary: Plugin  uBlock for Pale Moon
+Summary: Plugin NoScript for Pale Moon
 Requires: palemoon
 %endif
 
@@ -39,12 +39,12 @@ of security vulnerabilities (known and even unknown!) with
 no loss of functionality.
 
 %description -l ru_RU.utf8
-Расширение для вашего бракзера Firefox: NoScript позволяет выполнять
+Расширение для вашего браузер:  NoScript позволяет выполнять
 скрипты JavaScript, Java (и другие расширения ) только с доверенных
-доменов из вашего списка (например с сайта банка, вашей зарплатной карточки).
-Этот белый список основанн на приоритетах блокировки предотвращает
-использование "дыр" в безопасности (известных и даже неизвестных !)
-без потери функциональности.
+доменов выбранных вами (например: с сайта банковского обслуживания).
+Список доверенных сайтов основанн на принципе упреждающей блокировки
+угроз, и позволяет предотвращать использование уязвимостей 
+(как известных, так и ещё неизвестных) без потери функциональности.
 
 %if_enabled palemoon
 %description -n palemoon-noscript
@@ -56,12 +56,12 @@ of security vulnerabilities (known and even unknown!) with
 no loss of functionality.
 
 %description -l ru_RU.utf8 -n palemoon-noscript
-Расширение для вашего браузер  Pale Moon: NoScript позволяет выполнять
+Расширение для вашего браузер:  NoScript позволяет выполнять
 скрипты JavaScript, Java (и другие расширения ) только с доверенных
-доменов из вашего списка (например с сайта банка, вашей зарплатной карточки).
-Этот белый список основанн на приоритетах блокировки предотвращает
-использование "дыр" в безопасности (известных и даже неизвестных !)
-без потери функциональности.
+доменов выбранных вами (например: с сайта банковского обслуживания).
+Список доверенных сайтов основанн на принципе упреждающей блокировки
+угроз, и позволяет предотвращать использование уязвимостей 
+(как известных, так и ещё неизвестных) без потери функциональности.
 %endif
 
 %prep
@@ -93,6 +93,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Sun Mar 20 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.9.0.7-alt2
+- Fix errors in spec
+
 * Sun Mar 20 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.9.0.7-alt1
 - Version 2.9.0.7
 
