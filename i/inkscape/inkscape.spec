@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.91
-Release: alt3
+Release: alt4
 
 Summary: A Vector Drawing Application
 
@@ -130,6 +130,9 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Mon Mar 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.91-alt4
+- rebuild with latest libpoppler58
+
 * Fri Oct 09 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.91-alt3
 - build fixed
 
