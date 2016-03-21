@@ -1,7 +1,11 @@
 
+%define sover 4
+%define libname libcfitsio%sover
+%define devame libcfitsio-devel
+
 Name: cfitsio
-Version: 3.370
-Release: alt1
+Version: 3.380
+Release: alt2
 %define sversion %(echo %version | tr -d .)
 
 Group: System/Libraries
@@ -15,12 +19,11 @@ Source: ftp://heasarc.gsfc.nasa.gov/software/fitsio/c/%name-%version.tar.gz
 Patch1: cfitsio-zlib.patch
 # FC
 Patch5: cfitsio-pkgconfig.patch
+Patch6: cfitsio-noversioncheck.patch
 # ALT
 Patch10: cfitsio-3.360-autotools.patch
-Patch11: cfitsio-3.350-alt-pkgconfig.patch
-Patch12: cfitsio-3.360-soname.patch
 
-BuildRequires: flex gcc-c++ gcc-fortran glibc-devel zlib-devel
+BuildRequires: flex gcc-c++ gcc-fortran glibc-devel zlib-devel bzlib-devel
 
 %description
 CFITSIO is a library of C and Fortran subroutines for reading and
@@ -32,11 +35,11 @@ At the same time, CFITSIO provides many advanced features that have made
 it the most widely used FITS file programming interface in the astronomical
 community.
 
-%package -n lib%name
+%package -n %libname
 License: BSD-like
 Summary: Library for accessing files in FITS format for C and Fortran
 Group: System/Libraries
-%description -n lib%name
+%description -n %libname
 CFITSIO is a library of C and Fortran subroutines for reading and
 writing data files in FITS (Flexible Image Transport System) data
 format.  CFITSIO simplifies the task of writing software that deals
@@ -47,14 +50,14 @@ features that have made it the most widely used FITS file programming
 interface in the astronomical community.  This package contains the
 shared library required by prgrams that use the cfits library.
 
-%package -n lib%name-devel
+%package -n %devame
 License: BSD-like
 Summary: Library for accessing files in FITS format for C and Fortran
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: %libname = %version-%release
 Provides: fitsio-devel = %version-%release
 Provides: %name-devel = %version-%release
-%description -n lib%name-devel
+%description -n %devame
   CFITSIO is a library of C and Fortran subroutines for reading and
 writing data files in FITS (Flexible Image Transport System) data format.
 CFITSIO simplifies the task of writing software that deals with FITS
@@ -66,12 +69,12 @@ community.
   This package contains the headers required for compiling software that uses
 the cfits library.
 
-%package -n lib%name-devel-static
+%package -n %devame-static
 License: BSD-like
 Summary: Library for accessing files in FITS format for C and Fortran
 Group: Development/C
-Requires: lib%name-devel = %version-%release
-%description -n lib%name-devel-static
+Requires: %devame = %version-%release
+%description -n %devame-static
   CFITSIO is a library of C and Fortran subroutines for reading and
 writing data files in FITS (Flexible Image Transport System) data format.
 CFITSIO simplifies the task of writing software that deals with FITS
@@ -87,13 +90,19 @@ the cfits library.
 %setup
 %patch1 -p1
 %patch5 -p1
+%patch6 -p1
 %patch10 -p0
-#%patch11 -p0
-%patch12 -p0
 #autoreconf
 
+# remove bundled zlib
+pushd zlib
+rm adler32.c crc32.c deflate.c infback.c inffast.c inflate.c inflate.h \
+inftrees.c inftrees.h zlib.h deflate.h trees.c trees.h uncompr.c zconf.h \
+zutil.c zutil.h crc32.h  inffast.h  inffixed.h 
+popd
+
 %build
-%configure --disable-static --enable-shared --enable-reentrant
+%configure --disable-static --enable-shared --enable-reentrant --with-bzip2
 %make_build shared
 %make_build fpack
 %make_build funpack
@@ -111,20 +120,26 @@ install -m755 f{,un}pack %buildroot/%_bindir/
 %files
 %_bindir/*
 
-%files -n lib%name
-%_libdir/*.so.3
-%_libdir/*.so.3.*
+%files -n %libname
+%_libdir/*.so.%sover
+%_libdir/*.so.*
 
-%files -n lib%name-devel
+%files -n %devame
 %_libdir/*.so
 #%_libdir/*.la
 %_includedir/*
 %_libdir/pkgconfig/*
 
-#%files -n lib%name-devel-static
+#%files -n %devame-static
 #%_libdir/*.a
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 3.380-alt2
+- fix requires
+
+* Fri Mar 18 2016 Sergey V Turchin <zerg@altlinux.org> 3.380-alt1
+- new version
+
 * Wed Jul 01 2015 Sergey V Turchin <zerg@altlinux.org> 3.370-alt1
 - new version
 
