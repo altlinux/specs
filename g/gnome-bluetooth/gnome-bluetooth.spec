@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -23,7 +23,7 @@ Requires: lib%name = %version-%release rfkill
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
-%define gtk_ver 3.11.2
+%define gtk_ver 3.12.0
 
 BuildRequires: gnome-common gtk-doc intltool yelp-tools itstool
 BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libudev-devel libnotify-devel
@@ -132,6 +132,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
+- 3.18.3
+
 * Mon Jan 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
