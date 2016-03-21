@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2.3
+Version: 1.3.0
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers.
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 21 2016 Vladimir Didenko <cow@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.3-alt1
 - NMU: 1.2.1 -> 1.2.3 (fixes FTBFS).
 

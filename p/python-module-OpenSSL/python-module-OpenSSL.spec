@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-%define version    0.15.1
+%define version    16.0.0
 %define release    alt1
 
 %define source_version %version
@@ -13,7 +13,7 @@ Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
 Name: %packagename
 Version: %version
-Release: alt1.1.1
+Release: %release
 Source: %source_name-%source_version.tar.bz2
 License: LGPL
 Group: Development/Python
@@ -51,12 +51,12 @@ High-level wrapper around a subset of the OpenSSL library, includes
 Высокоуровневая обвязка для подмножества библиотеки OpenSSL.
 Включает в себя:
 	* Объекты SSL.Connection для работы с переносимыми сокетами
-          python 
+          python
 	* Коллбэки, написанные на python
 	* Широкие возможности по обработке ошибок, отражающие коды
 	  ошибок OpenSSL
 	... И это еще не все ;)
-	  
+
 
 %if_with python3
 %package -n python3-module-%modulename
@@ -71,15 +71,6 @@ High-level wrapper around a subset of the OpenSSL library, includes
 	* Extensive error-handling mechanism, mirroring OpenSSL's
 	  error codes
 	...  and much more ;)
-
-%package -n python3-module-%modulename-tests
-Summary: %modulename tests (Python 3)
-Group: Development/Python3
-Requires: python3-module-%modulename = %version-%release
-
-%description -n python3-module-%modulename-tests
-%modulename is a high-level wrapper around a subset of the OpenSSL
-library. This package contains tests for %modulename.
 %endif
 
 %if_with doc_package
@@ -100,15 +91,6 @@ OpenSSL. Установите python-%modulename-doc, если Вам требу
 документация по API и примеры программирования с использованием
 данного модуля.
 %endif
-
-%package tests
-Summary: %modulename tests
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-%modulename is a high-level wrapper around a subset of the OpenSSL
-library. This package contains tests for %modulename.
 
 %prep
 %setup -n %source_name-%source_version
@@ -142,13 +124,9 @@ popd
 
 
 %files
-%doc ChangeLog CONTRIBUTING.rst INSTALL.rst README.rst TODO
+%doc CHANGELOG.rst CONTRIBUTING.rst INSTALL.rst README.rst
 %python_sitelibdir/%modulename/
 %python_sitelibdir/*.egg-info
-%exclude %python_sitelibdir/OpenSSL/test
-
-%files tests
-%python_sitelibdir/OpenSSL/test
 
 %if_with doc_package
 %files doc
@@ -158,16 +136,14 @@ popd
 
 %if_with python3
 %files -n python3-module-%modulename
-%doc ChangeLog CONTRIBUTING.rst INSTALL.rst README.rst TODO
+%doc CHANGELOG.rst CONTRIBUTING.rst INSTALL.rst README.rst
 %python3_sitelibdir/*
-%python3_sitelibdir/*.egg-*
-%exclude %python3_sitelibdir/OpenSSL/test
-
-%files -n python3-module-%modulename-tests
-%python3_sitelibdir/OpenSSL/test
 %endif
 
 %changelog
+* Mon Mar 21 2016 Vladimir Didenko <cow@altlinux.org> 16.0.0-alt1
+- Version 16.0.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
