@@ -1,6 +1,7 @@
+%def_enable session
 Name: cairo-dock
 Version: 3.4.1
-Release: alt2
+Release: alt3
 
 Summary: A light and eye-candy dock to launch your programs easily
 Summary(ru_RU.UTF-8): Приятный глазу док для простого запуска ваших программ
@@ -15,6 +16,9 @@ BuildPreReq: cmake rpm-macros-cmake
 # Automatically added by buildreq on Wed Sep 09 2015 (-bi)
 # optimized out: at-spi2-atk cmake-modules elfutils fontconfig glib-networking glib2-devel libGL-devel libX11-devel libXfixes-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server pkg-config python-base wayland-devel xorg-compositeproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
 BuildRequires: ImageMagick-tools cmake desktop-file-utils gcc-c++ libGConf libGLU-devel libXcomposite-devel libcurl-devel libdbus-glib-devel libgtk+3-devel librsvg-devel libxml2-devel
+%if_enabled session
+BuildRequires: libpixman-devel libXtst-devel libXrandr-devel libXdmcp-devel libwayland-egl-devel 	libharfbuzz-devel libexpat-devel libdrm-devel libXdamage-devel libXxf86vm-devel libpng-devel libXinerama-devel libXcursor-devel 	libxkbcommon-x11-devel libwayland-cursor-devel libepoxy-devel at-spi2-atk-devel libat-spi2-core-devel
+%endif
 
 %description
 Cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -42,7 +46,7 @@ This package provides the include files and library for cairo-dock functions.
 %setup -n %name-%version
 
 %build
-%cmake -Denable-desktop-manager=ON
+%cmake %{?_enable_session:-Denable-desktop-manager=ON}
 %make_build -C BUILD
 
 %install
@@ -87,6 +91,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 21 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt3
+- Added missing buildrequires
+- Enabled session.
+
 * Wed Sep 16 2015 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt2
 - Small fix in spec
 
