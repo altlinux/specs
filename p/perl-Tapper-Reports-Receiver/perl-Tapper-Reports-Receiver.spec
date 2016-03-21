@@ -1,20 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(DateTime/Format/SQLite.pm)
 %define upstream_name    Tapper-Reports-Receiver
-%define upstream_version 4.1.3
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_5
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Receive test reports
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Reports-Receiver-%{version}.tar.gz
 
 BuildRequires: perl(AnyEvent.pm)
 BuildRequires: perl(AnyEvent/Handle.pm)
@@ -85,6 +86,9 @@ Tapper Distribution for Recevining Test Reports.
 
 
 %changelog
+* Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_5
 - update by mgaimport
 
