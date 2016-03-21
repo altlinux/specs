@@ -1,5 +1,5 @@
 Name: wcslib
-Version: 4.23
+Version: 4.25.1
 Release: alt1
 
 Group: System/Libraries
@@ -62,7 +62,8 @@ rm -rf %buildroot/%_docdir/wcslib-*
 
 %files -n libwcs
 %doc README
-%_libdir/*.so.*
+%_libdir/libwcs.so.4
+%_libdir/libwcs.so.4.*
 
 %files devel
 %doc html wcslib.pdf README
@@ -76,6 +77,12 @@ rm -rf %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.25.1-alt1
+- new version
+
+* Thu Jun 19 2014 Sergey V Turchin <zerg@altlinux.org> 4.23-alt0.M70P.1
+- built for M70P
+
 * Thu Jun 05 2014 Sergey V Turchin <zerg@altlinux.org> 4.23-alt1
 - new version
 
