@@ -1,7 +1,7 @@
 %define module RPM-Source-BundleImport
 
 Name: perl-%module
-Version: 0.027
+Version: 0.028
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -12,10 +12,11 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
-# Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-Source-Package perl(Pod/PlainText.pm)
+# for evalMakefilePL
+BuildRequires: perl(ExtUtils/Depends.pm) perl(YAML/Any.pm)
 Requires: perl-Source-Package > 0.04
-Requires: perl-RPM-Source-Editor > 0.854
+Requires: perl-RPM-Source-Editor > 0.859
 
 %description
 %summary
@@ -35,6 +36,9 @@ Requires: perl-RPM-Source-Editor > 0.854
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
+- development release
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.027-alt1
 - development release
 
