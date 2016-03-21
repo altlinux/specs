@@ -34,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1.1.1
+Release: alt1.1.2
 Epoch: 1
 
 Summary: Boost libraries
@@ -1241,7 +1241,6 @@ applications. This package contains python module.
 %patch34 -p2
 %patch35 -p1
 %patch36 -p1
-
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
 
@@ -1728,6 +1727,9 @@ done
 
 
 %changelog
+* Mon Mar 21 2016 Denis Medvedev <nbr@altlinux.org> 1:1.58.0-alt1.1.2
+- (NMU) fix typo in patch that makes errors for python 3.5
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.58.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
