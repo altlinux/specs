@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.5.8
+Version: 3.5.9
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Mon Mar 21 2016 Terechkov Evgenii <evg@altlinux.org> 3.5.9-alt1
+- 3.5.9 (Mighty Ravendark)
+
 * Sun Jan 31 2016 Terechkov Evgenii <evg@altlinux.org> 3.5.8-alt1
 - 3.5.8 (Major Tom)
 
