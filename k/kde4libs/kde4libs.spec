@@ -14,11 +14,11 @@
 
 %define major 4
 %define minor 14
-%define bugfix 17
+%define bugfix 18
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -356,6 +356,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.18-alt1
+- new version
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.17-alt2
 - completely disable nepomuk
 
