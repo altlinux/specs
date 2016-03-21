@@ -5,13 +5,13 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A document manager application for GNOME
 Group: Office
 License: GPLv2+
-Url: https://live.gnome.org/Design/Apps/Documents
+Url: https://wiki.gnome.org/Apps/Documents
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -155,6 +155,9 @@ GObject introspection devel data for the %name library.
 %_datadir/appdata/%_name1.appdata.xml
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
+- 3.18.3
+
 * Wed Nov 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
