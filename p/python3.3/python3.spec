@@ -40,7 +40,7 @@ This package is needed for the transition only.
 Summary: %shortdesc (with the only built subpkg)
 Name: %ext_basename
 Version: %_python3_version.1
-Release: alt200
+Release: alt201
 License: Python
 Group: Development/Python3
 
@@ -88,12 +88,17 @@ import site
 
 known_paths = set()
 for prefix in site.PREFIXES:
-    site.addsitedir(os.path.join("%ext_sitelibdir"),
+    site.addsitedir("%ext_sitelibdir",
                     known_paths)
 %if "%_lib" == "lib64"
-    site.addsitedir(os.path.join("%ext_sitelibdir_noarch"),
+    site.addsitedir("%ext_sitelibdir_noarch",
                     known_paths)
 %endif
+EOF
+
+mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
+cat <<\EOF >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%ext_basename-site-packages
+^%std_site/(|__pycache__/)sitecustomize\.(|.+\.)py
 EOF
 
 mkdir -p %buildroot%_rpmlibdir
@@ -109,6 +114,7 @@ EOF
 
 %files -n %ext_basename-site-packages
 %_rpmlibdir/%ext_basename-site-packages-files.req.list
+%_sysconfdir/buildreqs/files/ignore.d/%ext_basename-site-packages
 
 %dir %ext_sitelibdir/
 %dir %ext_sitelibdir/__pycache__/
@@ -122,6 +128,9 @@ EOF
 %exclude %dir %std_site/__pycache__
 
 %changelog
+* Mon Mar 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt201
+- buildreq should ignore our sitecustomize.py.
+
 * Fri Mar 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt200
 - customize to look for modules under the old path (python3.3/site-packages)
 
