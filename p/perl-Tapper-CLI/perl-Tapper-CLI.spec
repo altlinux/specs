@@ -5,10 +5,10 @@ BuildRequires: perl(Catalyst/Runtime.pm) perl(Data/DPath.pm) perl(DateTime.pm) p
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(Tapper/Cmd/Init.pm) perl(Tapper/Base.pm)
 %define upstream_name    Tapper-CLI
-%define upstream_version 4.1.7
+%define upstream_version 5.0.2
 
 Name:       perl-%{upstream_name}
-Version:    4.1.7
+Version:    5.0.2
 Release:    alt1
 %if %release == alt3nt
 %define _without_test 1
@@ -85,18 +85,13 @@ Command line tools for Tapper.
 %files
 %doc META.json META.yml Changes LICENSE README
 %perl_vendor_privlib/*
-/usr/bin/tapper
-/usr/bin/tapper-api
-/usr/bin/tapper-db-deploy
-/usr/bin/tapper-testrun
-/usr/share/man/man1/tapper-api.1.*
-/usr/share/man/man1/tapper-db-deploy.1.*
-/usr/share/man/man1/tapper-testrun.1.*
-/usr/share/man/man1/tapper.1.*
-
-
+%_bindir/tapper*
+%_man1dir/tapper*
 
 %changelog
+* Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 4.1.7-alt1
 - automated CPAN update
 
