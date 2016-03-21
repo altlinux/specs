@@ -1,15 +1,13 @@
 Name: ntp
 Version: 4.2.8
-#define vers_rc p5
-Release: alt4
-%define srcname %name-%version%{?vers_rc:%vers_rc}
+#define patchlevel p6
+Release: alt5
+%define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
-License: BSD-Style
+License: %bsdstyle
 Group: System/Configuration/Other
 Url: http://www.ntp.org/
-
-Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
 Source0: http://www.eecis.udel.edu/~ntp/ntp_spool/ntp4/ntp-4.2/%srcname.tar.gz
 Source1: ntpd.init
@@ -33,6 +31,12 @@ Requires: ntp-utils = %version-%release
 Requires: ntpdate = %version-%release
 Requires: ntpd = %version-%release
 
+# ntpq subpackage should not have dependency to ntp-utils subpackage:
+# man8/ntpq.8 is a symlink to man1/ntp.1 which in ntp-utils
+%add_findreq_skiplist %_man8dir/ntpq.*
+
+BuildRequires: rpm-build-licenses
+
 # due to readline library linked with tinfo.
 BuildPreReq: libreadline-devel >= 4.3-alt5
 
@@ -47,6 +51,12 @@ BuildRequires: perl-File-Fetch perl-Digest-SHA
 
 # Root directory for chrooted environment, must not be same as real system root.
 %define ROOT /var/lib/ntpd
+
+%define common_description The Network Time Protocol (NTP) is used to synchronize the time\
+of a computer client or server to another server or reference time\
+source, such as a radio or satellite receiver or modem. It provides\
+client accuracies typically within a millisecond on LANs and up to\
+a few tens of milliseconds on WANs.
 
 %package aux
 Summary: The Network Time Protocol (NTP) auxiliary package
@@ -69,6 +79,7 @@ BuildArch: noarch
 Summary: The Network Time Protocol (NTP) utilities
 Group: System/Base
 Requires: ntpdate = %version-%release
+Requires: ntpq = %version-%release
 
 %package -n ntpdate
 Summary: Set the date and time via NTP
@@ -76,6 +87,10 @@ Group: System/Base
 Requires: ntp-aux = %version-%release
 Requires(pre): shadow-utils
 Requires: /var/empty
+
+%package -n ntpq
+Summary: The standard NTP query program
+Group: System/Base
 
 %package -n ntpd
 Summary: The Network Time Protocol daemon
@@ -88,27 +103,15 @@ Requires: /var/resolv
 Provides: ntp-server
 
 %description
-The Network Time Protocol (NTP) is used to synchronize the time
-of a computer client or server to another server or reference time source,
-such as a radio or satellite receiver or modem.  It provides client
-accuracies typically within a millisecond on LANs and up to a few tens of
-milliseconds on WANs.
+%common_description
 
 %description aux
-The Network Time Protocol (NTP) is used to synchronize the time
-of a computer client or server to another server or reference time source,
-such as a radio or satellite receiver or modem.  It provides client
-accuracies typically within a millisecond on LANs and up to a few tens of
-milliseconds on WANs.
+%common_description
 
 This is an auxiliary package.
 
 %description doc
-The Network Time Protocol (NTP) is used to synchronize the time
-of a computer client or server to another server or reference time source,
-such as a radio or satellite receiver or modem.  It provides client
-accuracies typically within a millisecond on LANs and up to a few tens of
-milliseconds on WANs.
+%common_description
 
 This package contains NTP documentation.
 
@@ -116,32 +119,25 @@ This package contains NTP documentation.
 Perl NTP module
 
 %description utils
-The Network Time Protocol (NTP) is used to synchronize the time
-of a computer client or server to another server or reference time source,
-such as a radio or satellite receiver or modem.  It provides client
-accuracies typically within a millisecond on LANs and up to a few tens of
-milliseconds on WANs.
+%common_description
 
 This package contains various NTP utilities.
 
-%description -n ntpd
-The Network Time Protocol (NTP) is used to synchronize the time
-of a computer client or server to another server or reference time source,
-such as a radio or satellite receiver or modem.  It provides client
-accuracies typically within a millisecond on LANs and up to a few tens of
-milliseconds on WANs.
-
-This package contains Network Time Protocol daemon.
-
 %description -n ntpdate
-The Network Time Protocol (NTP) is used to synchronize the time
-of a computer client or server to another server or reference time source,
-such as a radio or satellite receiver or modem.  It provides client
-accuracies typically within a millisecond on LANs and up to a few tens of
-milliseconds on WANs.
+%common_description
 
 This package contains ntpdate program for retrieving the date and time
 from remote machines via a network.
+
+%description -n ntpq
+%common_description
+
+This package contains standard NTP query program
+
+%description -n ntpd
+%common_description
+
+This package contains Network Time Protocol daemon.
 
 %prep
 %setup -q -n %srcname
@@ -223,6 +219,7 @@ touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/%name/{drift,step-tickers}
 # ghost files from update_chrooted
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/host.conf
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/hosts
+touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/localtime
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/nsswitch.conf
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/resolv.conf
 touch $RPM_BUILD_ROOT%ROOT%_sysconfdir/services
@@ -289,14 +286,22 @@ fi
 %_sbindir/*
 %_mandir/man?/*
 %exclude %_sbindir/ntpd
+%exclude %_sbindir/ntpq
 %exclude %_sbindir/ntpdate
 %exclude %_man1dir/ntpd.*
+%exclude %_man1dir/ntpq.*
 %exclude %_man8dir/ntpd.*
+%exclude %_man8dir/ntpq.*
 %exclude %_man8dir/ntpdate.*
 
 %files -n ntpdate
 %_sbindir/ntpdate
 %_man8dir/ntpdate.*
+
+%files -n ntpq
+%_sbindir/ntpq
+%_man1dir/ntpq.*
+%_man8dir/ntpq.*
 
 %files -n ntpd
 %config %_initdir/ntpd
@@ -321,6 +326,7 @@ fi
 # ghost files from update_chrooted
 %ghost %ROOT%_sysconfdir/host.conf
 %ghost %ROOT%_sysconfdir/hosts
+%ghost %ROOT%_sysconfdir/localtime
 %ghost %ROOT%_sysconfdir/nsswitch.conf
 %ghost %ROOT%_sysconfdir/resolv.conf
 %ghost %ROOT%_sysconfdir/services
@@ -330,6 +336,11 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Mon Mar 21 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt5
+- 4.2.8p6
+- removed "Packager" from spec
+- splitted ntpq to separate subpackage
+
 * Tue Dec 15 2015 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt4
 - added files produced by update_chrooted as ghost
 - added check section
