@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %{_name}2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The Geoinformation Service
@@ -178,6 +178,9 @@ mkdir -p %buildroot%_localstatedir/%_name
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt1
+- 2.4.3
+
 * Tue Mar 01 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
