@@ -1,6 +1,6 @@
 Name: thermald
 Version: 1.4.3
-Release: alt1
+Release: alt2
 
 Summary: Thermal daemon for IA
 
@@ -46,11 +46,9 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 
 %post
 %post_service thermald
-/sbin/service thermald condrestart ||:
 
 %preun
 %preun_service thermald
-/sbin/service thermald condstop ||:
 
 %files
 %_sbindir/%name
@@ -67,5 +65,8 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 %_man8dir/*
 
 %changelog
+* Mon Mar 21 2016 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt2
+- Remove init-condrestart.
+
 * Tue Feb 16 2016 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt1
 - Initial build for Altlinux Sisyphus.
