@@ -1,15 +1,19 @@
 %set_verify_elf_method relaxed
 
-%define firefox_cid                    \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
-%define firefox_prefix                 %_libdir/firefox
-%define firefox_datadir                %_datadir/firefox
+%define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
+%define firefox_prefix  %_libdir/firefox
+%define firefox_datadir %_datadir/firefox
+
+%define gst_version 1.0
+%define nspr_version 4.12.0
+%define nss_version 3.23.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        44.0.2
-Release:        alt3
+Version:        45.0.1
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -33,7 +37,6 @@ Patch17:        firefox-mediasource-crash.patch
 # Upstream
 Patch200:       mozilla-bug-1205199.patch
 Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
-Patch202:       mozilla-bug-1234026.patch
 
 # Red Hat
 Patch300:       rhbz-1219542-s390-build.patch
@@ -67,7 +70,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
+BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libicu-devel
@@ -80,8 +83,8 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel
-BuildRequires: libnss-devel
+BuildRequires: pkgconfig(nspr) >= %nspr_version
+BuildRequires: pkgconfig(nss) >= %nss_version
 BuildRequires: libnss-devel-static
 
 BuildRequires: autoconf_2.13
@@ -94,7 +97,7 @@ Provides:	webclient
 Requires:	mozilla-common
 
 # ALT#30732
-Requires:	gst-plugins-ugly
+Requires:	gst-plugins-ugly%gst_version
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss >= 3.12.11-alt3
@@ -135,7 +138,6 @@ tar -xf %SOURCE2
 
 %patch200 -p1
 %patch201 -p1
-%patch202 -p1
 
 %patch300 -p1
 %patch301 -p1
@@ -302,6 +304,39 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Mar 22 2016 Alexey Gladkov <legion@altlinux.ru> 45.0.1-alt1
+- New release (45.0.1).
+
+* Wed Mar 16 2016 Alexey Gladkov <legion@altlinux.ru> 45.0-alt4
+- New release (45.0).
+- Fixed:
+  + 2016-38 Out-of-bounds write with malicious font in Graphite 2
+  + 2016-37 Font vulnerabilities in the Graphite 2 library
+  + 2016-36 Use-after-free during processing of DER encoded keys in NSS
+  + 2016-35 Buffer overflow during ASN.1 decoding in NSS
+  + 2016-34 Out-of-bounds read in HTML parser following a failed allocation
+  + 2016-33 Use-after-free in GetStaticInstance in WebRTC
+  + 2016-32 WebRTC and LibVPX vulnerabilities found through code inspection
+  + 2016-31 Memory corruption with malicious NPAPI plugin
+  + 2016-30 Buffer overflow in Brotli decompression
+  + 2016-29 Same-origin policy violation using performance.getEntries and history navigation with session restore
+  + 2016-28 Addressbar spoofing though history navigation and Location protocol property
+  + 2016-27 Use-after-free during XML transformations
+  + 2016-26 Memory corruption when modifying a file being read by FileReader
+  + 2016-25 Use-after-free when using multiple WebRTC data channels
+  + 2016-24 Use-after-free in SetBody
+  + 2016-23 Use-after-free in HTML5 string parser
+  + 2016-22 Service Worker Manager out-of-bounds read in Service Worker Manager
+  + 2016-21 Displayed page address can be overridden
+  + 2016-20 Memory leak in libstagefright when deleting an array during MP4 processing
+  + 2016-19 Linux video memory DOS with Intel drivers
+  + 2016-18 CSP reports fail to strip location information for embedded iframe pages
+  + 2016-17 Local file overwriting and potential privilege escalation through CSP reports
+  + 2016-16 Miscellaneous memory safety hazards (rv:45.0 / rv:38.7)
+
+* Fri Feb 19 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.2-alt4
+- Fix gst-plugins-ugly version.
+
 * Tue Feb 16 2016 Alexey Gladkov <legion@altlinux.ru> 44.0.2-alt3
 - Use GTK3 again.
 - Add RedHat patches.
