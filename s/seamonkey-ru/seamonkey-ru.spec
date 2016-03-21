@@ -3,7 +3,7 @@
 
 Name:		seamonkey-ru
 Version:	2.40
-Release:	alt1
+Release:	alt2
 Summary:	Russian (RU) Language Pack for Seamonkey
 
 License:	MPL/NPL
@@ -41,6 +41,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %ciddir
 
 %changelog
+* Sun Mar 20 2016 Michael Shigorin <mike@altlinux.org> 2.40-alt2
+- Official release
+
 * Sat Mar 05 2016 Michael Shigorin <mike@altlinux.org> 2.40-alt1
 - New version
 

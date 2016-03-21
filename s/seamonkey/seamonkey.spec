@@ -15,7 +15,7 @@
 
 Name: 	 seamonkey
 Version: 2.40
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -394,6 +394,9 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Sun Mar 20 2016 Michael Shigorin <mike@altlinux.org> 1:2.40-alt2
+- 2.40 released
+
 * Sat Mar 05 2016 Michael Shigorin <mike@altlinux.org> 1:2.40-alt1
 - 2.40 (candidate build4 tarball)
 
