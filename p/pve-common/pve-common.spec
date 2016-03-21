@@ -1,6 +1,6 @@
 Name: pve-common
 Summary: Proxmox VE base library
-Version: 4.0.63
+Version: 4.0.67
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -19,6 +19,7 @@ BuildRequires: perl(IO/AtomicFile.pm)
 BuildRequires: perl(HTTP/Status.pm)
 BuildRequires: perl(Devel/Cycle.pm)
 BuildRequires: perl(Net/IP.pm)
+BuildRequires: perl(Net/DBus.pm)
 BuildRequires: perl(Pod/Parser.pm)
 BuildRequires: perl(Clone.pm)
 BuildRequires: perl(File/Basename.pm)
@@ -39,6 +40,12 @@ cd src
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Jun 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.67-alt1
+- 4.0-67
+
+* Wed Jun 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.65-alt1
+- 4.0-65
+
 * Fri May 20 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.63-alt1
 - 4.0-63
 
