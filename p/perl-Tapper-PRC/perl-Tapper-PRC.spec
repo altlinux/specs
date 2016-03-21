@@ -1,22 +1,22 @@
-BuildRequires: perl(File/Slurp.pm)
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl(File/Slurp.pm)
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators perl(Hash/Merge.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(File/Slurp.pm)
 %define upstream_name    Tapper-PRC
-%define upstream_version 4.1.2
+%define upstream_version 5.0.0
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_7
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-PRC-%{version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -69,12 +69,13 @@ Tapper - Program run control for test program automation.
 %files
 %doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
-/usr/bin/tapper-automatic-test.pl
-/usr/bin/tapper-client
-/usr/share/man/man1/tapper-automatic-test.pl.1*
-/usr/share/man/man1/tapper-client.1*
+%_bindir/tapper*
+%_man1dir/tapper*
 
 %changelog
+* Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
+- automated CPAN update
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_7
 - update by mgaimport
 
