@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module FCGI
 
 Name: perl-%module
-Version: 0.77
-Release: alt1.1.1
+Version: 0.78
+Release: alt1
 
 Summary: Fast CGI module for perl
 License: OpenMarket
@@ -33,15 +34,16 @@ WARRANTIES.
 %install
 %perl_vendor_install
 
-chmod -c 644 LICENSE.TERMS
-
 %files
 %perl_vendor_archlib/FCGI.pm
 %perl_vendor_autolib/FCGI
-%doc README ChangeLog LICENSE.TERMS 
+%doc README ChangeLog
 #*.fpl
 
 %changelog
+* Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1.1.1
 - rebuild with new perl 5.22.0
 
