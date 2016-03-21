@@ -4,7 +4,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -92,7 +92,7 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %attr(2711,root,chkpwd) %_K5exec/kcheckpass
 %_K5plug/screenlocker_kcm.so
 %_K5data/ksmserver/screenlocker/
-%_K5data/plasma/kcms/screenlocker_kcm/
+#%_K5data/plasma/kcms/screenlocker_kcm/
 %_K5conf_up/k*reenlock*
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
@@ -111,6 +111,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 

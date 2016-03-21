@@ -1,6 +1,6 @@
 Name: lxqt-config
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL
@@ -46,6 +46,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS
 
 %changelog
+* Wed Mar 23 2016 Michael Shigorin <mike@altlinux.org> 0.10.0-alt2
+- rebuilt against KF5 5.6.0
+
 * Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
 - 0.10.0
 

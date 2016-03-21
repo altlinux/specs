@@ -14,8 +14,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.5.5
-Release: alt2
+Version: 5.6.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -36,7 +36,7 @@ Patch103: alt-plasma-konsole.patch
 Patch104: alt-def-digital-clock.patch
 Patch105: alt-lock-widgets.patch
 Patch106: alt-digital-clock-date.patch
-Patch107: alt-userswitcher.patch
+#
 Patch108: alt-breeze-background.patch
 Patch109: alt-def-start-empty-session.patch
 
@@ -132,7 +132,7 @@ KF5 library
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
-%patch107 -p1
+#
 %patch108 -p1
 %patch109 -p1
 
@@ -270,6 +270,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt2
 - update requires
 
