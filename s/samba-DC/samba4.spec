@@ -19,7 +19,6 @@
 %def_without libsmbclient
 %def_without libwbclient
 %def_without libnetapi
-%def_without pam_smbpass
 %def_with docs
 
 %def_with dc
@@ -44,8 +43,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.3.6
-Release: alt2
+Version: 4.4.0
+Release: alt1
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -87,7 +86,6 @@ Requires: libwbclient-DC = %version-%release
 BuildRequires: /proc
 BuildRequires: libe2fs-devel
 BuildRequires: libacl-devel
-BuildRequires: libaio-devel
 BuildRequires: libattr-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libncurses-devel
@@ -277,16 +275,6 @@ Conflicts: %rname-test
 samba4-test provides testing tools for both the server and client
 packages of Samba.
 
-%package test-devel
-Summary: Testing devel files for Samba servers and clients
-Group: Development/C
-Requires: %name-test = %version-%release
-Conflicts: %rname-test-devel
-
-%description test-devel
-samba-test-devel provides testing devel files for both the server and client
-packages of Samba.
-
 %if_with winbind
 %package winbind
 Summary: Samba winbind
@@ -365,19 +353,6 @@ projects to store temporary data. If an application is already using TDB for
 temporary data it is very easy to convert that application to be cluster aware
 and use CTDB instead.
 
-%package ctdb-devel
-Summary: CTDB clustered database development package
-Group: Development/C
-Requires: %name-ctdb = %version-%release
-Conflicts: ctdb-devel
-
-%description ctdb-devel
-Libraries, include files, etc you can use to develop CTDB applications.
-CTDB is a cluster implementation of the TDB database used by Samba and other
-projects to store temporary data. If an application is already using TDB for
-temporary data it is very easy to convert that application to be cluster aware
-and use CTDB instead.
-
 %package ctdb-tests
 Summary: CTDB clustered database test suite
 Group: Development/Other
@@ -385,6 +360,9 @@ Requires: %name-libs = %version-%release
 Requires: %name-ctdb = %version-%release
 Requires: nc
 Conflicts: ctdb-tests
+Conflicts: ctdb-devel
+Provides:  %name-ctdb-devel = %version-%release
+Obsoletes: %name-ctdb-devel < %version-%release
 
 %description ctdb-tests
 Test suite for CTDB.
@@ -445,9 +423,9 @@ Microsoft Active Directory.
 %define _ntdb_lib ,!ntdb,!pyntdb
 %endif
 
-%define _ldb_lib ,ldb,pyldb
+%define _ldb_lib ,ldb,pyldb,pyldb-util
 %if_without ldb
-%define _ldb_lib ,!ldb,!pyldb
+%define _ldb_lib ,!ldb,!pyldb,!pyldb-util
 %endif
 
 %define _samba4_libraries heimdal,!zlib,!popt%{_talloc_lib}%{_tevent_lib}%{_tdb_lib}%{_ntdb_lib}%{_ldb_lib}
@@ -526,9 +504,6 @@ Microsoft Active Directory.
 %if_with clustering_support
 	--with-cluster-support \
 %endif
-%if_without pam_smbpass
-	--without-pam_smbpass \
-%endif
 %if_with testsuite
 	--enable-selftest \
 %endif
@@ -604,6 +579,7 @@ install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
 install -m 0644 ctdb/config/ctdb.service %buildroot%_unitdir
 install -m 0644 ctdb/config/ctdb.sysconfig %buildroot%_sysconfdir/sysconfig/ctdb
 echo "d /var/run/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
+touch %buildroot%_sysconfdir/ctdb/nodes
 %endif
 
 install -m644 packaging/systemd/samba.conf.tmp %buildroot%_tmpfilesdir/%rname.conf
@@ -653,6 +629,9 @@ cp -a docs-xml/output/htmldocs %buildroot%_defaultdocdir/%rname/
 %if_without libsmbclient
 /bin/rm -f %buildroot%_man7dir/libsmbclient.7*
 %endif
+
+# Install pidl/lib/Parse/Pidl/Samba3/Template.pm
+cp -a pidl/lib/Parse/Pidl/Samba3/Template.pm %buildroot%_datadir/perl5/Parse/Pidl/Samba3/
 
 %find_lang pam_winbind
 %find_lang net
@@ -758,9 +737,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/smbpasswd
 %_bindir/smbprint
 %_bindir/smbspool
-%_bindir/smbta-util
+#_bindir/smbta-util
 %_bindir/smbtar
 %_bindir/smbtree
+%_libexecdir/samba/smbspool_krb5_wrapper
 %{cups_serverbin}/backend/smb
 %_man1dir/dbwrap_tool.1*
 %_man1dir/nmblookup.1*
@@ -783,7 +763,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/smbtree.1*
 %_man8dir/smbpasswd.8*
 %_man8dir/smbspool.8*
-%_man8dir/smbta-util.8*
+%_man8dir/smbspool_krb5_wrapper.8*
+#_man8dir/smbta-util.8*
+%_man8dir/cifsdd.8*
 
 %if_with ntdb
 %_bindir/ntdbbackup
@@ -859,53 +841,44 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0
 
 %exclude %_includedir/samba-4.0/netapi.h
-%exclude %_includedir/samba-4.0/torture.h
+#%exclude %_includedir/samba-4.0/torture.h
 %if_with libsmbclient
 %exclude %_includedir/samba-4.0/libsmbclient.h
 %endif
 %if_with libwbclient
 %exclude %_includedir/samba-4.0/wbclient.h
 %endif
-%if_with clustering_support
-%exclude %_includedir/samba-4.0/ctdb*
-%endif
 
-%_samba_libdir/libdcerpc-atsvc.so
 %_samba_libdir/libdcerpc-binding.so
 %_samba_libdir/libdcerpc-samr.so
 %_samba_libdir/libdcerpc.so
-%_samba_libdir/libgensec.so
 %_samba_libdir/libndr-krb5pac.so
 %_samba_libdir/libndr-nbt.so
 %_samba_libdir/libndr-standard.so
 %_samba_libdir/libndr.so
-%_samba_libdir/libregistry.so
 %_samba_libdir/libsamba-credentials.so
+%_samba_libdir/libsamba-errors.so
 %_samba_libdir/libsamba-hostconfig.so
 %_samba_libdir/libsamba-policy.so
 %_samba_libdir/libsamba-util.so
 %_samba_libdir/libsamdb.so
-%_samba_libdir/libsmbclient-raw.so
 %_samba_libdir/libsmbconf.so
 %_samba_libdir/libtevent-util.so
+%_samba_libdir/libtevent-unix-util.so
 %_samba_libdir/libsamba-passdb.so
 %_samba_libdir/libsmbldap.so
 
 %_pkgconfigdir/dcerpc.pc
-%_pkgconfigdir/dcerpc_atsvc.pc
 %_pkgconfigdir/dcerpc_samr.pc
-%_pkgconfigdir/gensec.pc
 %_pkgconfigdir/ndr.pc
 %_pkgconfigdir/ndr_krb5pac.pc
 %_pkgconfigdir/ndr_nbt.pc
 %_pkgconfigdir/ndr_standard.pc
-%_pkgconfigdir/registry.pc
 %_pkgconfigdir/samba-credentials.pc
 %_pkgconfigdir/samba-hostconfig.pc
 %_pkgconfigdir/samba-policy.pc
 %_pkgconfigdir/samba-util.pc
 %_pkgconfigdir/samdb.pc
-%_pkgconfigdir/smbclient-raw.pc
 
 %if_with dc
 %_samba_libdir/libdcerpc-server.so
@@ -913,24 +886,22 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %files libs
-%_samba_libdir/libdcerpc-atsvc.so.*
 %_samba_libdir/libdcerpc-binding.so.*
 %_samba_libdir/libdcerpc-samr.so.*
 %_samba_libdir/libdcerpc.so.*
-%_samba_libdir/libgensec.so.*
 %_samba_libdir/libndr-krb5pac.so.*
 %_samba_libdir/libndr-nbt.so.*
 %_samba_libdir/libndr-standard.so.*
 %_samba_libdir/libndr.so.*
-%_samba_libdir/libregistry.so.*
 %_samba_libdir/libsamba-credentials.so.*
+%_samba_libdir/libsamba-errors.so.*
 %_samba_libdir/libsamba-hostconfig.so.*
 %_samba_libdir/libsamba-policy.so.*
 %_samba_libdir/libsamba-util.so.*
 %_samba_libdir/libsamdb.so.*
-%_samba_libdir/libsmbclient-raw.so.*
 %_samba_libdir/libsmbconf.so.*
 %_samba_libdir/libtevent-util.so.*
+%_samba_libdir/libtevent-unix-util.so.*
 %_samba_libdir/libsamba-passdb.so.*
 %_samba_libdir/libsmbldap.so.*
 %_samba_mod_libdir/auth
@@ -960,10 +931,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libdbwrap-samba4.so
 %_samba_mod_libdir/libdcerpc-samba-samba4.so
 %_samba_mod_libdir/libdcerpc-samba4.so
-%_samba_mod_libdir/liberrors-samba4.so
 %_samba_mod_libdir/libevents-samba4.so
 %_samba_mod_libdir/libflag-mapping-samba4.so
 %_samba_mod_libdir/libgenrand-samba4.so
+%_samba_mod_libdir/libgensec-samba4.so
 %_samba_mod_libdir/libgpo-samba4.so
 %_samba_mod_libdir/libgse-samba4.so
 %_samba_mod_libdir/libhttp-samba4.so
@@ -986,6 +957,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libnon-posix-acls-samba4.so
 %_samba_mod_libdir/libnpa-tstream-samba4.so
 %_samba_mod_libdir/libprinting-migrate-samba4.so
+%_samba_mod_libdir/libregistry-samba4.so
 %_samba_mod_libdir/libreplace-samba4.so
 %_samba_mod_libdir/libsamba-cluster-support-samba4.so
 %_samba_mod_libdir/libsamba-debug-samba4.so
@@ -1000,6 +972,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libserver-role-samba4.so
 %_samba_mod_libdir/libshares-samba4.so
 %_samba_mod_libdir/libsamba3-util-samba4.so
+%_samba_mod_libdir/libsmbclient-raw-samba4.so
 %_samba_mod_libdir/libsmbd-base-samba4.so
 %_samba_mod_libdir/libsmbd-conn-samba4.so
 %_samba_mod_libdir/libsmbd-shim-samba4.so
@@ -1011,6 +984,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libtalloc-report-samba4.so
 %_samba_mod_libdir/libtdb-wrap-samba4.so
 %_samba_mod_libdir/libtime-basic-samba4.so
+%_samba_mod_libdir/libtorture-samba4.so
 %_samba_mod_libdir/libtrusts-util-samba4.so
 %_samba_mod_libdir/libutil-cmdline-samba4.so
 %_samba_mod_libdir/libutil-reg-samba4.so
@@ -1035,6 +1009,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libdb-glue-samba4.so
 %_samba_mod_libdir/libHDB-SAMBA4-samba4.so
 %_samba_mod_libdir/libasn1-samba4.so.*
+%_samba_mod_libdir/libcom_err-samba4.so.*
 %_samba_mod_libdir/libgssapi-samba4.so.*
 %_samba_mod_libdir/libhcrypto-samba4.so.*
 %_samba_mod_libdir/libhdb-samba4.so.*
@@ -1135,7 +1110,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/masktest
 %_bindir/ndrdump
 %_bindir/smbtorture
-%_samba_libdir/libtorture.so.*
+#%_samba_libdir/libtorture.so.*
 %if_with dc
 %_samba_mod_libdir/libdlz-bind9-for-torture-samba4.so
 %else
@@ -1154,11 +1129,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/libsocket-wrapper-samba4.so
 %_samba_mod_libdir/libuid-wrapper-samba4.so
 %endif
-
-%files test-devel
-%_includedir/samba-4.0/torture.h
-%_samba_libdir/libtorture.so
-%_pkgconfigdir/torture.pc
 
 %if_with winbind
 %files winbind -f pam_winbind.lang
@@ -1198,6 +1168,7 @@ TDB_NO_FSYNC=1 %make_build test
 #doc ctdb/README
 %config(noreplace) %_sysconfdir/sysconfig/ctdb
 %dir %_sysconfdir/ctdb
+%config(noreplace) %_sysconfdir/ctdb/nodes
 %config(noreplace) %_sysconfdir/ctdb/notify.sh
 %config(noreplace) %_sysconfdir/ctdb/debug-hung-script.sh
 %config(noreplace) %_sysconfdir/ctdb/ctdb-crash-cleanup.sh
@@ -1219,13 +1190,15 @@ TDB_NO_FSYNC=1 %make_build test
 %_sbindir/ctdbd
 %_sbindir/ctdbd_wrapper
 %_bindir/ctdb
-%_bindir/smnotify
-%_bindir/ping_pong
-%_bindir/ltdbtool
 %_bindir/ctdb_diagnostics
+%_bindir/ltdbtool
 %_bindir/onnode
-%_bindir/ctdb_lock_helper
-%_bindir/ctdb_event_helper
+%_bindir/ping_pong
+%_libexecdir/ctdb/ctdb_event_helper
+%_libexecdir/ctdb/ctdb_lock_helper
+%_libexecdir/ctdb/ctdb_natgw
+%_libexecdir/ctdb/ctdb_recovery_helper
+%_libexecdir/ctdb/smnotify
 
 %_man1dir/ctdb.1*
 %_man1dir/ctdbd.1*
@@ -1238,10 +1211,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/ctdb-tunables.7*
 %_man7dir/ctdb-statistics.7*
 
-%files ctdb-devel
-%_includedir/samba-4.0/ctdb*
-%_libdir/pkgconfig/ctdb.pc
-
 %files ctdb-tests
 %_libdir/samba-dc/ctdb-tests
 %_bindir/ctdb_run_tests
@@ -1252,6 +1221,10 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Tue Mar 22 2016 Andrey Cherepanov <cas@altlinux.org> 4.4.0-alt1
+- New version (https://www.samba.org/samba/history/samba-4.4.0.html)
+- Remove samba-DC-test-build and samba-DC-ctdb-devel
+
 * Sun Mar 13 2016 Andrey Cherepanov <cas@altlinux.org> 4.3.6-alt2
 - Rebuild with new libtalloc
 
