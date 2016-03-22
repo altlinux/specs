@@ -27,8 +27,8 @@
 
 
 Name: glusterfs3
-Version: %major.8
-Release: alt2
+Version: %major.9
+Release: alt1
 
 Summary: Cluster File System
 
@@ -410,6 +410,7 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %_datadir/glusterfs/scripts/slave-upgrade.sh
 %_datadir/glusterfs/scripts/gsync-upgrade.sh
 %_datadir/glusterfs/scripts/generate-gfid-file.sh
+%_datadir/glusterfs/scripts/schedule_georep.py
 %_bindir/gsync-sync-gfid
 %endif
 
@@ -500,6 +501,9 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %preun_service glusterd
 
 %changelog
+* Tue Mar 22 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.9-alt1
+- new version 3.7.9
+
 * Thu Feb 25 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.8-alt2
 - rebuild with libuserspace-icu 0.9.1
 
