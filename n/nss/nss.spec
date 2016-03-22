@@ -1,6 +1,8 @@
+%define nspr_version 4.12.0-alt1
+
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.22.0
+Version:	3.23.0
 Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -24,11 +26,15 @@ Patch5:		nss-fix-objdir.patch
 
 # Fedora patches
 Patch10:	nss-enable-pem.patch
+Patch11:	disableSSL2libssl.patch
+Patch12:	disableSSL2tests.patch
+Patch13:	tstclnt-ssl2-off-by-default.patch
+Patch14:	skip_stress_TLS_RC4_128_with_MD5.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:	chrpath zlib-devel libsqlite3-devel
-BuildRequires:	libnspr-devel >= 4.10.10-alt1
-Requires:	libnspr       >= 4.10.10-alt1
+BuildRequires:	libnspr-devel >= %nspr_version
+Requires:	libnspr       >= %nspr_version
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -109,10 +115,25 @@ Netscape Network Security Services Utilities
 %patch5 -p2
 
 %patch10 -p0
+%patch11 -p0
+%patch12 -p0
+%patch13 -p0
+%patch14 -p0
+
+:>nss/coreconf/Werror.mk
+
+pushd nss/tests/ssl
+# Create versions of sslcov.txt and sslstress.txt that disable tests
+# for SSL2 and EXPORT ciphers.
+cat sslcov.txt| sed -r "s/^([^#].*EXPORT|^[^#].*SSL2)/#disabled \1/" > sslcov.noSSL2orExport.txt
+cat sslstress.txt| sed -r "s/^([^#].*EXPORT|^[^#].*SSL2)/#disabled \1/" > sslstress.noSSL2orExport.txt
+popd
 
 %build
 export BUILD_OPT=1 
 export NS_USE_GCC=1
+export CC_IS_GCC=1
+export NSS_NO_SSL2_NO_EXPORT=1
 export NSS_ENABLE_ECC=1
 export NSS_ENABLE_WERROR=0
 export NSS_USE_SYSTEM_SQLITE=1
@@ -216,8 +237,6 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %exclude %_bindir/oidcalc
 %exclude %_bindir/sdrtest
 %exclude %_bindir/shlibsign
-%exclude %_bindir/tstclnt
-%exclude %_bindir/vfyserv
 
 %files -n lib%name
 %_libdir/*.so*
@@ -246,6 +265,11 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %_libdir/*.a
 
 %changelog
+* Mon Mar 21 2016 Alexey Gladkov <legion@altlinux.ru> 3.23.0-alt1
+- New version (3.23).
+- Add tstclnt and vfyserv (ALT#31803)
+- Disable SSL2.
+
 * Wed Feb 10 2016 Alexey Gladkov <legion@altlinux.ru> 3.22.0-alt1
 - New version (3.22.0).
 
