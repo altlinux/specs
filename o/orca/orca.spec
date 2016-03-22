@@ -1,8 +1,8 @@
-%define ver_major 3.18
+%define ver_major 3.20
 
 Name: orca
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению 
@@ -89,6 +89,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.18.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
