@@ -2,8 +2,8 @@
 
 
 Name: indilib
-Version: 1.1.0
-Release: alt3
+Version: 1.2.0
+Release: alt1
 
 %add_verify_elf_skiplist %_libdir/libindidriver.so.%version
 %add_verify_elf_skiplist %_libdir/libindimain.so.%version
@@ -102,6 +102,9 @@ chmod -x drivers/telescope/lx200fs2.{h,cpp}
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
+- new version
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt3
 - rebuild with new cfitsio
 
