@@ -1,7 +1,7 @@
 %define rname ktp-text-ui
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 15.12.3
 Release: alt1
 %K5init altplace
 
@@ -108,6 +108,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
 * Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
