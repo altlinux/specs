@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -45,6 +45,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_datadir/mate/applications/defaults.list
 
 %changelog
+* Tue Mar 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- support for recently added kf5 apps
+
 * Tue Mar 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - added kf5 okular
 
