@@ -1,7 +1,7 @@
 
 %def_disable kpercentage
 %def_disable qalculate
-%def_disable openbabel
+%def_enable openbabel
 %def_enable artikulate
 
 %add_findpackage_path %_kde4_bindir
@@ -9,11 +9,11 @@
 
 %define rname kdeedu
 Name: kde4edu
-%define major 4
-%define minor 14
+%define major 15
+%define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -1114,6 +1114,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
+* Tue Feb 02 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
+- new version
+
 * Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.14.3-alt2
 - rebuild with new libindi
 
