@@ -10,8 +10,8 @@
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.10
-Release: alt10.1
+Version: %ver_major.11
+Release: alt1
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -133,6 +133,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.11-alt1
+- 0.14.11
+
 * Mon Feb 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.10-alt10.1
 - disabled mozilla plugin
 
