@@ -1,5 +1,5 @@
 Name: grsync
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Grsync is a GUI for rsync
@@ -55,6 +55,9 @@ install -pD -m644 %_sourcedir/grsync16.png %buildroot%_miconsdir/grsync.png
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Tue Oct 28 2014 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
 - 1.2.5
 
