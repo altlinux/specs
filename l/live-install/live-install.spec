@@ -1,5 +1,5 @@
 Name: live-install
-Version: 20150829
+Version: 20160322
 Release: alt1
 Summary: Copy running system to fixed disk
 Group: System/Configuration/Other
@@ -27,6 +27,9 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 %dir %_datadir/%name/scripts.d
 
 %changelog
+* Tue Mar 22 2016 Eugene Prokopiev <enp@altlinux.ru> 20160322-alt1
+- audit=0 in kernel cmdline
+
 * Sat Aug 29 2015 Eugene Prokopiev <enp@altlinux.ru> 20150829-alt1
 - major improvements:
   + select root device by partition label and autodetect boot devices
