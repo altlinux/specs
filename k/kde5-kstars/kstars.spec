@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.12.2
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Education
@@ -61,6 +61,9 @@ sed -i 's|isnan(|std::isnan(|g' kstars/tools/horizonmanager.cpp
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt3
+- rebuild with new wcslib
+
 * Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
 - rebuild with new cfitsio
 

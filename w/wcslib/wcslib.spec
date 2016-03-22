@@ -1,5 +1,9 @@
+
+%define sover 5
+%define libwcs libwcs%sover
+
 Name: wcslib
-Version: 4.25.1
+Version: 5.14
 Release: alt1
 
 Group: System/Libraries
@@ -20,11 +24,11 @@ BuildRequires: flex libcfitsio-devel zlib-devel
 WCSLIB is a library that implements the "World Coordinate System" (WCS)
 convention in FITS (Flexible Image Transport System)
 
-%package -n libwcs
+%package -n %libwcs
 Group: System/Libraries
 Summary: An implementation of the FITS World Coordinate System standard
 License: LGPLv3+
-%description -n libwcs
+%description -n %libwcs
 WCSLIB is a library that implements the "World Coordinate System" (WCS)
 convention in FITS (Flexible Image Transport System)
 
@@ -60,10 +64,10 @@ Utils provided with %name
 rm -rf %buildroot/%_libdir/*.a
 rm -rf %buildroot/%_docdir/wcslib-*
 
-%files -n libwcs
+%files -n %libwcs
 %doc README
-%_libdir/libwcs.so.4
-%_libdir/libwcs.so.4.*
+%_libdir/libwcs.so.%sover
+%_libdir/libwcs.so.%sover.*
 
 %files devel
 %doc html wcslib.pdf README
@@ -77,6 +81,9 @@ rm -rf %buildroot/%_docdir/wcslib-*
 %_man1dir/*
 
 %changelog
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 5.14-alt1
+- new version
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.25.1-alt1
 - new version
 

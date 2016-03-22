@@ -13,7 +13,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -1114,6 +1114,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
+- rebuild with new wcslib
+
 * Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
 - new version
 
