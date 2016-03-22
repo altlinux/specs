@@ -1,17 +1,17 @@
 Name: rpm-utils
-Version: 0.9.18
+Version: 0.9.19
 Release: alt1
 
 Summary: Utilities every rpm packager must have
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 Source: %name-%version.tar
 
 Requires: getopt, time
 Requires: rpm-build > 0:4.0.4-alt96.8, mktemp >= 1:1.3.1
-# strace version that works properly without -F/-k options
-Requires: strace >= 4.5.18-alt5
+# strace version that works
+Requires: strace >= 4.11
 
 # Automatically added by buildreq on Wed Mar 26 2008
 BuildRequires: gcc-c++ librpm-devel
@@ -72,6 +72,10 @@ fi >&2
 %_datadir/buildreqs
 
 %changelog
+* Tue Mar 22 2016 Dmitry V. Levin <ldv@altlinux.org> 0.9.19-alt1
+- filereq: take openat, execveat, faccessat, lstat, and
+  fstatat64/newfstatat syscalls into account.
+
 * Fri Jan 17 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.18-alt1
 - optimize_package_list: fixed misoptimization (closes: #26320).
 
