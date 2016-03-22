@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.18
+%define ver_major 3.20
 %def_enable introspection
 
 Name: gcr
@@ -178,6 +178,9 @@ This package contains development documentation for GCR libraries.
 
 
 %changelog
+* Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

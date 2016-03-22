@@ -1,6 +1,7 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 3.18
+%define ver_major 3.20
+%define xdg_name org.gnome.eog
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
@@ -8,7 +9,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -32,11 +33,11 @@ BuildPreReq: rpm-build-python3 python3-devel
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
-# From configure.in
+# From configure.ac
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gtk-doc
-BuildPreReq: libgtk+3-devel >= 3.14.0
-BuildPreReq: libgio-devel >= 2.38.0
+BuildPreReq: libgtk+3-devel >= 3.19.3
+BuildPreReq: libgio-devel >= 2.42.0
 BuildPreReq: libgnome-desktop3-devel >= 2.91.91
 BuildPreReq: gnome-icon-theme >= 2.19.1
 BuildPreReq: shared-mime-info >= 0.60
@@ -131,8 +132,8 @@ the functionality of the EOG GUI.
 %_libdir/%name/plugins/*.so
 %_libdir/%name/plugins/*.plugin
 %_iconsdir/hicolor/*/apps/%{name}*.*
-%config %_datadir/glib-2.0/schemas/org.gnome.eog.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.eog.enums.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/GConf/gsettings/eog.convert
 %_datadir/appdata/%name.appdata.xml
 %doc AUTHORS HACKING MAINTAINERS NEWS
@@ -164,6 +165,9 @@ the functionality of the EOG GUI.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sun Feb 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2 (CVE-2013-7447)
 

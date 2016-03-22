@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1.6
 %define gst_api_ver 1.0
 
@@ -59,7 +59,6 @@ GStreamer applications.
 %autoreconf
 %configure \
 	--disable-static \
-	--disable-builtin-libvpx \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{subst_enable wayland}
 
@@ -80,6 +79,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 

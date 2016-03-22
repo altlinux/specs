@@ -1,10 +1,9 @@
-%define _name org.gnome.Weather
-
-%define ver_major 3.18
+%define xdg_name org.gnome.Weather
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -23,11 +22,12 @@ Provides:  %name-data = %version-%release
 %define gtk_ver 3.12
 %define gi_ver 1.36.0
 %define gjs_ver 1.40.0
-%define gweather_ver 3.18.1
+%define gweather_ver 3.20.0
 
 Requires: libgweather-gir >= %gweather_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(Gdk)
+Requires: typelib(Geoclue)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
@@ -36,7 +36,8 @@ Requires: typelib(Gtk)
 Requires: typelib(GWeather)
 
 BuildRequires: rpm-build-gnome gnome-common intltool rpm-build-gir
-BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel >= %gjs_ver libgweather-devel >= %gweather_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver libgjs-devel >= %gjs_ver
+BuildRequires: libgweather-devel >= %gweather_ver libgeoclue2-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel libgweather-gir-devel
 BuildRequires: libappstream-glib-devel
 
@@ -61,22 +62,25 @@ subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 %install
 %makeinstall_std
 
-%find_lang --with-gnome %_name
+%find_lang --with-gnome %xdg_name
 
-%files -f %_name.lang
+%files -f %xdg_name.lang
 %_bindir/%name
-%_datadir/applications/%_name.Application.desktop
-%_datadir/%_name/
-%_datadir/dbus-1/services/%_name.Application.service
-%_datadir/dbus-1/services/%_name.BackgroundService.service
-%_datadir/glib-2.0/schemas/%_name.Application.gschema.xml
-%_iconsdir/hicolor/*/apps/%_name.Application.png
-%_iconsdir/hicolor/symbolic/apps/%_name.Application-symbolic.svg
-%_datadir/gnome-shell/search-providers/%_name.Application.search-provider.ini
-%_datadir/appdata/%_name.Application.appdata.xml
+%_datadir/applications/%xdg_name.Application.desktop
+%_datadir/%xdg_name/
+%_datadir/dbus-1/services/%xdg_name.Application.service
+%_datadir/dbus-1/services/%xdg_name.BackgroundService.service
+%_datadir/glib-2.0/schemas/%xdg_name.Application.gschema.xml
+%_iconsdir/hicolor/*/apps/%xdg_name.Application.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name.Application-symbolic.svg
+%_datadir/gnome-shell/search-providers/%xdg_name.Application.search-provider.ini
+%_datadir/appdata/%xdg_name.Application.appdata.xml
 %doc NEWS
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

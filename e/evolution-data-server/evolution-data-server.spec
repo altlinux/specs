@@ -3,8 +3,8 @@
 # see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
 %set_verify_elf_method unresolved=relaxed
 
-%define ver_major 3.18
-%define ver_base 3.18
+%define ver_major 3.20
+%define ver_base 3.20
 %define ver_lib 1.2
 
 %def_disable debug
@@ -14,6 +14,7 @@
 %def_disable static_ldap
 %def_with krb5
 %def_enable goa
+%def_enable google
 # Ubuntu online accounts support
 %def_disable uoa
 %{?_enable_snapshot:%def_enable gtk_doc}
@@ -23,7 +24,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -68,8 +69,9 @@ BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
+%{?_enable_google:BuildRequires: libwebkitgtk3-devel libjson-glib-devel}
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
+%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel}
 %{?_with_sys_db4:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildPreReq: vala >= %vala_ver vala-tools >= %vala_ver}
@@ -194,6 +196,7 @@ export CAMEL_LOCK_HELPER_GROUP=mail
     --enable-dot-locking=no \
     %ldap_flags \
     %{subst_enable goa} \
+    %{?_disable_google:--disable-google-auth} \
     %{subst_enable uoa} \
     --enable-smime \
 %if_with krb5
@@ -229,6 +232,11 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %_libdir/%name/libedbus-private.so
 %_datadir/%name/
 %_datadir/dbus-1/services/*
+%_prefix/lib/systemd/user/evolution-addressbook-factory.service
+%_prefix/lib/systemd/user/evolution-calendar-factory.service
+%_prefix/lib/systemd/user/evolution-source-registry.service
+%_prefix/lib/systemd/user/evolution-user-prompter.service
+
 %_datadir/pixmaps/*
 %_datadir/GConf/gsettings/evolution-data-server.convert
 %_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.gschema.xml
@@ -252,16 +260,17 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 
 %if_enabled introspection
 %files gir
-#%_typelibdir/ECalendar-1.2.typelib
-%_typelibdir/EBookContacts-1.2.typelib
-%_typelibdir/EDataServer-1.2.typelib
-%_typelibdir/EBook-1.2.typelib
+#%_typelibdir/ECalendar-%ver_lib.typelib
+%_typelibdir/EBookContacts-%ver_lib.typelib
+%_typelibdir/EDataServer-%ver_lib.typelib
+%_typelibdir/EBook-%ver_lib.typelib
 
 %files gir-devel
-#%_girdir/ECalendar-1.2.gir
-%_girdir/EBookContacts-1.2.gir
-%_girdir/EDataServer-1.2.gir
-%_girdir/EBook-1.2.gir
+#%_girdir/ECalendar-%ver_lib.gir
+%_girdir/Camel-%ver_lib.gir
+%_girdir/EBookContacts-%ver_lib.gir
+%_girdir/EDataServer-%ver_lib.gir
+%_girdir/EBook-%ver_lib.gir
 %endif
 
 %if_enabled vala
@@ -277,6 +286,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Feb 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.5-alt1
 - 3.18.5
 

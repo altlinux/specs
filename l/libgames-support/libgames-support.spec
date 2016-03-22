@@ -1,4 +1,4 @@
-%define ver_major 0.1
+%define ver_major 1.0
 %define api_ver 1.0
 
 Name: libgames-support
@@ -13,7 +13,7 @@ Url: https://wiki.gnome.org/Apps/Games
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.40
-%define gtk_ver 3.12
+%define gtk_ver 3.20.0
 
 BuildRequires: intltool libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgee0.8-devel vala-tools
@@ -25,6 +25,7 @@ BuildRequires: libgee0.8-devel vala-tools
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
+Requires: libgee0.8-devel
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -54,6 +55,12 @@ developing applications that use %name.
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
+- 1.0
+
+* Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.91-alt1
+- 0.91
+
 * Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1-alt1
 - first build for Sisyphus
 

@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.8
 %define ver_api 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
@@ -25,7 +25,7 @@
 %def_enable libflac
 %def_enable exempi
 %def_enable nautilus_extension
-%def_enable gtk_doc
+%def_disable gtk_doc
 %def_enable taglib
 %def_enable needle
 %def_enable libgif
@@ -49,7 +49,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -64,7 +64,7 @@ Obsoletes: lib%name-client
 Requires: lib%name = %version-%release
 
 %define dbus_ver 1.3.1
-%define glib_ver 2.38.0
+%define glib_ver 2.40.0
 %define pango_ver 1.0.0
 %define gtk_ver 3.0.0
 %define libxml2_ver 2.6
@@ -336,13 +336,6 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 %files utils
 %_bindir/%name
-%_bindir/tracker-import
-%_bindir/tracker-info
-%_bindir/tracker-control
-%_bindir/tracker-search
-%_bindir/tracker-sparql
-%_bindir/tracker-stats
-%_bindir/tracker-tag
 %_man1dir/tracker-info.*
 %_man1dir/tracker-search.*
 %_man1dir/tracker-sparql.*
@@ -399,6 +392,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Tue Mar 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 

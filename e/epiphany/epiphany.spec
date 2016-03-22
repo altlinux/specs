@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.10
 %define ua_ver %ver_major
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -24,21 +24,27 @@ Patch: %name-3.17.2-alt-lfs.patch
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.10.0
+%define webkit_ver 2.11.4
+%define gtk_ver 3.19.1
+%define libxml2_ver 2.6.12
+%define xslt_ver 1.1.7
+%define soup_ver 2.48.0
+%define secret_ver 0.14
+%define gcr_ver 3.5.5
 
 Requires: %name-data = %version-%release indexhtml iso-codes
 
 BuildRequires: gnome-common yelp-tools libappstream-glib-devel
 BuildPreReq: intltool >= 0.50.0
-BuildPreReq: libgio-devel >= 2.44.0
-BuildPreReq: libgtk+3-devel >= 3.14.0
+BuildPreReq: libgio-devel
+BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libSM-devel
-BuildPreReq: libxml2-devel >= 2.6.12
-BuildPreReq: libxslt-devel >= 1.1.7
+BuildPreReq: libxml2-devel >= %libxml2_ver
+BuildPreReq: libxslt-devel >= %xslt_ver
 BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
-BuildPreReq: libsoup-devel >= 2.48.0
-BuildPreReq: libsecret-devel >= 0.14
-BuildPreReq: gcr-libs-devel >= 3.5.5
+BuildPreReq: libsoup-devel >= %soup_ver
+BuildPreReq: libsecret-devel >= %secret_ver
+BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildRequires: libwnck3-devel libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
 BuildPreReq: iso-codes-devel >= 0.35
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
@@ -64,7 +70,8 @@ This package contains common noarch files needed for Epiphany.
 %prep
 %setup
 %patch -p1
-[ ! -d m4 ] && mkdir m4
+# libtool-2.4.6 required
+rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 
 %build
 %autoreconf
@@ -104,6 +111,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Mar 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.5-alt1
 - 3.18.5
 

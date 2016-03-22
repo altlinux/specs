@@ -1,17 +1,16 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.46
-%define pcre_ver 8.11
+%define ver_major 2.48
+%define pcre_ver 8.13
 
 %def_disable snapshot
 %set_verify_elf_method strict
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
 
-%def_without sys_pcre
+%def_with sys_pcre
 %def_enable selinux
 %def_disable fam
 %def_disable systemtap
 %def_enable installed_tests
-
 
 %if_enabled snapshot
 %def_enable gtk_doc
@@ -20,7 +19,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -74,7 +73,7 @@ BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
 %endif
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: gnome-common intltool gtk-doc indent
+BuildRequires: gnome-common gtk-doc indent
 BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel libffi-devel zlib-devel libelf-devel
 BuildRequires: rpm-build-python python-devel
 #BuildRequires: rpm-build-python3 python3-devel
@@ -242,7 +241,7 @@ NOCONFIGURE=1 ./autogen.sh
     --enable-xattr \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --enable-included-printf=no \
-    %{?_with_sys_pcre:--with-pcre=system} \
+    %{?_without_sys_pcre:--with-pcre=internal} \
     %{subst_enable fam} \
     %{subst_enable systemtap} \
     %{?_enable_installed_tests:--enable-installed-tests}
@@ -327,6 +326,8 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_datadir/aclocal/gsettings.m4
 %dir %_datadir/glib-2.0
 %_datadir/glib-2.0/gettext/
+%_datadir/gettext/its/gschema.its
+%_datadir/gettext/its/gschema.loc
 %_datadir/glib-2.0/codegen/
 %_man1dir/glib-genmarshal.*
 %_man1dir/glib-gettextize.*
@@ -409,6 +410,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 2.48.0-alt1
+- 2.48.0
+
 * Sat Nov 07 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.2-alt1
 - 2.46.2
 

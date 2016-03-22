@@ -2,7 +2,7 @@
 
 %define _name tetravex
 %define __name gnome-%_name
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -12,7 +12,7 @@ Release: alt1
 Summary: A game based on Tetravex
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Apps/Tetravex
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
@@ -20,8 +20,8 @@ Provides:  %_name = %version-%release
 Obsoletes: gnome-games-gnotravex
 Provides:  gnome-games-gnotravex = %version-%release
 
-%define glib_ver 2.32.0
-%define gtk_ver 3.4.0
+%define glib_ver 2.40.0
+%define gtk_ver 3.14.0
 
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
@@ -56,6 +56,9 @@ times are stored in a system-wide scoreboard.
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

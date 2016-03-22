@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.18
+%define ver_major 3.20
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of GSettings schemas
@@ -127,6 +127,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Oct 20 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

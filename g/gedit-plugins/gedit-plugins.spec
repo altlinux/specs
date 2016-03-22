@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %def_enable python
 %define gedit_pluginsdir %_libdir/gedit/plugins
 %add_python3_compile_include %gedit_pluginsdir
@@ -18,7 +18,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
 %define gtksourceview_ver 3.18.0
-%define gedit_ver 3.18.0
+%define gedit_ver 3.20.0
 %define peas_ver 1.14
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -87,6 +87,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

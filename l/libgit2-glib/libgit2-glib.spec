@@ -1,9 +1,9 @@
-%define ver_major 0.23
+%define ver_major 0.24
 %define api_ver 1.0
 
 Name: libgit2-glib
-Version: %ver_major.10
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Git library for GLib
 Group: System/Libraries
@@ -13,7 +13,7 @@ Url: https://live.gnome.org/Libgit2-glib
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define libgit2_ver 0.23.0
+%define libgit2_ver 0.24.0
 %define glib_ver 2.44
 
 BuildRequires: gnome-common gtk-doc
@@ -103,6 +103,9 @@ This package contains documentation needed for developing Libgit2-glib applicati
 %_datadir/gtk-doc/*
 
 %changelog
+* Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.23.10-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

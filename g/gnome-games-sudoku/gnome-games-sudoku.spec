@@ -2,24 +2,24 @@
 
 %define _name sudoku
 %define __name gnome-%_name
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Sudoku game
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Apps/Sudoku
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
 Provides:  %__name = %version-%release
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.15.0
+%define gtk_ver 3.19.0
 
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: gcc-c++ gnome-common intltool yelp-tools libgio-devel >= %glib_ver
@@ -55,6 +55,9 @@ in popularity.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

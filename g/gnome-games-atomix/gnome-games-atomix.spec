@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name atomix
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -47,15 +47,16 @@ other obstacles on the playfield.
 %_bindir/%_name
 %_desktopdir/%_name.desktop
 %_datadir/%_name/
-#%_iconsdir/hicolor/scalable/apps/%_name.svg
-#%_iconsdir/HighContrast/*x*/apps/%_name.png
-#%config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/pixmaps/%_name-icon.png
+%_iconsdir/hicolor/*x*/apps/%_name.png
+%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
 %_datadir/appdata/%_name.appdata.xml
 %doc AUTHORS NEWS README
 
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

@@ -1,17 +1,18 @@
 %def_disable snapshot
 %set_verify_elf_method unresolved=relaxed
-%define _name org.gnome.gedit
+%define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
 %def_enable introspection
 %def_enable python
 %def_enable zeitgeist
+%def_enable gspell
 %{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: gedit
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -41,9 +42,10 @@ AutoReqProv: nopython
 # From configure.ac
 %define glib_ver 2.44.0
 %define gtk_ver 3.16
-%define gtksourceview_ver 3.18.2
+%define gtksourceview_ver 3.19.4
 %define peas_ver 1.7.0
 %define enchant_ver 1.2.0
+%define gspell_ver 1.0.0
 
 Requires: %name-data = %version-%release
 Requires: %name-gir = %version-%release
@@ -69,6 +71,7 @@ BuildRequires: vala-tools
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel libzeitgeist2.0-gir-devel}
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview3-gir-devel}
+%{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
 
 %description
 gEdit is the official text editor of the GNOME desktop environment.
@@ -173,7 +176,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-mime-type=text/x-sh \
 	--add-mime-type=text/x-tcl \
 	--add-mime-type=text/x-tex \
-	%buildroot%_desktopdir/%_name.desktop
+	%buildroot%_desktopdir/%xdg_name.desktop
 
 %find_lang --with-gnome %name
 
@@ -193,12 +196,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files data -f %name.lang
 %pkgdatadir/
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/org.gnome.gedit.service
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/gedit.convert
-%_datadir/appdata/%_name.appdata.xml
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc README AUTHORS NEWS
 
 %exclude %pkgdatadir/gir-1.0/
@@ -220,6 +225,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
+* Sun Mar 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.5-alt1
+- 3.19.5
+
 * Thu Jan 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

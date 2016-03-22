@@ -1,15 +1,15 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.18
+%define ver_major 3.20
 
 Name: gnome-tweak-tool
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
 Group: Graphical desktop/GNOME
 License: GPLv3
-Url: https://live.gnome.org/GnomeTweakTool
+Url: https://wiki.gnome.org/Apps/GnomeTweakTool
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -54,7 +54,7 @@ Features:
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %find_lang %name
 
@@ -70,6 +70,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Wed Nov 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

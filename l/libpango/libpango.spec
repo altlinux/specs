@@ -1,5 +1,5 @@
 %define _name pango
-%define ver_major 1.38
+%define ver_major 1.40
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -9,7 +9,7 @@
 %def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -141,11 +141,11 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
     %{?_enable_installed_tests:--enable-installed-tests}
 %make_build
 
-%check
-%make check
-
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %_bindir/%_name-view
@@ -189,6 +189,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.40.0-alt1
+- 1.40.0
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.38.1-alt1
 - 1.38.1
 

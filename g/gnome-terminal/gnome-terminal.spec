@@ -1,10 +1,12 @@
-%define ver_major 3.18
+%define ver_major 3.20
+%define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
+%def_without pcre2
 
 Name: gnome-terminal
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -15,8 +17,8 @@ Url: http://www.gnome.org
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define glib_ver 2.40
-%define gtk_ver 3.10.0
-%define vte_ver 0.42.1
+%define gtk_ver 3.12.0
+%define vte_ver 0.44.0
 
 Provides: xvt
 
@@ -24,13 +26,14 @@ PreReq: libvte3 >= %vte_ver
 Requires: common-licenses
 Requires: dconf gnome-icon-theme
 
-BuildRequires: gnome-common intltool yelp-tools desktop-file-utils appdata-tools
+BuildRequires: rpm-build-gnome gnome-common intltool yelp-tools desktop-file-utils appdata-tools
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libvte3-devel >= %vte_ver
 BuildRequires: libvala-devel vala-tools
 BuildRequires: gsettings-desktop-schemas-devel gnome-doc-utils-xslt libgio-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
+%{?_with_pcre2:BuildRequires: libpcre2-devel}
 %{?_with_nautilus:BuildRequires: libnautilus-devel}
 # for migration
 BuildRequires: libGConf-devel
@@ -62,8 +65,8 @@ Nautilus file manager.
 	--disable-static \
 	--disable-schemas-compile \
 	--disable-dependency-tracking \
-	%{?_with_nautilus:--with-nautilus-extension}
-
+	%{?_with_nautilus:--with-nautilus-extension} \
+	%{subst_with pcre2}
 %make_build
 
 %install
@@ -81,22 +84,26 @@ EOF
 %_bindir/%name
 %_libexecdir/%name-migration
 %_libexecdir/%name-server
-%_datadir/applications/%name.desktop
-%_datadir/dbus-1/services/org.gnome.Terminal.service
-%config %_datadir/glib-2.0/schemas/org.gnome.Terminal.gschema.xml
+%_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/gnome-shell/search-providers/%name-search-provider.ini
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %_altdir/%name
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS
 
 %if_with nautilus
 %files nautilus
-%_libdir/nautilus/extensions-3.0/libterminal-nautilus.so
-%exclude %_libdir/nautilus/extensions-3.0/libterminal-nautilus.la
+%nautilus_extdir/libterminal-nautilus.so
+%_datadir/appdata/%xdg_name.Nautilus.appdata.xml
+%exclude %nautilus_extdir/libterminal-nautilus.la
 %endif
 
 %changelog
+* Sat Mar 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Mar 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

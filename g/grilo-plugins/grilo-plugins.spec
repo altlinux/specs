@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 0.2
+%define ver_major 0.3
 
 %def_disable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.17
+Version: %ver_major.1
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -22,20 +22,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.36
-BuildRequires: libgrilo-devel >= 0.2.15
+BuildRequires: libgrilo-devel >= %ver_major.0
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
 BuildRequires: libgssdp-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libgdata-devel >= 0.9.1
-BuildRequires: libgom-devel >= 0.3.0
+BuildRequires: libgom-devel >= 0.3.2
 BuildRequires: libsoup-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime-devel
 BuildRequires: tracker-devel
 BuildRequires: liboauth-devel
-BuildRequires: libgnome-online-accounts-devel >= 3.17.91
+BuildRequires: libgnome-online-accounts-devel >= 3.18.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
 BuildRequires: libdmapsharing-devel >= 2.9.12
 BuildRequires: libjson-glib-devel
@@ -89,9 +89,14 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %files -f %name.lang
 %doc AUTHORS COPYING NEWS README
 %_libdir/grilo-%ver_major/*.so*
-%_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
+* Wed Feb 03 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sun Dec 20 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.17-alt1
 - 0.2.17
 

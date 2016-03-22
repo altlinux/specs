@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name hitori
-%define ver_major 3.16
+%define xdg_name org.gnome.Hitori
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ application to generate and let you play games of Hitori
@@ -56,13 +57,16 @@ multiple solutions to a Hitori puzzle board.
 
 %files -f %_name.lang
 %attr(2711,root,games) %_bindir/%_name
-%_desktopdir/%_name.desktop
-%_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Thu Nov 19 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt1
 - 3.16.2
 

@@ -7,14 +7,14 @@
 %def_with webkit
 %def_enable daap
 %def_enable visualizer
-%def_enable grilo
+%def_disable grilo
 %def_disable gtk_doc
 %def_enable zeitgeist
 %def_enable soundcloud
 
 Name: rhythmbox
 Version: %ver_major
-Release: alt1%rev
+Release: alt2%rev
 
 Summary: Music Management Application
 License: GPL
@@ -83,7 +83,7 @@ BuildRequires: libmtp-devel >= %mtp_ver
 BuildRequires: libICE-devel libSM-devel libsecret-devel >= %secret_ver
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
-BuildRequires: libjson-glib-devel libpng-devel
+BuildRequires: libxml2-devel libjson-glib-devel libpng-devel
 %{?_with_webkit:BuildRequires: libwebkitgtk3-devel}
 BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
@@ -498,6 +498,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Thu Mar 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt2
+- disabled grilo plugin, not ready for 0.3
+
 * Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
 - 3.3
 - new -plugins-android subpackage

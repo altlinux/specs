@@ -2,10 +2,10 @@
 # and use those C sources during bootstrap phase. Next package rebuilds must be done
 # without bootstrap define.
 %def_with bootstrap
-%define api_ver 0.30
+%define api_ver 0.32
 
 Name: vala
-Version: 0.30.1
+Version: 0.32.0
 Release: alt1
 Group: Development/C
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -20,7 +20,7 @@ Patch: %name-%version-%release-pregenerated.patch
 Patch1: %name-%version-%release-fixes.patch
 PreReq: rpm-build-vala
 PreReq: vapi-common = %version-%release
-BuildRequires: flex glib2-devel libgio-devel xsltproc dbus-tools-gui gobject-introspection-devel
+BuildRequires: flex glib2-devel >= 2.32.0  libgio-devel xsltproc dbus-tools-gui gobject-introspection-devel
 BuildPreReq: /proc rpm-build-vala
 %if_without bootstrap
 BuildRequires: vala
@@ -203,6 +203,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_man1dir/vapigen*
 
 %changelog
+* Tue Mar 22 2016 Alexey Shabalin <shaba@altlinux.ru> 0.32.0-alt1
+- 0.32.0
+
 * Mon Feb 01 2016 Alexey Shabalin <shaba@altlinux.ru> 0.30.1-alt1
 - 0.30.1
 

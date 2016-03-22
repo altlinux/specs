@@ -1,10 +1,10 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -19,8 +19,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.39.3
 %define gjs_ver 1.43.3
 %define tracker_ver 0.16
-%define geocode_ver 3.18.0
-%define geoclue_ver 2.1.0
+%define geocode_ver 3.20.0
+%define geoclue_ver 2.4.0
 %define champlain_ver 0.12.6
 
 Requires: geoclue2 >= %geoclue_ver
@@ -30,9 +30,9 @@ Requires: libchamplain-gir >= %champlain_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(Champlain)
 Requires: typelib(Clutter)
-Requires: typelib(Cogl)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
+Requires: typelib(Geoclue)
 Requires: typelib(GeocodeGlib)
 Requires: typelib(GFBGraph)
 Requires: typelib(Gio)
@@ -44,15 +44,19 @@ Requires: typelib(Gtk)
 Requires: typelib(GtkChamplain)
 Requires: typelib(GtkClutter)
 Requires: typelib(GWeather)
+Requires: typelib(Pango)
+Requires: typelib(PangoCairo)
 Requires: typelib(Rest)
+Requires: typelib(Secret)
 Requires: typelib(Soup)
+Requires: typelib(WebKit2)
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: geoclue2-devel >= %geoclue_ver
 BuildRequires: libgee0.8-devel libfolks-devel libgeocode-glib-devel libchamplain-gtk3-devel
-BuildRequires: libgeocode-glib-gir-devel libchamplain-gtk3-gir-devel
+BuildRequires: libgeocode-glib-gir-devel libchamplain-gtk3-gir-devel librest-gir-devel
 
 %description
 Maps is a map application for GNOME.
@@ -78,8 +82,8 @@ Maps is a map application for GNOME.
 %_libdir/%name/
 %_datadir/applications/*
 %_datadir/%name/
-%_iconsdir/hicolor/*x*/*/%name.png
-%_iconsdir/hicolor/symbolic/apps/%{name}*.svg
+%_iconsdir/hicolor/*x*/*/%_name.png
+%_iconsdir/hicolor/symbolic/apps/%{_name}*.svg
 %_datadir/dbus-1/services/%_name.service
 %config %_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_datadir/appdata/%_name.appdata.xml
@@ -90,6 +94,9 @@ Maps is a map application for GNOME.
 %exclude %_girdir/GnomeMaps-%api_ver.gir
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

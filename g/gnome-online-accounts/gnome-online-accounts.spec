@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 %def_enable kerberos
 %def_enable owncloud
@@ -20,7 +20,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -38,12 +38,12 @@ Requires: lib%name = %version-%release
 
 %{?_enable_kerberos:Requires: realmd}
 
-%define glib_ver 2.36
-%define gtk_ver 3.11.1
+%define glib_ver 2.40
+%define gtk_ver 3.19.12
 %define oauth_ver 0.9.5
 %define rest_ver 0.7.12
 %define soup_ver 2.42
-%define webkit_ver 2.6.0
+%define webkit_ver 2.8.0
 
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: liboauth-devel >= %oauth_ver
@@ -55,6 +55,7 @@ BuildRequires: libtelepathy-glib-devel
 BuildRequires: gnome-common intltool gtk-doc
 BuildRequires: libjson-glib-devel libgnome-keyring-devel libnotify-devel libsecret-devel
 BuildRequires: libkrb5-devel gcr-libs-devel gobject-introspection-devel
+BuildRequires: vala-tools
 
 %description
 gnome-online-accounts provides interfaces so applications and
@@ -110,7 +111,7 @@ This package contains development documentation for the %name libraries.
 %if_enabled snapshot
 NOCONFIGURE=1 ./autogen.sh
 %else
-%autoreconf
+#%autoreconf
 %endif
 %configure --disable-static \
 	--enable-facebook \
@@ -164,6 +165,8 @@ NOCONFIGURE=1 ./autogen.sh
 %_libdir/libgoa-backend-%api_ver.so
 %_pkgconfigdir/goa-%api_ver.pc
 %_pkgconfigdir/goa-backend-%api_ver.pc
+%_vapidir/goa-%api_ver.deps
+%_vapidir/goa-%api_ver.vapi
 
 %files -n lib%name-gir
 %_typelibdir/Goa-%api_ver.typelib
@@ -175,6 +178,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt1
 - 3.18.4
 

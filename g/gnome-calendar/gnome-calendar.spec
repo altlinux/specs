@@ -1,9 +1,9 @@
 %define xdg_name org.gnome.Calendar
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calendar
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Calendar application for GNOME
@@ -15,10 +15,10 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
-%define glib_ver 2.43.4
-%define gtk_ver 3.15.4
+%define glib_ver 2.44.0
+%define gtk_ver 3.20.0
 %define ical_ver 1.0.1
-%define eds_ver 3.13.90
+%define eds_ver 3.18.0
 
 BuildPreReq: intltool yelp-tools itstool libappstream-glib-devel
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
@@ -50,12 +50,15 @@ Calendar is a calendar application for GNOME.
 #%_man1dir/*
 %_datadir/glib-2.0/schemas/org.gnome.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.calendar.enums.xml
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/appdata/%xdg_name.appdata.xml
 %doc NEWS README
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Thu Mar 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

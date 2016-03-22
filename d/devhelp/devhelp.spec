@@ -1,8 +1,8 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define _name org.gnome.Devhelp
 
 Name: devhelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's help program
@@ -25,11 +25,11 @@ BuildPreReq: gtk-doc
 # From configure.ac
 BuildPreReq: intltool >= 0.40.0
 BuildRequires: pkgconfig(gthread-2.0) >= 2.10.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.14
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.19.3
 # build with webkit2gtk-3.0 or webkit2gtk-4.0
 # BuildRequires: pkgconfig(webkit2gtk-3.0) >= 2.0.0
 BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.0.0
-BuildRequires: pkgconfig(gio-2.0) >= 2.37.3
+BuildRequires: pkgconfig(gio-2.0) >= 2.40
 BuildRequires: zlib-devel
 
 %description
@@ -104,6 +104,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

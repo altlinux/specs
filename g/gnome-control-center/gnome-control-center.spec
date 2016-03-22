@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -28,24 +28,24 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.8.3-alt-lfs.patch
 
 # From configure.ac
-%define gtk_ver 3.15.0
-%define glib_ver 2.40.0
-%define desktop_ver 3.17.90
+%define gtk_ver 3.19.12
+%define glib_ver 2.44.0
+%define desktop_ver 3.19.93
 %define fontconfig_ver 1.0.0
 %define gsds_ver 3.16.1
 %define nm_ver 0.9.8
 %define goa_ver 3.7.91
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.18.1
+%define sett_daemon_ver 3.20.0
 %define cheese_ver 3.9.5
-%define bt_ver 3.18.0
+%define bt_ver 3.18.2
 %define systemd_ver 40
 %define wacom_ver 0.7
 %define ibus_ver 1.5.2
 %define colord_ver 1.0
 %define pwq_ver 1.2.2
 %define upower_ver 0.99.0
-%define grilo_ver 0.2.9
+%define grilo_ver 0.3.0
 %define polkit_ver 0.103
 
 Requires: %name-data = %version-%release
@@ -62,7 +62,7 @@ BuildPreReq: rpm-build-gnome >= 0.9
 
 # From configure.in
 BuildPreReq: intltool >= 0.50 gnome-common desktop-file-utils
-BuildPreReq: gnome-doc-utils gtk-doc xsltproc libappstream-glib-devel
+BuildPreReq: gtk-doc xsltproc libappstream-glib-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
@@ -178,6 +178,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Nov 10 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

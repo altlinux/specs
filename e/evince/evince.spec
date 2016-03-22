@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3
 %define so_ver 4
 
@@ -9,7 +9,7 @@
 %def_enable multimedia
 
 Name: evince
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document viewer
@@ -27,7 +27,7 @@ Requires: dconf
 %{?_enable_multimedia:Requires: gst-plugins-base1.0 gst-libav}
 
 %define poppler_ver 0.24.0
-%define gtk_ver 3.14.0
+%define gtk_ver 3.16.0
 
 BuildPreReq: libpoppler-glib-devel >= %poppler_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -41,6 +41,7 @@ BuildRequires: libgnome-desktop3-devel
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
 BuildRequires: libSM-devel libICE-devel libXi-devel
+BuildRequires: systemd-devel
 
 %if_enabled introspection
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -135,6 +136,7 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %files -f %name.lang
 %doc AUTHORS NEWS README
 %_bindir/evince*
+%_prefix/lib/systemd/user/%name.service
 %_libdir/nautilus/extensions-3.0/libevince-properties-page.so
 %dir %_libdir/evince
 %dir %_libdir/evince/%so_ver
@@ -203,6 +205,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Wed Nov 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

@@ -1,11 +1,11 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
 %def_disable static
 %def_enable introspection
 %def_enable vala
 
 Name: libgweather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library for weather information
@@ -19,7 +19,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gtk_ver 3.13.5
 %define glib_ver 2.35.1
 %define intltool_ver 0.40.0
-%define soup_ver 2.34
+%define soup_ver 2.44
 %define gir_ver 0.9.5
 %define vala_ver 0.21.1
 
@@ -154,6 +154,9 @@ This package provides Vala language bindings for the %name library.
 
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

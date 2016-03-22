@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.6
+%define ver_major 1.8
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,8 +8,8 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -101,6 +101,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstGL-%api_ver.typelib
 %_typelibdir/GstInsertBin-%api_ver.typelib
 %_typelibdir/GstMpegts-%api_ver.typelib
+%_typelibdir/GstPlayer-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
 %_datadir/gst-plugins-bad/%api_ver/opencv_haarcascades/fist.xml
@@ -117,6 +118,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_girdir/GstGL-%api_ver.gir
 %_girdir/GstInsertBin-%api_ver.gir
 %_girdir/GstMpegts-%api_ver.gir
+%_girdir/GstPlayer-%api_ver.gir
 
 %if_enabled gtk_doc
 %files doc
@@ -125,6 +127,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt2
 - rebuilt against libSoundTouch.so.1
 

@@ -1,9 +1,9 @@
 %define _name pyatspi
-%define ver_major 2.18
+%define ver_major 2.20
 
 Name: python-module-%_name
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: Python bindings for at-spi library
 Group: Development/Python
@@ -64,7 +64,7 @@ export PYTHON=python3
 popd
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 # hack to avoid verify-elf errors
 export LD_PRELOAD=%_libdir/libpython%__python_version.so
 
@@ -84,6 +84,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.20.0-alt1
+- 2.20.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.18.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

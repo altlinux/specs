@@ -1,11 +1,11 @@
-%define _name org.gnome.Documents
-%define _name1 org.gnome.Books
-%define ver_major 3.18
+%define xdg_name org.gnome.Documents
+%define xdg_name1 org.gnome.Books
+%define ver_major 3.20
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -17,6 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: %name-data = %version-%release
 Requires: gnome-online-miners
+
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(cairo)
 Requires: typelib(EvinceDocument)
@@ -32,6 +33,7 @@ Requires: typelib(GnomeDesktop)
 Requires: typelib(Goa)
 Requires: typelib(GObject)
 Requires: typelib(Gtk)
+#Requires: typelib(LOKDocView)
 Requires: typelib(Pango)
 Requires: typelib(Soup)
 Requires: typelib(Tracker)
@@ -45,7 +47,7 @@ Requires: typelib(Zpj)
 %set_girdir %pkgdatadir
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.15.5
+%define gtk_ver 3.20.0
 %define evince_ver 3.13.3
 %define tracker_ver 0.17.2
 %define goa_ver 3.2.0
@@ -141,20 +143,23 @@ GObject introspection devel data for the %name library.
 %pkglibdir/girepository-1.0/GdPrivate-1.0.typelib
 
 %files data -f %name.lang
-%_desktopdir/%_name.desktop
-%_desktopdir/%_name1.desktop
-%_datadir/dbus-1/services/%_name.service
-%_datadir/dbus-1/services/%_name1.service
-%_datadir/glib-2.0/schemas/%_name.enums.xml
+%_desktopdir/%xdg_name.desktop
+%_desktopdir/%xdg_name1.desktop
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/services/%xdg_name1.service
+%_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.documents.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.books.gschema.xml
-%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_datadir/appdata/%_name.appdata.xml
-%_datadir/appdata/%_name1.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/appdata/%xdg_name1.appdata.xml
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

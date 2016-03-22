@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name five-or-more
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -11,7 +11,7 @@ Release: alt1
 Summary: A GNOME version of the color lines program
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Apps/Five-or-more
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -19,8 +19,8 @@ Provides:  %_name = %version-%release
 Obsoletes: gnome-games-glines
 Provides:  gnome-games-glines = %version-%release
 
-%define glib_ver 2.31.13
-%define gtk_ver 3.0.0
+%define glib_ver 2.32
+%define gtk_ver 3.12.0
 
 BuildRequires: gnome-common
 BuildRequires: intltool yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
@@ -31,7 +31,6 @@ Glines, is the GNOME port of the once popular Windows game called Color
 Lines. The game's objective is to align as often as possible five balls
 or more of the same color causing them to disappear, play as long as
 possible, and be #1 in the High Scores.
-
 
 %prep
 %setup -n %_name-%version
@@ -51,12 +50,15 @@ possible, and be #1 in the High Scores.
 %_desktopdir/%_name.desktop
 %_datadir/%_name/
 %_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/scalable/apps/%{_name}*.svg
+%_iconsdir/hicolor/symbolic/apps/%_name-symbolic.svg
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

@@ -1,23 +1,22 @@
-%define ver_major 2.46
+%define ver_major 2.48
 %define _libexecdir %_prefix/libexec
 %def_enable installed_tests
 
 Name: glib-networking
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Networking support for GIO
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
 Requires: ca-certificates gsettings-desktop-schemas >= 3.2.0
 
-%define glib_ver 2.45.1
+%define glib_ver 2.46.0
 %define gnutls_ver 2.12.8
 %define p11kit_ver 0.8
 %define libproxy_ver 0.3.1
@@ -69,6 +68,7 @@ the functionality of the installed %name package.
 %_libdir/gio/modules/libgiognutls.so
 %_libdir/gio/modules/libgiognomeproxy.so
 %_datadir/dbus-1/services/org.gtk.GLib.PACRunner.service
+%_prefix/lib/systemd/user/glib-pacrunner.service
 %doc NEWS README
 
 %exclude %_libdir/gio/modules/*.la
@@ -80,6 +80,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.48.0-alt1
+- 2.48.0
+
 * Wed Dec 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.1-alt2
 - rebuilt against libgnutls.so.30
 

@@ -1,7 +1,7 @@
-%define ver_major 3.18
+%define ver_major 3.20
 
 Name: gnome-themes-standard
-Version: %ver_major.0
+Version: %ver_major
 Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
@@ -68,22 +68,9 @@ done
 %_datadir/themes/Adwaita/index.theme
 %dir %_datadir/themes/Adwaita/gtk-2.0
 %_datadir/themes/Adwaita/gtk-2.0/gtkrc
-%_datadir/themes/Adwaita/gtk-2.0/Arrows/
-%_datadir/themes/Adwaita/gtk-2.0/Buttons/
-%_datadir/themes/Adwaita/gtk-2.0/Check-Radio/
-%_datadir/themes/Adwaita/gtk-2.0/Entry/
-%_datadir/themes/Adwaita/gtk-2.0/Expanders/
-%_datadir/themes/Adwaita/gtk-2.0/Handles/
-%_datadir/themes/Adwaita/gtk-2.0/Lines/
-%_datadir/themes/Adwaita/gtk-2.0/Menu-Menubar/
-%_datadir/themes/Adwaita/gtk-2.0/Others/
-%_datadir/themes/Adwaita/gtk-2.0/ProgressBar/
-%_datadir/themes/Adwaita/gtk-2.0/Range/
-%_datadir/themes/Adwaita/gtk-2.0/Scrollbars/
-%_datadir/themes/Adwaita/gtk-2.0/Shadows/
-%_datadir/themes/Adwaita/gtk-2.0/Spin/
-%_datadir/themes/Adwaita/gtk-2.0/Tabs/
-%_datadir/themes/Adwaita/gtk-2.0/Toolbar/
+%_datadir/themes/Adwaita/gtk-2.0/apps.rc
+%_datadir/themes/Adwaita/gtk-2.0/main.rc
+%_datadir/themes/Adwaita/gtk-2.0/assets/
 %dir %_datadir/themes/Adwaita/gtk-3.0
 %_datadir/themes/Adwaita/gtk-3.0/gtk.css
 
@@ -99,6 +86,9 @@ done
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20-alt1
+- 3.20
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

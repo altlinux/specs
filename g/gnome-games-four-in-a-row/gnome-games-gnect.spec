@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name four-in-a-row
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Four in a row game
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Apps/Four-in-a-row
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -19,8 +19,8 @@ Provides:  %_name = %version-%release
 Obsoletes: gnome-games-gnect
 Provides:  gnome-games-gnect = %version-%release
 
-%define glib_ver 2.31.13
-%define gtk_ver 3.0.0
+%define glib_ver 2.32.0
+%define gtk_ver 3.14.0
 
 BuildRequires: gnome-common vala-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: intltool yelp-tools libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
@@ -50,12 +50,15 @@ line can be horizontal, vertical or diagonal.
 %_desktopdir/%_name.desktop
 %_datadir/%_name/
 %_iconsdir/hicolor/*x*/apps/%_name.png
-%_iconsdir/hicolor/scalable/apps/%{_name}*.svg
+%_iconsdir/hicolor/symbolic/apps/%{_name}*.svg
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

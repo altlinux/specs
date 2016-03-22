@@ -1,8 +1,8 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %def_disable packagekit
 
 Name: simple-scan
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple scanning utility
@@ -46,6 +46,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

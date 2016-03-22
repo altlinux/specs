@@ -1,5 +1,5 @@
 %define oldname libgtop2
-%define ver_major 2.32
+%define ver_major 2.34
 %define api_ver 2.0
 
 %def_disable static
@@ -162,6 +162,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1.1
+- 2.34.0
+
 * Mon Nov 30 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1.1
 - buildreqs: added makeinfo
 

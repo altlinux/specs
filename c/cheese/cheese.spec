@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
-%define _name org.gnome.Cheese
+%define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
+
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -26,7 +27,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version.t
 %define gst_ver 1.4.0
 %define vala_ver 0.18.0
 %define clutter_ver 1.10.0
-%define clutter_gst_ver 3.0.8
+%define clutter_gst_ver 3.0.16
 
 Requires: lib%name = %version-%release
 Requires: gnome-video-effects
@@ -56,7 +57,7 @@ BuildRequires: gnome-video-effects-devel gsettings-desktop-schemas-devel
 BuildRequires: libappstream-glib-devel
 %{?_enable_introspection:BuildRequires: libgdk-pixbuf-gir-devel libclutter-gir-devel libgstreamer%gst_api_ver-gir-devel}
 # for check
-BuildRequires: /proc dbus-tools-gui xvfb-run
+BuildRequires: /proc dbus-tools-gui
 
 %description
 Cheese is a Photobooth-inspired GNOME application for taking pictures
@@ -133,11 +134,11 @@ GObject introspection devel data for the Cheese library.
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/gnome-camera-service
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/icons/hicolor/*/*/*.*
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %_datadir/dbus-1/services/org.gnome.Camera.service
-%_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/*
 %_man1dir/%name.1.*
 %doc AUTHORS NEWS README
@@ -162,6 +163,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

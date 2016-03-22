@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
 %define binary_ver 3.0.0
 %define _libexecdir %_prefix/libexec
@@ -20,8 +20,8 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.9
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -38,10 +38,10 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 # https://bug740554.bugzilla-attachments.gnome.org/attachment.cgi?id=308706
 Patch1: gtk+-3.18.3-bgo740554.patch
 
-%define glib_ver 2.45.0
+%define glib_ver 2.46.0
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.37.1
+%define pango_ver 1.37.3
 %define atk_ver 2.15.1
 %define atspi_ver 2.8.1
 %define pixbuf_ver 2.30.0
@@ -49,7 +49,8 @@ Patch1: gtk+-3.18.3-bgo740554.patch
 %define gtk_doc_ver 1.6
 %define colord_ver 0.1.9
 %define cups_ver 1.6
-%define wayland_ver 1.5.91
+%define wayland_ver 1.9.91
+%define wayland_protocols_ver 1.0
 %define epoxy_ver 1.0
 
 Provides: libgtk3-engine-adwaita = %version-%release
@@ -79,7 +80,7 @@ BuildRequires: libXrender-devel libXt-devel
 
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
 # for examples
 BuildRequires: libcanberra-gtk3-devel
@@ -216,7 +217,7 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-%patch1 -p1
+#%patch1 -p1
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -283,6 +284,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %files -f gtk30.lang
 %{?_enable_broadway:%_bindir/broadwayd}
 %_bindir/gtk-query-immodules-%api_ver
+%_bindir/gtk-query-settings
 %_bindir/gtk-launch
 %_bindir/gtk-encode-symbolic-svg
 %_libdir/libgdk-3.so.*
@@ -313,6 +315,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %ghost %_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 %{?_enable_broadway:%_man1dir/broadwayd.1.*}
 %_man1dir/gtk-query-immodules*
+%_man1dir/gtk-query-settings.1.*
 %_man1dir/gtk-launch.*
 %_man1dir/gtk-encode-symbolic-svg.1.*
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
@@ -335,6 +338,8 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %dir %_datadir/gtk-%api_ver
 %_datadir/gtk-%api_ver/gtkbuilder.rng
 %_datadir/aclocal/gtk-%api_ver.m4
+%_datadir/gettext/its/gtkbuilder.its
+%_datadir/gettext/its/gtkbuilder.loc
 %_man1dir/gtk-builder-tool.1*
 
 %if_enabled wayland
@@ -408,6 +413,12 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Thu Mar 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.9-alt2
 - rebuilt for broken rpm-4.0.4-alt100.89
 

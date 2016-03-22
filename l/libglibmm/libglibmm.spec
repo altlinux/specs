@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define major 2.46
+%define major 2.47
 %define api_ver 2.4
 
 Name: libglibmm
-Version: %major.3
+Version: %major.92
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -19,7 +19,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.46.0
+%define glib_ver 2.47.92
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
 
@@ -98,6 +98,9 @@ mm-common-prepare --force --copy
 %_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Fri Mar 18 2016 Yuri N. Sedunov <aris@altlinux.org> 2.47.92-alt1
+- 2.47.92
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.46.3-alt1
 - 2.46.3
 

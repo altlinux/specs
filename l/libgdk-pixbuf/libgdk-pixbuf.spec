@@ -1,17 +1,17 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.32
+%define ver_major 2.34
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 %def_enable introspection
 %def_with x11
-%def_without libjasper
+%def_with libjasper
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -180,6 +180,7 @@ echo : >>%_name/abicheck.sh
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xbm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xpm.so
+%{?_with_libjasper:%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jasper.so}
 %exclude %_libdir/%_name-%api_ver/%binary_ver/loaders/*.la
 %ghost %_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %_man1dir/gdk-pixbuf-query-loaders*
@@ -223,6 +224,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Thu Mar 24 2016 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
+- 2.34.0
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt1
 - 2.32.3
 

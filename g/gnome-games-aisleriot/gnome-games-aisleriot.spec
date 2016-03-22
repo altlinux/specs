@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name aisleriot
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: A collection of card games
@@ -27,7 +27,7 @@ Requires: pysol-cardsets
 
 BuildRequires: intltool desktop-file-utils yelp-tools libappstream-glib-devel  libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libGConf-devel librsvg-devel libcanberra-gtk3-devel
-BuildRequires: libICE-devel libSM-devel gstreamer-devel guile20 libguile20-devel
+BuildRequires: libICE-devel libSM-devel guile20 libguile20-devel
 BuildRequires: /proc
 
 %description
@@ -72,6 +72,9 @@ fi
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Sat Mar 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

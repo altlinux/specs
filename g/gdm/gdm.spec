@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -22,7 +22,7 @@
 %def_enable xsession
 
 Name: gdm
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -45,7 +45,7 @@ Source13: gdm-launch-environment.pam
 Source14: gdm-smartcard.pam
 Source15: gdm-fingerprint.pam
 
-Patch2: gdm-3.11.90-alt-Xsession.patch
+Patch2: gdm-3.19.4-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch11: gdm-3.8.0-alt-lfs.patch
 
@@ -55,7 +55,8 @@ Provides: gnome-dm
 
 # from configure.ac
 %define glib_ver 2.36.0
-%define gtk_ver 2.91.1
+%define gtk_ver 3.16.0
+%define shell_ver 3.19.4
 %define libcanberra_ver 0.4
 %define accountsservice_ver 0.6.12
 %define check_ver 0.9.4
@@ -66,7 +67,7 @@ Obsoletes: %name-user-switch-applet
 PreReq: %_rpmlibdir/update-dconf-database.filetrigger
 Requires: %name-libs = %version-%release
 Requires: %name-data = %version-%release
-Requires: gnome-shell
+Requires: gnome-shell >= %shell_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
 # since 3.11.92
 Requires: caribou
@@ -169,9 +170,9 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup
-%patch
-%patch2 -p1
-%patch7 -p1
+#%%patch -b .disable_wayland
+%patch2 -p1 -b .Xsession
+%patch7 -p1 -b .Init
 %patch11 -p1 -b .lfs
 
 # just copy our PAM config files to %default_pam_config directory
@@ -275,12 +276,9 @@ xvfb-run %make check
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local
 %attr(1750, gdm, gdm) %dir %_localstatedir/lib/gdm/.local/share
 %attr(1777, root, gdm) %dir %_localstatedir/run/gdm
-%_datadir/gdm/greeter/applications/gnome-shell.desktop
-%_datadir/gdm/greeter/applications/gnome-shell-wayland.desktop
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
 %dir %_datadir/%name/greeter/autostart
-#%_datadir/%name/greeter/autostart/caribou-autostart.desktop
 %exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %files help -f %name-help.lang
@@ -302,6 +300,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Nov 17 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

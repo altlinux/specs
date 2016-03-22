@@ -1,11 +1,12 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.18
+%define xdg_name org.gnome.Shell
+%define ver_major 3.20
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -25,23 +26,23 @@ AutoReqProv: nopython
 
 %define session_ver 3.16
 %define clutter_ver 1.21.5
-%define gjs_ver 1.39.0
-%define mutter_ver 3.18.1
+%define gjs_ver 1.40.0
+%define mutter_ver 3.20.0
 %define gtk_ver 3.16.0
-%define gio_ver 2.37.0
-%define gstreamer_ver 0.11.92
+%define gio_ver 2.46.0
+%define gstreamer_ver 1.0
 %define eds_ver 3.17.2
 %define telepathy_ver 0.17.5
 %define telepathy_logger_ver 0.2.4
 %define polkit_ver 0.100
 %define bluetooth_ver 3.11.3
 %define folks_ver 0.5.2
-%define gi_ver 0.10.1
+%define gi_ver 1.46
 %define sn_ver 0.11
-%define gcr_ver 3.3.90
+%define gcr_ver 3.8
 %define atspi_ver 2.5.91
 %define menus_ver 3.5.3
-%define desktop_ver 3.7.90
+%define desktop_ver 3.8
 %define json_glib_ver 0.13.2
 %define nm_ver 0.9.8
 %define caribou_ver 0.4.8
@@ -210,20 +211,19 @@ rm -f %buildroot%_libdir/%name/*.la
 %exclude %browser_plugins_path/libgnome-shell-browser-plugin.la
 
 %files data -f %name.lang
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_desktopdir/%name-extension-prefs.desktop
 %_desktopdir/evolution-calendar.desktop
-%_desktopdir/%name-wayland.desktop
-%_desktopdir/org.gnome.Shell.PortalHelper.desktop
+%_desktopdir/%xdg_name.PortalHelper.desktop
 %_datadir/%name/
-%_datadir/dbus-1/services/org.gnome.Shell.CalendarServer.service
-%_datadir/dbus-1/services/org.gnome.Shell.HotplugSniffer.service
+%_datadir/dbus-1/services/%xdg_name.CalendarServer.service
+%_datadir/dbus-1/services/%xdg_name.HotplugSniffer.service
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
-%_datadir/dbus-1/interfaces/org.gnome.Shell.Screenshot.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Screenshot.xml
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
-%_datadir/dbus-1/interfaces/org.gnome.Shell.Screencast.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Screencast.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
-%_datadir/dbus-1/services/org.gnome.Shell.PortalHelper.service
+%_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %_man1dir/*
@@ -234,6 +234,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.18.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

@@ -10,7 +10,7 @@
 %def_enable hw
 
 Name: %_name%api_ver
-Version: %ver_major.16
+Version: %ver_major.18
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -113,6 +113,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.18-alt1
+- 2.0.18
+
 * Sun May 24 2015 Yuri N. Sedunov <aris@altlinux.org> 2.0.16-alt1
 - 2.0.16
 

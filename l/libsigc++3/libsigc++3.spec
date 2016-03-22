@@ -1,8 +1,9 @@
 %define _name libsigc++
-%define ver_major 2.8
+%define ver_major 2.99
+%define api_ver 3.0
 
-Name: %{_name}2
-Version: %ver_major.0
+Name: %{_name}3
+Version: %ver_major.1
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -13,9 +14,6 @@ Url: http://libsigc.sourceforge.net/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 #Source: %_name-%version.tar
 
-Provides: libsigc++2.0 = %version-%release
-Obsoletes: libsigc++2.0 < %version-%release
-# Automatically added by buildreq on Fri Nov 19 2010
 BuildRequires: docbook-style-xsl doxygen gcc-c++ graphviz mm-common xsltproc
 
 %description
@@ -28,8 +26,6 @@ whether it is static or virtual.
 Summary: Development files for libsigc++ library
 Group: Development/C++
 Requires: %name = %version-%release
-Provides: libsigc++2.0-devel = %version-%release
-Obsoletes: libsigc++2.0-devel < %version-%release
 
 %description devel
 This package contains development files for the software development
@@ -39,8 +35,6 @@ using libsigc++ library.
 Summary: Documentation for libsigc++ library
 Group: Books/Other
 BuildArch: noarch
-Provides: libsigc++2.0-doc = %version-%release
-Obsoletes: libsigc++2.0-doc < %version-%release
 
 %description doc
 This package provides API documentation of libsigc++ library.
@@ -56,7 +50,7 @@ mm-common-prepare -f
 
 %install
 %makeinstall_std
-%define docdir %_docdir/libsigc++-2.0
+%define docdir %_docdir/libsigc++-%api_ver
 install -pm644 AUTHORS NEWS README %buildroot%docdir/
 
 %check
@@ -79,8 +73,8 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
-* Wed Mar 16 2016 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
-- 2.8.0
+* Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
+- 2.99.1
 
 * Fri Nov 13 2015 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
 - 2.6.2
