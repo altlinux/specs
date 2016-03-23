@@ -1,5 +1,5 @@
 Name: rpm-utils
-Version: 0.9.19
+Version: 0.9.20
 Release: alt1
 
 Summary: Utilities every rpm packager must have
@@ -72,8 +72,12 @@ fi >&2
 %_datadir/buildreqs
 
 %changelog
+* Wed Mar 23 2016 Dmitry V. Levin <ldv@altlinux.org> 0.9.20-alt1
+- filereq: add faccessat, lstat/lstat64, and fstatat64/newfstatat
+  to the list of weak syscalls.
+
 * Tue Mar 22 2016 Dmitry V. Levin <ldv@altlinux.org> 0.9.19-alt1
-- filereq: take openat, execveat, faccessat, lstat, and
+- filereq: take openat, execveat, faccessat, lstat/lstat64, and
   fstatat64/newfstatat syscalls into account.
 
 * Fri Jan 17 2014 Dmitry V. Levin <ldv@altlinux.org> 0.9.18-alt1
