@@ -1,5 +1,5 @@
 Name: cryptmount
-Version: 5.0
+Version: 5.2
 Release: alt1
 Group: File tools
 Packager: Pavel Isopenko <pauli@altlinux.org>
@@ -10,6 +10,7 @@ Url: http://cryptmount.sourceforge.net
 Source: %name-%version.tar
 
 BuildRequires: libdevmapper-devel libgcrypt-devel libuuid-devel
+BuildRequires: doxygen libudev-devel libcryptsetup
 
 Requires(post): %post_service
 Requires(preun): %preun_service
@@ -42,7 +43,8 @@ s|%_sysconfdir/init.d|%_initdir|g;
 %install
 install -d -m0755 %buildroot%_initdir
 install -d -m0755 %buildroot%_sbindir
-install -d -m0755 %buildroot%_sysconfdir/default/
+install -d -m0755 %buildroot%_libdir/cryptmount/
+install -d -m0755 %buildroot%_sysconfdir/default/cryptmount/
 
 %makeinstall_std
 %find_lang %name
@@ -54,19 +56,23 @@ install -d -m0755 %buildroot%_sysconfdir/default/
 %_mandir/*/man5/cmtab.5*
 %_mandir/*/man8/cryptmount*.8*
 
-
 %config(noreplace) %_sysconfdir/cryptmount/
-# %config %_initdir/cryptmount
-# %config %_initdir/cryptmount-early
-# %config %_sysconfdir/default/cryptmount
+%_sysconfdir/default/cryptmount/
+%_sysconfdir/modules-load.d/cryptmount.conf
+%_initdir/cryptmount/
 %_sbindir/cryptmount-setup
 %_libdir/cryptmount/
 
 %attr(4711, root, root) %_bindir/cryptmount
 
 %changelog
+* Wed Mar 23 2016 Pavel Isopenko <pauli@altlinux.org> 5.2-alt1
+- new version 5.2
+- add BuildRequires: doxygen libudev-devel libcryptsetup
+
+
 * Wed Jan 07 2015 Pavel Isopenko <pauli@altlinux.org> 5.0-alt1
- - new version cryptmount 5.0
+- new version cryptmount 5.0
 
 * Tue Jun 05 2012 Pavel Isopenko <pauli@altlinux.org> 4.3-alt1
 - update to 4.3
