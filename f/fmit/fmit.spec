@@ -1,12 +1,12 @@
 Name: fmit
 Version: 1.0.12
-Release: alt1
+Release: alt2
 
 Summary: Free Music Instrument Tuner
 
 License: GPL
 Group: Sound
-Url: http://home.gna.org/fmit/
+Url: http://gillesdegottex.github.io/fmit/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -50,11 +50,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ChangeLog TODO
 %_bindir/%name
 %_datadir/%name/
-%_datadir/appdata/
+# FIXME: add macro for appdata
+%_datadir/appdata/fmit.appdata.xml
 %_iconsdir/hicolor/*/apps/fmit.*
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Mar 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.12-alt2
+- fix packing
+
 * Sat Jan 02 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.12-alt1
 - new version 1.0.12
 
