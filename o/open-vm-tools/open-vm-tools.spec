@@ -1,4 +1,3 @@
-%set_automake_version 1.11
 
 %def_disable vgauth
 %def_disable grabbitmqproxy
@@ -16,7 +15,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt2
+Release: alt3
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -172,6 +171,7 @@ fi
 %_bindir/vmtoolsd
 %_bindir/vmware-checkvm
 %_bindir/vmware-hgfsclient
+%_bindir/vmware-namespace-cmd
 %_bindir/vmware-rpctool
 %_bindir/vmware-toolbox-cmd
 %_bindir/vmware-xferlogs
@@ -207,6 +207,12 @@ fi
 %_libdir/libvmtools.so
 
 %changelog
+* Wed Mar 23 2016 Sergey V Turchin <zerg@altlinux.org> 10.0.7-alt3
+- fix to use git repo for source instead of tarball
+
+* Thu Feb 25 2016 Sergey V Turchin <zerg@altlinux.org> 10.0.7-alt1.M70P.1
+- build for M70P
+
 * Wed Feb 24 2016 Sergey V Turchin <zerg@altlinux.org> 10.0.7-alt2
 - fix search for alt linux
 - clean package release from toolsbuild
