@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 15.12.3
 Release: alt1
 %K5init altplace
 
@@ -115,6 +115,9 @@ KF5 library
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
 * Thu Feb 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
