@@ -1,12 +1,11 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 1.3.4
+Version: 2.0.0
 Release: alt1
 
-Packager: Stanislav Ievlev <inger@altlinux.org>
-
-Requires: libshell >= 0.1.3 etcnet alterator-hw-functions
+Requires: libshell >= 0.1.3 etcnet
+Requires: alterator-hw-functions >= 0.7.5
 
 Provides: alterator-net-common = %version
 Obsoletes: alterator-net-common
@@ -23,11 +22,13 @@ License: GPL
 Group: System/Base
 Requires: openssl
 
+Conflicts: alterator-net-eth < 5.0.0
+
 %description
 helpers for etcnet administration
 
 %prep
-%setup -q
+%setup
 
 %build
 %make check
@@ -40,6 +41,31 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1
+- Drop unneeded line.
+- Add functions for read current default route and DNS settings.
+- Suppress 'broken pipe' error message.
+- Add list_bridge() and list_bridge_with_cache().
+- Add function for host interfaces.
+- list_iface(): Skip ifaces in a bonding.
+- list_eth(): Don't replace interface with bridge.
+- Add init_slave_eth_iface_cache().
+- tests: Add more ipv*addr tests.
+- Add warning for deprecated functions.
+- Remove read_iface_slaves().
+- Add remove_iface_with_cache().
+- Add list_vlans_for_iface() and list_vlans_for_iface_with_cache().
+- iface_has_host(): Suppress find's error messages.
+- Add list_vlan() and list_vlan_with_cache().
+- Introduce function for work with cached data.
+- next_iface(): Pass ifaces directory as argument.
+- list_network(): Pass ifaces directory as second argument.
+- Use list_etcnet_iface_filtered() to list interfaces.
+- Use list_etcnet_iface_filtered for list_ppp().
+- Add functions for filtered interfaces list.
+- iface_has_host: Handle VLAN interfaces too.
+- Rename read_iface_slaves -> read_iface_host_var.
+
 * Tue Jan 20 2015 Mikhail Efremov <sem@altlinux.org> 1.3.4-alt1
 - Fix valid_ipv4addr().
 

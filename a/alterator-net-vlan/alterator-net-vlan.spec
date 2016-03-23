@@ -1,10 +1,10 @@
-Name: alterator-net-bond
-Version: 1.0.0
+Name: alterator-net-vlan
+Version: 0.1.0
 Release: alt1
 
 Source:%name-%version.tar
 
-Summary: alterator module for bonding interfaces
+Summary: alterator module for VLAN interfaces
 License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.24 libshell >= 0.0.1-alt4
@@ -21,7 +21,7 @@ BuildArch: noarch
 BuildRequires: alterator
 
 %description
-alterator module for bonding network interfaces
+alterator module for VLAN network interfaces
 
 %prep
 %setup
@@ -38,15 +38,6 @@ alterator module for bonding network interfaces
 %_alterator_backend3dir/*
 
 %changelog
-* Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
-- Use functions from new alterator-net-functions.
-
-* Wed Jan 14 2015 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1
-- Prepend arp_ip_target value with '+' in the etcnet's config.
-
-* Tue Jan 13 2015 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
-- build: Fix module name.
-
-* Thu Dec 25 2014 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1
+* Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1
 - Initial build.
 
