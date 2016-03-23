@@ -14,14 +14,13 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt15.git20150829.1
+Release: alt15.git20150829.2
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
 Group: Development/Python
 Url: http://numpy.scipy.org/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 %setup_python_module %oname
 
@@ -40,7 +39,8 @@ Conflicts: libsyfi-devel < 0.6.1-alt3.hg20090822
 Conflicts: lib%oname-devel < %version-%release
 Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
 
-#BuildPreReq: /proc git
+BuildPreReq: /proc git
+BuildPreReq: python-devel
 
 #BuildPreReq: gcc-fortran liblapack-devel python-module-Pyrex
 #BuildPreReq: python-modules-compiler python-modules-encodings
@@ -58,8 +58,9 @@ Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
 #%endif
 #BuildPreReq: python-module-stsci
 %if_with python3
-BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
+BuildRequires(pre): rpm-build-python3
+BuildPreReq: python3-devel
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: dvipng elfutils fontconfig fonts-type1-urw ipython libgfortran-devel libopenblas-devel libquadmath-devel libstdc++-devel pkg-config python-base python-devel python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-Pyrex-pickles python-module-babel python-module-cffi python-module-cssselect python-module-cycler python-module-dateutil python-module-decorator python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-greenlet python-module-ipykernel python-module-ipyparallel python-module-ipython_genutils python-module-jinja2 python-module-jinja2-tests python-module-jupyter_client python-module-jupyter_core python-module-markupsafe python-module-matplotlib python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-numpy python-module-path python-module-pexpect python-module-pickleshare python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-simplegeneric python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-sqlite3 python-modules-unittest python-modules-wsgiref python-modules-xml python-tools-2to3 python3 python3-base python3-dev python3-module-zope swig-data t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
 BuildRequires: doxygen gcc-c++ gcc-fortran git-core liblapack-devel python-module-Cython python-module-Pyrex python-module-alabaster python-module-html5lib python-module-matplotlib-sphinxext python-module-notebook python-module-numpydoc python-module-objects.inv python3-module-Cython rpm-build-python3 subversion swig texmf-latex-preview time
@@ -1020,6 +1021,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 23 2016 Denis Medvedev <nbr@altlinux.org> 2.0.0-alt15.git20150829.2
+- NMU: reorganized dependencies.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt15.git20150829.1
 - NMU: Use buildreq for BR.
 
