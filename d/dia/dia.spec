@@ -1,7 +1,8 @@
+# INFO: For update, do git merge -s ours with new tag rom upstream repo
 %define major 0.97
 Name: dia
-Version: %major.3
-Release: alt1
+Version: %major.4
+Release: alt0.1
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -15,9 +16,11 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 %py_provides dia
 Obsoletes: %name-gnome %name-python
 
-Source: http://ftp.gnome.org/pub/gnome/sources/dia/%major/%name-%version.tar
+# Do not use: http://ftp.gnome.org/pub/gnome/sources/dia/%major/%name-%version.tar
+# Source-git: https://git.gnome.org/browse/dia/
+Source: %name-%version.tar
 
-Patch: %name-%version-%release.patch
+#Patch: %name-%version-%release.patch
 
 BuildRequires: dblatex docbook-style-xsl docbook-utils gcc-c++ intltool libart_lgpl-devel libgtk+2-devel libxslt-devel
 BuildRequires: python-devel python-module-PyXML python-module-pygtk python-modules-email python-modules-encodings xsltproc
@@ -47,7 +50,7 @@ PostScript(TM), SVG, CGM или PNG.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 install -m644 data/icons/48x48/apps/%name.png app/pixmaps/%name-app.png
 
@@ -88,8 +91,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_man1dir/*
+%_mandir/fr/man1/*
 
 %changelog
+* Thu Mar 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.97.4-alt0.1
+- real build pre 0.97.4 from git 050e8f6d631de7eff
+
 * Wed Sep 24 2014 Vitaly Lipatov <lav@altlinux.ru> 0.97.3-alt1
 - new version 0.97.3 (with rpmrb script)
 
