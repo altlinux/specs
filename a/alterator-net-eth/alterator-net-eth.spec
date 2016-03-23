@@ -1,23 +1,18 @@
-%define _altdata_dir %_datadir/alterator
-
 Name: alterator-net-eth
-Version: 4.20.2
+Version: 5.0.0
 Release: alt1
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Source:%name-%version.tar
 
 Summary: alterator module for tcp/ip connections configuration
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 4.24 libshell >= 0.0.1-alt4
+Requires: alterator >= 4.24 libshell >= 0.1.3
 Requires: alterator-l10n >= 2.1-alt9
 Requires: alterator-sh-functions >= 0.12-alt1
 Requires: alterator-hw-functions >= 0.7-alt2
-Requires: alterator-net-functions >= 1.3.3
+Requires: alterator-net-functions >= 2.0.0
 Requires: etcnet openresolv avahi-autoipd startup >= 0.9.8.21-alt1
-Requires: bridge-utils
 # For use in netdev_is_wireless() from alterator-hw-functions.
 Requires: iw
 
@@ -63,7 +58,7 @@ This package contains the hook for /etc/hooks/hostname.d which provides
 mapping current hostname to 127.0.0.1 in /etc/hosts.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -72,8 +67,8 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %makeinstall
 
 %files
-%_altdata_dir/applications/*
-%_altdata_dir/ui/*/
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/
 %_alterator_backend3dir/*
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/net-eth.d
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/net-eth-precommit.d
@@ -82,6 +77,26 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 5.0.0-alt1
+- Tell NetworkManager to reaload connections if needed.
+- Fix configuration list for VLANs.
+- Show current network configuration for non-static ifaces
+    (closes: #29327), (closes: #19846).
+- Show MAC and interface status in the info box (closes: #27802).
+- Don't use deprecated function.
+- "Startup this interface at boot" checkbox added
+    (thx Lenar Shakirov) (closes: #14953).
+- Show interface info depending on its type.
+- Add alterator-net-bridge support.
+- Drop useless comment.
+- Replace read_iface_slaves -> read_iface_host_var.
+- Use functions from new alterator-net-functions.
+- Drop debug output.
+- Drop 'interface as bridge' support.
+- Simplify commit_cache() a bit.
+- Use sort -V to sort VLAN interfaces.
+- Remove VLAN page.
+
 * Fri Jan 16 2015 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
 - Fix VLAN name check.
 

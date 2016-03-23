@@ -1,5 +1,5 @@
 Name: alterator-hw-functions
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Url: http://www.altlinux.org/Alterator
@@ -22,6 +22,9 @@ install -pDm644 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 0.7.5-alt1
+- Add bond interfaces support.
+
 * Fri Apr 25 2014 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1
 - slight netdev_is_eth() optimization
 - added an Url:
