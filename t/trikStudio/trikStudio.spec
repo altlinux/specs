@@ -1,7 +1,7 @@
 %define rev 30210b3a
 Name: trikStudio
 Version: 3.1.3
-Release: alt2.%rev.1
+Release: alt3.%rev.1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache License 2.0
@@ -94,6 +94,9 @@ Requires: lib%name = %version-%release
 %_desktopdir/*
 
 %changelog
+* Wed Mar 23 2016 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt3.30210b3a.1
+- fix install.patch
+
 * Wed Mar 23 2016 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt2.30210b3a.1
 - new package libtrikStudio
 - rename package trikStudio-devel to libtrikStudio-devel
