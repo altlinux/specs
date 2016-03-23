@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.11
-Release: alt1
+Release: alt2
 
 %define package_name		%real_name
 %define weight			1001
@@ -16,12 +16,16 @@ Release: alt1
 %define nodot_ver		27
 # When suffix_ver was removed from real_name
 %define noversion_from		%suffix_ver-alt1
+
+%def_with tk
+%def_with ssl
 %def_without check
+%def_without bootstrap
 
 %ifarch %ix86 x86_64
-%global with_valgrind 1
+%def_with valgrind
 %else
-%global with_valgrind 0
+%def_without valgrind
 %endif
 
 %global _optlevel 3
@@ -82,11 +86,17 @@ Requires: %name-modules-logging
 
 BuildPreReq: rpm >= 4.0.4-alt36.d8, rpm-build-python >= 0.34.4-alt1
 # Automatically added by buildreq on Sun Apr 08 2007
-BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel libncursesw-devel libreadline-devel libsqlite3-devel libssl-devel tk-devel unzip zlib-devel libffi-devel libbluez-devel
+BuildRequires: bzlib-devel gcc-c++ libdb4-devel libexpat-devel libgdbm-devel libncursesw-devel libreadline-devel libsqlite3-devel unzip zlib-devel libffi-devel
+%{?_with_tk:BuildRequires: tk-devel}
+%{?_with_valgrind:BuildRequires: valgrind-devel}
+%{?_with_ssl:BuildRequires: libssl-devel}
+%{?!_with_bootstrap:BuildRequires: libbluez-devel}
 
-%if 0%{?with_valgrind}
-BuildRequires: valgrind-devel
-%endif
+# NB:
+# without_bootstrap might cut a lot more packages;
+# initial python build will still be a --nodeps affair,
+# those interested are invited to have a closer look.
+# -- mike@
 
 %description
 Python is an interpreted, interactive, object-oriented programming
@@ -673,14 +683,14 @@ autoconf
 cp -rl * ../build-static/
 
 build () {
-%configure --with-threads \
-%if 0%{?with_valgrind}
-  --with-valgrind \
-%endif
-           --with-system-ffi \
-           --with-system-expat \
-           --enable-ipv6 \
-           $*
+%configure \
+	--with-threads \
+	%{subst_with valgrind} \
+	%{subst_with tk} \
+	--with-system-ffi \
+	--with-system-expat \
+	--enable-ipv6 \
+	$*
 
 %make_build LDFLAGS=-L$PWD
 }
@@ -824,12 +834,18 @@ mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %real_name >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
 echo %real_name-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 echo %real_name-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-dev
+%if_with tk
 echo tkinter >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%python_name-modules-tkinter
+%endif
 chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
 
+%global python_ignored_files site-packages(/.+\.(pth|egg-info/(entry_points|namespace_packages)\.txt))?$
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat > %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name << EOF
-^%_libdir/python[^/]*/site-packages(/.+\.pth)?$
+^%_libdir/python[^/]*/%python_ignored_files
+%if "lib" != "%_lib"
+^%prefix/lib/python[^/]*/%python_ignored_files
+%endif
 EOF
 
 cat >> python.sh <<EOF
@@ -986,6 +1002,8 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 #%files obsolete
 #%python_libdir/lib-old
 
+# some tools R: p-m-tkinter
+%if_with tk
 %files tools-idle
 %python_libdir/idlelib
 %exclude %python_libdir/idlelib/idle_test/
@@ -994,16 +1012,19 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %exclude %_bindir/idle
 %doc Lib/idlelib/README.txt Lib/idlelib/NEWS.txt Lib/idlelib/HISTORY.txt Lib/idlelib/CREDITS.txt
 %_menudir/idle%version
+%endif
 
 %files tools-2to3
 %python_libdir/lib2to3
 %_bindir/2to3
 
+%if_with tk
 %files tools-pynche
 %python_tooldir/pynche
 %_bindir/pynche
 %_bindir/pynche%suffix_ver
 %doc Tools/pynche/README
+%endif
 
 %files tools-i18n
 %python_tooldir/pygettext.py*
@@ -1012,6 +1033,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %_bindir/pygettext
 %_bindir/pymsgfmt
 
+%if_with tk
 %files tools-webchecker
 %python_tooldir/webchecker/*.py*
 %exclude %python_tooldir/webchecker/README
@@ -1020,12 +1042,15 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %_bindir/websucker
 %_bindir/wsgui
 %doc Tools/webchecker/README
+%endif
 
 %files tools-smtpd
 %_bindir/smtpd.py
 
+%if_with tk
 %files tools-scripts -f .TOOLS_SCRIPTS
 %doc Tools/scripts/README Tools/scripts/dutree.doc
+%endif
 
 %files dev
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-devel
@@ -1058,13 +1083,27 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %files devel-static
 %_libdir/lib%python_name.a
 
+%if_with tk
 %files modules-tkinter
 %config %_sysconfdir/buildreqs/packages/substitute.d/%python_name-modules-tkinter
 %python_libdir/lib-tk
 %exclude %python_libdir/lib-tk/test
 %python_libdir/lib-dynload/_tkinter.so
+%endif
 
 %changelog
+* Wed Mar 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7.11-alt2
+- /etc/buildreqs/files/ignore.d/python: fixed on x86_64 and added
+  .egg-info/(entry_points|namespace_packages).txt.
+
+* Tue Feb 09 2016 Michael Shigorin <mike@altlinux.org> 2.7.11-alt1.2
+- BOOTSTRAP2: make ssl knob separate as python-dev needs python2.7(_ssl)
+
+* Sun Feb 07 2016 Michael Shigorin <mike@altlinux.org> 2.7.11-alt1.1
+- BOOTSTRAP:
+  + added tk knob (enabled by default)
+  + skip bluez, ssl when --with bootstrap (and not by default of course)
+
 * Mon Dec 14 2015 Vladimir Didenko <cow@altlinux.org> 2.7.11-alt1
 - New version
 
