@@ -5,7 +5,7 @@
 
 Name: python-module-%_name
 Version: 0.23.4
-Release: alt1
+Release: alt2
 
 Summary: C-extensions for Python
 Group: Development/Python
@@ -16,6 +16,12 @@ Source: http://www.cython.org/release/Cython-%version.tar.gz
 
 Provides: %_name = %version-%release
 Conflicts: python-module-Cython0.18
+
+%if_with  python3
+%add_python3_req_skip IPython
+%endif
+
+%add_python_req_skip IPython
 
 BuildPreReq: rpm-build-python
 BuildPreReq: python-devel python-module-setuptools python-module-json
@@ -217,6 +223,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Wed Mar 23 2016 Denis Medvedev <nbr@altlinux.org> 0.23.4-alt2
+- NMU - making IPython not a requirement for Cython.
+
 * Thu Nov 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.23.4-alt1
 - 0.23.4
 
