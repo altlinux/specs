@@ -2,7 +2,7 @@
 %define module Socket6
 
 Name: perl-%module
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -35,6 +35,9 @@ Socket6 is a module that implements a IPv6 API for Perl programs.
 %perl_vendor_autolib/Socket6
 
 %changelog
+* Wed Mar 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
