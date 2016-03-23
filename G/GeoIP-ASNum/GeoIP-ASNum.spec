@@ -1,5 +1,5 @@
 Name: GeoIP-ASNum
-Version: 20160314
+Version: 20160323
 Release: alt1
 # OK, day designation in version string is unneeded, this file updates strictly
 # monthly. We need to introduce Epoch in order to drop day from version
@@ -41,6 +41,9 @@ gunzip -c %_sourcedir/GeoIPASNum.dat.gz >%buildroot%_datadir/GeoIP/GeoIPASNum.da
 %_datadir/GeoIP/GeoIPASNum.dat
 
 %changelog
+* Wed Mar 23 2016 Cronbuild Service <cronbuild@altlinux.org> 1:20160323-alt1
+- repocop cronbuild 20160323. At your service.
+
 * Mon Mar 14 2016 Cronbuild Service <cronbuild@altlinux.org> 1:20160314-alt1
 - repocop cronbuild 20160314. At your service.
 
