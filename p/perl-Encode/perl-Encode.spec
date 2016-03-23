@@ -1,7 +1,7 @@
 %define dist Encode
 Name: perl-%dist
-Version: 2.78
-Release: alt1.1
+Version: 2.82
+Release: alt1
 
 Summary: Character encodings
 License: GPL or Artistic
@@ -133,6 +133,9 @@ bzip2 -k Changes
 	%perl_vendor_archlib/Encode/MIME/Header/ISO_2022_JP.pm
 
 %changelog
+* Wed Mar 23 2016 Igor Vlasenko <viy@altlinux.ru> 2.82-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.78-alt1.1
 - rebuild with new perl 5.22.0
 
