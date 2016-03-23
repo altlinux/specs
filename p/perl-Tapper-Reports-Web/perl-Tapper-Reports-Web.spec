@@ -12,10 +12,10 @@ BuildRequires: perl-devel perl-podlators
 BuildRequires: perl(Catalyst/DispatchType/Regex.pm) perl(Catalyst/Plugin/Redirect.pm)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(HTML/Mason/Interp.pm) perl(Catalyst/Action/RenderView.pm) perl(Locale/Maketext.pm) perl(Tapper/Base.pm) perl(Catalyst/Plugin/Redirect.pm)
 %define upstream_name    Tapper-Reports-Web
-%define upstream_version 5.0.6
+%define upstream_version 5.0.7
 
 Name:       perl-%{upstream_name}
-Version:    5.0.6
+Version:    5.0.7
 Release:    alt1
 
 Summary:    Tapper frontend web application based on Catalyst
@@ -127,6 +127,9 @@ Tapper frontend web application based on Catalyst.
 
 
 %changelog
+* Wed Mar 23 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.7-alt1
+- automated CPAN update
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1
 - automated CPAN update
 - filtered perl(BenchmarkAnything/Storage/Frontend/Lib.pm) from requires:
