@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 1.40
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Games/Cards
@@ -10,7 +10,10 @@ Summary: Lieutnant skat
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
+Requires: kde5-carddecks
+
 Source: %rname-%version.tar
+Patch1: alt-no-kcrash.patch
 
 # Automatically added by buildreq on Thu Mar 24 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 qt5-base-devel rpm-build-python3 xml-common xml-utils
@@ -34,6 +37,7 @@ where the second player is either live opponent, or built in artificial intellig
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -51,6 +55,9 @@ where the second player is either live opponent, or built in artificial intellig
 %_K5data/lskat/
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 1.40-alt3
+- fix crash
+
 * Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 1.40-alt2
 - fix changelog
 
