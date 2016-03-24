@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kf5-i18n-%lng
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -18,8 +18,6 @@ Source0: kf5-l10n-%lng-messages-%version.tar
 Source1: kf5-l10n-%lng-docs-%version.tar
 Source100: template-main
 Source101: template-messages
-
-Patch1: alt-userswitcher.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -36,10 +34,6 @@ for d in *-l10n-* ; do
     simplename=`echo "$d" | sed -e 's|^kf5-l10n-%lng-||' -e 's|-[[:digit:]].*||'`
     mv $d $simplename
 done
-
-pushd messages
-%patch1 -p0
-popd
 
 find docs -type d | \
 while read d ; do
@@ -93,6 +87,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 
