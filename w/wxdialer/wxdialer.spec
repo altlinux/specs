@@ -1,9 +1,9 @@
 Name: wxdialer
 Version: 0.2.1
-Release: alt6.1.qa2.1
+Release: alt7
 
 Summary: A phone dialer written in wxPython
-Summary(ru_RU.KOI8-R): Программа набора номера, написанная на wxPython
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ п╫п╟п╠п╬я─п╟ п╫п╬п╪п╣я─п╟, п╫п╟п©п╦я│п╟п╫п╫п╟я▐ п╫п╟ wxPython
 
 License: GPL
 Group: Communications
@@ -11,12 +11,14 @@ Url: http://wxdialer.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: wxDialer-%version.tar.bz2
+Source: wxDialer-%version.tar
 Source1: %name.png
+
 Patch: wxDialer-%version-etersoft.patch
 Patch1: %name-gettext.patch
 
-%define installdir %_libdir/python%__python_version/tools
+BuildArch: noarch
+
 BuildRequires: desktop-file-utils
 
 %description
@@ -26,12 +28,12 @@ your modem. A microphone is required, and it is suggested that you also have
 headphones instead of using your speakers to prevent any nasty feedback. A
 telephone headset, naturally, is best for this.
 
-%description -l ru_RU.KOI8-R
-wxDialer - это простая программа для набора номера через модем. Всё, что она
-делает - позволяет вам делать и принимать звонки через модем. Вам потребуется
-микрофон, и так же предполагается, что вы используете наушники вместо колонок,
-чтобы избежать возникновения эффекта обратной связи. Телефонная гарнитура - лучший
-вариант для этого.
+%description -l ru_RU.UTF-8
+wxDialer - я█я┌п╬ п©я─п╬я│я┌п╟я▐ п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ п╫п╟п╠п╬я─п╟ п╫п╬п╪п╣я─п╟ я┤п╣я─п╣п╥ п╪п╬п╢п╣п╪. п▓я│я▒, я┤я┌п╬ п╬п╫п╟
+п╢п╣п╩п╟п╣я┌ - п©п╬п╥п╡п╬п╩я▐п╣я┌ п╡п╟п╪ п╢п╣п╩п╟я┌я▄ п╦ п©я─п╦п╫п╦п╪п╟я┌я▄ п╥п╡п╬п╫п╨п╦ я┤п╣я─п╣п╥ п╪п╬п╢п╣п╪. п▓п╟п╪ п©п╬я┌я─п╣п╠я┐п╣я┌я│я▐
+п╪п╦п╨я─п╬я└п╬п╫, п╦ я┌п╟п╨ п╤п╣ п©я─п╣п╢п©п╬п╩п╟пЁп╟п╣я┌я│я▐, я┤я┌п╬ п╡я▀ п╦я│п©п╬п╩я▄п╥я┐п╣я┌п╣ п╫п╟я┐я┬п╫п╦п╨п╦ п╡п╪п╣я│я┌п╬ п╨п╬п╩п╬п╫п╬п╨,
+я┤я┌п╬п╠я▀ п╦п╥п╠п╣п╤п╟я┌я▄ п╡п╬п╥п╫п╦п╨п╫п╬п╡п╣п╫п╦я▐ я█я└я└п╣п╨я┌п╟ п╬п╠я─п╟я┌п╫п╬п╧ я│п╡я▐п╥п╦. п╒п╣п╩п╣я└п╬п╫п╫п╟я▐ пЁп╟я─п╫п╦я┌я┐я─п╟ - п╩я┐я┤я┬п╦п╧
+п╡п╟я─п╦п╟п╫я┌ п╢п╩я▐ я█я┌п╬пЁп╬.
 
 %prep
 %setup -n wxDialer-%version
@@ -43,9 +45,7 @@ wxDialer - это простая программа для набора номера через модем. Всё, что она
 
 %install
 %makeinstall
-install -d  %buildroot%_bindir
-install -D -m0755 wxDialer.py %buildroot%installdir/%name.py
-ln -s %installdir/%name.py %buildroot%_bindir/%name
+install -D -m0755 wxDialer.py %buildroot%_bindir/%name
 
 install -D -m644 %SOURCE1 %buildroot%_niconsdir/%name.png
 
@@ -55,7 +55,7 @@ cat > %buildroot%_desktopdir/%name.desktop << EOF
 Name=Phone dialer
 Comment=A phone dialer written in wxPython
 Exec=%_bindir/%name
-Icon=%name.png
+Icon=%name
 Terminal=false
 Type=Application
 Categories=Internet;
@@ -73,9 +73,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_niconsdir/*
-%installdir/%name.py
 
 %changelog
+* Thu Mar 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt7
+- cleanup spec, fix build
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2.1-alt6.1.qa2.1
 - Rebuild with Python-2.7
 
