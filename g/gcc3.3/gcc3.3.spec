@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 3.3.4
-Release: alt8
+Release: alt9
 
 Summary: GNU Compiler Collection
 License: GPL
@@ -65,6 +65,7 @@ Patch702: gcc32-alt-install.patch
 Patch703: gcc32-alt-nowrap.patch
 Patch704: gcc33-alt-bison.patch
 Patch705: gcc33-up-siginfo.patch
+Patch706: gcc33-bison.patch
 
 Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
 Obsoletes: egcs, gcc3.0, gcc3.1
@@ -645,6 +646,7 @@ find -type d -name CVS -print0 |
 %patch703 -p1
 %patch704 -p1
 %patch705 -p0
+%patch706 -p0
 
 # Set proper version & contact info.
 cp -p gcc/version.c gcc/version.c.orig
@@ -790,8 +792,8 @@ CopyDocs ada gcc/ada
 ln -s documentation.html %buildroot%gcc_doc_dir/libstdc++/html/index.html
 
 # Compress changelogs.
-find %buildroot%gcc_doc_dir -type f -name *ChangeLog\* \! -name \*.bz2 -print0 |
-	xargs -r0 bzip2 -9 --
+find %buildroot%gcc_doc_dir -type f -name *ChangeLog\* \! -name \*.xz -print0 |
+	xargs -r0 xz --
 
 pushd %buildtarget
 %makeinstall_std
@@ -884,7 +886,7 @@ EOF
 
 # no valid g++ manpage exists in 3.3 series.
 rm -fv %buildroot%_man1dir/g++%psuffix.1
-ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
+ln -s gcc%psuffix.1.xz %buildroot%_man1dir/g++%psuffix.1.xz
 
 %find_lang gcc%psuffix
 
@@ -896,13 +898,13 @@ cp -a %buildroot{/%_lib,%_libdir}/*.so.* %buildroot%_libdir/debug/
 %set_strip_method none
 %endif #enabled_debug
 
-%set_compress_method bzip2
+%set_compress_method xz
 
 #install alternatives stuff
 install -d %buildroot%_altdir
 cat >%buildroot%_altdir/cpp%gcc_branch<<EOF
 %_bindir/%_target_platform-cpp	%_bindir/%_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%_target_platform-cpp%psuffix
+%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%_target_platform-cpp%psuffix
 EOF
 
 cat >%buildroot%_altdir/%name<<EOF
@@ -910,20 +912,20 @@ cat >%buildroot%_altdir/%name<<EOF
 %_bindir/%_target_platform-gcov	%_bindir/%_target_platform-gcov%psuffix	%_bindir/%_target_platform-gcc%psuffix
 %_bindir/%_target_platform-protoize	%_bindir/%_target_platform-protoize%psuffix	%_bindir/%_target_platform-gcc%psuffix
 %_bindir/%_target_platform-unprotoize	%_bindir/%_target_platform-unprotoize%psuffix	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
+%_man1dir/gcc.1.xz	%_man1dir/gcc%psuffix.1.xz	%_bindir/%_target_platform-gcc%psuffix
+%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%_target_platform-gcc%psuffix
 EOF
 
 cat >%buildroot%_altdir/c++%gcc_branch<<EOF
 %_bindir/%_target_platform-g++	%_bindir/%_target_platform-g++%psuffix	%priority
 %_bindir/%_target_platform-c++filt	%_bindir/%_target_platform-c++filt%psuffix	%_bindir/%_target_platform-g++%psuffix
-%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%_target_platform-g++%psuffix
+%_man1dir/g++.1.xz	%_man1dir/g++%psuffix.1.xz	%_bindir/%_target_platform-g++%psuffix
 EOF
 
 %if_with fortran
 cat >%buildroot%_altdir/g77%gcc_branch<<EOF
 %_bindir/%_target_platform-g77	%_bindir/%_target_platform-g77%psuffix	%priority
-%_man1dir/g77.1.bz2	%_man1dir/g77%psuffix.1.bz2	%_bindir/%_target_platform-g77%psuffix
+%_man1dir/g77.1.xz	%_man1dir/g77%psuffix.1.xz	%_bindir/%_target_platform-g77%psuffix
 EOF
 %endif
 
@@ -944,8 +946,8 @@ cat >%buildroot%_altdir/java%gcc_branch<<EOF
 %_bindir/%_target_platform-jar	%_bindir/%_target_platform-jar%psuffix	%_bindir/%_target_platform-gcj%psuffix
 %_bindir/%_target_platform-rmic	%_bindir/%_target_platform-rmic%psuffix	%_bindir/%_target_platform-gcj%psuffix
 %_bindir/%_target_platform-rmiregistry	%_bindir/%_target_platform-rmiregistry%psuffix	%_bindir/%_target_platform-gcj%psuffix
-%_man1dir/gcj.1.bz2	%_man1dir/gcj%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix
-%_man1dir/gij.1.bz2	%_man1dir/gij%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix
+%_man1dir/gcj.1.xz	%_man1dir/gcj%psuffix.1.xz	%_bindir/%_target_platform-gcj%psuffix
+%_man1dir/gij.1.xz	%_man1dir/gij%psuffix.1.xz	%_bindir/%_target_platform-gcj%psuffix
 EOF
 %endif
 
@@ -1240,6 +1242,10 @@ EOF
 %endif #compat
 
 %changelog
+* Thu Mar 24 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.4-alt9
+- Fixed BFS.
+- Changed compress_method to xz.
+
 * Thu Feb 28 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.4-alt8
 - Backported upstream change to fix build with glibc-2.16.
 
