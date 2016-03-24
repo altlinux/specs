@@ -5,7 +5,7 @@
 
 Name: python-module-%_name
 Version: 0.23.4
-Release: alt2
+Release: alt3
 
 Summary: C-extensions for Python
 Group: Development/Python
@@ -223,6 +223,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Thu Mar 24 2016 Denis Medvedev <nbr@altlinux.org> 0.23.4-alt3
+- NMU - rebuild from srpm.
+
 * Wed Mar 23 2016 Denis Medvedev <nbr@altlinux.org> 0.23.4-alt2
 - NMU - making IPython not a requirement for Cython.
 
