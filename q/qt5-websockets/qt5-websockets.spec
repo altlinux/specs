@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-websockets
-Version: 5.5.1
+Version: 5.6.0
 Release: alt1
 
 Group: System/Libraries
@@ -15,9 +15,9 @@ Source: %qt_module-opensource-src-%version.tar
 
 # Automatically added by buildreq on Mon Jun 16 2014 (-bi)
 # optimized out: elfutils libcloog-isl4 libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs
-BuildRequires: gcc-c++ glibc-devel qt5-script-devel qt5-webkit-devel qt5-xmlpatterns-devel
+BuildRequires: gcc-c++ glibc-devel qt5-xmlpatterns-devel qt5-declarative-devel
 %if_disabled bootstrap
-BuildRequires: qt5-tools-devel
+BuildRequires: qt5-tools
 %endif
 
 %description
@@ -102,6 +102,9 @@ syncqt.pl-qt5 -version %version -private
 %endif
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 

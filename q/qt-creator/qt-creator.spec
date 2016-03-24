@@ -4,7 +4,7 @@
 
 Name:    qt-creator
 Version: 3.6.0
-Release: alt1
+Release: alt1.1
 Summary: Cross-platform IDE for Qt
 
 Group:   Development/Tools
@@ -110,6 +110,9 @@ install -Dpm0644 %SOURCE2 %buildroot%_datadir/appdata/qtcreator.appdata.xml
 %_datadir/qtcreator/*
 
 %changelog
+* Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 3.6.0-alt1.1
+- NMU: Rebuild with new Qt5
+
 * Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version
 - Build with Qt5 (closes #31175)

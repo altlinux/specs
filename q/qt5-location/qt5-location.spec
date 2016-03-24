@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.5.1
+Version: 5.6.0
 Release: alt1
 
 Group: System/Libraries
@@ -19,7 +19,7 @@ Source: %qt_module-opensource-src-%version.tar
 BuildRequires: gcc-c++ glibc-devel qt5-declarative-devel qt5-xmlpatterns-devel
 BuildRequires: pkgconfig(geoclue) pkgconfig(gypsy) pkgconfig(gconf-2.0)
 %if_disabled bootstrap
-BuildRequires: qt5-tools-devel
+BuildRequires: qt5-tools
 %endif
 
 %description
@@ -125,6 +125,9 @@ syncqt.pl-qt5 -version %version -private
 %endif
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Thu Oct 15 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 

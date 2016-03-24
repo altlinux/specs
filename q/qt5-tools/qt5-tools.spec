@@ -1,15 +1,15 @@
 
 %define qt_module qttools
 %define gname qt5
-%def_disable bootstrap
+%def_enable bootstrap
 %def_disable qtconfig
 
 %define major 5
 %define minor 5
 %define bugfix 0
 Name: qt5-tools
-Version: 5.5.1
-Release: alt2
+Version: 5.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -35,7 +35,8 @@ Patch10: alt-build-qtconfig.patch
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
 BuildRequires: desktop-file-utils gcc-c++ glibc-devel libicu-devel /usr/bin/convert
-BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-webkit-devel qt5-xmlpatterns-devel
+BuildRequires: qt5-base-devel qt5-declarative-devel-static qt5-xmlpatterns-devel
+#BuildRequires: qt5-webkit-devel
 BuildRequires: libXext-devel libX11-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
@@ -217,6 +218,7 @@ done
 %_bindir/lupdate*
 %_bindir/pixeltool*
 %_bindir/qcollectiongenerator*
+%_bindir/qdoc*
 %_bindir/qhelpconverter*
 %_bindir/qhelpgenerator*
 %_bindir/qtpaths*
@@ -227,6 +229,7 @@ done
 %_qt5_bindir/lupdate*
 %_qt5_bindir/pixeltool*
 %_qt5_bindir/qcollectiongenerator*
+%_qt5_bindir/qdoc*
 %_qt5_bindir/qhelpconverter*
 %_qt5_bindir/qhelpgenerator*
 %_qt5_bindir/qtpaths*
@@ -281,9 +284,11 @@ done
 %_qt5_headerdir/QtUiTools/
 %_qt5_headerdir/QtUiPlugin/
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/libQt*.so
-%_qt5_libdir/pkgconfig/Qt*CLucene.pc
-%_qt5_libdir/pkgconfig/Qt*DesignerComponents.pc
+%_qt5_libdatadir/libQt*.so
+#%_qt5_libdir/pkgconfig/Qt*CLucene.pc
+#%_qt5_libdir/pkgconfig/Qt*DesignerComponents.pc
 %_qt5_libdir/pkgconfig/Qt*Designer.pc
 %_qt5_libdir/pkgconfig/Qt*Help.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
@@ -291,6 +296,7 @@ done
 
 %files devel-static
 %_qt5_libdir/libQt?*.a
+%_qt5_libdatadir/libQt?*.a
 %_pkgconfigdir/Qt?UiTools.pc
 
 %files doc
@@ -313,6 +319,9 @@ done
 
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
 - fix find qmake
 

@@ -3,15 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.5
-Release: alt1.1
+Version: 5.5.1
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
 
 %setup_python_module %oname
 
-Source0: PyQt-gpl.tar
+Source0: PyQt-gpl-%version.tar
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 
 #BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
@@ -89,7 +89,7 @@ Requires: %name
 This package contains PyQt5 docs
 
 %prep
-%setup -n PyQt-gpl
+%setup -qn PyQt-gpl-%version
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
 subst 's|/lib" |/%_lib" |g' configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
@@ -205,6 +205,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- new version
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 5.5-alt1.1
 - NMU: Use buildreq for BR.
 
