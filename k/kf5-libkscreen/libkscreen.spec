@@ -1,7 +1,7 @@
 %define rname libkscreen
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -17,7 +17,7 @@ Patch1: alt-pnp-ids-path.patch
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-x11extras libstdc++-devel libxcb-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel kf5-kwayland-devel
 
 %description
 LibKScreen is a library that provides access to current configuration
@@ -76,6 +76,9 @@ KF5 library
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 

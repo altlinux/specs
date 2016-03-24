@@ -9,7 +9,7 @@
 
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -154,6 +154,7 @@ KF5 library
 %_K5qml/org/kde/plasma/private/*/
 %_K5qml/org/kde/private/*/
 %_K5qml/org/kde/plasma/activityswitcher/
+%_K5qml/org/kde/activities/settings/
 %_K5xdgapp/*
 %_K5cfg/*
 %_K5srv//ServiceMenus/*.desktop
@@ -167,6 +168,7 @@ KF5 library
 %_K5data/color-schemes/*
 %_K5data/kcm*/
 %_K5cf_upd/*
+%_K5data/kactivitymanagerd/
 %_K5data/kpackage/kcms/*
 %_K5data/plasma/plasmoids/*
 %_K5data/plasma/packages/*
@@ -205,6 +207,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 

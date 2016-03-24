@@ -1,7 +1,7 @@
 %define rname kactivitymanagerd
 
 Name: kf5-kactivitymanagerd
-Version: 5.5.95
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -48,5 +48,8 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-deve
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Fri Mar 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.95-alt1
 - initial build

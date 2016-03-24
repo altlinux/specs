@@ -2,9 +2,11 @@
 
 %define plasmacomicprovidercore_sover 0
 %define libplasmacomicprovidercore libplasmacomicprovidercore%plasmacomicprovidercore_sover
+%define plasmaweather_sover 1
+%define libplasmaweather libplasmaweather%plasmaweather_sover
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -34,6 +36,7 @@ BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmode
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kross-devel kf5-knewstuff-devel kf5-kactivities-devel
+BuildRequires: kf5-plasma-workspace-devel kf5-libksysguard-devel
 
 %description
 Plasma addons.
@@ -58,6 +61,13 @@ Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
 %description -n %libplasmacomicprovidercore
+KF5 library
+
+%package -n %libplasmaweather
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libplasmaweather
 KF5 library
 
 
@@ -86,7 +96,7 @@ KF5 library
 %_K5plug/plasma/applets/*.so
 %_K5plug/kpackage/packagestructure/*.so
 %_K5qml/org/kde/plasma/private/*/
-%_K5exec/*
+#%_K5exec/*
 %_K5data/plasma/*
 %_K5data/kwin/*
 %_K5srv/*
@@ -96,8 +106,14 @@ KF5 library
 %files -n %libplasmacomicprovidercore
 %_K5lib/libplasmacomicprovidercore.so.*
 %_K5lib/libplasmacomicprovidercore.so.%plasmacomicprovidercore_sover
+%files -n %libplasmaweather
+%_K5lib/libplasmaweather.so.*
+%_K5lib/libplasmaweather.so.%plasmaweather_sover
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 

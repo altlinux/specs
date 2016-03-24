@@ -1,7 +1,7 @@
 %define rname kwallet-pam
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -17,17 +17,19 @@ Patch1: alt-defaults.patch
 # optimized out: cmake-modules elfutils libgpg-error libgpg-error-devel libstdc++-devel python-base python3 python3-base ruby ruby-stdlibs
 #BuildRequires: cmake gcc-c++ glibc-devel-static libgcrypt-devel libpam-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: cmake gcc-c++ glibc-devel libgcrypt-devel libpam-devel
+BuildRequires: cmake gcc-c++ glibc-devel extra-cmake-modules qt5-base-devel libgcrypt-devel libpam-devel
 
 %package -n pam0_kwallet
 Summary: KDE4 PAM KWallet integration
 Group: System/Base
+Requires: /usr/bin/socat
 %description -n pam0_kwallet
 KDE4 PAM KWallet integration
 
 %package -n pam0_kwallet5
 Summary: KDE5 PAM KWallet integration
 Group: System/Base
+Requires: /usr/bin/socat
 %description -n pam0_kwallet5
 KDE5 PAM KWallet integration
 
@@ -59,15 +61,52 @@ pushd $d
 popd
 done
 
+# fix libs path
+if [  -d %buildroot/%_libdir/security ] ; then
+    mkdir -p %buildroot/%_lib/security
+    mv %buildroot/%_libdir/security/* %buildroot/%_lib/security/
+fi
+
+# install pam_kwallet_init
+mkdir -p %buildroot/%_K5libexecdir
+cat >%buildroot/%_K5libexecdir/pam_kwallet_init <<__EOF__
+#!/bin/sh
+if test -n "\$PAM_KWALLET_LOGIN" ; then
+    env | socat STDIN UNIX-CONNECT:\$PAM_KWALLET_LOGIN
+fi
+__EOF__
+chmod 0755 %buildroot/%_K5libexecdir/pam_kwallet_init
+
+cat >%buildroot/%_K5libexecdir/pam_kwallet5_init <<__EOF__
+#!/bin/sh
+if test -n "\$PAM_KWALLET5_LOGIN" ; then
+    env | socat STDIN UNIX-CONNECT:\$PAM_KWALLET5_LOGIN
+fi
+__EOF__
+chmod 0755 %buildroot/%_K5libexecdir/pam_kwallet5_init
+
+# install pam_kwallet_init.desktop
+cp -ar %buildroot/%_K5start/pam_kwallet_init.desktop \
+    %buildroot/%_K5start/pam_kwallet5_init.desktop
+sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
+    %buildroot/%_K5start/pam_kwallet5_init.desktop
+
 %files -n pam0_kwallet
 %doc kde4/COPYING.LIB
 %_pam_modules_dir/pam_kwallet.so
+%_K5libexecdir/pam_kwallet_init
+%_K5start/pam_kwallet_init.desktop
 
 %files -n pam0_kwallet5
 %doc kde5/COPYING.LIB
 %_pam_modules_dir/pam_kwallet5.so
+%_K5libexecdir/pam_kwallet5_init
+%_K5start/pam_kwallet5_init.desktop
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 

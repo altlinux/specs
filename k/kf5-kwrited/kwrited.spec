@@ -1,7 +1,7 @@
 %define rname kwrited
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -58,11 +58,14 @@ KF5 library
 
 %files -f %name.lang
 %doc COPYING*
-%_K5plug/*writed*.so
-%_K5srv/kded/*writed*.desktop
+%_K5plug/kf5/kded/kwrited.so
+#%_K5srv/kded/*writed*.desktop
 %_K5notif/*writed*
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 

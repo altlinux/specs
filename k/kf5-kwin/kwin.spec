@@ -2,17 +2,17 @@
 
 %define kwin4_effect_builtins_sover 1
 %define libkwin4_effect_builtins libkwin4_effect_builtins%kwin4_effect_builtins_sover
-%define kwineffects_sover 7
+%define kwineffects_sover 8
 %define libkwineffects libkwineffects%kwineffects_sover
-%define kwinglutils_sover 7
+%define kwinglutils_sover 8
 %define libkwinglutils libkwinglutils%kwinglutils_sover
 %define kwin_sover 5
 %define libkwin libkwin%kwin_sover
-%define kwinxrenderutils_sover 7
+%define kwinxrenderutils_sover 8
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -22,6 +22,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Requires: libqt5-multimedia kf5-kscreenlocker
+#Requires: xorg-xwayland
 
 Source: %rname-%version.tar
 Patch1: alt-def-compositing.patch
@@ -171,6 +172,9 @@ KF5 library
 
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 

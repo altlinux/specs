@@ -4,7 +4,7 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: kf5-%rname
-Version: 5.5.5
+Version: 5.6.0
 Release: alt1
 %K5init altplace
 
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libsystemsettingsview.so.%systemsettingsview_sover
 
 %changelog
+* Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.5-alt1
 - new version
 
