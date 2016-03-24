@@ -3,13 +3,19 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.1.1
-Release: alt3.ec88
+Release: alt4.46aa4
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
+
+%ifarch x86_64
+%def_enable gst1   // Enable gstreamer 1.0
+%else
+%def_disable gst1   // Disable gstreamer 1.0
+%endif
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
@@ -40,25 +46,35 @@ BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
 # BEGIN SourceDeps(oneline):
-# Automatically added by buildreq on Wed Mar 16 2016
-# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libpango-devel libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-beaker python-module-cssselect python-module-docutils python-module-ecdsa python-module-ed25519 python-module-genshi python-module-jinja2 python-module-lingua python-module-nss python-module-numpy python-module-polib python-module-pycrypto python-module-pytz python-module-snowballstemmer python-module-sphinx python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ glibc-devel-static gst-plugins-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-module-html5lib python-module-mako unzip xorg-cf-files yasm zip
+BuildRequires: libssl-devel perl-devel python-devel texinfo
 
-BuildRequires: libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(CGI/Carp.pm) perl(Carp.pm) perl(DBI.pm) perl(Errno.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(GD.pm) perl(GD/Graph/Data.pm) perl(GD/Graph/colour.pm) perl(GD/Graph/lines.pm) perl(GD/Graph/linespoints.pm) perl(GD/Graph/mixed.pm) perl(GD/Graph/points.pm) perl(HTTP/Request/Common.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(List/Util.pm) perl(Test/Harness.pm) perl(Time/HiRes.pm) perl(Time/Local.pm) perl(Time/localtime.pm) perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(base.pm) perl(diagnostics.pm) perl(strict.pm) perl(subs.pm) python-devel texinfo
 # END SourceDeps(oneline)
 
-BuildRequires:  gstreamer1.0-devel
-
-BuildRequires: autoconf_2.13 
-
+# Automatically added by buildreq on Sun Mar 20 2016
+# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-beaker python-module-cssselect python-module-docutils python-module-ecdsa python-module-ed25519 python-module-genshi python-module-jinja2 python-module-lingua python-module-nss python-module-polib python-module-pycrypto python-module-pytz python-module-snowballstemmer python-module-sphinx python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python3 python3-base xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-module-html5lib python-module-mako
+BuildRequires: python-module-pygobject3 python3 unzip xorg-cf-files yasm zip
 
 %set_autoconf_version 2.13
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss
 
-Requires: gstreamer
+BuildRequires: autoconf_2.13
+
+%if_enabled gst1
+BuildRequires: gst-plugins1.0-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
+
+Requires: libgstreamer1.0 gst-libav
+Requires: gst-plugins-base1.0
+%else
+BuildRequires: gst-plugins-devel
+BuildRequires: gstreamer-devel gst-plugins-devel
+
+Requires: libgstreamer
 Requires: gst-plugins-base gst-plugins-good
+%endif
 
 %description
 The %name project is a redesign of Mozilla's  Firefox browser component,
@@ -90,19 +106,10 @@ These helper macros provide possibility to rebuild
 cd %name
 
 tar -xf %SOURCE1
+
 pushd browser/locales/en-US/
 tar -xf %SOURCE2
-#pushd searchplugins
-#> ./list.txt
-#for fil in *.xml
-#do
-#    bn=`basename $fil .xml`
-#    echo $bn >> ./list.txt
-#done
-#popd
 popd
-
-
 
 #patch5  -p1
 %patch6  -p1
@@ -140,6 +147,11 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 echo 'ac_add_options --enable-optimize="-O2 -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
+%if_enabled gst1
+echo "ac_add_options --enable-gstreamer=1.0" >> .mozconfig
+%else
+echo "ac_add_options --enable-gstreamer=0.10" >> .mozconfig
+%endif
 
 %build
 cd %name
@@ -317,6 +329,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Mar 23 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt4.46aa4
+- Update from upstream/master git 
+
 * Wed Mar 16 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt3.ec88
 - Version from https://github.com/trav90/Pale-Moon/tree/gstreamer1.x
 - Add Buildreq
@@ -416,4 +431,3 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
