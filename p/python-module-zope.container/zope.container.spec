@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt1.dev0.git20150608.1.1
+Release: alt2.dev0.git20150608
 Summary: Zope Container
 License: ZPL
 Group: Development/Python
@@ -41,9 +41,9 @@ Requires: python-module-zope.i18nmessageid
 #BuildPreReq: python3-module-zope.traversing-tests
 
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-module-BTrees python-module-PyStemmer python-module-Pygments python-module-ZEO python-module-ZODB python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-numpy python-module-pbr python-module-persistent python-module-pyasn1 python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-transaction python-module-twisted-core python-module-unittest2 python-module-zc.lockfile python-module-zdaemon python-module-zope python-module-zope.annotation python-module-zope.browser python-module-zope.component python-module-zope.configuration python-module-zope.container python-module-zope.contenttype python-module-zope.dottedname python-module-zope.event python-module-zope.exceptions python-module-zope.filerepresentation python-module-zope.hookable python-module-zope.i18n python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.lifecycleevent python-module-zope.location python-module-zope.pagetemplate python-module-zope.proxy python-module-zope.publisher python-module-zope.schema python-module-zope.security python-module-zope.size python-module-zope.tal python-module-zope.tales python-module-zope.testing python-module-zope.traversing python-module-zope.untrustedpython python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-dev python3-module-BTrees python3-module-ZEO python3-module-ZODB python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-mimeparse python3-module-ntlm python3-module-pbr python3-module-persistent python3-module-pip python3-module-pycparser python3-module-pytz python3-module-setuptools python3-module-transaction python3-module-unittest2 python3-module-zc.lockfile python3-module-zdaemon python3-module-zope python3-module-zope.annotation python3-module-zope.browser python3-module-zope.component python3-module-zope.configuration python3-module-zope.container python3-module-zope.contenttype python3-module-zope.dottedname python3-module-zope.event python3-module-zope.exceptions python3-module-zope.i18n python3-module-zope.i18nmessageid python3-module-zope.interface python3-module-zope.lifecycleevent python3-module-zope.location python3-module-zope.proxy python3-module-zope.publisher python3-module-zope.schema python3-module-zope.security python3-module-zope.tal python3-module-zope.tales python3-module-zope.testing python3-module-zope.traversing
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python-module-repoze.sphinx.autointerface python-module-zope.browserpage python-module-zope.site python-module-zope.testrunner python3-module-html5lib python3-module-pytest python3-module-zope.filerepresentation python3-module-zope.pagetemplate python3-module-zope.site python3-module-zope.size python3-module-zope.testrunner rpm-build-python3 time
+# Automatically added by buildreq on Wed Mar 23 2016 (-bi)
+# optimized out: elfutils python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-enum34 python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-numpy python-module-pyasn1 python-module-pytz python-module-repoze python-module-repoze.sphinx python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope python-module-zope.component python-module-zope.event python-module-zope.hookable python-module-zope.i18nmessageid python-module-zope.interface python-module-zope.lifecycleevent python-module-zope.location python-module-zope.proxy python-module-zope.schema python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-sphinx-objects.inv python3 python3-base python3-module-cssselect python3-module-enum34 python3-module-pycparser python3-module-setuptools rpm-build-python3
+BuildRequires: python-module-alabaster python-module-html5lib python-module-mimeparse python-module-pbr python-module-repoze.sphinx.autointerface python-module-zope.container python-module-zope.testing python3-dev python3-module-html5lib python3-module-mimeparse python3-module-pbr python3-module-pytz python3-module-zope time
 
 %description
 This package define interfaces of container components, and provides
@@ -180,6 +180,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt2.dev0.git20150608
+- BRs updated with buildreq (many non-essential deps have been cleared away with
+  python-2.7.11-alt2 and the self-dep with python-module-setuptools-18.1-alt3)
+
 * Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150608.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
