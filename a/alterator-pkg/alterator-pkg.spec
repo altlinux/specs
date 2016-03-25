@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.18
+Version: 2.6.19
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -61,6 +61,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Mar 25 2016 Michael Shigorin <mike@altlinux.org> 2.6.19-alt1
+- Fix for group files in subdirectories
+
 * Mon Jan 13 2014 Michael Shigorin <mike@altlinux.org> 2.6.18-alt1
 - Drop 90-pkg.sh, see also installer-feature-cdrom-add (closes: #29704)
 
