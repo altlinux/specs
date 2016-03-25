@@ -1,6 +1,6 @@
 Name: uim
 Version: 1.8.6
-Release: alt1
+Release: alt2
 
 Summary: useful input method metapackage
 
@@ -41,6 +41,7 @@ This is metapackage.
 %package common
 Summary: useful input method common files
 Group: Text tools
+BuildArch: noarch
 
 %description common
 %common_descr
@@ -82,11 +83,22 @@ This package contains universal input method uim-custom API library.
 %package -n libuim-data
 Summary: universal input method data files
 Group: Text tools
+Requires: libuim-plugin
+BuildArch: noarch
 
 %description -n libuim-data
 %common_descr
 
 This package contains the data files for uim.
+
+%package -n libuim-plugin
+Summary: universal input method data files
+Group: Text tools
+
+%description -n libuim-plugin
+%common_descr
+
+This package contains the plugin files for uim.
 
 %package -n libuim-scm0
 Summary: universal input method API uim-scm library
@@ -266,10 +278,12 @@ cp %SOURCE4 .
 %files -n libuim-data -f %name.lang
 %_datadir/uim/*.scm
 %_datadir/uim/lib/*
-%_libdir/uim/notify/*
-%_libdir/uim/plugin/*
 %dir %_datadir/uim
 %dir %_datadir/uim/lib
+
+%files -n libuim-plugin
+%_libdir/uim/notify/*
+%_libdir/uim/plugin/*
 %dir %_libdir/uim
 %dir %_libdir/uim/notify
 %dir %_libdir/uim/plugin
@@ -334,5 +348,9 @@ cp %SOURCE4 .
 %_mandir/man1/uim-xim.1.xz
 
 %changelog
+* Fri Mar 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt2
+- mark uim-common and libuim-data packages as noarch
+- split libuim-plugin from libuim-data package
+
 * Wed Mar 9 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt1
 - initial build
