@@ -1,6 +1,6 @@
 Name: cherrytree
 Version: 0.36.3
-Release: alt2
+Release: alt3
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8):  Записная книжка иерархической структуры для заметок
@@ -26,6 +26,7 @@ BuildRequires: gettext
 #Requires: python-module-enchant
 
 Requires: %_bindir/7z
+Requires: python-module-enchant
 
 %description
 CherryTree is a hierarchical note taking application, featuring rich text and
@@ -72,6 +73,9 @@ rm -rf %buildroot%python_sitelibdir_noarch/
 
 
 %changelog
+* Fri Mar 25 2016 Konstantin Artyushkin <akv@altlinux.org> 0.36.3-alt3
+- fix spellcheck requares
+
 * Wed Jan 13 2016 Konstantin Artyushkin <akv@altlinux.org> 0.36.3-alt2
 - new version 0.36.3
 
