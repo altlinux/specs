@@ -12,7 +12,7 @@
 %def_enable  vaapi
 %def_enable  widevine
 
-%define v8_version 4.8.271.20
+%define v8_version 4.9.385.33
 
 %if_enabled debug
 %define buildtype Debug
@@ -21,7 +21,7 @@
 %endif
 
 Name:           chromium
-Version:        48.0.2564.116
+Version:        49.0.2623.108
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -77,7 +77,6 @@ Patch86:	chromium-icon.patch
 # Old, but specific
 Patch87:	chromium-cups1.5.patch
 Patch90:	chromium-gcc4.7.patch
-Patch91:	chromium-arm.patch
 # New from Debian
 Patch92:	chromium-third-party-cookies-off-by-default.patch
 Patch93:	chromium-ps-print.patch
@@ -92,6 +91,7 @@ Patch98: 	chromium-fix-ffmpeg-build-on-ia32.patch
 Patch300:	chromium-enable_vaapi_on_linux.patch
 # If exterior-sourced widevine library exists at run-time, use it.
 Patch301:	chromium-fix_building_widevinecdm_with_chromium.patch
+Patch302:   chromium-widevine.patch
 
 BuildRequires: /proc
 
@@ -120,6 +120,7 @@ BuildRequires:  libexif-devel
 BuildRequires:  libevent1.4-devel
 BuildRequires:  libexpat-devel
 BuildRequires:  libflac-devel
+BuildRequires:  libffi-devel
 BuildRequires:  libglew-devel
 BuildRequires:  libgcrypt-devel
 BuildRequires:  libgnome-keyring-devel
@@ -257,7 +258,6 @@ cp -a src/libchromiumcontent/chromiumcontent src
 %patch86 -p0
 %patch87 -p1
 %patch90 -p1
-%patch91 -p1
 %patch92 -p0
 %patch93 -p1
 %patch95 -p0
@@ -270,6 +270,7 @@ cp -a src/libchromiumcontent/chromiumcontent src
 %endif
 %if_enabled widevine
 %patch301 -p1 -d src
+%patch302 -p0 -d src
 %endif
 
 %if_disabled v8_internal
@@ -339,6 +340,7 @@ _google_default_client_secret='h_PrTP1ymJu83YTLyz-E25nP'
 
 cd src
 ./build/gyp_chromium -f ninja build/all.gyp \
+    -Duse_sysroot=0 \
 %if_enabled shared_libraries
 	-Dcomponent=shared_library \
 %endif
@@ -566,6 +568,7 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %doc AUTHORS LICENSE
 %dir %_datadir/gnome-control-center
 %dir %_datadir/gnome-control-center/default-apps
+%dir %_sysconfdir/%name
 %config %_sysconfdir/%name/*
 %dir %_libdir/chromium/
 %attr(4711,root,root) %_libdir/chromium/chrome-sandbox
@@ -601,6 +604,37 @@ ln -s %_libdir/v8/snapshot_blob.bin %buildroot%_libdir/chromium/snapshot_blob.bi
 %_altdir/%name-gnome
 
 %changelog
+* Fri Mar 25 2016 Andrey Cherepanov <cas@altlinux.org> 49.0.2623.108-alt1
+- New version
+- Security fixes:
+  - High CVE-2016-1647: Use-after-free in Navigation.
+  - High CVE-2016-1648: Use-after-free in Extensions.
+  - High CVE-2016-1649: Buffer overflow in libANGLE.
+
+* Wed Mar 09 2016 Andrey Cherepanov <cas@altlinux.org> 49.0.2623.87-alt1
+- New version
+- Security fixes:
+  - High CVE-2016-1643: Type confusion in Blink.
+  - High CVE-2016-1644: Use-after-free in Blink.
+  - High CVE-2016-1645: Out-of-bounds write in PDFium.
+
+* Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 49.0.2623.75-alt1
+- New version
+- Security fixes:
+  - High CVE-2016-1630: Same-origin bypass in Blink.
+  - High CVE-2016-1631: Same-origin bypass in Pepper Plugin.
+  - High CVE-2016-1632: Bad cast in Extensions.
+  - High CVE-2016-1633: Use-after-free in Blink.
+  - High CVE-2016-1634: Use-after-free in Blink.
+  - High CVE-2016-1635: Use-after-free in Blink.
+  - High CVE-2016-1636: SRI Validation Bypass.
+  - High CVE-2015-8126: Out-of-bounds access in libpng.
+  - Medium CVE-2016-1637: Information Leak in Skia.
+  - Medium CVE-2016-1638: WebAPI Bypass.
+  - Medium CVE-2016-1639: Use-after-free in WebRTC.
+  - Medium CVE-2016-1640: Origin confusion in Extensions UI.
+  - Medium CVE-2016-1641: Use-after-free in Favicon.
+
 * Fri Feb 19 2016 Andrey Cherepanov <cas@altlinux.org> 48.0.2564.116-alt1
 - New version
 - Security fixes:

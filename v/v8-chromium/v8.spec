@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     4
-%define MINOR_VERSION     8
-%define BUILD_NUMBER      271
-%define PATCH_LEVEL       20
+%define MINOR_VERSION     9
+%define BUILD_NUMBER      385
+%define PATCH_LEVEL       33
 %define soversion %MAJOR_VERSION.%MINOR_VERSION
 %define libname libv8
 %def_without tests
@@ -22,6 +22,7 @@ Source3: buildtools.tar
 Source4: gtest.tar
 Source5: gmock.tar
 Source6: swarming_client.tar
+Source7: trace_event.tar
 
 Patch1:  v8-alt-fix-isolate-on-ia32.patch
 
@@ -77,6 +78,7 @@ tar xf %SOURCE3
 tar xf %SOURCE4
 tar xf %SOURCE5
 tar xf %SOURCE6
+tar xf %SOURCE7
 sed -i 's|build/gyp/gyp|gyp|g' Makefile
 %patch1 -p1
 
@@ -133,6 +135,14 @@ LD_LIBRARY_PATH=out/Release/lib.target tools/run-tests.py \
 %_bindir/*
 
 %changelog
+* Fri Mar 25 2016 Andrey Cherepanov <cas@altlinux.org> 4.9.385.33-alt1
+- New version for chromium-49.0.2623.108
+- Security fixes:
+  - High CVE-2016-1646: Out-of-bounds read in V8.
+
+* Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 4.9.385.28-alt1
+- New version for chromium-49.0.2623.75
+
 * Fri Feb 19 2016 Andrey Cherepanov <cas@altlinux.org> 4.8.271.20-alt1
 - New version for chromium-48.0.2564.116
 
