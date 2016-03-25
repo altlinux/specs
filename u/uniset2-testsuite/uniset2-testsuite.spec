@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.2
-Release: alt1
+Release: alt4
 Summary: UniSet test suite
 Group: Development/Python
 License: GPL
@@ -79,10 +79,14 @@ ln -s %python_sitelibdir/%name/%name-conv.py %buildroot/%_bindir/uniset2-testsui
 %python_sitelibdir/%name/*
 %exclude %python_sitelibdir/%name/gui*Player*
 %exclude %python_sitelibdir/%name/Gtk*
+%exclude %python_sitelibdir/%name/ScenarioParamEditor*
+%exclude %python_sitelibdir/%name/dlg*
 
 %files gui
 %python_sitelibdir/%name/guiTestSuitePlayer-gtk.py
 %python_sitelibdir/%name/GtkProcessMonitor.py
+%python_sitelibdir/%name/ScenarioParamEditor*
+%python_sitelibdir/%name/dlg*
 %_bindir/uniset2-testsuite-gtkplayer
 %dir %_datadir/%name/player/
 %dir %_datadir/%name/player/editors
@@ -97,6 +101,15 @@ ln -s %python_sitelibdir/%name/%name-conv.py %buildroot/%_bindir/uniset2-testsui
 %endif
 
 %changelog
+* Sat Mar 26 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt4
+- added support 'ignore' flag for 'check' and 'action'
+
+* Mon Mar 21 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt3
+- fixed bug in requires
+
+* Thu Mar 10 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt2
+- add <Success> and <Failure> section to run scripts at the end of the test
+
 * Fri Mar 04 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt1
 - rebuild for ALTLinux (rename eter --> alt)
 
