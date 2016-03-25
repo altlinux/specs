@@ -3,10 +3,10 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.6.2
-Release: alt1.1
+Version: 2.7.8
+Release: alt1
 Summary: A simple and efficient access to R from Python, version 2
-License: MPL/GPL/LGPL
+License: GPLv2
 Group: Development/Python
 Url: http://rpy.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-python
 #BuildPreReq: python-module-six python-modules-sqlite3
 #BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: graphviz
+BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 #BuildPreReq: python3-devel python3-module-setuptools-tests
@@ -168,7 +169,7 @@ cp -fR . ../python3
 %endif
 
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
-#prepare_sphinx doc
+%prepare_sphinx doc
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -221,7 +222,7 @@ python3 -m unittest discover -v rpy2.robjects
 %endif
 
 %files
-%doc AUTHORS NEWS *.rst
+%doc AUTHORS NEWS *.rst gpl*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/tests*
 %exclude %python_sitelibdir/*/*/tests
@@ -245,7 +246,7 @@ python3 -m unittest discover -v rpy2.robjects
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS NEWS *.rst
+%doc AUTHORS NEWS *.rst gpl*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests*
 %exclude %python3_sitelibdir/*/*/tests*
@@ -258,6 +259,9 @@ python3 -m unittest discover -v rpy2.robjects
 %endif
 
 %changelog
+* Fri Mar 25 2016 Denis Medvedev <nbr@altlinux.org> 2.7.8-alt1
+- New version
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.6.2-alt1.1
 - NMU: Use buildreq for BR.
 
