@@ -1,7 +1,7 @@
 %define api_ver 1.0
 
 Name: libgusb
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -78,6 +78,7 @@ applications that use GUsb library.
 %doc README AUTHORS NEWS
 
 %files devel
+%_bindir/gusbcmd
 %_includedir/gusb-1/
 %_libdir/libgusb.so
 %_libdir/pkgconfig/gusb.pc
@@ -93,6 +94,9 @@ applications that use GUsb library.
 %_datadir/gtk-doc/html/gusb/
 
 %changelog
+* Sat Mar 26 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt1
+- 0.2.9
+
 * Sat Dec 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.8-alt1
 - 0.2.8
 
