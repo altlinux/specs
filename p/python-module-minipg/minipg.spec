@@ -5,29 +5,29 @@
 
 Name: python-module-%oname
 Version: 0.4.3
-Release: alt1.git20150208.1
+Release: alt1.git20150208.2
 Summary: Yet another PostgreSQL database driver
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/minipg/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Python Development Team <python@packages.altlinux.org>
 
 # https://github.com/nakagami/minipg.git
 Source: %name-%version.tar
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-Cython
+BuildPreReq: python-devel python-module-Cython
+#BuildPreReq: python-module-setuptools-tests
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-Cython
+BuildPreReq: python3-devel python3-module-Cython
+#BuildPreReq: python3-module-setuptools-tests
 %endif
 
 %py_provides %oname
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-json python-modules-xml python3 python3-base python3-dev python3-module-zope
-BuildRequires: python-module-Cython python3-module-Cython rpm-build-python3
+#BuildRequires: python-module-Cython python3-module-Cython rpm-build-python3
 
 %description
 Yet another Python PostgreSQL database driver.
@@ -64,6 +64,7 @@ This package contains tests for %oname.
 %setup
 
 %if_with python3
+rm -rf ../python3
 cp -fR . ../python3
 %endif
 
@@ -116,6 +117,9 @@ exit 1
 %endif
 
 %changelog
+* Sat Mar 26 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.3-alt1.git20150208.2
+- NMU: Fixed BRs.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.4.3-alt1.git20150208.1
 - NMU: Use buildreq for BR.
 
