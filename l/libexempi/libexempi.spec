@@ -1,11 +1,10 @@
-%def_enable shared
 %def_enable static
 
 %define Name Exempi
 %define _name exempi
 
 Name: lib%_name
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
@@ -23,7 +22,6 @@ BuildRequires: boost-test-devel gcc-c++ libexpat-devel zlib-devel
 %Name provides a library for easy parsing of XMP metadata. It is a
 port of Adobe XMP SDK to work on UNIX.
 
-
 %package devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
@@ -32,7 +30,6 @@ Requires: %name%{?_disable_shared:-devel-static} = %version-%release
 %description devel
 This package contains the libraries and header files needed for
 developing with %name.
-
 
 %if_enabled static
 %package devel-static
@@ -50,34 +47,28 @@ This package contains the static library needed for developing with
 %setup -n %_name-%version
 
 %build
-%define _optlevel 3
 %autoreconf
-%configure \
-    %{subst_enable shared} \
-    %{subst_enable static}
-
-%make_build
+%configure  \
+    %{subst_enable static} \
+    CPPFLAGS="-DBanAllEntityUsage=1"
+%make V=1
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
 %make check
 
-%if_enabled shared
 %files
 %_bindir/%_name
 %_libdir/*.so.*
 %_man1dir/%_name.1.*
 %doc AUTHORS ChangeLog NEWS README
-%endif
 
 %files devel
-%{?_disable_shared:%doc AUTHORS ChangeLog NEWS README}
 %_includedir/%_name-2.0/
-%{?_enable_shared:%_libdir/*.so}
+%_libdir/*.so
 %_pkgconfigdir/*
-
 
 %if_enabled static
 %files devel-static
@@ -86,6 +77,9 @@ This package contains the static library needed for developing with
 
 
 %changelog
+* Sat Mar 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 - %%check section
