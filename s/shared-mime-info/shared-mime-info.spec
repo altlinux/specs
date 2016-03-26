@@ -1,7 +1,7 @@
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: Shared MIME-Info Specification
@@ -98,6 +98,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Sat Mar 26 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
+- 1.6
+
 * Wed Sep 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
 - 1.5
 - replaced default "vnd.adobe.flash.movie" type by old non-standard alias "x-shockwave-flash"
