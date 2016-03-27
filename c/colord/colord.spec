@@ -1,3 +1,5 @@
+%def_enable daemon
+%def_enable session_helper
 %def_enable reverse
 %def_enable introspection
 %def_enable vala
@@ -11,7 +13,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Color daemon
@@ -117,6 +119,8 @@ the functionality of the installed Golord.
 %build
 %configure --disable-static \
 	--disable-rpath \
+	%{subst_enable daemon} \
+	%{?_enable_session_helper:--enable-session-helper} \
 	%{subst_enable reverse} \
 	%{subst_enable vala} \
 	--with-daemon-user=%colord_user \
@@ -155,12 +159,15 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_sysconfdir/dbus-1/system.d/org.freedesktop.ColorManager.conf
 %_datadir/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
 %_datadir/dbus-1/system-services/org.freedesktop.ColorManager.service
-%_datadir/dbus-1/interfaces/org.freedesktop.ColorHelper.xml
-%_datadir/dbus-1/services/org.freedesktop.ColorHelper.service
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
 /lib/udev/rules.d/*.rules
 %_tmpfilesdir/%name.conf
+
+%if_enabled session_helper
+%_datadir/dbus-1/interfaces/org.freedesktop.ColorHelper.xml
+%_datadir/dbus-1/services/org.freedesktop.ColorHelper.service
 %_prefix/lib/systemd/user/%name-session.service
+%endif
 
 %dir %_libdir/colord-sensors
 %_libdir/colord-sensors/libcolord_sensor_dummy.so
@@ -284,6 +291,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Sun Mar 27 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
+- 1.3.2
+
 * Fri Nov 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - 1.3.1
 
