@@ -104,7 +104,7 @@
 
 Name: libvirt
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -189,6 +189,9 @@ Requires: %name-client = %version-%release
 Requires: iptables
 %{?_with_pm_utils:Requires: pm-utils}
 
+# libvirtd depends on 'messagebus' service
+Requires: dbus
+
 %description daemon
 Server side daemon required to manage the virtualization capabilities
 of recent versions of Linux. Requires a hypervisor specific sub-RPM
@@ -200,6 +203,7 @@ Group: System/Servers
 BuildArch: noarch
 Requires: %name-daemon = %version-%release
 Requires: bridge-utils
+Requires: dnsmasq
 %if_with driver_modules
 Requires: %name-daemon-driver-network = %version-%release
 %endif
@@ -697,11 +701,10 @@ if [ $1 -eq 1 ]; then
 	sed -e "s,</name>,</name>\n  <uuid>$UUID</uuid>," \
          < %_datadir/libvirt/networks/default.xml \
          > /etc/libvirt/qemu/networks/default.xml
-	ln -s ../default.xml /etc/libvirt/qemu/networks/autostart/default.xml
     fi
 fi
-%endif
-%endif
+%endif #if_with network
+%endif #if_with libvirtd
 
 %post client
 %post_service libvirt-guests
@@ -963,6 +966,11 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Mar 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt2
+- add Requires dnsmasq, but disable autostart default network
+- add Requires dbus to libvirt-daemon
+- backport some patches from upstream
+
 * Mon Mar 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 - build with zfs support
