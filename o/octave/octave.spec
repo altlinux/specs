@@ -1,5 +1,5 @@
 Name: octave
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -24,6 +24,8 @@ BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
 BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
 BuildPreReq: libXfixes-devel
+#Added buildreq-src
+BuildPreReq: java-devel-default libX11-devel libgl2ps-devel libncurses-devel libpcre-devel libsuitesparse-devel libtinfo-devel llvm-devel pkgconfig(fontconfig) pkgconfig(freetype2) pkgconfig(portaudio-2.0) pkgconfig(sndfile) pkgconfig(xft) texinfo
 
 Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
@@ -143,6 +145,10 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Sun Mar 27 2016 Anton Midyukov <antohami@altlinux.org> 4.0.1-alt1
+- New version
+- Added missing buildrequires.
+
 * Tue Jun 30 2015 Paul Wolneykien <manowar@altlinux.org> 4.0.0-alt1
 - repocop cronbuild 20150630. At your service.
 
