@@ -1,7 +1,7 @@
 %define rev 30210b3a
 Name: trikStudio
 Version: 3.1.3
-Release: alt3.%rev.1
+Release: alt4.%rev.1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache License 2.0
@@ -12,7 +12,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar.gz
 Patch1: install.patch
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel libusb-devel libudev-devel libgmock-devel 
+BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel libusb-devel libudev-devel libgmock-devel libqscintilla2-qt5-devel
 
 Requires: lib%name = %version-%release
 Requires: %name-data = %version-%release
@@ -41,7 +41,6 @@ TRIK Studio прекрасно подходит как универсально�
 %package data
 Summary: Data files for %name
 Group: Education
-Requires: %name = %version-%release
 BuildArch: noarch
 
 %description data
@@ -58,6 +57,7 @@ Library for %name
 %package  -n lib%name-devel
 Summary: Library for %name
 Group: Development/C++
+Conflicts: libqscintilla2-qt4-devel
 
 %description -n lib%name-devel
 Developments file for %name
@@ -78,6 +78,7 @@ Requires: lib%name = %version-%release
 %files
 %_bindir/*
 %_libdir/%name
+%_sysconfdir/%name.config
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -86,7 +87,6 @@ Requires: lib%name = %version-%release
 %_libdir/*.so
 
 %files data
-%_sysconfdir/%name.config
 %_datadir/%name
 %_miconsdir/*
 %_liconsdir/*
@@ -94,6 +94,10 @@ Requires: lib%name = %version-%release
 %_desktopdir/*
 
 %changelog
+* Sat Mar 26 2016 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt4.30210b3a.1
+- Move config file from package trikStudio-data in package trikStudio
+- Added conflict with libqscintilla2-qt4-devel.
+
 * Wed Mar 23 2016 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt3.30210b3a.1
 - fix install.patch
 
