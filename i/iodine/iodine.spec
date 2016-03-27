@@ -1,6 +1,6 @@
 Name: iodine
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: IPv4 tunnel through a DNS server
 
@@ -49,6 +49,7 @@ upstream and up to 1 Mbit/s downstream.
 %package common
 Summary: IPv4 tunnel through a DNS server (common)
 Group: Networking/Other
+BuildArch: noarch
 
 %description common
 iodine lets you tunnel IPv4 data through a DNS server. This can be
@@ -89,8 +90,8 @@ make DESTDIR=%buildroot prefix=%prefix install
 
 pushd %buildroot%_man8dir
 for file in iodine.8*; do
-	link=`echo $file | sed -e 's/iodine/iodined/'`
-	cp $file $link
+	copy=`echo $file | sed -e 's/iodine/iodined/'`
+	cp $file $copy
 done
 popd
 
@@ -152,5 +153,8 @@ __EOF__
 %_man8dir/%{name}d.8.*
 
 %changelog
+* Sun Mar 27 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.0-alt2
+- Fix init files description, functions and missing LSB comments.
+
 * Tue Mar 8 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.0-alt1
 - Initial build.
