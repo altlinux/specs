@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
 %define		branch 0.10
-%define		svn svn5734
+%define		svn svn6199
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -16,7 +16,7 @@ Url:		http://qmmp.ylsoftware.com/plugins_en.php
 Source0:	%name-%branch-%svn.tar.bz2
 
 
-BuildRequires:	libqt4-devel gcc-c++ libmpg123-devel libqmmp-devel >= %version libtag-devel >= 1.6 libxmp-devel yasm
+BuildRequires:	libqt4-devel gcc-c++ libmpg123-devel libqmmp-devel >= %version libtag-devel >= 1.6 libxmp-devel yasm libsamplerate-devel
 
 %description
 Plugin pack is a set of extra plugins for Qmmp.
@@ -25,6 +25,7 @@ Plugins List
  - MPG123 - MPEG v1/2 layer1/2/3 decoder using of libmpg123 library
  - FFap - enhanced Monkey's Audio (APE) decoder (24-bit samples and embedded cue support)
  - XMP - support for MOD, S3M, IT and others tracker formats
+ - SRC - Qmmp Sample Rate Converter Plugin
 
 %description -l ru_RU.UTF8
 Набор дополнительных модулей для Qmmp.
@@ -33,6 +34,7 @@ Plugins List
  - MPG123 - декодер MPEG v1/2 layer1/2/3 с использованием библиотеки libmpg123
  - FFap - улучшенный декодер Monkey's Audio (APE) (поддержка 24-х бит и встроенного cue)
  - XMP - поддержка для MOD, S3M, IT и прочих трекерных форматов
+ - SRC - модуль конвертера Sample Rate для Qmmp
 
 %description -l uk_UA.UTF8
 Набір додаткових модулів для Qmmp.
@@ -41,6 +43,7 @@ Plugins List
  - MPG123 - декодер MPEG v1/2 layer1/2/3 з використанням бібліотеки libmpg123
  - FFap - покращений декодер Monkey's Audio (APE) (підтримка 24-х біт та вбудованого cue)
  - XMP - підтримка для MOD, S3M, IT та інших трекерних форматів
+ - SRC - модуль конвертера Sample Rate для Qmmp
 
 %package -n %name-in-mpg123
 Summary: MPG123 - MPEG v1/2 layer1/2/3 decoder using of libmpg123 library
@@ -90,6 +93,22 @@ XMP - поддержка для MOD, S3M, IT и прочих трекерных 
 %description -l uk_UA.UTF8 -n %name-in-xmp
 XMP - підтримка для MOD, S3M, IT та інших трекерних форматів
 
+%package -n %name-eff-src
+Summary: SRC - Qmmp Sample Rate Converter Plugin
+Summary(ru_RU.UTF8): SRC - модуль конвертера Sample Rate для Qmmp
+Summary(uk_UA.UTF8): SRC - модуль конвертера Sample Rate для Qmmp
+Group: Sound
+Requires: qmmp >= %version-%release
+
+%description -n %name-eff-src
+SRC - Qmmp Sample Rate Converter Plugin
+
+%description -l ru_RU.UTF8 -n %name-eff-src
+SRC - модуль конвертера Sample Rate для Qmmp
+
+%description -l uk_UA.UTF8 -n %name-eff-src
+SRC - модуль конвертера Sample Rate для Qmmp
+
 %prep
 %setup -q -n %name-svn
 
@@ -110,7 +129,13 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %files -n %name-in-xmp
 %_libdir/qmmp/Input/libxmp.so
 
+%files -n %name-eff-src
+%_libdir/qmmp/Effect/libsrconverter.so
+
 %changelog
+* Sun Mar 27 2016 Motsyo Gennadi <drool@altlinux.ru> 0.10.0-alt1.svn6199
+- build svn6199
+
 * Tue Nov 03 2015 Motsyo Gennadi <drool@altlinux.ru> 0.10.0-alt1.svn5734
 - build svn5734
 - bump version

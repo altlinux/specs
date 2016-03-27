@@ -1,5 +1,5 @@
 %define branch 0.10
-%define svn svn5769
+%define svn svn6199
 
 %define rel alt1
 
@@ -48,7 +48,7 @@ BuildPreReq: rpm-build-wlskins doxygen
 BuildRequires: gcc-c++ libavformat-devel
 BuildRequires: libcurl-devel libfaad-devel libmad-devel libmodplug-devel
 BuildRequires: libmpcdec-devel libpulseaudio-devel >= 0.9.15 libqt4-devel
-BuildRequires: libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
+BuildRequires: libsoxr-devel libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
@@ -818,7 +818,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 # Effects plugins
 %files -n %name-eff-srconverter
-%_libdir/%name/Effect/libsrconverter*
+%_libdir/%name/Effect/libsoxr*
 
 %files -n %name-eff-bs2b
 %_libdir/%name/Effect/libbs2b*
@@ -911,6 +911,18 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sun Mar 27 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6199
+- 0.10.0 svn6199 version
+
+* Sat Mar 26 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6198
+- 0.10.0 svn6198 version
+
+* Wed Feb 10 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6129
+- 0.10.0 svn6129 version
+
+* Wed Feb 10 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6126
+- 0.10.0 svn6126 version
+
 * Fri Nov 13 2015 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn5769
 - 0.10.0 svn5769 version
 
