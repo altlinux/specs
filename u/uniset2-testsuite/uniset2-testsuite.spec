@@ -1,12 +1,12 @@
 %def_enable doc
 
 Name: uniset2-testsuite
-Version: 2.2
-Release: alt4
+Version: 2.3
+Release: alt2
 Summary: UniSet test suite
 Group: Development/Python
-License: GPL
-Url: http://wiki.office.etersoft.ru/asu/
+License: LGPL
+Url: http://github.com/Etersoft/uniset2-testsuite
 Source: %name-%version.tar
 # Automatically added by buildreq on Thu Oct 02 2014
 # optimized out: pkg-config python-base python-devel python-modules
@@ -101,6 +101,14 @@ ln -s %python_sitelibdir/%name/%name-conv.py %buildroot/%_bindir/uniset2-testsui
 %endif
 
 %changelog
+* Sat Mar 26 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt2
+- fixed URL in spec
+- GPL --> LGPL
+- update README
+
+* Sat Mar 26 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt1
+- added support 'compare' test (compare sensor1 and sensor2) 
+
 * Sat Mar 26 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt4
 - added support 'ignore' flag for 'check' and 'action'
 
