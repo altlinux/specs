@@ -1,6 +1,6 @@
 
 Name:           pcsc-tools
-Version:        1.4.24
+Version:        1.4.26
 Release:        alt1
 Summary:        Tools to be used with smart cards and PC/SC
 
@@ -8,6 +8,7 @@ Group:          System/Configuration/Hardware
 License:        GPLv2+
 URL:            http://ludovic.rousseau.free.fr/softwares/pcsc-tools/
 Source0:        http://ludovic.rousseau.free.fr/softwares/pcsc-tools/%{name}-%{version}.tar.gz
+Source1:	%name.watch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libpcsclite-devel >= 1.2.9
@@ -44,7 +45,7 @@ desktop-file-install --mode=644 \
 # TODO: icon
 
 %files
-%doc Changelog LICENCE README TODO
+%doc Changelog LICENCE README
 %_bindir/*
 %_datadir/pcsc/
 %doc %_man1dir/*
@@ -57,6 +58,10 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.4.26-alt1
+- New version
+- Add watch file
+
 * Wed Sep 23 2015 Andrey Cherepanov <cas@altlinux.org> 1.4.24-alt1
 - New version
 
