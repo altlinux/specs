@@ -10,7 +10,7 @@
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
 Version: 0.9.2
-Release: alt2.git.ed5aa69
+Release: alt3.git.g5188f19
 License: GPLv2+
 Group: System/Base
 
@@ -477,6 +477,9 @@ fi \
 %files system-theme
 
 %changelog
+* Fri Mar 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.2-alt3.git.g5188f19
+- upstream snapshot 5188f19416a60f801b46600503dd02926b4d9f33
+
 * Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 0.9.2-alt2.git.ed5aa69
 - upstream snapshot ed5aa69d4aa336898ebd2755d6222343f7cc2050
 
