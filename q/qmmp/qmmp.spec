@@ -1,5 +1,5 @@
 %define branch 0.10
-%define svn svn6199
+%define svn svn6201
 
 %define rel alt1
 
@@ -425,13 +425,15 @@ Requires: qmmp = %version-%release libprojectM >= 2.0.1
 Qmmp ProjectM Visual Plugin
 
 # Effects plugins
-%package -n %name-eff-srconverter
-Summary: Qmmp Sample Rate Converter Plugin
+%package -n %name-eff-soxr
+Summary: Qmmp SoX Resampler Plugin
 Group: Sound
 Requires: qmmp = %version-%release
+Provides: %name-eff-srconverter
+Obsoletes: %name-eff-srconverter
 
-%description -n %name-eff-srconverter
-Qmmp Sample Rate Converter Plugin
+%description -n %name-eff-soxr
+Qmmp SoX Resampler Plugin
 
 %package -n %name-eff-bs2b
 Summary: Qmmp BS2B Effect Plugin
@@ -659,7 +661,7 @@ Summary: QMMP - Qt-based multimedia player
 Group: Sound
 BuildArch: noarch
 Requires: qmmp qmmp-in-wavpack qmmp-mpris qmmp-notifier
-Requires: qmmp-eff-srconverter qmmp-in-ffmpeg qmmp-in-mplayer
+Requires: qmmp-eff-soxr qmmp-in-ffmpeg qmmp-in-mplayer
 Requires: qmmp-in-flac qmmp-out-pulseaudio qmmp-in-modplug qmmp-in-midi
 Requires: qmmp-in-musepack qmmp-statusicon qmmp-in-sndfile qmmp-in-cue
 Requires: qmmp-vis-analyzer qmmp-scrobbler qmmp-hal qmmp-hotkey qmmp-gnomehotkey
@@ -817,7 +819,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %_libdir/%name/Visual/libprojectm*
 
 # Effects plugins
-%files -n %name-eff-srconverter
+%files -n %name-eff-soxr
 %_libdir/%name/Effect/libsoxr*
 
 %files -n %name-eff-bs2b
@@ -911,6 +913,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Mon Mar 28 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6201
+- 0.10.0 svn6201 version
+
 * Sun Mar 27 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6199
 - 0.10.0 svn6199 version
 
