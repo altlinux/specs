@@ -1,5 +1,5 @@
 Name: perl-CPAN-Perl-Releases
-Version: 2.58
+Version: 2.60
 Release: alt1
 
 Summary: Mapping Perl releases on CPAN to the location of the tarballs
@@ -29,6 +29,9 @@ BuildRequires: perl-devel
 %doc Changes LICENSE README
 
 %changelog
+* Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.60-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.58-alt1
 - automated CPAN update
 
