@@ -7,13 +7,14 @@
 
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 License: GPLv2+
 Group:   System/Libraries
 Url: 	 http://lasso.entrouvert.org/
 
 Source:  http://dev.entrouvert.org/lasso/lasso-%{version}.tar.gz
+Source1: %name.watch
 Patch1:  lasso-export-symbols-from-logging.h.patch
 
 BuildRequires: gtk-doc
@@ -209,7 +210,7 @@ make check
 %if_with java
 %files java
 %_javadir/lasso.jar
-%_jnidir/libjnilasso.so
+%_libdir/java/libjnilasso.so
 %endif
 
 %if_with php
@@ -227,6 +228,9 @@ make check
 %endif
 
 %changelog
+* Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt1
+- New version
+
 * Fri Nov 20 2015 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
 - Initial build in Sisyphus (thanks Fedora for src.rpm)
 
