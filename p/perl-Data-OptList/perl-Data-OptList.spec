@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Data-OptList
-Version: 0.109
+Version: 0.110
 Release: alt1
 
 Summary: Data-OptList - Perl module
@@ -47,6 +47,9 @@ None.
 %perl_vendor_privlib/Data*
 
 %changelog
+* Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.110-alt1
+- automated CPAN update
+
 * Sun Dec 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.109-alt1
 - automated CPAN update
 
