@@ -1,8 +1,8 @@
 %def_without python3
 
 Name: openstack-keystone
-Version: 8.0.1
-Release: alt2
+Version: 8.1.0
+Release: alt1
 Epoch: 1
 Summary: OpenStack Identity Service
 
@@ -332,6 +332,9 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.1.0-alt1
+- 8.1.0
+
 * Sat Feb 27 2016 Lenar Shakirov <snejok@altlinux.ru> 1:8.0.1-alt2
 - links to wsgi-script fixed 
 

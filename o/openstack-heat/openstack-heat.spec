@@ -3,7 +3,7 @@
 
 Name: openstack-heat
 Summary: OpenStack Orchestration (heat)
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 Epoch: 1
 License: ASL 2.0
@@ -44,6 +44,8 @@ BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-yaml
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno
+BuildRequires: python-module-testresources
 # These are required to build due to the requirements check added
 BuildRequires: python-module-PasteDeploy
 BuildRequires: python-module-routes >= 1.12.3
@@ -337,6 +339,9 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 %_prefix/lib/heat/docker
 
 %changelog
+* Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.1-alt1
+- 5.0.1
+
 * Mon Nov 02 2015 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.0-alt1
 - 5.0.0 Liberty Release
 
@@ -347,7 +352,6 @@ crudini --set %heat_conf database connection  'mysql://heat:heat@localhost/heat'
 - 2015.1.1
 - drop common package
 - drop dist config in datadir
-
 
 * Mon Jun 01 2015 Alexey Shabalin <shaba@altlinux.ru> 2015.1.0-alt1
 - 2015.1.0 Kilo release
