@@ -3,7 +3,7 @@
 %def_with compression
 
 Name: python-module-django-horizon
-Version: 8.0.0
+Version: 8.0.1
 Release: alt1
 Epoch: 1
 Summary: Django application for talking to Openstack
@@ -64,6 +64,7 @@ BuildRequires: python-module-selenium
 
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
+BuildRequires: python-module-reno
 
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-kombu >= 3.0.7
@@ -356,6 +357,9 @@ sed -i "/^SECRET_KEY.*$/{N;s/^.*$/SECRET_KEY='`openssl rand -hex 10`'/}" /etc/op
 %doc html
 
 %changelog
+* Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.1-alt1
+- 8.0.1
+
 * Thu Nov 05 2015 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
 - 8.0.0 Liberty Release
 

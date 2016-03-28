@@ -1,7 +1,7 @@
 %define sname neutron-vpnaas
 
 Name: openstack-%sname
-Version: 7.0.1
+Version: 7.0.3
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking VPNaaS
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
+BuildRequires: python-module-reno
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-d2to1
@@ -91,6 +92,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-vpn-agent.service
 
 
 %changelog
+* Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.3-alt1
+- 7.0.3
+
 * Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
 - 7.0.1
 

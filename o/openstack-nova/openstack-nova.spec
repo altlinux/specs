@@ -1,8 +1,8 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 12.0.0
-Release: alt2
+Version: 12.0.2
+Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
 
@@ -52,8 +52,6 @@ Source23: nova-polkit.rules
 Source22: nova-ifc-template
 Source24: nova-sudoers
 Source30: %name-novncproxy.sysconfig
-
-Patch0001: 0001-Fix-attibute-error-when-cloning-raw-images-in-Ceph.patch
 
 BuildArch: noarch
 # /proc need for generate sample config fix "nova.cmd.novncproxy: [Errno 2] No such file or directory: '/proc/stat'"
@@ -110,6 +108,7 @@ BuildRequires: python-module-oslo.vmware >= 1.16.0
 BuildRequires: python-module-boto
 BuildRequires: python-module-webob
 BuildRequires: python-module-babel
+BuildRequires: python-module-reno
 
 BuildRequires: graphviz
 
@@ -438,7 +437,6 @@ This package contains documentation files for nova.
 
 %prep
 %setup
-%patch0001 -p1
 
 find . \( -name .gitignore -o -name .placeholder \) -delete
 
@@ -808,6 +806,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.2-alt1
+- 12.0.2
+
 * Tue Nov 24 2015 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.0-alt2
 - add patch for fix attibute error when cloning raw images in Ceph
 
