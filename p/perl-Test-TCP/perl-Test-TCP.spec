@@ -1,5 +1,5 @@
 Name: perl-Test-TCP
-Version: 2.14
+Version: 2.15
 Release: alt1
 
 Summary: Test::TCP - testing TCP program
@@ -31,6 +31,9 @@ Test::TCP is test utilities for TCP/IP program.
 %doc Changes README.md
 
 %changelog
+* Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1
 - automated CPAN update
 
