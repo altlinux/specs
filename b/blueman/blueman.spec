@@ -2,12 +2,13 @@
 
 Name: blueman
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: The GTK+ bluetooth management utility
 Group: System/Libraries
 License: GPLv3
 Url: https://github.com/blueman-project/blueman
+Packager: Yuri N. Sedunov <aris@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -18,12 +19,12 @@ Requires: gnome-icon-theme
 
 Provides: bluez-gnome
 
-# use python3
+# force python3
 AutoReqProv: nopython
 %define __python %nil
 
 BuildRequires: intltool libbluez-devel
-BuildRequires: rpm-build-python3 python3-module-Cython
+BuildRequires: rpm-build-python3 python3-devel python3-module-Cython
 BuildRequires: python3-module-pygobject3-devel python3-module-dbus python-module-dbus-devel
 BuildRequires: libpolkit-devel gnome-icon-theme
 
@@ -108,6 +109,9 @@ EOF
 %exclude %python3_sitelibdir/_%{name}.la
 
 %changelog
+* Mon Mar 28 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.3-alt1.1
+- NMU: added python3-devel to BRs.
+
 * Sun Jan 31 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3 (switched back to 2-0-stable)
 
