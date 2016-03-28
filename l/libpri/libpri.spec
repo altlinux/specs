@@ -4,7 +4,7 @@
 #============================================================================
 Name: libpri
 Summary: PRI library
-Version: 1.4.15
+Version: 1.5.0
 Release: alt1
 License: %gpl2only
 Group: System/Servers
@@ -67,6 +67,9 @@ find -type f -name '.depend' -print0 \
 %_libdir/libpri.a
 
 %changelog
+* Mon Mar 28 2016 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.5.0-alt1
+- new version 1.5.0
+
 * Sat Jun 21 2014 Cronbuild Service <cronbuild@altlinux.org> 20080502:1.4.15-alt1
 - new version 1.4.15
 
