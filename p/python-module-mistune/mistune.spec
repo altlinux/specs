@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt2.git20150811
+Release: alt3.git20150811
 Summary: The fastest markdown parser in pure Python
 License: BSD
 Group: Development/Python
@@ -17,16 +17,17 @@ Source: %name-%version.tar
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-wheel
 BuildPreReq: python-module-nose python-modules-multiprocessing
+BuildPreReq: python-module-Cython
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 BuildPreReq: python3-module-wheel
 BuildPreReq: python3-module-nose
+BuildPreReq: python3-module-Cython
 %endif
 
 %py_provides %oname
 
-BuildArch: noarch
 
 %description
 The fastest markdown parser in pure Python, inspired by marked.
@@ -103,6 +104,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 28 2016 Denis Medvedev <nbr@altlinux.org> 0.7-alt3.git20150811
+- Cython brought back
+
 * Tue Mar 22 2016 Denis Medvedev <nbr@altlinux.org> 0.7-alt2.git20150811
 - Removed cython dependency for python3.5 adaptation.
 
