@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -9,8 +9,8 @@
 %def_enable gtk_doc
 
 Name: %_name-good%api_ver
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -72,6 +72,9 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Sat Mar 12 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt2
 - rebuilt against libvpx.so.3
 

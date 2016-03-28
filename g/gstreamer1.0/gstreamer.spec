@@ -1,5 +1,5 @@
 %define _name gstreamer
-%define ver_major 1.6
+%define ver_major 1.8
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -7,7 +7,7 @@
 %def_disable gtk-doc
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -15,12 +15,15 @@ License: LGPL
 Group: System/Libraries
 URL: http://gstreamer.freedesktop.org
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %version-%release libcap-utils
 
 Source: http://gstreamer.freedesktop.org/src/%_name/%_name-%version.tar.xz
 Patch: %_name-0.11.94-alt-intltool.patch
 
-BuildRequires: docbook-utils flex gcc-c++ ghostscript-utils glib2-devel gtk-doc intltool libcheck-devel libxml2-devel
+%define glib_ver 2.40.0
+
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: docbook-utils flex gcc-c++ ghostscript-utils gtk-doc intltool libcheck-devel libxml2-devel
 BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
 BuildRequires: libcap-utils
 
@@ -165,6 +168,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_datadir/doc/%_name-%api_ver
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Mon Jan 25 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
 - 1.6.3
 

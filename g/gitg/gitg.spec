@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 1.0
 %def_enable python
 
@@ -13,6 +13,7 @@ URL: http://trac.novowork.com/gitg/
 
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+# hack to avoid break of non-SMP build
 Patch: gitg-3.18.0-alt-makefile.patch
 
 PreReq: lib%name = %version-%release
@@ -28,7 +29,7 @@ AutoReqProv: nopython
 %define glib_ver 2.38
 %define gtk_ver 3.12
 %define gtksourceview_ver 3.10
-%define git2_ver 0.23.6
+%define git2_ver 0.24.0
 %define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
@@ -42,7 +43,7 @@ BuildPreReq: libgtkspell3-devel >= %gtkspell_ver
 BuildPreReq: libpeas-devel >= %peas_ver
 BuildRequires: gnome-common intltool desktop-file-utils
 BuildRequires: libgee0.8-devel libjson-glib-devel libsecret-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxml2-devel
 BuildRequires: libgit2-glib-gir-devel libwebkit2gtk-gir-devel libgee0.8-gir-devel
 BuildRequires: vala-tools
 BuildRequires: gsettings-desktop-schemas-devel
@@ -158,6 +159,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

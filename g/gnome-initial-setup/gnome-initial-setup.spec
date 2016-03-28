@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define gst_api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -30,7 +30,7 @@ BuildRequires: NetworkManager-devel >= %nm_ver libnm-gtk-devel
 BuildRequires: libkrb5-devel libpwquality-devel
 BuildRequires: libxkbfile-devel libibus-devel librest-devel
 BuildRequires: libaccountsservice-devel libgnome-desktop3-devel
-BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst2.0-devel
+BuildRequires: gstreamer%gst_api_ver-devel libclutter-gst3.0-devel
 BuildRequires: libgweather-devel libgnome-online-accounts-devel
 BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -79,6 +79,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README NEWS
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

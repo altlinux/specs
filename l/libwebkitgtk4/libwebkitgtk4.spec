@@ -14,7 +14,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.10.9
+Version: 2.12.0
 Release: alt1
 
 Summary: Web browser engine
@@ -27,12 +27,14 @@ Source: %url/releases/%_name-%version.tar.xz
 # fc
 Patch12: webkitgtk-2.8.4-youtube.patch
 
-BuildPreReq: rpm-build-licenses
-
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
 Requires: hyphen-en hyphen-ru
 
-BuildRequires: gcc-c++ cmake ccache libicu-devel bison perl-Switch zlib-devel
+BuildPreReq: rpm-build-licenses
+BuildRequires: gcc-c++ cmake ccache libicu-devel >= 5.6.1 bison perl-Switch zlib-devel
+%ifarch x86_64
+BuildRequires: llvm-devel >= 3.7
+%endif
 BuildRequires: chrpath
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel
@@ -182,7 +184,7 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
-%patch12 -p1
+#%%patch12 -p1
 # Remove bundled libraries
 rm -rf Source/ThirdParty/leveldb/
 rm -rf Source/ThirdParty/gtest/
@@ -208,13 +210,16 @@ rm -rf Source/ThirdParty/qunit/
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
 %{?_disable_gnu_ld:-DUSE_LD_GOLD:BOOL=OFF} \
 %{?_enable_media_stream:-DENABLE_MEDIA_STREAM:BOOL=ON} \
+-Dbmalloc_LIBRARIES:STRING=-ldl
+# automatically enabled on x86_64
+#-DENABLE_FTL_JIT:BOOL=ON
 #-DENABLE_FTPDIR:BOOL=ON \
 #-DENABLE_TELEPHONE_NUMBER_DETECTION:BOOL=ON \
 #-DENABLE_BATTERY_STATUS:BOOL=ON \
 #-DENABLE_DEVICE_ORIENTATION:BOOL=ON \
 #-DENABLE_ORIENTATION_EVENTS:BOOL=ON
 
-%cmake_build VERBOSE=1
+%cmake_build
 
 %install
 %cmakeinstall_std
@@ -250,6 +255,10 @@ rm -rf Source/ThirdParty/qunit/
 
 %files -n libjavascriptcoregtk4
 %_libdir/libjavascriptcoregtk-%api_ver.so.*
+#%ifarch x86_64
+#%dir %_libdir/javascriptcoregtk-%api_ver
+#%_libdir/javascriptcoregtk-%api_ver/libllvmForJSC.so
+#%endif
 
 %files -n libjavascriptcoregtk4-devel
 %_includedir/webkitgtk-%api_ver/JavaScriptCore
@@ -275,6 +284,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.12.0-alt1
+- 2.12.0
+
 * Thu Mar 17 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10.9-alt1
 - 2.10.9
 

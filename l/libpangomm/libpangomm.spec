@@ -1,5 +1,5 @@
 %define rname pangomm
-%define major 2.38
+%define major 2.39
 %define api_ver 1.4
 
 Name: lib%rname
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.
 
 %define glib_ver 2.46.1
 %define cairo_ver 1.12
-%define pango_ver 1.38
+%define pango_ver 1.39.0
 
 BuildRequires: mm-common gcc-c++
 BuildRequires: libcairomm-devel >= %cairo_ver
@@ -73,6 +73,12 @@ BuildArch: noarch
 %_docdir/%rname-%api_ver
 
 %changelog
+* Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.39.1-alt1
+- 2.39.1
+
+* Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt1
+- 2.38.2
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 2.38.1-alt1
 - 2.38.1
 

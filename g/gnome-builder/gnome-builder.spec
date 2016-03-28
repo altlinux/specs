@@ -1,10 +1,10 @@
-%define _name org.gnome.Builder
-%define ver_major 3.18
+%define xdg_name org.gnome.Builder
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -17,10 +17,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define gtk_ver 3.17.8
-%define gtksourceview_ver 3.17.8
-%define git2_ver 0.23.5
-%define devhelp_ver 3.16.0
+%define gtk_ver 3.20.0
+%define gtksourceview_ver 3.20.0
+%define git2_ver 0.24.0
+%define devhelp_ver 3.20.0
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.30
@@ -75,87 +75,104 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/%name-worker
+%_bindir/ide
 %dir %_libexecdir/%name
-%_libexecdir/%name/ide-build
-%_libexecdir/%name/ide-list-build-flags
 %_libexecdir/%name/ide-list-counters
-%_libexecdir/%name/ide-list-devices
-%_libexecdir/%name/ide-list-diagnostics
-%_libexecdir/%name/ide-list-file-settings
-%_libexecdir/%name/ide-list-files
-%_libexecdir/%name/ide-mine-projects
-%_libexecdir/%name/ide-search
 %dir %_libdir/%name
-%dir %_libdir/%name/plugins
-%_libdir/%name/plugins/libautotools-plugin.so
-%_libdir/%name/plugins/libclang-plugin.so
-%_libdir/%name/plugins/libcommand-bar.so
-%_libdir/%name/plugins/libc-pack-plugin.so
-%_libdir/%name/plugins/libctags-plugin.so
-%_libdir/%name/plugins/libdevhelp-plugin.so
-%_libdir/%name/plugins/libfallback-plugin.so
-%_libdir/%name/plugins/libfile-search.so
-%_libdir/%name/plugins/libgnome-code-assistance-plugin.so
-%_libdir/%name/plugins/libhtml-completion-plugin.so
-%_libdir/%name/plugins/libpython-pack-plugin.so
-%_libdir/%name/plugins/libsymbol-tree.so
-%_libdir/%name/plugins/libsysmon.so
-%_libdir/%name/plugins/libterminal.so
-%_libdir/%name/plugins/libvala-pack-plugin.so
-%_libdir/%name/plugins/libxml-pack-plugin.so
-%_libdir/%name/plugins/jedi_plugin.py
-%_libdir/%name/plugins/python_gi_imports_completion.py
-%_libdir/%name/plugins/__pycache__/
-%_libdir/%name/plugins/html_preview_plugin/
-%_libdir/%name/plugins/*.plugin
-%exclude %_libdir/%name/plugins/*.la
-#%files -n libide
 %_libdir/%name/libide-%api_ver.so
+%_libdir/%name/libtemplate-glib-%api_ver.so.*
 %_libdir/%name/libegg-private.so.*
-%_libdir/%name/libgnome-builder.so.*
 %_libdir/%name/librg.so.*
+%_libdir/%name/libpanel-gtk.so.*
 %_libdir/%name/libsearch.so.*
 
 %exclude %_libdir/%name/*.la
 %exclude %_libdir/%name/libegg-private.so
-%exclude %_libdir/%name/libgnome-builder.so
+%exclude %_libdir/%name/libpanel-gtk.so
 %exclude %_libdir/%name/librg.so
 %exclude %_libdir/%name/libsearch.so
 
-#%files -n libide-gir
 %dir %_libdir/%name/girepository-1.0
 %_libdir/%name/girepository-1.0/Egg-%api_ver.typelib
 %_libdir/%name/girepository-1.0/Ide-%api_ver.typelib
-%_libdir/%name/girepository-1.0/Builder-%api_ver.typelib
+%_libdir/%name/girepository-1.0/Pnl-%api_ver.typelib
+%_libdir/%name/girepository-1.0/Template-%api_ver.typelib
+
+%dir %_libdir/%name/plugins
+%_libdir/%name/plugins/*.plugin
+%_libdir/%name/plugins/__pycache__/
+%_libdir/%name/plugins/contributing_plugin/
+%_libdir/%name/plugins/fpaste_plugin/
+%_libdir/%name/plugins/html_preview_plugin/
+%_libdir/%name/plugins/jedi_plugin.py
+%_libdir/%name/plugins/jhbuild_plugin.py
+%_libdir/%name/plugins/libautotools-plugin.so
+%_libdir/%name/plugins/libbuild-tools-plugin.so
+%_libdir/%name/plugins/libc-pack-plugin.so
+%_libdir/%name/plugins/libclang-plugin.so
+%_libdir/%name/plugins/libcommand-bar.so
+%_libdir/%name/plugins/libcomment-code-plugin.so
+%_libdir/%name/plugins/libcreate-project-plugin.so
+%_libdir/%name/plugins/libctags-plugin.so
+%_libdir/%name/plugins/libdevhelp-plugin.so
+%_libdir/%name/plugins/libfile-search.so
+%_libdir/%name/plugins/libgcc-plugin.so
+%_libdir/%name/plugins/libgettext-plugin.so
+%_libdir/%name/plugins/libgit-plugin.so
+%_libdir/%name/plugins/libgnome-code-assistance-plugin.so
+%_libdir/%name/plugins/libhtml-completion-plugin.so
+%_libdir/%name/plugins/libmingw-plugin.so
+%_libdir/%name/plugins/libproject-tree-plugin.so
+%_libdir/%name/plugins/libpython-pack-plugin.so
+%_libdir/%name/plugins/library_template/
+%_libdir/%name/plugins/libsupport-plugin.so
+%_libdir/%name/plugins/libsymbol-tree.so
+%_libdir/%name/plugins/libsysmon.so
+%_libdir/%name/plugins/libterminal.so*
+%_libdir/%name/plugins/libvala-pack-plugin.so
+%_libdir/%name/plugins/libxml-pack-plugin.so
+%_libdir/%name/plugins/python_gi_imports_completion.py
+%_libdir/%name/plugins/todo_plugin/
+
+%exclude %_libdir/%name/plugins/*.la
+
+%_includedir/%name-%version/
+%_libdir/%name/libtemplate-glib-%api_ver.so
+%dir %_libdir/%name/pkgconfig
+%_libdir/%name/pkgconfig/libide-%api_ver.pc
+%_libdir/%name/pkgconfig/template-glib-%api_ver.pc
+%python3_sitelibdir/gi/overrides/Ide.py
 %doc README AUTHORS NEWS
 
+
 %files data
-%_desktopdir/%_name.desktop
-%_datadir/dbus-1/services/%_name.service
+%_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/glib-2.0/schemas/org.gnome.builder.build.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.code-insight.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.language.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.extension-type.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.gnome-code-assistance.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.plugin.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project-tree.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.terminal.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.workbench.gschema.xml
 %_datadir/gtksourceview-3.0/styles/*.xml
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/apps/builder.png
 %_iconsdir/hicolor/scalable/apps/builder-symbolic.svg
-%_datadir/appdata/%_name.appdata.xml
-
-#%files -n libide-devel
-%exclude %_pkgconfigdir/libide-%api_ver.pc
-
-#%files -n libide-gir-devel
-#%exclude %_girdir/Ide-%api_ver.gir
-#%exclude %_girdir/Builder-%api_ver.gir
-
+%_datadir/appdata/%xdg_name.appdata.xml
 #%files -n libide-devel-doc
-%exclude %_datadir/gtk-doc/html/libide/
+%_datadir/gtk-doc/html/libide/
+
 
 %changelog
+* Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Thu Oct 15 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

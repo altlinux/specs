@@ -1,10 +1,11 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.28
+%define ver_major 0.30
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable mediathek_plugin
 %def_enable tracker_plugin
+%def_enable lms_plugin
 %def_with ui
 %define media_engine gstreamer
 
@@ -19,7 +20,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -35,13 +36,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gi_ver 1.33.4
 %define gssdp_ver 0.13.0
 %define gupnp_ver 0.20.14
-%define gupnp_av_ver 0.12.4
+%define gupnp_av_ver 0.12.8
 %define gupnp_dlna_ver 0.9.4
 %define gstreamer_ver 1.0
-%define gst_pbu_ver 1.0
-%define gst_tag_ver 1.0
-%define gst_app_ver 1.0
-%define gst_audio_ver 1.0
+%define gst_api_ver 1.0
+%define gst_ver 1.6
+%define gst_pbu_ver 1.6
+%define gst_tag_ver 1.6
+%define gst_app_ver 1.6
+%define gst_audio_ver 1.6
 %define gio_ver 2.34
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
@@ -50,6 +53,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define libsqlite3_ver 3.5
 %define mediaart_ver 1.9
 %define tracker_ver 1.4.0
+
+Requires: gstreamer%gst_api_ver >= %gst_ver
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-ugly%gst_api_ver
+Requires: gst-libav
+Requires: tracker
+Requires: lsdvd
 
 BuildRequires: intltool autoconf-archive gtk-doc
 BuildRequires: gobject-introspection-devel >= %gi_ver
@@ -79,6 +91,7 @@ BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
 BuildRequires: vapi(gupnp-1.0) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
 BuildRequires: gir(GUPnP) = 1.0 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
 %{?_with_ui:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
+%{?_enable_lms_plugin:BuildRequires: liblightmediascanner-devel libsqlite3-devel}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
 %description
@@ -108,7 +121,6 @@ in Vala language. The project was previously known as gupnp-media-server.
 This package contains documentation needed to develop applications using Rygel
 libraries.
 
-
 %package tracker
 Summary: Tracker plugin for %name
 Group: System/Servers
@@ -117,6 +129,15 @@ Requires: tracker
 
 %description tracker
 A plugin for rygel to use tracker to locate media on the local machine.
+
+%package lms
+Summary: Lightweight media scanner plugin for %name
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: lightmediascanner
+
+%description lms
+A plugin for rygel to use LMS to locate media on the local machine.
 
 %package gir
 Summary: GObject introspection data for the %name
@@ -140,6 +161,8 @@ GObject introspection devel data for the %name
 echo %version > .tarball-version
 
 %build
+# gettext 0.19.7 required
+gettextize -q -f
 %autoreconf
 %configure \
 	%{subst_enable vala} \
@@ -150,7 +173,8 @@ echo %version > .tarball-version
 	%{?_enable_mpris_plugin:--enable-mpris-plugin} \
 	%{subst_enable playbin_plugin} \
 	%{?_enable_mediathek_plugin:--enable-mediathek-plugin} \
-	%{?_enable_gst_launch_plugin:--enable-gst-launch-plugin}
+	%{?_enable_gst_launch_plugin:--enable-gst-launch-plugin} \
+	%{?_enable_lms_plugin:--enable-lms-plugin}
 %make_build
 
 %install
@@ -164,8 +188,16 @@ echo %version > .tarball-version
 %_bindir/%name-preferences
 %_libexecdir/%name/
 %_libdir/lib%name-*.so.*
-%_libdir/%name-*
+%_libdir/%name-*/
+
 %exclude %_libdir/%name-*/plugins/lib%name-tracker.so
+%exclude %_libdir/%name-*/plugins/tracker.plugin
+
+%if_enabled lms_plugin
+%exclude %_libdir/%name-*/plugins/librygel-lms.so
+%exclude %_libdir/%name-*/plugins/lms.plugin
+%endif
+
 %_datadir/%name
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
@@ -177,6 +209,13 @@ echo %version > .tarball-version
 
 %files tracker
 %_libdir/%name-*/plugins/librygel-tracker.so
+%_libdir/%name-*/plugins/tracker.plugin
+
+%if_enabled lms_plugin
+%files lms
+%_libdir/%name-*/plugins/librygel-lms.so
+%_libdir/%name-*/plugins/lms.plugin
+%endif
 
 %files devel
 %_libdir/lib%name-*.so
@@ -194,6 +233,9 @@ echo %version > .tarball-version
 %_girdir/*.gir
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
+- 0.30.0
+
 * Wed Mar 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.28.3-alt1
 - 0.28.3
 

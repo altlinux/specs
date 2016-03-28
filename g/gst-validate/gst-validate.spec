@@ -1,5 +1,5 @@
 %define _name gstvalidate
-%define ver_major 1.6
+%define ver_major 1.8
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
@@ -110,11 +110,12 @@ GObject introspection devel data for the Gst Validate library.
 %_bindir/gst-validate-transcoding-%api_ver
 %_bindir/%name-images-check-%api_ver
 %_libdir/%name-launcher/
+%_libdir/gstreamer-%gst_api_ver/lib%{_name}plugin-%api_ver.so*
 %_datadir/gstreamer-%gst_api_ver/validate/
 
 %files -n lib%name -f %name.lang
 %_libdir/lib%_name-%api_ver.so.*
-%_libdir/lib%{_name}_preload-%api_ver.so.*
+#%_libdir/lib%{_name}_preload-%api_ver.so.*
 %_libdir/lib%_name-default-overrides-%api_ver.so.*
 %_libdir/lib%{_name}video-%api_ver.so.*
 %dir %_libdir/gstreamer-%gst_api_ver/validate/
@@ -126,7 +127,7 @@ GObject introspection devel data for the Gst Validate library.
 %_includedir/gstreamer-%gst_api_ver/gst/validate/
 %_includedir/gstreamer-%gst_api_ver/lib/validate/
 %_libdir/lib%_name-%api_ver.so
-%_libdir/lib%{_name}_preload-%api_ver.so
+#%_libdir/lib%{_name}_preload-%api_ver.so
 %_libdir/lib%_name-default-overrides-%api_ver.so
 %_libdir/lib%{_name}video-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
@@ -142,6 +143,9 @@ GObject introspection devel data for the Gst Validate library.
 %_datadir/gtk-doc/html/%name-plugins-%api_ver/
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Sat Sep 26 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 

@@ -1,8 +1,7 @@
 %define _libexecdir %_prefix/libexec
-
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
-%define _name org.gnome.Nautilus
+%define xdg_name org.gnome.Nautilus
 
 %def_enable exempi
 %def_disable packagekit
@@ -11,7 +10,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -36,7 +35,7 @@ Patch35: %name-2.22.1-umountfstab.patch
 %define glib_ver 2.46.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.18.0
+%define gtk_ver 3.19.12
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
@@ -44,9 +43,9 @@ Patch35: %name-2.22.1-umountfstab.patch
 %define notify_ver 0.7.0
 %define tracker_ver 0.18
 
+Requires(post): libcap-utils
 PreReq: lib%name = %version-%release
 PreReq: gnome-icon-theme >= %icon_theme_ver
-
 Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.26.1.1
@@ -157,19 +156,23 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 %find_lang %name
 
+%post
+# for mount secure NFS shares
+setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
+
 %files -f %name.lang
 %_bindir/*
-%_libexecdir/nautilus-convert-metadata
+#%_libexecdir/nautilus-convert-metadata
 %dir %_libdir/%name-%api_ver
 %dir %_libdir/%name-%api_ver/components
-%_datadir/applications/*.desktop
+%_desktopdir/*.desktop
 %_sysconfdir/xdg/autostart/nautilus-autostart.desktop
-%_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
 %_datadir/gnome-shell/search-providers/nautilus-search-provider.ini
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
-%_datadir/GConf/gsettings/nautilus.convert
-%_datadir/appdata/%_name.appdata.xml
+#%_datadir/GConf/gsettings/nautilus.convert
+%_datadir/appdata/%xdg_name.appdata.xml
 # docs
 %doc --no-dereference COPYING
 %doc AUTHORS MAINTAINERS NEWS.bz2 README THANKS
@@ -200,6 +203,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Jan 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.5-alt1
 - 3.18.5
 

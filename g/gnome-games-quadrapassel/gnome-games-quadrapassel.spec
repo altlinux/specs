@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name quadrapassel
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -11,14 +11,14 @@ Release: alt1
 Summary: A tetris clone
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Apps/Quadrapassel
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 Provides:  %_name = %version-%release
 
 %define glib_ver 2.32.0
-%define gtk_ver 3.4.0
+%define gtk_ver 3.12.0
 
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
@@ -54,6 +54,9 @@ GNOME version of the popular russian game Tetris.
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

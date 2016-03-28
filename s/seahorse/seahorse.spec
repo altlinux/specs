@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.18
+%define ver_major 3.20
 
 %def_disable debug
 %def_enable ldap
@@ -36,7 +36,7 @@ BuildPreReq: intltool >= 0.35
 BuildPreReq: libgio-devel
 BuildPreReq: yelp-tools itstool
 BuildPreReq: libgtk+3-devel >= 3.4.0
-BuildPreReq: gnupg
+BuildPreReq: gnupg2
 BuildPreReq: libgpgme-devel >= 1.0.0
 BuildPreReq: libgpg-error-devel
 BuildRequires: vala-tools
@@ -98,6 +98,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

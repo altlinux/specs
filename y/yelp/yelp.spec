@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.18
+%define ver_major 3.20
 %def_disable debug
 %def_enable lzma
 
 Name: yelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
@@ -20,7 +20,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gtk_ver 3.13.3
 %define xslt_ver 1.1.4
 %define webkit_ver 2.8
-%define yelpxsl_ver 3.12.0
+%define yelpxsl_ver 3.20.0
 %define intltool_ver 0.5.0
 
 Requires: lib%name = %version-%release
@@ -99,9 +99,10 @@ Yelp.
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
-%_desktopdir/*
-%_datadir/%name
+%_bindir/gnome-help
+%_bindir/%name
+%_desktopdir/%name.desktop
+%_datadir/%name/
 %_datadir/yelp-xsl/xslt/common/domains/yelp.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.yelp.gschema.xml
 %doc AUTHORS README NEWS TODO
@@ -109,18 +110,19 @@ Yelp.
 %files -n lib%name
 %_libdir/*.so.*
 %_libdir/%name/
-%exclude %_libdir/%name/*.la
 %exclude %_libdir/%name/*/*.la
 
 %files -n lib%name-devel
 %_includedir/lib%name/
 %_libdir/*.so
-#%_libdir/pkgconfig/*
 
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

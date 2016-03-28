@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -27,7 +27,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gnome_desktop_ver 3.11.1
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
-%define gsds_ver 3.15.4
+%define gsds_ver 3.20.0
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
@@ -36,6 +36,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define geocode_ver 3.10.0
 %define geoclue_ver 2.1.2
 %define gweather_ver 3.9.5
+%define nm_ver 1.0
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
@@ -66,8 +67,8 @@ BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
-BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver geoclue2-devel >= %geoclue_ver
-BuildRequires: libnm-glib-devel libnm-util-devel
+BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver libgeoclue2-devel >= %geoclue_ver
+BuildRequires: libnm-devel >= %nm_ver libnm-glib-devel libnm-util-devel
 
 # for check
 %{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
@@ -179,7 +180,6 @@ The %name-tests package provides programms for testing GSD plugins.
 %_udevrulesdir/61-gnome-settings-daemon-rfkill.rules
 
 %exclude %_libdir/%name-%api_ver/*.la
-%exclude %_datadir/%name-%api_ver/input-device-example.sh
 
 %files devel
 %_includedir/*
@@ -207,6 +207,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Fri Mar 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

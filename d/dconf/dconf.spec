@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.24
+%define ver_major 0.26
 %def_disable introspection
 %def_enable gtk_doc
 
@@ -24,7 +24,7 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
-BuildRequires: libgio-devel >= 2.40.0 vala-tools >= 0.18.0
+BuildRequires: libgio-devel >= 2.44.0 vala-tools >= 0.18.0
 BuildRequires: libdbus-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.33.3}
 
@@ -141,7 +141,7 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
@@ -155,12 +155,15 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %files -n lib%name-vala
-%_datadir/vala/vapi/dconf.deps
-%_datadir/vala/vapi/dconf.vapi
+%_vapidir/dconf.deps
+%_vapidir/dconf.vapi
 
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
 - 0.24.0
 

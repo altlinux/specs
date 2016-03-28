@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.8
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 # switched from libav to ffmpeg since 1.5.90
@@ -8,7 +8,7 @@
 %endif
 
 Name: gst-libav
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer (%gst_api_ver API) streaming media framework plug-in using FFmpeg
@@ -20,8 +20,8 @@ Source: http://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 
 %define libav_ver 11.4
 
-BuildRequires: gst-plugins%gst_api_ver-devel >= %ver_major 
-BuildRequires: orc liborc-devel zlib-devel bzlib-devel gtk-doc
+BuildRequires: gst-plugins%gst_api_ver-devel >= %ver_major
+BuildRequires: orc liborc-devel zlib-devel bzlib-devel liblzma-devel gtk-doc
 %if_with system_libav
 BuildRequires: libavformat-devel >= %libav_ver libswscale-devel libavresample-devel
 %else
@@ -97,6 +97,9 @@ plug-in.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Mon Jan 25 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
 - 1.6.3
 

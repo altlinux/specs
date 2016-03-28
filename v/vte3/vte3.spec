@@ -1,15 +1,16 @@
 %define _name vte
-%define ver_major 0.42
+%define ver_major 0.44
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
 %def_disable glade
+%def_disable pcre2
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL
@@ -37,6 +38,7 @@ BuildRequires: libgtk+3-devel >= %gtk3_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: vala-tools libvala-devel
+%{?_enable_pcre2:BuildRequires: libpcre2-devel}
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 
@@ -120,7 +122,8 @@ GObject introspection devel data for the %name library
 	--enable-shared \
 	%{subst_enable static} \
 	%{subst_enable introspection} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{subst_enable pcre2}
 #	%{subst_enable glade}
 %make_build
 
@@ -133,7 +136,7 @@ install -d -m755 %buildroot%pkgdocdir
 install -p -m644 AUTHORS MAINTAINERS NEWS README %buildroot%pkgdocdir/
 ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
 
-install -p -m644 doc/utmpwtmp.txt doc/boxes.txt %buildroot%pkgdocdir/
+install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 install -p -m644 src/iso2022.txt %buildroot%pkgdocdir/
 install -p -m644 doc/openi18n/*.txt %buildroot%pkgdocdir/
 
@@ -180,6 +183,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sat Mar 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
+- 0.44.0
+
 * Tue Mar 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.42.5-alt1
 - 0.42.5
 

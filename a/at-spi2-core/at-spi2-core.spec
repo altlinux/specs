@@ -1,11 +1,12 @@
-%define ver_major 2.18
+%define ver_major 2.20
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
 %def_enable x11
+%def_disable xevie
 
 Name: at-spi2-core
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -20,7 +21,8 @@ Requires: dbus-tools-gui
 
 BuildRequires: libgio-devel >= 2.36.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libXevie-devel libICE-devel libSM-devel}
+%{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
+%{?_enable_xevie:BuildRequires: libXevie-devel}
 BuildRequires: intltool gtk-doc
 
 %description
@@ -85,22 +87,26 @@ This package contains documentation for developing applications that use
 %configure \
     --with-dbus-daemondir=/bin \
     %{subst_enable x11} \
+    %{subst_enable xevie} \
     %{?_disable_introspection:--enable-introspection=no}
 
 %make_build
 
 %install
 %makeinstall_std
-
 %find_lang %name
+
+%check
+#%make check
 
 %files -f %name.lang
 %_libexecdir/at-spi2-registryd
 %_libexecdir/at-spi-bus-launcher
 %_datadir/dbus-1/accessibility-services/org.a11y.atspi.Registry.service
 %_datadir/dbus-1/services/org.a11y.Bus.service
-%_sysconfdir/at-spi2
+%_datadir/defaults/at-spi2/accessibility.conf
 %_sysconfdir/xdg/autostart/at-spi-dbus-bus.desktop
+%_prefix/lib/systemd/user/at-spi-dbus-bus.service
 %doc AUTHORS README NEWS
 
 %files -n lib%name
@@ -123,6 +129,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.20.0-alt1
+- 2.20.0
+
 * Wed Nov 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.18.3-alt1
 - 2.18.3
 

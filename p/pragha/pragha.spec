@@ -1,8 +1,12 @@
 %def_disable libxfce4ui
+# only grilo-0.2 supported
+%def_disable grilo
+# works only with rygel-2.2
+%def_disable rygel
 
 Name: pragha
 Version: 1.3.3
-Release: alt2
+Release: alt3
 
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
@@ -21,14 +25,14 @@ Requires: gst-plugins-good1.0
 BuildRequires: libcddb-devel libcdio-devel libcdio-paranoia-devel libclastfm-devel
 BuildRequires: libexo-devel libglyr-devel
 BuildRequires: libkeybinder-devel libnotify-devel libtag-devel
-BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libgtk+3-devel >= %gtk_ver libpeas-devel
-BuildPreReq:  libtotem-pl-parser-devel
-BuildPreReq: libgudev-devel libsoup-devel libgrilo-devel libmtp-devel
-# works only rygel-2.2
-#BuildPreReq: rygel-devel
+BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libgtk+3-devel >= %gtk_ver
+BuildRequires: libpeas-devel libtotem-pl-parser-devel
+BuildPreReq: libgudev-devel libsoup-devel libmtp-devel
+%{?_enable_rygel:BuildRequires: rygel-devel}
+%{?_enable_grilo:BuildRequires: libgrilo-devel}
+%{?_enable_libxfce4ui:BuildRequires: libxfce4ui-devel}
 # requires for autogen.sh
 BuildRequires: xfce4-dev-tools
-%{?_enable_libxfce4ui:BuildRequires: libxfce4ui-devel}
 
 %description
 Pragha is a reproducer and administrator of music for GNU/Linux, based
@@ -61,6 +65,9 @@ light, and simultaneously complete without obstructing the daily work.
 
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt3
+- rebuilt for new gnome-3.20 without grilo support
+
 * Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt2
 - fixed files list
 

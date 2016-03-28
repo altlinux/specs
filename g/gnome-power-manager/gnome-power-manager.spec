@@ -1,8 +1,8 @@
-%define ver_major 3.18
+%define ver_major 3.20
 
 Name: gnome-power-manager
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: GNOME Power management tools
 License: %gpl2plus
@@ -71,6 +71,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt2
 - fixed files list
 

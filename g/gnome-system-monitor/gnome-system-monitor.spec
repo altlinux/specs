@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.18
+%define ver_major 3.20
 %def_enable systemd
 %def_enable wnck
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
@@ -70,11 +70,14 @@ Gnome-system-monitor is a simple process and system monitor.
 %_desktopdir/*
 %_datadir/polkit-1/actions/org.gnome.%name.policy
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gnome-system-monitor.enums.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
 %_datadir/appdata/%name.appdata.xml
 
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

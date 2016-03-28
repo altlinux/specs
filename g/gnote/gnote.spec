@@ -1,9 +1,9 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
 Name: gnote
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Note-taking application
@@ -44,7 +44,7 @@ and consumes fewer resources.
 
 %build
 # NOCONFIGURE=1 ./autogen.sh
-%autoreconf
+#%autoreconf
 %configure \
 	%{?_with_x11_support:--with-x11-support} \
 	--with-cxx11-support \
@@ -80,6 +80,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Sat Mar 26 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sat Nov 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

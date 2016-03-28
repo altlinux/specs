@@ -1,13 +1,13 @@
 %define _name json-glib
-%define ver_major 1.0
+%define ver_major 1.2
 %define api_ver 1.0
 %def_disable gtk_doc
 %def_disable static
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library for JavaScript Object Notation format
 Group: System/Libraries
@@ -15,9 +15,8 @@ License: LGPLv2+
 Url: http://live.gnome.org/JsonGlib
 
 Source: ftp://ftp.gnome.org/pub/GNOME/sources/%_name/%ver_major/%_name-%version.tar.xz
-Patch: %name-1.0.4-up-duplicate_testname.patch
 
-%define glib_ver 2.38.0
+%define glib_ver 2.46.0
 %define gi_ver 0.10.5
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
@@ -55,7 +54,6 @@ GObject introspection devel data for the JSON-GLib library
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 
 %build
 %configure \
@@ -95,6 +93,12 @@ GObject introspection devel data for the JSON-GLib library
 %endif
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
+* Wed Mar 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Sun Jan 24 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt2
 - fixed build with glib >= 2.46
 

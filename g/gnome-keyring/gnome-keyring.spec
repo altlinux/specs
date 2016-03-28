@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -26,7 +26,7 @@ Patch: gnome-keyring-3.14.0-alt-lfs.patch
 %define p11kit_ver 0.18.1
 %define gcr_ver 3.5.3
 
-PreReq: libcap-utils
+Requires(post): libcap-utils
 Requires: libp11-kit >= %p11kit_ver
 
 # From configure.ac
@@ -117,6 +117,9 @@ setcap cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Fri Mar 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Oct 27 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

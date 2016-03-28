@@ -1,4 +1,4 @@
-%define ver_major 1.16
+%define ver_major 1.18
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -197,6 +197,12 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
+* Wed Jan 27 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
+- 1.17.0
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 

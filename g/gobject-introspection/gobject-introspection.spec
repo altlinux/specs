@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.46
+%define ver_major 1.48
 %def_enable doctool
 
 Name: gobject-introspection
@@ -123,6 +123,9 @@ gobject-introspection.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.48.0-alt1
+- 1.48.0
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 1.46.0-alt1
 - 1.46.0
 

@@ -1,6 +1,7 @@
+%define xdg_name org.gnome.Totem
 %def_disable snapshot
 
-%define ver_major 3.18
+%define ver_major 3.20
 %define parser_ver 3.10.1
 %define gst_api_ver 1.0
 %define gst_ver 1.4.2
@@ -15,7 +16,6 @@
 
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
-%define _name org.gnome.Totem
 
 %def_disable static
 %def_enable vala
@@ -32,12 +32,12 @@
 %def_disable jamendo
 
 Name: totem
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
-License: GPL%def_disable static
+License: GPLv2/LGPL
 URL: http://www.gnome.org/projects/totem
 
 %if_enabled snapshot
@@ -304,18 +304,18 @@ find %buildroot%_libdir -name \*.la -delete
 %dir %_libdir/%name
 # depends on pygtk
 #%_libexecdir/%name/totem-bugreport.py
-%_desktopdir/%_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/%name/
 %_man1dir/*
 %exclude %_man1dir/%name-video-thumbnailer.1.*
-%_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.enums.xml
 %_datadir/GConf/gsettings/totem.convert
-%_datadir/appdata/%_name.appdata.xml
-%doc AUTHORS NEWS README TODO
+%_datadir/appdata/%xdg_name.appdata.xml
+%doc AUTHORS NEWS README TODO COPYING
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -405,6 +405,15 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
+* Thu Mar 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.92-alt1
+- 3.19.92
+
+* Sat Mar 05 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.91-alt1
+- 3.19.91
+
 * Mon Oct 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

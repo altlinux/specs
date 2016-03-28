@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.18
+%define ver_major 3.20
 %def_enable clutter
 # tests require colord running and g-c-m installed
 %def_disable check
@@ -42,7 +42,7 @@ BuildPreReq: colord-devel >= %colord_ver
 BuildPreReq: libcolord-gtk-devel >= %colord_ver
 BuildRequires: libgnome-desktop3-devel libexif-devel libexiv2-devel libcanberra-gtk3-devel
 BuildRequires: libtiff-devel liblcms2-devel >= %lcms_ver libXrandr-devel
-%{?_enable_clutter:BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libmash-devel}
+%{?_enable_clutter:BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel}
 %{?_enable_check:BuildRequires: /proc xvfb-run}
 
 %description
@@ -70,8 +70,6 @@ This project has the following features:
 * Easy to use DBus interface for applications to query what ICC profiles should
   be used for a specific device. This is session activated and is only started
   when it is needed, and quits after a small period of idleness.
-
-
 
 %prep
 %setup
@@ -115,6 +113,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

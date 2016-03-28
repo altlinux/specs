@@ -1,10 +1,10 @@
 %define _name org.gnome.Characters
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 %def_with included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Character map application for GNOME
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
-%define gjs_ver 1.43.3
+%define gjs_ver 1.44.0
 %define unistring_ver 0.9.5
 
 Requires: libgjs >= %gjs_ver
@@ -74,6 +74,9 @@ characters.
 %exclude %_libdir/%_name/libgc.la
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sun Oct 11 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

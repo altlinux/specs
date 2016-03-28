@@ -1,15 +1,16 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.52
+%define ver_major 2.54
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
 %def_enable introspection
 %def_enable vala
+%def_with gssapi
 
 Name: libsoup
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -27,9 +28,9 @@ Source1: %name-compat.map
 Source2: %name-compat.lds
 Source3: %name-gnome-compat.map
 Source4: %name-gnome-compat.lds
-Patch1: %name-2.49.91-alt-compat-map.patch
+Patch1: %name-2.53.2-alt-compat-map.patch
 
-Requires: glib-networking >= 2.42
+Requires: glib-networking >= 2.47.90
 
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
@@ -47,6 +48,7 @@ BuildRequires: gtk-doc xml-common xsltproc intltool
 BuildRequires: glib-networking
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires: vala-tools}
+%{?_with_gssapi:BuildRequires: libkrb5-devel}
 # for check
 BuildRequires: /proc curl
 
@@ -167,7 +169,8 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
     %{subst_with gnome} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     %{?_enable_snapshot:--enable-gtk-doc} \
-    %{subst_enable introspection}
+    %{subst_enable introspection} \
+    %{subst_with gssapi}
 
 %make_build
 
@@ -222,6 +225,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
+- 2.54.0
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 2.52.2-alt1
 - 2.52.2
 

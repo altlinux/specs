@@ -1,9 +1,10 @@
-%define ver_major 3.18
+%define ver_major 3.20
+%define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -18,23 +19,37 @@ Requires: zenity
 #Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+%define gtk_ver 3.20.0
+%define gi_ver 0.9.5
+%define cogl_ver 1.17.1
+%define clutter_ver 1.25.6
+%define glib_ver 2.26
+%define pango_ver 1.2.0
+%define cairo_ver 1.10.0
+%define Xi_ver 1.6.0
+%define wayland_ver 1.7.0
+%define upower_ver 0.99.0
+%define libinput_ver 0.99.0
+%define gsds_ver 3.19.3
+
 BuildPreReq: rpm-build-gnome gnome-common
 BuildPreReq: intltool >= 0.34.90
-BuildPreReq: gobject-introspection-devel >= 0.9.5
-BuildRequires: libgtk+3-devel >= 3.9.11
-BuildRequires: glib2-devel  libgio-devel >= 2.25.10
-BuildRequires: libpango-devel >= 1.2.0
-BuildRequires: libcairo-devel >= 1.10.0
-BuildRequires: gsettings-desktop-schemas-devel >= 3.15.4
-BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= 1.6.0
+BuildRequires: gobject-introspection-devel >= %gi_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libpango-devel >= %pango_ver
+BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
+BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-devel libXi-devel >= %Xi_ver
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
 BuildRequires: libxcb-devel
-BuildRequires: libclutter-devel >= 1.23.4 libcogl-devel >= 1.17.1 libwayland-server-devel >= 1.6.90
+BuildRequires: libclutter-devel >= %clutter_ver libcogl-devel >= %cogl_ver
+BuildRequires: libwayland-server-devel >= %wayland_ver wayland-protocols
 BuildRequires: libgdk-pixbuf-devel libgbm-devel
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
-BuildRequires: libgnome-desktop3-devel libupower-devel >= 0.99.0
-BuildRequires: libxkbcommon-x11-devel libinput-devel >= 0.8 libxkbfile-devel xkeyboard-config-devel
+BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
+BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver libxkbfile-devel xkeyboard-config-devel
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel
 
@@ -105,7 +120,7 @@ DATADIRNAME=share %configure \
 %make_build
 
 %install
-%make DESTDIR=%buildroot DATADIRNAME=share install
+%makeinstall_std
 
 %find_lang --with-gnome %name creating-%name-themes
 
@@ -138,13 +153,15 @@ DATADIRNAME=share %configure \
 %_libdir/%name/*.gir
 
 %files gnome
-%_desktopdir/mutter-wayland.desktop
-%_datadir/glib-2.0/schemas/org.gnome.mutter.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.mutter.wayland.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.wayland.gschema.xml
 %_datadir/GConf/gsettings/mutter-schemas.convert
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.20.0-alt1
+- 3.20.0
+
 * Tue Mar 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.18.3-alt1
 - 3.18.3
 

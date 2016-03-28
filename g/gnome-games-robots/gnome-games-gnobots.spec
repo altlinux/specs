@@ -2,17 +2,17 @@
 
 %define _name robots
 %define __name gnome-%_name
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Apps/Robots
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 Patch: %__name-3.7.92-alt-lfs.patch
@@ -27,7 +27,7 @@ Provides:  gnome-games-gnobots = %version-%release
 BuildRequires: gnome-common
 BuildRequires: intltool yelp-tools gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libcanberra-gtk3-devel
+BuildRequires: libcanberra-gtk3-devel libgames-support-devel
 
 %description
 GNOME Robots is a development of the original Gnome Robots game which
@@ -61,6 +61,9 @@ systems.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0.1-alt1
+- 3.20.0.1
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

@@ -1,24 +1,24 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name swell-foop
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The "Same Game" puzzle
 Group: Games/Boards
 License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+Url: https://wiki.gnome.org/Apps/Swell-Foop
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 Provides:  %_name = %version-%release
 
-%define glib_ver 2.32.0
-%define gtk_ver 3.4.0
+%define glib_ver 2.36.0
+%define gtk_ver 3.12.0
 
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
@@ -51,6 +51,9 @@ area in as few moves as possible.
 %_datadir/appdata/%_name.appdata.xml
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Nov 09 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

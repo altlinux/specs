@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 15.12.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Editors
@@ -165,6 +165,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Wed Mar 23 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
+- rebuild with new libgit2
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 

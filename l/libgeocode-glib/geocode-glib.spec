@@ -1,10 +1,10 @@
 %define _name geocode-glib
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 1.0
 %def_enable introspection
 
 Name: lib%{_name}
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -14,10 +14,14 @@ Url: http://www.gnome.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildPreReq: gnome-common libjson-glib-devel >= 0.99.2
-BuildRequires: libgio-devel >= 2.34 libsoup-gnome-devel
-BuildRequires: intltool gnome-doc-utils gtk-doc
-%{?_enable_introspection:BuildRequires: libsoup-gnome-gir-devel libjson-glib-gir-devel}
+%define glib_ver 2.34
+%define soup_ver 2.42
+%define json_glib_ver 1.0
+
+BuildPreReq: gnome-common libjson-glib-devel >= %json_glib_ver
+BuildRequires: libgio-devel >= %glib_ver libsoup-devel >= %soup_ver
+BuildRequires: gtk-doc
+%{?_enable_introspection:BuildRequires: libsoup-gir-devel libjson-glib-gir-devel}
 
 %description
 %_name is a helper library for geocoding and reverse-geocoding
@@ -99,6 +103,9 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sun Feb 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

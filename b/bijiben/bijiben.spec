@@ -1,9 +1,11 @@
-%define ver_major 3.18
+%define ver_major 3.20
+%define xdg_name org.gnome.bijiben
 %define _libexecdir %_prefix/libexec
+%def_enable zeitgeist
 
 Name: bijiben
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Note editor for GNOME
 License: LGPLv3+
@@ -15,15 +17,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.28
 %define gtk_ver 3.11.4
 %define tracker_ver 0.17
-%define eds_ver 3.13.90
+%define eds_ver 3.19.90
 
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: tracker-devel >= %tracker_ver
 BuildRequires: libxml2-devel libclutter-gtk3-devel libwebkitgtk3-devel
-BuildRequires: libgnome-online-accounts-devel libzeitgeist2.0-devel libuuid-devel
+BuildRequires: libgnome-online-accounts-devel libuuid-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libical-devel libicu-devel
 BuildRequires: rpm-build-xdg gnome-common intltool yelp-tools libappstream-glib-devel
+%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 
 %description
 Bijiben is an attempt to design an intuitive note editor with strong
@@ -45,20 +48,23 @@ desktop integration.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
 %_libexecdir/%name-shell-search-provider
-%_datadir/applications/*
-%_datadir/%name
-%_iconsdir/hicolor/*x*/*/%name.png
-%_iconsdir/hicolor/scalable/*/%name-symbolic.svg
-%_datadir/gnome-shell/search-providers/%name-search-provider.ini
-%_datadir/dbus-1/services/org.gnome.Bijiben.SearchProvider.service
-%_xdgmimedir/packages/bijiben.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_desktopdir/%xdg_name.desktop
+%_datadir/%name/
+%_iconsdir/hicolor/*x*/*/%xdg_name.png
+%_iconsdir/hicolor/scalable/*/%xdg_name-symbolic.svg
+%_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
+%_datadir/dbus-1/services/%xdg_name.SearchProvider.service
+%_xdgmimedir/packages/%xdg_name.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt2
 - rebuilt against libical.so.2
 

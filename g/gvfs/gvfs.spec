@@ -1,4 +1,4 @@
-%define ver_major 1.26
+%define ver_major 1.28
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -27,7 +27,7 @@
 %def_enable google
 
 Name: gvfs
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -96,7 +96,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
 %{?_enable_gtk:BuildPreReq: libgtk+3-devel}
 %{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
-%{?_enable_http:BuildPreReq: libsoup-gnome-devel >= %libsoup_ver libxml2-devel}
+%{?_enable_http:BuildPreReq: libsoup-devel >= %libsoup_ver libxml2-devel}
 %{?_enable_keyring:BuildPreReq: libsecret-devel}
 %{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
 %{?_enable_nfs:BuildPreReq: libnfs-devel >= %nfs_ver}
@@ -342,6 +342,7 @@ killall -USR1 gvfsd >&/dev/null || :
 # for mount secure NFS shares
 setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
+
 %files -f %name.lang
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
 %dir %_libdir/%name
@@ -534,6 +535,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Thu Feb 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.26.3-alt1
 - 1.26.3
 

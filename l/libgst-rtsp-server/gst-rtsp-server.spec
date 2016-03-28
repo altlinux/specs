@@ -1,12 +1,13 @@
 %define _name gst-rtsp-server
-%define ver_major 1.6
+%define ver_major 1.8
+%define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -83,7 +84,10 @@ GObject introspection devel data for the GStreamer RTSP server library.
 
 %files
 %_libdir/libgstrtspserver-%api_ver.so.*
+%_libdir/gstreamer-%gst_api_ver/libgstrtspclientsink.so
 %doc README TODO NEWS
+
+%exclude %_libdir/gstreamer-%gst_api_ver/*.la
 
 %files devel
 %_includedir/gstreamer-%api_ver/gst/*
@@ -101,6 +105,9 @@ GObject introspection devel data for the GStreamer RTSP server library.
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 

@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _name org.gnome.Photos
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -15,20 +15,29 @@ Url: https://wiki.gnome.org/Apps/Photos
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
+%define glib_ver 2.40
+%define gtk_ver 3.19.1
+%define tracker_ver 0.18
+%define gdata_ver 0.15.2
+%define gegl_ver 0.3.5
+%define grilo_ver 0.3
+%define png_ver 1.5
 
+Requires: grilo-plugins >= %grilo_ver
+
+BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.ac
 BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
-BuildPreReq: libgio-devel >= 2.40.0
-BuildPreReq: libgtk+3-devel >= 3.15.0
-BuildPreReq: libexif-devel >= 0.6.14
-BuildPreReq: tracker-devel >= 0.17.5
-BuildPreReq: libgdata-devel >= 0.15.2
-BuildRequires: libbabl-devel >= 0.1.12
-BuildPreReq: libgegl%gegl_api_ver-devel >= 0.3.0
-BuildRequires: libexempi-devel liblcms2-devel librsvg-devel libgfbgraph-devel
-BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel
-BuildRequires: libgrilo-devel zlib-devel
+BuildPreReq: libgio-devel >= %glib_ver
+BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildPreReq: tracker-devel >= %tracker_ver
+BuildPreReq: libgdata-devel >= %gdata_ver
+BuildPreReq: libgegl%gegl_api_ver-devel >= %gegl_ver
+BuildPreReq: libgrilo-devel >= %grilo_ver
+BuildPreReq: libpng-devel >= %png_ver
+BuildRequires: libgexiv2-devel libexempi-devel liblcms2-devel librsvg-devel
+BuildRequires: libjpeg-devel libgfbgraph-devel
+BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel zlib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
 %description
@@ -40,6 +49,8 @@ patterns and objectives.
 
 %prep
 %setup
+# downgrade required libpng
+subst 's|libpng16|libpng15|' configure.ac
 
 %build
 %autoreconf
@@ -66,6 +77,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Mar 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3 (CVE-2013-7447)
 

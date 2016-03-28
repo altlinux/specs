@@ -1,13 +1,14 @@
 %define _name gtksourceview
 %define api_ver 3.0
-%define ver_major 3.18
+%define ver_major 3.20
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 %def_enable vala
+%def_enable gspell
 
 Name: lib%{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -18,20 +19,18 @@ Url: https://wiki.gnome.org/Projects/GtkSourceView
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 # From configure.ac
-%define intltool_ver 0.40
 %define gtk_ver 3.15.3
 %define libxml2_ver 2.6.0
+%define gspell_ver 1.0.0
 
 BuildPreReq: rpm-build-gnome
 
 # From configure.ac
-BuildPreReq: autoconf-archive
-BuildPreReq: intltool >= %intltool_ver
-BuildPreReq: gtk-doc >= 1.11
+BuildRequires: gcc-c++ autoconf-archive gtk-doc itstool
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
-
-BuildRequires: gcc-c++ perl-XML-Parser zlib-devel libgio-devel
+BuildRequires: perl-XML-Parser zlib-devel
+%{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
 
@@ -129,6 +128,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Thu Jan 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

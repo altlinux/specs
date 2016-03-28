@@ -1,11 +1,11 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -127,6 +127,7 @@ This package permits to log into GNOME using Wayland.
 %_datadir/%name/sessions/gnome.session
 %_datadir/%name/sessions/gnome-dummy.session
 %_datadir/xsessions/gnome.desktop
+#%_datadir/xsessions/gnome-xorg.desktop
 %_iconsdir/hicolor/*/apps/session-properties*
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
@@ -146,9 +147,12 @@ This package permits to log into GNOME using Wayland.
 
 %files wayland
 %_datadir/wayland-sessions/gnome-wayland.desktop
-%_datadir/%name/sessions/gnome-wayland.session
+#%_datadir/%name/sessions/gnome-wayland.session
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1.1-alt1
 - 3.18.1.1
 

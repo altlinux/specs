@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.20
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %def_enable facebook
@@ -9,8 +9,8 @@
 %def_enable windows_live
 
 Name: gnome-online-miners
-Version: %ver_major.3
-Release: alt4
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of miners for online content
 Group: Graphical desktop/GNOME
@@ -21,13 +21,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.35.1
 %define goa_ver 3.11.5
-%define grilo_ver 0.2.6
+%define grilo_ver 0.3
 %define gdata_ver 0.13.3
 %define zapojit_ver 0.0.2
 %define tracker_ver 0.17.1
 %define gfbgraph_ver 0.2.2
 
-%{?_enable_flickr:Requires: grilo-plugins}
+%{?_enable_flickr:Requires: grilo-plugins >= %grilo_ver}
 
 BuildRequires: gnome-common
 BuildPreReq: libgio-devel >= %glib_ver
@@ -81,6 +81,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sat Sep 12 2015 Yuri N. Sedunov <aris@altlinux.org> 3.14.3-alt4
 - rebuilt for gnome-3.18
 

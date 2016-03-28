@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.20.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -85,6 +85,9 @@ KF5 library
 #%_K5xmlgui/katepart/
 
 %changelog
+* Wed Mar 23 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt2
+- rebuild with new libgit2
+
 * Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
 - new version
 

@@ -1,7 +1,9 @@
-%define ver_major 0.2
+%define ver_major 0.3
+%define api_ver %ver_major
+%def_enable gtk_doc
 
 Name: grilo
-Version: %ver_major.15
+Version: %ver_major.0
 Release: alt1
 
 Summary: Content discovery framework
@@ -12,7 +14,7 @@ Url: https://wiki.gnome.org/Projects/Grilo
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires: gnome-common intltool >= 0.40.0
-BuildRequires: glib2-devel >= 2.34 libgio-devel
+BuildRequires: libgio-devel >= 2.44
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= 2.41.3 libsoup-gir-devel
@@ -88,7 +90,7 @@ Tools for the %name library
 
 %build
 %autoreconf
-%configure			\
+%configure \
 	--disable-static	\
 	--enable-vala		\
 	--enable-gtk-doc	\
@@ -110,9 +112,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 
 %files tools
 %doc AUTHORS COPYING NEWS README TODO
-%_bindir/grl-inspect*
-%_bindir/grl-launch-*
-%_bindir/grilo-test-ui*
+%_bindir/grl-inspect-%api_ver
+%_bindir/grl-launch-%api_ver
+%_bindir/grilo-test-ui-%api_ver
 %_man1dir/*
 
 %files -n lib%name -f %name.lang
@@ -120,22 +122,31 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %dir %_libdir/grilo-%ver_major
 %dir %_datadir/grilo-%ver_major/plugins
 
-%files -n lib%name-gir
-%_typelibdir/*.typelib
-
-%files -n lib%name-gir-devel
-%_girdir/*.gir
-
 %files -n lib%name-devel
-%_includedir/%name-%ver_major
+%_includedir/%name-%api_ver/
 %_libdir/*.so
-%_pkgconfigdir/*.pc
+%_pkgconfigdir/*-%api_ver.pc
 %_vapidir/*
 
+%files -n lib%name-gir
+%_typelibdir/Grl-%api_ver.typelib
+%_typelibdir/GrlNet-%api_ver.typelib
+%_typelibdir/GrlPls-%api_ver.typelib
+
+%files -n lib%name-gir-devel
+%_girdir/Grl-%api_ver.gir
+%_girdir/GrlNet-%api_ver.gir
+%_girdir/GrlPls-%api_ver.gir
+
+%if_enabled gtk_doc
 %files devel-doc
-%_gtk_docdir/*
+%_gtk_docdir/%name/
+%endif
 
 %changelog
+* Wed Feb 03 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sat Dec 19 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.15-alt1
 - 0.2.15
 

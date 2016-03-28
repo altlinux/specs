@@ -1,8 +1,8 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -21,6 +21,7 @@ BuildPreReq: intltool yelp-tools
 BuildPreReq: libgtk+3-devel >= 3.12
 BuildRequires: libgio-devel >= 2.40.0 libxml2-devel vala-tools >= 0.24
 BuildRequires: libmpfr-devel libgtksourceview3-devel >= 3.16
+BuildRequires: libsoup-devel >= 2.42
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -60,6 +61,9 @@ A single graphics driver for GTK included with this package.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Wed Jan 27 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 

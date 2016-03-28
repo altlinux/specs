@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 3.18
-%define ver_base 3.18
+%define ver_major 3.20
+%define ver_base 3.20
 %define gst_api_ver 1.0
 
 %def_disable static
@@ -10,7 +10,6 @@
 %def_disable static_ldap
 %def_with krb5
 %def_enable map
-%def_disable image_inline
 %def_enable autoar
 %def_enable tnef
 %def_enable installed_tests
@@ -19,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.5.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -33,6 +32,7 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 Patch: %name-3.13.90-alt-link.patch
+Patch1: %name-3.19.90-alt-link.patch
 
 ### Patches ###
 # hack to properly link against ldap libs
@@ -49,7 +49,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.18.4
+%define eds_ver 3.19.91
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -86,7 +86,6 @@ BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver libcryptui-devel
 %{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
-%{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 %{?_enable_tnef:BuildRequires: libytnef-devel}
 %{?_enable_autoar:BuildRequires: libgnome-autoar-devel}
 
@@ -189,7 +188,8 @@ the functionality of the installed Evolution.
 
 %prep
 %setup
-%patch
+%patch -b .link
+#%%patch1 -b .link
 %patch10 -b .ldaphack
 %patch27 -p1 -b .im-context-reset
 
@@ -239,7 +239,6 @@ export KILL_PROCESS_CMD=%_bindir/killall
     --enable-smime \
     --disable-schemas-compile \
     %{?_enable_map:--enable-contact-maps} \
-    %{?_disable_image_inline:--disable-image-inline} \
     %{subst_enable autoar} \
     %{?_enable_installed_tests:--enable-installed-tests}
 %make_build
@@ -292,6 +291,7 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_datadir/GConf/gsettings/evolution.convert
 %_iconsdir/hicolor/*/*/*
 %_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/%name-pst.metainfo.xml
 
 %files devel
 %_includedir/*
@@ -318,6 +318,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Thu Feb 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.5.1-alt1
 - 3.18.5.1
 

@@ -1,8 +1,8 @@
-%define ver_major 3.18
-%define _name org.gnome.Polari
+%define ver_major 3.20
+%define xdg_name org.gnome.Polari
 
 Name: polari
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -27,6 +27,7 @@ Requires: typelib(Gtk)
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Polari)
+Requires: typelib(Secret)
 Requires: typelib(Soup)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
@@ -59,20 +60,23 @@ with GNOME 3 Desktop.
 %files -f %name.lang
 %_bindir/%name
 %_libdir/%name/
-%_desktopdir/%_name.desktop
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/%name/
-%_datadir/dbus-1/services/%_name.service
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Polari.service
 %_datadir/telepathy/clients/Polari.client
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/appdata/%_name.appdata.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 %doc AUTHORS NEWS
 
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Wed Oct 14 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

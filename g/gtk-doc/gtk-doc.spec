@@ -1,12 +1,11 @@
 Name: gtk-doc
-Version: 1.24
+Version: 1.25
 Release: alt1
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
 License: %gpl2plus
 Url: http://www.gtk.org/gtk-doc/
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -40,6 +39,8 @@ BuildRequires: docbook-style-dsssl
 BuildRequires: openjade >= 1.3.1
 # for check
 BuildRequires: glib2-devel
+# since 1.25
+BuildRequires: perl(diagnostics.pm) dblatex
 
 %description
 %name is a tool for generating API reference documentation.
@@ -62,7 +63,6 @@ This package provides utility for saving documentation in PDF format
 Summary: Manual for gtk-doc
 Group: Development/Other
 License: %fdl
-Requires(post,postun): scrollkeeper
 
 %description manual
 Manual for gtk-doc, a tool for generating API reference documentation
@@ -70,6 +70,8 @@ used by GTK+, GLib and GNOME.
 
 %prep
 %setup
+# make cmake files arch-independent
+subst 's/libdir/datadir/' cmake/Makefile.am
 
 # Move this doc file to avoid name collisions
 mv doc/README doc/README.docs
@@ -113,10 +115,12 @@ cp -a examples %buildroot%pkgdocdir/
 %files
 %_bindir/*
 %exclude %_bindir/gtkdoc-mkpdf
-%_datadir/gtk-doc
-%_datadir/sgml/gtk-doc
-%_datadir/pkgconfig/*
-%_datadir/aclocal/*
+%_datadir/%name/
+%_datadir/sgml/%name/
+%_datadir/pkgconfig/%name.pc
+%_datadir/aclocal/%name.m4
+%dir %_datadir/cmake/GtkDoc
+%_datadir/cmake/GtkDoc/*.cmake
 %_sysconfdir/buildreqs/files/ignore.d/*
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
@@ -137,6 +141,9 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.25-alt1
+- 1.25
+
 * Sat May 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24-alt1
 - 1.24
 

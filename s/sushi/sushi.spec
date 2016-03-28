@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.18
+%define ver_major 3.19
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %def_enable introspection
 
 Name: sushi
-Version: %ver_major.0
+Version: %ver_major.90
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -22,8 +22,8 @@ Requires: gst-plugins-base%gst_api_ver
 #Requires: unoconv
 
 BuildRequires: intltool
-BuildRequires: libgtksourceview3-devel libgjs-devel
-BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst2.0-devel
+BuildRequires: libgtksourceview3-devel libgjs-devel libharfbuzz-devel
+BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst3.0-devel
 BuildRequires: libevince-devel libmusicbrainz5-devel libwebkit2gtk-devel
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel
 %if_enabled introspection
@@ -96,6 +96,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.90-alt1
+- 3.19.90
+
 * Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

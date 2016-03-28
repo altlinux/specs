@@ -2,7 +2,7 @@
 
 %define _name chess
 %define __name gnome-%_name
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -12,7 +12,7 @@ Release: alt1
 Summary: A chess game for GNOME
 Group: Games/Boards
 License: GPLv3+
-Url: https://live.gnome.org/Chess
+Url: https://wiki.gnome.org/Apps/Chess
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
@@ -21,7 +21,7 @@ Obsoletes: gnome-games-glchess
 Provides:  gnome-games-glchess = %version-%release
 
 %define glib_ver 2.40
-%define gtk_ver 3.4.0
+%define gtk_ver 3.19.0
 %define vala_ver 0.22.0
 
 BuildRequires: gnome-common
@@ -61,6 +61,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 

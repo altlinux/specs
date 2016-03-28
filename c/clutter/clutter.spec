@@ -1,4 +1,4 @@
-%define ver_major 1.24
+%define ver_major 1.26
 
 %def_enable x11_backend
 %def_enable gdk_backend
@@ -16,7 +16,7 @@
 %def_enable wayland_compositor
 
 Name: clutter
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clutter Core Library
@@ -182,6 +182,9 @@ gtkdocize
 
 
 %changelog
+* Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Tue Oct 13 2015 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1
 - 1.24.2
 
