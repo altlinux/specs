@@ -4,7 +4,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	38.7.0
+Version:	38.7.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -464,6 +464,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 38.7.1-alt1
+- New version (38.7.1)
+
 * Tue Mar 15 2016 Andrey Cherepanov <cas@altlinux.org> 38.7.0-alt1
 - New version (38.7.0)
 - Enigmail (1.9.1)
