@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 2.008
-Release: alt1
+Release: alt2
 
 Summary: Net::Server - Extensible, general Perl server engine
 License: Artistic
@@ -14,6 +14,8 @@ Source: http://www.cpan.org/authors/id/R/RH/RHANDOM/Net-Server-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-IO-Multiplex perl-Net-SSLeay perl(Log/Log4perl.pm)
 Requires: perl-IO-Multiplex perl-Net-SSLeay
+# hack around broken requires in perl-ARCv2
+Provides: perl(Net/Server/PreFork.pm) = %version
 
 %description
 Net::Server is an extensible, class oriented module written in perl
@@ -21,10 +23,6 @@ and intended to be the back end layer of internet protocol servers.
 
 %prep
 %setup -q -n %module-%version
-if [ %version = 2.007 ]; then
-# Trouble running server: Could not finalize SSL connection with client handle (SSL connect accept failed because of handshake problems error:14094418:SSL routines:SSL3_READ_BYTES:tlsv1 alert unknown ca)
-rm t/SSL_test.t
-fi
 
 %build
 %perl_vendor_build
@@ -39,6 +37,9 @@ fi
 %perl_vendor_privlib/Net/Server
 
 %changelog
+* Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.008-alt2
+- added compat provides
+
 * Tue May 13 2014 Igor Vlasenko <viy@altlinux.ru> 2.008-alt1
 - automated CPAN update
 
