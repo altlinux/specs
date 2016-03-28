@@ -1,11 +1,11 @@
 Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 2.6.5
+%define octave_pkg_version 3.0.0
 %define octave_pkg_name control
 %define octave_descr_name Control
 Name: octave-%octave_pkg_name
-Version: 2.6.5
-Release: alt1.1
+Version: 3.0.0
+Release: alt1
 Summary: Control Systems
 
 Group: Sciences/Mathematics
@@ -14,9 +14,9 @@ URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
-BuildRequires: octave-devel
+BuildRequires: octave-devel texinfo
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
@@ -52,6 +52,10 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Sun Mar 27 2016 Anton Midyukov <antohami@altlinux.org> 1:3.0.0-alt1
+- New version
+- Added missing buildrequires.
+
 * Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.6.5-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
