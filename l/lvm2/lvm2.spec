@@ -1,7 +1,7 @@
 %define lvm2version 2.02.137
 %define dmversion 1.02.113
 
-%def_disable cluster
+%def_enable cluster
 %def_enable selinux
 %def_enable lvmetad
 %def_enable lvmpolld
@@ -18,7 +18,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt2
 License: GPL
 
 Group: System/Base
@@ -49,7 +49,7 @@ BuildRequires: systemd-devel
 BuildRequires: thin-provisioning-tools >= 0.5.4
 BuildRequires: python-devel python-module-setuptools
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
-%{?_enable_cluster:BuildRequires: libcman-devel libdlm-devel}
+%{?_enable_cluster:BuildRequires: libcorosync2-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
 %{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
 %{?_enable_lockd_sanlock:BuildRequires: sanlock-devel}
@@ -71,9 +71,9 @@ Requires: %name = %lvm2version-%release
 This package contains statically linked LVM2 tool.
 
 %package -n clvm
-Summary: Cluster LVM daemon for LVM2
+Summary: Cluster extensions for userland logical volume management tools
 Group: System/Base
-Requires: %name = %lvm2version-%release
+Requires: %name = %lvm2version-%release dlm
 
 %description -n clvm
 Extensions to LVM2 to support clusters.
@@ -249,7 +249,7 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-device-mode=0660 \
 	--enable-write_install \
 %if_enabled cluster
-	--with-clvmd=cman \
+	--with-clvmd=corosync \
 %endif
 	--enable-applib \
 	--enable-cmdlib \
@@ -344,6 +344,13 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 # Fix tmpfiles
 sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 
+mv %buildroot%_prefix/sbin/clvmd %buildroot%_sbindir/
+mkdir -p %buildroot%_sysconfdir/sysconfig
+cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/clvmd
+START_CLVM=yes
+#LVM_VGS=""
+__EOF__
+
 %post
 %if_enabled lvmetad
 %post_service lvm2-lvmetad
@@ -385,6 +392,7 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %exclude %_man8dir/dmstats*
 %exclude %_man8dir/blkdeactivate*
 %if_enabled cluster
+%exclude %_sbindir/clvmd
 %exclude %_man8dir/clvm*
 %endif
 %config(noreplace) %_sysconfdir/lvm/lvm.conf
@@ -422,11 +430,10 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 
 %if_enabled cluster
 %files -n clvm
+%config(noreplace) %_sysconfdir/sysconfig/clvmd
+%_unitdir/lvm2-c*.service
+/lib/systemd/lvm2-cluster-activation
 %_sbindir/clvmd
-%_initdir/clvmd
-%_unitdir/lvm2-clvmd*
-%_unitdir/lvm2-cluster*
-%_unitdir/clvmd.service
 %_man8dir/clvmd*
 %endif
 
@@ -496,6 +503,9 @@ sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 %python_sitelibdir/*
 
 %changelog
+* Mon Mar 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.02.137-alt2
+- enabled cluster support
+
 * Thu Dec 10 2015 Alexey Shabalin <shaba@altlinux.ru> 2.02.137-alt1
 - 2.02.137
 
