@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Mar 28 2016 Mikhail Efremov <sem@altlinux.org> 5.0.1-alt1
+- QT UI: Fix crash in the "Advanced" page.
+
 * Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 5.0.0-alt1
 - Tell NetworkManager to reaload connections if needed.
 - Fix configuration list for VLANs.

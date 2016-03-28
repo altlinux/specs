@@ -1,5 +1,5 @@
 Name: alterator-net-vlan
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -38,6 +38,9 @@ alterator module for VLAN network interfaces
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Mar 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
+- Fix QT UI.
+
 * Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1
 - Initial build.
 
