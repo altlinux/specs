@@ -1,13 +1,14 @@
 
 Name:           pcsc-perl
-Version:        1.4.13
-Release:        alt1.1.1
+Version:        1.4.14
+Release:        alt1
 Summary:        Perl interface to the PC/SC smart card library
 
 Group:          Development/Perl
 License:        GPLv2+
 URL:            http://ludovic.rousseau.free.fr/softwares/pcsc-perl/
 Source0:        http://ludovic.rousseau.free.fr/softwares/pcsc-perl/%{name}-%{version}.tar.bz2
+Source1:	%name.watch
 
 BuildRequires:  perl-devel
 BuildRequires:  libpcsclite-devel >= 1.3.0
@@ -34,6 +35,10 @@ chmod 644 examples/* # avoid dependencies
 %perl_vendor_autolib/Chipcard
 
 %changelog
+* Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.4.14-alt1
+- New version
+- Add watch file
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.13-alt1.1.1
 - rebuild with new perl 5.22.0
 
