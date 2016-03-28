@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt1.1
+Release: alt1.2
 Summary: Python bindings for sigprocmask(2) and signalfd(2)
 License: MIT
 Group: Development/Python
@@ -113,6 +113,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 28 2016 Denis Medvedev <nbr@altlinux.org> 0.1-alt1.2
+- Fix test for python3.5
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.1-alt1.1
 - NMU: Use buildreq for BR.
 
