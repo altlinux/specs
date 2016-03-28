@@ -8,7 +8,7 @@
 %define oversion 10_0
 
 Name:    icebw
-Version: 11.5
+Version: 11.7
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -48,6 +48,9 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 11.7-alt1
+- new version 11.7
+
 * Tue Feb 02 2016 Andrey Cherepanov <cas@altlinux.org> 11.5-alt1
 - new version 11.5
 - fix missing global variables as `organ`
