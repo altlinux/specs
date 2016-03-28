@@ -1,5 +1,5 @@
 Name: perl-App-perlbrew
-Version: 0.73
+Version: 0.75
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Requires: perl-Devel-PatchPerl
 
 BuildArch: noarch
-BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-Test-Exception perl-devel perl-Devel-PatchPerl perl-Test-Spec perl-File-Path-Tiny perl-Path-Class perl-Test-Output perl-local-lib perl-Module-Install perl-Module-Install-Repository perl-Test-NoWarnings
+BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-Test-Exception perl-devel perl-Devel-PatchPerl perl-Test-Spec perl-File-Path-Tiny perl-Path-Class perl-Test-Output perl-local-lib perl-Module-Install perl-Module-Install-Repository perl-Module-Install-AuthorRequires perl-Test-NoWarnings perl(Pod/Markdown.pm)
 
 %description
 %summary
@@ -33,6 +33,9 @@ BuildRequires: curl perl-CPAN-Perl-Releases perl-IO-All perl-Capture-Tiny perl-T
 %doc Changes LICENSE README
 
 %changelog
+* Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.73-alt1
 - automated CPAN update
 
