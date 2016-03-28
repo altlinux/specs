@@ -7,7 +7,7 @@ Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
 Name:           mate-menus
 Version:        1.12.0
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
@@ -38,7 +38,7 @@ Displays menus for MATE Desktop
 %package -n libmate-menus
 Group: System/Libraries
 Summary: Shared libraries for mate-menus
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+#Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description -n libmate-menus
 Shared libraries for mate-menus
@@ -114,6 +114,9 @@ chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 
 
 %changelog
+* Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt2_3
+- libmate-menus no more requires mate-menus (closes: #31928)
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_3
 - new version
 
