@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.10
-Release: alt2.git20141116
+Release: alt3.git20141116
 Summary: Javascript Minifier
 License: ASLv2.0
 Group: Development/Python
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Mon Mar 28 2016 Denis Medvedev <nbr@altlinux.org> 1.0.10-alt3.git20141116
+- Python compilation for 3.5.
+
 * Thu Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.10-alt2.git20141116
 - Documentation creation disabled
 
