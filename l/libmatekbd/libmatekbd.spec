@@ -22,11 +22,7 @@ BuildRequires: /usr/bin/glib-gettextize libSM-devel libgio-devel libgtk+2-gir-de
 
 Name:           libmatekbd
 Version:        %{branch}.1
-%if 0%{?rel_build}
-Release:        alt1_1
-%else
-Release:        alt1_1
-%endif
+Release:        alt2_1
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -100,9 +96,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/matekbd.convert
 %{_libdir}/libmatekbd.so.4*
 %{_libdir}/libmatekbdui.so.4*
 %{_libdir}/girepository-1.0/Matekbd-1.0.typelib
-%{_datadir}/gir-1.0/Matekbd-1.0.gir
 
 %files devel
+%{_datadir}/gir-1.0/Matekbd-1.0.gir
 %{_includedir}/libmatekbd
 %{_libdir}/pkgconfig/libmatekbd.pc
 %{_libdir}/pkgconfig/libmatekbdui.pc
@@ -110,6 +106,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/matekbd.convert
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2_1
+- moved gir to devel (closes: #31926)
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new fc release
 
