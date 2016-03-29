@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           scorchwentbonkers
 Version:        1.3
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Realtime remake of Scorched Earth
 Group:          Games/Other
 License:        zlib
@@ -15,6 +15,7 @@ Source3:        %{name}.appdata.xml
 Patch0:         %{name}-no-fmod.patch
 Patch1:         %{name}-support-16bpp.patch
 Patch2:         %{name}-unixify.patch
+Patch3:         %{name}-gcc6.patch
 BuildRequires:  liballegro-devel liballegro-devel dumb-devel AllegroOGG-devel 
 BuildRequires:  libGLU-devel desktop-file-utils libappstream-glib
 Requires:       icon-theme-hicolor
@@ -33,6 +34,7 @@ for controlling your tank. The game is real-time instead of turn based.
 %patch0 -p1 -z .no-fmod
 %patch1 -p1 -z .16bpp
 %patch2 -p1 -z .unix
+%patch3 -p1
 mv src/menu/Splashscreen.h src/menu/SplashScreen.h
 
 
@@ -65,6 +67,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_3
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_1
 - update to new release by fcimport
 
