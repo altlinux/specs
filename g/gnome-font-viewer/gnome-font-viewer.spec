@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.16
+%define ver_major 3.20
 %define _name org.gnome.font-viewer
 
 Name: gnome-font-viewer
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: The GNOME Font Viewer
 Group: Graphical desktop/GNOME
@@ -47,6 +47,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Tue Mar 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.16.2-alt2
 - rebuilt against libgnome-desktop-3.so.12
 
