@@ -1,9 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/xml2-config
-# END SourceDeps(oneline)
 Name:           kanatest
 Version:        0.4.8
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Hiragana and Katakana drill tool
 
 Group:          Games/Other
@@ -15,6 +12,9 @@ Source0:        http://clayo.org/kanatest/%{name}-%{version}.tar.gz
 Patch1:         kanatest-0.4.8-gtkfixes.patch
 # Format security patch
 Patch2:		kanatest-0.4.8-format-security.patch
+# gtk_message_dialog_new_with_markup() usage fix
+# bug 1308898
+Patch3:		kanatest-0.4.8-gtk_markup_func_usage_fix.patch
 
 
 BuildRequires:  desktop-file-utils >= 0.9
@@ -35,6 +35,7 @@ statistics are provided
 %setup -q
 %patch1 -p1 -b gtkfixes
 %patch2 -p1 -b .format
+%patch3 -p1 -b .dialog_markup
 
 sed -i src/Makefile.in \
 	-e 's|DISABLE_DEPRECATED|ENABLE_DEPRECATED|g'
@@ -64,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_18
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.8-alt2_17
 - update to new release by fcimport
 
