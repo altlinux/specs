@@ -1,16 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Lexical-SealRequireHints
 Version:        0.010
-Release:        alt1
+Release:        alt1_1
 Summary:        Prevent leakage of lexical hints
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Lexical-SealRequireHints/
-Source:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/Lexical-SealRequireHints-%{version}.tar.gz
+BuildRequires:  findutils
 BuildRequires:  perl
 BuildRequires:  perl(Module/Build.pm)
 BuildRequires:  perl(strict.pm)
@@ -48,7 +48,7 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_
 
 %install
 ./Build install destdir=$RPM_BUILD_ROOT create_packlist=0
-find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -60,6 +60,9 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{perl_vendor_archlib}/Lexical*
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1_1
+- update to new release by fcimport
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
