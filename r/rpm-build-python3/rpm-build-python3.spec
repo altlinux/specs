@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.9.2
+Version: 0.1.9.4
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -10,7 +10,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Requires: file >= 4.26-alt11
-Requires: rpm >= 4.0.4-alt100.45
+Conflicts: rpm-build < 4.0.4-alt100.91
 # Since the .so handling code in python3.req.py with the help of
 # objdump is borrowed from rpm-build, we borrow the dependency, too:
 Requires: binutils >= 1:2.20.51.0.7
@@ -42,6 +42,8 @@ install -pD -m755 python3.req.py %buildroot%_rpmlibdir/python3.req.py
 install -pD -m755 python3.req.files %buildroot%_rpmlibdir/python3.req.files
 install -pD -m755 python3.compileall.py %buildroot%_rpmlibdir/python3.compileall.py
 install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-bytecompile_python3.brp
+# It's like brp.d/128-hardlink_pyo_pyc.brp from rpm-build (but for python3-3.5):
+install -pD -m755 brp-hardlink_opt_pyc %buildroot%_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
 install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
 #install -pd -m755 %buildroot%python_tooldir/rpm-build
 #install -pD -m644 bdist_altrpm.py %buildroot%_libdir/python%__python_version/distutils/command/bdist_altrpm.py
@@ -64,6 +66,7 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmmacrosdir/python3.env
 %_sysconfdir/buildreqs/files/ignore.d/%name
 %_rpmlibdir/brp.d/096-bytecompile_python3.brp
+%_rpmlibdir/brp.d/128-hardlink_opt_pyc.brp
 %_rpmlibdir/brp.d/000-fix_python3_site-packages_location.brp
 %_rpmlibdir/python3.compileall.py
 %_rpmlibdir/python3.req
@@ -74,6 +77,13 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.9.4-alt1
+- brp-hardlink_opt_pyc: handle .opt-?.pyc files (introduced in python3-3.5).
+
+* Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.9.3-alt1
+- implemented %%requires_python3-ABI, which ultimately asks
+  verify_elf to LD_PRELOAD.
+
 * Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.9.2-alt1
 - macros: commented on %%__ vs %%_ (build vs target system properties)
   and cleaned up a bit accordingly.

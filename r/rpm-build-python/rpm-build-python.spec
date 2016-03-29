@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.36.5
+Version: 0.36.6
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 Packager: Python Development Team <python@packages.altlinux.org>
 
-Requires: rpm >= 4.0.4-alt96.15
+Conflicts: rpm-build < 4.0.4-alt100.91
 Requires: python-base >= 2.7.2-alt3
 Requires: file >= 4.26-alt11
 
@@ -61,6 +61,10 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.6-alt1
+- implemented %%requires_python_ABI, which ultimately asks verify_elf
+  to LD_PRELOAD.
+
 * Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.5-alt1
 - python.compileall.py: remove unused variable.
 
