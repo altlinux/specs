@@ -12,7 +12,7 @@
 
 Name: vdfuse
 Version: 8.2a
-Release: alt1
+Release: alt1.qa1
 
 Summary: Application for mounting vdi images
 License: GPLv3
@@ -54,9 +54,10 @@ ${CC:-gcc} %SOURCE1 -o %name \
     `pkg-config --cflags --libs fuse` \
     -I./include \
     -Wl,-rpath,%_libdir/virtualbox/ \
-    -l:%_libdir/virtualbox/VBoxDD.so \
-    -l:%_libdir/virtualbox/VBoxDD2.so \
-    -l:%_libdir/virtualbox/VBoxDDU.so \
+    -L%_libdir/virtualbox/ \
+    -l:VBoxDD.so \
+    -l:VBoxDD2.so \
+    -l:VBoxDDU.so \
     -Wall %optflags
 
 %install
@@ -66,6 +67,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Mar 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2a-alt1.qa1
+- Fixed build with binutils 2.26.0.
+
 * Tue Feb 28 2012 Michael Shigorin <mike@altlinux.org> 8.2a-alt1
 - initial build for ALT Linux Sisyphus (based on opensuse package)
 
