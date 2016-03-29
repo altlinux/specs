@@ -5,10 +5,9 @@
 %filter_from_requires /^python2...VS.$/d
 %add_python_compile_include %_datadir/vegastrike
 %add_python_lib_path %_datadir/vegastrike
-%define fedora 23
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_8.r1
+Release:        alt2_10.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -17,9 +16,9 @@ Source0:        http://downloads.sourceforge.net/vegastrike/vegastrike-data-0.5.
 Source1:        http://downloads.sourceforge.net/vegastrike/vegastrike-extra-0.5.1.r1.tar.bz2
 # Remove Falik's songs from playlists (no longer needed, kept for reference)
 Patch0:         vegastrike-data-0.5.0-playlists.patch
-BuildRequires:  python-devel
+BuildRequires:  python-devel ImageMagick
 BuildArch:      noarch
-Requires:       vegastrike >= %{version}
+Requires:       icon-theme-hicolor vegastrike >= %{version}
 Source44: import.info
 
 %description
@@ -76,11 +75,11 @@ find .vegastrike ai animations bases cockpits communications \
 
 grep '\.py"$' data.files | sed -e 's;\.py"$;.pyc";' > data.pyc
 grep '\.py"$' data.files | sed -e 's;\.py"$;.pyo";' > data.pyo
-grep '\.py"$' extra.files | sed -e 's;\.py"$;.pyc";' > extra.pyc
-grep '\.py"$' extra.files | sed -e 's;\.py"$;.pyo";' > extra.pyo
-
+# not compiled in alt due to chmod +x above
 sed -i -e /webpageize.py/d data.pyc data.pyo
 sed -i -e /findunits.py/d data.pyc data.pyo
+
+
 
 %build
 # nothing to build data only
@@ -94,38 +93,33 @@ for i in .vegastrike ai animations bases cockpits communications \
          *.xml *.csv *.config *.cur *.xpm New_Game Version.txt; do
   cp -a $i $RPM_BUILD_ROOT%{_datadir}/vegastrike
 done
-%if 0%{?fedora} && 0%{?fedora} < 20
-ln -s ../doc/%{name}-%{version} \
-  $RPM_BUILD_ROOT%{_datadir}/vegastrike/documentation
-%else
 ln -s ../doc/%{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/vegastrike/documentation
-%endif
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
-install -p -m 644 vegastrike.xpm \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
+convert vegastrike.xpm \
+  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps/vegastrike.png
 # multiple -f flags in %files: merging -f data.dirs into -f data.files
 cat data.dirs >> data.files
 # multiple -f flags in %files: merging -f data.pyc into -f data.files
 cat data.pyc >> data.files
 # multiple -f flags in %files: merging -f data.pyo into -f data.files
 cat data.pyo >> data.files
-# multiple -f flags in %files: merging -f extra.pyc into -f extra.files
-cat extra.pyc >> extra.files
-# multiple -f flags in %files: merging -f extra.pyo into -f extra.files
-cat extra.pyo >> extra.files
 
 
 %files -f data.files   
-%doc vega-license.txt documentation/*
+%doc documentation/*
+%doc vega-license.txt
 %dir %{_datadir}/vegastrike
 %{_datadir}/vegastrike/documentation
-%{_datadir}/icons/hicolor/128x128/apps/vegastrike.xpm
+%{_datadir}/icons/hicolor/128x128/apps/vegastrike.png
 
-%files -n vegastrike-extra -f extra.files  
+%files -n vegastrike-extra -f extra.files
 
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_10.r1
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_8.r1
 - fixed build
 
