@@ -1,17 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CGI/Simple.pm) perl-devel perl-podlators
+BuildRequires: perl(CGI/Simple.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Captcha-reCAPTCHA
 Version:        0.97
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Perl implementation of the reCAPTCHA API
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Captcha-reCAPTCHA/
 Source0:        http://search.cpan.org/CPAN/authors/id/P/PH/PHRED/Captcha-reCAPTCHA-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  findutils
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(warnings.pm)
 # Run-time
 BuildRequires:  perl(Carp.pm)
 BuildRequires:  perl(constant.pm)
@@ -24,26 +28,28 @@ BuildRequires:  perl(Test/More.pm)
 # Optional tests
 BuildRequires:  perl(Test/Pod.pm)
 BuildRequires:  perl(Test/Pod/Coverage.pm)
+Requires:       perl(HTML/Tiny.pm) >= 0.904
 
+
+# Filter under-specified dependencies
 
 Source44: import.info
+%filter_from_requires /^perl\\(HTML.Tiny.pm\\)$/d
 
 %description
-reCAPTCHA is a hybrid mechanical turk and captcha that allows visitors who
+reCAPTCHA is a hybrid mechanical Turk and captcha that allows visitors who
 complete the captcha to assist in the digitization of books.
 
 %prep
 %setup -q -n Captcha-reCAPTCHA-%{version}
 
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -54,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.97-alt2_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.97-alt2_9
 - update to new release by fcimport
 
