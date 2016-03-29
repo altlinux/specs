@@ -33,7 +33,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.1.91
+Version: 1.1.92
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -402,6 +402,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--with-session-tracking=ck \
 	--with-suspend-resume=upower \
 %endif
+	--with-udev-dir=/lib/udev \
 	--enable-polkit=yes \
 	--enable-polkit-agent \
 	--enable-modify-system=no \
@@ -652,6 +653,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Mar 29 2016 Mikhail Efremov <sem@altlinux.org> 1.1.92-alt1
+- Disable systemd tests.
+- Fix documentation build.
+- Use resolvconf with immutable resolv.conf too.
+- Updated to 1.1.92 (1.2-beta3).
+
 * Tue Mar 01 2016 Mikhail Efremov <sem@altlinux.org> 1.1.91-alt1
 - etcnet-alt: convert tests to g_assert().
 - etcnet-alt: Replace config.h with nm-default.h.
