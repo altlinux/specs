@@ -1,11 +1,11 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
 Name:           drascula-international
 Version:        1.0
-Release:        alt4_11
+Release:        alt4_12
 Summary:        Subtitles for Drascula: The Vampire Strikes Back
-Group:          Games/Other
 # For further discussion on distribution rights see:
 # http://www.redhat.com/archives/fedora-extras-list/2006-November/msg00030.html
 License:        Freely redistributable without restriction
@@ -25,32 +25,32 @@ Strikes Back.
 
 
 %package -n drascula-fr
+Group: Games/Other
 Summary:        French subtitles for Drascula: The Vampire Strikes Back
-Group:          Games/Other
 Requires:       drascula
 
 %description -n drascula-fr
 French subtitles for Drascula: The Vampire Strikes Back.
 
 %package -n drascula-de
+Group: Games/Other
 Summary:        German subtitles for Drascula: The Vampire Strikes Back
-Group:          Games/Other
 Requires:       drascula
 
 %description -n drascula-de
 German subtitles for Drascula: The Vampire Strikes Back.
 
 %package -n drascula-es
+Group: Games/Other
 Summary:        Spanish subtitles for Drascula: The Vampire Strikes Back
-Group:          Games/Other
 Requires:       drascula
 
 %description -n drascula-es
 Spanish subtitles for Drascula: The Vampire Strikes Back.
 
 %package -n drascula-it
+Group: Games/Other
 Summary:        Italian subtitles for Drascula: The Vampire Strikes Back
-Group:          Games/Other
 Requires:       drascula
 
 %description -n drascula-it
@@ -78,7 +78,6 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE4}
 
-
 %files -n drascula-fr
 %doc readme.txt
 %{_datadir}/drascula/PACKET.002
@@ -101,6 +100,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_12
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_11
 - update to new release by fcimport
 
