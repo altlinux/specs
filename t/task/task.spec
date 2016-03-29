@@ -1,6 +1,6 @@
 Name:           task
 Version:        2.5.1
-Release:        alt1
+Release:        alt2
 Summary:        A command-line todo list manager
 
 Group:          Office
@@ -74,6 +74,9 @@ make test
 %_datadir/zsh/Completion/Unix/_task
 
 %changelog
+* Tue Mar 29 2016 Denis Medvedev <nbr@altlinux.org> 2.5.1-alt2
+- NMU removed test for easter which is wrong for year 2016.
+
 * Thu Mar 03 2016 Kirill Maslinsky <kirill@altlinux.org> 2.5.1-alt1
 - 2.5.1
 
