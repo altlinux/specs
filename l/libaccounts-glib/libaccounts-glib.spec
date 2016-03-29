@@ -1,16 +1,25 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel
+BuildRequires: /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds pkgconfig(pygobject-3.0) python-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name libaccounts-glib
+%define version 1.21
+
+%global commit0 00254a604a7c7bd38c41794a80ad8930e90f21aa
+%global gittag0 VERSION_%{version}
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global snap0 20160216
+
 Name:		libaccounts-glib
-Version:	1.18
-Release:	alt1_3
+Version:	1.21
+Release:	alt1_1
 Summary:	Accounts framework for Linux and POSIX based platforms
 License:	LGPLv2
 URL:        https://gitlab.com/accounts-sso/libaccounts-glib
 
-Source0:    https://gitlab.com/accounts-sso/%{name}/repository/archive.tar.gz?ref=VERSION_%{version}#/%{name}-%{version}.tar.gz
+Source0:    https://gitlab.com/accounts-sso/%{name}/repository/archive.tar.gz?ref=%{gittag0}#/%{name}-%{version}.tar.gz
 
 BuildRequires:	libdbus-glib-devel
 BuildRequires:	libxml2-devel
@@ -28,8 +37,7 @@ Source44: import.info
 %package devel
 Group: Development/C
 Summary:	Development files for %{name}
-Requires:	%{name}%{?_isa} = %{version}-%{release}
-
+Requires:	%{name}%{?_isa} = %{version}
 %description devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
@@ -38,40 +46,45 @@ developing applications that use %{name}.
 Group: System/Libraries
 Summary:	Documentation for %{name}
 BuildArch:	noarch
-
 %description docs
 The %{name}-docs package contains documentation for %{name}.
 
+
 %prep
-%setup -q
+%setup -q -n %{name}-%{gittag0}-%{commit0}
+
+
 
 %build
-gtkdocize
-autoreconf -i --force
+NOCONFIGURE=1 \
+./autogen.sh
 
-%configure --disable-static \
-	--disable-gtk-doc
+%configure \
+  --disable-static \
+  --enable-gtk-doc
 
 make %{?_smp_mflags}
+
 
 %install
 make install DESTDIR=%{buildroot}
 
-rm -f %{buildroot}%{_libdir}/*.la
+rm -fv %{buildroot}%{_libdir}/lib*.la
 
 # create/own data dirs
 mkdir -p %{buildroot}%{_datadir}/accounts/{applications,providers,services,service_types}
 
 # add docs manuall to %%doc instead
-rm -rf %{buildroot}%{_prefix}/doc/reference
+rm -rfv %{buildroot}%{_prefix}/doc/reference
 
-# remove tests for now
-rm -f %{buildroot}%{_bindir}/*test*
-rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
+%check
+# advisory and non-fatal for now
+make check || cat tests/test-suite.log ||:
+
 
 %files
 %doc COPYING
-%doc AUTHORS INSTALL ChangeLog README NEWS
+%doc AUTHORS ChangeLog README NEWS
 %{_bindir}/ag-backup
 %{_bindir}/ag-tool
 %{_mandir}/man1/ag-backup.1*
@@ -97,16 +110,21 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %{_libdir}/pkgconfig/libaccounts-glib.pc
 %{_includedir}/libaccounts-glib
 %{_datadir}/gir-1.0/Accounts-1.0.gir
-%{_libdir}/libaccounts-glib/
 %{_datadir}/dbus-1/interfaces/*.xml
-%{_datadir}/libaccounts-glib/
 %{_datadir}/vala/vapi/libaccounts-glib.deps
 %{_datadir}/vala/vapi/libaccounts-glib.vapi
+## testing bits
+%{_datadir}/libaccounts-glib/
+%{_libdir}/libaccounts-glib/
 
 %files docs
 %doc %{_datadir}/gtk-doc/html/libaccounts-glib/
 
+
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1_3
 - update to new release by fcimport
 
