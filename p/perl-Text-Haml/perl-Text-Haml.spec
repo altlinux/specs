@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Digest/MD5.pm) perl(File/Path.pm) perl(Test/More.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-Haml
 %define upstream_version 0.990116
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_6
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
@@ -57,6 +57,9 @@ rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.990116-alt1_6
+- update by mgaimport
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.990116-alt1_5
 - update by mgaimport
 
