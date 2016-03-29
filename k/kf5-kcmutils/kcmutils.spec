@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.20.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -44,11 +44,12 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkf5cmutils
+%package -n libkf5kcmutils
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
-%description -n libkf5cmutils
+Conflicts: kf5-kcmutils-devel < %EVR
+%description -n libkf5kcmutils
 KF5 library
 
 
@@ -73,11 +74,14 @@ KF5 library
 %_K5lib/cmake/KF5KCMUtils
 %_K5archdata/mkspecs/modules/qt_KCMUtils.pri
 
-#%files -n libkf5cmutils
+%files -n libkf5kcmutils
 %_K5lib/libKF5KCMUtils.so.*
 %_K5srvtyp/kcm*.desktop
 
 %changelog
+* Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt2
+- fix packaging
+
 * Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
 - new version
 
