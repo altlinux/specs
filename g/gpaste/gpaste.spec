@@ -1,31 +1,41 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 1.0
 %define _name GPaste
+%define xdg_name org.gnome.GPaste
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major.3
+Version: %ver_major
 Release: alt1
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
-License: GPLv3+
+License: BSD-like
 Url: https://github.com/Keruspe/GPaste
 
 Source: http://www.imagination-land.org/files/%name/%name-%version.tar.xz
 #Source: %name-%version.tar
+# from pkg-config 0.29.1
+Source1: pkg.m4
+Patch: %name-3.20-alt-link.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: intltool appdata-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libdbus-devel libgtk+3-devel libclutter-devel
+%define gtk_ver 3.20
+%define gi_ver 1.48
+%define vala_ver 0.32
+
+BuildRequires: intltool libappstream-glib-devel desktop-file-utils
+BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver libclutter-devel
 BuildRequires: gnome-control-center-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools libvala-devel
+BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
+BuildRequires: vala-tools >= %vala_ver libvala-devel
+# since 3.20
+BuildRequires: systemd-devel
 
 %description
 This package provides gpaste-daemon is a clipboard management daemon with DBus
-interface, simple CLI interface -- gpaste and gpaste-settings is a tool
-to edit gpaste-daemon settings.
+interface.
 
 %package -n lib%name
 Summary: GPaste library
@@ -84,6 +94,11 @@ in notification area.
 
 %prep
 %setup
+%patch 
+# pkg-config-0.27, automake 1.15 required
+subst 's/0\.27/0.25/
+       s/1\.15/1.14/' configure.ac
+cp %SOURCE1 m4/
 
 %build
 %autoreconf
@@ -92,6 +107,7 @@ in notification area.
   --disable-unity \
   --enable-applet \
   --enable-vala
+#  --disable-silent-rules
 %make
 
 %install
@@ -99,17 +115,22 @@ in notification area.
 %find_lang %_name
 
 %files -f %_name.lang
-%_bindir/%name
+#%_bindir/%name
 %_bindir/%name-client
 %_libexecdir/%name/
 %exclude %_libexecdir/%name/%name-applet
-%_desktopdir/org.gnome.GPaste.Ui.desktop
-%_datadir/appdata/org.gnome.GPaste.Ui.appdata.xml
+%_desktopdir/%xdg_name.Ui.desktop
+%_datadir/appdata/%xdg_name.Ui.appdata.xml
+%_prefix/lib/systemd/user/%xdg_name.Ui.service
 %_datadir/dbus-1/services/*.service
+%_prefix/lib/systemd/user/%xdg_name.service
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/gnome-control-center/keybindings/*.xml
 %_man1dir/%name-client.1.*
-%doc AUTHORS NEWS README.md THANKS TODO
+
+%_datadir/bash-completion/completions/gpaste-client
+%exclude %_datadir/zsh/site-functions/_gpaste-client
+%doc AUTHORS NEWS README.md THANKS TODO COPYING
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -128,16 +149,20 @@ in notification area.
 
 %files applet
 %_libexecdir/%name/%name-applet
-%_datadir/appdata/org.gnome.GPaste.Applet.appdata.xml
-%_datadir/applications/org.gnome.GPaste.Applet.desktop
-%_sysconfdir/xdg/autostart/org.gnome.GPaste.Applet.desktop
+%_datadir/appdata/%xdg_name.Applet.appdata.xml
+%_datadir/applications/%xdg_name.Applet.desktop
+%_prefix/lib/systemd/user/%xdg_name.Applet.service
+%_sysconfdir/xdg/autostart/%xdg_name.Applet.desktop
 
 %files -n gnome-shell-extension-%name
 %_datadir/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/
-%_datadir/gnome-shell/search-providers/org.gnome.GPaste.search-provider.ini
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 
 %changelog
+* Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20-alt1
+- 3.20
+
 * Wed Jan 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 
