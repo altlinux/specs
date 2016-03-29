@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           nogravity
 Version:        2.00
-Release:        alt2_23
+Release:        alt2_25
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -31,6 +31,7 @@ Patch10:        nogravity-2.00-libpng15.patch
 Patch11:        0001-v3xscene-Remove-some-unused-code.patch
 Patch12:        0002-rlx32-Stop-using-MaxExtentableObjet.patch
 Patch13:        nogravity-2.00-stdint_h.patch
+Patch14:        nogravity--gcc6.patch
 Requires:       %{name}-data = %{version}
 BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libvorbis-devel
 BuildRequires:  automake desktop-file-utils libappstream-glib
@@ -64,6 +65,7 @@ cp %{SOURCE6} ./src/Linux/configure.in
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 sed -i 's/\r//g' GNU.TXT README.TXT
 pushd src/Linux
 sh bootstrap
@@ -112,6 +114,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_25
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_23
 - update to new release by fcimport
 
