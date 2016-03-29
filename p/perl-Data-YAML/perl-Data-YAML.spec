@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Data-YAML
 %define upstream_version 0.0.7
@@ -9,7 +9,7 @@ BuildRequires: perl-devel perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Easy YAML serialisation
 License:    GPL+ or Artistic
@@ -49,6 +49,9 @@ tripping of YAML serialized Perl data structures.
 %perl_vendor_privlib/*
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.7-alt1_2
+- update by mgaimport
+
 * Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.0.7-alt1_1
 - update by mgaimport
 
