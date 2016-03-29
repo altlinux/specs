@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: darktable
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -73,6 +73,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/%name/
 
 %changelog
+* Tue Mar 29 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Tue Mar 08 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
