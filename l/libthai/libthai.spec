@@ -1,14 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen
-# END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Summary:  Thai language support routines
 Name: libthai
-Version: 0.1.21
+Version: 0.1.24
 Release: alt1_1
 License: LGPLv2+
 Group: System/Libraries
 Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
-Patch: libthai-0.1.9-multilib.patch
+Patch0: libthai-0.1.9-multilib.patch
+Patch1: libthai-0.1.24-gcc6.patch
 URL: http://linux.thai.net
 
 BuildRequires: pkgconfig(datrie-0.2)
@@ -24,7 +23,8 @@ output methods as well as basic character and string supports.
 %package devel
 Summary:  Thai language support routines
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
+Requires: pkgconfig
 
 %description devel
 The libthai-devel package includes the header files and developer docs 
@@ -35,7 +35,8 @@ libthai.
 
 %prep
 %setup -q
-%patch -p1 -b .multilib
+%patch0 -p1 -b .multilib
+%patch1 -p0 -b .gcc6
 
 %build
 %configure --disable-static
@@ -47,9 +48,9 @@ make
 
 # move installed doc files back to build directory to package them
 # in the right place
-#mkdir installed-docs
-#mv $RPM_BUILD_ROOT%{_docdir}/libthai/* installed-docs
-#rmdir $RPM_BUILD_ROOT%{_docdir}/libthai
+mkdir installed-docs
+mv $RPM_BUILD_ROOT%{_docdir}/libthai/* installed-docs
+rmdir $RPM_BUILD_ROOT%{_docdir}/libthai
 
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 
@@ -59,12 +60,15 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/libthai
 
 %files devel
-#%doc installed-docs/*
+%doc installed-docs/*
 %{_includedir}/thai
 %{_libdir}/lib*.so
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.24-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 08 2014 Igor Vlasenko <viy@altlinux.ru> 0.1.21-alt1_1
 - new version (closes: #30252)
 
