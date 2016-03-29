@@ -1,18 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Pod/Usage.pm) perl-devel perl-podlators
+BuildRequires: perl(Pod/Usage.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Markdown
 Version:        3.005
-Release:        alt1
+Release:        alt1_1
 Summary:        Convert POD to Markdown
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Pod-Markdown/
-Source:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RW/RWSTAUNER/Pod-Markdown-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -50,7 +48,7 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -64,6 +62,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1_1
+- update to new release by fcimport
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 3.005-alt1
 - automated CPAN update
 
