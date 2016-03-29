@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Color-Library
 Version:        0.021
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Easy-to-use and comprehensive named-color library
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -13,6 +13,7 @@ Source0:        http://www.cpan.org/authors/id/R/RO/ROKR/Color-Library-%{version
 # Fix POD syntax, CPAN RT#86023
 Patch0:         Color-Library-0.021-pod-fixes.patch
 BuildArch:      noarch
+BuildRequires:  findutils
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(strict.pm)
@@ -44,7 +45,7 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name .packlist -delete
 # %{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
@@ -55,6 +56,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_8
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.021-alt2_7
 - update to new release by fcimport
 
