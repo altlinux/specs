@@ -1,16 +1,27 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/python /usr/bin/time gcc-c++
+BuildRequires: /usr/bin/python /usr/bin/time
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
+%define fedora 23
 Name:		coan
 Version:	6.0.1
-Release:	alt1_4
+Release:	alt1_8
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 Group:		Development/Tools
 License:	BSD
 URL:		http://coan2.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/coan2/%{name}-%{version}.tar.gz
+BuildRequires:  gcc-c++
+BuildRequires:	python
+# For pod2man:
+BuildRequires:  perl-podlators
+# On Fedora 23 pod2html is included in the perl package, whereas in 24
+# and later it's split out into perl-Pod-Html.
+%if 0%{fedora} > 23
+BuildRequires:  perl-Pod-Html
+%endif
 Source44: import.info
+
 
 %description
 %{name} (formerly sunifdef) is a software engineering tool for analyzing
@@ -37,10 +48,13 @@ done
 %configure
 make %{?_smp_mflags}
 
+%check
 #some tests are broken in armv7hl - disable until upstream fixes the issue
 #upstream bug report: https://sourceforge.net/p/coan2/bugs/83/
-#%check
-#make check
+#so for now we'll just allow the tests to fail
+#make check || (for f in test_coan/*.log ; do cat ${f} ; done ; false)
+make check || (for f in test_coan/*.log ; do cat ${f} ; done ; true)
+
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
@@ -51,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_8
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_4
 - update to new release by fcimport
 
