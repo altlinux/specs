@@ -1,17 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libexpat-devel libssl-devel pkgconfig(gnutls)
+BuildRequires: libssl-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libisds
-Version:        0.10.2
-Release:        alt1_3
+Version:        0.10.3
+Release:        alt1_1
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
 URL:            http://xpisar.wz.cz/%{name}/
 Source0:        %{url}dist/%{name}-%{version}.tar.xz
-# Fix a GCC 6 warning, bug #1305760, in upstream after 0.10
-Patch0:         libisds-0.10.2-test-Fix-indentation.patch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
@@ -45,7 +43,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %configure \
@@ -78,6 +75,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.3-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.2-alt1_3
 - update to new release by fcimport
 
