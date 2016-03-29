@@ -1,25 +1,33 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-IBeat
 Version:        0.161
-Release:        alt2_24
+Release:        alt2_25
 Summary:        Format times in .beat notation 
-
 Group:          Development/Perl
 License:        GPL+ or Artistic 
 URL:            http://search.cpan.org/dist/DateTime-Format-IBeat
 Source0:        http://backpan.perl.org/authors/id/E/EM/EMARTIN/DateTime-Format-IBeat-0.161.tar.gz
-
 BuildArch:      noarch 
-BuildRequires:  perl(Class/ISA.pm)
-BuildRequires:  perl(DateTime.pm), perl(Test/More.pm)
+# Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+# Module
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(DateTime.pm)
+BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(vars.pm)
+BuildRequires:  perl(warnings.pm)
+# Test Suite
+BuildRequires:  perl(Test/More.pm)
+# Optional Tests
 BuildRequires:  perl(Test/Pod.pm)
-
-
 Source44: import.info
+# Dependencies
 
 %description
 No Time Zones, No Geographical Borders 
@@ -29,34 +37,30 @@ day into 1000 beats. One Swatch beat is the equivalent of 1 minute 26.4
 seconds. That means that 12 noon in the old time system is the equivalent of 
 500 Swatch .beats.
 
-
 %prep
 %setup -q -n DateTime-Format-IBeat-%{version}
 
-
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
-
-# American English...
-mv LICENCE LICENSE
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-chmod -R u+w %{buildroot}/*
-
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} %{buildroot}
 
 %check
 make test
 
-
 %files
-%doc Artistic COPYING LICENSE Changes README
-%{perl_vendor_privlib}/*
-
+%doc Artistic COPYING LICENCE
+%doc Changes README
+%{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_25
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.161-alt2_24
 - update to new release by fcimport
 
