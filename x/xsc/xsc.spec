@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libICE-devel libSM-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 Name: xsc
-Version:  1.5
-Release:  alt2_15
+Version:  1.6
+Release:  alt1_1
 Summary: A clone of the old vector graphics video game Star Castle
 
 Group: Games/Other
-License: GPLv2        
+License: GPLv2+
 URL: http://www.panix.com/~mbh/projects.html
 Source0: http://www.panix.com/~mbh/xsc/xsc-%{version}.tar.gz
 Source1: xsc.desktop
@@ -51,6 +51,9 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/32x32/apps/xsc.png
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_15
 - update to new release by fcimport
 
