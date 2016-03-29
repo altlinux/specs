@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define _oldname gnome2-utils
 
 Name: gnome-utils
@@ -19,8 +19,8 @@ Obsoletes: %name-common
 
 Requires: gnome-dictionary >= %version
 Requires: gnome-disk-usage >= %version
-Requires: gnome-font-viewer >= 3.16.2
-Requires: gnome-screenshot >= %version
+Requires: gnome-font-viewer >= %version
+Requires: gnome-screenshot >= 3.18.0
 
 %description
 This package provides a set of utilities for the GNOME 3 desktop:
@@ -39,6 +39,9 @@ Font Viewer	  - preview fonts.
 
 
 %changelog
+* Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 28 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
