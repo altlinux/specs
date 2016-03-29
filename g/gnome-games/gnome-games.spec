@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 
 Name: gnome-games
 Version: %ver_major.0
@@ -10,7 +10,7 @@ Group: Graphical desktop/GNOME
 URL: http://live.gnome.org/GnomeGames/
 
 BuildArch: noarch
-%define hitori_ver 3.16.1
+%define hitori_ver 3.20.0
 
 Requires: %name-glines >= %ver_major
 Requires: %name-gnect >= %ver_major
@@ -29,7 +29,7 @@ Requires: %name-glchess >= %ver_major
 Requires: %name-lightsoff >= %ver_major
 Requires: %name-atomix >= %ver_major
 Requires: %name-taquin >= %ver_major
-Requires: %name-hitori >= %hitori_ver
+Requires: %name-hitori >= %ver_major
 Requires: %name-2048 >= %ver_major
 
 BuildRequires: rpm-build-licenses
@@ -56,6 +56,9 @@ GlChess:	a chess game which supports several chess engines.
 %files
 
 %changelog
+* Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Sep 21 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 - added gnome-2048 game
