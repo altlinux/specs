@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libexpat-devel perl(English.pm) zlib-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ perl(English.pm) zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt5_25.r1
+Release:        alt5_27.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -15,6 +15,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-src-%{version}.
 Source1:        %{name}-manpages.tar.bz2
 Source2:        %{name}-wrapper.sh
 Source3:        %{name}.desktop
+Source4:        %{name}.appdata.xml
 Patch0:         vegastrike-0.5.1-char-fix.patch
 Patch1:         vegastrike-0.5.1-paths-fix.patch
 Patch2:         vegastrike-0.4.2-posh-fix.patch
@@ -29,12 +30,13 @@ Patch15:        vegastrike-0.5.1-music.patch
 Patch16:        vegastrike-0.5.1-gcc48.patch
 Patch17:        vegastrike-0.5.1-boost154.patch
 Patch18:        vegastrike-aarch64.patch
+Patch19:        vegastrike-0.5.1-gcc6.patch
 BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk2-devel
 BuildRequires:  libjpeg-devel libpng-devel boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel expat-devel python-devel
 BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
 BuildRequires:  libvorbis-devel libogre-devel cegui-devel desktop-file-utils
-Requires:       %{name}-data = %{version}, icon-theme-hicolor, xdg-utils
-Requires:       opengl-games-utils
+BuildRequires:  libappstream-glib
+Requires:       %{name}-data = %{version}, xdg-utils, opengl-games-utils
 Source44: import.info
 Patch33: vegastrike-0.5.1-alt-SharedPool.patch
 Patch34: vegastrike-0.5.1.r1-alt-perl522.patch
@@ -62,6 +64,7 @@ Yet danger lurks in the space beyond.
 %patch16 -p0
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
@@ -74,8 +77,9 @@ rm objconv/mesher/expat.h
 
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
+export CXXFLAGS="$RPM_OPT_FLAGS -fsigned-char"
 %configure --with-data-dir=%{_datadir}/%{name} --with-boost=system \
-  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES $RPM_OPT_FLAGS" --disable-ffmpeg \
+  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES $RPM_OPT_FLAGS -fsigned-char" --disable-ffmpeg \
   --enable-stencil-buffer
 make %{?_smp_mflags} CXXLD="g++ -Wl,--no-as-needed"
 
@@ -99,21 +103,28 @@ install -p -m 644 *.6 $RPM_BUILD_ROOT%{_mandir}/man6
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install            \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE3}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE3}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/appdata
+appstream-util validate-relax --nonet \
+  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 
 %files
-%doc AUTHORS COPYING DOCUMENTATION README ToDo.txt
+%doc AUTHORS DOCUMENTATION README ToDo.txt
+%doc COPYING
 %{_bindir}/vega*
 %{_bindir}/vs*
 %{_libexecdir}/%{name}
 %{_mandir}/man6/*
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_27.r1
+- update to new release by fcimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt5_25.r1
 - fixed build
 
