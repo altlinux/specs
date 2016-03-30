@@ -4,7 +4,7 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.6.10
+Version: 2.6.12
 Release: alt2
 
 Group: Video
@@ -32,16 +32,17 @@ Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
 %endif
 Patch2: avidemux-2.6.10-alt-i18n-qm-path.patch
 Patch3: avidemux-2.6.0-alt-crash-retranslate.patch
-Patch4: avidemux-2.6.10-alt-flags.patch
+Patch4: alt-flags.patch
+Patch5: alt-buildfix.patch
 #
 Patch100: avidemux-2.5.1-opencore-check.patch
 
 # Automatically added by buildreq on Mon Aug 24 2015 (-bi)
 # optimized out: cmake-modules elfutils glibc-devel-static libEGL-devel libGL-devel libX11-devel libXext-devel libXv-devel libalsa-devel libgpg-error libjack-devel libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libqt5-core libqt5-gui libqt5-script libqt5-widgets libqt5-xml libstdc++-devel libvorbis-devel libxcb-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage pkg-config python-base python3 python3-base qt5-base-devel rpm-build-gir rsync ruby ruby-stdlibs xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: bzlib-devel cmake gcc-c++ git-core libSDL-devel libXvMC-devel libaften-devel libarts-devel libdca-devel libfaad-devel liblame-devel liblzma-devel liblzo2-devel libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel libsqlite3-devel libva-devel libvdpau-devel libvpx-devel libx264-devel libx265-devel libxvid-devel nss-ldapd perl-podlators python-module-google qt5-script-devel qt5-tools rpm-build-python3 rpm-build-ruby texi2html xsltproc yasm zlib-devel-static
-BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libSDL-devel python-devel
-BuildRequires: libaften-devel libdca-devel libfaad-devel libjack-devel liblame-devel
-BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel
+BuildRequires: bzlib-devel cmake gcc-c++ yasm glibc-devel libGL-devel libGLU-devel libSDL2-devel python-devel
+BuildRequires: libaften-devel libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame-devel libopus-devel
+BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fontconfig-devel libfribidi-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libvdpau-devel libva-devel libxvba-devel libXv-devel libXvMC-devel
 BuildRequires: libvorbis-devel libvpx-devel libx264-devel libx265-devel
@@ -101,6 +102,7 @@ Common files for %name
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 %patch100 -p1
 
 #cp -f %SOURCE4 po/
@@ -116,11 +118,11 @@ grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 export QTDIR=%_qt5_prefix
 BUILDDIR=$PWD
 sh bootStrap.bash --with-core --with-cli --with-qt4 --enable-qt5 --without-gtk --with-plugins
-lrelease-qt5 po/*.ts
-for p in po/*.po ; do
-    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
-    msgfmt -o po/"$FLNG".mo $p
-done
+#lrelease-qt5 avidemux/qt4/i18n/*.ts
+#for p in po/*.po ; do
+#    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
+#    msgfmt -o po/"$FLNG".mo $p
+#done
 
 %install
 %set_verify_elf_method unresolved=relaxed,textrel=relaxed
@@ -137,14 +139,14 @@ install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%rname.desktop
 install -pD -m644 %SOURCE3 %buildroot/%_libdir/ADM_plugins6/autoScripts/lib/
 ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 
-for p in po/*.mo ; do
-    LNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||' -e 's|@.*||'`
-    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
-    mkdir -p %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES
-    install -m 0644 po/"$FLNG".mo %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES/avidemux.mo
-done
+#for p in po/*.mo ; do
+#    LNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||' -e 's|@.*||'`
+#    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
+#    mkdir -p %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES
+#    install -m 0644 po/"$FLNG".mo %buildroot/%_datadir/locale/"$LNG"/LC_MESSAGES/avidemux.mo
+#done
 #mkdir -p %buildroot/%_datadir/avidemux6/i18n/
-#install -m 0644 po/avidemux*.qm %buildroot/%_datadir/avidemux6/i18n/
+#install -m 0644 lrelease-qt5 avidemux/qt4/i18n/avidemux*.qm %buildroot/%_datadir/avidemux6/i18n/
 
 %find_lang --with-qt avidemux
 #echo "%%defattr(644,root,root,755)" > avidemux.lang
@@ -163,11 +165,8 @@ done
 %_bindir/avidemux3_cli
 %_bindir/avidemux3_jobs*
 %_bindir/avidemux3_qt5
-%_libdir/libADM_UI*.so*
-%_libdir/libADM_render*.so
-%_libdir/libADM6*
-%_libdir/libADM_core*.so*
-%_libdir/libADM_audio*.so
+%_libdir/libADM6*.so.*
+%_libdir/libADM_*.so
 %_libdir/ADM_plugins?/
 %_pixmapsdir/*
 #%_datadir/ADM_scripts
@@ -180,6 +179,12 @@ done
 %exclude %_includedir/avidemux
 
 %changelog
+* Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.12-alt2
+- fix build requires
+
+* Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.12-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.6.10-alt2
 - rebuilt with recent x264
 
