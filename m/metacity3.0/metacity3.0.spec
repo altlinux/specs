@@ -7,7 +7,7 @@
 %def_enable shape
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Metacity window manager
@@ -21,7 +21,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %define theme_prefix theme
 
 # From configure.ac
-%define gtk_ver 3.15.2
+%define gtk_ver 3.16.0
 %define glib_ver 2.32.0
 %define startup_notification_ver 0.7
 %define xcomposite_ver 0.2
@@ -249,6 +249,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
+- 3.18.3
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
