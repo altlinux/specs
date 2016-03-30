@@ -23,8 +23,8 @@
 %define minor  5
 %define bugfix 0
 Name: qt5-base
-Version: 5.5.1
-Release: alt9
+Version: 5.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -35,16 +35,21 @@ Source: %rname-opensource-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
 # FC
-Patch1: qtbase-opensource-src-5.3.2-QTBUG-35459.patch
-Patch2: qtbase-opensource-src-5.4.0-QTBUG-43057.patch
-Patch3: qtbase-opensource-src-5.5.1-qdbusconnection_no_debug.patch
+Patch1: moc-get-the-system-defines-from-the-compiler-itself.patch
+Patch2: qtbase-opensource-src-5.6.0-alsa-1.1.patch
+Patch3: qtbase-opensource-src-5.6.0-arm.patch
+Patch4: qtbase-opensource-src-5.6.0-moc_WORDSIZE.patch
+Patch11: QTBUG-35459.patch
+Patch12: QTBUG-50930.patch
+Patch13: QTBUG-51086.patch
+Patch14: QTBUG-51648.patch
+Patch15: QTBUG-51649.patch
+Patch16: QTBUG-51676.patch
 # upstream
 # SuSE
 Patch100: 0001-Fix-QWidget-setWindowRole.patch
 Patch101: 0005-Restore-documented-behavior-for-the-WA_X11NetWmWindo.patch
 Patch102: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
-Patch103: xcb-dont-crash-in-mapToNativemapFromNative-if-the-screen-is-null.patch
-Patch104: xcb-fix-yet-another-crash-when-screens-are-disconnected.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -331,26 +336,33 @@ EGL integration library for the Qt%major toolkit
 
 %prep
 %setup -n %rname-opensource-src-%version
-%patch1 -p1 -b .QTBUG-35459
-%patch2 -p1 -b .QTBUG-43057
+%patch1 -p1
+%patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch11 -p1 -b .QTBUG
+%patch12 -p1 -b .QTBUG
+%patch13 -p1 -b .QTBUG
+%patch14 -p1 -b .QTBUG
+%patch15 -p1 -b .QTBUG
+%patch16 -p1 -b .QTBUG
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
-%patch104 -p1
 %patch1000 -p1 -b .ibase
 %patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
-bin/syncqt.pl -private
+bin/syncqt.pl -version %version -private
 [ -e include/QtCore/QtCoreDepends ] || >include/QtCore/QtCoreDepends
 
 # install optflags
 %add_optflags %optflags_shared
-sed -i "s|^\s*QMAKE_CFLAGS_RELEASE\s*+=.*$|QMAKE_CFLAGS_RELEASE += %optflags|" mkspecs/common/gcc-base.conf
-sed -i "s|^\s*QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO\s*+=.*$|QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += %optflags|" mkspecs/common/g++-base.conf
+sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE\s*=.*$|QMAKE_CFLAGS_OPTIMIZE = %optflags|" mkspecs/common/gcc-base.conf
+QMAKE_CFLAGS_OPTIMIZE_FULL=`echo %optflags | sed 's|-O[[:digit:]]||'`
+QMAKE_CFLAGS_OPTIMIZE_FULL+=" -O3"
+sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = $QMAKE_CFLAGS_OPTIMIZE_FULL|" mkspecs/common/gcc-base.conf
 
 #sed -i -e "s|^\(QMAKE_LFLAGS_RELEASE.*\)|\1 $RPM_LD_FLAGS|" \
 #  mkspecs/common/g++-unix.conf
@@ -440,8 +452,8 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
 
 %install
 # uninstall optflags
-sed -i "s|^\s*QMAKE_CFLAGS_RELEASE\s*+=.*$|QMAKE_CFLAGS_RELEASE += |" mkspecs/common/gcc-base.conf
-sed -i "s|^\s*QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO\s*+=.*$|QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += -O2 -g|" mkspecs/common/g++-base.conf
+sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE\s*=.*$|QMAKE_CFLAGS_OPTIMIZE = -O2|" mkspecs/common/gcc-base.conf
+sed -i "s|^\s*QMAKE_CFLAGS_OPTIMIZE_FULL\s*=.*$|QMAKE_CFLAGS_OPTIMIZE_FULL = -O3|" mkspecs/common/gcc-base.conf
 
 make install INSTALL_ROOT=%buildroot
 %if_disabled bootstrap
@@ -480,7 +492,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.5.1
+Version: 5.6.0
 __EOF__
 
 # rpm macros
@@ -604,8 +616,8 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %_qt5_bindir/qdbuscpp2xml*
 %_bindir/qdbusxml2cpp*
 %_qt5_bindir/qdbusxml2cpp*
-%_bindir/qdoc*
-%_qt5_bindir/qdoc*
+%_bindir/fixqt4headers.pl*
+%_qt5_bindir/fixqt4headers.pl*
 %_bindir/qmake*
 %_qt5_bindir/qmake*
 %_bindir/rcc*
@@ -639,15 +651,11 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 %_pkgconfigdir/Qt%{major}Test.pc
 %_pkgconfigdir/Qt%{major}Widgets.pc
 %_pkgconfigdir/Qt%{major}Xml.pc
-%_pkgconfigdir/Qt%{major}EglDeviceIntegration.pc
-%_pkgconfigdir/Qt%{major}XcbQpa.pc
 
 %files devel-static
 %_qt5_libdir/libQt%{major}*.a
 %_qt5_prefix/lib/libQt%{major}*.a
-%_pkgconfigdir/Qt%{major}Bootstrap.pc
 %_pkgconfigdir/Qt%{major}OpenGLExtensions.pc
-%_pkgconfigdir/Qt%{major}PlatformSupport.pc
 
 %files -n %gname-sql
 
@@ -737,6 +745,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt9
 - fix detect timezone
 

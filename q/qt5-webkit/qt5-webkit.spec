@@ -5,8 +5,8 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.5.1
-Release: alt3
+Version: 5.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -20,6 +20,7 @@ Patch1: qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch2: qtwebkit-opensource-src-5.0.1-debuginfo.patch
 # ALT
 Patch10: alt-flags.patch
+Patch11: alt-version.patch
 
 # Automatically added by buildreq on Mon Sep 30 2013 (-bi)
 # optimized out: elfutils fontconfig glib2-devel glibc-devel-static gstreamer-devel libGL-devel libX11-devel libXfixes-devel libfreetype-devel libgst-plugins libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-encodings python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs xorg-compositeproto-devel xorg-fixesproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
@@ -87,6 +88,7 @@ Requires: %name-common = %EVR
 %patch1 -p1 -b .save_memory
 %patch2 -p1 -b .debuginfo
 %patch10 -p1
+%patch11 -p1
 syncqt.pl-qt5 Source -version %version -private
 
 # remove rpath
@@ -154,6 +156,9 @@ export LDFLAGS="$LDFLAGS -Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt3
 - fix compile on arm64
 

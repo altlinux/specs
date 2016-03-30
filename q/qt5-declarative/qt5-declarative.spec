@@ -1,11 +1,11 @@
 
 %define qt_module qtdeclarative
 %define gname qt5
-%def_disable bootstrap
+%def_enable bootstrap
 
 Name: qt5-declarative
-Version: 5.5.1
-Release: alt2
+Version: 5.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -14,7 +14,12 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 # FC
-Patch1: qtdeclarative-opensource-src-5.5.0-no_sse2.patch
+Patch1: 0008-Fix-crash-when-Canvas-has-negative-width-or-height.patch
+Patch2: 0019-Revert-Fix-crash-on-QQmlEngine-destruction.patch
+Patch3: 0029-Avoid-div-by-zero-when-nothing-is-rendered.patch
+Patch10: qtdeclarative-opensource-src-5.5.0-no_sse2.patch
+Patch11: Check-for-NULL-from-glGetString.patch
+Patch12: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
 %if_disabled bootstrap
@@ -94,6 +99,11 @@ Requires: %name-common = %EVR
 %prep
 %setup -n %qt_module-opensource-src-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 syncqt.pl-qt5 -version %version -private
 
 %build
@@ -119,6 +129,7 @@ syncqt.pl-qt5 -version %version -private
 %dir %_qt5_archdatadir/qml/Qt/labs/
 %dir %_qt5_archdatadir/qml/QtQml/
 %dir %_qt5_archdatadir/qml/QtQuick/
+%dir %_qt5_plugindir/qmltooling/
 
 %files doc
 %if_disabled bootstrap
@@ -127,17 +138,16 @@ syncqt.pl-qt5 -version %version -private
 
 %files -n libqt5-qml
 %_qt5_libdir/libQt5Qml.so.*
+%_qt5_archdatadir/qml/builtins.qmltypes
 %_qt5_archdatadir/qml/Qt/labs/folderlistmodel/
 %_qt5_archdatadir/qml/Qt/labs/settings/
-%_qt5_archdatadir/qml/QtQml/Models.2/
-%_qt5_archdatadir/qml/QtQml/StateMachine/
+%_qt5_archdatadir/qml/QtQml/*
 %_qt5_archdatadir/qml/QtQuick/LocalStorage/
 %_qt5_archdatadir/qml/QtQuick/XmlListModel/
 
 %files -n libqt5-quick
 %_qt5_libdir/libQt5Quick.so.*
 #%_qt5_plugindir/accessible/libqtaccessiblequick.so
-%_qt5_plugindir/qmltooling/
 %_qt5_archdatadir/qml/QtQuick.2/
 #%_qt5_archdatadir/qml/QtQuick/Dialogs/
 #%_qt5_archdatadir/qml/QtQuick/PrivateWidgets/
@@ -156,6 +166,7 @@ syncqt.pl-qt5 -version %version -private
 
 %files devel
 %_bindir/qml*
+%_qt5_plugindir/qmltooling/*
 %_qt5_bindir/qml*
 %_qt5_libdir/libQt*.so
 %_qt5_libdatadir/libQt*.so
@@ -170,9 +181,12 @@ syncqt.pl-qt5 -version %version -private
 %files devel-static
 %_qt5_libdir/libQt?QmlDevTools.a
 %_qt5_libdatadir/libQt?QmlDevTools.a
-%_pkgconfigdir/Qt?QmlDevTools.pc
+#%_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Thu Oct 29 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
 - force SSE2 compile flags for ix86
 

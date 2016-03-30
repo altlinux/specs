@@ -1,9 +1,12 @@
 
 %global qt_module qtimageformats
 
+%def_disable fmt_mng
+%def_disable fmt_jp2
+
 Name: qt5-imageformats
-Version: 5.5.1
-Release: alt2
+Version: 5.6.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtImageFormats component
@@ -17,8 +20,10 @@ Source: %qt_module-opensource-src-%version.tar
 # Automatically added by buildreq on Tue Jun 03 2014 (-bi)
 # optimized out: elfutils libGL-devel libcloog-isl4 libjpeg-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs zlib-devel
 #BuildRequires: gcc-c++ glibc-devel-static libjasper-devel libmng-devel libtiff-devel libwebp-devel python-module-protobuf qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires: gcc-c++ glibc-devel libjasper-devel libmng-devel libtiff-devel libwebp-devel qt5-base-devel
+BuildRequires: gcc-c++ glibc-devel libtiff-devel libwebp-devel qt5-base-devel
 BuildRequires: qt5-tools
+%{?_enable_fmt_jp2:BuildRequires: libjasper-devel}
+%{?_enable_fmt_mng:BuildRequires: libmng-devel}
 
 %description
 The core Qt Gui library by default supports reading and writing image
@@ -47,6 +52,14 @@ This package contains documentation for Qt5 %qt_module
 %setup -qn %qt_module-opensource-src-%version
 syncqt.pl-qt5 -version %version -private
 
+%if_disabled fmt_jp2
+rm -rf config.tests/jasper
+%endif
+%if_disabled fmt_mng
+rm -rf  config.tests/libmng
+%endif
+
+
 %build
 %qmake_qt5
 %make_build
@@ -66,6 +79,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
+- new version
+
 * Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt2
 - rebuild with new libwebp
 
