@@ -2,11 +2,11 @@
 BuildRequires: glibc-devel libgnustep-corebase-devel zlib-devel
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.5.9
+%define octave_pkg_version 3.0.1
 %define octave_pkg_name nan
 %define octave_descr_name NaN
 Name: octave-%octave_pkg_name
-Version: 2.5.9
+Version: 3.0.1
 Release: alt1
 Summary: The NaN-toolbox
 
@@ -18,7 +18,7 @@ Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libgomp-devel libblas-devel libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
@@ -54,6 +54,10 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Mon Mar 28 2016 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
+- new version
+- added missing buildrequires
+
 * Wed Jul 02 2014 Paul Wolneykien <manowar@altlinux.ru> 2.5.9-alt1
 - updated by octave-package-builder
 
