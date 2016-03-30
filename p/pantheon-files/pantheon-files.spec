@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: pantheon-files
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -92,6 +92,9 @@ find ./ -name "CMakeLists.txt" -print0 | xargs -r0 subst 's|lib\/|${LIB_DESTINAT
 %endif
 
 %changelog
+* Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- 0.2.4
+
 * Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 

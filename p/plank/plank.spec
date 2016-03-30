@@ -1,8 +1,9 @@
-%define ver_major 0.10
-%def_disable dbusmenu
+%define ver_major 0.11
+%def_enable dbusmenu
+%def_disable apport
 
 Name: plank
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -14,12 +15,17 @@ Source: https://launchpad.net/%name/1.0/%version/+download/%name-%version.tar.xz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Requires: bamfdaemon
+Requires: bamfdaemon dconf
 
-BuildRequires: intltool libbamf3-devel libgee0.8-devel vala-tools xmllint
-BuildRequires: xvfb-run dbus-tools-gui libgtk+3-devel libwnck3-devel
-BuildRequires: libXi-devel libXfixes-devel
-%{?_enable_dbusmenu:BuildRequires: libdbusmenu-glib-devel}
+%define gtk_ver 3.10
+%define bamf_ver 0.2.92
+
+BuildRequires: intltool xmllint
+BuildRequires: libgtk+3-devel >= %gtk_ver libbamf3-devel >= %bamf_ver libgee0.8-devel
+BuildRequires: libwnck3-devel libXi-devel libXfixes-devel
+BuildRequires: xvfb-run dbus-tools-gui
+BuildRequires: vala-tools
+%{?_enable_dbusmenu:BuildRequires: libdbusmenu-gtk3-devel}
 
 %description
 Plank is a dock enabling you to start applications and manage your windows.
@@ -77,8 +83,9 @@ This package provides Vala language bindings for plank library.
 %build
 %configure \
   --enable-headless-tests \
-  %{subst_enable dbusmenu}
-%make_build V=1
+  %{subst_enable dbusmenu} \
+  %{subst_enable apport}
+%make_build
 
 %install
 %makeinstall_std
@@ -90,13 +97,25 @@ This package provides Vala language bindings for plank library.
 
 
 %files -f %name.lang
-%_sysconfdir/apport/crashdb.conf.d/plank-crashdb.conf
-%_bindir/plank
+%_bindir/%name
 %_datadir/icons/hicolor/*/apps/plank.*
 %_man1dir/plank.*
 %_desktopdir/plank.desktop
+%dir %_libdir/plank
+%dir %_libdir/plank/docklets
+%_libdir/plank/docklets/libdocklet-clippy.so
+%_libdir/plank/docklets/libdocklet-clock.so
+%_libdir/plank/docklets/libdocklet-desktop.so
+%_libdir/plank/docklets/libdocklet-trash.so
+%_datadir/glib-2.0/schemas/net.launchpad.plank.gschema.xml
 %_datadir/appdata/plank.appdata.xml
-%exclude %_datadir/apport/package-hooks/source_plank.py
+
+%if_enabled apport
+%_sysconfdir/apport/crashdb.conf.d/plank-crashdb.conf
+%_datadir/apport/package-hooks/source_plank.py
+%endif
+
+%exclude %_libdir/plank/docklets/*.la
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -116,6 +135,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Sat Mar 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Sat Oct 31 2015 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
 
