@@ -1,6 +1,6 @@
 %define mversion	6
-%define dversion	%mversion.9.2
-%define drelease	4
+%define dversion	%mversion.9.3
+%define drelease	7
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -10,7 +10,7 @@
 
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt1.1.1
+Release: alt1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -226,6 +226,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Mar 30 2016 Anton Farygin <rider@altlinux.ru> 6.9.3.7-alt1
+- new version 6.9.3.7
+
 * Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 6.9.2.4-alt1.1.1
 - don't show menu item in KDE
 
