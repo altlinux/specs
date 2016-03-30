@@ -2,8 +2,11 @@
 # Conditionals and other variables controlling the build
 # ======================================================
 
+# Below the same shorthands as in Redhat's spec are definied,
+# but mostly through ALT Sisyphus rpm-build-python3's macros
+# (to make the picture more clear and less error-prone).
+
 %global pybasever 3.3
-%global __python3_version %pybasever
 
 # pybasever without the dot:
 %global pyshortver 33
@@ -12,13 +15,24 @@
 
 %global pynameabi python%pybasever%pyabi
 
-%global pylibdir %_libdir/python%pybasever
-%global dynload_dir %pylibdir/lib-dynload
-%global pylibdir_noarch %_libexecdir/python%pybasever
+# Here, we re-use the machinery of rpm-build-python3 definitions
+# to generate the paths etc. in the way they are usually determined
+# for the build system. (The input to this machinery is:
+# %%__python3_version and %%__python3_abiflags;
 
-# Fix find-requires
-%define __python3 %buildroot%_bindir/python3
-%add_python3_path %pylibdir
+%global __python3_version %pybasever
+# the above also affects %%_python3_abi_version the way we need indeed.
+%global __python3_abiflags %pyabi
+# the above also affects %%_python3_abiflags
+
+# they normally refer to Python3 installed in the build system,
+# but we are building a new one, and not going to use the old one).
+
+%global pylibdir %__python3_libdir
+%global dynload_dir %__python3_dynlibdir
+%global include_dir %__python3_includedir
+%global tool_dir %__python3_tooldir
+%global pylibdir_noarch %__python3_libdir_noarch
 
 # All bytecode files are now in a __pycache__ subdirectory, with a name
 # reflecting the version of the bytecode (to permit sharing of python libraries
@@ -29,7 +43,7 @@
 # now has bytecode at:
 #   foo/__pycache__/bar.cpython-33.pyc
 #   foo/__pycache__/bar.cpython-33.pyo
-%global bytecode_suffixes .cpython-33.py?
+%global bytecode_suffixes .cpython-%pyshortver.py?
 
 # Python's configure script defines SOVERSION, and this is used in the Makefile
 # to determine INSTSONAME, the name of the libpython DSO:
@@ -59,12 +73,16 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %pybasever.1
-Release: alt7
+Release: alt8
 License: Python
 Group: Development/Python3
 
-# new common location for site-packages is supported since 0.1.9
-BuildRequires(pre): rpm-build-python3 >= 0.1.9
+# New common location for site-packages is supported since 0.1.9.
+# %%python3_ABI_dep is defined since 0.1.9.1.
+# The path macros brought in sync in 0.1.9.2.
+# %%__libpython3 macro is defined and used for the verify_elf trick
+# since 0.1.9.3.
+BuildRequires(pre): rpm-build-python3 >= 0.1.9.3
 BuildPreReq: liblzma-devel
 # For Bluetooth support
 # see https://bugzilla.redhat.com/show_bug.cgi?id=879720
@@ -78,6 +96,14 @@ BuildRequires: gdbm-devel
 %if 0%{?with_valgrind}
 BuildRequires: valgrind-devel
 %endif
+
+# Fix find-requires
+%global __python3 %buildroot%_bindir/python3
+%add_python3_path %pylibdir
+#Do not recompile .py files with old python3
+%add_python3_compile_exclude %pylibdir
+# Help verify_elf:
+%global __libpython3 %buildroot%__libpython3
 
 Source: %name-%version.tar
 
@@ -318,12 +344,13 @@ Url: http://www.python.org/
 
 # Like in Fedora:
 Provides: python(abi) = %pybasever
-# ALT's special name:
-%if "%_lib" == "lib64"
-Provides: python%pybasever-ABI(64bit)
-%else
-Provides: python%pybasever-ABI
-%endif
+
+# ALT's special name (looking like: python3.3-ABI(64bit)):
+#
+# (BTW, %%ABI_suffix is computed in a new-arch-ABI-proof way:
+# if a new weird arch-ABI arises, at least, we'll have
+# a weird suffix here, not coinciding with another existing one.)
+Provides: %python3_ABI_dep
 
 Requires: %name-base = %EVR
 
@@ -474,9 +501,9 @@ done
 %patch1 -p1
 %patch1005 -p1
 
-%if "%_lib" == "lib64"
-%patch102 -p1
-%patch104 -p1
+%if "%_lib" != "lib"
+< %PATCH102 sed -e 's:lib64:%_lib:g' | patch -p1
+< %PATCH104 sed -e 's:lib64:%_lib:g' | patch -p1
 %endif
 
 %patch113 -p1
@@ -576,25 +603,25 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 mv $RPM_BUILD_ROOT%_bindir/2to3 $RPM_BUILD_ROOT%_bindir/python3-2to3
 
 # Development tools
-install -m755 -d $RPM_BUILD_ROOT%pylibdir/Tools
-install Tools/README $RPM_BUILD_ROOT%pylibdir/Tools/
-cp -ar Tools/freeze $RPM_BUILD_ROOT%pylibdir/Tools/
-cp -ar Tools/i18n $RPM_BUILD_ROOT%pylibdir/Tools/
-cp -ar Tools/pynche $RPM_BUILD_ROOT%pylibdir/Tools/
-cp -ar Tools/scripts $RPM_BUILD_ROOT%pylibdir/Tools/
+install -m755 -d $RPM_BUILD_ROOT%tool_dir
+install Tools/README $RPM_BUILD_ROOT%tool_dir/
+cp -ar Tools/freeze $RPM_BUILD_ROOT%tool_dir/
+cp -ar Tools/i18n $RPM_BUILD_ROOT%tool_dir/
+cp -ar Tools/pynche $RPM_BUILD_ROOT%tool_dir/
+cp -ar Tools/scripts $RPM_BUILD_ROOT%tool_dir/
 
 # Documentation tools
 install -m755 -d %buildroot%pylibdir/Doc
 cp -ar Doc/tools %buildroot%pylibdir/Doc/
 
 # Demo scripts
-cp -ar Tools/demo %buildroot%pylibdir/Tools/
+cp -ar Tools/demo %buildroot%tool_dir/
 
 # Fix for bug #136654
 rm %buildroot%pylibdir/test/test_email/data/audiotest.au %buildroot%pylibdir/test/audiotest.au
 
 install -d -m 0755 %buildroot%python3_sitelibdir/__pycache__
-%if "%_lib" == "lib64"
+%if "%_lib" != "lib"
 install -d -m 0755 %buildroot%python3_sitelibdir_noarch/__pycache__
 %endif
 # The install scripts put a README in the old-style %pylibdir/site-packages
@@ -615,8 +642,8 @@ rmdir %buildroot%pylibdir/site-packages
 %global _pyconfig_h %_pyconfig32_h
 %endif
 
-mv %buildroot%_includedir/%pynameabi/pyconfig.h  %buildroot%_includedir/%pynameabi/%_pyconfig_h
-cat > %buildroot%_includedir/%pynameabi/pyconfig.h << EOF
+mv %buildroot%include_dir/pyconfig.h  %buildroot%include_dir/%_pyconfig_h
+cat > %buildroot%include_dir/pyconfig.h << EOF
 #include <bits/wordsize.h>
 
 #if __WORDSIZE == 32
@@ -661,7 +688,7 @@ find %buildroot \
 # Remove executable flag from files that shouldn't have it:
 chmod a-x \
   %buildroot%pylibdir/distutils/tests/Setup.sample \
-  %buildroot%pylibdir/Tools/README
+  %buildroot%tool_dir/README
 
 # Get rid of DOS batch files:
 find %buildroot -name \*.bat -exec rm {} \;
@@ -674,8 +701,8 @@ rm %buildroot%pylibdir/LICENSE.txt
 rm $RPM_BUILD_ROOT/%pylibdir/idlelib/{,__pycache__/}testcode*.py*
 
 # Get rid of crappy code:
-rm %buildroot%pylibdir/Tools/scripts/abitype.py
-rm %buildroot%pylibdir/Tools/scripts/fixcid.py
+rm %buildroot%tool_dir/scripts/abitype.py
+rm %buildroot%tool_dir/scripts/fixcid.py
 rm %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
 
 # Get rid of lib2to3 tests (python2)
@@ -695,12 +722,12 @@ rm %buildroot%pylibdir/distutils/{,__pycache__/}msvccompiler*.py*
 rm %buildroot%pylibdir/distutils/{,__pycache__/}msvc9compiler*.py*
 rm %buildroot%pylibdir/distutils/command/{,__pycache__/}bdist_msi*.py*
 rm %buildroot%pylibdir/distutils/command/*.exe
-rm %buildroot%pylibdir/Tools/scripts/win_add2path.py
+rm %buildroot%tool_dir/scripts/win_add2path.py
 
 # Get rid of crap
 rm -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
-rm %buildroot%pylibdir/Tools/scripts/md5sum.py
-rm %buildroot%pylibdir/Tools/scripts/parseentities.py
+rm %buildroot%tool_dir/scripts/md5sum.py
+rm %buildroot%tool_dir/scripts/parseentities.py
 
 # Remove sphinxext (temporary)
 rm -r %buildroot%pylibdir/Doc/tools/sphinxext
@@ -732,13 +759,22 @@ find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -w
 
 sed -i 's,/usr/local/bin/python,/usr/bin/python3,' %buildroot%_libdir/python%pybasever/cgi.py
 
+%global python_ignored_files site-packages(/.+\.(pth|egg-info/(entry_points|namespace_packages)\.txt))?$
+mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
+cat > %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name << EOF
+^%_libdir/python3[^/]*/%python_ignored_files
+%if "lib" != "%_lib"
+^%prefix/lib/python3[^/]*/%python_ignored_files
+%endif
+EOF
+
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%name-base-files.req.list
 # %name dirlist for %_rpmlibdir/files.req
 %dynload_dir/	%name-base
 %pylibdir/__pycache__/	%name-base
-%pylibdir/Tools/	%name-tools
-%pylibdir/Tools/__pycache__/	%name-tools
+%tool_dir/	%name-tools
+%tool_dir/__pycache__/	%name-tools
 EOF
 # rpm-build-python3 has a dep on exactly this file with the list
 # (for modularity: there used to be a separate package
@@ -747,15 +783,12 @@ cat <<\EOF >%buildroot%_rpmlibdir/%python3_sitebasename-site-packages-files.req.
 %(dirname %python3_sitelibdir)	%name-base
 %python3_sitelibdir/	%name-base
 %python3_sitelibdir/__pycache__/	%name-base
-%if "%_lib" == "lib64"
+%if "%_lib" != "lib"
 %(dirname %python3_sitelibdir_noarch)/	%name-base
 %python3_sitelibdir_noarch/	%name-base
 %python3_sitelibdir_noarch/__pycache__/	%name-base
 %endif
 EOF
-
-#Do not recompile .py files with old python3
-%add_python3_compile_exclude %_libdir/python%pybasever
 
 %check
 # Probably, some SSL-related things are currently anyway broken in Sisyphus
@@ -779,6 +812,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 
 %files base
 %doc LICENSE README
+%config %_sysconfdir/buildreqs/files/ignore.d/%name
 %_rpmlibdir/%name-base-files.req.list
 %_rpmlibdir/%python3_sitebasename-site-packages-files.req.list
 
@@ -787,7 +821,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dir %python3_sitelibdir/__pycache__/
 %python3_sitelibdir/README
 
-%if "%_lib" == "lib64"
+%if "%_lib" != "lib"
 %dir %(dirname %python3_sitelibdir_noarch)
 %dir %python3_sitelibdir_noarch/
 %dir %python3_sitelibdir_noarch/__pycache__/
@@ -939,8 +973,8 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 # package, along with their parent directories (bug 531901):
 %dir %pylibdir/config-%pybasever%pyabi/
 %pylibdir/config-%pybasever%pyabi/Makefile
-%dir %_includedir/%pynameabi/
-%_includedir/%pynameabi/%_pyconfig_h
+%dir %include_dir/
+%include_dir/%_pyconfig_h
 
 %files -n libpython3
 %_libdir/libpython%pybasever%pyabi.so.*
@@ -948,8 +982,8 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %files dev
 %pylibdir/config-%pybasever%pyabi/*
 %exclude %pylibdir/config-%pybasever%pyabi/Makefile
-%_includedir/%pynameabi/*.h
-%exclude %_includedir/%pynameabi/%_pyconfig_h
+%include_dir/*.h
+%exclude %include_dir/%_pyconfig_h
 %doc Misc/README.valgrind Misc/valgrind-python.supp Misc/gdbinit
 %_bindir/python3-config
 %_bindir/python%pybasever-config
@@ -964,8 +998,8 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %_bindir/python3-2to3
 %_bindir/2to3-%pybasever
 %_bindir/idle*
-%pylibdir/Tools
-%exclude %pylibdir/Tools/scripts/run_tests.py
+%tool_dir
+%exclude %tool_dir/scripts/run_tests.py
 %doc %pylibdir/Doc
 
 %files modules-tkinter
@@ -1004,9 +1038,14 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %dynload_dir/_testcapi.cpython-%pyshortver%pyabi.so
 %pylibdir/tkinter/test
 %pylibdir/unittest/test
-%pylibdir/Tools/scripts/run_tests.py
+%tool_dir/scripts/run_tests.py
 
 %changelog
+* Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt8
+- added ignored python3 files pattern for buildreq.
+- (.spec) Help verify_elf by pointing %%__libpython3 to our newly
+  built library.
+
 * Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.1-alt7
 - Unicode problem with ncurses fixed (RH#539917).
 - Unpackage garbage __pycache__/* left-over from unwanted files.
