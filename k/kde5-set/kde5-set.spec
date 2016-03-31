@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.1.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -12,7 +12,7 @@ BuildArch: noarch
 %package -n kde5-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: qt5-phonon-backend qt5-quickcontrols qt5-graphicaleffects qt5-imageformats
+Requires: qt5-phonon-backend qt5-quickcontrols qt5-graphicaleffects qt5-imageformats qt5-translations
 Requires: kf5-kio kf5-kded kf5-kwayland-integration
 
 %package -n kde5-mini
@@ -94,7 +94,7 @@ Summary: Set of KDE-based games
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-lskat kde5-kmines kde5-kshisen kde5-ktuberling kde5-bovo kde5-knetwalk
-Requires: kde5-katomic kde5-knavalbattle
+Requires: kde5-katomic kde5-knavalbattle kde5-kpat
 
 %package -n kde5-printing
 Summary: Set of printing support applications
@@ -106,7 +106,7 @@ Requires: kde5-print-manager cups printer-drivers-X11 system-config-printer-udev
 Summary: Set of image scanning support applications
 Group: Graphics
 Requires: kde5-runtime
-Requires: kde5-skanlite hplip-sane libsane-gphoto2
+Requires: kde5-skanlite hplip-sane libsane-gphoto2 sane
 # kde5-ksaneplugin
 
 %description
@@ -147,6 +147,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt2
+- update requires
+
 * Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
 - add kde5-edu kde5-games kde5-printing kde5-scanning packages
 
