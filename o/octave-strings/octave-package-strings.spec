@@ -1,10 +1,10 @@
 %def_with _octave_arch
-%define octave_pkg_version 1.0.7
+%define octave_pkg_version 1.2.0
 %define octave_pkg_name strings
 %define octave_descr_name strings
 Name: octave-%octave_pkg_name
-Version: 1.0.7
-Release: alt2.1
+Version: 1.2.0
+Release: alt1
 Summary: String Handling.
 
 Group: Sciences/Mathematics
@@ -13,7 +13,7 @@ URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
-BuildRequires: octave-devel
+BuildRequires: octave-devel texinfo
 %if_with _octave_arch
 BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Mar 31 2016 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- New version.
+
 * Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.7-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
