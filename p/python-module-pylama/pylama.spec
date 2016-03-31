@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 6.1.1
-Release: alt2.git20141029
+Release: alt3.git20141029
 Summary: pylama -- Code audit tool for python
 License: LGPL
 Group: Development/Python
@@ -98,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 6.1.1-alt3.git20141029
+- Recompile for python3.5 changed place of site-packages.
+
 * Fri Feb 26 2016 Denis Medvedev <nbr@altlinux.org> 6.1.1-alt2.git20141029
 - Build back into sisyphus
 
