@@ -12,7 +12,7 @@
 %{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: gedit
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -68,7 +68,6 @@ BuildPreReq: libpeas-devel >= %peas_ver
 BuildPreReq: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libattr-devel gnome-common libxml2-devel libsoup-devel gsettings-desktop-schemas-devel
 BuildRequires: vala-tools
-%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel libzeitgeist2.0-gir-devel}
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel libgtksourceview3-gir-devel}
 %{?_enable_gspell:BuildRequires: libgspell-devel >= %gspell_ver}
@@ -225,6 +224,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Mar 31 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
