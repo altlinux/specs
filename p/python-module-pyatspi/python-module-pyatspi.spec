@@ -3,7 +3,7 @@
 
 Name: python-module-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for at-spi library
 Group: Development/Python
@@ -65,13 +65,9 @@ popd
 
 %install
 %makeinstall_std
-# hack to avoid verify-elf errors
-export LD_PRELOAD=%_libdir/libpython%__python_version.so
 
 pushd py3build
 %makeinstall_std
-# hack to avoid verify-elf errors
-export LD_PRELOAD="${LD_PRELOAD:+"$LD_PRELOAD:"}%_libdir/libpython3.so"
 popd
 
 %files
@@ -84,6 +80,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 2.20.0-alt2
+- NMU removed incorrect LD_PRELOADS from noarch package
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.20.0-alt1
 - 2.20.0
 
