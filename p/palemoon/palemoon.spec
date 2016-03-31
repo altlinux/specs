@@ -2,8 +2,8 @@ Summary: The Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
-Version: 26.1.1
-Release: alt4.46aa4
+Version: 26.2.0
+Release: alt1.RC2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -40,7 +40,7 @@ Patch16: firefox-cross-desktop.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 Patch21: cpp_check.patch
-Patch23: palemoon_version-26.1.1.patch
+Patch23: palemoon_version-26.2.0.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -329,6 +329,12 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Mar 31 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.0-alt1.RC2
+- Version 26.2-RC2
+
+* Tue Mar 29 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt5.d870
+- Update from upstream/master git 
+
 * Wed Mar 23 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt4.46aa4
 - Update from upstream/master git 
 
