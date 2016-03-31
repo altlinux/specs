@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.3
-Release: alt2.git20150226
+Release: alt3.git20150226
 Summary: Thin wrapper for pandoc
 License: MIT
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 0.9.3-alt3.git20150226
+- Recompile for changed site-packages for python3.5
+
 * Wed Feb 24 2016 Denis Medvedev <nbr@altlinux.org> 0.9.3-alt2.git20150226
 - back to sisyphus
 
