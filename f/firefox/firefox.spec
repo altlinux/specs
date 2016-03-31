@@ -13,7 +13,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        45.0.1
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -142,10 +142,7 @@ tar -xf %SOURCE2
 %patch300 -p1
 %patch301 -p1
 %patch302 -p1
-#patch303 -p1
-
-
-#echo firefox_version > browser/config/version.txt
+%patch303 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -304,6 +301,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Thu Mar 31 2016 Alexey Gladkov <legion@altlinux.ru> 45.0.1-alt2
+- Add patch for Gtk 3.20.
+
 * Tue Mar 22 2016 Alexey Gladkov <legion@altlinux.ru> 45.0.1-alt1
 - New release (45.0.1).
 
