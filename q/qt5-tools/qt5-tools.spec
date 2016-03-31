@@ -1,7 +1,7 @@
 
 %define qt_module qttools
 %define gname qt5
-%def_enable bootstrap
+%def_disable bootstrap
 %def_disable qtconfig
 
 %define major 5
@@ -9,7 +9,7 @@
 %define bugfix 0
 Name: qt5-tools
 Version: 5.6.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -319,6 +319,9 @@ done
 
 
 %changelog
+* Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt2
+- build docs
+
 * Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 
