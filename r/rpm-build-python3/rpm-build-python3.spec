@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.9
+Version: 0.1.9.2
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -74,6 +74,18 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.9.2-alt1
+- macros: commented on %%__ vs %%_ (build vs target system properties)
+  and cleaned up a bit accordingly.
+- Path values fixed:
+  + %%python3_includedir has a suffix in the case of Python3 (3.3&3.5, at least).
+  + %%python3_tooldir synced with the real value that has been used
+    in python3-3.3.
+- %%_python3_path value should be adjusted when building python3 package;
+  the default made suitable for modules only.
+- macros: general-purpose %%ABI_suffix and special %%python3_ABI_dep added.
+- simplified the implementation of %%py3_requires & %%py3_provides.
+
 * Thu Mar 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.9-alt1
 - if there is an .so (in /*/python3*/), generate a req like:
   python(abi)(64bit) = 3.3
