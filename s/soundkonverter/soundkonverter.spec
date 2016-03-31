@@ -7,7 +7,7 @@
 
 Name: soundkonverter
 Version: 0.3.9
-Release: alt8.1
+Release: alt9
 
 %define Name soundKonverter
 
@@ -17,13 +17,10 @@ Group: Sound
 
 Url: http://www.kde-apps.org/content/show.php/%Name?content=29024
 Source: http://hessijames.googlepages.com/%name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt.patch
 Patch1: tde-3.5.13-build-defdir-autotool.patch
 Patch2: cvs-auto_version_check.patch
 Packager: Roman Savochenko <rom_as@altlinux.ru>
-
-Requires: vorbis-tools vorbisgain wavpack speex flac cdparanoia mppenc
-Requires: faad
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Fri May 16 2008
@@ -32,6 +29,25 @@ BuildRequires: libcdparanoia-devel libdnet-devel libjpeg-devel
 BuildRequires: libtag-devel xml-utils xorg-cf-files
 
 %description
+%Name project is a frontend to various audio converters.
+Currently supported backends are oggenc, oggdec, flac, lame, ffmpeg
+(partly), mplayer (partly).
+With %Name you can convert between various audio file formats.
+Supported formats are: (encode/decode)
+    ogg (e/d)
+    flac (e/d)
+    mp3 (e/d)
+    wav (e/d)
+    wma (d)
+
+%package -n kde3-soundkonverter
+Group: %group
+Summary: %summary
+Provides: soundkonverter = %EVR
+Obsoletes: soundkonverter < %EVR
+Requires: vorbis-tools vorbisgain wavpack speex flac cdparanoia mppenc
+Requires: faad
+%description -n kde3-soundkonverter
 %Name project is a frontend to various audio converters.
 Currently supported backends are oggenc, oggdec, flac, lame, ffmpeg
 (partly), mplayer (partly).
@@ -67,7 +83,7 @@ export KDEDIR=%kdedir
 
 export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 
-%configure \
+%K3configure \
     --disable-rpath \
     --enable-nmcheck \
     --enable-final \
@@ -83,21 +99,25 @@ bzip2 --keep --force --best ChangeLog
 
 %install
 %make_install DESTDIR=%buildroot install
-mv %buildroot%_datadir/apps/%name/amarokscript/README{,.html}
+mv %buildroot/%_K3apps/%name/amarokscript/README{,.html}
+mkdir -p %buildroot/%_K3bindir
+mv %buildroot/%_K3datadir/bin/* %buildroot/%_K3bindir/
 %find_lang --with-kde %name
 
-%files -f %name.lang
+%files -n kde3-soundkonverter -f %name.lang
 %doc AUTHORS ChangeLog.* README
-%_bindir/%name
-%_desktopdir/kde/*
-%_docdir/HTML/en/%name
-%_iconsdir/hicolor/*/*/*
-%_datadir/apps/%name
-%attr(755,root,root) %_datadir/apps/%name/amarokscript/*.rb
-%_datadir/apps/konqueror/servicemenus/*
-%_datadir/mimelnk/*/*
+%_K3bindir/%name
+%_K3xdg_apps/*
+%_kde3_iconsdir/hicolor/*/*/*
+%_K3apps/%name
+%attr(755,root,root) %_K3apps/%name/amarokscript/*.rb
+%_K3apps/konqueror/servicemenus/*
+%_K3mimelnk/*/*
 
 %changelog
+* Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 0.3.9-alt9
+- move to KDE3 dir
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.9-alt8.1
 - Fixed build
 
