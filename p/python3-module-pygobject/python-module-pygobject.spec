@@ -2,11 +2,10 @@
 %define oname pygobject
 %define gtk_api_ver 2.0
 %def_disable introspection
-%set_verify_elf_skiplist %_libdir/libpyglib-2.0-python3.so.0.0.0
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt8
+Release: alt10
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -24,8 +23,10 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python3-devel python3-module-pycairo-devel python-tools-2to3
+BuildRequires: python3-devel python3-module-pycairo-devel python3-module-pycairo python-tools-2to3
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2}
+
+%requires_python3_ABI_for_files %_libdir/libpyglib-2.0-python3.so.0.0.0
 
 %py3_provides scmexpr
 # ? python-modules
@@ -127,6 +128,12 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 2.28.6-alt10
+- Added new macro for python3.5
+
+* Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 2.28.6-alt9
+- Python3.5 adaptations.
+
 * Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 2.28.6-alt8
 - Spec cleanup
 
