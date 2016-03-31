@@ -4,7 +4,7 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.4.8
+Version: 1.3.5.1
 Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
@@ -14,14 +14,18 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:  %name-%version.tar
 # VCS:   https://git.fedorahosted.org/git/389/ds.git
 Patch1:  %name-fix-initscripts.patch
+Patch2:  %name-fix-syntax-errors.patch
 
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
 BuildRequires: libpcre-devel libsasl2-devel libsensors3-devel libsvrcore-devel
+BuildRequires: perl-devel
 BuildRequires: perl-Mozilla-LDAP perl-libnet perl-bignum
 BuildRequires: perl-DBM
 BuildRequires: perl-NetAddr-IP
 BuildRequires: perl-Archive-Tar
+BuildRequires: perl-Socket6
+BuildRequires: libsystemd-devel
 
 Provides:  fedora-ds = %version-%release
 Obsoletes: fedora-ds < %version-%release
@@ -82,6 +86,7 @@ and without the main package.
 %prep
 %setup -n %name-%version
 %patch1 -p1
+%patch2 -p1
 %autoreconf
 # Install SysVInit scripts anyway
 subst 's/^@SYSTEMD_FALSE@//g' Makefile.in
@@ -94,6 +99,7 @@ subst 's/^@SYSTEMD_FALSE@//g' Makefile.in
 %endif
 	--localstatedir=/var \
  	--enable-autobind \
+	--with-systemd \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-systemdsystemconfdir=%_sysconfdir/systemd/system \
 	--with-systemdgroupname=%groupname \
@@ -185,6 +191,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.5.1-alt1
+- New version
+
 * Thu Feb 18 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.4.8-alt1
 - New version
 
