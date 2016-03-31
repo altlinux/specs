@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.90
+Release: alt100.91
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -531,6 +531,14 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.91
+- brp-verify_elf: handle all rules for setting LD_PRELOAD in the form
+  of pairs of RPM_LD_PRELOAD_@ and RPM_FILES_TO_LD_PRELOAD_@ env vars.
+- verify-elf: substitute LD_PRELOAD with "$VERIFY_ELF_LD_PRELOAD"
+  before ldd (i.e., any prior value of LD_PRELOAD will be cleared!)
+- examples of usage of the above facilities:
+  rpm-build-python3-0.1.9.3 and rpm-build-python.
+
 * Thu Mar 10 2016 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.90
 - lib.req: made "no symbol bindings" condition fatal.
 - relative: fixed potential heap buffer overflow (by Gleb F-Malinovskiy).
