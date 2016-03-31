@@ -14,7 +14,7 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.6.0
+Version: 5.6.1
 Release: alt1
 %K5init altplace
 
@@ -270,6 +270,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 
