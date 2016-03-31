@@ -10,7 +10,7 @@
 
 Name: kf5-%rname
 Version: 5.6.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -41,6 +41,7 @@ Patch12: alt-def-layout-indicator.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel
+BuildRequires: scim-devel libibus-devel libgio-devel glib2-devel
 BuildRequires: libudev-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel libxcbutil-image-devel
 BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel
@@ -211,6 +212,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt2
+- update requires
+
 * Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - new version
 
