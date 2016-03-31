@@ -5,7 +5,7 @@
 
 Name: python-module-pygobject
 Version: %major.6
-Release: alt3
+Release: alt4
 
 Summary: Python bindings for GObject
 
@@ -23,10 +23,12 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
 %{?_enable_introspection:Requires: python-module-pygi = %version-%release}
 
 Conflicts: python-module-pygtk <= 2.8.2-alt2.1
+%requires_python_ABI_for_files  %_libdir/libpyglib-2.0-python.so.*
 
 %define glib_ver 2.28.0
 
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
+BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
 BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2}
 # for tests
@@ -86,8 +88,6 @@ mkdir -p %buildroot%_includedir/python%__python_version
 mv %buildroot%_includedir/pygtk-%gtk_api_ver %buildroot%_includedir/python%__python_version/pygtk
 %__subst "s|\${includedir}/pygtk-%gtk_api_ver|\${includedir}/python%__python_version/pygtk|g" %buildroot/%_pkgconfigdir/*.pc
 
-# hack to avoid verify-elf errors
-export LD_PRELOAD=%_libdir/libpython%__python_version.so
 
 %files
 %_libdir/libpyglib-2.0-python.so.*
@@ -119,6 +119,9 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %endif
 
 %changelog
+* Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 2.28.6-alt4
+- Removed LD_PRELOAD, added macros needed for python3.5
+
 * Fri Apr 13 2012 Yuri N. Sedunov <aris@altlinux.org> 2.28.6-alt3
 - updated to latest pygobject-2-28 (42d01f0)
 - no more libpython dependencies
