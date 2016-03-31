@@ -1,16 +1,18 @@
 
-%define _kde_alternate_placement 1
 %define mp3gain_ver %{get_version mp3gain}
 
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
 Version: 2.1.2
-Release: alt3
+Release: alt4
 
 Summary: A frontend to various audio converters
 License: GPLv2
 Group: Sound
+
+Provides: soundkonverter = %version-%release
+Conflicts: soundkonverter <= 0.3.9-alt8.1
 
 Url: http://gitorious.org/soundkonverter/soundkonverter
 #Url: http://kde-apps.org/content/show.php/soundKonverter?content=29024
@@ -64,17 +66,20 @@ done
 %files -f %tname.lang
 %doc README CHANGELOG
 #%_K4doc/*/%tname
-%_kde4_bindir/%tname
+%_K4bindir/%tname
 %_K4libdir/libsoundkonvertercore.so*
 %_K4lib/%{tname}_*.so
-%_kde4_xdg_apps/*.desktop
-%_kde4_iconsdir/hicolor/*/*/*.*
+%_K4xdg_apps/*.desktop
+%_K4iconsdir/hicolor/*/*/*.*
 %_K4apps/%tname
 %_K4apps/solid/actions/soundkonverter-*.desktop
 %_K4srv/%{tname}_*.desktop
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt4
+- move from KDE4 dir
+
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt3
 - fix find taglib
 
