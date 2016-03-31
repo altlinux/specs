@@ -1,5 +1,5 @@
 Name: liborcus
-Version: 0.9.2
+Version: 0.11.0
 Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
@@ -7,9 +7,10 @@ Group: System/Libraries
 License: MIT
 Url: http://gitorious.org/orcus
 Source: %name-%version.tar.bz2
-Patch: liborcus-alt-boost.patch
 
-%define libver 0.10
+Patch: liborcus-alt-mdds-pkgconfig.patch
+
+%define libver 0.11
 
 # Automatically added by buildreq on Thu Jul 25 2013
 # optimized out: boost-devel boost-intrusive-devel libstdc++-devel pkg-config
@@ -53,13 +54,15 @@ sed -i 's/liborcus_parser_.*_la_LIBADD = /& $(BOOST_SYSTEM_LIB) /' src/parser/Ma
 	--with-pic \
 	--with-boost \
 	--with-boost-system \
-	\
-	--disable-spreadsheet-model
+	--disable-python \
+	--disable-spreadsheet-model \
+	#
 
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
     libtool
+
 %make_build V=1
 
 %install
@@ -80,6 +83,9 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %_bindir/orcus-*
 
 %changelog
+* Thu Mar 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.0-alt1
+- Updated to 0.11.0.
+
 * Mon Sep 21 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.2-alt1
 - Updated to 0.9.2.
 
