@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.3.0
-Release: alt2
+Release: alt3
 Summary: A utility library for mocking out the requests Python library
 License: ASLv2.0
 Group: Development/Python
@@ -86,6 +86,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 0.3.0-alt3
+- Rebuild with changed site-packages in sisyphus
+
 * Thu Feb 25 2016 Denis Medvedev <nbr@altlinux.org> 0.3.0-alt2
 - Rebuild into sisyphus
 
