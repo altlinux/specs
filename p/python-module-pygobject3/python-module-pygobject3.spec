@@ -6,7 +6,7 @@
 
 Name: python-module-%{_name}3
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for GObject
 
@@ -31,11 +31,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%major/%_name-%version.tar.
 %define gi_ver 1.46.0
 
 BuildRequires: gnome-common
+BuildRequires(pre): rpm-build-gir
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel gtk-doc
+BuildPreReq: python-devel  python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel gtk-doc
 BuildPreReq: gobject-introspection-devel >= %gi_ver
 # python3
-BuildRequires: rpm-build-python3 python3-devel python3-module-pycairo-devel
+BuildPreReq: rpm-build-python3  python3-devel python3-module-pycairo-devel
 # for tests
 BuildRequires: dbus-tools-gui libgtk+3-gir-devel xvfb-run
 BuildRequires: glibc-i18ndata
@@ -149,13 +150,9 @@ popd
 
 %install
 %makeinstall_std
-# hack to avoid verify-elf errors
-export LD_PRELOAD=%_libdir/libpython%__python_version.so
 
 pushd py3build
 %makeinstall_std
-# hack to avoid verify-elf errors
-export LD_PRELOAD="${LD_PRELOAD:+"$LD_PRELOAD:"}%_libdir/libpython3.so"
 popd
 
 %check
@@ -203,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 3.20.0-alt2
+- NMU LD_PRELOAD changes for Python 3.5
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
