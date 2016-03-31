@@ -8,7 +8,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     4
-%define postgresql_subminor  6
+%define postgresql_subminor  7
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -758,6 +758,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Mar 31 2016 Alexei Takaseev <taf@altlinux.org> 9.4.7-alt1
+- 9.4.7
+
 * Wed Feb 10 2016 Alexei Takaseev <taf@altlinux.org> 9.4.6-alt1
 - 9.4.6
 - Drop patch 0001-flex-2.6.0.patch (Fix upstream)
