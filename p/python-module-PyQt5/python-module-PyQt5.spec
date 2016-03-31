@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 5.5.1
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -31,7 +31,8 @@ BuildRequires: python-module-dbus-devel python-module-sip-devel python3-module-d
 #BuildPreReq: qt5-serialport-devel qt5-x11extras-devel qt5-location-devel
 #BuildPreReq: qt5-connectivity-devel qt5-websockets-devel
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+# %%__python3_includedir was fixed in rpm-build-python3-0.1.9.2-alt1.
+BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
 #BuildRequires: python3-module-sip-devel python3-devel
 #BuildPreReq: python3-module-dbus
 %endif
@@ -95,20 +96,21 @@ subst 's|/lib" |/%_lib" |g' configure.py
 subst 's|#include <QTextStream>|#include <QTextStream>\n#define QT_SHARED\n|g' \
 	configure.py
 sed -i 's|@LIBDIR@|%_libdir|g' configure.py
-find . -type f -name \*.pro -o -name '*.pro-in' |while read f; do
-cat >> $f << 'E_O_F'
+find . -type f -name \*.pro -o -name '*.pro-in' -print0 |while read -r -d '' f; do
+cat >> "$f" << 'E_O_F'
 QMAKE_CFLAGS += %optflags %optflags_shared
 QMAKE_CXXFLAGS += %optflags %optflags_shared
 E_O_F
 done
 
 %if_with python3
-cp -fR . ../python3
+rm -rf ../python3
+cp -R . ../python3
 %endif
 
 %build
-%add_optflags -I$PWD/qpy/QtGui -I%_includedir/qt5/QtPrintSupport
-export PATH=$PATH:%_qt5_bindir
+%add_optflags -I"$PWD"/qpy/QtGui -I%_includedir/qt5/QtPrintSupport
+export PATH="$PATH":%_qt5_bindir
 
 echo 'yes' | python configure.py \
 	--debug \
@@ -119,8 +121,8 @@ echo 'yes' | python configure.py \
 	-a --confirm-license \
 	--qsci-api \
 	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
-for i in $(find ./ -name Makefile); do
-	sed -i 's|-Wl,-rpath,|-I|g' $i
+find ./ -name Makefile -print0 | while read -r -d '' i; do
+	sed -i 's|-Wl,-rpath,|-I|g' "$i"
 done
 %make_build
 
@@ -135,12 +137,12 @@ echo 'yes' | python3 configure.py \
 	-a --confirm-license \
 	--qsci-api \
 	--sip=%_bindir/sip3 \
-	--sip-incdir=%python3_includedir%_python3_abiflags \
+	--sip-incdir=%__python3_includedir \
 	--sipdir=%_datadir/sip3/PyQt5 \
 	--qsci-api-destdir=%_qt5_datadir/qsci3 \
 	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
-for i in $(find ./ -name Makefile); do
-	sed -i 's|-Wl,-rpath,|-I|g' $i
+find ./ -name Makefile -print0 | while read -r -d '' i; do
+	sed -i 's|-Wl,-rpath,|-I|g' "$i"
 done
 %make_build
 popd
@@ -150,23 +152,23 @@ popd
 %if_with python3
 pushd ../python3
 %makeinstall_std INSTALL_ROOT=%buildroot
-rm -rf %buildroot%python3_sitelibdir/%oname/uic/port_v2
+rm -r %buildroot%python3_sitelibdir/%oname/uic/port_v2
 popd
 pushd %buildroot%_bindir
-for i in $(ls); do
-	mv $i $i.py3
+find . -mindepth 1 -maxdepth 1 -print0 | while read -r -d '' i; do
+	mv -- "$i" "$i".py3
 done
 popd
 %endif
 
 %makeinstall_std INSTALL_ROOT=%buildroot
-rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
+rm -r %buildroot%python_sitelibdir/%oname/uic/port_v3
 
 # There is a file in the package named .DS_Store or .DS_Store.gz, 
 # the file name used by Mac OS X to store folder attributes.  
 # Such files are generally useless in packages and were usually accidentally 
 # included by copying complete directories from the source tarball.
-find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+find "$RPM_BUILD_ROOT" \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
 ##wait ##
 #install -d %buildroot/usr/share/sip/PyQt5/Qsci \
@@ -205,6 +207,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Thu Mar 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.5.1-alt2
+- (.spec) %%__python3_includedir was fixed in rpm-build-python3-0.1.9.2-alt1.
+
 * Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
 - new version
 
