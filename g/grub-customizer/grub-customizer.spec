@@ -1,6 +1,6 @@
 Name:           grub-customizer
-Version:        4.0.6
-Release:        alt2
+Version:        5.0.5
+Release:        alt1
 Summary:        Grub Customizer is a graphical interface to configure the grub2/burg settings
 
 License:        GPLv3
@@ -20,6 +20,7 @@ BuildRequires:  libarchive-devel
 BuildRequires:  desktop-file-utils
 
 Requires:       grub2
+Requires:       hwinfo
 
 %description
 Grub Customizer is a graphical interface to configure the grub2/burg settings
@@ -53,23 +54,29 @@ OUTPUT_FILE=/boot/grub/grub.cfg
 SETTINGS_FILE=/etc/sysconfig/grub2
 
 EOF
-mkdir -p %{buildroot}%{_sysconfdir}/%{name}
-install -m 0644 grub.cfg %{buildroot}%{_sysconfdir}/%{name}/grub.cfg
+mkdir -p %buildroot%_sysconfdir/%name
+install -m 0644 grub.cfg %buildroot%_sysconfdir/%name/grub.cfg
 
-%find_lang %{name}
+%find_lang %name
 
-%files -f %{name}.lang
+%files -f %name.lang
 %doc README COPYING changelog
-%config(noreplace) %{_sysconfdir}/%{name}
-%{_bindir}/%{name}
-%{_libdir}/grubcfg-proxy
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
-%{_mandir}/man1/%{name}.1*
-%{_datadir}/polkit-1/actions/net.launchpad.danielrichter2007.pkexec.grub-customizer.policy
+%config(noreplace) %_sysconfdir/%name
+%_bindir/%name
+%_libdir/grubcfg-proxy
+%_desktopdir/%name.desktop
+%_iconsdir/hicolor/*/apps/%name.png
+%_man1dir/%name.1*
+%_datadir/polkit-1/actions/net.launchpad.danielrichter2007.pkexec.grub-customizer.policy
 
 
 %changelog
+* Fri Apr 01 2016 Andrey Cherepanov <cas@altlinux.org> 5.0.5-alt1
+- New version
+
+* Tue Mar 29 2016 Andrey Cherepanov <cas@altlinux.org> 5.0.4-alt1
+- New version
+
 * Tue Oct 06 2015 Andrey Cherepanov <cas@altlinux.org> 4.0.6-alt2
 - Fix build with gcc5
 
