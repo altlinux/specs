@@ -13,7 +13,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt8
+Release: alt9
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -353,6 +353,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt9
+- update from frameworks branch
+
 * Thu Mar 10 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt8
 - update from frameworks branch
 
