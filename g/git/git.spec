@@ -1,5 +1,5 @@
 Name: git
-Version: 2.6.6
+Version: 2.7.4
 Release: alt1
 
 Summary: Git core and tools
@@ -498,6 +498,9 @@ popd
 %endif #emacs
 
 %changelog
+* Fri Mar 18 2016 Dmitry V. Levin <ldv@altlinux.org> 2.7.4-alt1
+- 2.6.6 -> 2.7.4
+
 * Thu Mar 17 2016 Dmitry V. Levin <ldv@altlinux.org> 2.6.6-alt1
 - 2.6.5 -> 2.6.6.
 
