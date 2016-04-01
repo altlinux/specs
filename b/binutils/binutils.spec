@@ -1,6 +1,6 @@
 Name: binutils
-Version: 2.24.0
-Release: alt5
+Version: 2.26.0
+Release: alt1.1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -12,35 +12,26 @@ Url: http://sourceware.org/binutils/
 Source: %name-%version.tar
 Source1: bfd.h
 Source2: gcc.sh
-Source3: gxx.sh
+Source3: g++.sh
 Source4: output-format.sed
 
-Patch: binutils-2_24-branch.patch
+Patch: binutils-2_26-branch.patch
 
-Patch0001: 0001-gold-testsuite-fix-dependencies.patch
-Patch0002: 0002-Also-copy-EI_OSABI-field.patch
-Patch0003: 0003-Set-SHF_INFO_LINK-bit-for-SHT_REL-SHT_RELA-sections.patch
-Patch0004: 0004-Check-corrupted-symbol-table.patch
-Patch0005: 0005-Add-lto-and-none-lto-input-support-for-ld-r.patch
-Patch0006: 0006-gold-change-default-hash-style-to-gnu.patch
-Patch0007: 0007-bfd-export-demangle.h-and-hashtab.h.patch
-Patch0008: 0008-ld-add-no-warn-shared-textrel-option.patch
-Patch0009: 0009-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
-Patch0010: 0010-ld-change-default-hash-style-to-gnu.patch
-Patch0011: 0011-ld-enable-z-relro-by-default.patch
-Patch0012: 0012-gold-enable-z-relro-by-default.patch
-Patch0013: 0013-ld-testsuite-restore-upstream-default-options.patch
-Patch0014: 0014-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
-Patch0015: 0015-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
-
-Patch16: binutils-2.24-amodra-pr16457.patch
-Patch17: binutils-2.24-rh-corrupt-binaries.patch
-Patch18: binutils-2.24-rh-corrupt-ar.patch
-Patch19: binutils-2.24-rh-strings-default-all.patch
-
-Patch100: binutils-alt-ld-testsuite-workaround-x86.patch
-Patch101: binutils-2.24-alt-fix-gold-testsuite.patch
-Patch102: binutils-2.24-alt-fix-ld-testsuite.patch
+Patch0001: 0001-Add-lto-and-none-lto-input-support-for-ld-r.patch
+Patch0002: 0002-Add-test-for-nm-on-mixed-LTO-non-LTO-object.patch
+Patch0003: 0003-Don-t-check-the-plugin-target-twice.patch
+Patch0004: 0004-PR19886-as-needed-regression.patch
+Patch0005: 0005-gold-change-default-hash-style-to-gnu.patch
+Patch0006: 0006-bfd-export-demangle.h-and-hashtab.h.patch
+Patch0007: 0007-ld-add-no-warn-shared-textrel-option.patch
+Patch0008: 0008-ld-enable-optimization-and-warn-shared-textrel-by-de.patch
+Patch0009: 0009-ld-change-default-hash-style-to-gnu.patch
+Patch0010: 0010-ld-enable-z-relro-by-default.patch
+Patch0011: 0011-gold-enable-z-relro-by-default.patch
+Patch0012: 0012-ld-testsuite-restore-upstream-default-options.patch
+Patch0013: 0013-gold-testsuite-use-sysv-hash-style-for-two-tests.patch
+Patch0014: 0014-bfd-elflink.c-bfd_elf_final_link-check-all-objects-f.patch
+Patch0015: 0015-ld-testsuite-pr18808b.c-pass-Wno-return-type.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -50,6 +41,7 @@ Conflicts: gcc-common < 0:1.2.1-alt4
 BuildRequires: alternatives >= 0:0.4
 BuildRequires: flex makeinfo perl-Pod-Parser zlib-devel
 BuildRequires: gcc-c++ libstdc++-devel-static
+BuildRequires: makeinfo
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, gcc-c++, glibc-devel-static, zlib-devel-static, bc, /proc, /dev/pts}}
 
 %package devel
@@ -99,26 +91,19 @@ libiberty.
 %patch0014 -p1
 %patch0015 -p1
 
-%patch16 -p1
-%patch17 -p0
-%patch18 -p0
-%patch19 -p0
-
-%ifarch %ix86
-%patch100 -p1
-%endif
-
-%patch101 -p2
-%patch102 -p2
-
-grep -FlZ 'LD="${LD-ld} -m elf_x86_64"' libtool.m4 */configure |
-        xargs -0 sed -i -e '
-/LD="\${LD-ld} -m elf_x86_64"/ i \
-	    libsuff=64
+# Replay libtool commits
+# a042d335197ac7afb824ab54c3aab91f3e79a2d0
+# 9e68384a4fac10585e54519a3f1925cb99d338e8
+sed -i -e '
+/^      \*32-bit\*)$/ a \
+	libsuff=x32
+/^      \*64-bit\*)$/ a \
+	libsuff=64
 s,sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib",sys_lib_search_path_spec="/lib$libsuff /usr/lib$libsuff /usr/local/lib$libsuff",
 s,sys_lib_dlsearch_path_spec="/lib /usr/lib",sys_lib_dlsearch_path_spec="/lib$libsuff /usr/lib$libsuff",
 s,sys_lib_dlsearch_path_spec="/lib /usr/lib \$lt_ld_extra",sys_lib_dlsearch_path_spec="$sys_lib_dlsearch_path_spec $lt_ld_extra",
-' --
+s,x86_64-\*kfreebsd\*-gnu|x86_64-\*linux\*|powerpc\*-\*linux\*|,aarch64*-*linux*|&,
+' libtool.m4 */configure
 
 sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
 
@@ -246,15 +231,13 @@ done
 
 %check
 [ -w /dev/ptmx -a -f /proc/self/maps ] || exit
+# testsuite requires gcc to be able to print path to liblto_plugin.so
+GCC_PFN_LTO=$(gcc -print-file-name=liblto_plugin.so)
+GCC_PPN_LTO=$(gcc -print-prog-name=liblto_plugin.so)
+[ "$GCC_PFN_LTO" != 'liblto_plugin.so' -o "$GCC_PPN_LTO" != 'liblto_plugin.so' ] || exit
 RUNTESTFLAGS=
-XFAIL_TESTS='script_test_1 script_test_11 ifuncmain1 ifuncmain1pic ifuncmain1vis ifuncmain1vispic ifuncmain1pie ifuncmain1vispie ifuncmain3'
-%ifarch x86_64
-XFAIL_TESTS="$XFAIL_TESTS exception_static_test incremental_test_2 incremental_test_3 incremental_test_4 incremental_test_5 incremental_test_6 incremental_copy_test incremental_common_test_1 incremental_comdat_test_1"
-%endif
-%ifarch %ix86
-XFAIL_TESTS="$XFAIL_TESTS debug_msg.sh"
-%endif
-%make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" \
+XFAIL_TESTS=
+%make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/g++.sh" \
 	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS"
 
 %files devel
@@ -276,6 +259,12 @@ XFAIL_TESTS="$XFAIL_TESTS debug_msg.sh"
 %doc NEWS*
 
 %changelog
+* Fri Apr 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.26.0-alt1.1
+- Applied upstream fix for sw#19886.
+
+* Thu Mar 24 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.26.0-alt1
+- Updated to 2.26.0 20160318.
+
 * Tue Dec 22 2015 Dmitry V. Levin <ldv@altlinux.org> 1:2.24.0-alt5
 - %%check: xfailed failing gold tests.
 
