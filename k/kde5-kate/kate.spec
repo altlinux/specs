@@ -4,8 +4,8 @@
 %define libkateinterfaces libkateinterfaces%sover
 
 Name: kde5-%rname
-Version: 15.12.2
-Release: alt2
+Version: 15.12.3
+Release: alt1
 %K5init
 
 Group: Editors
@@ -165,6 +165,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
 * Wed Mar 23 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
 - rebuild with new libgit2
 
