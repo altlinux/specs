@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 5.1.0
+Version: 5.1.1
 Release: alt2
 
 Group: Graphical desktop/KDE
@@ -87,7 +87,8 @@ Summary: Educational software based on the KDE technologies
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
 Requires: kde5-kanagram kde5-khangman kde5-parley kde5-kwordquiz kde5-kturtle kde5-marble
-Requires: kde5-step kde5-kstars kde5-kig kde5-kmplot
+Requires: kde5-step kde5-kstars kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
+Requires: kde5-kbruch kde5-kgeography
 
 %package -n kde5-games
 Summary: Set of KDE-based games
@@ -147,6 +148,12 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
+- fix requires
+
+* Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt1
+- update requires
+
 * Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt2
 - update requires
 
