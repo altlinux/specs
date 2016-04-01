@@ -3,7 +3,7 @@
 %define lngg Russian
 
 Name: kde5-i18n-%lng
-Version: 15.12.2
+Version: 15.12.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -77,6 +77,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
 * Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
