@@ -1,7 +1,7 @@
 %define oname shiboken
 Name: %oname-py3
 Version: 1.2.2
-Release: alt1.git20140422
+Release: alt3.git20140422
 Summary: Generates bindings for C++ libraries using CPython source code (Python 3)
 License: GPLv2, LGPLv2.1
 Group: Development/KDE and QT
@@ -10,7 +10,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+# Updated build system %%__*python3* macros are in 0.1.9.2.
+BuildRequires(pre): rpm-build-python3 >= 0.1.9.2
+BuildPreReq: python3-devel
 BuildPreReq: cmake libqt4-devel gcc-c++ libgeneratorrunner-devel
 BuildPreReq: phonon-devel generatorrunner qt4-designer xml-utils
 BuildPreReq: python3-module-sphinx-devel xsltproc python3-devel
@@ -86,6 +88,8 @@ cmake \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DQT_PHONON_INCLUDE_DIR:PATH="%_includedir/kde4" \
 	-DUSE_PYTHON3:BOOL=ON \
+	-DPYTHON3_INCLUDE_DIR=%__python3_includedir \
+	-DPYTHON3_LIBRARY=%__libpython3 \
 	..
 
 %make_build VERBOSE=1
@@ -118,6 +122,10 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt3.git20140422
+- (.spec) Fixed %%_libpython3 path (a new macro).
+- Denis Medvedev changed environment for Python3.5 build.
+
 * Tue May 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.git20140422
 - Version 1.2.2
 
