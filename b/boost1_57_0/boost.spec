@@ -36,7 +36,7 @@
 
 Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4.2
+Release: alt5
 Epoch: 1
 
 Summary: Boost libraries
@@ -61,13 +61,14 @@ Patch32: boost-1.54.0-fedora-spirit-unused_typedef-2.patch
 Patch33: boost-1.54.0-fedora-spirit-unused_typedef.patch
 Patch34: boost-1.57.0-python-cast-unused-typedef.patch
 
-# we use %%_python_version
-BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
+# we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
+BuildRequires(pre): rpm-build-python >= 0.36.6-alt1
 
 %if_with python3
 # we use %%_python3_abiflags
-BuildRequires(pre): rpm-build-python3 >= 0.1.2
-BuildRequires: python3-devel
+# we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
+BuildRequires(pre): rpm-build-python3 >= 0.1.9.3-alt1
+BuildPreReq: python3-devel
 %endif
 
 %if_with mpi
@@ -599,7 +600,7 @@ Summary: The Boost Python Library (Boost.Python) development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires: python3-devel = %_python3_version
+Requires: python3-devel = %_python3_abi_version
 Requires: %name-python-headers = %epoch:%version-%release
 Requires: libboost_python3-%version = %epoch:%version-%release
 PreReq: %name-devel = %epoch:%version-%release
@@ -1019,6 +1020,8 @@ Provides: boost-mpi-python = %epoch:%version-%release
 Requires: libboost_python%version = %epoch:%version-%release
 %endif
 
+%requires_python_ABI_for_files %_libdir/*_mpi_python.so.*
+
 %description -n libboost_mpi_python%version
 Boost.MPI is a library for message passing in high-performance parallel
 applications. This package contains shared library for python bindings.
@@ -1047,6 +1050,16 @@ Provides: boost-python-gcc2 = %epoch:%version-%release
 Provides: boost-python-gcc3 = %epoch:%version-%release
 Provides: boost-python = %epoch:%version-%release
 
+# Boost.Python shared libraries have unresolved symbols from libpythonX.X.so.
+# This is done intensionally to make it possible to load Python extensions
+# written with Boost.Python into programs that link with Python interpreter
+# statically (e.g. /usr/bin/python2.7 since 2.7.2-alt5). So, we have to
+# convince verify_elf that it is normal. See also thread starting from
+# http://lists.altlinux.org/pipermail/devel/2012-April/193731.html
+# and especially message where ldv@ suggested this hack (thanks):
+# http://lists.altlinux.org/pipermail/devel/2012-April/193827.html
+%requires_python_ABI_for_files %_libdir/*boost_python.so.*
+
 %description -n libboost_python%version
 Use the Boost Python Library to quickly and easily export a C++ library
 to Python such that the Python interface is very similar to the C++
@@ -1060,6 +1073,7 @@ in order to use them with Boost.Python. The system should simply
 Summary: The Boost Python Library (Boost.Python) for Python 3
 Group: Development/C++
 
+%requires_python3_ABI_for_files %_libdir/*boost_python3.so.*
 
 %description -n libboost_python3-%version
 Use the Boost Python Library to quickly and easily export a C++ library
@@ -1251,7 +1265,7 @@ using mpi ;
 %endif
 using python : %_python_version ;
 %if_with python3
-using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}%{_python3_abiflags} ;
+using python : %_python3_abi_version : %_prefix :  %__python3_includedir ;
 %endif
 EOF
 
@@ -1312,14 +1326,21 @@ $BJAM -q -j$NPROCS -d2 --layout=system --toolset=gcc    \
    --prefix=%{buildroot}%{_prefix} --libdir=%{buildroot}%{_libdir} install
 
 
-%if_with devel
-
 # install mpi python module
 %if_with mpi
+%if_with devel
 mkdir -p %buildroot/%python_sitelibdir/boost
 install -Dm644 libs/mpi/build/__init__.py %buildroot/%python_sitelibdir/boost/
 mv %buildroot%_libdir/mpi.so %buildroot/%python_sitelibdir/boost/
+%else
+# The python module won't be created
+# if we are a building just library compat pkgs.
+# (mpi.so belongs exclusively to the python module.)
+rm %buildroot%_libdir/mpi.so
 %endif
+%endif
+
+%if_with devel
 
 # make symbolic links for compatibility
 for i in %buildroot%_libdir/*.so; do
@@ -1395,22 +1416,6 @@ ln -s `basename $BJAM` %buildroot%_bindir/boost-jam
 
 %if_without devel_static
 rm -f %buildroot%_libdir/*.a || :
-%endif
-
-# Boost.Python shared libraries have unresolved symbols from libpythonX.X.so.
-# This is done intensionally to make it possible to load Python extensions
-# written with Boost.Python into programs that link with Python interpreter
-# statically (e.g. /usr/bin/python2.7 since 2.7.2-alt5). So, we have to
-# convince verify_elf that it is normal. See also thread starting from
-# http://lists.altlinux.org/pipermail/devel/2012-April/193731.html
-# and especially message where ldv@ suggested this hack (thanks):
-# http://lists.altlinux.org/pipermail/devel/2012-April/193827.html
-#
-# Adding both python 2 and python 3 creates library hell in requires searches,
-# but we don't care while this works.
-export LD_PRELOAD=%_libdir/libpython%_python_version.so
-%if_with python3
-export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_version}%{_python3_abiflags}.so
 %endif
 
 #files
@@ -1725,6 +1730,10 @@ done
 
 
 %changelog
+* Thu Mar 31 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.57.0-alt5
+- (.spec) ugly LD_PRELOAD replaced with nice new
+  %%requires_python{,3}_ABI. (Backported from 1.58.0-alt2.)
+
 * Sun Feb 28 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.57.0-alt4.2
 - Rebuild with new icu
 
