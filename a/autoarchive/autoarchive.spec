@@ -5,7 +5,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           autoarchive
 Version:        1.1.1
-Release:        alt1_6
+Release:        alt1_6.1
 Summary:        A simple backup tool that uses tar
 
 License:        GPLv3
@@ -51,6 +51,10 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{name}-%{version}/
 %{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 %changelog
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1_6.1
+- (NMU) rebuild with rpm-build-python3-0.1.9
+  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_6
 - update to new release by fcimport
 
