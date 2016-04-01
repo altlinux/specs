@@ -1,5 +1,5 @@
 %define branch 0.10
-%define svn svn6201
+%define svn svn6214
 
 %define rel alt1
 
@@ -913,6 +913,12 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Fri Apr 01 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6214
+- 0.10.0 svn6214 version
+
+* Wed Mar 30 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6202
+- 0.10.0 svn6202 version
+
 * Mon Mar 28 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6201
 - 0.10.0 svn6201 version
 
