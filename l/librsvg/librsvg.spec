@@ -11,13 +11,14 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.13
+Version: %ver_major.15
 Release: alt1
 Epoch: 1
 
 Summary: SVG rendering library
 License: LGPLv2+
 Group: System/Libraries
+Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
@@ -28,7 +29,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define libxml2_ver 2.7.0
 %define cairo_ver 1.2.0
 %define croco_ver 0.6.7
-%define vala_ver 0.17.1.26
+%define vala_ver 0.18
 
 PreReq: libcroco >= %croco_ver
 
@@ -181,6 +182,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Apr 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.15-alt1
+- 2.40.15
+
 * Fri Jan 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.13-alt1
 - 2.40.13
 
