@@ -2,16 +2,18 @@ Summary: GTK+ based GUI for controlling CDEmu daemon
 Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
 Name: gcdemu
 Version: 3.0.1
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+
 Url: http://cdemu.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
+Source1: ru.po
 Patch1: autostart.patch
-Patch2: ru_RU.patch
+Patch2: enabled_ru_translation.patch
+Patch3: fix_desktop.patch
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake intltool ImageMagick
+BuildRequires: cmake intltool
 Requires: cdemu-daemon cdemu-client python-module-notify python-module-appindicator
 BuildArch: noarch
 
@@ -41,7 +43,9 @@ gCDEmu - базирующийся на Gtk+ и Appindicator апплет в об
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
+%patch2
+%patch3
+cp %SOURCE1 po/
 
 %build
 %cmake_insource
@@ -52,25 +56,20 @@ gCDEmu - базирующийся на Gtk+ и Appindicator апплет в об
 %find_lang %name
 install -d -m755 %buildroot/%_sysconfdir/xdg/autostart/
 install -m644 %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
-#install -d -m755 %buildroot{%_niconsdir,%_miconsdir,%_liconsdir,%_iconsdir/hicolor/256x256/apps}
-#convert data/%name.svg -resize 48x48 %buildroot%_liconsdir/%name.svg
-#convert data/%name.svg -resize 16x16 %buildroot%_miconsdir/%name.svg
-#convert data/%name.svg -resize 32x32 %buildroot%_niconsdir/%name.svg
-#mv data/gcdemu*.svg %buildroot%_iconsdir/hicolor/256x256/apps/
 
 %files -f %name.lang
 %doc README AUTHORS
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_pixmapsdir/gcdemu*.svg
-#_niconsdir/%name.svg
-#_miconsdir/%name.svg
-#_liconsdir/%name.svg
-#_iconsdir/hicolor/256x256/apps/%name.svg
 %_datadir/glib-2.0/schemas/net.sf.cdemu.gcdemu.gschema.xml
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Sun Apr 03 2016 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt2
+- Added russian translation of git
+- fix desktop file
+
 * Thu Jan 14 2016 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
 - New version;
 - Added russian translation.
