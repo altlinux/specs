@@ -1,6 +1,6 @@
 Name: converseen
 Version: 0.9.2
-Release: alt2
+Release: alt3
 Summary: Converseen is a free cross-platform batch image processor.
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений.
 License: GPLv3
@@ -9,9 +9,10 @@ Url: http://converseen.fasterland.net/
 BuildRequires: desktop-file-utils
 # Automatically added by buildreq on Thu Aug 20 2015
 # optimized out: cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libstdc++-devel pkg-config
-BuildRequires: ImageMagick-tools cmake gcc-c++ libImageMagick-devel phonon-devel qt4-designer
+BuildRequires: ImageMagick-tools cmake gcc-c++ libImageMagick-devel libqt4-devel phonon-devel qt4-designer
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-0.9.2.tar.bz2
+Patch1: converseen_fix_desktop-file.patch
 
 %description
 Converseen is a free cross-platform batch image processor for Windows and Linux
@@ -31,6 +32,7 @@ Converseen — свободная кроссплатформенная прог�
 
 %prep
 %setup -n %name-%version
+%patch1
 
 %build
 cmake -DCMAKE_INSTALL_PREFIX=/usr .
@@ -39,19 +41,30 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr .
 %install
 %make_install DESTDIR=%buildroot install
 desktop-file-validate %buildroot/%_desktopdir/%name.desktop
+for x in 16 32 48; do
+    mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
+	convert %buildroot%_pixmapsdir/%name.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
+done
 
 %files
 %doc COPYING
 %_bindir/%name
 %_datadir/%name/*
 %_datadir/kde4/services/ServiceMenus/converseen_import.desktop
-%_datadir/pixmaps/%name.png
+%_liconsdir/*
+%_niconsdir/*
+%_miconsdir/*
+%exclude %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sun Apr 03 2016 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt3
+- Added loop to change the size of the icon
+- Added converseen_fix_desktop-file.patch.
+
 * Thu Aug 27 2015 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt2
-- Fix encoding in description
+- Fix encoding in description.
 
 * Thu Aug 20 2015 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - Initial build for ALT Linux Sisyphus (Closes: 31215).
