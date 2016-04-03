@@ -89,14 +89,14 @@
 
 Name: runawfe
 Version: 3.6.0
-Release: alt1.svn4700
+Release: alt2.svn4700
 Summary: RUNA WFE Workflow/BPM management system
 License: LGPL
 Group: Office
 Url: http://sourceforge.net/projects/runawfe
 Packager: Aleksey Konstantinov <kana@altlinux.org>
 Source0: %{name}-%{version}.tar.gz
-BuildPrereq: %requires_jboss %requires_java %requires_java_devel %requires_ant %requires_struts %requires_struts_test unzip %requires_perlcgi %requires_libgtk %requires_hibernate %requires_bsh %requires_apache_commons %requires_dom4j %requires_trove %requires_xjavadoc %requires_cactus %requires_cargo %requires_aspectj %requires_javamail
+BuildPrereq: %requires_jboss java = 1.6.0 java-devel = 1.6.0 %requires_ant %requires_struts %requires_struts_test unzip %requires_perlcgi %requires_libgtk %requires_hibernate %requires_bsh %requires_apache_commons %requires_dom4j %requires_trove %requires_xjavadoc %requires_cactus %requires_cargo %requires_aspectj %requires_javamail
 
 %description
 RUNA WFE is a cross-platform end user solution for business process management. It provides rich web interface with tasklist, form player, graphical process designer, bots and more
@@ -705,12 +705,6 @@ rm -f %_sbindir/runawfe-start.sh
 
 ############################   { pre/post scripts for runawfe-gpd }   #############################
 %post gpd
-
-mandriva=`uname -a | grep Mandriva`
-if [ "$mandriva" = "" ]; then
-	rm -Rf %{_libdir}/RunaGPD/plugins/org.eclipse.swt*.jar
-	ln -s -t %{_libdir}/RunaGPD/plugins %{_libdir}/eclipse/plugins/org.eclipse.swt*.jar
-fi
 %runawfe_update_menus
 
 %postun gpd
@@ -893,6 +887,6 @@ rm -f %_sbindir/runawfe-start.sh
 
 
 %changelog
-* Sun May 12 2013 Konstantinov Aleksey <kana@altlinux.org> 3.6.0-alt1.svn4700
+* Sun May 12 2013 Konstantinov Aleksey <kana@altlinux.org> 3.6.0-alt2.svn4700
 - New release
 
