@@ -1,8 +1,10 @@
 Name: solfege
-Version: 3.20.7
+Version: 3.22.2
 Release: alt1
 
 Summary: Eartraining program for GNOME
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ я┌я─п╣п╫п╦я─п╬п╡п╨п╦ я│п╩я┐я┘п╟.
+Summary(uk_UA.UTF-8): п÷я─п╬пЁя─п╟п╪п╟ я┌я─п╣п╫я┐п╡п╟п╫п╫я▐ я│п╩я┐я┘я┐.
 License: GPLv3
 Group: Education
 
@@ -33,14 +35,15 @@ BuildRequires: xsltproc >= 1.0.30-alt2
 BuildRequires: gnome-doc-utils
 # ...or something like 1.23-alt1, but *before* 1.29-alt1
 
+BuildRequires: texinfo ImageMagick-tools
+
 Requires: pygtk2 >= %pygtk_ver, libgtkhtml2 >= %gtkhtml_ver
 Requires: python >= %python_ver, gnome-python2 >= %pygnome_ver
 Requires: python-module-pygnome-bonobo python-module-pygnome-canvas pyorbit
 Requires: python-module-pygnome-gtkhtml2
 Requires: python-modules-sqlite3
-
-Summary(ru_RU.KOI8-R): Программа тренировки слуха.
-Summary(uk_UA.KOI8-U): Програма тренування слуху.
+#Added TiMidity++ is a converter that converts some of MIDI files
+Requires: TiMidity++
 
 AutoReqProv: yes, nopython
 # Requires: python-strict
@@ -56,17 +59,17 @@ performance of music, so I won't even try to make "a complete
 computerbased eartraining course". But I hope someone find this
 software useful.
 
-%description -l ru_RU.KOI8-R
-Solfege -- программа для тренировки слуха, написанная на Python с
-использованием библиотек GTK+ и GNOME.
+%description -l ru_RU.UTF-8
+Solfege -- п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╩я▐ я┌я─п╣п╫п╦я─п╬п╡п╨п╦ я│п╩я┐я┘п╟, п╫п╟п©п╦я│п╟п╫п╫п╟я▐ п╫п╟ Python я│
+п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ п╠п╦п╠п╩п╦п╬я┌п╣п╨ GTK+ п╦ GNOME.
 
-Тренировка слуха -- это отдельная тема, во многом перекликающаяся с теорией и
-исполнением музыки. Поэтому автор и не пытается создать "полный курс", в то же
-время надеясь, что эта программа окажется полезной.
+п╒я─п╣п╫п╦я─п╬п╡п╨п╟ я│п╩я┐я┘п╟ -- я█я┌п╬ п╬я┌п╢п╣п╩я▄п╫п╟я▐ я┌п╣п╪п╟, п╡п╬ п╪п╫п╬пЁп╬п╪ п©п╣я─п╣п╨п╩п╦п╨п╟я▌я┴п╟я▐я│я▐ я│ я┌п╣п╬я─п╦п╣п╧ п╦
+п╦я│п©п╬п╩п╫п╣п╫п╦п╣п╪ п╪я┐п╥я▀п╨п╦. п÷п╬я█я┌п╬п╪я┐ п╟п╡я┌п╬я─ п╦ п╫п╣ п©я▀я┌п╟п╣я┌я│я▐ я│п╬п╥п╢п╟я┌я▄ "п©п╬п╩п╫я▀п╧ п╨я┐я─я│", п╡ я┌п╬ п╤п╣
+п╡я─п╣п╪я▐ п╫п╟п╢п╣я▐я│я▄, я┤я┌п╬ я█я┌п╟ п©я─п╬пЁя─п╟п╪п╪п╟ п╬п╨п╟п╤п╣я┌я│я▐ п©п╬п╩п╣п╥п╫п╬п╧.
 
-%description -l uk_UA.KOI8-U
-Solfege -- програма для тренування слуху, що написана на Python ╕з використанням
-б╕бл╕отек GTK+ та GNOME.
+%description -l uk_UA.UTF-8
+Solfege -- п©я─п╬пЁя─п╟п╪п╟ п╢п╩я▐ я┌я─п╣п╫я┐п╡п╟п╫п╫я▐ я│п╩я┐я┘я┐, я┴п╬ п╫п╟п©п╦я│п╟п╫п╟ п╫п╟ Python я√п╥ п╡п╦п╨п╬я─п╦я│я┌п╟п╫п╫я▐п╪
+п╠я√п╠п╩я√п╬я┌п╣п╨ GTK+ я┌п╟ GNOME.
 
 %prep
 %setup
@@ -108,11 +111,20 @@ subst 's@!%__python\(.*\)@!%__python\1 -O@' %buildroot%_bindir/%name
 find %buildroot%_datadir/%name/ -name '*.pyc' -delete
 
 # put only optimized bytecode and necessary .py's into the package
+
+for x in 16 32 48; do
+    mkdir -p %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/
+    convert %buildroot%_pixmapsdir/%name.svg -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.svg
+done
+
 %files -f %name.lang
 %_bindir/*
 %dir %_datadir/%name
 %_datadir/%name
-#_niconsdir/*
+%_niconsdir/*
+%_liconsdir/*
+%_miconsdir/*
+%exclude %_pixmapsdir/*
 %_desktopdir/*
 %_man1dir/*
 #_libdir/%name
@@ -121,6 +133,12 @@ find %buildroot%_datadir/%name/ -name '*.pyc' -delete
 %doc AUTHORS FAQ README COPYING INSTALL changelog
 
 %changelog
+* Sun Apr 03 2016 Anton Midyukov <antohami@altlinux.org> 3.22.2-alt1
+- new version
+- encoding description to UTF-8
+- added missing buildrequires
+- added requires to TiMidity++ (Closes: 31786)
+
 * Mon Feb 25 2013 Alex Karpov <karpov@altlinux.ru> 3.20.7-alt1
 - new version
 
