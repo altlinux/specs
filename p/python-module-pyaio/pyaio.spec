@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4
-Release: alt2.git20130914
+Release: alt2.git20130914.1
 Summary: Python aio bindings
 License: BSD
 Group: Development/Python
@@ -91,6 +91,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt2.git20130914.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 
 * Wed Feb 03 2016 Sergey Alembekov <rt@altlinux.ru> 0.4-alt2.git20130914
 - Disable tests

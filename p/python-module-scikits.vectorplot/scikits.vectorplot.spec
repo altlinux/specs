@@ -6,7 +6,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 0.2
-Release: alt2.git20150130
+Release: alt2.git20150130.1
 Summary: Vector fields plotting algorithms
 License: BSD
 Group: Development/Python
@@ -91,6 +91,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.2-alt2.git20150130.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Tue Apr 28 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2-alt2.git20150130
 - Rebuilt with updated NumPy
 

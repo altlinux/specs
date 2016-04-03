@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.2
-Release: alt1.git20131112
+Release: alt1.git20131112.1
 Summary: Accelerator for ws4py and AutobahnPython
 License: Apache
 Group: Development/Python
@@ -82,6 +82,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.2-alt1.git20131112.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Nov 09 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.git20131112
 - Initial build for Sisyphus
 

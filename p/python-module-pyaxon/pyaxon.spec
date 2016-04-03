@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.5.11
-Release: alt1.git20150217.2
+Release: alt1.git20150217.2.1
 Summary: Python library for AXON
 License: MIT
 Group: Development/Python
@@ -150,6 +150,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.11-alt1.git20150217.2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sat Mar 26 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.11-alt1.git20150217.2
 - NMU: Fixed BRs.
 

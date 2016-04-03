@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 3.0.0
-Release: alt1.dev0.git20150806.1
+Release: alt2.dev0.git20150806
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
@@ -24,7 +24,7 @@ Source1: PIL.pth
 #BuildPreReq: python-module-sphinx-devel python3-module-sphinx
 #BuildPreReq: python3-module-sphinx-better-theme
 %if_with python3
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
 #BuildPreReq: python3-devel python3-module-setuptools-tests
 #BuildPreReq: python3-module-nose
 #BuildPreReq: python3-modules-tkinter
@@ -120,9 +120,9 @@ export LC_ALL=en_US.UTF-8
 %if_with python3
 pushd ../python3
 %python3_install
-install -d %buildroot%python3_includedir%_python3_abiflags
+install -d %buildroot%__python3_includedir
 install -p -m644 libImaging/*.h \
-	%buildroot%python3_includedir%_python3_abiflags/
+	%buildroot%__python3_includedir
 popd
 install -m 644 %SOURCE1 %buildroot%python3_sitelibdir/
 pushd %buildroot%_bindir
@@ -182,10 +182,14 @@ popd
 %python3_sitelibdir/*
 
 %files -n python3-module-%oname-devel
-%python3_includedir%_python3_abiflags/*
+# Here, we re-use the same path as in the build system
+%__python3_includedir/*
 %endif
 
 %changelog
+* Sat Apr  2 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.0-alt2.dev0.git20150806
+- (.spec) use the new correct %%__python3_includedir.
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1.dev0.git20150806.1
 - NMU: Use buildreq for BR.
 

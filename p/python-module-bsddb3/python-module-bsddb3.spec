@@ -4,7 +4,7 @@
 
 Name: python-module-%_name
 Version: 6.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for BerkleyDB
 Group: Development/Python
@@ -74,6 +74,10 @@ popd
 %exclude %_includedir/python*/%_name/bsddb.h
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 6.1.1-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Feb 19 2016 Yuri N. Sedunov <aris@altlinux.org> 6.1.1-alt1
 - 6.1.1
 

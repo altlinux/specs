@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt2.hg20150514
+Release: alt2.hg20150514.1
 Summary: Toolkit for IsoGeometric Analysis (IGA)
 License: BSD
 Group: Development/Python
@@ -79,6 +79,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt2.hg20150514.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.hg20150514
 - New snapshot
 - Enabled check

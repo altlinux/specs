@@ -3,7 +3,7 @@
 
 Name: sfepy
 Version: 2015.1
-Release: alt1.git20150427
+Release: alt1.git20150427.1
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
@@ -301,6 +301,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2015.1-alt1.git20150427.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Apr 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2015.1-alt1.git20150427
 - New snapshot
 

@@ -2,7 +2,7 @@
 
 Name: blueman
 Version: 2.0.3
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: The GTK+ bluetooth management utility
 Group: System/Libraries
@@ -109,6 +109,10 @@ EOF
 %exclude %python3_sitelibdir/_%{name}.la
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.3-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Mar 28 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.3-alt1.1
 - NMU: added python3-devel to BRs.
 

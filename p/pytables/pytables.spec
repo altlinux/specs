@@ -6,7 +6,7 @@
 
 Name: py%oname
 Version: 3.2.2
-Release: alt1.dev0.git20150828
+Release: alt1.dev0.git20150828.1
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -344,6 +344,10 @@ popd
 %_docdir/%name
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:3.2.2-alt1.dev0.git20150828.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Aug 30 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.2.2-alt1.dev0.git20150828
 - New snapshot
 

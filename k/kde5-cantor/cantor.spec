@@ -12,7 +12,7 @@
 
 Name: kde5-%rname
 Version: 15.12.2
-Release: alt1
+Release: alt1.1
 %K5init
 
 Group: Education
@@ -129,5 +129,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Sun Apr 03 2016 Ivan Zakharyaschev <imz@altlinux.org> 15.12.2-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - initial build

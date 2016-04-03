@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.9.4
+Version: 0.1.10
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -19,6 +19,8 @@ Requires: binutils >= 1:2.20.51.0.7
 # this happens automatically of the packages that owns it is installed.
 Requires: %_rpmlibdir/python3-site-packages-files.req.list
 # (The lib64 variant must be owned by the same package; thus it must be detected as well.)
+
+Conflicts: python3 < 3.5
 
 AutoReqProv: yes, nopython
 
@@ -77,6 +79,18 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10-alt1
+- use only the major Python version number for pythonN(*) autoreqs.
+  (This is mostly a cosmetic change in essence: the numbers in the
+  pythonN(*) provs and reqs don't mean much. The guarantee that the
+  module was run by exactly the same version of python used to be given
+  by the dep on python3.3/site-packages/; we are changing this.)
+  (The corresponding cosmetic removal of python3.3(*) provs is
+  scheduled for later; and we'll let it go on its own, without
+  forcing.)
+- Now, as python 3.5 stores .pyc compiled with -O and -OO separately
+  (as .opt-{1,2}.pyc), brp-bytecompile_python3 can safely make both.
+
 * Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.9.4-alt1
 - brp-hardlink_opt_pyc: handle .opt-?.pyc files (introduced in python3-3.5).
 

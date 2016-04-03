@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 5.0.0
-Release: alt1.git20150221.1
+Release: alt1.git20150221.1.1
 Summary: X-Ray Fluorescence Analysis Toolkit and Application
 License: MIT
 Group: Development/Python
@@ -210,6 +210,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.0.0-alt1.git20150221.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 5.0.0-alt1.git20150221.1
 - NMU: Use buildreq for BR.
 

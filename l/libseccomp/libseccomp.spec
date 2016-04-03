@@ -4,7 +4,7 @@
 
 Name: lib%oname
 Version: 2.2.3
-Release: alt1
+Release: alt1.1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -141,6 +141,10 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2.3-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Dec 17 2015 Alexey Shabalin <shaba@altlinux.ru> 2.2.3-alt1
 - 2.2.3
 - relocate shared libraries from %_libdir/ to /%_lib/.

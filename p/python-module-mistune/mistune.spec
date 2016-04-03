@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt3.git20150811
+Release: alt3.git20150811.1
 Summary: The fastest markdown parser in pure Python
 License: BSD
 Group: Development/Python
@@ -104,6 +104,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt3.git20150811.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Mar 28 2016 Denis Medvedev <nbr@altlinux.org> 0.7-alt3.git20150811
 - Cython brought back
 

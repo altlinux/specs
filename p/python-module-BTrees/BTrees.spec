@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 4.1.5
-Release: alt2.dev0.git20150602.1
+Release: alt2.dev0.git20150602.1.1
 Summary: Scalable persistent object containers
 License: ZPL
 Group: Development/Python
@@ -180,6 +180,10 @@ exit 1
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.5-alt2.dev0.git20150602.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 4.1.5-alt2.dev0.git20150602.1
 - NMU: Use buildreq for BR.
 

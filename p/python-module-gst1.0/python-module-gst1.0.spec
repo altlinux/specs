@@ -5,7 +5,7 @@
 
 Name: python-module-gst%gst_api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GStreamer overrides for PyGobject
 Group: Development/Python
@@ -75,6 +75,10 @@ popd
 
 
 %changelog
+* Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.8.0-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

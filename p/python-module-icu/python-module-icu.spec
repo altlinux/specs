@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 1.9.2
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %modulename
 
@@ -75,6 +75,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.2-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
 - 1.9.2
 - switched build from tarballs to upstream git

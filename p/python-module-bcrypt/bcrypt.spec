@@ -2,7 +2,7 @@
 
 Summary: An implementation the OpenBSD Blowfish password hashing algorithm
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 %setup_python_module bcrypt
 Name: python-module-bcrypt
 Source0: %version.tar.gz
@@ -98,6 +98,10 @@ python setup.py test
 python3 setup.py test
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Dec 07 2015 Fr. Br. George <george@altlinux.ru> 2.0.0-alt1
 - Autobuild version bump to 2.0.0
 - Update bfhash(1)

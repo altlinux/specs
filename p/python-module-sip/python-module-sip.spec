@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 4.16.9
-Release: alt1.1
+Release: alt2
 Summary: Python bindings generator for C++ class libraries
 License: PSF
 Group: Development/Python
@@ -99,10 +99,10 @@ sed -i 's|^\(CPPFLAGS.*\)|\1 -g -I%python_includedir|' */Makefile
 pushd ../python3
 python3 configure.py --debug -d %python3_sitelibdir
 sed -i \
-	's|^\(CPPFLAGS.*\)|\1 -g -I%python3_includedir%_python3_abiflags|' \
+	's|^\(CPPFLAGS.*\)|\1 -g -I%__python3_includedir|' \
 	*/Makefile
 sed -i \
-	's|lpython%_python3_version|lpython%_python3_version%_python3_abiflags|' \
+	's|lpython%__python3_version|l:%(basename %__libpython3)|' \
 	siplib/Makefile
 %make
 popd
@@ -138,11 +138,15 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %python3_sitelibdir/*
 
 %files -n python3-module-%oname-devel
-%python3_includedir%_python3_abiflags/*
+# Here, we just use the same path as in the build system:
+%__python3_includedir/*
 #doc doc/*
 %endif
 
 %changelog
+* Sat Apr 02 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.16.9-alt2
+- (.spec) use updated correct %%__python3_includedir and %%__libpython3.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 4.16.9-alt1.1
 - NMU: Use buildreq for BR.
 

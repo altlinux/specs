@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.7
-Release: alt3.a1.git20140620
+Release: alt3.a1.git20140620.1
 Summary: Cryptographic modules for Python
 License: Public domain
 Group: Development/Python
@@ -157,6 +157,10 @@ popd
 %endif
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7-alt3.a1.git20140620.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Mar 25 2016 Denis Medvedev <nbr@altlinux.org> 2.7-alt3.a1.git20140620
 - NMU changes for building on Python3.5.
 

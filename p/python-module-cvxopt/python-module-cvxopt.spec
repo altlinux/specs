@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.7
-Release: alt1.1
+Release: alt1.1.1
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
@@ -185,6 +185,10 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.7-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.7-alt1.1
 - NMU: Use buildreq for BR.
 

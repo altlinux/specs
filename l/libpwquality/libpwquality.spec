@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library for password generation and password quality checking
 License: BSD or GPL+
@@ -119,6 +119,10 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Jul 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

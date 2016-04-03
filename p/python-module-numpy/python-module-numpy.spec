@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt15.git20150829.2
+Release: alt15.git20150829.2.1
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -1021,6 +1021,10 @@ fi
 %endif
 
 %changelog
+* Thu Mar 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt15.git20150829.2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Mar 23 2016 Denis Medvedev <nbr@altlinux.org> 2.0.0-alt15.git20150829.2
 - NMU: reorganized dependencies.
 

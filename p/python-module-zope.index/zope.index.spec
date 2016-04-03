@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.1.1
-Release: alt1.dev0.git20150402.1.1
+Release: alt1.dev0.git20150402.1.1.1
 Summary: Indices for using with catalog like text, field, etc.
 License: ZPLv2.1
 Group: Development/Python
@@ -146,6 +146,10 @@ popd
 %endif
 
 %changelog
+* Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150402.1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Mar 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.1.1-alt1.dev0.git20150402.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

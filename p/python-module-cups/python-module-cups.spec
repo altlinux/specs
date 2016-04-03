@@ -4,7 +4,7 @@
 
 Name:          python-module-%oname
 Version:       1.9.73
-Release:       alt1
+Release:       alt1.1
 %setup_python_module %oname
 
 Group:         Development/Python
@@ -92,6 +92,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.73-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Feb 10 2016 Sergey Alembekov <rt@altlinux.ru> 1.9.73-alt1
 - Version 1.9.73
 

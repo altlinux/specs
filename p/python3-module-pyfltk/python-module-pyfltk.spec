@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.3.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python 3 bindings for FLTK library
 
@@ -55,6 +55,10 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.3.1-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Feb 24 2016 Denis Medvedev <nbr@altlinux.org> 1.3.3.1-alt1
 - Imported new sources 1.3.3.1_py3
 

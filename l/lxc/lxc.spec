@@ -27,7 +27,7 @@
 
 Name: lxc
 Version: 2.0.0
-Release: alt0.rc9.1
+Release: alt0.rc9.1.1
 Packager: Denis Pynkin <dans@altlinux.org>
 
 URL: https://linuxcontainers.org/
@@ -170,6 +170,10 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt0.rc9.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt0.rc9.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

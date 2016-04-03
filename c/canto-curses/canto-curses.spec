@@ -1,6 +1,6 @@
 Name: canto-curses
 Version: 0.9.0
-Release: alt1.alpha1.git20140904
+Release: alt1.alpha1.git20140904.1
 Summary: Curses frontend for Canto daemon
 License: GPLv2
 Group: Networking/News
@@ -40,6 +40,10 @@ and extensibility using the excellent Python programming language.
 %_man1dir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.0-alt1.alpha1.git20140904.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.alpha1.git20140904
 - Initial build for Sisyphus
 

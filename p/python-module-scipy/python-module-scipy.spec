@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.17.0
-Release: alt1.git20150829.2
+Release: alt1.git20150829.2.1
 
 Summary: SciPy is the library of scientific codes
 
@@ -481,6 +481,10 @@ rm -f %buildroot%python_sitelibdir/scipy/pickle/generated/scipy-stats-rv_discret
 %endif
 
 %changelog
+* Fri Mar 25 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.17.0-alt1.git20150829.2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 24 2016 Denis Medvedev <nbr@altlinux.org> 0.17.0-alt1.git20150829.2
 - NMU: arranged dependencies.
 

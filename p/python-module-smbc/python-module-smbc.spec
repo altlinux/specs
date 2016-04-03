@@ -2,7 +2,7 @@
 
 Name: python-module-%mname
 Version: 1.0.15.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python interface for smbclient
 Group: Development/Python
@@ -51,6 +51,10 @@ popd
 %doc README NEWS PKG-INFO
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.15.3-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Dec 22 2014 Yuri N. Sedunov <aris@altlinux.org> 1.0.15.3-alt1
 - updated to 1.0.15.3, new url
 - new python3 subpackage

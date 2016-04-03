@@ -2,7 +2,7 @@
 %define oname py%mname
 Name: python3-module-%oname
 Version: 1.10.1
-Release: alt3.git20121222
+Release: alt3.git20121222.1
 
 Summary: Pycairo is a set of Python bindings for the vector graphics library cairo
 
@@ -142,6 +142,10 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/%mname/pickle
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.1-alt3.git20121222.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Apr 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.1-alt3.git20121222
 - New snapshot
 

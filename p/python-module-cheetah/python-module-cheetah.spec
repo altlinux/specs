@@ -6,7 +6,7 @@
 Summary: Template engine and code-generator
 Name: %packagename
 Version: 2.4.4
-Release: alt2.git20121217.1
+Release: alt2.git20121217.1.1
 Source0: %origname-%version.tar.gz
 License: MIT
 Group: Development/Python
@@ -122,6 +122,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.4-alt2.git20121217.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.4.4-alt2.git20121217.1
 - NMU: Use buildreq for BR.
 

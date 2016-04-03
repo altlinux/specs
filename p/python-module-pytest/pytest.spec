@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2.8.0
-Release: alt1.dev4.git20150807.1.1
+Release: alt1.dev4.git20150807.2.workaround
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -144,6 +144,12 @@ cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sat Mar 19 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.8.0-alt1.dev4.git20150807.2.workaround
+- Rebuild with python3-3.5 to update the executable name (this is a
+  workaround; this should be fixed not to depend on the minor version).
+- This rebuild (with rpm-build-python3-0.1.10) will also switch to the
+  new python3(*) reqs.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.8.0-alt1.dev4.git20150807.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

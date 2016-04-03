@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-build-python rpm-build-python3 rpm-macros-fedora-compat
 
 Name: python-module-llfuse
 Version: 0.40
-Release: alt1_4.1
+Release: alt1_4.1.1
 
 Summary: Python Bindings for the low-level FUSE API
 
@@ -102,6 +102,10 @@ popd
 %endif # with_python3
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.40-alt1_4.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.40-alt1_4.1
 - NMU: Use buildreq for BR.
 

@@ -1,6 +1,6 @@
 Name: python3-module-kerberos
 Version: 1.1.5
-Release: alt1
+Release: alt1.1
 Summary: A high-level wrapper for Kerberos (GSSAPI) operations
 Group: Development/Python3
 License: ASL 2.0
@@ -36,6 +36,10 @@ Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.5-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Aug 25 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt1
 - Initial build for Sisyphus
 

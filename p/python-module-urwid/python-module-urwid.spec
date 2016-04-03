@@ -4,7 +4,7 @@
 
 Name: python-module-urwid
 Version: 1.2.1
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Urwid is a console user interface library for Python.
 License: LGPL
@@ -229,6 +229,10 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%rname/
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.1-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1.1
 - NMU: Use buildreq for BR.
 

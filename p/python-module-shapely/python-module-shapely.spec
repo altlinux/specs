@@ -4,7 +4,7 @@
 
 Name: python-module-%module_name
 Version: 1.5.10
-Release: alt1.git20150820
+Release: alt1.git20150820.1
 
 Summary: Planar geometries, predicates, and operations
 
@@ -163,6 +163,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.10-alt1.git20150820.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Aug 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.10-alt1.git20150820
 - Version 1.5.10
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-pygobject
 Version: %major.6
-Release: alt10
+Release: alt10.1
 Summary: Python 3 bindings for GObject
 
 License: LGPL
@@ -128,6 +128,10 @@ find %buildroot -type f -name '*.py' -exec 2to3 -w '{}' +
 %endif
 
 %changelog
+* Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.28.6-alt10.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 2.28.6-alt10
 - Added new macro for python3.5
 

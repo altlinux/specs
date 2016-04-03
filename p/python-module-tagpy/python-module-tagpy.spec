@@ -4,7 +4,7 @@
 
 Name: python-module-tagpy
 Version: 2013.1
-Release: alt2.git20130711.1.1.1
+Release: alt2.git20130711.1.1.1.1
 
 Summary: TagPy is a set of Python bindings for TagLib. 
 License: GPL2+
@@ -100,6 +100,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2013.1-alt2.git20130711.1.1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2013.1-alt2.git20130711.1.1.1
 - NMU: Use buildreq for BR.
 

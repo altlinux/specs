@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 2013.1
-Release: alt1.git20140620.1
+Release: alt1.git20140620.1.1
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
 Group: Development/Python
@@ -147,6 +147,10 @@ rm -fR %_includedir/pyublas
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2013.1-alt1.git20140620.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2013.1-alt1.git20140620.1
 - rebuild with boost 1.57.0
 

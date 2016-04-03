@@ -4,7 +4,7 @@
 
 Name: python-module-%modulename
 Version: 0.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: Parse english textual date descriptions
 
@@ -77,6 +77,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.4-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Sep 01 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt1
 - Version 0.2.4
 - Added module for Python 3

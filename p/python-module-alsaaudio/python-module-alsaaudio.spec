@@ -3,7 +3,7 @@
 
 Name: python-module-alsaaudio
 Version: 0.7
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Wrapper for accessing the ALSA API from Python
 
@@ -73,6 +73,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Tue Mar 26 2013 Aleksey Avdeev <solo@altlinux.ru> 0.7-alt1.1
 - Rebuild with Python-3.3
 

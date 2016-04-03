@@ -5,7 +5,7 @@
 %def_disable check
 
 Version: 1.2.5
-Release: alt1.1
+Release: alt1.1.1
 Epoch: 1
 %setup_python_module %oname
 Name: %packagename
@@ -152,6 +152,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.2.5-alt1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Jan 29 2016 Mikhail Efremov <sem@altlinux.org> 1:1.2.5-alt1.1
 - NMU: Use buildreq for BR.
 

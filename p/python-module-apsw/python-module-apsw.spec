@@ -4,7 +4,7 @@
 
 Name: python-module-%_name
 Version: 3.8.3.1
-Release: alt1.%rel.1
+Release: alt1.%rel.1.1
 
 Summary: Another Python SQLite Wrapper
 License: zlib/libpng License
@@ -78,6 +78,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.8.3.1-alt1.r1.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 3.8.3.1-alt1.r1.1
 - NMU: Use buildreq for BR.
 

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.99.2
-Release: alt2.git20130522
+Release: alt2.git20130522.1
 
 Summary: Base module for all Kaa modules
 
@@ -97,6 +97,10 @@ install -d %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.99.2-alt2.git20130522.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Feb 08 2016 Sergey Alembekov <rt@altlinux.ru> 0.99.2-alt2.git20130522
 - Disabled Doc, Pickle and Sphinx
 

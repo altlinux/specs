@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.24.1
-Release: alt1.git20150224
+Release: alt1.git20150224.1
 Summary: A Python binding to Poppler-Qt5
 License: LGPLv2.1+
 Group: Development/Python
@@ -83,6 +83,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.24.1-alt1.git20150224.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Feb 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.24.1-alt1.git20150224
 - Initial build for Sisyphus
 

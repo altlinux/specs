@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.3
-Release: alt1.git20140923
+Release: alt1.git20140923.1
 Summary: Fast drop-in replacement for decimal.py
 License: BSD
 Group: Development/Python
@@ -152,6 +152,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3-alt1.git20140923.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.git20140923
 - Initial build for Sisyphus
 

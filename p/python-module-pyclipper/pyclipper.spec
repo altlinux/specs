@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.9.2
-Release: alt1.b0.git20150320
+Release: alt1.b0.git20150320.1
 Summary: Cython wrapper for the C++ translation of the Angus Johnson's Clipper library
 License: MIT
 Group: Development/Python
@@ -87,6 +87,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.2-alt1.b0.git20150320.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.b0.git20150320
 - Initial build for Sisyphus
 

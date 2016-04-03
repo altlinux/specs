@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.10.4
-Release: alt1
+Release: alt1.1
 
 %setup_python_module %oname
 
@@ -93,6 +93,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.4-alt1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Nov 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.4-alt1
 - Version 0.10.4
 - Added module for Python 3

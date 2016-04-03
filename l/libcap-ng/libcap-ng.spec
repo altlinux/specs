@@ -3,7 +3,7 @@
 
 Name: libcap-ng
 Version: 0.7.4
-Release: alt1.3
+Release: alt1.3.1
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
@@ -157,6 +157,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.4-alt1.3.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Feb 24 2016 Michael Shigorin <mike@altlinux.org> 0.7.4-alt1.3
 - fix BR(pre): rpm-build-python3 towards a simple BR
   (makes --without python3 work again with hasher >= 1.3.28)

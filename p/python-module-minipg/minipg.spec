@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.4.3
-Release: alt1.git20150208.2
+Release: alt1.git20150208.2.1
 Summary: Yet another PostgreSQL database driver
 License: MIT
 Group: Development/Python
@@ -117,6 +117,10 @@ exit 1
 %endif
 
 %changelog
+* Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.3-alt1.git20150208.2.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sat Mar 26 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.3-alt1.git20150208.2
 - NMU: Fixed BRs.
 

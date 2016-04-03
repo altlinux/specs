@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2.1
+Release: alt2.1.1
 
 Summary: Python wrapper to the DIRECT algorithm
 License: MIT
@@ -138,6 +138,10 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt2.1.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Jan 27 2016 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt2.1
 - NMU: Use buildreq for BR.
 

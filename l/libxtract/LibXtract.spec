@@ -2,7 +2,7 @@
 
 Name: libxtract
 Version: 0.7.1
-Release: alt1.beta.git20140717
+Release: alt1.beta.git20140717.1
 Summary: Simple, portable, lightweight library of audio feature extraction functions
 License: MIT
 Group: System/Libraries
@@ -158,6 +158,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.1-alt1.beta.git20140717.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Sun Sep 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.beta.git20140717
 - Initial build for Sisyphus
 

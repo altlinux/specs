@@ -1,6 +1,6 @@
 Name: blender
-Version: 2.69
-Release: alt1
+Version: 2.76b
+Release: alt2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -13,20 +13,19 @@ Source1: %name-wrapper
 Source2: %name.desktop
 Source3: %name-win.desktop
 Patch1: %name-2.68a-cmake_freetype251.patch
-Patch2: %name-2.47-alt-usertempdir.patch
-Patch3: %name-2.49b-alt-ld.patch
-Patch4: %name-2.49b-alt-qhull.patch
-Patch6: %name-2.66-alt-libav.patch
-Patch7: 0004-install_in_usr_lib.patch
-Patch8: 0006-locales_directory_install.patch
-Patch9: 0009-do_not_use_version_number_in_the_system_path.patch
-Patch10: 0011-look_for_droid_ttf_with_fontconfig.patch
-Patch11: %name-2.66-alt-pcre.patch
-Patch12: %name-2.67a-rna.patch
+
+Patch11: 0001-blender_thumbnailer.patch
+Patch12: 0002-install_in_usr_share.patch
+Patch13: 0003-locales_directory_install.patch
+Patch14: 0004-update_manpages.patch
+Patch15: 0005-do_not_use_version_number_in_system_path.patch
+Patch16: 0006-look_for_dejavu_ttf_with_fontconfig.patch
+
+Patch21: %name-2.66-alt-pcre.patch
 
 BuildRequires(pre): rpm-build-python3
 
-%add_python3_path %_libexecdir/%name/scripts
+%add_python3_path %_datadir/%name/scripts
 %add_python3_req_skip _bpy
 %add_python3_req_skip _bpy_path
 %add_python3_req_skip BPyWindow
@@ -34,11 +33,18 @@ BuildRequires(pre): rpm-build-python3
 %add_python3_req_skip bge
 %add_python3_req_skip bgl
 %add_python3_req_skip blf
+%add_python3_req_skip _freestyle
+%add_python3_req_skip enchant
 
-Provides: python%_python3_version(Blender)
-Provides: python%_python3_version(bpy)
-Provides: python%_python3_version(BPyMesh)
-Provides: python%_python3_version(bmesh)
+#Provides: python%_python3_version(Blender)
+#Provides: python%_python3_version(bpy)
+#Provides: python%_python3_version(BPyMesh)
+#Provides: python%_python3_version(bmesh)
+%py3_provides Blender
+%py3_provides bpy
+%py3_provides BPyMesh
+%py3_provides bmesh
+
 
 Requires: libopenCOLLADA >= 0-alt3
 BuildRequires: libopenCOLLADA-devel >= 0-alt3
@@ -48,6 +54,8 @@ BuildRequires: libopenCOLLADA-devel >= 0-alt3
 #  + libexpat-devel
 # optimized out: boost-devel cmake cmake-modules fontconfig ilmbase-devel libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libdc1394-22 libfreetype-devel libopencore-amrnb0 libopencore-amrwb0 libraw1394-11 libstdc++-devel pkg-config python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: boost-devel-headers boost-filesystem-devel boost-locale-devel ctest fontconfig-devel gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libglew-devel libjack-devel libjpeg-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel openexr-devel python3-dev tinyxml-devel libexpat-devel
+
+BuildPreReq: python3-dev >= 3.5
 
 %description
 Fully integrated creation suite, offering a broad range of essential
@@ -76,27 +84,21 @@ Languages support for blender
 %prep
 %setup -q -n %name-%version
 %patch1 -p1
-#patch2 -p1
-#patch3 -p2
-#patch4 -p2
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+
+# debian
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
-
-#sed -i 's|\(CFLAGS\=\"\)|\1 -g |' release/plugins/bmake
-#sed -i '36a\#include <GL/gl.h>' \
-#	source/blender/ftfont/intern/FTF_TTFont.h
-#rm -fR extern/fftw extern/qhull
+%patch21 -p1
 
 %build
 mkdir cmake-make
 cd cmake-make
-export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing"
+export CFLAGS="%optflags -fPIC -funsigned-char -fno-strict-aliasing"
 export CXXFLAGS="$CFLAGS"
 cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %ifnarch %{ix86} x86_64
@@ -121,64 +123,41 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_FONTCONFIG=ON \
  -DWITH_CYCLES=OFF \
  -DWITH_OPENIMAGEIO=OFF \
- -DPYTHON_VERSION="3.3" \
+ -DPYTHON_VERSION="%_python3_version" \
 #
 
-%make
+%make_build
 cd ..
 
 install -d release/plugins/include
-#install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
-
-#chmod +x release/plugins/bmake
-#make -C release/plugins/
 
 %install
-install -pD -m755 cmake-make/bin/%name %buildroot%_bindir/%name
-install -pD -m755 cmake-make/bin/%{name}player %buildroot%_bindir/%{name}player
+%makeinstall_std -C cmake-make
 
-# icons and .desktop files
-/bin/install -pD -m644 release/freedesktop/icons/16x16/apps/%name.png %buildroot%_miconsdir/%name.png
-/bin/install -pD -m644 release/freedesktop/icons/32x32/apps/%name.png %buildroot%_niconsdir/%name.png
-/bin/install -pD -m644 release/freedesktop/icons/scalable/apps/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 /bin/install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 /bin/install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name-win.desktop
-
-#/bin/install -d %%buildroot%%_libdir/%%name/plugins/sequence
-#/bin/install -d %%buildroot%%_libdir/%%name/plugins/texture
-#/bin/install -pD -m644 release/plugins/sequence/*.so %%buildroot%%_libdir/%%name/plugins/sequence
-#/bin/install -pD -m644 release/plugins/texture/*.so %%buildroot%%_libdir/%%name/plugins/texture
-
-install -d %buildroot%_libexecdir/%name
-cp -a release/scripts %buildroot%_libexecdir/%name
-cp -a release/datafiles/locale %buildroot%_datadir
-install -pD -m644 release/datafiles/locale/languages %buildroot%_datadir/%name/locale/languages
-
-#/bin/install -m644 release/VERSION %%buildroot%%_datadir/%%name
-#/bin/install -m644 bin/.blender/.Blanguages %%buildroot%%_datadir/%%name
-
-%find_lang %name
+%find_lang blender
 
 %files
-#doc README release/linux/*.pdf release/linux/release_*.txt release/linux/blender.html
 %_bindir/*
 %_desktopdir/*
-#_libdir/%%name/
 
 %_niconsdir/%name.png
 %_miconsdir/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
-%_libexecdir/%name/
-#exclude %%_datadir/%%name/.Blanguages
-%exclude %_datadir/locale/languages
+%_datadir/%name/
 
 %files i18n -f %name.lang
-#_datadir/%%name/.Blanguages
-%_datadir/%name/locale/languages
-
 
 %changelog
+* Wed Mar 30 2016 Denis Medvedev <nbr@altlinux.org> 2.76b-alt2
+- Changed provides to macros.
+
+* Tue Mar 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.76b-alt1
+- Updated to 2.76b.
+- Rebuilt with python 3.5.
+
 * Tue Dec 10 2013 Andrey Liakhovets <aoliakh@altlinux.org> 2.69-alt1
 - 2.69
 - buildreq adjusted for new fontconfig

@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 6.3.3
-Release: alt1.git20140408
+Release: alt1.git20140408.1
 Summary: Stand-alone GNU readline module
 License: GPL
 Group: Development/Python
@@ -71,6 +71,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 6.3.3-alt1.git20140408.1
+- (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
+  (for ABI dependence and new python3(*) reqs)
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.3.3-alt1.git20140408
 - Initial build for Sisyphus
 
