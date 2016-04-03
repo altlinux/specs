@@ -1,4 +1,4 @@
-%define ver_major 8.0
+%define ver_major 8.4
 %def_with recording
 
 Name: girl
@@ -15,9 +15,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: totem
 %{?_with_recording:Requires: streamripper}
 
-%define gtk_ver 3.6.0
+#%define gtk_ver 3.6.0
 
-BuildRequires: libgtk+3-devel >= %gtk_ver
+#BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: gnome-common intltool yelp-tools gtk-doc
 BuildRequires: libgnomeui-devel libxml2-devel
 
@@ -54,6 +54,9 @@ export ac_cv_path_GIRL_HELPER_RECORD=%_bindir/streamripper
 
 
 %changelog
+* Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 8.4.0-alt1
+- 8.4.0
+
 * Sun Jan 17 2016 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
 - 8.0.0
 
