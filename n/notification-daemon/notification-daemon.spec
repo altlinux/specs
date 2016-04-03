@@ -1,8 +1,8 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: notification-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Desktop Notification Daemon
@@ -17,8 +17,7 @@ Requires: dbus >= 0.36
 Conflicts: notification-daemon-xfce
 
 BuildPrereq: gnome-common
-BuildPrereq: libgio-devel >= 2.27.0
-BuildPrereq: libgtk+3-devel >= 3.8.0
+BuildPrereq: libgtk+3-devel >= 3.20.0
 BuildPrereq: libcanberra-gtk3-devel
 BuildRequires: rpm-build-licenses rpm-build-gnome rpm-build-xdg
 
@@ -46,10 +45,12 @@ Flashback. This is reason for version number change.
 %files -f %name.lang
 %_libexecdir/%name
 %_desktopdir/%name.desktop
-%_xdgconfigdir/autostart/%name-autostart.desktop
 %doc AUTHORS NEWS
 
 %changelog
+* Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 

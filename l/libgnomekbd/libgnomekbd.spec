@@ -1,21 +1,22 @@
 %define ver_major 3.6
+%define api_ver 3.0
 %def_enable introspection
 
 Name: libgnomekbd
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME keyboard shared library
 License: %lgpl2plus
 Group: Graphical desktop/GNOME
 URL: http://www.gnome.org/
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
-
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Obsoletes: gnome-kbd-indicator < 2.22.0
 Provides: gnome-kbd-indicator = %version-%release
+Provides: %_bindir/gkbd-keyboard-display
 
 %define glib_ver 2.28.0
 %define gtk_ver 2.91.6
@@ -87,26 +88,29 @@ GObject introspection devel data for the GNOME keyboard library
 
 %_bindir/gkbd-keyboard-display
 %_desktopdir/gkbd-keyboard-display.desktop
-%_datadir/%name
+%_datadir/%name/
 %config %_datadir/glib-2.0/schemas/org.gnome.libgnomekbd.desktop.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.libgnomekbd.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.libgnomekbd.keyboard.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
 
 %files devel
-%_includedir/*
+%_includedir/%name/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*.typelib
+%_typelibdir/Gkbd-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*.gir
+%_girdir/Gkbd-%api_ver.gir
 %endif
 
 %changelog
+* Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- updated to 3.6.0-23-g43cd1bd
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
