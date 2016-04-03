@@ -1,5 +1,5 @@
 Name: wmforecast
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: weather dockapp for Window Maker using the Yahoo Weather API
@@ -50,6 +50,9 @@ sed -i  's/Sunnyvale, CA/Moscow, Russia/' %name.1*
 %_iconsdir/*/*/*/*.svg
 
 %changelog
+* Sun Apr 03 2016 Michael Shigorin <mike@altlinux.org> 0.11-alt1
+- 0.11
+
 * Thu Mar 31 2016 Michael Shigorin <mike@altlinux.org> 0.10-alt1
 - 0.10
 
