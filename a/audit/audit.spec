@@ -1,5 +1,5 @@
 Name: audit
-Version: 2.4.4
+Version: 2.5
 Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -74,7 +74,7 @@ and libauparse can be used by python.
 %build
 %autoreconf
 
-%configure --sbindir=/sbin --libdir=/%_lib --disable-static --with-prelude
+%configure --sbindir=/sbin --libdir=%_libdir --disable-static --with-prelude
 
 %make_build CFLAGS=-D_GNU_SOURCE
 
@@ -85,12 +85,15 @@ install -d %buildroot%_logdir/%name
 install -d %buildroot%_sysconfdir/audispd/plugins.d
 install -d %buildroot/%_libdir/%name
 
-#move development part to libdir
-install -d %buildroot%_libdir
+#move shared library to %_lib
+install -d %buildroot/%_lib
+mv %buildroot/%_libdir/*.so.* %buildroot/%_lib/
 for i in libaudit libauparse;do
-LIBNAME=$(readlink %buildroot/%_lib/$i.so)
-ln -s  /%_lib/${LIBNAME##*/}  %buildroot/%_libdir/$i.so
+LIBNAME=$(readlink %buildroot/%_libdir/$i.so)
+ln -sf  ../../%_lib/${LIBNAME##*/}  %buildroot/%_libdir/$i.so
 done
+
+
 
 #replace init script
 install -Dpm755 %name.init %buildroot/%_initdir/%{name}d
@@ -103,6 +106,7 @@ install -pD -m755 init.d/%{name}d.condrestart %buildroot/usr/libexec/service/leg
 install -pD -m755 init.d/%{name}d.rotate %buildroot/usr/libexec/service/legacy-actions/%{name}d/rotate
 install -pD -m755 init.d/%{name}d.stop %buildroot/usr/libexec/service/legacy-actions/%{name}d/stop
 install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-actions/%{name}d/restart
+install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.d/10-base-config.rules
 
 %post
 %post_service %{name}d
@@ -111,7 +115,7 @@ install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-
 %preun_service %{name}d
 
 %files
-%doc README ChangeLog contrib
+%doc README ChangeLog contrib rules
 %config(noreplace) %_sysconfdir/cron.weekly/%{name}d
 %_initdir/%{name}d
 %attr(700,root,root) %_logdir/%name
@@ -140,7 +144,7 @@ install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-
 %attr(700,root,root) %dir %_sysconfdir/%name
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/auditd.conf
 %attr(700,root,root) %dir %_sysconfdir/%name/rules.d
-%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/rules.d/audit.rules
+%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/rules.d/*.rules
 
 %attr(700,root,root) %dir %_sysconfdir/audispd
 %config(noreplace) %attr(640,root,root) /etc/audisp/*.conf
@@ -162,12 +166,16 @@ install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*
 %_man3dir/*
 
 %files -n python-module-%name
 %python_sitelibdir/*
 
 %changelog
+* Thu Jan 14 2016 Anton Farygin <rider@altlinux.ru> 2.5-alt1
+- new version
+
 * Wed Oct 21 2015 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1
 - new version
 
