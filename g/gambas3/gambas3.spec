@@ -1,10 +1,12 @@
 %define appdir  %_datadir/%name
 %def_enable     opengl
-%def_without    jit
+# The MCJIT in llvm 3.6 is incompatible with gb.jit
+# http://permalink.gmane.org/gmane.comp.lang.gambas.user/32019
+%def_without   	jit
 
 Name:		gambas3
 Version:	3.8.4
-Release:	alt1
+Release:	alt2
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -87,6 +89,7 @@ Patch2:		%name-2.99.1-noliconv.patch
 Patch3:		%name-3.8.0-fix-bad-elf-symbol-in-gb.sdl2.patch
 # Use libv4l1
 Patch4:		%name-3.3.4-use-libv4l1.patch
+Patch5:		gambas3-gcc-fix.patch
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -976,6 +979,7 @@ This package contains the Gambas3 qt-webkit components.
 %patch2 -p1
 %patch3 -p2
 %patch4 -p2
+%patch5 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1055,9 +1059,9 @@ for i in main; do
 done
 # for some unholy reason, using system libtool breaks on qt5. so we don't.
 pushd gb.qt5
-make %?_smp_mflags
+make %{?_smp_mflags}
 popd
-make LIBTOOL=%_bindir/libtool %?_smp_mflags
+make LIBTOOL=%_bindir/libtool %{?_smp_mflags}
 
 %install
 export PATH=%buildroot%_bindir:$PATH
@@ -1533,6 +1537,10 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/info/gb.qt5.webkit.*
 
 %changelog
+* Mon Apr 04 2016 Andrey Cherepanov <cas@altlinux.org> 3.8.4-alt2
+- Rebuild with new poppler
+- Fix build with GCC
+
 * Wed Dec 16 2015 Andrey Cherepanov <cas@altlinux.org> 3.8.4-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.8.4)
 
