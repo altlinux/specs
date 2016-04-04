@@ -1,6 +1,6 @@
 Name: xfce4-mount-plugin
 Version: 0.6.7
-Release: alt2
+Release: alt3
 
 Summary: Mount plugin for Xfce Desktop
 License: %gpl2plus
@@ -10,6 +10,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 # Upstream: git://git.xfce.org/panel-plugins/xfce4-mount-plugin
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -27,6 +28,7 @@ information on each device.
 
 %prep
 %setup
+%patch -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag mount_version_tag configure.ac.in
@@ -50,6 +52,10 @@ information on each device.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Apr 04 2016 Mikhail Efremov <sem@altlinux.org> 0.6.7-alt3
+- Patch from upstream:
+  + Fixed autoconf and intltools bug 12470.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.6.7-alt2
 - Rebuild with libxfce4util-4.12.
 
