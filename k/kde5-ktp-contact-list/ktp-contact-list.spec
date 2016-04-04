@@ -1,7 +1,7 @@
 %define rname ktp-contact-list
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 15.12.3
 Release: alt2
 %K5init altplace
 
@@ -25,6 +25,7 @@ BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompl
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kpeople-devel kf5-kservice-devel
 BuildRequires: kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kcmutils-devel
 
 %description
 %summary
@@ -83,6 +84,15 @@ sed -i 's|^Exec=.*|Exec=%_K5bin/ktp-contactlist|' %buildroot/%_K5dbus_srv/org.kd
 #%_K5lib/libktp-contact-list.so.*
 
 %changelog
+* Mon Apr 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
+- fix build requires
+
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
+* Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Thu Jan 28 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
 - don't group contacts by default
 
