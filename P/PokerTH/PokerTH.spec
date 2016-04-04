@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -12,22 +12,49 @@ Url: http://www.pokerth.net/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+# Patches form Fedora spec
+# (upstream patches actually)
+# https://github.com/pokerth/pokerth/pull/299
+Patch1:         pokerth-1.1.1-fstream-ambiguity.patch
+# https://github.com/zaphoyd/websocketpp/issues/457
+Patch2:         pokerth-1.1.1-ownerless.patch
+# Upstream patches for C++11 support
+Patch3:         pokerth-1.1.1-cxx11-build.patch
+Patch4:         pokerth-1.1.1-cxx11-fixes.patch
+
 BuildRequires(pre): rpm-build-licenses >= 2.0.5-alt1
 
-# Automatically added by buildreq on Tue May 26 2009
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libdb4-devel libgnutls-openssl-devel libgsasl-devel qt5-base-devel
 
 BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel phonon-devel tinyxml-devel libircclient-devel libprotobuf-devel
 BuildPreReq: protobuf-compiler
+
+Requires: %name-data = %version-%release
 
 %description
 PokerTH is a poker game written in C++/Qt5. You can play the popular
 "Texas Hold'em" poker variant against up to nine computer-opponents or
 play network games with people all over the world.
 
+%package data
+Summary: Data files for %name
+Group: Games/Cards
+BuildArch: noarch
+
+%description data
+PokerTH is a poker game written in C++/Qt5. You can play the popular
+"Texas Hold'em" poker variant against up to nine computer-opponents or
+play network games with people all over the world.
+
+This package contents data files for %name.
+
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 qmake-qt5 \
@@ -44,11 +71,17 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 
 %files
 %_bindir/*
+
+%files data
 %_datadir/pokerth
 %_desktopdir/pokerth.desktop
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Mon Apr 04 2016 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt3
+- Fix build: Patches from Fedora.
+- Move data to separate subpackage.
+
 * Tue Jul 14 2015 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
 - Fix build with Qt-5.5.0.
 - Use rpm-build-licenses again.
