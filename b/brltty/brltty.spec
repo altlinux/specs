@@ -1,4 +1,5 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%define _localstatedir %_var
 
 %define pkg_version 5.3.1
 %define api_ver 0.6.4
@@ -23,7 +24,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt2.1
+Release: alt3
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -278,33 +279,40 @@ echo ".so man1/brltty.1" > %buildroot%_man5dir/brltty.conf.5
 
 # clean up the manuals:
 #rm Documents/Manual-*/*/{*.mk,*.made,Makefile*}
-mv Documents/BrlAPIref/{html,BrlAPIref}
+mv -f Documents/BrlAPIref/{html,BrlAPIref}
 
 # Don't want static lib
 rm -rf %buildroot/%_lib/libbrlapi.a
-
-mkdir -p %buildroot/lib/udev/devices/vcc
-touch %buildroot/lib/udev/devices/vcsa
-touch %buildroot/lib/udev/devices/vcsa0
-touch %buildroot/lib/udev/devices/vcc/a
 
 %__subst s/'#text-table.ru'/'text-table ru'/ %buildroot/etc/brltty.conf
 %__cp %SOURCE2 ru_brltty.tar
 tar xf ru_brltty.tar
 %__cp ru_brltty/* %buildroot%_sysconfdir/brltty/
 
-# service file
-install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
+# create temporary directory
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/%name.conf << _EOF_
+d /run/%name 0755 root root -
+_EOF_
+
+# udev rules
+install -D -p -m644 Autostart/Udev/udev.rules %buildroot%_udevrulesdir/95-%name.rules
+
+# polkit rules
+#install -D -p -m644 Authorization/Polkit/org.%name.policy %buildroot%_datadir/polkit-1/rules.d/org.%name.policy
+
+# systemd unit
+#install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
+install -D -p -m644  Autostart/Systemd/%name.service  %buildroot%_unitdir/%name.service
+
 
 %find_lang %name
 
 %files -f %name.lang
-%attr(0660, root, tty) %dev(c, 7, 128) /lib/udev/devices/vcsa
-%attr(0660, root, tty) %dev(c, 7, 128) /lib/udev/devices/vcsa0
-%attr(0660, root, tty) %dev(c, 7, 128) /lib/udev/devices/vcc/a
-
 %config(noreplace) %_sysconfdir/brltty.conf
 %_sysconfdir/brltty/
+%_udevrulesdir/95-%name.rules
+%_tmpfilesdir/%name.conf
 %_unitdir/brltty.service
 %_bindir/brltty
 %_bindir/brltty-*
@@ -395,6 +403,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%name.service
 %endif
 
 %changelog
+* Mon Apr 04 2016 Yuri N. Sedunov <aris@altlinux.org> 5.3.1-alt3
+- removed /lib/udev/devices/* (ALT #29446)
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.3.1-alt2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
