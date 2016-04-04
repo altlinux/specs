@@ -2,7 +2,7 @@
 
 Name: qt5-phonon
 Version: 4.8.3
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE5 Multimedia Framework
@@ -11,9 +11,17 @@ License: LGPLv2+
 
 #Source: ftp://ftp.kde.org/pub/kde/stable/%name/%version/%name-%version.tar.bz2
 Source: phonon-%version.tar
+# FC
+Patch1: 0001-rename-phonon-meta-include-file-in-the-source-and-in.patch
+Patch2: 0002-Don-t-allocate-a-char-with-an-undefined-size.patch
+Patch3: 0003-Fix-build-with-Qt-5.4.2.patch
+Patch4: 0004-Specify-_include-dirs-as-INCLUDE_DIRECTORIES.patch
+Patch5: 0005-Yet-another-_include_dirs-fix.patch
+
 # ALT
 Patch100: alt-no-rpath.patch
 Patch101: alt-fix-install.patch
+Patch102: alt-fix-qt-visibility-test.patch
 
 BuildRequires(pre): qt5-base-devel
 BuildRequires: qt5-tools-devel qt5-quick1-devel
@@ -50,17 +58,25 @@ with Phonon.
 
 %prep
 %setup -qn phonon-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+#%patch5 -p1
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
 
 
 %build
 %add_optflags %optflags_shared -UPIE -U__PIE__
+#%add_optflags %optflags_shared
 %Kcmake \
     -DPHONON_BUILD_PHONON4QT5:BOOL=ON \
     -DSHARE_INSTALL_PREFIX:PATH=%_datadir \
     -DPLUGIN_INSTALL_DIR:PATH=%_qt5_archdatadir \
     -DINCLUDE_INSTALL_DIR:PATH=%_includedir/phonon4qt5 \
+    -DPHONON_INSTALL_QT_COMPAT_HEADERS:BOOL=ON \
     -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT:BOOL=ON \
     #
 %Kmake
@@ -92,6 +108,9 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon4qt5_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Mon Apr 04 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt3
+- fix to build with new Qt
+
 * Thu Jul 02 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt2
 - rebuild with gcc5
 
