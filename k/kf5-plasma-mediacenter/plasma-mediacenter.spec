@@ -4,8 +4,8 @@
 %define libplasmamediacenter libplasmamediacenter%sover
 
 Name: kf5-%rname
-Version: 5.6.0
-Release: alt1
+Version: 5.6.1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -22,7 +22,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-baloo-devel kf5-kactivities-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-kfilemetadata-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel liblmdb-devel libtag-devel python-module-google qt5-multimedia-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: liblmdb-devel libtag-devel
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-multimedia-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-multimedia-devel qt5-declarative-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel kf5-kfilemetadata-devel
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel
@@ -89,6 +89,12 @@ KF5 library
 %_K5lib/libplasmamediacenter.so.*
 
 %changelog
+* Mon Apr 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt2
+- fix build requires
+
+* Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 
