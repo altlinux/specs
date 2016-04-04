@@ -13,8 +13,8 @@
 %def_enable soundcloud
 
 Name: rhythmbox
-Version: %ver_major
-Release: alt2%rev
+Version: %ver_major.1
+Release: alt1%rev
 
 Summary: Music Management Application
 License: GPL
@@ -61,6 +61,9 @@ AutoReqProv: nopython
 # python bindings are linked into rhythmbox statically
 Provides: python%__python3_version(rb)
 Provides: python%__python3_version(rhythmdb)
+Provides: python3(rb)
+Provides: python3(rhythmdb)
+
 BuildRequires: rpm-build-python3 python3-module-pygobject3-devel
 
 BuildRequires(Pre): browser-plugins-npapi-devel
@@ -84,7 +87,7 @@ BuildRequires: libICE-devel libSM-devel libsecret-devel >= %secret_ver
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libxml2-devel libjson-glib-devel libpng-devel
-%{?_with_webkit:BuildRequires: libwebkitgtk3-devel}
+%{?_with_webkit:BuildRequires: libwebkit2gtk-devel}
 BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
 BuildRequires: libavahi-glib-devel
@@ -498,6 +501,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
+- 3.3.1
+
 * Thu Mar 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt2
 - disabled grilo plugin, not ready for 0.3
 
