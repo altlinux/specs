@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -36,6 +36,9 @@ install -pDm755 initinstall/stop-md-dm.sh \
 %_datadir/install2/initinstall.d/89-stop-md-dm.sh
 
 %changelog
+* Mon Apr 04 2016 Michael Shigorin <mike@altlinux.org> 0.5.6-alt1
+- defuse gvfs
+
 * Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.5.5-alt1
 - /dev/md/imsm workaround (closes: #31286)
 
