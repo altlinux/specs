@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.91
+Release: alt100.92
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -490,6 +490,7 @@ fi
 %rpmattr %config %_rpmlibdir/*-files.req.list
 %rpmattr %_rpmlibdir/lib.*
 %rpmattr %_rpmlibdir/pam.*
+%rpmattr %_rpmlibdir/percolate
 %rpmattr %_rpmlibdir/pkgconfig.*
 %rpmattr %_rpmlibdir/pkgconfiglib.*
 %rpmattr %_rpmlibdir/rpmlib.*
@@ -531,6 +532,12 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon Apr 04 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.92
+- find-requires: treat symlinks leading to some real content all way
+  through the same package as that content ("percolation via symlinks").
+- find-{requires,provides}: in case of an error in it, the pipe to it
+  will be broken (must not change the visible behavior of rpm-build).
+
 * Mon Mar 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.91
 - brp-verify_elf: handle all rules for setting LD_PRELOAD in the form
   of pairs of RPM_LD_PRELOAD_@ and RPM_FILES_TO_LD_PRELOAD_@ env vars.
