@@ -1,9 +1,9 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 %def_without compiz
 
 Name: gnome-flashback
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -14,16 +14,14 @@ Url: https://wiki.gnome.org/Projects/GnomeFlashback
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
-%define glib_ver 2.40.0
-%define gtk_ver 3.15.2
+%define glib_ver 2.44.0
+%define gtk_ver 3.20.0
 %define desktop_ver 3.12.0
 %define dbus_glib_ver 0.76
 %define gsds_ver 3.12.0
-%define nd_ver 3.16
 
 PreReq: xinitrc
 Requires: gnome-session gnome-settings-daemon gnome-panel gnome-applets metacity3.0
-Requires: notification-daemon >= %nd_ver
 Requires: libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
@@ -42,6 +40,8 @@ Requires: upower
 Requires: bluez
 Requires: NetworkManager-applet-gtk
 Requires: ibus xkeyboard-config
+# since 3.20
+Conflicts: notification-daemon < 3.20
 
 BuildRequires: rpm-build-gnome gnome-common
 BuildRequires: libgio-devel >= %glib_ver
@@ -125,6 +125,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
