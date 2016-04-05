@@ -1,20 +1,18 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 1.12.1
+%define version 3.18.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 3.18
 
-%global gtk3_ver gtk3.18
-
-%global rel_ver 1.12.1
+%global rel_ver 3.18.0
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5fec16803c5ff06fa31b7cab47c6d51a99f1acc7}
@@ -22,7 +20,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gtk+
 %{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
 %{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
 %{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
-%{!?rel_build:%global git_tar %{name}-%{gtk3_ver}-%{version}-%{git_ver}.tar.xz}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-themes
 Version:        %{rel_ver}
@@ -38,7 +36,7 @@ BuildArch:      noarch
 
 # for downloading the tarball use 'spectool -g -R mate-themes.spec'
 # Source for release-builds.
-%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{gtk3_ver}-%{version}.tar.xz}
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
@@ -57,7 +55,7 @@ MATE Desktop themes
 %prep
 %if 0%{?rel_build}
 # for releases
-%setup -qn %{name}-%{gtk3_ver}-%{version}
+%setup -qn %{name}-%{version}
 %else # 0%{?rel_build}
 # for snapshots
 %setup -qn %{name}-%{commit}
@@ -115,6 +113,9 @@ fi
 
 
 %changelog
+* Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.18.0-alt1_1
+- new fc release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new version
 
