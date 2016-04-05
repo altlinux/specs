@@ -1,7 +1,7 @@
-%def_disable qt5
+%def_enable qt5
 
 Name: qsynth
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -18,7 +18,7 @@ Requires: fluidsynth
 
 BuildRequires: gcc-c++ ladspa_sdk libfluidsynth-devel libXext-devel
 %if_enabled qt5
-BuildRequires: libqt5-devel
+BuildRequires: qt5-tools qt5-x11extras-devel
 %else
 BuildRequires: libqt4-devel
 %endif
@@ -43,13 +43,15 @@ QSynth -- это графическая надстройка над FluidSynth. 
 %setup
 
 %build
+%if_disabled qt5
 export QTDIR=%qtdir
 export PATH=%qtdir/bin:$PATH
+%endif
 %configure --localedir=%_datadir/%name/locale \
 	%{subst_enable qt5}
 
 # SMP-incompatible build
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -67,6 +69,9 @@ export PATH=%qtdir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Tue Apr 05 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1 with qt5
+
 * Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
