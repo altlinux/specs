@@ -1,22 +1,65 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libXext-devel libgio-devel libwrap-devel pkgconfig(dbus-glib-1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libsystemd-login) pkgconfig(mate-desktop-2.0) pkgconfig(sm) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xsltproc libXext-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
+%define fedora 23
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name mate-session-manager
+%define version 1.12.1
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.12
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit af58c2ecd98fe68360635f0e566b81e4b8c7be4d}
+%{!?rel_build:%global commit_date 20151006}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
+
 Name:           mate-session
-Version:        1.10.2
-Release:        alt1_2
 Summary:        MATE Desktop session manager
 License:        GPLv2+
+Version:        %{branch}.1
+%if 0%{?rel_build}
+Release:        alt1_1
+%else
+Release:        alt1_1
+%endif
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.10/%{oldname}-%{version}.tar.xz
 
-# overlay scrollbars
-# http://git.mate-desktop.org/mate-session-manager/commit/?id=7259109
-Patch0:         mate-session-manager_overlay-scrollbars.patch
+# for downloading the tarball use 'spectool -g -R mate-session-manager.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{oldname}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
+
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  gtk2-devel
+BuildRequires:  libSM-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-desktop-devel
+BuildRequires:  libpangox-compat-devel
+BuildRequires:  systemd-devel
+BuildRequires:  xmlto
+BuildRequires:  libXtst-devel
+BuildRequires:  xorg-xtrans-devel
+BuildRequires:  tcp_wrappers-devel
+
+# Needed for mate-settings-daemon
+Requires: mate-control-center
+# we need an authentication agent in the session
+Requires: mate-polkit
+# and we want good defaults
+Requires: polkit
+Requires: icon-theme-hicolor
 Source44: import.info
 Patch33: mate-session-manager-cflags.patch
 Provides: mate-session-manager = %version-%release
@@ -24,20 +67,21 @@ Provides: mate-session-xsession = %version-%release
 Requires: mate-desktop
 Source45: MATE64.png
 
-
-# Needed for mate-settings-daemon
-# we need an authentication agent in the session
-# and we want good defaults
-
 %description
 This package contains a session that can be started from a display
 manager such as MDM. It will load all necessary applications for a
 full-featured user session.
 
 %prep
-%setup -n %{oldname}-%{version} -q
+%setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
-%patch0 -p1 -b .overlay-scrollbars
+%if 0%{?rel_build}
+# for releases
+#NOCONFIGURE=1 ./autogen.sh
+%else
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif
 %patch33 -p1
 
 %build
@@ -124,6 +168,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-session-properties.svg
 %{_datadir}/glib-2.0/schemas/org.mate.session.gschema.xml
 %{_datadir}/xsessions/mate.desktop
+%if 0%{?fedora} > 22
+%{_docdir}/mate-session-manager/dbus/mate-session.html
+%endif
 
 %_bindir/*
 %_iconsdir/hicolor/64x64/apps/mate.png
@@ -134,6 +181,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
+- new fc release
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt1_2
 - new version
 
