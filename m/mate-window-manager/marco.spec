@@ -1,20 +1,19 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/zenity libICE-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libstartup-notification-1.0) pkgconfig(xcomposite)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize imake libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(pangoxft) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xrender) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libcanberra-gtk2-devel
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname marco
-%define fedora 22
+%define fedora 23
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name marco
-%define version 1.10.2
+%define version 1.12.1
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 62a708d461e08275d6b85985f5fa13fa8fbc85f7}
@@ -25,11 +24,11 @@ BuildRequires: mate-common
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-window-manager
-Version:       %{branch}.2
+Version:       %{branch}.1
 %if 0%{?rel_build}
-Release:       alt2_1
+Release:       alt1_3
 %else
-Release:       alt2_0.2%{?git_rel}
+Release:       alt1_3
 %endif
 Summary:       MATE Desktop window manager
 License:       LGPLv2+ and GPLv2+
@@ -51,8 +50,6 @@ Source5:       window.png
 # needed for fixing initial-setup issue, rhbz (#962009)
 Patch0:        marco_add-pixbuf-inline-icons_1.9.x.patch
 
-Requires:      libmate-desktop
-
 BuildRequires: desktop-file-utils
 BuildRequires: gtk2-devel
 BuildRequires: libcanberra-devel
@@ -69,15 +66,18 @@ BuildRequires: zenity
 BuildRequires: libstartup-notification-devel
 BuildRequires: yelp-tools
 
+Requires:      libmate-desktop
+Requires:      libmarco-private = %{version}
+
 # http://bugzilla.redhat.com/873342
 # https://bugzilla.redhat.com/962009
 Provides: firstboot(windowmanager) = marco
 
-%if 0%{?fedora} && 0%{?fedora} > 19
 Provides: mate-window-manager%{?_isa} = %{version}-%{release}
 Provides: mate-window-manager = %{version}-%{release}
 Obsoletes: mate-window-manager < %{version}-%{release}
-%endif
+# rhbz (#1297958)
+Obsoletes:     %{oldname} < 1.12.1-2
 Source44: import.info
 # http://bugzilla.gnome.org/show_bug.cgi?id=558723
 Patch33: stop-spamming-xsession-errors.patch
@@ -85,49 +85,58 @@ Patch33: stop-spamming-xsession-errors.patch
 Patch34: Dont-focus-ancestor-window-on-a-different-workspac.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=604319
 Patch35: metacity-2.28-xioerror-unknown-display.patch
-Requires: libmarco-private = %{version}-%{release}
 
 %description
 MATE Desktop window manager
 
+# to avoid that marco will install in other DE's by compiz-0.8.10
+%package -n libmarco-private
+Group: System/Libraries
+Summary:       Libraries for marco
+License:       LGPLv2+
+# rhbz (#1297958)
+Conflicts:     mate-window-manager < 1.12.1-2
+
+%description -n libmarco-private
+This package provides Libraries for marco.
+
 %package devel
 Group: Development/C
-Summary: Development files for mate-window-manager
-Requires: mate-window-manager = %{version}-%{release}
-%if 0%{?fedora} && 0%{?fedora} > 19
-Provides: mate-window-manager-devel%{?_isa} = %{version}-%{release}
-Provides: mate-window-manager-devel = %{version}-%{release}
-Obsoletes: mate-window-manager-devel < %{version}-%{release}
-%endif
+Summary:       Development files for marco
+Requires:      mate-window-manager = %{version}
+Requires:      libmarco-private = %{version}
+Provides:      mate-window-manager-devel%{?_isa} = %{version}-%{release}
+Provides:      mate-window-manager-devel = %{version}-%{release}
+Obsoletes:     mate-window-manager-devel < %{version}-%{release}
 
 %description devel
 Development files for marco
 
-%package -n libmarco-private
-Group: System/Libraries
-Summary: mate-window-manager internal library
-
-%description -n libmarco-private
-Internal library for MATE Window Manager.
-
-
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
-# needed for missing `po/Makefile.in.in'
-cp %{SOURCE1} src/mini-window.png
-cp %{SOURCE2} src/stock_delete.png
-cp %{SOURCE3} src/stock_maximize.png
-cp %{SOURCE4} src/stock_minimize.png
-cp %{SOURCE5} src/window.png
-
-%patch0 -p1 -b .inline-icons
-
-# needed for the patch and for git snapshot builds
-autoreconf -if
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
+
+# needed for missing `po/Makefile.in.in'
+#cp %{SOURCE1} src/mini-window.png
+#cp %{SOURCE2} src/stock_delete.png
+#cp %{SOURCE3} src/stock_maximize.png
+#cp %{SOURCE4} src/stock_minimize.png
+#cp %{SOURCE5} src/window.png
+
+#%patch0 -p1 -b .inline-icons
+
+# needed for the patch and for git snapshot builds
+#autoreconf -if
+#NOCONFIGURE=1 ./autogen.sh
 
 %build
 %autoreconf -fisv
@@ -158,7 +167,7 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 %find_lang %{oldname} --with-gnome --all-name
 
 
-%files -f %{oldname}.lang
+%files
 %doc AUTHORS COPYING README ChangeLog
 %{_bindir}/marco
 %{_bindir}/marco-message
@@ -178,15 +187,11 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 %{_datadir}/marco/icons/marco-window-demo.png
 %{_datadir}/mate-control-center/keybindings/50-marco*.xml
 %{_datadir}/mate/wm-properties
-%{_datadir}/glib-2.0/schemas/org.mate.marco.gschema.xml
-%{_libdir}/libmarco-private.so.0*
 %{_mandir}/man1/*
-# moved to lib
-%exclude %{_libdir}/libmarco-private.so.*
 
-%files -n libmarco-private
-%{_libdir}/libmarco-private.so.*
-
+%files -n libmarco-private -f %{oldname}.lang
+%{_libdir}/libmarco-private.so.0*
+%{_datadir}/glib-2.0/schemas/org.mate.marco.gschema.xml
 
 %files devel
 %{_bindir}/marco-theme-viewer
@@ -199,6 +204,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 
 
 %changelog
+* Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_3
+- new fc release
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.2-alt2_1
 - fixed dependencies
 
