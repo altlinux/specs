@@ -3,7 +3,7 @@
 
 Name: bumblebee
 Version: 3.2.1
-Release: alt2
+Release: alt3
 
 Summary: Bumblebee - support for NVidia Optimus laptops on Linux
 Group: System/Kernel and hardware
@@ -14,7 +14,13 @@ Source: http://bumblebee-project.org/%name-%version.tar.gz
 Source1: bumblebeed.in
 
 # Configure the name of the Bumbleblee server group
-Patch: %name-3.1-alt-CONF_GID.patch
+Patch1: %name-3.1-alt-CONF_GID.patch
+# https://github.com/Bumblebee-Project/Bumblebee/issues/699
+Patch2: nvidia_modeset-detection_bug699_01.patch
+Patch3: nvidia_modeset-detection_bug699_02.patch
+Patch4: nvidia_umv_detection_bug699.patch
+# https://github.com/Bumblebee-Project/Bumblebee/issues/573
+Patch5: hexadicimal_bug573.patch
 
 Requires: NVIDIA_GLX VirtualGL
 # see ALT #29213
@@ -36,7 +42,11 @@ kernel-modules-bbswitch package for your running kernel.
 
 %prep
 %setup
-%patch -b .gid
+%patch1 -b .gid
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 cp %SOURCE1 scripts/sysvinit/
 
@@ -87,6 +97,9 @@ groupadd -r -f %bumblebeed_group
 %exclude %_docdir/bumblebee
 
 %changelog
+* Tue Apr 05 2016 Mikhail Efremov <sem@altlinux.org> 3.2.1-alt3
+- Add patches from upstream's bug tracker (closes: #31863).
+
 * Tue Jul 23 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt2
 - removed forbidden dep on bbswitch (ALT #29213)
 
