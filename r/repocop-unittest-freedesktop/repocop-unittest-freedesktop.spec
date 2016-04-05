@@ -1,6 +1,6 @@
 Name: repocop-unittest-freedesktop
-Version: 0.19
-Release: alt3
+Version: 0.20
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -49,6 +49,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- support for kf5 (closes: #31941)
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt3
 - maintainance release
 
