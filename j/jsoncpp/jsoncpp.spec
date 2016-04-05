@@ -1,16 +1,16 @@
 
 Name: jsoncpp
-Version: 1.6.2
-Release: alt2
+Version: 1.7.2
+Release: alt1
 %define sover 1
 %define libname lib%name%sover
 
 Group: System/Libraries
 Summary: JSON library implemented in C++
-Url: http://sourceforge.net/projects/%name/
+Url: https://github.com/open-source-parsers/jsoncpp/
 License: MIT
 
-Source: %name-src-%version.tar
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Jun 11 2015 (-bi)
 # optimized out: cmake-modules elfutils fontconfig fonts-bitmap-misc libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs
@@ -47,15 +47,15 @@ BuildArch: noarch
 This package contains the documentation for %name
 
 %prep
-%setup -n %name-src-%version
+%setup -qn %name-%version
 
 %build
 %Kbuild \
   -DJSONCPP_WITH_CMAKE_PACKAGE=ON \
   -DJSONCPP_WITH_PKGCONFIG_SUPPORT=ON \
   -DJSONCPP_WITH_TESTS=OFF \
-  -DJSONCPP_LIB_BUILD_STATIC=OFF \
-  -DJSONCPP_LIB_BUILD_SHARED=ON \
+  -DBUILD_STATIC_LIBS=OFF \
+  -DBUILD_SHARED_LIBS=ON \
   #
 # build docs
 python doxybuild.py --with-dot --doxygen %_bindir/doxygen
@@ -79,6 +79,9 @@ python doxybuild.py --with-dot --doxygen %_bindir/doxygen
 #%_docdir/%name/
 
 %changelog
+* Tue Apr 05 2016 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt1
+- new version
+
 * Tue Jun 16 2015 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt2
 - add conflict with old json-c devel package (ALT#31072)
 
