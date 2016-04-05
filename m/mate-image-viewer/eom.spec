@@ -1,13 +1,13 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libSM-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dbus-glib-1) pkgconfig(exempi-2.0) pkgconfig(gmodule-2.0) pkgconfig(lcms2) pkgconfig(libexif) pkgconfig(librsvg-2.0) pkgconfig(libxml-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-xproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize imake libXt-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(gmodule-2.0) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-cf-files xorg-xproto-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname eom
-%define fedora 22
+%define fedora 23
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eom
-%define version 1.12.1
+%define version 1.12.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -23,7 +23,7 @@ BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/desktop-file-install /usr/bin
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-image-viewer
-Version:       %{branch}.1
+Version:       %{branch}.2
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -38,9 +38,6 @@ URL:           http://mate-desktop.org
 %{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{oldname}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
-
-# https://github.com/mate-desktop/eom/pull/113
-Patch0:        eom_fix-gir-compilation.patch
 
 BuildRequires: zlib-devel
 BuildRequires: libcairo-gobject-devel
@@ -74,7 +71,7 @@ Eye of Mate is extensible through a plugin system.
 %package devel
 Summary:  Support for developing plugins for the eom image viewer
 Group:    Development/C
-Requires: mate-image-viewer = %{version}-%{release}
+Requires: mate-image-viewer = %{version}
 %if 0%{?fedora} && 0%{?fedora} > 19
 Provides: mate-image-viewer-devel%{?_isa} = %{version}-%{release}
 Provides: mate-image-viewer-devel = %{version}-%{release}
@@ -87,9 +84,6 @@ Development files for eom
 
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
-
-%patch0 -p1 -b .fix-gir-compilation
-NOCONFIGURE=1 ./autogen.sh
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -149,6 +143,9 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/eom.convert
 
 
 %changelog
+* Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.2-alt1_1
+- new fc release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new version
 
