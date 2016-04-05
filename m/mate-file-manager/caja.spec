@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database libICE-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(exempi-2.0) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libexif) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xext) pkgconfig(xrender) xorg-xproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/update-mime-database libICE-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(pango) pkgconfig(unique-3.0) pkgconfig(xext) pkgconfig(xrender) xorg-xproto-devel
 # END SourceDeps(oneline)
-BuildRequires: mate-common
+BuildRequires: chrpath
 %define _libexecdir %_prefix/libexec
 %define oldname caja
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja
-%define version 1.10.4
+%define version 1.12.4
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
+%global branch 1.12
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -25,9 +25,9 @@ Name:        mate-file-manager
 Summary:     File manager for MATE
 Version:     %{branch}.4
 %if 0%{?rel_build}
-Release:     alt2_1
+Release:     alt1_1
 %else
-Release:     alt2_0.2%{?git_rel}
+Release:     alt1_1
 %endif
 License:     GPLv2+ and LGPLv2+
 Group:       Graphical desktop/MATE
@@ -39,13 +39,13 @@ URL:         http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-# http://git.mate-desktop.org/caja/commit/?id=d2dd87a
-Patch0:         caja_do-not-save-position-from-last-window.patch
+Patch0:         caja_add-xfce-to-desktop-file.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libexempi-devel
 BuildRequires:  gobject-introspection-devel
+BuildRequires:  libcairo-gobject-devel
 BuildRequires:  libexif-devel
 BuildRequires:  libselinux-devel
 BuildRequires:  libSM-devel
@@ -63,10 +63,10 @@ Requires:   gvfs
 
 # the main binary links against libcaja-extension.so
 # don't depend on soname, rather on exact version
-Requires:       mate-file-manager-extensions = %{version}-%{release}
+Requires:       mate-file-manager-extensions = %{version}
 
 # needed for using mate-text-editor as stanalone in another DE
-Requires:       mate-file-manager-schemas = %{version}-%{release}
+Requires:       mate-file-manager-schemas = %{version}
 
 Provides: mate-file-manager%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager = %{version}-%{release}
@@ -87,7 +87,7 @@ It is also responsible for handling the icons on the MATE desktop.
 %package extensions
 Group: Development/C
 Summary:  Mate-file-manager extensions library
-Requires: mate-file-manager = %{version}-%{release}
+Requires: mate-file-manager = %{version}
 Provides: mate-file-manager-extensions%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-extensions = %{version}-%{release}
 Obsoletes: mate-file-manager-extensions < %{version}-%{release}
@@ -110,7 +110,7 @@ This package provides the gsettings schemas for caja.
 %package devel
 Group: Development/C
 Summary:  Support for developing mate-file-manager extensions
-Requires: mate-file-manager = %{version}-%{release}
+Requires: mate-file-manager = %{version}
 Provides: mate-file-manager-devel%{?_isa} = %{version}-%{release}
 Provides: mate-file-manager-devel = %{version}-%{release}
 Obsoletes: mate-file-manager-devel < %{version}-%{release}
@@ -122,7 +122,7 @@ for developing caja extensions.
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
-%patch0 -p1 -b .position
+%patch0 -p1 -b .add-xfce-to-desktop-file
 
 %if 0%{?rel_build}
 %patch33 -p1
@@ -131,12 +131,12 @@ for developing caja extensions.
 %else # 0%{?rel_build}
 # for snapshots
 # needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 %patch34 -p1
 
 
 %build
-NOCONFIGURE=1 ./autogen.sh
 %configure \
         --disable-static \
         --enable-unique \
@@ -183,6 +183,10 @@ cat << EOF > ${RPM_BUILD_ROOT}%{_sysconfdir}/prelink.conf.d/caja.conf
 EOF
 
 %find_lang %{oldname}
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
+	chrpath -d $i ||:
+done
 
 
 %files
@@ -217,6 +221,9 @@ EOF
 
 
 %changelog
+* Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.4-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.4-alt2_1
 - fixed dependencies
 
