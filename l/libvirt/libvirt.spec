@@ -104,7 +104,7 @@
 
 Name: libvirt
 Version: 1.3.2
-Release: alt2
+Release: alt3
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -691,6 +691,7 @@ if [ $1 -ge 1 ] ; then
     if service libvirtd status; then
         chkconfig virtlogd on && service virtlogd start
         chkconfig virtlockd on && service virtlockd start
+    fi
 fi
 
 %if_with network
@@ -966,6 +967,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Apr 05 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt3
+- fixed typo in trigger
+
 * Fri Mar 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt2
 - add Requires dnsmasq, but disable autostart default network
 - add Requires dbus to libvirt-daemon
