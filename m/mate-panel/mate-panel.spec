@@ -1,13 +1,13 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize libX11-devel libXau-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmate-menu) pkgconfig(librsvg-2.0) pkgconfig(libwnck-1.0) pkgconfig(libwnck-3.0) pkgconfig(mate-desktop-2.0) pkgconfig(pango) pkgconfig(sm) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrandr) python-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize libX11-devel libXau-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libwnck-3.0) pkgconfig(pango) pkgconfig(xrandr) python-devel
 # END SourceDeps(oneline)
 BuildRequires: libXi-devel
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-panel
-%define version 1.12.1
+%define version 1.12.2
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
@@ -23,7 +23,7 @@ BuildRequires: libXi-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-panel
-Version:        %{branch}.1
+Version:        %{branch}.2
 %if 0%{?rel_build}
 Release:        alt1_1
 %else
@@ -42,7 +42,7 @@ URL:            http://mate-desktop.org
 
 Source1:        mate-panel_fedora.layout
 
-Requires:       %{name}-libs%{?_isa} = %{?serial:%serial:}%{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}
 # needed as nothing else requires it
 Requires:       mate-session-manager
 #for fish
@@ -77,7 +77,7 @@ MATE Desktop panel applets
 Group: Development/C
 Summary:     Shared libraries for mate-panel
 License:     LGPLv2+
-Requires:    %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
+Requires:    %{name}%{?_isa} = %{version}
 
 %description libs
 Shared libraries for libmate-desktop
@@ -85,7 +85,7 @@ Shared libraries for libmate-desktop
 %package devel
 Group: Development/C
 Summary:     Development files for mate-panel
-Requires:    %{name}-libs%{?_isa} = %{?serial:%serial:}%{version}-%{release}
+Requires:    %{name}-libs%{?_isa} = %{version}
 
 %description devel
 Development files for mate-panel
@@ -167,6 +167,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-panel.convert
 
 
 %changelog
+* Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.12.2-alt1_1
+- new fc release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt1_1
 - new version
 
