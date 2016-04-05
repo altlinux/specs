@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt5.git20150312
+Release: alt6.git20160401
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -16,19 +16,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source2: ld_shared_wrapper.pl
 
-Patch1: wxGTK3.0-disable-ABI-checking.patch
+Patch1: wxGTK3-3.0.2-abicheck.patch
+Patch2: wxGTK3.0-gst1.patch
 
-# Automatically added by buildreq on Wed Dec 10 2008
-BuildRequires: gcc-c++ libGL-devel libSDL-devel libSM-devel
-BuildRequires: libXinerama-devel libesd-devel libexpat-devel
-BuildRequires: libjpeg-devel libtiff-devel libgtk+3-devel
+BuildRequires: gcc-c++
+BuildRequires: libGL-devel libGLU-devel libSDL-devel libSM-devel
+BuildRequires: libX11-devel libXinerama-devel libICE-devel libXmu-devel libXext-devel libXp-devel
+BuildRequires: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
+BuildRequires: libexpat-devel
+BuildRequires: libjpeg-devel libtiff-devel libpng-devel libmspack-devel zlib-devel
+BuildRequires: libgtk+3-devel libcairo-devel
 
-BuildPreReq: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
-BuildPreReq: rpm-build-java libXxf86vm-devel libbfd-devel
-BuildPreReq: libstdc++-devel gstreamer-devel
-BuildPreReq: libGConf-devel gst-plugins-devel libpng-devel
-BuildPreReq: libnotify-devel libwebkitgtk3-devel
-BuildPreReq: libmspack-devel
+BuildRequires: libXxf86vm-devel libbfd-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libGConf-devel
+#BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
+BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: libnotify-devel libwebkitgtk3-devel
 
 %description
 wxWidgets is a free C++ library for cross-platform GUI development.
@@ -37,17 +41,57 @@ With wxWidgets, you can create applications for different GUIs
 
 This is a GTK+ port.
 
+%package -n libwxBase%wxbranch
+Summary: Non-GUI support classes from the wxWidgets library
+Group: System/Libraries
+Conflicts: lib%name < %EVR
+
+%description -n libwxBase%wxbranch
+Every wxWidgets application must link against this library. It contains
+mandatory classes that any wxWidgets code depends on (like wxString) and
+portability classes that abstract differences between platforms. wxBase can
+be used to develop console mode applications -- it does not require any GUI
+libraries or the X Window System.
+
 %package -n lib%name
 Summary: The GTK+ port of the wxWidgets library
 Group: System/Libraries
+Requires: libwxBase%wxbranch = %EVR
 
 %description -n lib%name
 Header files for wxGTK, the GTK+ port of the wxWidgets library.
 
+%package -n lib%name-gl
+Summary: OpenGL add-on for the wxWidgets library
+Group: System/Libraries
+Requires: lib%name = %EVR
+Conflicts: lib%name < %EVR
+
+%description -n lib%name-gl
+OpenGL (a 3D graphics API) add-on for the wxWidgets library.
+wxWidgets is the GTK port of the C++ cross-platform wxWidgets
+GUI library, offering classes for all common GUI controls as well as a
+comprehensive set of helper classes for most common application tasks,
+ranging from networking to HTML display and image manipulation.
+
+
+%package -n lib%name-media
+Summary: Multimedia add-on for the wxWidgets library
+Group: System/Libraries
+Requires: lib%name = %EVR
+Conflicts: lib%name < %EVR
+
+%description -n lib%name-media
+Multimedia add-on for the wxWidgets library.
+wxWidgets is the GTK port of the C++ cross-platform wxWidgets
+GUI library, offering classes for all common GUI controls as well as a
+comprehensive set of helper classes for most common application tasks,
+ranging from networking to HTML display and image manipulation.
+
 %package -n lib%name-devel
 Summary: Development files for wxGTK library
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: python-module-PyDSTool
 %add_python_req_skip utils
 Conflicts: libwxGTK2.9-devel
@@ -61,7 +105,7 @@ Header files for wxGTK, the GTK+ port of the wxWidgets library.
 Summary: wxGTK example programs
 Group: Development/C++
 BuildArch: noarch
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description examples
 wxGTK example programs.
@@ -69,35 +113,49 @@ wxGTK example programs.
 %prep
 %setup
 %patch1 -p1
+#%patch2 -p1
 
-subst "s,bakefile/presets,bakefile/presets-\$(WX_RELEASE),g" Makefile.in
+# patch some installed files to avoid conflicts with 2.8.*
+sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
+sed -i -e 's|wxstd.mo|wxstd30.mo|' Makefile.in
+sed -i -e 's|wxmsw.mo|wxmsw30.mo|' Makefile.in
+sed -i -e 's|bakefile/presets|bakefile/presets-\$(WX_RELEASE)|g' Makefile.in
+
+# fix plugin dir for 64-bit
+sed -i -e 's|/usr/lib\b|%{_libdir}|' wx-config.in configure
+sed -i -e 's|/lib|/%{_lib}|' src/unix/stdpaths.cpp
 
 %build
 CONF_FLAG="--enable-shared --without-debug_flag --without-debug_info"
 
 ./autogen.sh
-GST_CFLAGS="$(pkg-config --cflags gstreamer-0.10)"
 export LIBS="-lX11"
 DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 %add_optflags -fno-strict-aliasing -std=gnu++11 $GST_CFLAGS $DEFS
 %configure $CONF_FLAG \
+	--with-zlib=sys \
+	--with-expat=sys \
+	--enable-display \
+	--with-libjpeg=sys \
+	--with-libpng=sys \
+	--with-libtiff=sys \
+	--with-opengl \
 	--with-sdl \
 	--enable-unicode \
 	--enable-optimise \
 	--with-regex=yes \
 	--disable-rpath \
-	--without-subdirs \
 	--without-odbc \
-	--with-opengl \
 	--disable-joystick \
 	--enable-plugins \
 	--enable-precomp-headers=yes \
 	--enable-compat26 \
 	--enable-compat28 \
 	--with-gtk=3 \
-	--enable-sound \
 	--enable-soname \
 	--enable-mediactrl \
+	--enable-sound \
+	--enable-webview \
 	--enable-stc \
 	--enable-gui \
 	--with-xresources \
@@ -110,9 +168,12 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 	--enable-std_containers \
 	--enable-std_string_conv_in_wxstring \
 	--enable-ipv6 \
+	--enable-no_deps \
 	--with-subdirs
 
-%make_build SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
+#%make_build SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
+%make_build
+%make -C locale allmo
 
 %install
 %makeinstall_std
@@ -125,8 +186,24 @@ ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
 cp -fR include/wx/private %buildroot%_includedir/wx-%wxbranch/wx/
 cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 
-%files -n lib%name
+%find_lang wxstd3
+%find_lang wxmsw3
+cat wxmsw3.lang >> wxstd3.lang
+
+%files -f wxstd3.lang -n lib%name
 %_libdir/*.so.*
+%exclude %_libdir/libwx_baseu*.so.*
+%exclude %_libdir/libwx_gtk3u_gl-*.so.*
+%exclude %_libdir/libwx_gtk3u_media-*.so.*
+
+%files -n libwxBase%wxbranch
+%_libdir/libwx_baseu*.so.*
+
+%files -n lib%name-gl
+%_libdir/libwx_gtk3u_gl-*.so.*
+
+%files -n lib%name-media
+%_libdir/libwx_gtk3u_media-*.so.*
 
 %files -n lib%name-devel
 %_libdir/wx/config/gtk3-unicode-%wxbranch
@@ -136,7 +213,7 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %dir %_datadir/bakefile
 %_datadir/bakefile/*
 %_bindir/*
-%_libdir/wx/%wxbranch/*.so
+%_libdir/wx/*
 %_datadir/aclocal/*.m4
 %_includedir/wx-%wxbranch
 %_libdir/*.so
@@ -145,6 +222,11 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Tue Apr 05 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.3-alt6.git20160401
+- git snapshot of WX_3_0_BRANCH with fixes for wayland
+- update BR:
+- split package to libwxBase3.1,libwxGTK3.0,libwxGTK3.0-gl,libwxGTK3.0-media
+
 * Thu Oct 29 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.3-alt5.git20150312
 - Disabled ABI checking.
 
