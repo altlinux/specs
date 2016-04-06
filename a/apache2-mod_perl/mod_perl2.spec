@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.10
-Release: alt0.1.1
+Release: alt1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -254,6 +254,9 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Mon Apr 11 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.10-alt1
+- rebuild with apache-2.4
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt0.1.1
 - rebuild with new perl 5.22.0
 

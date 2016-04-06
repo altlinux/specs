@@ -2,20 +2,20 @@
 
 %define real_name    modsecurity
 %define module_name  mod_security
-%define version      2.5.9
+%define version      2.9.1
 %define release      alt1
 
 
 Name: apache2-%module_name
 Version: %version
-Release: alt1.qa1
+Release: alt1
 
 Summary: Tighten web applications security for Apache 2.x
 
-License: %gpl2only
+License: Apache 2.0
 Group:   System/Servers
 URL:     http://www.modsecurity.org
-
+# VCS:   https://github.com/SpiderLabs/ModSecurity
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source0: %real_name.tar
@@ -26,8 +26,8 @@ Source6: security.conf
 
 BuildRequires(pre): apache2-devel >= 2.2.5
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Fri Dec 12 2008
 BuildRequires: apache2-httpd-prefork gcc-c++ libcurl-devel libpcre-devel libxml2-devel
+BuildRequires: libyajl-devel
 
 BuildRequires: %apache2_apr_buildreq
 
@@ -64,20 +64,18 @@ This package contains a documentation for ModSecurity.
 
 %prep
 %setup -q -n %real_name
-/bin/sed -i -e "s#Apache/2.2.0 (Fedora)#Apache/2 (ALTLinux)#g" rules/modsecurity_crs_10_config.conf
-
-mv -f -- LICENSE LICENSE.orig
-ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
-
 
 %build
-pushd apache2
 %configure	--with-apxs=%apache2_apxs \
 		--with-apr=%apache2_apr_config \
-		%nil
+		--enable-pcre-match-limit=1000000 \
+                --enable-pcre-match-limit-recursion=1000000 \
+		--with-yajl
+
+# remove rpath
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %make
-%make mlogc
-popd
 
 %install
 /bin/install -pDm644 -- apache2/.libs/mod_security2.so %buildroot%apache2_libexecdir/mod_security2.so
@@ -90,19 +88,6 @@ popd
 
 # alt default ruleset
 /bin/install -pD -m644 -- %SOURCE4 %buildroot%conf_dir/altdefaults.conf
-
-/bin/gzip CHANGES
-
-# default rules
-/bin/cp -rp -- rules %buildroot%conf_dir/
-/bin/rm -f -- %buildroot%conf_dir/rules/LICENSE
-
-pushd %buildroot%conf_dir/rules/
-    ln -s -- $(relative %_licensedir/GPL-2 %conf_dir/rules/LICENSE) LICENSE
-    /bin/gzip CHANGELOG
-popd
-
-mkdir -p -- %buildroot%conf_dir/local_rules
 
 %post
 # Reconfigure Apache2:
@@ -147,30 +132,25 @@ fi
 
 
 %files
-%doc README* CHANGES.gz modsecurity.conf-minimal MODSECURITY_LICENSING_EXCEPTION
-%doc --no-dereference LICENSE
+%doc README.* LICENSE
 
 %apache2_libexecdir/mod_security2.so
 %apache2_mods_available/security.load
 %config(noreplace) %apache2_mods_available/security.conf
 
 %dir %conf_dir
-%dir %conf_dir/rules
-%dir %conf_dir/rules/optional_rules
-%dir %conf_dir/local_rules
-
 %config(noreplace) %conf_dir/*.conf
-%config(noreplace) %conf_dir/rules/*.conf
-%config(noreplace) %conf_dir/rules/optional_rules/*.conf
-
-%conf_dir/rules/CHANGELOG.gz
-%conf_dir/rules/README
-%conf_dir/rules/LICENSE
 
 %files doc
 %doc doc/*
 
 %changelog
+* Wed Apr 06 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.1-alt1
+- New version
+
+* Wed Apr 06 2016 Andrey Cherepanov <cas@altlinux.org> 2.5.9-alt1.qa2
+- Rebuild with new apache2
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.5.9-alt1.qa1
 - NMU: rebuilt for debuginfo.
 

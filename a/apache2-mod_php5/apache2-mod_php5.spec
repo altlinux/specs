@@ -3,7 +3,7 @@
 
 Name: apache2-mod_php5
 Version: %php5_version
-Release: %php5_release
+Release: %php5_release.1
 
 Summary: The PHP5 HTML-embedded scripting language for use with Apache2
 Group: System/Servers
@@ -158,7 +158,10 @@ fi
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
-- Rebuild with php5-%version-%release
+- Rebuild with new apache2
+
+* Tue Mar 29 2016 Anton Farygin <rider@altlinux.org> 5.6.19.20160303-alt1 
+- Rebuild with php5-5.6.19.20160303-alt1
 
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - Rebuild with php5-5.3.18.20121017-alt1

@@ -8,7 +8,7 @@
 %add_findreq_skiplist %_datadir/apr-1/build/config.guess
 
 Name: apr%aprver
-Version: 1.4.6
+Version: 1.5.2
 Release: %branch_release alt1
 
 Summary: Apache Portable Runtime
@@ -19,18 +19,6 @@ Packager: Boris Savelev <boris@altlinux.org>
 
 #Source: http://archive.apache.org/dist/apr/apr-%version.tar.gz
 Source: %name-%version.tar
-
-# ALT patchs and:
-# * Debian patchs:
-#   + fix-apr.pc.patch
-#   + hurd_path_max.patch
-#   + fix_doxygen.patch
-#   + omit_extra_libs.patch
-#   + debug-kfreebsd-issues.patch
-#   + updates-from-1.4.x-branch.patch
-# * UniMRCP patchs (see https://sites.google.com/a/unimrcp.org/unimrcp/dependencies):
-#   + apr-1.4.5.patch
-Patch1: %name-%version-alt-all-0.1.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -89,7 +77,6 @@ This package contains APR static library.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
@@ -139,6 +126,9 @@ find %buildroot%_datadir -type f -print0 |
 %endif
 
 %changelog
+* Wed Mar 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.5.2-alt1
+- New version 1.5.2
+
 * Fri Nov 16 2012 Aleksey Avdeev <solo@altlinux.ru> 1.4.6-alt1
 - New version (1.4.6)
 - Security fixes (CVE-2011-1928, oCERT-2011-003)

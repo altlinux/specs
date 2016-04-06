@@ -5,7 +5,7 @@
 Summary: 389 Administration Server
 Name:    389-admin
 Version: 1.1.42
-Release: alt1
+Release: alt2
 License: GPLv2
 Url:     http://port389.org/
 # VCS:   https://git.fedorahosted.org/git/389/admin.git
@@ -45,7 +45,7 @@ export adminutil_inc=/usr/include/libadminutil/
 %configure --localstatedir=/var \
            --with-modnss-lib=%_libdir/apache2/modules/ \
            --with-httpd=%_sbindir/httpd2.worker \
-	   --with-apxs=%_sbindir/apxs2 \
+	   --with-apxs=%apache2_apxs \
            --with-openldap \
 %if_with selinux
            --with-selinux \
@@ -88,6 +88,10 @@ rm -f %buildroot%_libdir/*.so
 %_man8dir/*
 
 %changelog
+* Tue Apr 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.42-alt2
+- Rebuild with new apache2
+- Use %%apache2_apxs for apxs2 location
+
 * Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.42-alt1
 - New version
 - SELinux support is disabled

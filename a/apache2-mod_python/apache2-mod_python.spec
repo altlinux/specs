@@ -8,12 +8,12 @@
 %define parch %_arch
 %endif
 
-%define a2_version 2.2.9-alt10
+%define a2_version 2.4.18-alt1
 
 %define python_bindir %apache2_htdocsdir/%module_name
 Name: apache2-mod_python%__python_package_version
-Version: 3.3.1
-Release: alt2.5.2.1.1
+Version: 3.5.0
+Release: alt1
 
 Summary: Python module for Apache2
 Group: System/Servers
@@ -25,6 +25,7 @@ Source: %modname-%version.tgz
 Source1: python.load
 Source2: python.conf
 Source3: python.start
+Patch0: nogit.patch
 
 BuildPreReq: rpm-build-apache2 >= %a2_version
 BuildRequires: flex python-dev python-modules-encodings
@@ -51,6 +52,8 @@ Apache internals.
 
 %prep
 %setup -q -n %modname-%version
+%patch0 -p2
+
 sed -i "s/!(b == APR_BRIGADE_SENTINEL(b) ||/!(b == APR_BRIGADE_SENTINEL(bb) ||/g" src/connobject.c
 
 %build
@@ -157,6 +160,10 @@ fi
 %_docdir/%modname-%version
 
 %changelog
+* Wed Apr 06 2016 Sergey Alembekov <rt@altlinux.ru> 3.5.0-alt1
+- new version
+- rebuild with apache 2.4
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.3.1-alt2.5.2.1.1
 - Rebuild with Python-2.7
 

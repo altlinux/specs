@@ -11,7 +11,7 @@
 
 Name: rpm-macros-%macrosname
 Version: 3.12
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: RPM macros to Apache2 Web server
 Summary(ru_RU.UTF-8): RPM макросы для веб-сервера Apache2
@@ -80,6 +80,11 @@ find %buildroot%_rpmmacrosdir/ -type f -print0 \
 %_rpmmacrosdir/%macrosname-compat
 
 %changelog
+* Thu Mar 31 2016 Sergey Alembekov <rt@altlinux.ru> 3.12-alt2
+- fix apxs path
+- fix htcacheclean binary name
+- fix htcacheclean_cachepath
+
 * Tue Feb 05 2013 Aleksey Avdeev <solo@altlinux.ru> 3.12-alt1
 - Add new macros:
   + %%apache2_docdir_prefix
