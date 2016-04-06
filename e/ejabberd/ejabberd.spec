@@ -5,14 +5,14 @@
 
 Name: ejabberd
 Version: 2.1.10
-Release: alt1
+Release: alt1.1
 
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
 Group: System/Servers
 Url: http://www.process-one.net/en/ejabberd/
 
-Requires: erlang >= R11B.5
+Requires: erlang
 Requires: jabber-common >= 0.2
 Requires: su
 
@@ -173,6 +173,9 @@ ln -s %name-%version %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Tue Apr 05 2016 Denis Medvedev <nbr@altlinux.org> 2.1.10-alt1.1
+- removed strict requirement to erlang version.
+
 * Sat Mar 31 2012 Vladimir V. Kamarzin <vvk@altlinux.org> 2.1.10-alt1
 - 2.1.10 (Closes: #26762).
 
