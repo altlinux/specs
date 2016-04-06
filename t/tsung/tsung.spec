@@ -1,6 +1,6 @@
 Name: tsung
 Version: 1.4.1.git20111220
-Release: alt1
+Release: alt1.1
 Summary: A distributed multi-protocol load testing tool
 URL: http://%name.erlang-projects.org/
 License: %gpl2plus
@@ -8,7 +8,7 @@ Group: Development/Tools
 Source: http://%name.erlang-projects.org/dist/%name-%version.tar
 BuildArch: noarch
 Provides: erlang-%name = %version-%release
-Requires: erlang-otp >= R12B perl-RRD
+Requires: erlang-otp  perl-RRD
 Packager: hsv <hsv@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -62,6 +62,9 @@ install -m 0644 CHANGES.* CONTRIBUTORS README TODO doc/*.{erl,png,txt} %buildroo
 
 
 %changelog
+* Tue Apr 05 2016 Denis Medvedev <nbr@altlinux.org> 1.4.1.git20111220-alt1.1
+- removed strict requirement for erlang version.
+
 * Tue Dec 27 2011 Sergey Shilov <hsv@altlinux.org> 1.4.1.git20111220-alt1
 - 1.4.1.git20111220
 - use upstream git repository
