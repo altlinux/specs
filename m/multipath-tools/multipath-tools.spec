@@ -4,7 +4,7 @@
 
 Name: multipath-tools
 Version: 0.5.0
-Release: alt2
+Release: alt3
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -76,7 +76,7 @@ mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrules
 	udevrulesdir=%_udevrulesdir \
 	unitdir=%_unitdir
 
-#install -pm644 %SOURCE2 %buildroot%_udevrulesdir/62-multipath.rules
+install -pm644 %SOURCE2 %buildroot%_udevrulesdir/56-multipath.rules
 install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
 #install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
 mv -f %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
@@ -118,6 +118,9 @@ cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 %_man8dir/kpartx.8.*
 
 %changelog
+* Wed Apr 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.5.0-alt3
+- updated multipath.rules
+
 * Tue Jul 14 2015 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt2
 - upstream snapshot (770e6d0da035deaced82885939161c2b69225e10)
 - add patches from suse
