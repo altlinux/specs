@@ -1,6 +1,6 @@
 Name: rpm-build-mono4
 Version: 0.1.1
-Release: alt5
+Release: alt6
 
 Summary: RPM helper macros and dependency utils to build Mono packages
 License: GPL
@@ -16,8 +16,8 @@ BuildPreReq: rpm >= 4.0.4-alt96.13
 Conflicts: rpm-build-mono
 
 %description
-These helper macros and dependency calculation utils facilitate creation of
-RPM packages containing Mono bytecode archives etc.
+These helper macros and dependency calculation utils facilitate creation
+of RPM packages containing Mono bytecode archives etc.
 Based on rpm-build-mono, but for mono4.
 
 %prep
@@ -38,6 +38,10 @@ install -pD -m755 mono4.prov.files %buildroot%_rpmlibdir/mono4.prov.files
 %_rpmlibdir/monolib4*
 
 %changelog
+* Wed Apr 06 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt6
+- Incorporated changes from imz@ - not lib64 centered way.
+More portable.
+
 * Wed Jan 27 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt5
 - Fixed searching additional direcotory for mono.configuration.security
 
