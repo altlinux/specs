@@ -1,8 +1,8 @@
 %define _libexecdir /usr/libexec
 
 Name: ceph
-Version: 0.94.5
-Release: alt2
+Version: 0.94.6
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -300,6 +300,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Apr 05 2016 Alexei Takaseev <taf@altlinux.org> 0.94.6-alt1
+- 0.94.6
+
 * Mon Jan 11 2016 Alexei Takaseev <taf@altlinux.org> 0.94.5-alt2
 - Fix loss man
 
