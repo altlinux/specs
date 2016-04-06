@@ -3,7 +3,7 @@
 
 Name: evas_generic_loaders
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A set of loaders for Evas
 License: LGPLv2.1+
@@ -57,6 +57,9 @@ subst 's@/usr/lib@%_libdir@' src/bin/pdf/evas_generic_pdf_loader.libreoffice
 %doc AUTHORS COPYING README
 
 %changelog
+* Wed Apr 06 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt2
+- rebuilt against libpoppler.so.59
+
 * Tue Feb 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
 - 1.17.0
 
