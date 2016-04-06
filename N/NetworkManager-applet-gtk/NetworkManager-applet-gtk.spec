@@ -7,7 +7,7 @@
 %def_without appindicator
 
 Name: NetworkManager-applet-gtk
-Version: 1.1.92
+Version: 1.1.93
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -209,6 +209,9 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Wed Apr 06 2016 Mikhail Efremov <sem@altlinux.org> 1.1.93-alt1
+- Updated to 1.1.93 (1.2-rc1).
+
 * Tue Mar 29 2016 Mikhail Efremov <sem@altlinux.org> 1.1.92-alt1
 - Updated to 1.1.92 (1.2-beta3).
 
