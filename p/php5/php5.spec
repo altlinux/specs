@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.19
+Version: 5.6.20
 Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.5
-%define _php5_snapshot 20160303
+%define _php5_snapshot 20160331
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -406,6 +406,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Mon Apr 04 2016 Anton Farygin <rider@altlinux.ru> 5.6.20-alt1
+- new version
+
 * Fri Mar 25 2016 Anton Farygin <rider@altlinux.ru> 5.6.19-alt1
 - new version
 
