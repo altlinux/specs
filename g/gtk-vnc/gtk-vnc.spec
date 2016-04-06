@@ -10,7 +10,7 @@
 
 Name: gtk-vnc
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: VNC viewer widget
 Group: System/Libraries
@@ -323,6 +323,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt2
+- rebuilt against libgnutls.so.30
+
 * Tue Feb 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - 0.5.4
 
