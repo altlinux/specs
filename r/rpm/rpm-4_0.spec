@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.92
+Release: alt100.93
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Wed Apr  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.93
+- find-requires fixed for packages consisting completely of symlinks.
+
 * Mon Apr 04 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.92
 - find-requires: treat symlinks leading to some real content all way
   through the same package as that content ("percolation via symlinks").
