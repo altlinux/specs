@@ -1,6 +1,6 @@
 Name: rpm-build-mono
-Version: 1.3.2
-Release: alt2
+Version: 1.3.2.1
+Release: alt1
 
 Summary: RPM helper macros and dependency utils to build Mono packages
 License: GPL
@@ -34,6 +34,11 @@ install -pD -m755 mono.prov.files %buildroot%_rpmlibdir/mono.prov.files
 %_rpmlibdir/mono*
 
 %changelog
+* Wed Apr 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.2.1-alt1
+- mono.req: re-written the suffix (e.g.: ()(64bit)) computation in
+  non-lib64-centric way. (For easier porting to other platforms.)
+  (Borrowed from rpm-build-python3-0.1.9.1-alt1.)
+
 * Mon Nov 24 2008 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt2
 - define %%_monodocdir as /usr/share/monodoc/sources
 - install mono macros to /usr/lib/rpm/macros.d
