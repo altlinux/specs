@@ -2,10 +2,10 @@
 %define dir		var/lib/clamav-db
 %define sys_clamav 	/var/lib/clamav
 %define sys_db		/var/lib/clamav-db
-%define checksum	06f660f474d1a6863de4a00eb02521e3
+%define checksum	f13ead862171f50019c15c946d25e91f
 
 Name:    clamav-db-%dbname
-Version: 20130918
+Version: 20160317
 Release: alt1
 
 Summary: Antivirus database for ClamAV (%dbname)
@@ -50,10 +50,17 @@ do
     fi
 done
 
+%check
+test "$(md5sum "%buildroot%sys_db/%dbname.cvd" | cut -f1 -d' ')" = "%checksum"
+
 %files
 %attr(664,mail,root) %config(noreplace) /%dir/%dbname.cvd
 
 %changelog
+* Wed Apr 06 2016 Andrey Cherepanov <cas@altlinux.org> 20160317-alt1
+- Update database
+- Test checksum
+
 * Sun Nov 30 2014 Andrey Cherepanov <cas@altlinux.org> 20130918-alt1
 - Split clamav-db into undepended packages
 

@@ -2,10 +2,10 @@
 %define dir		var/lib/clamav-db
 %define sys_clamav 	/var/lib/clamav
 %define sys_db		/var/lib/clamav-db
-%define checksum	c0a9216b52bdab1ca58955a3479bb3d5
+%define checksum	656e67f4237f33ca5ee087a33b696d90
 
 Name:    clamav-db-%dbname
-Version: 20151102
+Version: 20160317
 Release: alt1
 
 Summary: Antivirus database for ClamAV (%dbname)
@@ -33,6 +33,9 @@ Database %dbname.cvd for ClamAV virus scanner.
 %install
 install -pD %SOURCE0 %buildroot/%dir/%dbname.cvd
 
+%check
+test "$(md5sum "%buildroot%sys_db/%dbname.cvd" | cut -f1 -d' ')" = "%checksum"
+
 %post
 for base in %dbname
 do
@@ -47,6 +50,10 @@ done
 %attr(664,mail,root) %config(noreplace) /%dir/%dbname.cvd
 
 %changelog
+* Wed Apr 06 2016 Andrey Cherepanov <cas@altlinux.org> 20160317-alt1
+- Update database
+- Test checksum
+
 * Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 20151102-alt1
 - Update database
 
