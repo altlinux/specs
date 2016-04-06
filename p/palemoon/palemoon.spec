@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
 
 Name: palemoon
 Version: 26.2.0
-Release: alt1.RC3
+Release: alt2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -45,6 +45,20 @@ Patch23: palemoon_version-26.2.0.patch
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
+%if_enabled gst1
+BuildRequires(pre): gst-plugins1.0-devel
+BuildRequires(pre): gstreamer1.0-devel gst-plugins1.0-devel
+
+Requires: libgstreamer1.0 gst-libav
+Requires: gst-plugins-base1.0
+%else
+BuildRequires(pre): gst-plugins-devel
+BuildRequires(pre): gstreamer-devel gst-plugins-devel
+
+Requires: libgstreamer
+Requires: gst-plugins-base gst-plugins-good
+%endif
+
 # BEGIN SourceDeps(oneline):
 BuildRequires: libssl-devel perl-devel python-devel texinfo
 
@@ -62,19 +76,6 @@ Requires: libnss
 
 BuildRequires: autoconf_2.13
 
-%if_enabled gst1
-BuildRequires: gst-plugins1.0-devel
-BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
-
-Requires: libgstreamer1.0 gst-libav
-Requires: gst-plugins-base1.0
-%else
-BuildRequires: gst-plugins-devel
-BuildRequires: gstreamer-devel gst-plugins-devel
-
-Requires: libgstreamer
-Requires: gst-plugins-base gst-plugins-good
-%endif
 
 %description
 The %name project is a redesign of Mozilla's  Firefox browser component,
@@ -329,6 +330,9 @@ done
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Apr 06 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.0-alt2
+- Version 26.2 Release
+
 * Sat Apr 02 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.0-alt1.RC3
 - Version 26.2-RC3
 
