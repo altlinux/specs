@@ -1,7 +1,7 @@
 Name: libgflags
 Summary: A commandline flags library that allows for distributed flags
 Version: 2.1.2
-Release: alt1
+Release: alt1.qa1
 Group: System/Libraries
 Url: http://code.google.com/p/gflags
 License: BSD
@@ -48,6 +48,9 @@ files for developing applications that use the %name package.
 ##_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.1.2-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 2.1.2-alt1
 - Autobuild version bump to 2.1.2
 - Upstream has provided soname, drop patch
