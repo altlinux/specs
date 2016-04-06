@@ -1,6 +1,8 @@
+%def_without telepathy
+
 Name: remmina
-Version: 1.1.2
-Release: alt2
+Version: 1.2.0
+Release: alt0.rc11
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -10,9 +12,27 @@ Source: %name-%version.tar
 
 Requires: icon-theme-hicolor
 
-BuildRequires: cmake desktop-file-utils intltool libavahi-ui-devel libgcrypt-devel libssh-devel libunique-devel libvte3_2.90-devel libavahi-ui-gtk3-devel libpng-devel libpixman-devel xorg-glproto-devel xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel libXdamage-devel libXxf86vm-devel libxkbfile-devel libtelepathy-glib-devel
-BuildRequires: libfreerdp-devel gettext libgnome-keyring-devel libgnutls-devel libXxf86misc-devel libXv-devel libXrandr-devel libXpm-devel libXinerama-devel
-BuildRequires: libjpeg-devel libtasn1-devel libp11-kit-devel libvncserver-devel
+BuildRequires: cmake
+BuildRequires: desktop-file-utils
+BuildRequires: gettext pkgconfig(libpcre)
+BuildRequires: intltool
+BuildRequires: libappstream-glib
+BuildRequires: libgcrypt-devel
+BuildRequires: libjpeg-devel libtasn1-devel libpng-devel libpixman-devel zlib-devel
+BuildRequires: pkgconfig(glib-2.0) >= 2.28 pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(avahi-ui) >= 0.6.30
+BuildRequires: pkgconfig(avahi-ui-gtk3) >= 0.6.30
+BuildRequires: pkgconfig(freerdp2) >= 2.0.0
+BuildRequires: pkgconfig(winpr2)
+BuildRequires: pkgconfig(gtk+-3.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango) pkgconfig(cairo) pkgconfig(atk)
+BuildRequires: pkgconfig(libsecret-1)
+BuildRequires: pkgconfig(libssh) >= 0.6
+BuildRequires: pkgconfig(libvncserver)
+%{?_with_telepathy:BuildRequires: pkgconfig(telepathy-glib)}
+BuildRequires: pkgconfig(vte-2.91)
+BuildRequires: pkgconfig(xkbfile)
+BuildRequires: pkgconfig(webkit2gtk-4.0)
+BuildRequires: pkgconfig(harfbuzz)
 
 %description
 Remmina is a remote desktop client written in GTK+, aiming to be useful for
@@ -48,18 +68,26 @@ A set of plugins-gnome for %name remote desktop client
 %prep
 %setup
 
-sed -i '/target_link_libraries/s/)/ -lgnutls)/' remmina-plugins/vnc/CMakeLists.txt
+#? Hack: https://github.com/FreeRDP/Remmina/issues/292
+sed -i 's#install(DIRECTORY include/remmina DESTINATION include/remmina #install(DIRECTORY remmina/include/remmina DESTINATION include/ #' CMakeLists.txt
 
 %build
-%cmake	-DWITH_APPINDICATOR=OFF \
-	-DWITH_TELEPATHY=OFF \
-	-DCMAKE_INSTALL_LIBDIR=%_lib \
-	-DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
-	
-%make_build -C BUILD
+%cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DWITH_APPINDICATOR=OFF \
+    -DWITH_AVAHI=ON \
+    -DWITH_FREERDP=ON \
+    -DWITH_GCRYPT=ON \
+    -DWITH_GETTEXT=ON \
+    -DWITH_LIBSSH=ON \
+     %{?_without_telepathy:-DWITH_TELEPATHY=OFF} \
+    -DWITH_VTE=ON \
+    -DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
+
+%cmake_build
 
 %install
-%makeinstall_std -C BUILD
+%cmakeinstall_std
 
 mkdir -p %buildroot%_pkgconfigdir
 install -p -m 644 remmina/%name.pc.in %buildroot%_pkgconfigdir/%name.pc
@@ -71,15 +99,18 @@ subst "s|@includedir@|%_includedir|g" %buildroot%_pkgconfigdir/%name.pc
 subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 
 %find_lang %name
-%find_lang %name-plugins
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog README
+%doc AUTHORS CHANGELOG.md README.md
 %_bindir/%name
+%_datadir/appdata/*.appdata.xml
 %_datadir/applications/*.desktop
 %_iconsdir/*/*/*/*
+%_datadir/%name
+%dir %_libdir/remmina
+%dir %_libdir/remmina/plugins
 
-%files plugins -f %name-plugins.lang
+%files plugins
 %_libdir/remmina/plugins/*.so
 %exclude %_libdir/remmina/plugins/remmina-plugins-gnome.so
 
@@ -87,10 +118,13 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_libdir/remmina/plugins/remmina-plugins-gnome.so
 
 %files devel
-#_includedir/%name
+%_includedir/%name
 %_pkgconfigdir/*
 
 %changelog
+* Thu Apr 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc11
+- 1.2.0.rcgit.11
+
 * Tue Aug 04 2015 Michael Shigorin <mike@altlinux.org> 1.1.2-alt2
 - fixed plugins path on non-x86_64
 - fixed build (closes: #31184)
