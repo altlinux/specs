@@ -10,7 +10,7 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
@@ -97,7 +97,7 @@ Patch1: %name-1.0-lib_dir.patch
 Patch2: sbcl-1.1.13-personality.patch
 Patch3: sbcl-1.3.2-optflags.patch
 Patch6: sbcl-0.9.5-verbose-build.patch
-
+Patch7: sbcl-1.3.4-runtime.patch
 
 ## upstreamable patches
 Patch50: sbcl-1.3.0-generate_version.patch
@@ -132,6 +132,9 @@ pushd sbcl-%version
 %patch2 -p1 -b .personality
 %patch3 -p1 -b .optflags
 %{?sbcl_verbose:%patch6 -p1 -b .verbose-build}
+%ifarch x86_64
+%patch7 -p1
+%endif
 %patch50 -p1 -b .generate_version
 
 %__subst "s|/usr/lib/sbcl/|%_libdir/sbcl/|" src/runtime/runtime.c
@@ -175,7 +178,7 @@ popd
 pushd sbcl-%version
 mkdir -p %buildroot{%_bindir,%_libdir,%_mandir}
 
-unset SBCL_HOME
+#unset SBCL_HOME
 
 export INSTALL_ROOT=%buildroot%prefix
 export LIB_DIR=%buildroot%_libdir
@@ -268,6 +271,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 06 2016 Ilya Mashkin <oddity@altlinux.ru> 1.3.4-alt1
+- 1.3.4
+
 * Sat Mar 19 2016 Ilya Mashkin <oddity@altlinux.ru> 1.3.3-alt1
 - 1.3.3
 
