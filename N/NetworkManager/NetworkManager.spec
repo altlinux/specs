@@ -33,7 +33,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.1.92
+Version: 1.1.93
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -245,6 +245,7 @@ NetworkManager.
 Summary: Header files for adding NetworkManager support to applications that use glib.
 Group: Development/GNOME and GTK+
 Requires: libnm-glib-devel libnm-glib-vpn-devel libnm-util-devel
+BuildArch: noarch
 
 %description glib-devel
 Virtual package for backward compatibility.
@@ -518,6 +519,7 @@ fi
 %_datadir/dbus-1/system-services/*.service
 %doc %_man1dir/*.*
 %doc %_man5dir/*.*
+%doc %_man7dir/*.*
 %doc %_man8dir/*.*
 %doc %_defaultdocdir/%name-%version/
 %dir %_libexecdir/NetworkManager/
@@ -584,7 +586,6 @@ fi
 
 %files -n libnm
 %_libdir/libnm.so.*
-%_libdir/libnm.so.*.*
 
 %files -n %libnm_glib
 %_libdir/libnm-glib.so.%nm_glib_sover
@@ -653,6 +654,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Apr 06 2016 Mikhail Efremov <sem@altlinux.org> 1.1.93-alt1
+- Make NetworkManager-glib-devel subpackage noarch.
+- Updated to 1.1.93 (1.2-rc1).
+
 * Tue Mar 29 2016 Mikhail Efremov <sem@altlinux.org> 1.1.92-alt1
 - Disable systemd tests.
 - Fix documentation build.
