@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt7.1
+Release: alt8
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -75,6 +75,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Wed Apr 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.84-alt8
+- support of bad xs in perl-optimizer && perl 5.22
+
 * Thu Dec 17 2015 Igor Vlasenko <viy@altlinux.ru> 0.84-alt7.1
 - unbootstrap
 
