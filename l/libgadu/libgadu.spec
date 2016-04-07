@@ -1,7 +1,7 @@
 
 Name: libgadu
 Version: 1.12.1
-Release: alt1
+Release: alt2
 
 Summary: Library for Handling of Gadu-Gadu Instant Messaging
 License: LGPLv2.1
@@ -57,6 +57,9 @@ instant messenger Gadu-Gadu.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Apr 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt2
+- rebuild with new gnutls
+
 * Thu Apr 09 2015 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
 - 1.12.1
 
