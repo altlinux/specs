@@ -1,6 +1,6 @@
 Name: krb5user
 Version: 0.1.2
-Release: alt3.1
+Release: alt3.qa2
 
 Summary: User helper library for MIT Kerberos
 
@@ -34,6 +34,7 @@ User helper library for MIT Kerberos
 %package -n lib%name-devel
 Summary: Headers for developing with MIT Kerberos user helper library
 Group: System/Libraries
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Headers for developing with MIT Kerberos user helper library
@@ -41,6 +42,7 @@ Headers for developing with MIT Kerberos user helper library
 %package -n %packagename
 Summary: Python binding for MIT Kerberos user helper library
 Group: Development/Python
+Requires: lib%name = %EVR
 %setup_std_python_package_deps
 
 %description -n %packagename
@@ -61,12 +63,15 @@ scons install --install-sandbox=%buildroot --libdir=%_libdir
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/lib*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %files -n %packagename
 %python_sitelibdir/*
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.2-alt3.qa2
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.1.2-alt3.1
 - rebuild with boost 1.57.0
 
