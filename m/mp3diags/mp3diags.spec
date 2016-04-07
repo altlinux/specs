@@ -1,6 +1,6 @@
 Name: mp3diags
-Version: 1.0.11.076
-Release: alt1.3.1
+Version: 1.2.02
+Release: alt1
 
 Summary: Finds problems in MP3 files and helps the user fix many of them
 License: GPLv2+
@@ -10,8 +10,8 @@ URL: http://mp3diags.sourceforge.net/
 Source: http://downloads.sourceforge.net/mp3diags/MP3Diags-%version.tar.gz
 Source1: mp3diags.desktop
 
-# Automatically added by buildreq on Sat Dec 12 2009
-BuildRequires: boost-devel gcc-c++ libqt4-devel
+BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: boost-devel boost-program_options-devel
 
 %description
 Finds problems in MP3 files and helps the user to fix many of them using
@@ -41,6 +41,9 @@ install -pD -m644 desktop/MP3Diags48.png %buildroot%_liconsdir/mp3diags.png
 %_liconsdir/*
 
 %changelog
+* Thu Apr 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.02-alt1
+- 1.2.02
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.0.11.076-alt1.3.1
 - rebuild with boost 1.57.0
 
