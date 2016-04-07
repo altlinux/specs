@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 15.12.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Video
@@ -10,7 +10,7 @@ Summary: Video Player for KDE
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Provides: kde5-video-player
+#Provides: kde5-video-player
 
 Source: %rname-%version.tar
 
@@ -77,6 +77,9 @@ KF5 library
 %_K5data/solid/actions/*.desktop
 
 %changelog
+* Thu Apr 07 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
+- fix provides
+
 * Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
 - new version
 

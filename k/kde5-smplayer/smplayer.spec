@@ -2,12 +2,12 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 7385
+%define svn 7558
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 16.1.0.%svn
+Version: 16.4.0.%svn
 Release: alt1
 
 %define qt_bin_dir %_qt5_bindir
@@ -24,7 +24,7 @@ Url: http://www.smplayer.info/
 License: GPLv2
 
 Requires: %name-backend %name-common = %EVR
-Provides: %xde-video-player
+#Provides: %xde-video-player
 
 Source: %rname-%version.tar
 Patch1: alt-defines.patch
@@ -162,6 +162,9 @@ done
 
 
 %changelog
+* Thu Apr 07 2016 Sergey V Turchin <zerg@altlinux.org> 16.4.0.7558-alt1
+- new version
+
 * Mon Feb 08 2016 Sergey V Turchin <zerg@altlinux.org> 16.1.0.7385-alt1
 - update for upstream fixes
 
