@@ -5,10 +5,10 @@ BuildRequires: perl(Catalyst/Runtime.pm) perl(Data/DPath.pm) perl(DateTime.pm) p
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(Tapper/Cmd/Init.pm) perl(Tapper/Base.pm)
 %define upstream_name    Tapper-CLI
-%define upstream_version 5.0.2
+%define upstream_version 5.0.4
 
 Name:       perl-%{upstream_name}
-Version:    5.0.2
+Version:    5.0.4
 Release:    alt1
 %if %release == alt3nt
 %define _without_test 1
@@ -89,6 +89,9 @@ Command line tools for Tapper.
 %_man1dir/tapper*
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1
+- automated CPAN update
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1
 - automated CPAN update
 
