@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist SQL-Statement
 Name: perl-%dist
-Version: 1.407
-Release: alt2
+Version: 1.409
+Release: alt1
 
 Summary: SQL parsing and processing engine
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/SQL-Statement/
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RE/REHSACK/SQL-Statement-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -82,6 +83,9 @@ export SQL_STATEMENT_WARN_UPDATE=sure
 %perl_vendor_privlib/SQL
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.409-alt1
+- automated CPAN update
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.407-alt2
 - dropped Requires: perl-DBI (create loop)
 
