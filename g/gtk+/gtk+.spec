@@ -1,6 +1,6 @@
 Name: gtk+
 Version: 1.2.10
-Release: alt22
+Release: alt23
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs for X
 License: LGPL
@@ -192,6 +192,10 @@ cp -a docs/{*.txt,html,text} %buildroot%pkgdocdir/devel
 
 %find_lang %name
 
+# Some language names in files (like .pl) made them look like Perl scripts.
+%add_findreq_skiplist %_sysconfdir/gtk/*
+%add_findprov_skiplist %_sysconfdir/gtk/*
+
 %files -f %name.lang
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
@@ -220,6 +224,11 @@ cp -a docs/{*.txt,html,text} %buildroot%pkgdocdir/devel
 %endif
 
 %changelog
+* Thu Apr 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.10-alt23
+- (.spec) The suffix collision between a human and a programming
+  language in /etc/gtk/gtkrc.pl badly affected find-requires with
+  rpm-build-4.0.4-alt100.92.
+
 * Mon Jan 04 2016 Michael Shigorin <mike@altlinux.org> 1.2.10-alt22
 - fixed FTBFS (-lm)
 
