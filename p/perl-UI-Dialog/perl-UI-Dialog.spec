@@ -6,10 +6,10 @@ BuildRequires: perl(Config.pm) perl(FileHandle.pm) perl(File/Slurp.pm) perl(Gnom
 # END SourceDeps(oneline)
 %filter_from_requires /^perl.Gnome2.GConf.pm/d
 %define upstream_name    UI-Dialog
-%define upstream_version 1.20
+%define upstream_version 1.21
 
 Name:       perl-%{upstream_name}
-Version:    1.20
+Version:    1.21
 Release:    alt1
 
 Summary:    OOPerl wrapper for the various dialog applications
@@ -64,6 +64,9 @@ perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - automated CPAN update
 
