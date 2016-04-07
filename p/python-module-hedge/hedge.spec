@@ -1,7 +1,7 @@
 %define oname hedge
 Name: python-module-%oname
 Version: 0.91
-Release: alt1.git20140528.1
+Release: alt1.git20140528.qa2
 Summary: Hybrid and Easy Discontinuous Galerkin Environment
 License: MIT
 Group: Development/Python
@@ -105,6 +105,9 @@ cp -fR doc/manual/build/pickle %buildroot%python_sitelibdir/%oname/
 %doc doc/manual/build/html
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.91-alt1.git20140528.qa2
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.91-alt1.git20140528.1
 - rebuild with boost 1.57.0
 
