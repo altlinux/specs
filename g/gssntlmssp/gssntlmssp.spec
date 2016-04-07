@@ -2,13 +2,14 @@
 
 Name: gssntlmssp
 Version: 0.6.0
-Release: alt1
+Release: alt1.qa1
 Summary: GSSAPI NTLMSSP Mechanism
 
 Group: System/Libraries
 License: LGPLv3+
 Url: https://fedorahosted.org/gss-ntlmssp
 Source: https://fedorahosted.org/released/gss-ntlmssp/%name-%version.tar
+Packager: Alexey Shabalin <shaba@altlinux.org>
 
 Requires: libkrb5 >= 1.13
 
@@ -66,6 +67,9 @@ make test_gssntlmssp
 %_includedir/gssapi/*
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.0-alt1.qa1
+- NMU: rebuilt with libunistring.so.2.
+
 * Wed Apr 01 2015 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1
 - 0.6.0
 
