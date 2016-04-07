@@ -9,7 +9,7 @@
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.4.0
-Release: alt1.git20140703.1
+Release: alt1.git20140703.qa2
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -402,6 +402,9 @@ done
 %endif
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.4.0-alt1.git20140703.qa2
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2.4.0-alt1.git20140703.1
 - rebuild with boost 1.57.0
 
