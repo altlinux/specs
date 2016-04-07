@@ -1,6 +1,6 @@
 Name:           pymol
 Version:        1.7.2.1
-Release:        alt2.svn20140819
+Release:        alt2.svn20140819.qa1
 Summary:        Python-enhanced molecular graphics tool
 Group:          Sciences/Chemistry
 License:        CNRI Python License
@@ -134,6 +134,9 @@ bzip2 ChangeLog
 %_docdir/PyMOL
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.2.1-alt2.svn20140819.qa1
+- NMU: rebuilt with libGLEW.so.1.13.
+
 * Thu Sep 18 2014 Nazarov Denis <nenderus@altlinux.org> 1.7.2.1-alt2.svn20140819
 - Rebuilt with libGLEW 1.11.0
 
