@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.92.4
-Release: alt6.git20140527.1
+Release: alt6.git20140527.qa2
 Summary: Added functionality for PyUblas
 License: BSD
 Group: Development/Python
@@ -137,6 +137,9 @@ exit 1
 %endif
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.92.4-alt6.git20140527.qa2
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.92.4-alt6.git20140527.1
 - rebuild with boost 1.57.0
 
