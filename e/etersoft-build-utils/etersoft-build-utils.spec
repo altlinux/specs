@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.6
+Version: 2.4.7
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,16 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Apr 07 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.7-alt1
+- rpmcs: improve after use Fedora Rawhide packages
+- loginhsh: support -X -Y args, and -p option for override hasher dir name postfix
+- introduce runinhsh command for run any packaged command in hasher
+- do not use docmd against loginhsh run (fix auto login to hasher after build)
+- rpmbps: fix spec comment
+- rpmbph: fix possible ambiguous branch name
+- set build ok flag only if all build is done
+- rpmlog: do not lower initial letter for abbreviations
+
 * Sun Feb 07 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.6-alt1
 - add --help support
 - rpmbb: restore PKGFORMAT detection for fix --nodeps
