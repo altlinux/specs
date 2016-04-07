@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist SVN-Notify
 Name: perl-%dist
-Version: 2.84
+Version: 2.86
 Release: alt1
 
 Summary: Perl module for Subversion activity notification
@@ -16,7 +17,7 @@ Provides: svnnotify = %version
 Obsoletes: svnnotify < %version
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-IO-stringy perl-Module-Build perl-Net-SMTP-TLS perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Trac
+BuildRequires: perl-IO-stringy perl-Module-Build perl-Net-SMTP-TLS perl-Test-Pod perl-Test-Pod-Coverage perl-Text-Trac perl(Email/Address.pm)
 
 %description
 SVN::Notify is a Perl module for Subversion activity notification.
@@ -38,6 +39,9 @@ export SENDMAIL=/usr/sbin/sendmail
 %perl_vendor_privlib/SVN
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.86-alt1
+- automated CPAN update
+
 * Tue Aug 27 2013 Igor Vlasenko <viy@altlinux.ru> 2.84-alt1
 - automated CPAN update
 
