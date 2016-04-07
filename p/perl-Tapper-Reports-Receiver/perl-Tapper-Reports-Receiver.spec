@@ -5,10 +5,10 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(DateTime/Format/SQLite.pm)
 %define upstream_name    Tapper-Reports-Receiver
-%define upstream_version 5.0.0
+%define upstream_version 5.0.1
 
 Name:       perl-%{upstream_name}
-Version:    5.0.0
+Version:    5.0.1
 Release:    alt1
 
 Summary:    Receive test reports
@@ -86,6 +86,9 @@ Tapper Distribution for Recevining Test Reports.
 
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1
+- automated CPAN update
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
 - automated CPAN update
 
