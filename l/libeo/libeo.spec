@@ -1,6 +1,6 @@
 Name: libeo
 Version: 1.3.1
-Release: alt1.qa1.1
+Release: alt1.qa3
 Summary: EO, the Evolving Objects library
 License: LGPLv2.1
 Url: http://eodev.sourceforge.net
@@ -25,12 +25,14 @@ classes.
 %package devel
 Group: Development/C++
 Summary: Development environment for %sum
+Requires: %name = %EVR
 %description devel
 Development environment for %sum
 
 %package -n python-module-PyEO
 Group: Development/Python
 Summary: Python bindings for %sum
+Requires: %name = %EVR
 %description -n python-module-PyEO
 Python bindings for %sum
 
@@ -90,6 +92,9 @@ mv %buildroot%prefix/lib/* %buildroot%_libdir/
 #_libexecdir/eo/test
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.1-alt1.qa3
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt1.qa1.1
 - rebuild with boost 1.57.0
 
