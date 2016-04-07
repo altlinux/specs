@@ -8,7 +8,7 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.8.9
+Version: 2.0.0
 Release: alt2
 
 Summary: A very fast open source browser based on WebKit core
@@ -20,24 +20,9 @@ Url: http://qupzilla.com
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-# Automatically added by buildreq on Mon Feb 09 2015
-# optimized out: libGL-devel libX11-devel libcloog-isl4 libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config qt5-base-devel qt5-declarative-devel qt5-tools xorg-xproto-devel
-BuildRequires: gcc-c++ libssl-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel
-BuildRequires: qt5-x11extras-devel
-
-BuildRequires: pkgconfig(Qt5Concurrent)
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5DBus)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: pkgconfig(Qt5PrintSupport)
-BuildRequires: pkgconfig(Qt5Script)
-BuildRequires: pkgconfig(Qt5Sql)
-BuildRequires: pkgconfig(Qt5WebKitWidgets)
-BuildRequires: pkgconfig(Qt5Widgets)
-
-BuildRequires: fontconfig
-BuildRequires: gdb
+# Automatically added by buildreq on Thu Apr 07 2016
+# optimized out: fontconfig gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
+BuildRequires: libssl-devel libxcbutil-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
 
 %description
 QupZilla is a new and very fast World Wide Web Browser
@@ -81,6 +66,12 @@ make INSTALL_ROOT=%buildroot install
 # - move shared libraries to a subpackage?
 
 %changelog
+* Thu Apr 07 2016 Michael Shigorin <mike@altlinux.org> 2.0.0-alt2
+- buildreq
+
+* Thu Mar 31 2016 Michael Shigorin <mike@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Thu Feb 04 2016 Michael Shigorin <mike@altlinux.org> 1.8.9-alt2
 - tweaked Russian translation (sent upstream)
 
