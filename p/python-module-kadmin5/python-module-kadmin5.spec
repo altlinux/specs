@@ -1,9 +1,8 @@
-
 %define oname kadmin5
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt5.4.1
+Release: alt5.qa6
 
 Summary: Kerveros 5 database administration API for Python.
 
@@ -38,6 +37,9 @@ scons install DESTDIR=%buildroot
 %python_sitelibdir/*
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.5-alt5.qa6
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.0.5-alt5.4.1
 - rebuild with boost 1.57.0
 
