@@ -4,13 +4,14 @@
 
 Name: lib%oname%branch
 Version: %branch.15
-Release: alt1.git20150302
+Release: alt1.git20150302.qa1
 
 Summary: A C++ Crypto Library
 License: BSD
 Group: System/Libraries
 
 Url: http://botan.randombit.net
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/randombit/botan.git
 Source: %name-%version.tar
@@ -147,6 +148,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.11.15-alt1.git20150302.qa1
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.15-alt1.git20150302
 - Version 1.11.15
 
