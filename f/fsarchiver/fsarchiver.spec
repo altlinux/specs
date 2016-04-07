@@ -2,10 +2,12 @@ Summary: Filesystem Archiver for Linux
 Summary(ru_RU.UTF-8): Архиватор файловых систем
 
 Name: fsarchiver
-Version: 0.7.0
-Release: alt3
-Url: http://www.fsarchiver.org
+Version: 0.6.22
+Release: alt1
+Url: https://github.com/fdupoux/fsarchiver
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
+
+Epoch: 1
 
 Source: %name-%version.tar
 License: GPLv2+
@@ -77,11 +79,15 @@ FSArchiver предоставляет следующие возможности:
 
 %files
 %doc COPYING ChangeLog AUTHORS README
-%config %_sysconfdir/%name.conf
+#config %_sysconfdir/%name.conf
 %_sbindir/%name
 %_man8dir/*
 
 %changelog
+* Thu Apr 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.6.22-alt1
+- Update from https://github.com/fdupoux/fsarchiver
+- Version 0.6.22
+
 * Tue Oct 13 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.7.0-alt3
 - Correct Russian description
 
