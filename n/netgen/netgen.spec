@@ -8,7 +8,7 @@
 %define oname netgen
 Name: %oname
 Version: 6.1
-Release: alt1.dev.git20150306
+Release: alt1.dev.git20150306.qa1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -440,6 +440,9 @@ done
 %endif
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.1-alt1.dev.git20150306.qa1
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Mon Mar 23 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1-alt1.dev.git20150306
 - Version 6.1-dev
 
