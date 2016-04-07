@@ -2,7 +2,7 @@
 
 Name: rpm-build-perl
 Version: 0.84
-Release: alt8
+Release: alt9
 
 Summary: RPM helper scripts to calculate Perl dependencies
 License: GPL
@@ -75,6 +75,9 @@ install -pm644 macros.env %buildroot%_rpmmacrosdir/perl5.env
 %config %_rpmmacrosdir/perl5.env
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.84-alt9
+- support for Moo && Mouse
+
 * Wed Apr 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.84-alt8
 - support of bad xs in perl-optimizer && perl 5.22
 
