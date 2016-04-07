@@ -1,6 +1,6 @@
 Name: dvdisaster
 Version: 0.72.3
-Release: alt2.1
+Release: alt3
 
 Summary: Additional error protection for CD/DVD media
 License: GPLv2+
@@ -41,6 +41,8 @@ subst 's~glib/gstrfuncs.h~glib.h~' memtrack.c dvdisaster.h
 
 %build
 ./configure --prefix=/usr --with-embedded-src-path=no --docdir=%_docdir --with-nls=yes
+# parallel builds fail randomly (sometimes), therefore:
+NPROCS=1
 %make_build
 
 %install
@@ -83,6 +85,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_defaultdocdir/dvdisaster-%version
 
 %changelog
+* Thu Apr  7 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.72.3-alt3
+- (.spec) parallel builds fail randomly (sometimes), therefore: NPROCS=1
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.72.3-alt2.1
 - Fixed build with libpng15
 
