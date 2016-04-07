@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/git /usr/bin/svnversion glib2-devel libICE-devel libSM-devel libglpk36-devel libgnutls-devel libidn-devel libltdl7-devel libmicrohttpd-devel libmysqlclient-devel libpq-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
 # END SourceDeps(oneline)
-%define oname gnunet
 Name: gnunet
 Version: 0.9.5a
-Release: alt1.2
+Release: alt1.qa3
 
 Summary: Peer-to-peer framework
 
-License: GPL
+License: GPLv3+
 Group: Communications
 Url: http://gnunet.org/
+Packager: ALT QA Team <qa@packages.altlinux.org>
 
 Source: http://gnunet.org/download/%name-%version.tar
 # (TODO: add pseudouser)
@@ -54,7 +54,7 @@ This package contains the headers that programmers will need to develop
 applications which will use %name.
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
 %autoreconf
@@ -63,13 +63,13 @@ applications which will use %name.
 
 %install
 %makeinstall_std
-%find_lang %oname
+%find_lang %name
 install -D -m0755 %{SOURCE1} %buildroot%_initdir/gnunetd
 
 # unpackaged files found
 rm -f %buildroot/usr/share/doc/gnunet/COPYING
 
-%files -f %{oname}.lang
+%files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README
 %doc %_man1dir/gnunet*.1*
 %doc %_man5dir/gnunet*.5*
@@ -179,6 +179,9 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_pkgconfigdir/gnunetvpn.pc
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.5a-alt1.qa3
+- NMU: rebuilt with libunistring.so.2.
+
 * Fri May 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5a-alt1.2
 - Rebuilt with glpk36
 
