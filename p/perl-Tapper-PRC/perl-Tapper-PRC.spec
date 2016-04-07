@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: perl(File/Slurp.pm)
+BuildRequires: perl(File/Slurp.pm) perl(Proc/Killfam.pm)
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators perl(Hash/Merge.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(File/Slurp.pm)
 %define upstream_name    Tapper-PRC
-%define upstream_version 5.0.0
+%define upstream_version 5.0.1
 
 Name:       perl-%{upstream_name}
-Version:    5.0.0
+Version:    5.0.1
 Release:    alt1
 
 Summary:    Control running test programs
@@ -73,6 +73,9 @@ Tapper - Program run control for test program automation.
 %_man1dir/tapper*
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1
+- automated CPAN update
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1
 - automated CPAN update
 
