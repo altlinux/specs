@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt2
+Release: alt3
 License: Python
 Group: Development/Python3
 
@@ -863,9 +863,7 @@ mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%name-base-files.req.list
 # %name dirlist for %_rpmlibdir/files.req
 %dynload_dir/	%name-base
-%pylibdir/__pycache__/	%name-base
 %tool_dir/	%name-tools
-%tool_dir/__pycache__/	%name-tools
 EOF
 # rpm-build-python3 has a dep on exactly this file with the list
 # (for modularity: there used to be a separate package
@@ -873,11 +871,9 @@ EOF
 cat <<\EOF >%buildroot%_rpmlibdir/%python3_sitebasename-site-packages-files.req.list
 %(dirname %python3_sitelibdir)	%name-base
 %python3_sitelibdir/	%name-base
-%python3_sitelibdir/__pycache__/	%name-base
 %if "%_lib" != "lib"
 %(dirname %python3_sitelibdir_noarch)/	%name-base
 %python3_sitelibdir_noarch/	%name-base
-%python3_sitelibdir_noarch/__pycache__/	%name-base
 %endif
 EOF
 
@@ -1147,6 +1143,10 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Thu Apr 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt3
+- I was wrong in letting __pycache__/ be handled by files.req:
+  must be invisible. (Other pkgs gave this crazy Provides as a result.)
+
 * Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt2
 - Merged the major switch to a common /usr/lib{,64}/python3/site-packages
   done in 3.3:
