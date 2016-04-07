@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.13
+Version: 0.2.14
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -18,7 +18,7 @@ BuildArchitectures: noarch
 
 BuildRequires: rpm-macros-webserver-common
 
-Requires: nginx >= 1.1.8
+Requires: nginx >= 1.8.1
 
 %description
 Additional Nginx templates and functions.
@@ -58,6 +58,14 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Thu Apr 07 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.14-alt1
+- set required nginx version to 1.8.1
+- use default proxy_cache_key value
+- use scheme for proxy_cache_key
+- make proxy_cache_lock really works
+- add store-week-proxy.conf
+- add proxy_*_timeout example
+
 * Fri Mar 18 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.13-alt1
 - allow permanent trans-repoxy
 - add letsencrypt.conf
