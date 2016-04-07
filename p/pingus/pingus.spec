@@ -3,7 +3,7 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt1.6.2
+Release: alt1.qa9
 
 
 Summary: A free Lemmings clone
@@ -145,6 +145,9 @@ EOF
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.6-alt1.qa9
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Feb 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.7.6-alt1.6.2
 - (ALT bug #29733)
  
