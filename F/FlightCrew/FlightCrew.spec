@@ -1,12 +1,13 @@
 Name: FlightCrew
 Version: 0.7.2
-Release: alt2.1
+Release: alt2.qa3
 Summary: EPUB validation tool
 
 Group: File tools
 License: LGPLv3+
 URL: http://code.google.com/p/flightcrew/
-Source0: %name-%version.tar
+Packager: ALT QA Team <qa@packages.altlinux.org>
+Source: %name-%version.tar
 
 Patch1: %name-0.7.2-fc18-soname.patch
 Patch2: %name-0.7.2-fc18-as_shared.patch
@@ -26,7 +27,7 @@ BuildRequires: zlib-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel boost-datetime-devel boost-regex-devel boost-thread-devel boost-system-devel
 BuildRequires: xerces-c-devel >= 3.1
 BuildRequires: libqt4-devel
-Requires: lib%name = %version
+Requires: lib%name = %version-%release
 
 %description
 FlightCrew is a C++, cross-platform, native code epub validator.
@@ -41,7 +42,7 @@ FlightCrew is a C++, cross-platform, native code epub validator library.
 %package gui
 Summary: EPUB validation tool with gui
 Group: File tools
-Requires: lib%name = %version
+Requires: lib%name = %version-%release
 
 %description gui
 FlightCrew is a C++, cross-platform, native code epub validator.
@@ -112,6 +113,9 @@ cd BUILD
 
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.7.2-alt2.qa3
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.7.2-alt2.1
 - rebuild with boost 1.57.0
 
