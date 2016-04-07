@@ -1,9 +1,8 @@
-
 %define oname IceSSL
 
 Name: python-module-%oname
 Version: 0.0.5
-Release: alt4.4.1
+Release: alt4.4.qa6
 
 Summary: Some usfull functions for better integrating IceSSL and Python.
 
@@ -24,7 +23,7 @@ BuildRequires: boost-devel >= 1.39.0
 
 %description
 IcePySSL is a python module, which provides some usefull functions for using
-Ice (www.zeroc.com) in python (www.python.org) with secure connections 
+Ice (www.zeroc.com) in python (www.python.org) with secure connections
 over IceSSL.
 
 Currently python mapping for IceSSL::getConnectionInfo() function is implemented.
@@ -44,6 +43,9 @@ scons install DESTDIR=%buildroot
 %python_sitelibdir/*
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.5-alt4.4.qa6
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.0.5-alt4.4.1
 - rebuild with boost 1.57.0
 
