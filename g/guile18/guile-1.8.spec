@@ -6,7 +6,7 @@
 Summary: A GNU implementation of Scheme for application extensibility
 Name: %{iname}18
 Version: %sversion.7
-Release: alt2.5
+Release: alt3
 Serial: 1
 Url: http://www.gnu.org/software/guile/
 
@@ -110,7 +110,7 @@ make check
 %_libdir/lib%iname?*.so
 %_datadir/%iname/%sversion/*
 %_altdir/%name
-%_mandir/man1/%iname.1.gz
+%_mandir/man1/%iname.1.*
 
 %files devel
 %_bindir/%iname-snarf
@@ -126,6 +126,10 @@ make check
 %_libdir/lib*.a
 
 %changelog
+* Thu Apr 07 2016 Mikhail Efremov <sem@altlinux.org> 1:1.8.7-alt3
+- Don't specify extension for manpages.
+- tests: Update srfi-14.test.
+
 * Mon Dec 02 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.8.7-alt2.5
 - Fix BFS (use old automake 1.11).
 
