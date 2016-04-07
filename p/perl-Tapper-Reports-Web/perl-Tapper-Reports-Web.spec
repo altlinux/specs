@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # we have it in autoimports, but it requires a huge tree of deps
 %filter_from_requires /^perl.BenchmarkAnything.Storage.Frontend.Lib.pm./d
 
 %add_findreq_skiplist */Tapper/Reports/Web.pm */auto/Tapper/Reports/Web/tapper.psgi
 %add_findreq_skiplist %_bindir/tapper_reports_web_fastcgi_live.pl
 %add_findreq_skiplist %_bindir/tapper_reports_web_fastcgi_public.pl
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
@@ -12,10 +12,10 @@ BuildRequires: perl-devel perl-podlators
 BuildRequires: perl(Catalyst/DispatchType/Regex.pm) perl(Catalyst/Plugin/Redirect.pm)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(HTML/Mason/Interp.pm) perl(Catalyst/Action/RenderView.pm) perl(Locale/Maketext.pm) perl(Tapper/Base.pm) perl(Catalyst/Plugin/Redirect.pm)
 %define upstream_name    Tapper-Reports-Web
-%define upstream_version 5.0.7
+%define upstream_version 5.0.10
 
 Name:       perl-%{upstream_name}
-Version:    5.0.7
+Version:    5.0.10
 Release:    alt1
 
 Summary:    Tapper frontend web application based on Catalyst
@@ -127,6 +127,9 @@ Tapper frontend web application based on Catalyst.
 
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1
+- automated CPAN update
+
 * Wed Mar 23 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.7-alt1
 - automated CPAN update
 
