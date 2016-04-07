@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           xsd
 Version:        3.3.0
-Release:        alt2_16
+Release:        alt2_16.qa1
 Summary:        W3C XML schema to C++ data binding compiler
 
 Group:          Development/Tools
@@ -118,6 +118,9 @@ find apidocdir -name "*.doxygen" \
 
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.0-alt2_16.qa1
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Mon Mar 09 2015 Igor Vlasenko <viy@altlinux.ru> 3.3.0-alt2_16
 - moved to Sisyphus by request of mike@
 
