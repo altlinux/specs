@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.13.0
-Release: alt4
+Release: alt5
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,7 @@ Summary: Lightweight QML-based display manager
 Url: https://github.com/sddm/sddm
 License: GPLv2+
 
-Requires: xinitrc >= 2.4.43 xauth design-graphics
+Requires: xinitrc >= 2.4.43 xauth /usr/share/design/current
 
 Source: %name-%version.tar
 Source1: sddm.conf
@@ -124,6 +124,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Thu Apr 07 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt5
+- fix requires
+
 * Tue Mar 01 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt4
 - hardcode HideShells from default config file
 
