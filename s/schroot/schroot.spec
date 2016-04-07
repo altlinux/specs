@@ -1,6 +1,6 @@
 Name: schroot
 Version: 1.4.23
-Release: alt1.5.1
+Release: alt1.qa7
 Summary: Execute commands in a chroot environment
 Group: Development/Tools
 License: GPLv3+
@@ -124,6 +124,9 @@ rm -f %buildroot%_bindir/schroot-sbuild
 %_mandir/man1/dchroot*
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.4.23-alt1.qa7
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 1.4.23-alt1.5.1
 - rebuild with boost 1.57.0
 
