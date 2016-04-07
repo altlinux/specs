@@ -3,7 +3,7 @@
 
 Name: percona-playback
 Version: 0.6
-Release: alt1.1
+Release: alt1.1.qa1
 Summary: A tool for replaying captured database server load
 
 License: GPL2
@@ -66,6 +66,9 @@ make check
 %_libdir/*.so
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt1.1.qa1
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.6-alt1.1
 - rebuild with boost 1.57.0
 
