@@ -1,12 +1,13 @@
 Name: sigil
 Version: 0.6.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: Sigil is a free, open source, multi-platform WYSIWYG ebook editor
 Summary(ru_RU.UTF-8): Сигиль есть свободный, открытый, многоплатформенный Вицивиговый книгоправщик
 License: GPLv3
 Group: Editors
 Url: http://code.google.com/p/sigil/
+Packager: ALT QA Team <qa@packages.altlinux.org>
 
 Source: %name-%version.tar.bz2
 
@@ -24,7 +25,7 @@ can be found in the ChangeLog.txt file.
 набора может быть обретена в файле ChangeLog.txt.
 
 %prep
-%setup -q
+%setup
 
 %build
 %cmake
@@ -48,6 +49,9 @@ mv %buildroot%_pixmapsdir/*.png %buildroot%_liconsdir/
 %_datadir/%name/*
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.1-alt1.qa1
+- NMU: rebuilt with rebuilt libFlightCrew.so.0.7.
+
 * Mon Dec 03 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.6.1-alt1
 - new version
 
