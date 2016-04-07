@@ -1,17 +1,18 @@
-# 5.1.1.3
+# 5.1.2.1
 %def_without forky
+%def_without python
 %def_with parallelism
 %def_without fetch
 %def_without lto
 
 Name: LibreOffice
 Version: 5.1
-%define urelease 1.3
+%define urelease 2.1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -45,6 +46,44 @@ Source200:	oasis-master-document-template.icns
 Source300:	update_from_fc
 
 ## FC patches
+Patch1: FC-openoffice.org-2.4.0.ooo86080.unopkg.bodge.patch
+Patch2: FC-openoffice.org-3.1.0.oooXXXXX.solenv.allowmissing.patch
+Patch3: FC-0001-tdf-95450-avoid-double-swap-on-big-endian-arches.patch
+Patch4: FC-0001-these-popups-should-start-invisible-and-take-default.patch
+Patch5: FC-0002-disable-tearability-of-color-window.patch
+Patch6: FC-0001-rhbz-1168757-propagate-selected-slides-to-print-dial.patch
+Patch7: FC-0001-hack-out-optimization-to-build.patch
+Patch8: FC-0001-generate-better-unit-test-assert-message.patch
+Patch9: FC-0001-tdf-97665-Let-s-hope-that-over-activation-isn-t-real.patch
+Patch10: FC-0002-gtk3-some-changes-towards-enabling-native-gtk3-popup.patch
+Patch11: FC-0003-gtk3-vcl-popups-flush-any-unexecuted-Select-events-o.patch
+Patch12: FC-0004-gtk3-replace-old-action-if-same-command-is-added.patch
+Patch13: FC-installfix.patch
+Patch14: FC-0005-gtk3-handle-items-without-commands.patch
+Patch15: FC-0006-mark-checkable-toolbox-menu-entries-as-checkable.patch
+Patch16: FC-0007-set-gtk-layout-direction-to-match-ours.patch
+Patch17: FC-0008-gtk3-implement-native-context-menus.patch
+Patch18: FC-0001-Resolves-rhbz-1315385-use-preferred-size-if-widget-s.patch
+Patch19: FC-0001-gtk3-various-bits-means-different-things-again.patch
+Patch20: FC-0001-Resolves-tdf-98638-sometimes-menu-grab-doesn-t-take.patch
+Patch21: FC-0001-Resolves-tdf-98636.patch
+Patch22: FC-0001-Resolves-tdf-96989-videos-playback-at-maximum-possib.patch
+Patch23: FC-0001-delete-hidden-pages-before-deleting-unused-masters.patch
+Patch24: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch25: FC-0001-tdf-39271-allow-to-export-only-notes-pages.patch
+Patch26: FC-0001-disable-firebird-unit-test.patch
+Patch27: FC-0001-Update-liborcus-to-0.11.0.patch
+Patch28: FC-0001-reorder.patch
+Patch29: FC-0002-reduce-copypasta.patch
+Patch30: FC-0003-detect-Boost.Filesystem.patch
+Patch31: FC-0004-define-boost_filestystem-external-for-system-boost-t.patch
+Patch32: FC-0001-never-run-autogen.sh.patch
+Patch33: FC-0001-disable-libe-book-support.patch
+Patch34: FC-0001-fix-build-with-gcc-4.8.patch
+Patch35: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch36: FC-0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
+Patch37: FC-0001-but-only-for-dialog.patch
+Patch38: FC-0003-gtk3-wayland-start-floating-windows-hidden.patch
 
 ## Long-term FC patches
 
@@ -52,7 +91,6 @@ Source300:	update_from_fc
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: libreoffice-4-alt-drop-gnome-open.patch
 Patch403: alt-002-tmpdir.patch
-Patch404: alt-004-isnan.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -66,6 +104,12 @@ BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
 BuildRequires: libe-book-devel
 # 5.1
 BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
+# 5.1.2
+BuildRequires: libgtk+3-gir-devel
+
+%if_without python
+BuildRequires: python3-dev
+%endif
 
 %description
 LibreOffice is a productivity suite that is compatible with other major
@@ -108,6 +152,23 @@ Requires: %name-common = %version-%release
 Obsoletes: LibreOffice4-kde4
 %description kde4
 KDE4 extensions for %name
+
+%package -n libreofficekit
+Summary: A library providing access to LibreOffice functionality
+Group: Graphical desktop/GNOME
+License: MPLv2.0
+%description -n libreofficekit
+LibreOfficeKit can be used to access LibreOffice functionality
+through C/C++, without any need to use UNO.
+
+%package -n libreofficekit-devel
+Summary: Development files for libreofficekit
+Group: Development/GNOME and GTK+
+License: MPLv2.0
+%description -n libreofficekit-devel
+The libreofficekit-devel package contains libraries and header files for
+developing applications that use libreofficekit.
+
 
 %package extensions
 Summary: Additional extensions for %name
@@ -156,14 +217,51 @@ echo Direct build
 %setup -q -n libreoffice-%uversion -a10 -b1 -b2 -b3
 
 ## FC apply patches
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
 
 ## Long-term FC patches applying
 
 ## ALT apply patches
 %patch401 -p0
 ##patch402 -p1
-%patch403 -p2
-%patch404 -p1
+%patch403 -p1
 
 # Hacked git binary patch
 cp %SOURCE300 sysui/desktop/icons/
@@ -253,12 +351,13 @@ export CXX=%_target_platform-g++
 %else   
         --without-parallelism \
 %endif
-%if_with fetch
+%if_with python
 	--enable-python=internal \
+%endif
+%if_with fetch
 	--enable-fetch-external
 %else
 	--with-system-libs \
-	--enable-python=internal \
 	--disable-fetch-external
 %endif
 
@@ -292,10 +391,24 @@ test -r $HOME/forky.log && echo "Fork() was `wc -l $HOME/forky.log` times delaye
 %make build-nocheck
 %endif
 
+# Generate typelib files
+## TODO use stuff generated here
+export DESTDIR=../output
+export KDEMAINDIR=/usr
+export GNOMEDIR=/usr
+export GNOME_MIME_THEME=hicolor
+export PREFIXDIR=/usr
+. ./bin/get_config_variables PRODUCTVERSIONSHORT PRODUCTVERSION SRCDIR WORKDIR PKG_CONFIG INSTDIR
+export PRODUCTVERSIONSHORT PRODUCTVERSION SRCDIR WORKDIR PKG_CONFIG INSTDIR
+cd $WORKDIR/CustomTarget/sysui/share/libreoffice
+./create_tree.sh
+
 %install
 %makeinstall DESTDIR=%buildroot INSTALLDIR=%lodir
+%if_with python
 # Ignore dull /usr/local/bin/python hack
 chmod -x %buildroot%lodir/program/python-core*/lib/cgi.py
+%endif
 
 # Pick up LOO-generated file lists
 for l in %with_lang; do
@@ -307,8 +420,7 @@ done
 (
 cd %buildroot
 find .%lodir/program/gnome*
-find .%lodir/program/*gconf*
-find .%lodir/program/*gtk*.so
+find .%lodir/program/*gtk3*.so
 find .%lodir/share/registry/gnome.xcd
 ) | sed 's/^[.]//' > files.gnome
 
@@ -319,7 +431,7 @@ find .%lodir/program/*kde*
 ) | sed 's/^[.]//' > files.kde4
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.kde4; } | sort | uniq -u | grep -v '~$' | grep -v '/share/extensions/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | grep -v '/share/extensions/.' > files.nolang
 
 unset RPM_PYTHON
 
@@ -342,6 +454,9 @@ for n in writer impress calc base draw math qstart; do
 	ln -sr %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
 done
 
+# Hack out "Education" category from Math
+sed -i 's/Education;//' %buildroot%lodir/share/xdg/math.desktop
+
 # TODO some other hack with .mime (?)
 mkdir -p %buildroot%_datadir/mime-info %buildroot%_datadir/mimelnk/application %buildroot%_datadir/application-registry
 install sysui/desktop/mimetypes/*.keys %buildroot%_datadir/mime-info/
@@ -351,6 +466,11 @@ install sysui/desktop/mimetypes/*.applications %buildroot%_datadir/application-r
 
 # Config file
 install -D libreoffice.config %buildroot%conffile
+
+# Typelib/GIR stuff
+install -D workdir/CustomTarget/sysui/share/output/girepository-1.0/LOKDocView-0.1.typelib %buildroot%_typelibdir/LOKDocView-0.1.typelib
+install -D workdir/CustomTarget/sysui/share/output/usr/share/gir-1.0/LOKDocView-0.1.gir %buildroot%_girdir/LOKDocView-0.1.gir
+mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 
 %files
 
@@ -371,6 +491,7 @@ install -D libreoffice.config %buildroot%conffile
 %exclude %_iconsdir/*/*/apps/libreoffice%{version}-*.*g
 
 %files gnome -f files.gnome
+%lodir/program/libvclplug_gtk3lo.so
 
 %files kde4 -f files.kde4
 
@@ -393,7 +514,18 @@ install -D libreoffice.config %buildroot%conffile
 %langpack -l kk -n Kazakh
 %langpack -l tt -n Tatar
 
+%files -n libreofficekit
+%_typelibdir/LOKDocView-*.typelib
+%_libdir/liblibreofficekitgtk.so
+
+%files -n libreofficekit-devel
+%_girdir/LOKDocView-*.gir
+
 %changelog
+* Thu Mar 31 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt3
+- Update to 5.1.2.1
+- Build with system python again
+
 * Thu Mar 10 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt2
 - Update to 5.1.1.3
 - Build without forky (turns out -XX:ParallelGCThreads=2 fixes OOM)
