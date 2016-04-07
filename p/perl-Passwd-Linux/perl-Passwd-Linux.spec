@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Passwd-Linux
 Name: perl-%dist
-Version: 1.2
-Release: alt4.1.1
+Version: 1.3
+Release: alt1
 
 Summary: Perl module for manipulating the passwd and shadow files
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/EE/EESTABROO/Passwd-Linux-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-devel
@@ -37,6 +38,9 @@ mv test.pl test.pl.orig
 %perl_vendor_autolib/Passwd
 
 %changelog
+* Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4.1.1
 - rebuild with new perl 5.22.0
 
