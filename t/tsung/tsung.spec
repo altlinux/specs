@@ -1,6 +1,6 @@
 Name: tsung
-Version: 1.4.1.git20111220
-Release: alt1.1
+Version: 1.6.0
+Release: alt1
 Summary: A distributed multi-protocol load testing tool
 URL: http://%name.erlang-projects.org/
 License: %gpl2plus
@@ -14,8 +14,8 @@ Packager: hsv <hsv@altlinux.org>
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-erlang
 BuildRequires: rpm-build-erlang
-BuildRequires: erlang-otp-devel >= R12B
-BuildRequires: perl-RRD
+BuildRequires: erlang-otp-devel
+BuildRequires: perl-RRD perl-JSON
 
 %description
 %name is a distributed load testing tool. It is protocol-independent
@@ -36,7 +36,7 @@ It also has support for SSL.
 %autoreconf
 %configure
 %make_build %name doc
-%make boot
+%make
 bzip2 --best --keep --force CHANGES
 
 
@@ -49,11 +49,11 @@ bzip2 --best --keep --force CHANGES
     LIBDIR=%_libexecdir/%name \
     install
 rm -rf %buildroot%_otplibdir/{*/{src,BUILD_OPTIONS},tsung_*/include}
-install -m 0644 CHANGES.* CONTRIBUTORS README TODO doc/*.{erl,png,txt} %buildroot%_docdir/%name-%version/
+install -m 0644 CHANGES.* CONTRIBUTORS README.md TODO  %buildroot%_docdir/%name-%version/
 
 
 %files
-%_docdir/%name-%version/
+%_docdir/%name-%version/*
 %_bindir/*
 %_otplibdir/*
 %_man1dir/*
@@ -62,6 +62,12 @@ install -m 0644 CHANGES.* CONTRIBUTORS README TODO doc/*.{erl,png,txt} %buildroo
 
 
 %changelog
+* Thu Apr 07 2016 Denis Medvedev <nbr@altlinux.org> 1.6.0-alt1
+- new version 1.6.0
+
+* Wed Apr 06 2016 Denis Medvedev <nbr@altlinux.org> 1.4.1.git20111220-alt1.2
+- removed strict requirement for erlang build system
+
 * Tue Apr 05 2016 Denis Medvedev <nbr@altlinux.org> 1.4.1.git20111220-alt1.1
 - removed strict requirement for erlang version.
 
