@@ -1,27 +1,32 @@
 Name: rkhunter
-Version: 1.3.4
+Version: 1.4.2
 Release: alt1
 
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 License: GPLv2
 Group: Monitoring
-Url: http://sourceforge.net/projects/rkhunter/
+
+Url: http://rkhunter.sourceforge.net/
+
 BuildArch: noarch
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
-Patch1: rkhunter-1.3.2-alt-devhelpers.patch
-Patch2: rkhunter-1.3.2-alt-noksh.patch
-Patch3: rkhunter-1.3.2-alt-updates.patch
-Patch4: rkhunter-1.3.2-alt-conf.patch
+Source: %name-%version.tar
+Source2: rkhunter.sysconfig
+Source3: printosnumber.sh
 
-Requires: mailx crontabs binutils
+Patch: rkhunter-1.4.2-alt-conf.patch
+
+Requires: crontabs
+Requires: su, binutils, kmod, findutils, grep
+Requires: libe2fs, procps, lsof, wget
+Requires: perl, mailx, logrotate
+
 BuildPreReq: mailx crontabs perl-base perl-Digest-SHA1
 # Note: mailx and crontabs are not needed to be noticed explicitly,
 #       but are placed here for better manageability at install stage
 #       and for suppress warnings from find-requires at build stage.
 
-Summary(ru_RU.KOI8-R): Поиск троянских коней и закладок в программах
+Summary(ru_RU.UTF8): п÷п╬п╦я│п╨ я┌я─п╬я▐п╫я│п╨п╦я┘ п╨п╬п╫п╣п╧ п╦ п╥п╟п╨п╩п╟п╢п╬п╨ п╡ п©я─п╬пЁя─п╟п╪п╪п╟я┘
 
 # ToDo: /usr/bin/rkhunter strictly lookups helper scripts in /usr/lib/%name.
 #       More correct should be to place them to /usr/share/%name (%_datadir/%name)
@@ -55,33 +60,43 @@ exploits by running tests like:
 Rootkit Hunter is released as a GPL licensed project
 and free for everyone to use.
 
-%description -l ru_RU.KOI8-R
-Сканер Rootkit проверяет вашу систему на наличие закладок и троянских коней.
-Для этого используются следующие тесты:
-	- проверка контрольных сумм MD5
-	- поиск файлов, используемых закладками
-	- неверные права доступа к программам
-	- сигнатуры закладок в модулях ядра
-	- поиск невидимых файлов
-	- дополнительное сканирование внутри текстовых и двоичных файлов
-	- проверка версий программ
-	- тесты для приложений
+%description -l ru_RU.UTF8
+п║п╨п╟п╫п╣я─ Rootkit п©я─п╬п╡п╣я─я▐п╣я┌ п╡п╟я┬я┐ я│п╦я│я┌п╣п╪я┐ п╫п╟ п╫п╟п╩п╦я┤п╦п╣ п╥п╟п╨п╩п╟п╢п╬п╨ п╦ я┌я─п╬я▐п╫я│п╨п╦я┘ п╨п╬п╫п╣п╧.
+п■п╩я▐ я█я┌п╬пЁп╬ п╦я│п©п╬п╩я▄п╥я┐я▌я┌я│я▐ я│п╩п╣п╢я┐я▌я┴п╦п╣ я┌п╣я│я┌я▀:
+	- п©я─п╬п╡п╣я─п╨п╟ п╨п╬п╫я┌я─п╬п╩я▄п╫я▀я┘ я│я┐п╪п╪ MD5
+	- п©п╬п╦я│п╨ я└п╟п╧п╩п╬п╡, п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀я┘ п╥п╟п╨п╩п╟п╢п╨п╟п╪п╦
+	- п╫п╣п╡п╣я─п╫я▀п╣ п©я─п╟п╡п╟ п╢п╬я│я┌я┐п©п╟ п╨ п©я─п╬пЁя─п╟п╪п╪п╟п╪
+	- я│п╦пЁп╫п╟я┌я┐я─я▀ п╥п╟п╨п╩п╟п╢п╬п╨ п╡ п╪п╬п╢я┐п╩я▐я┘ я▐п╢я─п╟
+	- п©п╬п╦я│п╨ п╫п╣п╡п╦п╢п╦п╪я▀я┘ я└п╟п╧п╩п╬п╡
+	- п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫п╬п╣ я│п╨п╟п╫п╦я─п╬п╡п╟п╫п╦п╣ п╡п╫я┐я┌я─п╦ я┌п╣п╨я│я┌п╬п╡я▀я┘ п╦ п╢п╡п╬п╦я┤п╫я▀я┘ я└п╟п╧п╩п╬п╡
+	- п©я─п╬п╡п╣я─п╨п╟ п╡п╣я─я│п╦п╧ п©я─п╬пЁя─п╟п╪п╪
+	- я┌п╣я│я┌я▀ п╢п╩я▐ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
 
 %prep
 %setup -n %name
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
+cp %SOURCE3 files/development
+
+%patch0 -p1
+
+
+cat <<'EOF' >%name.logrotate
+%_localstatedir/log/%name/%name.log {
+    weekly
+    notifempty
+    create 640 root root
+}
+EOF
 
 %build
-#%%configure ...
 # We have nothing to configure... yet...
+files/development/rpmhashes.sh files/ > files/%hash_list
 
 %install
 mkdir -p %buildroot{%_bindir,%_sysconfdir,%_man8dir}
 mkdir -p %buildroot{%scripts_dir,%runonce_dir,%doc_dir,%db_dir,%tmp_dir}
 mkdir -p %buildroot%db_dir/i18n
+
+install -d  %buildroot%_logdir/%name
 
 install -m750 -p files/rkhunter                %buildroot%_bindir/
 install -m750 -p files/{*.pl,*.sh}             %buildroot%scripts_dir/
@@ -89,7 +104,10 @@ install -m750 -p files/development/{*.pl,*.sh} %buildroot%runonce_dir/
 install -m644 -p files/*.8                     %buildroot%_man8dir/
 install -m640 -p files/*.dat                   %buildroot%db_dir/
 install -m644 -p files/i18n/en                 %buildroot%db_dir/i18n/en
-install -m644 -p files/{CHANGELOG,LICENSE,README,WISHLIST} %buildroot%doc_dir/
+install -m644 -p files/{CHANGELOG,README,FAQ,ACKNOWLEDGMENTS} %buildroot%doc_dir/
+install -D -m640 -p %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -D -m644 -p %name.logrotate         %buildroot%_sysconfdir/logrotate.d/%name
+
 
 # (cjo) Put installation root in configuration file,
 #       then copy the rest of the file from the original.
@@ -159,15 +177,10 @@ __EOF__
 chmod 750 %buildroot%runonce_dir/create_defaulthashes
 
 %post
-echo '    Refresh your MD5 checksum database by following command:
-    GNUPGHOME=~user/.gnupg %runonce_dir/create_defaulthashes'
 
 %preun
 rm -f %db_dir/%hash_list.{asc,*saved.*}
 
-%verifyscript
-echo '%name checksum database should be verified separately by following command:
-GNUPGHOME=~user/.gnupg gpg --verify %db_dir/%hash_list.asc'
 
 %files
 %_bindir/%name
@@ -177,15 +190,21 @@ GNUPGHOME=~user/.gnupg gpg --verify %db_dir/%hash_list.asc'
 %attr(770,root,root) %tmp_dir
 %doc_dir
 %_man8dir/*
+%config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %verify(not mtime) %_sysconfdir/%name.conf
+%config(noreplace) %verify(not mtime) %_sysconfdir/sysconfig/%name
 %exclude %db_dir/%hash_list
 %config(noreplace) %verify(not mtime size md5) %db_dir/%hash_list
+%dir %_logdir/%name
 
 #%exclude %scripts_dir/check_update.sh
 #%exclude %db_dir/mirrors.dat
 
 
 %changelog
+* Thu Apr 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.2-alt1
+- Updated to 1.4.2
+
 * Fri May 01 2009 Slava Semushin <php-coder@altlinux.ru> 1.3.4-alt1
 - Updated to 1.3.4
 - Updated home page
@@ -296,5 +315,3 @@ GNUPGHOME=~user/.gnupg gpg --verify %db_dir/%hash_list.asc'
 
 * Mon Mar 29 2004 Doncho N. Gunchev - 1.0.0-0
 - initial .spec file
-
-## EOF ##
