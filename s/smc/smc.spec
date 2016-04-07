@@ -1,6 +1,6 @@
 Name: smc
 Version: 2.0.0
-Release: alt2.git20110510.7.1
+Release: alt2.git20110510.qa9
 Summary: 2D platform game that uses OpenGL in a style similar to Super Mario
 Group: Games/Arcade
 License: GPLv3
@@ -88,6 +88,9 @@ desktop-file-install --vendor dribble \
 %doc credits.txt docs/*.html docs/license.txt docs/style.css
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.0.0-alt2.git20110510.qa9
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 2.0.0-alt2.git20110510.7.1
 - rebuild with boost 1.57.0
 
