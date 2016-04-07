@@ -13,7 +13,7 @@ Name: mailutils
 %if %snapshot
 %define snapshotdate 20151110
 Version: %baseversion
-Release: alt0.%snapshotdate.2
+Release: alt0.%snapshotdate.3
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
@@ -255,7 +255,8 @@ sed "s/^@hashchar{}/#/" -i doc/texinfo/programs.texi
 %set_verify_elf_method unresolved=relaxed
 #undefine __libtoolize
 
-CFLAGS="-llber" \
+%add_optflags "-llber"
+
 %configure \
     --disable-rpath \
     --enable-ipv6 \
@@ -341,7 +342,7 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %_includedir/*
 %_bindir/mailutils-config
 %_datadir/aclocal/mailutils.m4
-%_libdir/libmu_argp.a
+#_libdir/libmu_argp.a
 %_libdir/libmailutils.so
 %_libdir/libmuaux.so
 %_libdir/libmu_*.so
@@ -351,7 +352,7 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %_libdir/mailutils/moderator.*a
 %_libdir/mailutils/vacation.*a
 %_libdir/mailutils/pipe.*a
-%exclude %_libdir/libmu_argp.a
+#exclude #_libdir/libmu_argp.a
 %_libdir/libmu*.*a
 %_libdir/mailutils/list.*a
 %_libdir/mailutils/numaddr.*a
@@ -417,6 +418,9 @@ rm -f $RPM_BUILD_ROOT%python_sitelibdir/mailutils/c_api.la
 %endif
 
 %changelog
+* Thu Apr 07 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.99.99-alt0.20151110.3
+- moved libmu_argp.a from devel subpackage to devel-static
+
 * Sat Jan 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.99.99-alt0.20151110.2
 - Fixed FTBFS: added makeinfo to BuildRequires
 
