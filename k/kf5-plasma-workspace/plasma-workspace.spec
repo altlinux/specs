@@ -15,7 +15,7 @@
 
 Name: kf5-%rname
 Version: 5.6.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -23,6 +23,7 @@ Summary: KDE Workspace 5 Plasma
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
+Requires: /usr/share/design/current
 Requires: qt5-dbus qt5-tools qt5-quickcontrols dbus-tools-gui
 Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kactivitymanagerd kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
@@ -270,6 +271,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Thu Apr 07 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt2
+- fix requires
+
 * Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - new version
 
