@@ -1,7 +1,7 @@
 Summary: Video Codec based on Wavelets
 Name: dirac
 Version: 1.0.2
-Release: alt1.1
+Release: alt1.1.qa1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 License: MPL/GPL/LGPL
@@ -106,6 +106,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_libdir/pkgconfig/dirac.pc
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.2-alt1.1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.1
 - Removed bad RPATH
 
