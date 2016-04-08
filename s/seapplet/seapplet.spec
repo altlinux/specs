@@ -1,6 +1,6 @@
 Name: seapplet
-Version: 0.3.3
-Release: alt1.1
+Version: 0.3.4
+Release: alt1
 
 Summary: Applet for selinux
 License: GPL
@@ -17,7 +17,7 @@ Applet for selinux.
 
 %prep
 %setup -q -n %name-%version
-qmake-qt4 "CONFIG += release"
+%qmake_qt4
 
 %build
 %make
@@ -43,6 +43,11 @@ install -m644 %name.desktop %buildroot/%_sysconfdir/xdg/autostart/%name.desktop
 
 
 %changelog
+* Fri Apr 08 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.4-alt1
+- fix show initial state of categories
+- fix autostart in MATE
+- code cleanup
+
 * Wed Dec 18 2013 Timur Aitov <timonbl4@altlinux.org> 0.3.3-alt1.1
 - send to build
 
