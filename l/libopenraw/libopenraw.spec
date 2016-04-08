@@ -2,7 +2,7 @@
 
 Name: libopenraw
 Version: 0.0.9
-Release: alt1
+Release: alt1.qa1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -84,6 +84,9 @@ applications that use %name-gnome.
 %_pkgconfigdir/libopenraw-gnome-1.0.pc
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.9-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Dec 01 2011 Yuri N. Sedunov <aris@altlinux.org> 0.0.9-alt1
 - 0.0.9
 - removed upstreamed patch2
