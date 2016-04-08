@@ -17,7 +17,7 @@
 
 Name: sankore
 Version: 3.1.git.1386578185
-Release: alt1
+Release: alt2
 
 Summary: The open-source software suite for digital teachers
 License: GPL-3.0+
@@ -177,6 +177,9 @@ install -p plugins/cffadaptor/build/linux/release/lib/libCFF_Adaptor* \
 %_bindir/open-%name
 
 %changelog
+* Fri Apr 08 2016 Michael Shigorin <mike@altlinux.org> 3.1.git.1386578185-alt2
+- rebuilt against current poppler
+
 * Tue Mar 22 2016 Michael Shigorin <mike@altlinux.org> 3.1.git.1386578185-alt1
 - initial build for ALT Linux Sisyphus (based on openSUSE package)
 - spec cleanup
