@@ -12,7 +12,7 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt3
+%define cedet_release alt4
 
 # subpackages to build;
 %def_enable nox
@@ -23,7 +23,7 @@
 
 Name: emacs24
 Version: 24.5
-Release: alt15
+Release: alt16
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -1503,6 +1503,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Thu Apr  7 2016 Terechkov Evgenii <evg@altlinux.org> 24.5-alt16
+- Rebuild with libgnutls30
+
 * Thu Apr 16 2015 Terechkov Evgenii <evg@altlinux.org> 24.5-alt15
 - Use new build scheme (from upstream git) in emacs24 source package
 
