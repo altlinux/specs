@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt4.git20150829.1.1
+Release: alt4.git20150829.1.1.1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -717,6 +717,10 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.0-alt4.git20150829.1.1.1
+- (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
+  (it is meaningless because arbitrary packages package that dir).
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.0-alt4.git20150829.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
