@@ -1,6 +1,6 @@
 Name: bamg
 Version: 0.60
-Release: alt3
+Release: alt4
 Summary: 2D mesh generator
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -42,6 +42,7 @@ This package contains examples for Bamg.
 install -p -m644 %SOURCE1 .
 
 %build
+NPROCS=1
 %make_build HOSTTYPE=linux world
 
 %install
@@ -58,6 +59,9 @@ install -p -m644 %SOURCE1 .
 %doc examples/*
 
 %changelog
+* Fri Apr  8 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.60-alt4
+- (.spec) it doesn't tolerate parallel builds, therefore: NPROCS=1
+
 * Fri Mar 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.60-alt3
 - Rebuilt for debuginfo
 
