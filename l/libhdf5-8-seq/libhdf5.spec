@@ -9,7 +9,7 @@
 %define priority 30
 Name: lib%oname-%sover-seq
 Version: 1.8.13
-Release: alt1
+Release: alt1.qa1
 
 Summary: Hierarchical Data Format 5 library
 
@@ -194,6 +194,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %_docdir/hdf5_examples
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.8.13-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.13-alt1
 - Version 1.8.13
 
