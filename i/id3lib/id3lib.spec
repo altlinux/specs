@@ -1,6 +1,6 @@
 Name: id3lib
 Version: 3.8.3
-Release: alt9
+Release: alt9.qa1
 
 Summary: A software library for manipulating ID3v1 and ID3v2 tags
 License: LGPL
@@ -120,6 +120,9 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 3.8.3-alt9.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.3-alt9
 - Fixed RPATH
 
