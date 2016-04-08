@@ -1,6 +1,6 @@
 Name: libofa
 Version: 0.9.3
-Release: alt4.1
+Release: alt4.1.qa1
 Summary: Open Fingerprint Architecture library
 License: APLv1 or GPLv2
 Group: System/Libraries
@@ -64,6 +64,9 @@ This package contains development header files and library for %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.9.3-alt4.1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt4.1
 - Fixed build with glibc 2.16
 
