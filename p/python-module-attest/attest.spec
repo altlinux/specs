@@ -1,10 +1,10 @@
 %define oname attest
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt1.git20130330.1.1
+Release: alt2.git20130330
 Summary: Modern, Pythonic unit testing
 License: BSD
 Group: Development/Python
@@ -158,6 +158,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr  8 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6-alt2.git20130330
+- %%def_without python3 (because it FTBFS with python3-3.5).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6-alt1.git20130330.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
