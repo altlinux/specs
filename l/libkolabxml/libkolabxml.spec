@@ -4,7 +4,7 @@
 
 Name: libkolabxml
 Version: 1.0.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Kolab XML format collection parser library
 License: LGPLv3+
@@ -182,6 +182,9 @@ python src/python/test.py ||:
 %endif
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.qa1
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Mar 07 2015 Michael Shigorin <mike@altlinux.org> 1.0.3-alt1
 - built for ALT Linux (package based on Mageia's 1.0.3-1.mga5)
 - disabled java/python/php bindings for now

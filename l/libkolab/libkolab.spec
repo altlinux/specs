@@ -3,7 +3,7 @@
 
 Name: libkolab
 Version: 0.5.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Kolab Object Handling Library
 License: LGPLv3+
@@ -153,6 +153,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 08 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.3-alt1.qa1
+- NMU: rebuilt with rebuilt libkolabxml.
+
 * Sat Mar 07 2015 Michael Shigorin <mike@altlinux.org> 0.5.3-alt1
 - built for ALT Linux (based on Mageia's 0.5.3-5.mga5 package)
 - disabled php/python bindings for now
