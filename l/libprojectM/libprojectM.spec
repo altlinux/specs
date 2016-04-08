@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt9
+Release: alt9.qa1
 
 License: LGPLv2.1
 Group: System/Libraries
@@ -155,6 +155,9 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 #%_libdir/libprojectM.a
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.1.0-alt9.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Jul 30 2013 Motsyo Gennadi <drool@altlinux.ru> 2.1.0-alt9
 - fix build for x86_64 (thanx to lnkvisitor@ for remote hasher64)
 
