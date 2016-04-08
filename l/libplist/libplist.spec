@@ -1,13 +1,13 @@
 Name: libplist
 Version: 1.12
-Release: alt1
+Release: alt2
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.libimobiledevice.org/
 
-Source: http://github.com/downloads/JonathanBeck/%name/%name-%version.tar.bz2
+Source: %url/downloads/%name-%version.tar.bz2
 
 BuildRequires: gcc-c++ cmake libxml2-devel xml-utils
 BuildRequires: python-devel python-module-Cython >= 0.18
@@ -86,6 +86,9 @@ Python libraries and bindings for %name
 %exclude %python_sitelibdir/plist.la
 
 %changelog
+* Fri Apr 08 2016 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt2
+- rebuilt for new gcc, python, cython etc.
+
 * Wed Oct 15 2014 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
 - 1.12
 
