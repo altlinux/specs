@@ -1,6 +1,6 @@
 Name: libcompizconfig
 Version: 0.8.8
-Release: alt3
+Release: alt3.qa1
 Summary: Settings library for plugins - OpenCompositing Project
 License: GPL
 Group: System/Libraries
@@ -64,6 +64,9 @@ rm -f %buildroot%_libdir/compizconfig/backends/libini.la
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.8.8-alt3.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Apr 14 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt3
 - restore compiz in Sisyphus
 
