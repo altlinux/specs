@@ -1,6 +1,6 @@
 Name: libmusicbrainz
 Version: 2.1.5
-Release: alt5.qa1
+Release: alt5.qa2
 Summary: A software library for accesing MusicBrainz servers
 Group: System/Libraries
 License: LGPL
@@ -54,6 +54,9 @@ applications which will use lib%name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.1.5-alt5.qa2
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.1.5-alt5.qa1
 - NMU: rebuilt for updated dependencies.
 
