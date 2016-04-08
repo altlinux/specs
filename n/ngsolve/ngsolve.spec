@@ -5,7 +5,7 @@
 
 Name: ngsolve
 Version: 6.1
-Release: alt1.dev.git20150323
+Release: alt1.dev.git20150323.qa1
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -180,6 +180,9 @@ ln -s %_libdir/ngslib.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Fri Apr 08 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.1-alt1.dev.git20150323.qa1
+- NMU: rebuilt with rebuilt netgen.
+
 * Fri Mar 27 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1-alt1.dev.git20150323
 - Version 6.1-dev
 - Added Python module
