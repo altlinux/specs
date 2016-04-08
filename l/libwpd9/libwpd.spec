@@ -1,6 +1,6 @@
 Name: libwpd9
 Version: 0.10.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library for reading and converting WordPerfect(tm) documents
 
@@ -61,6 +61,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.10.0-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 0.10.0-alt1
 - Autobuild version bump to 0.10.0
 - Fix buildreq
