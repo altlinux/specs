@@ -2,7 +2,7 @@
 
 Name: fonts-type1-cm-super
 Version: 0.3.3
-Release: alt8.qa1
+Release: alt8.qa1.1
 Summary: Cyrillic Type 1 EC/TC and LH fonts
 Group: Publishing
 License: GPL
@@ -195,6 +195,10 @@ ln -s ../../../%type1fontsdir %buildroot%_sysconfdir/X11/fontpath.d/type1-cm-sup
 %_sysconfdir/texmf/updmap.d/30-cm-super.cfg
 
 %changelog
+* Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.3-alt8.qa1.1
+- (NMU) Rebuild with rpm-4.0.4-alt100.93 for previously missed deps
+  (fonts-type1-cm-super-tex-afm on fonts-type1-cm-super-afm due to /usr/share/fonts/type1/cm-super/afms).
+
 * Thu Feb 04 2010 Repocop Q. A. Robot <repocop@altlinux.org> 0.3.3-alt8.qa1
 - NMU (by repocop): the following fixes applied:
   * altlinux-policy-tex-obsolete-util-calls-in-post for fonts-type1-cm-super-tex
