@@ -4,7 +4,7 @@
 
 Name:           python-tools-%{module_name}
 Version:        1.6.2
-Release:        alt1.1
+Release:        alt1.1.1
 Summary:        Python style guide checker
 
 Group:          Development/Python
@@ -103,6 +103,10 @@ popd
 %endif
 
 %changelog
+* Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.2-alt1.1.1
+- (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
+  (it is meaningless because arbitrary packages package that dir).
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

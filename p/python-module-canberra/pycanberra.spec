@@ -13,7 +13,7 @@ License:       LGPLv2
 
 # There's no versioning upstream, it's all about the Git hash
 Version:       0
-Release:       alt2_0.9.git%{shortcommit}.1.1
+Release:       alt2_0.9.git%{shortcommit}.1.1.1
 
 # There aren't any release yet, I'm downloading straight from the last commit
 Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
@@ -70,6 +70,10 @@ install -p -m 0644 pycanberra.py %{buildroot}%{python3_sitelibdir_noarch}
 
 
 %changelog
+* Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0-alt2_0.9.git88c53cd.1.1.1
+- (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
+  (it is meaningless because arbitrary packages package that dir).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0-alt2_0.9.git88c53cd.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
