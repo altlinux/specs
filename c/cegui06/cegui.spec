@@ -1,6 +1,6 @@
 Name: cegui06
 Version: 0.6.2
-Release: alt7
+Release: alt7.qa1
 
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
@@ -118,6 +118,9 @@ done
 %_datadir/CEGUI-0.6
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.6.2-alt7.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.2-alt7
 - sync patches with f18
 
