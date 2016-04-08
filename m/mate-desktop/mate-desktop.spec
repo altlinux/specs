@@ -25,9 +25,9 @@ Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
 Version:        %{branch}.1
 %if 0%{?rel_build}
-Release:        alt2_1
+Release:        alt2_1.1
 %else
-Release:        alt2_1
+Release:        alt2_1.1
 %endif
 URL:            http://mate-desktop.org
 
@@ -221,6 +221,10 @@ that is a hack around this problem.
 
 
 %changelog
+* Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.12.1-alt2_1.1
+- (NMU) Rebuild for previously missed deps with rpm-4.0.4-alt100.93
+  (mate-desktop-synaptics on /usr/share/X11/xorg.conf.d/50-synaptics.conf).
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2_1
 - no need to obsolete mate-user-share
 
