@@ -2,7 +2,7 @@
 %define sover %somver.4.0
 Name: chasm
 Version: 1.4.0
-Release: alt4.cvs20131111
+Release: alt5.cvs20131111
 Summary: Tool to improve C++ and Fortran 90 interoperability
 License: LANL
 Group: Development/Tools
@@ -134,6 +134,15 @@ of how to use these tools.
 	--enable-shared \
 	--with-xalan-root=%_javadir \
 	--with-F90-vendor=GNU
+# When %%__nprocs is high, it requests too much memory as a whole.
+# ("There is insufficient memory for the Java Runtime Environment to continue.")
+# We set such an upper limit that it just works for us.
+# If you have more memory, you might want to raise the limit with:
+#   --define 'max_nprocs 16'
+%ifndef max_nprocs
+%define max_nprocs 8
+%endif
+[ %__nprocs -gt %max_nprocs ] && NPROCS=%max_nprocs
 %make_build
 pushd doc
 doxygen
@@ -228,6 +237,9 @@ popd
 %_datadir/%name-example-particle
 
 %changelog
+* Fri Apr  8 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.0-alt5.cvs20131111
+- (.spec) overcoming Out Of Memory: one may tweak %%max_nprocs
+
 * Mon Nov 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.cvs20131111
 - New snapshot
 
