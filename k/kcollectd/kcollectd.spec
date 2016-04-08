@@ -1,6 +1,6 @@
 Name: kcollectd
 Version: 0.9
-Release: alt2.1
+Release: alt2.qa8
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -53,7 +53,7 @@ ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 %K4find_lang --with-kde %name
 
 mkdir -p -- %buildroot%_bindir
-ln -s -- $(relative %_kde4_bindir/%name %_bindir/%name) %buildroot%_bindir/%name
+ln -rs -- %buildroot{%_kde4_bindir/%name,%_bindir/%name}
 
 %files -f %name.lang
 %doc ChangeLog AUTHORS
@@ -65,6 +65,9 @@ ln -s -- $(relative %_kde4_bindir/%name %_bindir/%name) %buildroot%_bindir/%name
 %_K4xdg_mime/%name.*
 
 %changelog
+* Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9-alt2.qa8
+- NMU: rebuilt with boost 1.57.0 -> 1.58.0.
+
 * Sat Jan 03 2015 Ivan A. Melnikov <iv@altlinux.org> 0.9-alt2.1
 - rebuild with boost 1.57.0
 
