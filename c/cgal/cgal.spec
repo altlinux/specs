@@ -2,7 +2,7 @@
 %define sover %somver.0.0
 Name: cgal
 Version: 4.6
-Release: alt2.1
+Release: alt2.2
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -141,7 +141,7 @@ pushd %buildroot%_docdir/%name
 tar -xf %SOURCE1
 popd
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
@@ -181,6 +181,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Fri Apr 08 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6-alt2.2
+- fix packaging on 64-bit arches other than x86_64
+
 * Thu Apr 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.6-alt2.1
 rebuild with new boost (1.57 -> 1.58)
 
