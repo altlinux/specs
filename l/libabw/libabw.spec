@@ -1,6 +1,6 @@
 Name: libabw
 Version: 0.1.1
-Release: alt1
+Release: alt1.qa1
 Summary: A library for import of AbiWord files
 
 Group: System/Libraries
@@ -97,6 +97,9 @@ install -m 0644 abw2*.1 %buildroot/%_mandir/man1
 %_mandir/man1/abw2html.1*
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.1.1-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jan 28 2015 Fr. Br. George <george@altlinux.ru> 0.1.1-alt1
 - Autobuild version bump to 0.1.1
 
