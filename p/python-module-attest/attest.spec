@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt2.git20130330
+Release: alt3.git20130330
 Summary: Modern, Pythonic unit testing
 License: BSD
 Group: Development/Python
@@ -34,7 +34,10 @@ Requires: python-module-progressbar
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: libgpg-error python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-pytz python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-Pygments python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-lxml python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-progressbar python-module-pytest python3-module-html5lib python3-module-progressbar python3-module-pytest python3-module-sphinx rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-progressbar python-module-pytest time
+%if_with python3
+BuildPreReq: python3-module-html5lib python3-module-progressbar python3-module-pytest python3-module-sphinx rpm-build-python3
+%endif
 
 %description
 Attest is a unit testing framework built from the ground up with
@@ -84,7 +87,8 @@ This package contains documentation for %oname.
 %setup
 
 %if_with python3
-cp -fR . ../python3
+rm -rf ../python3
+cp -R . ../python3
 find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
@@ -158,6 +162,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr  8 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6-alt3.git20130330
+- Hidden the python3 BuildReqs (because it is turned off now).
+
 * Fri Apr  8 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6-alt2.git20130330
 - %%def_without python3 (because it FTBFS with python3-3.5).
 
