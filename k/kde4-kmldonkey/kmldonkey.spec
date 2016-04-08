@@ -5,7 +5,7 @@
 %define rname kmldonkey
 Name: kde4-%rname
 Version: 2.0.2
-Release: alt3
+Release: alt3.qa1
 
 Summary: MLdonkey KDE frontend
 License: GPL
@@ -81,6 +81,9 @@ Group: System/Configuration/Other
 
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.0.2-alt3.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 25 2011 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt3
 - move to standart place
 
