@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%_name
-Version: 0.23.4
-Release: alt3.1.1
+Version: 0.24
+Release: alt1
 
 Summary: C-extensions for Python
 Group: Development/Python
@@ -223,6 +223,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Fri Apr 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24-alt1
+- 0.24
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.23.4-alt3.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
