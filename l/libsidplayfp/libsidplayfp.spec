@@ -1,6 +1,6 @@
 Name:		libsidplayfp
 Version:	1.0.3
-Release:	alt1
+Release:	alt1.qa1
 Summary:	SID chip music module playing library
 Group:		System/Libraries
 License:	GPLv2+
@@ -71,6 +71,9 @@ make DESTDIR=%buildroot install
 %doc docs/html
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.3-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Jul 15 2013 Motsyo Gennadi <drool@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 
