@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 1.3.6
+Version: 1.3.9
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -46,7 +46,7 @@ Requires: djvu-utils
 Requires: libtiff-utils
 
 # OCR:
-Requires: cuneiform
+#Requires: cuneiform
 
 %description
 At maturity, the GUI will have similar features to that of the Windows Imaging
@@ -90,6 +90,10 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Fri Apr 08 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.9-alt1
+- new version 1.3.9 (with rpmrb script)
+- drop cuneiform requires (ALT bug #31935)
+
 * Sun Jan 17 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.6-alt1
 - new version 1.3.6 (with rpmrb script)
 
