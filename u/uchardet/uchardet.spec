@@ -1,7 +1,7 @@
 Name:		uchardet
 Summary:	Universal charset detection
 Version:	0.0.1
-Release:	alt1
+Release:	alt1.qa1
 Group:		Development/Tools
 License:	MPLv1.1
 Url:		http://code.google.com/p/uchardet/
@@ -76,5 +76,8 @@ mv %buildroot/usr/lib %buildroot/usr/lib64
 %_libdir/lib%name.a
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.1-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Oct 15 2013 Motsyo Gennadi <drool@altlinux.ru> 0.0.1-alt1
 - initial build for ALT Linux from Fedora package
