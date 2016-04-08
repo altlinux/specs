@@ -7,7 +7,7 @@
 
 Name: calligra
 Version: 2.9.11
-Release: alt1
+Release: alt2
 Epoch: 0
 %define libname lib%name
 
@@ -696,6 +696,9 @@ done
 %_K4libdir/libkritacolord.so
 
 %changelog
+* Fri Apr 08 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.11-alt2
+- rebuild with new poppler
+
 * Thu Feb 11 2016 Sergey V Turchin <zerg@altlinux.org> 0:2.9.11-alt1
 - new version
 
