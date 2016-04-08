@@ -2,7 +2,7 @@
 
 Name: liblasi
 Version: 1.1.2
-Release: alt1
+Release: alt1.qa1
 
 Summary: C++ stream output interface for creating Unicode PostScript documents
 License: LGPL
@@ -99,6 +99,9 @@ mv %buildroot%_datadir/lasi%version/examples/ %buildroot%pkgdocdir/
 %doc doc/*
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.1.2-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Aug 04 2014 Michael Shigorin <mike@altlinux.org> 1.1.2-alt1
 - new version (watch file uupdate)
 - dropped patch (merged upstream)
