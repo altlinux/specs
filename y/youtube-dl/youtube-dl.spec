@@ -1,5 +1,7 @@
+%define py_name youtube_dl
+
 Name: youtube-dl
-Version: 2016.03.27
+Version: 2016.04.06
 Release: alt1
 
 Summary: Download videos from YouTube
@@ -11,24 +13,80 @@ Source0: %name-%version.tar
 
 BuildArch: noarch
 
+Requires: python-module-youtube_dl = %EVR
+
+# Automatically added by buildreq on Fri Apr 08 2016
+# optimized out: python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python3 python3-base
+BuildRequires: python-module-setuptools python3-dev python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+
 %description
 Youtube-dl is a small command-line program to download videos
 from YouTube.com.
 
+%package -n python-module-%py_name
+Group: Development/Python
+Summary: Python module for youtube-dl
+Conflicts: youtube-dl < 2016.04.06-alt1
+
+%description -n python-module-%py_name
+Youtube-dl is a small command-line program to download videos
+from YouTube.com.
+
+This package contains Python module.
+
+%package -n python3-module-%py_name
+Group: Development/Python
+Summary: Python 3 module for youtube-dl
+
+%description -n python3-module-%py_name
+Youtube-dl is a small command-line program to download videos
+from YouTube.com.
+
+This package contains Python 3 module.
+
 %prep
-%setup
+%setup -c
+for py in py2 py3; do
+	cp -a %name-%version $py
+done
+
+%build
+cd py2
+	%python3_build
+cd -
+
+cd py3
+	%python_build
+cd -
 
 %install
-mkdir -p %buildroot%_bindir/
-install -pm 755 bin/youtube-dl %buildroot%_bindir/youtube-dl
-mkdir -p %buildroot%python_sitelibdir
-cp -r youtube_dl %buildroot%python_sitelibdir/
+cd py2
+	%python3_install
+cd -
+
+cd py3
+	%python_install
+cd -
 
 %files
 %_bindir/youtube-dl
-%python_sitelibdir/youtube_dl
+%_man1dir/youtube-dl.1.*
+
+%files -n python-module-%py_name
+%python_sitelibdir/%py_name
+%python_sitelibdir/%py_name-*.egg-info
+
+%files -n python3-module-%py_name
+%python3_sitelibdir/%py_name
+%python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2016.04.06-alt1
+- Updated to 2016.04.06.
+- Split package into youtube-dl and python module.
+- Packaged python3 module (fixes ALT#31948).
+
 * Wed Mar 30 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2016.03.27-alt1
 - Updated to 2016.03.27.
 
