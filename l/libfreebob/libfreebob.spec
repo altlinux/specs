@@ -6,9 +6,9 @@
 Name: libfreebob
 Version: 1.0.11
 %ifdef svnrel
-Release: alt0.svn.%svnrel
+#Release: alt0.svn.%svnrel
 %else
-Release: alt3.1
+Release: alt3.1.qa1
 %endif
 
 Summary: Free Firewire Audio Drivers
@@ -87,6 +87,9 @@ perl -pi -e 's/1.1.0/1.0.0/' configure
 %endif #static
 
 %changelog
+* Fri Apr 08 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.11-alt3.1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.11-alt3.1
 - Fixed build with glibc 2.16
 
