@@ -2,7 +2,7 @@
 %define dist MooseX-Types-DateTime
 Name: perl-%dist
 Version: 0.13
-Release: alt1
+Release: alt1.1
 
 Summary: DateTime related constraints and coercions for Moose
 License: GPL or Artistic
@@ -34,6 +34,9 @@ designed to work with the DateTime suite of objects.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1.1
+- rebuild to restore role requires
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 
