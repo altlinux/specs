@@ -2,7 +2,7 @@
 %define dist MooseX-NonMoose
 Name: perl-%dist
 Version: 0.26
-Release: alt1
+Release: alt1.1
 
 Summary: Easy subclassing of non-Moose classes
 License: GPL or Artistic
@@ -44,6 +44,9 @@ anything at all.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1.1
+- rebuild to restore role requires
+
 * Fri Feb 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
