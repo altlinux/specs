@@ -2,7 +2,7 @@
 %define dist MooseX-Role-WithOverloading
 Name: perl-%dist
 Version: 0.17
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Roles which support overloading
 License: GPL or Artistic
@@ -35,6 +35,9 @@ composed into the classes/roles/instances it's compiled to, while plain
 %perl_vendor_autolib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.1.1
+- rebuild to restore role requires
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.1
 - rebuild with new perl 5.22.0
 
