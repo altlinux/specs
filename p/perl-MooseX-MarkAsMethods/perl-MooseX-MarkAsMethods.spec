@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-MarkAsMethods
 Version:        0.15
-Release:        alt1_10
+Release:        alt1_10.1
 Summary:        Mark overload code symbols as methods
 License:        LGPLv2+
 Group:          Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_10.1
+- rebuild to restore role requires
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_10
 - update to new release by fcimport
 
