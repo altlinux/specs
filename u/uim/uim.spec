@@ -1,6 +1,6 @@
 Name: uim
 Version: 1.8.6
-Release: alt2
+Release: alt3
 
 Summary: useful input method metapackage
 
@@ -15,6 +15,7 @@ Source3: UIMFep
 Source4: UIMEl
 
 Patch1: uim-1.8.6-configure.patch
+Patch2: uim-1.8.6-uim.desktop.patch
 
 # Automatically added by buildreq on Wed Mar 09 2016
 # optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libX11-devel libXext-devel libXft-devel libXrender-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libncurses-devel libpango-devel libqt3-settings libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel libtinfo-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl-Encode pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -212,6 +213,7 @@ XIM module for universal input method.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 cp %SOURCE2 .
 cp %SOURCE3 .
 cp %SOURCE4 .
@@ -348,6 +350,9 @@ cp %SOURCE4 .
 %_mandir/man1/uim-xim.1.xz
 
 %changelog
+* Sat Apr  9 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt3
+- fix menu-related additional categories in uim.desktop
+
 * Fri Mar 25 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.6-alt2
 - mark uim-common and libuim-data packages as noarch
 - split libuim-plugin from libuim-data package
