@@ -2,7 +2,7 @@
 %define dist MooseX-Types-Path-Class
 Name: perl-%dist
 Version: 0.08
-Release: alt1
+Release: alt1.1
 
 Summary: A Path::Class type library for Moose
 License: GPL or Artistic
@@ -35,6 +35,9 @@ with Path::Class objects as Moose attributes.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1
+- rebuild to restore role requires
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
