@@ -2,7 +2,7 @@
 %define dist MooseX-Params-Validate
 Name: perl-%dist
 Version: 0.21
-Release: alt1
+Release: alt1.1
 
 Summary: an extension of Params::Validate for using Moose's types
 License: GPL or Artistic
@@ -35,6 +35,9 @@ be considered the "official" one by any means though.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1.1
+- rebuild to restore role requires
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
