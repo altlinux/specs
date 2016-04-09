@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.001008
-Release: alt1
+Release: alt1.1
 Summary: NativeTrait-like behavior for Moo.
 Group: Development/Perl
 License: perl
@@ -35,6 +35,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.001008-alt1.1
+- rebuild to restore role requires
+
 * Wed Oct 14 2015 Igor Vlasenko <viy@altlinux.ru> 0.001008-alt1
 - regenerated from template by package builder
 
