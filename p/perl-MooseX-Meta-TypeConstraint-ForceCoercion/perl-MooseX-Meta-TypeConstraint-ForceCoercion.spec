@@ -1,7 +1,7 @@
 %define dist MooseX-Meta-TypeConstraint-ForceCoercion
 Name: perl-%dist
 Version: 0.01
-Release: alt2
+Release: alt2.1
 
 Summary: Force coercion when validating type constraints
 License: GPL or Artistic
@@ -33,6 +33,9 @@ force coercion of the value when checking or validating a value against it.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2.1
+- rebuild to restore role requires
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2
 - NMU: fixed build
 
