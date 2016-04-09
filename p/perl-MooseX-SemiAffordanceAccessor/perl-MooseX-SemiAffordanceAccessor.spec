@@ -2,7 +2,7 @@
 %define dist MooseX-SemiAffordanceAccessor
 Name: perl-%dist
 Version: 0.10
-Release: alt1
+Release: alt1.1
 
 Summary: Name your accessors foo() and set_foo()
 License: GPL or Artistic
@@ -36,6 +36,9 @@ as the accessor, while set methods are prefixed with "set_".
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1.1
+- rebuild to restore role requires
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
