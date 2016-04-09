@@ -1,7 +1,7 @@
 %define dist MooseX-InsideOut
 Name: perl-%dist
 Version: 0.106
-Release: alt1
+Release: alt1.1
 
 Summary: Inside-out objects with Moose
 License: GPL or Artistic
@@ -35,5 +35,8 @@ either don't want to care about or aren't hash-based.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.106-alt1.1
+- rebuild to restore role requires
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.106-alt1
 - initial revision
