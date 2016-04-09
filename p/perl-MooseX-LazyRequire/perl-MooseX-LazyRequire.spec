@@ -2,7 +2,7 @@
 %define dist MooseX-LazyRequire
 Name: perl-%dist
 Version: 0.11
-Release: alt1
+Release: alt1.1
 
 Summary: Required attributes which fail only when trying to use them
 License: GPL or Artistic
@@ -33,6 +33,9 @@ This module adds a lazy_required option to Moose attribute declarations.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1.1
+- rebuild to restore role requires
+
 * Tue Aug 19 2014 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
