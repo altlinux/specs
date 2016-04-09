@@ -2,7 +2,7 @@
 %define dist MooseX-Role-Parameterized
 Name: perl-%dist
 Version: 1.08
-Release: alt2
+Release: alt2.1
 
 Summary: Roles with composition parameters
 License: GPL or Artistic
@@ -50,6 +50,9 @@ Parameterized roles offer a solution to these (and other) kinds of problems.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.08-alt2.1
+- rebuild to restore role requires
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt2
 - NMU: fixed build
 
