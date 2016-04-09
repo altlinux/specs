@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.015
-Release: alt1
+Release: alt1.1
 Summary: easily translate Moose code to Moo
 Group: Development/Perl
 License: perl
@@ -94,6 +94,9 @@ will never do more than seven.
 %perl_vendor_privlib/M*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1.1
+- rebuild to restore role requires
+
 * Mon Dec 22 2014 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
 - automated CPAN update
 
