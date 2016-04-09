@@ -1,7 +1,7 @@
 %define dist MooseX-Emulate-Class-Accessor-Fast
 Name: perl-%dist
 Version: 0.00903
-Release: alt1
+Release: alt1.1
 
 Summary: Emulate Class::Accessor::Fast behavior using Moose attributes
 License: GPL or Artistic
@@ -36,5 +36,8 @@ to MooseX::Emulate::Class::Accessor::Fast and ultimately, to Moose.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.00903-alt1.1
+- rebuild to restore role requires
+
 * Tue Apr 13 2010 Alexey Tourbin <at@altlinux.ru> 0.00903-alt1
 - initial revision, for Catalyst
