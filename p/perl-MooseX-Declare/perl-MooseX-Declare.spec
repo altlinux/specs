@@ -9,7 +9,7 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl(Module/Build.pm)
 %define dist MooseX-Declare
 Name: perl-%dist
 Version: 0.43
-Release: alt2
+Release: alt2.1
 
 Summary: Declarative syntax for Moose
 License: perl
@@ -42,6 +42,9 @@ system for Perl 5.  When used, it sets up the "class" and "role" keywords.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.43-alt2.1
+- rebuild to restore role requires
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.43-alt2
 - fixed provides
 
