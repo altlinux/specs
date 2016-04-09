@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-StrictConstructor 
 Version:        0.19
-Release:        alt3_5
+Release:        alt3_5.1
 # see lib/MooseX/StrictConstructor.pm
 License:        Artistic 2.0
 Group:          Development/Perl
@@ -57,6 +57,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.19-alt3_5.1
+- rebuild to restore role requires
+
 * Sat Jan 04 2014 Igor Vlasenko <viy@altlinux.ru> 0.19-alt3_5
 - Sisyphus build
 
