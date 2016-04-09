@@ -2,8 +2,8 @@
 
 %define rname getfem
 Name: getfemxx
-Version: 4.2
-Release: alt2
+Version: 5.0
+Release: alt1
 %setup_python_module getfem
 
 Group: Development/C++
@@ -16,21 +16,23 @@ Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 
 Source0: http://download.gna.org/getfem/stable/getfem-%version.tar.gz
-Patch1: getfem++-3.1-alt-gcc44.patch
+Patch1: getfemxx-alt-qhull-2011.2.patch
 
-# Automatically added by buildreq on Wed Aug 26 2009 (-bi)
-#BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel-static libatlas-devel
 BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel-static libnumpy-devel
+BuildRequires: python-module-scipy-devel python-module-mpi4py-devel
+BuildRequires: scilab
 
 BuildPreReq: libqhull-devel libmuparser-devel libmumps-devel
-BuildPreReq: liblapack-devel libsuperlu-devel
+BuildPreReq: liblapack-devel 
+#libsuperlu-devel
 
 %description
-The Getfem++ project focuses on the development of a generic and efficient
-C++ library for finite element methods. The goal is to provide a library
-allowing the computation of any elementary matrix (even for mixed finite
-element methods) on the largest class of methods and elements, and for
-arbitrary dimension (i.e. not only 2D and 3D problems).
+The Getfem++ project focuses on the development of a generic and
+efficient C++ library for finite element methods. The goal is to provide
+a library allowing the computation of any elementary matrix (even for
+mixed finite element methods) on the largest class of methods and
+elements, and for arbitrary dimension (i.e. not only 2D and 3D
+problems).
 
 %package -n lib%name
 Group: System/Libraries
@@ -48,25 +50,25 @@ Python bindings to %name
 
 %prep
 %setup -q -n %rname-%version
-#%patch1 -p1
+%patch1 -p2
 %autoreconf
-
 
 %build
 %add_optflags -fno-strict-aliasing -fpermissive -I%_includedir/metis0
 export CFLAGS="%optflags" CXXFLAGS="%optflags"
+%undefine _configure_gettext
 %configure \
-    --disable-static \
-    --enable-shared \
-    --enable-boost \
-		--enable-mumps \
-		--with-mumps="dmumps zmumps smumps cmumps mumps_common pord" \
-		--enable-qhull \
-		--with-blas=openblas \
-		--with-pic \
-    --with-matlab-toolbox-dir=%_datadir/getfem_toolbox
+	--disable-static \
+	--enable-shared \
+	--enable-boost \
+	--enable-mumps \
+	--with-mumps="dmumps zmumps smumps cmumps mumps_common pord" \
+	--enable-qhull \
+	--enable-scilab \
+	--with-blas=openblas \
+	--with-pic \
+	--with-matlab-toolbox-dir=%_datadir/getfem_toolbox
 CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[:space:]]*=||"`
-rm -fR superlu
 %make CFLAGS="$CUT_CFLAGS"
 
 %install
@@ -78,7 +80,7 @@ mv %buildroot%python_sitelibdir_noarch/getfem/* \
 %endif
 
 %files
-%doc README NEWS BUGS AUTHORS
+%doc NEWS AUTHORS
 %_datadir/getfem_toolbox
 %_bindir/getfem-config
 %_includedir/getfem
@@ -93,6 +95,11 @@ mv %buildroot%python_sitelibdir_noarch/getfem/* \
 %python_sitelibdir/getfem
 
 %changelog
+* Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 5.0-alt1
+- New version
+- Use bundled libsuperlu
+- Enable scilab support
+
 * Thu Nov 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
 - Fixed build
 

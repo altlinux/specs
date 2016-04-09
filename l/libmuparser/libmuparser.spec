@@ -1,5 +1,5 @@
 Name: libmuparser
-Version: 2.2.3
+Version: 2.2.5
 Release: alt1
 
 %define oname muparser
@@ -68,6 +68,9 @@ sed -i 's|^\(CXXFLAGS.*\)|\1 -g|' Makefile.in
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.2.5-alt1
+- New version
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt1
 - new version 2.2.3 (with rpmrb script)
 
