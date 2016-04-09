@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.002
-Release: alt2
+Release: alt2.1
 Summary: Document the MooseX namespace
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/M*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2.1
+- rebuild to restore role requires
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 0.002-alt2
 - to Sissyphus
 
