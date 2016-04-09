@@ -1,7 +1,7 @@
 %define dist MooseX-AuthorizedMethods
 Name: perl-%dist
 Version: 0.006
-Release: alt1
+Release: alt1.1
 
 Summary: Syntax sugar for authorized methods
 License: GPL or Artistic
@@ -35,5 +35,8 @@ method result and call "roles" to list the roles given to that user.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1.1
+- rebuild to restore role requires
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.006-alt1
 - initial revision
