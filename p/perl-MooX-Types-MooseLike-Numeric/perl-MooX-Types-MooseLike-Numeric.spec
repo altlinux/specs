@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.02
-Release: alt1
+Release: alt1.1
 Summary: Moo types for numbers
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/M*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1.1
+- rebuild to restore role requires
+
 * Mon Nov 25 2013 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
