@@ -5,7 +5,7 @@ BuildRequires: perl(Benchmark.pm) perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) pe
 # END SourceDeps(oneline)
 Name:       perl-MooseX-Log-Log4perl
 Version:    0.47
-Release:    alt1
+Release:    alt1.1
 # see lib/MooseX/Log/Log4perl.pm
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1.1
+- rebuild to restore role requires
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
 - automated CPAN update
 
