@@ -1,14 +1,15 @@
 %define  themename Clearlooks-Phenix
 
 Name:    gtk3-theme-clearlooks-phenix
-Version: 3.0.16
+Version: 6.0.3
 Release: alt1
 
 Summary: GTK3 port of the Clearlooks theme
 
 License: GPLv3+
 Group:   Graphical desktop/GNOME
-Url:     http://www.jpfleury.net/en/software/clearlooks-phenix.php
+Url:     https://github.com/jpfleury/clearlooks-phenix
+# VCS:   https://github.com/jpfleury/clearlooks-phenix
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -32,6 +33,9 @@ tar xf %SOURCE0 -C %buildroot%_datadir/themes
 %_datadir/themes/%themename
 
 %changelog
+* Fri Apr 08 2016 Andrey Cherepanov <cas@altlinux.org> 6.0.3-alt1
+- New version
+
 * Thu Sep 18 2014 Andrey Cherepanov <cas@altlinux.org> 3.0.16-alt1
 - New version
 
