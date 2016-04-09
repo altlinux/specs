@@ -1,7 +1,7 @@
 %define dist MooseX-Traits-Pluggable
 Name: perl-%dist
 Version: 0.12
-Release: alt1
+Release: alt1.1
 
 Summary: Trait loading and resolution for Moose
 License: GPL or Artistic
@@ -33,6 +33,9 @@ apply_traits to apply traits to an instance.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1.1
+- rebuild to restore role requires
+
 * Tue Jan 14 2014 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
