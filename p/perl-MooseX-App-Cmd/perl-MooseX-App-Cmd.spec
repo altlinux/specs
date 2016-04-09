@@ -5,7 +5,7 @@ BuildRequires: perl(FindBin.pm) perl(Test/CPAN/Changes.pm) perl(Test/EOL.pm) per
 # END SourceDeps(oneline)
 Name:       perl-MooseX-App-Cmd
 Version:    0.32
-Release:    alt1
+Release:    alt1.1
 # see lib/MooseX/App/Cmd.pm
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -134,6 +134,9 @@ make test
 %{perl_vendor_privlib}/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1.1
+- rebuild to restore role requires
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
