@@ -5,7 +5,7 @@ Summary: Maven 3 system repository architecture-dependent symlinks.
 License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Group: Development/Java
-Release: alt2
+Release: alt2.1
 BuildArch: noarch
 
 %description
@@ -28,6 +28,10 @@ ln -sf %_jnidir %buildroot/usr/share/maven/repository-jni/JPP
 /usr/share/maven/repository-jni/JPP
 
 %changelog
+* Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.01-alt2.1
+- (NMU) Rebuild with rpm-4.0.4-alt100.93 for previously missed deps
+  (maven-filesystem on /usr/lib/java).
+
 * Sun Feb 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2
 - rebuild with new _jnidir location
 
