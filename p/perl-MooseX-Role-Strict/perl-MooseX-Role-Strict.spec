@@ -8,7 +8,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.05
-Release: alt2
+Release: alt2.1
 Summary: use strict 'roles'
 Group: Development/Perl
 License: perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/M*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2.1
+- rebuild to restore role requires
+
 * Thu Mar 06 2014 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2
 - moved to Sisyphus as perl update dependency
 
