@@ -17,7 +17,7 @@ BuildRequires: perl(Module/Build/Tiny.pm) perl(Module/Build.pm)
 
 Name: perl-MooseX-Types-LoadableClass
 Version: 0.014
-Release: alt1
+Release: alt1.1
 
 Summary: ClassName type constraint with coercion to load the class
 
@@ -57,6 +57,9 @@ Now I don't have to.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1.1
+- rebuild to restore role requires
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
 - automated CPAN update
 
