@@ -6,8 +6,8 @@
 %define cfontsdir /lib/kbd/consolefonts
 
 Name: fonts-bitmap-%cname
-Version: 4.38
-Release: alt3
+Version: 4.40
+Release: alt1
 Summary: Terminus Font - a clean fixed width font
 Summary(ru_RU.UTF-8): Шрифт Terminus - растровый моноширинный шрифт
 License: OFL
@@ -21,9 +21,9 @@ Source0: %cname-font-%version.tar.gz
 Source1: %cname-FAQ
 Source2: ibm-866.uni
 
-Patch0: %cname-4.38-alt-12pt_ve_fix.patch
-Patch1: %cname-4.38-alt-be2.patch
-Patch2: terminus-ALT-cp866.patch
+Patch0: %cname-4.40-alt-12pt_ve_fix.patch
+Patch1: %cname-4.40-alt-be2.patch
+Patch2: %cname-4.40-alt-cp866.patch
 
 Provides: terminus-font = %version-%release
 
@@ -89,14 +89,17 @@ xterm.
 
 %prep
 %setup -n %cname-font-%version
-%patch0
-%patch1
-%patch2 -p1
+#%%patch0 -p2
+%patch1 -p2
+%patch2 -p2
 cp %SOURCE2 uni/
 touch dup/ibm-866.dup
 
 %build
-patch < alt/ge2.diff
+patch < alt/dv1.diff
+patch < alt/gq2.diff
+patch < alt/ll2.diff
+patch < alt/td1.diff
 chmod +x configure
 ./configure --prefix=%_prefix \
     --psfdir=%cfontsdir \
@@ -126,6 +129,17 @@ fi
 %cfontsdir/*.psf.gz
 
 %changelog
+* Sat Apr 9 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.40-alt1
+- 4.40
+- Build with next character patches:
+  + dv1: Cyrillic "d" character looks differ than Latin "g"
+  + gq2: single quote looks like reverse backquote
+  + ij1: Cyrillic "i" looks differ than Latin "u"
+  + ll2: Latin "l" looks differ than "1"
+  + td1: center tilde character
+- "ge" character variant resetted to default
+- Remove patch for "ve" character due alternative "ve" character
+
 * Tue Mar 25 2014 Fr. Br. George <george@altlinux.ru> 4.38-alt3
 - Add cp866 encoding
 
