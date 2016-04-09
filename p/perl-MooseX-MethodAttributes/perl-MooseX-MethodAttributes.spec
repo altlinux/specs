@@ -2,7 +2,7 @@
 %define dist MooseX-MethodAttributes
 Name: perl-%dist
 Version: 0.31
-Release: alt1
+Release: alt1.1
 
 Summary: code attribute introspection
 License: GPL or Artistic
@@ -39,6 +39,9 @@ Moose meta method objects.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1.1
+- rebuild to restore role requires
+
 * Thu Oct 29 2015 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
