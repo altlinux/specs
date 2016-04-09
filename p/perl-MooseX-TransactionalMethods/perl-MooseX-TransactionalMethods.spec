@@ -1,7 +1,7 @@
 %define dist MooseX-TransactionalMethods
 Name: perl-%dist
 Version: 0.009
-Release: alt1
+Release: alt1.1
 
 Summary: Syntax sugar for transactional methods
 License: GPL or Artistic
@@ -33,6 +33,9 @@ the method in a txn_do call.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1.1
+- rebuild to restore role requires
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
 - automated CPAN update
 
