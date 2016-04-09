@@ -2,7 +2,7 @@
 %define dist MooseX-Types-JSON
 Name: perl-%dist
 Version: 1.00
-Release: alt1
+Release: alt1.1
 
 Summary: JSON datatype for Moose
 License: GPL or Artistic
@@ -33,6 +33,9 @@ BuildRequires: perl-Class-C3-XS perl-JSON-XS perl-MooseX-Types perl-Test-Pod per
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1.1
+- rebuild to restore role requires
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
 - automated CPAN update
 
