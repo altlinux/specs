@@ -2,7 +2,7 @@
 %define dist MooseX-Types-Structured
 Name: perl-%dist
 Version: 0.35
-Release: alt1
+Release: alt1.1
 
 Summary: Structured Type Constraints for Moose
 License: GPL or Artistic
@@ -35,6 +35,9 @@ explicitly name all the allowed type constraints inside the structure.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1.1
+- rebuild to restore role requires
+
 * Mon Dec 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
