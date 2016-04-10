@@ -1,5 +1,5 @@
 Name: xboard
-Version: 4.5.2
+Version: 4.8.0
 Release: alt2
 
 Summary: An X Window System graphical chessboard
@@ -24,8 +24,9 @@ Requires: fairymax
 # needs helvetica: #30634
 Requires: fonts-bitmap-100dpi
 
-# Automatically added by buildreq on Sun Oct 11 2009
-BuildRequires: flex groff-base imake libXaw-devel libXpm-devel xorg-cf-files
+# Automatically added by buildreq on Sun Apr 10 2016
+# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-modules xorg-xproto-devel xz
+BuildRequires: groff-base libgtk+2-devel librsvg-devel makeinfo
 
 %set_verify_info_method none
 
@@ -52,7 +53,7 @@ default theme for xboard
 
 %build
 %autoreconf
-%configure
+%configure --with-gtk
 %make_build
 
 %install
@@ -67,15 +68,21 @@ install -Dpm644 %SOURCE5 %buildroot%_sysconfdir/X11/app-defaults/XBoard
 
 #default theme
 install -d %buildroot%_datadir/%name/theme
-cp -a pixmaps/*.xpm %buildroot%_datadir/%name/theme
+#cp -a pixmaps/*.xpm %buildroot%_datadir/%name/theme
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %doc AUTHORS COPYING COPYRIGHT ChangeLog* NEWS TODO
 %doc FAQ.html README
 %config(noreplace) %_sysconfdir/X11/app-defaults/*
+%config(noreplace) %_sysconfdir/%name.conf
 %_bindir/*
 %_man6dir/*
 %_infodir/*.info*
+%_datadir/mime/*/*.xml
+%_gamesdatadir/%name/pixmaps/
+%_gamesdatadir/%name/sounds/
 %_desktopdir/*
 %_miconsdir/*.png
 %_niconsdir/*.png
@@ -83,9 +90,20 @@ cp -a pixmaps/*.xpm %buildroot%_datadir/%name/theme
 %_iconsdir/*/*/*/*.svg
 
 %files theme-default
-%_datadir/%name/theme
+%_gamesdatadir/%name/themes/
 
 %changelog
+* Sun Apr 10 2016 Michael Shigorin <mike@altlinux.org> 4.8.0-alt2
+- switched to GTK+ UI
+
+* Sun Apr 10 2016 Stanislav Ievlev <inger@altlinux.org> 4.8.0-alt1
+- 4.8.0
+- buildreq
+- theme-default subpackage includes shogi and xiangqi too now
+
+* Sun Apr 10 2016 Michael Shigorin <mike@altlinux.org> 4.5.2-alt3
+- added BR: makeinfo
+
 * Thu Jan 15 2015 Michael Shigorin <mike@altlinux.org> 4.5.2-alt2
 - added R: fonts-bitmap-100dpi (closes: #30634)
 
