@@ -3,7 +3,7 @@
 
 Name: audiofile
 Version: 0.3.6
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library to handle various audio file formats
 License: LGPL
@@ -111,6 +111,9 @@ sed -ri \
 %endif
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3.6-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Sep 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1
 - Version 0.3.6
 
