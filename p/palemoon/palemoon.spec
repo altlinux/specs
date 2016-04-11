@@ -1,13 +1,16 @@
-Summary: The Pale Moon project browser
-Summary(ru_RU.UTF-8): Интернет-браузер Pale Moon
+Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
+Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
 Version: 26.2.1
-Release: alt1.0f44
+Release: alt2.0f44
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
+
+%define sname palemoon
+%define bname newmoon
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -19,16 +22,16 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
-%define palemoon_prefix                 %_libdir/%name
-%define palemoon_datadir                %_datadir/%name
+%define palemoon_prefix                 %_libdir/%bname
+%define palemoon_datadir                %_datadir/%sname
 %define palemoon_arch_extensionsdir     %palemoon_prefix/extensions
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
 
-Source: %name-source.tar
+Source: %sname-source.tar
 Source1: rpm-build.tar
 Source2: searchplugins.tar
-Source4: %name-mozconfig
-Source6: %name.desktop
+Source4: %sname-mozconfig
+Source6: %bname.desktop
 Source7: firefox.c
 Source8: firefox-prefs.js
 
@@ -39,28 +42,15 @@ Patch16: firefox-cross-desktop.patch
 #Patch17:	mozilla-disable-installer.patch
 Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
+
 Patch21: cpp_check.patch
 Patch23: palemoon_version-26.2.0.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
-%if_enabled gst1
-BuildRequires(pre): gst-plugins1.0-devel
-BuildRequires(pre): gstreamer1.0-devel gst-plugins1.0-devel
-
-Requires: libgstreamer1.0 gst-libav
-Requires: gst-plugins-base1.0
-%else
-BuildRequires(pre): gst-plugins-devel
-BuildRequires(pre): gstreamer-devel gst-plugins-devel
-
-Requires: libgstreamer
-Requires: gst-plugins-base gst-plugins-good
-%endif
-
 # BEGIN SourceDeps(oneline):
-BuildRequires: libssl-devel perl-devel python-devel texinfo
+BuildRequires: libssl-devel perl-devel python-devel texinfo libpixman-devel
 
 # END SourceDeps(oneline)
 
@@ -69,24 +59,61 @@ BuildRequires: libssl-devel perl-devel python-devel texinfo
 BuildRequires: doxygen gcc-c++ imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-module-html5lib python-module-mako
 BuildRequires: python-module-pygobject3 python3 unzip xorg-cf-files yasm zip
 
+
+
+BuildRequires: autoconf_2.13 chrpath
+
 %set_autoconf_version 2.13
 
-# Protection against fraudulent DigiNotar certificates
-Requires: libnss
+%if_enabled gst1
+BuildRequires(pre): gst-plugins1.0-devel
+BuildRequires(pre): gstreamer1.0-devel gst-plugins1.0-devel
 
-BuildRequires: autoconf_2.13
-
+%else
+BuildRequires(pre): gst-plugins-devel
+BuildRequires(pre): gstreamer-devel gst-plugins-devel
+%endif
 
 %description
-The %name project is a redesign of Mozilla's  Firefox browser component,
+The %sname project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
 cross-platform.
 
 %description -l ru_RU.UTF8
-Интернет-браузер %name - кроссплатформенная модификация браузера Mozilla Firefox ,
+Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
-%package -n rpm-build-%name
+%package -n newmoon
+Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
+Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
+Group: Networking/WWW
+
+Obsoletes: palemoon  <= 26.2.2
+Provides: palemoon = %version-%release
+Conflicts: palemoon
+
+%if_enabled gst1
+Requires: libgstreamer1.0 gst-libav
+Requires: gst-plugins-base1.0
+%else
+Requires: libgstreamer
+Requires: gst-plugins-base gst-plugins-good
+%endif
+# Protection against fraudulent DigiNotar certificates
+Requires: libnss
+
+%description -n newmoon
+The New Moon browser, an unofficial branding of the Pale Moon project browser
+The %sname project is a redesign of Mozilla's  Firefox browser component,
+written using the XUL user interface language and designed to be
+cross-platform.
+
+%description -n newmoon -l ru_RU.UTF8
+Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
+Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
+созданная с использованием языка XUL для описания интерфейса пользователя.
+
+%package -n rpm-build-palemoon
 Summary: RPM helper macros to rebuild %name packages
 Group: Development/Other
 BuildArch: noarch
@@ -94,17 +121,17 @@ BuildArch: noarch
 Requires: mozilla-common-devel
 Requires: rpm-build-mozilla.org
 
-%description -n rpm-build-%name
+%description -n rpm-build-palemoon
 These helper macros provide possibility to rebuild
-%name packages by some Alt Linux Team Policy compatible way.
+%sname packages by some Alt Linux Team Policy compatible way.
 
 %prep
-%setup -n %name-%version -c
+%setup -n %sname-%version -c
 %patch21 -p1
 %patch20 -p1
 %patch23 -p1
 
-cd %name
+cd %sname
 
 tar -xf %SOURCE1
 
@@ -155,7 +182,7 @@ echo "ac_add_options --enable-gstreamer=0.10" >> .mozconfig
 %endif
 
 %build
-cd %name
+cd %sname
 
 %add_optflags %optflags_shared
 %add_findprov_lib_path %palemoon_prefix
@@ -168,6 +195,7 @@ export MOZ_BUILD_APP=browser
 #
 MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
                 sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
+
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS -D_GNUC_"
 
@@ -197,6 +225,13 @@ make -f client.mk \
 	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
 	mozappdir=%buildroot/%palemoon_prefix \
+	clobber
+
+make -f client.mk \
+	MAKENSISU= \
+	STRIP="/bin/true" \
+	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
+	mozappdir=%buildroot/%palemoon_prefix \
 	build
 
 #	MOZ_APP_VERSION="" \
@@ -204,11 +239,11 @@ make -f client.mk \
 gcc %optflags \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
-	-DMOZ_PROGRAM=\"%palemoon_prefix/%name-bin\" \
-	%SOURCE7 -o %name
+	-DMOZ_PROGRAM=\"%palemoon_prefix/%sname-bin\" \
+	%SOURCE7 -o %sname
 
 %install
-cd %name
+cd %sname
 
 echo %palemoon_prefix
 
@@ -227,36 +262,30 @@ pushd objdir
 %makeinstall_std MOZ_APP_VERSION=
 popd
 
-rm  -f %buildroot/%_bindir/%name
+if [ -f %buildroot/%_bindir/%sname ];then
+    rm  -f %buildroot/%_bindir/%sname
+fi
 
-install  %name  %buildroot/%_bindir/%name
+install  %sname  %buildroot/%_bindir/%sname
 
 #mv -f %buildroot%palemoon_prefix-%version %buildroot%palemoon_prefix
 
 #cp  %buildroot/%palemoon_prefix/%name-bin  %buildroot%_bindir/%name
 
-# install altlinux-specific configuration
-install -D -m 644 %SOURCE8 %buildroot/%palemoon_prefix/browser/defaults/preferences/all-altlinux.js
-
-cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%name-l10n.js <<EOF
-pref("intl.locale.matchOS",		true);
-pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
-EOF
-
 # icons
-for s in 16 22 24 32 48 256; do
+for s in 16 32 48; do
 	install -D -m 644 \
-		browser/branding/official/default$s.png \
-		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%name.png
+		browser/branding/unofficial/default$s.png \
+		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
 done
 
-# install rpm-build-%name
+# install rpm-build-%sname
 mkdir -p -- \
 	%buildroot/%_rpmmacrosdir
 sed \
 	-e 's,@palemoon_version@,%version,' \
 	-e 's,@palemoon_release@,%release,' \
-	rpm-build/rpm.macros.%name.standalone > %buildroot/%_rpmmacrosdir/%name
+	rpm-build/rpm.macros.%sname.standalone > %buildroot/%_rpmmacrosdir/%sname
 
 #install -m755 %name %buildroot/%_bindir/%name
 
@@ -267,26 +296,37 @@ cd %buildroot
 #	-e 's,\(MaxVersion\)=.*,\1=5.0.1,g' \
 #	./%palemoon_prefix/application.ini
 
+# Remove devel files
+rm -rf -- \
+	%buildroot%_includedir/%sname-%version \
+	%buildroot%_datadir/idl/%sname-%version \
+	%buildroot%_libdir/%sname-devel-%version \
+	%buildroot%_libdir/%sname-devel- \
+
+install -d %buildroot%palemoon_prefix
+mv -f %buildroot/%_libdir/%sname/* %buildroot%palemoon_prefix
+
 mv -f %buildroot%palemoon_prefix/application.ini %buildroot%palemoon_prefix/browser/application.ini
 
+# install altlinux-specific configuration
+install -D -m 644 %SOURCE8 %buildroot/%palemoon_prefix/browser/defaults/preferences/all-altlinux.js
+
+cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%sname-l10n.js <<EOF
+pref("intl.locale.matchOS",		true);
+pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+EOF
+
+
 # install menu file
-install -D -m 644 %SOURCE6 ./%_desktopdir/%name.desktop
+install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
 
 # Add alternatives
 mkdir -p ./%_altdir
-printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' >./%_altdir/%name
+printf '%_bindir/xbrowser\t%_bindir/%bname\t100\n' >./%_altdir/%bname
 
 rm -f -- \
-	./%palemoon_prefix/%name \
+	./%palemoon_prefix/%bname \
 	./%palemoon_prefix/removed-files
-
-# Remove devel files
-rm -rf -- \
-	./%_includedir/%name-%version \
-	./%_datadir/idl/%name-%version \
-	./%_libdir/%name-devel-%version \
-
-#
 
 # Add real RPATH
 (set +x
@@ -311,25 +351,25 @@ for n in defaults browserconfig.properties; do
 	[ ! -L "%palemoon_prefix/$n" ] || rm -f "%palemoon_prefix/$n"
 done
 
-%files
-%_altdir/%name
-%_bindir/%name
+%files -n %bname
+%_altdir/%bname
+%_bindir/%sname
 %dir %palemoon_prefix
 %palemoon_prefix/*
 %mozilla_arch_extdir/%palemoon_cid
 %mozilla_noarch_extdir/%palemoon_cid
-%_desktopdir/%name.desktop
-%_miconsdir/%name.png
-%_iconsdir/hicolor/22x22/apps/%name.png
-%_iconsdir/hicolor/24x24/apps/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
-%_iconsdir/hicolor/256x256/apps/%name.png
+%_desktopdir/%bname.desktop
+%_miconsdir/%bname.png
+%_niconsdir/%bname.png
+%_liconsdir/%bname.png
 
-%files -n rpm-build-%name
-%_rpmmacrosdir/%name
+%files -n rpm-build-%sname
+%_rpmmacrosdir/%sname
 
 %changelog
+* Mon Apr 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt2.0f44
+- New Branding - New Moon
+
 * Fri Apr 08 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt1.0f44
 - Update from git
 
