@@ -1,5 +1,5 @@
 Name:    innoextract
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: A tool to extract installers created by Inno Setup
@@ -35,6 +35,9 @@ non-windows systems without running the actual installer using wine.
 %_man1dir/innoextract.*
 
 %changelog
+* Mon Apr 11 2016 Andrey Cherepanov <cas@altlinux.org> 1.6-alt1
+- New version
+
 * Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.5-alt1
 - New version
 
