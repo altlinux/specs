@@ -1,6 +1,6 @@
 Name: xmoto
 Version: 0.5.9
-Release: alt1.3
+Release: alt1.3.qa1
 
 Summary: A challenging 2D motocross platform game.
 License: GPL
@@ -72,6 +72,9 @@ ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %buildroot%_datadir/%name/Textures
 [ -L %_datadir/%name/Textures/Fonts/DejaVuSansMono.ttf ] || ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %_datadir/%name/Textures/Fonts/
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.5.9-alt1.3.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Jul 07 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt1.3
 - Rebuilt with new ODE
 
