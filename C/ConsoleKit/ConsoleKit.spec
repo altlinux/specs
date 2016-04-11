@@ -3,7 +3,7 @@
 
 Name: ConsoleKit
 Version: 0.4.5
-Release: alt1
+Release: alt1.qa1
 Summary: System daemon for tracking users, sessions and seats
 License: GPL
 Group: System/Libraries
@@ -143,6 +143,9 @@ __EOF__
 %_man8dir/*.8*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.4.5-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue May 03 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.4.5-alt1
 - 0.4.5
 
