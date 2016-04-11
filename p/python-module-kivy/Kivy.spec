@@ -1,19 +1,27 @@
 Name: python-module-kivy
-Version: 1.8.0
-Release: alt2
+Version: 1.9.1
+Release: alt1
 Summary: Open source library for rapid development of applications
 License: LGPLv3
 Group: Development/Python
 Url: http://kivy.org
-Source: Kivy-%version.tar.gz
+Source: %version.tar.gz
 
 %setup_python_module kivy
 %add_python_req_skip AppKit
 %add_python_req_skip freenect
 %add_python_req_skip jnius
 %add_python_req_skip android
+# recommended
+%add_python_req_skip ffpyplayer
+%add_python_req_skip pyobjus
+# Kivy's internal submodule (relative import is needed?)
+%add_python_req_skip doc
 
-BuildRequires: libGL-devel libGLES-devel python-module-Cython0.18 python-module-Pyrex python-module-docutils python-module-html5lib python-module-nss python-module-numpy-testing python-module-pygame
+# Automatically added by buildreq on Wed Jan 29 2014
+# optimized out: libEGL-devel python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-docutils python-module-html5lib python-module-jinja2 python-module-markupsafe python-module-numpy python-module-numpy-testing python-module-protobuf python-module-setuptools python-module-simplejson python-module-six python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
+BuildRequires: ctags libGL-devel libGLES-devel python-module-Cython python-module-Pyrex python-module-jinja2-tests python-module-nss python-module-pygame python-module-pytz python-module-sphinx python-modules-json time
+BuildRequires: xvfb-run
 
 %description
 Kivy - Open source library for rapid development of applications
@@ -23,6 +31,8 @@ that make use of innovative user interfaces, such as multi-touch apps.
 Group: Development/Python
 Summary: Development environment for Kivy, %summary
 BuildArch: noarch
+
+# TODO garden modules/installer
 
 %description devel
 Example files, documentation and packaging tool for Kivy, %summary
@@ -42,7 +52,7 @@ sed -i 's/from configparser/from ConfigParser/' kivy/tools/pep8checker/pep8.py
 sed -i 's/from configparser/from ConfigParser/' kivy/tools/report.py
 
 # XXX
-sleep 1
+sleep 2
 find . -name \*.pyx | xargs touch
 
 %build
@@ -56,24 +66,32 @@ cd doc &&
   export PYTHONPATH=`ls -d ../build/lib*` &&
   python autobuild.py &&
   export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments &&
-  #make html
+  xvfb-run make html
 
 %install
 %python_install
 
 %files
-%doc doc/README PKG-INFO
+%doc doc/README.md
 %python_sitelibdir/kivy
+%python_sitelibdir/Kivy*
 
 %files devel
-#%doc doc/build/html
+%doc doc/build/html
 %_datadir/kivy-examples
 ## XXX garden binary is moved to separate module
 
 %changelog
+* Mon Apr 11 2016 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
+- Autobuild version bump to 1.9.1
+- Fix documentation build
+
 * Tue Feb 09 2016 Sergey Alembekov <rt@altlinux.ru> 1.8.0-alt2
 - cleanup buildreq
 - switchoff html generation
+
+* Thu Apr 23 2015 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
+- Autobuild version bump to 1.9.0
 
 * Mon Aug 25 2014 Fr. Br. George <george@altlinux.ru> 1.8.0-alt1
 - Autobuild version bump to 1.8.0
