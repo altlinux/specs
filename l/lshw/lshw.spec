@@ -1,6 +1,6 @@
 Name: lshw
 Version: 2.17
-Release: alt1
+Release: alt1.qa1
 %define real_version B.0%version
 
 Summary: Hardware Lister
@@ -97,6 +97,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/lshw-gui
 %_desktopdir/*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.17-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Jan 01 2014 Yuri N. Sedunov <aris@altlinux.org> 2.17-alt1
 - 2.17
 
