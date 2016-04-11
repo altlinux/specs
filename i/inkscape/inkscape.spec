@@ -4,7 +4,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.91
-Release: alt4
+Release: alt5
 
 Summary: A Vector Drawing Application
 
@@ -26,6 +26,7 @@ Patch: %name.patch
 #fedora patches
 Patch10:         inkscape-0.48.2-types.patch
 Patch114:        0001-update-to-new-libwpg.patch
+Patch20: 	 inkscape-alt-ScopedPtr.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -78,7 +79,7 @@ inkview is standalone viewer for Inkscape files (SVG)
 # fedora patches
 %patch10 -p1 -b .types
 #patch114 -p1 -b .libwpg
-
+%patch20 -p2
 #cat %%SOURCE1 >po/ru.po
 
 %build
@@ -130,6 +131,10 @@ rm -rf %buildroot%_mandir/zh_TW/
 %_man1dir/inkview*
 
 %changelog
+* Mon Apr 11 2016 Denis Medvedev <nbr@altlinux.org> 0.91-alt5
+- Changed obsoleted ScopedPtr to make_unique_ptr_gfree
+hinted by https://mail.gnome.org/archives/commits-list/2016-January/msg04404.html
+
 * Mon Mar 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.91-alt4
 - rebuild with latest libpoppler58
 
