@@ -2,7 +2,7 @@
 
 Name: kino
 Version: 1.3.4
-Release: alt8
+Release: alt8.qa1
 
 Summary: Non-linear DV editor
 Group: Video
@@ -144,6 +144,9 @@ fi
 %_datadir/%name/scripts/dvdauthor/
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.3.4-alt8.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.ru> 1.3.4-alt8
 - Make the 'ffmpeg2dirac' export script not to require ffmpeg2dirac
   binary.
