@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 2.9
-Release: alt1.dev.git20150726.1.1
+Release: alt1.dev.git20150726.1.1.1
 
 Summary: The new and improved version of a small but fast template engine
 License: BSD
@@ -171,6 +171,10 @@ make test
 %endif
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.9-alt1.dev.git20150726.1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.9-alt1.dev.git20150726.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
