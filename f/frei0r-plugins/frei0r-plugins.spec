@@ -4,7 +4,7 @@
 
 Name: %bname-plugins
 Version: %major_ver.%minor_ver
-Release: alt2
+Release: alt2.qa1
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: %lgpl2plus
 Group: Video
@@ -86,6 +86,9 @@ mkdir -p m4
 %_libdir/%bname-%major_ver/facedetect.so
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.4-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Oct 08 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4-alt2
 - build plugins cairogradient, cairoimagegrid, cairoaffineblend, cairoblend
 - fixed files for facedetect package
