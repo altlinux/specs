@@ -1,8 +1,12 @@
+# hasher :(
+# network is required to query example.com
+%define _without_test 1
+
 %define module Mail-SPF
 
 Name: perl-%module
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: Perl module that implements Sender Policy Framework
 License: BSD
@@ -11,8 +15,11 @@ Group: Development/Perl
 URL: %CPAN %module
 Source: http://www.cpan.org/authors/id/J/JM/JMEHNLE/mail-spf/Mail-SPF-v%{version}.tar.gz
 
+Patch0:         Mail-SPF-v2.8.0-POD.patch
 # https://rt.cpan.org/Public/Bug/Display.html?id=78214
-Patch: %module-2.8.0-fixed_tests_with_new_Net_DNS.patch
+Patch1:         Mail-SPF-v2.8.0-testsuite.patch
+
+
 
 BuildArch: noarch
 
@@ -25,7 +32,10 @@ Framework (SPF) e-mail sender authentication system.
 
 %prep
 %setup -n %module-v%version
-%patch -p2
+# Fix broken POD (CPAN RT#86060)
+%patch0
+# Work around test suite failures with Net::DNS ≥ 0.68 (CPAN RT#78214)
+%patch1
 rm t/90-author-pod-validation.t
 
 %build
@@ -40,9 +50,13 @@ rm t/90-author-pod-validation.t
 %files
 %exclude %_bindir/spfquery
 %exclude %_sbindir/spfd
+%exclude %_man1dir/spf*
 %perl_vendor_privlib/Mail/SPF*
 
 %changelog
+* Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt2
+- fixed build (internet connection is requires for tests)
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 2.9.0-alt1
 - automated CPAN update
 
