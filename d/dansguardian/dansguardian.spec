@@ -1,6 +1,6 @@
 Name: dansguardian
 Version: 2.10.1.1
-Release: alt3.1
+Release: alt3.1.qa1
 
 Summary: Content filter
 Summary(ru_RU.UTF-8): Фильтр WEB-содержимого
@@ -79,6 +79,9 @@ rm -rf %buildroot/usr/share/doc/%name
 %attr(2775,root,%name) /var/run/%name
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.10.1.1-alt3.1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.1.1-alt3.1
 - Fixed build
 
