@@ -9,7 +9,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    5.0.4
-Release:    alt1
+Release:    alt2
 %if %release == alt3nt
 %define _without_test 1
 %endif
@@ -49,8 +49,8 @@ BuildRequires: perl(Tapper/Schema.pm)
 BuildRequires: perl(Tapper/Schema/ReportsDB.pm)
 BuildRequires: perl(Tapper/Schema/TestTools.pm)
 BuildRequires: perl(Tapper/Schema/TestrunDB.pm)
-BuildRequires: perl(Tapper/Testplan/Generator.pm)
-BuildRequires: perl(Tapper/Testplan/Reporter.pm)
+#BuildRequires: perl(Tapper/Testplan/Generator.pm)
+#BuildRequires: perl(Tapper/Testplan/Reporter.pm)
 BuildRequires: perl(Template.pm)
 BuildRequires: perl(Test/Deep.pm)
 BuildRequires: perl(Test/Fixture/DBIC/Schema.pm)
@@ -89,6 +89,9 @@ Command line tools for Tapper.
 %_man1dir/tapper*
 
 %changelog
+* Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt2
+- build w/o Tapper-Testplan
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1
 - automated CPAN update
 
