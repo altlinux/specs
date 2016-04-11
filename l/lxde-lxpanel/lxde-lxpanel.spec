@@ -2,7 +2,7 @@
 %define origname lxpanel
 
 Name: lxde-%origname
-Version: 0.7.0
+Version: 0.8.2
 Release: alt1
 
 Summary: LXPanel is a lightweight X11 desktop panel
@@ -20,7 +20,7 @@ Requires: menu-cache
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libmenu-cache libpango-devel libsystemd-daemon libwayland-client libwayland-server pkg-config xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel xz
 BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc
 
-BuildRequires: libfm-devel libxml2-devel
+BuildRequires: libfm-devel libxml2-devel libkeybinder-devel
 BuildPreReq: rpm-build-xdg
 
 %description
@@ -66,6 +66,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Apr 11 2016 Michael Shigorin <mike@altlinux.org> 0.8.2-alt1
+- 0.8.2 (thx Alexey Borisenkov for suggestion)
+
 * Wed Aug 27 2014 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
 - 0.7.0
 - reorganized gear repo like lxqt-*
