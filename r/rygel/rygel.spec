@@ -20,7 +20,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -233,6 +233,9 @@ gettextize -q -f
 %_girdir/*.gir
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.30.1-alt1
+- 0.30.1
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
 - 0.30.0
 
