@@ -11,7 +11,7 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -35,7 +35,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define exiv2_ver 0.20
 %define libraw_ver 0.16
 %define brasero_ver 3.2.0
-%define soup_ver 2.36
+%define soup_ver 2.42
 %define gnome_common_ver 2.8.0
 %define webp_ver 0.2.0
 %define webkit_ver 2.6.0
@@ -50,7 +50,7 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
-BuildRequires: libsoup-gnome-devel >= %soup_ver libsecret-devel
+BuildRequires: libsoup-devel >= %soup_ver libsecret-devel
 BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
 BuildRequires: libwebkitgtk4-devel >= %webkit_ver
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Mon Mar 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
