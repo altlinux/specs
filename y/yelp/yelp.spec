@@ -5,7 +5,7 @@
 %def_enable lzma
 
 Name: yelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
@@ -120,6 +120,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
