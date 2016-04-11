@@ -2,7 +2,7 @@
 #
 
 Name:     aerospike-server
-Version:  3.7.4.1
+Version:  3.7.5
 Release:  alt1
 
 Summary: Aerospike Database Server
@@ -163,7 +163,7 @@ mkdir -p -- %buildroot/var/run/%name
 
 # logrotate file
 rm -f -- %buildroot%_sysconfdir/logrotate.d/%as_name
-install -m 664 -- %SOURCE103 %buildroot%_sysconfdir/logrotate.d/%name
+install -m 644 -- %SOURCE103 %buildroot%_sysconfdir/logrotate.d/%name
 
 
 # Default configuration files
@@ -223,6 +223,9 @@ mkdir -p -- %buildroot/var/log/%as_name
 
 
 %changelog
+* Mon Apr 11 2016 Nikolay A. Fetisov <naf@altlinux.ru> 3.7.5-alt1
+- New version
+
 * Sun Mar 20 2016 Nikolay A. Fetisov <naf@altlinux.ru> 3.7.4.1-alt1
 - Initial build for ALT Linux Sisyphus
 
