@@ -3,12 +3,12 @@
 # numbers change, otherwise the NEVR of the library may cause a package not to
 # be updated even if it should be.
 %global srcname tqsl
-%global tqslver 2.1.2
+%global tqslver 2.2.1
 %global libtqslver 2.5
 
 Name:           trustedqsl
 Version:        %tqslver
-Release:        alt1
+Release:        alt2
 Summary:        TrustedQSL ham-radio applications
 
 Group:		Communications
@@ -108,5 +108,8 @@ rm -f %buildroot%_datadir/locale/*/LC_MESSAGES/wxstd.mo
 %_libdir/libtqsllib.so
 
 %changelog
+* Mon Apr 11 2016 Andrey Cherepanov <cas@altlinux.org> 2.2.1-alt2
+- New version
+
 * Thu Nov 19 2015 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
 - Initial build in Sisyphus (thanks Fedora for spec and patches)
