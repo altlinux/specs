@@ -1,6 +1,6 @@
 Name: lirc
 Version: 0.9.3a
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
@@ -154,6 +154,10 @@ fi
 %exclude %_datadir/lirc/configs/audio.conf
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.3a-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.3a-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

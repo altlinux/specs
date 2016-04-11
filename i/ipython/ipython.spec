@@ -2,7 +2,7 @@
 
 Name: ipython
 Version: 4.0.0
-Release: alt3.1
+Release: alt3.1.1
 
 %setup_python_module IPython
 
@@ -199,6 +199,10 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt3.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.0-alt3.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
