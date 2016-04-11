@@ -3,13 +3,13 @@
 %def_with python3
 
 Name: python-module-memcached
-Version: 1.53
-Release: alt3.1
+Version: 1.57
+Release: alt1
 
 Summary: A Python module for memcached daemon
 Group: Development/Python
 License: GPL
-Url: ftp://ftp.tummy.com/pub/python-memcached/
+Url: https://github.com/linsomniac/python-memcached
 
 %setup_python_module %modulename
 
@@ -20,11 +20,12 @@ BuildArch: noarch
 # Automatically added by buildreq on Mon Nov 14 2005
 BuildRequires: python-devel python-modules-compiler python-modules-encodings
 
-BuildPreReq: python-module-setuptools
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-six
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-module-six
 %endif
 
 %py_provides memcache
@@ -47,7 +48,6 @@ distributed memory object caching system.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 1.57-alt1
+- 1.57
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.53-alt3.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

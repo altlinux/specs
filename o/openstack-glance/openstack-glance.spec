@@ -1,6 +1,6 @@
 
 Name: openstack-glance
-Version: 11.0.1
+Version: 12.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Image Service
@@ -26,35 +26,46 @@ BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
-BuildRequires: python-module-eventlet >= 0.17.4
-BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
+BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.concurrency >= 2.3.0
+BuildRequires: python-module-httplib2 >= 0.7.5
+BuildRequires: python-module-pycrypto >= 2.6
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.concurrency >= 3.5.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.db >= 2.4.1
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-oslo.middleware >= 2.8.0
-BuildRequires: python-module-oslo.policy >= 0.5.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
+BuildRequires: python-module-oslo.service >= 1.0.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
 BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-futurist >= 0.1.2
-BuildRequires: python-module-taskflow >= 1.16.0
-BuildRequires: python-module-keystonemiddleware >= 2.0.0
-BuildRequires: python-module-wsme >= 0.7
+BuildRequires: python-module-futurist >= 0.11.0
+BuildRequires: python-module-taskflow >= 1.26.0
+BuildRequires: python-module-keystoneauth1 >= 2.1.0
+BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-wsme >= 0.8
+BuildRequires: python-module-prettytable >= 0.7
+BuildRequires: python-module-paste
+BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-keystoneclient >= 1.6.0
 BuildRequires: python-module-OpenSSL >= 0.14
-BuildRequires: python-module-glance_store >= 0.7.1
+BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.middleware >= 3.0.0
+BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-retrying >= 1.2.3
+BuildRequires: python-module-osprofiler >= 1.1.0
+
+BuildRequires: python-module-glance_store >= 0.13.0
 BuildRequires: python-module-semantic_version >= 2.3.1
-BuildRequires: python-module-jsonschema >= 2.0.0
-BuildRequires: python-module-castellan >= 0.2.0
+BuildRequires: python-module-castellan >= 0.3.1
 BuildRequires: python-module-cryptography >= 1.0
+BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-monotonic >= 0.6
 
 # Required to build module documents
 BuildRequires: python-module-boto
@@ -63,11 +74,13 @@ BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-elasticsearch
 BuildRequires: python-module-reno >= 0.1.1
+BuildRequires: python-modules-sqlite3
 
 Requires(pre): shadow-utils
 Requires: python-module-glance = %EVR
 Requires: python-module-glanceclient
 Requires: python-module-PasteDeploy
+Requires: /usr/bin/qemu-img
 
 Requires: openstack-utils
 
@@ -86,18 +99,18 @@ This package contains the API and registry servers.
 Summary: Glance Python libraries
 Group: Development/Python
 Requires: python-module-keystoneclient >= 1.6.0
-Requires: python-module-keystonemiddleware >= 2.0.0
-Requires: python-module-oslo.config >= 2.3.0
-Requires: python-module-oslo.concurrency >= 2.3.0
+Requires: python-module-keystonemiddleware >= 4.0.0
+Requires: python-module-oslo.config >= 3.7.0
+Requires: python-module-oslo.concurrency >= 3.5.0
 Requires: python-module-oslo.context >= 0.2.0
-Requires: python-module-oslo.service >= 0.7.0
-Requires: python-module-oslo.utils >= 2.0.0
-Requires: python-module-oslo.log >= 1.8.0
-Requires: python-module-oslo.db >= 2.4.1
-Requires: python-module-oslo.i18n >= 1.5.0
-Requires: python-module-oslo.messaging >= 1.16.0
+Requires: python-module-oslo.service >= 1.0.0
+Requires: python-module-oslo.utils >= 3.5.0
+Requires: python-module-oslo.log >= 1.14.0
+Requires: python-module-oslo.db >= 4.1.0
+Requires: python-module-oslo.i18n >= 2.1.0
+Requires: python-module-oslo.messaging >= 4.0.0
 Requires: python-module-oslo.policy >= 0.5.0
-Requires: python-module-oslo.serialization >= 1.4.0
+Requires: python-module-oslo.serialization >= 1.10.0
 
 %description -n python-module-glance
 OpenStack Image Service (code-named Glance) provides discovery, registration,
@@ -135,9 +148,11 @@ rm -rf {test-,}requirements.txt tools/{pip,test}-requires
 %build
 %python_build
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build -b man doc/source doc/build/man
-sphinx-build -b html doc/source doc/build/html
+# disabling git call for last modification date from git repo
+sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+python setup.py build_sphinx
+# Fix hidden-file-or-dir warnings
+rm -fr doc/build/html/.buildinfo
 
 %install
 %python_install
@@ -150,8 +165,8 @@ rm -f  %buildroot%python_sitelibdir/glance/openstack/common/test*
 # and replaced glanceclient
 rm -f %buildroot%_bindir/glance
 
-mkdir -p %buildroot%_mandir/man1
-install -p -D -m 644 doc/build/man/*.1 %buildroot%_mandir/man1/
+mkdir -p %buildroot%_man1dir
+install -p -D -m 644 doc/build/man/*.1 %buildroot%_man1dir/
 
 install -d -m 0755 %buildroot%_sysconfdir/glance
 install -d -m 0755 %buildroot%_sysconfdir/glance/metadefs
@@ -213,7 +228,7 @@ rm -rf %buildroot/usr/etc/glance
 %config(noreplace) %attr(640, root, glance) %_sysconfdir/glance/*.conf
 %config %_sysconfdir/glance/*.ini
 %config %_sysconfdir/glance/*.json
-%config %_sysconfdir/glance/*.conf.sample
+%config %_sysconfdir/glance/*.sample
 %dir %_sysconfdir/glance/metadefs
 %_sysconfdir/glance/metadefs/README
 %config %_sysconfdir/glance/metadefs/*.json
@@ -232,6 +247,9 @@ rm -rf %buildroot/usr/etc/glance
 %doc doc/build/html
 
 %changelog
+* Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.0-alt1
+- 12.0.0
+
 * Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:11.0.1-alt1
 - 11.0.1
 

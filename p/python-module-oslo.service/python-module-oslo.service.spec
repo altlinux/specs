@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 0.9.1
+Version: 1.8.0
 Release: alt1
 Summary: Oslo service library
 Group: Development/Python
@@ -15,20 +15,42 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.8
+BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-webob >= 1.2.3
+BuildRequires: python-module-eventlet >= 0.18.2
+BuildRequires: python-module-greenlet >= 0.3.2
+BuildRequires: python-module-monotonic >= 0.6
+BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.concurrency >= 3.5.0
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-paste
+
+
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-oslo-i18n
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-oslo.concurrency >= 2.3.0
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-paste
-BuildRequires: python-module-PasteDeploy >= 1.5.0
-BuildRequires: python-module-eventlet >= 0.17.4
-BuildRequires: python-module-greenlet >= 0.3.2
-BuildRequires: python-module-monotonic >= 0.3
-BuildRequires: python-module-six >= 1.9.0
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-oslo-i18n >= 2.1.0
+BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-oslo.concurrency >= 3.5.0
+BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-oslo.log >= 1.14.0
+BuildRequires: python3-module-paste
+BuildRequires: python3-module-PasteDeploy >= 1.5.0
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-greenlet >= 0.3.2
+BuildRequires: python3-module-monotonic >= 0.6
+BuildRequires: python3-module-six >= 1.9.0
+%endif
 
 %description
 Library for running OpenStack services
@@ -38,23 +60,6 @@ Library for running OpenStack services
 %package -n python3-module-%pypi_name
 Summary: Oslo service library
 Group: Development/Python3
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-oslo-i18n
-BuildRequires: python3-module-oslo.utils >= 2.0.0
-BuildRequires: python3-module-oslo.concurrency >= 2.3.0
-BuildRequires: python3-module-oslo.config >= 2.3.0
-BuildRequires: python3-module-oslo.log >= 1.8.0
-BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-paste
-BuildRequires: python3-module-PasteDeploy >= 1.5.0
-BuildRequires: python3-module-eventlet >= 0.17.4
-BuildRequires: python3-module-greenlet >= 0.3.2
-BuildRequires: python3-module-monotonic >= 0.3
-BuildRequires: python3-module-six >= 1.9.0
 
 %description -n python3-module-%pypi_name
 Library for running OpenStack services
@@ -116,6 +121,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 0.9.1-alt1
 - 0.9.1
 

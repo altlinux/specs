@@ -1,7 +1,7 @@
 %add_findreq_skiplist %python_sitelibdir/nova/cloudpipe/*.template
 
 Name: openstack-nova
-Version: 12.0.2
+Version: 13.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Compute (nova)
@@ -19,7 +19,6 @@ Source10: %name-api.service
 Source11: %name-cert.service
 Source12: %name-compute.service
 Source13: %name-network.service
-Source14: %name-objectstore.service
 Source15: %name-scheduler.service
 Source18: %name-xvpvncproxy.service
 Source19: %name-console.service
@@ -35,7 +34,6 @@ Source110: %name-api.init
 Source111: %name-cert.init
 Source112: %name-compute.init
 Source113: %name-network.init
-Source114: %name-objectstore.init
 Source115: %name-scheduler.init
 Source118: %name-xvpvncproxy.init
 Source119: %name-console.init
@@ -60,16 +58,16 @@ BuildRequires: crudini
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-d2to1
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
-BuildRequires: python-module-eventlet >= 0.17.4
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
+BuildRequires: python-module-eventlet >= 0.18.2
 BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-iso8601
-BuildRequires: python-module-keystonemiddleware >= 2.0.0
+BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-routes >= 1.12.3
 BuildRequires: python-module-cryptography >= 1.0
-BuildRequires: python-module-PasteDeploy
+BuildRequires: python-module-PasteDeploy >= 1.5.0
 BuildRequires: python-module-numpy
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
@@ -77,31 +75,35 @@ BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-netifaces >= 0.10.4
 BuildRequires: python-module-jsonschema >= 2.0.0
 BuildRequires: python-module-cinderclient >= 1.3.1
-BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-keystoneauth1 >= 2.1.0
 BuildRequires: python-module-neutronclient >= 2.6.0
-BuildRequires: python-module-glanceclient >= 0.18.0
-BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-glanceclient >= 2.0.0
+BuildRequires: python-module-requests >= 2.8.1
 BuildRequires: python-module-stevedore >= 1.5.0
 BuildRequires: python-module-setuptools >= 16.0
 BuildRequires: python-module-websockify >= 0.6.1
-BuildRequires: python-module-oslo.concurrency >= 2.3.0
-BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-oslo.cache >= 1.5.0
+BuildRequires: python-module-oslo.concurrency >= 3.5.0
+BuildRequires: python-module-oslo.config >= 3.7.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.reports >= 0.1.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-oslo.db >= 2.4.1
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.reports >= 0.6.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.db >= 4.1.0
 BuildRequires: python-module-oslo.rootwrap >= 2.0.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.service >= 0.7.0
+BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.policy >= 0.5.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.service >= 1.0.0
 BuildRequires: python-module-rfc3986 >= 0.2.0
-BuildRequires: python-module-oslo.middleware >= 2.8.0
+BuildRequires: python-module-oslo.middleware >= 3.0.0
 BuildRequires: python-module-psutil >= 1.1.1
-BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.5.0
 BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-os-brick >= 0.4.0
+BuildRequires: python-module-os-brick >= 1.0.0
+BuildRequires: python-module-os-win >= 0.2.3
+BuildRequires: python-module-castellan >= 0.3.1
 BuildRequires: python-module-barbicanclient
 BuildRequires: python-module-oslo.vmware >= 1.16.0
 # Required to build module documents
@@ -117,7 +119,6 @@ Requires: %name-cert = %EVR
 Requires: %name-scheduler = %EVR
 Requires: %name-api = %EVR
 Requires: %name-network = %EVR
-Requires: %name-objectstore = %EVR
 Requires: %name-conductor = %EVR
 Requires: %name-console = %EVR
 Requires: %name-cells = %EVR
@@ -139,7 +140,7 @@ Group: System/Servers
 
 Requires: python-module-nova = %EVR
 Requires: python-module-oslo.rootwrap >= 2.0.0
-Requires: python-module-oslo.messaging >= 1.16.0
+Requires: python-module-oslo.messaging >= 4.0.0
 Requires(pre): shadow-utils
 
 %description common
@@ -285,23 +286,6 @@ standard hardware configurations and seven major hypervisors.
 This package contains the Nova services providing database access for
 the compute service
 
-%package objectstore
-Summary: OpenStack Nova simple object store service
-Group: System/Servers
-
-Requires: openstack-nova-common = %EVR
-
-%description objectstore
-OpenStack Compute (codename Nova) is open source software designed to
-provision and manage large networks of virtual machines, creating a
-redundant and scalable cloud computing platform. It gives you the
-software, control panels, and APIs required to orchestrate a cloud,
-including running instances, managing networks, and controlling access
-through users and projects. OpenStack Compute strives to be both
-hardware and hypervisor agnostic, currently supporting a variety of
-standard hardware configurations and seven major hypervisors.
-
-This package contains the Nova service providing a simple object store.
 
 %package console
 Summary: OpenStack Nova console access services
@@ -509,7 +493,6 @@ install -p -D -m 644 %SOURCE10 %buildroot%_unitdir/openstack-nova-api.service
 install -p -D -m 644 %SOURCE11 %buildroot%_unitdir/openstack-nova-cert.service
 install -p -D -m 644 %SOURCE12 %buildroot%_unitdir/openstack-nova-compute.service
 install -p -D -m 644 %SOURCE13 %buildroot%_unitdir/openstack-nova-network.service
-install -p -D -m 644 %SOURCE14 %buildroot%_unitdir/openstack-nova-objectstore.service
 install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/openstack-nova-scheduler.service
 install -p -D -m 644 %SOURCE18 %buildroot%_unitdir/openstack-nova-xvpvncproxy.service
 install -p -D -m 644 %SOURCE19 %buildroot%_unitdir/openstack-nova-console.service
@@ -526,7 +509,6 @@ install -p -D -m 755 %SOURCE110 %buildroot%_initdir/openstack-nova-api
 install -p -D -m 755 %SOURCE111 %buildroot%_initdir/openstack-nova-cert
 install -p -D -m 755 %SOURCE112 %buildroot%_initdir/openstack-nova-compute
 install -p -D -m 755 %SOURCE113 %buildroot%_initdir/openstack-nova-network
-install -p -D -m 755 %SOURCE114 %buildroot%_initdir/openstack-nova-objectstore
 install -p -D -m 755 %SOURCE115 %buildroot%_initdir/openstack-nova-scheduler
 install -p -D -m 755 %SOURCE118 %buildroot%_initdir/openstack-nova-xvpvncproxy
 install -p -D -m 755 %SOURCE119 %buildroot%_initdir/openstack-nova-console
@@ -638,11 +620,6 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %post_service %name-conductor
 %preun conductor
 %preun_service %name-conductor
-
-%post objectstore
-%post_service %name-objectstore
-%preun objectstore
-%preun_service %name-objectstore
 
 %post console
 %post_service %name-console
@@ -763,11 +740,6 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %_unitdir/%name-conductor.service
 %_initdir/%name-conductor
 
-%files objectstore
-%_bindir/nova-objectstore
-%_unitdir/%name-objectstore.service
-%_initdir/%name-objectstore
-
 %files console
 %_bindir/nova-console*
 %_bindir/nova-xvpvncproxy
@@ -806,6 +778,9 @@ usermod -a -G fuse nova 2>/dev/null ||:
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1:13.0.0-alt1
+- 13.0.0 Mitaka release
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:12.0.2-alt1
 - 12.0.2
 

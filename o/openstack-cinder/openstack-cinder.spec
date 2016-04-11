@@ -2,7 +2,7 @@
 %add_python_req_skip hp3parclient
 
 Name: openstack-cinder
-Version: 7.0.1
+Version: 8.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Volume service
@@ -34,7 +34,6 @@ BuildArch: noarch
 BuildRequires: /proc
 BuildRequires: webserver-common rpm-build-webserver-common rpm-macros-apache2
 BuildRequires: crudini
-BuildRequires: python-module-d2to1
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
@@ -43,50 +42,65 @@ BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-reno >= 0.1.1
 BuildRequires: python-module-setuptools
 BuildRequires: graphviz
-
+BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-decorator >= 3.4.0
 BuildRequires: python-module-enum34
-BuildRequires: python-module-eventlet >= 0.17.4
-BuildRequires: python-module-routes >= 1.12.3
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
-BuildRequires: python-module-webob
-BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-iso8601
-BuildRequires: python-module-PasteDeploy
-BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.concurrency >= 2.3.0
+BuildRequires: python-module-eventlet >= 0.18.2
+BuildRequires: python-module-greenlet >= 0.3.2
+BuildRequires: python-module-httplib2 >= 0.7.5
+BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-keystonemiddleware >= 4.0.0
+BuildRequires: python-module-lxml >= 2.3
+BuildRequires: python-module-oauth2client >= 1.5.0
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.concurrency >= 3.5.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.db >= 2.4.1
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-oslo.middleware >= 2.8.0
+BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.middleware >= 3.0.0
 BuildRequires: python-module-oslo.policy >= 0.5.0
-BuildRequires: python-module-oslo.reports >= 0.1.0
+BuildRequires: python-module-oslo.reports >= 0.6.0
 BuildRequires: python-module-oslo.rootwrap >= 2.0.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-oslo.versionedobjects >= 0.9.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.service >= 1.0.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.versionedobjects >= 1.5.0
+BuildRequires: python-module-osprofiler >= 1.1.0
+BuildRequires: python-module-paramiko >= 1.16.0
+BuildRequires: python-module-paste
+BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-pycrypto >= 2.6
+BuildRequires: python-module-pyparsing >= 2.0.1
+BuildRequires: python-module-barbicanclient >= 3.3.0
+BuildRequires: python-module-glanceclient >= 2.0.0
+BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-novaclient >= 2.29.0
+BuildRequires: python-module-swiftclient >= 2.2.0
+BuildRequires: python-module-pytz >= 2013.6
+BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-retrying >= 1.2.3
+BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-taskflow >= 1.26.0
+BuildRequires: python-module-simplejson >= 2.2.0
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
+BuildRequires: python-module-migrate >= 0.9.6
+BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-suds-jurko >= 0.6
+BuildRequires: python-module-webob >= 1.2.3
+BuildRequires: python-module-oslo.i18n >= 2.1.0
 BuildRequires: python-module-oslo.vmware >= 0.16.0
-BuildRequires: python-module-os-brick >= 0.4.0
-BuildRequires: python-module-kombu >= 3.0.7
-BuildRequires: python-module-keystonemiddleware >= 2.0.0
-BuildRequires: python-module-osprofiler >= 0.3.0
-BuildRequires: python-module-paramiko >= 1.13.0
-BuildRequires: python-module-taskflow >= 1.16.0
+BuildRequires: python-module-os-brick >= 1.0.0
+BuildRequires: python-module-os-win >= 0.2.3
+BuildRequires: python-module-tooz >= 1.28.0
+BuildRequires: python-module-google-api-client >= 1.4.2
+
+
 BuildRequires: python-module-anyjson
 BuildRequires: python-module-mox
 BuildRequires: python-module-testtools
 BuildRequires: python-module-testrepository
 BuildRequires: python-module-oslotest
-BuildRequires: python-module-requests >= 2.5.2
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-barbicanclient >= 3.3.0
-BuildRequires: python-module-glanceclient >= 0.18.0
-BuildRequires: python-module-novaclient >= 2.28.1
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-swiftclient >= 2.2.0
 
 Requires: openstack-utils
 Requires: python-module-cinder = %EVR
@@ -144,9 +158,11 @@ PYTHONPATH=. tools/config/generate_sample.sh from_tox
 
 %python_build
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build -b man doc/source doc/build/man
-sphinx-build -b html doc/source doc/build/html
+# disabling git call for last modification date from git repo
+sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+python setup.py build_sphinx
+# Fix hidden-file-or-dir warnings
+rm -fr doc/build/html/.buildinfo
 
 %install
 %python_install
@@ -154,8 +170,6 @@ sphinx-build -b html doc/source doc/build/html
 mkdir -p %buildroot%_man1dir
 install -p -D -m 644 doc/build/man/*.1 %buildroot%_man1dir/
 
-# Fix hidden-file-or-dir warnings
-rm -fr build/html/.doctrees build/html/.buildinfo
 
 # Setup directories
 install -d -m 755 %buildroot%_sharedstatedir/cinder
@@ -295,6 +309,9 @@ crudini --set %cinder_conf keystone_authtoken identity_uri http://localhost:3535
 %doc doc/build/html
 
 %changelog
+* Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
+- 8.0.0 Mitaka release
+
 * Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.1-alt1
 - 7.0.1
 

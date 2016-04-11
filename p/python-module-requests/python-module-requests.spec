@@ -2,15 +2,15 @@
 %def_with python3
 
 Name:           python-module-requests
-Version:        2.7.0
-Release:        alt1.git20150719.1.1.1
+Version:        2.9.1
+Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
 
 License:        ASL 2.0
 URL:            http://pypi.python.org/pypi/requests
 # https://github.com/kennethreitz/requests.git
-Source0:        %{name}-%{version}.tar
+Source0:        %name-%version.tar
 # Explicitly use the system certificates in ca-certificates.
 # https://bugzilla.redhat.com/show_bug.cgi?id=904614
 Patch0:         python-requests-system-cert-bundle.patch
@@ -22,17 +22,15 @@ Patch1:         python-requests-system-chardet-not-charade.patch
 Patch2:         python-requests-system-urllib3.patch
 
 BuildArch:      noarch
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-cffi python-module-cryptography python-module-enum34 python-module-pyasn1 python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-enum34 python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-chardet python-module-ndg-httpsclient python-module-ntlm python3-module-chardet python3-module-urllib3 rpm-build-python3
 
-#BuildRequires:  python-devel python-modules-json
-#BuildRequires:  python-module-chardet
-#BuildRequires:  python-module-urllib3 >= 1.8.2
+BuildRequires:  python-devel python-modules-json
+BuildRequires:  python-module-chardet
+BuildRequires:  python-module-urllib3 >= 1.13.1
+BuildRequires:  python-module-httpbin
 
 Requires:       ca-certificates
 Requires:       python-module-chardet
-Requires:       python-module-urllib3 >= 1.8.2
+Requires:       python-module-urllib3 >= 1.13.1
 %py_requires json
 
 %description
@@ -46,12 +44,14 @@ designed to make HTTP requests easy for developers.
 Summary: HTTP library, written in Python, for human beings
 Group:   Development/Python3
 BuildRequires(pre): rpm-build-python3
-#BuildRequires:  python3-devel python3-base
-#BuildRequires:  python3-module-chardet
-#BuildRequires:  python3-module-urllib3 >= 1.8.2
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-chardet
+BuildRequires:  python3-module-urllib3 >= 1.13.1
+BuildRequires:  python3-module-httpbin
 Requires:       ca-certificates
 Requires:       python3-module-chardet
-Requires:       python3-module-urllib3 >= 1.8.2
+Requires:       python3-module-urllib3 >= 1.13.1
+%py3_requires json
 
 %description -n python3-module-%pkgname
 Most existing Python modules for sending HTTP requests are extremely verbose and
@@ -115,17 +115,18 @@ popd
 
 %files
 %doc NOTICE LICENSE README.rst HISTORY.rst
-%python_sitelibdir/%pkgname
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %if_with python3
 %files -n python3-module-%pkgname
 %doc NOTICE LICENSE README.rst HISTORY.rst
-%python3_sitelibdir/%pkgname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.9.1-alt1
+- 2.9.1
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7.0-alt1.git20150719.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).

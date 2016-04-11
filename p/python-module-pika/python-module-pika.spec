@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%modulename
-Version: 0.9.14
-Release: alt1.git20141201.1.1
+Version: 0.10.0
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -17,20 +17,17 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-#BuildPreReq: %py_dependencies setuptools
-#BuildPreReq: python-module-sphinx-devel python-module-twisted-core
-#BuildPreReq: python-module-tornado
+BuildRequires(pre): rpm-macros-sphinx
+BuildRequires: python-devel
+BuildRequires: python-module-setuptools
+BuildRequires: python-module-sphinx-devel python-module-twisted-core
+BuildRequires: python-module-tornado
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+BuildPreReq: python3-devel python3-module-setuptools
 %endif
 
 %py_requires twisted.internet tornado
-
-BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-twisted-core python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-tornado python-module-twisted-logger python3-module-setuptools rpm-build-python3 time
 
 %description
 Pika is a pure-Python implementation of the AMQP 0-9-1 protocol that
@@ -77,6 +74,11 @@ pushd ../python3
 popd
 %endif
 
+# generate html docs
+python setup.py build_sphinx
+# remove the sphinx-build leftovers
+rm -rf build/sphinx/html/.{doctrees,buildinfo}
+
 %install
 %python_install
 
@@ -86,25 +88,30 @@ pushd ../python3
 popd
 %endif
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs html
+# Delete tests
+rm -fr %buildroot%python_sitelibdir/tests
+rm -fr %buildroot%python_sitelibdir/*/tests
+rm -fr %buildroot%python3_sitelibdir/tests
+rm -fr %buildroot%python3_sitelibdir/*/tests
+
 
 %files
 %doc *.rst
-%python_sitelibdir/%modulename/
-%python_sitelibdir/*.egg-info
+%python_sitelibdir/*
 
 %files docs
-%doc docs/_build/html/*
+%doc build/sphinx/html/*
 
 %if_with python3
 %files -n python3-module-%modulename
 %doc *.rst
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*
 %endif
 
 %changelog
+* Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
+- 0.10.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.14-alt1.git20141201.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

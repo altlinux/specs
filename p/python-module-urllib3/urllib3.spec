@@ -3,10 +3,10 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 20150503
-Release: alt1.1.1.1
+Version: 1.15.1
+Release: alt1
 
-Epoch: 1
+Epoch: 2
 
 Summary: Library with thread-safe connection pooling, file post support, sanity friendly etc
 License: MIT
@@ -23,16 +23,15 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-OpenSSL python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg python-module-pyasn1 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-ndg-httpsclient python-module-objects.inv rpm-build-python3 time
 
-#BuildRequires:  python-module-six python-module-backports.ssl_match_hostname
-#BuildRequires: python-module-ndg-httpsclient
-#BuildPreReq: python-module-sphinx-devel
+BuildRequires: python-module-six python-module-backports.ssl_match_hostname
+BuildRequires: python-module-ndg-httpsclient
+BuildRequires: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-six
 %endif
 
 %setup_python_module %oname
@@ -163,6 +162,9 @@ cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2:1.15.1-alt1
+- 1.15.1
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:20150503-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
