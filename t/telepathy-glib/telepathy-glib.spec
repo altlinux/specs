@@ -8,7 +8,7 @@
 
 Name: telepathy-glib
 Version: 0.24.1
-Release: alt1
+Release: alt2
 
 Summary: Telepathy framework - GLib connection manager library
 License: LGPL
@@ -16,6 +16,7 @@ Group: System/Libraries
 Url: http://telepathy.freedesktop.org/wiki/TelepathyGLib
 
 Source: http://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.tar.gz
+Patch: telepathy-glib-0.24.1-fc-duplicate_testcase_path.patch
 
 %define glib_ver 2.36.0
 %define dbus_ver 0.90
@@ -25,12 +26,12 @@ Source: http://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libdbus-glib-devel >= %dbus_ver
-BuildRequires: gtk-doc  python-module-PyXML
+BuildRequires: gtk-doc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver}
 %{?_enable_vala:BuildPreReq: vala >= %vala_ver vala-tools >= %vala_ver}
 
 # for check
-BuildRequires: /proc dbus dbus-tools-gui
+BuildRequires: /proc dbus dbus-tools-gui python-module-PyXML
 
 %description
 This package contains telepathy-glib, a GLib-based library for Telepathy
@@ -104,6 +105,7 @@ the functionality of the installed %name library package.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -117,10 +119,10 @@ the functionality of the installed %name library package.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
-#%make check
+%make check
 
 %files -n lib%name
 %doc AUTHORS ChangeLog
@@ -161,6 +163,9 @@ the functionality of the installed %name library package.
 %endif
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt2
+- fixed tests for glib >= 2.46
+
 * Tue Aug 26 2014 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt1
 - 0.24.1
 
