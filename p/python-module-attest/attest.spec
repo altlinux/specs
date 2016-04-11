@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6
-Release: alt3.git20130330
+Release: alt4.git20130330
 Summary: Modern, Pythonic unit testing
 License: BSD
 Group: Development/Python
@@ -45,6 +45,7 @@ idiomatic Python in mind. Unlike others, it is not built on top of
 unittest though it provides compatibility by creating TestSuites from
 Attest collections.
 
+%if_with python3
 %package -n python3-module-%oname
 Summary: Modern, Pythonic unit testing
 Group: Development/Python3
@@ -57,6 +58,7 @@ Attest is a unit testing framework built from the ground up with
 idiomatic Python in mind. Unlike others, it is not built on top of
 unittest though it provides compatibility by creating TestSuites from
 Attest collections.
+%endif
 
 %package pickles
 Summary: Pickles for %oname
@@ -162,6 +164,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6-alt4.git20130330
+- (.spec) Put %%if_with python3 guards around all python3-related code. (Otherwise the build from .src.rpm fails.)
+
 * Fri Apr  8 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6-alt3.git20130330
 - Hidden the python3 BuildReqs (because it is turned off now).
 
