@@ -1,6 +1,6 @@
 Name: qstardict
 Version: 1.0.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: QStarDict Qt4 clone of StarDict
 License: GPLv2
@@ -49,6 +49,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS ChangeLog README THANKS 
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.1-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon May 28 2012 Terechkov Evgenii <evg@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
