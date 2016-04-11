@@ -4,8 +4,8 @@
 %def_disable hipe
 
 Name: ejabberd
-Version: 2.1.10
-Release: alt1.1
+Version: 2.1.13
+Release: alt1
 
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL2
@@ -44,7 +44,7 @@ The main features of ejabberd is:
 * Mostly XMPP-compliant
 * Support for JEP-0030 (Service Discovery).
 * Support for JEP-0039 (Statistics Gathering).
-* Support for xml:lang 
+* Support for xml:lang
 
 %if_enabled captcha
 %package captcha
@@ -173,6 +173,9 @@ ln -s %name-%version %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Wed Apr 06 2016 Denis Medvedev <nbr@altlinux.org> 2.1.13-alt1
+- 2.1.13
+
 * Tue Apr 05 2016 Denis Medvedev <nbr@altlinux.org> 2.1.10-alt1.1
 - removed strict requirement to erlang version.
 
