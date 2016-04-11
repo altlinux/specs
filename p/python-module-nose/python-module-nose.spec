@@ -5,7 +5,7 @@
 Name: python-module-%oname
 Epoch: 1
 Version: 1.3.7
-Release: alt1.git20160316
+Release: alt1.git20160316.1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
@@ -101,6 +101,10 @@ popd
 %endif
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.3.7-alt1.git20160316.1
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Wed Mar 16 2016 Denis Medvedev <nbr@altlinux.org> 1:1.3.7-alt1.git20160316
 - Git upstream merged.
 
