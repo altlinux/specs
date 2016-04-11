@@ -1,6 +1,6 @@
 Name: kiki
 Version: 1.0.2
-Release: alt1.qa4.1
+Release: alt1.qa5
 
 Group: Games/Puzzles
 Summary: 3D logical game
@@ -138,6 +138,9 @@ tar -jxvf %SOURCE4
 %doc Readme.txt Thanks.txt manual
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.2-alt1.qa5
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.2-alt1.qa4.1
 - Rebuild with Python-2.7
 
