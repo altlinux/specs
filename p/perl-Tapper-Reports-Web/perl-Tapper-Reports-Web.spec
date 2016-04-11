@@ -16,7 +16,7 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    5.0.10
-Release:    alt1
+Release:    alt2
 
 Summary:    Tapper frontend web application based on Catalyst
 License:    GPL+ or Artistic
@@ -72,8 +72,8 @@ BuildRequires: perl(Tapper/Cmd/Testrun.pm)
 BuildRequires: perl(Tapper/Config.pm)
 BuildRequires: perl(Tapper/Model.pm)
 BuildRequires: perl(Tapper/Schema/TestTools.pm)
-BuildRequires: perl(Tapper/Testplan/Plugins/Taskjuggler.pm)
-BuildRequires: perl(Tapper/Testplan/Reporter.pm)
+#BuildRequires: perl(Tapper/Testplan/Plugins/Taskjuggler.pm)
+#BuildRequires: perl(Tapper/Testplan/Reporter.pm)
 BuildRequires: perl(Template.pm)
 BuildRequires: perl(Test/Deep.pm)
 BuildRequires: perl(Test/Fixture/DBIC/Schema.pm)
@@ -127,6 +127,9 @@ Tapper frontend web application based on Catalyst.
 
 
 %changelog
+* Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt2
+- build w/o Tapper-Testplan
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.10-alt1
 - automated CPAN update
 
