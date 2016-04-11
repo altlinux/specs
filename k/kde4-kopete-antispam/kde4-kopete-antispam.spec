@@ -3,7 +3,7 @@
 
 Name: kde4-kopete-antispam
 Version: 0.5
-Release: alt1
+Release: alt1.qa1
 
 Group: Networking/Instant messaging
 Summary: Kopete Antispam Plugin
@@ -48,5 +48,8 @@ Authors:
 %_K4cfg/kopeteantispamconfig.kcfg
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.5-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Jul 04 2011 Sergey V Turchin <zerg@altlinux.org> 0.5-alt1
 - initial build
