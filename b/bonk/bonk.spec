@@ -1,7 +1,7 @@
 %define Name Bonk
 Name: bonk
 Version: 0.6
-Release: alt4.qa1
+Release: alt4.qa2
 Summary: %Name lossy/lossless audio coder
 Summary(uk_UA.CP1251): %Name аудіо кодер з втратами та без втрат
 Summary(ru_RU.CP1251): %Name аудио кодер с потерями и без потерь
@@ -54,6 +54,9 @@ install -pD -m755 %name %buildroot%_bindir/%name
 
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.6-alt4.qa2
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
