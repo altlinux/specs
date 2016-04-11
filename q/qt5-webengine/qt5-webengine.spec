@@ -6,7 +6,7 @@
 
 Name: qt5-webengine
 Version: 5.6.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -14,6 +14,7 @@ Url: http://qt.io/
 License: GPLv2 / GPLv3 / LGPLv3
 
 Source: %qt_module-opensource-src-%version.tar
+# FC
 Patch1: qtwebengine-opensource-src-5.6.0-beta-no-format.patch
 Patch2: qtwebengine-opensource-src-5.6.0-rc-linux-pri.patch
 Patch3: qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
@@ -23,6 +24,8 @@ Patch6: qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
 Patch7: qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
 Patch8: qtwebengine-opensource-src-5.6.0-beta-chimera-nss-init.patch
 Patch9: qtwebengine-opensource-src-5.6.0-rc-no-sse2.patch
+# ATL
+Patch100: alt-pepflashplayer.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -109,6 +112,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch100 -p1
 syncqt.pl-qt5 -version %version -private
 
 # fix // in #include in content/renderer/gpu to avoid debugedit failure
@@ -156,8 +160,24 @@ popd
 %install_qt5 -C %_target_platform
 %make INSTALL_ROOT=%buildroot install_docs -C %_target_platform ||:
 
-%files common
-%_qt5_translationdir/qtwebengine_locales/
+# find translations
+echo "%%defattr(644,root,root,755)" >translations_list.lang
+find %buildroot/%_qt5_translationdir/qtwebengine_locales -type f -name \*.pak | \
+while read t
+do
+    lang_file=`basename $t`
+    lang_name=`echo "$lang_file" | sed -e 's|\.pak$||' -e 's|-|_|'`
+    if echo $lang_name | grep -q ^en
+    then
+	echo "%%_qt5_translationdir/qtwebengine_locales/$lang_file" >>translations_list.lang
+    else
+	echo "%%lang($lang_name) %%_qt5_translationdir/qtwebengine_locales/$lang_file" >>translations_list.lang
+    fi
+done
+
+
+%files common -f translations_list.lang
+%dir %_qt5_translationdir/qtwebengine_locales/
 %dir %_qt5_datadir/resources/
 %_qt5_datadir/resources/qtwebengine*.pak
 
@@ -189,5 +209,9 @@ popd
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Apr 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt2
+- fix find flash plugin
+- properly package translations
+
 * Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - initial build
