@@ -1,7 +1,7 @@
 Summary: ALURE is a utility library to help manage common tasks with OpenAL applications
 Name: alure
 Version: 1.2
-Release: alt2
+Release: alt2.qa1
 Source0: %name-%version.tar
 License: MIT
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -89,6 +89,9 @@ The %name-examples package contains example program for %name
 %_bindir/*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.2-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Nov 12 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2-alt2
 - Fix build
 
