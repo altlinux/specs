@@ -1,7 +1,7 @@
 
 Name:		packageinstall
 Version:	1.1.1
-Release:	alt1
+Release:	alt1.qa1
 Summary:	GUI frontend for install packages using apt-get
 
 License:	GPL
@@ -45,6 +45,9 @@ install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%n
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.1.1-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Aug 11 2011 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - Reset show details on show information
 
