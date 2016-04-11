@@ -1,7 +1,7 @@
 Name: yate
 Summary: Yet Another Telephony Engine
 Version: 3.3.2
-Release: alt4
+Release: alt5
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers doxygen gcc-c++ kdoc libalsa-devel libcoredumper-devel libgsm-devel liblksctp-devel libmysqlclient-devel libopenh323_1.19-devel libpw1.11-devel libqt4-network libspandsp6-devel libspeex-devel postgresql-devel libqt4-devel
@@ -210,6 +210,8 @@ for small to large scale projects.
 
 %build
 %configure --enable-sctp --enable-tdmcard --enable-dahdi
+# It fails during parallel builds randomly (sometimes); therefore:
+NPROCS=1
 %make_build
 
 %install
@@ -431,6 +433,9 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %config(noreplace) %_sysconfdir/yate/zlibcompress.conf
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.3.2-alt5
+- It fails during parallel builds randomly (sometimes); therefore: NPROCS=1
+
 * Fri Feb 01 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.2-alt4
 - repocop fix for arch-dep-package-consists-of-usr-share
 
