@@ -2,7 +2,7 @@
 
 Name: dosbox
 Version: 0.74
-Release: alt4
+Release: alt4.qa1
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -204,6 +204,9 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 %_desktopdir/*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.74-alt4.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Oct 09 2014 Mikhail Kolchin <mvk@altlinux.org> 0.74-alt4
 - fix %install section
 
