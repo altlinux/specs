@@ -2,14 +2,14 @@
 %define api_ver 3.0
 %define _libexecdir %_prefix/libexec
 
-# freerdp >= 1.1 required
-%def_disable rdp
+# freerdp >= 2.0.0-alt0.git20160331 required
+%def_enable rdp
 %def_enable spice
 %def_enable telepathy
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: VNC client for the GNOME Desktop
@@ -20,7 +20,7 @@ URL: http://www.gnome.org/projects/vinagre
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: dconf gnome-icon-theme-symbolic
-%{?_enable_rdp:Requires: freerdp}
+%{?_enable_rdp:Requires: freerdp >= 2.0.0-alt0.git20160331}
 
 BuildPreReq: rpm-build-gnome gnome-common desktop-file-utils
 BuildPreReq: libappstream-glib-devel
@@ -76,6 +76,10 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+- enabled RDP support, required freerdp >= 2.0.0-alt0.git20160331
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 - disabled RDP support, our freerdp is too old again
