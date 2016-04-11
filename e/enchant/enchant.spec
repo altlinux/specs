@@ -1,6 +1,6 @@
 Name: enchant
 Version: 1.6.0
-Release: alt3
+Release: alt3.qa1
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
 License: LGPL
@@ -80,6 +80,9 @@ EOF
 %_pkgconfigdir/*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.6.0-alt3.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Mar 11 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.6.0-alt3
 - rebuild for debuginfo
 
