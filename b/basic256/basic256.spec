@@ -1,6 +1,6 @@
 Name: basic256
 Version: 0.9.6
-Release: alt6.1
+Release: alt6.1.qa1
 URL: http://kidbasic.sourceforge.net
 Source: http://ovh.dl.sourceforge.net/sourceforge/kidbasic/%name-%version.tar.gz
 Source1: basic256.desktop
@@ -56,6 +56,9 @@ cp -r ./../doc/ru/ %buildroot%_datadir/%name/help/
 %_niconsdir/%name.png
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.9.6-alt6.1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6-alt6.1
 - Fixed build with glibc 2.16
 
