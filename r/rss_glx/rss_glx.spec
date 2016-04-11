@@ -4,7 +4,7 @@
 
 Name: rss_glx
 Version: 0.9.1
-Release: alt4
+Release: alt4.qa1
 
 Summary: Really Slick Screensavers
 License: GNU GPL
@@ -105,6 +105,9 @@ install -pm644 %name.xss %buildroot%xss_ad_dir/%name.xss
 %_Kapplnk/System/ScreenSavers/*.desktop
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.9.1-alt4.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.9.1-alt4
 - Rebuild with new libImageMagick
 
