@@ -1,6 +1,6 @@
 Name: bozohttpd
 Version: 20150320
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: Tiny http 1.1 server
 License: BSD
@@ -71,13 +71,9 @@ sed -i 's/-lssl /-lssl -lc /' libbozohttpd/Makefile
 sed 's@#include "netbsd_queue.h"@#include <bozohttpd/netbsd_queue.h>@' < bozohttpd.h > libbozohttpd/bozohttpd.h
 
 %build
-%bmake COPTS+="-D_GNU_SOURCE"
-%bmake COPTS+="-D_GNU_SOURCE -DNO_LUA_SUPPORT" -C libbozohttpd
-%bmake COPTS+="-D_GNU_SOURCE" -C small
-# XXX syntax errors in upstream in lua/glue.c
-#ln -s libluabozohttpd.so.0.0 lua/libluabozohttpd.so
-#ln -s ../libbozohttpd/libbozohttpd.so.0.0 lua/libbozohttpd.so
-#bmake COPTS+="-D_GNU_SOURCE -I.." LDADD="-L. -lbozohttpd" -C lua
+%bmake COPTS+="-D_GNU_SOURCE -Wno-error=unused-result"
+%bmake COPTS+="-D_GNU_SOURCE -Wno-error=unused-result -DNO_LUA_SUPPORT" -C libbozohttpd
+%bmake COPTS+="-D_GNU_SOURCE -Wno-error=unused-result" -C small
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_libdir \
@@ -113,6 +109,9 @@ cd testsuite
 %_libdir/*.a
 
 %changelog
+* Mon Apr 11 2016 Fr. Br. George <george@altlinux.ru> 20150320-alt2
+- Fix build
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 20150320-alt1
 - Autobuild version bump to 20150320
 
