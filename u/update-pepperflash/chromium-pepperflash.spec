@@ -1,6 +1,6 @@
 Name: 	  update-pepperflash
 Version:  1.5.4
-Release:  alt1
+Release:  alt2
 
 Summary:  Pepper Flash Player downloader
 License:  GPLv3+
@@ -46,7 +46,7 @@ Summary:  Pepper Flash Player - browser plugin for Pale Moon
 Group: Networking/WWW
 BuildArch: noarch
 Requires: %name = %version
-Requires: /usr/bin/palemoon
+Requires: palemoon
 Requires: freshplayerplugin
 
 %description -n palemoon-pepperflash
@@ -79,6 +79,9 @@ exit 0
 %files -n palemoon-pepperflash
 
 %changelog
+* Mon Apr 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.5.4-alt2
+- Fixed the  Requires to the  palemoon
+
 * Fri Dec 04 2015 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
 - Replace strings  call by sed regexp (do not require binutils)
 
