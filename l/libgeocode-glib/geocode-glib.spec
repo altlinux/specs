@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%{_name}
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Convenience library for the Yahoo! Place Finder APIs
@@ -103,6 +103,9 @@ GObject introspection devel data for the %_name library
 %endif
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
