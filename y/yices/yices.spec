@@ -10,7 +10,7 @@
 
 Name: yices
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: The Yices SMT Solver
 License: Noncommercial use only
 Group: Sciences/Mathematics
@@ -95,6 +95,8 @@ This package contains development files of %name.
 sed -i 's|^STRIP=.*|STRIP=echo|' %make_include
 sed -i 's|^YACC=.*|YACC=yacc|' %make_include
 sed -i 's|^LEX=.*|LEX=flex|' %make_include
+# It fails during parallel builds randomly (sometimes); therefore:
+NPROCS=1
 %make_build YICES_MAKE_INCLUDE=%make_include ARCH=%target lib bin
 
 %install
@@ -121,6 +123,9 @@ sed -i 's|%prefix|%buildroot%prefix|' %make_include
 %_libdir/*.so
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.0-alt2
+- It fails during parallel builds randomly (sometimes); therefore: NPROCS=1
+
 * Mon Mar 16 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus
 
