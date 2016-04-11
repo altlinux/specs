@@ -1,6 +1,6 @@
 Name: python3-module-enchant
 Version: 1.6.5
-Release: alt4.1
+Release: alt5
 # XXX this is ugly, need to change when python3 macros set developes
 %ifdef setup_python3_module
 %setup_python3_module enchant
@@ -53,6 +53,10 @@ sed -i '/use_setuptools/d' setup.py
 %endif
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.5-alt5
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.5-alt4.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
