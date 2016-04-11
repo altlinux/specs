@@ -1,7 +1,7 @@
 %define dist HTML-Tree
 Name: perl-%dist
 Version: 5.03
-Release: alt1
+Release: alt2
 
 Summary: Perl modules for HTML syntax tree processing
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-HTML-Format perl-Module-Build perl-Test-Fatal perl-libwww
+BuildRequires: perl-Module-Build perl-Test-Fatal perl-libwww
 
 %description
 This package contains a suite of modules for representing, creating,
@@ -39,6 +39,9 @@ and extracting information from HTML syntax trees
 %doc	%perl_vendor_privlib/HTML/Tree/*.pod
 
 %changelog
+* Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 5.03-alt2
+- build w/o HTML-Format
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 5.03-alt1
 - 4.2 -> 5.03
 - requires LWP::UserAgent
