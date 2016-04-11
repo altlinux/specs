@@ -1,5 +1,5 @@
 Name: pkgsrc-mk-files
-Version: 20100117
+Version: 20131230
 Release: alt1
 
 Summary: PKGSRC mk-files for bmake, the NetBSD make(1) tool
@@ -10,7 +10,9 @@ Url: http://mova.org/~cheusov/pub/netbsd-tools/pkgsrc-mk-files/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://mova.org/~cheusov/pub/netbsd-tools/pkgsrc-mk-files/netbsd-%name-%version.tar
+Source: netbsd-%name-%version.tar.bz2
+
+BuildRequires: groff-base
 
 BuildArch: noarch
 
@@ -25,6 +27,7 @@ This package provides PKGSRC (http://pkgsrc.org) variants of mk-files.
 
 %prep
 %setup -n netbsd-%name-%version
+sed -i "s/1.18.1.1/`rpmquery --queryformat '%%{version}' groff-base`/" mods/Linux.bsd.man.mk
 
 %install
 CP=/bin/cp
@@ -42,6 +45,10 @@ sh bootstrap.sh
 %_datadir/mk/
 
 %changelog
+* Mon Apr 11 2016 Fr. Br. George <george@altlinux.ru> 20131230-alt1
+- autobuild version bump to 20131230
+- hack in groff/tmac path freshener
+
 * Sun Jun 27 2010 Vitaly Lipatov <lav@altlinux.ru> 20100117-alt1
 - new version (20100117) import in git
 - remove bmake requires (hold /usr/share/mk here)
