@@ -1,6 +1,6 @@
 Name: libfreehand
 Version: 0.1.0
-Release: alt1
+Release: alt1.qa1
 Summary: A library for import of Macromedia/Adobe FreeHand documents
 
 Group: System/Libraries
@@ -77,6 +77,9 @@ rm -rf %buildroot/%_docdir/%name
 %_bindir/*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.1.0-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.1.0-alt1
 - 0.1.0
 
