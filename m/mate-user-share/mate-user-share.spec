@@ -3,22 +3,11 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define fedora 21
-# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name mate-user-share
-%define version 1.10.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.10
-
-# Settings used for build from snapshots.
-%{!?rel_build:%global commit c0f0c63c670d799dee4fa7577083d0cbace56db4}
-%{!?rel_build:%global commit_date 20140210}
-%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
-%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
-%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
-%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+%global branch 1.12
 
 Summary:         Mate user file sharing
 Name:            mate-user-share
@@ -27,6 +16,14 @@ Release:         alt1_0
 License:         GPLv2+
 Group:           System/Libraries
 URL:             http://mate-desktop.org
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit c0f0c63c670d799dee4fa7577083d0cbace56db4}
+%{!?rel_build:%global commit_date 20140210}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 # for downloading the tarball use 'spectool -g -R mate-user-share.spec'
 # Source for release-builds.
@@ -140,6 +137,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 
 
 %changelog
+* Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_0
+- new version
+
 * Thu Oct 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_0
 - new version
 
