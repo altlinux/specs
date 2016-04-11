@@ -1,6 +1,6 @@
 Name: v4l-utils
 Version: 1.6.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -117,6 +117,9 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %_man1dir/qv4l2.1*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.6.0-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sun Feb 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.0-alt1
 - 1.6.0 released
 
