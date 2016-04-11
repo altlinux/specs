@@ -1,6 +1,6 @@
 Name: lam
 Version: 7.1.4
-Release: alt4.qa1
+Release: alt4.qa2
 
 %define mpi_prefix %_libexecdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -184,6 +184,9 @@ EOF
 %mpi_prefix/man/man3
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 7.1.4-alt4.qa2
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 7.1.4-alt4.qa1
 - NMU: rebuilt for debuginfo.
 
