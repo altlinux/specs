@@ -1,6 +1,6 @@
 Name: medit
 Version: 1.1.0
-Release: alt1.2
+Release: alt1.2.qa1
 
 Summary: Multiplatform GTK+2 text editor
 License: GPLv2+
@@ -59,6 +59,9 @@ rm -f %buildroot%_iconsdir/hicolor/icon-theme.cache
 %_man1dir/%name.*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.1.0-alt1.2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon May 27 2013 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.2
 - Update Russian translation (by azol@).
 
