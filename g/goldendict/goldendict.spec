@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-Release: alt7.git
+Release: alt7.git.qa1
 Version: 1.0.1
 
 Name: goldendict
@@ -85,6 +85,9 @@ rm -rf %buildroot%_datadir/app-install
 %dir %_datadir/%name/locale
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0.1-alt7.git.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Sun Apr 15 2012 Alexey Morozov <morozov@altlinux.org> 1.0.1-alt7.git
 - post-1.0.1 git snapshot 296d6d5203d5dab9915ac52e6fcb8271c2ef739d
 - rebuilt against newer kde4libs
