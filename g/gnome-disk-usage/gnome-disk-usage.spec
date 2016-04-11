@@ -6,7 +6,7 @@
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME disk usage analyser.
@@ -18,7 +18,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 Provides: baobab = %version-%release
 
-%define gtk_ver 3.19.10
+%define gtk_ver 3.20.0
 %define vala_ver 0.23.3
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildRequires: rpm-build-gnome intltool yelp-tools itstool xmllint
@@ -57,6 +57,9 @@ popd
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
