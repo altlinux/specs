@@ -1,6 +1,6 @@
 Name: iptstate
 Version: 2.2.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Display iptables state table information in a "top"-like interface
 License: zlib/libpng license
@@ -32,6 +32,9 @@ make PREFIX="%buildroot/usr" install
 %_man8dir/*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.2.3-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Apr 04 2011 Victor Forsiuk <force@altlinux.org> 2.2.3-alt1
 - 2.2.3
 
