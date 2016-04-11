@@ -11,7 +11,7 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.12.2
+Version:        1.14.0
 Release:        alt1
 Summary:        Document viewer
 
@@ -195,7 +195,6 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %{_datadir}/dbus-1/services/org.mate.atril.Daemon.service
 %endif
 %{_datadir}/glib-2.0/schemas/org.mate.Atril.gschema.xml
-%{_datadir}/MateConf/gsettings/atril.convert
 %{_datadir}/thumbnailers/atril.thumbnailer
 %{_datadir}/help/*/*
 
@@ -267,6 +266,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Mon Apr 11 2016 Mikhail Efremov <sem@altlinux.org> 1.14.0-alt1
+- Updated to 1.14.0.
+
 * Fri Dec 18 2015 Mikhail Efremov <sem@altlinux.org> 1.12.2-alt1
 - Updated to 1.12.2.
 
