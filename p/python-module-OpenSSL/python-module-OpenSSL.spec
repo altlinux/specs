@@ -13,7 +13,7 @@ Summary: Python wrapper module around the OpenSSL library
 Summary(ru_RU.UTF-8): Модуль-обвязка библиотеки OpenSSL для python
 Name: %packagename
 Version: %version
-Release: %release
+Release: alt1.1
 Source: %source_name-%source_version.tar.bz2
 License: LGPL
 Group: Development/Python
@@ -141,6 +141,10 @@ popd
 %endif
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 16.0.0-alt1.1
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Mon Mar 21 2016 Vladimir Didenko <cow@altlinux.org> 16.0.0-alt1
 - Version 16.0.0
 
