@@ -1,5 +1,5 @@
 Version: 0.25
-Release: alt1.1
+Release: alt1.1.1
 %setup_python_module pyxdg
 Name: %packagename
 
@@ -56,6 +56,10 @@ pushd py3build
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.25-alt1.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.25-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

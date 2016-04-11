@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.29
-Release: alt1.git20140726.1
+Release: alt1.git20140726.1.1
 Summary: Scour SVG Optimizer
 License: ASLv2.0
 Group: Development/Python
@@ -92,6 +92,10 @@ popd
 %endif
 
 %changelog
+* Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.29-alt1.git20140726.1.1
+- (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
+  and with python3-3.5 (for byte-compilation).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.29-alt1.git20140726.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
