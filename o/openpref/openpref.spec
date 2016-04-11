@@ -1,6 +1,6 @@
 Name: openpref
 Version: 0.1.3
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: OpenPref - Preference game for linux
 Summary(ru_RU.UTF-8): OpenPref - преферанс для Linux
@@ -50,6 +50,9 @@ install -m644 -p openpref_ru.qm %buildroot%_datadir/openpref/
 %_datadir/openpref/openpref_ru.qm
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.1.3-alt2.qa2
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.3-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
