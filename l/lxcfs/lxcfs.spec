@@ -1,6 +1,6 @@
 Name:		lxcfs
 Version:	2.0.0
-Release:	alt2.rc2
+Release:	alt3
 Summary:	FUSE filesystem for LXC
 
 Group:		Development/Other
@@ -30,7 +30,7 @@ FUSE filesystem for LXC, offering the following features:
 
 %package -n %pam_name
 Summary: %summary
-Group: Development/Other
+Group: System/Base
 
 %description -n %pam_name
 %summary
@@ -74,6 +74,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_pam_modules_dir/*
 
 %changelog
+* Mon Apr 11 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt3
+- Release 2.0
+
 * Thu Mar 03 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt2.rc2
 - Added service restart
 
