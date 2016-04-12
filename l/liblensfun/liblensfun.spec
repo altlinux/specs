@@ -1,6 +1,6 @@
 Name: liblensfun
 Version: 0.3.2
-Release: alt1.1.1
+Release: alt2
 
 Summary: A library to rectifying the defects introduced by your photographic equipment
 Group: System/Libraries
@@ -42,6 +42,10 @@ subst 's/\t/      /' apps/lensfun-add-adapter
 %build
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
+%ifnarch %ix86 x86_64
+	-DBUILD_FOR_SSE:BOOL=OFF \
+	-DBUILD_FOR_SSE2:BOOL=OFF \
+%endif
 	-DBUILD_TESTS:BOOL=OFF \
 	-DBUILD_DOC:BOOL=ON
 
@@ -74,6 +78,9 @@ popd
 
 
 %changelog
+* Tue Apr 12 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.2-alt2
+- fix build on non-x86 arches
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.2-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
