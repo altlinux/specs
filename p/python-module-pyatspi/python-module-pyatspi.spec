@@ -2,8 +2,8 @@
 %define ver_major 2.20
 
 Name: python-module-%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Python bindings for at-spi library
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Apr 12 2016 Yuri N. Sedunov <aris@altlinux.org> 2.20.1-alt1
+- 2.20.1
+
 * Thu Mar 31 2016 Denis Medvedev <nbr@altlinux.org> 2.20.0-alt2
 - NMU removed incorrect LD_PRELOADS from noarch package
 
