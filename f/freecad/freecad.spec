@@ -2,7 +2,7 @@
 %define ldir %_libdir/%oname
 
 Name:    freecad
-Version: 0.15
+Version: 0.16
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -15,6 +15,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 
 Patch1: %name-fix-circular-cmake-call.patch
+Patch2: %name-fix-ImageConv-build.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -31,8 +32,10 @@ BuildPreReq: libode-devel phonon-devel libann-devel qt4-assistant
 BuildPreReq: doxygen graphviz libqt4-help eigen3
 BuildPreReq: python-module-pivy libnumpy-devel libqt4-assistant-devel
 BuildPreReq: boost-interprocess-devel libshiboken-devel shiboken
-BuildPreReq: libpyside-qt4-devel
+BuildPreReq: libpyside-qt4-devel boost-python-devel
+BuildRequires: gdb
 #BuildRequires: texlive-extra-utils
+
 %py_requires pivy PySide
 %py_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
 %py_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
@@ -151,6 +154,7 @@ This package contains development files of FreeCAD.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 sed -i 's|@LIBDIR@|%_libdir|g' CMakeLists.txt \
 	src/3rdParty/salomesmesh/CMakeLists.txt
 ln -s FindOpenCasCade.cmake cMake/FindOCE.cmake
@@ -257,6 +261,7 @@ fi
 %dir %ldir
 %_bindir/*
 %ldir/bin
+%ldir/Gui
 %ldir/Mod
 %ldir/examples
 %ldir/*.png
@@ -290,6 +295,10 @@ fi
 %_qt4dir/plugins/designer/*.so
 
 %changelog
+* Mon Apr 11 2016 Andrey Cherepanov <cas@altlinux.org> 1:0.16-alt1
+- New version
+- Add boost-python-devel to build requirements
+
 * Thu Dec 10 2015 Andrey Cherepanov <cas@altlinux.org> 1:0.15-alt1
 - New version (ALT #31511)
 - Rename free-cad to freecad
