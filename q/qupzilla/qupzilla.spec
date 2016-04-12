@@ -7,22 +7,28 @@
 # upon. The license for this file, and modifications and additions to the
 # file, is the same license as for the pristine package itself.
 
+%define sover 2
+%define libqupzilla libqupzilla%sover
+
 Name: qupzilla
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
 Group: Networking/WWW
-
 Url: http://qupzilla.com
-# https://github.com/QupZilla/qupzilla
-Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
+PreReq(post,preun): alternatives >= 0.2
+Provides: webclient
+
+# https://github.com/QupZilla/qupzilla
+Source: %name-%version.tar
 # Automatically added by buildreq on Thu Apr 07 2016
 # optimized out: fontconfig gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
 BuildRequires: libssl-devel libxcbutil-devel qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel
+BuildRequires: rpm-build-kf5 kf5-kwallet-devel libgnome-keyring-devel
 
 %description
 QupZilla is a new and very fast World Wide Web Browser
@@ -31,41 +37,94 @@ It is a lightweight browser with some advanced functions
 like integrated AdBlock, Search Engines Manager, Theming
 support, Speed Dial and SSL Certificate manager.
 
+%package kde5
+Group: Graphical desktop/KDE
+Summary: QupZilla KDE integration
+Requires: %name
+%description kde5
+QupZilla KDE integration.
+
+%package gnome3
+Group: Graphical desktop/GNOME
+Summary: QupZilla GNOME integration
+Requires: %name
+%description gnome3
+QupZilla GNOME integration.
+
+%package -n %libqupzilla
+Group: System/Libraries
+Summary: %name library
+#Requires: %name-common = %EVR
+Conflicts: qupzilla <= 2.0.0-alt2
+%description -n %libqupzilla
+%name library
+
 %prep
 %setup
 sed -i 's,бит/с,б/с,' translations/ru_RU.ts
 
 %build
-export USE_WEBGL="true"
+export DISABLE_UPDATES_CHECK="true"
 export NONBLOCK_JS_DIALOGS="true"
-export KDE="false"
+export KDE_INTEGRATION="true"
+export GNOME_INTEGRATION="true"
 export USE_LIBPATH="%_libdir"
-echo "CONFIG += debug" >> src/defines.pri
-qmake-qt5
+export SHARE_FOLDER="%_datadir"
+%qmake_qt5 "QMAKE_LFLAGS += -L%_K5link"
 %make_build
 
 %install
 make INSTALL_ROOT=%buildroot install
 
-%files
+# install alternatives
+install -d %buildroot/%_sysconfdir/alternatives/packages.d
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_bindir/xbrowser       %_K5bin/qupzilla      30
+%_bindir/x-www-browser       %_K5bin/qupzilla      30
+__EOF__
+
+%find_lang --all-name --with-qt %name
+
+%files -f %name.lang
+%lang(uz) %_datadir/%name/locale/uz@Latn.qm
+%config /%_sysconfdir/alternatives/packages.d/%name
 %doc AUTHORS FAQ
 %_bindir/%name
-%_libdir/%name
-%_libdir/*.so.*
+%_libdir/%name/libAutoScroll.so
+%_libdir/%name/libFlashCookieManager.so
+%_libdir/%name/libGreaseMonkey.so
+%_libdir/%name/libImageFinder.so
+%_libdir/%name/libMouseGestures.so
+%_libdir/%name/libPIM.so
+%_libdir/%name/libStatusBarIcons.so
+%_libdir/%name/libTabManager.so
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*/*/*.png
 %dir %_datadir/%name
-%_datadir/%name/locale
-%exclude %_datadir/%name/locale/uz@Latn.qm
+%dir %_datadir/%name/locale
 %_datadir/%name/themes
 %_datadir/bash-completion/completions/qupzilla
 %_datadir/appdata/*
 
-# TODO:
-# - move shared libraries to a subpackage?
+%files kde5
+%_libdir/%name/libKWalletPasswords.so
+
+%files gnome3
+%_libdir/%name/libGnomeKeyringPasswords.so
+
+%files -n %libqupzilla
+%_libdir/libQupZilla.so.%sover
+%_libdir/libQupZilla.so.%sover.*
 
 %changelog
+* Tue Apr 12 2016 Sergey V Turchin <zerg at altlinux dot org> 2.0.0-alt3
+- build KDE and GNOME integration plugins (closes: #31959)
+- package library separately
+- provide webclient
+- properly package translations
+- fix build options
+
 * Thu Apr 07 2016 Michael Shigorin <mike@altlinux.org> 2.0.0-alt2
 - buildreq
 
