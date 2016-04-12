@@ -6,7 +6,7 @@
 %def_disable xevie
 
 Name: at-spi2-core
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -129,6 +129,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Tue Apr 12 2016 Yuri N. Sedunov <aris@altlinux.org> 2.20.1-alt1
+- 2.20.1
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.20.0-alt1
 - 2.20.0
 
