@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.25
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -227,19 +227,21 @@ rm -f %buildroot%_libdir/%name/*.a
 %exclude %_sysconfdir/sane.d/saned.conf
 %dir %_libdir/%name/
 %_libdir/%name/*.so.*
+%_libdir/%name/*.so
 %exclude %_libdir/sane/*gphoto2.so.*
+%exclude %_libdir/sane/*gphoto2.so
 # used in sane-frontends, xsane
 %dir %_datadir/%name/
 %attr(0775,root,scanner) %dir %_lockdir/%name/
 
 %files -n lib%name-gphoto2
 %_libdir/sane/*gphoto2.so.*
+%_libdir/sane/*gphoto2.so
 
 %files -n lib%name-devel
 %_bindir/sane-config
 %_man1dir/sane-config*
 %_libdir/*.so
-%_libdir/%name/*.so
 %_includedir/sane/
 %_pkgconfigdir/%oname.pc
 
@@ -250,6 +252,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Tue Apr 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.25-alt2
+- move .so plugins from -devel (ALT bug #31920)
+
 * Sat Dec 12 2015 Vitaly Lipatov <lav@altlinux.ru> 1.0.25-alt1
 - new version 1.0.25 (with rpmrb script) (ALT bug #31327)
 - add libnet-snmp-devel build requires
