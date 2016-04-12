@@ -169,7 +169,7 @@
 
 Name: qemu
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -198,6 +198,7 @@ BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.4.0
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: iasl
+BuildRequires: libpcre-devel-static
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
 %{?_enable_sdl2:BuildRequires: libSDL2-devel}
 %{?_enable_curses:BuildRequires: libncurses-devel}
@@ -674,6 +675,9 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Tue Apr 12 2016 Denis Medvedev <nbr@altlinux.org> 2.5.0-alt2
+- Fixed linking.
+
 * Fri Dec 18 2015 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 - add tilegx arch
