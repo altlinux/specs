@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.3.4
-Release: alt6
+Release: alt6.qa1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPLv3
@@ -98,6 +98,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3.4-alt6.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Jul 29 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt6
 - 0.3.4 release
 
