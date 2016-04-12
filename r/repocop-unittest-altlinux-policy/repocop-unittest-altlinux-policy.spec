@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.31
+Version: 0.32
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Tue Apr 12 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
+- skip *.env in macros.d
+
 * Thu Sep 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - added dbus-xml-not-in-devel
 
