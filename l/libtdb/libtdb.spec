@@ -2,7 +2,7 @@
 %def_without python3
 
 Name: libtdb
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 
 Summary: A trivial database system
@@ -10,7 +10,7 @@ License: GPL
 Group: System/Libraries
 Url: http://tdb.samba.org/
 
-Source: tdb-%version.tar
+Source: http://samba.org/ftp/tdb/tdb-%{version}.tar.gz
 
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc
 BuildRequires: rpm-build-python python-devel 
@@ -135,6 +135,12 @@ make test
 %endif
 
 %changelog
+* Tue Apr 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
+- 1.3.9
+
+* Sun Mar 13 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.8-alt2
+- Rebuild with new libtalloc
+
 * Fri Nov 13 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.8-alt1
 - 1.3.8
 - Enable tests

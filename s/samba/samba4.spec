@@ -34,7 +34,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.4.0
+Version: 4.4.2
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1318,6 +1318,18 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue Apr 12 2016 Andrey Cherepanov <cas@altlinux.org> 4.4.2-alt1
+- New version
+- Security fixes:
+  - CVE-2015-5370 (Multiple errors in DCE-RPC code)
+  - CVE-2016-2110 (Man in the middle attacks possible with NTLMSSP)
+  - CVE-2016-2111 (NETLOGON Spoofing Vulnerability)
+  - CVE-2016-2112 (LDAP client and server don't enforce integrity)
+  - CVE-2016-2113 (Missing TLS certificate validation)
+  - CVE-2016-2114 ("server signing = mandatory" not enforced)
+  - CVE-2016-2115 (SMB IPC traffic is not integrity protected)
+  - CVE-2016-2118 (SAMR and LSA man in the middle attacks possible)
+
 * Tue Mar 22 2016 Andrey Cherepanov <cas@altlinux.org> 4.4.0-alt1
 - New version (https://www.samba.org/samba/history/samba-4.4.0.html)
 
