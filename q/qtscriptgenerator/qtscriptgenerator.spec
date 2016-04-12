@@ -2,7 +2,7 @@
 
 Name: qtscriptgenerator
 Version: 0.2.0
-Release: alt3
+Release: alt3.qa1
 
 Group: Development/KDE and QT
 Summary: Qt bindings for Qt Script
@@ -99,6 +99,9 @@ cp -a tools/qsexec/README.TXT README.qsexec
 %_qt4dir/plugins/script/libqtscript*
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.2.0-alt3.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Oct 07 2014 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt3
 - apply patch for arm only for arm
 - cleanup specfile
