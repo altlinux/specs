@@ -1,6 +1,6 @@
 Name: octave
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -105,6 +105,18 @@ gzip -c ChangeLog >ChangeLog.gz
 # Install the filetrigger for packages:
 install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 
+# required to suppress verify-elf warnings
+mkdir -p %buildroot%_rpmmacrosdir
+_octave_libs=
+for lib in `ls %buildroot%_libdir/%name/%version/lib*.so.?`; do
+    lib=${lib##%buildroot}
+    _octave_libs="$_octave_libs $lib"
+done
+cat > %buildroot%_rpmmacrosdir/%{name}.env <<EOF
+export RPM_LD_PRELOAD_octave='$_octave_libs'
+export RPM_FILES_TO_LD_PRELOAD_octave='%_libdir/%name/packages/*'
+EOF
+
 #check
 #make check
 
@@ -140,11 +152,15 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %_includedir/%name-%version
 %_bindir/mkoctfile
 %_bindir/mkoctfile-%version
+%_rpmmacrosdir/%{name}.env
 
 %files doc
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Tue Apr 12 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt2
+- added octave.env for proper verfy-elf
+
 * Sun Mar 27 2016 Anton Midyukov <antohami@altlinux.org> 4.0.1-alt1
 - New version
 - Added missing buildrequires.
