@@ -1,6 +1,6 @@
 Name: xprobe2
 Version: 0.3
-Release: alt2
+Release: alt2.qa1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -47,6 +47,9 @@ signature database.
 %_man1dir/*
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.3-alt2.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Oct 27 2008 Victor Forsyuk <force@altlinux.org> 0.3-alt2
 - Fix FTBFS with gcc4.3.
 
