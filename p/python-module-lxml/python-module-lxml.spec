@@ -1,11 +1,11 @@
 %define modulename lxml
 
 %def_with python3
-%def_without docs
+%def_with docs
 
 Name: python-module-lxml
 Version: 3.5.0
-Release: alt1.beta1.git20150727.2
+Release: alt1.beta1.git20150727.3
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -157,6 +157,9 @@ popd
 %endif
 
 %changelog
+* Tue Apr 12 2016 Denis Medvedev <nbr@altlinux.org> 3.5.0-alt1.beta1.git20150727.3
+- NMU: added documentation back.
+
 * Wed Mar 23 2016 Denis Medvedev <nbr@altlinux.org> 3.5.0-alt1.beta1.git20150727.2
 - NMU: temporarily removed documentation for python3.5 cycle removal.
 
