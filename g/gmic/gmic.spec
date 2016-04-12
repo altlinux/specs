@@ -3,7 +3,7 @@
 
 Name: gmic
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: GREYC's Magic Image Converter
 License: CeCILL v.2.0
@@ -75,6 +75,9 @@ multi-spectral image datasets.
 %setup -n gmic-%version
 dos2unix src/Makefile
 subst 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
+%ifnarch %ix86 x86_64
+subst 's|-mtune=generic||' src/Makefile
+%endif
 
 %build
 %if_enabled zart
@@ -123,6 +126,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Tue Apr 12 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.0-alt2
+- fix build for non-x86 arches
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
