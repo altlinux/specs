@@ -30,15 +30,16 @@
 %def_enable python
 %def_disable coherence_upnp
 %def_disable jamendo
+%def_disable gromit
 
 Name: totem
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME 3
 Group: Video
 License: GPLv2/LGPL
-URL: http://www.gnome.org/projects/totem
+Url: https://wiki.gnome.org/Apps/Videos
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -152,7 +153,6 @@ Requires: %name = %version-%release
 
 %description plugins
 A default plugins for Totem:
-	gromit
 	ontop
 	screensaver
 	skipto
@@ -218,10 +218,9 @@ This package contains a DLNA/UPnP client for Totem powered by Coherence
 Summary: Gromit Annotations plugin for totem
 Group: Video
 Requires: %name = %version-%release
-Requires: gromit
 
 %description plugins-gromit
-This package contains presentation helper to make annotations on screen via Gromit
+This package contains presentation helper to make annotations on screen
 
 %package plugins-brasero
 Summary: Video disc recorder plugin for Totem
@@ -382,8 +381,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/GConf/gsettings/jamendo.convert
 %endif
 
+%if_enabled gromit
 %files plugins-gromit
 %_libdir/%name/plugins/gromit/
+%endif
 
 %files nautilus
 %nautilus_extdir/*
@@ -405,6 +406,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
+- disabled gromit plugin
+- fixed url
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
