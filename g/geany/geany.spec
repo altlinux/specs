@@ -3,7 +3,7 @@
 
 Name: geany
 Version: 1.24.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: A fast and lightweight IDE using GTK2
 License: GPLv2
@@ -111,6 +111,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.24.1-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 1.24.1-alt1
 - Autobuild version bump to 1.24.1
 
