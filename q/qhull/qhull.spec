@@ -3,7 +3,7 @@
 
 Name: qhull
 Version: 2012.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: General dimension convex hull programs
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -144,6 +144,9 @@ rm -fR %_includedir/%name
 %doc %_docdir/%name
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2012.1-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Mar 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.1-alt1
 - Version 2012.1
 
