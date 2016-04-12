@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.12.1
-Release: alt1
+Release: alt2
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -121,6 +121,11 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/polkit-gnome-authe
 %_libdir/xfce4/session/balou*
 
 %changelog
+* Tue Apr 12 2016 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt2
+- xflock4: Add light-locker support.
+- Use TryExec to start gnome authentication agent.
+- Improve "Fix shutdown action in the fallback mode" patch.
+
 * Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
 - Updated to 4.12.1.
 
