@@ -1,9 +1,10 @@
 %def_without ffmpeg
 %def_without x264
+%def_without directfb
 
 Name: freerdp
 Version: 2.0.0
-Release: alt0.git20160331
+Release: alt0.git20160411
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -13,7 +14,8 @@ Packager: Mikhail Kolchin <mvk@altlinux.org>
 
 Source: %name-%version.tar
 
-Requires: xfreerdp = %EVR 
+Requires: xfreerdp = %EVR
+Requires: wlfreerdp = %EVR
 Requires: %name-plugins-standard = %EVR
 
 BuildRequires: cmake gcc-c++
@@ -38,6 +40,7 @@ BuildRequires: pkgconfig(xv)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(libpulse)
+%{?_with_directfb:BuildRequires: pkgconfig(directfb)}
 BuildRequires: libcups-devel libjpeg-devel zlib-devel
 %{?_with_ffmpeg:BuildRequires: libavcodec-devel libavutil-devel}
 %{?_with_x264:BuildRequires: libx264-devel}
@@ -60,6 +63,18 @@ xfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
 Microsoft products.
 
 This package contains X11 UI.
+
+%package -n dfreerdp
+Summary: Remote Desktop Protocol client
+Group: Networking/Remote access
+Provides: dfbfreerdp
+Requires: lib%name = %EVR
+
+%description -n dfreerdp
+dfbfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
+Microsoft products.
+
+This package contains DirectFB UI.
 
 %package -n wlfreerdp
 Summary: Remote Desktop Protocol client
@@ -181,7 +196,7 @@ the RDP protocol.
     -DWITH_CUPS=ON \
     -DWITH_CHANNELS=ON -DSTATIC_CHANNELS=OFF \
     -DWITH_CLIENT=ON \
-    -DWITH_DIRECTFB=OFF \
+    %{?_without_directfb:-DWITH_DIRECTFB=OFF} \
     %{?_without_ffmpeg:-DWITH_FFMPEG=OFF} \
     %{?_without_x264:-DWITH_X264=OFF} \
     -DWITH_GSM=OFF \
@@ -234,6 +249,11 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 
 %files -n wlfreerdp
 %_bindir/wlfreerdp
+
+%if_with directfb
+%files -n dfreerdp
+%_bindir/dfreerdp
+%endif
 
 %files server
 %_bindir/winpr-*
@@ -289,6 +309,9 @@ ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt0.git20160411
+- upstream git snapshot 11d113872fe254a2472e99a40f8be7237d5a82d3
+
 * Wed Apr 06 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt0.git20160331
 - upstream git snapshot a0d9969a3030a8056eacbe8b2e7362274d0a9c4b
 - drop directfb dfreerdp package
