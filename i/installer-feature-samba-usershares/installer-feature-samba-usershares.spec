@@ -1,5 +1,5 @@
 Name: installer-feature-samba-usershares
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Installer hooks for Samba usershares
@@ -34,6 +34,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Apr 12 2016 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
+- Don't do anything if samba is unavailable.
+
 * Mon Feb 13 2012 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
 - Rename hook: 75-* -> 85-* (closes: #26930).
 
