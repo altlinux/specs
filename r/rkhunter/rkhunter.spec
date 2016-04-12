@@ -1,6 +1,8 @@
+# This spec is backported to ALTLinux t7 automatically by rpmbph script. Do not edit it.
+#
 Name: rkhunter
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 License: GPLv2
@@ -13,8 +15,15 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source2: rkhunter.sysconfig
 Source3: printosnumber.sh
+Source4: ru.lng
+Source5: rkhunter.conf
 
-Patch: rkhunter-1.4.2-alt-conf.patch
+#
+# Fix issue with ipcs command and locales
+#
+Patch1: rkhunter-1.4.2-ipcs-locale.patch
+
+Patch2: fix-lang-update-grep.patch
 
 Requires: crontabs
 Requires: su, binutils, kmod, findutils, grep
@@ -76,8 +85,11 @@ and free for everyone to use.
 %setup -n %name
 cp %SOURCE3 files/development
 
-%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
+install %SOURCE4 files/i18n/ru
+install %SOURCE5 files/
 
 cat <<'EOF' >%name.logrotate
 %_localstatedir/log/%name/%name.log {
@@ -104,6 +116,7 @@ install -m750 -p files/development/{*.pl,*.sh} %buildroot%runonce_dir/
 install -m644 -p files/*.8                     %buildroot%_man8dir/
 install -m640 -p files/*.dat                   %buildroot%db_dir/
 install -m644 -p files/i18n/en                 %buildroot%db_dir/i18n/en
+install -m644 -p files/i18n/ru		       %buildroot%db_dir/i18n/ru
 install -m644 -p files/{CHANGELOG,README,FAQ,ACKNOWLEDGMENTS} %buildroot%doc_dir/
 install -D -m640 -p %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -D -m644 -p %name.logrotate         %buildroot%_sysconfdir/logrotate.d/%name
@@ -161,6 +174,7 @@ for f in %hash_list %hash_list.asc %hash_list.sig; do
     test -f "\$f" && mv -f "\$f" "\$f.saved.\$tstamp"
 done
 
+
 cd %runonce_dir
 ./rpmhashes.sh > %db_dir/%hash_list
 # ./createhashes.sh >> %db_dir/%hash_list
@@ -190,6 +204,8 @@ rm -f %db_dir/%hash_list.{asc,*saved.*}
 %attr(770,root,root) %tmp_dir
 %doc_dir
 %_man8dir/*
+#db_dir/i18n/en
+#db_dir/i18n/ru
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %config(noreplace) %verify(not mtime) %_sysconfdir/%name.conf
 %config(noreplace) %verify(not mtime) %_sysconfdir/sysconfig/%name
@@ -197,11 +213,12 @@ rm -f %db_dir/%hash_list.{asc,*saved.*}
 %config(noreplace) %verify(not mtime size md5) %db_dir/%hash_list
 %dir %_logdir/%name
 
-#%exclude %scripts_dir/check_update.sh
-#%exclude %db_dir/mirrors.dat
 
 
 %changelog
+* Tue Apr 12 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.2-alt2
+- Add russian translate
+
 * Thu Apr 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.2-alt1
 - Updated to 1.4.2
 
@@ -315,3 +332,4 @@ rm -f %db_dir/%hash_list.{asc,*saved.*}
 
 * Mon Mar 29 2004 Doncho N. Gunchev - 1.0.0-0
 - initial .spec file
+
