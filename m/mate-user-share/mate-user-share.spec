@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 Summary:         Mate user file sharing
 Name:            mate-user-share
 Version:         %{branch}.0
-Release:         alt1_0
+Release:         alt2_0
 License:         GPLv2+
 Group:           System/Libraries
 URL:             http://mate-desktop.org
@@ -87,6 +87,7 @@ The program also allows to share files using ObexFTP over Bluetooth.
 %build
 # disable bluetooth support for bluez5
 %configure \
+    --with-httpd=/usr/sbin/httpd2 \
     --disable-static \
     --disable-bluetooth \
     --disable-schemas-compile
@@ -137,6 +138,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 
 
 %changelog
+* Tue Apr 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt2_0
+- added --with-httpd=/usr/sbin/httpd2 (closes: #31965)
+
 * Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_0
 - new version
 
