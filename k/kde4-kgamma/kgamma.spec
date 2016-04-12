@@ -3,7 +3,7 @@
 %define rname kgamma
 Name: kde4-kgamma
 Version: 4.11.1
-Release: alt3
+Release: alt3.qa1
 
 Group: Graphical desktop/KDE
 Summary: Color profiling
@@ -59,6 +59,9 @@ Development files for %name
 
 
 %changelog
+* Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 4.11.1-alt3.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Fri Nov 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.11.1-alt3
 - don't treat spaces as arguments for xf86gammacfg
 
