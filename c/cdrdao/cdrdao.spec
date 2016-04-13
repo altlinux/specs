@@ -7,10 +7,10 @@
 
 Name: cdrdao
 Version: 1.2.3
-%define release alt3%rc_ver
+%define release alt3.qa1%rc_ver
 
 %ifdef cvsdate
-Release: %{release}cvs%cvsdate
+#Release: %{release}cvs%cvsdate
 %else
 Release: %release
 %endif
@@ -124,6 +124,9 @@ chmod 700 %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.2.3-alt3.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Sep 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt3
 - fixed build (patch from fedora)
 
