@@ -1,5 +1,5 @@
 # check deps/npm/package.json for it
-%define npmver 2.14.12
+%define npmver 2.15.1
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -21,8 +21,8 @@
 %def_disable check
 
 Name: node
-Version: 4.2.6
-Release: alt2
+Version: 4.4.3
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -103,12 +103,13 @@ Documentation files for %name.
 
 
 %package -n npm
-Version: 	%npmver
+Version:	%npmver
 Group:		Development/Tools
 Summary:	A package manager for node
 License:	MIT License
 Requires:	node
 BuildArch:	noarch
+AutoReq:	yes,nopython
 Requires:	nodejs(abi) = %{nodejs_abi}
 
 %description -n npm
@@ -178,6 +179,9 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 rm -rf %buildroot/usr/lib/dtrace/
 rm -rf %buildroot/usr/share/doc/node/gdbinit
 
+# gnuplot and convert reqs
+rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules/node-uuid/benchmark/
+
 %files
 %doc AUTHORS CHANGELOG.md LICENSE README.md
 %_bindir/node
@@ -215,6 +219,11 @@ rm -rf %buildroot/usr/share/doc/node/gdbinit
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Apr 13 2016 Vitaly Lipatov <lav@altlinux.ru> 4.4.3-alt1
+- build 2016-04-12, Version 4.4.3 'Argon' (LTS)
+- drop gnuplot and convert reqs from npm
+- disable python reqs for npm package
+
 * Wed Feb 10 2016 Vitaly Lipatov <lav@altlinux.ru> 4.2.6-alt2
 - build with system libuv-devel 1.8.0
 - fix include packing
