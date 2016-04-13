@@ -1,5 +1,5 @@
 Name: libetonyek
-Version: 0.1.3
+Version: 0.1.6
 Release: alt1
 Summary: A library for import of Apple Keynote presentations
 
@@ -13,6 +13,7 @@ BuildRequires: cppunit-devel
 # Automatically added by buildreq on Mon Sep 21 2015
 # optimized out: boost-devel-headers gnu-config libstdc++-devel pkg-config xz
 BuildRequires: doxygen gcc-c++ libglm-devel librevenge-devel libxml2-devel mdds-devel zlib-devel
+BuildRequires: liblangtag-devel mdds-devel
 
 %description
 libetonyek is library providing ability to interpret and import Apple
@@ -82,6 +83,9 @@ make check
 %_bindir/*
 
 %changelog
+* Wed Apr 13 2016 Fr. Br. George <george@altlinux.ru> 0.1.6-alt1
+- Autobuild version bump to 0.1.6
+
 * Wed Sep 16 2015 Fr. Br. George <george@altlinux.ru> 0.1.3-alt1
 - Autobuild version bump to 0.1.3
 
