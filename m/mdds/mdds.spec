@@ -1,8 +1,6 @@
-# This spec is backported to ALTLinux t7 automatically by rpmbph script. Do not edit it.
-#
 Name: mdds
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
 Group: Development/C++
@@ -57,18 +55,19 @@ sed -i -e '/^CPPFLAGS_NODEBUG=/s/=.*/="%optflags"/' configure
 
 %build
 %configure
-%make all
+%make_build all
+# Lightweight, but ctritical -- leave it here
 %make check
 #sphinx3_rel
 %make build-doc-doxygen
 
 %install
-mkdir -p %buildroot/%_includedir
-mkdir %buildroot/%_includedir/mdds
-cp -pr include/mdds/* %buildroot/%_includedir/mdds
-mkdir -p %buildroot/%_datadir
-mkdir %buildroot/%_datadir/pkgconfig
-cp -p misc/%name.pc %buildroot/%_datadir/pkgconfig
+install -d %buildroot/%_includedir/mdds
+install include/mdds/* %buildroot/%_includedir/mdds/
+ln -s %name %buildroot/%_includedir/%name-1.0
+
+install -D misc/%name.pc %buildroot/%_datadir/pkgconfig/%name.pc
+ln -s %name.pc %buildroot/%_datadir/pkgconfig/%name-1.0.pc
 
 install -dm 755 %buildroot/%_docdir/%name-%version
 install -dm 755 %buildroot/%_docdir/%name-%version/html
@@ -77,9 +76,6 @@ install -Dm 644 AUTHORS README.md VERSION %buildroot/%_docdir/%name-%version
 cp ./doc/html/search/*.*  %buildroot/%_docdir/%name-%version/html/search
 cp ./doc/html/*.* %buildroot/%_docdir/%name-%version/html/
 
-#check
-#make check
-
 %files doc
 %exclude %_docdir/%name-%version/AUTHORS
 %exclude %_docdir/%name-%version/README.md
@@ -87,11 +83,14 @@ cp ./doc/html/*.* %buildroot/%_docdir/%name-%version/html/
 %_docdir/%name-%version/html
 
 %files devel
-%_includedir/%name
-%_datadir/pkgconfig/%name.pc
+%_includedir/*
+%_datadir/pkgconfig/*
 %doc AUTHORS README.md VERSION
 
 %changelog
+* Wed Apr 13 2016 Fr. Br. George <george@altlinux.ru> 1.0.0-alt2
+- Add ABI-depended include simlink
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 1.0.0-alt1
 - Autobuild version bump to 1.0.0
 
