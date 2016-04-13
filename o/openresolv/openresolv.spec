@@ -1,7 +1,7 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.7.3
+Version: 3.8.0
 Release: alt1
 
 Summary: A framework for managing DNS information 
@@ -11,7 +11,6 @@ Group: System/Configuration/Networking
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Source1: test
-Source2: resolvconf-restartcmd
 Patch0: %name-%version-%release.patch
 BuildArch: noarch
 
@@ -76,19 +75,14 @@ cp %SOURCE1 .
 
 %build
 ./test
-sed -i 's;/sbin/service;/sbin/resolvconf-restartcmd;' dnsmasq.in
 %configure --sbindir=/sbin --libexecdir=/lib/resolvconf \
            --localstatedir=%_var \
            --rundir=%_var/run \
-           --os=linux \
-           --restartcmd='/sbin/resolvconf-restartcmd \1 condreload'
-#           --restartcmd='/sbin/service \1 condreload'
+           --os=linux
 %make
 
 %install
 %makeinstall_std
-
-install -Dm0755 %SOURCE2 %buildroot/sbin/resolvconf-restartcmd
 
 mkdir -p %buildroot%_sysconfdir/dnsmasq.conf.d
 touch %buildroot%_sysconfdir/dnsmasq.conf.d/60-resolvconf
@@ -126,6 +120,11 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Wed Apr 13 2016 Mikhail Efremov <sem@altlinux.org> 3.8.0-alt1
+- Drop resolvconf-restartcmd.
+- Simplify detect_init().
+- Updated to 3.8.0.
+
 * Thu Feb 25 2016 Mikhail Efremov <sem@altlinux.org> 3.7.3-alt1
 - Fix search string with multiple domains.
 - Updated to 3.7.3.
