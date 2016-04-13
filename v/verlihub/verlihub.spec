@@ -5,7 +5,7 @@
 
 Name: verlihub
 Version: 0.9.8e
-Release: alt1.2
+Release: alt1.2.1
 
 Summary: Direct Connect (p2p) Server
 
@@ -89,6 +89,9 @@ ln -s ../../..%_libdir/libplug_pi.so.0.0.0 %buildroot%_sysconfdir/%name/plugins
 %_includedir/%name/
 
 %changelog
+* Wed Apr 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.8e-alt1.2.1
+- (NMU) rebuild with gcc5-c++ (for new C++ ABI).
+
 * Wed Apr 03 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.8e-alt1.2
 - Fix build with new glibc
 

@@ -2,7 +2,7 @@
 
 Name: verlihub-plugins
 Version: 0.1
-Release: alt2.qa2
+Release: alt2.qa2.1
 
 Summary: Plugins for verlihub
 
@@ -47,6 +47,9 @@ done
 #%python_sitelibdir/*
 
 %changelog
+* Wed Apr 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt2.qa2.1
+- (NMU) rebuild with gcc5-c++ (for new C++ ABI).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1-alt2.qa2
 - NMU: rebuilt for debuginfo.
 
