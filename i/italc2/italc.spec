@@ -42,8 +42,8 @@
 %endif
 
 Name: italc2
-Version: 2.0.1
-Release: alt11
+Version: 2.0.2
+Release: alt1
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -283,11 +283,11 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %files client
 %_bindir/ica
 %attr(4711,root,root) %_bindir/italc_auth_helper
-%doc %_man1dir/italc_auth_helper.1.gz
+%doc %_man1dir/italc_auth_helper.1.*
 %_bindir/imc
-%doc %_man1dir/imc.1.gz
+%doc %_man1dir/imc.1.*
 %_libdir/*.so
-%doc %_man1dir/ica.1.gz
+%doc %_man1dir/ica.1.*
 %_bindir/ica-launcher
 %xinitdir/ica-launcher
 %dir %confdir
@@ -316,7 +316,7 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 
 %files master
 %_bindir/italc
-%doc %_man1dir/italc.1.gz
+%doc %_man1dir/italc.1.*
 %_desktopdir/italc.desktop
 %icons128x128dir/italc.png
 %icons128x128dir/imc.png
@@ -329,6 +329,9 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %icons16x16dir/imc.png
 
 %changelog
+* Wed Apr 13 2016 Denis Medvedev <nbr@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Tue Nov 26 2013 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt11
 - Move imc to italc2-client package to configure clients
 - Mark all man pages as documentation
