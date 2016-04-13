@@ -3,7 +3,7 @@
 %define rname OpenEXR
 Name: openexr21
 Version: 2.1.0
-Release: alt3
+Release: alt3.qa1
 
 %define common %name-common
 %define libilmimf libilmimf%libsover
@@ -69,6 +69,8 @@ developing applications with %rname
 %patch12 -p1
 
 %build
+%add_optflags -D_GLIBCXX_USE_CXX11_ABI=0
+
 %Kcmake
 %Kmake
 
@@ -105,6 +107,9 @@ install -m 0644 README %buildroot/%_docdir/%name-%version/
 
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.1.0-alt3.qa1
+- Switched build to old CXX ABI.
+
 * Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt3
 - don't package utils
 

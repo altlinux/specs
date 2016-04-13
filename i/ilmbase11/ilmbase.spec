@@ -3,7 +3,7 @@
 
 Name: ilmbase11
 Version: 2.1.0
-Release: alt4
+Release: alt4.qa1
 
 %define common %name-common
 %define libhalf libhalf%libsover
@@ -120,6 +120,8 @@ developing applications with %name
 
 
 %build
+%add_optflags -D_GLIBCXX_USE_CXX11_ABI=0
+
 %Kcmake
 %Kmake
 
@@ -165,6 +167,9 @@ done
 
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.1.0-alt4.qa1
+- Switched build to old CXX ABI.
+
 * Tue Dec 02 2014 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt4
 - clean package
 
