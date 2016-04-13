@@ -6,18 +6,23 @@
 
 Name: gnome-shell
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://wiki.gnome.org/Projects/GnomeShell
 
-#Source: %name-%version.tar
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: gnome-shell-3.11.90-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=764898
+# https://bug764898.bugzilla-attachments.gnome.org/attachment.cgi?id=325731
+Patch10: gnome-shell-3.20.0-bgo764898.patch
+
 Obsoletes: gnome-shell-extension-per-window-input-source
 
 # use python3
@@ -176,6 +181,7 @@ GNOME Shell.
 #%%patch1 -p1 -b .gir
 %patch3 -b .shells
 %patch4
+%patch10 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -234,6 +240,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
+- updated to 3.20.0-20-g2edfd45
+- applied patch for BGO #764898 (ALT #31968)
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
