@@ -2,7 +2,8 @@
 
 Name:    gtk3-theme-clearlooks-phenix
 Version: 6.0.3
-Release: alt1
+Release: alt2
+Epoch:   1
 
 Summary: GTK3 port of the Clearlooks theme
 
@@ -33,6 +34,9 @@ tar xf %SOURCE0 -C %buildroot%_datadir/themes
 %_datadir/themes/%themename
 
 %changelog
+* Wed Apr 13 2016 Andrey Cherepanov <cas@altlinux.org> 1:6.0.3-alt2
+- Increase Epoch for downgrade package version in stable branch
+
 * Fri Apr 08 2016 Andrey Cherepanov <cas@altlinux.org> 6.0.3-alt1
 - New version
 
