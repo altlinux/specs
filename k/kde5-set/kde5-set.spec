@@ -1,7 +1,7 @@
 
 Name: kde5-set
 Version: 5.1.1
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -28,7 +28,7 @@ Group: Graphical desktop/KDE
 Requires: icon-theme-breeze
 Requires: kde5-mini
 Requires: kde5-volume-control
-Requires: kde5-www-browser
+Requires: webclient
 Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-powerdevil kf5-ksysguard
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kde-cli-tools
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
@@ -148,6 +148,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Wed Apr 13 2016 Sergey V Turchin <zerg at altlinux dot org> 5.1.1-alt3
+- fix requires
+
 * Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt2
 - fix requires
 
