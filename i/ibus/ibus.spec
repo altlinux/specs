@@ -7,7 +7,7 @@
 %def_enable wayland
 
 Name: ibus
-Version: 1.5.12
+Version: 1.5.13
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -253,6 +253,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.13-alt1
+- 1.5.13
+
 * Thu Feb 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.12-alt1
 - 1.5.12
 
