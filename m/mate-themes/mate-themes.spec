@@ -5,14 +5,14 @@ BuildRequires: /usr/bin/glib-gettextize
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 3.18.0
+%define version 3.20.5
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 3.18
+%global branch 3.20
 
-%global rel_ver 3.18.0
+%global rel_ver 3.20.5
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5fec16803c5ff06fa31b7cab47c6d51a99f1acc7}
@@ -36,7 +36,7 @@ BuildArch:      noarch
 
 # for downloading the tarball use 'spectool -g -R mate-themes.spec'
 # Source for release-builds.
-%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/themes/%{branch}/%{name}-%{version}.tar.xz}
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
@@ -75,9 +75,6 @@ make %{?_smp_mflags} V=1
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
-%find_lang %{name} --with-gnome --all-name
-
-
 %post
 for icon_theme in \
   ContrastHigh ;
@@ -95,24 +92,27 @@ do
 done
 fi
 
-%files -f %{name}.lang
+%files
+%doc AUTHORS COPYING README ChangeLog
 %{_datadir}/themes/BlackMATE/
 %{_datadir}/themes/BlueMenta/
 %{_datadir}/themes/Blue-Submarine/
-%{_datadir}/themes/ContrastHigh/
 %{_datadir}/themes/ContrastHighInverse/
-%{_datadir}/themes/GreenLaguna/
+##%{_datadir}/themes/GreenLaguna/
 %{_datadir}/themes/Green-Submarine/
+%{_datadir}/themes/HighContrast/metacity-1/metacity-theme-1.xml
 %{_datadir}/themes/Menta/
 %{_datadir}/themes/TraditionalOk/
 %{_datadir}/themes/TraditionalGreen/
-%{_datadir}/themes/TraditionalOkTest/
 %{_datadir}/themes/Shiny/
 %{_datadir}/icons/ContrastHigh/
 %{_datadir}/icons/mate/cursors/
 
 
 %changelog
+* Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 3.20.5-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.18.0-alt1_1
 - new fc release
 
