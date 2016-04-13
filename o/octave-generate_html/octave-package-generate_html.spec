@@ -1,17 +1,20 @@
-Serial: 1
-%define octave_pkg_version 0.1.5
+# BEGIN SourceDeps(oneline):
+BuildRequires: makeinfo
+# END SourceDeps(oneline)
+%define octave_pkg_version 0.1.10
 %define octave_pkg_name generate_html
 %define octave_descr_name generate_html
+Serial: 1
 Name: octave-%octave_pkg_name
-Version: 0.1.5
-Release: alt3
+Version: 0.1.10
+Release: alt1
 Summary: Generate HTML web page from help texts
 
 Group: Sciences/Mathematics
 License: GPLv3+
 Url: http://octave.sourceforge.net/
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
@@ -35,7 +38,7 @@ Extension Description:
 This package provides functions for generating HTML pages that
 
 %prep
-%setup -n %octave_pkg_name
+%setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -52,6 +55,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.1.10-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1:0.1.5-alt3
 - Rebuild with the next version of Octave: 4.0.0
 
