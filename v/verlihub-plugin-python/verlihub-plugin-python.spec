@@ -1,7 +1,7 @@
 %define oname python
 Name: verlihub-plugin-python
 Version: 1.1
-Release: alt2.1.1
+Release: alt2.1.1.1
 
 Summary: Python Plugin for verlihub
 
@@ -36,6 +36,9 @@ sed -i 's|python2\.5|python%__python_version|g' configure.in
 %_libdir/*.so*
 
 %changelog
+* Wed Apr 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt2.1.1.1
+- (NMU) rebuild with gcc5-c++ (for new C++ ABI).
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt2.1.1
 - Rebuild with Python-2.7
 

@@ -7,7 +7,7 @@
 %define oname lua
 Name: verlihub-plugins-lua51
 Version: 1.8.1
-Release: alt1.qa1
+Release: alt1.qa1.1
 
 Summary: Lua 5.1 plugin for verlihub
 
@@ -43,6 +43,9 @@ Lua 5.1 plugin for verlihub
 %_libdir/*.so*
 
 %changelog
+* Wed Apr 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.8.1-alt1.qa1.1
+- (NMU) rebuild with gcc5-c++ (for new C++ ABI).
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.8.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
