@@ -2,7 +2,7 @@ Name: kernel-image-std-pae
 Release: alt1
 epoch:1 
 %define kernel_base_version	4.1
-%define kernel_sublevel	.20
+%define kernel_sublevel	.21
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -544,6 +544,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Apr 13 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.21-alt1
+- 4.1.21
+
 * Fri Mar 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.20-alt1
 - 4.1.20
 - CLONE_NEWUSER restricted by default
