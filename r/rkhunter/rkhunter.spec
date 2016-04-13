@@ -2,7 +2,7 @@
 #
 Name: rkhunter
 Version: 1.4.2
-Release: alt2
+Release: alt3
 
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 License: GPLv2
@@ -92,7 +92,7 @@ install %SOURCE4 files/i18n/ru
 install %SOURCE5 files/
 
 cat <<'EOF' >%name.logrotate
-%_localstatedir/log/%name/%name.log {
+%_logdir/%name/%name.log {
     weekly
     notifempty
     create 640 root root
@@ -216,6 +216,9 @@ rm -f %db_dir/%hash_list.{asc,*saved.*}
 
 
 %changelog
+* Wed Apr 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.2-alt3
+- Fix /etc/logrotate/rkhunter
+
 * Tue Apr 12 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.2-alt2
 - Add russian translate
 
