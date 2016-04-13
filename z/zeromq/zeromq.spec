@@ -1,6 +1,6 @@
 Name: zeromq
 Version: 4.0.5
-Release: alt1
+Release: alt1.qa1
 Summary: a software library that lets you quickly design and implement a fast message-based application
 
 Group: System/Libraries
@@ -76,6 +76,9 @@ make check
 %_man7dir/zmq_*7*
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 4.0.5-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Jan 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.5-alt1
 - Version 4.0.5
 
