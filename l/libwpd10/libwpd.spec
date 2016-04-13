@@ -1,6 +1,6 @@
 Name: libwpd10
 Version: 0.10.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Library for reading and converting WordPerfect(tm) documents
 
@@ -96,6 +96,9 @@ LD_LIBRARY_PATH=../lib/.libs make check
 %doc docs/*.png
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.10.0-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Thu Jun 05 2014 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
 - 0.10.0
 - build as libwpd10
