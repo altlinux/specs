@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt5.a0.git20150813.1
+Release: alt6.a0.git20150813
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -24,6 +24,7 @@ Source1: conf.py.template
 Source2: macro
 Source3: macro3
 Source4: refcounting.py
+Patch0: sphinx-1.4b1-alt-avoid-download-objects.inv.patch 
 
 BuildArch: noarch
 
@@ -213,6 +214,7 @@ This packages contains pickles for Sphinx.
 
 %prep
 %setup
+%patch0 -p1
 install -pm644 %_sourcedir/conf.py.template .
 
 ln -s %_datadir/python-sphinx/objects.inv doc/
@@ -428,6 +430,10 @@ EOF
 %endif
 
 %changelog
+* Thu Apr 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt6.a0.git20150813
+- (.spec) clarify: use the pure upstream sources & explicitly expose
+  a single useful patch (sphinx-1.4b1-alt-avoid-download-objects.inv.patch).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt5.a0.git20150813.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
