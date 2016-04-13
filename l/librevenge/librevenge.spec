@@ -1,7 +1,7 @@
 
 Name: librevenge
 Version: 0.0.2
-Release: alt1
+Release: alt1.qa1
 Summary: A base library for writing document import filters
 Group: System/Libraries
 
@@ -73,6 +73,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 %doc docs/doxygen/html
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.2-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Mon Jan 19 2015 Alexey Shabalin <shaba@altlinux.ru> 0.0.2-alt1
 - 0.0.2
 
