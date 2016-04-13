@@ -1,30 +1,30 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/mkoctfile /usr/bin/nc-config /usr/bin/octave glibc-devel
+BuildRequires: /usr/bin/octave /usr/bin/octave-config makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.0.5
+%define octave_pkg_version 1.0.9
 %define octave_pkg_name netcdf
 %define octave_descr_name netcdf
 Name: octave-%octave_pkg_name
-Version: 1.0.5
-Release: alt2
+Version: 1.0.9
+Release: alt1
 Summary: netcdf
 
 Group: Sciences/Mathematics
 License: GPLv2+
 URL: http://modb.oce.ulg.ac.be/mediawiki/index.php/Octave-netcdf
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(netcdf) = %version
 
-# octave module BuildRequires: netcdf-devel
+# octave module BuildRequires: netcdf-devel [Fedora]
 BuildRequires: libnetcdf-devel
 # Depends: octave (>= 3.4.0)
 Requires: octave >= 3.4.0
@@ -38,12 +38,10 @@ Extension Description:
 A MATLAB compatible NetCDF interface for Octave
 
 %prep
-%setup -c -n %name-%version
+%setup -q -n %{octave_pkg_name}
 
 %build
-tar czf ../%octave_pkg_name-%version.tar.gz *
-rm -rf *
-octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
+octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -57,6 +55,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1.0.5-alt2
 - Rebuild with the next version of Octave: 4.0.0
 
