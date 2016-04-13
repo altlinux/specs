@@ -33,8 +33,8 @@
 %def_disable gromit
 
 Name: totem
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -46,6 +46,7 @@ Source: %name-%version.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
+Patch: %name-3.20.1-alt-format.patch
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -275,6 +276,7 @@ used by other applications like filemanagers.
 
 %prep
 %setup
+%patch -b .format
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -406,6 +408,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
 - disabled gromit plugin
 - fixed url
