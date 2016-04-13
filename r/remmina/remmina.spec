@@ -2,7 +2,7 @@
 
 Name: remmina
 Version: 1.2.0
-Release: alt0.rc11
+Release: alt0.rc11.1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -33,6 +33,8 @@ BuildRequires: pkgconfig(vte-2.91)
 BuildRequires: pkgconfig(xkbfile)
 BuildRequires: pkgconfig(webkit2gtk-4.0)
 BuildRequires: pkgconfig(harfbuzz)
+
+%add_findreq_skiplist %_datadir/%name/external_tools/*
 
 %description
 Remmina is a remote desktop client written in GTK+, aiming to be useful for
@@ -122,6 +124,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc11.1
+- add skip requires for external tools
+
 * Thu Apr 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt0.rc11
 - 1.2.0.rcgit.11
 
