@@ -1,30 +1,30 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/mkoctfile /usr/bin/octave glibc-devel
+BuildRequires: /usr/bin/octave-config libgnutls-devel makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.2.0
+%define octave_pkg_version 3.0.4
 %define octave_pkg_name parallel
 %define octave_descr_name Parallel
 Name: octave-%octave_pkg_name
-Version: 2.2.0
-Release: alt2
+Version: 3.0.4
+Release: alt1
 Summary: Parallel Computing.
 
 Group: Sciences/Mathematics
 License: GPLv3+
 URL: http://octave.sf.net
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(parallel) = %version
-# Depends: octave (>= 3.4.0)
-Requires: octave >= 3.4.0
+# Depends: octave (>= 3.8.0)
+Requires: octave >= 3.8.0
 
 
 %description
@@ -35,12 +35,10 @@ Extension Description:
 Parallel execution package. See also package mpi, maintained
 
 %prep
-%setup -c -n %name-%version
+%setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
 
 %build
-tar czf ../%octave_pkg_name-%version.tar.gz *
-rm -rf *
-octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
+octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -54,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.4-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 2.2.0-alt2
 - Rebuild with the next version of Octave: 4.0.0
 
