@@ -1,8 +1,8 @@
 Name: xpad
-Version: 4.7.0
+Version: 4.8.0
 Release: alt1
 
-Summary: F virtual sticky pad system using GTK+-3
+Summary: A virtual sticky pad system using GTK+3
 Group: Office
 License: GPLv3+
 
@@ -43,6 +43,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README NEWS ChangeLog TODO
 
 %changelog
+* Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Sun Mar 27 2016 Yuri N. Sedunov <aris@altlinux.org> 4.7.0-alt1
 - 4.7.0
 
