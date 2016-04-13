@@ -1,6 +1,6 @@
 Name: libpagemaker
 Version: 0.0.2
-Release: alt1
+Release: alt1.qa1
 Summary: A library for import of Adobe PageMaker documents
 Group: System/Libraries
 
@@ -84,6 +84,9 @@ install -m 0644 pmd2*.1 %buildroot/%_man1dir
 %_man1dir/*
 
 %changelog
+* Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.2-alt1.qa1
+- Rebuilt for gcc5 C++11 ABI.
+
 * Tue Feb 03 2015 Fr. Br. George <george@altlinux.ru> 0.0.2-alt1
 - Initial build for ALT
 
