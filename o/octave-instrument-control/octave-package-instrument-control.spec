@@ -1,24 +1,24 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/mkoctfile /usr/bin/rpcgen glibc-devel libtirpc-devel
+BuildRequires: /usr/bin/rpcgen libtirpc-devel makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 0.2.0
+%define octave_pkg_version 0.2.2
 %define octave_pkg_name instrument-control
 %define octave_descr_name instrument-control
 Name: octave-%octave_pkg_name
-Version: 0.2.0
-Release: alt3
-Summary: Instrument Control Toolbox
+Version: 0.2.2
+Release: alt1
+Summary: Instrument Control
 
 Group: Sciences/Mathematics
 License: GPLv3+
 Url: http://octave.sourceforge.net/
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
@@ -35,7 +35,7 @@ Extension Description:
 Low level I/O functions for serial, i2c, parallel, tcp, gpib, vxi11 and usbtmc interfaces.
 
 %prep
-%setup -T -c %name-%version
+%setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -52,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 0.2.0-alt3
 - Rebuild with the next version of Octave: 4.0.0
 
