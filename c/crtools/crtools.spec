@@ -1,5 +1,5 @@
 Name: crtools
-Version: 2.0
+Version: 2.1
 #define pre 
 %define ver %version%{?pre:%pre}
 Release: alt1
@@ -50,7 +50,7 @@ BuildRequires: libnl-devel
 BuildRequires: libcap-devel
 BuildRequires(pre): rpm-build-python
 Provides: crit = %version-%release
-Obsoletes: pycriu
+Obsoletes: crtools-pycriu
 
 %description -n python-module-criu
 Python library library of checkpoint/restore.
@@ -92,6 +92,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Wed Apr 13 2016 Denis Pynkin <dans@altlinux.org> 2.1-alt1
+- upstream updates and fixes
+
 * Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 2.0-alt1
 - Version update 
 
