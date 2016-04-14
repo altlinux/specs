@@ -1,21 +1,24 @@
-Serial: 1
-%define octave_pkg_version 1.3.4
+# BEGIN SourceDeps(oneline):
+BuildRequires: makeinfo
+# END SourceDeps(oneline)
+%define octave_pkg_version 1.3.5
 %define octave_pkg_name fpl
 %define octave_descr_name fpl
+Serial: 1
 Name: octave-%octave_pkg_name
-Version: 1.3.4
-Release: alt3
+Version: 1.3.5
+Release: alt1
 Summary: Fem PLotting
 
 Group: Sciences/Mathematics
 License: GPLv3+
 Url: http://octave.sourceforge.net/
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
@@ -32,7 +35,7 @@ Extension Description:
 Collection of routines to export data produced by Finite Elements or Finite Volume Simulations in formats used by some visualization programs.
 
 %prep
-%setup -T -c %name-%version
+%setup -q -n %{octave_pkg_name}
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.3.5-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1:1.3.4-alt3
 - Rebuild with the next version of Octave: 4.0.0
 
