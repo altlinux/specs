@@ -1,27 +1,30 @@
-Serial: 1
-%define octave_pkg_version 1.1.4
+# BEGIN SourceDeps(oneline):
+BuildRequires: makeinfo
+# END SourceDeps(oneline)
+%define octave_pkg_version 1.1.5
 %define octave_pkg_name bim
 %define octave_descr_name bim
+Serial: 1
 Name: octave-%octave_pkg_name
-Version: 1.1.4
-Release: alt2
+Version: 1.1.5
+Release: alt1
 Summary: PDE Solver using a Finite Element/Finite Volume approach
 
 Group: Sciences/Mathematics
 License: GPLv2+
 Url: http://octave.sourceforge.net/
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(bim) = %version
-# Depends: octave (>= 3.6.0), fpl, msh
-Requires: octave >= 3.6.0 octave(fpl) octave(msh)
+# Depends: octave (>= 3.8.0), fpl, msh
+Requires: octave >= 3.8.0 octave(fpl) octave(msh)
 
 
 %description
@@ -32,12 +35,10 @@ Extension Description:
 Package for solving Diffusion Advection Reaction (DAR) Partial Differential Equations
 
 %prep
-%setup -c -n %name-%version
+%setup -q -n %{octave_pkg_name}
 
 %build
-tar czf ../%octave_pkg_name-%version.tar.gz *
-rm -rf *
-octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
+octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -51,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.1.5-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1:1.1.4-alt2
 - Rebuild with the next version of Octave: 4.0.0
 
