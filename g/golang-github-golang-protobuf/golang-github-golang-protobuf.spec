@@ -1,12 +1,12 @@
 %global import_path     github.com/golang/protobuf
 
-%global commit b9504f23731d0b61ccfff7370a161d6c857ca00d
+%global commit f0a097ddac24fb00e07d2ac17f8671423f3ea47c
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-golang-protobuf
 Version: 0
-Release: alt2.git%abbrev
+Release: alt3.git%abbrev
 Summary: Go support for Protocol Buffers
 License: BSD
 Group: Development/Other
@@ -71,6 +71,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Thu Apr 14 2016 Denis Pynkin <dans@altlinux.org> 0-alt3.gitf0a097dd
+- Update
+
 * Thu Mar 10 2016 Denis Pynkin <dans@altlinux.org> 0-alt2.gitb9504f23
 - Update
 
