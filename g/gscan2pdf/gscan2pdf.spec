@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 1.3.9
+Version: 1.4.0
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -90,6 +90,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Thu Apr 14 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+
 * Fri Apr 08 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.9-alt1
 - new version 1.3.9 (with rpmrb script)
 - drop cuneiform requires (ALT bug #31935)
