@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 8.0.0
-Release: alt1
+Release: alt2
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -46,6 +46,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.0.0-alt2
+- Added missing p8 key to vendor.list.
+
 * Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.0.0-alt1
 - Added p8 branch.
 
