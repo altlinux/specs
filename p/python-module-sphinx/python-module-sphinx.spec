@@ -8,8 +8,8 @@
 %endif
 
 Name: python-module-%oname
-Version: 1.4
-Release: alt8.a0.git20150813
+Version: 1.4.1
+Release: alt1
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -62,13 +62,25 @@ BuildRequires: python3-module-html5lib python3-module-nose
 BuildPreReq: python3-tools
 %endif
 
+# For running the new sphinx itself (and generating the docs):
+BuildPreReq: %py_dependencies imagesize
+%if_with python3
+BuildPreReq: python3(imagesize)
+%endif
+
 # For %%check:
 BuildPreReq: %py_dependencies mock
 # minimal deps on the built-in sqlite driver have been fixed in 1.0.8-alt2:
 BuildPreReq: python-module-SQLAlchemy >= 1.0.8-alt2
+# These 2 must be recent to pass the tests:
+BuildPreReq: python-module-Pygments >= 2.1.3
+BuildPreReq: python-module-alabaster >= 0.7.6-alt2.git20150703
 %if_with python3
 BuildPreReq: python3(mock) python3(docutils) python3(jinja2) python3(pygments)
 BuildPreReq: python3-module-SQLAlchemy >= 1.0.8-alt2
+# These 2 must be recent to pass the tests:
+BuildPreReq: python3-module-Pygments >= 2.1.3
+BuildPreReq: python3-module-alabaster >= 0.7.6-alt2.git20150703
 %endif
 
 %description
@@ -241,6 +253,8 @@ install -pm644 %_sourcedir/macro3 ../python3/
 %endif
 
 install -pm644 %_sourcedir/macro .
+# Invalid Python2:
+rm tests/test_autodoc_py35.py
 
 %build
 %python_build
@@ -379,12 +393,14 @@ EOF
 %endif
 
 %check
-%make_build test
+# Tried to export NOSE_PROCESSES=%%__nprocs, but it makes a lot tests fail.
+export LC_ALL=en_US.utf8 # some tests fail otherwise, because they use paths with Unicode
 %if_with python3
 pushd ../python3
 %make_build PYTHON=python3 test
 popd
 %endif
+%make_build test
 
 %files
 %_bindir/*
@@ -441,6 +457,9 @@ popd
 %endif
 
 %changelog
+* Thu Apr 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4.1-alt1
+- 1.4.1 released
+
 * Thu Apr 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt8.a0.git20150813
 - 2to3 not used, because sphinx is known to support Python3 natively.
   (This fixed one test that used to fail before.)
