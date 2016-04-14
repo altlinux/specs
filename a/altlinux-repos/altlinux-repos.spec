@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/mirrors
 
 %changelog
+* Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5-alt1
+- Add p8 branch.
+
 * Wed Dec 24 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4-alt1
 - Dropped ftp.linux.kiev.ua mirror (ALT#30104, #30598).
 

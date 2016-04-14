@@ -1,10 +1,10 @@
 %define base_name apt-conf
 %define distro branch
-%define Distro p7 branch
+%define Distro p8 branch
 
 Name: %base_name-%distro
-Version: 7.0.0
-Release: alt4
+Version: 8.0.0
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -27,7 +27,7 @@ This package contains default apt configuration for %distribution %Distro.
 %setup
 
 %build
-%make_build REPOSITORIES=p7
+%make_build REPOSITORIES=p8
 
 %install
 %makeinstall
@@ -46,6 +46,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.0.0-alt1
+- Added p8 branch.
+
 * Fri Oct 18 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.0-alt4
 - Bump release.
 
