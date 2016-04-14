@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.1.2
-Release: alt11
+Release: alt12
 
 Summary: GNU Compiler Collection
 License: GPL
@@ -32,7 +32,7 @@ Url: http://gcc.gnu.org/
 # Don't strip in debug mode
 %set_strip_method none
 %endif #enabled_debug
-%set_compress_method bzip2
+%set_compress_method xz
 # due to libmudflap and libgnarl
 %set_verify_elf_method unresolved=relaxed
 
@@ -124,6 +124,8 @@ Patch714: gcc41-alt-arm-cflags.patch
 Patch715: gcc41-alt-makeinfo.patch
 Patch716: gcc41-alt-defaults-FORTIFY_SOURCE.patch
 Patch717: gcc41-up-siginfo.patch
+Patch718: gcc41-fix-build-with-makeinfo5.patch
+Patch719: gcc41-fix-build-with-bison.patch
 
 Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
 Obsoletes: egcs, gcc3.0, gcc3.1
@@ -135,6 +137,7 @@ Requires: %binutils_deps, glibc-devel
 
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
 BuildPreReq: coreutils, flex, glibc-devel-static >= 2.4
+BuildPreReq: makeinfo
 # due to manpages
 BuildPreReq: perl-Pod-Parser
 %{?_with_ada:BuildPreReq: gcc-gnat}
@@ -845,6 +848,8 @@ sed -i \
 %patch715 -p1
 %patch716 -p0
 %patch717 -p0
+%patch718 -p1
+%patch719 -p1
 
 find -type f -name \*.orig -delete -print
 
@@ -853,6 +858,8 @@ cp -a libstdc++-v3/config/cpu/i{4,3}86/atomicity.h
 
 %set_automake_version 1.9
 %set_autoconf_version 2.5
+%set_gcc_version 4.9
+
 #set_gcc_version %gcc_branch
 
 # Never build with bundled libltdl.
@@ -1146,8 +1153,7 @@ EOF
 
 %if_with cxx
 # no valid g++ manpage exists in 4.1 series.
-rm %buildroot%_man1dir/g++%psuffix.1
-ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
+rm %buildroot%_man1dir/g++%psuffix.1 %buildroot%_man1dir/gcc%psuffix.1
 %endif #with_cxx
 
 %find_lang gcc%psuffix
@@ -1161,7 +1167,7 @@ cp -a %buildroot{/%_lib,%_libdir}/*.so.* %buildroot%_libdir/debug/
 install -d %buildroot%_altdir
 cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
 %_bindir/%_target_platform-cpp	%_bindir/%_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%_target_platform-cpp%psuffix
+%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%_target_platform-cpp%psuffix
 EOF
 
 cat >%buildroot%_altdir/%name <<EOF
@@ -1169,21 +1175,19 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%_target_platform-gcov	%_bindir/%_target_platform-gcov%psuffix	%_bindir/%_target_platform-gcc%psuffix
 %_bindir/%_target_platform-protoize	%_bindir/%_target_platform-protoize%psuffix	%_bindir/%_target_platform-gcc%psuffix
 %_bindir/%_target_platform-unprotoize	%_bindir/%_target_platform-unprotoize%psuffix	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
+%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%_target_platform-gcc%psuffix
 EOF
 
 %if_with cxx
 cat >%buildroot%_altdir/c++%gcc_branch <<EOF
 %_bindir/%_target_platform-g++	%_bindir/%_target_platform-g++%psuffix	%priority
-%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%_target_platform-g++%psuffix
 EOF
 %endif #with_cxx
 
 %if_with fortran
 cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
 %_bindir/%_target_platform-gfortran	%_bindir/%_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.bz2	%_man1dir/gfortran%psuffix.1.bz2	%_bindir/%_target_platform-gfortran%psuffix
+%_man1dir/gfortran.1.xz	%_man1dir/gfortran%psuffix.1.xz	%_bindir/%_target_platform-gfortran%psuffix
 EOF
 %endif #with_fortran
 
@@ -1200,7 +1204,7 @@ $(for i in gappletviewer gcj-dbtool gcjh gij gjarsigner gjnih gkeytool grmic grm
 	echo "%_bindir/%_target_platform-$i	%_bindir/%_target_platform-$i%psuffix	%_bindir/%_target_platform-gcj%psuffix"
 done)
 $(for i in gcj gappletviewer gcj-dbtool gcjh gij gjarsigner gjnih gkeytool grmic grmiregistry jcf-dump jv-convert jv-scan; do
-	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix"
+	echo "%_man1dir/$i.1.xz	%_man1dir/$i%psuffix.1.xz	%_bindir/%_target_platform-gcj%psuffix"
 done)
 EOF
 %endif #with_java
@@ -1221,7 +1225,6 @@ EOF
 %_bindir/%_target_platform-gcov%psuffix
 %_bindir/%_target_platform-protoize%psuffix
 %_bindir/%_target_platform-unprotoize%psuffix
-%_man1dir/gcc%psuffix.*
 %_man1dir/gcov%psuffix.*
 %dir %gcc_target_libdir
 %dir %gcc_target_libdir/include
@@ -1345,7 +1348,6 @@ EOF
 %gcc_doc_dir/g++
 %_bindir/g++%psuffix
 %_bindir/%_target_platform-g++%psuffix
-%_man1dir/g++%psuffix.*
 %dir %gcc_target_libexecdir
 %gcc_target_libexecdir/cc1plus
 %endif #with_cxx
@@ -1550,22 +1552,15 @@ EOF
 
 %files locales -f gcc%psuffix.lang
 
-%files doc
-%_infodir/cpp*.info*
-%_infodir/gcc*.info*
-%{?_with_fortran:%_infodir/gfortran.info*}
-%{?_with_treelang:%_infodir/treelang.info*}
-%{?_with_java:%_infodir/gcj.info*}
-%{?_with_ada:%_infodir/gnat*.info*}
-
-%if_with pdf
-%doc gcc/doc/cpp*.pdf
-%doc gcc/doc/gcc*.pdf
-%{?_with_fortran:%doc gcc/doc/gfortran.pdf}
-%{?_with_ada:%doc gcc/doc/gnat*.pdf}
-%endif #with_pdf
-
 %changelog
+* Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.2-alt12
+- Rebuilt with gcc 4.9.
+- Fixed build with:
+ + makeinfo >= 5;
+ + bison.
+- Changed compress_method to xz.
+- Dropped doc subpackage.
+
 * Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 4.1.2-alt11
 - Backported upstream change to fix build with glibc-2.16.
 - Define _FORTIFY_SOURCE only for optimization level 2 or higher.
