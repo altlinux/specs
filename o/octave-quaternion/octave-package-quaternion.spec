@@ -1,28 +1,31 @@
-Serial: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: makeinfo texinfo
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 2.2.1
+%define octave_pkg_version 2.4.0
 %define octave_pkg_name quaternion
 %define octave_descr_name quaternion
+Serial: 1
 Name: octave-%octave_pkg_name
-Version: 2.2.1
-Release: alt2
+Version: 2.4.0
+Release: alt1
 Summary: Quaternion
 
 Group: Sciences/Mathematics
 License: GPLv3+
 URL: http://octave.sf.net
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(quaternion) = %version
-# Depends: octave (>= 3.6.0)
-Requires: octave >= 3.6.0
+# Depends: octave (>= 3.8.0)
+Requires: octave >= 3.8.0
 
 
 %description
@@ -33,12 +36,10 @@ Extension Description:
 Quaternion package for GNU Octave, includes a quaternion class with overloaded operators
 
 %prep
-%setup -c -n %name-%version
+%setup -q -n %{octave_pkg_name}
 
 %build
-tar czf ../%octave_pkg_name-%version.tar.gz *
-rm -rf *
-octave -q -H --no-site-file --eval "pkg build -nodeps . ../%octave_pkg_name-%version.tar.gz"
+octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
 
 %install
 mkdir -p %buildroot%_datadir/octave/packages
@@ -52,6 +53,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 1:2.2.1-alt2
 - Rebuild with the next version of Octave: 4.0.0
 
