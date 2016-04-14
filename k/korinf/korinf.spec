@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Korinf multidistro single source build system
@@ -46,6 +46,19 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Thu Apr 14 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- converts/deb: do not replace depends
+- write dependences only when ALTLinux/Sisyphus, do not fatal
+- update lists
+- windows: support .gear/mingwbuild.sh for windows build
+- use rpmbp instead rpmbh -n
+- robot: skip check_dist when run for license only task
+- jump to 2016 year
+- drop local alien convert code
+- list: strict grep for versions
+- add ALT Linux p8 support
+- rename Debian/?.0 to Debian/? (eterbug #11093)
+
 * Sat Nov 07 2015 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - windows: add korinf/mingwbuild.sh
 - fix bug with 2 file created
