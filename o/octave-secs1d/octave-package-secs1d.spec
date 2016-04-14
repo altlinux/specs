@@ -1,27 +1,29 @@
-%def_with _octave_arch
-%define octave_pkg_version 0.0.8
+# BEGIN SourceDeps(oneline):
+BuildRequires: makeinfo
+# END SourceDeps(oneline)
+%define octave_pkg_version 0.0.9
 %define octave_pkg_name secs1d
 %define octave_descr_name SECS1D
 Name: octave-%octave_pkg_name
-Version: 0.0.8
-Release: alt3
+Version: 0.0.9
+Release: alt1
 Summary: SEmi Conductor Simulator in 1D
 
 Group: Sciences/Mathematics
 License: GPL version 2 or later
-URL: http://www.comson.org/dem
+Url: http://octave.sourceforge.net/
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(secs1d) = %version
-# Depends: octave (>= 2.9.17)
-Requires: octave >= 2.9.17
+# Depends: octave (>= 3.0), bim
+Requires: octave >= 3.0 octave(bim)
 
 
 %description
@@ -32,7 +34,7 @@ Extension Description:
 A Drift-Diffusion simulator for 1d semiconductor devices
 
 %prep
-%setup -n %octave_pkg_name-%version
+%setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,6 +51,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.9-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 0.0.8-alt3
 - Rebuild with the next version of Octave: 4.0.0
 
