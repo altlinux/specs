@@ -11,7 +11,7 @@
 
 Name: NetworkManager-pptp
 Version: 1.1.92
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -99,6 +99,9 @@ NetworkManager panel applet.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Apr 14 2016 Mikhail Efremov <sem@altlinux.org> 1.1.92-alt2
+- nm-pppd-plugin: fix crash (closes: #31966).
+
 * Tue Mar 29 2016 Mikhail Efremov <sem@altlinux.org> 1.1.92-alt1
 - Updated to 1.1.92 (1.2-beta3).
 
