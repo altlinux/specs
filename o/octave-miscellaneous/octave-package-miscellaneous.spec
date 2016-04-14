@@ -1,22 +1,25 @@
-Serial: 4
+# BEGIN SourceDeps(oneline):
+BuildRequires: makeinfo
+# END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.2.0
+%define octave_pkg_version 1.2.1
 %define octave_pkg_name miscellaneous
 %define octave_descr_name Miscellaneous
+Serial: 4
 Name: octave-%octave_pkg_name
-Version: 1.2.0
-Release: alt5
+Version: 1.2.1
+Release: alt1
 Summary: Miscellaneous functions
 
 Group: Sciences/Mathematics
 License: GPLv3+
 URL: http://octave.sf.net
 
-Source0: %octave_pkg_name-%version.tar.gz
+Source0: http://downloads.sourceforge.net/octave/%{octave_pkg_name}-%{octave_pkg_version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
 BuildArch: noarch
 %endif
@@ -25,7 +28,7 @@ Provides: octave(miscellaneous) = %version
 # SystemRequirements: units
 BuildRequires: units
 
-# octave module BuildRequires: libtinfo-devel [Debian] libncurses5-dev
+# octave module BuildRequires: termcap-devel [Debian] libncurses5-dev
 BuildRequires: libtinfo-devel libncurses-devel
 # Depends: octave (>= 3.6.0), general (>= 1.3.1)
 Requires: octave >= 3.6.0 octave(general) >= 1.3.1
@@ -39,7 +42,7 @@ Extension Description:
 Miscellaneous tools that don't fit somewhere else.
 
 %prep
-%setup -n %octave_pkg_name
+%setup -q -n %{octave_pkg_name}-%{octave_pkg_version}
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -56,6 +59,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 4:1.2.1-alt1
+- regenerated from template by package builder
+
 * Tue Jul 07 2015 Paul Wolneykien <manowar@altlinux.org> 4:1.2.0-alt5
 - Rebuild with the next version of Octave: 4.0.0
 
