@@ -1,6 +1,6 @@
 Name: digger
 Version: 20130313
-Release: alt1
+Release: alt1.qa1
 
 Summary: A Game of Digger
 
@@ -19,10 +19,11 @@ Source13: %name-48x48.png
 #Packager: Michael Shigorin <mike@altlinux.ru>
 #Packager: Dima Pashko <troll@watersport.com.ua>
 
-# Automatically added by buildreq on Mon Mar 31 2008
-BuildRequires: libSDL-devel zlib-devel libalsa libaudiofile esound cmake
+# Automatically added by buildreq on Thu Apr 14 2016
+# optimized out: cmake-modules libX11-devel libgpg-error libjson-c python-base xorg-xproto-devel
+BuildRequires: cmake libSDL-devel zlib-devel
 
-#BuildRequires: XFree86-libs esound libSDL-devel libalsa libaudiofile zlib-devel
+BuildRequires(pre): rpm-macros-cmake
 
 %description
 Digger is one of most popular games on IBM PC.
@@ -67,6 +68,10 @@ install -m644 %SOURCE13 -D %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Thu Apr 14 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 20130313-alt1.qa1
+- Removed libaudio fron BR.
+- Updated BR with buildreq.
+
 * Tue Dec 22 2015 Vitaly Lipatov <lav@altlinux.ru> 20130313-alt1
 - upgrade source to 20130313 (ALT bug #31573)
 - build with cmake, add icons
