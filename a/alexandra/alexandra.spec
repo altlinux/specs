@@ -1,5 +1,5 @@
 Name:		alexandra
-Version:	1.4.0
+Version:	1.5.0
 Release:	alt1
 Summary:	A small and user friendly opensource video library with great potential
 License:	GPLv2
@@ -37,6 +37,9 @@ make INSTALL_ROOT=%buildroot install
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Apr 14 2016 Motsyo Gennadi <drool@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Sun Oct 18 2015 Motsyo Gennadi <drool@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
