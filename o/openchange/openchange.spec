@@ -5,7 +5,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt4.zentyal22.2
+Release: alt4.zentyal23
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -269,7 +269,7 @@ popd
 %files client
 %_bindir/*
 %_man1dir/*
-%_datadir/mapitest/*
+%_datadir/mapitest
 
 %if_enabled python
 %files -n python-module-%name
@@ -294,6 +294,7 @@ popd
 
 %files ocsmanager
 %config(noreplace) %_initdir/openchange-ocsmanager
+%dir %_sysconfdir/ocsmanager
 %config(noreplace) %_sysconfdir/ocsmanager/*
 %config(noreplace) %apache2_mods_available/ocsmanager.conf
 %python_sitelibdir/ocsmanager*
@@ -302,9 +303,15 @@ popd
 
 %files rpcproxy
 %config(noreplace) %apache2_mods_available/rpcproxy.conf
+%dir %_libexecdir/openchange
+%dir %_libexecdir/openchange/web
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Tue Apr 12 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal23
+- New version
+- Fix unowned directories
+
 * Mon Mar 28 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt4.zentyal22.2
 - Fix build with Samba 4.4.0
 
