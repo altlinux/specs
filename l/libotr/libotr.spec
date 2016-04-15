@@ -4,7 +4,7 @@
 %define libname libotr2
 Name: libotr
 Version: 3.2.1
-Release: alt2
+Release: alt2.qa1
 
 Group: System/Legacy libraries
 Summary: Off-The-Record Messaging library and toolkit
@@ -118,6 +118,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.1-alt2.qa1
+- NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
+
 * Mon Jan 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.1-alt2
 - Renamed devel subpackage.
 - Disabled utils subpackage.
