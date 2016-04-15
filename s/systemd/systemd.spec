@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 229
-Release: alt1
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -124,6 +124,9 @@ Source65: systemd-cgls-bash3
 Source66: systemd-cgtop-bash3
 Source67: systemd-detect-virt-bash3
 
+# simpleresolv
+Source68: altlinux-simpleresolv.path
+Source69: altlinux-simpleresolv.service
 
 %define dbus_ver 1.4.6
 
@@ -701,7 +704,10 @@ install -m755 %SOURCE2 %buildroot/lib/systemd/systemd-sysv-install
 ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/altlinux-openresolv.path
 install -m644 %SOURCE5 %buildroot%_unitdir/altlinux-openresolv.service
+install -m644 %SOURCE68 %buildroot%_unitdir/altlinux-simpleresolv.path
+install -m644 %SOURCE69 %buildroot%_unitdir/altlinux-simpleresolv.service
 ln -s ../altlinux-openresolv.path %buildroot%_unitdir/multi-user.target.wants
+ln -s ../altlinux-simpleresolv.path %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-libresolv.path
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
 ln -s ../altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants
@@ -912,8 +918,6 @@ udev_tmpfs="1"
 # (in /dev/.udevdb)
 tmpfs_options="size=5m"
 EOF
-
-mkdir -p %buildroot/lib/udev/devices
 
 # Install symlinks for rules which are needed in initramfs
 mkdir -p %buildroot/lib/udev/initramfs-rules.d
@@ -1574,6 +1578,7 @@ fi
 %_unitdir/*org.freedesktop.resolve1.*
 %_unitdir/altlinux-libresolv*
 %_unitdir/altlinux-openresolv*
+%_unitdir/altlinux-simpleresolv*
 %_unitdir/*/*resolv*
 %_unitdir/*/*network1*
 /lib/systemd/network/*.network
@@ -1707,7 +1712,6 @@ fi
 %_unitdir/*udev*
 %_unitdir/*/*udev*
 %dir /lib/udev
-%dir /lib/udev/devices
 %dir /lib/systemd/network
 /lib/systemd/network/*.link
 /lib/udev/udevd
@@ -1766,6 +1770,15 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Apr 15 2016 Alexey Shabalin <shaba@altlinux.ru> 1:229-alt3
+- Don't enable audit by default.
+- drop support /lib/udev/devices.
+- systemd-networkd-wait online times out with ipv6 disabled
+- backport many patches from upstream master (see git log)
+
+* Tue Apr 12 2016 Eugene Prokopiev <enp@altlinux.ru> 1:229-alt2
+- add alt-specific simpleresolv units (closes: #31276)
+
 * Fri Feb 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:229-alt1
 - 229
 - enable seccomp support
