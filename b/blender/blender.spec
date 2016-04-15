@@ -1,18 +1,16 @@
 Name: blender
-Version: 2.76b
-Release: alt2
+Version: 2.77a
+Release: alt1
 
 Summary: 3D modeling, animation, rendering and post-production
-License: GPL
+License: GPLv2
 Group: Graphics
 URL: http://www.blender.org/
-Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
+# Repacked http://download.blender.org/source/blender-%%version.tar.gz
 Source0: %name-%version.tar
-Source1: %name-wrapper
-Source2: %name.desktop
-Source3: %name-win.desktop
-Patch1: %name-2.68a-cmake_freetype251.patch
+Source1: %name.desktop
+Source2: %name-win.desktop
 
 Patch11: 0001-blender_thumbnailer.patch
 Patch12: 0002-install_in_usr_share.patch
@@ -21,41 +19,37 @@ Patch14: 0004-update_manpages.patch
 Patch15: 0005-do_not_use_version_number_in_system_path.patch
 Patch16: 0006-look_for_dejavu_ttf_with_fontconfig.patch
 
-Patch21: %name-2.66-alt-pcre.patch
+Patch21: blender-2.66-alt-pcre.patch
+Patch22: blender-2.77-alt-enable-localization.patch
+Patch23: blender-2.77-alt-usertempdir.patch
 
 BuildRequires(pre): rpm-build-python3
 
 %add_python3_path %_datadir/%name/scripts
+%add_python3_req_skip BPyWindow
 %add_python3_req_skip _bpy
 %add_python3_req_skip _bpy_path
-%add_python3_req_skip BPyWindow
-%add_python3_req_skip mathutils
+%add_python3_req_skip _freestyle
 %add_python3_req_skip bge
 %add_python3_req_skip bgl
+%add_python3_req_skip blend
 %add_python3_req_skip blf
-%add_python3_req_skip _freestyle
 %add_python3_req_skip enchant
+%add_python3_req_skip mathutils
 
-#Provides: python%_python3_version(Blender)
-#Provides: python%_python3_version(bpy)
-#Provides: python%_python3_version(BPyMesh)
-#Provides: python%_python3_version(bmesh)
-%py3_provides Blender
-%py3_provides bpy
 %py3_provides BPyMesh
+%py3_provides Blender
 %py3_provides bmesh
+%py3_provides bpy
 
 
 Requires: libopenCOLLADA >= 0-alt3
-BuildRequires: libopenCOLLADA-devel >= 0-alt3
+# Automatically added by buildreq on Mon Apr 04 2016
+# optimized out: boost-devel boost-devel-headers cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libfreetype-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: boost-filesystem-devel boost-locale-devel cmake fontconfig-devel gcc-c++ libGLEW-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libjack-devel libjpeg-devel libopenCOLLADA-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel python3-dev
 
-# Automatically added by buildreq on Sun Sep 22 2013
-#  - libopenCOLLADA-devel - moved, with version
-#  + libexpat-devel
-# optimized out: boost-devel cmake cmake-modules fontconfig ilmbase-devel libGL-devel libGLU-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libavcodec-devel libavutil-devel libdc1394-22 libfreetype-devel libopencore-amrnb0 libopencore-amrwb0 libraw1394-11 libstdc++-devel pkg-config python3 python3-base xorg-inputproto-devel xorg-kbproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: boost-devel-headers boost-filesystem-devel boost-locale-devel ctest fontconfig-devel gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libglew-devel libjack-devel libjpeg-devel libopenal-devel libopenjpeg-devel libpcre-devel libpng-devel libsndfile-devel libswscale-devel libtiff-devel libxml2-devel openexr-devel python3-dev tinyxml-devel libexpat-devel
-
-BuildPreReq: python3-dev >= 3.5
+BuildPreReq: libopenCOLLADA-devel >= 0-alt3
+BuildPreReq: python3-devel >= 3.5
 
 %description
 Fully integrated creation suite, offering a broad range of essential
@@ -83,7 +77,6 @@ Languages support for blender
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
 
 # debian
 %patch11 -p1
@@ -94,13 +87,16 @@ Languages support for blender
 %patch16 -p1
 
 %patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 %build
 mkdir cmake-make
 cd cmake-make
 export CFLAGS="%optflags -fPIC -funsigned-char -fno-strict-aliasing"
 export CXXFLAGS="$CFLAGS"
-cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+cmake .. \
+  -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %ifnarch %{ix86} x86_64
   -DWITH_RAYOPTIMIZATION=OFF \
 %endif
@@ -124,18 +120,19 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_CYCLES=OFF \
  -DWITH_OPENIMAGEIO=OFF \
  -DPYTHON_VERSION="%_python3_version" \
-#
+ #
 
-%make_build
 cd ..
+
+%make_build -C cmake-make
 
 install -d release/plugins/include
 
 %install
 %makeinstall_std -C cmake-make
 
-/bin/install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
-/bin/install -pD -m644 %SOURCE3 %buildroot%_desktopdir/%name-win.desktop
+/bin/install -pD -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+/bin/install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name-win.desktop
 %find_lang blender
 
 %files
@@ -151,6 +148,10 @@ install -d release/plugins/include
 %files i18n -f %name.lang
 
 %changelog
+* Fri Apr 15 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.77a-alt1
+- Updated to 2.77a.
+- Enable localization by default (closes ALT#31561).
+
 * Wed Mar 30 2016 Denis Medvedev <nbr@altlinux.org> 2.76b-alt2
 - Changed provides to macros.
 
