@@ -13,7 +13,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt9
+Release: alt10
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -22,7 +22,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 #Requires: kde5-konqueror      = %EVR
-Requires: /usr/bin/xbrowser
+Requires: webclient
 #
 Requires: kde5-kdepasswd      = %EVR
 Requires: kde5-kdialog        = %EVR
@@ -353,6 +353,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Fri Apr 15 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt10
+- fix requires
+
 * Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt9
 - update from frameworks branch
 
