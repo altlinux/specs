@@ -1,7 +1,7 @@
 %define collectorname buildreqs-subst
 
 Name: repocop-collector-%collectorname
-Version: 0.02
+Version: 0.03
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ install -m 644 %collectorname.filepattern $RPM_BUILD_ROOT%_datadir/repocop/pkgco
 %_datadir/repocop/pkgcollectors/%collectorname
 
 %changelog
+* Fri Apr 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- more checks
+
 * Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - schema version
 
