@@ -1,7 +1,7 @@
 %define py_name youtube_dl
 
 Name: youtube-dl
-Version: 2016.04.06
+Version: 2016.04.13
 Release: alt1
 
 Summary: Download videos from YouTube
@@ -38,6 +38,7 @@ This package contains Python module.
 %package -n python3-module-%py_name
 Group: Development/Python
 Summary: Python 3 module for youtube-dl
+%py3_provides %py_name
 
 %description -n python3-module-%py_name
 Youtube-dl is a small command-line program to download videos
@@ -82,10 +83,14 @@ cd -
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Fri Apr 15 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2016.04.13-alt1
+- Updated to 2016.04.13.
+- python3-module-youtube_dl: added P: python3(youtube_dl) (ALT#31948).
+
 * Fri Apr 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2016.04.06-alt1
 - Updated to 2016.04.06.
 - Split package into youtube-dl and python module.
-- Packaged python3 module (fixes ALT#31948).
+- Packaged python3 module (ALT#31948).
 
 * Wed Mar 30 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2016.03.27-alt1
 - Updated to 2016.03.27.
