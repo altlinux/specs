@@ -1,5 +1,5 @@
 Name: volumes-profile-kdesktop
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: Volumes description for Desktop KDE distribution
@@ -28,6 +28,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Fri Apr 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1
+- don't separate home
+
 * Wed May 16 2012 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
 - increase mimimum root size
 
