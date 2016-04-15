@@ -1,5 +1,5 @@
 Name: kexec-tools
-Version: 2.0.11
+Version: 2.0.12
 Release: alt1
 
 Summary: Load one kernel from another
@@ -31,11 +31,12 @@ This package contains statically linked kexec binary only.
 
 %prep
 %setup
+echo '#define VERSION "%version-%release"' > version.h
 
 %build
 %autoreconf
 %configure
-make
+%make_build
 
 %install
 %make_install sbindir=/sbin DESTDIR=%buildroot install
@@ -56,6 +57,9 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 %endif
 
 %changelog
+* Fri Apr 15 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.12-alt1
+- 2.0.12 released
+
 * Mon Nov 09 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.11-alt1
 - 2.0.11 released
 
