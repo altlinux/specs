@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.2
-Release: alt5.3
+Release: alt5.qa5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -696,6 +696,9 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.5.13.2-alt5.qa5
+- NMU: rebuilt with libpoppler.so.58 -> libpoppler.so.59.
+
 * Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 3.5.13.2-alt5.3
 - NMU: rebuilt with new poppler
 
