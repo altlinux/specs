@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: 1.4
-Release: alt6.a0.git20150813
+Release: alt8.a0.git20150813
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -17,6 +17,11 @@ License: BSD
 Group: Development/Python
 Url: http://sphinx.pocoo.org/
 Packager: Python Development Team <python@packages.altlinux.org>
+
+%py_requires simplejson
+
+Provides: python-module-objects.inv
+Obsoletes: python-module-objects.inv
 
 # https://github.com/sphinx-doc/sphinx.git
 Source0: %name-%version.tar
@@ -52,12 +57,19 @@ BuildRequires: python3-module-html5lib python3-module-nose
 #BuildRequires: python-tools-2to3 python3-module-jinja2-tests
 #BuildRequires: python3-module-snowballstemmer python3-module-babel
 #BuildRequires: python3-module-alabaster python3-module-sphinx_rtd_theme
+
+# For python3-2to3:
+BuildPreReq: python3-tools
 %endif
 
-%py_requires simplejson
-
-Provides: python-module-objects.inv
-Obsoletes: python-module-objects.inv
+# For %%check:
+BuildPreReq: %py_dependencies mock
+# minimal deps on the built-in sqlite driver have been fixed in 1.0.8-alt2:
+BuildPreReq: python-module-SQLAlchemy >= 1.0.8-alt2
+%if_with python3
+BuildPreReq: python3(mock) python3(docutils) python3(jinja2) python3(pygments)
+BuildPreReq: python3-module-SQLAlchemy >= 1.0.8-alt2
+%endif
 
 %description
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -236,7 +248,7 @@ install -pm644 %_sourcedir/macro .
 %if_with python3
 pushd ../python3
 
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+python3-2to3 -w -n tests/etree13/HTMLTreeBuilder.py
 sed -i 's|python|python3|' doc/Makefile
 sed -i 's|mimetools|email|g' tests/etree13/HTMLTreeBuilder.py
 sed -i 's|%_bindir/python|%_bindir/python3|' tests/coverage.py
@@ -339,16 +351,12 @@ cp -R doc/_build/pickle %buildroot%sphinx_dir/
 install -p -m644 conf.py.template \
 	%buildroot%sphinx_dir/
 
-%ifarch x86_64
-LIBSUF=64
-%endif
-
 #if_with python3
 #pushd ../python3
 #export PYTHONPATH=%buildroot%python3_sitelibdir
 #export PATH=$PATH:%buildroot%_bindir
 #sed -i 's|^SPHINXBUILD.*|SPHINXBUILD = py3_sphinx-build|' doc/Makefile
-#make_build -C doc pickle
+#make_build PYTHON=python3 -C doc pickle
 #install -d %buildroot%sphinx3_dir/doctrees
 #install -p -m644 doc/_build/doctrees/*.pickle \
 #	%buildroot%sphinx3_dir/doctrees/
@@ -357,11 +365,6 @@ install -p -m644 conf.py.template \
 	%buildroot%sphinx3_dir/
 #popd
 #endif
-
-#check
-# test_autosummary work only with installed Sphinx
-#rm tests/test_autosummary.py
-#make test
 
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
@@ -373,6 +376,14 @@ cat <<\EOF >%buildroot%_rpmlibdir/python3-module-%oname-files.req.list
 # python3-module-%oname dirlist for %_rpmlibdir/files.req
 %sphinx3_dir	python3-module-%oname
 EOF
+%endif
+
+%check
+%make_build test
+%if_with python3
+pushd ../python3
+%make_build PYTHON=python3 test
+popd
 %endif
 
 %files
@@ -430,6 +441,11 @@ EOF
 %endif
 
 %changelog
+* Thu Apr 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt8.a0.git20150813
+- 2to3 not used, because sphinx is known to support Python3 natively.
+  (This fixed one test that used to fail before.)
+- Enabled %%check (for Python{2,3}).
+
 * Thu Apr 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4-alt6.a0.git20150813
 - (.spec) clarify: use the pure upstream sources & explicitly expose
   a single useful patch (sphinx-1.4b1-alt-avoid-download-objects.inv.patch).
