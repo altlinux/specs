@@ -12,7 +12,7 @@
 
 Name: qupzilla
 Version: 2.0.0
-Release: alt3
+Release: alt4
 
 Summary: A very fast open source browser based on WebKit core
 License: GPLv3+
@@ -79,8 +79,8 @@ make INSTALL_ROOT=%buildroot install
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
 cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
-%_bindir/xbrowser       %_K5bin/qupzilla      30
-%_bindir/x-www-browser       %_K5bin/qupzilla      30
+%_bindir/xbrowser       %_bindir/qupzilla      111
+%_bindir/x-www-browser       %_bindir/qupzilla      111
 __EOF__
 
 %find_lang --all-name --with-qt %name
@@ -118,6 +118,9 @@ __EOF__
 %_libdir/libQupZilla.so.%sover.*
 
 %changelog
+* Fri Apr 15 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt4
+- fix alternatives
+
 * Tue Apr 12 2016 Sergey V Turchin <zerg at altlinux dot org> 2.0.0-alt3
 - build KDE and GNOME integration plugins (closes: #31959)
 - package library separately
