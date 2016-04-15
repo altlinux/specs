@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.21
+Version: 0.22
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -11,6 +11,7 @@ Url: http://repocop.altlinux.org
 
 Requires: repocop > 0.67
 Obsoletes: repocop-report-distromap-db < 0.12
+Requires: repocop-collector-buildreqs-subst
 
 BuildRequires: perl-devel perldoc
 BuildRequires: repocop
@@ -38,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Fri Apr 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- support for buildreqs-subst
+
 * Fri Mar 18 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - new version - cmake support
 
