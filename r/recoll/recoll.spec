@@ -5,7 +5,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.21.6
+Version: 1.22.0
 Release: alt1
 
 Summary: A personal full text search package
@@ -86,7 +86,7 @@ for s in 128 96 72 64 36 32 24 22 16; do
 done
 
 %install
-%makeinstall_std
+%makeinstall_std INSTALL_ROOT=%buildroot
 for s in 128 96 72 64 36 32 24 22 16; do
     install -pDm644 desktop/%name-$s.png %buildroot%_iconsdir/hicolor/${s}x$s/apps/%name.png
 done
@@ -124,6 +124,10 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Fri Apr 15 2016 Michael Shigorin <mike@altlinux.org> 1.22.0-alt1
+- new version (watch file uupdate)
+- fixed installation
+
 * Fri Apr 08 2016 Michael Shigorin <mike@altlinux.org> 1.21.6-alt1
 - new version (watch file uupdate)
 
