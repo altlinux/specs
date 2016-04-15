@@ -1,6 +1,6 @@
 Name: libspectrum
 Version: 1.1.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: ZX Spectrum emulation shared library
 
@@ -54,6 +54,9 @@ This package contains header files for %name.
 %_includedir/%name.h
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
+- NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
