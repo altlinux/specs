@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0.8
-Release: alt1.1.1
+Release: alt2
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -13,6 +13,11 @@ Url: http://www.sqlalchemy.org/
 
 Source: SQLAlchemy-%version.tar
 %py_provides SQLAlchemy
+
+# Make sure that at least the Python built-in sqlite driver
+# is present (and can be used by SQLAlchemy--among other things--
+# in various tests, like in the tests for sphinx).
+Requires: python-modules-sqlite3
 
 #BuildArch: noarch
 #BuildPreReq: python-devel python-module-setuptools
@@ -39,6 +44,11 @@ simple and Pythonic domain language.
 Summary: Python 3 SQL toolkit and Object Relational Mapper
 Group: Development/Python3
 %py3_provides SQLAlchemy
+
+# Make sure that at least the Python built-in sqlite driver
+# is present (and can be used by SQLAlchemy--among other things--
+# in various tests, like in the tests for sphinx).
+Requires: python3-modules-sqlite3
 
 %description -n python3-module-%oname
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
@@ -124,6 +134,11 @@ popd
 %endif
 
 %changelog
+* Fri Apr 15 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.8-alt2
+- Make sure that at least the Python built-in sqlite driver is present
+  (and can be used by SQLAlchemy whenever SQLAlchemy is installed;
+  among other things, it's useful for tests, like in sphinx).
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.8-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
