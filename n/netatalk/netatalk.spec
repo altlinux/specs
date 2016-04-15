@@ -2,7 +2,7 @@
 
 Name: netatalk
 Version: 2.2.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: AppleTalk networking programs
 License: GPL, BSD
@@ -130,6 +130,9 @@ mv %buildroot%_man1dir/uniconv.1 %buildroot%_man1dir/uniconv_netatalk.1
 
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.2.4-alt1.qa1
+- NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
+
 * Sat Dec  8 2012 Sergey Kurakin <kurakin@altlinux.org> 2.2.4-alt1
 - 2.2.4
 - cups support removed
