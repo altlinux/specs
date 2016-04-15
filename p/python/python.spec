@@ -4,7 +4,7 @@
 Name: %real_name
 
 Version: 2.7.11
-Release: alt2
+Release: alt3
 
 %define package_name		%real_name
 %define weight			1001
@@ -830,9 +830,14 @@ find %buildroot -type f -print0 |
 	xargs -r0 grep -FZl -- %buildroot |
 	xargs -r0 sed -i 's|%buildroot||g' --
 
+touch dev-list
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
+if [ "%real_name" != "%name" ]; then
 echo %real_name >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name
+echo %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name >> base-list
 echo %real_name-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
+echo %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel >> dev-list
+fi
 echo %real_name-devel >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-dev
 %if_with tk
 echo tkinter >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%python_name-modules-tkinter
@@ -901,7 +906,6 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 
 %files base -f base-list
 %_mandir/man?/*
-%config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
 %_bindir/%python_name
 %_bindir/%real_name
@@ -1052,8 +1056,7 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %doc Tools/scripts/README Tools/scripts/dutree.doc
 %endif
 
-%files dev
-%config %_sysconfdir/buildreqs/packages/substitute.d/%name-devel
+%files dev -f dev-list
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-dev
 %_includedir/%python_name
 %exclude %_includedir/%python_name/pyconfig.h
@@ -1092,6 +1095,9 @@ rm -f %buildroot%_man1dir/python2.1 %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Fri Apr 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.11-alt3
+- NMU: made some buildreqs/substitute.d optional (closes: #31979)
+
 * Wed Mar 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.7.11-alt2
 - /etc/buildreqs/files/ignore.d/python: fixed on x86_64 and added
   .egg-info/(entry_points|namespace_packages).txt.
