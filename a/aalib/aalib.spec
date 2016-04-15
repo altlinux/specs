@@ -3,7 +3,7 @@
 
 Name: aalib
 Version: 1.4
-Release: alt7%prerel
+Release: alt8%prerel
 
 Summary: AA (Ascii Art) library
 License: LGPLv2+
@@ -12,12 +12,6 @@ Url: http://aa-project.sourceforge.net/%name/
 
 # http://prdownloads.sourceforge.net/aa-project/%name-%version%prerel.tar.gz
 Source: %name-%version%prerel.tar
-Source1: %name-config.1
-Patch0: %name-info.patch
-Patch1: %name-debian_man.patch
-Patch2: %name-1.4-suse-m4.patch
-Patch3: %name-1.4-fc-aalinuxkbd.patch
-Patch4: %name-1.4-alt-rpath.patch
 
 %ifdef prerel
 Provides: %name = %version%prerel
@@ -25,7 +19,7 @@ Provides: %name = %version%prerel
 
 # Automatically added by buildreq on Mon Apr 25 2011
 # optimized out: xorg-xproto-devel
-BuildRequires: libX11-devel libgpm-devel libslang2-devel
+BuildRequires: libX11-devel libgpm-devel libslang2-devel makeinfo
 
 %package devel
 Summary: Header files for developing apps which will use %name
@@ -88,11 +82,7 @@ library, an ASCII art library.
 
 %prep
 %setup -n %name-%version.0
-%patch0 -p1
-%patch1 -p1
-%patch2 -p0
-%patch3 -p1
-%patch4 -p1
+rm doc/*.info*
 
 %build
 %autoreconf
@@ -102,14 +92,9 @@ library, an ASCII art library.
 %install
 %makeinstall_std
 
-install -pD -m644 %SOURCE1 %buildroot%_man1dir/aalib-config.1
-
-for p in `ls -1 %buildroot%_bindir | grep -Ev '\-|fire'`; do
-    echo .so aafire.1 >%buildroot%_man1dir/"$p".1
+for f in %buildroot%_bindir/aa[ist]*; do
+	echo .so aafire.1 > %buildroot%_man1dir/${f##*/}.1
 done
-
-# remove none-packaged files
-rm -f %buildroot%_infodir/dir
 
 %files
 %doc ChangeLog NEWS README
@@ -136,6 +121,9 @@ rm -f %buildroot%_infodir/dir
 %exclude %_man1dir/*-config.*
 
 %changelog
+* Fri Apr 15 2016 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt8rc5
+- Import patches from Debian aalib package.
+
 * Sun Dec 18 2011 Dmitriy Khanzhin <jinn@altlinux.ru> 1.4-alt7rc5
 - Fixed "aalib-config --libs" output (closes: #26727).
 
