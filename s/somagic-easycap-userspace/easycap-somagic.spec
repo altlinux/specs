@@ -1,7 +1,7 @@
 Summary: Somagic EasyCAP tools
 Name: somagic-easycap-userspace
 Version: 1.0
-Release: alt1
+Release: alt2
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: GPL
 Group: Graphics
@@ -42,5 +42,8 @@ This package will soon be obsolete by the proper kernel driver.
 %_man1dir/*
 
 %changelog
+* Sat Apr 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
+- rebuild with gcrypt
+
 * Wed Oct 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - first build for sisyphus
