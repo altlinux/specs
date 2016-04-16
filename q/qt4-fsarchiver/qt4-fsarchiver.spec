@@ -4,7 +4,7 @@
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt4-fsarchiver
 Version: 0.6.19
-Release: alt1.%subver
+Release: alt1.%subver.qa1
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -128,6 +128,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%name.policy
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.19-alt1.12.qa1
+- NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
+
 * Mon Mar 16 2015 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.12
 - new version
 
