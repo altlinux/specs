@@ -1,6 +1,6 @@
 Name: exrtools
 Version: 0.4
-Release: alt1.2
+Release: alt1.qa3
 
 Summary: Command line utilities for manipulating high dynamic range images
 License: MIT/X Consortium
@@ -21,7 +21,7 @@ small and reasonably self-contained so that the source code may be of most
 value to others.
 
 %prep
-%setup -q
+%setup
 %patch -p2
 
 %build
@@ -29,7 +29,7 @@ value to others.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc README ChangeLog
@@ -37,6 +37,9 @@ value to others.
 %_man1dir/*
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4-alt1.qa3
+- NMU: rebuilt due to libIlmImf.so.6 -> libIlmImf-2_2.so.22 soname change.
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1.2
 - Rebuilt with libpng15
 
