@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
@@ -7,7 +7,7 @@
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -19,7 +19,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
 # From configure.ac
-%define gtk_ver 3.15.2
+%define gtk_ver 3.20.0
 %define desktop_ver 3.3.92
 %define libpango_ver 1.15.4
 %define glib_ver 2.36.0
@@ -192,6 +192,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
