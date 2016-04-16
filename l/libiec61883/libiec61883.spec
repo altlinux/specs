@@ -2,22 +2,17 @@
 
 Name: libiec61883
 Version: 1.2.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Streaming library for IEEE1394
-
-License: LGPL
+License: LGPLv2+
 Group: System/Libraries
-Url: http://www.linux1394.org/
+Url: https://ieee1394.wiki.kernel.org/index.php/Libraries#libiec61883
 
 #Source: http://prdownloads.sourceforge.net/libraw1394/%name-%version.tar
 Source: https://www.kernel.org/pub/linux/libs/ieee1394/libiec61883-%version.tar
 
-# Automatically added by buildreq on Mon Feb 13 2006
-BuildRequires: gcc-c++ libraw1394-devel pkg-config
-
-BuildRequires: libraw1394-devel >= 1.2.0
-Requires: libraw1394 >= 1.2.0
+BuildRequires: gcc-c++ libraw1394-devel
 
 %description
 This library is an implementation of IEC 61883, part 1 (CIP, plug
@@ -39,7 +34,6 @@ existed in experimental form in an unreleased version of libavc1394.
 Summary: libiec61883 header files
 Group: Development/Other
 Requires: %name = %version-%release
-Requires: libraw1394-devel >= 1.2.0
 
 %description devel
 libiec61883 devel package.
@@ -68,6 +62,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc examples
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt1.qa1
+- NMU: removed redundant libraw1394 and libraw1394-devel requirements.
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - new version 1.2.0 (with rpmrb script)
 - cleanup spec
