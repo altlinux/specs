@@ -2,12 +2,13 @@
 
 Name: blender2.49
 Version: 2.49b
-Release: alt12
+Release: alt12.qa1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
 Group: Graphics
 URL: http://www.blender.org/
+Packager: ALT QA Team <qa@packages.altlinux.org>
 
 Source0: http://download.blender.org/source/blender-%version.tar.gz
 Source1: blender-wrapper
@@ -74,6 +75,10 @@ Languages support for blender
 %patch6 -p1
 %patch7 -p1
 %patch8 -p2
+
+find -type f -print0 |
+	xargs -r0 grep -FlZ '#include "math.h"' |
+	xargs -r0 sed -i 's/#include "math\.h"/#include <math.h>/' --
 
 sed -i 's|BulletSoftBody//|BulletSoftBody/|' source/gameengine/Physics/Bullet/CcdPhysicsController.cpp
 
@@ -204,6 +209,9 @@ popd
 %_datadir/%name/.Blanguages
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.49b-alt12.qa1
+- NMU: rebuilt due to libHalf.so.11 -> libHalf.so.12 soname change.
+
 * Wed Apr 23 2014 Fr. Br. George <george@altlinux.ru> 2.49b-alt12
 - Rebuilt without ffmpeg (blender2.49 is used for python2.7 modules only)
 
