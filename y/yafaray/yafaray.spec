@@ -1,13 +1,14 @@
 Name: yafaray
 Version: 0.1.1
-Release: alt2.2
+Release: alt2.qa3
 
 Summary: YafaRay is a raytracing open source render engine
 License: LGPL
 Group: Graphics
-Url: http://www.yafaray.org/
+Url: http://www.yafaray.org
+Packager: Sergey Kurakin <kurakin@altlinux.org>
 
-Source0: YafaRay.%version.zip
+Source: YafaRay.%version.zip
 
 %py_provides yafrayinterface
 
@@ -32,15 +33,15 @@ Summary: Graphic display for YafaRay
 Requires: %name = %version-%release
 
 %description yafqt
-YafQt is a graphic display for YafaRay
+YafQt is a graphic display for YafaRay.
 
 %prep
 %setup -n %name
 
 cat > user-config.py <<__EOF__
 PREFIX = '%buildroot%_usr'
-CCFLAGS = '-g -Wall -fPIC'
-REL_CCFLAGS = '-g -Wall -fPIC'
+CCFLAGS = '%optflags %optflags_shared'
+REL_CCFLAGS = '%optflags %optflags_shared'
 YF_LIBOUT = '%buildroot%_libdir'
 YF_PLUGINPATH = '%buildroot%_libdir/%name'
 YF_BINPATH = '%buildroot%_bindir'
@@ -74,6 +75,9 @@ install -p -m644 bindings/python/* %buildroot%_libdir/blender/scripts
 %_libdir/blender/scripts/*yafqt.*
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.1.1-alt2.qa3
+- NMU: rebuilt due to libIlmImf.so.6 -> libIlmImf-2_2.so.22 soname change.
+
 * Thu Sep 27 2012 Sergey Kurakin <kurakin@altlinux.org> 0.1.1-alt2.2
 - rebuild with latest libpng
 
