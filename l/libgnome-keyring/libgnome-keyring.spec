@@ -7,13 +7,12 @@
 
 Name: libgnome-keyring
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Compatibility library for accessing secrets
 License: LGPL
 Group: System/Libraries
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Source1: %name.map
@@ -135,6 +134,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
+- rebuilt against libgcrypt.so.20
+
 * Sun Mar 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 
