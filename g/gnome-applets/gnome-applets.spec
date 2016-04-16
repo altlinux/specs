@@ -1,12 +1,14 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define panel_api_ver 5.0
 %def_enable frequency_selector
 %def_disable mini_commander
 %def_enable battstat
 %def_enable modemlights
+%def_enable command
+%def_enable timer
 
 Name: gnome-applets
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -22,7 +24,7 @@ Patch: %name-2.9.90-alt-modemlights.patch
 # From configure.ac
 %define gtk_ver 3.16.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.18.1
+%define gnome_panel_ver 3.20.0
 %define libgtop_ver 2.11.92
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -48,6 +50,8 @@ Requires: %name-tracker-search-bar = %version-%release
 %{?_enable_mini_commander:Requires: %name-mini-commander = %version-%release}
 %{?_enable_modemlights:Requires: %name-modemlights = %version-%release}
 %{?_enable_battstat:Requires: %name-battstat = %version-%release}
+%{?_enable_command:Requires: %name-command = %version-%release}
+%{?_enable_timer:Requires: %name-timer = %version-%release}
 
 # From configure.ac
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -307,6 +311,23 @@ Requires: tracker
 This package provides tracker-search-bar applet for gnome-panel that allows user
 to search data quickly using Tracker.
 
+%package command
+Summary: Applet that shows the output of a command
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+
+%description command
+This package provides command-applet for gnome-panel that allows user
+to show the output of a command.
+
+%package timer
+Summary: Applet that starts a timer
+Group: Graphical desktop/GNOME
+PreReq: %name-common = %version-%release
+
+%description timer
+This package provides timer-applet for gnome-panel that allows user
+to start a timer and receive a notification when it is finished.
 
 %define _libexecdir %gnome_appletsdir
 
@@ -496,6 +517,22 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.panel.SearchBar.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.SearchBarFactory.service
 
+%if_enabled command
+%files command
+%gnome_appletsdir/command-applet
+%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.CommandApplet.panel-applet
+%_datadir/dbus-1/services/org.gnome.panel.applet.CommandAppletFactory.service
+%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.command.gschema.xml
+%endif
+
+%if_enabled timer
+%files timer
+%gnome_appletsdir/timer-applet
+%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.TimerApplet.panel-applet
+%_datadir/dbus-1/services/org.gnome.panel.applet.TimerAppletFactory.service
+%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.timer.gschema.xml
+%endif
+
 #exclude invest-applet files
 %exclude %_bindir/invest-chart
 %exclude %_libdir/%name/invest-applet
@@ -510,6 +547,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_iconsdir/hicolor/*/*/invest-applet*
 
 %changelog
+* Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0, new -timer and -command applets/subpackages
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 
