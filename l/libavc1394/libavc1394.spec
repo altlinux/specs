@@ -1,25 +1,17 @@
 Name: libavc1394
 Version: 0.5.4
-Release: alt1
+Release: alt1.qa1
 
 Summary: A library to control AV firewire devices
 
-License: LGPL
+License: LGPLv2+
 Group: System/Libraries
-Url: http://sourceforge.net/projects/libavc1394/
+Url: https://sourceforge.net/projects/libavc1394/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/%name/%name-%version.tar.gz
+Source: https://downloads.sourceforge.net/%name/%name-%version.tar.gz
 
-%define libraw1394_ver 1.1.0
-Requires: libraw1394 >= %libraw1394_ver
-BuildPreReq: libraw1394-devel >= %libraw1394_ver
-
-#BuildPreReq: libtool_1.4
-
-# manually removed: gcc-g77 libg2c-devel 
-# Automatically added by buildreq on Fri Aug 26 2005
-BuildRequires: gcc-c++ libraw1394-devel libstdc++-devel pkgconfig
+BuildRequires: gcc-c++ libraw1394-devel
 
 %description
 libavc1394 is a programming interface for the 1394 Trade
@@ -50,7 +42,7 @@ Association AV/C (Audio/Video Control) Digital Interface
 Command Set.
 
 This package contains libraries needed to compile applications
-statically linked  with %name.
+statically linked with %name.
 
 %package utils
 Summary: FireWire interface
@@ -97,6 +89,9 @@ rm -f %buildroot%_libdir/*.la
 %_man1dir/*
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.5.4-alt1.qa1
+- NMU: removed redundant libraw1394 and libraw1394-devel requirements.
+
 * Sun Oct 30 2011 Michael Shigorin <mike@altlinux.org> 0.5.4-alt1
 - NMU: 0.5.4
 - minor spec cleanup
