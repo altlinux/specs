@@ -1,7 +1,7 @@
 %define _sover 6.1
 Name: libdb%_sover
 Version: %_sover.19
-Release: alt1
+Release: alt2
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -37,13 +37,15 @@ Source:  %srcname.tar.gz
 %{?_enable_java:BuildPreReq: jdkgcj, sharutils, /proc}
 %{?_enable_tcl:BuildPreReq: tcl-devel >= 8.4.0-alt1}
 
-BuildPreReq: libsocket-devel
+BuildRequires: libsocket-devel
+Provides: libdb6-devel = %version-%release
 
 %package -n db%_sover-utils
 Summary: Command line tools for managing Berkeley DB databases
 Group: Databases
 Conflicts: db3-utils, db4.0-utils, db4.1-utils, db4.2-utils
 Conflicts: db4.3-utils, db4.4-utils, db4.7-utils, db4.8-utils
+Provides: db6-utils = %version-%release
 
 %package devel
 Summary: Development environment for Berkeley database library
@@ -52,14 +54,17 @@ Requires: %name = %version-%release
 Conflicts: libdb3-devel, libdb4.0-devel, libdb4.1-devel, libdb4.2-devel
 Conflicts: libdb4.3-devel, libdb4.4-devel, libdb4.6-devel
 Conflicts: libdb4.7-devel, libdb4.8-devel, libdb2-devel < 0:2.4.14-alt3
+Provides: libdb6-devel = %version-%release
 
 %package -n %{name}_cxx
 Summary: C++ bindings for Berkeley database library
 Group: System/Libraries
+Provides: libdb6_cxx = %version-%release
 
 %package -n %{name}_sql
 Summary: SQL API for Berkeley database library
 Group: System/Libraries
+Provides: libdb6_sql = %version-%release
 
 %package -n %{name}_cxx-devel
 Summary: C++ development bindings for Berkeley database library
@@ -70,12 +75,14 @@ Requires: %{name}_cxx = %version-%release
 Conflicts: libdb4.0_cxx-devel, libdb4.1_cxx-devel, libdb4.2_cxx-devel
 Conflicts: libdb4.3_cxx-devel, libdb4.4_cxx-devel, libdb4.6_cxx-devel
 Conflicts: libdb4.7_cxx-devel libdb4.8_cxx-devel
+Provides: libdb6_cxx-devel = %version-%release
 
 %package -n %{name}_sql-devel
 Summary: SQL API development files for Berkeley database library
 Group: Development/Databases
 Requires: %name-devel = %version-%release
 Requires: %{name}_sql = %version-%release
+Provides: libdb6_sql-devel = %version-%release
 
 %package -n %{name}_tcl
 Summary: Tcl bindings for Berkeley database library
@@ -83,6 +90,7 @@ Group: System/Libraries
 Conflicts: libdb3_tcl, libdb4.0_tcl, libdb4.1_tcl, libdb4.2_tcl
 Conflicts: libdb4.3_tcl, libdb4.4_tcl, libdb4.6_tcl, libdb4.7_tcl
 Conflicts: libdb4.8_tcl
+Provides: libdb6_tcl = %version-%release
 
 %package -n %{name}_tcl-devel
 Summary: Tcl development bindings for Berkeley database library
@@ -92,18 +100,21 @@ Requires: %{name}_tcl = %version-%release
 Conflicts: libdb4.0_tcl-devel, libdb4.1_tcl-devel, libdb4.2_tcl-devel
 Conflicts: libdb4.3_tcl-devel, libdb4.4_tcl-devel, libdb4.6_tcl-devel
 Conflicts: libdb4.7_tcl-devel libdb4.8_tcl-devel
+Provides: libdb6_tcl-devel = %version-%release
 
 %package -n %{name}_java
 Summary: Java bindings for Berkeley database library
 Group: System/Libraries
 Conflicts: libdb4.0_java, libdb4.1_java, libdb4.2_java, libdb4.3_java
 Conflicts: libdb4.4_java, libdb4.6_java, libdb4.7_java, libdb4.8_java
+Provides: libdb6_java = %version-%release
 
 %package -n %{name}_java-devel
 Summary: Java development bindings for Berkeley database library
 Group: Development/Java
 Requires: %name-devel = %version-%release
 Requires: %{name}_java = %version-%release
+Provides: libdb6_java-devel = %version-%release
 
 %package doc
 Summary: Documentation for Berkeley database library
@@ -315,7 +326,7 @@ for n in db%_sover-utils \
 	 %{?_enable_java:%{name}_java{,-devel}} \
 	 %{name}_sql{,-devel} \
 	 ; do
-	echo "${n/%_sover/4}" >"%buildroot%_sysconfdir/buildreqs/packages/substitute.d/$n"
+	echo "${n/%_sover/6}" >"%buildroot%_sysconfdir/buildreqs/packages/substitute.d/$n"
 done
 
 %files
@@ -392,6 +403,9 @@ done
 %endif
 
 %changelog
+* Sun Apr 17 2016 Igor Vlasenko <viy@altlinux.ru> 6.1.19-alt2
+- NMU: fixed substitute.d files
+
 * Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1.19-alt1
 - Initial build for Sisyphus
 
