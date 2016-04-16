@@ -1,7 +1,7 @@
 Summary: Somagic EasyCAP tools
 Name: somagic-easycap-tools
 Version: 1.0
-Release: alt1
+Release: alt2
 Packager: Igor Vlasenko <viy@altlinux.ru>
 License: GPL
 Group: Graphics
@@ -43,6 +43,9 @@ Linux capture program for the Somagic variants of the EasyCAP:
 %_man1dir/*
 
 %changelog
+* Sat Apr 16 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
+- rebuild with gcrypt
+
 * Wed Oct 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - first build for sisyphus
 
