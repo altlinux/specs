@@ -1,6 +1,6 @@
 Name: ario
 Version: 1.5.1
-Release: alt2
+Release: alt2.qa1
 Summary: Ario is a GTK2 client for MPD
 
 Group: Sound
@@ -46,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.1-alt2.qa1
+- NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
+
 * Thu Apr 19 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 1.5.1-alt2
 - fixed build with new glib2
 
