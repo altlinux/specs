@@ -2,32 +2,32 @@
 
 Name: devil
 Version: 1.7.8
-Release: alt1.3
+Release: alt1.qa4
 
-%define realver %version
-
-License: GPL
-Url: http://openil.sourceforge.net
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
-Summary: Cross-platform image loading and manipulation toolkit.
+Summary: Cross-platform image loading and manipulation toolkit
 Group: System/Libraries
-Source: %name-%realver.tar
+License: LGPLv2+
+Url: http://openil.sourceforge.net
+Packager: Packager: ALT QA Team <qa@packages.altlinux.org>
+Source: %name-%version.tar
 
-#Patch1: DevIL-1.6.8-ilut-h.patch
-Patch2: devil-1.7.8-alt-libpng15.patch
+Patch0: devil-1.7.8-alt-png_set_expand_gray.patch
+Patch1: devil-1.7.8-deb-CVE-2009-3994.patch
+Patch2: devil-deb-FTBFS-il.h.patch
 
-BuildRequires: gcc-c++ libSDL-devel liballegro-devel libjpeg-devel liblcms-devel libmng-devel libpng-devel libstdc++-devel libtiff-devel zlib-devel
+BuildRequires: gcc-c++ libSDL-devel liballegro-devel libjpeg-devel
+BuildRequires: liblcms-devel libmng-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libGL-devel libGLU-devel libGLUT-devel libX11-devel
-BuildPreReq: openexr-devel libjasper-devel libICE-devel libXext-devel
-BuildPreReq: libXrender-devel libSM-devel libXmu-devel libXi-devel
+BuildRequires: openexr-devel libjasper-devel libICE-devel libXext-devel
+BuildRequires: libXrender-devel libSM-devel libXmu-devel libXi-devel
 
 %description
-Developer's Image Library (DevIL) is a programmer's library to develop 
-applications with very powerful image loading capabilities, yet is easy 
-for a developer to learn and use. Ultimate control of images is left 
-to the developer, so unnecessary conversions, etc. are not performed. 
-DevIL utilizes a simple, yet powerful, syntax. 
-DevIL can load, save, convert, manipulate, filter and display a wide 
+Developer's Image Library (DevIL) is a programmer's library to develop
+applications with very powerful image loading capabilities, yet is easy
+for a developer to learn and use. Ultimate control of images is left
+to the developer, so unnecessary conversions, etc. are not performed.
+DevIL utilizes a simple, yet powerful, syntax.
+DevIL can load, save, convert, manipulate, filter and display a wide
 variety of image formats.
 
 %package -n lib%name
@@ -71,11 +71,11 @@ applications with very powerful image loading capabilities, yet is easy
 for a developer to learn and use. This package contains documentation
 
 %prep
-%setup 
+%setup
 
-%patch2 -p0
-
-sed -i 's|glut32|glut|g' configure
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure \
@@ -107,6 +107,9 @@ rm -rf %buildroot%_infodir/*
 %doc README Libraries.txt TODO CREDITS AUTHORS
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.7.8-alt1.qa4
+- NMU: imported patches from Debian to fix FTBFS.
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.8-alt1.3
 - Rebuilt with libpng15
 
@@ -136,4 +139,3 @@ rm -rf %buildroot%_infodir/*
 
 * Fri Aug 26 2005 Pavlov Konstantin <thresh@altlinux.ru> 1.6.7-alt1
 - Initial build.
-
