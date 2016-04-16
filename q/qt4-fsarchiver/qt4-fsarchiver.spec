@@ -1,10 +1,10 @@
 %define subversion alt
-%define subver 12
+%define subver 16
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt4-fsarchiver
 Version: 0.6.19
-Release: alt1.%subver.qa1
+Release: alt1.%subver
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -18,9 +18,16 @@ Patch1: qt4-fsarchiver_qmake_pro.patch
 License: GPLv2+
 Group: Archiving/Backup
 
-# Automatically added by buildreq on Mon Feb 16 2015
-# optimized out: fontconfig libcloog-isl4 libcom_err-devel libgpg-error libgpg-error-devel libqt4-core libqt4-gui libstdc++-devel phonon-devel zlib-devel
-BuildRequires: bzlib-devel gcc-c++ glibc-devel libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libqt4-devel libuuid-devel
+BuildRequires(pre): libqt4-devel 
+
+
+# BEGIN SourceDeps(oneline):
+# Automatically added by buildreq on Sat Apr 16 2016
+# optimized out: fontconfig libcom_err-devel libgpg-error libgpg-error-devel libqt4-core libqt4-devel libqt4-gui libstdc++-devel phonon-devel python-base zlib-devel
+BuildRequires: bzlib-devel gcc-c++ libattr-devel libblkid-devel libe2fs-devel libgcrypt-devel liblzma-devel liblzo2-devel libqt4-webkit-devel libuuid-devel
+
+BuildRequires: libcom_err-devel libgpg-error-devel zlib-devel
+# END SourceDeps(oneline)
 
 %description
 QT4-FSArchiver is GUI for fsarhiver.
@@ -77,7 +84,7 @@ FSArchiver  - системный инструментарий, позволяя�
 %patch -p2
 %patch1 -p1
 
-cp %SOURCE4 ./translations/%{name}_ru.ts
+#cp %SOURCE4 ./translations/%{name}_ru.ts
 
 echo QMAKE_CXXFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
 echo QMAKE_CFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
@@ -112,6 +119,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/%name
 
 install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
 install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
+
+rm -f %buildroot/%_desktopdir/*-%name.desktop
+
 install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
 
 %files
@@ -124,10 +134,15 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
 %_sysconfdir/pam.d/*
 %_sysconfdir/security/console.apps/*
 %_datadir/qt4/translations/*%{name}*.qm
-%exclude %_datadir/qt4/translations/*%{name}*.ts
+%exclude %_docdir/%name
+#exclude %_datadir/qt4/translations/*%{name}*.ts
 %_datadir/polkit-1/actions/org.project.pkexec.run-%name.policy
 
 %changelog
+* Sat Apr 16 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.16
+- version 0.6.19-16
+- correct russian translation
+
 * Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.19-alt1.12.qa1
 - NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
 
