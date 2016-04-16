@@ -2,16 +2,16 @@
 %define api_ver 1.0
 
 Name: lib%_name%api_ver
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Summary: Gtk+3 widget for displaying map tiles
 
 Group: System/Libraries
 License: GPLv2+
-Url: http://nzjrs.github.com/%_name/
+Url: https://github.com/nzjrs/%_name/
 
-Source: https://github.com/nzjrs/%_name/releases/download/%version/%_name-%version.tar.gz
+Source: %url/releases/download/%version/%_name-%version.tar.gz
 
 BuildRequires: gnome-common gtk-doc libgtk+3-devel libcairo-devel libsoup-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -92,10 +92,13 @@ mv %buildroot%_datadir/gtk-doc/html/libosmgpsmap{,-%api_ver}
 %files devel-doc
 %_datadir/gtk-doc/html/libosmgpsmap-%api_ver/
 
-%exclude %_prefix/doc/%_name
+%exclude %_datadir/doc/%_name
 
 
 %changelog
+* Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Wed Nov 04 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - first build for Sisyphus
 
