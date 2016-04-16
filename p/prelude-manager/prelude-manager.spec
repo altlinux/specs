@@ -4,7 +4,7 @@
 Summary:        Prelude Hybrid Intrusion Detection System Manager
 Name:           prelude-manager
 Version:        1.2.6
-Release:        alt1.rc2.git20140923
+Release:        alt1.rc2.git20140923.qa1
 License:        GPLv2
 Group:          System/Servers
 URL:            http://www.prelude-ids.org/
@@ -333,6 +333,9 @@ EOF
 %endif
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.6-alt1.rc2.git20140923.qa1
+- NMU: rebuilt with libgnutls.so.28 -> libgnutls.so.30.
+
 * Wed Sep 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.6-alt1.rc2.git20140923
 - Version 1.2.6rc2
 
