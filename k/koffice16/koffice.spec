@@ -28,7 +28,7 @@
 %define rname koffice
 Name: %{rname}16
 Version: 1.6.3
-%define rlz alt27.2
+%define rlz alt27.qa3
 %define beta %nil
 Serial: 4
 
@@ -909,6 +909,9 @@ mv %buildroot/%_iconsdir/crystalsvg %buildroot/%_kde3_iconsdir
 ###%endif
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4:1.6.3-alt27.qa3
+- NMU: rebuilt due to libHalf.so.11 -> libHalf.so.12 soname change.
+
 * Wed Mar 12 2014 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt27.2
 - Rebuild force by gcc4.7.
 
