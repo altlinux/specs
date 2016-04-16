@@ -1,6 +1,6 @@
 Name: chmsee
 Version: 1.3.1.1
-Release: alt2
+Release: alt3
 
 Summary: A GTK+2 based CHM viewer
 Group: Office
@@ -54,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3.1.1-alt3
+- rebuilt against libgcrypt.so.20
+
 * Mon Aug 15 2011 Yuri N. Sedunov <aris@altlinux.org> 1.3.1.1-alt2
 - built with webkit (ALT #26064)
 
