@@ -1,7 +1,7 @@
 Summary: srecord programs
 Name: srecord
 Version: 1.61
-Release: alt1
+Release: alt1.qa1
 License: GPL
 Group: Development/Tools
 Source: http://srecord.sourceforge.net/%name-%version.tar.gz
@@ -77,6 +77,9 @@ that manipulate EPROM load files.
 %_man3dir/*
 
 %changelog
+* Sat Apr 16 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.61-alt1.qa1
+- NMU: rebuilt with libgcrypt.so.11 -> libgcrypt.so.20.
+
 * Mon Jan 28 2013 Grigory Milev <week@altlinux.ru> 1.61-alt1
 - Initial build for ALTLinux
 
