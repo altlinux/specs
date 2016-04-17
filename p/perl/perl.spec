@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.22.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -325,6 +325,9 @@ cat <<EOF >%buildroot%_rpmlibdir/perl-base-files.req.list
 /usr/lib/perl5/vendor_perl	perl-base
 EOF
 
+mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d/
+echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
+
 %files	base
 %doc	Artistic AUTHORS README
 	%_bindir/perl
@@ -338,6 +341,7 @@ EOF
 %dir	/etc/perl5
 %dir	/usr/lib/perl5/vendor_perl
 %config %_rpmlibdir/perl-base-files.req.list
+%config %_sysconfdir/buildreqs/packages/substitute.d/perl-base
 # pragma
 	%archlib/arybase.pm
 	%autolib/arybase
@@ -750,6 +754,9 @@ EOF
 	%privlib/Unicode/Normalize.pm
 
 %changelog
+* Sun Apr 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:5.22.1-alt2
+- added buildreqs substitute.d perl-base -> perl
+
 * Wed Dec 16 2015 Igor Vlasenko <viy@altlinux.ru> 1:5.22.1-alt1
 - 5.22.0 -> 5.22.1
 
