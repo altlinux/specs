@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.10
+Version: 0.11
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -76,8 +76,6 @@ if grep 'only_from = 127.0.0.1' /etc/xinetd.conf; then
     sed -i -e 's,only_from = .*,only_from = 0.0.0.0,' /etc/xinetd.conf
 fi
 service xinetd restart
-
-echo 'include /etc/monitrc.d/*.conf' > /etc/monitrc
 service monit restart ||:
 
 %post nginx
@@ -108,6 +106,9 @@ fi
 %config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Sun Apr 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- fixed monit misconfiguration
+
 * Mon Oct 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - fixed port in monit for autoports (thanks to ldv@)
 
