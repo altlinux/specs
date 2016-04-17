@@ -1,4 +1,4 @@
-%define		svn 7460
+%define		svn 7662
 
 %define		rel alt1
 
@@ -9,20 +9,25 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	16.1.0
+Version:	16.4.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
 Patch0:		smplayer-paths-fix-alt.patch
-Patch1:		smplayer-15.11.0-disable_update_autoshutdown.patch
+Patch1:		smplayer-16.4.0-disable_update_autoshutdown.patch
 
 BuildRequires:	gcc-c++ libqt4-devel >= 4.2
 Provides: %name
 
-%if "%rel" != "alt1"
+%if "%rel" == "alt0.M70T"
 Requires: mplayer
 %endif
-
+%if "%rel" == "alt0.M60T"
+Requires: mplayer
+%endif
+%if "%rel" == "alt0.M51"
+Requires: mplayer
+%endif
 
 %description
 smplayer intends to be a complete front-end for MPlayer/MPV, from basic features
@@ -104,6 +109,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Sun Apr 17 2016 Motsyo Gennadi <drool@altlinux.ru> 16.4.0-alt1.7662
+- 16.4.0 version (svn7662)
+
 * Sun Feb 28 2016 Motsyo Gennadi <drool@altlinux.ru> 16.1.0-alt1.7460
 - 16.1.0 version (svn7460)
 
