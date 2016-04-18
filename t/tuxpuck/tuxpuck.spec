@@ -1,6 +1,6 @@
 Name: tuxpuck
 Version: 0.8.2
-Release: alt1.qa3
+Release: alt1.qa4
 
 Group: Games/Arcade
 Summary: Clone of ShufflePuck Cafe historical game
@@ -21,13 +21,9 @@ Patch5: tuxpuck-0.8.2-alt-libpng15.patch
 
 # Author: d00jkr@efd.lth.se
 
-# Automatically added by buildreq on Tue Sep 17 2002
-#BuildRequires: XFree86-libs aalib esound freetype2-devel libSDL-devel libSDL_net-devel libalsa2 libarts libaudiofile libjpeg-devel libogg-devel libpng-devel libslang libvorbis-devel zlib-devel
-
-BuildRequires: aalib esound freetype2-devel
-BuildRequires: libSDL-devel libSDL_net-devel libalsa2
-BuildRequires: libaudiofile libjpeg-devel libogg-devel
-BuildRequires: libpng-devel libslang2-devel libvorbis-devel zlib-devel
+# Automatically added by buildreq on Mon Apr 18 2016
+# optimized out: libgpg-error libjson-c libogg-devel pkg-config python-base zlib-devel
+BuildRequires: libSDL-devel libfreetype-devel libjpeg-devel libpng-devel libvorbis-devel
 
 %description
 Anyone remember "Shufflepuck Cafe" for the Amiga/AtariST ?
@@ -77,6 +73,10 @@ EOF
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Apr 18 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.8.2-alt1.qa4
+- Removed libaudio fron BR.
+- Updated BR with buildreq.
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.qa3
 - Rebuilt with libpng15
 
