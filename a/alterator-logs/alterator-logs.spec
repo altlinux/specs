@@ -1,5 +1,5 @@
 Name: alterator-logs
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
@@ -41,6 +41,9 @@ System logs alterator module
 %_sysconfdir/alterator/logs
 
 %changelog
+* Mon Apr 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8.2-alt1
+- cups/page_log definition added
+
 * Wed Jun 18 2014 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
 - add alterator-updates log definition.
 
