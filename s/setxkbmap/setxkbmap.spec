@@ -1,14 +1,12 @@
 Name: setxkbmap
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: set the keyboard using the X Keyboard Extension
 License: MIT/X11
 Group: System/X11
-Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: https://cgit.freedesktop.org/xorg/app/setxkbmap/
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libxkbfile-devel xorg-util-macros
 
@@ -17,8 +15,7 @@ The setxkbmap command maps the keyboard to use the layout determined by
 the options specified on the command line.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -34,6 +31,9 @@ the options specified on the command line.
 %_man1dir/*
 
 %changelog
+* Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
+- Autobuild version bump to 1.3.1
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 
