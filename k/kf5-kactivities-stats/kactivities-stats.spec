@@ -1,0 +1,90 @@
+%define rname kactivities-stats
+
+%define sover 1
+%define libkf5activitiesstats libkf5activitiesstats%sover
+
+Name: kf5-%rname
+Version: 5.21.0
+Release: alt1
+%K5init altplace
+
+Group: System/Libraries
+Summary: KDE Frameworks 5 activity manager statistics
+Url: http://www.kde.org
+License: LGPLv2+ / LGPLv3
+
+Source: %rname-%version.tar
+Patch1: alt-pkgconfig.patch
+
+# Automatically added by buildreq on Fri Apr 15 2016 (-bi)
+# optimized out: cmake cmake-modules elfutils gcc-c++ libgpg-error libqt5-core libqt5-dbus libqt5-sql libqt5-xml libstdc++-devel pkg-config python-base python-modules python3 python3-base rpm-build-python3 ruby ruby-stdlibs
+#BuildRequires: boost-devel-headers extra-cmake-modules kf5-kactivities-devel kf5-kconfig-devel python-module-google python3-dev qt5-base-devel rpm-build-kf5 rpm-build-ruby
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: boost-devel extra-cmake-modules qt5-base-devel
+BuildRequires: kf5-kactivities-devel kf5-kconfig-devel
+
+%description
+The KActivitiesStats library provides a querying mechanism for the data
+that the activitiy manager collects - which documents hae been opened by
+which applications, and what documents have been linked to which activity.
+The activity manager also keeps the score for each document which gets
+higher when a particular document has been often accessed or kept open
+for longer periods of time. This score is also available through the
+querying mechanism.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
+%package -n libkf5activitiesstats
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5activitiesstats
+KF5 library
+
+
+%prep
+%setup -n %rname-%version
+%patch1 -p1
+
+%build
+%K5build
+
+%install
+%K5install
+%find_lang %name --all-name
+%K5find_qtlang %name --all-name
+
+%files common -f %name.lang
+%doc README.md
+
+%files devel
+%_K5inc/kactivitiesstats_version.h
+%_K5inc/KActivitiesStats/
+%_K5link/lib*.so
+%_K5lib/cmake/KF5ActivitiesStats/
+%_pkgconfigdir/libKActivitiesStats.pc
+%_K5archdata/mkspecs/modules/qt_KActivitiesStats.pri
+
+%files -n libkf5activitiesstats
+%_K5lib/libKF5ActivitiesStats.so.%sover
+%_K5lib/libKF5ActivitiesStats.so.*
+
+%changelog
+* Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt1
+- new version
+
+* Fri Apr 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
+- initial build

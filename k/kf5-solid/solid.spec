@@ -1,7 +1,7 @@
 %define rname solid
 
 Name: kf5-%rname
-Version: 5.20.0
+Version: 5.21.0
 Release: alt1
 %K5init altplace
 
@@ -10,7 +10,7 @@ Summary: KDE Frameworks 5 desktop hardware abstraction
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: upower udisks2
+Requires: upower udisks2 media-player-info
 
 Source: %rname-%version.tar
 Patch1: alt-no-hal.patch
@@ -81,6 +81,9 @@ KF5 library
 %_K5qml/org/kde/solid/
 
 %changelog
+* Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt1
+- new version
+
 * Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
 - new version
 
