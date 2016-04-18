@@ -1,14 +1,13 @@
 Name: xmodmap
-Version: 1.0.6
-Release: alt1.1
+Version: 1.0.9
+Release: alt1
 Summary: utility for modifying keymaps and pointer button mappings in X
 License: MIT/X11
 Group: System/X11
-Url: http://www.x.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: https://cgit.freedesktop.org/xorg/app/xmodmap/
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
+Patch: xmodmap-1.0.6-alt1.1.patch
 
 BuildRequires: libX11-devel xorg-util-macros
 
@@ -19,7 +18,7 @@ event keycodes into keysyms.  It is usually run from the user's session
 startup  script to configure the keyboard according to personal tastes.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -37,6 +36,9 @@ startup  script to configure the keyboard according to personal tastes.
 %_man1dir/*
 
 %changelog
+* Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.0.9-alt1
+- Autobuild version bump to 1.0.9
+
 * Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.1
 - Fixed build
 
