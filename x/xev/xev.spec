@@ -1,14 +1,12 @@
 Name: xev
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 Summary: print contents of X events
 License: MIT/X11
 Group: System/X11
-Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: https://cgit.freedesktop.org/xorg/app/xev/
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libXrandr-devel xorg-util-macros
 
@@ -21,7 +19,7 @@ display the information that they contain; it is essentially  a  debug-
 ging and development tool, and should not be needed in normal usage.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -37,6 +35,9 @@ ging and development tool, and should not be needed in normal usage.
 %_man1dir/*
 
 %changelog
+* Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.2.2-alt1
+- Autobuild version bump to 1.2.2
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
