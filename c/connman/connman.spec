@@ -2,8 +2,8 @@
 %define _localstatedir %_var
 
 Name: connman
-Version: 1.20
-Release: alt4
+Version: 1.32
+Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -14,18 +14,18 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source: %name-%version.tar
 Source1: connmand.init
-Source2: connmanctl.1
 
 Patch0: add-options-file.patch
 Patch1: connman-add-libs.patch
 Patch2: connman-main-conf.patch
+Patch3: connman.tmpfiles.patch
 
-BuildRequires: rpm-build-licenses gcc-c++ glib2-devel iptables-devel libdbus-devel wpa_supplicant
+BuildRequires: rpm-build-licenses gcc-c++ glib2-devel iptables iptables-devel libdbus-devel wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
 BuildRequires: openconnect openvpn vpnc xl2tpd
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel libselinux-devel
-BuildRequires: systemd-devel
+BuildRequires: systemd-devel libsystemd-devel
 
 Provides: network-config-subsystem
 
@@ -63,13 +63,14 @@ This package contains include files required for development %name-based softwar
 %patch0 -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 
 %build
 %autoreconf
-./configure \
-	--prefix=%_usr \
-	--sysconfdir=%_sysconfdir \
-	--localstatedir=%_localstatedir \
+%configure \
+	--enable-pie \
+	--with-systemdunitdir=%_unitdir \
+	--with-tmpfilesdir=%_tmpfilesdir \
 	--enable-datafiles \
 	--enable-client \
 	--enable-nmcompat \
@@ -84,9 +85,11 @@ This package contains include files required for development %name-based softwar
 %make_build
 
 %install
-%makeinstall \
-	dbusconfdir=%buildroot%_sysconfdir/dbus-1/system.d \
-	systemdunitdir=%buildroot%_unitdir
+%makeinstall_std
+
+#%makeinstall_std \
+#	dbusconfdir=%buildroot%_sysconfdir/dbus-1/system.d \
+#	systemdunitdir=%buildroot%_unitdir
 
 mkdir -p -- \
 	%buildroot%_initdir \
@@ -98,18 +101,21 @@ mkdir -p -- \
 echo 'CONNMAND_OPTS="-r"' > %buildroot%_sysconfdir/sysconfig/connman
 
 install -pm0755 -D %SOURCE1          %buildroot%_initdir/connmand
-install -pm0644 -D %SOURCE2          %buildroot%_man1dir/connmanctl.1
-install -pm0755 -D client/connmanctl %buildroot%_sbindir/connmanctl
 install -pm0644 -D src/main.conf     %buildroot%_sysconfdir/connman/main.conf
 
 ln -s connman.service %buildroot%_unitdir/connmand.service
 
 find %buildroot%_libdir/%name -name '*.la' -delete
 
+%post
+%post_service connmand
+
+%preun
+%preun_service connmand
+
 %files
-%_sbindir/connmand
-%_sbindir/connman-vpnd
-%_sbindir/connmanctl
+%_sbindir/*
+%_bindir/*
 
 %dir %_sysconfdir/connman
 %config(noreplace) %_sysconfdir/connman/main.conf
@@ -118,15 +124,16 @@ find %buildroot%_libdir/%name -name '*.la' -delete
 %_sysconfdir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/system-services/*.service
 
-%_initdir/connmand
-%_unitdir/%{name}*
+%_initdir/*
+%_unitdir/*
+%_tmpfilesdir/*
 
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins*
 %_libdir/%name/plugins*/*.so
 
 %dir %_libdir/%name/scripts
-%_libdir/%name/scripts/*.so.*
+%_libdir/%name/scripts/*.so
 %_libdir/%name/scripts/*-script
 
 %_datadir/polkit-1/actions/*
@@ -134,9 +141,9 @@ find %buildroot%_libdir/%name -name '*.la' -delete
 %_localstatedir/lib/%name
 %_localstatedir/lib/%name-vpn
 
-%_man1dir/connmanctl.1*
-%_man5dir/connman.conf.5*
-%_man8dir/connman.8*
+%_man1dir/*
+%_man5dir/*
+%_man8dir/*
 
 %files -n %name-docs
 %doc AUTHORS README TODO README ChangeLog doc/*.txt
@@ -144,9 +151,11 @@ find %buildroot%_libdir/%name -name '*.la' -delete
 %files -n %name-devel
 %_pkgconfigdir/*.pc
 %_includedir/*
-%_libdir/%name/scripts/*.so
 
 %changelog
+* Mon Apr 18 2016 Alexey Shabalin <shaba@altlinux.ru> 1.32-alt1
+- 1.32
+
 * Thu Aug 28 2014 Michael Shigorin <mike@altlinux.org> 1.20-alt4
 - Provides: network-config-subsystem (closes: #30263)
 
