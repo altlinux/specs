@@ -1,23 +1,24 @@
 Name: xinput
-Version: 1.5.3
-Release: alt1.qa1
+Version: 1.6.2
+Release: alt1
 Summary: utility to configure and test XInput devices
 License: MIT/X11
 Group: System/X11
-Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: https://cgit.freedesktop.org/xorg/app/xinput
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
-BuildRequires: libX11-devel libXext-devel libXi-devel xorg-util-macros
+BuildRequires(pre): xorg-util-macros
+
+# Automatically added by buildreq on Mon Apr 18 2016
+# optimized out: libX11-devel libXext-devel libXfixes-devel libXrender-devel perl pkg-config python-base python-modules xorg-fixesproto-devel xorg-inputproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: libXi-devel libXinerama-devel libXrandr-devel
 
 %description
 xinput - utility to configure and test XInput devices
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -33,6 +34,9 @@ xinput - utility to configure and test XInput devices
 %_man1dir/*
 
 %changelog
+* Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.6.2-alt1
+- Autobuild version bump to 1.6.2
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
