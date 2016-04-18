@@ -1,5 +1,5 @@
 Name:    installer-feature-online-repo
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Make online repositories available
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Apr 18 2016 Michael Shigorin <mike@altlinux.org> 0.16-alt1
+- Adapt for p8/branch (improved repository URI scheme)
+
 * Sat Apr 11 2015 Andrey Cherepanov <cas@altlinux.org> 0.15-alt1
 - Disable message show
 
