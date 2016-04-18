@@ -2,7 +2,7 @@
 
 Name:    gtk3-theme-clearlooks-phenix
 Version: 6.0.3
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: GTK3 port of the Clearlooks theme
@@ -19,6 +19,8 @@ Source:   %name-%version.tar
 BuildArch: noarch
 
 Requires: libgtk-engine-clearlooks
+Provides: clearlooks-phenix-gtk3-theme = %version-%release
+Obsoletes: clearlooks-phenix-gtk3-theme < %version-%release
 
 %description
 The Clearlooks-Phenix project (formerly known as Clearwaita) aims at
@@ -34,6 +36,9 @@ tar xf %SOURCE0 -C %buildroot%_datadir/themes
 %_datadir/themes/%themename
 
 %changelog
+* Mon Apr 18 2016 Andrey Cherepanov <cas@altlinux.org> 1:6.0.3-alt3
+- Obsoletes clearlooks-phenix-gtk3-theme
+
 * Wed Apr 13 2016 Andrey Cherepanov <cas@altlinux.org> 1:6.0.3-alt2
 - Increase Epoch for downgrade package version in stable branch
 
