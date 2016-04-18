@@ -1,6 +1,6 @@
 Name: glib
 Version: 1.2.10
-Release: alt19
+Release: alt20
 
 Summary: A library of handy utility functions
 License: LGPLv2.1+
@@ -14,11 +14,14 @@ Patch2: glib-1.2.10-rh-isowarning.patch
 Patch3: glib-1.2.10-rh-m4.patch
 Patch4: glib-1.2.10-rh-gcc34.patch
 Patch5: glib-1.2.10-alt-linkage.patch
+Patch6: glib-1.2.10-alt-makeinfo6.patch
 
 %def_enable static
 %set_automake_version 1.4
 %set_autoconf_version 2.13
 %set_libtool_version 1.5
+
+BuildRequires: makeinfo
 
 %package devel
 Summary: Development environment for the glib library
@@ -49,6 +52,7 @@ Static libraries for development statically linked glib-based programs.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 find -type f -name \*.orig -delete
 
 %add_optflags -std=gnu89
@@ -108,6 +112,10 @@ bzip2 -9 %buildroot%docdir/NEWS
 %endif
 
 %changelog
+* Mon Apr 18 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt20
+- Added BR: makeinfo.
+- Fixed build with makeinfo 6.
+
 * Tue Jun 02 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.10-alt19
 - Fix build with gcc5 (hardcode -std=gnu89).
 
