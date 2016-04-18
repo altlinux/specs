@@ -1,5 +1,5 @@
 Name: xrandr
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: primitive command line interface to RandR extension
 License: MIT/X11
@@ -40,6 +40,9 @@ entation of the screen, and can be one of "normal inverted left right 0
 %_man1dir/*.1*
 
 %changelog
+* Mon Apr 18 2016 Valery Inozemtsev <shrek@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+
 * Thu Mar 07 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
