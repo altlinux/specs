@@ -1,6 +1,6 @@
 Name: madbomber
 Version: 0.2.5
-Release: alt1.qa3
+Release: alt1.qa4
 
 Summary: Catch the bombs
 License: GPL
@@ -11,13 +11,14 @@ Source0: ftp://ftp.sonic.net/pub/users/nbs/unix/x/madbomber/madbomber-%version.t
 Patch: %name-0.1.8-fix-CFLAGS.patch.bz2
 Patch1: %name-0.2.4-add-keypad-keys.patch.bz2
 
-# Automatically added by buildreq on Втр Мар 25 2003
-BuildRequires: aalib esound libSDL-devel libSDL_image-devel libSDL_mixer-devel libalsa2 libaudiofile libjpeg libogg libslang2 libsmpeg libtiff libvorbis
+# Automatically added by buildreq on Mon Apr 18 2016
+# optimized out: libSDL-devel libgpg-error libjson-c python-base
+BuildRequires: libSDL_image-devel libSDL_mixer-devel
 
 %description
-The Mad Bomber is loose in the city and he's dropping bombs everywhere! It's
-your job to catch them before they hit the ground and explode. Luckily, you have
-a set of trusty buckets to extinguish them with.
+The Mad Bomber is loose in the city and he's dropping bombs everywhere!
+It's your job to catch them before they hit the ground and explode.
+Luckily, you have a set of trusty buckets to extinguish them with.
 
 %prep
 %setup -q
@@ -30,14 +31,14 @@ a set of trusty buckets to extinguish them with.
 %make_build CFLAGS="%optflags" BIN_PREFIX=%_bindir DATA_PREFIX=%_datadir/%name/
 
 %install
-install -D %name $RPM_BUILD_ROOT%_bindir/%name
-install -d $RPM_BUILD_ROOT%_datadir/%name
-cp -a data/* $RPM_BUILD_ROOT%_datadir/%name
+install -D %name %buildroot%_bindir/%name
+install -d %buildroot%_datadir/%name
+cp -a data/* %buildroot%_datadir/%name
 
-install -D -m644 data/images/icon.png $RPM_BUILD_ROOT%_liconsdir/madbomber.png
-#mkdir -p $RPM_BUILD_ROOT%_miconsdir/ $RPM_BUILD_ROOT%_niconsdir/
-#convert -resize 16x16 data/images/icon.png $RPM_BUILD_ROOT%_miconsdir/madbomber.png
-#convert -resize 32x32 data/images/icon.png $RPM_BUILD_ROOT%_niconsdir/madbomber.png
+install -D -m644 data/images/icon.png %buildroot%_liconsdir/madbomber.png
+#mkdir -p %buildroot%_miconsdir/ %buildroot%_niconsdir/
+#convert -resize 16x16 data/images/icon.png %buildroot%_miconsdir/madbomber.png
+#convert -resize 32x32 data/images/icon.png %buildroot%_niconsdir/madbomber.png
 
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
@@ -63,6 +64,10 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Mon Apr 18 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.2.5-alt1.qa4
+- Removed libaudio fron BR.
+- Updated BR with buildreq.
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.qa3
 - Fixed build
 
