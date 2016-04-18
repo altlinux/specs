@@ -1,14 +1,12 @@
 Name: xvinfo
-Version: 1.1.1
-Release: alt1.qa1
+Version: 1.1.3
+Release: alt1
 Summary: Print out X-Video extension adaptor information
 License: MIT/X11
 Group: System/X11
-Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: https://cgit.freedesktop.org/xorg/app/xkbcomp/
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libXv-devel xorg-util-macros
 
@@ -17,8 +15,7 @@ xvinfo  prints  out  the  capabilities of any video adaptors associated
 with the display that are accesible through the X-Video extension
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -34,6 +31,9 @@ with the display that are accesible through the X-Video extension
 %_man1dir/*
 
 %changelog
+* Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.1.3-alt1
+- Autobuild version bump to 1.1.3
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
