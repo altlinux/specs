@@ -2,15 +2,18 @@
 %def_disable static
 
 Name: lib%_name
-Version: 1.10.0
-Release: alt2
+Version: 1.11.0
+Release: alt1
 
 Summary: Generic Programming for Computer Vision
 License: MIT
 Group: System/Libraries
+Url: http://ukoethe.github.io/%_name
 
-Url: http://kogs-www.informatik.uni-hamburg.de/~koethe/%_name
-Source: %url/%_name-%version.tar
+# VCS https://github.com/ukoethe/%name/
+Source: https://github.com/ukoethe/%_name/releases/download/Version-1-11-0/%_name-%version-src.tar.gz
+# partially deimproved FindOpenEXR
+Patch: vigra-1.11.0-alt-findexr.patch
 
 # Automatically added by buildreq on Wed Jun 13 2007
 BuildRequires: gcc-c++ cmake libfftw3-devel libjpeg-devel libpng-devel libtiff-devel
@@ -37,7 +40,7 @@ applications which will use %name.
 
 %package devel-doc
 Summary: Development documentation for vigra library
-Group: Development/C
+Group: Development/C++
 Requires: %name-devel = %version-%release
 Provides: %_name-devel-doc
 Obsoletes: %_name-devel-doc
@@ -48,10 +51,13 @@ Development documentation for vigra library.
 
 %prep
 %setup -n %_name-%version
+%patch
 
 %build
 %cmake -DWITH_VIGRANUMPY:BOOL=OFF \
-	-DWITH_OPENEXR:BOOL=ON
+	-DWITH_HDF5:BOOL=ON \
+	-DWITH_OPENEXR:BOOL=ON \
+	-DDOCINSTALL:STRING=share/doc
 %cmake_build
 
 %install
@@ -66,8 +72,16 @@ Development documentation for vigra library.
 %_libdir/*.so
 %_libdir/%_name/
 
+%files devel-doc
+%_datadir/doc/%_name/
+
+%exclude %_datadir/doc/%{_name}numpy
+
 
 %changelog
+* Sun Apr 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Sun Jul 12 2015 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt2
 - updated to 1.10.0_72b8210c
 - enabled OpenEXR support (required by hugin)

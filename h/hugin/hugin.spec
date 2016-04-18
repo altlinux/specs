@@ -1,5 +1,5 @@
 Name: hugin
-Version: 2015.0.0
+Version: 2016.0.0
 Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -13,12 +13,13 @@ BuildPreReq: libpano13-devel boost-devel >= 1.34 wxGTK-devel >= 2.8.0
 BuildPreReq: libgtk+2-devel >= 2.0.3 boost-thread-devel >= 1.34 gcc-c++ gcc-fortran
 BuildRequires: boost-devel boost-thread-devel boost-datetime-devel boost-regex-devel
 BuildRequires: boost-filesystem-devel boost-iostreams-devel boost-system-devel
-BuildRequires: boost-signals-devel libglew-devel libGLUT-devel libXi-devel libXmu-devel
+BuildRequires: boost-signals-devel libglew-devel libXi-devel libXmu-devel
 BuildRequires: glib-devel libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
 BuildRequires: libpng-devel libstdc++-devel libtiff-devel wxGTK-devel
 BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
 BuildRequires: liblensfun-devel libvigra-devel libgomp-devel libfftw3-devel libsqlite3-devel swig
 BuildRequires: desktop-file-utils
+BuildRequires: liblcms2-devel
 
 Requires: enblend >= 3.2 libpano13 wxGTK >= 2.8.0  autopano-sift-C perl-Image-ExifTool make
 
@@ -30,12 +31,14 @@ panorama, stitch any series of overlapping pictures and much more.
 %setup
 
 %build
-suffix=`echo %_libdir | sed s/[^0-9]*//`
-cmake -DCMAKE_INSTALL_PREFIX=/usr/ -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" -DLIB_SUFFIX="$suffix" .
-%make_build
+# reenable RPTHs because libraries in private subdirectory
+%cmake -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" \
+	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 %find_lang --output=%name.lang %name nona_gui
 /bin/install -p -m644 -D src/hugin1/hugin/xrc/data/hugin.png %buildroot%_datadir/pixmaps/%name.png
 /bin/install -p -m644 -D src/hugin1/hugin/xrc/data/hugin.png %buildroot%_niconsdir/%name.png
@@ -63,6 +66,9 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Apr 18 2016 Yuri N. Sedunov <aris@altlinux.org> 2016.0.0-alt1
+- 2016.0.0
+
 * Sat Aug 08 2015 Yuri N. Sedunov <aris@altlinux.org> 2015.0.0-alt1
 - 2015.0.0 release
 
