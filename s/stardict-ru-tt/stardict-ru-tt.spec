@@ -10,7 +10,7 @@
 
 Name: stardict-%dict_name
 Version: 1.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: Dictionary: %dict_eng_name
 Summary(ru_RU.KOI8-R): Словарь: %dict_rus_name
@@ -21,8 +21,9 @@ BuildArchitectures: noarch
 
 Source: stardict-ru-tt.tar.gz
 
-# Automatically added by buildreq on Wed Nov 26 2003
-BuildRequires: dict-tools esound fontconfig freetype2 glib2 gnome-vfs2 libGConf2 libIDL libORBit2 libart_lgpl libatk libaudiofile libbonobo2 libbonoboui libexpat libgnome libgnomecanvas libgnomeui libgtk+2 libjpeg libltdl libpango libssl libxml2 stardict-tools unzip
+# Automatically added by buildreq on Mon Apr 18 2016
+# optimized out: python-base python-modules
+BuildRequires: dict-tools
 
 %description
 Dictionary: %dict_eng_name
@@ -48,6 +49,10 @@ install -p -m644 -D %name/%dict_name.ifo $RPM_BUILD_ROOT%_datadir/stardict/dic/%
 %_datadir/stardict/dic/*
 
 %changelog
+* Mon Apr 18 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.0-alt1.qa1
+- Removed libaudio fron BR.
+- Updated BR with buildreq.
+
 * Wed Jun 18 2008 Alexandra Panyukova <mex3@altlinux.ru> 1.0-alt1
 - build for Sisyphus
 
