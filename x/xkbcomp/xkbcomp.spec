@@ -1,14 +1,12 @@
 Name: xkbcomp
-Version: 1.2.4
+Version: 1.3.1
 Release: alt1
-Summary: compile XKB keyboard description
+Summary: Compile XKB keyboard description
 License: MIT/X11
 Group: System/X11
-Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Url: https://cgit.freedesktop.org/xorg/app/xkbcomp
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
 
 BuildRequires: libX11-devel libxkbfile-devel xorg-util-macros
 
@@ -25,8 +23,7 @@ which typically make up an XKB keymap are merged correctly or to create
 a single file which contains a complete description of the keymap.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -42,6 +39,9 @@ a single file which contains a complete description of the keymap.
 %_man1dir/*
 
 %changelog
+* Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
+- Autobuild version bump to 1.3.1
+
 * Fri Mar 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 
