@@ -2,7 +2,7 @@
 
 Name: qt5-phonon
 Version: 4.8.3
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: KDE5 Multimedia Framework
@@ -10,7 +10,7 @@ Url: http://phonon.kde.org/
 License: LGPLv2+
 
 #Source: ftp://ftp.kde.org/pub/kde/stable/%name/%version/%name-%version.tar.bz2
-Source: phonon-%version.tar
+Source: phonon4qt5-%version.tar
 # FC
 Patch1: 0001-rename-phonon-meta-include-file-in-the-source-and-in.patch
 Patch2: 0002-Don-t-allocate-a-char-with-an-undefined-size.patch
@@ -57,7 +57,7 @@ with Phonon.
 
 
 %prep
-%setup -qn phonon-%version
+%setup -qn phonon4qt5-%version
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -108,6 +108,9 @@ mkdir -p %buildroot/%_qt5_plugindir/phonon4qt5_backend
 %_datadir/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
 
 %changelog
+* Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt4
+- fix conflict with phonon debuginfo (ALT#31977)
+
 * Mon Apr 04 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt3
 - fix to build with new Qt
 
