@@ -1,7 +1,7 @@
 
 Name: kvpnc
 Version: 0.9.6
-Release: alt2
+Release: alt3
 #define beta rc1
 
 Group: Networking/Remote access
@@ -74,6 +74,9 @@ done
 %_K4iconsdir/*/*/actions/fritzboximport.*
 
 %changelog
+* Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt3
+- rebuild with new evironment
+
 * Wed Oct 10 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt2
 - fix to build with gcc 4.7
 
