@@ -1,11 +1,12 @@
 %define _name rest
-%define ver_major 0.7
+%define ver_major 0.8
+%define api_ver 0.7
 %def_enable introspection
 %def_disable gtk_doc
 %def_disable tests
 
 Name: lib%_name
-Version: %ver_major.93
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library for access to RESTful web services
@@ -83,30 +84,33 @@ This package contains development documentation for the %_name library.
 %makeinstall_std
 
 %files
-%_libdir/librest-%ver_major.so.*
-%_libdir/librest-extras-%ver_major.so.*
+%_libdir/librest-%api_ver.so.*
+%_libdir/librest-extras-%api_ver.so.*
 %doc AUTHORS README
 
 %files devel
-%_includedir/rest-%ver_major
-%_libdir/librest-%ver_major.so
-%_libdir/librest-extras-%ver_major.so
+%_includedir/rest-%api_ver/
+%_libdir/librest-%api_ver.so
+%_libdir/librest-extras-%api_ver.so
 %_libdir/pkgconfig/rest*
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Rest-%ver_major.typelib
-%_typelibdir/RestExtras-%ver_major.typelib
+%_typelibdir/Rest-%api_ver.typelib
+%_typelibdir/RestExtras-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Rest-%ver_major.gir
-%_girdir/RestExtras-%ver_major.gir
+%_girdir/Rest-%api_ver.gir
+%_girdir/RestExtras-%api_ver.gir
 %endif
 
 %files devel-doc
-%_datadir/gtk-doc/html/%{_name}*%ver_major/
+%_datadir/gtk-doc/html/%{_name}*%api_ver/
 
 %changelog
+* Mon Apr 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed Mar 25 2015 Yuri N. Sedunov <aris@altlinux.org> 0.7.93-alt1
 - 0.7.93
 
