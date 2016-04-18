@@ -1,6 +1,6 @@
 Name: bc
 Version: 1.06
-Release: alt3
+Release: alt4
 Serial: 1
 
 Summary: GNU's bc (a numeric processing language) and dc (a calculator)
@@ -17,9 +17,11 @@ Patch2: bc-1.06-alt-readline.patch
 Patch3: bc-1.06-alt-warnings.patch
 Patch4: bc-1.06-owl-functions-fix.patch
 Patch5: bc-1.06-deb-17.patch
+Patch6: bc-1.06-alt-makeinfo6.patch
 
-# Automatically added by buildreq on Sun Jun 30 2002
-BuildRequires: flex libreadline-devel
+# Automatically added by buildreq on Mon Apr 18 2016
+# optimized out: perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore python-base
+BuildRequires: flex libreadline-devel makeinfo
 
 %description
 This package includes bc and dc.  bc implements a numeric processing
@@ -33,6 +35,8 @@ calculator.  Both bc and dc support arbitrary precision arithmetic.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+
 rm bc/{bc,scan}.c
 sed -i 's/getopt[1]\?\.c //g' lib/Makefile.am
 find -type f -name getopt\* -delete
@@ -54,6 +58,10 @@ export ac_cv_lib_termcap_tgetent=no ac_cv_lib_ncurses_tparm=no
 %doc Examples AUTHORS FAQ NEWS README
 
 %changelog
+* Mon Apr 18 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.06-alt4
+- Added BR: makeinfo.
+- Fixed build with makeinfo 6.
+
 * Tue Sep 08 2009 Dmitry V. Levin <ldv@altlinux.org> 1:1.06-alt3
 - Removed obsolete %%install_info/%%uninstall_info calls.
 
