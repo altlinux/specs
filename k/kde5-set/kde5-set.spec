@@ -1,7 +1,7 @@
 
 Name: kde5-set
-Version: 5.1.1
-Release: alt4
+Version: 5.1.2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -33,7 +33,7 @@ Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-oxygen
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kde-cli-tools
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kdepasswd kde5-kcalc kde5-kdebugsettings kde5-kross-python
-Requires: kf5-milou
+Requires: kf5-milou kf5-systemsettings
 
 %package -n kde5
 Summary: %summary
@@ -46,10 +46,10 @@ Requires: kde5-video-player
 #Requires: kde5-audio-player
 Requires: kde5-network-manager
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass
-Requires: kf5-systemsettings kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
+Requires: kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma kf5-plasma-integration
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
-Requires: kde5-kamera kde5-network-filesharing
+Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
 
 %package -n kde5-big
 Summary: %summary
@@ -148,6 +148,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Tue Apr 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt1
+- update requires
+
 * Fri Apr 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.1-alt4
 - fix requires
 
