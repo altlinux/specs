@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 
 Name: gnome3
 Version: %ver_major.0
@@ -17,21 +17,22 @@ BuildPreReq: rpm-build-licenses
 ## Core components
 %define session_ver %ver_major.0
 ## Applications
-%define roller_ver 3.16.4
-%define eog_ver 3.16.1
-%define network_manager_ver 0.8.995
+%define contacts_ver 3.19.91
+%define roller_ver %ver_major
+%define eog_ver %ver_major
+%define network_manager_ver 1.0
 %define terminal_ver %ver_major
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
 %define evince_ver %ver_major
-%define applets_ver 2.91.4
+%define applets_ver 3.18
 %define gedit_plugins_ver %ver_major
 %define gnome_nettool_ver 3.8
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
 %define gdu_ver %ver_major
 %define evo_ver %ver_major
-%define emp_ver 3.12
+%define emp_ver 3.12.11
 %define brasero_ver 3.12.1
 %define accerciser_ver 3.14
 %define recorder_ver 3.17
@@ -114,7 +115,7 @@ Doesn't install games and media programs.
 ## =========================================================================
 
 %package default
-Summary: GNOME 2 Desktop installer for optimal user's requirements
+Summary: GNOME 3 Desktop installer for optimal user's requirements
 Group: Graphical desktop/GNOME
 Obsoletes: gnome-sisyphus-default
 Provides: gnome-sisyphus-default = %version-%release
@@ -146,7 +147,7 @@ Requires: gnome-disk-utility >= %gdu_ver
 Requires: gdm-gnome >= %ver_major
 ## Default web-browser
 Requires: epiphany >=  %epiphany_ver
-Requires: mozilla-plugin-adobe-flash
+#Requires: mozilla-plugin-adobe-flash
 ## Default mailer
 Requires: evolution >= %evo_ver
 ## Default messenger
@@ -154,7 +155,7 @@ Requires: empathy >= %emp_ver
 ## IRC client
 Requires: polari >= %ver_major
 # Und contacts manager
-Requires: gnome-contacts >= %ver_major
+Requires: gnome-contacts >= %contacts_ver
 
 ## Default document reader (currently pdf, ps, tiff, dvi)
 Requires: evince >= %evince_ver
@@ -410,6 +411,9 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Fri Sep 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - added xorg-drv-libinput to -minimal
 - added pinentry-gnome3, gnome-todo to -default
