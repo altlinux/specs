@@ -1,5 +1,5 @@
 Name: eepm
-Version: 1.6.4
+Version: 1.6.9
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -65,6 +65,28 @@ chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
 %_sysconfdir/bash_completion.d/cerv
 
 %changelog
+* Tue Apr 19 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.9-alt1
+- check if systemd is active
+- release_upgrade: fix version
+
+* Mon Apr 18 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.8-alt1
+- small output fix
+- rewrite release-upgrade
+
+* Fri Apr 15 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt1
+- release_upgrade: fix sign replacement
+- fix epm_update
+- set p8 sign and install apt-conf-branch
+- repofix: add signs for ALT Linux or Etersoft branches
+
+* Fri Apr 15 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.6-alt1
+- release_upgrade: improve upgrade way
+- epm: update copyright date
+
+* Fri Apr 15 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
+- restrict sudo args
+- small fixes
+
 * Fri Apr 15 2016 Vitaly Lipatov <lav@altlinux.ru> 1.6.4-alt1
 - epm-repofix: use sed -r instead perl -pi
 - pack_in_onefile: fix run positional load_helper
