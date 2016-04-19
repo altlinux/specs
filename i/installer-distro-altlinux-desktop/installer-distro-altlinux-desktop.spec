@@ -1,5 +1,5 @@
 Name: installer-distro-altlinux-desktop
-Version: 7.0.0
+Version: 8.0.0
 Release: alt1
 
 Summary: Installer configuration (desktop)
@@ -73,9 +73,13 @@ cp -a * %buildroot%install2dir/
 %files stage2
 %install2dir/alterator-menu
 %install2dir/installer-steps
+%install2dir/*.d/*
 
 %files stage3
 
 %changelog
+* Tue Apr 19 2016 Michael Shigorin <mike@altlinux.org> 8.0.0-alt1
+- carried over 80-setup-user-groups from installer-distro-centaurus
+
 * Mon Dec 23 2013 Michael Shigorin <mike@altlinux.org> 7.0.0-alt1
 - initial release based on installer-distro-altlinux-generic 7.0.1-alt1
