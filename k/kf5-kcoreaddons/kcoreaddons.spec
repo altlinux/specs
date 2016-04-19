@@ -1,7 +1,7 @@
 %define rname kcoreaddons
 
 Name: kf5-%rname
-Version: 5.20.0
+Version: 5.21.0
 Release: alt1
 %K5init altplace
 
@@ -35,6 +35,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: qt5-base-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -77,6 +78,9 @@ KF5 library
 %_K5lib/libKF5CoreAddons.so.*
 
 %changelog
+* Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt1
+- new version
+
 * Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.20.0-alt1
 - new version
 
