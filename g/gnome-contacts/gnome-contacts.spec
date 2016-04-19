@@ -6,14 +6,15 @@
 
 Name: gnome-contacts
 Version: %ver_major.91
-Release: alt1
+Release: alt2
 
 Summary: Contacts manager for GNOME
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Contacts
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 %define glib_ver 2.37.6
 %define gtk_ver 3.19.10
@@ -30,6 +31,8 @@ BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-ser
 BuildRequires: libgeocode-glib-devel >= %geocode_ver libchamplain-gtk3-devel libclutter-gtk3-devel
 %{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltool
+# for build from git
+BuildRequires: libfolks-vala
 
 %description
 %name is a standalone contacts manager for GNOME desktop.
@@ -38,6 +41,7 @@ BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltoo
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -59,6 +63,9 @@ BuildRequires: gobject-introspection-devel vala-tools libgtk+3-gir-devel intltoo
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Apr 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.91-alt2
+- updated to 3.19.91-25-gf3dafae
+
 * Thu Feb 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.91-alt1
 - 3.19.91
 
