@@ -1,6 +1,6 @@
 Name: zpaq
-Version: 705
-Release: alt2
+Version: 710
+Release: alt1
 
 Summary: A journaling archiver optimized for backup
 
@@ -9,11 +9,12 @@ License: Public domain
 Url: http://mattmahoney.net/dc/zpaq.html
 
 # Use $ rpmrb NEWVERSION for update the package
-Source: http://mattmahoney.net/dc/%name%version.zip
+# Source-url: http://mattmahoney.net/dc/%name%version.zip
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Mar 21 2013
 # optimized out: libstdc++-devel
-BuildRequires: gcc-c++ libgomp-devel unzip perl-podlators
+BuildRequires: gcc-c++ libgomp-devel perl-podlators
 
 %description
 zpaq is a journaling archiver optimized for user-level incremental
@@ -40,7 +41,7 @@ A journaling archiver optimized for backup library,
 development environment.
 
 %prep
-%setup -c
+%setup
 
 %build
 # XXX this is for funny libzpaq::error() callback
@@ -74,6 +75,9 @@ install -m0644 -D zpaq.1 %buildroot%_man1dir/zpaq.1
 %_includedir/*.h
 
 %changelog
+* Tue Apr 19 2016 Vitaly Lipatov <lav@altlinux.ru> 710-alt1
+- new version 710 (with rpmrb script)
+
 * Tue Jul 21 2015 Vitaly Lipatov <lav@altlinux.ru> 705-alt2
 - convert and pack man page
 
