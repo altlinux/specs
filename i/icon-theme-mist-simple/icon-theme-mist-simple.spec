@@ -1,7 +1,7 @@
 %define themename mist-simple
 
 Name: icon-theme-%themename
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Additonal set of icons for the Mist theme
@@ -29,6 +29,9 @@ mv * $RPM_BUILD_ROOT%_iconsdir/%themename
 %_iconsdir/*
 
 %changelog
+* Tue Apr 19 2016 Eugene Prokopiev <enp@altlinux.ru> 0.3-alt1
+- scale icons
+
 * Mon Jul 25 2011 Eugene Prokopiev <enp@altlinux.ru> 0.2-alt1
 - use old gnome desktop icon
 
