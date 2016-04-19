@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: autorepo-altnode-config
-Version: 0.11
+Version: 0.12
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -106,6 +106,9 @@ fi
 %config %_sysconfdir/monitrc.d/nginx.conf
 
 %changelog
+* Tue Apr 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- added support for t8/p8
+
 * Sun Apr 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - fixed monit misconfiguration
 
