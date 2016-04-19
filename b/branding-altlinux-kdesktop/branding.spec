@@ -4,12 +4,12 @@
 %define brand altlinux
 %define Brand ALT Linux
 
-%define major 7
+%define major 8
 %define minor 0
-%define bugfix 5
+%define bugfix 0
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt0.1
 BuildArch: noarch
 
 %define theme %name
@@ -323,10 +323,15 @@ cp -a kde4/* %buildroot%_sysconfdir/skel/.kde4/
 mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 install -m 0644 menu/*.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 popd
-# kde4 disable annoing autostart
-mkdir -p %buildroot%_sysconfdir/skel/.config/autostart/
-for n in tracker-miner-fs tracker-store ; do
+# disable annoing autostart
+mkdir -p %buildroot/%_sysconfdir/skel/.config/autostart/
+for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot%_sysconfdir/skel/.config/autostart/$n.desktop
+done
+# disable annoing menus
+mkdir -p %buildroot/%_sysconfdir/skel/.local/share/applications/
+for n in gnome-mplayer mplayer gmplayer ; do
+    echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_sysconfdir/skel/.local/share/applications/$n.desktop
 done
 
 #kde3-settings
@@ -432,6 +437,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/design
 %_sysconfdir/skel/.config/gtk-3.0
 %_sysconfdir/skel/.config/autostart
+%_sysconfdir/skel/.local/share/applications
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
@@ -476,8 +482,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
+%_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 19 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.1
+- add common KDE5 support
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg at altlinux dot org> 7.0.5-alt4
 - return default gtk3 icon theme to oxygen
 
