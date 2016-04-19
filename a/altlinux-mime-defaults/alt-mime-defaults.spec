@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.38
+Version: 0.39
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -45,6 +45,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_datadir/mate/applications/defaults.list
 
 %changelog
+* Tue Apr 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- updated audio priorities according to community@ poll
+
 * Sun Apr 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.38-alt1
 - newmoon and other updates
 
