@@ -1,7 +1,7 @@
 %define _name keepassx
 
 Name: %{_name}2
-Version:  2.0
+Version:  2.0.2
 Release:  alt1
 Summary: KeePassX Password Safe - light-weight cross-platform password manager
 Group: File tools
@@ -14,9 +14,10 @@ Conflicts: %_name < %version
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: cmake ctest gcc-c++
-BuildRequires: libqt4-devel
-BuildRequires: libgcrypt-devel
-BuildRequires: zlib-devel
+BuildRequires: libqt4-devel >= 4.6.0
+BuildRequires: libgcrypt-devel >= 1.6.0
+BuildRequires: zlib-devel >= 1.2.0
+BuildRequires: libXi-devel libXtst-devel libX11-devel
 
 %description
 KeePassX  is  a cross platform port  of the windows  application
@@ -56,6 +57,9 @@ in KeePass Password Safe.
 %_datadir/%_name
 
 %changelog
+* Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.2-alt1
+- 2.0.2
+
 * Tue Dec 08 2015 Alexey Shabalin <shaba@altlinux.ru> 2.0-alt1
 - 2.0 release
 
