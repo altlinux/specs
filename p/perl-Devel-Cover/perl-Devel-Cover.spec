@@ -3,8 +3,8 @@
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.21
-Release: alt1.1
+Version: 1.22
+Release: alt1
 
 Summary: Code coverage metrics for Perl
 License: GPL or Artistic
@@ -49,6 +49,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1.1
 - rebuild with new perl 5.22.0
 
