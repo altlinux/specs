@@ -2,7 +2,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.3
-Release: alt6.git20160401
+Release: alt7.git20160409
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -116,7 +116,7 @@ wxGTK example programs.
 #%patch2 -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
-sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
+#sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
 sed -i -e 's|wxstd.mo|wxstd30.mo|' Makefile.in
 sed -i -e 's|wxmsw.mo|wxmsw30.mo|' Makefile.in
 sed -i -e 's|bakefile/presets|bakefile/presets-\$(WX_RELEASE)|g' Makefile.in
@@ -222,6 +222,10 @@ cat wxmsw3.lang >> wxstd3.lang
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.3-alt7.git20160409
+- git snapshot 59078ab5456c8383257a226ae88a446b60800af9
+- revert aclocal/wxwin.m4 name
+
 * Tue Apr 05 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.3-alt6.git20160401
 - git snapshot of WX_3_0_BRANCH with fixes for wayland
 - update BR:
