@@ -1,20 +1,20 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 0.2.12
+Version: 0.3.0
 Release: alt1
 
 License: LGPLv2+
 Group: System/Libraries
 
 Source: %name-%version.tar
-Patch2: %name-%version-altlinux.patch
+#Patch2: %name-%version-altlinux.patch
 
 Url: https://fedorahosted.org/libosinfo/
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gnome-common gtk-doc
 BuildRequires: glib2-devel libgio-devel
-BuildRequires: libsoup-devel libsoup-gnome-devel
+BuildRequires: libsoup-devel >= 2.42
 BuildRequires: libxml2-devel >= 2.6.0
 BuildRequires: libxslt-devel >= 1.0.0
 BuildRequires: libcheck-devel
@@ -26,7 +26,6 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: pciids usbids
 
 Requires: pciids usbids
-Requires: udev
 
 %description
 libosinfo is a library that allows virtualization provisioning tools to
@@ -74,7 +73,7 @@ Contains developer documentation for %name.
 
 %prep
 %setup
-%patch2 -p1
+#%%patch2 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -84,7 +83,6 @@ NOCONFIGURE=1 ./autogen.sh
 	--with-usb-ids-path=%_datadir/misc/usb.ids \
 	--with-pci-ids-path=%_datadir/misc/pci.ids \
 	--enable-vala \
-	--enable-udev \
 	--enable-gtk-doc
 
 %make_build
@@ -110,7 +108,6 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/%name/db/*
 %_datadir/%name/schemas/*
 %_libdir/%name-*.so.*
-/lib/udev/rules.d/95-osinfo.rules
 
 %files devel
 %doc examples/demo.js
@@ -132,6 +129,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 0.3.0-alt1
+- 0.3.0
+
 * Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 0.2.12-alt1
 - 0.2.12
 
