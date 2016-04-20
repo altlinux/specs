@@ -1,5 +1,5 @@
 Name: ryu
-Version: 3.26
+Version: 3.30
 Release: alt1
 Summary: Component-based Software-defined Networking Framework
 Group: Development/Python
@@ -21,6 +21,7 @@ BuildRequires: python-module-oslo.config >= 1.6.0
 BuildRequires: python-module-routes
 BuildRequires: python-module-six >= 1.4.0
 BuildRequires: python-module-webob >= 1.2
+
 
 %description
 Ryu is a component-based software defined networking framework.
@@ -107,6 +108,9 @@ install -m 644 debian/log.conf %buildroot%_logrotatedir/%name
 %doc html
 
 %changelog
+* Fri Apr 15 2016 Alexey Shabalin <shaba@altlinux.ru> 3.30-alt1
+- 3.30
+
 * Fri Oct 30 2015 Alexey Shabalin <shaba@altlinux.ru> 3.26-alt1
 - 3.26
 

@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.4.12
-Release: alt2.git20150814.1
+Version: 1.5.2
+Release: alt1
 
 Summary: OAuth 2.0 client library
 License: Apache Software License
@@ -48,6 +48,38 @@ The oauth2client is a client library for OAuth 2.0.
 
 This package contains documentation for %oname.
 
+%package -n python-module-django-%oname
+Summary:        Django extension
+Group: Development/Python
+PreReq: %name = %version-%release
+
+%description -n python-module-django-%oname
+OAuth 2.0 utilities for Django.
+
+Utilities for using OAuth 2.0 in conjunction with
+the Django datastore.
+
+%package flask
+Summary: Flask extension
+Group: Development/Python
+PreReq: %name = %version-%release
+
+%description flask
+Provides a Flask extension that makes using OAuth2 web server flow easier.
+The extension includes views that handle the entire auth flow and a
+``@required`` decorator to automatically ensure that user credentials are
+available.
+
+%package gce
+Summary: GCE extension
+Group: Development/Python
+PreReq: %name = %version-%release
+
+%description gce
+Utilities for Google Compute Engine
+
+Utilities for making it easier to use OAuth 2.0 on Google Compute Engine.
+
 %if_with python3
 %package -n python3-module-%oname
 Summary: OAuth 2.0 client library
@@ -56,6 +88,39 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 The oauth2client is a client library for OAuth 2.0.
+
+%package -n python3-module-django-%oname
+Summary:        Django extension
+Group: Development/Python3
+PreReq: python3-module-%oname = %version-%release
+
+%description -n python3-module-django-%oname
+OAuth 2.0 utilities for Django.
+
+Utilities for using OAuth 2.0 in conjunction with
+the Django datastore.
+
+%package -n python3-module-%oname-flask
+Summary: Flask extension
+Group: Development/Python3
+PreReq: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-flask
+Provides a Flask extension that makes using OAuth2 web server flow easier.
+The extension includes views that handle the entire auth flow and a
+``@required`` decorator to automatically ensure that user credentials are
+available.
+
+%package -n python3-module-%oname-gce
+Summary: GCE extension
+Group: Development/Python3
+PreReq: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-gce
+Utilities for Google Compute Engine
+
+Utilities for making it easier to use OAuth 2.0 on Google Compute Engine.
+
 %endif
 
 %prep
@@ -73,7 +138,7 @@ ln -s ../objects.inv docs/
 
 %if_with python3
 pushd ../python3
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
+#find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build_debug
 popd
 %endif
@@ -105,19 +170,49 @@ popd
 %python_sitelibdir/*
 #%exclude %python_sitelibdir/*/pickle
 
+%exclude %python_sitelibdir/oauth2client/flask*
+%exclude %python_sitelibdir/oauth2client/django*
+%exclude %python_sitelibdir/oauth2client/gce*
+
 #%files pickles
 #%python_sitelibdir/*/pickle
 
 #%files docs
 #%doc docs/_build/html/*
 
+%files flask
+%python_sitelibdir/oauth2client/flask*
+
+%files -n python-module-django-%oname
+%python_sitelibdir/oauth2client/django*
+
+%files gce
+%python_sitelibdir/oauth2client/gce*
+
 %if_with python3
 %files -n python3-module-%oname
 %doc *.md
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/oauth2client/flask*
+%exclude %python3_sitelibdir/oauth2client/django*
+%exclude %python3_sitelibdir/oauth2client/gce*
+
+%files -n python3-module-%oname-flask
+%python3_sitelibdir/oauth2client/flask*
+
+%files -n python3-module-django-%oname
+%python3_sitelibdir/oauth2client/django*
+
+%files -n python3-module-%oname-gce
+%python3_sitelibdir/oauth2client/gce*
+
 %endif
 
 %changelog
+* Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1.5.2-alt1
+- 1.5.2
+- split flask, django, gce packages
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.12-alt2.git20150814.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

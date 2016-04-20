@@ -1,7 +1,7 @@
 %def_with python3
 
 Name:       python-module-keystoneclient
-Version:    1.7.4
+Version:    2.3.1
 Release:    alt1
 Summary:    Client library for OpenStack Identity API
 License:    ASL 2.0
@@ -14,44 +14,40 @@ BuildArch:  noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-argparse
 BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-debtcollector >= 1.2.0
+BuildRequires: python-module-keystoneauth1 >= 2.1.0
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-positional >= 1.0.1
 BuildRequires: python-module-prettytable >= 0.7
-BuildRequires: python-module-requests >= 2.5.2
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-requests >= 2.8.1
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-babel >= 1.3
+BuildRequires: python-module-stevedore >= 1.5.0
+
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-debtcollector >= 0.3.0
+BuildRequires: python-module-reno >= 0.1.1
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-d2to1
-BuildRequires: python3-module-argparse
 BuildRequires: python3-module-iso8601 >= 0.1.9
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-keystoneauth1 >= 2.1.0
+BuildRequires: python3-module-oslo.config >= 3.7.0
+BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.serialization >= 1.10.0
+BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-positional >= 1.0.1
 BuildRequires: python3-module-prettytable >= 0.7
-BuildRequires: python3-module-requests >= 2.5.0
-BuildRequires: python3-module-oslo.config >= 2.3.0
-BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-oslo.serialization >= 1.4.0
-BuildRequires: python3-module-oslo.utils >= 2.0.0
+BuildRequires: python3-module-requests >= 2.8.1
 BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-netaddr >= 0.7.12
-BuildRequires: python3-module-babel >= 1.3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-stevedore >= 1.5.0
-BuildRequires: python3-module-debtcollector >= 0.3.0
 %endif
 
 %description
@@ -95,6 +91,11 @@ pushd ../python3
 popd
 %endif
 
+# disabling git call for last modification date from git repo
+sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+python setup.py build_sphinx
+rm -f doc/build/html/.buildinfo
+
 %install
 %if_with python3
 pushd ../python3
@@ -110,22 +111,11 @@ install -p -D -m 644 tools/keystone.bash_completion %buildroot%_sysconfdir/bash_
 rm -fr %buildroot%python_sitelibdir/keystoneclient/tests
 rm -fr %buildroot%python3_sitelibdir/keystoneclient/tests
 
-
-# Build HTML docs and man page
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build -b html doc/source html
-sphinx-build -b man doc/source man
-install -p -D -m 644 man/keystone.1 %buildroot%_man1dir/keystone.1
-
-# Fix hidden-file-or-dir warnings
-rm -fr html/.doctrees html/.buildinfo
-
 %files
 %doc LICENSE README.rst
 %_bindir/keystone
 %_sysconfdir/bash_completion.d/keystone.bash_completion
 %python_sitelibdir/*
-%_man1dir/keystone.1*
 
 %if_with python3
 %files -n python3-module-keystoneclient
@@ -134,9 +124,12 @@ rm -fr html/.doctrees html/.buildinfo
 %endif
 
 %files doc
-%doc LICENSE html
+%doc LICENSE doc/build/html
 
 %changelog
+* Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
+- 2.3.1
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1.7.4-alt1
 - 1.7.4
 

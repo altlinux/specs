@@ -1,7 +1,7 @@
 %define sname neutron-lbaas
 
 Name: openstack-%sname
-Version: 7.0.3
+Version: 8.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking LBaaS
@@ -21,25 +21,28 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-reno
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-eventlet >= 0.17.4
-BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-eventlet >= 0.18.2
+BuildRequires: python-module-requests >= 2.8.1
 BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.db >= 2.4.1
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.service >= 1.0.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
 BuildRequires: python-module-barbicanclient >= 3.3.0
+BuildRequires: python-module-pyasn1
+BuildRequires: python-module-pyasn1-modules
 BuildRequires: python-module-OpenSSL >= 0.14
 BuildRequires: python-module-stevedore >= 1.5.0
+BuildRequires: python-module-keystoneauth1 >= 2.1.0
 
+BuildRequires: python-module-neutron >= 8.0.0
 
-Requires: openstack-neutron >= 1:7.0.0-alt1
+Requires: openstack-neutron >= 1:8.0.0-alt1
 Requires: python-module-%sname = %EVR
 
 %description
@@ -72,8 +75,14 @@ This package contains the neutron Python library.
 %build
 %python_build
 
+PYTHONPATH=. tools/generate_config_file_samples.sh
+
 %install
 %python_install --install-data=/
+
+install -p -D -m 644 etc/neutron_lbaas.conf.sample %buildroot%_sysconfdir/neutron/neutron_lbaas.conf
+install -p -D -m 644 etc/lbaas_agent.ini.sample %buildroot%_sysconfdir/neutron/lbaas_agent.ini
+install -p -D -m 644 etc/services_lbaas.conf.sample %buildroot%_sysconfdir/neutron/services_lbaas.conf
 
 # Install sysV init scripts
 install -p -D -m 755 %SOURCE1 %buildroot%_initdir/neutron-lbaas-agent
@@ -86,7 +95,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaas-agent.service
 %doc LICENSE
 %doc README.rst
 %_bindir/*
-%config(noreplace) %_sysconfdir/neutron/*
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/*.ini
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/*.conf
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/rootwrap.d/*.filters
 %_initdir/neutron-lbaas-agent
 %_unitdir/neutron-lbaas-agent.service
 
@@ -98,6 +109,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-lbaas-agent.service
 
 
 %changelog
+* Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
+- 8.0.0
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.3-alt1
 - 7.0.3
 

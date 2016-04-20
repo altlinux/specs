@@ -2,7 +2,7 @@
 %define project trove
 
 Name: openstack-%project
-Version: 4.0.0
+Version: 5.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack DBaaS (%project)
@@ -26,38 +26,46 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
-BuildRequires: python-module-migrate >= 0.9.6
-BuildRequires: python-module-eventlet >= 0.17.4
-BuildRequires: python-module-keystonemiddleware >= 2.0.0
-BuildRequires: python-module-kombu >= 3.0.7
+BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
+BuildRequires: python-module-eventlet >= 0.18.2
+BuildRequires: python-module-keystonemiddleware >= 4.0.0
 BuildRequires: python-module-routes >= 1.12.3
+BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-PasteDeploy >= 1.5.0
+BuildRequires: python-module-migrate >= 0.9.6
 BuildRequires: python-module-netaddr >= 0.7.12
 BuildRequires: python-module-netifaces >= 0.10.4
 BuildRequires: python-module-httplib2 >= 0.7.5
 BuildRequires: python-module-lxml >= 2.3
 BuildRequires: python-module-passlib >= 1.6
-BuildRequires: python-module-heatclient >= 0.3.0
-BuildRequires: python-module-novaclient >= 2.28.1
+BuildRequires: python-module-heatclient >= 0.6.0
+BuildRequires: python-module-novaclient >= 2.29.0
 BuildRequires: python-module-cinderclient >= 1.3.1
 BuildRequires: python-module-keystoneclient >= 1.6.0
 BuildRequires: python-module-swiftclient >= 2.2.0
-BuildRequires: python-module-designateclient >= 1.0.0
+BuildRequires: python-module-designateclient >= 1.5.0
 BuildRequires: python-module-neutronclient >= 2.6.0
-BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-iso8601 >= 0.1.9
+BuildRequires: python-module-jsonschema >= 2.0.0
+BuildRequires: python-module-jinja2 >= 2.8
+BuildRequires: python-module-pexpect >= 3.1
+BuildRequires: python-module-oslo.config >= 3.7.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-oslo.concurrency >= 2.3.0
-BuildRequires: python-module-six >= 1.9.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.middleware >= 3.0.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.service >= 1.0.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-oslo.concurrency >= 3.5.0
+BuildRequires: python-module-pymysql
+BuildRequires: python-module-babel >= 1.3
 BuildRequires: python-module-stevedore >= 1.5.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-osprofiler >= 0.3.0
-BuildRequires: python-module-oslo.log >= 1.8.0
+BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-osprofiler >= 1.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-enum34
 
 Requires: %name-api = %EVR
 Requires: %name-taskmanager = %EVR
@@ -300,6 +308,9 @@ rm -fr %buildroot%python_sitelibdir/run_tests.*
 %endif
 
 %changelog
+* Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:5.0.0-alt1
+- 5.0.0
+
 * Tue Nov 03 2015 Alexey Shabalin <shaba@altlinux.ru> 1:4.0.0-alt1
 - 4.0.0 Liberty release
 

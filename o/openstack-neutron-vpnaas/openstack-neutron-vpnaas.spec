@@ -1,7 +1,7 @@
 %define sname neutron-vpnaas
 
 Name: openstack-%sname
-Version: 7.0.3
+Version: 8.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking VPNaaS
@@ -21,21 +21,24 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-reno
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-d2to1
-BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-jinja2 >= 2.8
 BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-oslo.concurrency >= 2.3.0
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.db >= 2.4.1
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-neutron-lib >= 0.0.1
+BuildRequires: python-module-oslo.concurrency >= 3.5.0
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.service >= 1.0.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
 
-Requires: openstack-neutron >= 1:7.0.0-alt1
+BuildRequires: python-module-neutron >= 1:8.0.0-alt1
+
+Requires: openstack-neutron >= 1:8.0.0-alt1
 Requires: python-module-%sname = %EVR
 
 %description
@@ -47,7 +50,7 @@ requires Neutron to run.
 %package -n python-module-%sname
 Summary: Neutron VPNaaS Python libraries
 Group: Development/Python
-Requires: python-module-neutron >= 1:7.0.0-alt1
+Requires: python-module-neutron >= 1:8.0.0-alt1
 
 %description -n python-module-%sname
 
@@ -66,8 +69,12 @@ This package contains the neutron Python library.
 %build
 %python_build
 
+PYTHONPATH=. tools/generate_config_file_samples.sh
+
 %install
 %python_install --install-data=/
+install -p -D -m 644 etc/neutron_vpnaas.conf.sample %buildroot%_sysconfdir/neutron/neutron_vpnaas.conf
+install -p -D -m 644 etc/vpn_agent.ini.sample %buildroot%_sysconfdir/neutron/vpn_agent.ini
 
 # Install sysV init scripts
 install -p -D -m 755 %SOURCE1 %buildroot%_initdir/neutron-vpn-agent
@@ -80,7 +87,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-vpn-agent.service
 %doc LICENSE
 %doc README.rst
 %_bindir/*
-%config(noreplace) %_sysconfdir/neutron/*
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/*.ini
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/*.conf
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/rootwrap.d/*.filters
 %_initdir/neutron-vpn-agent
 %_unitdir/neutron-vpn-agent.service
 
@@ -92,6 +101,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/neutron-vpn-agent.service
 
 
 %changelog
+* Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
+- 8.0.0
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.3-alt1
 - 7.0.3
 

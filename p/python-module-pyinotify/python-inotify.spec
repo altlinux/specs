@@ -2,8 +2,8 @@
 
 Summary:       Monitor filesystem events with Python under Linux
 Name:          python-module-pyinotify
-Version:       0.9.4
-Release:       alt1.1.1
+Version:       0.9.6
+Release:       alt1
 License:       MIT
 Group:         Development/Python
 URL:           https://github.com/seb-m/pyinotify
@@ -93,19 +93,21 @@ cp -a python2/examples/* %buildroot%_datadir/pyinotify
 %files
 %doc ACKS COPYING README.md
 %_bindir/pyinotify
-%python_sitelibdir_noarch/pyinotify*
+%python_sitelibdir_noarch/*
 
 %if_with python3
 %files -n python3-module-pyinotify
 %_bindir/py3inotify
-%python3_sitelibdir_noarch/pyinotify*
-%python3_sitelibdir_noarch/__pycache__/pyinotify*
+%python3_sitelibdir_noarch/*
 %endif
 
 %files examples
 %_datadir/pyinotify
 
 %changelog
+* Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 0.9.6-alt1
+- 0.9.6
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.4-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).

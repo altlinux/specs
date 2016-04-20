@@ -1,7 +1,7 @@
 %def_with python3
 
 Name: python-module-neutronclient
-Version: 3.1.1
+Version: 4.1.2
 Release: alt1
 Summary: Python API and CLI for OpenStack Neutron
 Group: Development/Python
@@ -17,22 +17,24 @@ BuildArch: noarch
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
-BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-babel >= 1.3
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-argparse
-BuildRequires: python-module-cliff >= 1.14.0
+BuildRequires: python-module-reno
+BuildRequires: python-module-pbr >= 1.6
+BuildRequires: python-module-cliff >= 1.15.0
+BuildRequires: python-module-debtcollector >= 1.2.0
 BuildRequires: python-module-iso8601 >= 0.1.9
 BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-requests >= 2.5.2
-BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-os-client-config >= 1.13.1
+BuildRequires: python-module-keystoneauth1 >= 2.1.0
+BuildRequires: python-module-requests >= 2.8.1
 BuildRequires: python-module-simplejson >= 2.2.0
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-babel >= 1.3
+
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -42,14 +44,16 @@ BuildRequires: python3-module-pbr >= 1.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
 BuildRequires: python3-module-argparse
-BuildRequires: python3-module-cliff >= 1.14.0
+BuildRequires: python3-module-cliff >= 1.15.0
+BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-iso8601 >= 0.1.9
 BuildRequires: python3-module-netaddr >= 0.7.12
-BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-oslo.serialization >= 1.4.0
-BuildRequires: python3-module-oslo.utils >= 2.0.0
-BuildRequires: python3-module-requests >= 2.5.2
-BuildRequires: python3-module-keystoneclient >= 1.6.0
+BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.serialization >= 1.10.0
+BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-os-client-config >= 1.13.1
+BuildRequires: python3-module-keystoneauth1 >= 2.1.0
+BuildRequires: python3-module-requests >= 2.8.1
 BuildRequires: python3-module-simplejson >= 2.2.0
 BuildRequires: python3-module-babel >= 1.3
 %endif
@@ -108,8 +112,11 @@ mv %buildroot%_bindir/neutron %buildroot%_bindir/python3-neutron
 
 %python_install
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-sphinx-build -b html doc/source html
+# disabling git call for last modification date from git repo
+sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+python setup.py build_sphinx
+# Fix hidden-file-or-dir warnings
+rm -fr doc/build/html/.buildinfo
 
 # Install other needed files
 install -p -D -m 644 tools/neutron.bash_completion \
@@ -135,9 +142,12 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %endif
 
 %files doc
-%doc html
+%doc doc/build/html
 
 %changelog
+* Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 4.1.2-alt1
+- 4.1.2
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 3.1.1-alt1
 - 3.1.1
 

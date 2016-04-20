@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt1.git20140913.1
+Version: 1.4.2
+Release: alt1
 Summary: Google API Client Library for Python
 License: ASL
 Group: Development/Python
@@ -15,11 +15,20 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildPreReq: python-devel python-module-setuptools
+BuildRequires: python-devel python-module-setuptools
+BuildRequires: python-module-httplib2 >= 0.8
+BuildRequires: python-module-oauth2client >= 1.4.6
+BuildRequires: python-module-six >= 1.6.1
+BuildRequires: python-module-uritemplate >= 0.6
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-httplib2 >= 0.8
+BuildRequires: python3-module-oauth2client >= 1.4.6
+BuildRequires: python3-module-six >= 1.6.1
+BuildRequires: python3-module-uritemplate >= 0.6
+#BuildRequires: python-tools-2to3
 %endif
 
 %description
@@ -29,7 +38,6 @@ Plus, Moderator, and many other Google APIs.
 %package docs
 Summary: Documentation for Google API Client Library for Python
 Group: Development/Documentation
-BuildArch: noarch
 
 %description docs
 The Google API Client for Python is a client library for accessing the
@@ -51,15 +59,14 @@ Plus, Moderator, and many other Google APIs.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
-%python_build_debug
+%python_build
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 %endif
 
@@ -88,6 +95,9 @@ rm -f docs/build
 %endif
 
 %changelog
+* Thu Apr 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1
+- 1.4.2
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2-alt1.git20140913.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

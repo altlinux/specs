@@ -1,7 +1,7 @@
 %define sname neutron-fwaas
 
 Name: openstack-%sname
-Version: 7.0.2
+Version: 8.0.0
 Release: alt1
 Epoch: 1
 Summary: OpenStack Networking FWaaS
@@ -19,19 +19,23 @@ BuildRequires: python-module-setuptools
 BuildRequires: python-module-reno
 BuildRequires: python-module-pbr >= 1.6
 BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-d2to1
+BuildRequires: python-module-eventlet >= 0.18.2
+BuildRequires: python-module-httplib2 >= 0.7.5
 BuildRequires: python-module-netaddr >= 0.7.12
-BuildRequires: python-module-SQLAlchemy >= 0.9.9
+BuildRequires: python-module-SQLAlchemy >= 1.0.10
 BuildRequires: python-module-alembic >= 0.8.0
-BuildRequires: python-module-oslo.config >= 2.3.0
-BuildRequires: python-module-oslo.db >= 2.4.1
-BuildRequires: python-module-oslo.log >= 1.8.0
-BuildRequires: python-module-oslo.messaging >= 1.16.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.service >= 0.7.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
+BuildRequires: python-module-neutron-lib >= 0.0.1
+BuildRequires: python-module-oslo.config >= 3.7.0
+BuildRequires: python-module-oslo.db >= 4.1.0
+BuildRequires: python-module-oslo.log >= 1.14.0
+BuildRequires: python-module-oslo.messaging >= 4.0.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.service >= 1.0.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
 
-Requires: openstack-neutron >= 1:7.0.0-alt1
+BuildRequires: python-module-neutron >= 8.0.0
+
+Requires: openstack-neutron >= 1:8.0.0-alt1
 Requires: python-module-%sname = %version-%release
 
 %description
@@ -60,15 +64,18 @@ This package contains the neutron Python library.
 %build
 %python_build
 
+PYTHONPATH=. tools/generate_config_file_samples.sh
+
 %install
 %python_install --install-data=/
 
-# Remove unused files
+# configuration files
+install -p -D -m 644 etc/fwaas_driver.ini.sample %buildroot%_sysconfdir/neutron/fwaas_driver.ini
 
 %files
 %doc LICENSE
 %doc README.rst
-%config(noreplace) %_sysconfdir/neutron/fwaas_driver.ini
+%config(noreplace) %attr(0640, root, neutron) %_sysconfdir/neutron/*
 
 %files -n python-module-%sname
 %doc LICENSE
@@ -78,6 +85,9 @@ This package contains the neutron Python library.
 
 
 %changelog
+* Tue Apr 19 2016 Alexey Shabalin <shaba@altlinux.ru> 1:8.0.0-alt1
+- 8.0.0
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:7.0.2-alt1
 - 7.0.2
 

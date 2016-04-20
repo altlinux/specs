@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4
-Release: alt1.1
+Version: 1.0
+Release: alt1
 Summary: An implementation of time.monotonic() for Python 2 & Python 3
 License: ASLv2.0
 Group: Development/Python
@@ -43,11 +43,11 @@ cp -fR . ../python3
 %endif
 
 %build
-%python_build_debug
+%python_build
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 %endif
 
@@ -57,14 +57,6 @@ popd
 %if_with python3
 pushd ../python3
 %python3_install
-popd
-%endif
-
-%check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
 popd
 %endif
 
@@ -79,6 +71,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 08 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt1
+- 1.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

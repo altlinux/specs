@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%pypi_name
-Version: 2.3.3
+Version: 4.4.0
 Release: alt1
 Summary: Middleware for OpenStack Identity
 Group: Development/Python
@@ -15,38 +15,40 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 1.6
-BuildRequires: python-module-oslo.config >= 2.3.0
+BuildRequires: python-module-keystoneauth1 >= 2.1.0
+BuildRequires: python-module-oslo.config >= 3.7.0
 BuildRequires: python-module-oslo.context >= 0.2.0
-BuildRequires: python-module-oslo.i18n >= 1.5.0
-BuildRequires: python-module-oslo.serialization >= 1.4.0
-BuildRequires: python-module-oslo.utils >= 2.0.0
-BuildRequires: python-module-keystoneclient >= 1.6.0
-BuildRequires: python-module-six >= 1.9.0
-BuildRequires: python-module-requests >= 2.5.2
+BuildRequires: python-module-oslo.i18n >= 2.1.0
+BuildRequires: python-module-oslo.serialization >= 1.10.0
+BuildRequires: python-module-oslo.utils >= 3.5.0
+BuildRequires: python-module-positional >= 1.0.1
 BuildRequires: python-module-pycadf >= 1.1.0
+BuildRequires: python-module-keystoneclient >= 1.6.0
+BuildRequires: python-module-requests >= 2.8.1
+BuildRequires: python-module-six >= 1.9.0
 BuildRequires: python-module-webob >= 1.2.3
 BuildRequires: python-module-sphinx
 BuildRequires: python-module-oslosphinx
-BuildRequires: python-module-babel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-oslo.config >= 2.3.0
+BuildRequires: python3-module-keystoneauth1 >= 2.1.0
+BuildRequires: python3-module-oslo.config >= 3.7.0
 BuildRequires: python3-module-oslo.context >= 0.2.0
-BuildRequires: python3-module-oslo.i18n >= 1.5.0
-BuildRequires: python3-module-oslo.serialization >= 1.4.0
-BuildRequires: python3-module-oslo.utils >= 2.0.0
-BuildRequires: python3-module-keystoneclient >= 1.6.0
-BuildRequires: python3-module-six >= 1.9.0
-BuildRequires: python3-module-requests >= 2.5.2
+BuildRequires: python3-module-oslo.i18n >= 2.1.0
+BuildRequires: python3-module-oslo.serialization >= 1.10.0
+BuildRequires: python3-module-oslo.utils >= 3.5.0
+BuildRequires: python3-module-positional >= 1.0.1
 BuildRequires: python3-module-pycadf >= 1.1.0
+BuildRequires: python3-module-keystoneclient >= 1.6.0
+BuildRequires: python3-module-requests >= 2.8.1
+BuildRequires: python3-module-six >= 1.9.0
 BuildRequires: python3-module-webob >= 1.2.3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-oslosphinx
-BuildRequires: python3-module-babel
 %endif
 
 
@@ -91,10 +93,12 @@ popd
 %endif
 
 
-## generate html docs
-#sphinx-build doc/source html
-## remove the sphinx-build leftovers
-#rm -rf html/.{doctrees,buildinfo}
+# disabling git call for last modification date from git repo
+sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
+# generate html docs
+python setup.py build_sphinx
+# remove the sphinx-build leftovers
+rm -rf doc/build/html/.{doctrees,buildinfo}
 
 %install
 %python_install
@@ -119,10 +123,13 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests
 %python3_sitelibdir/*
 %endif
 
-#%files doc
-#%doc html LICENSE
+%files doc
+%doc LICENSE doc/build/html
 
 %changelog
+* Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 4.4.0-alt1
+- 4.4.0
+
 * Mon Mar 28 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.3-alt1
 - 2.3.3
 

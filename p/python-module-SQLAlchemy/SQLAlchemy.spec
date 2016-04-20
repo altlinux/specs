@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.8
-Release: alt2
+Version: 1.0.12
+Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -19,16 +19,10 @@ Source: SQLAlchemy-%version.tar
 # in various tests, like in the tests for sphinx).
 Requires: python-modules-sqlite3
 
-#BuildArch: noarch
-#BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils python-base python-devel python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base
-BuildRequires: python-module-setuptools python3-devel python3-module-setuptools rpm-build-python3
-
-#BuildRequires: python3-devel python3-module-distribute
-#BuildPreReq: python-tools-2to3
+BuildRequires: python3-devel python3-module-setuptools
 %endif
 
 %description
@@ -77,7 +71,6 @@ This package contains tests for SQLAlchemy.
 %package tests
 Summary: Tests for SQLAlchemy
 Group: Development/Python
-#BuildArch: noarch
 Requires: %name = %version-%release
 
 %description tests
@@ -99,8 +92,7 @@ cp -a . ../python3
 
 %build
 %add_optflags -fno-strict-aliasing
-CFLAGS="%optflags" python setup.py install --optimize=2 --root=buildroot \
-	--record INSTALLED_FILES
+%python_build
 
 %if_with python3
 pushd ../python3
@@ -109,8 +101,7 @@ popd
 %endif
 
 %install
-mkdir -p %buildroot
-cp -r buildroot/* %buildroot/
+%python_install
 
 %if_with python3
 pushd ../python3
@@ -118,7 +109,8 @@ pushd ../python3
 popd
 %endif
 
-%files -f INSTALLED_FILES
+%files
+%python_sitelibdir/*
 %exclude %python_sitelibdir/*/testing
 
 %files tests
@@ -134,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 1.0.12-alt1
+- 1.0.12
+
 * Fri Apr 15 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.8-alt2
 - Make sure that at least the Python built-in sqlite driver is present
   (and can be used by SQLAlchemy whenever SQLAlchemy is installed;
