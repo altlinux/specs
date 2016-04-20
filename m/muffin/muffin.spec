@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 2.8.5
-Release: alt2
+Release: alt3
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -156,6 +156,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Wed Apr 20 2016 Vladimir Didenko <cow@altlinux.org> 2.8.5-alt3
+- Better fix for wrong context menu position.
+
 * Mon Apr 18 2016 Vladimir Didenko <cow@altlinux.org> 2.8.5-alt2
 - Fix wrong context menu position.
 
