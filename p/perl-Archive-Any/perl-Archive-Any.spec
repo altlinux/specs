@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Archive-Any
-Version: 0.0942
+Version: 0.0944
 Release: alt1
 
 Summary: Single interface to deal with file archives.
@@ -24,13 +24,11 @@ License: Artistic
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Archive-Any/
 
-Packager: Michael Bochkaryov <misha@altlinux.ru>
-
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/O/OA/OALDERS/Archive-Any-%{version}.tar.gz
-Patch: Archive-Any-0.0941-syntax.patch
+Patch: Archive-Any-0.0944-syntax.patch
 
-BuildPreReq: perl-Archive-Tar
+BuildRequires: perl-Archive-Tar
 # Automatically added by buildreq on Wed Sep 03 2008 (-bi)
 BuildRequires: perl-Archive-Any perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn perl-version
 
@@ -53,6 +51,9 @@ Tarballs, zip files, etc.
 %perl_vendor_privlib/Archive*
 
 %changelog
+* Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.0944-alt1
+- automated CPAN update
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 0.0942-alt1
 - automated CPAN update
 
