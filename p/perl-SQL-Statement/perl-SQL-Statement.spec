@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SQL-Statement
 Name: perl-%dist
-Version: 1.409
+Version: 1.410
 Release: alt1
 
 Summary: SQL parsing and processing engine
@@ -83,6 +83,9 @@ export SQL_STATEMENT_WARN_UPDATE=sure
 %perl_vendor_privlib/SQL
 
 %changelog
+* Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.410-alt1
+- automated CPAN update
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.409-alt1
 - automated CPAN update
 
