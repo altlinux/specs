@@ -1,7 +1,7 @@
 
 Name: phpipam
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -59,7 +59,7 @@ Requires: apache2-httpd-prefork-like php-engine
 mkdir -p %buildroot%webserver_webappsdir
 cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 #cleaup
-rm -rf %buildroot%webserver_webappsdir/%name/misc
+#rm -rf %buildroot%webserver_webappsdir/%name/misc
 rm -f %buildroot%webserver_webappsdir/%name/{INSTALL.txt,README,UPDATE}
 rm -f %buildroot%webserver_webappsdir/%name/.gitattributes
 rm -f %buildroot%webserver_webappsdir/%name/.gitignore
@@ -77,5 +77,8 @@ install -pDm644 %SOURCE2 %buildroot%apache2_extra_available/%name.conf
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt2
+- git snapshot of branch 1.2 - 7a5cb1a2ea065096d1d393ccc5b52a5bb7983c39
+
 * Tue Feb 16 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.1-alt1
 - initial build for ALT Linux Sisyphus
