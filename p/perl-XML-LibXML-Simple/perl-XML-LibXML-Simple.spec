@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML-Simple
 Name: perl-%dist
-Version: 0.96
+Version: 0.97
 Release: alt1
 
 Summary: XML::LibXML based XML::Simple clone
@@ -32,6 +32,9 @@ None.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.97-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.96-alt1
 - automated CPAN update
 
