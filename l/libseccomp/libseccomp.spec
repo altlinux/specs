@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: lib%oname
-Version: 2.2.3
-Release: alt1.1
+Version: 2.3.0
+Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -12,7 +12,7 @@ Url: https://github.com/seccomp/libseccomp
 
 #https://github.com/seccomp/libseccomp.git
 Source: %name-%version.tar
-
+Patch: %name-%version-%release.patch
 Patch100: 0001-Tune-config.patch
 
 BuildPreReq: python-devel python-module-Cython
@@ -74,6 +74,7 @@ This package contains python bindings of %name.
 
 %prep
 %setup
+%patch -p1
 %patch100 -p1
 
 %if_with python3
@@ -141,6 +142,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
+- 2.3.0
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2.3-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
