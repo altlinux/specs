@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Apr 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt1
+- disable colord and openl2tp
+
 * Tue Jul 16 2013 Sergey V Turchin <zerg@altlinux.org> 0.6.3-alt1
 - fix disable services
 
