@@ -13,9 +13,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.2
-Release: alt29
-
+Version: 2.3
+Release: alt2
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -28,9 +27,9 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 Source: %name-%version.tar
 
 # manually removed: glibc-devel-static
-# Automatically added by buildreq on Mon May 11 2015
-# optimized out: fontconfig gcc-c++ libcloog-isl4 libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-module-omniidl python-modules
-BuildRequires: libcommoncpp2-devel libomniORB-devel libsigc++2-devel
+# Automatically added by buildreq on Thu Apr 21 2016
+# optimized out: fontconfig gcc-c++ libgpg-error libsasl2-3 libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-module-omniidl python-modules
+BuildRequires: doxygen glibc-devel-static libcomedi-devel libcommoncpp2-devel libev-devel libmysqlclient-devel libomniORB-devel libpqxx-devel librrd-devel libsigc++2-devel libsqlite3-devel python-module-distribute python-module-google python-module-sphinxcontrib xsltproc
 
 # for uniset2-codegen
 BuildPreReq: xsltproc
@@ -487,6 +486,55 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Wed Apr 20 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt2
+- (LogSession): disable "keep alive message"
+
+* Tue Apr 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt1
+- build new version
+
+* Sun Apr 17 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt31.7
+- LogSession: auto restore log levels after all sesssions closed
+
+* Mon Apr 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt31.6
+- LogSession: added the connection test
+
+* Sun Apr 10 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt31.5
+- LogSession: add buffer limit.. (200 messages, ~30kB)
+
+* Sun Apr 03 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt31.3
+- ModbusSlave: iowait optimization
+
+* Thu Mar 31 2016 Pavel Vainerman <pv@etersoft.ru> 2.2-alt31.2
+- test build
+
+* Tue Mar 29 2016 Pavel Vainerman <pv@etersoft.ru> 2.2-alt31.1
+- test build
+
+* Wed Mar 23 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt31
+- IONotifyContoller: fixed bug in depend (notify)(setbug #9302)
+- ModbusMultiMaster: fixed bug for change channel (timeout)
+
+* Tue Mar 22 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt30
+- minor fixes in DealyTimer and MBExchange (not respond logic)
+
+* Sun Mar 20 2016 Pavel Vainerman <pv@etersoft.ru> 2.2-alt29.2
+- rebuild
+
+* Sun Mar 20 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt29.1
+- test build
+
+* Sat Mar 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt28.4
+- test build
+
+* Sat Mar 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt28.3
+- test build
+
+* Sat Mar 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt28.2
+- test build
+
+* Fri Mar 18 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt28.1
+- test build
+
 * Mon Mar 07 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt29
 - minor fixes
 
@@ -523,11 +571,27 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 * Mon Jan 18 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt19
 - rebuild new version
 
+* Mon Jan 18 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt17.2.3.alt1
+- add supported libev:
+  - refactoring ModbusSlave (use libev)
+  - refactoring LogServer (use libev)
+  - refactoring UNetReceiver (use libev)
+- minor fixes
+
 * Fri Jan 15 2016 Pavel Vainerman <pv@altlinux.ru> 2.2-alt17
 - rebuild new version
 
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 2.2-alt13.1
 - NMU: rebuild with libpqxx 4
+
+* Wed Dec 23 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt16
+- fixed bug in DBNetInterface (uzum)
+
+* Sat Dec 19 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt15
+- (codegen): added to display information about the timers
+
+* Sat Dec 19 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt14
+- (uzum): refactoring DBInterface..
 
 * Wed Dec 16 2015 Pavel Vainerman <pv@altlinux.ru> 2.2-alt13
 - set public for UniSetObject::askTimer 
