@@ -1,6 +1,6 @@
 Name: nfqfilter
 Version: 0.2
-Release: alt13
+Release: alt14
 Summary: Pattern-based packet filtering system
 Group: Networking/Other
 
@@ -57,6 +57,9 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Wed Apr 20 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt14
+- update to git:682029bb4ef2163e8a2ee111dbdf7e1426aaeb87
+
 * Mon Mar 28 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt13
 - update to git:1e79b0229a2870a15c7e18cfa3722da7a35e5c2a
 - Add multithread's
