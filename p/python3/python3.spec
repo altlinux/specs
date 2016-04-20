@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt3
+Release: alt4
 License: Python
 Group: Development/Python3
 
@@ -850,6 +850,14 @@ find %buildroot -type f -a -name "*.py" -a -not -wholename "*/test/*" -a -not -w
 
 sed -i 's,/usr/local/bin/python,/usr/bin/python3,' %buildroot%_libdir/python%pybasever/cgi.py
 
+# Replace the shell implementation with the more correct .py one
+# (BTW, the .py one used to be packaged in python3-3.3):
+ln -sfv \
+   "$(relative \
+	%pylibdir/config-%pybasever%pyabi/python-config.py \
+   	%_bindir/python%pybasever%pyabi-config)" \
+   %buildroot%_bindir/python%pybasever%pyabi-config
+
 %global python_ignored_files site-packages(/.+\.(pth|egg-info/(entry_points|namespace_packages)\.txt))?$
 mkdir -p %buildroot%_sysconfdir/buildreqs/files/ignore.d
 cat > %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name << EOF
@@ -878,6 +886,14 @@ cat <<\EOF >%buildroot%_rpmlibdir/%python3_sitebasename-site-packages-files.req.
 EOF
 
 %check
+# ALT#32008:
+if head -1 %buildroot%_bindir/python3-config | fgrep -q python; then
+configdir="$(WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python %buildroot%_bindir/python3-config --configdir)"
+else
+configdir="$(%buildroot%_bindir/python3-config --configdir)"
+fi
+[ -d %buildroot"$configdir" ]
+
 WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbose --findleaks
 
 %files
@@ -1143,6 +1159,10 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Wed Apr 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt4
+- put the Python implementation of python3-config back (as in 3.3)
+  because it prints more correct values for --configdir (ALT#32008).
+
 * Thu Apr 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt3
 - I was wrong in letting __pycache__/ be handled by files.req:
   must be invisible. (Other pkgs gave this crazy Provides as a result.)
