@@ -1,5 +1,5 @@
 %define branch 0.10
-%define svn svn6214
+%define svn svn6253
 
 %define rel alt1
 
@@ -48,7 +48,7 @@ BuildPreReq: rpm-build-wlskins doxygen
 BuildRequires: gcc-c++ libavformat-devel
 BuildRequires: libcurl-devel libfaad-devel libmad-devel libmodplug-devel
 BuildRequires: libmpcdec-devel libpulseaudio-devel >= 0.9.15 libqt4-devel
-BuildRequires: libsoxr-devel libsamplerate-devel libtag-devel >= 1.6 libvorbis-devel
+BuildRequires: libsoxr-devel libtag-devel >= 1.6 libvorbis-devel
 BuildRequires: libwavpack-devel libalsa-devel libflac-devel libbs2b-devel >= 3.0
 BuildRequires: libprojectM-devel >= 2.0.1 jackit-devel xorg-xf86miscproto-devel
 BuildRequires: libenca-devel libcddb-devel libmms-devel >= 0.4 libwildmidi-devel >= 0.2.3.4
@@ -913,6 +913,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Wed Apr 20 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6253
+- 0.10.0 svn6253 version
+
 * Fri Apr 01 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6214
 - 0.10.0 svn6214 version
 
