@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Encode.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Encode.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Growl-GNTP
-Version:        0.20
-Release:        alt2_8
+Version:        0.21
+Release:        alt1_1
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -17,8 +17,7 @@ BuildRequires:  perl(Digest/MD5.pm)
 BuildRequires:  perl(Digest/SHA.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Filter/Util/Call.pm)
-BuildRequires:  perl(IO/Socket/PortState.pm)
-BuildRequires:  perl(Module/Build.pm)
+BuildRequires:  perl(Module/Build/Tiny.pm)
 BuildRequires:  perl(Test/More.pm)
 Source44: import.info
 
@@ -29,11 +28,11 @@ Growl::GNTP is Perl implementation of GNTP Protocol (Client Part)
 %setup -q -n Growl-GNTP-%{version}
 
 %build
-perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
+perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 ./Build
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
+./Build install --destdir=%{buildroot} --create_packlist=0
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 
@@ -47,6 +46,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_8
 - update to new release by fcimport
 
