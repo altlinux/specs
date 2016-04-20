@@ -1,6 +1,6 @@
 Name: xlockmore
 Version: 5.46
-Release: alt1
+Release: alt2
 
 Summary: An X terminal locking program
 License: MIT
@@ -18,6 +18,9 @@ Patch2: xlockmore-5.46-l10n.patch
 Patch3: xlockmore-5.46-kbdmon.patch
 Patch4: xlockmore-5.46-nologout.patch
 Patch5: xlockmore-5.46-droidfonts.patch
+Patch6: xlockmore-5.46-alt-BSD_SOURCE.patch
+Patch7: xlockmore-5.46-alt-build-freetype.patch
+
 
 PreReq: /etc/tcb
 Requires: fortune-mod
@@ -45,6 +48,8 @@ X sessions.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 autoconf
@@ -105,6 +110,10 @@ rm -rf %_datadir/xlock/fonts/
 %exclude %_mandir/xlock.1*
 
 %changelog
+* Wed Apr 20 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.46-alt2
+- Fixed build with freetype.
+- Switched from _BSD_SOURCE to _DEFAULT_SOURCE.
+
 * Mon Apr 20 2015 Fr. Br. George <george@altlinux.ru> 5.46-alt1
 - Autobuild version bump to 5.46
 - Fix patches
