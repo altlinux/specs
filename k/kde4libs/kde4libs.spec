@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -119,6 +119,7 @@ Patch1035: kdelibs-4.10.2-alt-flags.patch
 Patch1036: kdelibs-4.10.2-alt-add-protocol-all.patch
 Patch1037: kdelibs-4.10.4-alt-def-plasma-theme-bg.patch
 Patch1038: kdelibs-4.10.5-alt-run-with-context.patch
+Patch1039: alt-def-widget-style.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
@@ -356,6 +357,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed Apr 20 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.18-alt2
+- set breeze widgets style and icons theme by default (kde4-styles-breeze package)
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.18-alt1
 - new version
 
