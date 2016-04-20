@@ -1,6 +1,6 @@
 Name: blender
 Version: 2.77a
-Release: alt1
+Release: alt1.1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPLv2
@@ -148,6 +148,9 @@ install -d release/plugins/include
 %files i18n -f %name.lang
 
 %changelog
+* Thu Apr 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.77a-alt1.1
+- (NMU) Rebuild with rpm-build-python3-0.1.10.2 (more autoreqs/provs).
+
 * Fri Apr 15 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.77a-alt1
 - Updated to 2.77a.
 - Enable localization by default (closes ALT#31561).
