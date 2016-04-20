@@ -18,7 +18,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -223,6 +223,7 @@ applications for KDE 4.
 %patch1036 -p1
 %patch1037 -p1
 %patch1038 -p1
+%patch1039 -p1
 
 %patch3000 -p1
 
@@ -357,6 +358,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed Apr 20 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.18-alt3
+- fix set default style
+
 * Wed Apr 20 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.18-alt2
 - set breeze widgets style and icons theme by default (kde4-styles-breeze package)
 
