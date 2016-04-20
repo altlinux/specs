@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Regexp-Assemble
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: Assemble multiple Regular Expressions into a single RE
@@ -75,6 +75,9 @@ http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html.
 %perl_vendor_privlib/Regexp/*
 
 %changelog
+* Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - automated CPAN update
 
