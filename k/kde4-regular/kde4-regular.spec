@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.14
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -19,6 +19,7 @@ Requires: fonts-ttf-google-droid-sans-mono
 Requires: fonts-ttf-google-droid-serif
 
 Requires: appmenu-qt4
+Requires: kde4-styles-breeze
 
 Requires: kde4base-workspace-core kde4base-workspace-cursors kde4base-workspace-wallpapers
 Requires: kde4accessibility
@@ -82,6 +83,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.14-alt4
+- update requires
+
 * Thu Oct 22 2015 Sergey V Turchin <zerg@altlinux.org> 4.14-alt3
 - using kde4-smplayer instead of kde4-kaffeine
 
