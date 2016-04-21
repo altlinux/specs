@@ -3,7 +3,7 @@
 
 Name: python-module-efl
 Version: 1.17.0
-Release: alt1.1
+Release: alt2
 
 Summary: Python bindings for EFL libraries
 Group: Development/Python
@@ -84,12 +84,20 @@ popd
 %python_sitelibdir/python_efl-*.egg-info
 %doc AUTHORS README* ChangeLog
 
+%exclude %python_sitelibdir/efl/utils/setup.py*
+
 %files -n python3-module-efl
 %python3_sitelibdir/efl/
 %python3_sitelibdir/python_efl-*.egg-info
 %doc AUTHORS README* ChangeLog
 
+%exclude %python3_sitelibdir/efl/utils/setup.py*
+
 %changelog
+* Thu Apr 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt2
+- exclude utils/setup.py that can be used only by other apps
+  in the setup.py script (ALT #32010)
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.17.0-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
