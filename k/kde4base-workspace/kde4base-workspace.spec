@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt8
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -199,7 +199,7 @@ Obsoletes: kdebase-wm < %version-%release
 %endif
 Requires: udev udisks2 upower media-player-info usbids
 Requires: kde4base-runtime >= %version
-Requires: kde4-icon-theme-oxygen kde4-kactivities
+Requires: icon-theme-breeze kde4-kactivities
 Requires: /usr/bin/qdbus dbus-tools-gui
 Requires: qalculate-common
 Requires: kde4-kscreen
@@ -970,6 +970,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt8
+- fix requires
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt7
 - fix default menu icon
 
