@@ -9,7 +9,7 @@
 
 Name: nemo
 Version: %ver_major.7
-Release: alt1
+Release: alt2.git20160420
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -184,7 +184,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %config %_datadir/glib-2.0/schemas/org.nemo.gschema.xml
 # docs
 %doc --no-dereference COPYING
-%doc AUTHORS NEWS.bz2 README THANKS
+%doc AUTHORS NEWS.bz2 README.md THANKS
 %_man1dir/*
 
 %files -n lib%name
@@ -209,6 +209,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Wed Mar 16 2016 Vladimir Didenko <cow@altlinux.org> 2.8.7-alt2.git20160420
+- git20160420 (94c6036)
+
 * Wed Mar 16 2016 Vladimir Didenko <cow@altlinux.org> 2.8.7-alt1
 - 2.8.7
 
