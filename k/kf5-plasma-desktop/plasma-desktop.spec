@@ -10,7 +10,7 @@
 
 Name: kf5-%rname
 Version: 5.6.1
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -24,13 +24,12 @@ Requires: polkit-kde-plasma-desktop
 Source: %rname-%version.tar
 Patch1: alt-def-font.patch
 Patch2: alt-menu-icon.patch
-Patch3: alt-kickoff-favorites.patch
+Patch3: alt-def-apps-menu.patch
 #
 Patch5: alt-multimedia-player-chooser.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-def-desktop.patch
-Patch8: alt-def-apps-menu.patch
-Patch9: alt-def-apps-menu0.patch
+#
 Patch10: alt-def-start-empty-session.patch
 Patch11: alt-def-key-numlock.patch
 Patch12: alt-def-layout-indicator.patch
@@ -118,8 +117,7 @@ KF5 library
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#%patch8 -p1
-%patch9 -p1
+#
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -212,6 +210,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt3
+- update menu favorites defaults
+
 * Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt2
 - update requires
 
