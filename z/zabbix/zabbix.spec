@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev 58734
+%define svnrev 59540
 
 %def_with pgsql
 
@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -470,6 +470,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Apr 21 2016 Alexei Takaseev <taf@altlinux.org> 1:3.0.2-alt1
+- 3.0.2
+
 * Sat Feb 27 2016 Alexei Takaseev <taf@altlinux.org> 1:3.0.1-alt1
 - 3.0.1
 - Enable SSL (ALT#31828)
