@@ -9,7 +9,7 @@
 %define bugfix 0
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 BuildArch: noarch
 
 %define theme %name
@@ -485,6 +485,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.2
+- set breeze gtk3 icon theme by default
+
 * Tue Apr 19 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.1
 - add common KDE5 support
 
