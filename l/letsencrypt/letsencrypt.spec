@@ -1,5 +1,5 @@
 Name: letsencrypt
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -20,7 +20,8 @@ Requires: python-module-letsencrypt = %version-%release
 
 Requires: python-module-zope.component
 Requires: python-module-zope.interface >= 4.1.0
-Requires: python-module-pyasn1
+Requires: python-module-pyasn1 >= 0.1.8
+Requires: python-module-cffi >= 1.4.2
 Requires: dialog
 # Due Prior to Python 2.7.9 the stdlib SSL module did not allow a user to configure
 # See /usr/lib/python2.7/site-packages/acme/client.py
@@ -46,7 +47,7 @@ Requires: python-base >= 2.7.9
 #BuildRequires: python-parsedatetime
 #BuildRequires: python-configobj
 #BuildRequires: python2-configargparse >= 0.10.0
-#BuildRequires: python2-acme = %version
+BuildRequires: python-module-acme = %version
 
 %description
 Let's Encrypt is a free, automated certificate authority that aims
@@ -132,6 +133,9 @@ mkdir -p %buildroot%_logdir/%name
 #%doc docs/_build/html
 
 %changelog
+* Thu Apr 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+
 * Fri Mar 18 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - new version 0.4.2 (with rpmrb script)
 - fix requires
