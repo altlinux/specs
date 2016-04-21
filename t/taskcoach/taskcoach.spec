@@ -1,6 +1,6 @@
 %define oname TaskCoach
 Name: taskcoach
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: Your friendly task manager
@@ -18,13 +18,13 @@ BuildArch: noarch
 # manually removed: eric
 # Automatically added by buildreq on Fri Sep 21 2012
 # optimized out: python-base python-devel  python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings
-BuildRequires: python-module-distribute
+BuildRequires: python-module-distribute libwxGTK3.1-devel
 
 BuildPreReq: rpm-build-intro
 
 Requires: lsb-release xprop
 
-Requires: python-module-wx2.9 python-module-twisted-core-gui-wx libXScrnSaver
+Requires: python-module-twisted-core-gui-wx libXScrnSaver
 
 AutoProv: no
 # wait for correct build python-module-pysyncml
@@ -66,6 +66,9 @@ rm -rf %buildroot%python_sitelibdir/buildlib/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Apr 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt1
+- new version 1.4.3 (with rpmrb script)
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - new version 1.4.2 (with rpmrb script)
 
