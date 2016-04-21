@@ -306,7 +306,7 @@
 
 Name: %lname
 Version: 1.1.1
-Release: alt15
+Release: alt16
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -636,6 +636,7 @@ Ukrainian language support for %Name.
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
 sed -i '/\(VP8E_UPD_ENTROPY\|VP8E_UPD_REFERENCE\|VP8E_USE_REFERENCE\)/d' ffmpeg/libavcodec/libvpxenc.c
 ls DOCS/man/*/%lname.1 | grep -v '^DOCS/man/en/' | xargs sed -i '1i.\\" -*- mode: troff; coding: utf-8 -*-'
+echo "NotShowIn=KDE;" >> etc/%lname.desktop
 
 %build
 %define _optlevel 3
@@ -1107,6 +1108,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt16
+- hide menu items from KDE (ALT#31522)
+
 * Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt15
 - rebuilt with recent libx264
 
