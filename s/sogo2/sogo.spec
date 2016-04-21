@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo2
 Version:      2.3.10
-Release:      alt1
+Release:      alt2
 Epoch:        1
 
 License:      GPL
@@ -87,7 +87,7 @@ Requires: sogo2-tool
 Requires: sope2-cards
 Requires: sogo2-apache2
 Requires: apache2-base
-Requires: apache2-mod_ngobjweb
+Requires: apache2-mod_ngobjweb-sope2
 Requires: memcached 
 %if_with openchange
 Requires: %name-openchange-backend
@@ -435,6 +435,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Apr 21 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.10-alt2
+- Use apache2-mod_ngobjweb-sope2 for task-sogo
+
 * Tue Apr 12 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.10-alt1
 - New version
 - Use sope2 instead of sope >= 3.0.0
