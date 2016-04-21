@@ -34,7 +34,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt5
+%define rlz alt6
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -95,9 +95,10 @@ Patch211: qt-everywhere-opensource-src-4.8.2--assistant-crash.patch
 Patch212: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
 Patch213: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
 Patch214: qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch
-#
+Patch215: qt-everywhere-opensource-src-4.8.5-qt_plugin_path.patch
 Patch216: qt-everywhere-opensource-src-4.8.6-QTBUG-34614.patch
 Patch217: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
+Patch218: qt-everywhere-opensource-src-4.8.7-alsa-1.1.patch
 # MDV
 # ALT
 # by raorn@altlinux
@@ -703,9 +704,10 @@ Install this package if you want to create RPM packages that use %name
 %patch212 -p1
 %patch213 -p1
 %patch214 -p1
-#
+%patch215 -p1
 %patch216 -p0
 %patch217 -p1
+%patch218 -p1
 # MDV
 # ALT
 %patch501 -p1
@@ -1447,6 +1449,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt6
+- support KDE4 plugins by default
+
 * Thu Dec 10 2015 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt5
 - add aarch64 support
 
