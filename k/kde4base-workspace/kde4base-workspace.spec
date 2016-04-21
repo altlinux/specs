@@ -25,7 +25,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -555,7 +555,7 @@ KDE 4 library
 %patch1038 -p1
 %patch1039 -p1
 %patch1040 -p1
-#%patch1041 -p1
+%patch1041 -p1
 %patch1042 -p1
 %patch1043 -p1
 %patch1044 -p1
@@ -970,6 +970,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt7
+- fix default menu icon
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 4.11.22-alt6
 - don't save session by default
 
