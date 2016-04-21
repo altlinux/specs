@@ -4,7 +4,7 @@
 %define libqpulseaudioprivate libqpulseaudioprivate%sover
 
 Name: kf5-%rname
-Version: 5.6.1
+Version: 5.6.3
 Release: alt1
 %K5init altplace
 
@@ -13,7 +13,6 @@ Summary: Audio Volume Plasma Applet
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Provides: kde5-volume-control
 Requires: pulseaudio-daemon
 
 Source: %rname-%version.tar
@@ -90,6 +89,9 @@ KF5 library
 %_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
+- new version
+
 * Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - new version
 
