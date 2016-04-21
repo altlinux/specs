@@ -61,7 +61,7 @@ License:	%gpl2only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
-Version:	4.3.26
+Version:	4.3.27
 Release:	alt1
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
@@ -264,6 +264,9 @@ Patch503: xymonclient-linux.sh-various-procps.patch
 
 # rollback of changes for cgiwrap introduced in 4.3.20
 Patch504: xymon-4.3.21-FollowSymLinks.patch
+
+# added "su xymon xymon" to logrotate
+Patch505: xymon.logrotate.patch
 
 ##########################################################################
 ##########################################################################
@@ -473,6 +476,9 @@ the Xymon server in NCV format.
 %patch502 -p2
 %patch503 -p1
 %patch504 -p1
+%patch505 -p1
+
+sed "s/define MAXCHECK   102400/define MAXCHECK   2048000/" -i client/logfetch.c
 
 %if_disabled trunk
   PROTOFILE="xymond/etcfiles/protocols.cfg.DIST"
@@ -1252,6 +1258,11 @@ done
 ################ end extra clients ################
 
 %changelog
+* Thu Apr 21 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.3.27-alt1
+- new version
+- fixed config for logrotate
+- increased logfetch's buffer size from 102400 to 2048000
+
 * Fri Feb 26 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.3.26-alt1
 - new version (CVE-2016-2054, CVE-2016-2055, CVE-2016-2056,
   CVE-2016-2057, CVE-2016-2058 was fixed in previous 4.3.25)
