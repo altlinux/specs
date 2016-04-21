@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt4
+Release: alt4.1
 License: Python
 Group: Development/Python3
 
@@ -1159,6 +1159,10 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Wed Apr 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt4.1
+- Rebuild with rpm-build-python3-0.1.10.2 (more autoreqs/provs will
+  be found, and their default format has been tweaked slightly).
+
 * Wed Apr 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt4
 - put the Python implementation of python3-config back (as in 3.3)
   because it prints more correct values for --configdir (ALT#32008).
