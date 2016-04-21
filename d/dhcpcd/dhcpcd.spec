@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 6.10.1
+Version: 6.10.3
 Release: alt1
 
 Summary: DHCP Client
@@ -10,14 +10,6 @@ Group: System/Servers
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-# Patch from upstream
-# http://roy.marples.name/projects/dhcpcd/info/528541c4c619520e
-# Drop it when new version will be released
-Patch1: dhcpcd-6.10.1-CVE-2014-7913.patch
-# Patch from upstream
-# http://roy.marples.name/projects/dhcpcd/info/f30603efca774b6a
-# Drop it when new version will be released
-Patch2: dhcpcd-6.10.1-blank-hostname.patch
 
 AutoReq: yes, noshell
 
@@ -38,8 +30,6 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
-%patch2 -p0
 
 %build
 %configure \
@@ -83,6 +73,10 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Thu Apr 21 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.3-alt1
+- Drop obsoleted patches.
+- Updated to 6.10.3.
+
 * Mon Jan 25 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.1-alt1
 - Patches from upstream:
   + Don't allow blank hostname.
