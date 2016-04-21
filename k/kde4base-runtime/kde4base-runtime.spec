@@ -6,12 +6,12 @@
 %def_disable ntrack
 
 %define rname kdebase-runtime
-%define major 15
-%define minor 12
+%define major 16
+%define minor 04
 %define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -67,7 +67,7 @@ Summary: Core files for %name
 Group: Graphical desktop/KDE
 Requires: %libname = %EVR
 Requires: phonon-backend
-Requires: qt4-dbus kde4-icon-theme-oxygen shared-desktop-ontologies kde4pimlibs
+Requires: qt4-dbus icon-theme-breeze shared-desktop-ontologies kde4pimlibs
 %ifnarch s390 s390x
 Requires: eject
 %endif
@@ -223,6 +223,10 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+- fix requires
+
 * Mon Jan 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
 - fix to build
 
