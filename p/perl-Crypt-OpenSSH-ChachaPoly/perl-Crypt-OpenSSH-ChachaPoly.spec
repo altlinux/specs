@@ -1,7 +1,9 @@
 %define dist Crypt-OpenSSH-ChachaPoly
 
+%define _unpackaged_files_terminate_build 1
+
 Name: perl-%dist
-Version: 0.01
+Version: 0.02
 Release: alt1
 
 Summary: This module serves as a wrapper to the OpenSSH Chacha20 and Poly1305 functions
@@ -34,5 +36,8 @@ This module serves as a wrapper to the OpenSSH Chacha20 and Poly1305 functions
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Apr 21 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.02-alt1
+- new version
+
 * Thu Feb 18 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.01-alt1
 - initial build
