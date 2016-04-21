@@ -1,5 +1,5 @@
 Name: PsychoPy
-Version: 1.82.01
+Version: 1.83.04
 Release: alt1
 Summary: Psychophysics toolkit for Python
 Url: http://www.psychopy.org
@@ -16,9 +16,10 @@ BuildArch: noarch
 ## pylink ?
 ## textgrid is internal module
 %add_python_req_skip pylabjack pylink textgrid
+%add_python_req_skip moviepy
 
 # optimized out: dvipng fontconfig libgdk-pixbuf libwayland-client libwayland-server python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-babel python-module-beaker python-module-dateutil python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-mako python-module-matplotlib python-module-mpmath python-module-nose python-module-nss python-module-numpy python-module-numpy-testing python-module-protobuf python-module-py python-module-pyExcelerator python-module-pyglet python-module-pytz python-module-simplejson python-module-sympy python-module-whoosh python-module-xlwt python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-tkinter python-modules-unittest t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
-BuildRequires: ImageMagick-tools ctags openssl python-module-OpenGL python-module-imaging python-module-pygame python-module-scipy python-module-sphinx python-module-wx2.9 python-modules-json time unzip xvfb-run
+BuildRequires: ImageMagick-tools ctags openssl python-module-OpenGL python-module-imaging python-module-pygame python-module-scipy python-module-sphinx python-module-wx3.0 python-modules-json time unzip xvfb-run
 
 BuildRequires: python2.7(setuptools) texlive-latex-recommended
 
@@ -31,7 +32,7 @@ Group: Development/Python
 Summary: Supplemental python module for %name, psychophysics toolkit
 
 # This cannot be found or properly selected
-Requires: python-module-imaging python-module-pygame python-module-wx2.9
+Requires: python-module-imaging python-module-pygame python-module-wx3.0
 
 %description -n %packagename
 Supplemental python module for %name.
@@ -60,7 +61,7 @@ Categories=Science;Humanities;
 
 %build
 %python_build
-PYTHONPATH=`pwd`/build/lib xvfb-run sphinx-build docs/source HTML
+#PYTHONPATH=`pwd`/build/lib xvfb-run sphinx-build docs/source HTML
 
 %install
 %python_install
@@ -73,16 +74,21 @@ done
 
 %files
 # TODO check if this must reside at specific place
-%doc HTML
+#%doc HTML
 %_bindir/*
 %_iconsdir/hicolor/*/*
 %_desktopdir/*
 
 %files -n %packagename
-%python_sitelibdir_noarch/%modulename
-%python_sitelibdir_noarch/%name-*
+%python_sitelibdir_noarch/*
+%exclude %python_sitelibdir_noarch/*/tests
+%exclude %python_sitelibdir_noarch/*/demos
 
 %changelog
+* Thu Apr 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.83.04-alt1
+- 1.83.04
+- built with wx3.0
+
 * Mon Feb 16 2015 Fr. Br. George <george@altlinux.ru> 1.82.01-alt1
 - Autobuild version bump to 1.82.01
 - Eliminate wxpython2.8

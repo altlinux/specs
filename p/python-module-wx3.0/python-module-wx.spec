@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.3.0
-Release: alt5.git20150311
+Release: alt6.git20150311
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -185,6 +185,7 @@ LNUM=$(egrep -n '%%import _statctrls.i' src/_control.i |\
 sed -i "${LNUM}rsrc/_statctrls.i" src/_control.i
 sed -i '/%%import _statctrls.i/d' src/_control.i
 
+
 %if_enabled docs
 %prepare_sphinx .
 ln -s README.html docs/index.html
@@ -197,6 +198,7 @@ do
 done
 
 sed -i 's|@VER@|%libmajor|' config.py
+sed -i -e 's|/usr/lib|%_libdir|' -e 's|-O3|-O2|' config.py
 
 %if_with python3
 rm -rf ../python3
@@ -207,10 +209,11 @@ cp -a . ../python3
 INCS="$(wx-config --cflags)"
 %add_optflags -fno-strict-aliasing -fpermissive -std=gnu++11 $INCS
 
-%python_build_debug \
+%python_build \
 	NO_SCRIPTS=1 \
 	WXPORT=gtk3 \
 	UNICODE=1 \
+	INSTALL_MULTIVERSION=1 \
 %if_enabled glcanvas
 	BUILD_GLCANVAS=1 \
 %else
@@ -302,36 +305,42 @@ mv %buildroot%_includedir/wx-%major/wx/wxPython \
 %endif
 
 %add_optflags -fno-strict-aliasing
-%python_build_install
+%python_install INSTALL_MULTIVERSION=1
 
 for i in _gdi _windows _controls _misc xrc combo aui html stc calendar \
 	glcanvas grid media wizard html2 propgrid webkit dataview richtext
 do
-	sed -i 's|wx\._core|_core|g' %buildroot%python_sitelibdir/wx/$i.py
+	sed -i 's|wx\._core|_core|g' %buildroot%python_sitelibdir/*/wx/$i.py
 done
 for i in combo richtext
 do
 	sed -i 's|wx\._controls|_controls|g' \
-		%buildroot%python_sitelibdir/wx/$i.py
+		%buildroot%python_sitelibdir/*/wx/$i.py
 done
 for i in aui html grid wizard propgrid richtext
 do
 	sed -i 's|wx\._windows|_windows|g' \
-		%buildroot%python_sitelibdir/wx/$i.py
+		%buildroot%python_sitelibdir/*/wx/$i.py
 done
 
-mv %buildroot%python_sitelibdir/wx/tools/Editra/src/extern/pygments/lexers/math.py \
-	%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/pygments/lexers/_math.py
-rm -f %buildroot%python_sitelibdir/wx/tools/Editra/src/extern/pygments/lexers/math.py*
-ln -s Editra.pyw %buildroot%python_sitelibdir/wx/tools/Editra/Editra
+mv %buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/src/extern/pygments/lexers/math.py \
+	%buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/src/extern/pygments/lexers/_math.py
+rm -f %buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/src/extern/pygments/lexers/math.py*
+ln -s Editra.pyw %buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/Editra
 
 %define pythonsite %buildroot%python_sitelibdir_noarch
+
+%ifarch x86_64
+mv %pythonsite/wx.pth %pythonsite/*.egg-info %pythonsite/wxversion.py* \
+	%buildroot%python_sitelibdir
+#mv %pythonsite/wxaddons/ %buildroot%python_sitelibdir
+%endif
 
 mkdir -p %buildroot%_bindir
 cp -a scripts/{img2png,img2py,img2xpm,pycrust,pyshell,xrced} %buildroot%_bindir
 # has error
 rm -f \
-	%buildroot%python_sitelibdir/wx/tools/Editra/tests/syntax/python.python
+	%buildroot%python_sitelibdir/*/wx/tools/Editra/tests/syntax/python.python
 
 %if_enabled docs
 # docs
@@ -345,86 +354,11 @@ cp -fR pickle %buildroot%python_sitelibdir/wx%major/
 
 # tests
 
-cp -fR tests %buildroot%python_sitelibdir/wx/
-touch %buildroot%python_sitelibdir/wx/tests/__init__.py
+cp -fR tests %buildroot%python_sitelibdir/%wxdir/wx/
+touch %buildroot%python_sitelibdir/%wxdir/wx/tests/__init__.py
 rm -f \
-	%buildroot%python_sitelibdir/wx/tools/Editra/tests/syntax/perl.pl
+	%buildroot%python_sitelibdir/*/wx/tools/Editra/tests/syntax/perl.pl
 
-%check
-export LC_ALL=en_US.UTF-8
-pushd ~
-export PYTHONPATH=%buildroot%python_sitelibdir
-for i in $(find %buildroot%python_sitelibdir -type f -name '*.py' |\
-	grep -v pubsub |grep -v '\/tests\/'); do
-	# exclude files with errors, interactive and which needs network
-	if [ "$i" != "%buildroot%python_sitelibdir/wx/tools/XRCed/xrced.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/XRCed/plugins/controls.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/XRCed/plugins/core.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/launcher.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/setup.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/eclib/filemgrdlg.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/eclib/_filetree.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/stcprint.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/stcspellcheck.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/pygments/lexers/_phpbuiltins.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/pygments/lexers/_luabuiltins.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/pygments/lexers/_mapping.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/pygments/formatters/_mapping.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/extern/ez_setup.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/ebmlib/_winrecycle.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/Editra/src/Editra.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/tools/genaxmodule.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PyAlaCarte.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PySlices.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PySlicesShell.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PyAlaModeTest.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/filling.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PyFilling.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PyShell.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PyCrust.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/py/PyAlaMode.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/langlistctrl.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/mixins/rubberband.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/layoutf.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/wxPlotCanvas.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/itemspicker.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/activexwrapper.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/evtmgr.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/shell.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/ticker.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/flashwin_old.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/flashwin.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/colourchooser/pycolourchooser.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/filebrowsebutton.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/iewin.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/iewin_old.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/printout.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/pdfwin.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/pdfwin_old.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/nvdlg.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/eventwatcher.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/rpcMixin.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/analogclock/analogclock.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/busy.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/splashscreen.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/fancytext.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/pyshell.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/intctrl.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/activex.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/progressindicator.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/msgpanel.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/plot.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/floatcanvas/Utilities/Colors.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/wordwrap.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/masked/numctrl.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/masked/maskededit.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/lib/newevent.py" \
-		-a "$i" != "%buildroot%python_sitelibdir/wx/gizmos.py" ]
-	then
-		xvfb-run python $i
-	fi
-done
-popd
 
 %postun
 # remove old entries
@@ -437,8 +371,8 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %exclude %_bindir/py3_*
 %endif
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/tests
-%exclude %python_sitelibdir/*/*/*/tests
+%exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/*/*/tests
 %if_enabled docs
 %exclude %python_sitelibdir/wx%major/pickle
 %doc docs/{README.txt,CHANGES.txt}
@@ -448,15 +382,15 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %files -n python3-module-%oname
 %_bindir/py3_*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/*/tests
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/*/tests
 
 %files -n python3-module-%oname-devel
 %_includedir/wx-*/wx/wxPython3
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/*/tests
+%python_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/*/*/tests
 %endif
 
 %files devel
@@ -466,8 +400,8 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %doc demo
 
 %files tests
-%python_sitelibdir/*/tests
-%python_sitelibdir/*/*/*/tests
+%python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/*/*/tests
 
 %if_enabled docs
 %files docs
@@ -479,6 +413,10 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Fri Apr 22 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.3.0-alt6.git20150311
+- build with INSTALL_MULTIVERSION=1, as previus versions
+- fix provides wxversion
+
 * Tue Oct 27 2015 Anton Midyukov <antohami@altlinux.org> 3.0.3.0-alt5.git20150311
 - Rebuilt for new gcc5 C++11 ABI.
 
