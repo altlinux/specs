@@ -6,11 +6,11 @@
 
 %define rname okular
 Name: kde4-okular
-%define major 15
-%define minor 12
-%define bugfix 2
+%define major 16
+%define minor 04
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Office
 Summary: KDE document viewer
@@ -147,6 +147,9 @@ done
 
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt1
+- new version
+
 * Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
 - clean desktop-files Exec entries
 
