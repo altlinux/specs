@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 361.28
+Version: 361.42
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -109,6 +109,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt1
+- new version
+
 * Wed Mar 09 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt1
 - new version
 
