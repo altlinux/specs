@@ -1,5 +1,5 @@
 Name: rednotebook
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Summary: A desktop diary
@@ -51,6 +51,9 @@ and does so in style.
 %python_sitelibdir/%{name}*.egg-info
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
+- new version 1.12 (with rpmrb script)
+
 * Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
 - new version 1.11 (with rpmrb script)
 
