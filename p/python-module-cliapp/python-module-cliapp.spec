@@ -2,7 +2,7 @@
 %global pkgname cliapp
 
 Name: python-module-cliapp
-Version: 1.20150829
+Version: 1.20160109
 Release: alt1
 
 Summary: Python framework for Unix command line programs
@@ -23,6 +23,7 @@ BuildRequires: python-devel
 BuildArch: noarch
 BuildRequires: python-module-coverage-test-runner
 BuildRequires: python-module-sphinx
+BuildRequires: python-module-yaml
 
 %description
 cliapp is a Python framework for Unix-like command line programs. It
@@ -67,6 +68,9 @@ python -m CoverageTestRunner --ignore-missing-from=without-tests
 %doc doc/_build/html/*
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.20160109-alt1
+- new version 1.20160109 (with rpmrb script)
+
 * Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 1.20150829-alt1
 - new version 1.20150829 (with rpmrb script)
 
