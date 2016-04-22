@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.7.6
-Release: alt1.git20150703.1
+Release: alt2.git20150703
 Summary: A configurable sidebar-enabled Sphinx theme
 License: BSD
 Group: Development/Python
@@ -13,6 +13,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/bitprophet/alabaster.git
 Source: %name-%version.tar
+Patch: %name-0.7.6-alt-valid-xhtml.patch
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-setuptools
@@ -41,9 +42,11 @@ for [Flask](http://flask.pocoo.org/) & related projects.
 
 %prep
 %setup
+%patch -p1
 
 %if_with python3
-cp -fR . ../python3
+rm -rf python3
+cp -R . ../python3
 %endif
 
 %build
@@ -75,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Fri Apr 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.6-alt2.git20150703
+- correct XHTML (sphinx 1.4.1 tests failed because of this!)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.6-alt1.git20150703.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
