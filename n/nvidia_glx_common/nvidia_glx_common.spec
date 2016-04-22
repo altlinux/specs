@@ -13,8 +13,8 @@
 %define nv_version 361
 %define nv_release 42
 %define nv_minor %nil
-%define pkg_rel alt161
-%define set_gl_nvidia_ver 0.12.1
+%define pkg_rel alt162
+%define set_gl_nvidia_ver 0.13.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -265,6 +265,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt162
+- add nvidia-uvm module support
+
 * Mon Apr 11 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt161
 - bump version
 
