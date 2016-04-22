@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.5.2
+Version: 2.5.3
 Release: alt1
 
 Summary: DAR - Disk ARchive tool
@@ -18,7 +18,7 @@ Requires: lib%name = %version-%release
 # manually removed: glibc-devel-static
 # Automatically added by buildreq on Wed Sep 11 2013
 # optimized out: groff-base libgpg-error libgpg-error-devel libstdc++-devel python3-base xz
-BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libe2fs-devel libgcrypt-devel liblzo2-devel zlib-devel
+BuildRequires: bzlib-devel doxygen gcc-c++ libattr-devel libe2fs-devel libgcrypt-devel liblzo2-devel zlib-devel liblzma-devel
 
 BuildRequires: perl-devel groff-base man
 
@@ -85,6 +85,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/*.a
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt1
+- new version 2.5.3 (with rpmrb script)
+- add liblzma-devel buildreq
+
 * Sat Jan 30 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
 - new version 2.5.2 (with rpmrb script)
 
