@@ -1,16 +1,14 @@
 %define rname kmix
 
 Name: kde5-%rname
-Version: 15.12.2
-Release: alt1
+Version: 15.12.3
+Release: alt2
 %K5init altplace
 
 Group: Sound
 Summary: KDE sound mixer
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
-
-Provides: kde5-volume-control
 
 Source: %rname-%version.tar
 
@@ -74,6 +72,12 @@ developing applications that use %name.
 %_K5dbus_iface/*.xml
 
 %changelog
+* Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
+- clean provides
+
+* Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
