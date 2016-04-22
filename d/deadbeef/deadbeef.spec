@@ -1,13 +1,14 @@
 %set_verify_elf_method textrel=relaxed 
-%define rev	b647da7f
+%define gtkver 3
 Name:		deadbeef
-Version:	0.6.2
-Release:	alt2.%rev
+Version:	0.7.1
+Release:	alt1.20160419.1
 Summary:	DeaDBeeF is an audio player
-Url:		http://deadbeef.sourceforge.net/
-Source0:	http://kent.dl.sourceforge.net/project/deadbeef/%name-%version.tar
+Url:		http://deadbeef.sf.net
+#https://github.com/Alexey-Yakovenko/deadbeef
+Source0:	%name-%version.tar
 Group:		Sound
-License:	GPLv2, LGPLv2.1
+License:	zlib, GPLv2, LGPLv2.1
 
 Patch1:		deadbeef-plugins-ffmpeg-aac-support.patch
 Patch2:		deadbeef-repocop-desktop-file.patch
@@ -19,16 +20,18 @@ Patch7:		deadbeef-0.5.6-alt-gdk-threads.patch
 
 # Automatically added by buildreq on Mon Sep 22 2014 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libpng-devel libsndfile-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtk+2-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm libpng-devel
+BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtk+%gtkver-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm libpng-devel swig
+#Added by a buildreq-src:
+BuildPreReq: swig libcdparanoia-devel imlib2-devel libmpg123-devel libsndfile-devel libpango-devel libjansson-devel
 
-Requires:	%name-out-alsa %name-gtk2 %name-in-mpeg
+Requires:	%name-out-alsa %name-gtk%gtkver
 
 Obsoletes:	%name-medialib	
 
 %description
 DeaDBeeF is an audio player for GNU/Linux systems with
 X11 written in C and C++. Features: minimal depends,
-native GTK2 GUI, cuesheet support, mp3, ogg, flac, ape,
+native GTK%gtkver GUI, cuesheet support, mp3, ogg, flac, ape,
 chiptune formats with subtunes, song-length databases, etc,
 small memory footprint.
 
@@ -40,13 +43,13 @@ BuildArch: noarch
 # Out
 Requires: %name-out-pulseaudio
 # In
-Requires: %name-in-mpeg %name-in-flac %name-in-ffmpeg %name-in-oggvorbis %name-in-ape %name-in-musepack %name-in-aac %name-in-wavpack %name-in-sndfile
+Requires: %name-in-flac %name-in-mp3 %name-in-psf %name-in-ffmpeg %name-in-oggvorbis %name-in-ape %name-in-musepack %name-in-aac %name-in-wavpack %name-in-sndfile
 
 # DSP
 #Requires: %name-dsp-supereq %name-dsp-libsrc
 
 # General
-Requires: %name-artwork %name-hotkeys %name-notify %name-gtk2 %name-shellexec %name-m3u
+Requires: %name-artwork %name-hotkeys %name-notify %name-gtk%gtkver %name-shellexec %name-m3u
 
 %description -n %name-incomplete
 Virtual package for incomplete installation DeaDBeeF
@@ -60,21 +63,22 @@ BuildArch: noarch
 Requires: %name-out-pulseaudio %name-out-oss %name-out-alsa %name-out-null
 # In
 Requires: %name-in-wavpack %name-in-vtx %name-in-oggvorbis %name-in-sndfile
-Requires: %name-in-sid %name-in-mpeg %name-in-gme %name-in-flac %name-in-ffmpeg
+Requires: %name-in-sid %name-in-gme %name-in-flac %name-in-ffmpeg
 Requires: %name-in-ape %name-in-cdaudio %name-in-adplug %name-in-vfs_curl
 Requires: %name-in-dca %name-in-musepack %name-in-tta %name-in-wildmidi
-Requires: %name-in-mms %name-in-aac %name-in-alac %name-in-ao %name-in-dumb
-Requires: %name-in-shn
+Requires: %name-in-mms %name-in-aac %name-in-alac %name-in-dumb
+Requires: %name-in-shn %name-in-mp3 %name-in-psf
 
 # General
 Requires: %name-artwork %name-hotkeys %name-lastfm %name-notify 
-Requires: %name-gtk2 %name-pltbrowser_gtk2
+Requires: %name-gtk%gtkver %name-pltbrowser_gtk%gtkver
 Requires: %name-shellexec
 Requires: %name-m3u
 Requires: %name-dsp-supereq %name-dsp-libsrc %name-dsp-mono2stereo
 
 %description -n %name-full
-Virtual package for full installation DeaDBeeF (exclude %name-devel).
+Virtual package for full installation DeaDBeeF (exclude %name-devel,
+%name-statusnotifier, %name-in-sc68).
 
 # Development
 %package -n %name-devel
@@ -132,16 +136,6 @@ Requires: %name = %version-%release
 %description -n %name-in-alac
 DeaDBeeF ALAC Input Plugin
 plays alac files from MP4 and M4A files
-
-%package -n %name-in-ao
-Summary: DeaDBeeF PSF Input Plugin
-Group: Sound
-Requires: %name = %version-%release
-
-%description -n %name-in-ao
-DeaDBeeF PSF Input Plugin
-PSF player using Audio Overload SDK
-plays psf, psf2, spu, ssf, dsf, qsf file formats
 
 %package -n %name-in-dumb
 Summary: DeaDBeeF DUMB module player Plugin
@@ -207,15 +201,6 @@ Requires: %name = %version-%release
 DeaDBeeF SID Input Plugin
 SID player based on libsidplay2
 
-%package -n %name-in-mpeg
-Summary: DeaDBeeF MPEG Input Plugin
-Group: Sound
-Requires: %name = %version-%release
-
-%description -n %name-in-mpeg
-DeaDBeeF MPEG Input Plugin
-MPEG v1/2 layer1/2/3 decoder based on libmad
-
 %package -n %name-in-gme
 Summary: DeaDBeeF GME Input Plugin
 Group: Sound
@@ -233,6 +218,15 @@ Requires: %name = %version-%release
 %description -n %name-in-flac
 DeaDBeeF FLAC Input Plugin
 FLAC decoder using libFLAC
+
+%package -n %name-in-psf
+Summary: DeaDBeeF psf Input Plugin
+Group: Sound
+Requires: %name = %version-%release
+
+%description -n %name-in-psf
+DeaDBeeF psf Input Plugin
+psf decoder
 
 %package -n %name-in-ffmpeg
 Summary: DeaDBeeF FFMPEG Input Plugin
@@ -336,6 +330,15 @@ Requires: %name = %version-%release
 %description -n %name-in-wma
 DeaDBeeF Windows Media Audio (WMA) Input Plugin
 
+%package -n %name-in-mp3
+Summary: DeaDBeeF mp3 Input Plugin
+Group: Sound
+Requires: %name = %version-%release
+
+%description -n %name-in-mp3
+DeaDBeeF mp3 Input Plugin
+mp3 decoder
+
 # General plugins
 %package -n %name-dsp-supereq
 Summary: DeaDBeeF SuperEQ Plugin
@@ -393,14 +396,22 @@ Requires: %name = %version-%release
 DeaDBeeF OSD Notify Plugin
 notification daemon OSD
 
-%package -n %name-gtk2
-Summary: DeaDBeeF GTK2 UI Plugin
+%package -n %name-statusnotifier
+Summary: KDE Status Notifier
+Group: Sound
+Requires: %name = %version-%release
+
+%description -n %name-statusnotifier
+System tray icon support for KDE 5
+
+%package -n %name-gtk%gtkver
+Summary: DeaDBeeF GTK%gtkver UI Plugin
 Group: Sound
 Requires: %name = %version-%release
 Obsoletes: %name-gtkui
 
-%description -n %name-gtk2
-DeaDBeeF GTK2 UI Plugin
+%description -n %name-gtk%gtkver
+DeaDBeeF GTK%gtkver UI Plugin
 Default DeaDBeeF GUI
 
 %package -n %name-shellexec
@@ -445,14 +456,21 @@ Allows file conversion between various containers and codecs.
 #DeaDBeeF medialib Plugin
 #Scans disk for music files and manages them as database.
 
-%package -n %name-pltbrowser_gtk2
+%package -n %name-pltbrowser_gtk%gtkver
 Summary: Deadbeef plugin
 Group: Sound
 Requires: %name = %version-%release
 
-%description -n %name-pltbrowser_gtk2
+%description -n %name-pltbrowser_gtk%gtkver
 Playlist browser plugin.
 
+%package -n %name-in-sc68
+Summary: DeaDBeeF SC68 player
+Group: Sound
+Requires: %name = %version-%release
+
+%description -n %name-in-sc68
+SC68 player (Atari ST SNDH YM2149)
 
 %prep
 %setup
@@ -471,13 +489,13 @@ sed -i '/m4/ d' Makefile.am
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
-%autoreconf 
+#%%autoreconf 
+./autogen.sh
 %configure --enable-notify --docdir=%_docdir/%name-%version --disable-static \
 		--enable-src=yes \
 		--enable-m3u=yes \
 		--enable-ffmpeg=yes \
-		--enable-gtk2=yes \
-		--enable-gtk3=no \
+		--enable-gtk%gtkver=yes \
 		#--enable-medialib=yes \
 
 
@@ -513,9 +531,6 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-in-alac
 %_libdir/%name/alac.*
 
-%files -n %name-in-ao
-%_libdir/%name/ddb_ao.*
-
 %files -n %name-in-dumb
 %_libdir/%name/ddb_dumb.*
 
@@ -536,9 +551,6 @@ rm -rf %buildroot/%_libdir/%name/*.la
 
 %files -n %name-in-sid
 %_libdir/%name/sid.*
-
-%files -n %name-in-mpeg
-%_libdir/%name/mpgmad.*
 
 %files -n %name-in-gme
 %_libdir/%name/gme.*
@@ -582,6 +594,16 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-in-wma
 %_libdir/%name/wma.*
 
+%files -n %name-in-mp3
+%_libdir/%name/mp3.*
+
+%files -n %name-in-psf
+%_libdir/%name/psf.*
+
+%files -n %name-in-sc68
+%_libdir/%name/data68/Replay/*
+%_libdir/%name/in_sc68.*
+
 # General plugins
 %files -n %name-artwork
 %_libdir/%name/artwork.*
@@ -595,8 +617,11 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-notify
 %_libdir/%name/notify.*
 
-%files -n %name-gtk2
-%_libdir/%name/ddb_gui_GTK2.*
+%files -n %name-statusnotifier
+%_libdir/%name/statusnotifier.so
+
+%files -n %name-gtk%gtkver
+%_libdir/%name/ddb_gui_GTK%gtkver.*
 
 %files -n %name-dsp-supereq
 %_libdir/%name/supereq.*
@@ -621,8 +646,8 @@ rm -rf %buildroot/%_libdir/%name/*.la
 #files -n %name-medialib
 #_libdir/%name/medialib.*
 
-%files -n %name-pltbrowser_gtk2
-%_libdir/%name/pltbrowser_gtk2.*
+%files -n %name-pltbrowser_gtk%gtkver
+%_libdir/%name/pltbrowser_gtk%gtkver.*
 
 # Development
 %files -n %name-devel
@@ -634,6 +659,17 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Thu Apr 21 2016 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt1.20160419.1
+- version update to 0.7.1-alt1.20160419.1 (Closes: 31763)
+- build with gtk3
+- remove packages:
+  - deadbeef-in-ao
+  - deadbeef-in-mpeg
+- added packages:
+  + deadbeef-in-psf
+  + deadbeef-in-mp3
+  + deadbeef-in-sc68
+
 * Sun Dec 28 2014 Andrew Clark <andyc@altlinux.org> 0.6.2-alt2.b647da7f
 - version update to 0.6.2-alt2.b647da7f
 
