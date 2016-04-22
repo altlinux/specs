@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.10.2
+Version: 0.1.10.3
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -79,6 +79,11 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Fri Apr 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.3-alt1
+- Fix a bug of the prev.release: For the additional Provides with the
+  full name (when there is also a short name), the optional non-std
+  path was wrongly filled twice. (Example: python-module-Pillow.)
+
 * Wed Apr 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.2-alt1
 - generate more Requires (many Python3 files used to be skipped
   because "python script text executable" were considered to be
