@@ -1,6 +1,6 @@
 Name: pdksh
 Version: 5.2.14
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: A public domain clone of the Korn shell (ksh)
@@ -50,6 +50,7 @@ install -pDm644 ksh.1 %buildroot%_man1dir/ksh.1
 ln -s ksh.1 %buildroot%_man1dir/%name.1
 ln -s ../../bin/ksh %buildroot%_bindir/
 ln -s ksh %buildroot%_bindir/%name
+ln -s ksh %buildroot/bin/%name
 
 %files
 /bin/*
@@ -58,6 +59,9 @@ ln -s ksh %buildroot%_bindir/%name
 %doc BUG-REPORTS ChangeLog* CONTRIBUTORS LEGAL NEWS NOTES PROJECTS README
 
 %changelog
+* Fri Apr 22 2016 Michael Shigorin <mike@altlinux.org> 1:5.2.14-alt4
+- added /bin/pdksh symlink too
+
 * Sat Oct 03 2015 Michael Shigorin <mike@altlinux.org> 1:5.2.14-alt3
 - build with gcc4 (FTBFS with gcc5)
 - added some of mageia patches while at that
