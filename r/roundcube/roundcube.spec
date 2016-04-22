@@ -1,7 +1,7 @@
 %define oname roundcubemail
 Name: roundcube
-Version: 1.1.4
-Release: alt2
+Version: 1.1.5
+Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -9,7 +9,8 @@ License: GPL2
 Group: Networking/Mail
 Url: http://roundcube.net/
 
-Source0: http://prdownloads.sf.net/%oname/%oname-%version.tar
+#Source0: http://prdownloads.sf.net/%oname/%oname-%version.tar
+Source0: https://github.com/roundcube/roundcubemail/releases/download/%version/roundcubemail-%version.tar
 Source1: %name.apache.conf
 Source2: composer.json-dist
 BuildArch: noarch
@@ -75,10 +76,11 @@ Order Allow,Deny
 Deny from all
 EOF
 
-#mkdir -p %buildroot%_localstatedir/%name/logs/
-
-#ln -s %_localstatedir/%name/logs/ %buildroot%_datadir/%name/
-#ln -s %_localstatedir/%name/temp/ %buildroot%_datadir/%name/
+mkdir -p %buildroot%_localstatedir/%name/{temp,logs}/
+ln -s %_localstatedir/%name/logs/ %buildroot%_datadir/%name/
+ln -s %_localstatedir/%name/temp/ %buildroot%_datadir/%name/
+cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/temp/
+cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/logs/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 cp -ar config/* %buildroot%_sysconfdir/%name/
@@ -99,11 +101,11 @@ service httpd condreload
 
 %files
 %_datadir/%name/
-#%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/
-#%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/logs/
-#%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/temp/
-#%_localstatedir/%name/logs/.htaccess
-#%_localstatedir/%name/temp/.htaccess
+%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/
+%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/logs/
+%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/temp/
+%_localstatedir/%name/logs/.htaccess
+%_localstatedir/%name/temp/.htaccess
 %dir %attr(0750,root,%webserver_group) %_sysconfdir/%name/
 %config(noreplace) %attr(0640,root,%webserver_group) %_sysconfdir/%name/*
 %doc CHANGELOG LICENSE README.md UPGRADING SQL/
@@ -112,6 +114,9 @@ service httpd condreload
 %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt1
+- new version 1.1.5 (with rpmrb script)
+
 * Fri Feb 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt2
 - pack composer.json, add link to doc dir
 - improve requirements
