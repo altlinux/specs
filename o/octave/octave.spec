@@ -1,6 +1,6 @@
 Name: octave
-Version: 4.0.1
-Release: alt2
+Version: 4.0.2
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -158,6 +158,9 @@ EOF
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Fri Apr 22 2016 Cronbuild Service <cronbuild@altlinux.org> 4.0.2-alt1
+- repocop cronbuild 20160422. At your service.
+
 * Tue Apr 12 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt2
 - added octave.env for proper verfy-elf
 
