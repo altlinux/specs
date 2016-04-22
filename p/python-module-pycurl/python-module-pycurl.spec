@@ -1,23 +1,24 @@
 %define oname pycurl
+%define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 %def_with python3
 
 Name: python-module-%oname
-Version: 7.19.5.3
-Release: alt1.1.1
+Version: 7.43.0
+Release: alt1
 
 Summary: Python bindings to libcurl
 
 Group: Development/Python
 License: LGPL
-Url: http://pycurl.sourceforge.net/
+Url: http://pycurl.io/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 %setup_python_module %oname
 
-#Source: http://dl.sf.net/%modulename/%modulename-%version.tar.bz2
-Source: http://pycurl.sourceforge.net/download/pycurl-%version.tar.bz2
+# Source-url: https://github.com/pycurl/pycurl/archive/REL_%oversion.tar.gz
+Source: %modulename-%version.tar
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils pkg-config python-base python-modules python-modules-compiler python-modules-email python3 python3-base
@@ -51,10 +52,12 @@ cp -fR . ../python3
 %build
 %add_optflags -fno-strict-aliasing
 
+python setup.py docstrings
 %python_build_debug
 
 %if_with python3
 pushd ../python3
+python3 setup.py docstrings
 %python3_build_debug
 popd
 %endif
@@ -78,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 7.43.0-alt1
+- new version (7.43.0) with rpmgs script
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 7.19.5.3-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
