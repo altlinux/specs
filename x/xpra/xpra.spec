@@ -1,6 +1,12 @@
+# TODO: python2.7(palib)
+# https://github.com/jonathanunderwood/pypactl
+# TODO:
+# typelib(GdkGLExt)
+# typelib(GtkGLExt)
+
 Name: xpra
-Version: 0.14.19
-Release: alt2
+Version: 0.16.3
+Release: alt1
 
 Summary: X Persistent Remote Applications
 
@@ -8,9 +14,10 @@ Group: Networking/Remote access
 License: GPLv2
 Url: http://xpra.org/
 
-Source: http://winswitch.org/src/%name-%version.tar
+Source: https://xpra.org/src/xpra-%version.tar
 
-Patch: xpra-pygtk.patch
+# thanks, Debian
+Patch: libav-no0RGB.patch
 
 # Automatically added by buildreq on Sat Dec 08 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libpango-devel pkg-config python-base python-devel python-module-distribute python-module-peak python-module-pygobject-devel python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -25,14 +32,15 @@ AutoReq: yes, nomingw
 
 %add_python_req_skip win32security pyopencl
 
-BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): rpm-build-gir rpm-build-intro rpm-macros-kde-common-devel
+
 # Unity specific?
 %add_typelib_req_skiplist typelib(AppIndicator) typelib(AppIndicator3)
 
 # Note: we have no linking requires to libwebp.so.x
 Requires: libwebp xorg-xvfb setxkbmap
 
-Requires: python-module-pyinotify
+Requires: python-module-pyinotify python-module-rencode
 
 %description
 Xpra is 'screen for X': it allows you to run X programs,
@@ -60,18 +68,23 @@ If connecting from a remote machine, you would use something like (or you can al
 
 %prep
 %setup
-%patch -p2
+%__subst "s|-Werror|-Wall|g" setup.py
+# fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
+%__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/*.pyx xpra/gtk_common/gdk_atoms.pyx
+%patch -p1
 
 # Fix error: implicit declaration of function 'avcodec_free_frame'
-patch -p1 <patches/old-libav.patch
-patch -p1 <patches/old-libav-pixfmtconsts.patch
-patch -p1 <patches/old-libav-no0RGB.patch
+#patch -p1 <patches/old-libav.patch
+#patch -p1 <patches/old-libav-pixfmtconsts.patch
+#patch -p1 <patches/old-libav-no0RGB.patch
 
 %build
-%python_build --without-dec_avcodec --without-dec_avcodec2
+%python_build --without-sound --without-opengl
 
 %install
-%python_install --without-dec_avcodec --without-dec_avcodec2
+%python_install  --without-sound --without-opengl
+mkdir -p %buildroot/%_tmpfilesdir/
+mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 
 %files
 %dir %_sysconfdir/%name/
@@ -84,8 +97,15 @@ patch -p1 <patches/old-libav-no0RGB.patch
 #_datadir/parti/
 #_datadir/wimpiggy/
 %_datadir/xpra/
+%_tmpfilesdir/xpra.conf
+%_datadir/appdata/xpra.appdata.xml
+%_K4xdg_mime/application-x-xpraconfig.xml
+%_cupslibdir/backend/xpraforwarder
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 0.16.3-alt1
+- new version (0.16.3) with rpmgs script
+
 * Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.19-alt2
 - rebuilt with recent libx264
 
