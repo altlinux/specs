@@ -1,8 +1,8 @@
 %define req_ver_mlt 0.9.0
 
 Name: kdenlive
-Version: 15.12.2
-Release: alt1
+Version: 16.04.0
+Release: alt2
 %K5init no_altplace man
 
 Summary: KDE Non Linear Video Editor
@@ -14,7 +14,7 @@ URL: http://kdenlive.org/
 
 Requires: mlt-utils >= %req_ver_mlt frei0r-plugins /usr/bin/avconv /usr/bin/avplay
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
-Requires: icon-theme-oxygen
+Requires: icon-theme-breeze
 
 Source: %name-%version.tar
 Patch1: alt-prefer-vlc.patch
@@ -24,14 +24,14 @@ Patch2: alt-find-lumas.patch
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libmlt-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs shared-mime-info xml-common xml-utils
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel libdb4-devel libmlt++-devel libv4l-devel python-module-google qt5-script-devel qt5-svg-devel rpm-build-gir rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-svg-devel qt5-declarative-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-webkit-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
 BuildRequires: libmlt-devel libmlt++-devel >= %req_ver_mlt
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel
 BuildRequires: kf5-knotifyconfig-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel kf5-kfilemetadata-devel
 
 %description
 Kdenlive is a non-linear video editor for GNU/Linux, which supports
@@ -73,6 +73,12 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt2
+- fix build requires
+
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt1
+- new version
+
 * Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
