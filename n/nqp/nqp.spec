@@ -1,5 +1,5 @@
 Name: nqp
-Version: 2016.02
+Version: 2016.04
 Release: alt1
 Summary: Not Quite Perl
 
@@ -58,6 +58,9 @@ perl Configure.pl --prefix=%_prefix --backends=moar
 %doc docs examples
 
 %changelog
+* Fri Apr 22 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.04-alt1
+- 2016.04
+
 * Mon Feb 22 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.02-alt1
 - 2016.02
 
