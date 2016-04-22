@@ -1,7 +1,7 @@
 %define rname oxygen
 
 Name: kf5-%rname
-Version: 5.6.0
+Version: 5.6.3
 Release: alt1
 %K5init altplace
 
@@ -91,6 +91,12 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
+- new version
+
+* Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 

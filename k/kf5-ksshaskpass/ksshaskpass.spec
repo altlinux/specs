@@ -2,7 +2,7 @@
 %define openssh_askpass_dir %_libexecdir/openssh
 
 Name: kf5-%rname
-Version: 5.6.0
+Version: 5.6.3
 Release: alt1
 %K5init altplace
 
@@ -80,6 +80,12 @@ EOF
 %_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
+- new version
+
+* Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 
