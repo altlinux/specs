@@ -1,8 +1,8 @@
-%define kernel_base_version 4.4
+%define kernel_base_version 4.5
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: hyperv-daemons
-Version: %kernel_base_version
+Version: %kernel_base_version.2
 Release: alt1
 Summary:  HyperV daemons suite
 License: GPLv2
@@ -11,7 +11,7 @@ URL: http://www.kernel.org
 
 
 # git://git.altlinux.org/gears/h/%name.git
-# Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 #Patch2: %name-altlinux.patch
 
 Source5: hv_get_dhcp_info.sh
@@ -82,7 +82,7 @@ functionality for Linux.
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
-# %patch -p1
+%patch -p1
 # %patch2 -p1
 
 %build
@@ -192,6 +192,9 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Fri Apr 22 2016 Alexey Shabalin <shaba@altlinux.ru> 4.5.2-alt1
+- build from kernel-source-4.5
+
 * Tue Jan 26 2016 Alexey Shabalin <shaba@altlinux.ru> 4.4-alt1
 - build from kernel-source-4.4
 
