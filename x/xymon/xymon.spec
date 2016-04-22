@@ -62,7 +62,7 @@ URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.27
-Release:	alt1
+Release:	alt2
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -264,9 +264,6 @@ Patch503: xymonclient-linux.sh-various-procps.patch
 
 # rollback of changes for cgiwrap introduced in 4.3.20
 Patch504: xymon-4.3.21-FollowSymLinks.patch
-
-# added "su xymon xymon" to logrotate
-Patch505: xymon.logrotate.patch
 
 ##########################################################################
 ##########################################################################
@@ -476,7 +473,6 @@ the Xymon server in NCV format.
 %patch502 -p2
 %patch503 -p1
 %patch504 -p1
-%patch505 -p1
 
 sed "s/define MAXCHECK   102400/define MAXCHECK   2048000/" -i client/logfetch.c
 
@@ -1157,8 +1153,8 @@ done
 
 ### end client stuff ###
 
-%attr(755,xymon,xymon)	%{logDirectory}
-%attr(755,xymon,xymon)	%{runDirectory}
+%attr(1770,root,xymon)	%{logDirectory}
+%attr(1770,root,xymon)	%{runDirectory}
 
 %files man
 %_man1dir/*
@@ -1258,6 +1254,11 @@ done
 ################ end extra clients ################
 
 %changelog
+* Fri Apr 22 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.3.27-alt2
+- dropped patch for config of logrotate, changed permissions for
+  %{logDirectory} instead; permissions for %{runDirectory} changed
+  similarly
+
 * Thu Apr 21 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.3.27-alt1
 - new version
 - fixed config for logrotate
