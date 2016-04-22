@@ -1,6 +1,6 @@
 %define pear_name Mail
 Name: pear-%pear_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Class that provides multiple interfaces for sending emails
@@ -48,6 +48,9 @@ provides a RFC822 email address list validation utility class.
 %pear_dir/.pkgxml/Mail.xml
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Mon Oct 04 2010 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - build new version 1.2.0 (ALT bug #16091)
 - fix Url, License
