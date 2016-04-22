@@ -14,8 +14,8 @@
 %define nv_version 361
 %define nv_release 28
 %define nv_minor %nil
-%define pkg_rel alt150
-%def_enable kernelsource
+%define pkg_rel alt151
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -290,6 +290,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt151
+- don't package kernel module sources
+
 * Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 361.28-alt150
 - new version
 
