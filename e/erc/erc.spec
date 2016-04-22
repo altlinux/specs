@@ -1,5 +1,5 @@
 Name: erc
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -41,12 +41,19 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 %files
 %doc README LICENSE TODO
 %_bindir/erc
+%_bindir/unerc
 %_bindir/ercat
 %_datadir/%name/
 %_man1dir/*
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- skip repack for the same input and output file
+- erc: add add command
+- erc: add tgz format recognize
+- pack unerc
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
 - erc: add -f (--force) for override target, improve test
 
