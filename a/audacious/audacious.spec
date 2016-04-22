@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -113,6 +113,9 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.2-alt1
+- new version 3.7.2 (with rpmrb script)
+
 * Sat Jan 02 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt1
 - new version 3.7.1 (with rpmrb script)
 
