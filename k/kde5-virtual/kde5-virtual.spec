@@ -1,6 +1,6 @@
 
 Name: kde5-virtual
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -61,6 +61,46 @@ Requires: kde5-smplayer
 %description -n kde5-video-player-4-smplayer
 %summary
 
+%package -n kde5-volume-control-2-kmix
+Group: Graphical desktop/KDE
+Summary: KMix volume control
+Provides: kde5-volume-control = %EVR
+Provides: kde5-volume-control-kmix = %EVR
+Requires: kf5-filesystem
+Requires: kde5-kmix
+%description -n kde5-volume-control-2-kmix
+%summary
+
+%package -n kde5-volume-control-4-plasmapulse
+Group: Graphical desktop/KDE
+Summary: Plasma applet volume control
+Provides: kde5-volume-control = %EVR
+Provides: kde5-volume-control-plasmapulse = %EVR
+Requires: kf5-filesystem
+Requires: kf5-plasma-pa
+%description -n kde5-volume-control-4-plasmapulse
+%summary
+
+%package -n kde5-email-client-2-kmail
+Group: Graphical desktop/KDE
+Summary: KMail email client
+Provides: kde5-email-client = %EVR
+Provides: kde5-email-client-kmail = %EVR
+Requires: kf5-filesystem
+Requires: kde5-pim-kmail
+%description -n kde5-email-client-2-kmail
+%summary
+
+%package -n kde5-email-client-4-thunderbird
+Group: Graphical desktop/KDE
+Summary: Thunderbird email client
+Provides: kde5-email-client = %EVR
+Provides: kde5-email-client-thunderbird = %EVR
+Requires: kf5-filesystem
+Requires: thunderbird thunderbird-ru
+%description -n kde5-email-client-4-thunderbird
+%summary
+
 %files -n kde5-network-manager-0-dummy
 %files -n kde5-network-manager-2-etcnet
 %files -n kde5-network-manager-4-nm
@@ -68,7 +108,16 @@ Requires: kde5-smplayer
 %files -n kde5-video-player-2-dragon
 %files -n kde5-video-player-4-smplayer
 
+%files -n kde5-volume-control-2-kmix
+%files -n kde5-volume-control-4-plasmapulse
+
+%files -n kde5-email-client-2-kmail
+%files -n kde5-email-client-4-thunderbird
+
 %changelog
+* Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
+- add kde5-volume-control and kde5-email-client
+
 * Fri Apr 08 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
 - add kde5-video-player
 
