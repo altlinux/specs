@@ -2,7 +2,7 @@
 
 Name:    playonlinux
 Version: 4.2.10
-Release: alt3
+Release: alt3.1
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -14,7 +14,7 @@ Source: http://www.playonlinux.com/script_files/%oname/%version/%{oname}_%versio
 Source1: playonlinux.sh
 Source2: %oname.desktop
 
-BuildRequires: python-module-wx2.9
+BuildRequires: python-module-wx3.0
 Requires: ImageMagick
 Requires: wget
 Requires: gettext
@@ -22,8 +22,8 @@ Requires: unzip
 Requires: cabextract
 Requires: xterm
 Requires: binutils
-Requires: python-module-wx2.9
 Requires: icoutils
+Requires: python-module-wx3.0
 
 %add_findreq_skiplist %_datadir/%name/bash/*
 %add_findreq_skiplist %_datadir/%name/lib/scripts.lib
@@ -74,6 +74,9 @@ ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 %_libdir/%name/*
 
 %changelog
+* Thu Apr 21 2016 Alexey Shabalin <shaba@altlinux.ru> 4.2.10-alt3.1
+- rebuild with python-module-wx3.0
+
 * Thu Jan 21 2016 Denis Medvedev <nbr@altlinux.org> 4.2.10-alt3
 - Added i586 pulsaudio and nss libs for normal functioning of WoT
 
