@@ -1,5 +1,5 @@
 Name:		libxmp
-Version:	4.3.8
+Version:	4.3.13
 Release:	alt1
 Summary:	Module Player library for MOD, S3M, IT and others
 License:	LGPLv2.1
@@ -59,5 +59,10 @@ mv "$b/%_docdir/%name/libxmp.3" "$b/%_man3dir/"
 %_docdir/%name/
 
 %changelog
+* Fri Apr 22 2016 Michael Shigorin <mike@altlinux.org> 4.3.13-alt1
+- 4.3.13
+  + NB: there were quite a few fixes for issues found during
+    fuzzing/coverity scan in 4.3.9 and 4.3.10
+
 * Thu Jun 11 2015 Motsyo Gennadi <drool@altlinux.ru> 4.3.8-alt1
 -initial build for ALT Linux from OpenSUSE
