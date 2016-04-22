@@ -1,7 +1,6 @@
-# TODO: x86_64
 %define oname pxlib
 Name: libpx
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: A library to read Paradox DB files
@@ -12,7 +11,7 @@ Url: http://pxlib.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%oname/%oname-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/%oname/%oname-%version.tar
 Source1: %name.watch
 
 # Automatically added by buildreq on Sat Jul 18 2009
@@ -34,11 +33,8 @@ Header files for pxlib.
 
 %prep
 %setup -q -n %oname-%version
-%__subst "s|/usr/lib|%_libdir|g" configure.in
 
 %build
-touch config.rpath
-%autoreconf
 # man pages are build by docbook2man
 %__subst 's#mv PXLIB.3 pxlib.3##g' doc/Makefile*
 %__subst 's#docbook-to-man#docbook2man#g' configure*
@@ -49,7 +45,7 @@ for man in doc/*.sgml; do
 done
 
 # FIXME:
-CPPFLAGS="$(pkg-config glib-2.0 --cflags)"
+#CPPFLAGS="$(pkg-config glib-2.0 --cflags)"
 %configure \
 	--with-gsf --with-sqlite \
 	--disable-static
@@ -71,6 +67,10 @@ CPPFLAGS="$(pkg-config glib-2.0 --cflags)"
 %_man3dir/*
 
 %changelog
+* Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 0.6.6-alt1
+- new version 0.6.6 (with rpmrb script)
+- cleanup spec
+
 * Tue Sep 02 2014 Vitaly Lipatov <lav@altlinux.ru> 0.6.5-alt1
 - new version 0.6.5 (with rpmrb script)
 
