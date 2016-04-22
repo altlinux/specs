@@ -1,5 +1,5 @@
 Name: rakudo
-Version: 2016.02
+Version: 2016.04
 Release: alt1
 Summary: Perl 6 compiler for the MoarVM
 
@@ -64,6 +64,9 @@ perl Configure.pl --prefix=%_prefix --backends=moar
 %exclude %_datadir/perl6/precomp/.lock
 
 %changelog
+* Fri Apr 22 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.04-alt1
+- 2016.04
+
 * Mon Feb 22 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.02-alt1
 - 2016.02
 
