@@ -7,7 +7,7 @@
 %def_without appindicator
 
 Name: NetworkManager-applet-gtk
-Version: 1.1.93
+Version: 1.2.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -41,7 +41,7 @@ BuildRequires: libsecret-devel
 Requires: NetworkManager-daemon >= %nm_version
 Requires: dbus-tools-gui
 Requires: mobile-broadband-provider-info
-Requires: polkit-gnome
+#Requires: polkit-gnome
 Requires: iso-codes
 
 Obsoletes: NetworkManager-gnome < 0.9.8.4
@@ -209,6 +209,10 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Fri Apr 22 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Don't require polkit-gnome.
+- Updated to 1.2.0.
+
 * Wed Apr 06 2016 Mikhail Efremov <sem@altlinux.org> 1.1.93-alt1
 - Updated to 1.1.93 (1.2-rc1).
 
