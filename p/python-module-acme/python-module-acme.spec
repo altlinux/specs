@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -172,6 +172,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Thu Apr 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+
 * Fri Mar 18 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - new version 0.4.2 (with rpmrb script)
 
