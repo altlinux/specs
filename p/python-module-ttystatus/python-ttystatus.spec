@@ -2,7 +2,7 @@
 %global pkgname ttystatus
 
 Name: python-module-ttystatus
-Version: 0.26
+Version: 0.32
 Release: alt1
 
 Summary: Progress and status updates on terminals for Python
@@ -24,7 +24,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 
 #BuildRequires: python-module-coverage-test-runner
-BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinx python-module-alabaster
 
 %description
 ttystatus is a Python library for showing progress reporting and
@@ -73,6 +73,9 @@ make check
 %doc doc/_build/html/*
 
 %changelog
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.32-alt1
+- new version 0.32 (with rpmrb script)
+
 * Sun Jan 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt1
 - new version 0.26 (with rpmrb script)
 
