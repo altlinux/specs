@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -19,6 +19,7 @@ Url: http://sphinx.pocoo.org/
 Packager: Python Development Team <python@packages.altlinux.org>
 
 %py_requires simplejson
+%py_requires alabaster
 
 Provides: python-module-objects.inv
 Obsoletes: python-module-objects.inv
@@ -93,6 +94,7 @@ multiple reStructuredText sources)
 Summary: Tool for producing documentation for Python 3 projects
 Group: Development/Python3
 %add_python3_req_skip xapian
+%py3_requires alabaster
 Provides: python3-module-objects.inv
 Obsoletes: python3-module-objects.inv
 
@@ -457,6 +459,13 @@ popd
 %endif
 
 %changelog
+* Sat Apr 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4.1-alt2
+- %%py_requires alabaster (in the new source code, alabaster looks
+  like a conditional import--i.e., not top-level and hence not
+  autodetected--but this doesn't make much sense since setuptools
+  check the declared reqs when running the entry_point
+  %_bindir/sphinx-build...)
+
 * Thu Apr 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.4.1-alt1
 - 1.4.1 released
 
