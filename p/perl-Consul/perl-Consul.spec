@@ -1,0 +1,57 @@
+## SPEC file for Perl module Consul
+
+%define real_name Consul
+
+Name: perl-Consul
+Version: 0.016
+Release: alt1
+
+Summary:  Perl client library for Consul
+
+License: %perl_license
+Group: Development/Perl
+
+URL: http://search.cpan.org/dist/Consul/
+#URL: https://github.com/robn/Consul
+
+Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+
+Source: %real_name-%version.tar
+
+BuildArch: noarch
+
+BuildRequires(pre): perl-devel rpm-build-licenses
+
+# Automatically added by buildreq on Sat Apr 23 2016
+# optimized out: perl-Encode perl-JSON-MaybeXS perl-Moo perl-Try-Tiny perl-URI perl-devel perl-namespace-autoclean python-base python-modules python3
+BuildRequires: perl-Convert-Base64 perl-HTTP-Tiny perl-Hash-MultiValue perl-Type-Tiny perl-JSON-MaybeXS perl-JSON-PP perl-JSON-XS
+
+%description
+Perl module Consul provides a client library for accessing and
+manipulating data in a Consul cluster. It targets the
+Consul v1 HTTP API.
+
+This module is quite low-level. You're expected to have a good
+understanding of Consul and its API to understand the methods
+this module provides.
+
+# TO FIX: there are no Test::Consul module in Sisyphus,
+# nor Consul itself - we can't test this module
+%def_without test
+
+%prep
+%setup -q -n %real_name-%version
+
+%build
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+%files
+%doc README Changes
+%perl_vendor_privlib/Consul*
+
+%changelog
+* Sat Apr 23 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.016-alt1
+- Initial build for ALT Linux Sisyphus
