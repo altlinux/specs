@@ -1,6 +1,6 @@
 Name: efax-gtk
-Version: 3.2.9
-Release: alt1.1
+Version: 3.2.13
+Release: alt1
 
 Summary: GUI front end for the efax fax program
 Summary(ru_RU.UTF-8): Графическая программа работы с факсами
@@ -12,13 +12,15 @@ Url: http://efax-gtk.sourceforge.net/
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.src.tar
-Source1: %name-%version.ru.po
-Source2: %name-%version.config
+Source1: %name-3.2.9.ru.po
+Source2: %name-3.2.9.config
 #Patch: %name-%version.patch
 
-# Automatically added by buildreq on Wed Apr 25 2012
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcxx-gtk-utils libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+3-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ libcxx-gtk-utils-devel libtiff-devel
+# Automatically added by buildreq on Sun Apr 24 2016
+# optimized out: at-spi2-atk fontconfig glib2-devel gnu-config gnustep-base-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcxx-gtk-utils libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+3-devel libpango-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-module-distribute python-modules python3 python3-base xorg-kbproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ libtiff-devel
+
+BuildRequires: libcxx-gtk-utils-devel >= 2.2.12
 
 Requires: efax
 
@@ -77,6 +79,9 @@ ln -sf efix %buildroot%_bindir/efix-0.9a
 %_spooldir/fax/%name-*
 
 %changelog
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 3.2.13-alt1
+- new version 3.2.13 (with rpmrb script)
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.9-alt1.1
 - Rebuilt with libtiff5
 
