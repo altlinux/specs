@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.4.9
+Version: 2.5.0
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -22,8 +22,8 @@ BuildArchitectures: noarch
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
 
-Requires: giter >= 1.7
-Requires: eepm >= 1.6.0
+Requires: giter >= 1.10
+Requires: eepm >= 1.7.2
 Requires: erc >= 0.8
 
 Requires: rpm-build
@@ -70,6 +70,18 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- loginhsh: drop automode (-a)
+- myhsh: add -b for get binary packages, -r for remove packages
+- rpmbsh: release -i (install in hasher) here
+- rewrite git repo using to support a few specs or git dirs as args
+- make rpmbsh install all built packages in one hasher
+- make rpmbs create one task with all packages
+- rpmbph: run rpmbs(h) for all repo together, add autorestore current branch
+- rpmrb: rewrite to support multiple dirs/spec in common task
+- config: fix run on non rpm systems
+- pkgrepls: improve repls for Debian 7/8
+
 * Sat Apr 16 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.9-alt1
 - require rpm-build-intro 1.9.3 (with distr_vendor supported ALT Linux p8)
 - add some asserts for non empty MENV
