@@ -2,8 +2,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.3.0
-Release: alt1.rc1
+Version: 1.3.1
+Release: alt1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -13,13 +13,15 @@ Packager: Pavel Maleev <rolland@altlinux.org>
 
 Source0: %name-%version.tar.gz
 Patch1: %name-1.2.3-alt-vreen.patch
+Patch2: %name-1.3.0-alt-sqlite-fts3.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
 BuildRequires: gstreamer%{gst_api_ver}-devel gst-plugins%gst_api_ver-devel gstreamer%gst_api_ver-utils
 BuildRequires: libchromaprint-devel
 BuildRequires: libcryptopp-devel
-BuildRequires: libsqlite3-devel
+# SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER is available since 3.12
+BuildRequires: libsqlite3-devel >= 3.12
 BuildRequires: libpulseaudio-devel
 BuildRequires: libechonest-devel
 
@@ -46,6 +48,7 @@ advantage of Qt4.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
 
 %build
 %K4build -DSTATIC_SQLITE=on -DBUILD_WERROR=off
@@ -66,6 +69,10 @@ advantage of Qt4.
 
 
 %changelog
+* Sat Apr 23 2016 Vladimir Didenko <cow@altlinux.org> 1.3.1-alt1
+- Version 1.3.1
+- Enable FTS3 at runtime (closes: #31978)
+
 * Thu Feb 4 2016 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt1.rc1
 - Version 1.3rc1
 
