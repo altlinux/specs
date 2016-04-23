@@ -1,6 +1,6 @@
 Name: parallel
 Version: 20160422
-Release: alt1
+Release: alt2
 
 Summary: A shell tool for executing jobs in parallel
 License: GPLv3
@@ -16,6 +16,8 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: perl-Pod-Parser perl-devel
 
 BuildArch: noarch
+
+%set_findreq_skiplist %_bindir/env_parallel.*
 
 %description
 GNU parallel is a shell tool for executing jobs in parallel
@@ -45,6 +47,9 @@ ln -sf parallel %buildroot%_bindir/sem
 %_man7dir/*
 
 %changelog
+* Sat Apr 23 2016 Michael Shigorin <mike@altlinux.org> 20160422-alt2
+- suppress extra requires (closes: #32016)
+
 * Fri Apr 22 2016 Michael Shigorin <mike@altlinux.org> 20160422-alt1
 - new version (watch file uupdate)
 
