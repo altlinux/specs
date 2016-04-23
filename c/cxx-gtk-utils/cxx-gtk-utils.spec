@@ -1,11 +1,11 @@
-%define major 2.0
+%define major 2.2
 %define oname c++-gtk-utils
 
 Name: cxx-gtk-utils
-Version: 2.0.4
+Version: %major.12
 Release: alt1
 
-Summary: GTK+-based ISO image editor
+Summary: lightweight library for programming GTK+ programs using C++ in POSIX (unix-like) environment
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -17,7 +17,7 @@ Source: http://downloads.sourceforge.net/cxx-gtk-utils/cxx-gtk-utils/%version/%o
 
 # Automatically added by buildreq on Wed Apr 25 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config
-BuildRequires: gcc-c++ glibc-devel-static libgtk+3-devel
+BuildRequires: gcc-c++ glibc-devel libgtk+3-devel
 
 %define libname lib%name
 %define develname %libname-devel
@@ -77,6 +77,9 @@ rm -rf %buildroot%_docdir/
 %_libdir/libcxx-gtk-utils-3-%major.so
 
 %changelog
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt1
+- new version 2.2.12 (with rpmrb script)
+
 * Wed Apr 25 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
 - initial build for ALT Linux Sisyphus
 
