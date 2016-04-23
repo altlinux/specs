@@ -1,7 +1,7 @@
 %define py_name imagesize
 
 Name: python-module-%py_name
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Group: Development/Python
@@ -11,9 +11,6 @@ License: MIT
 Url: https://github.com/shibukawa/imagesize_py
 
 # https://github.com/shibukawa/imagesize_py
-#
-# The same source is used for both Python{2,3} with a commit from:
-# https://github.com/xantares/imagesize_py py2a3
 Source0: %name-%version.tar
 
 BuildArch: noarch
@@ -25,8 +22,6 @@ BuildPreReq: python3-module-setuptools
 # For %%check:
 BuildPreReq: python-module-nose
 BuildPreReq: python3-module-nose
-# To get all the data for the tests:
-BuildPreReq: ImageMagick-tools
 
 %global long_desc It parses image files' header and return image size.\
 \
@@ -75,10 +70,10 @@ popd
 
 %check
 cd %name-%version
-convert test/images/test.jp{g,2}
+
 # Just in case:
 # make sure we test the installed modules from %%buildroot,
-rm -rf imagesize
+rm -r imagesize
 
 [ -n "$NOSE_PROCESSES" ] || NOSE_PROCESSES=%__nprocs; export NOSE_PROCESSES # like in %%make_build
 PYTHONPATH=%buildroot%python_sitelibdir nosetests test
@@ -95,6 +90,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir nosetests3 test
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Sat Apr 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.1-alt1
+- upstream release 0.7.1 (no changes)
+
 * Thu Apr 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt1
 - Initial build for ALT Sisyphus. (Needed for sphinx-1.4.1.) (ALT#31976)
 - The same source is used for both Python{2,3} with a commit from:
