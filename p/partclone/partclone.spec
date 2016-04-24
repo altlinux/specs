@@ -2,7 +2,7 @@
 
 Name: partclone
 Version: 0.2.84
-Release: alt1
+Release: alt2
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -64,6 +64,9 @@ subst 's/ fail-mbr//g' Makefile.in Makefile.am
 %_man8dir/*
 
 %changelog
+* Sun Apr 24 2016 Denis Medvedev <nbr@altlinux.org> 0.2.84-alt2
+- Rebuild for new ntfs-3g.
+
 * Fri Dec 04 2015 Michael Shigorin <mike@altlinux.org> 0.2.84-alt1
 - 0.2.84
 - use ntfs-3g instead of libntfs

@@ -1,6 +1,6 @@
 Name: testdisk
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Tool to check and undelete partition
 License: GPLv2+
@@ -98,6 +98,9 @@ rm -rf %buildroot%_mandir/zh_CN/
 %_man8dir/qphotorec*
 
 %changelog
+* Sun Apr 24 2016 Denis Medvedev <nbr@altlinux.org> 7.0-alt2
+- Rebuild for sisyphus.
+
 * Wed May 06 2015 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
 - new version 7.0 (with rpmrb script)
 - add qphotorec subpackage
