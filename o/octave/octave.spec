@@ -1,6 +1,6 @@
 Name: octave
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -158,6 +158,9 @@ EOF
 %doc doc/interpreter/octave.html doc/liboctave/liboctave.html doc/interpreter/octave.pdf doc/liboctave/liboctave.pdf doc/refcard/refcard*.pdf
 
 %changelog
+* Sun Apr 24 2016 Anton Midyukov <antohami@altlinux.org> 4.0.2-alt2
+- change cronbuild_mailto="Anton Midyukov <antohami@altlinux.org>"
+
 * Fri Apr 22 2016 Cronbuild Service <cronbuild@altlinux.org> 4.0.2-alt1
 - repocop cronbuild 20160422. At your service.
 
