@@ -2,12 +2,9 @@
 %define ver_major 3.18
 %define api_ver 3.0
 %def_disable static
-%def_enable compositor
-%def_enable render
-%def_enable shape
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Metacity window manager
@@ -39,13 +36,10 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libstartup-notification-devel >= %startup_notification_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
-%if_enabled compositor
 BuildPreReq: libXcomposite-devel >= %xcomposite_ver
 BuildRequires: libXfixes-devel libXrender-devel libXdamage-devel libXtst-devel
-%endif
-%{?_enable_render:BuildRequires: libXrender-devel}
-BuildRequires: libXcursor-devel libXt-devel libXinerama-devel
-%{?_enable_shape:BuildRequires: libXext-devel}
+BuildRequires: libXrender-devel
+BuildRequires: libXcursor-devel libXt-devel libXinerama-devel libXext-devel
 BuildRequires: yelp-tools itstool zenity libcanberra-gtk3-devel
 BuildRequires: libXrandr-devel libX11-devel libSM-devel libICE-devel perl-XML-Parser libgtop-devel
 
@@ -182,13 +176,9 @@ theme.
 %build
 %autoreconf
 %configure \
-    %{subst_enable compositor} \
-    %{subst_enable render} \
-    %{subst_enable shape} \
     %{subst_enable static} \
     --enable-sm \
     --enable-startup-notification \
-    --enable-xsync \
     --enable-xinerama \
     --disable-schemas-compile
 %make_build
@@ -249,6 +239,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Sun Apr 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt1
+- 3.18.4
+
 * Wed Mar 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 
