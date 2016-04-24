@@ -1,15 +1,16 @@
 %define libname libwim
-
 Name: wimlib
-Version: 1.6.2
-Release: alt2
+Version: 1.9.1
+Release: alt1
 
 Summary: Library to extract, create, modify, and mount WIM files
+
 License: GPLv3+
 Group: System/Libraries
+Url: https://wimlib.net/
 
-Url: http://sourceforge.net/projects/wimlib
-Source: http://prdownloads.sourceforge.net/wimlib/wimlib-%version.tar
+#Source: http://prdownloads.sourceforge.net/wimlib/wimlib-%version.tar
+Source: https://wimlib.net/downloads/wimlib-%version.tar
 
 # manually removed: glibc-devel-static  ruby ruby-stdlibs  python3
 # Automatically added by buildreq on Tue Apr 15 2014
@@ -74,11 +75,12 @@ but this package contains a free implementation of ImageX called
 make check
 
 %files -n %libname
-%doc AUTHORS README
+%doc README NEWS
 %_libdir/libwim.so.*
 
 %files -n wimtools
-%_bindir/*
+%_bindir/wim*
+%_bindir/mkwinpeimg
 %_man1dir/*
 
 %files -n %libname-devel
@@ -87,6 +89,9 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Sun Apr 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
+- new version 1.9.1 (with rpmrb script)
+
 * Tue Apr 15 2014 Michael Shigorin <mike@altlinux.org> 1.6.2-alt2
 - wimtools: explicit syslinux dependency
 
