@@ -1,5 +1,5 @@
 Name: eepm
-Version: 1.7.2
+Version: 1.7.5
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -65,6 +65,21 @@ chmod a+x %buildroot%_datadir/%name/{serv-,epm-}*
 %_sysconfdir/bash_completion.d/cerv
 
 %changelog
+* Sun Apr 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
+- epm-print: add compare version command
+- repofix: fix Sisyphus replace
+- release_upgrade: do packages downgrade after changes to p8 from Sisyphus
+- epm-assure: rewrite to realize correct version comparing
+- kernel_update: run remove-old-kernels too
+
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
+- release-upgrade: small logic improvements
+
+* Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.3-alt1
+- epm release-upgrade: check for glibc-core-2.17
+- release-upgrade: add detect current system by apt repo
+- release-upgrade: rewrite to support p8 -> Sisyphus and vice versa
+
 * Wed Apr 20 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
 - distr_info: fix os-release detection
 
