@@ -5,8 +5,8 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.0
-Release: alt2.1
+Version: %major.1
+Release: alt1
 
 Summary: Python bindings for GObject
 
@@ -158,7 +158,6 @@ popd
 %check
 #xvfb-run %make check
 
-# currently fails for python3
 #pushd py3build
 #xvfb-run %make check
 #popd
@@ -200,6 +199,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.20.0-alt2.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
