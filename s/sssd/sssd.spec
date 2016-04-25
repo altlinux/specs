@@ -1,8 +1,8 @@
 %define libwbc_alternatives_version 0.12.0
 
 Name: sssd
-Version: 1.13.3
-Release: alt1.2
+Version: 1.13.4
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -482,7 +482,6 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %attr(755,%sssd_user,%sssd_user) %dir %pipepath
 %attr(755,%sssd_user,%sssd_user) %dir %gpocachepath
 %attr(755,%sssd_user,%sssd_user) %dir %pubconfpath
-%attr(755,root,root) %dir %pubconfpath/krb5.include.d
 %attr(700,%sssd_user,%sssd_user) %dir %pipepath/private
 %attr(770,root,%sssd_user) %dir %_var/log/%name
 %attr(750,root,%sssd_user) %dir %_sysconfdir/sssd
@@ -513,6 +512,7 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_datadir/%name/sssd.api.d/sssd-ldap.conf
 
 %files krb5-common
+%attr(755,%sssd_user,%sssd_user) %dir %pubconfpath/krb5.include.d
 %attr(4710,root,%sssd_user) %_libexecdir/%name/ldap_child
 %attr(4710,root,%sssd_user) %_libexecdir/%name/krb5_child
 
@@ -629,6 +629,9 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_altdir/libwbclient-sss-devel
 
 %changelog
+* Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.13.4-alt1
+- 1.13.4
+
 * Fri Mar 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.13.3-alt1.2
 - Rebuild with libldb-1.1.26
 
