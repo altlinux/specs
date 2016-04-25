@@ -1,6 +1,6 @@
 Name: autoconf-archive
-Version: 2015.02.24
-Release: alt1.1
+Version: 2016.03.20
+Release: alt1
 Summary: The Autoconf Macro Archive
 
 Group: Development/Other
@@ -54,6 +54,9 @@ rm -rf %buildroot%_datadir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 2016.03.20-alt1
+- 2016.03.20
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2015.02.24-alt1.1
 - NMU: added BR: texinfo
 
