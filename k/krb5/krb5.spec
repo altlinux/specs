@@ -1,7 +1,7 @@
 
 Name: krb5
-Version: 1.13.2
-Release: alt2
+Version: 1.14.2
+Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -24,13 +24,16 @@ Patch60: krb5-1.12.1-fedora-pam.patch
 Patch63: krb5-1.13-fedora-selinux-label.patch
 Patch71: krb5-1.13-fedora-dirsrv-accountlock.patch
 Patch86: krb5-1.9-fedora-debuginfo.patch
-Patch105: krb5-fedora-kvno-230379.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
 Patch134: krb5-1.11-fedora-kpasswdtest.patch
-Patch140: krb5-1.14-Support-KDC_ERR_MORE_PREAUTH_DATA_REQUIRED.patch
-Patch143: krb5-tests_use_libs_from_build.patch
-Patch144: krb5-1.13.3-bindresvport_sa_port_byte_swap_bug_triggering_selinux_avc_denial.patch
-Patch146: krb5-1.14-client_referral_principal.patch
+Patch148: krb5-fedora-disable_ofd_locks.patch
+Patch150: krb5-fedora-acquire_cred_interposer.patch
+Patch153: krb5-1.14.1-fedora-log_file_permissions.patch
+
+# backported patches from master:
+Patch164: krb5-1.15-kdc_send_receive_hooks.patch
+Patch165: krb5-1.15-kdc_hooks_test.patch
+
 
 BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel
@@ -160,15 +163,17 @@ MIT Kerberos.
 %patch39 -p1 -b .api
 %patch71 -p1 -b .dirsrv-accountlock
 %patch86 -p0 -b .debuginfo
-%patch105 -p1 -b .kvno
 # Apply when the hard-wired or configured default location is
 # DIR:/run/user/%%{uid}/krb5cc.
 %patch129 -p1 -b .run_user_0
 %patch134 -p1 -b .kpasswdtest
-%patch140 -p1 -b .krb5-1.14-support-kdc_err_more_preauth_data_required
-%patch143 -p1 -b .krb5-tests_use_libs_from_build
-%patch144 -p1 -b .krb5-1.13.3-bindresvport_sa_port_byte_swap_bug_triggering_selinux_avc_denial
-%patch146 -p1 -b .client_referral_principal.patch
+%patch148 -p1 -b .disable_ofd_locks
+
+%patch150 -p1 -b .fix_interposer
+%patch153 -p1 -b .log_file_permissions
+
+%patch164 -p1 -b .kdc_send_receive_hooks
+%patch165 -p1 -b .kdc_hooks_test
 
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
@@ -297,7 +302,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %preun_service kprop
 
 %files -n lib%name -f mit-krb5.lang
-%verify(not md5 size mtime) %config(noreplace) %_sysconfdir/krb5.conf
+%config(noreplace) %_sysconfdir/krb5.conf
 %ghost %config(noreplace) %attr(600,root,root) %_sysconfdir/krb5.keytab
 %dir %_sysconfdir/gss
 %dir %_sysconfdir/gss/mech.d
@@ -422,6 +427,11 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.2-alt1
+- 1.14.2
+- fixed CVE-2015-2695,CVE-2015-2696,CVE-2015-2697,CVE-2015-2698,CVE-2015-8629,CVE-2015-8630,CVE-2015-8631,CVE-2016-3119
+- allow verification of attributes on krb5.conf
+
 * Mon Nov 16 2015 Andrey Cherepanov <cas@altlinux.org> 1.13.2-alt2
 - Comment out includedir directive in /etc/krb5.conf because samba
   cannot get Kerberos context while domain provision

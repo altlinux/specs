@@ -1,6 +1,6 @@
 
 Name: adcli
-Version: 0.7.6
+Version: 0.8.1
 
 Release: alt1
 Summary: Active Directory enrollment
@@ -43,6 +43,9 @@ standard LDAP and Kerberos calls.
 %_mandir/*/*
 
 %changelog
+* Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.1-alt1
+- 0.8.1
+
 * Wed Nov 11 2015 Alexey Shabalin <shaba@altlinux.ru> 0.7.6-alt1
 - 0.7.6 (ALT #31470)
 
