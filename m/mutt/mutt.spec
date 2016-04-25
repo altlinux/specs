@@ -7,7 +7,7 @@
 Name: %oname%branch
 
 # hg log -r . --template '{latesttag}-{latesttagdistance}-{node|short}\n'
-Version: 1.5.23.88.hg577987ca2d02
+Version: 1.6
 Release: alt1
 Epoch: 3
 
@@ -127,13 +127,15 @@ headers, key remapping, colors, and more.
 
 mutt_apply()
 {
+	ls $1
 	%SOURCE9 $1
 }
 
-mutt_apply altlinux/patch-1.5.23.vvv.quote
-mutt_apply altlinux/patch-1.5.23.vvv.nntp
-mutt_apply altlinux/patch-1.5.23.vvv.initials
-mutt_apply altlinux/patch-1.5.23.rr.compressed
+mutt_apply altlinux/patch-1.6.0.vvv.quote
+mutt_apply altlinux/patch-1.6.0.vvv.nntp
+mutt_apply altlinux/patch-1.6.0.vvv.nntp_ru
+mutt_apply altlinux/patch-1.6.0.vvv.initials
+mutt_apply altlinux/patch-1.6.0.rr.compressed
 
 %build
 export ac_cv_path_GDB=/usr/bin/gdb
@@ -318,6 +320,10 @@ find %buildroot%_sysconfdir -type f -print0 |
 %_bindir/mutt-Maxi
 
 %changelog
+* Mon Apr 25 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:1.6-alt1
+- Updated to mutt-1-6-rel (ALT#31943).
+- Fixed hang with empty TERM env variable (ALT#31224).
+
 * Tue May 19 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:1.5.23.88.hg577987ca2d02-alt1
 - Updated to mutt-1-5-23-rel-88-577987ca2d02.
 
