@@ -1,4 +1,4 @@
-%define ver_major 2.8
+%define ver_major 3.0
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -9,8 +9,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -196,6 +196,9 @@ The %name-tests package provides programms for testing CSD plugins.
 %_libexecdir/csd-test-background
 
 %changelog
+* Mon Apr 25 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Mon Mar 21 2016 Vladimir Didenko <cow@altlinux.org> 2.8.4-alt2
 - color plugin: don't filter disconnected outputs
 
