@@ -1,19 +1,18 @@
 Name: seaview
-Version: 4.2.6
-Release: alt1.4
+Version: 4.6
+Release: alt1
 Summary: Graphical multiple sequence alignment editor
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Sciences/Biology
 License: GPLv2+
 Url: http://pbil.univ-lyon1.fr/software/seaview.html
-Source0: ftp://pbil.univ-lyon1.fr/pub/mol_phylogeny/seaview/seaview_4.2.6.tar.gz
+Source0: ftp://pbil.univ-lyon1.fr/pub/mol_phylogeny/seaview/seaview_%version.tar.gz
 Source1: seaview.desktop
-Patch0: seaview-chris.patch
-Patch1: seaview-unrooted.patch
-BuildRequires: libfltk-devel gcc-c++ libX11-devel zlib-devel libXft-devel libXext-devel
-BuildRequires: desktop-file-utils
+Patch: no-interactive.patch
 
-BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
+# Automatically added by buildreq on Wed Apr 27 2016
+# optimized out: fontconfig libX11-devel libstdc++-devel python-base python-modules python3 python3-base xorg-xproto-devel
+BuildRequires: gcc-c++ libfltk-devel python3-dev zlib-devel
 
 %description
 SeaView is a graphical multiple sequence alignment editor developed by Manolo
@@ -24,15 +23,15 @@ alignment.
 
 %prep
 %setup -q -n seaview
-%patch0 -p 1 -b .chris
-%patch1 -p1
+%patch -p1
+
 chmod -x *.cxx
 chmod -x csrc/*.[ch]
 
 sed -i 's|^\(CFLAGS.*\)|\1 -g -DFL_LIBRARY|' Makefile
 
 %build
-make %{?_smp_mflags}
+%make_build
 
 %check
 
@@ -57,6 +56,10 @@ install -m 644 seaview.1 $RPM_BUILD_ROOT/%_mandir/man1
 %_man1dir/*
 
 %changelog
+* Wed Apr 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.6-alt1
+- Updated to 4.6.
+- Rebuilt with libfltk13-1.3.3-alt1.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.6-alt1.4
 - Rebuilt with updated libfltk
 
