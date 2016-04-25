@@ -34,7 +34,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt6
+%define rlz alt7
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -107,7 +107,7 @@ Patch502: qt-4.7.2-alt-ca-certificates-path.patch
 Patch503: qt-4.7.3-alt-qt-config-add-webkit.patch
 Patch504: qt-4.7.0-alt-fix-gl-loading.patch
 Patch505: qt-4.0.1-alt-iso_c_extension.patch
-#
+Patch506: qt-4.8.6-alt-kde-breeze.patch
 Patch507: qt-4.8.6-alt-disable-gstreamer.patch
 Patch508: qt-4.7.4-alt-buildkey.patch
 Patch509: qt-4.7.0-alt-qtconfig_add_translator.patch
@@ -715,7 +715,7 @@ Install this package if you want to create RPM packages that use %name
 %patch503 -p1
 %patch504 -p1
 %patch505 -p1
-#
+%patch506 -p1
 %patch507 -p1
 %patch508 -p1
 ###%patch509 -p1
@@ -1449,6 +1449,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Mon Apr 25 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt7
+- set Breeze style and icons for KDE4 by default
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt6
 - support KDE4 plugins by default
 
