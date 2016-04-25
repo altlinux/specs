@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.2.4
+Version:  1.3.0
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -15,9 +15,9 @@ Requires:  apt
 Requires:  curl
 
 %description
-The apt-repo script allow to show, add and remove APT repositories specified
-by address in sources.list(5) format, URL with optional component, branch 
-name or task number.
+The apt-repo script allow to show, add and remove APT repositories
+specified by address in sources.list(5) format, URL with optional
+component, branch name or task number.
 
 %prep
 %setup
@@ -33,9 +33,18 @@ gzip %buildroot%_man8dir/%name.8
 %files -f %name.lang
 %doc TODO
 %_bindir/%name
-%doc %_man8dir/%name.8.gz
+%_man8dir/%name.8*
 
 %changelog
+* Mon Apr 25 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
+- Add p8 branch (ALT #32006)
+- Add support for altlinuxclub sources
+- Add arepo repo for task only if it exists (ALT #31577)
+- Use new format of source (ALT #31974)
+- Optional package name(s) support in apt-repo test
+- Remove duplicate package names in task list
+- Do not use strict extension for compessed man page
+
 * Wed Dec 02 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.2.4-alt1
 - prepare a smaller basesystem in hasher as girar's install check does
   (rather than the default one with rpm-build). This will allow to
