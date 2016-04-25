@@ -1,5 +1,5 @@
-%define lvm2version 2.02.137
-%define dmversion 1.02.113
+%define lvm2version 2.02.151
+%define dmversion 1.02.123
 
 %def_enable cluster
 %def_enable selinux
@@ -7,6 +7,7 @@
 %def_enable lvmpolld
 %def_disable lvmlockd
 %def_disable blkid_wiping
+%def_disable lvmdbusd
 
 %if_enabled lvmlockd
  %def_enable lockd_sanlock
@@ -18,7 +19,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt2
+Release: alt1
 License: GPL
 
 Group: System/Base
@@ -48,11 +49,15 @@ BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel
 BuildRequires: thin-provisioning-tools >= 0.5.4
 BuildRequires: python-devel python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: autoconf-archive
+%{?_enable_lvmdbusd:BuildRequires: python-module-dbus python-module-pyudev python3-module-dbus python3-module-pyudev}
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcorosync2-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
 %{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
-%{?_enable_lockd_sanlock:BuildRequires: sanlock-devel}
+%{?_enable_lockd_sanlock:BuildRequires: sanlock-devel >= 3.3.0}
 
 %description
 LVM2 includes all of the support for handling read/write operations
@@ -155,11 +160,26 @@ Requires: libdevmapper-devel = %dmversion-%release
 Summary: LVM locking daemon
 Group: System/Base
 Requires: %name = %version-%release
+Requires: sanlock
+Requires: dlm
+
+%package dbusd
+Summary: LVM2 D-Bus daemon
+License: GPLv2
+Group: System/Base
+Requires: %name = %lvm2version-%release
+Requires: dbus
 
 %package -n python-module-lvm
 Summary: Python module to access LVM
 License: LGPLv2
 Group: Development/Python
+Requires: liblvm2 = %lvm2version-%release
+
+%package -n python3-module-lvm
+Summary: Python3 module to access LVM
+License: LGPLv2
+Group: Development/Python3
 Requires: liblvm2 = %lvm2version-%release
 
 %description
@@ -193,8 +213,15 @@ the device-mapper event library.
 %description lockd
 LVM commands use lvmlockd to coordinate access to shared storage.
 
+%description dbusd
+Daemon for access to LVM2 functionality through a D-Bus interface.
+
 %description -n python-module-lvm
 Python module to allow the creation and use of LVM
+logical volumes, physical volumes, and volume groups.
+
+%description -n python3-module-lvm
+Python3 module to allow the creation and use of LVM
 logical volumes, physical volumes, and volume groups.
 
 
@@ -265,6 +292,7 @@ mv libdm/ioctl/libdevmapper.a .
 	%{subst_enable blkid_wiping} \
 	%{?_enable_lockd_dlm:--enable-lockd-dlm} \
 	%{?_enable_lockd_sanlock:--enable-lockd-sanlock} \
+	%{?_enable_lvmdbusd:--enable-dbus-service} \
 	--with-dmeventd-path="%_sbindir/dmeventd" \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-tmpfilesdir=%_tmpfilesdir \
@@ -286,7 +314,8 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-thin-dump=/usr/sbin/thin_dump \
 	--with-thin-repair=/usr/sbin/thin_repair \
 	--with-thin-restore=/usr/sbin/thin_restore \
-	--enable-python-bindings
+	--enable-python2-bindings \
+	--enable-python3-bindings
 
 %__make
 
@@ -376,6 +405,12 @@ __EOF__
 
 %preun lockd
 %preun_service lvm2-lvmlockd
+
+%post dbusd
+%post_service lvm2-lvmdbusd
+
+%preun dbusd
+%preun_service lvm2-lvmdbusd
 
 %files
 %doc README WHATS_NEW udev/12-dm-permissions.rules
@@ -499,10 +534,28 @@ __EOF__
 %_initdir/lvm2-lvmlock*
 %endif
 
+%if_enabled lvmdbusd
+%_sbindir/lvmdbusd
+%_sysconfdir/dbus-1/system.d/com.redhat.lvmdbus1.conf
+%_datadir/dbus-1/system-services/com.redhat.lvmdbus1.service
+%_man8dir/lvmdbusd.*
+%_unitdir/lvm2-lvmdbusd.service
+%python3_sitelibdir/lvmdbusd/*
+%endif
+
 %files -n python-module-lvm
 %python_sitelibdir/*
 
+%files -n python3-module-lvm
+%python3_sitelibdir/*
+
 %changelog
+* Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.151-alt1
+- 2.02.151
+- update requires for lockd package
+- add python3 package
+- add dbusd package, but not buld now
+
 * Mon Mar 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.02.137-alt2
 - enabled cluster support
 
