@@ -1,5 +1,5 @@
 Name: system-report
-Version: 0.0.8
+Version: 0.0.9
 Release: alt1
 BuildArch: noarch
 
@@ -23,6 +23,11 @@ cp -f -- %SOURCE0 %buildroot/%_bindir/
 %_bindir/*
 
 %changelog
+* Mon Apr 25 2016 Alexey Gladkov <legion@altlinux.ru> 0.0.9-alt1
+- Choose better achiver.
+- Obtain:
+  + Information about network interfaces (ALT#32015).
+
 * Mon Feb 29 2016 Alexey Gladkov <legion@altlinux.ru> 0.0.8-alt1
 - Fix command arguments.
 
