@@ -12,7 +12,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.5.1
-Release: alt1.git20141223
+Release: alt2.git20141223
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -21,6 +21,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://bitbucket.org/slepc/slepc4py.git
 Source: %oname-%version.tar.gz
+Patch1: %oname-3.5.1-alt-complex.patch
 
 Requires: python-module-%name = %version-%release
 BuildRequires(pre): rpm-build-python rpm-macros-make
@@ -28,12 +29,14 @@ BuildPreReq: python-devel python-module-Cython chrpath
 BuildPreReq: %mpiimpl-devel libslepc-%scalar_type-devel python-module-mpi4py
 BuildPreReq: libnumpy-devel python-module-petsc4py-%scalar_type
 BuildPreReq: python-module-docutils python-module-epydoc
-%if "%scalar_type" == "real"
+%if_enabled docs
 BuildPreReq: python-module-Pygments
+BuildPreReq: python-module-sphinx-devel >= 1.4.1-alt1
 BuildPreReq: texlive-latex-extra
+BuildPreReq: makeinfo
 %endif
 BuildPreReq: libtrilinos10-devel libamesos10-devel libepetraext10-devel
-BuildPreReq: libifpack10-devel python-module-sphinx-devel libdakota-devel
+BuildPreReq: libifpack10-devel libdakota-devel
 
 %description
 slepc4py are Python bindings for SLEPc, the Scalable Library for Eigenvalue
@@ -94,6 +97,10 @@ This package contains examples for SLEPc for Python.
 
 %prep
 %setup
+%if "%scalar_type" == "complex"
+%patch1 -p1
+%endif
+
 sed -i 's|@VERSION@|%version|' docs/source/conf.py
 sed -i "s|@TOP@|$PWD|" docs/source/conf.py
 sed -i 's|@PYVER@|%_python_version|' docs/source/Makefile
@@ -107,7 +114,10 @@ mpi-selector --set %mpiimpl
 source %_bindir/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%add_optflags %optflags_shared -fpermissive -fno-strict-aliasing
+%add_optflags %optflags_shared -fno-strict-aliasing
+%if "%scalar_type" == "complex"
+%add_optflags -fpermissive
+%endif
 %make_ext config
 python conf/cythonize.py
 %make_build_ext
@@ -207,6 +217,10 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Mon Apr 25 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt2.git20141223
+- docs: Fixed the build (with sphinx-1.4.1 & makeinfo).
+- (.spec) Build real/complex variants from a single commit (with specsubst).
+
 * Sun Mar 22 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt1.git20141223
 - Version 3.5.1
 
@@ -254,6 +268,7 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 
 * Mon Dec 05 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.hg20111105
 - Version 1.2
+- Enabled docs
 
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1-alt1.hg20110506.1
 - Rebuild with Python-2.7
