@@ -1,5 +1,5 @@
 Name: live-install
-Version: 20160322
+Version: 20160420
 Release: alt1
 Summary: Copy running system to fixed disk
 Group: System/Configuration/Other
@@ -27,6 +27,9 @@ mkdir -p %buildroot/%_datadir/%name/scripts.d
 %dir %_datadir/%name/scripts.d
 
 %changelog
+* Wed Apr 20 2016 Eugene Prokopiev <enp@altlinux.ru> 20160420-alt1
+- install only into empty partition
+
 * Tue Mar 22 2016 Eugene Prokopiev <enp@altlinux.ru> 20160322-alt1
 - audit=0 in kernel cmdline
 
