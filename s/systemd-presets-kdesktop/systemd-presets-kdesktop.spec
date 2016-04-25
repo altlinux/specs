@@ -1,5 +1,5 @@
 Name: systemd-presets-kdesktop
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Group: System/Configuration/Boot and Init
@@ -24,6 +24,9 @@ install -m 0644 %SOURCE0 %buildroot/%_presetdir/50-kdesktop.preset
 %_presetdir/*.preset
 
 %changelog
+* Mon Apr 25 2016 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
+- remove workaround
+
 * Fri Apr 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
 - workaround against default units disabling
 
