@@ -1,15 +1,14 @@
 Name: apache2-mod_mono
-%define apxs %_sbindir/apxs2
-%define apache2_sysconfdir %(%apxs -q SYSCONFDIR)/conf.d
+%define apache2_sysconfdir %(%apache2_apxs -q SYSCONFDIR)/conf.d
 Obsoletes: mod_mono
 %define modname mod_mono
-%define apache2_libexecdir %(%apxs -q LIBEXECDIR)
-%define apache_mmn        %(MMN=$(%apxs -q LIBEXECDIR)_MMN; test -x $MMN && $MMN)
+%define apache2_libexecdir %(%apache2_apxs -q LIBEXECDIR)
+%define apache_mmn        %(MMN=$(%apache2_apxs -q LIBEXECDIR)_MMN; test -x $MMN && $MMN)
 Url: http://go-mono.com/
 License: Apache Software License
 Group: Networking/WWW
 Version: 3.12
-Release: alt1
+Release: alt1.1
 Summary: Run ASP.NET Pages on Unix with Apache and Mono
 Packager: Denis Medvedev <nbr@altlinux.org>
 
@@ -18,7 +17,7 @@ Source: %modname-%version.tar.bz2
 Provides: mod_mono = %version-%release
 # This must be manually entered according to xsp's protocol version
 Requires: mono4-xsp >= %version
-BuildPreReq: apache-base
+BuildPreReq: apache-base rpm-macros-apache2 >= 2.4.18-alt1
 BuildRequires: pkg-config
 BuildRequires: apache2-devel mono4-devel
 BuildRequires: libaprutil1-devel
@@ -35,7 +34,7 @@ into Apache, run the command "a2enmod mono" as root.
 %build
 chmod +x ./autogen.sh
 %define _configure_script ./autogen.sh
-%configure
+%configure --with-apxs=%apache2_apxs
 make
 
 %install
@@ -50,6 +49,9 @@ make
 %_man8dir/mod_mono.8*
 
 %changelog
+* Tue Apr 05 2016 Sergey Alembekov <rt@altlinux.ru> 3.12-alt1.1
+- rebuild with apache-2.4
+
 * Mon Feb 22 2016 Denis Medvedev <nbr@altlinux.org> 3.12-alt1
 - initial build for ALT Linux Sisyphus
 

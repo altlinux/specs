@@ -1,11 +1,11 @@
-# vim: set ft=spec: -*- rpm-spec -*-
+# vir: set ft=spec: -*- rpm-spec -*-
 
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
-%define apache_version 2.2.31
+%define apache_version 2.4.18
 
-%define mmn 20051115
+%define mmn 20120211
 
 # do we use native apr/apu ?
 %def_disable static
@@ -52,9 +52,6 @@ Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер 
 # SVN URL: http://svn.apache.org/repos/asf/httpd/httpd/tags/2.2.4
 Source0: httpd-%version.tar
 
-Source5: README-itk.html
-Source6: README-peruser.html
-
 #Source10: apache2.favour
 Source11: apache2-alt-configs-3.0.tar
 Source12: README.ALT.ru_RU.KOI8-R
@@ -100,12 +97,16 @@ Source71: apache2-cert-sh.sh
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
 Patch1: apache2-%version-alt-all-0.2.patch
+Patch2: Makefile.in.patch
+Patch3: apachectl.patch
+Patch4: configure.in.patch
+Patch5: httpd.conf.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.12
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
-BuildRequires(pre): libaprutil1-devel >= 1.3.7-alt2.1
+BuildRequires(pre): libaprutil1-devel 
 BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
 BuildPreReq: rpm-macros-webserver-cgi-bin-control
 BuildPreReq: rpm >= 4.0.4-alt100.62
@@ -121,7 +122,7 @@ Requires: webserver-html
 Requires: webserver-icons
 
 # Modules by default
-Requires: %name-mod_disk_cache > 2.2.22-alt15
+Requires: %name-mod_cache_disk >= 2.4.18-alt1
 
 BuildPreReq: webserver-common
 
@@ -358,44 +359,44 @@ new requests.
 
 This MPM is especially suitable for sites that see extensive KeepAlive traffic
 
-%package httpd-itk
-Summary: Experimental Multi-Processing Module for the Apache 2 (itk-mpm)
-Group: System/Servers
-PreReq: %name-base > 2.2.22-alt15
-%if "%alternatives_min_ver" != ""
-PreReq: %alternatives_name >= %alternatives_min_ver
-%endif
-Provides: %name-mmn = %mmn
-Provides: %apache2_sbindir/%apache2_dname
-Provides: %name-httpd = %EVR
-Provides: %name-httpd-prefork-like = %EVR
+#%package httpd-itk
+#Summary: Experimental Multi-Processing Module for the Apache 2 (itk-mpm)
+#Group: System/Servers
+#PreReq: %name-base > 2.2.22-alt15
+#%if "%alternatives_min_ver" != ""
+#PreReq: %alternatives_name >= %alternatives_min_ver
+#%endif
+#Provides: %name-mmn = %mmn
+#Provides: %apache2_sbindir/%apache2_dname
+#Provides: %name-httpd = %EVR
+#Provides: %name-httpd-prefork-like = %EVR
 
-%description httpd-itk
-The ITK Multi-Processing Module (MPM) works in about the same way as
-the classical "prefork" module (that is, without threads), except that it
-allows you to constrain each individual vhost to a particular system user.
-This allows you to run several different web sites on a single server without
-worrying that they will be able to read each others' files.
+#%description httpd-itk
+#The ITK Multi-Processing Module (MPM) works in about the same way as
+#the classical "prefork" module (that is, without threads), except that it
+#allows you to constrain each individual vhost to a particular system user.
+#This allows you to run several different web sites on a single server without
+#worrying that they will be able to read each others' files.
 
-%package httpd-peruser
-Summary: Experimental Multi-Processing Module for the Apache 2 (peruser-mpm)
-Group: System/Servers
-PreReq: %name-base > 2.2.22-alt15
-%if "%alternatives_min_ver" != ""
-PreReq: %alternatives_name >= %alternatives_min_ver
-%endif
-Provides: %name-mmn = %mmn
-Provides: %apache2_sbindir/%apache2_dname
-Provides: %name-httpd = %EVR
-Provides: %name-httpd-prefork-like = %EVR
+#%package httpd-peruser
+#Summary: Experimental Multi-Processing Module for the Apache 2 (peruser-mpm)
+#Group: System/Servers
+#PreReq: %name-base > 2.2.22-alt15
+#%if "%alternatives_min_ver" != ""
+#PreReq: %alternatives_name >= %alternatives_min_ver
+#%endif
+#Provides: %name-mmn = %mmn
+#Provides: %apache2_sbindir/%apache2_dname
+#Provides: %name-httpd = %EVR
+#Provides: %name-httpd-prefork-like = %EVR
 
-%description httpd-peruser
-Peruser is an Apache 2 module based on metuxmpm, a working implementation of
-the perchild MPM. The fundamental concept behind all of them is to run each
-apache child process as its own user and group, each handling its own set of
-virtual hosts. Peruser and recent metuxmpm releases can also chroot()
-apache processes. The result is a sane and secure web server environment
-for your users, without kludges like PHP's safe_mode.
+#%description httpd-peruser
+#Peruser is an Apache 2 module based on metuxmpm, a working implementation of
+#the perchild MPM. The fundamental concept behind all of them is to run each
+#apache child process as its own user and group, each handling its own set of
+#virtual hosts. Peruser and recent metuxmpm releases can also chroot()
+#apache processes. The result is a sane and secure web server environment
+#for your users, without kludges like PHP's safe_mode.
 
 %package -n rpm-build-%name
 Summary: RPM helper to rebuild Web servers and apps packages
@@ -632,7 +633,7 @@ mod_ldap -- LDAP connection pooling and result caching services for use by
 mod_authnz_ldap -- Allows an LDAP directory to be used to store the database
     for HTTP Basic authentication.
 
-%package mod_disk_cache
+%package mod_cache_disk
 Group: System/Servers
 Summary: Module supported content cache storage for the Apache HTTP server
 PreReq: %name-base > 2.2.22-alt15
@@ -643,9 +644,11 @@ Requires: %apache2_sbindir/%apache2_htcacheclean_dname
 Provides: %apache2_htcacheclean_cachepath
 
 Conflicts: apache2-common < 2.2.19-alt1.1
+Obsoletes: apache2-mod_disk_cache
 
-%description mod_disk_cache
-This package contains the module mod_disk_cache
+
+%description mod_cache_disk
+This package contains the module mod_cache_disk (ex.mod_disk_cache)
 
 %package htcacheclean-control
 Summary: Control rules for htcacheclean
@@ -657,7 +660,7 @@ This package contains control rules for the htcacheclean.
 See control(8) for details.
 
 %package htcacheclean
-Summary: Clean up the disk cache for Apache
+Summary: Clean up the cache disk for Apache
 Group: System/Servers
 Requires: %apache2_htcacheclean_cachepath
 Requires: %name-base > 2.2.22-alt15
@@ -665,7 +668,7 @@ Requires: %_controldir/htcacheclean-run
 Requires: %_controldir/htcacheclean-mode
 
 %description htcacheclean
-Htcacheclean is used to keep the size of mod_disk_cache's storage within
+Htcacheclean is used to keep the size of mod_cache_disk's storage within
 a certain limit. This tool can run either manually or in daemon mode.
 
 %package ab
@@ -763,6 +766,10 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 
 %setup -q -n httpd-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 # generate ALTLinux Apache layout
 echo "
@@ -852,20 +859,21 @@ mpmbuild worker --enable-mods-shared=all  --with-program-name=%apache2_dname
 
 mpmbuild event --enable-mods-shared=all  --with-program-name=%apache2_dname
 
-mpmbuild itk --enable-mods-shared=all --with-program-name=%apache2_dname
+#mpmbuild itk --enable-mods-shared=all --with-program-name=%apache2_dname
 
-mpmbuild peruser --enable-mods-shared=all --with-program-name=%apache2_dname
+#mpmbuild peruser --enable-mods-shared=all --with-program-name=%apache2_dname
 
 # Verify that the same modules were built into the two httpd binaries
 ./prefork/%apache2_dname -l | grep -v prefork > prefork.mods
 ./worker/%apache2_dname -l | grep -v worker > worker.mods
 ./event/%apache2_dname -l | grep -v event > event.mods
-./itk/%apache2_dname -l | grep -v itk > itk.mods
-./peruser/%apache2_dname -l | grep -v peruser > peruser.mods
+#./itk/%apache2_dname -l | grep -v itk > itk.mods
+#./peruser/%apache2_dname -l | grep -v peruser > peruser.mods
 if ( ! diff -u prefork.mods worker.mods ) \
 	|| ( ! diff -u prefork.mods event.mods ) \
-	|| ( ! diff -u prefork.mods itk.mods ) \
-	|| ( ! diff -u prefork.mods peruser.mods ) ; then
+#	|| ( ! diff -u prefork.mods itk.mods ) \
+#	|| ( ! diff -u prefork.mods peruser.mods ) \
+then
   : Different modules built into httpd binaries, will not proceed
   exit 1
 fi
@@ -904,7 +912,7 @@ s|%%apache2_sslcertsh|%apache2_sslcertsh|g
 pushd docs/man
 
 %if "%apache2_branch" != ""
-MANS="ab.8 apachectl.8 apxs.8 dbmmanage.1 htdigest.1 htpasswd.1 httpd.8 rotatelogs.8 logresolve.8 suexec.8"
+MANS="ab.1 apachectl.8 apxs.1 dbmmanage.1 htdigest.1 htpasswd.1 httpd.8 rotatelogs.8 logresolve.1 suexec.8"
 for manpage in $MANS; do
     mv ${manpage} `echo ${manpage}|sed -e "s/\./%apache2_branch./"`
 done
@@ -925,12 +933,12 @@ WDIR=event
 install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.event
 
 # install itk binary
-WDIR=itk
-install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.itk
+#WDIR=itk
+#install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.itk
 
 # install peruser binary
-WDIR=peruser
-install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.peruser
+#WDIR=peruser
+#install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.peruser
 
 #-----------------------------------------------------------------------------------
 # Tune up executibles to co-exist with apache-ru
@@ -945,19 +953,22 @@ mv suexec suexec%apache2_branch
 # rename tools
 # Maybe it's better to push ru-apache-devel before installing devel package
 rm envvars-std
-for tool in apachectl apxs checkgid dbmmanage envvars rotatelogs httxt2dbm; do
+#for tool in apachectl apxs checkgid dbmmanage envvars rotatelogs httxt2dbm; do
+for tool in apachectl checkgid envvars rotatelogs fcgistarter htcacheclean; do
     mv ${tool} ${tool}%apache2_branch
 done
 #fix apachectl and apxs
-sed -i -e 's|\(\/envvars\)"|\1%apache2_branch"|
-s|\(apachectl\)|\1%apache2_branch|
-' %apache2_apachectl_name %apache2_apxs_name
+#sed -i -e 's|\(\/envvars\)"|\1%apache2_branch"|
+#s|\(apachectl\)|\1%apache2_branch|
+#' %apache2_apachectl_name %apache2_apxs_name
 %endif
 # move&rename utilities to /usr/bin
-TOOLS="ab htdbm logresolve htpasswd htdigest"
+pushd %buildroot%apache2_bindir
+TOOLS="ab htdbm logresolve htpasswd apxs dbmmanage httxt2dbm htdigest check_forensic"
 for tool in $TOOLS; do
     mv ${tool} %buildroot%apache2_bindir/${tool}%apache2_branch
 done
+popd
 popd
 #
 #-----------------------------------------------------------------------------------
@@ -970,7 +981,6 @@ mkdir -p %buildroot%_altdir
 pushd %buildroot%_altdir
 tar xvSf %SOURCE13
 popd
-install -m 644 {%SOURCE5,%SOURCE6} %_builddir/httpd-%version
 
 # mod_ssl bits
 for suffix in crl crt csr key prm; do
@@ -1000,7 +1010,7 @@ install -d %buildroot%apache2_spooldir/{,tmp,sessions,uploads}
 # create lock dir
 install -d %buildroot%apache2_lockdir
 
-# create dir for mod_disk_cache
+# create dir for mod_cache_disk
 install -d %buildroot%apache2_htcacheclean_cachepath
 
 # Make the MMN accessible to module packages
@@ -1065,8 +1075,9 @@ mv %buildroot%apache2_manualdir %buildroot%docdir/manual
 ln -snf $(relative %buildroot%docdir/manual %buildroot%apache2_manualdir) %buildroot%apache2_manualdir
 
 # install docs to %%docdir/
-cp -r ABOUT_APACHE README CHANGES LICENSE README.ALT* README-itk.* README-peruser.* %buildroot%docdir/
-cp server/mpm/experimental/itk/CHANGES %buildroot%docdir/CHANGES-itk
+#cp -r ABOUT_APACHE README CHANGES LICENSE README.ALT* README-itk.* README-peruser.* %buildroot%docdir/
+cp -r ABOUT_APACHE README CHANGES LICENSE README.ALT* %buildroot%docdir/
+#cp server/mpm/experimental/itk/CHANGES %buildroot%docdir/CHANGES-itk
 
 # install the daemon start script
 install -pD -m755 %SOURCE18 \
@@ -1204,7 +1215,7 @@ cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
 %_datadir/%name/	%name-datadirs
 %_datadir/%name/cgi-bin/	%name-datadirs
 %apache2_proxycachedir/mod_ssl/	%name-mod_ssl
-%apache2_htcacheclean_cachepath/	%name-mod_disk_cache
+%apache2_htcacheclean_cachepath/	%name-mod_cache_disk
 %apache2_includedir/	%name-devel
 %apache2_installbuilddir/	%name-devel
 %apache2_compat_htdocsdir/	%name-compat
@@ -1304,7 +1315,8 @@ fi
 %triggerun_apache2_rpmhttpdstartfile
 exit 0
 
-%triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-httpd-itk < 2.2.17-alt3, %name-httpd-peruser < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
+#%triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-httpd-itk < 2.2.17-alt3, %name-httpd-peruser < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
+%triggerun base -- %name-base < 2.2.17-alt3, %name-httpd-worker < 2.2.17-alt3, %name-httpd-prefork < 2.2.17-alt3, %name-httpd-event < 2.2.17-alt3, %name-configs-A1PROXIED < 2.2.17-alt3, %name-mod_ssl-compat < 2.2.17-alt3, %name-mod_ssl < 2.2.17-alt3, %name-mod_ldap < 2.2.17-alt3, %name-suexec < 2.2.17-alt3, %name-compat < 2.2.17-alt3, %name-manual < 2.2.17-alt3
 %triggerun_apache2_rpmhttpdstartfile
 exit 0
 
@@ -1350,23 +1362,23 @@ exit 0
 %postun httpd-event
 %unregister_alternatives %name-httpd-event
 
-%post -n %name-httpd-itk
-%register_alternatives %name-httpd-itk
+#%post -n %name-httpd-itk
+#%register_alternatives %name-httpd-itk
 
-%triggerpostun -n %name-httpd-itk -- apache2 < 2.2.4-alt18
-%register_alternatives %name-httpd-itk
+#%triggerpostun -n %name-httpd-itk -- apache2 < 2.2.4-alt18
+#%register_alternatives %name-httpd-itk
 
-%postun -n %name-httpd-itk
-%unregister_alternatives %name-httpd-itk
+#%postun -n %name-httpd-itk
+#%unregister_alternatives %name-httpd-itk
 
-%post httpd-peruser
-%register_alternatives %name-httpd-peruser
+#%post httpd-peruser
+#%register_alternatives %name-httpd-peruser
 
-%triggerpostun httpd-peruser -- apache2 < 2.2.4-alt18
-%register_alternatives %name-httpd-peruser
+#%triggerpostun httpd-peruser -- apache2 < 2.2.4-alt18
+#%register_alternatives %name-httpd-peruser
 
-%postun httpd-peruser
-%unregister_alternatives %name-httpd-peruser
+#%postun httpd-peruser
+#%unregister_alternatives %name-httpd-peruser
 %endif
 
 %pre manual
@@ -1453,36 +1465,38 @@ exit 0
 %triggerpostun cgi-bin-printenv -- apache-common < 1.3.37rusPL30.23-alt1.1, apache-cgi-bin < 1.3.41rusPL30.23-alt4.7.3, apache2-cgi-bin < 2.2.9-alt10, apache2-cgi-bin-printenv
 %triggerpostun_webserver_cgi_bin_control -s symlink_root_noexec cgi-bin_printenv
 
+
 %files mods
 %config(noreplace) %apache2_mods_available/*.load
 %config(noreplace) %apache2_mods_available/*.conf
 %ghost %apache2_mods_enabled/*.load
 %ghost %apache2_mods_enabled/*.conf
 %exclude %apache2_mods_available/ssl.load
-%exclude %apache2_mods_available/ssl.conf
+#%exclude %apache2_mods_available/ssl.conf
 %exclude %apache2_mods_available/*ldap.load
-%exclude %apache2_mods_available/suexec.load
-%exclude %apache2_mods_available/disk_cache.*
-%exclude %apache2_mods_enabled/ssl.load
-%exclude %apache2_mods_enabled/ssl.conf
-%exclude %apache2_mods_enabled/*ldap.load
-%exclude %apache2_mods_enabled/suexec.load
-%exclude %apache2_mods_enabled/disk_cache.*
+#%exclude %apache2_mods_available/suexec.load
+%exclude %apache2_mods_available/cache_disk.*
+#%exclude %apache2_mods_enabled/ssl.load
+#%exclude %apache2_mods_enabled/ssl.conf
+#%exclude %apache2_mods_enabled/*ldap.load
+#%exclude %apache2_mods_enabled/*ldap.conf
+#%exclude %apache2_mods_enabled/suexec.load
+#%exclude %apache2_mods_enabled/cache_disk.*
 
 %doc %docdir/original/mods-available/*.load
 %doc %docdir/original/mods-available/*.conf
 %exclude %docdir/original/mods-available/ssl.load
 %exclude %docdir/original/mods-available/ssl.conf
-%exclude %docdir/original/mods-available/*ldap.load
-%exclude %docdir/original/mods-available/suexec.load
-%exclude %docdir/original/mods-available/disk_cache.*
+#%exclude %docdir/original/mods-available/*ldap.load
+#%exclude %docdir/original/mods-available/suexec.load
+%exclude %docdir/original/mods-available/cache_disk.*
 
 # everything but mod_ssl.so:
 %apache2_moduledir/mod_*.so
 %exclude %apache2_moduledir/mod_ssl.so
 %exclude %apache2_moduledir/mod_*ldap.so
 %exclude %apache2_moduledir/mod_suexec.so
-%exclude %apache2_moduledir/mod_disk_cache.so
+%exclude %apache2_moduledir/mod_cache_disk.so
 
 %files httpd-worker
 %apache2_sbindir/%apache2_dname.worker
@@ -1496,16 +1510,16 @@ exit 0
 %apache2_sbindir/%apache2_dname.event
 %_altdir/%name-httpd-event
 
-%files httpd-itk
-%doc %docdir/README-itk.*
-%doc %docdir/CHANGES-itk
-%apache2_sbindir/%apache2_dname.itk
-%_altdir/%name-httpd-itk
+#%files httpd-itk
+#%doc %docdir/README-itk.*
+#%doc %docdir/CHANGES-itk
+#%apache2_sbindir/%apache2_dname.itk
+#%_altdir/%name-httpd-itk
 
-%files httpd-peruser
-%doc %docdir/README-peruser.*
-%apache2_sbindir/%apache2_dname.peruser
-%_altdir/%name-httpd-peruser
+#%files httpd-peruser
+#%doc %docdir/README-peruser.*
+#%apache2_sbindir/%apache2_dname.peruser
+#%_altdir/%name-httpd-peruser
 
 %files
 
@@ -1515,9 +1529,10 @@ exit 0
 %exclude %docdir/original/mods-available/*
 %doc %docdir/ABOUT_APACHE
 %doc %docdir/README*
-%exclude %docdir/README-peruser.*
-%exclude %docdir/README-itk.*
+#%exclude %docdir/README-peruser.*
+#%exclude %docdir/README-itk.*
 %doc %docdir/CHANGES
+%doc %docdir/LICENSE
 
 %config %_sysconfdir/tmpfiles.d/*
 
@@ -1565,16 +1580,16 @@ exit 0
 %config(noreplace) %apache2_ports_available/*.conf
 %ghost %apache2_ports_enabled/*.conf
 %config(noreplace) %apache2_ports_start/*.conf
-%exclude %apache2_ports_available/https.conf
+#%exclude %apache2_ports_available/https.conf
 %exclude %apache2_ports_available/http-A1PROXIED.conf
-%exclude %apache2_ports_enabled/https.conf
+#%exclude %apache2_ports_enabled/https.conf
 %exclude %apache2_ports_enabled/http-A1PROXIED.conf
 %exclude %apache2_ports_start/020-A1PROXIED.conf
 %config(noreplace) %apache2_sites_available/*.conf
-%ghost %apache2_sites_enabled/*.conf
+#%ghost %apache2_sites_enabled/*.conf
 %config(noreplace) %apache2_sites_start/*.conf
-%exclude %apache2_sites_available/default_https.conf
-%exclude %apache2_sites_available/vhosts-A1PROXIED.conf
+#%exclude %apache2_sites_available/default_https.conf
+#%exclude %apache2_sites_available/vhosts-A1PROXIED.conf
 %exclude %apache2_sites_available/default-compat.conf
 %exclude %apache2_sites_available/default_https-compat.conf
 %exclude %apache2_sites_enabled/default_https.conf
@@ -1589,7 +1604,7 @@ exit 0
 %config(noreplace) %apache2_extra_available/*.conf
 %ghost %apache2_extra_enabled/*.conf
 %exclude %apache2_extra_available/httpd-manual*.conf
-%exclude %apache2_extra_available/httpd-*-compat.conf
+#%exclude %apache2_extra_available/httpd-*-compat.conf
 %exclude %apache2_extra_enabled/httpd-manual*.conf
 %exclude %apache2_extra_enabled/httpd-*-compat.conf
 %config(noreplace) %apache2_extra_start/*.conf
@@ -1603,6 +1618,8 @@ exit 0
 %attr(0600,root,root) %config(noreplace) %apache2_envconf
 %_unitdir/%apache2_dname.service
 
+
+
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/logrotate.d/%apache2_name
 
 %apache2_bindir/ht*
@@ -1613,10 +1630,11 @@ exit 0
 %exclude %apache2_sbindir/htcacheclean*
 
 %apache2_sbindir/checkgid*
-%apache2_sbindir/check_forensic*
-%apache2_sbindir/dbmmanage*
+%apache2_bindir/check_forensic*
+%apache2_bindir/dbmmanage*
+%apache2_sbindir/fcgistarter*
 
-%apache2_sbindir/httxt2dbm*
+%apache2_bindir/httxt2dbm*
 
 %_rpmlibdir/*-%apache2_name.filetrigger
 %_rpmlibdir/*-%apache2_name-base.filetrigger
@@ -1636,10 +1654,10 @@ exit 0
 
 %apache2_mandir/man1/*
 %exclude %apache2_mandir/man1/htpasswd*
+%exclude %apache2_mandir/man1/ab*
+%exclude %apache2_mandir/man1/apxs*
 
 %apache2_mandir/man8/*
-%exclude %apache2_mandir/man8/apxs*
-%exclude %apache2_mandir/man8/ab*
 %exclude %apache2_mandir/man8/htcacheclean*
 %exclude %apache2_mandir/man8/suexec*
 
@@ -1649,7 +1667,7 @@ exit 0
 %config(noreplace) %apache2_ports_available/http-A1PROXIED.conf
 %ghost %apache2_ports_enabled/http-A1PROXIED.conf
 %config(noreplace) %apache2_ports_start/020-A1PROXIED.conf
-%config(noreplace) %apache2_sites_available/vhosts-A1PROXIED.conf
+#%config(noreplace) %apache2_sites_available/vhosts-A1PROXIED.conf
 %ghost %apache2_sites_enabled/vhosts-A1PROXIED.conf
 %config(noreplace) %apache2_sites_start/020-A1PROXIED.conf
 
@@ -1692,6 +1710,7 @@ exit 0
 %apache2_iconsdir/README.html
 %apache2_iconsdir/*.gif
 %apache2_iconsdir/*.png
+%apache2_iconsdir/*.svg
 %apache2_iconsdir/small/*.gif
 %apache2_iconsdir/small/*.png
 
@@ -1699,12 +1718,12 @@ exit 0
 %attr(0644,root,root) %apache2_sslcertshfunctions
 %apache2_moduledir/mod_ssl.so
 %attr(0600,root,root) %config(noreplace) %apache2_mods_available/ssl.load
-%attr(0600,root,root) %config(noreplace) %apache2_mods_available/ssl.conf
-%ghost %apache2_mods_enabled/ssl.load
-%ghost %apache2_mods_enabled/ssl.conf
-%attr(0600,root,root) %config(noreplace) %apache2_ports_available/https.conf
-%attr(0600,root,root) %config(noreplace) %apache2_sites_available/default_https.conf
-%ghost %apache2_ports_enabled/https.conf
+#%attr(0600,root,root) %config(noreplace) %apache2_mods_available/ssl.conf
+#%ghost %apache2_mods_enabled/ssl.load
+#%ghost %apache2_mods_enabled/ssl.conf
+#%attr(0600,root,root) %config(noreplace) %apache2_ports_available/https.conf
+#%attr(0600,root,root) %config(noreplace) %apache2_sites_available/default_https.conf
+#%ghost %apache2_ports_enabled/https.conf
 %ghost %apache2_sites_enabled/default_https.conf
 %ghost %apache2_sites_enabled/000-default_https.conf
 %ghost %apache2_confdir/ssl.crt/server.crt
@@ -1714,20 +1733,20 @@ exit 0
 %attr(0600,%apache2_user,%apache2_group) %ghost %apache2_proxycachedir/mod_ssl/scache.pag
 %attr(0600,%apache2_user,%apache2_group) %ghost %apache2_proxycachedir/mod_ssl/scache.sem
 %doc %docdir/original/mods-available/ssl.load
-%doc %docdir/original/mods-available/ssl.conf
+#%doc %docdir/original/mods-available/ssl.conf
 
 %files mod_ldap
 %apache2_moduledir/mod_*ldap.so
-%attr(0600,root,root) %config(noreplace) %apache2_mods_available/*ldap.load
-%ghost %apache2_mods_enabled/*ldap.load
-%doc %docdir/original/mods-available/*ldap.load
+#%attr(0600,root,root) %config(noreplace) %apache2_mods_available/*ldap.load
+#%ghost %apache2_mods_enabled/*ldap.load
+#%doc %docdir/original/mods-available/*ldap.load
 
-%files mod_disk_cache
-%apache2_moduledir/mod_disk_cache.so
-%config(noreplace) %apache2_mods_available/disk_cache.*
-%ghost %apache2_mods_enabled/disk_cache.*
+%files mod_cache_disk
+%apache2_moduledir/mod_cache_disk.so
+%config(noreplace) %apache2_mods_available/cache_disk.*
+#%ghost %apache2_mods_enabled/cache_disk.*
 %attr(2770,root,%apache2_group) %dir %apache2_htcacheclean_cachepath/
-%doc %docdir/original/mods-available/disk_cache.*
+%doc %docdir/original/mods-available/cache_disk.*
 
 %files htcacheclean-control
 %_controldir/htcacheclean-*
@@ -1744,7 +1763,7 @@ exit 0
 
 %files ab
 %apache2_bindir/ab*
-%apache2_mandir/man8/ab*
+#%apache2_mandir/man8/ab*
 
 %files htpasswd
 %apache2_bindir/htpasswd*
@@ -1760,13 +1779,15 @@ exit 0
 %apache2_includedir/.mmn
 %apache2_includedir/ap_*
 %apache2_includedir/[hmoprsu]*
+%apache2_includedir/apache_noprobes.h
+%apache2_includedir/cache_common.h
 
 #%apache2_moduledir/httpd.exp
 #%apache2_installbuilddir/config.nice
 
 
-%apache2_sbindir/apxs*
-%apache2_mandir/man8/apxs*
+%apache2_bindir/apxs*
+#%apache2_mandir/man8/apxs*
 %dir %apache2_installbuilddir/
 %apache2_installbuilddir/[clprs]*.mk
 %apache2_installbuilddir/instdso.sh
@@ -1774,19 +1795,19 @@ exit 0
 %apache2_sbindir/envvars*
 
 %files suexec
-%config(noreplace) %apache2_mods_available/suexec.load
-%ghost %apache2_mods_enabled/suexec.load
+#%config(noreplace) %apache2_mods_available/suexec.load
+#%ghost %apache2_mods_enabled/suexec.load
 %apache2_moduledir/mod_suexec.so
 %attr(4510,root,%apache2_group) %apache2_sbindir/suexec*
 %apache2_mandir/man8/suexec*
-%doc %docdir/original/mods-available/suexec.load
+#%doc %docdir/original/mods-available/suexec.load
 
 %files compat
 %config(noreplace) %apache2_sites_available/default-compat.conf
 %ghost %apache2_sites_enabled/default-compat.conf
 %ghost %apache2_sites_enabled/000-default-compat.conf
 %config(noreplace) %apache2_sites_start/*-default-compat.conf
-%config(noreplace) %apache2_extra_available/httpd-*-compat.conf
+#%config(noreplace) %apache2_extra_available/httpd-*-compat.conf
 %ghost %apache2_extra_enabled/httpd-*-compat.conf
 %config(noreplace) %apache2_extra_start/*-default-compat.conf
 %dir %apache2_compat_htdocsdir/
@@ -1795,11 +1816,17 @@ exit 0
 %dir %apache2_compat_manualaddonsdir/
 
 %files mod_ssl-compat
-%config(noreplace) %apache2_sites_available/default_https-compat.conf
+#%config(noreplace) %apache2_sites_available/default_https-compat.conf
 %ghost %apache2_sites_enabled/default_https-compat.conf
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sun Mar 06 2016 Sergey Alembekov <rt@altlinux.ru> 2.4.18-alt1
+- new version 2.4.18
+- peruser patch no longer supported
+- itk patch became a module
+- mod_disk_cache became mod_cache_disk
+
 * Tue Oct 06 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.2.31-alt1
 - updated to 2.2.31
 - imported srpms as new git

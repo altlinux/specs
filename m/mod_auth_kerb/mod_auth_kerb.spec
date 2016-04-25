@@ -3,7 +3,7 @@
 Summary: An Apache authentication module using Kerberos.
 Name: mod_auth_kerb
 Version: 5.4
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -20,7 +20,7 @@ Patch7: mod_auth_kerb-5.4-longuser.patch
 Patch8: mod_auth_kerb-5.4-handle-continue.patch
 
 # Automatically added by buildreq on Mon Sep 29 2008
-BuildRequires: apache2-devel libcom_err-devel libkrb5-devel
+BuildRequires: apache2-devel libcom_err-devel libkrb5-devel rpm-macros-apache2
 %{?_with_apache1:BuildRequires: apache-devel}
 
 %description
@@ -73,7 +73,7 @@ cp -a src apache1
 %endif
 
 # apache-2
-export APXS=%_sbindir/apxs2
+export APXS=%apache2_apxs
 # XXX for GSSAPI libraries support SPNEGO
 CPPFLAGS="$CPPFLAGS -Wl,--no-as-needed" ./configure \
 			--with-krb5=%_prefix \
@@ -127,6 +127,9 @@ touch %buildroot%apache2_mods_enabled/auth_krb5.load
 %attr(0700,apache2,apache2) %dir %_runtimedir/httpd2/krbcache
 
 %changelog
+* Tue Apr 05 2016 Sergey Alembekov <rt@altlinux.ru> 5.4-alt1.1
+- rebuild with apache-2.4
+
 * Thu Mar 17 2016 Alexey Shabalin <shaba@altlinux.ru> 5.4-alt1
 - 5.4
 - add patches from fedora

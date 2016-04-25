@@ -6,8 +6,8 @@
 
 %define python_bindir %apache2_htdocsdir/%module_name
 Name: apache2-mod_wsgi%__python_package_version
-Version: 3.3
-Release: alt1.1
+Version: 4.5.1
+Release: alt1
 
 Summary: Python WSGI module for Apache2
 Group: System/Servers
@@ -47,8 +47,7 @@ sites.
 %make OPT="-fPIC $RPM_OPT_FLAGS -DEAPI" 
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%apache2_libexecdir
-install -c .libs/%modname.so $RPM_BUILD_ROOT%apache2_libexecdir
+%makeinstall_std
 install -d -m 755 $RPM_BUILD_ROOT{%apache2_mods_available,%apache2_mods_start}
 install -p -m 644 -- %SOURCE1 $RPM_BUILD_ROOT%apache2_mods_available/%module_name.load
 subst 's,@a_libexecdir@,%apache2_libexecdir,g' $RPM_BUILD_ROOT%apache2_mods_available/%module_name.load
@@ -99,11 +98,18 @@ fi
 
 
 %files
+%doc *.rst LICENSE
 %apache2_libexecdir/%modname.so
 %config            %apache2_mods_available/%module_name.load
 %config            %apache2_mods_start/100-%module_name.conf
 
 %changelog
+* Wed Apr 06 2016 Andrey Cherepanov <cas@altlinux.org> 4.5.1-alt1
+- New version
+
+* Tue Apr 05 2016 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1.2
+- Rebuild with new apache2
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.3-alt1.1
 - Rebuild with Python-2.7
 
