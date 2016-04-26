@@ -1,5 +1,5 @@
 Name:    texmf-latex-currfile
-Version: 0.7b
+Version: 0.7c
 Release: alt1
 Summary: Provide file name and path of input files
 License: GPL
@@ -54,6 +54,9 @@ install -pD -m644 doc/latex/currfile/* %buildroot%_texmfdoc/tex/latex/currfile/
 %_texmfdoc/tex/latex/currfile/*
 
 %changelog
+* Tue Apr 26 2016 Andrey Bergman <vkni@altlinux.org> 0.7c-alt1
+- Version update.
+
 * Sat Mar 29 2014 Andrey Bergman <vkni@altlinux.org> 0.7b-alt1
 - Initial release for Sisyphus
 
