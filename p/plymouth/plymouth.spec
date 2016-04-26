@@ -6,11 +6,12 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
+Name: plymouth
+Version: 0.8.8
+Release: alt6.git.37d2e4
+Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
-Name: plymouth
-Version: 0.9.2
-Release: alt3.git.g5188f19
 License: GPLv2+
 Group: System/Base
 
@@ -23,20 +24,13 @@ Patch: %name-%version-%release.patch
 Requires(post): plymouth-scripts
 Requires: lib%name = %version-%release
 
-BuildRequires: libpng-devel >= 1.2.16
-BuildRequires: pkgconfig(libpng) >= 1.2.16
-BuildRequires: pkgconfig(libudev)
-BuildRequires: pkgconfig(pangocairo) >= 1.21.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0
-BuildRequires: pkgconfig(libdrm)
+BuildRequires: libdrm-devel
 BuildRequires: systemd-devel
+BuildRequires: libudev-devel
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 
 Conflicts: bootsplash
 Conflicts: systemd < 186-alt1
-
-Provides: %name-utils = %version-%release
-Obsoletes: %name-utils < %version-%release
 
 %description
 Plymouth provides an attractive graphical boot animation in
@@ -67,7 +61,7 @@ used by Plymouth.
 Summary: Plymouth graphics libraries
 Group: System/Libraries
 Requires: lib%name = %version-%release
-
+BuildRequires: libpng-devel
 
 %description -n lib%name-graphics
 This package contains the libply-splash-graphics library
@@ -83,6 +77,16 @@ Requires: lib%name = %version-%release
 %description devel
 This package contains the libply and libplybootsplash libraries
 and headers needed to develop 3rd party splash plugins for Plymouth.
+
+%package utils
+Summary: Plymouth related utilities
+Group: System/Base
+Requires: %name = %version-%release
+BuildRequires: libgtk+2-devel
+
+%description utils
+This package contains utilities that integrate with Plymouth
+including a boot log viewing application.
 
 %package scripts
 Summary: Plymouth related scripts
@@ -110,6 +114,8 @@ event start-up services fail.
 Summary: Plymouth label plugin
 Group: System/Base
 Requires: lib%name = %version-%release
+BuildRequires: libpango-devel >= 1.21.0
+BuildRequires: libcairo-devel
 
 %description plugin-label
 This package contains the label control plugin for
@@ -271,30 +277,31 @@ export UDEVADM="/sbin/udevadm"
 
 %autoreconf
 %configure \
-	--disable-static				\
 	--enable-tracing				\
 	--enable-drm-renderer				\
-	--enable-pango					\
 	--enable-documentation				\
+	--without-default-plugin			\
 	--with-logo=%_pixmapsdir/altlinux.png		\
 	--with-background-start-color-stop=0x0073B3	\
 	--with-background-end-color-stop=0x00457E	\
 	--with-background-color=0x3391cd		\
 	--disable-gdm-transition			\
+	--without-gdm-autostart-file			\
 	--without-rhgb-compat-link			\
 	--with-system-root-install			\
+	--with-log-viewer				\
 	--enable-systemd-integration			\
-	--with-systemdunitdir=%_unitdir			\
 	--with-boot-tty=tty1				\
 	--with-shutdown-tty=tty1			\
-	--with-release-file=/etc/os-release
+	--with-release-file=/etc/altlinux-release
 
+#	--with-boot-tty=tty7				\
+#	--with-shutdown-tty=tty1			\
 
 %make
 
 %install
 %makeinstall_std
-
 
 # Glow isn't quite ready for primetime
 rm -rf %buildroot%_datadir/plymouth/glow/
@@ -302,6 +309,9 @@ rm -f %buildroot%_libdir/plymouth/glow.so
 
 find %buildroot -name '*.a' -exec rm -f {} \;
 find %buildroot -name '*.la' -exec rm -f {} \;
+
+# Temporary symlink until rc.sysinit is fixed
+(cd %buildroot%_bindir; ln -s ../../bin/plymouth)
 
 mkdir -p %buildroot%_localstatedir/lib/plymouth
 cp boot-duration %buildroot%_datadir/plymouth/default-boot-duration
@@ -382,6 +392,7 @@ fi \
 %plymouthdaemon_execdir/plymouthd
 %plymouthdaemon_execdir/plymouth-update
 %plymouthclient_execdir/plymouth
+%_bindir/plymouth
 %_libdir/plymouth/details.so
 %_libdir/plymouth/text.so
 %_libdir/plymouth/tribar.so
@@ -430,6 +441,9 @@ fi \
 # %_libexecdir/plymouth/plymouth-generate-initrd
 # %_libexecdir/plymouth/plymouth-populate-initrd
 
+%files utils
+%_bindir/plymouth-log-viewer
+
 %if_enabled gdm
 %files gdm-hooks
 %_datadir/gdm/autostart/LoginWindow/plymouth-log-viewer.desktop
@@ -477,6 +491,9 @@ fi \
 %files system-theme
 
 %changelog
+* Tue Apr 26 2016 Michael Shigorin <mike@altlinux.org> 1:0.8.8-alt6.git.37d2e4
+- rollback to 0.8: 0.9 isn't included even in fedora (closes: #31379)
+
 * Fri Mar 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9.2-alt3.git.g5188f19
 - upstream snapshot 5188f19416a60f801b46600503dd02926b4d9f33
 
