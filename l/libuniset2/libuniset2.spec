@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.3
-Release: alt2
+Release: alt3
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,9 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Wed Apr 27 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt3
+- fixed build for 64-bit
+
 * Wed Apr 20 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt2
 - (LogSession): disable "keep alive message"
 
