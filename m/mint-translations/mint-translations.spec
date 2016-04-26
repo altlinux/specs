@@ -1,12 +1,12 @@
 Name:           mint-translations
-Version:        2015.11.28
+Version:        2016.04.21
 Release:        alt1
 License:        GPLv2+ and MIT
 Summary:        Translation files for Linux Mint applications
 
 Group:          Graphical desktop/GNOME
 Url:            http://packages.linuxmint.com/pool/main/m/mint-translations/
-Source:         http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%version.tar.gz
+Source:         http://packages.linuxmint.com/pool/main/m/mint-translations/mint-translations_%version.tar.xz
 
 Source1:	mint-translations.watch
 
@@ -30,6 +30,10 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Apr 26 2016 Andrey Cherepanov <cas@altlinux.org> 2016.04.21-alt1
+- New version
+- Tarball now uses xz compression
+
 * Thu Dec 03 2015 Andrey Cherepanov <cas@altlinux.org> 2015.11.28-alt1
 - New version
 
