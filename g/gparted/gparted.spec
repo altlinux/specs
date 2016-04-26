@@ -2,7 +2,7 @@
 %define Name GParted
 
 Name: gparted
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -88,11 +88,13 @@ sed -i 's|%_sbindir|%_bindir|' %buildroot%_desktopdir/%name.desktop
 %_sysconfdir/pam.d/*
 %_sysconfdir/security/console.apps/*
 %_iconsdir/hicolor/*/apps/*
-%_datadir/pixmaps/%name.png
 %_desktopdir/*
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Tue Apr 26 2016 Yuri N. Sedunov <aris@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Wed Jan 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
 - 0.25.0
 
