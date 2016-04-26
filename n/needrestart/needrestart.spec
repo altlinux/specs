@@ -1,6 +1,6 @@
 Name: needrestart
 Version: 2.7
-Release: alt2
+Release: alt3
 
 Summary: Restart daemons after library updates
 License: GPLv2
@@ -47,6 +47,9 @@ install -pDm 644 man/%name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS README* NEWS INSTALL* ChangeLog
 
 %changelog
+* Tue Apr 26 2016 Terechkov Evgenii <evg@altlinux.org> 2.7-alt3
+- v2.7-7-g65c981d
+
 * Tue Mar  8 2016 Terechkov Evgenii <evg@altlinux.org> 2.7-alt2
 - Fix mail/dbus notifications
 
