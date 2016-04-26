@@ -1,4 +1,4 @@
-%define ver_major 2.8
+%define ver_major 3.0
 %define _name cjs
 %define api_ver 1.0
 
@@ -79,6 +79,9 @@ Files for development with %name.
 %doc examples/*
 
 %changelog
+* Mon Apr 25 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

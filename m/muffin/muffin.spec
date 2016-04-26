@@ -1,8 +1,8 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 2.8.5
-Release: alt3
+Version: 3.0.0
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -156,6 +156,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Tue Apr 26 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Wed Apr 20 2016 Vladimir Didenko <cow@altlinux.org> 2.8.5-alt3
 - Better fix for wrong context menu position.
 

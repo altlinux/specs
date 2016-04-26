@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: cinnamon
-Version: 2.8.8
+Version: 3.0.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -182,6 +182,7 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %_datadir/icons/hicolor/*/actions/*.svg
 %_datadir/icons/hicolor/*/categories/*.svg
 %_datadir/icons/hicolor/*/emblems/*.svg
+%_datadir/icons/hicolor/*/devices/*.svg
 %_datadir/desktop-directories/*.directory
 %exclude %_datadir/cinnamon-session/sessions/*.session
 
@@ -197,6 +198,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Tue Apr 26 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Wed Mar 30 2016 Vladimir Didenko <cow@altlinux.org> 2.8.8-alt1
 - 2.8.8
 

@@ -1,5 +1,5 @@
 %define api_ver 3.0
-%define ver_major 2.8
+%define ver_major 3.0
 
 %def_enable exempi
 %def_disable packagekit
@@ -8,8 +8,8 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.7
-Release: alt2.git20160420
+Version: %ver_major.0
+Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -209,6 +209,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Apr 26 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Wed Mar 16 2016 Vladimir Didenko <cow@altlinux.org> 2.8.7-alt2.git20160420
 - git20160420 (94c6036)
 

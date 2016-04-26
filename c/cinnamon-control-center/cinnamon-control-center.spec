@@ -1,10 +1,9 @@
-%define ver_major 2.8
+%define ver_major 3.0
 %define api_ver 1.0
 
 %def_disable debug
 %def_disable static
 %def_with libsocialweb
-%def_enable cheese
 %def_enable systemd
 %def_enable ibus
 
@@ -34,7 +33,6 @@ Patch: %name-%version-%release.patch
 %define gnome_menus_ver 3.5.5
 %define goa_ver 3.5.90
 %define sett_daemon_ver 0.0.1
-%define cheese_ver 3.5.92
 %define bt_ver 3.5.92
 %define systemd_ver 40
 %define ibus_ver 1.4.99
@@ -49,7 +47,6 @@ Requires: cinnamon-settings-daemon
 Requires: accountsservice
 #Requires: userpasswd
 Requires: gnome-online-accounts >= %goa_ver
-%{?_with_cheese:Requires: cheese >= %cheese_ver}
 BuildPreReq: rpm-build-gnome >= 0.9
 
 # From configure.in
@@ -61,15 +58,13 @@ BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libcinnamon-desktop-devel >= %desktop_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: cinnamon-settings-daemon-devel >= %sett_daemon_ver
-BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
-%{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
 BuildRequires: libxkbfile-devel
 %{?_enable_ibus:BuildPreReq: libibus-devel >= %ibus_ver}
 BuildRequires: libGConf-devel libdbus-glib-devel libupower-devel libpolkit1-devel
-BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
+BuildRequires: libgio-devel librsvg-devel libxml2-devel
 BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
 BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
-BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel iso-codes-devel
+BuildRequires: libgtop-devel libcups-devel iso-codes-devel
 BuildRequires: libpwquality-devel libkrb5-devel
 BuildRequires: libgnomekbd-devel libxklavier-devel
 BuildRequires: libwacom-devel
@@ -127,7 +122,6 @@ you'll want to install this package.
 	%{subst_enable static} \
 	--disable-update-mimedb \
 	%{subst_with libsocialweb} \
-	%{subst_with cheese} \
 	%{subst_enable systemd} \
 	%{subst_enable ibus}
 
@@ -146,8 +140,6 @@ you'll want to install this package.
 %_libdir/%{name}-1/panels/libdisplay.so
 %_libdir/%{name}-1/panels/libnetwork.so
 %_libdir/%{name}-1/panels/libregion.so
-%_libdir/%{name}-1/panels/libsoundnua.so
-%_libdir/%{name}-1/panels/libuniversal-access.so
 %_libdir/%{name}-1/panels/libwacom-properties.so
 %_libdir/%{name}-1/panels/libdate_time.so
 #%_libdir/%{name}-1/panels/libuser-accounts.so
@@ -158,12 +150,10 @@ you'll want to install this package.
 %files data -f %name-timezones.lang
 %dir %_datadir/%name
 %_datadir/%name/ui
-%_datadir/%name/icons/
 %_datadir/%name/datetime
 %_desktopdir/*.desktop
 %_sysconfdir/xdg/menus/cinnamoncc.menu
 %_datadir/desktop-directories/*
-%exclude %_sysconfdir/xdg/autostart/cinnamon-sound-applet.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/polkit-1/rules.d/cinnamon-control-center.rules
 %doc AUTHORS NEWS README
@@ -176,6 +166,9 @@ you'll want to install this package.
 
 
 %changelog
+* Mon Apr 25 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Mon Oct 19 2015 Vladimir Didenko <cow@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

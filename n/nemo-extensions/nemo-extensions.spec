@@ -1,8 +1,8 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 2.8.1
-Release: alt2
+Version: 3.0.0
+Release: alt1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -286,6 +286,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/applications/nemo-compare-preferences.desktop
 
 %changelog
+* Tue Apr 26 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Wed Feb 3 2016 Vladimir Didenko <cow@altlinux.org> 2.8.1-alt2
 - Add libvte3_2.90-gir to nemo-terminal deps
 - Port nemo-preview to ClutterGst 3.0
