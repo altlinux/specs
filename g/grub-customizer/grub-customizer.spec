@@ -1,5 +1,5 @@
 Name:           grub-customizer
-Version:        5.0.5
+Version:        5.0.6
 Release:        alt1
 Summary:        Grub Customizer is a graphical interface to configure the grub2/burg settings
 
@@ -71,6 +71,9 @@ install -m 0644 grub.cfg %buildroot%_sysconfdir/%name/grub.cfg
 
 
 %changelog
+* Tue Apr 26 2016 Andrey Cherepanov <cas@altlinux.org> 5.0.6-alt1
+- New version
+
 * Fri Apr 01 2016 Andrey Cherepanov <cas@altlinux.org> 5.0.5-alt1
 - New version
 
