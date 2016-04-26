@@ -15,8 +15,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: mlt
-Version: 0.9.8
-Release: alt1
+Version: 6.2.0
+Release: alt2
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -33,12 +33,14 @@ Patch2: mlt-0.9.0-alt-no-version-script.patch
 Patch10: libmlt-0.8.2-vdpau.patch
 # Debian
 Patch20: 01-changed-preset-path.diff
+# ALT
+Patch100: alt-freetype-include.patch
 
 BuildRequires: ImageMagick-tools gcc-c++ jackit-devel ladspa_sdk libSDL-devel
-BuildRequires: libSDL_image-devel libX11-devel libavdevice-devel libavformat-devel
+BuildRequires: libSDL_image-devel libX11-devel libavdevice-devel libavformat-devel libavfilter-devel
 BuildRequires: libquicktime-devel libsamplerate-devel libsox-devel libswscale-devel
 BuildRequires: libxml2-devel swig python-devel
-BuildRequires: frei0r-devel libalsa-devel libexif-devel
+BuildRequires: frei0r-devel libalsa-devel libpulseaudio-devel libexif-devel
 #BuildRequires: libqt4-devel kde4libs-devel
 BuildRequires: qt5-base-devel qt5-svg-devel
 BuildRequires: rpm-build-kf5
@@ -103,6 +105,7 @@ This module allows to work with %Name using python..
 %patch2 -p1
 %patch10 -p0
 %patch20 -p1
+%patch100 -p1
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
@@ -177,6 +180,12 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Tue Apr 26 2016 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt2
+- fix build requires
+
+* Tue Apr 26 2016 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
+- new version
+
 * Fri Sep 25 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt1
 - new version
 
