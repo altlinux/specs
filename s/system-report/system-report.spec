@@ -1,5 +1,5 @@
 Name: system-report
-Version: 0.0.9
+Version: 0.1.0
 Release: alt1
 BuildArch: noarch
 
@@ -23,6 +23,9 @@ cp -f -- %SOURCE0 %buildroot/%_bindir/
 %_bindir/*
 
 %changelog
+* Wed Apr 27 2016 Alexey Gladkov <legion@altlinux.ru> 0.1.0-alt1
+- Fix exitcode.
+
 * Mon Apr 25 2016 Alexey Gladkov <legion@altlinux.ru> 0.0.9-alt1
 - Choose better achiver.
 - Obtain:
