@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt3.git20141229
+Release: alt4.git20141229
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python
@@ -51,10 +51,8 @@ This package is a port of the Urllib3 package.
 %package -n python3-module-%oname
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 Group: Development/Python3
-%py3_provides %oname
 Requires: python3-module-%mname = %EVR
-%py3_requires asyncio
-%py3_requires yieldfrom.http.client
+%python3_req_hier
 
 %description -n python3-module-%oname
 Yieldfrom is a project to port various useful Python 3 libraries, both
@@ -77,8 +75,6 @@ Core files of %mname.
 %package -n python3-module-%mname
 Summary: Core files of %mname
 Group: Development/Python3
-%py3_provides %mname
-%py3_requires pkg_resources
 
 %description -n python3-module-%mname
 Core files of %mname.
@@ -112,7 +108,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libdir" != "%_libexecdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -161,9 +157,18 @@ popd
 %dir %python3_sitelibdir/%mname/__pycache__
 %python3_sitelibdir/%mname/__init__.*
 %python3_sitelibdir/%mname/__pycache__/__init__.*
+%python3_sitelibdir/*.pth
 %endif
 
 %changelog
+* Thu Apr 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt4.git20141229
+- Rebuild with rpm-build-python3-0.1.10.4-alt1 to get the essential
+  dep on setuptools (from an __import__ expr).
+- package *.pth (modifies the Python's site path and the form of reqs/provs).
+- (.spec) %%py3_provides will be detected automatically.
+- (.spec) %%py3_requires will be detected automatically.
+- (.spec) rewrite in non-x86_64-centric manner.
+
 * Thu Apr 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt3.git20141229
 - A quick fix for a missed dep due to __import__('pkg_resources')
   (will be auto-handled in rpm-build-python3-0.1.10.4). (ALT bug 32026)

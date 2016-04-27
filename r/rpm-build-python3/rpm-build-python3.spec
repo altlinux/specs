@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.10.3
+Version: 0.1.10.4
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -79,6 +79,12 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Wed Apr 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.4-alt1
+- .req.py: handle simple __import__ exprs on the same level of code
+  nesting as it is done for import statements, too (ALT#32026).
+- .req.py: just in case: deps with (deep < 4) are also OK if
+  RPM_PYTHON3_REQ_METHOD is slight (the default) or relaxed.
+
 * Fri Apr 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.3-alt1
 - Fix a bug of the prev.release: For the additional Provides with the
   full name (when there is also a short name), the optional non-std
