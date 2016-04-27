@@ -1,5 +1,5 @@
 Name: xfce4-eyes-plugin
-Version: 4.4.4
+Version: 4.4.5
 Release: alt1
 
 Summary: Eyes plugin for Xfce Desktop
@@ -51,6 +51,9 @@ Scary!
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Apr 27 2016 Mikhail Efremov <sem@altlinux.org> 4.4.5-alt1
+- Updated to 4.4.5.
+
 * Mon Mar 16 2015 Mikhail Efremov <sem@altlinux.org> 4.4.4-alt1
 - Updated to 4.4.4.
 
