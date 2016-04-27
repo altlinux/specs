@@ -1,19 +1,20 @@
 Name: x11vnc
-Version: 0.9.12
-Release: alt3
+Version: 0.9.14
+Release: alt1
 
-%def_without avahi
+%def_with avahi
 
 Summary: VNC server for real X displays
 License: GPL
 Group: Networking/Remote access
-Url: http://www.karlrunge.com/x11vnc/
-Packager: Maxim Ivanov <redbaron@altlinux.org>
+Url: https://github.com/LibVNC/x11vnc
 
-Source: %name-%version.tar
-Patch: libvncserver-c656b381fd8158aa73173c157b1492d1014e13f0.patch
+Source: %version.tar.gz
 
-BuildRequires: libjpeg-devel zlib-devel libssl-devel libXdamage-devel libXinerama-devel libXrandr-devel libXtst-devel libXt-devel
+# Automatically added by buildreq on Wed Apr 27 2016
+# optimized out: fontconfig libX11-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libcom_err-devel libgpg-error libkrb5-devel libp11-kit libwayland-client libwayland-server perl pkg-config python-base python-modules xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: imake libICE-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXinerama-devel libXrandr-devel libXtst-devel libavahi-devel libcairo-devel libssl-devel libvncserver-devel xorg-cf-files
+
 %if_with avahi
 BuildRequires: libavahi-devel
 %endif
@@ -24,33 +25,49 @@ x11vnc allows one to remotely view and interact with real X displays
 with any VNC viewer. In this way it plays the role for Unix/X11 that
 WinVNC plays for Windows.
 
+%package scripts
+License: GPL
+Group: Networking/Remote access
+BuildArch: noarch
+Summary: Various x11vnc wrappers
+
+%description scripts
+%summary
+
+In this directory you'll find a hodgepodge of wrapper scripts and
+utility programs that have found some use with x11vnc.
+
+Some are on the rough side and will need some customization for your use.
+
 %prep
 %setup
-%patch -p1
-
-# rfb carries around an ancient keysym.h from year 98. When included together
-# with the current keysymdef.h, it generates loads of warnings.
-# However, a careful comparison of the headers shows that replacing
-# the old one with the new one will only introduce new macros, without
-# changing or removing old ones. Therefore it should be safe to do this:
-rm rfb/keysym.h
-echo '#include <X11/keysym.h>' >rfb/keysym.h
 
 %build
+%autoreconf
 %configure --without-uinput
 %make_build
 
 %install
 %makeinstall
+install tkx11vnc %buildroot%_bindir/
 
 %files
 %_bindir/%name
 %_man1dir/%name.*
-%_datadir/%name
 %_desktopdir/*
 %doc README NEWS
 
+%files scripts
+%_bindir/tkx11vnc
+%doc misc/*
+%exclude  %_bindir/Xdummy
+
 %changelog
+* Wed Apr 27 2016 Fr. Br. George <george@altlinux.ru> 0.9.14-alt1
+- Upstream migrated under libNVNC project
+- Autobuild version bump to 0.9.14
+- Introduce supplemental scripts
+
 * Sun Mar 27 2011 Terechkov Evgenii <evg@altlinux.org> 0.9.12-alt3
 - Fix build with sisyphus_check 0.8.20-alt1
 
@@ -68,7 +85,7 @@ echo '#include <X11/keysym.h>' >rfb/keysym.h
 - 0.9.9
 
 * Fri Jun 05 2009 Ivanov Maxim <redbaron@altlinux.org> 0.9.8-alt1
-- Bump to 0.9.8 
+- Bump to 0.9.8
 
 * Wed Jul 11 2007 Alex V. Myltsev <avm@altlinux.ru> 0.9.2-alt1
 - 0.9.1:
