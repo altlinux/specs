@@ -1,6 +1,6 @@
 Name: liblmdb
-Version: 0.9.11
-Release: alt1.gitfca18d25
+Version: 0.9.18
+Release: alt1
 
 Summary: Symas Lightning Memory-Mapped Database
 Group: System/Libraries
@@ -9,8 +9,7 @@ License: LGPLv2+
 
 Source: %name-%version.tar
 
-Patch10: liblmdb-0.9.8-alt-install-dirs.patch
-Patch11: liblmdb-0.9.8-alt-add-soname.patch
+Patch12: liblmdb-0.9.18-alt-deb-add-soname-fix-install.patch
 
 %description
 Lighting Memory-Mapped Database (LMDB) is an ultra-fast, ultra-compact
@@ -36,28 +35,25 @@ Requires: %name = %version-%release
 
 %description -n lmdb-utils
 This package provides tools for manipulating LMDB databases:
- * mdb_stat - LMDB environment status tool
  * mdb_copy - LMDB environment copy tool
+ * mdb_dump - LMDB environment export tool
+ * mdb_load - LMDB environment import tool
+ * mdb_stat - LMDB environment status tool
 
 %prep
 %setup -n libraries
-%patch10 -p2
-%patch11 -p2
+%patch12 -p2
 
 %build
-pushd %name
-%make_build LIBDIR=%_lib prefix=%_prefix
-popd
+%make_build -C %name XCFLAGS="%optflags"
 
 %install
-pushd %name
-%makeinstall_std LIBDIR=%_lib prefix=%_prefix
-popd
+%makeinstall -C %name
+
+rm %buildroot%_libdir/liblmdb.a
 
 %check
-pushd %name
-%make test
-popd
+make -C %name test
 
 %files
 %_libdir/%name.so.*
@@ -71,6 +67,8 @@ popd
 %_man1dir/mdb_*
 
 %changelog
+* Wed Apr 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.18-alt1
+- Updated to 0.9.18.
+
 * Wed Apr 09 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.11-alt1.gitfca18d25
 - Initial build.
-
