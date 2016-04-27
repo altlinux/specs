@@ -8,7 +8,7 @@
 
 Name: apache2-%module_name
 Version: %version
-Release: alt1.qa1
+Release: alt2
 
 Summary: Apache 2.x evasive module to minimize HTTP DoS or brute force attacks
 
@@ -57,11 +57,11 @@ mv -f -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
 
 %build
-%apache2_apxs -a -c mod_evasive20.c
+%apache2_apxs -a -c mod_evasive24.c
 
 
 %install
-/bin/install -pDm644 .libs/mod_evasive20.so %buildroot%apache2_libexecdir/mod_evasive20.so
+/bin/install -pDm644 .libs/mod_evasive24.so %buildroot%apache2_libexecdir/mod_evasive24.so
 
 /bin/install -pDm644 %SOURCE1 %buildroot%apache2_mods_available/evasive.load
 /bin/install -pDm644 %SOURCE2 %buildroot%apache2_mods_available/evasive.conf
@@ -114,13 +114,17 @@ fi
 %doc README CHANGELOG
 %doc --no-dereference LICENSE
 
-%apache2_libexecdir/mod_evasive20.so
+%apache2_libexecdir/mod_evasive24.so
 %apache2_mods_available/evasive.load
 %config(noreplace) %apache2_mods_available/evasive.conf
 
 %dir %apache2_spooldir/%module_name
 
 %changelog
+* Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 1.10.1-alt2
+- mod_evasive24.c adopted to apache-2.4 API
+- rebuild with apache-2.4
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.10.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
