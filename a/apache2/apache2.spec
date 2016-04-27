@@ -39,7 +39,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: alt1
+Release: alt2
 
 License: %asl
 Group: System/Servers
@@ -275,6 +275,7 @@ Requires: %name-mmn = %mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Requires: %apache2_libapr_name >= %apache2_libapr_evr
 Requires: %apache2_moduledir
+Obsoletes: apache2-mod_macro
 
 %description mods
 This package contains modules for %name.
@@ -1472,12 +1473,12 @@ exit 0
 %ghost %apache2_mods_enabled/*.load
 %ghost %apache2_mods_enabled/*.conf
 %exclude %apache2_mods_available/ssl.load
-#%exclude %apache2_mods_available/ssl.conf
+%exclude %apache2_mods_available/ssl.conf
 %exclude %apache2_mods_available/*ldap.load
 #%exclude %apache2_mods_available/suexec.load
 %exclude %apache2_mods_available/cache_disk.*
-#%exclude %apache2_mods_enabled/ssl.load
-#%exclude %apache2_mods_enabled/ssl.conf
+%exclude %apache2_mods_enabled/ssl.load
+%exclude %apache2_mods_enabled/ssl.conf
 #%exclude %apache2_mods_enabled/*ldap.load
 #%exclude %apache2_mods_enabled/*ldap.conf
 #%exclude %apache2_mods_enabled/suexec.load
@@ -1821,6 +1822,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 2.4.18-alt2
+- obsoletes mod_macro
+- fixes in mod_ssl defaults
+
 * Sun Mar 06 2016 Sergey Alembekov <rt@altlinux.ru> 2.4.18-alt1
 - new version 2.4.18
 - peruser patch no longer supported
