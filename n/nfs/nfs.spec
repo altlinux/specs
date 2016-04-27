@@ -1,6 +1,6 @@
 Name: nfs
 Version: 1.3.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -257,6 +257,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Wed Apr 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.3-alt2
+- rebuilt with libtirpc-1.0.1
+
 * Thu Oct 01 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.3.3-alt1
 - 1.3.3 released
 
