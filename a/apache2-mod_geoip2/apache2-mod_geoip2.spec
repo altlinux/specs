@@ -1,5 +1,5 @@
 Name: apache2-mod_geoip2
-Version: 1.2.7
+Version: 1.2.10
 Release: alt1
 
 Summary: Apache2 module for finding the country and city that a web request originated from
@@ -12,7 +12,7 @@ Source0: http://www.maxmind.com/download/geoip/api/mod_geoip2/mod_geoip2_%versio
 Source1: apache2-mod_geoip2-load.conf
 Source2: apache2-mod_geoip2.conf
 
-PreReq: apache2 >= %apache2_version
+#PreReq: apache2 >= %apache2_version
 
 # Automatically added by buildreq on Mon Aug 11 2008
 BuildRequires: apache2-devel libGeoIP-devel
@@ -36,9 +36,13 @@ install -pD -m 0755 .libs/mod_geoip.so %buildroot%apache2_moduledir/mod_geoip.so
 %config(noreplace) %apache2_confdir/modules.d/A.500_geoip2.conf
 %config(noreplace) %apache2_addonconfdir/A.mod_geoip2.conf
 %apache2_moduledir/mod_geoip.so
-%doc Changes INSTALL README README.php
+%doc Changes INSTALL.md README.md README.php
 
 %changelog
+* Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 1.2.10-alt1
+- 1.2.10
+- rebuild with apache-2.4
+
 * Sat Nov 26 2011 Victor Forsiuk <force@altlinux.org> 1.2.7-alt1
 - 1.2.7
 
