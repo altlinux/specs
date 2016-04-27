@@ -1,5 +1,5 @@
 Name: alterator-luks
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Source:%name-%version.tar
@@ -15,6 +15,7 @@ BuildRequires: alterator
 
 Requires: alterator
 Requires: alterator-l10n
+Requires: cryptsetup => 1.6.8-alt1
 
 Conflicts: livecd-install < 0.7.2-alt1
 
@@ -37,6 +38,10 @@ alterator module for for change LUKS passphrase
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Apr 27 2016 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Show error message if cryptsetup failed.
+- Use --force-password for cryptsetup.
+
 * Mon Feb 04 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
 - Added 'luks' step for installer.
 - code style (by Timur Aitov).
