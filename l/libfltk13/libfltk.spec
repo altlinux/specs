@@ -2,7 +2,7 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.2.r10217
+Version: %major.3
 Release: alt1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
@@ -12,11 +12,13 @@ URL: http://www.fltk.org/
 
 # http://seriss.com/public/fltk/fltk/branches/branch-1.3/
 Source: %name-%version.tar
-Source1: CMakeCache.txt
+Source2: fltk-%version-docs-html.tar.gz
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Patch1: fltk-1.3-L3156.patch
+Patch2: fltk-1.3.2-fltk_config.patch
 
-# Automatically added by buildreq on Mon May 12 2008
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
 BuildRequires: gcc-c++ groff-base libICE-devel libXext-devel
 BuildRequires: libXft-devel libalsa-devel libjpeg-devel libGL-devel
 BuildRequires: libpng-devel xprop libX11-devel fontconfig-devel
@@ -26,9 +28,9 @@ BuildPreReq: libXcursor-devel libXdamage-devel libXdmcp-devel
 BuildPreReq: libXfixes-devel libXi-devel libXinerama-devel
 BuildPreReq: libXpm-devel libXrandr-devel libXt-devel libXv-devel
 BuildPreReq: libXxf86misc-devel libXScrnSaver-devel
-BuildPreReq: doxygen cmake glib2-devel libpixman-devel
+BuildPreReq: cmake glib2-devel libpixman-devel
 BuildPreReq: pkgconfig(glproto) pkgconfig(dri2proto)
-BuildPreReq: libXxf86vm-devel
+BuildPreReq: libXxf86vm-devel libharfbuzz-devel libexpat-devel
 
 %description
 The Fast Light ToolKit ("FLTK", pronounced "fulltick") is a LGPL'd
@@ -73,21 +75,18 @@ FLTK applications.
 
 %prep
 %setup
+tar xf %SOURCE2
+%patch1 -p0
+%patch2 -p1
 perl -pi -e 's/\bcat([1-3])\b/man$1/g' documentation/Makefile
 
-install -p -m644 %SOURCE1 .
+# change soname from so.1.3 to so.2 .
+sed -r -e 's/FL_API_VERSION=.*/FL_API_VERSION=2/' -i configure configure.in
+sed -r -e 's/(libfltk[^\.]*\.so)\.1\.3/\1.2/g' -i src/Makefile
 
 %build
-cmake \
-	-DOPTION_PREFIX_LIB:STRING=%_libdir \
-	-DOPTION_PREFIX_CONFIG:STRING=%_libdir/FLTK-%major \
-	.
-#configure --enable-shared --enable-xdbe --enable-xft --enable-threads
+%configure --disable-static --enable-shared --enable-largefile --enable-xdbe --enable-xinerama --enable-xft --enable-threads
 %make_build
-
-pushd documentation
-doxygen
-popd
 
 %install
 install -d %buildroot%_docdir/fltk-%version
@@ -95,9 +94,7 @@ install -d %buildroot%_mandir
 
 %makeinstall_std docdir=%buildroot%_docdir/fltk-%version
 cp -p ANNOUNCEMENT CHANGES CREDITS README %buildroot%_docdir/fltk-%version/
-cp -fR documentation/html %buildroot%_docdir/fltk-%version/
-
-mv %buildroot%prefix/man/* %buildroot%_mandir/
+cp -fR fltk-%version/documentation/html %buildroot%_docdir/fltk-%version/
 
 %files
 %_bindir/fluid
@@ -113,7 +110,6 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_bindir/fluid
 %_libdir/*.so
 %_includedir/*
-%_libdir/FLTK-1.3
 %_mandir/man?/*
 %exclude %_mandir/man1/fluid.1*
 
@@ -124,6 +120,13 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Tue Apr 26 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.3-alt1
+- cas@:
+ + New version
+ + Apply patches from Fedora
+ + Extract generated documentation from upstream tarball
+- Changed sonames to libfltk*.so.2 .
+
 * Fri Jul 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2.r10217-alt1
 - New snapshot
 

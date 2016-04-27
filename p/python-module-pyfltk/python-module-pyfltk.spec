@@ -7,7 +7,7 @@
 
 Name: python-module-pyfltk
 Version: 1.3.3
-Release: alt1
+Release: alt1.qa1
 
 Summary: Python bindings for FLTK library
 
@@ -55,6 +55,9 @@ popd
 %doc CHANGES README TODO
 
 %changelog
+* Wed Apr 27 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.3.3-alt1.qa1
+- Rebuilt with libfltk13-1.3.3-alt1.
+
 * Wed Feb 10 2016 Denis Medvedev <nbr@altlinux.org> 1.3.3-alt1
 - Imported version 1.3.3 
 
