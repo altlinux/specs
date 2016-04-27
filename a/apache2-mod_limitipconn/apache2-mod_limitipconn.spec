@@ -2,13 +2,13 @@
 %define oname mod_limitipconn
 Summary: Limit simultaneous connections by an IP address
 Name: apache2-%oname
-Version: 0.23
-Release: alt1.qa1
+Version: 0.24
+Release: alt1
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
 Url: http://dominia.org/djao/limitipconn2.html
-Source: http://dominia.org/djao/limit/mod_limitipconn-0.23.tar.bz2
+Source: http://dominia.org/djao/limit/mod_limitipconn-0.24.tar.bz2
 Source1: limitipconn.load
 Source2: limitipconn.conf
 
@@ -25,7 +25,7 @@ control which MIME types are affected by the limits.
 subst 's|APXS=apxs|#APXS=apxs|g' Makefile
 
 %build
-export APXS=%_sbindir/apxs2
+export APXS=%apache2_apxs
 %make_build
 
 %install
@@ -42,6 +42,10 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 0.24-alt1
+- new version 0.24
+- rebuild with apache-2.4
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.23-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
