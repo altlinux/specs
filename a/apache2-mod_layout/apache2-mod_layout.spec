@@ -7,7 +7,7 @@
 Summary: Add custom header and/or footers for apache
 Name: apache2-mod_layout
 Version: 5.1
-Release: alt1.qa1
+Release: alt2
 Group: System/Servers
 License: BSD-style
 Url: http://software.tangent.org/
@@ -35,7 +35,7 @@ creating large custom portal sites.
 %patch0 -p0
 
 %build
-%_sbindir/apxs2 -c mod_layout.c utility.c layout.c
+%apache2_apxs -c mod_layout.c utility.c layout.c
 
 %install
 mkdir -p %buildroot%apache2_moduledir
@@ -51,6 +51,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 5.1-alt2
+- rebuild with apache-2.4 
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.1-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
