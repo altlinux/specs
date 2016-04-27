@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Apr 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
+- rpmbsh: add -w for build via gear --hasher and make src.rpm in hasher (ALT bug #31673)
+- small fixes
+
 * Sat Apr 23 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
 - loginhsh: drop automode (-a)
 - myhsh: add -b for get binary packages, -r for remove packages
