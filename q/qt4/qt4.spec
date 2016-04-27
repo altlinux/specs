@@ -34,7 +34,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt7
+%define rlz alt8
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -101,13 +101,12 @@ Patch217: qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 Patch218: qt-everywhere-opensource-src-4.8.7-alsa-1.1.patch
 # MDV
 # ALT
-# by raorn@altlinux
 Patch501: qt-4.8.5-alt-honor-SUSv3-locales.patch
 Patch502: qt-4.7.2-alt-ca-certificates-path.patch
 Patch503: qt-4.7.3-alt-qt-config-add-webkit.patch
 Patch504: qt-4.7.0-alt-fix-gl-loading.patch
 Patch505: qt-4.0.1-alt-iso_c_extension.patch
-Patch506: qt-4.8.6-alt-kde-breeze.patch
+Patch506: qt-4.8.7-alt-kde-breeze.patch
 Patch507: qt-4.8.6-alt-disable-gstreamer.patch
 Patch508: qt-4.7.4-alt-buildkey.patch
 Patch509: qt-4.7.0-alt-qtconfig_add_translator.patch
@@ -118,6 +117,7 @@ Patch513: qt-4.8.6-alt-fix-ssl-loading.patch
 Patch514: qt-4.8.5-alt-fix-resolv-loading.patch
 Patch515: qt-4.6.1-alt-xmlpatterns-fexceptions.patch
 Patch516: qt-4.7.1-alt-sql-ibase-firebird.patch
+Patch517: qt-4.8.7-alt-kde-colors.patch
 # SuSE
 Patch701: handle-tga-files-properly.diff
 Patch702: build-qvfb-tool.diff
@@ -726,6 +726,7 @@ Install this package if you want to create RPM packages that use %name
 %patch514 -p1
 %patch515 -p1
 %patch516 -p1
+%patch517 -p1
 
 %patch701 -p0
 %patch702 -p0
@@ -1449,6 +1450,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Wed Apr 27 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt8
+- support KDE5 colors
+
 * Mon Apr 25 2016 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt7
 - set Breeze style and icons for KDE4 by default
 
