@@ -3,13 +3,12 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.10.1
-Release: alt1.1.1
+Version: 1.11.1
+Release: alt1
 Summary: A simple, Pythonic tool for remote execution and deployment
 License: BSD
 Group: Development/Python
-Url: https://pypi.python.org/pypi/Fabric/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://github.com/fabric/fabric
 
 Source: %name-%version.tar
 BuildArch: noarch
@@ -95,10 +94,10 @@ popd
 %endif
 
 pushd sites/docs
-sphinx-build -b html -d doctrees . docs
+sphinx-build -b html -E . docs
 popd
 pushd sites/www
-sphinx-build -b html -d doctrees . www
+sphinx-build -b html -E . www
 popd
 
 %install
@@ -128,6 +127,10 @@ mv %buildroot%_bindir/fab %buildroot%_bindir/fab.py3
 %endif
 
 %changelog
+* Wed Apr 27 2016 Denis Medvedev <nbr@altlinux.org> 1.11.1-alt1
+- 1.11.1. Removed changelog.rst from www since new sphinx chokes on that
+file.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
