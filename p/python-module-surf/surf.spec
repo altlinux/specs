@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.1.6
-Release: alt2.git20140617.1.1
+Release: alt2.git20140617.1.2
 Summary: Python library for working with RDF data in an Object-Oriented way
 License: BSD
 Group: Development/Python
@@ -34,7 +34,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-isodate python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pyparsing python-module-pytz python-module-rdflib python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python-tools-2to3 python3 python3-base python3-module-pyparsing python3-module-rdflib python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python-module-rdfextras python-module-rdflib_jsonld python3-module-pytest python3-module-rdfextras python3-module-rdflib_jsonld rpm-build-python3 time
+#BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python-module-rdfextras python-module-rdflib_jsonld python3-module-pytest python3-module-rdfextras python3-module-rdflib_jsonld rpm-build-python3 time
+BuildPreReq: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python-module-rdflib python-module-rdflib_jsonld python3-module-pytest python3-module-rdfextras python3-module-rdflib_jsonld rpm-build-python3 time
 
 %description
 SuRF is a Python library for working with RDF data in an Object-Oriented
@@ -62,7 +63,6 @@ This package contains tests for %oname.
 Summary: Plugins for %oname
 Group: Development/Python
 Requires: %name = %EVR
-%py_requires rdfextras
 
 %description plugins
 SuRF is a Python library for working with RDF data in an Object-Oriented
@@ -270,6 +270,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 27 2016 Denis Medvedev <nbr@altlinux.org> 1.1.6-alt2.git20140617.1.2
+- (NMU) remove dependence to rdfextras - they are already in rdflib
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.6-alt2.git20140617.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
