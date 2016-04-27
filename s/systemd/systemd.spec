@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 229
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1770,6 +1770,10 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Apr 27 2016 Alexey Shabalin <shaba@altlinux.ru> 1:229-alt4
+- fixed insecure core_pattern (ALT #32029)
+- add enable kdm4 to preset (ALT #32027)
+
 * Fri Apr 15 2016 Alexey Shabalin <shaba@altlinux.ru> 1:229-alt3
 - Don't enable audit by default.
 - drop support /lib/udev/devices.
