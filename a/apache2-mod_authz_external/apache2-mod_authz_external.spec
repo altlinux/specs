@@ -1,8 +1,8 @@
 %define oname mod_authz_external
 Summary: flexible tools for building custom basic authentication systems for the Apache HTTP Daemon
 Name: apache2-mod_authz_external
-Version: 3.2.4
-Release: alt1.qa1
+Version: 3.3.2
+Release: alt1
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -38,6 +38,10 @@ install -m 644 authz_external.load %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 3.3.2-alt1
+- new version
+- rebuild with apache-2.4
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2.4-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
