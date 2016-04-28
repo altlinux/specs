@@ -2,8 +2,10 @@
 %define _pseudouser_group    _radvd
 %define _pseudouser_home     %_localstatedir/radvd
 
+%define _unpackaged_files_terminate_build 1
+
 Name: radvd
-Version: 2.12
+Version: 2.13
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -83,6 +85,9 @@ install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 %_sbindir/radvdump
 
 %changelog
+* Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 2.13-alt1
+- Updated to 2.13.
+
 * Fri Feb 12 2016 Mikhail Efremov <sem@altlinux.org> 2.12-alt1
 - Updated to 2.12.
 
