@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.6.19
+Version: 2.6.20
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -61,6 +61,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Apr 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.6.20-alt1
+- size calculations errors are placed into /tmp/install2.log now
+
 * Fri Mar 25 2016 Michael Shigorin <mike@altlinux.org> 2.6.19-alt1
 - Fix for group files in subdirectories
 
