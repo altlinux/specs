@@ -34,7 +34,7 @@
 
 Name: NetworkManager
 Version: 1.2.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -444,6 +444,7 @@ touch %buildroot/%_var/log/NetworkManager
 mkdir -p %buildroot/%_var/lib/NetworkManager
 touch %buildroot/%_var/lib/NetworkManager/timestamps
 touch %buildroot/%_var/lib/NetworkManager/NetworkManager.state
+mkdir -p %buildroot/%_libexecdir/NetworkManager/VPN/
 install -m 0644 %SOURCE1 %buildroot%_sysconfdir/NetworkManager/
 install -m 0755 %SOURCE2 %buildroot%dispatcherdir/
 install -m 0755 %SOURCE5 %buildroot%dispatcherdir/
@@ -523,6 +524,7 @@ fi
 %doc %_man8dir/*.*
 %doc %_defaultdocdir/%name-%version/
 %dir %_libexecdir/NetworkManager/
+%dir %_libexecdir/NetworkManager/VPN/
 %dir %_libdir/NetworkManager/
 %_libdir/NetworkManager/libnm-*.so
 %_libexecdir/NetworkManager/nm-*
@@ -654,6 +656,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
+- NetworkManager-prestart: Make errors non-fatal.
+- Own %%_libexecdir/NetworkManager/VPN/.
+- etcnet-alt: Add test no-type.
+- etcnet-alt: Don't ignore interface if TYPE is not specified.
+
 * Fri Apr 22 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
