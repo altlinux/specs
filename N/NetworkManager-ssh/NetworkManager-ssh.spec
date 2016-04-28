@@ -1,15 +1,15 @@
 %define nm_version 1.1.90
 %define nm_applet_version 1.1.90
 %define nm_applet_name NetworkManager-applet-gtk
-#define git_date %nil
-%define git_date .git20151024
+%define git_date %nil
+#define git_date .git20151024
 
 %def_with libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-ssh
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -92,10 +92,14 @@ make check
 %_libexecdir/NetworkManager/nm-ssh-auth-dialog
 %_datadir/gnome-vpn-properties/*
 %_libdir/NetworkManager/libnm-vpn-plugin-ssh.so
+%_datadir/appdata/*.appdata.xml
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Thu Jan 21 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.git20151024
 - Upstream git snapshot (master branch).
 
