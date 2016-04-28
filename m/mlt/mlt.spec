@@ -16,7 +16,7 @@
 
 Name: mlt
 Version: 6.2.0
-Release: alt3
+Release: alt4
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPLv3
@@ -63,7 +63,7 @@ License: GPL
 Summary: %Name framework library
 License: GPL
 Group: System/Libraries
-%mIF_ver_lt %version 0.10
+%mIF_ver_lt %version 7
 Provides: libmlt = %EVR
 Obsoletes: libmlt < %EVR
 %endif
@@ -73,7 +73,7 @@ Obsoletes: libmlt < %EVR
 %package -n %libmltxx
 Summary: C++ wrapping for the MLT library
 Group: System/Libraries
-%mIF_ver_lt %version 0.10
+%mIF_ver_lt %version 7
 Provides: libmlt++ = %EVR
 Obsoletes: libmlt++ < %EVR
 %endif
@@ -180,6 +180,9 @@ install -pm 0755 src/swig/python/_%name.so %buildroot%python_sitelibdir/
 %_pkgconfigdir/mlt++.pc
 
 %changelog
+* Thu Apr 28 2016 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt4
+- fix obsoletes
+
 * Wed Apr 27 2016 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt3
 - fix build requires
 
