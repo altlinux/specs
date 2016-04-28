@@ -4,7 +4,7 @@
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
-Version: %ver_major.91
+Version: %ver_major.92
 Release: alt1
 
 Summary: Sound Recorder for GNOME
@@ -72,6 +72,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Thu Apr 28 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.92-alt1
+- 3.19.92
+
 * Sun Feb 28 2016 Yuri N. Sedunov <aris@altlinux.org> 3.19.91-alt1
 - 3.19.91
 
