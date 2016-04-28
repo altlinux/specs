@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20150311.1.1
+Release: alt2.git20150311
 Summary: asyncio version of http.client
 License: PSFL
 Group: Development/Python
@@ -42,9 +42,8 @@ The classes are named the same as in http.client.
 %package -n python3-module-%oname
 Summary: asyncio version of http.client
 Group: Development/Python3
-%py3_provides %oname
 Requires: python3-module-%mname.http = %EVR
-%py3_requires asyncio
+%python3_req_hier
 
 %description -n python3-module-%oname
 Asyncio conversion of http.client.
@@ -63,7 +62,6 @@ Core files of %mname.http.
 %package -n python3-module-%mname.http
 Summary: Core files of %mname.http
 Group: Development/Python3
-%py3_provides %mname.http
 %py3_requires %mname
 
 %description -n python3-module-%mname.http
@@ -98,7 +96,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libdir" != "%_libexecdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -140,6 +138,10 @@ popd
 %endif
 
 %changelog
+* Thu Apr 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt2.git20150311
+- (.spec) re-write in a non-x86_64-centric manner.
+- (.spec) %%py3_{provides,requires} should be auto-generated fine.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt1.git20150311.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
