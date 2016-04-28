@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.6.5
+Version: 0.7.0
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Apr 28 2016 Sergey V Turchin <zerg@altlinux.org> 0.7.0-alt1
+- enable real display-manager
+
 * Mon Apr 25 2016 Sergey V Turchin <zerg@altlinux.org> 0.6.5-alt1
 - disable debug-shell console-getty console-shell getty@tty1
 
