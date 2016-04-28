@@ -1,6 +1,6 @@
 Name: zynaddsubfx
 Version: 2.4.1
-Release: alt2.1.qa3
+Release: alt2.1.qa4
 
 Summary: %name is a open source software synthesizer
 License: GPLv2+
@@ -131,6 +131,9 @@ install -pD %name-jack.desktop %buildroot%_desktopdir
 %_bindir/spliter
 
 %changelog
+* Thu Apr 28 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.4.1-alt2.1.qa4
+- Fixed build with libfltk13-1.3.3-alt1.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt2.1.qa3
 - Rebuilt with updated libfltk
 
