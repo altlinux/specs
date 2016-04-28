@@ -1,8 +1,9 @@
 %define dist Proc-PID-File
+%define _unpackaged_files_terminate_build 1
 
 Name: perl-%dist
 Version: 1.27
-Release: alt2
+Release: alt3
 
 Summary: functions for manipulations with pidfiles
 License: %perl_license
@@ -10,6 +11,8 @@ Group: Development/Perl
 
 Url: %CPAN %dist
 Source: %dist-%version.tar.gz
+
+Patch1: Proc-PID-File-1.27-108434.patch
 
 BuildArch: noarch
 
@@ -28,6 +31,8 @@ which are files that store a process identifier.
 %prep
 %setup -q -n %dist-%version
 
+%patch1 -p1
+
 %build
 %perl_vendor_build
 
@@ -37,9 +42,12 @@ which are files that store a process identifier.
 %files
 %doc README Changes
 
-%perl_vendor_privlib/Proc/PID*
+%perl_vendor_privlib/Proc*
 
 %changelog
+* Thu Apr 28 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.27-alt3
+- applied patch for CPAN bug 108434
+
 * Wed Nov 17 2010 Sergey Y. Afonin <asy@altlinux.ru> 1.27-alt2
 - removed macro %%perl_vendor_man3dir from spec
 - removed Packager from spec
