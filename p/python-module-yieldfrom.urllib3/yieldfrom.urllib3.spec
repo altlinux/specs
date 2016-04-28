@@ -6,7 +6,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt2.git20141229.1.1
+Release: alt3.git20141229
 Summary: Asyncio HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
 Group: Development/Python
@@ -69,6 +69,7 @@ This package is a port of the Urllib3 package.
 Summary: Core files of %mname
 Group: Development/Python
 %py_provides %mname
+%py_requires pkg_resources
 
 %description -n python-module-%mname
 Core files of %mname.
@@ -77,6 +78,7 @@ Core files of %mname.
 Summary: Core files of %mname
 Group: Development/Python3
 %py3_provides %mname
+%py3_requires pkg_resources
 
 %description -n python3-module-%mname
 Core files of %mname.
@@ -162,6 +164,10 @@ popd
 %endif
 
 %changelog
+* Thu Apr 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt3.git20141229
+- A quick fix for a missed dep due to __import__('pkg_resources')
+  (will be auto-handled in rpm-build-python3-0.1.10.4). (ALT bug 32026)
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt2.git20141229.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
