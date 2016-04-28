@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-iodine
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -87,10 +87,14 @@ NetworkManager panel applet.
 %_libexecdir/NetworkManager/nm-iodine-auth-dialog
 %_datadir/gnome-vpn-properties/*
 %_libdir/NetworkManager/libnm-vpn-plugin-iodine.so
+%_datadir/appdata/*.appdata.xml
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Thu Apr 07 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
 - Initial build.
 
