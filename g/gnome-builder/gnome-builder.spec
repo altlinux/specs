@@ -4,8 +4,8 @@
 %define api_ver 1.0
 
 Name: gnome-builder
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -31,10 +31,12 @@ AutoReqProv: nopython
 %add_python3_compile_include %_libdir/%name/plugins
 
 PreReq: %name-data = %version-%release
+Requires: automake autoconf libtool
 Requires: devhelp uncrustify ctags
 Requires: libpeas-python3-loader
 
-BuildRequires: /proc gcc-c++ intltool yelp-tools gtk-doc libappstream-glib-devel
+BuildRequires: /proc gcc-c++ intltool yelp-tools gtk-doc
+BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: clang-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgtksourceview3-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
@@ -125,7 +127,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %_libdir/%name/plugins/libmingw-plugin.so
 %_libdir/%name/plugins/libproject-tree-plugin.so
 %_libdir/%name/plugins/libpython-pack-plugin.so
-%_libdir/%name/plugins/library_template/
+%_libdir/%name/plugins/autotools_templates/
 %_libdir/%name/plugins/libsupport-plugin.so
 %_libdir/%name/plugins/libsymbol-tree.so
 %_libdir/%name/plugins/libsysmon.so
@@ -143,8 +145,8 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 %_libdir/%name/pkgconfig/libide-%api_ver.pc
 %_libdir/%name/pkgconfig/template-glib-%api_ver.pc
 %python3_sitelibdir/gi/overrides/Ide.py
+%python3_sitelibdir/gi/overrides/__pycache__/
 %doc README AUTHORS NEWS
-
 
 %files data
 %_desktopdir/%xdg_name.desktop
@@ -170,6 +172,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 
 %changelog
+* Thu Apr 28 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.20.0-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
