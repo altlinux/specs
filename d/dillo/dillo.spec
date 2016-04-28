@@ -2,7 +2,7 @@
 
 Name: dillo
 Version: 3.0.4.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: a small GTK+ web browser
 Summary(ru_RU.UTF-8): компактный веб-браузер, написанный на GTK+
@@ -19,12 +19,7 @@ Source2: %name-32.png
 Source3: %name-48.png
 Source4: %name.desktop
 
-Patch0: %name-0.8.6-i18n-misc-20070916.diff.bz2
-Patch1: %name-0.8.6-alt-as_needed.patch
-Patch2: %name-0.8.6-alt-dillorc.patch
-Patch3: %name-0.8.6-alt-automake_fix.patch
-Patch4: %name-0.8.6-alt-CVE_2009_2294.patch
-Patch5: %name-0.8.6-alt-gold.patch
+Patch6: dillo-3.0.4.1-alt-libfltk13-x11-dso.patch
 
 AutoReqProv: yes
 BuildPreReq: rpm-build-licenses
@@ -61,12 +56,7 @@ Dillo.
 
 %prep
 %setup -q
-#%%patch4
-#%%patch0 -p1
-#%%patch1
-#%%patch2
-#%%patch3
-#%%patch5
+%patch6 -p2
 
 %build
 %autoreconf
@@ -120,6 +110,9 @@ rm -f -- doc/Makefile*
 %_man1dir/dillo.1*
 
 %changelog
+* Thu Apr 28 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.4.1-alt1.qa1
+- Fixed build with libfltk13-1.3.3-alt1.
+
 * Thu Jan 29 2015 Andrey Cherepanov <cas@altlinux.org> 3.0.4.1-alt1
 - New version
 
