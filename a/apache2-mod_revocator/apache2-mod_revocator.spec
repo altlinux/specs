@@ -4,7 +4,7 @@
 Name: apache2-mod_revocator
 Summary: Apache 2.0 module that lets the user configure remote Certificate Revocation Lists
 Version: 1.0.3
-Release: alt2
+Release: alt3
 License: Apache 2.0
 Group: System/Servers
 Url: http://port389.org/
@@ -33,7 +33,7 @@ down if the CRL expires and a new one cannot be obtained.
 
 %build
 
-./configure --with-apr-config --with-apxs=%_sbindir/apxs2 --with-ldapsdk-inc=/usr/include/mozldap --with-ldapsdk-lib=%_libdir --with-nss-lib=%_libdir --with-nss-inc=/usr/include/nss/
+./configure --with-apr-config --with-apxs=%apache2_apxs --with-ldapsdk-inc=/usr/include/mozldap --with-ldapsdk-lib=%_libdir --with-nss-lib=%_libdir --with-nss-inc=/usr/include/nss/
 %make
 
 %install
@@ -56,6 +56,9 @@ install -m 644 %SOURCE2 %buildroot%apache_confdir/mods-available/
 %doc docs/mod_revocator.html README
 
 %changelog
+* Fri Apr 29 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.3-alt3
+- rebuild with apache-2.4
+
 * Mon Feb 07 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.3-alt2
 - Fix build
 
