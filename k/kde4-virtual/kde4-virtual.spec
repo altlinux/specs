@@ -1,6 +1,6 @@
 Name:    kde4-virtual
 Version: 15.12
-Release: alt1
+Release: alt2
 
 %define smr KDE4 applications set
 
@@ -85,6 +85,9 @@ This package installs development tools for KDE 4.x.
 %files -n kde4-devel
 
 %changelog
+* Fri Apr 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.12-alt2
+- update requires
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12-alt1
 - add kde4-styles-breeze
 
