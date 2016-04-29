@@ -8,7 +8,7 @@
 Summary:      SOPE is an extensive set of frameworks which form a complete Web application server environment
 Name:         sope
 Version:      3.0.2
-Release:      alt2
+Release:      alt3
 License:      GPL
 URL:          http://sogo.nu/
 Group:        Development/Objective-C
@@ -292,7 +292,7 @@ OpenGroupware.org application server.
 . /usr/share/GNUstep/Makefiles/GNUstep.sh
 ./configure --with-gnustep
 
-make %{sope_makeflags} apr=/usr/bin/apr-1-config apxs=/usr/sbin/apxs2 apu=/usr/bin/apu-1-config
+make %{sope_makeflags} apr=/usr/bin/apr-1-config apxs=%apache2_apxs apu=/usr/bin/apu-1-config
 
 pushd sope-gdl1/MySQL
 make LDFLAGS="-L%_libdir/mysql" %{sope_makeflags}
@@ -307,7 +307,7 @@ popd
 
 %install
 install -d %buildroot%apache2_libexecdir
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM %{sope_makeflags} apxs="/usr/sbin/apxs2 -S LIBEXECDIR=%buildroot%apache2_libexecdir"
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM %{sope_makeflags} apxs="%apache2_apxs -S LIBEXECDIR=%buildroot%apache2_libexecdir"
 
 pushd sope-gdl1/MySQL
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM %{sope_makeflags}
@@ -477,6 +477,9 @@ fi
 
 
 %changelog
+* Fri Apr 29 2016 Sergey Alembekov <rt@altlinux.ru> 3.0.2-alt3
+- rebuild with apache-2.4
+
 * Thu Mar 10 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt2
 - Rebuild with new rpm
 
