@@ -3,7 +3,7 @@
 Summary: Sets the Unix umask of the Apache2 webserver process after it has started.
 Name: apache2-%oname
 Version: 0.1.0
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -22,7 +22,7 @@ mod_umask sets the Unix umask of the Apache HTTPd process after it has started.
 %setup -n %oname-%version
 
 %build
-%configure --with-apxs=%_sbindir/apxs2
+%configure --with-apxs=%apache2_apxs
 %make_build
 cd src
 %make make_so
@@ -40,6 +40,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Fri Apr 29 2016 Sergey Alembekov <rt@altlinux.ru> 0.1.0-alt3
+- rebuild with apache-2.4
+
 * Wed Mar 02 2011 Boris Savelev <boris@altlinux.org> 0.1.0-alt2
 - fix umask.conf (closes: #25183)
 
