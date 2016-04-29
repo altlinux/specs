@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 7.95.0
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -161,7 +161,9 @@ Summary: default settings for Xfce for Simply linux distribution
 License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
-Requires: etcskel gtk3-theme-clearlooks-phenix
+Requires: etcskel
+#Requires: gtk3-theme-clearlooks-phenix
+Requires: gnome-themes-standard
 Requires: gnome-icon-theme icon-theme-simple-sl
 Requires: branding-simply-linux-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
@@ -427,6 +429,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %config %_sysconfdir/polkit-1/rules.d/*.rules
 
 %changelog
+* Fri Apr 29 2016 Mikhail Efremov <sem@altlinux.org> 7.95.0-alt4
+- Replace GTK theme Clearlooks-Phenix with Adwaita.
+
 * Fri Dec 25 2015 Mikhail Kolchin <mvk@altlinux.org> 7.95.0-alt3
 - xfce-settings: Add .gtkrc-2.0 for canberra support (closes: #30264).
 
