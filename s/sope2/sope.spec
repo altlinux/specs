@@ -8,7 +8,7 @@
 Summary:      SOPE is an extensive set of frameworks which form a complete Web application server environment
 Name:         sope2
 Version:      2.3.10
-Release:      alt1
+Release:      alt2
 License:      GPL
 URL:          http://sogo.nu/
 Group:        Development/Objective-C
@@ -313,7 +313,7 @@ OpenGroupware.org application server.
 . /usr/share/GNUstep/Makefiles/GNUstep.sh
 ./configure --with-gnustep
 
-make %{sope_makeflags} apr=/usr/bin/apr-1-config apxs=/usr/sbin/apxs2 apu=/usr/bin/apu-1-config
+make %{sope_makeflags} apr=/usr/bin/apr-1-config apxs=%apache2_apxs apu=/usr/bin/apu-1-config
 
 pushd sope-gdl1/MySQL
 make LDFLAGS="-L%_libdir/mysql" %{sope_makeflags}
@@ -328,7 +328,7 @@ popd
 
 %install
 install -d %buildroot%apache2_libexecdir
-%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM %{sope_makeflags} apxs="/usr/sbin/apxs2 -S LIBEXECDIR=%buildroot%apache2_libexecdir"
+%makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM %{sope_makeflags} apxs="%apache2_apxs -S LIBEXECDIR=%buildroot%apache2_libexecdir"
 
 pushd sope-gdl1/MySQL
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM %{sope_makeflags}
@@ -498,6 +498,9 @@ fi
 
 
 %changelog
+* Fri Apr 29 2016 Sergey Alembekov <rt@altlinux.ru> 2.3.10-alt2
+- rebuild with apache-2.4
+
 * Tue Apr 12 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.10-alt1
 - New version
 - Rename package to sope2
