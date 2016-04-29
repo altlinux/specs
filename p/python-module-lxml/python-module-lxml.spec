@@ -1,11 +1,12 @@
+%def_without bootstrap
+
 %define modulename lxml
 
 %def_with python3
-%def_with docs
 
 Name: python-module-lxml
 Version: 3.5.0
-Release: alt1.beta1.git20150727.3
+Release: alt2.beta1.git20150727
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
 
@@ -17,11 +18,16 @@ License: BSD/GPLv2/ZPL/PSF
 Group: Development/Python
 URL: http://codespeak.net/lxml
 
-BuildPreReq: python-modules-wsgiref
-#BuildPreReq: libxslt-devel python-module-distribute zlib-devel
+BuildPreReq: libxslt-devel zlib-devel
 # see doc/build.txt
-#BuildPreReq: python-module-Cython >= 0.18
-#BuildPreReq: python-modules-wsgiref python-module-cssselect
+BuildPreReq: python-module-Cython >= 0.18
+BuildPreReq: python-modules-wsgiref
+#BuildPreReq: python-module-distribute
+%if_without bootstrap
+# Used for tests only, but depends on lxml itself,
+# which is not yet built in a bootstrap environment.
+BuildPreReq: python-module-cssselect
+%endif
 
 %setup_python_module lxml
 %py_requires cssselect
@@ -29,12 +35,16 @@ BuildPreReq: python-modules-wsgiref
 BuildPreReq: python-devel
 
 %if_with python3
-BuildPreReq: python3-devel
 BuildRequires(pre): rpm-build-python3
 # see doc/build.txt
-#BuildPreReq: python3-module-Cython >= 0.18
-#BuildPreReq: python3-devel python3-module-distribute
-#BuildPreReq: python3-module-cssselect
+BuildPreReq: python3-module-Cython >= 0.18
+BuildPreReq: python3-devel
+#BuildPreReq: python3-module-distribute
+%if_without bootstrap
+# Used for tests only, but depends on lxml itself,
+# which is not yet built in a bootstrap environment.
+BuildPreReq: python3-module-cssselect
+%endif
 
 %add_python3_req_skip etree
 %endif
@@ -42,11 +52,7 @@ BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: elfutils ipython ipython3 libgpg-error libxml2-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-coverage python-module-cryptography python-module-cssselect python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-genshi python-module-greenlet python-module-ipykernel python-module-ipyparallel python-module-ipython_genutils python-module-jinja2 python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-lxml python-module-matplotlib python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-ntlm python-module-numpy python-module-pexpect python-module-ptyprocess python-module-pyasn1 python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-terminado python-module-tornado_xstatic python-module-traitlets python-module-wx3.0 python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base python3-dev python3-module-Pygments python3-module-babel python3-module-cffi python3-module-chardet python3-module-coverage python3-module-cssselect python3-module-docutils python3-module-future python3-module-genshi python3-module-greenlet python3-module-ipykernel python3-module-ipyparallel python3-module-ipython_genutils python3-module-jinja2 python3-module-jsonschema python3-module-jupyter_client python3-module-jupyter_core python3-module-lxml python3-module-matplotlib python3-module-nbconvert python3-module-nbformat python3-module-numpy python3-module-pexpect python3-module-ptyprocess python3-module-pycares python3-module-pycparser python3-module-pygobject3 python3-module-pyparsing python3-module-pytz python3-module-setuptools python3-module-snowballstemmer python3-module-sphinx python3-module-terminado python3-module-tornado_xstatic python3-module-traitlets python3-module-xstatic python3-module-xstatic-term.js python3-module-yieldfrom.http.client python3-module-yieldfrom.requests python3-module-yieldfrom.urllib3 python3-module-zmq python3-module-zope python3-module-zope.interface xml-common
 #BuildRequires: libxslt-devel python-module-Cython python-module-html5lib python-module-notebook python3-module-Cython python3-module-html5lib python3-module-notebook rpm-build-python3 zlib-devel
-%if_with docs
-BuildPreReq: libxslt-devel python-module-Cython python-module-html5lib python-module-notebook python3-module-Cython python3-module-html5lib python3-module-notebook rpm-build-python3 zlib-devel
-%else
-BuildPreReq: libxslt-devel python-module-Cython python3-module-Cython rpm-build-python3 zlib-devel
-%endif
+
 %description
 lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.  It
 provides safe and convenient access to these libraries using the ElementTree
@@ -60,6 +66,8 @@ RelaxNG, XML Schema, XSLT, C14N and much more.
 Summary: XML processing library combining libxml2/libxslt with the ElementTree API (Python 3)
 Group: Development/Python3
 %py3_requires cssselect
+# Prepare for the future default method (to test the result earlier):
+%python3_req_hier
 
 %description -n python3-module-%modulename
 lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.  It
@@ -73,7 +81,6 @@ This is module for use with Python 3.
 %endif
 
 
-%if_with docs
 %package doc
 Summary: Documentation for lxml
 Group: Development/Documentation
@@ -88,8 +95,6 @@ It extends the ElementTree API significantly to offer support for XPath,
 RelaxNG, XML Schema, XSLT, C14N and much more.
 
 This package contains documentation for lxml.
-
-%endif
 
 %prep
 %setup
@@ -149,14 +154,14 @@ popd
 %python3_sitelibdir/*
 %endif
 
-%if_with docs
-
 %files doc
 %doc doc samples
 
-%endif
-
 %changelog
+* Fri Apr 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt2.beta1.git20150727
+- (.spec) Described the actually necessary simplification for %%if_with bootstrap
+  (namely: make it skip some tests employing cssselect which depends on lxml itself).
+
 * Tue Apr 12 2016 Denis Medvedev <nbr@altlinux.org> 3.5.0-alt1.beta1.git20150727.3
 - NMU: added documentation back.
 

@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.10.5
+Version: 0.1.10.6
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -79,6 +79,14 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Fri Apr 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.6-alt1
+- .{req,prov}.files: honor %%_python3_compile_exclude
+  (when using %%_python3_compile_include)
+- %%python3_req_nohier added, the reverse to %%python3_req_hier
+  (in future, when there is enough provs thx to 0.1.10.2, we'd like to
+  use the req_hier mode by default; packages can prepare beforehand)
+- Print a bit more diagnostics for skipped autoreqs.
+
 * Thu Apr 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.5-alt1
 - .prov.py: generalize to generate longer provs, too.
 

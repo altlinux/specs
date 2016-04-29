@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt4.1
+Release: alt5
 License: Python
 Group: Development/Python3
 
@@ -435,6 +435,11 @@ Group: Development/Python3
 Provides: %name-libs = %EVR
 Obsoletes: %name-libs < %EVR
 %py3_provides builtins
+# Prepare for the future default method (to test the result earlier):
+%python3_req_hier
+# It's an OS-independent alias (which other modules might want to import)
+# leading to an OS-specific path module.
+%py3_provides os.path
 
 # Things which have become internal in 3.5
 # (we do not use %%py3_provides here, because the autoreqs generated
@@ -791,8 +796,18 @@ rm %buildroot%tool_dir/scripts/abitype.py
 rm %buildroot%tool_dir/scripts/fixcid.py
 rm %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
 
-# Get rid of lib2to3 tests (python2)
-rm -r %buildroot%pylibdir/lib2to3/tests
+# Skip the 2to3 test data (which might contain Python2 code)
+%global lib2to3_tests %pylibdir/lib2to3/tests
+%add_python3_compile_exclude %lib2to3_tests/data
+%add_findreq_skiplist %lib2to3_tests/data/*
+%add_findprov_skiplist %lib2to3_tests/data/*
+# http://bugs.python.org/issue26911 :
+# remove a seemingly unused source file with broken code (a broken import):
+rm %buildroot%lib2to3_tests/{,__pycache__/}pytree_idempotency*.py*
+
+# http://bugs.python.org/issue26912 :
+# rm another seemingly unused source file with a broken import:
+rm %buildroot%pylibdir/test/test_email/{,__pycache__/}torture_test*.py*
 
 # Get rid of win tests
 rm %buildroot%pylibdir/test/{,__pycache__/}test_winreg*.py*
@@ -804,8 +819,9 @@ rm %buildroot%pylibdir/test/test_importlib/{,__pycache__/}test_windows*.py*
 rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_events*.py*
 rm %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.py*
 
-# Get rid of bad* tests
-rm %buildroot%pylibdir/test/bad*.py
+# Get rid of bad* tests -- just skip them:
+%add_findreq_skiplist %pylibdir/test/bad*.py
+%add_findprov_skiplist %pylibdir/test/bad*.py
 
 # Get rid of windows-related stuff
 rm %buildroot%pylibdir/distutils/{,__pycache__/}msvccompiler*.py*
@@ -1060,6 +1076,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %pylibdir/json/__pycache__/*%bytecode_suffixes
 
 %pylibdir/lib2to3
+%exclude %lib2to3_tests
 %pylibdir/logging
 %pylibdir/multiprocessing
 %exclude %pylibdir/multiprocessing/popen_spawn_win32.py
@@ -1148,6 +1165,7 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %files test
 %pylibdir/ctypes/test
 %pylibdir/distutils/tests
+%lib2to3_tests
 %pylibdir/sqlite3/test
 %pylibdir/test
 %dynload_dir/_ctypes_test.cpython-%pyshortver%pyabi.so
@@ -1159,6 +1177,11 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Fri Apr 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt5
+- %%py3_provides os.path (an OS-independent alias, which other modules
+  might want to import).
+- test: Some good code in lib2to3/tests restored (and some bad code removed).
+
 * Wed Apr 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt4.1
 - Rebuild with rpm-build-python3-0.1.10.2 (more autoreqs/provs will
   be found, and their default format has been tweaked slightly).
