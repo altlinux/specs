@@ -1,9 +1,9 @@
 %def_disable libcap
-%def_disable qt5
+%def_enable qt5
 
 Name: pinentry
 Version: 0.9.7
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -25,9 +25,8 @@ Patch10: alt-mask-xprop.patch
 # due to qt macros
 %if_enabled qt5
 BuildRequires(pre): qt5-base-devel
-%else
-BuildRequires(pre): libqt4-devel
 %endif
+BuildRequires(pre): libqt4-devel
 %if_enabled libcap
 BuildRequires: libcap-devel
 %endif
@@ -69,7 +68,7 @@ Requires: xprop
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
 
-%package qt4
+%package qt5
 Group: %group
 Summary: %summary
 Requires: xprop
@@ -79,10 +78,21 @@ Provides: %name-x11 = %version-%release
 Provides: pinentry-qt = %EVR
 Obsoletes: pinentry-qt < %EVR
 
+%package qt4
+Group: %group
+Summary: %summary
+Requires: xprop
+Requires: %name-common = %EVR
+Provides: %name = %version-%release
+Provides: %name-x11 = %version-%release
+
 %description gtk2
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
 %description gnome3
+This is simple PIN or passphrase entry dialog which
+utilize the Assuan protocol as described by the aegypten project.
+%description qt5
 This is simple PIN or passphrase entry dialog which
 utilize the Assuan protocol as described by the aegypten project.
 %description qt4
@@ -96,25 +106,35 @@ This package contains common files and documentation for %name.
 tar xf %SOURCE0
 mv %name-%version gui
 
-pushd gui
-rm doc/*.info
-pushd qt
-rm -f *.moc
-for h in *.h; do
-    m="${h%%.h}.moc"
-    moc-qt4 $h -o $m
-done
-popd
-%autoreconf
-popd
-
+cp -ar gui gui-qt5
 cp -ar gui tui
+
 install -m0644 %SOURCE1 pinentry-wrapper
 %patch10 -p0
 
+for d in gui-qt5 gui tui ; do
+    pushd $d
+    %autoreconf
+    popd
+done
 
 %build
 %add_optflags -std=gnu++11
+
+pushd gui-qt5
+%configure \
+    --disable-rpath \
+    --disable-pinentry-curses \
+    --disable-pinentry-tty \
+    --disable-pinentry-gtk2 \
+    --enable-pinentry-qt \
+    --enable-pinentry-qt-clipboard \
+    --disable-pinentry-gnome3 \
+    --enable-libsecret \
+    %{?_enable_libcap:--with-libcap}%{!?_enable_libcap:--without-libcap} \
+    #
+%make_build
+popd
 
 pushd gui
 %configure \
@@ -122,12 +142,8 @@ pushd gui
     --disable-pinentry-curses \
     --disable-pinentry-tty \
     --enable-pinentry-gtk2 \
-%if_enabled qt5
-    --enable-pinentry-qt \
-%else
     --enable-pinentry-qt \
     --disable-pinentry-qt5 \
-%endif
     --enable-pinentry-qt-clipboard \
     --enable-pinentry-gnome3 \
     --enable-libsecret \
@@ -151,16 +167,21 @@ pushd tui
 popd
 
 %install
+pushd gui-qt5
+%makeinstall_std
+popd
+mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt5
 pushd gui
 %makeinstall_std
 popd
+mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt4
 pushd tui
 %makeinstall_std
 popd
 rm %buildroot%_bindir/%name
 
 ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
-ln -s %name-qt %buildroot/%_bindir/%name-qt4
+ln -s %name-qt5 %buildroot/%_bindir/%name-qt
 
 install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 
@@ -170,6 +191,9 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 
 %files qt4
 %_bindir/%name-qt4
+
+%files qt5
+%_bindir/%name-qt5
 %_bindir/%name-qt
 
 %files gnome3
@@ -183,6 +207,9 @@ install -p -m0755 -D pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Fri Apr 29 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt2
+- build pinentry-qt5
+
 * Tue Dec 08 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt1
 - new version
 
