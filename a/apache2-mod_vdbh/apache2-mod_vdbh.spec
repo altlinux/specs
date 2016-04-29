@@ -6,7 +6,7 @@
 Summary: A Virtual Database Hosting DSO module for the apache web server
 Name: apache2-mod_vdbh
 Version: 1.0.3
-Release: alt1.1.qa1
+Release: alt2
 Group: System/Servers
 License: GPL
 Url: http://www.synthemesc.com/mod_vdbh/
@@ -34,7 +34,7 @@ find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 
 %build
-%_sbindir/apxs2 -DHAVE_STDDEF_H -I%_includedir/mysql -L%_libdir -Wl,-lmysqlclient -c mod_vdbh.c
+%apache2_apxs -DHAVE_STDDEF_H -I%_includedir/mysql -L%_libdir -Wl,-lmysqlclient -c mod_vdbh.c
 
 %install
 mkdir -p %buildroot%apache2_moduledir
@@ -50,6 +50,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Fri Apr 29 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.3-alt2
+- rebuild with apache-2.4
+
 * Sun Apr 14 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.0.3-alt1.1.qa1
 - NMU: rebuilt with libmysqlclient.so.18.
 
