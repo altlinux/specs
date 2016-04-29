@@ -15,7 +15,7 @@
 %def_enable rtmp
 
 Name: nginx
-Version: 1.8.1
+Version: 1.10.0
 Release: alt1
 
 Summary: Fast HTTP server
@@ -106,6 +106,7 @@ CFLAGS="%optflags $CPU" ./configure \
 	--prefix=/ \
 	--conf-path=%nginx_etc/nginx.conf \
 	--sbin-path=%_sbindir \
+        --modules-path=%_libdir/%name \
 	--error-log-path=%nginx_log/nginx.error.log \
 	--http-log-path=%nginx_log/nginx.log \
 	--http-client-body-temp-path=%nginx_spool/tmp/client \
@@ -116,24 +117,51 @@ CFLAGS="%optflags $CPU" ./configure \
 	--pid-path=%_var/run/nginx.pid \
 	--user=%nginx_user \
 	--group=%nginx_group \
+        --with-cc-opt="-I %_includedir/pcre/" \
 	--with-http_ssl_module \
-	--with-cc-opt="-I %_includedir/pcre/" \
-	--with-rtsig_module	\
 	--with-select_module    \
 	--with-poll_module      \
+        --with-threads \
 %if_with aio
-	--with-aio_module	\
 	--with-file-aio		\
 %endif
 %if_with ipv6
         --with-ipv6 \
 %endif
-	--with-mail \
-	--with-mail_ssl_module \
-	--with-imap \
-	--with-imap_ssl_module \
-	--with-md5=%_libdir \
 	--with-http_ssl_module  \
+	--with-http_v2_module  \
+	--with-http_realip_module \
+	--with-http_addition_module \
+%if_with xslt
+	--with-http_xslt_module=dynamic \
+%endif
+%if_with image_filter
+	--with-http_image_filter_module=dynamic \
+%endif
+%if_with geoip
+	--with-http_geoip_module=dynamic \
+%endif
+	--with-http_sub_module \
+	--with-http_dav_module \
+	--with-http_flv_module \
+	--with-http_mp4_module \
+	--with-http_gunzip_module \
+	--with-http_gzip_static_module \
+	--with-http_auth_request_module \
+        --with-http_random_index_module \
+	--with-http_secure_link_module \
+	--with-http_degradation_module \
+	--with-http_slice_module \
+	--with-http_stub_status_module \
+%if_with perl	
+	--with-http_perl_module=dynamic \
+%endif
+	--with-mail=dynamic \
+	--with-mail_ssl_module \
+	--with-stream=dynamic \
+	--with-stream_ssl_module \
+	--with-md5=%_libdir \
+	--with-sha1=%_libdir \
 %if_enabled cache_purge
 	--add-module=cache_purge \
 %endif
@@ -143,30 +171,8 @@ CFLAGS="%optflags $CPU" ./configure \
 %if_enabled rtmp
 	--add-module=nginx-rtmp-module \
 %endif
-	--with-http_mp4_module \
-	--with-http_realip_module \
-	--with-http_addition_module \
-	--with-http_sub_module \
-	--with-http_dav_module \
-	--with-http_flv_module \
-	--with-http_gzip_static_module \
-	--with-http_stub_status_module \
-	--with-http_secure_link_module \
-        --with-http_spdy_module \
-%if_with geoip
-	--with-http_geoip_module \
-%endif
-%if_with image_filter
-	--with-http_image_filter_module \
-%endif
-%if_with xslt
-	--with-http_xslt_module \
-%endif
 %if_with debug
 	--with-google_perftools_module \
-%endif
-%if_with perl	
-	--with-http_perl_module \
 %endif
 %if_with syslog
 	--with-syslog \
@@ -256,6 +262,7 @@ rm -rf %buildroot/html/
 %if_with uwsgi
 %config(noreplace) %nginx_etc/uwsgi_params
 %endif
+%_libdir/%name
 
 %pre
 %_sbindir/groupadd -r -f %nginx_group ||:
@@ -271,6 +278,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Sat Apr 30 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+- build some modules as dynamic
+
 * Mon Feb 01 2016 Denis Smirnov <mithraen@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 - CVE-2016-0742
