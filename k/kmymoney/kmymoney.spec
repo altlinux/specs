@@ -1,6 +1,6 @@
 Name:    kmymoney
 Version: 4.7.2
-Release: alt3
+Release: alt4
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -23,7 +23,6 @@ BuildRequires: doxygen
 BuildRequires: gcc-c++ 
 BuildRequires: glib2-devel
 BuildRequires: kde4pimlibs-devel
-BuildRequires: kde4-nepomuk-core-devel
 BuildRequires: ktoblzcheck-devel
 BuildRequires: libOpenSP-devel
 BuildRequires: libalkimia-devel >= 4.3.1
@@ -246,6 +245,10 @@ Internationalization and documentation for KMyMoney
 
 
 %changelog
+* Mon May 02 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.2-alt4
+- Rebuild with new aqbanking
+- Build without Nepomuk support
+
 * Tue Feb 09 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.2-alt3
 - Rebuild with new libalkimia
 
