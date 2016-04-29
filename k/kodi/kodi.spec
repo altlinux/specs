@@ -1,5 +1,5 @@
 Name: kodi
-Version: 16.0
+Version: 16.1
 Release: alt1
 
 Summary: Kodi Media Center
@@ -149,6 +149,9 @@ E_O_F
 %_libdir/kodi/*.cmake
 
 %changelog
+* Fri Apr 29 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.1-alt1
+- 16.1 Jarvis released
+
 * Wed Feb 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.0-alt1
 - 16.0 Jarvis released
 
