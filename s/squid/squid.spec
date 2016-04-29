@@ -9,7 +9,7 @@
 
 Name: squid
 Version: 3.5.15
-Release: alt1
+Release: alt1.1
 %define langpack_ver 20150704
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -240,8 +240,13 @@ chown %name:%name %_logdir/%name/*.log >/dev/null 2>&1 ||:
 chmod 660 %_logdir/%name/*.log >/dev/null 2>&1 ||:
 
 # fix conflict between symlink and dir
-if [ $1 -eq 2 ]; then
-    [ -d /usr/share/squid/errors/zh-cn ] && rm -rf /usr/share/squid/errors/zh-cn
+if [ $1 -gt 1 ]; then
+  for lang in zh-cn zh-tw; do
+    lang=/usr/share/squid/errors/$lang
+    if [ -d $lang -a ! -L $lang ]; then
+      rm -rf $lang
+    fi
+  done
 fi
 
 %triggerpostun -- squid < 2.4.STABLE4-alt1
@@ -301,6 +306,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Fri Apr 29 2016 Andrey Cherepanov <cas@altlinux.org> 3.5.15-alt1.1
+- (ldv@) Fix remove conflict directories and symlinks (ALT #31812)
+
 * Tue Mar 15 2016 Alexey Shabalin <shaba@altlinux.ru> 3.5.15-alt1
 - 3.5.15
 - fix files conflict for upgrade langpack (ALT#31812)
