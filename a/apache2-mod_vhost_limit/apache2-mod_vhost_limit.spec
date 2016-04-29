@@ -7,7 +7,7 @@
 Summary: Restrict the number of simultaneous connections per vhost
 Name: apache2-mod_vhost_limit
 Version: 0.2
-Release: alt1.qa1
+Release: alt2
 Group: System/Servers
 License: Apache License
 Url: http://apache.ivn.cl/
@@ -16,6 +16,7 @@ Packager: Boris Savelev <boris@altlinux.org>
 Source: http://apache.ivn.cl/files/source/%mod_name-%version.tgz
 Source1: %mod_conf.conf
 Source2: %mod_conf.load
+Patch1: mod_vhost_limit-apache24.patch
 
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: apache2-devel
@@ -25,9 +26,10 @@ Restrict the number of simultaneous connections per vhost.
 
 %prep
 %setup -q -n %mod_name-%version
+%patch1 -p1 
 
 %build
-%_sbindir/apxs2 -c %mod_name.c
+%apache2_apxs -c %mod_name.c
 
 %install
 mkdir -p %buildroot%apache2_moduledir
@@ -42,6 +44,9 @@ install -m 644 %SOURCE2 %buildroot%apache2_mods_available
 %apache2_moduledir/*.so
 
 %changelog
+* Fri Apr 29 2016 Sergey Alembekov <rt@altlinux.ru> 0.2-alt2
+- rebuild with apache-2.4
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
