@@ -1,6 +1,6 @@
 Name: gtk+3-themes-incompatible
 Version: 3.20
-Release: alt2
+Release: alt3
 
 Summary: metapackage to kick GTK3 themes that are known broken
 License: public domain
@@ -11,7 +11,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
 
 # https://github.com/jpfleury/clearlooks-phenix
-Conflicts: gtk3-theme-clearlooks-phenix < 6.0.3-alt3
+#Conflicts: gtk3-theme-clearlooks-phenix < 6.0.3-alt3
 
 %description
 This package should facilitate upgrades between branches
@@ -24,6 +24,9 @@ unfortunately.
 %files
 
 %changelog
+* Fri Apr 29 2016 Michael Shigorin <mike@altlinux.org> 3.20-alt3
+- drop the conflict for now: this package is thus currently noop
+
 * Thu Apr 28 2016 Michael Shigorin <mike@altlinux.org> 3.20-alt2
 - relax the initial conflict as it clearly needs more testing
 
