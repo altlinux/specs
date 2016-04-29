@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.0
+Version:  1.3.1
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,10 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Fri Apr 29 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
+- Remove arepo task source even for removed task
+- Fix check length of tested package list
+
 * Mon Apr 25 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - Add p8 branch (ALT #32006)
 - Add support for altlinuxclub sources
