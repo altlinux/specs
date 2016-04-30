@@ -1,21 +1,21 @@
 Name: sakura
-Version: 2.4.2
-Release: alt3
+Version: 3.3.4
+Release: alt2
 
 Summary: Terminal emulator application
 License: GPL
 Group: Terminals
-Url: http://www.pleyades.net/david/sakura.php
+Url: https://launchpad.net/sakura
 
-Source: http://www.pleyades.net/david/projects/sakura/sakura-%version.tar.bz2
+Source: https://launchpad.net/sakura/trunk/%version/+download/%name-%version.tar.bz2
 Source1: sakura.conf
 
 Patch0: sakura-2.3.0-no-tab-titles.patch
 Patch1: sakura-system-config-file.patch
 
 # Automatically added by buildreq on Tue Apr 13 2010
-BuildRequires: cmake gcc-c++ libvte-devel perl-podlators rpm-build-xdg
-BuildRequires: desktop-file-utils
+BuildRequires: cmake gcc-c++ libvte3-devel perl-podlators rpm-build-xdg
+BuildRequires: desktop-file-utils libpixman-devel libharfbuzz-devel 
 
 Requires: fonts-bitmap-terminus
 Conflicts: libfreetype < 2.4.10-alt2
@@ -28,7 +28,7 @@ emulators.
 %prep
 %setup -q
 #patch0 -p2
-%patch1 -p2
+#patch1 -p2
 
 sed '/POD2MAN/ s,-u ,,' -i CMakeLists.txt
 
@@ -45,8 +45,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=System \
 	%buildroot%_desktopdir/sakura.desktop
 
+#Strange, that command doesn't work in %%clean section
+rm -f %buildroot/%_docdir/%name/INSTALL
+
 %files -f %name.lang
-%doc AUTHORS
+%doc AUTHORS INSTALL
 %_bindir/%name
 %_xdgconfigdir/%name
 %_desktopdir/%name.desktop
@@ -54,6 +57,18 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Sat Apr 30 2016 Konstantin Artyushkin <akv@altlinux.org> 3.3.4-alt2
+- new version
+
+* Sat Apr 30 2016 Konstantin Artyushkin <akv@altlinux.org> 3.2.0-alt5
+- fix of unpacked INSTALL file
+
+* Sat May 16 2015 Konstantin Artyushkin <akv@altlinux.org> 3.2.0-alt4
+- Remove patches
+
+* Sat Apr 11 2015 Konstantin Artyushkin <akv@altlinux.org> 3.2.0-alt3
+-  3.2.0 build 
+
 * Tue Feb 26 2013 Mykola Grechukh <gns@altlinux.ru> 2.4.2-alt3
 - REALLY fixed (closes: #28607)
 
