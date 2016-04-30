@@ -1,6 +1,6 @@
 Name: mono-addins
 Version: 0.6.2
-Release: alt2
+Release: alt3
 License: LGPL
 URL: http://www.go-mono.com
 Group: Development/Other
@@ -42,12 +42,15 @@ Development files for Mono Addin
 %_monodir/%name
 %_monodir/xbuild/*
 %_monogacdir/*
-%_man1dir/*.gz
+%_man1dir/*.*
 
 %files devel
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Apr 30 2016 Denis Medvedev <nbr@altlinux.org> 0.6.2-alt3
+- fix manpages packing
+
 * Fri Aug 10 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.2-alt2
 - fix build with automake >= 1.11.3
 
