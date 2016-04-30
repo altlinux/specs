@@ -16,7 +16,7 @@
 
 Name: nginx
 Version: 1.10.0
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -216,6 +216,8 @@ install -pD -m644 uwsgi/uwsgi_params %buildroot%nginx_etc/
 
 rm -rf %buildroot/html/
 
+ln -s %_libdir/%name %buildroot/%nginx_etc/modules
+
 %files
 %_initdir/*
 %_sbindir/*
@@ -224,6 +226,8 @@ rm -rf %buildroot/html/
 %dir %nginx_etc/sites-available.d
 %dir %nginx_etc/conf-enabled.d
 %dir %nginx_etc/conf-available.d
+
+%nginx_etc/modules
 
 %config(noreplace) %nginx_etc/sites-available.d/default.conf
 
@@ -278,6 +282,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Sat Apr 30 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.0-alt2
+- update default config with dynamic modules loading sample
+
 * Sat Apr 30 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.0-alt1
 - 1.10.0
 - build some modules as dynamic
