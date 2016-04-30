@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Polari
 
 Name: polari
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -74,6 +74,9 @@ with GNOME 3 Desktop.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Sat Apr 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
