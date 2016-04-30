@@ -24,7 +24,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.8.0-openjdk
 Version:	1.6.2
-Release:	alt2_1jpp8
+Release:	alt3_1jpp8
 Summary:	Additional Java components for OpenJDK - Java browser plug-in and Web Start implementation
 
 Group:      Networking/WWW
@@ -177,11 +177,6 @@ cp metadata/%{oldname}-plugin.pom  $RPM_BUILD_ROOT/%{_mavenpomdir}/%{oldname}-pl
 
 %add_maven_depmap %{oldname}.pom %{oldname}.jar
 %add_maven_depmap %{oldname}-plugin.pom %{oldname}-plugin.jar
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%{javaplugin}_icedtea-web<<EOF
-%{_libdir}/mozilla/plugins/libjavaplugin.so	%{_libdir}/IcedTeaPlugin.so	%{priority}
-%{_bindir}/javaws	%{_prefix}/bin/javaws%{binsuffix}	%{_libdir}/IcedTeaPlugin.so
-%{_mandir}/man1/javaws.1.gz	%{_mandir}/man1/javaws-itweb.1.gz	%{_libdir}/IcedTeaPlugin.so
-EOF
 
 install -d -m 755 %buildroot/etc/icedtea-web
 cat > %buildroot/etc/icedtea-web/javaws.policy << EOF
@@ -270,7 +265,6 @@ make check
 appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 %files -f .mfiles
-%_altdir/%{javaplugin}_icedtea-web
 %{_sysconfdir}/bash_completion.d/icedteaweb-completion
 %{_prefix}/bin/*
 %{_libdir}/IcedTeaPlugin.so
@@ -312,6 +306,9 @@ appstream-util validate $RPM_BUILD_ROOT/%{_datadir}/appdata/*.xml || :
 
 
 %changelog
+* Sat Apr 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt3_1jpp8
+- removed fedora-based alternative (closes: #32043)
+
 * Fri Mar 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_1jpp8
 - fixed requires
 
