@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.2.1
-Release: alt3.14e0
+Release: alt4.5c81
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -34,6 +34,7 @@ Source4: %sname-mozconfig
 Source6: %bname.desktop
 Source7: firefox.c
 Source8: firefox-prefs.js
+Source9: HISTORY_GIT
 
 Patch5: firefox-duckduckgo.patch
 Patch6: firefox3-alt-disable-werror.patch
@@ -54,9 +55,10 @@ BuildRequires: libssl-devel perl-devel python-devel texinfo libpixman-devel
 
 # END SourceDeps(oneline)
 
-# Automatically added by buildreq on Sun Mar 20 2016
-# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-beaker python-module-cssselect python-module-docutils python-module-ecdsa python-module-ed25519 python-module-genshi python-module-jinja2 python-module-lingua python-module-nss python-module-polib python-module-pycrypto python-module-pytz python-module-snowballstemmer python-module-sphinx python-module-zope python-module-zope.interface python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python3 python3-base xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel python-module-html5lib python-module-mako
+# Automatically added by buildreq on Sat Apr 30 2016
+# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-PyStemmer python-module-cssselect python-module-ferari python-module-fiat python-module-instant python-module-mpmath python-module-numpy python-module-ufl python-module-uflacs python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ glibc-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel python-module-docutils python-module-ecdsa python-module-ed25519 python-module-ffc python-module-html5lib python-module-nss python-module-polib python-module-pycrypto python-module-pygobject3 python-module-pytz python-module-sidl python-module-sidlx python-module-snowballstemmer python-module-zope python-modules-json python3-base unzip xorg-cf-files
+
 BuildRequires: python-module-pygobject3 python3 unzip xorg-cf-files yasm zip
 
 
@@ -171,8 +173,13 @@ echo "ac_add_options --disable-polyic" >> .mozconfig
 echo "ac_add_options --disable-tracejit" >> .mozconfig
 %endif
 
+echo "ac_add_options --disable-static" >> .mozconfig
+echo "ac_add_options --enable-media-plugins --disable-elf-hack --enable-media-plugins --enable-media-navigator" >> .mozconfig
+echo "ac_add_options --with-system-libvpx --enable-wave --enable-alsa --enable-pulseaudio" >> .mozconfig
+
 %ifarch %ix86
-echo 'ac_add_options --enable-optimize="-O2 -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
+echo "ac_add_options --with-arch=i586" >> .mozconfig
+echo 'ac_add_options --enable-optimize="-O2 -msse2 -mfpmath=sse" ' >> .mozconfig
 %endif
 
 %if_enabled gst1
@@ -245,20 +252,14 @@ gcc %optflags \
 %install
 cd %sname
 
-echo %palemoon_prefix
-
 mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%palemoon_cid \
 	%buildroot/%mozilla_noarch_extdir/%palemoon_cid \
 	#
 
-#install -d %buildroot%palemoon_prefix
-
-#install -d %buildroot%palemoon_prefix
 
 pushd objdir
-#install -d %buildroot%palemoon_prefix/bin
-#cp -RfLp  dist/bin/* %buildroot%palemoon_prefix/bin
+
 %makeinstall_std MOZ_APP_VERSION=
 popd
 
@@ -287,14 +288,9 @@ sed \
 	-e 's,@palemoon_release@,%release,' \
 	rpm-build/rpm.macros.%sname.standalone > %buildroot/%_rpmmacrosdir/%sname
 
-#install -m755 %name %buildroot/%_bindir/%name
 
-cd %buildroot
+pushd %buildroot
 
-#sed -i \
-#	-e 's,\(MinVersion\)=.*,\1=5.0.1,g' \
-#	-e 's,\(MaxVersion\)=.*,\1=5.0.1,g' \
-#	./%palemoon_prefix/application.ini
 
 # Remove devel files
 rm -rf -- \
@@ -346,12 +342,20 @@ rm -f -- \
 	done
 )
 
+popd 
+
+# Add Docdir
+install -D -m 644 %SOURCE9 ../
+install -D -m 644 AUTHORS ../
+install -D -m 644 LICENSE ../
+
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%palemoon_prefix/$n" ] || rm -f "%palemoon_prefix/$n"
 done
 
 %files -n %bname
+%doc AUTHORS LICENSE HISTORY_GIT
 %_altdir/%bname
 %_bindir/%sname
 %dir %palemoon_prefix
@@ -367,7 +371,7 @@ done
 %_rpmmacrosdir/%sname
 
 %changelog
-* Thu Apr 28 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt3.14e0
+* Sat Apr 30 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt4.5c81
 - Update from git
 
 * Mon Apr 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt2.0f44
