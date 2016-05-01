@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        45.0.2
+Version:        46.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -35,7 +35,6 @@ Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
-Patch200:       mozilla-bug-1205199.patch
 Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
 
 # Red Hat
@@ -136,7 +135,6 @@ tar -xf %SOURCE2
 %patch16 -p1
 %patch17 -p2
 
-%patch200 -p1
 %patch201 -p1
 
 %patch300 -p1
@@ -301,6 +299,20 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Apr 29 2016 Alexey Gladkov <legion@altlinux.ru> 46.0-alt1
+- New release (46.0).
+- Fixed:
+  + 2016-48 Firefox Health Reports could accept events from untrusted domains
+  + 2016-47 Write to invalid HashMap entry through JavaScript.watch()
+  + 2016-46 Elevation of privilege with chrome.tabs.update API in web extensions
+  + 2016-45 CSP not applied to pages sent with multipart/x-mixed-replace
+  + 2016-44 Buffer overflow in libstagefright with CENC offsets
+  + 2016-43 Disclosure of user actions through JavaScript with motion and orientation sensors
+  + 2016-42 Use-after-free and buffer overflow in Service Workers
+  + 2016-41 Content provider permission bypass allows malicious application to access data
+  + 2016-40 Privilege escalation through file deletion by Maintenance Service updater
+  + 2016-39 Miscellaneous memory safety hazards (rv:46.0 / rv:45.1 / rv:38.8)
+
 * Sat Apr 16 2016 Alexey Gladkov <legion@altlinux.ru> 45.0.2-alt1
 - New release (45.0.2).
 
