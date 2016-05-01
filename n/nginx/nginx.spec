@@ -1,27 +1,32 @@
+#============================================================================
+# Please do not edit!
+# Created by specgen utility from files in specs/ subdir
+#============================================================================
+Name: nginx
+Summary: Fast HTTP server
+Version: 1.10.0
+Release: alt3
+License: BSD
+Group: System/Servers
+BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
+%if_with debug
+BuildRequires: google-perftools-devel
+%endif
+BuildRequires: libGeoIP-devel
+BuildRequires: libgd2-devel
+BuildRequires: libxml2-devel libxslt-devel
 %define pcre_version 4.5
-
 %def_with perl
 %def_with aio
 %def_with aio
 %def_with ipv6
 %def_without syslog
-%def_without image_filter
-%def_without xslt
+%def_with image_filter
+%def_with xslt
 %def_without debug
 %def_with geoip
 %def_enable cache_purge
-%def_enable ctpp2
-# If you want to update rtmp module -- use rtmp-update.sh
 %def_enable rtmp
-
-Name: nginx
-Version: 1.10.0
-Release: alt2
-
-Summary: Fast HTTP server
-License: BSD
-Group: System/Servers
-
 Url: http://sysoev.ru/nginx
 Source: %url/%name-%version.tar
 Source1: %name.conf.in
@@ -30,62 +35,73 @@ Source3: %name.logrotate.in
 Source5: %name.sysconfig
 Source6: default.conf
 Source7: cache_purge.tar
-Source8: ngx_ctpp2.tar
 Source9: %name.service
 Source10: nginx-rtmp-module.tar
 Source11: mime.types
+Source12: nginx.filetrigger
 Source100: %name.watch
-
 Patch1: nginx-0.8-syslog.patch
-
 Packager: Denis Smirnov <mithraen@altlinux.ru>
-
-# Automatically added by buildreq on Mon May 07 2007
-BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
-
-%if_with geoip
-BuildRequires: libGeoIP-devel
-Requires: GeoIP-Lite-City GeoIP-Lite-Country
-%endif
-
-%if_with image_filter
-BuildRequires: libgd2-devel
-%endif
-
-%if_with xslt
-BuildRequires: libxml2-devel libxslt-devel
-%endif
-
 %if_with debug
-BuildRequires: google-perftools-devel
 %endif
-
-%if_enabled ctpp2
-BuildRequires: libctpp-devel gcc-c++
-%endif
-
 Requires(pre): shadow-utils
 Requires(post): sed
-
 Provides: webserver
-
 %define nginx_user _nginx
 %define nginx_group _nginx
 %define nginx_etc %_sysconfdir/%name
 %define nginx_spool %_spooldir/%name
 %define nginx_log %_logdir/%name
-
 %define configs %buildroot{%_unitdir/%name.service,%_sysconfdir/logrotate.d/%name,%nginx_etc/{%name.conf,sites-available.d/default.conf}}
+
+%package geoip
+Summary: GeoIP module for nginx
+Group: System/Servers
+%def_with geoip
+Requires: GeoIP-Lite-City GeoIP-Lite-Country
+Requires: %name
+
+%description geoip
+GeoIP module for nginx
+
+%if_with image_filter
+%package image_filter
+Summary: image_filter module for nginx
+Group: System/Servers
+Requires: %name
+
+%description image_filter
+image_filter module for nginx
+%endif
+
+%if_with perl
+%package perl
+Summary: Perl for nginx
+Group: System/Servers
+Requires: %name
+
+%description perl
+Perl for nginx
+%endif
+
+%package xslt
+Summary: XSLT module for nginx
+Group: System/Servers
+%def_with xslt
+Requires: %name
+
+%description xslt
+XSLT module for nginx
 
 %description
 Fast HTTP server, extremely useful as an Apache frontend
 
+
 %prep
-%setup -a 7 -a 8 -a 10
+%setup -a 7 -a 10
 %if_with syslog
 %patch1 -p2
 %endif
-
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
@@ -101,7 +117,6 @@ cp -f %SOURCE11 conf/mime.types
 %ifnarch %ix86
 	CPU="" \
 %endif # for x86_64 TODO for amd64/nocona
-# FIXME: %%configure?
 CFLAGS="%optflags $CPU" ./configure \
 	--prefix=/ \
 	--conf-path=%nginx_etc/nginx.conf \
@@ -153,20 +168,15 @@ CFLAGS="%optflags $CPU" ./configure \
 	--with-http_degradation_module \
 	--with-http_slice_module \
 	--with-http_stub_status_module \
-%if_with perl	
+%if_with perl
 	--with-http_perl_module=dynamic \
 %endif
 	--with-mail=dynamic \
 	--with-mail_ssl_module \
 	--with-stream=dynamic \
 	--with-stream_ssl_module \
-	--with-md5=%_libdir \
-	--with-sha1=%_libdir \
 %if_enabled cache_purge
 	--add-module=cache_purge \
-%endif
-%if_enabled ctpp2
-	--add-module=ngx_ctpp2 \
 %endif
 %if_enabled rtmp
 	--add-module=nginx-rtmp-module \
@@ -177,8 +187,8 @@ CFLAGS="%optflags $CPU" ./configure \
 %if_with syslog
 	--with-syslog \
 %endif
-
-
+	--with-md5=%_libdir \
+	--with-sha1=%_libdir
 subst s!%buildroot!!g objs/*.h
 %make_build DESTDIR=%buildroot
 
@@ -190,9 +200,7 @@ mkdir -p %buildroot%nginx_etc/sites-enabled.d
 mkdir -p %buildroot%nginx_etc/sites-available.d
 mkdir -p %buildroot%nginx_etc/conf-enabled.d
 mkdir -p %buildroot%nginx_etc/conf-available.d
-
 %makeinstall DESTDIR=%buildroot
-
 rm -f %buildroot%nginx_etc/%name.conf
 install -pD -m644 %SOURCE1 %buildroot%nginx_etc/%name.conf
 install -pD -m755 %SOURCE2 %buildroot%_initdir/%name
@@ -201,50 +209,70 @@ install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 install -pD -m644 %SOURCE6 %buildroot%nginx_etc/sites-available.d/default.conf
 install -pD -m644 %SOURCE9 %buildroot%_unitdir/%name.service
 install -pD -m644 nginx-rtmp-module/stat.xsl %buildroot%nginx_etc/stat.xsl
-
 subst s!@nginx_user@!%nginx_user!g %configs
 subst s!@nginx_etc@!%nginx_etc!g %configs
 subst s!@nginx_spool@!%nginx_spool!g %configs
 subst s!@nginx_log@!%nginx_log!g %configs
-
 mkdir -p %buildroot%_docdir/%name-%version
 cp -a CHANGES CHANGES.ru %buildroot%_docdir/%name-%version/
-
 %if_with uwsgi
 install -pD -m644 uwsgi/uwsgi_params %buildroot%nginx_etc/
 %endif
-
 rm -rf %buildroot/html/
+mkdir -p %buildroot%nginx_etc/modules-available.d
+mkdir -p %buildroot%nginx_etc/modules-enabled.d
+for s in %buildroot/%_libdir/%name/*.so; do
+    fn=${s##*/}
+    module=${fn%.so}
+    module=${module#ngx_}
+    module=${module%_module}
+    echo "load_module %_libdir/%name/$fn;" >> %buildroot%nginx_etc/modules-available.d/$module.conf
+done
+echo "# load dynamic nginx modules" > %buildroot%nginx_etc/nginx.conf.tmp
+echo -e "include /etc/nginx/modules-enabled.d/*.conf;\n" >> %buildroot%nginx_etc/nginx.conf.tmp
+cat %buildroot%nginx_etc/nginx.conf >> %buildroot%nginx_etc/nginx.conf.tmp
+mv -f %buildroot%nginx_etc/nginx.conf.tmp %buildroot%nginx_etc/nginx.conf
+install -pD -m755 %SOURCE12 %buildroot/usr/lib/rpm/nginx.filetrigger
 
-ln -s %_libdir/%name %buildroot/%nginx_etc/modules
+%preun
+%preun_service %name
+
+%pre
+%_sbindir/groupadd -r -f %nginx_group ||:
+%_sbindir/groupadd -r -f _webserver ||:
+%_sbindir/useradd -r -g %nginx_group -G _webserver -d /dev/null -s /dev/null -n %nginx_user \
+	2> /dev/null > /dev/null ||:
+
+%post
+sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:space:]]*$/\1 64;/' /etc/nginx/nginx.conf ||:
+%post_service %name
 
 %files
+/usr/lib/rpm/nginx.filetrigger
 %_initdir/*
 %_sbindir/*
 %dir %nginx_etc
 %dir %nginx_etc/sites-enabled.d
 %dir %nginx_etc/sites-available.d
+%dir %nginx_etc/modules-enabled.d
+%dir %nginx_etc/modules-available.d
 %dir %nginx_etc/conf-enabled.d
 %dir %nginx_etc/conf-available.d
-
-%nginx_etc/modules
-
+%config(noreplace) %nginx_etc/modules-available.d/mail.conf
+%config(noreplace) %nginx_etc/modules-available.d/stream.conf
 %config(noreplace) %nginx_etc/sites-available.d/default.conf
-
 %if_enabled rtmp
 %nginx_etc/stat.xsl
 %endif
-
-# these are private; should also confirm to SPP (#12647)
-%attr(0700,root,root) %dir %_lockdir/%name
-%attr(1770,root,%nginx_group) %dir %nginx_spool/tmp
-%attr(1770,root,%nginx_group) %dir %nginx_spool/tmp/client
-%attr(1770,root,%nginx_group) %dir %nginx_spool/tmp/proxy
-%attr(1770,root,%nginx_group) %dir %nginx_spool/tmp/fastcgi
-%attr(1770,root,%nginx_group) %dir %nginx_spool/tmp/scgi
-%attr(1770,root,%nginx_group) %dir %nginx_spool/tmp/uwsgi
-%attr(1770,root,%nginx_group) %dir %nginx_spool
-%attr(1770,root,%nginx_group) %dir %nginx_log
+%dir %attr(0700,root,root) %_lockdir/%name
+%dir %attr(1770,root,%nginx_group) %nginx_spool/tmp
+%dir %attr(1770,root,%nginx_group) %nginx_spool/tmp/client
+%dir %attr(1770,root,%nginx_group) %nginx_spool/tmp/proxy
+%dir %attr(1770,root,%nginx_group) %nginx_spool/tmp/fastcgi
+%dir %attr(1770,root,%nginx_group) %nginx_spool/tmp/scgi
+%dir %attr(1770,root,%nginx_group) %nginx_spool/tmp/uwsgi
+%dir %attr(1770,root,%nginx_group) %nginx_spool
+%dir %attr(1770,root,%nginx_group) %nginx_log
 %config(noreplace) %nginx_etc/mime.types
 %config(noreplace) %nginx_etc/nginx.conf
 %config(noreplace) %nginx_etc/fastcgi.conf
@@ -259,29 +287,45 @@ ln -s %_libdir/%name %buildroot/%nginx_etc/modules
 %nginx_etc/koi-utf
 %nginx_etc/win-utf
 %_docdir/%name-%version
-%if_with perl
-%perl_vendor_archlib/nginx.pm
-%perl_vendor_autolib/nginx
-%endif
 %if_with uwsgi
 %config(noreplace) %nginx_etc/uwsgi_params
 %endif
-%_libdir/%name
+%dir %_libdir/%name
+%_libdir/%name/ngx_mail_module.so
+%_libdir/%name/ngx_stream_module.so
 
-%pre
-%_sbindir/groupadd -r -f %nginx_group ||:
-%_sbindir/groupadd -r -f _webserver ||:
-%_sbindir/useradd -r -g %nginx_group -G _webserver -d /dev/null -s /dev/null -n %nginx_user \
-	2> /dev/null > /dev/null ||:
+%files geoip
+%config(noreplace) %nginx_etc/modules-available.d/http_geoip.conf
+%_libdir/%name/ngx_http_geoip_module.so
 
-%post
-sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:space:]]*$/\1 64;/' /etc/nginx/nginx.conf ||:
-%post_service %name
+%if_with image_filter
+%files image_filter
+%config(noreplace) %nginx_etc/modules-available.d/http_image_filter.conf
+%_libdir/%name/ngx_http_image_filter_module.so
+%endif
 
-%preun
-%preun_service %name
+%if_with perl
+%files perl
+%config(noreplace) %nginx_etc/modules-available.d/http_perl.conf
+%perl_vendor_archlib/nginx.pm
+%perl_vendor_autolib/nginx
+%_libdir/%name/ngx_http_perl_module.so
+%endif
+
+%files xslt
+%config(noreplace) %nginx_etc/modules-available.d/http_xslt_filter.conf
+%_libdir/%name/ngx_http_xslt_filter_module.so
 
 %changelog
+* Sun May 01 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.0-alt3
+- remove ctpp module (ALT #32041)
+- fix dynamic modules configuration (use %nginx_etc/modules-enabled.d)
+- move perl module to nginx-perl subpackege
+- move GeoIP module to nginx-geoip subpackege
+- move xslt module to nginx-xslt subpackege
+- add image_filter module to nginx-image_filter subpackage
+- add filetrigger for restart nginx when modules installed/removed
+
 * Sat Apr 30 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.0-alt2
 - update default config with dynamic modules loading sample
 
@@ -653,7 +697,7 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 - rebuild
 
 * Mon Jan 28 2008 Michael Shigorin <mike@altlinux.org> 0.5.35-alt1.1
-- re-added kludge from 0.5.34-alt1.1: the more insightful fix didn't 
+- re-added kludge from 0.5.34-alt1.1: the more insightful fix didn't
   account for the case of i586 (which is our default x86 buildarch)
   while my dirty hack doesnn't account at all, it just has a hammer :)
 - so "could not build the types_hash, you should increase types_hash_bucket_size: 32
@@ -702,7 +746,7 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 - Feature: the "merge_slashes" directive.
 - Feature: the "gzip_vary" directive.
 - Feature: the "server_tokens" directive.
-- Feature: the "access_log" directive may be used inside the "limit_except" block. 
+- Feature: the "access_log" directive may be used inside the "limit_except" block.
 - Bugfix: if the $server_protocol was used in FastCGI parameters and a
   request line length was near to the "client_header_buffer_size" directive
   value, then nginx issued an alert "fastcgi: the request record is too big".
@@ -729,7 +773,7 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 - Bugfix: ngx_http_memcached_module did not set $upstream_response_time.
   Thanks to Maxim Dounin.
 - Bugfix: a worker process may got caught in an endless loop, if the
-  memcached was used. 
+  memcached was used.
 
 * Sun Jan 06 2008 Michael Shigorin <mike@altlinux.org> 0.5.33-alt2.1
 - Fix default nginx.conf:
@@ -816,7 +860,7 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 - rebuild
 
 * Thu Aug 30 2007 Michael Shigorin <mike@altlinux.org> 0.5.31-alt1.1
-- NMU: moved remnants of directory creation and permissions setup 
+- NMU: moved remnants of directory creation and permissions setup
   from initscript to specfile (seems like was a band-aid which is
   currently unneeded and non-elegant); see also #12647
 - fixed #7441 (service nginx stop would leave children running)
@@ -1032,3 +1076,4 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 
 * Tue Oct 12 2004 Denis Smirnov <mithraen@altlinux.ru> 0.1.1-alt1
 - first build
+
