@@ -1,6 +1,6 @@
 Name: synapse
-Version: 0.2.99.1
-Release: alt3
+Version: 0.2.99.2
+Release: alt2
 Summary: A semantic launcher written in Vala
 Summary(ru_RU.UTF-8): Семантический запуск приложений
 
@@ -94,6 +94,9 @@ fi
 %_datadir/vala/vapi/*
 
 %changelog
+* Sun May 01 2016 Konstantin Artyushkin <akv@altlinux.org> 0.2.99.2-alt2
+new version 0.2.99-2
+
 * Tue Jan 26 2016 Konstantin Artyushkin <akv@altlinux.org> 0.2.99.1-alt3
 - replace man file extension
 
