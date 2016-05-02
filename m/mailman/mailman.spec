@@ -2,8 +2,8 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.21
-Release: alt4.rel
+Version: 2.1.22
+Release: alt1
 Epoch: 5
 Packager: Grigory Batalov <bga@altlinux.ru>
 
@@ -373,6 +373,9 @@ fi
 %doc doc
 
 %changelog
+* Mon May 02 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.22-alt1
+- Updated to 2.1.22.
+
 * Mon Feb 29 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.21-alt4.rel
 - Updated to 2.1.21.
 - Added patch from 2.1.22-dev:
