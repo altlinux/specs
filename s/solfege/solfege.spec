@@ -1,6 +1,6 @@
 Name: solfege
 Version: 3.22.2
-Release: alt1
+Release: alt2
 
 Summary: Eartraining program for GNOME
 Summary(ru_RU.UTF-8): Программа тренировки слуха.
@@ -11,7 +11,8 @@ Group: Education
 #Url: http://solfege.sourceforge.net
 Url: http://www.solfege.org
 Source: http://download.sourceforge.net/solfege/%name-%version.tar.gz
-Patch: solfege-3.14.2-alt-desktop.patch
+Patch0: solfege-3.14.2-alt-desktop.patch
+Patch1: solfege-3.22.2-r2140.patch
 Packager: Alex Karpov <karpov@altlinux.org>
 
 %define python_ver 2.4
@@ -73,7 +74,8 @@ Solfege -- програма для тренування слуху, що нап�
 
 %prep
 %setup
-#patch -p1
+#patch0 -p1
+%patch1 -p0
 
 %build
 XSLPATH=`echo "system http://docbook.sourceforge.net/release/xsl/current" \
@@ -133,6 +135,9 @@ done
 %doc AUTHORS FAQ README COPYING INSTALL changelog
 
 %changelog
+* Mon May 02 2016 Michael Shigorin <mike@altlinux.org> 3.22.2-alt2
+- applied upstream r2140 as a patch
+
 * Sun Apr 03 2016 Anton Midyukov <antohami@altlinux.org> 3.22.2-alt1
 - new version
 - encoding description to UTF-8
