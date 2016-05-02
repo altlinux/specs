@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.46
+Version: 0.47
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Mon May 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
+- support for mutt15; misc bugfixes
+
 * Sun Aug 23 2015 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - Mass 0.15 support
 
