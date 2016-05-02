@@ -1,7 +1,7 @@
 
 Name:     aqbanking
-Version:  5.5.1
-Release:  alt2
+Version:  5.6.10
+Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
 License:  GPLv2+
@@ -212,7 +212,7 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_libdir/libaqbankingpp.so
 %_libdir/libaqhbci.so
 %_libdir/libaqebics.so
-%_libdir/cmake/aqbanking-5.5/aqbanking-config*.cmake
+%_libdir/cmake/aqbanking-5.6/aqbanking-config*.cmake
 
 %files ofx
 %_libdir/%name/plugins/*/providers/aqofxconnect.so
@@ -251,6 +251,9 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Fri Apr 29 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.10-alt1
+- new version 5.6.10
+
 * Sun Dec 27 2015 Andrey Cherepanov <cas@altlinux.org> 5.5.1-alt2
 - Update watch file after upstream site reconstruction
 
