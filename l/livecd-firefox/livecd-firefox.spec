@@ -1,6 +1,6 @@
 Name: livecd-firefox
 Version: 0.1
-Release: alt4
+Release: alt5
 
 Summary: configure firefox for a livecd environment
 License: Public domain
@@ -10,8 +10,9 @@ Url: http://altlinux.org/m-p
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # it's *not* noarch, btw
-%define prefsjs %_libdir/firefox/browser/defaults/profile/prefs.js
-Requires(post): %prefsjs
+%define prefix %_libdir/firefox/browser/defaults
+Requires(post): %_libdir/firefox
+Requires(post): %_bindir/firefox
 
 %description
 %summary
@@ -21,18 +22,26 @@ Requires(post): %prefsjs
 
 %post
 # http://permalink.gmane.org/gmane.linux.terminal-server.general/25696
-[ ! -f %prefsjs ] || \
-fgrep -q browser.rights %prefsjs || \
-cat >> %prefsjs << _EOF_
-user_pref("browser.rights.3.shown", true);
-user_pref("browser.shell.checkDefaultBrowser", false);
-user_pref("browser.download.manager.showWhenStarting", false);
-user_pref("extensions.update.notifyUser", false);
-_EOF_
+[ -d %prefix ] || exit 0
+
+for prefs in %prefix/{profile/prefs.js,preferences/all-altlinux.js}; do
+	[ -f $prefs ] || continue
+	fgrep -q browser.rights $prefs || \
+		cat >> $prefs <<-_EOF_
+		user_pref("browser.rights.3.shown", true);
+		user_pref("browser.shell.checkDefaultBrowser", false);
+		user_pref("browser.download.manager.showWhenStarting", false);
+		user_pref("extensions.update.notifyUser", false);
+		_EOF_
+done
 
 %files
 
 %changelog
+* Tue May 03 2016 Michael Shigorin <mike@altlinux.org> 0.1-alt5
+- adapted for Firefox 46 (prefs.js is no more, legion@ advised
+  to use all-altlinux.js; the prefix has changed yet again)
+
 * Fri Jun 07 2013 Michael Shigorin <mike@altlinux.org> 0.1-alt4
 - adapted for Firefox 21 (prefs.js path now includes "browser/",
   thanks legion@ for heads-up)
