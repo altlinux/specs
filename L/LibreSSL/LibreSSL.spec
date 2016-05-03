@@ -1,6 +1,6 @@
 Name: LibreSSL
 Version: 2.3.3
-Release: alt1
+Release: alt2
 
 %define oname libressl
 
@@ -45,6 +45,7 @@ Headers for building software that uses %name
 Summary: Documantation pages for %name
 Group: Documentation
 BuildArch: noarch
+Conflicts: openssl-doc
 
 %description doc
 %common_descr
@@ -96,6 +97,7 @@ Headers for building software that uses libtls
 %package -n libtls-doc
 Summary: Manpages for libtls
 Group: Documentation
+BuildArch: noarch
 
 %description -n libtls-doc
 
@@ -175,6 +177,7 @@ popd
 %exclude %_man3dir/x509.*
 
 %files -n libcrypto-LibreSSL
+%dir %_sysconfdir/%oname/
 %_sysconfdir/%oname/*
 %_libdir/libcrypto.so.*
 
@@ -199,5 +202,13 @@ popd
 %_man1dir/netcat.*
 
 %changelog
+* Tue May 3 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.3-alt2
+- LibreSSL-doc
+  + Add conflict: openssl-doc.
+- libtls-doc
+  + Build as noarch
+- libcrypto-LibreSSL
+  + "/etc/libressl" directory is owned by package now.
+
 * Thu Apr 21 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.3-alt1
 - Initial build.
