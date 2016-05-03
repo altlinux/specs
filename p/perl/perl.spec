@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.22.1
-Release: alt2
+Version: 5.22.2
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -754,6 +754,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%privlib/Unicode/Normalize.pm
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:5.22.2-alt1
+- 5.22.1 -> 5.22.2
+
 * Sun Apr 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:5.22.1-alt2
 - added buildreqs substitute.d perl-base -> perl
 
