@@ -28,7 +28,7 @@ BuildRequires: docbook-dtds docbook-style-xsl
 
 Name:           publican
 Version:        4.3.2
-Release:        alt1_2
+Release:        alt2_2
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -274,7 +274,7 @@ mkdir -p -m755 $RPM_BUILD_ROOT/%{wwwdir}/common-db5
 cd datadir/Common_Content/common-db5
 XML_CATALOG_FILES=$dir/catalog %{__perl} -CDAS -I $dir/blib/lib $dir/blib/script/publican install_brand --web --path=$RPM_BUILD_ROOT/%{wwwdir}/common-db5
 cd -
-sed -i -e '1,4s,perl[0-9a-z\.]*,perl,' %buildroot%_bindir/publican
+sed -i -e '1,4s,perl[0-9a-z\.]*,perl,' %buildroot%_bindir/*
 
 %check
 %if %{TESTS}
@@ -334,6 +334,9 @@ fi
 %{wwwdir}/common-db5
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt2_2
+- sed -i -e '1,4s,perl[0-9a-z\.]*,perl,' %%buildroot%%_bindir/*
+
 * Thu Feb 25 2016 Igor Vlasenko <viy@altlinux.ru> 4.3.2-alt1_2
 - fixed build
 
