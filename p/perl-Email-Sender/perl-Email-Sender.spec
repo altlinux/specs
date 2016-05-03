@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Email-Sender
-Version:        1.300027
+Version:        1.300028
 Release:        alt1
 Summary:        A library for sending email
 License:        GPL+ or Artistic
@@ -86,6 +86,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Email*
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.300028-alt1
+- automated CPAN update
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.300027-alt1
 - automated CPAN update
 
