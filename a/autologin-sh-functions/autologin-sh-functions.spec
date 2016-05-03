@@ -1,5 +1,5 @@
 Name: autologin-sh-functions
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: helper functions for autologin setup
@@ -26,6 +26,9 @@ install -pDm644 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Tue May 03 2016 Michael Shigorin <mike@altlinux.org> 0.2.2-alt1
+- fixed lxqt/sddm case
+
 * Mon Jan 25 2016 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt1
 - extend API with al_possible()
 
