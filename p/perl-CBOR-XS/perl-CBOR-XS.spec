@@ -1,21 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Time/Piece.pm) perl(Types/Serialiser.pm) perl(URI.pm) perl(XSLoader.pm) perl(common/sense.pm)
-# END SourceDeps(oneline)
-%define module_version 1.41
-%define module_name CBOR-XS
-Serial: 1
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Time/Piece.pm) perl(Types/Serialiser.pm) perl(URI.pm) perl(XSLoader.pm) perl(common/sense.pm) perl(Canary/Stability.pm) perl(Math/BigRat.pm)
+# END SourceDeps(oneline)
+%define module_version 1.5
+%define module_name CBOR-XS
+Serial: 2
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.41
+Version: 1.5
 Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/ML/MLEHMANN/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/CBOR-XS-%{version}.tar.gz
 
 %description
 This module converts Perl data structures to the Concise Binary Object
@@ -64,6 +64,9 @@ vice versa.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 2:1.5-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.41-alt1
 - new version
 
