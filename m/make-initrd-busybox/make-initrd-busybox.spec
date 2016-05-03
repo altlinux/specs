@@ -1,5 +1,5 @@
 Name: make-initrd-busybox
-Version: 1.24.1
+Version: 1.24.2
 Release: alt1
 
 Summary: Busybox for make-initrd
@@ -7,9 +7,6 @@ License: GPL
 Group: System/Base
 
 Source0: %name-%version.tar
-
-# For new put-file utility
-Requires: make-initrd >= 0.8.2-alt1
 
 %description
 Busybox (%version) for make-initrd.
@@ -37,6 +34,9 @@ ln -s ../usr/sbin/chroot  sbin/chroot
 /lib/initrd/*
 
 %changelog
+* Tue May 03 2016 Alexey Gladkov <legion@altlinux.ru> 1.24.2-alt1
+- New busybox version (1.24.2).
+
 * Wed Nov 18 2015 Alexey Gladkov <legion@altlinux.ru> 1.24.1-alt1
 - New busybox version (1.24.1).
 
