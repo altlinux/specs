@@ -1,7 +1,7 @@
 %def_enable session
 Name: cairo-dock
 Version: 3.4.1
-Release: alt3
+Release: alt4
 
 Summary: A light and eye-candy dock to launch your programs easily
 Summary(ru_RU.UTF-8): Приятный глазу док для простого запуска ваших программ
@@ -20,6 +20,8 @@ BuildRequires: ImageMagick-tools cmake desktop-file-utils gcc-c++ libGConf libGL
 BuildRequires: libpixman-devel libXtst-devel libXrandr-devel libXdmcp-devel libwayland-egl-devel 	libharfbuzz-devel libexpat-devel libdrm-devel libXdamage-devel libXxf86vm-devel libpng-devel libXinerama-devel libXcursor-devel 	libxkbcommon-x11-devel libwayland-cursor-devel libepoxy-devel at-spi2-atk-devel libat-spi2-core-devel
 %endif
 
+Requires: %name-data = %version
+
 %description
 Cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
 acceleration. It's fully configurable and can be a taskbar too. You can
@@ -29,6 +31,25 @@ easily plug applets into it.
 Сairo-dock использует cairo для рендеринга приятной графики и Glitz для
 задействования аппаратного ускорения. Это полностью настраиваемая и
 многофункциональная панель задач. Вы можете легко включить апплеты не ней.
+
+%package data
+Summary: Data files for %name
+Group: Graphical desktop/Other
+BuildArch: noarch
+
+%description data
+Data files for %name
+
+%if_enabled session
+%package session
+Summary: Session for %name
+Group: Graphical desktop/Other
+BuildArch: noarch
+Requires: %name = %version
+
+%description session
+Session for %name
+%endif
 
 %package devel
 Summary: Development files for cairo-dock
@@ -71,6 +92,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%name
 %_libdir/*.so.*
 %_libdir/%name/libcd-Help.so
+
+%files data
 %_datadir/%name
 %_desktopdir/*.desktop
 %_pixmapsdir/*.svg
@@ -80,6 +103,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*.1.*
 
 %if_enabled session
+%files session
 %_bindir/%name-session
 %_datadir/gnome-session/sessions/cairo-dock.session
 %exclude %_datadir/xsessions/cairo-dock.desktop
@@ -91,6 +115,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 02 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt4
+- New package cairo-dock-data
+- New package cairo-dock-session.
+
 * Mon Mar 21 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt3
 - Added missing buildrequires
 - Enabled session.

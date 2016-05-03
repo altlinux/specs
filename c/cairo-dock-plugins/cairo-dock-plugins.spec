@@ -1,10 +1,11 @@
 %define packagename cairo-dock
+%add_findreq_skiplist %_datadir/%packagename/plug-ins/shared-files/scripts/lock-screen.sh
 
 Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt4
+Release: alt5
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -74,6 +75,8 @@ Requires: %packagename-Messaging-Menu
 Requires: %packagename-Recent-Events
 Requires: %packagename-Status-Notifier
 Requires: %packagename-launcher-API-daemon
+Requires: %packagename-doncky
+Requires: %packagename-remote-control
 
 %description
 cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -95,6 +98,7 @@ This package contains various plugins for cairo-dock.
 Summary: That common package provides lang files
 Group: Graphical desktop/Other
 Requires: %packagename = %version
+Buildarch: noarch
 
 %description -n %packagename-common
 This plug-in provides many different animations for your icons.
@@ -102,9 +106,7 @@ This plug-in provides many different animations for your icons.
 %files -n %packagename-common -f %name.lang
 %dir %_datadir/%packagename/plug-ins
 %_datadir/%packagename/plug-ins/shared-files
-%dir %_libdir/%packagename
 %_datadir/%packagename/gauges/*
-%_libdir/%packagename/appmenu-registrar
 
 #---------------------------------------------------------------------
 %package -n %packagename-animated-icons
@@ -925,6 +927,7 @@ This applet allows you to adjust global menu.
 %files -n %packagename-Global-Menu
 %_datadir/%packagename/plug-ins/Global-Menu
 %_libdir/%packagename/libcd-Global-Menu.so
+%_libdir/%packagename/appmenu-registrar
 
 #---------------------------------------------------------------------
 
@@ -1038,6 +1041,7 @@ This package contains Python3 binding files for Cairo-Dock
 %python3_sitelibdir_noarch/CDApplet.py*
 %python3_sitelibdir_noarch/CDBashApplet.py*
 %python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/__pycache__/*
 
 #---------------------------------------------------------------------
 
@@ -1096,6 +1100,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Mon May 02 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt5
+- Fix Requires.
+
 * Fri Mar 18 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt4
 - Added missing buildrequires
 - Added plugin:
