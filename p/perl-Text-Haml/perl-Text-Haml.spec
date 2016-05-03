@@ -3,17 +3,17 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-Haml
-%define upstream_version 0.990116
+%define upstream_version 0.990117
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_6
+Version:    0.990117
+Release:    alt1
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Text/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/V/VT/VTI/Text-Haml-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Data/Section/Simple.pm)
@@ -57,6 +57,9 @@ rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.990117-alt1
+- automated CPAN update
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.990116-alt1_6
 - update by mgaimport
 
