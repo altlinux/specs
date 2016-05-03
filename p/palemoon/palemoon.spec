@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.2.1
-Release: alt4.5c81
+Release: alt5.5c81
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -27,7 +27,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 %define palemoon_arch_extensionsdir     %palemoon_prefix/extensions
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
 
-Source: %sname-source.tar
+Source: %sname-source-%version-%release.tar
 Source1: rpm-build.tar
 Source2: searchplugins.tar
 Source4: %sname-mozconfig
@@ -50,30 +50,40 @@ Patch23: palemoon_version-26.2.0.patch
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
-# BEGIN SourceDeps(oneline):
-BuildRequires: libssl-devel perl-devel python-devel texinfo libpixman-devel
 
+# BEGIN SourceDeps(oneline):
+BuildRequires: autoconf-common bzlib-devel fontconfig-devel gcc-c++-common glib2-devel libSM-devel libX11-devel libXcomposite-devel libXext-devel libcairo-devel libdbus-devel
+BuildRequires: libdbus-glib-devel libevent-devel libffi-devel libfreetype-devel libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel
+BuildRequires: libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel
+BuildRequires: perl perl-Archive-Zip perl-CGI perl-DBI perl-GD perl-GD-Graph perl-HTTP-Message perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww
+BuildRequires: python-base python-devel qt4-mobility-devel qt5-base-devel texinfo wcslib-devel xsltproc
+BuildRequires: zlib-devel
 # END SourceDeps(oneline)
 
-# Automatically added by buildreq on Sat Apr 30 2016
-# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-PyStemmer python-module-cssselect python-module-ferari python-module-fiat python-module-instant python-module-mpmath python-module-numpy python-module-ufl python-module-uflacs python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ glibc-devel imake libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel python-module-docutils python-module-ecdsa python-module-ed25519 python-module-ffc python-module-html5lib python-module-nss python-module-polib python-module-pycrypto python-module-pygobject3 python-module-pytz python-module-sidl python-module-sidlx python-module-snowballstemmer python-module-zope python-modules-json python3-base unzip xorg-cf-files
 
-BuildRequires: python-module-pygobject3 python3 unzip xorg-cf-files yasm zip
+# Automatically added by buildreq on Tue May 03 2016
+# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-PyStemmer python-module-cssselect python-module-enum34 python-module-ferari python-module-fiat python-module-instant python-module-mpmath python-module-numpy python-module-pyasn1 python-module-pyparsing python-module-serial python-module-twisted-core python-module-ufl python-module-uflacs python-module-zope python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ imake libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel
+BuildRequires: python-module-cmd2 python-module-contextlib2 python-module-dns python-module-docutils python-module-ecdsa python-module-ed25519 python-module-ffc python-module-greenlet python-module-html5lib
+BuildRequires: python-module-kerberos python-module-libcf python-module-mimeparse python-module-ndg python-module-netaddr python-module-nss python-module-paste python-module-pbr python-module-polib python-module-psycopg2
+BuildRequires: python-module-pycares python-module-pycrypto python-module-pycurl python-module-pyev python-module-pygobject3 python-module-pyinotify python-module-pysnmp4 python-module-pytz python-module-repoze
+BuildRequires: python-module-sidl python-module-sidlx python-module-snappy python-module-snowballstemmer python-module-wrapt python-module-yaml python-modules-wsgiref python3-base
+BuildRequires: unzip wget xorg-cf-files yasm zip
+
+BuildRequires: python3-base unzip xorg-cf-files
 
 
+BuildRequires: chrpath
 
-BuildRequires: autoconf_2.13 chrpath
+BuildRequires: autoconf_2.13 
 
 %set_autoconf_version 2.13
 
 %if_enabled gst1
 BuildRequires(pre): gst-plugins1.0-devel
-BuildRequires(pre): gstreamer1.0-devel gst-plugins1.0-devel
 
 %else
 BuildRequires(pre): gst-plugins-devel
-BuildRequires(pre): gstreamer-devel gst-plugins-devel
 %endif
 
 %description
@@ -371,6 +381,10 @@ done
 %_rpmmacrosdir/%sname
 
 %changelog
+* Tue May 03 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt5.5c81
+- add Docdir
+- Correct Buildreq
+ 
 * Sat Apr 30 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt4.5c81
 - Update from git
 
