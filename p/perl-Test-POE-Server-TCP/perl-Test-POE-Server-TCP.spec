@@ -1,7 +1,7 @@
 %define module Test-POE-Server-TCP
 
 Name: perl-%module
-Version: 1.18
+Version: 1.20
 Release: alt1
 
 Summary: A POE Component providing TCP server services for test cases
@@ -34,6 +34,9 @@ Once registered with the component, a session will receive events related to cli
 %perl_vendor_privlib/Test/POE/Server/*
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
