@@ -1,6 +1,6 @@
 Name: LibreSSL
-Version: 2.3.3
-Release: alt2
+Version: 2.3.4
+Release: alt1
 
 %define oname libressl
 
@@ -24,7 +24,7 @@ applying best practice development processes.
 %package openssl
 Summary: LibreSSL openssl utility, which provides tools for managing keys, certificates, etc
 Group: Security/Networking
-Conflicts: openssl
+Conflicts: openssl openssl-doc
 
 %description openssl
 %common_descr
@@ -202,6 +202,19 @@ popd
 %_man1dir/netcat.*
 
 %changelog
+* Tue May 03 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.4-alt1
+- 2.3.4
+- Fix multiple vulnerabilities in libcrypto relating to ASN.1 and encoding
+  (From OpenSSL):
+  + Memory corruption in the ASN.1 encoder (CVE-2016-2108)
+  + Padding oracle in AES-NI CBC MAC check (CVE-2016-2107)
+  + EVP_EncodeUpdate overflow (CVE-2016-2105)
+  + EVP_EncryptUpdate overflow (CVE-2016-2106)
+  + ASN.1 BIO excessive memory allocation (CVE-2016-2109)
+- Minor build fixes.
+- LibreSSL-openssl
+  + Added conflict to openssl-doc
+
 * Tue May 3 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.3-alt2
 - LibreSSL-doc
   + Add conflict: openssl-doc.
