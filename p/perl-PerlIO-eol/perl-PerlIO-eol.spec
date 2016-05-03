@@ -1,14 +1,14 @@
 %define dist PerlIO-eol
 Name: perl-%dist
-Version: 0.14
-Release: alt3.1.1
+Version: 0.16
+Release: alt1
 
 Summary: PerlIO layer for normalizing line endings
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://www.cpan.org
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/PerlIO-eol-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Nov 16 2011
 BuildRequires: perl-devel
@@ -32,6 +32,9 @@ line ending. It works for both input and output handles.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.14-alt3.1.1
 - rebuild with new perl 5.22.0
 
