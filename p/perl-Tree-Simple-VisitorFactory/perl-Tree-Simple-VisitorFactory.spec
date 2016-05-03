@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Tree-Simple-VisitorFactory
-Version: 0.12
+Version: 0.14
 Release: alt1
 
 Summary: %m_name - A factory object for dispensing Visitor objects
@@ -49,6 +49,9 @@ convienient way to avoid having to type thier long class names.
 %doc Changes README
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Fri Nov 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
