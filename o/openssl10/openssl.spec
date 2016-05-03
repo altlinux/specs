@@ -1,5 +1,5 @@
 Name: openssl10
-Version: 1.0.2g
+Version: 1.0.2h
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -37,7 +37,6 @@ Patch23: openssl-rh-xmpp-starttls.patch
 Patch24: openssl-rh-chil-fixes.patch
 Patch25: openssl-rh-alt-secure-getenv.patch
 Patch27: openssl-rh-padlock64.patch
-Patch28: openssl-rh-weak-ciphers.patch
 Patch30: openssl-rh-disable-sslv2v3.patch
 Patch84: openssl-rh-trusted-first-doc.patch
 Patch87: openssl-rh-cc-reqs.patch
@@ -242,7 +241,6 @@ on the command line.
 %patch24 -p1
 %patch25 -p1
 %patch27 -p1
-%patch28 -p1
 %patch30 -p1
 %patch84 -p1
 %patch87 -p1
@@ -462,6 +460,10 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Tue May 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2h-alt1
+- Updated to 1.0.2h (fixes CVE-2016-2105 CVE-2016-2106 CVE-2016-2107
+  CVE-2016-2109 CVE-2016-2176).
+
 * Tue Mar 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2g-alt1
 - Updated to 1.0.2g (fixes CVE-2016-0701 CVE-2016-0702
   CVE-2016-0705 CVE-2016-0797 CVE-2016-0798
