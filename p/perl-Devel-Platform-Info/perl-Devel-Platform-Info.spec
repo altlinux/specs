@@ -3,19 +3,19 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Devel-Platform-Info
-%define upstream_version 0.15
+%define upstream_version 0.16
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_2
+Version:    0.16
+Release:    alt1
 
 Summary:    Retrieve Solaris platform metadata
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Devel/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/B/BA/BARBIE/Devel-Platform-Info-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(IO/File.pm)
@@ -56,6 +56,9 @@ the usage for CPAN Testers.
 %perl_vendor_privlib/*
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_2
 - update by mgaimport
 
