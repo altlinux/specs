@@ -2,7 +2,7 @@
 %define module Mail-GnuPG
 
 Name: perl-%module
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: Process email with GPG
@@ -33,6 +33,9 @@ Use GnuPG::Interface to process or create PGP signed or encrypted email.
 %perl_vendor_privlib/Mail
 
 %changelog
+* Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - automated CPAN update
 
