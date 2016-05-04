@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt5
+Release: alt6
 License: Python
 Group: Development/Python3
 
@@ -729,7 +729,7 @@ rmdir %buildroot%pylibdir/site-packages
 %global _pyconfig32_h pyconfig-32.h
 %global _pyconfig64_h pyconfig-64.h
 
-%ifarch x86_64
+%ifarch aarch64 e2k ppc64 x86_64
 %global _pyconfig_h %_pyconfig64_h
 %else
 %global _pyconfig_h %_pyconfig32_h
@@ -1177,6 +1177,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Wed May  4 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt6
+- (.spec) Adapted for other 64bit archs (thx sbolshakov@).
+
 * Fri Apr 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt5
 - %%py3_provides os.path (an OS-independent alias, which other modules
   might want to import).
