@@ -1,5 +1,5 @@
 Name: filezilla
-Version: 3.16.1
+Version: 3.17.0
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
@@ -8,9 +8,9 @@ License: GPL
 Url: http://filezilla.sourceforge.net/
 Source: FileZilla_%{version}_src.tar
 
-# Automatically added by buildreq on Wed Mar 30 2016 (-ba)
-# optimized out: at-spi2-atk elfutils fontconfig glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libp11-kit libpango-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base xz
-BuildRequires: gcc-c++ libdbus-devel libfilezilla-devel libgnutls-devel libgtk+3-devel libpugixml-devel libsqlite3-devel libwxGTK3.0-devel xdg-utils
+# Automatically added by buildreq on Wed May 04 2016 (-ba)
+# optimized out: at-spi2-atk elfutils fontconfig glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libp11-kit libpango-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules xz
+BuildRequires: gcc-c++ libdbus-devel libfilezilla-devel libgnutls-devel libgtk+3-devel libnettle-devel libpugixml-devel libsqlite3-devel libwxGTK3.0-devel xdg-utils
 
 %description
 FileZilla is a fast and reliable FTP client and server with lots
@@ -43,6 +43,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Wed May 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.17.0-alt1
+- Updated to 3.17.0.
+
 * Wed Mar 30 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.16.1-alt1
 - Updated to 3.16.1.
 
