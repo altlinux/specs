@@ -1,7 +1,7 @@
 %define _libname libfreshwrapper-flashplayer
 
 Name: freshplayerplugin
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
@@ -15,7 +15,7 @@ ExclusiveArch: %ix86 x86_64
 
 # Automatically added by buildreq on Wed Dec 30 2015
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libEGL-devel libGL-devel libX11-devel libXrender-devel libatk-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libjson-c libopencore-amrnb0 libopencore-amrwb0 libpango-devel libstdc++-devel libvdpau-devel libwayland-client libwayland-server pkg-config xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: cmake gcc-c++ libXcursor-devel libXrandr-devel libalsa-devel libavcodec-devel libdrm-devel libevent-devel libgtk+2-devel libpulseaudio-devel libssl-devel libv4l-devel libva-devel ragel
+BuildRequires: cmake gcc-c++ libXcursor-devel libXrandr-devel libalsa-devel libavcodec-devel libdrm-devel libevent-devel libgtk+3-devel libpulseaudio-devel libssl-devel libv4l-devel libva-devel ragel
 
 %{?!_without_check:%{?!_disable_check:BuildPreReq: ctest}}
 
@@ -36,6 +36,7 @@ sed -i 's|^#pepperflash_path = .*|pepperflash_path = "%_libdir/pepper-plugins/li
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_C_FLAGS='%optflags' \
   -DCMAKE_CXX_FLAGS='%optflags' \
+  -DWITH_GTK=3 \
   #
 %cmake_build
 
@@ -52,6 +53,9 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Wed May 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.5-alt1
+- Updated to 0.3.5.
+
 * Wed Dec 30 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.4-alt1
 - Updated to 0.3.4.
 
