@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt14.2.1.1
+Release: alt15
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -31,6 +31,7 @@ Patch3: synaptic-0.58-rgiconlegend-supported.patch
 Patch4: synaptic-0.58-rsources-extraspaces.patch
 Patch5: synaptic-0.58-rsources-vendorparts.patch
 Patch6: synaptic-0.58-cdrom-to-media.patch
+Patch7: synaptic-0.58-alt-fix-null-history.patch
 
 BuildPreReq: libapt-devel >= 0.5.15lorg2-alt42
 %if_enabled autotools
@@ -72,6 +73,7 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
+%patch7 -p2
 
 %if_with ru_po
 # installing own translation
@@ -126,6 +128,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Wed May 04 2016 Denis Medvedev <nbr@altlinux.org> 0.58-alt15
+- Fix bug with missing history.
+
 * Thu May 28 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.58-alt14.2.1.1
 - Rebuilt for:
  + libapt-pkg-libc6.9-6.so.5.
