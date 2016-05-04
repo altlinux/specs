@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.3.26
-Release: alt2
+Release: alt3
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -187,6 +187,9 @@ usermod -d %rtdir %name ||:
 
 %files -f %name.lang locales
 %changelog
+* Wed May  4 2016 Terechkov Evgenii <evg@altlinux.org> 6.3.26-alt3
+- Drop etcnet requirement for fetchmail-daemon (i.e. for systemd-networkd-only setups)
+
 * Thu Jun  4 2015 Terechkov Evgenii <evg@altlinux.org> 6.3.26-alt2
 - Systemd unit added (ALT#31049) to daemon subpackage
 
