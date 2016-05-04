@@ -1,8 +1,8 @@
 %define docbook_man %_datadir/xml/docbook/xsl-stylesheets/manpages/docbook.xsl
 
 Name: dosbox
-Version: 0.74
-Release: alt4.qa1
+Version: 0.74.r3852
+Release: alt1
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -27,7 +27,7 @@ Source5: %name.xpm
 Source6: %name.desktop
 
 # fix #24306 bug
-Source7: %name-%version.conf
+Source7: %name-0.74.conf
 Source8: README_ru.ALT
 
 Patch: dosbox-0.74-alt-gcc4.6.patch
@@ -204,6 +204,9 @@ cp %{SOURCE7} %{SOURCE8} %buildroot/%_defaultdocdir/%name-%version
 %_desktopdir/*
 
 %changelog
+* Wed May 04 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.74.r3852-alt1
+- svn snapshot, fpu problems on x86_64 should be fixed
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.74-alt4.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
