@@ -1,15 +1,15 @@
-%define origname wxPython-src
 %define major 3.0
 %define libmajor 3.0
 %define wxdir wx-%major-gtk3
 %define oname wx%major
 
-%def_enable docs
+%def_disable docs
 %def_without python3
 
 Name: python-module-%oname
-Version: %major.3.0
-Release: alt6.git20150311
+Version: %major.2.0
+Release: alt1
+Epoch: 1
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -20,18 +20,21 @@ License: wxWindows Library Licence
 Group: Development/Python
 Url: http://www.wxpython.org/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 # https://github.com/wxWidgets/wxPython.git
-Source: %origname-%version.tar.bz2
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+# Remove Editra - it doesn't work and is technically a bundle.  Thanks to
+# Debian for the patch.
+Patch10: fix-editra-removal.patch
+Patch1: wxPython-3.0.0.0-format.patch
+# http://trac.wxwidgets.org/ticket/16765
+Patch2: wxPython-3.0.2.0-getxwindowcrash.patch
+# http://trac.wxwidgets.org/ticket/16767
+Patch3: wxPython-3.0.2.0-plot.patch
+# http://trac.wxwidgets.org/ticket/17160
+Patch4: wxPython-3.0.2.0-listctrl-mixin-edit.patch
+# make sure to keep this updated as appropriate
 
-# http://svn.wxwidgets.org/svn/wx/wxPython/3rdParty/
-#Source1: agw-%version.tar.bz2
-#Source2: floatcanvas-%version.tar.bz2
-#Source3: Editra-%version.tar.bz2
-#Source4: XRCed-%version.tar.bz2
-#Source5: PubSub-%version.tar.bz2
-#Source6: PDFViewer-%version.tar.bz2
 
 Provides: wxPython = %version
 Provides: wxPythonGTK = %version
@@ -66,7 +69,7 @@ Requires: libwxGTK%libmajor
 Provides: python-module-wx = %version-%release
 
 %py_requires enchant PIL
-%add_python_req_skip comtypes floatcanvas lib_setup clip_dndc cmndlgsc controls2c controlsc eventsc filesysc fontsc framesc gdic htmlhelpc imagec mdic misc2c miscc oglbasicc oglcanvasc oglshapes2c oglshapesc printfwc sizersc stattoolc streamsc utilsc windows2c windows3c windowsc xmlrpcserver __version__ _controls _gdi _misc _windows numpy
+%add_python_req_skip comtypes floatcanvas lib_setup clip_dndc cmndlgsc controls2c controlsc eventsc filesysc fontsc framesc gdic htmlhelpc imagec mdic misc2c miscc oglbasicc oglcanvasc oglshapes2c oglshapesc printfwc sizersc stattoolc streamsc utilsc windows2c windows3c windowsc xmlrpcserver __version__ _controls _gdi _misc _windows numpy unittest
 
 %description
 wxPython is a GUI toolkit for Python that is a wrapper around the
@@ -88,7 +91,7 @@ AutoReq: yes, noperl
 Provides: python3-module-wx = %version-%release
 Requires: libwxGTK3.3
 %py3_requires enchant PIL
-%add_python3_req_skip comtypes floatcanvas lib_setup clip_dndc cmndlgsc controls2c controlsc eventsc filesysc fontsc framesc gdic htmlhelpc imagec mdic misc2c miscc oglbasicc oglcanvasc oglshapes2c oglshapesc printfwc sizersc stattoolc streamsc utilsc windows2c windows3c windowsc xmlrpcserver __version__ _controls _gdi _misc _windows numpy
+%add_python3_req_skip comtypes floatcanvas lib_setup clip_dndc cmndlgsc controls2c controlsc eventsc filesysc fontsc framesc gdic htmlhelpc imagec mdic misc2c miscc oglbasicc oglcanvasc oglshapes2c oglshapesc printfwc sizersc stattoolc streamsc utilsc windows2c windows3c windowsc xmlrpcserver __version__ _controls _gdi _misc _windows numpy unittest
 
 %description -n python3-module-%oname
 wxPython is a GUI toolkit for Python that is a wrapper around the
@@ -169,21 +172,13 @@ Requires: %name = %version-%release
 This package contains demo programs files for wxPythonGTK
 
 %prep
-%setup -n %origname-%version
-
-rm -fR src/gtk/*.cpp src/gtk/*.py src/{msw,osx_carbon,osx_cocoa} \
-	contrib/gizmos/gtk/* contrib/gizmos/{msw,osx_carbon,osx_cocoa}
-#mkdir tmp
-#mv src/gtk/*.py tmp/
-
-# We do not need to refresh these files
-subst "s|'preamble.txt', 'licence.txt', 'licendoc.txt', 'lgpl.txt'||" \
-	setup.py
-
-LNUM=$(egrep -n '%%import _statctrls.i' src/_control.i |\
-	awk -F : '{print $1}')
-sed -i "${LNUM}rsrc/_statctrls.i" src/_control.i
-sed -i '/%%import _statctrls.i/d' src/_control.i
+%setup
+%patch -p1
+%patch10 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 
 %if_enabled docs
@@ -191,14 +186,8 @@ sed -i '/%%import _statctrls.i/d' src/_control.i
 ln -s README.html docs/index.html
 %endif
 
-#for i in lib/pubsub/pubsub1 lib/pubsub/pubsub2 tools/XRCed/plugins
-for i in tools/XRCed/plugins
-do
-	touch wx/$i/__init__.py
-done
-
-sed -i 's|@VER@|%libmajor|' config.py
-sed -i -e 's|/usr/lib|%_libdir|' -e 's|-O3|-O2|' config.py
+#sed -i 's|@VER@|%libmajor|' wxPython/config.py
+sed -i -e 's|/usr/lib|%_libdir|' -e 's|-O3|-O2|' wxPython/config.py
 
 %if_with python3
 rm -rf ../python3
@@ -206,26 +195,21 @@ cp -a . ../python3
 %endif
 
 %build
+cd wxPython
 INCS="$(wx-config --cflags)"
 %add_optflags -fno-strict-aliasing -fpermissive -std=gnu++11 $INCS
 
 %python_build \
-	NO_SCRIPTS=1 \
-	WXPORT=gtk3 \
-	UNICODE=1 \
-	INSTALL_MULTIVERSION=1 \
-%if_enabled glcanvas
-	BUILD_GLCANVAS=1 \
-%else
-	BUILD_GLCANVAS=0 \
-%endif
-	BUILD_STC=1 \
-	BUILD_GIZMOS=1 \
-	USE_SWIG=1 \
-	UNDEF_NDEBUG=0
+        NO_SCRIPTS=1 \
+        WXPORT=gtk3 \
+        UNICODE=1 \
+        WX_CONFIG=/usr/bin/wx-config
+
+cd ..
 
 %if_with python3
 pushd ../python3
+cd wxPython
 for i in $(find ./ -name '*.py'); do
 	sed -i 's|os\.path\.walk|os.walk|g' $i
 done
@@ -256,16 +240,20 @@ unset FFLAGS
 	USE_SWIG=1 \
 	UNDEF_NDEBUG=0
 popd
+cd ..
 %endif
 
 %if_enabled docs
+cd wxPython
 sed -i '1012d' docs/wxPythonManual.html
 %generate_pickles $PWD $PWD/docs wx
+cd ..
 %endif
 
 %install
 %if_with python3
 pushd ../python3
+cd wxPython
 %add_optflags -fno-strict-aliasing
 %python3_build_install
 
@@ -290,7 +278,7 @@ popd
 # has error
 rm -f \
 	%buildroot%python3_sitelibdir/wx/tools/Editra/tests/syntax/python.python
-
+cd ..
 cp -fR tests %buildroot%python3_sitelibdir/wx/
 touch %buildroot%python3_sitelibdir/wx/tests/__init__.py
 rm -f \
@@ -302,31 +290,16 @@ for i in $(find %buildroot%_includedir -type f); do
 done
 mv %buildroot%_includedir/wx-%major/wx/wxPython \
 	 %buildroot%_includedir/wx-%major/wx/wxPython3
-%endif
+%endif # python3
 
+cd wxPython
 %add_optflags -fno-strict-aliasing
-%python_install INSTALL_MULTIVERSION=1
-
-for i in _gdi _windows _controls _misc xrc combo aui html stc calendar \
-	glcanvas grid media wizard html2 propgrid webkit dataview richtext
-do
-	sed -i 's|wx\._core|_core|g' %buildroot%python_sitelibdir/*/wx/$i.py
-done
-for i in combo richtext
-do
-	sed -i 's|wx\._controls|_controls|g' \
-		%buildroot%python_sitelibdir/*/wx/$i.py
-done
-for i in aui html grid wizard propgrid richtext
-do
-	sed -i 's|wx\._windows|_windows|g' \
-		%buildroot%python_sitelibdir/*/wx/$i.py
-done
-
-mv %buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/src/extern/pygments/lexers/math.py \
-	%buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/src/extern/pygments/lexers/_math.py
-rm -f %buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/src/extern/pygments/lexers/math.py*
-ln -s Editra.pyw %buildroot%python_sitelibdir/%wxdir/wx/tools/Editra/Editra
+%python_install \
+        NO_SCRIPTS=1 \
+        WXPORT=gtk3 \
+        UNICODE=1 \
+        WX_CONFIG=/usr/bin/wx-config \
+        INSTALL_MULTIVERSION=1
 
 %define pythonsite %buildroot%python_sitelibdir_noarch
 
@@ -372,7 +345,7 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/*/tests
-%exclude %python_sitelibdir/*/*/*/*/tests
+#%exclude %python_sitelibdir/*/*/*/*/tests
 %if_enabled docs
 %exclude %python_sitelibdir/wx%major/pickle
 %doc docs/{README.txt,CHANGES.txt}
@@ -397,11 +370,11 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %_includedir/wx-*/wx/wxPython/
 
 %files demo
-%doc demo
+%doc wxPython/demo
 
 %files tests
 %python_sitelibdir/*/*/tests
-%python_sitelibdir/*/*/*/*/tests
+#%python_sitelibdir/*/*/*/*/tests
 
 %if_enabled docs
 %files docs
@@ -413,6 +386,10 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Wed May 04 2016 Alexey Shabalin <shaba@altlinux.ru> 1:3.0.2.0-alt1
+- downgrade to 3.0.2.0 release
+- add patches from fedora
+
 * Fri Apr 22 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.3.0-alt6.git20150311
 - build with INSTALL_MULTIVERSION=1, as previus versions
 - fix provides wxversion
