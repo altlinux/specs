@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.2
+Version:  1.3.3
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,9 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Wed May 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt1
+- Fix remove all branches or tasks
+
 * Sun May 01 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1
 - Fix enexpected warning (ALT #32045)
 
