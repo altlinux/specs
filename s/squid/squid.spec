@@ -8,8 +8,8 @@
 %def_with gnutls
 
 Name: squid
-Version: 3.5.15
-Release: alt1.1
+Version: 3.5.17
+Release: alt1
 %define langpack_ver 20150704
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -306,6 +306,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Sun May 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.17-alt1
+- Updated to 3.5.17.
+
 * Fri Apr 29 2016 Andrey Cherepanov <cas@altlinux.org> 3.5.15-alt1.1
 - (ldv@) Fix remove conflict directories and symlinks (ALT #31812)
 
