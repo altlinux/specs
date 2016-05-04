@@ -1,8 +1,8 @@
 %define py_name youtube_dl
 
 Name: youtube-dl
-Version: 2016.04.13
-Release: alt1.1
+Version: 2016.05.01
+Release: alt1
 
 Summary: Download videos from YouTube
 License: Public domain
@@ -82,6 +82,9 @@ cd -
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Wed May 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2016.05.01-alt1
+- Updated to 2016.05.01.
+
 * Thu Apr 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 2016.04.13-alt1.1
 - (NMU) Rebuild with rpm-build-python3-0.1.10.2 (more autoreqs/provs).
 
