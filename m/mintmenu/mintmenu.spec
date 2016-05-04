@@ -3,7 +3,7 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.6.6
+Version:        5.6.7
 Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
@@ -73,7 +73,7 @@ added to your gnome-panel or launched in its own window.
 #patch3 -p1
 %patch4 -p0
 %patch9 -p1
-%patch34 -p0
+%patch34 -p1
 %if_with apthack
 %patch56 -p1
 %else
@@ -134,6 +134,7 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %_datadir/glib-2.0/schemas/*.xml
 %_man1dir/%name.1.*
 %_pixmapsdir/mintmenu-altlinux.png
+%_pixmapsdir/mintmenu.svg
 %_altdir/mintmenu-icon-alt
 
 # list-mintmenu
@@ -142,6 +143,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Tue Apr 26 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.7-alt1
+- New version
+
 * Sat Dec 19 2015 Andrey Cherepanov <cas@altlinux.org> 5.6.6-alt1
 - New version
 
