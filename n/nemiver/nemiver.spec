@@ -2,15 +2,15 @@
 
 Name: nemiver
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: A GNOME C/C++ Debugger
 Group: Development/Debuggers
 License: GPLv2+
-Url: http://projects.gnome.org/nemiver/
+Url: https://wiki.gnome.org/Apps/Nemiver
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Requires: gdb
 
@@ -67,6 +67,9 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_includedir/%name/
 
 %changelog
+* Thu May 05 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt2
+- updated to 0.9.6-39-ge0e4222
+
 * Thu Sep 24 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
 - 0.9.6 release
 
