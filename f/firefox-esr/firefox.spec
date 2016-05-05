@@ -1,15 +1,19 @@
-#set_verify_elf_method relaxed
+%set_verify_elf_method relaxed
+%def_with gtk3
 
-%define firefox_cid                    \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
-%define firefox_prefix                 %_libdir/firefox
-%define firefox_datadir                %_datadir/firefox
-%define real_name		       firefox
+%define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
+%define firefox_prefix  %_libdir/firefox
+%define firefox_datadir %_datadir/firefox
+
+%define gst_version 1.0
+%define nspr_version 4.12.0
+%define nss_version 3.23.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        38.7.1
+Version:        45.1.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -17,20 +21,31 @@ URL:            http://www.mozilla.org/projects/firefox/
 
 Packager:	Andrey Cherepanov <cas@altlinux.ru>
 
-Source0:	firefox-source.tar
-Source1:	rpm-build.tar
-Source2:	searchplugins.tar
-Source4:	firefox-mozconfig
-Source6:	firefox.desktop
-Source7:	firefox.c
-Source8:	firefox-prefs.js
+Source0:        firefox-source.tar
+Source1:        rpm-build.tar
+Source2:        searchplugins.tar
+Source4:        firefox-mozconfig
+Source6:        firefox.desktop
+Source7:        firefox.c
+Source8:        firefox-prefs.js
 
-Patch5:		firefox-duckduckgo.patch
-Patch6:		firefox3-alt-disable-werror.patch
-Patch14:	firefox-fix-install.patch
-Patch16:	firefox-cross-desktop.patch
-#Patch17:	firefox-disable-installer.patch
-Patch18:	mozilla-bug-1153109-enable-stdcxx-compat.patch
+Patch5:         firefox-duckduckgo.patch
+Patch6:         firefox3-alt-disable-werror.patch
+Patch14:        firefox-fix-install.patch
+Patch16:        firefox-cross-desktop.patch
+Patch17:        firefox-mediasource-crash.patch
+
+# Upstream
+Patch200:       mozilla-bug-1205199.patch
+Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
+
+# Red Hat
+Patch300:       rhbz-1219542-s390-build.patch
+Patch301:       rhbz-1291190-appchooser-crash.patch
+Patch302:       rhbz-966424.patch
+%if_with gtk3
+Patch303:       rh-firefox-gtk3-20.patch
+%endif
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -42,6 +57,9 @@ BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver
 BuildRequires: libXcomposite-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
+%if_with gtk3
+BuildRequires: libgtk+3-devel
+%endif
 BuildRequires: xorg-cf-files chrpath alternatives yasm
 BuildRequires: zip unzip
 BuildRequires: bzlib-devel zlib-devel
@@ -58,7 +76,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
+BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libicu-devel
@@ -71,9 +89,9 @@ BuildRequires: python-modules-sqlite3
 BuildRequires: python-modules-json
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.10.8
-BuildRequires: libnss-devel        >= 3.18.0
-BuildRequires: libnss-devel-static >= 3.18.0
+BuildRequires: pkgconfig(nspr) >= %nspr_version
+BuildRequires: pkgconfig(nss) >= %nss_version
+BuildRequires: libnss-devel-static
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -86,6 +104,9 @@ Provides:	firefox = %name-%version
 Conflicts:	firefox
 Requires:	mozilla-common
 Requires:	gst-plugins-ugly1.0
+
+# ALT#30732
+Requires:	gst-plugins-ugly%gst_version
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss >= 3.12.11-alt3
@@ -110,10 +131,17 @@ tar -xf %SOURCE2
 %patch6  -p1
 %patch14 -p1
 %patch16 -p1
-#patch17 -p1
-%patch18 -p1
+%patch17 -p2
 
-#echo firefox_version > browser/config/version.txt
+%patch200 -p1
+%patch201 -p1
+
+%patch300 -p1
+%patch301 -p1
+%patch302 -p1
+%if_with gtk3
+%patch303 -p1
+%endif
 
 cp -f %SOURCE4 .mozconfig
 
@@ -144,14 +172,13 @@ EOF
 #
 # Disable C++ exceptions since Mozilla code is not exception-safe
 #
-MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
-                sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
+MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS -fPIC -Wl,-z,relro -Wl,-z,now | \
+                sed \
+                    -e 's/-Wall//' \
+                    -e 's/-fexceptions/-fno-exceptions/g'
+)
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
-
-# Add fake RPATH
-rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
 export PREFIX="%_prefix"
 export LIBDIR="%_libdir"
@@ -212,6 +239,12 @@ for s in 16 22 24 32 48 256; do
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/firefox.png
 done
 
+# ALT#30572
+if [ ! -e "%buildroot/%firefox_prefix/plugins" ]; then
+	what="$(relative %browser_plugins_path %firefox_prefix/plugins)"
+	ln -s -- "$what" %buildroot/%firefox_prefix/plugins
+fi
+
 # install rpm-build-firefox
 mkdir -p -- \
 	%buildroot/%_rpmmacrosdir
@@ -223,11 +256,6 @@ sed \
 install -m755 firefox %buildroot/%_bindir/firefox
 
 cd %buildroot
-
-#sed -i \
-#	-e 's,\(MinVersion\)=.*,\1=5.0.1,g' \
-#	-e 's,\(MaxVersion\)=.*,\1=5.0.1,g' \
-#	./%firefox_prefix/application.ini
 
 mv -f ./%firefox_prefix/application.ini ./%firefox_prefix/browser/application.ini
 
@@ -249,25 +277,6 @@ rm -rf -- \
 	./%_libdir/%rname-devel \
 #
 
-# Add real RPATH
-(set +x
-	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
-
-	find \
-		%buildroot/%firefox_prefix \
-		%buildroot/%firefox_prefix-devel \
-	-type f |
-	while read f; do
-		t="$(readlink -ev "$f")"
-
-		file "$t" | fgrep -qs ELF || continue
-
-		if chrpath -l "$t" | fgrep -qs "RPATH=$rpath"; then
-			chrpath -r "%firefox_prefix" "$t"
-		fi
-	done
-)
-
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -288,6 +297,19 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Wed May 04 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.1-alt1
+- New ESR version
+
+* Mon May 02 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2016-47 Write to invalid HashMap entry through JavaScript.watch()
+  + MFSA 2016-44 Buffer overflow in libstagefright with CENC offsets
+  + MFSA 2016-39 Miscellaneous memory safety hazards
+
+* Fri Apr 15 2016 Andrey Cherepanov <cas@altlinux.org> 45.0.2-alt1
+- New ESR version (switch to 45.x)
+
 * Thu Mar 24 2016 Andrey Cherepanov <cas@altlinux.org> 38.7.1-alt1
 - New ESR version
 
