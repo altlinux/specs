@@ -1,6 +1,6 @@
 Name: neko
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: The Neko Programming Language
 
@@ -48,5 +48,8 @@ make install INSTALL_PREFIX=%buildroot%prefix LIBDIRNAME=%_lib
 %_includedir/*.h
 
 %changelog
+* Thu May 05 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.0-alt2
+- backport apache-2.4 support
+
 * Mon Aug 05 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - initial build for ALTLinux Sisyphus
