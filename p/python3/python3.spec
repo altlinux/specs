@@ -75,7 +75,7 @@
 Summary: Version 3 of the Python programming language aka Python 3000
 Name: python3
 Version: %{pybasever}.1
-Release: alt6
+Release: alt7
 License: Python
 Group: Development/Python3
 
@@ -502,6 +502,7 @@ Summary: A GUI toolkit for Python 3
 Group: Development/Python3
 Provides: %name-modules-idlelib = %EVR
 Obsoletes: %name-modules-idlelib < 3.3.1-alt4
+Requires: tk
 
 %description modules-tkinter
 The Tkinter (Tk interface) program is an graphical user interface for
@@ -1177,6 +1178,9 @@ WITHIN_PYTHON_RPM_BUILD= LD_LIBRARY_PATH=`pwd` ./python -m test.regrtest --verbo
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Thu May  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt7
+- python3-modules-tkinter: Requires: tk (ALT#29206)
+
 * Wed May  4 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.1-alt6
 - (.spec) Adapted for other 64bit archs (thx sbolshakov@).
 
