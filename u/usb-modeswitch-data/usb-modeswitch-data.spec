@@ -1,16 +1,22 @@
 Name:    usb-modeswitch-data
-Version: 20151101
+Version: 2.3.0
 Release: alt1
 
 Summary: Data and udev-rules for usb-modeswitch
 License: GPLv2+
+
+%define pdate		20160112
+%define _udevdir 	/lib/udev
+%define bname 		usb-modeswitch
+
 Group:   System/Configuration/Hardware
 Url:     http://www.draisberghof.de/usb_modeswitch/
 
-Source:  %name-%version.tar
+Source: usb-modeswitch-data-%pdate.tar
 
 BuildArch: noarch
 Requires: usb-modeswitch >= 1.2.2
+Epoch: 1
 
 %description
 Data and udev-rules for usb-modeswitch
@@ -18,7 +24,7 @@ Data and udev-rules for usb-modeswitch
 %define modeswitch_rulesdir %_datadir/usb_modeswitch
 
 %prep
-%setup
+%setup -n %name-%pdate
 
 %install
 %makeinstall_std
@@ -26,9 +32,13 @@ Data and udev-rules for usb-modeswitch
 %files
 %doc ChangeLog README
 %modeswitch_rulesdir
-/lib/udev/rules.d/*
+%_udevdir/rules.d/40-usb_modeswitch.rules
+
 
 %changelog
+* Wed May 04 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:2.3.0-alt1
+- Version 20160112
+
 * Thu Nov 05 2015 Andrey Cherepanov <cas@altlinux.org> 20151101-alt1
 - New version (ALT #30058)
 
