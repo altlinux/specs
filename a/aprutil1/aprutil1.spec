@@ -70,7 +70,7 @@
 %define apudir %name-%version
 
 Name: aprutil%aprver
-Version: 1.5.1
+Version: 1.5.4
 Release: %{branch_release alt1}%{?release_libdb}
 
 Summary: Apache Portable Runtime Utility shared library
@@ -232,7 +232,6 @@ This package provides the ODBC driver for the apr-util DBD
 
 %prep
 %setup
-%patch1 -p1
 
 # GCC >= 4.6 too smart and warns about unused variable even with 'tmp=0;' line.
 # With -Werror this produce a compilation error and makes this test
@@ -240,8 +239,7 @@ This package provides the ODBC driver for the apr-util DBD
 sed -e 's#tmp=0;#return tmp;#' -i build/apu-conf.m4
 
 %build
-LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 \
-	./buildconf --with-apr=%_datadir/apr-%aprver
+autoheader && autoconf
 %configure \
 	--with-apr=%prefix \
 	--with-installbuilddir=%_datadir/apr-%aprver/build \
@@ -277,7 +275,6 @@ find %buildroot%_datadir -type f -print0 |
 %_libdir/*.exp
 %_pkgconfigdir/apr-util-%aprver.pc
 %_includedir/*
-%_datadir/apr-%aprver/build/*.m4
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -306,6 +303,9 @@ find %buildroot%_datadir -type f -print0 |
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 1.5.4-alt1
+- New version 1.5.4
+
 * Wed Nov 28 2012 Aleksey Avdeev <solo@altlinux.ru> 1.5.1-alt1
 - New version (1.5.1)
 - Use libdb4-devel by default
