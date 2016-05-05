@@ -5,7 +5,7 @@
 
 Name: monit
 Version: 5.17.1
-Release: alt1
+Release: alt2
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -84,6 +84,9 @@ Directory for monit configuration files
 
 %prep
 %setup -n %name-%version%beta
+sed -i \
+	-e 's,allow localhost,use address 127.0.0.1,' \
+	-e 's,admin:monit,monit:secretword,' monitrc
 
 %build
 sh bootstrap
@@ -129,8 +132,12 @@ if [ ! -f %name.pem ]; then
 		-keyout %name.pem -out %name.pem &>/dev/null
 fi
 
-grep -qs '^	allow localhost$' /etc/monitrc && {
+grep -qs '^    allow localhost ' /etc/monitrc && {
   echo "** WARNING: replace 'allow localhost' with 'use address 127.0.0.1'"
+  echo "            in /etc/monitrc"; } >&2 ||:
+
+grep -qs '^    allow admin:monit ' /etc/monitrc && {
+  echo "** WARNING: replace 'allow admin:monit' with another login:password"
   echo "            in /etc/monitrc"; } >&2 ||:
 
 grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
@@ -166,6 +173,13 @@ grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Thu May 05 2016 Michael Shigorin <mike@altlinux.org> 5.17.1-alt2
+- tweaked monitrc addition to avoid dups (closes: #30577)
+  + added corresponding warning to %%post
+
+* Thu Mar 10 2016 Michael Shigorin <mike@altlinux.org> 5.17.1-alt1.1
+- tweaked filesystems, mdadm examples
+
 * Wed Mar 09 2016 Michael Shigorin <mike@altlinux.org> 5.17.1-alt1
 - new version (watch file uupdate)
 
