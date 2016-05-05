@@ -11,7 +11,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-generic-compat
 Name:           batik
 Version:        1.8
-Release:        alt1_2jpp8
+Release:        alt2_2jpp8
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            http://xml.apache.org/batik/
@@ -90,6 +90,7 @@ purposes, such as viewing, generation or manipulation.
 Group: Graphics
 Summary:        Batik CSS engine
 Obsoletes:      %{name} < 1.8-0.17.svn1230816
+Conflicts: batik < 0:1.8-alt1_1
 
 %description css
 CSS component of the Apache Batik SVG manipulation and rendering library.
@@ -463,6 +464,9 @@ popd
 
 
 %changelog
+* Thu May 05 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt2_2jpp8
+- added conflicts (closes: #32067)
+
 * Tue Feb 02 2016 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_2jpp8
 - new version
 
