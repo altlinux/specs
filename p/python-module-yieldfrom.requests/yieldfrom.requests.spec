@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141019.1.1
 %define mname yieldfrom
 %define oname %mname.requests
 
@@ -6,7 +8,7 @@
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20141019.1
+#Release: alt1.git20141019.1
 Summary: asyncio port of Requests: "Python HTTP for Humans"
 License: ASLv2.0
 Group: Development/Python
@@ -126,7 +128,7 @@ echo %mname >$aFile
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -170,6 +172,9 @@ popd
 %endif
 
 %changelog
+* Fri May 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20141019.1.1
+- (AUTO) subst_x86_64.
+
 * Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 0.1.1-alt1.git20141019.1
 - NMU just rebuild.
 
