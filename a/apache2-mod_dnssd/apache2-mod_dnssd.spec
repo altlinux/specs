@@ -2,14 +2,14 @@
 
 Name: apache2-mod_dnssd
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Apache 2.0 module which adds Zeroconf support via DNS-SD using Avahi.
 License: Apache 2.0
 Group: System/Servers
 Url: http://0pointer.de/lennart/projects/mod_dnssd
 
-Requires: %apache2_name-base > 2.2.22-alt15
+Requires: %apache2_name-base >= 2.4.7-alt1
 Requires: %apache2_name-mmn = %apache2_mmn
 Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 
@@ -34,6 +34,7 @@ make
 install -pm0644 -D src/.libs/mod_dnssd.so %buildroot/%apache_moduledir/mod_dnssd.so
 install -pm0644 -D alt/dnssd.conf %buildroot%apache2_mods_available/dnssd.conf
 install -pm0644 -D alt/dnssd.load %buildroot%apache2_mods_available/dnssd.load
+sed -i 's,@apache_moduledir@,%apache_moduledir,' %buildroot%apache2_mods_available/dnssd.load
 install -pm0644 -D alt/dnssd.start %buildroot%apache2_mods_start/100-dnssd.conf
 
 # for %%ghost
@@ -51,6 +52,9 @@ touch %buildroot%apache2_mods_enabled/dnssd.load
 %ghost %apache2_mods_enabled/*.conf
 
 %changelog
+* Fri May 06 2016 Sergey Alembekov <rt@altlinux.ru> 0.6-alt3
+- fix dnssd.load config file
+
 * Mon Apr 11 2016 Andrey Cherepanov <cas@altlinux.org> 0.6-alt2
 - Rebuild with new apache2
 
