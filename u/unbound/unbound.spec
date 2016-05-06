@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.5.7
+Version: 1.5.8
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Fri May 06 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.8-alt1
+- New version, see Changelog
+
 * Mon Feb 29 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.7-alt1
 - New version, see Changelog
 
