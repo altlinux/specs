@@ -4,7 +4,7 @@
 %define api_ver 1.0
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -172,6 +172,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags libpcre`"
 
 
 %changelog
+* Fri May 06 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
+- 3.20.4
+
 * Thu Apr 28 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 
