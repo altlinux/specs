@@ -2,7 +2,7 @@
 %def_with recording
 
 Name: girl
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Internet Radio Locator
@@ -54,6 +54,9 @@ export ac_cv_path_GIRL_HELPER_RECORD=%_bindir/streamripper
 
 
 %changelog
+* Fri May 06 2016 Yuri N. Sedunov <aris@altlinux.org> 8.4.2-alt1
+- 8.4.2
+
 * Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 8.4.0-alt1
 - 8.4.0
 
