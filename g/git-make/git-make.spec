@@ -1,5 +1,5 @@
 Name: git-make
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: version control and merging of intended and automatically produced results
@@ -60,6 +60,14 @@ install --preserve-timestamps -m 755 gitmk-* -t %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Fri May 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1
+- check-GOAL targets should simply not have GOAL as a prerequisite;
+  in general, a check makes sense before the transformation, too.
+  (This idea allowed us to avoid a hack whose purpose was to avoid a
+  re-make after a Git checkout.)
+- gitmk-make: proceed if nothing to commit (borrowed from gear --commit).
+- more clear short AUTO commit msg (for those who do not know about git-make).
+
 * Sun Jan 11 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt1
 - Initial release of the tool I've written & used for myself (to work
 on a textbook and produce output with pandoc and extra tweaks, 
