@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename ru
 %define packagversion 2.4.0
-%define packagedate 201605050700
+%define packagedate 201605061325
 %define moodlebranch 2.4
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Russian
@@ -57,6 +57,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Sat May 07 2016 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201605061325-alt1
+- repocop cronbuild 20160507. At your service.
+- ru.zip build 2016-05-06 13:25 UTC
+
 * Thu May 05 2016 Cronbuild Service <cronbuild@altlinux.org> 2.4.0.201605050700-alt1
 - repocop cronbuild 20160505. At your service.
 - ru.zip build 2016-05-05 07:00 UTC
