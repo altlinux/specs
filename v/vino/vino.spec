@@ -2,7 +2,7 @@
 %define _name org.gnome.Vino
 
 Name: vino
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A remote desktop system for GNOME
@@ -48,6 +48,9 @@ connect to a running GNOME session using VNC.
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Tue May 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
