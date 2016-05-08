@@ -1,18 +1,29 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Perl-Destruct-Level
 Summary:	Allows you to change perl's internal destruction level
 Version:	0.02
-Release:	alt4_13
+Release:	alt4_14
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		http://search.cpan.org/dist/Perl-Destruct-Level/
 Source0:	http://search.cpan.org/CPAN/authors/id/R/RG/RGARCIA/Perl-Destruct-Level-%{version}.tar.gz
+# Module Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
+BuildRequires:	gcc
+BuildRequires:	perl
+BuildRequires:	perl-devel
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
-BuildRequires:	perl(Test/More.pm)
+# Module Runtime
+BuildRequires:	perl(strict.pm)
+BuildRequires:	perl(warnings.pm)
 BuildRequires:	perl(XSLoader.pm)
+# Test Suite
+BuildRequires:	perl(Test/More.pm)
+# Dependencies
 
 # Don't "provide" private Perl libs
 
@@ -40,8 +51,8 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
+find %{buildroot} -type f -name .packlist -delete
+find %{buildroot} -type f -name '*.bs' -a -empty -delete
 # %{_fixperms} %{buildroot}
 
 %check
@@ -52,6 +63,9 @@ make test
 %{perl_vendor_archlib}/Perl/
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_14
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt4_13
 - update to new release by fcimport
 
