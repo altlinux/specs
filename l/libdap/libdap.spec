@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison gcc-c++ libossp-uuid-devel
+BuildRequires: gcc-c++ libossp-uuid-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.17.0
+Version: 3.17.2
 Release: alt1_1
 
 License: LGPLv2+
@@ -14,8 +14,6 @@ URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
 Patch0:  libdap-offline.patch
-# Fix gcc6/c++11 compile errors
-Patch1:  libdap-gcc6.patch
 
 # For autoreconf
 BuildRequires: libtool
@@ -66,9 +64,8 @@ Documentation of the libdap library.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}
 %patch0 -p1 -b .offline
-%patch1 -p1 -b .libdap
 iconv -f latin1 -t utf8 < COPYRIGHT_W3C > COPYRIGHT_W3C.utf8
 touch -r COPYRIGHT_W3C COPYRIGHT_W3C.utf8
 mv COPYRIGHT_W3C.utf8 COPYRIGHT_W3C
@@ -132,6 +129,9 @@ done
 
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 3.17.2-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.17.0-alt1_1
 - update to new release by fcimport
 
