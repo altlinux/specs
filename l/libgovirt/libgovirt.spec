@@ -1,8 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: librest-gir-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(rest-0.7)
+BuildRequires: librest-gir-devel pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 23
+%define fedora 24
 # -*- rpm-spec -*-
 
 %global with_gir 0
@@ -13,8 +13,8 @@ BuildRequires: librest-gir-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgco
 
 Summary: A GObject library for interacting with oVirt REST API
 Name: libgovirt
-Version: 0.3.3
-Release: alt1_3%{?extra_release}
+Version: 0.3.4
+Release: alt1_1
 License: LGPLv2+
 Group: Development/C
 Source: http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
@@ -22,6 +22,9 @@ URL: http://people.freedesktop.org/~teuf/govirt/
 BuildRequires: glib2-devel
 BuildRequires: intltool
 BuildRequires: librest-devel >= 0.7.92
+#needed for make check
+BuildRequires: glib-networking
+BuildRequires: dconf
 %if %{with_gir}
 BuildRequires: gobject-introspection-devel
 %endif
@@ -85,6 +88,9 @@ make check
 %endif
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1_3
 - update to new release by fcimport
 
