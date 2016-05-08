@@ -1,18 +1,20 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker/CPANfile.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker/CPANfile.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Archive-Any-Lite
 Version:	0.11
-Release:	alt1
+Release:	alt1_1
 Summary:	Simple CPAN package extractor 
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Archive-Any-Lite
-Source:	http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
+Source0:	http://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Archive-Any-Lite-%{version}.tar.gz
 Patch0:		Archive-Any-Lite-0.08-EU:MM.patch
 BuildArch:	noarch
 # Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	perl
 BuildRequires:	perl(ExtUtils/MakeMaker.pm)
 # Module
@@ -58,7 +60,7 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+find %{buildroot} -type f -name .packlist -delete
 # %{_fixperms} %{buildroot}
 
 %check
@@ -70,6 +72,9 @@ make test TEST_POD=1
 %{perl_vendor_privlib}/Archive/
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_1
+- update to new release by fcimport
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
