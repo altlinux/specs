@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # License information:
 #
@@ -16,16 +16,25 @@ BuildRequires: perl-devel perl-podlators
 Summary:	Checks if scalar is valid UTF-8
 Name:		perl-Unicode-CheckUTF8
 Version:	1.03
-Release:	alt4_14
+Release:	alt4_15
 License:	UCD and (GPL+ or Artistic)
 Group:		Development/Perl
 Url:		http://search.cpan.org/dist/Unicode-String/
 Source0:	http://search.cpan.org/CPAN/authors/id/B/BR/BRADFITZ/Unicode-CheckUTF8-%{version}.tar.gz
+# Module Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
+BuildRequires:	gcc
+BuildRequires:	perl
+BuildRequires:	perl-devel
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
 BuildRequires:	perl(base.pm)
 BuildRequires:	perl(Exporter.pm)
-BuildRequires:	perl(ExtUtils/MakeMaker.pm)
-BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(XSLoader.pm)
+# Test Suite
+BuildRequires:	perl(Test/More.pm)
+# Dependencies
 
 # Don't "provide" private Perl libs
 
@@ -51,9 +60,8 @@ make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
-find %{buildroot} -type f -name '*.bs' -a -size 0 -exec rm -f {} ';'
-find %{buildroot} -depth -type d -exec rmdir {} ';' 2>/dev/null
+find %{buildroot} -type f -name .packlist -delete
+find %{buildroot} -type f -name '*.bs' -a -empty -delete
 # %{_fixperms} %{buildroot}
 
 %check
@@ -65,6 +73,9 @@ make test
 %{perl_vendor_archlib}/auto/Unicode/
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_15
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt4_14
 - update to new release by fcimport
 
