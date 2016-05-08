@@ -1,19 +1,29 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ libsocket pkgconfig(check) pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/splint gcc-c++ pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+%bcond_without check
+%bcond_without syslog_tests
+
 Name:           libqb
-Version:        0.17.2
-Release:        alt1_2
+Version:        1.0
+Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
-Source0:        https://fedorahosted.org/releases/q/u/quarterback/%{name}-%{version}.tar.xz
-Patch1:         https://github.com/ClusterLabs/libqb/commit/aec4cde4312ada559888371554b0ae862cf91b9a.patch
+Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  autoconf automake libtool doxygen procps libcheck-devel
+# https://fedoraproject.org/wiki/Packaging:C_and_C%2B%2B#BuildRequires_and_Requires
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -23,13 +33,15 @@ and polling.
 
 %prep
 %setup -q
-%patch1 -p1
 
-# Make sure the timestamps are correct
-find . -exec touch \{\} \;
+
+## Make sure the timestamps are correct
+#find . -exec touch \{\} \;
 
 %build
-%configure --disable-static
+./autogen.sh
+%configure --disable-static \
+           %{?with_syslog_tests:--enable-syslog-tests}
 make %{?_smp_mflags}
 
 %install
@@ -61,6 +73,9 @@ developing applications that use %{name}.
 %{_mandir}/man8/qb-blackbox.8*
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.17.2-alt1_2
 - update to new release by fcimport
 
