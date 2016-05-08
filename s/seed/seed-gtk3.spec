@@ -1,12 +1,12 @@
 %define ver_major 3.8
-%def_enable gtk_doc
+%def_disable gtk_doc
 %define webkit_api_ver 3.0
 %define _name seed-gtk3
 %def_enable xorg_module
 
 Name: seed
 Version: %ver_major.2
-Release: alt0.2
+Release: alt0.3
 
 Summary: GObject JavaScriptCore bridge
 License: LGPLv3+/GPLv3+
@@ -110,7 +110,7 @@ rm -f seed.pc
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %check
 #%make check
@@ -145,14 +145,19 @@ rm -f seed.pc
 %files -n lib%name-devel
 %_libdir/lib%_name.so
 %_includedir/%_name
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
 
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/%name
+%_datadir/gtk-doc/html/%name/
+%endif
 
 %exclude %_datadir/doc/%name/
 
 %changelog
+* Sun May 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt0.3
+- updated to 3_8_1-67-g91ce78c
+
 * Mon Sep 30 2013 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt0.2
 - 3.8.2 smapshot (24c5968)
 
