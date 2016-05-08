@@ -32,7 +32,7 @@
 
 Name: %{_name}5
 Version: %ver_major.4
-Release: alt2
+Release: alt3
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -49,6 +49,7 @@ Provides: libgda2 = %version-%release
 %define mdbtools_ver 0.7
 %define ldap_ver 2.2.27-alt1.1
 %define freetds_ver 0.63
+%define vala_ver 0.32
 
 BuildPreReq: intltool >= 0.35.5
 BuildPreReq: gnome-common >= 2.8.0
@@ -61,7 +62,7 @@ BuildPreReq: libldap-devel >= %ldap_ver libsasl2-devel
 BuildRequires: libjson-glib-devel libunixODBC-devel libssl-devel
 BuildRequires: libgnome-keyring-devel libsecret-devel iso-codes-devel
 BuildRequires: gcc-c++ libncurses-devel libreadline-devel libsoup-devel libgcrypt-devel
-%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 BuildRequires: yelp-tools
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.6.7}
 %{?_with_ui:BuildRequires: libgtk+3-devel libgtk+3-gir-devel}
@@ -409,7 +410,7 @@ sed -e 's/^[[:blank:]]//' libgda/libgda.symbols |grep '^_' > libgda/private.sym
 %build
 %autoreconf
 export ac_cv_path_VAPIGEN=%_bindir/vapigen
-export VALA_API_VERSION=0.30
+export VALA_API_VERSION=%vala_ver
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
@@ -625,6 +626,9 @@ export VALA_API_VERSION=0.30
 %exclude %_datadir/%_name-%abi_ver/php
 
 %changelog
+* Sun May 08 2016 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt3
+- updated to 5_2_4-32-g03de66c
+
 * Wed Oct 28 2015 Yuri N. Sedunov <aris@altlinux.org> 5.2.4-alt2
 - 5.2.4_bc89eb08
 
