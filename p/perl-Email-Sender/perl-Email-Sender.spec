@@ -1,17 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Email-Sender
 Version:        1.300028
-Release:        alt1
+Release:        alt1_1
 Summary:        A library for sending email
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Email-Sender/
-Source:        http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Sender-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Capture/Tiny.pm)
 BuildRequires:  perl(Carp.pm)
@@ -86,6 +85,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Email*
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.300028-alt1_1
+- update to new release by fcimport
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.300028-alt1
 - automated CPAN update
 
