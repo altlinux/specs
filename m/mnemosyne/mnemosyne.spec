@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 Name:		mnemosyne
 Summary:	Flash-card learning tool
-Version:	2.3.5
-Release:	alt1_3
+Version:	2.3.6
+Release:	alt1_1
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 Patch0:		mnemosyne-desktop.patch
@@ -20,8 +20,6 @@ Requires:	icon-theme-hicolor
 Requires:	python-module-PyQt4
 Requires:	python-module-PyQt4
 Requires:	python-module-matplotlib-qt4
-# Until bug #1219556 is fixed
-Requires:	python-module-matplotlib-qt5
 Requires:	python-module-cherrypy
 Requires:	python-module-webob
 Source44: import.info
@@ -69,6 +67,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.6-alt1_1
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_3
 - update to new release by fcimport
 
