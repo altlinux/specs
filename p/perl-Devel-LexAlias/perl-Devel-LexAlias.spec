@@ -1,19 +1,29 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DynaLoader.pm) perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-LexAlias
 Version:        0.05
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Alias lexical variables
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Devel-LexAlias/
 Source0:        http://www.cpan.org/authors/id/R/RC/RCLAMP/Devel-LexAlias-%{version}.tar.gz
-
-BuildRequires:  perl(Devel/Caller.pm)
+# Module Build
+BuildRequires:  coreutils
+BuildRequires:  findutils
+BuildRequires:  gcc
+BuildRequires:  perl
+BuildRequires:  perl-devel
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(strict.pm)
+# Module Runtime
+BuildRequires:  perl(Devel/Caller.pm)
+BuildRequires:  perl(DynaLoader.pm)
+# Test Suite
 BuildRequires:  perl(Test/More.pm)
+# Dependencies
 
 
 Source44: import.info
@@ -25,29 +35,28 @@ subroutines scope to one of your choosing.
 %prep
 %setup -q -n Devel-LexAlias-%{version}
 
-perl -pi -e 's|^#!perl|#!/usr/bin/perl|' t/*
-
 %build
-%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-
-find %{buildroot} -type f -name .packlist -exec rm -f {} +
-find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} +
-
-# %{_fixperms} %{buildroot}/*
+find %{buildroot} -type f -name .packlist -delete
+find %{buildroot} -type f -name '*.bs' -empty -delete
+# %{_fixperms} %{buildroot}
 
 %check
 make test
 
 %files
-%doc Changes t/
-%{perl_vendor_archlib}/auto/*
-%{perl_vendor_archlib}/Devel*
+%doc Changes
+%{perl_vendor_archlib}/auto/Devel/
+%{perl_vendor_archlib}/Devel/
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_9
 - update to new release by fcimport
 
