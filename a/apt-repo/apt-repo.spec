@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.3
+Version:  1.3.4
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,12 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Mon May 09 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.4-alt1
+- task_has_arepo(): check whether plan/arepo-add-x86_64-i586 is not
+  empty (ALT #31577).
+- get rid of NO_TASK_AREPO_HACK environment variable (now, as
+  task_has_arepo should work correctly).
+
 * Wed May 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.3-alt1
 - Fix remove all branches or tasks
 
