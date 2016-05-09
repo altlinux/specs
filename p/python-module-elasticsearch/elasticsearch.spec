@@ -4,16 +4,17 @@
 %def_disable check
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.dev.git20150226.1.1
+Version: 2.3.0
+Release: alt1
 Summary: Python client for Elasticsearch
 License: ASL
 Group: Development/Python
-Url: https://pypi.python.org/pypi/elasticsearch/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://github.com/elastic/elasticsearch-py
 
 # https://github.com/elasticsearch/elasticsearch-py.git
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+
 BuildArch: noarch
 
 #BuildPreReq: python-devel python-module-setuptools-tests
@@ -38,7 +39,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ndg-httpsclient python-module-nose python-module-ntlm python-module-pyasn1 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-urllib3 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ndg-httpsclient python3-module-nose python3-module-ntlm python3-module-pip python3-module-pycparser python3-module-setuptools
-BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nosexcover python-module-objects.inv python-module-pbr python-module-pylibmc python-module-pytest python-module-requests python-module-unittest2 python-module-yaml python3-module-chardet python3-module-coverage python3-module-html5lib python3-module-nosexcover python3-module-pbr python3-module-pytest python3-module-unittest2 python3-module-urllib3 rpm-build-python3 time
+BuildRequires: python-module-alabaster python-module-coverage python-module-docutils python-module-html5lib python-module-nosexcover python-module-objects.inv python-module-pbr python-module-pylibmc python-module-pytest python-module-requests python-module-unittest2 python-module-yaml python3-module-chardet python3-module-coverage python3-module-html5lib python3-module-nosexcover python3-module-pbr python3-module-pytest python3-module-unittest2 python3-module-urllib3 rpm-build-python3 time python-module-sphinx_rtd_theme
 
 %description
 Official low-level client for Elasticsearch. Its goal is to provide
@@ -172,6 +173,9 @@ popd
 %endif
 
 %changelog
+* Mon May  9 2016 Terechkov Evgenii <evg@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.0-alt1.dev.git20150226.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
