@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.4
+Version:  1.3.5
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,12 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Mon May  9 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.5-alt1
+- handle both cases without arepo: none (noarch) or empty (ALT #31577).
+- "apt-repo test [task] '' pkg1 ..." will install the packages without
+  modifying APT repos. (With --hsh-apt-config, this feature is useful
+  to do an install check for a package in a minimal system.)
+
 * Mon May 09 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.4-alt1
 - task_has_arepo(): check whether plan/arepo-add-x86_64-i586 is not
   empty (ALT #31577).
