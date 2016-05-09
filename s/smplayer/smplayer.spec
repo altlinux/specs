@@ -1,4 +1,4 @@
-%define		svn 7676
+%define		svn 7822
 
 %define		rel alt1
 
@@ -18,6 +18,7 @@ Patch1:		smplayer-16.4.0-disable_update_autoshutdown.patch
 
 BuildRequires:	gcc-c++ libqt4-devel >= 4.2
 Provides: %name
+
 
 %if "%rel" == "alt0.M70T"
 Requires: mplayer
@@ -107,8 +108,15 @@ export OPTFLAGS="%optflags"
 %files -n %name-mpv
 %files -n %name-mplayer
 %endif
+%if "%rel" == "alt0.M80P"
+%files -n %name-mpv
+%files -n %name-mplayer
+%endif
 
 %changelog
+* Mon May 09 2016 Motsyo Gennadi <drool@altlinux.ru> 16.4.0-alt1.7822
+- 16.4.0 version (svn7822)
+
 * Mon Apr 18 2016 Motsyo Gennadi <drool@altlinux.ru> 16.4.0-alt1.7676
 - 16.4.0 version (svn7676)
 
