@@ -1,23 +1,25 @@
 Name: ansible-shell
 Summary: Interactive shell for ansible
 Version: 0.0.6
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
 Source0: %name-%version.tar
-Patch0: %name-%version-upstream.patch
 Url: https://github.com/dominis/ansible-shell
 
 BuildArch: noarch
 BuildRequires: python-module-setuptools
 
 %description
-Interactive shell for ansible built-in tab completion for all the modules.
+Interactive shell for Ansible with built-in tab completion for all the modules.
+
+As of Ansible 2.1 ansible-shell is part of the official ansible release
+
+This version works with 1.x version of ansible.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %python_build
@@ -30,6 +32,10 @@ Interactive shell for ansible built-in tab completion for all the modules.
 %doc README.md
 
 %changelog
+* Tue May 10 2016 Terechkov Evgenii <evg@altlinux.org> 0.0.6-alt2
+- v0.0.6-6-g975f719
+- N.B.: ansible-shell will NOT work with ansible-2.x (it is builtin since ansible-2.1)
+
 * Sun Feb 14 2016 Terechkov Evgenii <evg@altlinux.org> 0.0.6-alt1
 - Fix FTBFS/missed merge conflict
 - 0.0.6-5-g590c182
