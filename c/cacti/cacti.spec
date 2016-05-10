@@ -1,6 +1,6 @@
 Name: cacti
-Version: 0.8.8b
-Release: alt2
+Version: 0.8.8h
+Release: alt1
 
 %define cactidir %_datadir/%name
 %define cacticonfdir %_sysconfdir/%name
@@ -22,8 +22,6 @@ Source7: %name-apache.conf
 Source8: %name-lighttpd.conf
 
 # official patches
-# http://www.cacti.net/downloads/patches/0.8.8b/security.patch
-Patch1: cacti-0.8.8b-security.patch
 
 # unofficial patches
 Patch11: %name-alt-config.patch
@@ -107,7 +105,6 @@ Documentation for %name
 %setup -q -n %name-%version
 
 # add official patches
-%patch1 -p1
 
 # sed -i /\$config\ =/a\$url_path\ \=\ \"\/cacti\/\"\; include/global.php
 
@@ -118,7 +115,7 @@ Documentation for %name
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch19 -p1
+#%patch19 -p1
 %patch20 -p1
 
 
@@ -237,6 +234,13 @@ fi
 %cactidir/docs
 
 %changelog
+* Tue May 10 2016 Alexey Shabalin <shaba@altlinux.ru> 0.8.8h-alt1
+- 0.8.8h
+- fixed CVE-2014-2326,CVE-2014-2327,CVE-2014-2328,CVE-2014-5025,
+        CVE-2014-5026,CVE-2014-4002,CVE-2013-5588,CVE-2013-5589,
+        CVE-2015-4342,CVE-2015-4634,CVE-2015-8377,CVE-2015-8604,
+        CVE-2016-3659
+
 * Tue May 06 2014 Alexey Shabalin <shaba@altlinux.ru> 0.8.8b-alt2
 - fixed:
  + CVE-2014-2326 Unspecified HTML Injection Vulnerability
