@@ -4,7 +4,7 @@
 
 Name:           mintmenu
 Version:        5.6.7
-Release:        alt1
+Release:        alt2
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -40,7 +40,7 @@ Patch40:	mintmenu-5.6.2-alt-xfce-logout.patch
 # Use Synaptic via consolehelper intead of gksu
 Patch41:	mintmenu-alt-fix-package-manager.patch
 
-Requires: GConf2 mozo mate-search-tool
+Requires: GConf2 mate-search-tool
 Requires: python-module-gnome-menus
 Requires: python-module-pygnome-desktop
 Requires: python-module-pyxdg
@@ -48,6 +48,7 @@ Requires: python-module-configobj
 Requires: python-module-apt
 Requires: menu-icons-default
 Requires: mint-translations
+Requires: mate-menu-editor
 
 Requires: apt
 BuildRequires: apt
@@ -143,6 +144,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Tue May 10 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.7-alt2
+- Replace mozo with mate-menu-editor (ALT #32083)
+
 * Tue Apr 26 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.7-alt1
 - New version
 
