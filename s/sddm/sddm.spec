@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.13.0
-Release: alt6
+Release: alt7
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -25,8 +25,11 @@ Source10: sddm.pam
 Source11: sddm-autologin.pam
 Source12: sddm-greeter.pam
 Source20: Xsetup
+# upstream
+Patch1: 0033-Activate-window-for-the-primary-screen.patch
+Patch2: 0034-Theme-Maui-Prevent-losing-focus.patch
 # SuSE
-Patch1: create_pid_file.patch
+Patch10: create_pid_file.patch
 # ALT
 Patch100: alt-defaults.patch
 Patch101: alt-branding.patch
@@ -55,6 +58,8 @@ ability to create smooth, animated user interfaces.
 %prep
 %setup -n %name-%version
 %patch1 -p1
+%patch2 -p1
+%patch10 -p1
 %patch100 -p1 -b .defaults
 %patch101 -p1
 %patch102 -p1 -b .wmsession
@@ -126,6 +131,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt7
+- add upstream fix to set focus on primary screen
+
 * Thu Apr 28 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt6
 - better handle plymouth
 
