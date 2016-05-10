@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -56,6 +56,10 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Fri May 06 2016 Dmitry V. Levin <ldv@altlinux.org> 2.0.7-alt1
+- gear-changelog, gear-edit-spec: look for specfile using the same
+  algorithm as gear-commit (by Alexey Gladkov and me; closes: #18140).
+
 * Fri Mar 11 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.0.6-alt1
 - gear-edit-spec: new utility, invokes editor for specfile.
 
