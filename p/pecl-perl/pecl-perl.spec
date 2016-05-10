@@ -3,7 +3,7 @@
 
 Name: pecl-%pecl_name
 Version: 1.0.1
-Release: alt11
+Release: alt12
 # see commit a3d7db22eb7964ea9cb39ea2f866d10df26655d4
 # of git://github.com/do-aki/php-ext-perl.git
 Patch0: %name-1.0.1-alt-fix_php5.4.patch
@@ -55,11 +55,14 @@ phpize
 %pecl_files
 
 %changelog
+* Tue May 10 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt12
+- rebuild with php5-5.6.21
+
 * Tue Apr 05 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt11
-- rebuild witch php5-5.6.20
+- rebuild with php5-5.6.20
 
 * Mon Mar 28 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt10
-- rebuild witch php5-5.6.19
+- rebuild with php5-5.6.19
 
 * Mon Dec 21 2015 Anton Farygin <rider@altlinux.ru> 1.0.1-alt9
 - rebuild with php5-5.6.16
