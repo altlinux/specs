@@ -26,7 +26,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.13
+Version: 10.1.14
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -87,7 +87,6 @@ Patch31: mariadb-string-overflow.patch
 Patch32: mariadb-basedir.patch
 Patch33: mariadb-covscan-signexpr.patch
 Patch34: mariadb-covscan-stroverflow.patch
-Patch36: mariadb-ssltest.patch
 
 Requires: %name-server = %EVR %name-client = %EVR
 
@@ -277,7 +276,6 @@ version.
 %patch32 -p1
 #%patch33 -p1
 %patch34 -p1
-%patch36 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -729,6 +727,9 @@ fi
 %endif
 
 %changelog
+* Tue May 10 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.14-alt1
+- 10.1.14
+
 * Thu Apr 21 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.13-alt1
 - 10.1 branch snapshot
 
