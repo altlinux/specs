@@ -9,7 +9,7 @@
 %define bugfix 0
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt0.3
 BuildArch: noarch
 
 %define theme %name
@@ -367,6 +367,7 @@ install -m 644 index.theme '%buildroot/%_datadir/themes/%XdgThemeName/'
 mkdir -p '%buildroot/etc/gnome/xdg/menus/'
 install -m 644 gnome-applications.menu '%buildroot/etc/gnome/xdg/menus/'
 install -m 644 settings.menu '%buildroot/etc/gnome/xdg/menus/'
+install -m 644 gtkrc-2 %buildroot/etc/skel/.gtkrc-2.0
 mkdir -p %buildroot/etc/skel/.config/gtk-3.0/
 install -m 644 gtk3-settings.ini %buildroot/etc/skel/.config/gtk-3.0/settings.ini
 popd
@@ -436,6 +437,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 %_sysconfdir/skel/.config/gtk-3.0
+%_sysconfdir/skel/.gtkrc-2.0
 %_sysconfdir/skel/.config/autostart
 %_sysconfdir/skel/.local/share/applications
 
@@ -485,6 +487,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.3
+- rebuild with new gfxboot
+- add GTK2 defaults
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.2
 - set breeze gtk3 icon theme by default
 
