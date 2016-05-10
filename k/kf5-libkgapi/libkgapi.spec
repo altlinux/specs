@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.1.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -141,6 +141,9 @@ KF5 library
 %_K5lib/libKF5GAPITasks.so.*
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt2
+- update from 5.1 branch
+
 * Tue Dec 22 2015 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
 - new version
 
