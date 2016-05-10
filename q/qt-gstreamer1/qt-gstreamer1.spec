@@ -1,6 +1,6 @@
 Name:    qt-gstreamer1
 Version: 1.2.0
-Release: alt4
+Release: alt5
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -9,6 +9,7 @@ URL:     http://gstreamer.freedesktop.org/modules/qt-gstreamer.html
 
 Obsoletes: qt-gstreamer < %version-%release
 Requires: gst-plugins-base1.0 gst-plugins-good1.0
+Requires: libqt4-glib
 
 Source: %name-%version.tar
 Patch1: alt-ext-glib.patch
@@ -113,6 +114,9 @@ done
 
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt5
+- require libqt4-glib directly
+
 * Mon Feb 15 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt4
 - obsolete qt-gstreamer
 
