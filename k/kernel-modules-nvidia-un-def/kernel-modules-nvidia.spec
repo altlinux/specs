@@ -5,8 +5,9 @@
 
 %define module_name	nvidia
 %define kmsmodule_name	nvidia-modeset
-%define module_version	361.28
-%define module_release	alt1
+%define uvmmodule_name	nvidia-uvm
+%define module_version	361.42
+%define module_release	alt3
 %define flavour		un-def
 
 %define __nprocs 1
@@ -152,6 +153,17 @@ do
 	TEMP_DIR=$PWD/ \
 	ARCH=%base_arch \
 	SYSSRC=%_usrsrc/linux-%kversion-%flavour
+	if [ -d uvm ] ; then
+	    pushd uvm
+	    cp -a ../Module.symvers .
+	    %make_build modules \
+		$INTO_KERNEL_SRCDIR \
+		SUBDIRS=$PWD \
+		TEMP_DIR=$PWD/ \
+		ARCH=%base_arch \
+		SYSSRC=%_usrsrc/linux-%kversion-%flavour
+	    popd
+	fi
     popd
 done
 
@@ -166,16 +178,32 @@ do
     sffx=`echo "$ver"| sed -e "s|\.||g"`
     pushd kernel-source-%module_name-$sffx
     install -p -m644 %module_name%module_ext %buildroot/%module_local_dir/%kversion-%flavour-%krelease-$ver
-    [ -e %module_name-modeset%module_ext ] &&
-	install -p -m644 %module_name-modeset%module_ext %buildroot/%module_local_dir/modeset-%kversion-%flavour-%krelease-$ver
+    [ -e %kmsmodule_name%module_ext ] &&
+	install -p -m644 %kmsmodule_name%module_ext %buildroot/%module_local_dir/modeset-%kversion-%flavour-%krelease-$ver
+    [ -e uvm/%uvmmodule_name%module_ext ] &&
+	install -p -m644 uvm/%uvmmodule_name%module_ext %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver
+    [ -e %uvmmodule_name%module_ext ] &&
+	install -p -m644 %uvmmodule_name%module_ext    %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver
     popd
 done
+# workaround agains absent uvm module
+if ! [ -e %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%version ] ; then
+    LAST_UVM_MOD_PATH=`ls -1d %buildroot/%module_local_dir/uvm-* 2>/dev/null | sort -r | head -n1`
+    if [ -n "$LAST_UVM_MOD_PATH" ] ; then
+	LAST_UVM_MOD_FILE=`basename $LAST_UVM_MOD_PATH`
+	ln -s `relative %module_local_dir/$LAST_UVM_MOD_FILE %module_local_dir/uvm-%kversion-%flavour-%krelease-%version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%version
+    else
+	ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%version %module_local_dir/uvm-%kversion-%flavour-%krelease-%version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%version
+    fi
+fi
 
 echo -n "%version" >%buildroot/%nvidia_workdir/%kversion-%flavour-%krelease
-ln -s %nvidia_workdir/%kversion-%flavour-%krelease %buildroot/%module_version_dir/%module_name
+ln -s `relative %nvidia_workdir/%kversion-%flavour-%krelease %module_version_dir/%module_name` %buildroot/%module_version_dir/%module_name
 ln -s nvidia %buildroot/%module_version_dir/%kmsmodule_name
-ln -s %module_local_dir/%kversion-%flavour-%krelease-%version %buildroot/%module_dir/%module_name%module_ext
-ln -s %module_local_dir/modeset-%kversion-%flavour-%krelease-%version %buildroot/%module_dir/%kmsmodule_name%module_ext
+ln -s nvidia %buildroot/%module_version_dir/%uvmmodule_name
+ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%version         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
+ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%version %module_dir/%kmsmodule_name%module_ext` %buildroot/%module_dir/%kmsmodule_name%module_ext
+ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%version     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
 
 
 %post
@@ -208,13 +236,25 @@ fi
 %module_dir
 %module_version_dir/%module_name
 %module_version_dir/%kmsmodule_name
+%module_version_dir/%uvmmodule_name
 %module_local_dir/%kversion-%flavour-%krelease-*
 %module_local_dir/modeset-%kversion-%flavour-%krelease-*
+%module_local_dir/uvm-%kversion-%flavour-%krelease-*
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Apr 22 2016 Sergey V Turchin <zerg at altlinux dot org> 361.42-alt3..
+- workaround agains absent uvm module
+
+* Fri Apr 22 2016 Sergey V Turchin <zerg at altlinux dot org> 361.42-alt2..
+- make default symlinks relative
+
+* Fri Apr 22 2016 Sergey V Turchin <zerg at altlinux dot org> 361.42-alt1..
+- new release (361.42)
+- build uvm module
 
 * Fri Mar 04 2016 Sergey V Turchin <zerg at altlinux dot org> 361.28-alt1..
 - new release (361.28)
