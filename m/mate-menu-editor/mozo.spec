@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 %define fedora 22
 Name:           mate-menu-editor
 Version:        1.12.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -27,8 +27,9 @@ BuildRequires:  python-devel
 
 Requires:       mate-menus
 
-%if 0%{?fedora} && 0%{?fedora} > 20
-%endif
+Provides: mozo = %version-%release
+Obsoletes: mozo = 1.12.0-alt1
+Conflicts: mozo = 1.12.0-alt1
 
 BuildArch:  noarch
 Patch33: mozo-gtk3-1.12.0-alt-xfce.patch
@@ -71,6 +72,9 @@ desktop-file-install                                  \
 
 
 %changelog
+* Tue May 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt2_1
+- added conflict with mozo
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
 - new version
 
