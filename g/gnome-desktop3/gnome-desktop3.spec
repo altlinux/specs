@@ -10,7 +10,7 @@
 %def_enable installed_tests
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -172,6 +172,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

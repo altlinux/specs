@@ -20,8 +20,8 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -58,6 +58,7 @@ Obsoletes: libgtk3-engine-adwaita < 3.13.0
 
 Requires: gtk-update-icon-cache
 Requires: icon-theme-adwaita
+# ALT #32028
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
@@ -414,6 +415,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
+- 3.20.4
+
 * Wed Apr 27 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt2
 - reqs: added gtk+3-themes-incompatible metapackage
   with conflicts on restricted themes for current gtk+3 (ALT #320028)

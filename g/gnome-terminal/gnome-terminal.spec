@@ -6,7 +6,7 @@
 %def_without pcre2
 
 Name: gnome-terminal
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Terminal
@@ -18,7 +18,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.44.1
+%define vte_ver 0.44.2
 
 Provides: xvt
 
@@ -84,6 +84,7 @@ EOF
 %_bindir/%name
 %_libexecdir/%name-migration
 %_libexecdir/%name-server
+%_prefix/lib/systemd/user/%name-server.service
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -101,6 +102,9 @@ EOF
 %endif
 
 %changelog
+* Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

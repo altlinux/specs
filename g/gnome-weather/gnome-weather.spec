@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -22,7 +22,7 @@ Provides:  %name-data = %version-%release
 %define gtk_ver 3.12
 %define gi_ver 1.36.0
 %define gjs_ver 1.40.0
-%define gweather_ver 3.20.0
+%define gweather_ver 3.20.1
 
 Requires: libgweather-gir >= %gweather_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -71,13 +71,16 @@ subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 %_datadir/dbus-1/services/%xdg_name.Application.service
 %_datadir/dbus-1/services/%xdg_name.BackgroundService.service
 %_datadir/glib-2.0/schemas/%xdg_name.Application.gschema.xml
-%_iconsdir/hicolor/*/apps/%xdg_name.Application.png
-%_iconsdir/hicolor/symbolic/apps/%xdg_name.Application-symbolic.svg
+%_iconsdir/hicolor/*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/gnome-shell/search-providers/%xdg_name.Application.search-provider.ini
 %_datadir/appdata/%xdg_name.Application.appdata.xml
 %doc NEWS
 
 %changelog
+* Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

@@ -3,7 +3,7 @@
 %define _name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: dconf confuguration editor
@@ -55,6 +55,9 @@ This package provides graphical dconf configuration editor.
 %doc README
 
 %changelog
+* Tue May 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Thu Apr 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
