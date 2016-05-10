@@ -4,16 +4,14 @@
 
 Name: php5-%php5_extension
 Summary: Database abstraction layer for PHP
-Version: 5.13
+Version: 5.20.4
 Release: alt1
 
 License: BSD or LGPLv2+
 Url: http://adodb.sf.net
 Group: System/Servers
 BuildArch: noarch
-Source: http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-513-for-php5/adodb513.zip
-
-Packager: Alexey Shabalin <shaba@altlinux.ru>
+Source: https://sourceforge.net/projects/adodb/files/adodb-php5-only/adodb-520-for-php5/%php5_extension-%version.tar.gz
 
 Requires: php-base
 
@@ -52,9 +50,6 @@ Requires: pear-core
 %description pear
 PEAR DB Emulation Layer for ADODB.
 
-%description pear -l pl.UTF-8
-Warstwa emulacji PEAR DB dla ADOdb.
-
 %package tests
 Summary: Tests for ADOdb
 Group: Development/Other
@@ -86,7 +81,7 @@ cp -ar cute_icons_for_site/* %buildroot%_var/www/icons/
 # cleanup
 rm -rf %buildroot%php5_moddir/adodb/cute_icons_for_site
 rm -rf %buildroot%php5_moddir/adodb/docs
-rm -f %buildroot%php5_moddir/adodb/*.txt
+rm -f %buildroot%php5_moddir/adodb/*.md
 
 %if %{with pear}
 mkdir -p %buildroot%pear_dir/Auth/Container
@@ -95,7 +90,7 @@ cp -a pear/Auth/Container/ADOdb.php %buildroot%pear_dir/Auth/Container
 
 
 %files
-%doc *.txt docs/*
+%doc *.md docs/changelog.md
 %_var/www/icons/*
 %php5_moddir/adodb
 
@@ -126,6 +121,9 @@ cp -a pear/Auth/Container/ADOdb.php %buildroot%pear_dir/Auth/Container
 
 
 %changelog
+* Tue May 10 2016 Alexey Shabalin <shaba@altlinux.ru> 5.20.4-alt1
+- 5.20.4
+
 * Wed Aug 31 2011 Alexey Shabalin <shaba@altlinux.ru> 5.13-alt1
 - 5.13
 
