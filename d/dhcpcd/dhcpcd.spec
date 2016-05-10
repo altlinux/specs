@@ -1,6 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: dhcpcd
 Epoch: 1
-Version: 6.10.3
+Version: 6.11.0
 Release: alt1
 
 Summary: DHCP Client
@@ -73,6 +76,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Tue May 10 2016 Mikhail Efremov <sem@altlinux.org> 1:6.11.0-alt1
+- Updated to 6.11.0.
+
 * Thu Apr 21 2016 Mikhail Efremov <sem@altlinux.org> 1:6.10.3-alt1
 - Drop obsoleted patches.
 - Updated to 6.10.3.
