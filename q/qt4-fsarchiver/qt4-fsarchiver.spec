@@ -1,5 +1,5 @@
 %define subversion alt
-%define subver 16
+%define subver 18
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt4-fsarchiver
@@ -8,7 +8,7 @@ Release: alt1.%subver
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: http://softlayer-ams.dl.sourceforge.net/project/qt4-fsarchiver/source/%name-%version-%subver.tar
+Source:  %name-%version-%subver.tar
 Source1: %name-pam
 Source2: %name-security
 Source3: %name.desktop
@@ -139,6 +139,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%name.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%name.policy
 
 %changelog
+* Tue May 10 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.18
+- version 0.6.19-19
+
 * Sat Apr 16 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.16
 - version 0.6.19-16
 - correct russian translation
