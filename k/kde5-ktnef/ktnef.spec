@@ -1,7 +1,7 @@
 %define rname ktnef
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 16.04.1
 Release: alt1
 %K5init altplace
 
@@ -77,6 +77,15 @@ KF5 library
 %_K5lib/libKF5Tnef.so.*
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
+* Mon Apr 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt1
+- new version
+
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
 * Thu Feb 25 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
