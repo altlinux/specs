@@ -1,6 +1,6 @@
 Name: unbound
 Version: 1.5.8
-Release: alt1
+Release: alt2
 License: BSD
 Url: http://unbound.net/
 Source: %name-%version.tar
@@ -144,7 +144,7 @@ rm %buildroot%python_sitelibdir/*.la
 %preun
 %preun_service %name
 %files
-%doc doc/README doc/CREDITS doc/LICENSE doc/FEATURES
+%doc doc/README doc/CREDITS doc/LICENSE doc/FEATURES doc/Changelog
 %_initdir/%name
 %_unitdir/*
 %_tmpfilesdir/*
@@ -195,6 +195,9 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Tue May 10 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.8-alt2
+- Added Changelog file (ALT 32079)
+
 * Fri May 06 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.8-alt1
 - New version, see Changelog
 
