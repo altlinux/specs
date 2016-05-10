@@ -1,5 +1,5 @@
 Name: fakeroot
-Version: 1.18.4
+Version: 1.20.2
 Release: alt1
 
 Summary: Run a command in an environment faking root privileges for file manipulation
@@ -11,7 +11,7 @@ Url: http://packages.qa.debian.org/f/fakeroot.html
 Source: %name-%version-%release.tar
 
 Requires: getopt
-BuildRequires: gcc-c++, libacl-devel
+BuildRequires: gcc-c++, libacl-devel, libcap-devel
 %{!?_without_check:%{!?_disable_check:BuildRequires: sharutils}}
 
 %description
@@ -52,6 +52,11 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %doc debian/changelog.bz2 doc/README* DEBUG
 
 %changelog
+* Tue May 10 2016 Dmitry V. Levin <ldv@altlinux.org> 1.20.2-alt1
+- 1.18.4 -> 1.20.2.
+- Fixed irrelevant noise with recent changes in glibc.
+- Added fts64 support.
+
 * Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 1.18.4-alt1
 - Updated to 1.18.4.
 
