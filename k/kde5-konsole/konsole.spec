@@ -1,10 +1,10 @@
 %define rname konsole
 
-%define sover 15
+%define sover 16
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 15.12.3
+Version: 16.04.1
 Release: alt1
 %K5init
 
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
 - new version
 
