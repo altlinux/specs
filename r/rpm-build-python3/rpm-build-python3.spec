@@ -1,6 +1,6 @@
 Name: rpm-build-python3
-Version: 0.1.10.6
-Release: alt3
+Version: 0.1.10.7
+Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
 License: GPL
@@ -79,6 +79,11 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Tue May 10 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.7-alt1
+- Additional import paths (where our deps are allowed to be
+  located) must be given by the maintainer only willingly now with
+  %%allow_python3_import_path.
+
 * Sun May 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.6-alt3
 - .{req,prov}.files fixed (in the rare case with %%_python3_compile_include).
 
