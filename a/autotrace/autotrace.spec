@@ -3,7 +3,7 @@
 
 Name: autotrace
 Version: 0.31.1
-Release: alt5
+Release: alt6
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
@@ -20,6 +20,7 @@ Patch3: %name-0.31.1-gcc41-deb.patch
 Patch4: %name-0.31.1-pc_in-deb.patch
 Patch5: %name-0.31.1-unneeded_libs-alt.patch
 Patch6: %name-0.31.1-libpng-1.5.patch
+Patch7: %name-0.31.1-CVE-2013-1953-deb.patch
 
 %define pstoedit_ver 3.32
 
@@ -131,6 +132,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Fri May 06 2016 Anton Farygin <rider@altlinux.ru> 0.31.1-alt6
+- fixed CVE-2013-1953
+
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 0.31.1-alt5
 - Rebuild with new libImageMagick
 
