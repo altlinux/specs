@@ -4,7 +4,7 @@
 %def_enable privatelib
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -159,6 +159,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Wed May 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.20.2-alt1
+- 3.20.2
+
 * Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.20.1-alt1
 - 3.20.1
 

@@ -5,7 +5,7 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -32,7 +32,7 @@ AutoReqProv: nopython
 %define session_ver 3.16
 %define clutter_ver 1.21.5
 %define gjs_ver 1.40.0
-%define mutter_ver 3.20.0
+%define mutter_ver 3.20.2
 %define gtk_ver 3.16.0
 %define gio_ver 2.46.0
 %define gstreamer_ver 1.0
@@ -240,6 +240,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed May 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
