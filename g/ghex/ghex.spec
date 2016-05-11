@@ -4,7 +4,7 @@
 %define api_ver 3.0
 
 Name: ghex
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Binary editor for GNOME
@@ -70,6 +70,9 @@ developing applications that use GtkGHex library.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed May 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
+- 3.18.1
+
 * Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
