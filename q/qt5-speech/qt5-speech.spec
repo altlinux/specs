@@ -2,7 +2,7 @@
 %global qt_module qtspeech
 
 Name: qt5-speech
-Version: 5.5.0
+Version: 5.8.0
 Release: alt1
 
 Group: System/Libraries
@@ -62,11 +62,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-syncqt.pl-qt5 \
-    -version %version \
-    -private \
-    -module QtTextToSpeech \
-    #
+syncqt.pl-qt5 -version %version -private
 
 %build
 %qmake_qt5
@@ -80,11 +76,14 @@ syncqt.pl-qt5 \
 %files common
 %files -n libqt5-texttospeech
 %_qt5_libdir/libQt?TextToSpeech.so.*
+%_qt5_plugindir/texttospeech/*.so
 
 %files devel
 %_qt5_headerdir/Qt*/
 %_qt5_libdir/libQt*.so
+%_qt5_libdatadir/libQt*.so
 %_qt5_libdir/libQt*.prl
+%_qt5_libdatadir/libQt*.prl
 %_qt5_libdir/cmake/Qt*/
 %_qt5_libdir/pkgconfig/Qt*.pc
 %_qt5_archdatadir/mkspecs/modules/*.pri
@@ -93,5 +92,8 @@ syncqt.pl-qt5 \
 #%_qt5_docdir/*
 
 %changelog
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
 * Fri Aug 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - initial build
