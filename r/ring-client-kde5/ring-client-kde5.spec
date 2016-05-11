@@ -4,7 +4,7 @@
 %define libringclientkde libringclientkde%sover
 
 Name: ring-client-kde5
-Version: 2.2.0
+Version: 2.3.0
 Release: alt0.1
 %K5init no_altplace
 
@@ -78,5 +78,8 @@ __EOF__
 %_K5dbus_iface/cx.ring.ring-kde.xml
 
 %changelog
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.1
+- new version
+
 * Wed Mar 16 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt0.1
 - initial build

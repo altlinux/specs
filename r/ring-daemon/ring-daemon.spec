@@ -3,7 +3,7 @@
 
 Name: ring-daemon
 Version: 2.3.0
-Release: alt0.1
+Release: alt0.3
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -14,7 +14,7 @@ License: GPLv3
 
 Source: %name-%version.tar
 Source1: pjproject-2.4.5.tar.bz2
-Source2: opendht-281b62dfd529a226e94d0da19e01acf07871a797.tar.gz
+Source2: opendht-13f8c13ac4ebb3b43474d91ca48b42a1019083f4.tar.gz
 Source3: msgpack-c-cpp-1.2.0.tar.gz
 Source4: iax-git.tar.gz
 Patch1: alt-fix-compile.patch
@@ -26,7 +26,7 @@ BuildRequires: cmake gcc-c++ glibc-devel autoconf-archive
 BuildRequires: doxygen graphviz
 BuildRequires: libalsa-devel libavdevice-devel libavformat-devel libdbus-c++-devel libgnutls-devel libgsm-devel
 BuildRequires: libnettle-devel libpcre-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel
-BuildRequires: libspeexdsp-devel libswscale-devel libudev-devel libupnp-devel libuuid-devel
+BuildRequires: libspeexdsp-devel libswscale-devel libudev-devel libupnp-devel libuuid-devel jsoncpp-devel
 BuildRequires: zlib-devel libopus-devel libspeex-devel ilbc-devel
 BuildRequires: libyaml-cpp-devel perl-Pod-Usage
 #curl git-core subversion
@@ -97,7 +97,7 @@ echo "Contribs built"
 
 %files
 %doc AUTHORS COPYING README
-%_libexecdir/dring
+%_sbindir/dring
 %_datadir/ring/
 %_datadir/dbus-1/services/cx.ring.*
 
@@ -108,5 +108,11 @@ echo "Contribs built"
 %_libdir/libring.a
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.3
+- fix build requires
+
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.2
+- update from master branch
+
 * Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.1
 - initial build

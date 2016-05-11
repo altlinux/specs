@@ -1,10 +1,10 @@
 
-%define sover 0.4.0
+%define sover 1.0.0
 %define libname libringclient%sover
 
 Name: libringclient
-Version: 0.4.0
-Release: alt0.1
+Version: 1.0.0
+Release: alt2
 
 Group: System/Libraries
 Summary: Ring voice, video and chat client library
@@ -22,9 +22,18 @@ BuildRequires: cmake qt5-tools-devel ring-daemon-devel-static
 %description
 Ring is a secure and distributed voice, video and chat communication platform that requires no centralized server and leaves the power of privacy in the hands of the user.
 
+%package common
+BuildArch: noarch
+Summary: Common %name files
+Group: System/Configuration/Other
+Conflicts: libringclient0.4.0
+%description common
+Common %name files
+
 %package -n %libname
 Group: System/Libraries
 Summary: %summary
+Requires: %name-common >= %EVR
 %description -n %libname
 %summary
 
@@ -57,10 +66,15 @@ sed -i 's|/usr/lib|/usr/lib64|' %buildroot/usr/lib/cmake/LibRingClient/LibRingCl
 mv %buildroot/usr/lib %buildroot/usr/lib64
 %endif
 
+%find_lang %name --with-qt --all-name
+
+%files common -f %name.lang
+%dir %_datadir/libringclient/
+%dir %_datadir/libringclient/translations/
+
 %files -n %libname
 %_libdir/libringclient.so.%sover
 %_libdir/libringclient.so.*
-%_datadir/libringclient/
 
 %files devel
 %_includedir/libringclient/
@@ -68,5 +82,11 @@ mv %buildroot/usr/lib %buildroot/usr/lib64
 %_libdir/libringclient.so
 
 %changelog
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2
+- split data to separate package
+
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1
+- new version
+
 * Tue Mar 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt0.1
 - initial build
