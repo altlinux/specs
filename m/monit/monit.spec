@@ -5,7 +5,7 @@
 
 Name: monit
 Version: 5.17.1
-Release: alt2
+Release: alt3
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -140,8 +140,14 @@ grep -qs '^    allow admin:monit ' /etc/monitrc && {
   echo "** WARNING: replace 'allow admin:monit' with another login:password"
   echo "            in /etc/monitrc"; } >&2 ||:
 
-grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
-  echo "** WARNING: add 'set pidfile /var/run/monit.pid' to /etc/monitrc" >&2
+if ! grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/*; then
+  echo "** WARNING: adding 'set pidfile /var/run/monit.pid' to /etc/monitrc" >&2
+  {
+    echo
+    echo "# added by monit-5.17.1-alt3 package upgrade"
+    echo "set pidfile /var/run/monit.pid"
+  } >> /etc/monitrc
+fi
 
 %post_service %name
 
@@ -173,6 +179,9 @@ grep -qs '^set pidfile ' /etc/monitrc /etc/monitrc.d/* ||
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Wed May 11 2016 Michael Shigorin <mike@altlinux.org> 5.17.1-alt3
+- changed "set pidfile" from notice to action (closes: #32086)
+
 * Thu May 05 2016 Michael Shigorin <mike@altlinux.org> 5.17.1-alt2
 - tweaked monitrc addition to avoid dups (closes: #30577)
   + added corresponding warning to %%post
