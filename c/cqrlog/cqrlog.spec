@@ -1,5 +1,5 @@
 Name:		cqrlog
-Version:	1.9.1
+Version:	2.0.1
 Release:	alt1
 Summary:	An amateur radio contact logging program
 
@@ -7,9 +7,9 @@ Group:		Communications
 License:	GPLv2
 URL:		http://www.cqrlog.com/
 Source0:	http://www.cqrlog.com/files/%{name}_%{version}/%{name}-%{version}.tar.gz
+# VCS:		https://github.com/ok2cqr/cqrlog
 
 Patch0:		cqrlog-install.patch
-Patch2:		cqrlog-build-with-fpc-3.0.0.patch
 
 BuildRequires:	fpc >= 2.6.4
 BuildRequires:	lazarus
@@ -33,7 +33,6 @@ and strongly focused on easy operation and maintenance.
 %prep
 %setup -q
 %patch0 -p1
-%patch2 -p2
 
 chmod -x src/*.pas \
          voice_keyer/voice_keyer.sh
@@ -57,10 +56,13 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
-%_pixmapsdir/%name/%name.png
+%_pixmapsdir/%name/
 %_man1dir/%name.1.*
 
 %changelog
+* Tue May 10 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version
+
 * Wed Feb 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt1
 - New version
 
