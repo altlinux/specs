@@ -4,7 +4,7 @@
 
 Name: kf5-i18n-%lng
 Version: 5.6.3
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE Workspace
@@ -34,6 +34,7 @@ for d in *-l10n-* ; do
     simplename=`echo "$d" | sed -e 's|^kf5-l10n-%lng-||' -e 's|-[[:digit:]].*||'`
     mv $d $simplename
 done
+rm -f messages/khelpcenter.*
 
 find docs -type d | \
 while read d ; do
@@ -87,6 +88,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt2
+- remove khelpcenter translation
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
 - new version
 
