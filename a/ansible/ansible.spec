@@ -1,14 +1,13 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
-Version: 1.9.4
-Release: alt2
+Version: 2.0.2.0
+Release: alt1
 
 Group: System/Libraries
 License: GPLv3
 Source0: %name-%version.tar
 Source1: %name-modules-core-%version.tar
 Source2: %name-modules-extras-%version.tar
-Source3: README.ALT
 
 Patch0:%name-%version-alt.patch
 Patch1: %name-modules-core-%version-alt.patch
@@ -18,7 +17,9 @@ Url: http://www.ansible.com
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools
+BuildRequires: python-module-setuptools asciidoc-a2x
+
+Requires: ca-certificates >= 2015.10.29
 
 # Skip findreq on all modules:
 %add_findreq_skiplist %python_sitelibdir/%name/modules/*
@@ -30,11 +31,9 @@ over SSH and does not require any software or daemons to be installed
 on remote nodes. Extension modules can be written in any language and
 are transferred to managed machines automatically.
 
-Please read README.ALT for distribution-specific notes.
-
 %prep
 %setup
-%patch0 -p1
+# %%patch0 -p1
 tar -xvf %SOURCE1               # creates ./library/...
 tar -xvf %SOURCE2
 pushd library
@@ -43,7 +42,6 @@ popd
 
 %build
 %python_build
-cp -v %SOURCE3 .
 
 %install
 %python_install
@@ -51,6 +49,7 @@ mkdir -p %buildroot%_sysconfdir/%name/
 cp examples/ansible.cfg %buildroot%_sysconfdir/%name/
 touch %buildroot%_sysconfdir/%name/hosts
 mkdir -p %buildroot/%_man1dir
+make docs
 cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 rm -f library/{VERSION,README.md,COPYING,CONTRIBUTING.md}
 cp -va library/* %buildroot%python_sitelibdir/%name/modules
@@ -61,9 +60,18 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %_man1dir/%{name}*
 %python_sitelibdir/%{name}*
 %doc examples/playbooks examples/scripts examples/hosts
-%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md README.ALT
+%doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md
 
 %changelog
+* Wed May 11 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.2.0-alt1
+- 2.0.2.0-1
+
+* Mon Feb 15 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.0.1-alt2
+- ca-certificates-2015.10.29 and up contains /etc/pki/tls/certs/ca-bundle.crt (symlink to /usr/share/ca-certificates/ca-bundle.crt)
+
+* Sat Feb 13 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.0.1-alt1
+- 2.0.0.1
+
 * Mon Nov 16 2015 Terechkov Evgenii <evg@altlinux.org> 1.9.4-alt2
 - README.ALT added with distro-specific notes
 
