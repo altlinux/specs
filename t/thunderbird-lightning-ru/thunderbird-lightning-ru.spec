@@ -3,7 +3,7 @@
 %define ciddir	%tbird_noarch_extensionsdir/%cid
 
 Name:		thunderbird-%rname
-Version:	4.0.5.2
+Version:	4.7
 Release:	alt1
 Serial: 	1
 Summary:	Russian (RU) Language Pack for Lightning
@@ -33,13 +33,16 @@ mkdir -p %buildroot/%ciddir
 unzip -qq -d %buildroot/%ciddir %SOURCE0
 cd %buildroot/%ciddir
 patch -p2 < %PATCH0
-subst 's/38\.\*/45.*/' install.rdf
-subst 's/2.35\.\*/2.40.*/' install.rdf
+#subst 's/38\.\*/45.*/' install.rdf
+#subst 's/2.35\.\*/2.40.*/' install.rdf
 
 %files
 %ciddir
 
 %changelog
+* Wed May 11 2016 Andrey Cherepanov <cas@altlinux.org> 1:4.7-alt1
+- New version compatible with Thunderbird 45.x and Seamonkey 2.42.x
+
 * Thu Apr 14 2016 Andrey Cherepanov <cas@altlinux.org> 1:4.0.5.2-alt1
 - New version
 - Support Thunderbird 45.x and Seamonkey 2.40.x
