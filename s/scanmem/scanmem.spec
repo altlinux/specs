@@ -1,13 +1,14 @@
 Summary: Simple debugging utility
 Name: scanmem
 Version: 0.15.4
-Release: alt3
+Release: alt4
 Url: http://taviso.decsystem.org/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: GPLv2
 Group: Development/Debuggers
 Patch0: scanmem-0.15.4-alt2-fix-desktop-files.patch
+Patch1: scanmem-0.15.4-alt-gameconqueror-libscanmem-soname.patch
 
 BuildRequires: libreadline-devel intltool /proc
 
@@ -46,6 +47,7 @@ The devel package contains the symlincs for sharedlib
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 ./autogen.sh
@@ -82,6 +84,9 @@ The devel package contains the symlincs for sharedlib
 %_datadir/appdata/GameConqueror.appdata.xml
 
 %changelog
+* Wed May 11 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.15.4-alt4
+- gameconqueror: fixed work without devel subpackage.
+
 * Fri Mar 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.15.4-alt3
 - Moved %%_libdir/libscanmem.so.1 to libscanmem.
 - Dropped devel-static subpackage.
