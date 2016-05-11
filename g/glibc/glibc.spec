@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.23
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -706,6 +706,11 @@ fi
 %_datadir/i18n
 
 %changelog
+* Tue May 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.23-alt2
+- Backported upstream fixes for sw bugs:
+  19679, 19758, 19759, 19762, 19791, 19792, 19822, 19879
+  (including fixes for CVE-2016-1234, CVE-2016-3075, CVE-2016-3706).
+
 * Fri Feb 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.23-alt1
 - Updated to 2.23 branch with backports from master and fedora.
 
