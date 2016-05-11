@@ -1,6 +1,6 @@
 Name: xfce4
 Version: 4.12
-Release: alt3
+Release: alt4
 Summary: Set of Xfce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -59,6 +59,7 @@ Requires: thunar-media-tags-plugin
 Requires: thunar-archive-plugin
 # Icon themes
 Requires: rodent-icon-theme
+Requires: gnome-icon-theme
 # for trash and network in Thunar
 Requires: gvfs gvfs-backends
 # Screensaver
@@ -75,6 +76,7 @@ BuildArch: noarch
 Requires: %name-default = %version-%release
 Requires: xfwm4-themes
 Requires: xfce4-session-engines
+Requires: xfce-polkit
 Requires: xfce4-dict
 Requires: orage
 Requires: xfce4-screenshooter
@@ -157,6 +159,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %files regular
 
 %changelog
+* Wed May 11 2016 Mikhail Efremov <sem@altlinux.org> 4.12-alt4
+- default: Add gnome-icon-theme (closes: #32003).
+- full: Add xfce-polkit (closes: #32075).
+
 * Tue Mar 01 2016 Mikhail Efremov <sem@altlinux.org> 4.12-alt3
 - regular: Drop firefox.
 
