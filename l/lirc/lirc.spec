@@ -1,6 +1,6 @@
 Name: lirc
 Version: 0.9.3a
-Release: alt1.1.1
+Release: alt1.2
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
@@ -120,7 +120,7 @@ fi
 %exclude %_mandir/man1/irdb-get*
 %exclude %_mandir/man1/lirc-config-tool*
 %exclude %_mandir/man1/lirc-setup*
-%_man4dir/*.4*
+#_man4dir/*.4*
 %_man5dir/*.5*
 %_man8dir/*.8*
 %_tmpfilesdir/lirc.conf
@@ -154,6 +154,9 @@ fi
 %exclude %_datadir/lirc/configs/audio.conf
 
 %changelog
+* Wed May 11 2016 Michael Shigorin <mike@altlinux.org> 0.9.3a-alt1.2
+- NMU: lirc(4) manpage dropped due to conflict with man-pages-4.06-alt1
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.3a-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
