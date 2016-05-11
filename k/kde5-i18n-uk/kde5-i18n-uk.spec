@@ -3,7 +3,7 @@
 %define lngg Ukrainian
 
 Name: kde5-i18n-%lng
-Version: 15.12.3
+Version: 16.04.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Summary: %lngg language support for KDE Applications
 License: GPL
 Url: http://www.kde.org/
 
+Conflicts: kf5-i18n-uk <= 5.6.3-alt1
 Requires: kf5-filesystem
 BuildArch: noarch
 
@@ -77,6 +78,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
 - new version
 
