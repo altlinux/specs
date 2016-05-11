@@ -7,13 +7,12 @@
 %define api_ver 3.0
 %def_enable introspection
 %def_enable python
-%def_enable zeitgeist
 %def_enable gspell
 %{?_enable_snapshot:%def_enable gtk_doc}
 
 Name: gedit
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPLv2
@@ -23,7 +22,7 @@ Url: http://www.gedit.org
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
 Patch: %name-3.10.1-alt-settings.patch
 
@@ -32,7 +31,7 @@ AutoReqProv: nopython
 %define __python %nil
 %{?_enable_python:%py3_provides gedit}
 %define  gedit_pluginsdir %_libdir/gedit/plugins
-%add_python3_compile_include %gedit_pluginsdir
+%add_python3_path %gedit_pluginsdir
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -51,7 +50,6 @@ Requires: %name-data = %version-%release
 Requires: %name-gir = %version-%release
 Requires: libpeas-python3-loader
 Requires: dconf gnome-icon-theme gvfs zenity
-%{?_enable_zeitgeist:Requires: zeitgeist}
 
 BuildPreReq: rpm-build-gnome >= 0.6
 
@@ -186,7 +184,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
 %{?_enable_python:%python3_sitelibdir/gi/overrides/Gedit.py*}
-#%{?_enable_python:%python3_sitelibdir/gi/overrides/__pycache__/Gedit.cpython-*.pyc}
+%{?_enable_python:%python3_sitelibdir/gi/overrides/__pycache__/Gedit.cpython-*.opt-*.pyc}
 
 %exclude %_libexecdir/%name/gedit-bugreport.sh
 %exclude %gedit_pluginsdir/*.la
@@ -224,6 +222,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Sun May 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+- used %%_python3_path instead of %%_python3_compile_include
+
 * Fri Apr 01 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.20.1-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

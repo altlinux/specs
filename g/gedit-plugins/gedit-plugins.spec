@@ -1,11 +1,12 @@
 %define ver_major 3.20
 %def_enable python
+%def_enable zeitgeist
 %define gedit_pluginsdir %_libdir/gedit/plugins
-%add_python3_compile_include %gedit_pluginsdir
+%add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Plugins for GEdit
 License: GPL
@@ -26,6 +27,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Requires: gedit >= %ver_major
 Requires: libpeas-python3-loader
 Requires: libvte3-gir >= %vte_ver
+%{?_enable_zeitgeist:Requires: zeitgeist}
 
 AutoReqProv: nopython
 %define __python %nil
@@ -45,8 +47,7 @@ BuildRequires: yelp-tools
 BuildRequires: libgit2-glib-devel >= %git2_ver
 # for Charmap plugin
 BuildPreReq: libgucharmap-devel >= 3.0.0 libgucharmap-gir-devel
-# for Zeitgeist plugin
-BuildRequires: libzeitgeist2.0-devel libzeitgeist2.0-gir-devel
+%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel libzeitgeist2.0-gir-devel}
 %{?_enable_python:BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel}
 BuildRequires: libxml2-devel python3-module-dbus-devel libvte3-gir-devel
 
@@ -87,6 +88,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Sun May 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
+- used %%_python3_path instead of %%_python3_compile_include
+
 * Sun Mar 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
