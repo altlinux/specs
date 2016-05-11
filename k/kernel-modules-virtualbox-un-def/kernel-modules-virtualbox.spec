@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	5.0.14
+%define module_version	5.0.20
 
 %define module_release	alt1
 
@@ -97,6 +97,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed May 11 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.0.20-alt1
+- Updated template for virtualbox 5.0.20.
 
 * Tue Feb 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.0.14-alt1
 - Updated template for virtualbox 5.0.14.

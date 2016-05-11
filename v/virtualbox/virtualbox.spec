@@ -56,8 +56,8 @@
 %define gcc_version 5
 
 Name: virtualbox
-Version: 5.0.14
-Release: alt2
+Version: 5.0.20
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -96,6 +96,7 @@ BuildPreReq: xsltproc
 BuildPreReq: rpm-build-kernel
 BuildPreReq: rpm-macros-qt4
 BuildRequires: genisoimage
+BuildRequires: docbook-dtds
 BuildPreReq: libpulseaudio-devel
 BuildRequires: libdevmapper-devel
 BuildRequires: makeself
@@ -103,7 +104,7 @@ BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: libqt4-devel libalsa-devel
 BuildRequires: libcap-devel libcurl-devel
 BuildRequires: libXmu-devel libGLU-devel
-BuildRequires: libXdamage-devel libXcomposite-devel
+BuildRequires: libXdamage-devel libXcomposite-devel libXcomposite
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires(pre): xorg-sdk
@@ -344,6 +345,7 @@ echo "VBOX_VENDOR                := ALT Linux Team" >> LocalConfig.kmk
 echo "VBOX_VENDOR_SHORT          := ALT" >> LocalConfig.kmk
 echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
 
+
 echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
 
 %if_with manual
@@ -353,7 +355,7 @@ echo "VBOX_CHMCMD                := 1" >> LocalConfig.kmk
 %endif
 
 source env.sh
-kmk -j1 VBOXDIR=%vboxdir
+[ -n "$NPROCS" ] || NPROCS=%__nprocs; kmk -j$NPROCS  VBOXDIR=%vboxdir
 
 %if_enabled debug
 sed 's|@VBOX_BUILD_DIR@|%vboxdir|g' %SOURCE99 >%vboxdbg_file
@@ -749,8 +751,17 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Wed May 11 2016 Denis Medvedev <nbr@altlinux.org> 5.0.20-alt1
+- 5.0.20
+
+* Tue Apr 05 2016 Denis Medvedev <nbr@altlinux.org> 5.0.16-alt2
+- with docs
+
+* Tue Apr 05 2016 Denis Medvedev <nbr@altlinux.org> 5.0.16-alt1
+- new version imported
+
 * Thu Mar 10 2016 Denis Medvedev <nbr@altlinux.org> 5.0.14-alt2
-- added support for virtual machines with ALTLinux. 
+- added support for virtual machines with ALTLinux.
 
 * Wed Feb 17 2016 Denis Medvedev <nbr@altlinux.org> 5.0.14-alt1
 - new version imported.
@@ -881,7 +892,7 @@ mountpoint -q /dev || {
  + VRDP: fixed screen corruption
  + NAT: the interface stopped working after a lot of failed ICMP requests
  + ATA: fixed a possible crash during ATAPI passthrough with certain guests
- + ATA: improved compatibility with ancient Linux kernels 
+ + ATA: improved compatibility with ancient Linux kernels
  + Main: fixed incorrect framebuffer information after leaving the
    fullscreen mode with X11 guests
 
