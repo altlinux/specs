@@ -1,5 +1,5 @@
 Name: rpm-utils
-Version: 0.9.20
+Version: 0.9.21
 Release: alt1
 
 Summary: Utilities every rpm packager must have
@@ -24,6 +24,7 @@ This package contains following utilities:
 + buildreq - generates and adds/updates BuildRequires tag in specfiles;
 + rpmdups,rpmrdups - generates list of duplicated packages;
 + rpmvercmp, rpmevrcmp: package version comparators;
++ paste_changelog - pastes a whole ready piece to the top of a changelog;
 + stamp_spec - generates timestamp for rpm specfile changelog entry;
 + add_changelog - generates and adds changelog entry to rpm specfile;
 + compare_packages - generates lists of package sets and compares them;
@@ -72,6 +73,10 @@ fi >&2
 %_datadir/buildreqs
 
 %changelog
+* Mon May 09 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.21-alt1
+- paste_changelog: a trivial ed wrapper extracted from add_changelog.
+  (It can be useful in combination with, e.g., gear-changelog.)
+
 * Wed Mar 23 2016 Dmitry V. Levin <ldv@altlinux.org> 0.9.20-alt1
 - filereq: add faccessat, lstat/lstat64, and fstatat64/newfstatat
   to the list of weak syscalls.
