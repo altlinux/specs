@@ -2,8 +2,8 @@
 %def_enable zart
 
 Name: gmic
-Version: 1.7.0
-Release: alt2
+Version: 1.7.1
+Release: alt1
 
 Summary: GREYC's Magic Image Converter
 License: CeCILL v.2.0
@@ -126,6 +126,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Wed May 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Tue Apr 12 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.0-alt2
 - fix build for non-x86 arches
 
