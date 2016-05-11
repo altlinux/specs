@@ -1,7 +1,7 @@
 %define rname akonadi
 
 Name: kde5-%rname
-Version: 15.12.3
+Version: 16.04.1
 Release: alt1
 %K5init altplace
 
@@ -21,12 +21,17 @@ Patch4: alt-mysqlcheck-detached.patch
 Patch5: alt-own-mysql-install-db.patch
 Patch6: alt-find-resources.patch
 
-# Automatically added by buildreq on Thu Aug 06 2015 (-bi)
-# optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-sql libqt5-test libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs shared-mime-info
-#BuildRequires: extra-cmake-modules gcc-c++ libdb4-devel libsqlite3-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby xml-utils xsltproc
+# Automatically added by buildreq on Mon Apr 25 2016 (-bi)
+# optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-utils
+#BuildRequires: boost-devel-headers extra-cmake-modules kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libsqlite3-devel libxslt-devel python-module-google python3-dev qt5-quick1-devel qt5-tools-devel rpm-build-ruby xsltproc
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: libsqlite3-devel xml-utils xsltproc shared-mime-info
+BuildRequires: boost-devel extra-cmake-modules qt5-quick1-devel qt5-tools-devel
+BuildRequires: xsltproc xml-utils shared-mime-info
+BuildRequires: libsqlite3-devel libxslt-devel
+BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kguiaddons-devel kf5-ki18n-devel
+BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel
+BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
 
 %description
 An extensible cross-desktop storage service for PIM data and meta data providing
@@ -104,6 +109,33 @@ Requires: %name-common = %version-%release
 %description -n libkf5akonadiprivate
 KF5 library
 
+%package -n libkf5akonadiagentbase
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5akonadiagentbase
+KF5 library
+
+%package -n libkf5akonadicore
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5akonadicore
+KF5 library
+
+%package -n libkf5akonadiwidgets
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5akonadiwidgets
+KF5 library
+
+%package -n libkf5akonadixml
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n libkf5akonadixml
+KF5 library
 
 %prep
 %setup -n %rname-%version
@@ -117,6 +149,7 @@ KF5 library
 %build
 %K5build \
     -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld \
+    -DBUILD_TESTING=OFF \
     #
 
 %install
@@ -129,6 +162,14 @@ mkdir -p %buildroot/%_K5srv/akonadi/contact
 mkdir -p %buildroot/%_K5lib/akonadi5/contact
 mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 
+mkdir %buildroot/%_K5data/akonadi/
+for f in %buildroot/%_datadir/akonadi5/*.xs* ; do
+    fname=`basename $f`
+    dname=`dirname $f`
+    ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi/$fname` %buildroot/%_K5data/akonadi/$fname
+done
+
+
 %files
 %_K5dbus_srv/org.freedesktop.Akonadi.Control.service
 %_K5bin/akonadi_agent_launcher
@@ -137,6 +178,11 @@ mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 %_K5bin/akonadi_control
 %_K5bin/akonadictl
 %_K5bin/akonadiserver
+%_K5bin/akonadiselftest
+%_K5bin/akonaditest
+%_K5bin/akonadi_*_resource
+%_datadir/akonadi5/agents/*
+%_K5data/akonadi_*_resource/
 
 %files -n qt5-sql-sqlite3
 %_qt5_plugindir/sqldrivers/libqsqlite3.so
@@ -154,27 +200,53 @@ mkdir -p %buildroot/%_datadir/akonadi5/{agents,contact,plugins,accountwizard}
 %dir %_K5xdgconf/akonadi/
 %dir %_K5srv/akonadi/
 %dir %_K5srv/akonadi/contact/
+%dir %_K5data/akonadi/
 %dir %_datadir/akonadi5/
 %dir %_datadir/akonadi5/accountwizard/
 %dir %_datadir/akonadi5/agents/
 %dir %_datadir/akonadi5/contact/
 %dir %_datadir/akonadi5/plugins/
 %config(noreplace) %_K5xdgconf/akonadi.categories
+%_K5cfg/resourcebase.kcfg
 %_K5xdgmime/akonadi5-mime.xml
 
 %files devel
 %_K5bin/asapcat
-#%_K5inc/akonadi_version.h
+%_K5bin/akonadi2xml
+%_K5plug/designer/akonadi5widgets.so
+%_K5inc/akonadi_version.h
+%_K5inc/Akonadi*/
 %_K5inc/akonadi/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5AkonadiServer
+%_K5lib/cmake/KF5Akonadi/
 %_K5dbus_iface/*.Akonadi.*.xml
-#%_K5archdata/mkspecs/modules/qt_akonadi.pri
+%_K5archdata/mkspecs/modules/qt_Akonadi*.pri
+%_datadir/akonadi5/*.xs*
+%_K5data/akonadi/*.xs*
 
 %files -n libkf5akonadiprivate
+%_K5lib/libKF5AkonadiPrivate.so.5
 %_K5lib/libKF5AkonadiPrivate.so.*
+%files -n libkf5akonadiagentbase
+%_K5lib/libKF5AkonadiAgentBase.so.5
+%_K5lib/libKF5AkonadiAgentBase.so.*
+%files -n libkf5akonadicore
+%_K5lib/libKF5AkonadiCore.so.5
+%_K5lib/libKF5AkonadiCore.so.*
+%files -n libkf5akonadiwidgets
+%_K5lib/libKF5AkonadiWidgets.so.5
+%_K5lib/libKF5AkonadiWidgets.so.*
+%files -n libkf5akonadixml
+%_K5lib/libKF5AkonadiXml.so.5
+%_K5lib/libKF5AkonadiXml.so.*
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
+* Mon Apr 25 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt1
+- new version
+
 * Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
 - new version
 
