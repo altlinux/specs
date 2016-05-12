@@ -1,6 +1,6 @@
 Name:    qt5-gstreamer1
 Version: 1.2.0
-Release: alt4
+Release: alt5
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -14,6 +14,7 @@ Source: qt-gstreamer-%version.tar
 Patch1: 001-memleak.patch
 Patch2: 002-boost157.patch
 Patch3: 003-gstreamer151.patch
+Patch4: 004-boost160.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -31,6 +32,13 @@ QtGStreamer provides C++ bindings for GStreamer with a Qt-style
 API, plus some helper classes for integrating GStreamer better
 in Qt applications.
 
+%package -n libqt5-glib
+Group:   System/Libraries
+Summary: C++ bindings for Glib with a Qt-style API
+Conflicts: qt5-gstreamer1 <= 1.2.0-alt4
+%description -n libqt5-glib
+QtGStreamer provides C++ bindings for GLib with a Qt-style API
+
 %package devel
 Summary:        Header files and development documentation for %name
 Group:          Development/C++
@@ -47,6 +55,7 @@ for %name.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %Kbuild \
@@ -65,8 +74,6 @@ for %name.
 %files
 %doc COPYING README
 %_libdir/gstreamer-1.0/libgst*.so
-%_libdir/libQt5GLib-2.0.so.0
-%_libdir/libQt5GLib-2.0.so.1*
 %_libdir/libQt5GStreamer-1.0.so.0
 %_libdir/libQt5GStreamer-1.0.so.1*
 %_libdir/libQt5GStreamerUi-1.0.so.0
@@ -77,6 +84,10 @@ for %name.
 %_libdir/libQt5GStreamerQuick-1.0.so.1*
 %_qt5_importdir/QtGStreamer/
 %_qt5_archdatadir/qml/QtGStreamer/
+
+%files -n libqt5-glib
+%_libdir/libQt5GLib-2.0.so.0
+%_libdir/libQt5GLib-2.0.so.1.*
 
 %files devel
 %doc HACKING
@@ -92,6 +103,9 @@ for %name.
 
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt5
+- package Qt5Glib separately
+
 * Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt4
 - apply upstream fixes
 
