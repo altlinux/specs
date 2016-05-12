@@ -34,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Boost libraries
@@ -60,6 +60,7 @@ Patch33: boost-1.54.0-fedora-spirit-unused_typedef.patch
 Patch34: boost-1.57.0-python-cast-unused-typedef.patch
 Patch35: boost-1.58.0-Fix-exec_file-for-Python-3-3.4.patch
 Patch36: boost-1.58.0-Fix-a-regression-with-non-constexpr-types.patch
+Patch37: boost-1.58.0-numeric-ublas-storage-cxx11.patch
 
 
 # we use %%requires_python_ABI, introduced in rpm-build-python-0.36.6-alt1
@@ -1255,6 +1256,7 @@ applications. This package contains python module.
 %patch34 -p2
 %patch35 -p1
 %patch36 -p1
+%patch37 -p0
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
 
@@ -1732,6 +1734,9 @@ done
 
 
 %changelog
+* Thu May 12 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.58.0-alt4
+- NMU: added patch37 (closes: #32001)
+
 * Fri Apr  1 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.58.0-alt3
 - rebuild with python3.5 (for ABI changes)
 - this will also rename the autoreqs to the new python3(*) form
