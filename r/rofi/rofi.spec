@@ -1,7 +1,7 @@
 
 Name: rofi
-Version: 0.15.7
-Release: alt3
+Version: 1.0.1
+Release: alt2
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
 Group: Graphical desktop/Other
@@ -10,7 +10,7 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 
 Source: https://github.com/DaveDavenport/%name/releases/download/%version/%name-%version.tar.gz
 #It tries to use x-terminal-emulator which is only available on debian systems, I replace it with xdg-terminal.
-Patch: 0001-Replace-x-terminal-emulator-with-xdg-terminal.patch
+#Patch: 0001-Replace-x-terminal-emulator-with-xdg-terminal.patch
 
 # Automatically added by buildreq on Mon Sep 21 2015
 # optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXft-devel libXrender-devel libfreetype-devel pkg-config python3-base xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
@@ -22,6 +22,12 @@ BuildRequires: libXft-devel
 BuildRequires: libXinerama-devel
 BuildRequires: make
 BuildRequires: libpango-devel
+BuildRequires: libxcb-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: libxkbcommon-x11-devel
+BuildRequires: libstartup-notification-devel
 Requires: xdg-utils
 
 %description
@@ -32,7 +38,7 @@ like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, maki
 
 %prep
 %setup
-%patch0 -p1
+#%%patch0 -p1
 
 %build
 %configure
@@ -44,9 +50,14 @@ like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, maki
 %files
 %doc Changelog README.md COPYING
 %_bindir/rofi
+%_bindir/rofi-*
 %_man1dir/%name.*
+%_man1dir/%name-*
 
 %changelog
+* Thu May 12 2016 Konstantin Artyushkin <akv@altlinux.org> 1.0.1-alt2
+- new version 1.0.1
+
 * Tue Jan 26 2016 Konstantin Artyushkin <akv@altlinux.org> 0.15.7-alt3
 - replace man file extension
 
