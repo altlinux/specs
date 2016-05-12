@@ -1,6 +1,6 @@
 Name: gnome-mplayer
 Version: 1.0.9
-Release: alt1.r2476
+Release: alt1.r2476.1
 
 Summary: is a simple GUI for MPlayer
 License: GPL
@@ -64,6 +64,7 @@ Requires: %name = %version-%release
 
 %prep
 %setup -q
+echo "NotShowIn=KDE;"  >>gnome-mplayer.desktop
 
 %build
 %autoreconf
@@ -95,6 +96,9 @@ rm -rf %buildroot%_docdir/%name
 %_libdir/caja/extensions-2.0/lib%name-caja-properties-page.so*
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.9-alt1.r2476.1
+- NMU: hide menu item from KDE
+
 * Sun Nov 01 2015 Vladimir Lettiev <crux@altlinux.ru> 1.0.9-alt1.r2476
 - svn checkout r2476
 - build nemo/caja extensions (Closes: #31418)
