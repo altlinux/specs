@@ -1,7 +1,7 @@
 %define rname ktp-approver
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 16.04.1
 Release: alt1
 %K5init altplace
 
@@ -10,6 +10,7 @@ Summary: KDE Channel Approver for Telepathy
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
+Requires: kde5-ktp-common-internals-common
 Requires: /bin/dbus-send
 
 Source: %rname-%version.tar
@@ -44,6 +45,15 @@ BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5
 %_K5srvtyp/*.desktop
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
+* Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 

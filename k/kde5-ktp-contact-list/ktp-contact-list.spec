@@ -1,8 +1,8 @@
 %define rname ktp-contact-list
 
 Name: kde5-%rname
-Version: 15.12.3
-Release: alt2
+Version: 16.04.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -84,6 +84,9 @@ sed -i 's|^Exec=.*|Exec=%_K5bin/ktp-contactlist|' %buildroot/%_K5dbus_srv/org.kd
 #%_K5lib/libktp-contact-list.so.*
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Mon Apr 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
 - fix build requires
 
