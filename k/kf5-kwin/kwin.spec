@@ -12,7 +12,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.6.3
+Version: 5.6.4
 Release: alt1
 %K5init altplace
 
@@ -172,6 +172,9 @@ KF5 library
 
 
 %changelog
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
+- new version
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
 - new version
 

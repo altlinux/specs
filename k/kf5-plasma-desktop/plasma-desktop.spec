@@ -9,8 +9,8 @@
 
 
 Name: kf5-%rname
-Version: 5.6.3
-Release: alt2
+Version: 5.6.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -210,6 +210,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
+- new version
+
 * Tue Apr 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt2
 - set default keyboard layout swithcing policy
 
