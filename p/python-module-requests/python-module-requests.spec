@@ -2,7 +2,7 @@
 %def_with python3
 
 Name:           python-module-requests
-Version:        2.9.1
+Version:        2.10.0
 Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python
@@ -27,6 +27,7 @@ BuildRequires:  python-devel python-modules-json
 BuildRequires:  python-module-chardet
 BuildRequires:  python-module-urllib3 >= 1.13.1
 BuildRequires:  python-module-httpbin
+BuildRequires:  python-module-setuptools-tests
 
 Requires:       ca-certificates
 Requires:       python-module-chardet
@@ -34,9 +35,9 @@ Requires:       python-module-urllib3 >= 1.13.1
 %py_requires json
 
 %description
-Most existing Python modules for sending HTTP requests are extremely verbose and 
-cumbersome. Python's built-in urllib2 module provides most of the HTTP 
-capabilities you should need, but the API is thoroughly broken. This library is 
+Most existing Python modules for sending HTTP requests are extremely verbose and
+cumbersome. Python's built-in urllib2 module provides most of the HTTP
+capabilities you should need, but the API is thoroughly broken. This library is
 designed to make HTTP requests easy for developers.
 
 %if_with python3
@@ -48,6 +49,7 @@ BuildRequires:  python3-devel
 BuildRequires:  python3-module-chardet
 BuildRequires:  python3-module-urllib3 >= 1.13.1
 BuildRequires:  python3-module-httpbin
+BuildRequires:  python3-module-setuptools-tests
 Requires:       ca-certificates
 Requires:       python3-module-chardet
 Requires:       python3-module-urllib3 >= 1.13.1
@@ -124,6 +126,9 @@ popd
 %endif
 
 %changelog
+* Fri May 6 2016 Vladimir Didenko <cow@altlinux.ru> 2.10.0-alt1
+- 2.10.0
+
 * Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.9.1-alt1
 - 2.9.1
 

@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.0.6
-Release: alt1.git20140914.1
+Version: 1.0.16
+Release: alt1
 Summary: IPv4/IPv6 manipulation library
 License: Python
 Group: Development/Python
@@ -80,10 +80,12 @@ popd
 %endif
 
 %changelog
+* Fri May 6 2016 Vladimir Didenko <cow@altlinux.org> 1.0.16-alt1
+- New version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.6-alt1.git20140914.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
 
 * Thu Oct 16 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.git20140914
 - Initial build for Sisyphus
-

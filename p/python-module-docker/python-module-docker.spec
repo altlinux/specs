@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.7.2
+Version: 1.8.1
 Release: alt1
 
 Summary: Python client for Docker.
@@ -17,6 +17,8 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-python
 BuildRequires: python-devel python-module-distribute
+Requires: python-module-backports.ssl_match_hostname >= 3.5
+Requires: python-module-ipaddress >= 1.0.16
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -75,6 +77,9 @@ popd
 %endif
 
 %changelog
+* Fri May 6 2016 Vladimir Didenko <cow@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Fri Mar 11 2016 Vladimir Didenko <cow@altlinux.ru> 1.7.2-alt1
 - 1.7.2
 

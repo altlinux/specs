@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          69fe79de1087d11bcae33bc776d7ce3875330860
+%global commit          baf6536d6259209c3edfa2b22237af82942d3dfa
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        0.0.9
+Version:        0.1.1
 Release:        alt1.git%shortcommit
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -56,5 +56,8 @@ EOF
 /lib/tmpfiles.d/runc.conf
 
 %changelog
+* Thu May 12 2016 Vladimir Didenko <cow@altlinux.ru> 0.1.1-alt1.gitbaf6536
+- New version.
+
 * Wed Mar 16 2016 Alexey Gladkov <legion@altlinux.ru> 0.0.9-alt1.git69fe79d
 - First build for Altlinux.
