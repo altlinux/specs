@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.1
-%define kernel_sublevel	.21
+%define kernel_base_version	4.4
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -69,6 +69,7 @@ BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeri
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
 BuildRequires: bc
+BuildRequires: openssl-devel 
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -544,59 +545,69 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed May 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.9-alt1
+- 4.4.9
+
+* Wed Apr 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.8-alt1
+- 4.4.8
+- 4.4 as std-def
+
 * Wed Apr 13 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.21-alt1
 - 4.1.21
 
-* Fri Mar 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.20-alt1
-- 4.1.20
-- CLONE_NEWUSER restricted by default
+* Thu Mar 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.5-alt1
+- 4.4.5
 
-* Sun Mar 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.19-alt1
-- 4.1.19
+* Fri Mar 04 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.4-alt1
+- 4.4.4
 
-* Wed Feb 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.18-alt1
-- 4.1.18
+* Fri Feb 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.3-alt1
+- 4.4.3
 
-* Tue Feb 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.17-alt1
-- 4.1.17
+* Thu Feb 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.2-alt1
+- 4.4.2
 
-* Tue Jan 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.16-alt1
-- 4.1.16
+* Tue Feb 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.1-alt1
+- 4.4.1
 
-* Tue Jan 19 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.15-alt2
+* Tue Jan 19 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.0-alt2
 - CVE-2016-0728 fixed
 
-* Tue Dec 15 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.15-alt1
-- 4.1.15
+* Mon Jan 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.4.0-alt1
+- 4.4.0
 
-* Thu Dec 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.14-alt1
-- 4.1.14
+* Tue Dec 15 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.3.3-alt1
+- 4.3.3
 
-* Tue Nov 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.1.13-alt1
-- 4.1.13
+* Fri Dec 11 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.3.2-alt1
+- 4.3.2
 
-* Tue Oct 27 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.12-alt1
-- 4.1.12
-- Ticket#2015061001000351
+* Thu Dec 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.3.1-alt1
+- 4.3.1
 
-* Fri Oct 23 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.11-alt1
-- 4.1.11
+* Tue Nov 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.3.0-alt1
+- 4.3.0
 
-* Mon Oct 12 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.10-alt2
-- fix for #31352, thanks to vsu@ (closes: #31352)
-- CONFIG_FW_LOADER_USER_HELPER disabled
+* Tue Nov 10 2015 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.2.6-alt1
+- 4.2.6
 
-* Wed Oct 07 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.10-alt1
-- 4.1.10
+* Tue Oct 27 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.5-alt1
+- 4.2.5
 
-* Mon Oct 05 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.18.22-alt1
-- 3.18.22
+* Fri Oct 23 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.4-alt1
+- 4.2.4
 
-* Tue Sep 22 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.8-alt1
-- 4.1.8
+* Thu Oct 08 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.3-alt2
+- CONFIG_NO_HZ_FULL disabled (closes: #31342)
 
-* Mon Sep 14 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.14.52-alt1
-- 3.14.52
+* Mon Oct 05 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.3-alt1
+- 4.2.3
+
+* Tue Sep 29 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.1-alt1
+- 4.2.1
+
+* Tue Sep 08 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.2.0-alt1
+- 4.2
 
 * Mon Aug 17 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:4.1.6-alt1
 - 4.1.6
