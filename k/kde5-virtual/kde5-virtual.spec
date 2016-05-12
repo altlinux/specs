@@ -1,6 +1,6 @@
 
 Name: kde5-virtual
-Version: 5.2.0
+Version: 5.3.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -87,7 +87,7 @@ Summary: KMail email client
 Provides: kde5-email-client = %EVR
 Provides: kde5-email-client-kmail = %EVR
 Requires: kf5-filesystem
-Requires: kde5-pim-kmail
+Requires: kde5-pim-kmail kde5-pim-addons-kmail kde5-pim-addons-plugins
 %description -n kde5-email-client-2-kmail
 %summary
 
@@ -99,6 +99,16 @@ Provides: kde5-email-client-thunderbird = %EVR
 Requires: kf5-filesystem
 Requires: thunderbird thunderbird-ru
 %description -n kde5-email-client-4-thunderbird
+%summary
+
+%package -n kde5-audio-player-4-qmmp
+Group: Graphical desktop/KDE
+Summary: QMMP audio player
+Provides: kde5-audio-player = %EVR
+Provides: kde5-audio-player-qmmp = %EVR
+Requires: kf5-filesystem
+Requires: qmmp1
+%description -n kde5-audio-player-4-qmmp
 %summary
 
 %files -n kde5-network-manager-0-dummy
@@ -114,7 +124,15 @@ Requires: thunderbird thunderbird-ru
 %files -n kde5-email-client-2-kmail
 %files -n kde5-email-client-4-thunderbird
 
+%files -n kde5-audio-player-4-qmmp
+
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
+- update requires
+
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- add kde5-audio-player
+
 * Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
 - add kde5-volume-control and kde5-email-client
 
