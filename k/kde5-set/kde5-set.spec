@@ -1,7 +1,7 @@
 
 Name: kde5-set
-Version: 5.1.2
-Release: alt1
+Version: 5.2.0
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -43,10 +43,12 @@ Obsoletes: kde5-normal < %EVR kde5-default < %EVR
 #Requires: pam0_kwallet5
 Requires: kde5-small
 Requires: kde5-video-player
-#Requires: kde5-audio-player
+Requires: kde5-audio-player
 Requires: kde5-network-manager
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass
-Requires: kf5-khelpcenter kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
+Requires: kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
+Requires: kf5-khelpcenter
+#Requires: kde5-khelpcenter
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma kf5-plasma-integration
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
@@ -60,19 +62,20 @@ Requires: kf5-plasma-workspace-wallpapers
 Requires: kf5-kwrited
 Requires: kf5-user-manager
 Requires: kde5-konversation kde5-kate
-Requires: kde5-pim kde5-baseapps kde5-kcron kde5-kruler kde5-ffmpegthumbs
+Requires: kde5-pim kde5-pim-addons kde5-baseapps kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kf5-plasma-mediacenter kde5-krfb
 Requires: kid3-ui-kde5 ring-client-kde5
 
 %package -n kde5-maxi
 Summary: %summary
 Group: Graphical desktop/KDE
-Requires: kdenlive kde5-konqueror kde5-dragon kde5-connect
+Requires: kde5-konqueror kde5-dragon kde5-pim-kmail
 Requires: kde5-big
 Requires: kde5-edu
 Requires: kde5-games
 Requires: kde5-printing
 Requires: kde5-scanning
+Requires: kdenlive kde5-connect
 
 %package -n kde5-somedevel
 Summary: %summary
@@ -148,6 +151,16 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt3
+- fix requires
+
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt2
+- fix requires
+
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
+- require kde5-audio-player
+- update requires
+
 * Tue Apr 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt1
 - update requires
 
