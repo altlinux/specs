@@ -1,7 +1,7 @@
 %define rname step
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 16.04.1
 Release: alt1
 %K5init
 
@@ -58,5 +58,8 @@ you can not only learn but feel how physics works!
 %_K5icon/*/*/actions/pointer.*
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - initial build

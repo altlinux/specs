@@ -11,8 +11,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 15.12.2
-Release: alt1.1
+Version: 16.04.1
+Release: alt1
 %K5init
 
 Group: Education
@@ -129,6 +129,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Sun Apr 03 2016 Ivan Zakharyaschev <imz@altlinux.org> 15.12.2-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

@@ -1,8 +1,8 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 15.12.2
-Release: alt4
+Version: 16.04.1
+Release: alt1
 %K5init
 
 Group: Education
@@ -26,7 +26,7 @@ BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support k
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kplotting-devel
 BuildRequires: kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel
 
 %description
 KStars is a Desktop Planetarium for KDE. It provides an accurate graphical
@@ -36,8 +36,6 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 
 %prep
 %setup -n %rname-%version
-
-sed -i 's|isnan(|std::isnan(|g' kstars/tools/horizonmanager.cpp
 
 %build
 %K5build
@@ -61,6 +59,9 @@ sed -i 's|isnan(|std::isnan(|g' kstars/tools/horizonmanager.cpp
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Mon Apr 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt4
 - fix build requires
 

@@ -1,8 +1,8 @@
 %define rname parley
 
 Name: kde5-%rname
-Version: 15.12.2
-Release: alt2
+Version: 16.04.1
+Release: alt1
 %K5init
 
 %add_findreq_skiplist %_K5data/parley/plugins/*.py
@@ -63,6 +63,9 @@ also known as flash cards.
 %_K5cfg/parley.kcfg
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Mon Mar 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
 - fix requires
 
