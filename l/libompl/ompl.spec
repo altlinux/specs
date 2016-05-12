@@ -1,24 +1,27 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++ python-devel
+BuildRequires: /usr/bin/curl /usr/bin/wget boost-python-devel gcc-c++ python-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname ompl
 Name:           libompl
 Version:        1.0.0
-Release:        alt1_2
+Release:        alt1_10
 Summary:        The Open Motion Planning Library
 
 Group:          System/Libraries
 License:        BSD
 URL:            http://ompl.kavrakilab.org/
 Source0:        https://bitbucket.org/%{oldname}/%{oldname}/downloads/%{oldname}-%{version}-Source.tar.gz
+# https://bitbucket.org/ompl/ompl/issues/206/cannot-compile-as-c-11
+Patch0:         ompl-1.0.0-cxx11.patch
 BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flann-devel
 BuildRequires:  graphviz
 BuildRequires:  libode-devel
+BuildRequires:  python
 BuildRequires:  ruby
 Source44: import.info
 Provides: ompl = %{version}-%{release}
@@ -33,7 +36,7 @@ collision checker or visualization front end.
 %package        devel
 Summary:        Development files for %{oldname}
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 Requires: boost-devel-headers
 Provides: ompl-devel = %{version}-%{release}
 
@@ -44,6 +47,7 @@ developing applications that use %{oldname}.
 
 %prep
 %setup -q -n %{oldname}-%{version}-Source
+%patch0 -p1
 # Get rid of bundled odeint
 rm -rf src/external/omplext_odeint/
 
@@ -91,6 +95,9 @@ make -C build test || exit 0
 %{_datadir}/cmake/Modules/FindOMPL.cmake
 
 %changelog
+* Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_10
+- update to new release by fcimport
+
 * Tue Apr 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2
 - update to new release by fcimport
 
