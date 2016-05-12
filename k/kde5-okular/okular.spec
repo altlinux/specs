@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 4.90.0
-Release: alt1
+Release: alt3
 %K5init
 
 Group: Office
@@ -18,6 +18,7 @@ License: GPLv2+ / LGPLv2+
 Requires: %name-core = %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-hide-unofficial-release.patch
 
 # Automatically added by buildreq on Tue Jan 19 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libfreetype-devel libgpg-error libjson-c libpoppler1-qt5 libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xz zlib-devel
@@ -81,6 +82,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -119,7 +121,7 @@ KF5 library
 %_K5data/okular/
 %_K5qml/org/kde/okular/
 %_K5plug/okular/
-%_K5plug/libokularpart.so
+%_K5plug/okularpart.so
 %_K5srv/okular_*.desktop
 %_K5conf_up/okular*
 %_K5cfg/*okular*
@@ -139,5 +141,11 @@ KF5 library
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt3
+- fix package
+
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt2
+- update from frameworks branch
+
 * Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt1
 - initial build
