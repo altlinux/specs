@@ -1,23 +1,23 @@
 Summary:	Secure PIN handling using NSS crypto
 Name:		svrcore
-Version:	4.0.4
-Release:	alt4
+Version:	4.1.2
+Release:	alt1
 License:	MPL/GPL/LGPL
-URL:		http://www.mozilla.org/projects/security/pki/
+URL:		https://pagure.io/svrcore
 Group:		System/Libraries
-Packager:	Alexey Gladkov <legion@altlinux.ru>
+Packager:	Andrey Cherepanov <cas@altlinux.org>
 
-Source0:	ftp://ftp.mozilla.org/pub/mozilla.org/directory/svrcore/releases/4.0.4/%name-%version.tar.bz2
+Source0:	%name-%version.tar
+# VCS: 		https://pagure.io/svrcore.git
 
-# Automatically added by buildreq on Tue Mar 10 2009
-BuildRequires: gcc-c++ glibc-devel-static
+BuildRequires: gcc-c++
 BuildRequires: libnss-devel >= 3.12.9.0-alt2
 
 %description
-svrcore provides applications with several ways to handle secure PIN storage
-e.g. in an application that must be restarted, but needs the PIN to unlock
-the private key and other crypto material, without user intervention.  svrcore
-uses the facilities provided by NSS.
+svrcore provides applications with several ways to handle secure PIN
+storage e.g. in an application that must be restarted, but needs the PIN
+to unlock the private key and other crypto material, without user
+intervention.  svrcore uses the facilities provided by NSS.
 
 %package -n lib%name
 Summary:	Secure PIN handling using NSS crypto
@@ -25,10 +25,10 @@ Group:		System/Libraries
 Provides:	%name = %version
 
 %description -n lib%name
-svrcore provides applications with several ways to handle secure PIN storage
-e.g. in an application that must be restarted, but needs the PIN to unlock
-the private key and other crypto material, without user intervention.  svrcore
-uses the facilities provided by NSS.
+svrcore provides applications with several ways to handle secure PIN
+storage e.g. in an application that must be restarted, but needs the PIN
+to unlock the private key and other crypto material, without user
+intervention.  svrcore uses the facilities provided by NSS.
 
 %package -n lib%name-devel
 Summary:	Development files for secure PIN handling using NSS crypto
@@ -36,37 +36,40 @@ Group:		Development/Other
 Requires:	lib%name = %version-%release
 
 %description -n lib%name-devel
-svrcore provides applications with several ways to handle secure PIN storage
-e.g. in an application that must be restarted, but needs the PIN to unlock
-the private key and other crypto material, without user intervention.  svrcore
-uses the facilities provided by NSS.
+svrcore provides applications with several ways to handle secure PIN
+storage e.g. in an application that must be restarted, but needs the PIN
+to unlock the private key and other crypto material, without user
+intervention.  svrcore uses the facilities provided by NSS.
 
-This package contains header files and symlinks to develop programs which will
-use the libsvrcore library.  You should install this package if you need to
-develop programs which will use the svrcore library.
+This package contains header files and symlinks to develop programs
+which will use the libsvrcore library.  You should install this package
+if you need to develop programs which will use the svrcore library.
 
 %prep
 %setup -q
 
 %build
-%configure
-%make
+%configure --disable-static
+%make_build
 
 %install
-%make_install install DESTDIR=%buildroot
-rm -f %buildroot/%_libdir/libsvrcore.a
-rm -f %buildroot/%_libdir/libsvrcore.la
+%makeinstall_std
 
 %files -n lib%name
-%doc LICENSE README NEWS
+%doc LICENSE README AUTHORS
 %_libdir/libsvrcore.so.*
 
 %files  -n lib%name-devel
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
 %_libdir/libsvrcore.so
 %_includedir/svrcore.h
 
 %changelog
+* Thu May 12 2016 Andrey Cherepanov <cas@altlinux.org> 4.1.2-alt1
+- New version
+- Build from upstream Git repository
+- Change project URL to https://pagure.io/svrcore
+
 * Thu Mar 10 2011 Alexey Gladkov <legion@altlinux.ru> 4.0.4-alt4
 - Rebuilt to enable proper debuginfo.
 
