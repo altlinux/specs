@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version  5.0.14	
+%define module_version  5.0.20
 %define module_release	alt1
 
 %define flavour		un-def
@@ -99,6 +99,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed May 11 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.0.20-alt1
+- Updated template for virtualbox 5.0.20.
 
 * Wed Mar 16 2016 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0.14-alt1
 - new version
