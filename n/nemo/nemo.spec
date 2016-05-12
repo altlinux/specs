@@ -8,7 +8,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -66,7 +66,7 @@ BuildPreReq: libexif-devel >= %exif_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
-BuildRequires: python-module-polib python-module-pygobject3
+BuildRequires: python3-module-polib python3-module-pygobject3
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
 %{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
@@ -209,6 +209,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Fri May 13 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
+- 3.0.1-4-gdedb4f8
+
 * Tue Apr 26 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
