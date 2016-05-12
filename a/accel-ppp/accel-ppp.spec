@@ -1,6 +1,6 @@
 Name: accel-ppp
-Version: 1.10.0
-Release: alt3
+Version: 1.10.2
+Release: alt1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -103,6 +103,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu May 12 2016 Alexei Takaseev <taf@altlinux.org> 1.10.2-alt1
+- 1.10.2
+
 * Wed Jan 06 2016 Alexei Takaseev <taf@altlinux.org> 1.10.0-alt3
 - Update packet.c
     radius server error packet may be coredump.
