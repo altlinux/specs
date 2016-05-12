@@ -1,5 +1,5 @@
 %define major_version 1.1
-%define minor_version 15
+%define minor_version 16
 
 Name:    389-console
 Version: %major_version.%minor_version
@@ -61,6 +61,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Thu May 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.16-alt1
+- New version
+
 * Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.15-alt1
 - New version
 
