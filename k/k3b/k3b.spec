@@ -8,22 +8,22 @@
 %undefine __libtoolize
 %define	stable_patchset	1.0.1
 
-%define req_std_burning kdelibs >= 3.2, wodim, cdrkit, cdrdao, mkisofs >= 2.0, dvd+rw-tools, libdvdcss, libdvdread
+%define req_std_burning wodim cdrkit cdrdao mkisofs >= 2.0 dvd+rw-tools
 %if_enabled hal
 %define req_std_kde dbus hal
 %else
 %define req_std_kde dbus
 %endif
-%define req_std_common libacl, libattr, iceauth
-%define req_multimedia libcdparanoia, lame, libmad, libvorbis, libmpcdec, libsndfile, libmusicbrainz, sox, transcode, libflac++, vcdimager >= 0.7, normalize, libtag
+%define req_std_common iceauth
+%define req_multimedia lame sox transcode vcdimager >= 0.7 normalize
 
-%define req_mini %req_std_burning, %req_std_kde, %req_std_common
-%define req_all %req_mini, %req_multimedia
+%define req_mini %req_std_burning %req_std_kde %req_std_common
+%define req_all %req_mini %req_multimedia
 
 
 Name: k3b
 Version: 1.0.5
-Release: alt13.1
+Release: alt13.1.1
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -39,13 +39,11 @@ Patch1: %name-%stable_patchset-messages-alt.patch
 Patch2: %name-1.0.4-disk_verify_cdrecord_noeject.patch
 Patch3: %name-1.0.4-disk_verify_fallback.patch
 Patch4: %name.desktop.patch
-
+Patch5: k3b-1.0.5-libav.patch
 Patch6: %name-1.0.5-fix-autoconf-2.64.patch
 Patch8: cvs-auto_version_check.patch
 Patch9: tde-3.5.13-build-defdir-autotool.patch
 
-Requires: %req_all
-Requires: k3b-mini = %version
 
 BuildRequires: flac gcc-c++ gcc-g77 kdelibs-devel libdbus-devel libdbus-tqt-devel libflac++-devel libflac-devel libjpeg-devel liblame-devel libmad-devel libmpcdec-devel libmusicbrainz-devel libpng-devel libsamplerate-devel libtag-devel libvorbis-devel libsndfile-devel qt3-designer xml-utils pkgconfig
 %if_enabled hal
@@ -67,40 +65,61 @@ K3b - это мощная графическая оболочка для про�
 Этот пакет cодержит зависимости и библиотеки, необходимые для 
 полнофункциональной работы программы.
 
+%package -n kde3-k3b
+Group: Archiving/Cd burning
+Summary: The CD Kreator (Complete set)
+Summary(ru_RU.UTF-8): Программа записи CD (Полный набор)
+Provides: k3b = %EVR
+Obsoletes: k3b < %EVR
+Requires: %req_all
+Requires: kde3-k3b-mini = %version
+%description -n kde3-k3b
+K3b is a GUI frontend to the cd recording programs. 
+It's aim is to provide a very user friendly interface to all the tasks that 
+come with cd recording. 
+This package contains all requiremnts and libraries necessary for full 
+program functionality.
+%description -n kde3-k3b -l ru_RU.UTF-8
+K3b - это мощная графическая оболочка для программ записи компакт дисков.
+Она создана для предоставления дружественного интерфейса ко всем задачам, сопровождающим
+процесс записи компакт-дисков. 
+Этот пакет cодержит зависимости и библиотеки, необходимые для 
+полнофункциональной работы программы.
 
-%package mini
+%package -n kde3-k3b-mini
 Summary: The CD Creator
 Summary(ru_RU.UTF-8): Программа записи CD
 License: GPL
 Group: Archiving/Cd burning
-Requires: %req_mini
+Provides: k3b-mini = %EVR
+Obsoletes: k3b-mini < %EVR
 Obsoletes: k3b-minimal
-
-%description mini
+Requires: %req_mini
+%description -n kde3-k3b-mini
 K3b is a GUI frontend to the cd recording programs. 
 It's aim is to provide a very user friendly interface to all the tasks that 
 come with cd recording.
 Install 'k3b' package to get all of the program's features.
-%description mini -l ru_RU.UTF-8
+%description -n kde3-k3b-mini -l ru_RU.UTF-8
 K3b - это мощная графическая оболочка для программ записи компакт дисков.
 Она создана для предоставления дружественного интерфейса ко всем задачам, сопровождающим
 процесс записи компакт-дисков.
 Для полнофункцмональной работы Вы можете установить пакет 'k3b'.
 
-
-%package devel
+%package -n kde3-k3b-devel
 Summary: The CD Kreator (Development package.)
 Summary(ru_RU.UTF-8): Программа записи CD (Пакет разработчика.)
 License: GPL
 Group: Development/KDE and QT
-Requires: k3b = %version
-
-%description devel
+Provides: k3b-devel = %EVR
+Obsoletes: k3b-devel < %EVR
+Requires: kde3-k3b = %version
+%description -n kde3-k3b-devel
 K3b is a GUI frontend to the cd recording programs. 
 It's aim is to provide a very user friendly interface to all the tasks that 
 come with cd recording. 
 This package contains k3b development files and libraries.
-%description devel -l ru_RU.UTF-8
+%description -n kde3-k3b-devel -l ru_RU.UTF-8
 K3b - это мощная графическая оболочка для программ записи компакт дисков.
 Она создана для предоставления дружественного интерфейса ко всем задачам, сопровождающим
 процесс записи компакт-дисков. 
@@ -115,7 +134,7 @@ K3b - это мощная графическая оболочка для про�
 %patch2 -p1
 %patch3 -p1
 %patch4 -p0
-
+%patch5 -p1
 %patch6 -p1
 %patch8
 %patch9
@@ -149,7 +168,7 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %K3find_lang --with-kde %name
 
 
-%files
+%files -n kde3-k3b
 %_K3lib/*.so
 %_K3apps/k3b/cdi
 %_K3apps/k3b/extra/*
@@ -161,7 +180,7 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3apps/konqsidebartng/virtual_folders/services/*video*
 %_K3srv/video*
 
-%files -f %name.lang mini
+%files -f %name.lang -n kde3-k3b-mini
 %_K3bindir/*
 %_K3libdir/lib*.so*
 %_K3xdg_apps/*
@@ -184,10 +203,15 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %doc README FAQ TODO AUTHORS ChangeLog
 %doc %_K3doc/*/k3b/
 
-%files devel
+%files -n kde3-k3b-devel
 %_K3includedir/*.h
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt13.1.1
+- NMU: fix to build with new libav
+- NMU: rename package
+- NMU: fix requires
+
 * Mon Nov 25 2013 Roman Savochenko <rom_as@altlinux.ru> 1.0.5-alt13.1
 - Build for Automake 1.13 and 1.14 is added.
 
