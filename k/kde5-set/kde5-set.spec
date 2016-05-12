@@ -1,7 +1,7 @@
 
 Name: kde5-set
-Version: 5.2.0
-Release: alt3
+Version: 5.2.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE 5 applications
@@ -47,8 +47,7 @@ Requires: kde5-audio-player
 Requires: kde5-network-manager
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass
 Requires: kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
-Requires: kf5-khelpcenter
-#Requires: kde5-khelpcenter
+Requires: kde5-khelpcenter
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma kf5-plasma-integration
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
@@ -151,6 +150,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
+- update requires
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt3
 - fix requires
 
