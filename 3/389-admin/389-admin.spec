@@ -4,8 +4,8 @@
 
 Summary: 389 Administration Server
 Name:    389-admin
-Version: 1.1.42
-Release: alt2
+Version: 1.1.43
+Release: alt1
 License: GPLv2
 Url:     http://port389.org/
 # VCS:   https://git.fedorahosted.org/git/389/admin.git
@@ -88,6 +88,9 @@ rm -f %buildroot%_libdir/*.so
 %_man8dir/*
 
 %changelog
+* Thu May 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.43-alt1
+- New version
+
 * Tue Apr 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.42-alt2
 - Rebuild with new apache2
 - Use %%apache2_apxs for apxs2 location
