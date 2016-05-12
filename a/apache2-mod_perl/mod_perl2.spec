@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -28,6 +28,7 @@ Source7: docs-2.0.tar
 Patch1: mod_perl-2.0.5-lfs.patch
 Patch2: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
 Patch3: mod_perl-2.0.10-rt101962.patch
+Patch4: mod_perl-2.0.10-test_config.patch
 
 Provides: mod_perl = %version
 
@@ -128,6 +129,7 @@ module.
 %patch1 -p1
 %patch2
 %patch3 -p1
+%patch4 -p1
 
 # Complete installation with separate projects
 tar xvf %SOURCE4
@@ -147,6 +149,9 @@ sed -e "s#VERSION = do { require mod_perl2; \$mod_perl2::VERSION }#VERSION = \"$
 %ifdef __BTE
 rm -f -- t/response/TestAPR/finfo.pm t/apr-ext/finfo.t t/lib/TestAPRlib/finfo.pm
 %endif
+
+#setup apache modules path for test config
+sed 's,@apache2_moduledir@,%apache2_moduledir,' -i t/conf/extra.conf.in
 
 %build
 %perl_vendor_build MP_APXS=%apache2_apxs MP_APR_CONFIG=%apache2_apr_config \
@@ -254,6 +259,10 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Thu May 12 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.10-alt2
+- fix tests httpd.conf
+- revert test switching off
+
 * Mon Apr 11 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.10-alt1
 - rebuild with apache-2.4
 
