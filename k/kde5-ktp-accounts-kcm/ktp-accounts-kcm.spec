@@ -4,7 +4,7 @@
 %define libktpaccountskcminternal libktpaccountskcminternal%sover
 
 Name: kde5-%rname
-Version: 15.12.1
+Version: 16.04.1
 Release: alt1
 %K5init altplace
 
@@ -36,7 +36,7 @@ to manipulate the accounts.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf5-filesystem kde5-ktp-common-internals-common
 %description common
 %name common package
 
@@ -89,6 +89,15 @@ KF5 library
 %_K5lib/libktpaccountskcminternal.so.*
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
+* Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
+* Mon Feb 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+- new version
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
