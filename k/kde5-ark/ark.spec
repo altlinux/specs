@@ -1,10 +1,10 @@
 %define rname ark
 
-%define sover 15
+%define sover 16
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 15.12.3
+Version: 16.04.1
 Release: alt1
 %K5init altplace
 
@@ -81,8 +81,7 @@ KF5 library
 %_K5srv/ServiceMenus/ark_*.desktop
 %_K5icon/hicolor/*/apps/ark.*
 #
-%_K5plug/kerfuffle_*.so
-%_K5srv/kerfuffle_*.desktop
+%_K5plug/kerfuffle/
 %_K5srvtyp/kerfuffle*.desktop
 
 #%files devel
@@ -97,6 +96,9 @@ KF5 library
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
 - new version
 

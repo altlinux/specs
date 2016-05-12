@@ -1,8 +1,8 @@
 %define rname kcalc
 
 Name: kde5-%rname
-Version: 15.12.3
-Release: alt2
+Version: 16.04.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: kdebug-360105.patch
 
 # Automatically added by buildreq on Wed Sep 30 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils
@@ -51,7 +50,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -72,6 +70,9 @@ KF5 library
 %_K5cfg/kcalc*
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Fri Apr 29 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
 - add fix against KDEBUG-360105 (ALT#32031)
 

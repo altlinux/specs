@@ -1,8 +1,8 @@
 %define rname kmix
 
 Name: kde5-%rname
-Version: 15.12.3
-Release: alt2
+Version: 16.04.1
+Release: alt1
 %K5init altplace
 
 Group: Sound
@@ -72,6 +72,9 @@ developing applications that use %name.
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
 - clean provides
 

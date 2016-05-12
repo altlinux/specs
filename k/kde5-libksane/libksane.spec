@@ -1,7 +1,7 @@
 %define rname libksane
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 16.04.1
 Release: alt1
 %K5init
 
@@ -24,6 +24,14 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-sonnet-devel
 %description
 Libksane is a KDE interface for SANE library to control flat scanners.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
+
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
@@ -34,7 +42,7 @@ developing applications that use %name.
 %package -n libkf5sane
 Group: System/Libraries
 Summary: KF5 library
-#Requires: %name-common = %EVR
+Requires: %name-common = %EVR
 %description -n libkf5sane
 KF5 library
 
@@ -49,6 +57,10 @@ KF5 library
 %K5install
 %find_lang %name --with-kde --all-name
 
+%files common -f %name.lang
+%doc COPYING*
+%_K5icon/hicolor/*/actions/*.*
+
 %files devel
 %_K5inc/ksane_version.h
 %_K5inc/KSane/
@@ -57,10 +69,15 @@ KF5 library
 #%_K5archdata/mkspecs/modules/qt_ksane.pri
 
 %files -n libkf5sane
-%doc COPYING*
 %_K5lib/libKF5Sane.so.*
 
 %changelog
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
+* Fri Apr 01 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt1
+- new version
+
 * Fri Feb 26 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - new version
 
