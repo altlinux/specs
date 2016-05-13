@@ -14,16 +14,16 @@
 %define gst_api_ver 1.0
 
 Name: empathy
-Version: %ver_major.11
-Release: alt3
+Version: %ver_major.12
+Release: alt1
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
 Group: Networking/Instant messaging
 Url: https://live.gnome.org/Empathy
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Conflicts: telepathy-haze-aim
 Obsoletes: libempathy libempathy-gtk python-module-empathy
@@ -186,6 +186,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Fri May 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.12-alt1
+- 3.12.12
+
 * Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.11-alt3
 - updated to 3.12.11-10-ga7ad339
 
