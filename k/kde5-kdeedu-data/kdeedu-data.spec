@@ -1,8 +1,8 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 15.12.2
-Release: alt2
+Version: 16.04.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -41,6 +41,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Sat Mar 19 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt2
 - make package noarch
 
