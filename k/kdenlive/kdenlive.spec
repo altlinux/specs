@@ -1,8 +1,8 @@
 %define req_ver_mlt 0.9.0
 
 Name: kdenlive
-Version: 16.04.0
-Release: alt3
+Version: 16.04.1
+Release: alt1
 %K5init no_altplace man
 
 Summary: KDE Non Linear Video Editor
@@ -73,6 +73,9 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Fri May 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Tue Apr 26 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.0-alt3
 - update from 16.04 branch
 
