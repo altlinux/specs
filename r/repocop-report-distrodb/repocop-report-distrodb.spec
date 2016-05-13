@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.22
+Version: 0.23
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- new python3 path
+
 * Fri Apr 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - support for buildreqs-subst
 
