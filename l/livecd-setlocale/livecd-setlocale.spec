@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
@@ -24,6 +24,8 @@ install -pDm755 {livecd-setlocale,%buildroot%_initdir}/livecd-setlocale
 install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
 
 %preun
+# would be an inconvenient %%ghost
+rm -f %_sysconfdir/profile.d/00dconf-kbd.sh
 %preun_service %name
 
 %files 
@@ -31,6 +33,9 @@ install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Thu May 12 2016 Michael Shigorin <mike@altlinux.org> 0.3.7-alt1
+- drop generated hook when uninstalling (closes: #32040)
+
 * Wed Jul 02 2014 Michael Shigorin <mike@altlinux.org> 0.3.6-alt1
 - tweaked unit file deps (thx shaba@)
 
