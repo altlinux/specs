@@ -1,6 +1,6 @@
 Name: libwpd10
 Version: 0.10.0
-Release: alt1.qa1
+Release: alt2
 
 Summary: Library for reading and converting WordPerfect(tm) documents
 
@@ -18,6 +18,8 @@ BuildRequires: help2man
 BuildRequires: pkgconfig(cppunit)
 BuildRequires: pkgconfig(librevenge-0.0)
 BuildRequires: pkgconfig(zlib)
+
+Obsoletes: libwpd9 >= 0.10.0
 
 %description
 Library that handles Word Perfect documents
@@ -96,6 +98,10 @@ LD_LIBRARY_PATH=../lib/.libs make check
 %doc docs/*.png
 
 %changelog
+* Tue May 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.10.0-alt2
+- NMU
+- added "Obsoletes: libwpd9 >= 0.10.0" (ALT #31956)
+
 * Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.10.0-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
