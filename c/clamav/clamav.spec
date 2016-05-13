@@ -12,8 +12,8 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.99.1
-Release: alt2
+Version: 0.99.2
+Release: alt1
 %define abiversion 7
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -319,6 +319,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Fri May 13 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.99.2-alt1
+- 0.99.2
+
 * Thu Mar 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 0.99.1-alt2
 - rebuilt due ALT Bug #31870
 - fixed "License"
