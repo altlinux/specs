@@ -7,7 +7,7 @@
 %def_without appindicator
 
 Name: NetworkManager-applet-gtk
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -175,7 +175,7 @@ make check
 %doc %_man1dir/*.*
 
 %_datadir/applications/*.desktop
-%_datadir/appdata/*.appdata.xml
+%_datadir/appdata/*.xml
 %dir %_datadir/gnome-vpn-properties
 
 %files -n libnm-gtk
@@ -209,6 +209,9 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Wed May 11 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
+- Updated to 1.2.2.
+
 * Fri Apr 22 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Don't require polkit-gnome.
 - Updated to 1.2.0.

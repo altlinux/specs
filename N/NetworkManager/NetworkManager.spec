@@ -33,8 +33,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.2.0
-Release: alt2%git_date
+Version: 1.2.2
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -656,6 +656,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed May 11 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
+- Updated to 1.2.2.
+
 * Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
 - NetworkManager-prestart: Make errors non-fatal.
 - Own %%_libexecdir/NetworkManager/VPN/.
