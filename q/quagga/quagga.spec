@@ -6,8 +6,8 @@
 
 Name: quagga
 
-%define baseversion 0.99.24.1
-Release: alt2
+%define baseversion 1.0.20160315
+Release: alt1
 
 %if %cvs
 %define cvsdate 20060505
@@ -42,7 +42,6 @@ Source13:	%name-ospfd.init
 Source14:	%name-ospf6d.init
 Source15:	%name-bgpd.init
 Source16:	%name-isisd.init
-Source17:	%name-babeld.init
 Source18:	%name-pimd.init
 
 Source19:	%name-watchquagga.init
@@ -54,7 +53,6 @@ Source23:	%name-ospfd.conf
 Source24:	%name-ospf6d.conf
 Source25:	%name-bgpd.conf
 Source26:	%name-isisd.conf
-Source27:	%name-babeld.conf
 Source28:	%name-pimd.conf
 
 Patch1:		quagga-libzebra_to_libospf.patch
@@ -79,7 +77,7 @@ It takes multi-server and multi-thread approach to resolve the current
 complexity of the Internet.
 
 Quagga supports BGP4, BGP4+, OSPFv2, OSPFv3, RIPv1, RIPv2, RIPng,
-                IS-SI, Babel, PIM-SSM and MPLS-VPN.
+                IS-SI, PIM-SSM and MPLS-VPN.
 
 Quagga is intended to be used as a Route Server and a Route Reflector.
 It is not a toolkit, it provides full routing power under a new
@@ -215,7 +213,6 @@ install %SOURCE23 $RPM_BUILD_ROOT%_sysconfdir/%name/ospfd.conf
 install %SOURCE24 $RPM_BUILD_ROOT%_sysconfdir/%name/ospf6d.conf
 install %SOURCE25 $RPM_BUILD_ROOT%_sysconfdir/%name/bgpd.conf
 install %SOURCE26 $RPM_BUILD_ROOT%_sysconfdir/%name/isisd.conf
-install %SOURCE27 $RPM_BUILD_ROOT%_sysconfdir/%name/babeld.conf
 install %SOURCE28 $RPM_BUILD_ROOT%_sysconfdir/%name/pimd.conf
 
 install -m 755 %SOURCE10 $RPM_BUILD_ROOT%_initdir/zebra
@@ -225,7 +222,6 @@ install -m 755 %SOURCE13 $RPM_BUILD_ROOT%_initdir/ospfd
 install -m 755 %SOURCE14 $RPM_BUILD_ROOT%_initdir/ospf6d
 install -m 755 %SOURCE15 $RPM_BUILD_ROOT%_initdir/bgpd
 install -m 755 %SOURCE16 $RPM_BUILD_ROOT%_initdir/isisd
-install -m 755 %SOURCE17 $RPM_BUILD_ROOT%_initdir/babeld
 install -m 755 %SOURCE18 $RPM_BUILD_ROOT%_initdir/pimd
 
 install -m 755 %SOURCE19 $RPM_BUILD_ROOT%_initdir/watchquagga
@@ -248,7 +244,6 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %post_service ripngd
 %post_service bgpd
 %post_service isisd
-%post_service babeld
 %post_service pimd
 %post_service watchquagga
 } &>/dev/null
@@ -261,7 +256,6 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %preun_service ripngd
 %preun_service bgpd
 %preun_service isisd
-%preun_service babeld
 %preun_service pimd
 %preun_service zebra
 
@@ -313,6 +307,9 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Fri May 13 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.0.20160315-alt1
+- new version (removed babeld)
+
 * Tue Dec 01 2015 Sergey Y. Afonin <asy@altlinux.ru> 0.99.24.1-alt2
 - added makeinfo to BuildRequires
   https://lists.altlinux.org/pipermail/devel/2015-November/200445.html
