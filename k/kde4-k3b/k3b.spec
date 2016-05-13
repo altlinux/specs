@@ -14,7 +14,7 @@
 %define rname k3b
 Name: kde4-%rname
 Version: 2.0.3
-Release: alt4
+Release: alt5
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -22,6 +22,7 @@ Summary(ru_RU.UTF-8): Программа записи CD (Полный набо�
 URL: http://www.k3b.org/
 License: GPLv2
 
+Provides: k3b = %version-%release
 Requires: %req_all
 #Requires: %name-mini = %version-%release
 Conflicts: k3b-mini < 1.0.5-alt7
@@ -79,7 +80,6 @@ Summary: The CD Kreator (Development package.)
 Summary(ru_RU.UTF-8): Программа записи CD (Пакет разработчика.)
 License: GPL
 Group: Development/KDE and QT
-Requires: %libk3blib = %version-%release
 %description devel
 K3b is a GUI frontend to the cd recording programs. 
 It's aim is to provide a very user friendly interface to all the tasks that 
@@ -95,15 +95,12 @@ K3b - это мощная графическая оболочка для про�
 %package -n %libk3blib
 Summary: KDE 4 library
 Group: System/Libraries
-Requires: kde4libs >= %{get_version kde4libs}
-Requires: %libk3bdevice = %version-%release
 %description -n %libk3blib
 KDE 4 library.
 
 %package -n %libk3bdevice
 Summary: KDE 4 library
 Group: System/Libraries
-Requires: libqt4-core >= %{get_version libqt4-core}
 %description -n %libk3bdevice
 KDE 4 library.
 
@@ -158,6 +155,9 @@ KDE 4 library.
 %_K4includedir/*.h
 
 %changelog
+* Fri May 13 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt5
+- provide k3b
+
 * Wed Nov 25 2015 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt4
 - update requires
 
