@@ -3,8 +3,8 @@
 %add_findreq_skiplist %_datadir/qtcreator/templates/wizards/classes/python/file.py
 
 Name:    qt-creator
-Version: 3.6.0
-Release: alt1.1
+Version: 4.0.0
+Release: alt1
 Summary: Cross-platform IDE for Qt
 
 Group:   Development/Tools
@@ -94,7 +94,7 @@ install -Dpm0644 %SOURCE2 %buildroot%_datadir/appdata/qtcreator.appdata.xml
 %install_qt5 INSTALL_ROOT=%buildroot/%_prefix install_inst_qch_docs
 
 %files
-%doc README* LICENSE.LGPL* LGPL_EXCEPTION.TXT
+%doc README* LICENSE*
 %_bindir/*
 %_libdir/qtcreator
 %_prefix/libexec/qtcreator
@@ -110,6 +110,9 @@ install -Dpm0644 %SOURCE2 %buildroot%_datadir/appdata/qtcreator.appdata.xml
 %_datadir/qtcreator/*
 
 %changelog
+* Fri May 13 2016 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version
+
 * Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 3.6.0-alt1.1
 - NMU: Rebuild with new Qt5
 
