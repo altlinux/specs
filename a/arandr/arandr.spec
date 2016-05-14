@@ -1,5 +1,5 @@
 Name: arandr
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Screen layout editor for xrandr 1.4 (Another XRandR gui)
@@ -67,6 +67,9 @@ Features
 %_man1dir/*
 
 %changelog
+* Sat May 14 2016 Terechkov Evgenii <evg@altlinux.org> 0.1.9-alt1
+- 0.1.9
+
 * Thu Nov 26 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.8-alt1
 - Updated to 0.1.8.
 
