@@ -1,25 +1,32 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/More.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-devel perl-podlators perl(IO/Scalar.pm)
+BuildRequires: perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-CSV-Slurp
 %define upstream_version 1.03
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    1.03
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Convert CSV into an array of hashes, or an array of hashes into CSV
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/B/BA/BABF/Text-CSV-Slurp-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Text/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(IO/File.pm)
+BuildRequires: perl(IO/Scalar.pm)
+BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Most.pm)
 BuildRequires: perl(Text/CSV.pm)
+BuildRequires: perl(lib.pm)
+BuildRequires: perl(strict.pm)
+BuildRequires: perl(vars.pm)
+BuildRequires: perl(warnings.pm)
 BuildArch:  noarch
 Source44: import.info
 
@@ -40,10 +47,13 @@ Convert CSV into an array of hashes, or an array of hashes into CSV.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.yml  README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
 %changelog
+* Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1_1
+- update by mgaimport
+
 * Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
