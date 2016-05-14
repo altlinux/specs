@@ -1,25 +1,31 @@
+BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(File/Slurp.pm)
+BuildRequires: perl(JSON/XS.pm) perl(Tapper/Model.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl-podlators perl(File/Slurp.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 %define upstream_name    Tapper-Schema
 %define upstream_version 5.0.6
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    5.0.6
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Database schemas for Tapper
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Schema-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
+BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Class/C3.pm)
-BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Compress/Bzip2.pm)
+BuildRequires: perl(DBD/Pg.pm)
+BuildRequires: perl(DBD/SQLite.pm)
+BuildRequires: perl(DBD/mysql.pm)
 BuildRequires: perl(DBIx/Class.pm)
 BuildRequires: perl(DBIx/Class/Core.pm)
 BuildRequires: perl(DBIx/Class/InflateColumn/DateTime.pm)
@@ -29,11 +35,14 @@ BuildRequires: perl(DBIx/Class/Schema.pm)
 BuildRequires: perl(DBIx/Class/TimeStamp.pm)
 BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(DateTime.pm)
+BuildRequires: perl(DateTime/Duration.pm)
 BuildRequires: perl(DateTime/Format/MySQL.pm)
 BuildRequires: perl(DateTime/Format/Pg.pm)
 BuildRequires: perl(DateTime/Format/SQLite.pm)
+BuildRequires: perl(DateTime/Format/Strptime.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(MRO/Compat.pm)
+BuildRequires: perl(Module/Pluggable.pm)
 BuildRequires: perl(SQL/Translator.pm)
 BuildRequires: perl(Scalar/Util.pm)
 BuildRequires: perl(TAP/DOM.pm)
@@ -42,8 +51,12 @@ BuildRequires: perl(Tapper/TAP/Harness.pm)
 BuildRequires: perl(Test/Deep.pm)
 BuildRequires: perl(Test/Fixture/DBIC/Schema.pm)
 BuildRequires: perl(Test/More.pm)
+BuildRequires: perl(Variable/Magic.pm)
 BuildRequires: perl(YAML/Syck.pm)
+BuildRequires: perl(YAML/XS.pm)
 BuildRequires: perl(common/sense.pm)
+BuildRequires: perl(lib.pm)
+BuildRequires: perl(namespace/clean.pm)
 BuildRequires: perl(parent.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
@@ -71,8 +84,10 @@ Database schemas for Tapper.
 %doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
-
 %changelog
+* Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1_1
+- update by mgaimport
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1
 - automated CPAN update
 
