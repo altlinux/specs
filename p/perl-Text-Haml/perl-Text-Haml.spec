@@ -1,24 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl-Module-Build perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Text-Haml
 %define upstream_version 0.990117
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    0.990117
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Haml Perl implementation
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/V/VT/VTI/Text-Haml-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Text/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Data/Section/Simple.pm)
 BuildRequires: perl(Encode.pm)
-BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(File/Spec.pm)
 BuildRequires: perl(IO/File.pm)
@@ -52,11 +53,13 @@ features. Do not expect Ruby specific things to work.
 rm -f %{buildroot}/%{perl_vendor_privlib}/Text/README.pod
 
 %files
-%doc META.json META.yml 
+%doc Changes LICENSE META.json META.yml 
 %{perl_vendor_privlib}/*
 
-
 %changelog
+* Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.990117-alt1_1
+- update by mgaimport
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.990117-alt1
 - automated CPAN update
 
