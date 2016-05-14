@@ -1,27 +1,28 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators perl(Hash/Merge.pm)
+BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Tapper/Config.pm
 BuildRequires: perl-Tapper
 %define upstream_name    Tapper-Config
 %define upstream_version 5.0.2
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    5.0.2
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Tapper - Context sensitive configuration hub for all Tapper libs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-Config-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/ShareDir.pm)
 BuildRequires: perl(File/Slurp.pm)
-BuildRequires: perl(Hash/Merge/Simple.pm)
+BuildRequires: perl(Hash/Merge.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(YAML/Syck.pm)
 BuildRequires: perl(strict.pm)
@@ -52,6 +53,9 @@ libraries.
 %perl_vendor_privlib/*
 
 %changelog
+* Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1_1
+- update by mgaimport
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1
 - automated CPAN update
 
