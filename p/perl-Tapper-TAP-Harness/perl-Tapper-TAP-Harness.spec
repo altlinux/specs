@@ -1,32 +1,34 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators perl(TAP/Formatter/HTML.pm)
+BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(File/Find/Rule.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(YAML/Syck.pm) perl(parent.pm)
 %define upstream_name    Tapper-TAP-Harness
 %define upstream_version 5.0.6
 
+%{?perl_default_filter}
+
 Name:       perl-%{upstream_name}
-Version:    5.0.6
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Tapper - Tapper specific TAP handling
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-TAP-Harness-%{version}.tar.gz
+Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
-BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(Directory/Scratch.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Slurp.pm)
 BuildRequires: perl(File/Temp.pm)
 BuildRequires: perl(IO/Scalar.pm)
 BuildRequires: perl(IO/String.pm)
 BuildRequires: perl(Moose.pm)
 BuildRequires: perl(TAP/DOM.pm)
+BuildRequires: perl(TAP/Formatter/HTML.pm)
 BuildRequires: perl(TAP/Parser.pm)
 BuildRequires: perl(TAP/Parser/Aggregator.pm)
 BuildRequires: perl(Test/Deep.pm)
@@ -34,7 +36,7 @@ BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(YAML/Tiny.pm)
 BuildRequires: perl(strict.pm)
 BuildRequires: perl(warnings.pm)
-BuildArch: noarch
+BuildArch:  noarch
 Source44: import.info
 
 %description
@@ -55,13 +57,13 @@ This package provides a Tapper-specific TAP handling.
 %makeinstall_std
 
 %files
-%doc META.json META.yml Changes LICENSE README
+%doc Changes LICENSE META.json META.yml  README
 %perl_vendor_privlib/*
 
-
-
-
 %changelog
+* Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1_1
+- update by mgaimport
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1
 - automated CPAN update
 
