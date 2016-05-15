@@ -1,18 +1,17 @@
 %define teaname blt
-%define	major 2.4
+%define	major 2.5
 
 Name: tcl-%teaname
-Version: %{major}z
-Release: alt3
+Version: 2.5
+Release: alt1
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 Copyright: MIT
 Group: System/Libraries
-Url: http://blt.sourceforge.net/
+#Url: http://blt.sourceforge.net/
+Url: http://pdqi.com/w/pw/pdqi/Wize/Blt
 
 Source: %name-%version.tar
-Patch0: blt2.4z-patch-2
-Patch1: blt-2.4-alt-misc.patch
 
 Provides: blt = %version-%release
 Obsoletes: blt
@@ -53,19 +52,17 @@ the features of the %teaname.
 
 %prep
 %setup -q %{?snapshot:-c}%{!?snapshot:-n %teaname%version}
-%patch0 -p1
-%patch1 -p1
 
 %build
-%set_autoconf_version 2.13
+#%set_autoconf_version 2.13
 %__autoconf
 %configure
 %make_build
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
-%__ln_s tcl/libBLT24.so %buildroot%_libdir/libBLT.so
-%__ln_s tcl/libBLTlite24.so %buildroot%_libdir/libBLTlite.so
+%__ln_s tcl/libBLT25.so %buildroot%_libdir/libBLT.so
+%__ln_s tcl/libBLTlite25.so %buildroot%_libdir/libBLTlite.so
 %__mv -f examples/*.tcl %buildroot%_tcldatadir/%teaname%major/demos
 %__subst 's|^\#!../src/bltwish|\#!%_bindir/wish|' \
 	%buildroot%_tcldatadir/%teaname%major/demos/*.tcl
@@ -80,8 +77,8 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 
 %files
 %doc NEWS PROBLEMS README
-%_tcllibdir/libBLT24.so
-%_tcllibdir/libBLTlite24.so
+%_tcllibdir/libBLT25.so
+%_tcllibdir/libBLTlite25.so
 %dir %_tcldatadir/%teaname%major
 %_tcldatadir/%teaname%major/dd_protocols
 %_tcldatadir/%teaname%major/*.tcl
@@ -101,6 +98,13 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_tcldatadir/%teaname%major/demos
 
 %changelog
+* Sun May 15 2016 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt1
+- tcl-blt-2.5 from http://pdqi.com/w/pw/pdqi/Wize/Blt
+
+* Sun May 15 2016 Vladislav Zavjalov <slazav@altlinux.org> 2.4z-alt4
+- fix tcl/tk version requirements
+- do not crash on zero-size markers, just do not draw them
+
 * Sat May 14 2016 Vladislav Zavjalov <slazav@altlinux.org> 2.4z-alt3
 - resurrected, build with tcl8.5.9
 
