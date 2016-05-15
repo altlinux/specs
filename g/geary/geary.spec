@@ -1,17 +1,17 @@
-%define ver_major 0.10
+%define ver_major 0.11
 %def_disable contractor
 
 Name: geary
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Email client
 License: LGPLv2.1+
 Group: Networking/Mail
 Url: https://wiki.gnome.org/Apps/Geary
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define vala_ver 0.22.1
 %define gtk_ver 3.10.0
@@ -77,9 +77,12 @@ Geary's development.
 %_iconsdir/hicolor/scalable/actions/*.svg
 %_datadir/appdata/%name.appdata.xml
 %{?_enable_contractor:%_datadir/contractor/geary-attach.contract}
-%doc AUTHORS MAINTAINERS NEWS README THANKS
+%doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun May 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Sat May 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt2
 - updated to 0.10.0-75-g2d9e9b2 (also fixed BGO #763203 and ALT #32058)
 
