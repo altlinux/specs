@@ -2,7 +2,7 @@
 %def_enable openssl
 
 Name: libircclient
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: Library that implements the client-server IRC protocol
@@ -58,6 +58,9 @@ export CFLAGS="%optflags -fPIC"
 %_libdir/*.so
 
 %changelog
+* Mon May 16 2016 Mikhail Efremov <sem@altlinux.org> 1.9-alt1
+- Updated to 1.9.
+
 * Tue May 27 2014 Mikhail Efremov <sem@altlinux.org> 1.8-alt1
 - Fix Url.
 - Updated to 1.8.
