@@ -1,16 +1,14 @@
 %define ver_major 3.20
 
 Name: orca
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
-Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению 
+Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
 Group: Accessibility
 License: LGPL
-Packager: Michael Pozhidaev <msp@altlinux.ru>
-
-URL: http://live.gnome.org/Orca
+URL: http://wiki.gnome.org/Projects/Orca
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Source1: voiceman-server
@@ -89,6 +87,9 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Mon May 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Mon Apr 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
