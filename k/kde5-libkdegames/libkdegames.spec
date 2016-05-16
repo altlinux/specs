@@ -7,7 +7,7 @@
 
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 16.04.1
 Release: alt1
 %K5init
 
@@ -45,6 +45,7 @@ Requires: kf5-filesystem
 %package -n kde5-carddecks
 Group: Games/Cards
 Summary: Carddecks for KDE cardgames
+BuildArch: noarch
 Requires: %name-common = %version-%release
 %description -n kde5-carddecks
 Carddecks for KDE cardgames.
@@ -106,5 +107,8 @@ KF5 library
 %_K5lib/libKF5KDEGamesPrivate.so.*
 
 %changelog
+* Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - initial build
