@@ -1,20 +1,21 @@
 %set_automake_version 1.11
 
 %define upstreamname lxappearance
+%define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.5.2
-Release: alt1.1
+Version: 0.6.2
+Release: alt1
 
 Summary: %name is desktop-independent theme swither for GTK+.
 License: GPL
 Group: Graphical desktop/Other
 Url: http://lxde.sf.net
+#Url: git://git.lxde.org/lxde/lxappearance.git
 
-Source: %upstreamname-%version.tar.gz
+Source: %upstreamname-%version.tar
 Patch1: lxappearance-0.5.2-alt-fixbuild.patch
 
-# Automatically added by buildreq on Fri Jul 18 2008
-BuildRequires: libgtk+2-devel intltool gtk-doc xsltproc
+BuildPreReq: libgtk+%gtkver-devel intltool gtk-doc xsltproc
 
 %description
 LXAppearance is part of LXDE project.
@@ -32,11 +33,14 @@ This package contains files needed to build plugins for lxappearance
 %patch1 -p2
 
 %build
-autoreconf -fisv
-%configure \
-    --enable-man
+%autoreconf
+%if %gtkver==3
+    %configure --enable-man --enable-gtk3
+%else
+    %configure --enable-man
+%endif
 
-touch -r po/Makefile po/stamp-it
+#touch -r po/Makefile po/stamp-it
 %make_build
 
 %install
@@ -58,6 +62,9 @@ mkdir -p %buildroot%_libdir/%upstreamname/plugins
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt1
+- New version (0.6.2).
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.1
 - Fixed build
 

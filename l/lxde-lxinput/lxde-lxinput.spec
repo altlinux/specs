@@ -1,17 +1,20 @@
 %define upstreamname lxinput
+%define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.3.2
+Version: 0.3.5
 Release: alt1
 Summary: Keyboard and mouse settings dialog for LXDE
 
 Group: System/Configuration/Hardware
 License: GPLv2+
 Url: http://lxde.sourceforge.net/
+#Url: git://git.lxde.org/lxde/lxinput.git
+
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
-Source: http://downloads.sourceforge.net/sourceforge/lxde/%upstreamname-%version.tar.gz
+Source: %upstreamname-%version.tar
 
-BuildRequires: docbook-dtds docbook-style-xsl intltool libgtk+2-devel xsltproc
+BuildRequires: docbook-dtds docbook-style-xsl intltool libgtk+%gtkver-devel xsltproc
 Requires: lxde-lxsession
 
 %description
@@ -22,24 +25,31 @@ Lightweight X11 Desktop Environment.
 %setup -n %upstreamname-%version
 
 %build
-autoreconf -fisv
-%configure --enable-man
+%autoreconf
+%if %gtkver==3
+    %configure --enable-man --enable-gtk3
+%else
+    %configure --enable-man
+%endif
+
 %make_build
 
 %install
-%makeinstall_std INSTALL='install -p'
-cp data/%upstreamname.desktop %buildroot%_desktopdir/%upstreamname.desktop
+%makeinstall_std
+#cp data/%upstreamname.desktop %buildroot%_desktopdir/%upstreamname.desktop
 %find_lang %upstreamname
 
 %files -f %upstreamname.lang
-#FIXME: add ChangeLog and NEWS if there is content
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README ChangeLog NEWS
 %_bindir/%upstreamname
 %_datadir/%upstreamname/
 %_desktopdir/%upstreamname.desktop
-%_man1dir/%upstreamname.1.gz
+%_man1dir/%upstreamname.1.*
 
 %changelog
+* Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.3.5-alt1
+- New version (0.3.5)
+
 * Wed May 30 2012 Radik Usupov <radik@altlinux.org> 0.3.2-alt1
 - new version (0.3.2)
 
