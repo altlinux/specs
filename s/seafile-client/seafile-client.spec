@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 5.0.4
+Version: 5.1.1
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -15,9 +15,12 @@ Source: %name-%version.tar
 
 Requires: seafile >= %version
 
-# Automatically added by buildreq on Sun Nov 10 2013
-# optimized out: cmake cmake-modules fontconfig glib2-devel libevent-devel libgio-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libsearpc-devel libssl-devel libstdc++-devel mariadb-client mariadb-common pkg-config
-BuildRequires: ccmake gcc-c++ libjansson-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite3-devel phonon-devel
+# manually removed: git-core i586-libxcb libfreetype-infinality python-module-mwlib ruby ruby-stdlibs python-module-google python3-dev python3-module-yieldfrom python3-module-zope 
+# Automatically added by buildreq on Tue May 17 2016
+# optimized out: cmake cmake-modules gcc-c++ glib2-devel libEGL-devel libGL-devel libevent-devel libgio-devel libgpg-error libjansson-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libsearpc-devel libstdc++-devel libuuid-devel pkg-config python-base python-modules python3 python3-base  qt5-tools
+BuildRequires: ccmake doxygen graphviz libccnet-devel libseafile-devel libsqlite3-devel libssl-devel qt5-imageformats qt5-tools-devel
+
+BuildRequires: qt5-base-devel
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -34,7 +37,7 @@ Seafile is a full-fledged document collaboration platform.
 %setup
 
 %build
-%cmake_insource
+PATH=%_qt5_bindir:$PATH %cmake_insource
 %make_build
 
 %install
@@ -49,6 +52,10 @@ Seafile is a full-fledged document collaboration platform.
 %_pixmapsdir/*
 
 %changelog
+* Tue May 17 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.1-alt1
+- new version 5.1.1 (with rpmrb script)
+- build with Qt5, update buildreqs
+
 * Sat Feb 13 2016 Vitaly Lipatov <lav@altlinux.ru> 5.0.4-alt1
 - new version 5.0.4 (with rpmrb script)
 
