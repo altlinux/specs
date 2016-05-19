@@ -8,7 +8,7 @@
 
 Name: virt-manager
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -22,7 +22,7 @@ Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %version-%release
 Requires: virt-install = %version-%release
-Requires: python-module-pygobject3 >= 3.4
+Requires: python-module-pygobject3 >= 3.14
 Requires: python-module-libxml2
 Requires: vte3
 Requires: dconf
@@ -146,6 +146,9 @@ python setup.py \
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu May 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt2
+- upstream master snapshot
+
 * Fri Mar 11 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 

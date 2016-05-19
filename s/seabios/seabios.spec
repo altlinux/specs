@@ -1,7 +1,7 @@
 %define debug_level 1
 
 Name: seabios
-Version: 1.9.0
+Version: 1.9.2
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -110,6 +110,9 @@ ln -r -s %buildroot%_datadir/seavgabios/vgabios-isavga.bin %buildroot%_datadir/s
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Fri May 13 2016 Alexey Shabalin <shaba@altlinux.ru> 1.9.2-alt1
+- 1.9.2
+
 * Tue Dec 15 2015 Alexey Shabalin <shaba@altlinux.ru> 1.9.0-alt1
 - 1.9.0
 - build vgabios-virtio

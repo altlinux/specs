@@ -9,12 +9,13 @@
 %def_enable webdav
 %def_enable lz4
 %def_disable gtk_doc
-# gstreamer/pulse/no
-%define audio pulse
+%def_enable pulse
+%def_enable gstaudio
+%def_enable epoxy
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.30
+Version: 0.31
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -24,7 +25,6 @@ Url: http://spice-space.org/page/Spice-Gtk
 
 Source: %name-%version.tar
 Source2: spice-common.tar
-#Source3: spice-protocol.tar
 # Patch: %name-%version-%release.patch
 # Patch2: %name-alt-fix.patch
 
@@ -38,7 +38,7 @@ BuildRequires: hwdatabase >= 0.3.31-alt1
 
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
-BuildRequires: spice-protocol >= 0.12.10
+BuildRequires: spice-protocol >= 0.12.11
 BuildRequires: glib2-devel >= 2.28 libgio-devel >= 2.10.0 libcairo-devel >= 1.2.0
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
@@ -54,13 +54,9 @@ BuildRequires: libpolkit-devel >= 0.96 libacl-devel
 BuildRequires: libgtk+3-devel
 %{?_enable_introspection:BuildRequires: libgtk+3-gir-devel}
 %endif
-BuildRequires: libXrandr-devel libX11-devel
-%if %audio == gstreamer
-BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
-%endif
-%if %audio == pulse
-BuildRequires: libpulseaudio-devel
-%endif
+%{?_enable_epoxy:BuildRequires: libepoxy-devel libdrm-devel}
+%{?_enable_gstaudio:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gstreamer1.0-utils gst-plugins-base1.0 gst-plugins-good1.0}
+%{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 BuildRequires: perl-Text-CSV perl-Text-CSV_XS python-module-pygtk-devel python-module-pyparsing
 BuildRequires: /usr/bin/pod2man
 
@@ -203,7 +199,6 @@ screen-shots of a SPICE desktop
 %prep
 %setup -q -c
 %__tar -xf %SOURCE2 -C %name-%version/spice-common
-#%__tar -xf %SOURCE3 -C %name-%version/spice-common/spice-protocol
 mv %name-%version %_name-%version
 cd %_name-%version
 # %patch -p1
@@ -234,8 +229,7 @@ cd %_name-%version
 	--with-usb-acl-helper-dir=%_libexecdir/spice-gtk/ \
 	--with-pnp-ids-path=%_datadir/misc \
 	--with-usb-ids-path=%_datadir/misc \
-	--with-gtk=2.0 \
-	--with-audio=%audio
+	--with-gtk=2.0
 
 %make_build
 cd ..
@@ -259,8 +253,7 @@ cd spice-gtk3-%version
 	--with-usb-acl-helper-dir=%_libexecdir/spice-gtk/ \
 	--with-pnp-ids-path=%_datadir/misc \
 	--with-usb-ids-path=%_datadir/misc \
-	--with-gtk=3.0 \
-	--with-audio=%audio
+	--with-gtk=3.0
 
 %make_build
 cd ..
@@ -349,6 +342,9 @@ cd ..
 %endif
 
 %changelog
+* Thu May 19 2016 Alexey Shabalin <shaba@altlinux.ru> 0.31-alt1
+- 0.31
+
 * Mon Oct 12 2015 Alexey Shabalin <shaba@altlinux.ru> 0.30-alt1
 - 0.30
 
