@@ -57,7 +57,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 229
-Release: alt5
+Release: alt6
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1770,6 +1770,11 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Wed May 18 2016 Mikhail Efremov <sem@altlinux.org> 1:229-alt6
+- Patch from upstream:
+    + strbuf: set the proper character when creating new nodes
+      (closes: #32060).
+
 * Thu Apr 28 2016 Eugene Prokopiev <enp@altlinux.ru> 1:229-alt5
 - fix alt-specific simpleresolv units
 
