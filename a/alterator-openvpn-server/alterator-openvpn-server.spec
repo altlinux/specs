@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-openvpn-server
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -42,6 +42,9 @@ Alterator module for openvpn server configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Mon May 16 2016 Mikhail Efremov <sem@altlinux.org> 0.8.5-alt1
+- Fix check for addresses range.
+
 * Tue Jan 20 2015 Mikhail Efremov <sem@altlinux.org> 0.8.4-alt1
 - Add tmp-dir option to ovpnoptions.
 - Rename {,ETCNET_}IFACEDIR to {,ETCNET_}IFACESDIR.
