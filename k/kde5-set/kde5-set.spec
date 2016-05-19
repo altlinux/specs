@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,7 @@ Requires: kf5-kio kf5-kded kf5-kwayland-integration
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-runtime
-Requires: qt5-dbus kf5-kwin kf5-plasma-desktop kf5-kinit kf5-kdeclarative
+Requires: qt5-dbus kf5-kde-cli-tools kf5-kwin kf5-plasma-desktop kf5-kinit kf5-kdeclarative
 Requires: kde5-dolphin
 
 %package -n kde5-small
@@ -30,7 +30,7 @@ Requires: kde5-mini
 Requires: kde5-volume-control
 Requires: webclient
 Requires: kf5-sddm-kcm kf5-polkit-kde-agent kf5-kio-extras kf5-breeze kf5-oxygen kf5-powerdevil kf5-ksysguard
-Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kf5-kde-cli-tools
+Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kdepasswd kde5-kcalc kde5-kdebugsettings kde5-kross-python
 Requires: kf5-milou kf5-systemsettings
@@ -103,7 +103,8 @@ Requires: kde5-katomic kde5-knavalbattle kde5-kpat
 Summary: Set of printing support applications
 Group: Graphics
 Requires: kde5-runtime
-Requires: kde5-print-manager cups printer-drivers-X11 system-config-printer-udev
+Requires: kde5-print-manager cups printer-drivers-X11
+#system-config-printer-udev
 
 %package -n kde5-scanning
 Summary: Set of image scanning support applications
@@ -150,6 +151,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Thu May 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- update requires
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.1-alt1
 - update requires
 
