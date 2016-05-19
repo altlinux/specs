@@ -1,6 +1,6 @@
 Name: vixie-cron
 Version: 4.1.20060426
-Release: alt9
+Release: alt10
 
 %def_with selinux
 
@@ -135,6 +135,10 @@ touch %buildroot%_sysconfdir/{at,cron}.{allow,deny}
 %attr(700,root,root) %dir %_sysconfdir/cron.d
 
 %changelog
+* Thu May 19 2016 Dmitry V. Levin <ldv@altlinux.org> 4.1.20060426-alt10
+- crond.service: fixed race condition that affected user crontabs
+  (closes: #32095).
+
 * Tue Sep 20 2011 Dmitry V. Levin <ldv@altlinux.org> 4.1.20060426-alt9
 - Fixed uninitialized pointer bug in case when SELinux is not enabled
   (by Sergey Vlasov; closes: #26285).
