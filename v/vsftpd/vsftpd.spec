@@ -1,6 +1,6 @@
 Name: vsftpd
-Version: 3.0.2
-Release: alt4
+Version: 3.0.3
+Release: alt1
 
 Summary: File Transfer Protocol (FTP) server
 License: GPLv2
@@ -101,6 +101,10 @@ touch %_logdir/vsftpd.log
 %doc vsftpd.eps.bz2
 
 %changelog
+* Thu May 19 2016 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt1
+- 3.0.2 -> 3.0.3.
+- /etc/xinetd.d/vsftpd: raised rlimit_as from 100M to 200M.
+
 * Tue Jul 16 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.2-alt4
 - Cleanup previous seccomp sandbox fixes.
 
