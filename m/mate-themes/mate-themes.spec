@@ -5,14 +5,14 @@ BuildRequires: /usr/bin/glib-gettextize
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 3.20.5
+%define version 3.20.7
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
 %global branch 3.20
 
-%global rel_ver 3.20.5
+%global rel_ver 3.20.7
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5fec16803c5ff06fa31b7cab47c6d51a99f1acc7}
@@ -41,7 +41,7 @@ BuildArch:      noarch
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:  mate-common
-BuildRequires:  gtk2-devel
+BuildRequires: libgail-devel libgtk+2-devel
 BuildRequires:  libgdk-pixbuf-devel
 
 Requires:       mate-icon-theme
@@ -62,7 +62,6 @@ MATE Desktop themes
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
-
 
 %build
 %configure --enable-icon-mapping
@@ -98,7 +97,7 @@ fi
 %{_datadir}/themes/BlueMenta/
 %{_datadir}/themes/Blue-Submarine/
 %{_datadir}/themes/ContrastHighInverse/
-##%{_datadir}/themes/GreenLaguna/
+%{_datadir}/themes/GreenLaguna/
 %{_datadir}/themes/Green-Submarine/
 %{_datadir}/themes/HighContrast/metacity-1/metacity-theme-1.xml
 %{_datadir}/themes/Menta/
@@ -110,6 +109,9 @@ fi
 
 
 %changelog
+* Thu May 19 2016 Igor Vlasenko <viy@altlinux.ru> 3.20.7-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 3.20.5-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
