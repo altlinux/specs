@@ -14,11 +14,11 @@
 
 %define major 4
 %define minor 14
-%define bugfix 18
+%define bugfix 20
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -120,6 +120,7 @@ Patch1036: kdelibs-4.10.2-alt-add-protocol-all.patch
 Patch1037: kdelibs-4.10.4-alt-def-plasma-theme-bg.patch
 Patch1038: kdelibs-4.10.5-alt-run-with-context.patch
 Patch1039: alt-def-widget-style.patch
+Patch1040: alt-def-color-scheme.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
@@ -224,6 +225,7 @@ applications for KDE 4.
 %patch1037 -p1
 %patch1038 -p1
 %patch1039 -p1
+%patch1040 -p1
 
 %patch3000 -p1
 
@@ -358,6 +360,10 @@ done
 %_K4includedir/*
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.20-alt1
+- new version
+- det default colors from Breeze color scheme
+
 * Wed Apr 20 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.18-alt3
 - fix set default style
 
