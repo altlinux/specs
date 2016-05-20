@@ -2,7 +2,7 @@
 
 Name: dbusmenu-qt5
 Version: 0.9.3
-Release: alt0.1
+Release: alt0.3
 
 Group: System/Libraries
 Summary: A Qt implementation of the DBusMenu protocol
@@ -63,6 +63,12 @@ Development files for %{name}
 %_pkgconfigdir/dbusmenu-qt5.pc
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt0.3
+- update to 20160218 snapshot
+
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt0.2
+- rebuild
+
 * Fri Oct 02 2015 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt0.1
 - use 0.9.3 snapshot 15.10.2015
 
