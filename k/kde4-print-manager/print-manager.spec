@@ -3,7 +3,7 @@
 %define rname print-manager
 Name: kde4-print-manager
 Version: 14.12.1
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Printing
 Summary: Printer management for KDE
@@ -13,7 +13,7 @@ License: GPLv2+
 Requires: %name-common = %version-%release
 Requires: cups
 Requires: kde4base-runtime
-Requires: system-config-printer-udev
+#Requires: system-config-printer-udev
 # required for the com.redhat.NewPrinterNotification D-Bus service
 #Requires: system-config-printer-libs
 
@@ -98,6 +98,9 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.deskt
 
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt2
+- clean requires
+
 * Fri Jan 30 2015 Sergey V Turchin <zerg@altlinux.org> 14.12.1-alt1
 - new version
 
