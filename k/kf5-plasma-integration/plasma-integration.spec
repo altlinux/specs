@@ -1,8 +1,8 @@
 %define rname plasma-integration
 
 Name: kf5-%rname
-Version: 5.6.3
-Release: alt1
+Version: 5.6.4
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-def-font.patch
 
 # Automatically added by buildreq on Tue Mar 22 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libxcbutil-keysyms libxkbfile-devel python-base python-modules python3 qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -29,6 +30,7 @@ Qt applications when running on a KDE Plasma workspace.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -42,6 +44,12 @@ Qt applications when running on a KDE Plasma workspace.
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme.so
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt2
+- set default font
+
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
+- new version
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
 - new version
 
