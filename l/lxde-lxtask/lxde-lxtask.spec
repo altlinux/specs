@@ -1,18 +1,18 @@
 %define upstreamname lxtask
+%define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.1.4
-Release: alt4
+Version: 0.1.7
+Release: alt1
 
 Summary: Task manager for LXDE
 License: GPL
 Group: Graphical desktop/Other
 Url: http://lxde.sf.net
+#Url: git://git.lxde.org/lxde/lxtask.git
 
-Source: %upstreamname-%version.tar.gz
-Patch: lxtask-fix-usage-tt.patch
+Source: %upstreamname-%version.tar
 
-# Automatically added by buildreq on Mon May 03 2010
-BuildRequires: cvs intltool libgtk+2-devel
+BuildPreReq: libgtk+%gtkver-devel intltool
 
 %description
 LXTask - lightweight and desktop-independent task manager derived from
@@ -21,12 +21,15 @@ and some improvement of the user interface.
 
 %prep
 %setup -n %upstreamname-%version
-%patch -p2
 
 %build
 %autoreconf
-%configure
-touch -r po/Makefile po/stamp-it
+%if %gtkver==3
+    %configure --enable-gtk3
+%else
+    %configure
+%endif
+#touch -r po/Makefile po/stamp-it
 %make_build
 
 %install
@@ -37,8 +40,13 @@ touch -r po/Makefile po/stamp-it
 %doc ChangeLog INSTALL README TODO
 %_bindir/*
 %_desktopdir/*
+%_man1dir/*
 
 %changelog
+* Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.1.7-alt1
+- New version
+- Remove lxtask-fix-usage-tt.patch.
+
 * Tue Jun 12 2012 Radik Usupov <radik@altlinux.org> 0.1.4-alt4
 - new upstream snapshot
 

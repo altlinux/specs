@@ -1,22 +1,25 @@
 %define upstreamname lxterminal
+%define gtkver 2
 Name: lxde-lxterminal
-Version: 0.1.11
-Release: alt3
+Version: 0.2.0
+Release: alt1.20160221.1
 
 Summary: Desktop-independent VTE-based terminal emulator for LXDE
 License: GPLv2+
 Group: Graphical desktop/Other
 Url: http://lxde.sourceforge.net/
+#Url: git://git.lxde.org/lxde/lxterminal.git
+
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
-Source: %upstreamname-%version.tar.gz
+Source: %upstreamname-%version.tar
 Patch: lxterminal-0-1-11-f10-true.patch
 
-Buildrequires: docbook-dtds docbook-style-xsl xsltproc libvte-devel intltool
-BuildRequires: desktop-file-utils
+BuildPreReq: libgtk+%gtkver-devel docbook-dtds docbook-style-xsl xsltproc libvte-devel intltool desktop-file-utils pkgconfig(glib-2.0) pkgconfig(vte-2.90) pkgconfig(x11) ImageMagick-tools
 
 %description
-%summary  without any unnecessary dependency (All instances share the same process to reduce memory usage)
+%summary  without any unnecessary dependency (All instances share the same
+process to reduce memory usage)
 
 %prep
 %setup -n %upstreamname-%version
@@ -24,7 +27,11 @@ BuildRequires: desktop-file-utils
 
 %build
 %autoreconf
-%configure --enable-man
+%if %gtkver==3
+    %configure --enable-man --enable-gtk3
+%else
+    %configure --enable-man
+%endif
 
 %make_build
 
@@ -36,15 +43,24 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=System \
 	%buildroot%_desktopdir/lxterminal.desktop
 
+for x in 16 32 48; do
+    mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps
+	convert %buildroot%_iconsdir/hicolor/128x128/apps/%upstreamname.png -resize $x'x'$x \
+	        %buildroot%_iconsdir/hicolor/$x'x'$x/apps/%upstreamname.png
+done
+
 %files -f %upstreamname.lang
 %doc ChangeLog INSTALL README
 %_bindir/*
 %_desktopdir/*.desktop
 %_datadir/%upstreamname
 %_man1dir/*
-%_pixmapsdir/*.png
+%_iconsdir/hicolor/*/apps/%upstreamname.png
 
 %changelog
+* Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1.20160221.1
+- New snapshot.
+
 * Tue Jun 12 2012 Radik Usupov <radik@altlinux.org> 0.1.11-alt3
 - new upstreame snapshot
 
