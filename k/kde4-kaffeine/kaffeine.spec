@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde4-%rname
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: Multimedia Player
@@ -10,6 +10,26 @@ Url: http://kaffeine.sourceforge.net/
 License: GPLv2
 
 Requires: libqt4-sql-sqlite
+
+Requires: vlc-mini
+Requires: vlc-plugin-alsa
+Requires: vlc-plugin-pulseaudio
+Requires: vlc-plugin-ffmpeg
+Requires: vlc-plugin-flac
+Requires: vlc-plugin-mpeg2
+Requires: vlc-plugin-ogg
+Requires: vlc-plugin-dvdnav
+Requires: vlc-plugin-dvdread
+Requires: vlc-plugin-audiocd
+Requires: vlc-plugin-v4l
+Requires: vlc-plugin-xcb
+Requires: vlc-plugin-ts
+Requires: vlc-plugin-live555
+Requires: vlc-plugin-smb
+Requires: vlc-plugin-xml
+Requires: vlc-plugin-dbus
+Requires: vlc-plugin-taglib
+
 Conflicts: kaffeine <= 0.8.8-alt4
 
 # svn.kde.org/home/kde/trunk/extragear/multimedia/kaffeine
@@ -52,6 +72,9 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 %_K4xdg_apps/kaffeine.desktop
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2
+- update requires
+
 * Mon Mar 14 2016 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
 - new version
 
