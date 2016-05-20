@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.13.0
-Release: alt7
+Release: alt8
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -131,6 +131,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt8
+- fix systemd service order
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt7
 - add upstream fix to set focus on primary screen
 
