@@ -40,7 +40,7 @@
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -65,6 +65,7 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
+Patch1: FDBUG-94873.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -267,6 +268,7 @@ statically linked libpoppler-based software
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 
 %autoreconf
 #aclocal --force -I m4
@@ -395,6 +397,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 0.42.0-alt2
+- add fix against crash on certain PDF form item activation actions
+
 * Tue Mar 29 2016 Sergey V Turchin <zerg@altlinux.org> 0.42.0-alt1
 - new version
 
