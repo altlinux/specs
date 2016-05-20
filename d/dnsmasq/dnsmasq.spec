@@ -1,7 +1,7 @@
 Name: dnsmasq
-Version: 2.75
+Version: 2.76
 
-Release: alt3
+Release: alt1
 Summary: A lightweight caching nameserver
 License: %gpl2plus
 Group: System/Servers
@@ -24,6 +24,7 @@ BuildRequires: libidn-devel
 BuildRequires: libnettle-devel libgmp-devel
 
 %define sysconfig_file %_sysconfdir/sysconfig/%name
+%define _unpackaged_files_terminate_build 1
 
 Summary(ru_RU.KOI8-R): Компактный сервер DNS и DHCP для локальных сетей
 
@@ -72,7 +73,7 @@ sed -i 's;/\* #define HAVE_DNSSEC \*/;#define HAVE_DNSSEC;' src/config.h
 
 %build
 %make_build
-%make_build -C contrib/wrt
+%make_build -C contrib/lease-tools
 
 %install
 %makeinstall_std PREFIX=%prefix
@@ -85,10 +86,10 @@ install -pD -m755 %SOURCE3            %buildroot%_sbindir/%name-helper
 install -pD -m644 %SOURCE4            %buildroot%_unitdir/%name.service
 
 # For utils package
-install -pD -m 755 contrib/wrt/dhcp_release %buildroot%_bindir/dhcp_release
-install -pD -m 644 contrib/wrt/dhcp_release.1 %buildroot%_man1dir/dhcp_release.1
-install -pD -m 755 contrib/wrt/dhcp_lease_time %buildroot%_bindir/dhcp_lease_time
-install -pD -m 644 contrib/wrt/dhcp_lease_time.1 %buildroot%_man1dir/dhcp_lease_time.1
+install -pD -m 755 contrib/lease-tools/dhcp_release %buildroot%_bindir/dhcp_release
+install -pD -m 644 contrib/lease-tools/dhcp_release.1 %buildroot%_man1dir/dhcp_release.1
+install -pD -m 755 contrib/lease-tools/dhcp_lease_time %buildroot%_bindir/dhcp_lease_time
+install -pD -m 644 contrib/lease-tools/dhcp_lease_time.1 %buildroot%_man1dir/dhcp_lease_time.1
 
 # For DNSSEC support
 install -pD -m 644 trust-anchors.conf %buildroot%_datadir/%name/trust-anchors.conf
@@ -128,6 +129,9 @@ fi
 %_man1dir/dhcp_*
 
 %changelog
+* Fri May 20 2016 Mikhail Efremov <sem@altlinux.org> 2.76-alt1
+- Updated to 2.76.
+
 * Thu Dec 03 2015 Mikhail Efremov <sem@altlinux.org> 2.75-alt3
 - Rebuild with nettle-3.x.
 
