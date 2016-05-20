@@ -1,0 +1,65 @@
+Name: pve-common
+Summary: Proxmox VE base library
+Version: 4.0.63
+Release: alt1
+License: GPLv3
+Group: Development/Perl
+Url: https://git.proxmox.com/
+Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+Source: %name-%version.tar
+
+BuildArch: noarch
+BuildRequires: perl(IO/Socket/IP.pm)
+BuildRequires: perl(Filesys/Df.pm)
+BuildRequires: perl(URI/Escape.pm)
+BuildRequires: perl(Digest/SHA.pm)
+BuildRequires: perl(String/ShellQuote.pm)
+BuildRequires: perl(IO/AtomicFile.pm)
+BuildRequires: perl(HTTP/Status.pm)
+BuildRequires: perl(Devel/Cycle.pm)
+BuildRequires: perl(Net/IP.pm)
+BuildRequires: perl(Pod/Parser.pm)
+BuildRequires: perl(Clone.pm)
+BuildRequires: perl(File/Basename.pm)
+BuildRequires: perl(Linux/Inotify2.pm)
+BuildRequires: perl(JSON.pm)
+
+%description
+This package contains the base library used by other Proxmox VE components.
+
+%prep
+%setup -q -n %name-%version
+
+%install
+cd src
+%make DESTDIR=%buildroot install
+
+%files
+%perl_vendor_privlib/PVE
+
+%changelog
+* Fri May 20 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.63-alt1
+- 4.0-63
+
+* Wed May 18 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.63-alt0.2.etcnet_reader_test2
+- 2nd test release of etcnet_reader
+
+* Sat May 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.59-alt0.2.etcnet_reader_test1
+- 1st test release of etcnet_reader
+
+* Sat May 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.59-alt0.1.etcnet_writer_test3
+- stable release of etcnet_writer_test
+
+* Wed May 04 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.59-alt0.1.etcnet_writer_test2
+- 2nd test release of etcnet_writer_test
+
+* Thu Apr 28 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.59-alt0.1.etcnet_writer_test1
+- test release of etcnet_writer_test
+
+* Mon Feb 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.46-alt1
+- 4.0-46
+
+* Mon Dec 14 2015 Valery Inozemtsev <shrek@altlinux.ru> 4.0.41-alt1
+- initial release
+
