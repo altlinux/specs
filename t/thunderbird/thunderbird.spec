@@ -2,9 +2,13 @@
 %def_with	lightning
 %define 	r_name thunderbird
 
+%define enigmail_version  1.9.2
+%define lightning_version 4.7
+%define gdata_version     2.6
+
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.0.0
+Version:	45.1.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -99,13 +103,12 @@ organizational needs.
 
 %if_with enigmail
 %package enigmail
-%define engimail_version 1.9.1
 %define enigmail_ciddir %mozilla_arch_extdir/%tbird_cid/\{847b3a00-7ab1-11d4-8f02-006008948af5\}
 Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
-Url: http://enigmail.mozdev.org/
+Url: https://www.enigmail.net/
 
-Provides: %name-enigmail = %engimail_version
+Provides:  %name-enigmail = %enigmail_version-%release
 Provides:  %name-esr-enigmail = %version-%release
 Obsoletes: %name-esr-enigmail < %version-%release
 Requires: %name = %version-%release
@@ -123,9 +126,9 @@ provided by the popular GnuPG software.
 %define lightning_ciddir %mozilla_arch_extdir/%tbird_cid/\{e2fda1a4-762b-4020-b5ad-a41df1933103\}
 Summary: An integrated calendar for Thunderbird
 Group: Office
-Url: http://www.mozilla.org/projects/calendar/lightning/
+Url: https://www.mozilla.org/projects/calendar
 
-Provides: %name-lightning = 1.9b1
+Provides:  %name-lightning = %lightning_version-%release
 Provides:  %name-esr-lightning = %version-%release
 Obsoletes: %name-esr-lightning < %version-%release
 Requires: %name = %version-%release
@@ -135,18 +138,17 @@ An integrated calendar for Thunderbird.
 
 %package google-calendar
 %define google_calendar_ciddir %mozilla_noarch_extdir/%tbird_cid/\{a62ef8ec-5fdc-40c2-873c-223b8a6925cc\}
-#Version: 0.8pre
 Summary: Provider for Google Calendar
 Group: Office
-Url: http://www.mozilla.org/projects/calendar/lightning/
+Url: https://www.mozilla.org/projects/calendar
 
+Provides: %name-google-calendar = %gdata_version-%release
 Requires: %name = %version-%release
 Requires: %name-lightning = %version-%release
 
-Provides: gdata-provider = %version-%release
+Provides: gdata-provider = %gdata_version-%release
 Provides:  %name-esr-google-calendar = %version-%release
 Obsoletes: %name-esr-google-calendar < %version-%release
-
 
 %description google-calendar
 Allows bidirectional access to Google Calendar
@@ -466,6 +468,11 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Fri May 20 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.0-alt1
+- New version (45.1.0)
+- Enigmail 1.9.2
+- Set correct URL and version to extension packages
+
 * Thu Apr 14 2016 Andrey Cherepanov <cas@altlinux.org> 45.0.0-alt1
 - New version (45.0.0)
 
