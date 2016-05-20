@@ -1,7 +1,7 @@
 %define rname krunner
 
 Name: kf5-%rname
-Version: 5.21.0
+Version: 5.22.0
 Release: alt1
 %K5init altplace
 
@@ -60,6 +60,7 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data kdevappwizard
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
@@ -68,6 +69,7 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %files devel
+%_K5data/kdevappwizard/templates/*
 %_K5inc/krunner_version.h
 %_K5inc/KRunner/
 %_K5link/lib*.so
@@ -79,6 +81,9 @@ KF5 library
 %_K5qml/org/kde/runnermodel/
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
+- new version
+
 * Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt1
 - new version
 

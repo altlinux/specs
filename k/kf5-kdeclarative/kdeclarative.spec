@@ -1,7 +1,7 @@
 %define rname kdeclarative
 
 Name: kf5-%rname
-Version: 5.21.0
+Version: 5.22.0
 Release: alt1
 %K5init altplace
 
@@ -44,6 +44,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: qt5-declarative-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -103,6 +104,9 @@ KF5 library
 %_K5lib/libKF5QuickAddons.so.*
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
+- new version
+
 * Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt1
 - new version
 
