@@ -4,8 +4,8 @@
 %define libplasmamediacenter libplasmamediacenter%sover
 
 Name: kf5-%rname
-Version: 5.6.3
-Release: alt1
+Version: 5.6.4
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -58,6 +58,9 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
+# hide menu item
+echo "NoDisplay=true" >>shells/plasma-mediacenter.desktop
+
 %build
 %K5build
 
@@ -89,6 +92,12 @@ KF5 library
 %_K5lib/libplasmamediacenter.so.*
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt2
+- hide menu item
+
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
+- new version
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
 - new version
 
