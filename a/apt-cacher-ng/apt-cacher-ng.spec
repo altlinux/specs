@@ -1,6 +1,6 @@
 Name: apt-cacher-ng
 Version: 0.8.5
-Release: alt2
+Release: alt3
 
 Summary: Caching HTTP download proxy for software packages
 
@@ -18,6 +18,9 @@ Patch2: acng-0.8.5-alt-perl_tobase64.patch
 # Automatically added by buildreq on Wed May 30 2012
 # optimized out: cmake cmake-modules libstdc++-devel pkg-config
 BuildRequires: boost-devel boost-devel-headers bzlib-devel ccmake gcc-c++ libfuse-devel liblzma-devel zlib-devel openssl-devel
+
+# workaround for sysvinit: see ALT bugs 11359 and 32101:
+Requires: su
 
 %description
 Apt-Cacher NG is a caching HTTP download proxy for software packages,
@@ -97,6 +100,9 @@ chmod ug+rw %_logdir/%name/* ||:
 %preun_service acng
 
 %changelog
+* Fri May 20 2016 Terechkov Evgenii <evg@altlinux.org> 0.8.5-alt3
+- Add manual Requires: su
+
 * Thu Feb 18 2016 Terechkov Evgenii <evg@altlinux.org> 0.8.5-alt2
 - Add git.alt task support in vfilepattern
 
