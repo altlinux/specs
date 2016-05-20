@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20151103
+Version: 20160516
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Fri May 20 2016 Michael Shigorin <mike@altlinux.org> 20160516-alt1
+- use spawn to run udevadm (legion@; see also #32068)
+
 * Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 20151103-alt1
 - modules.c: silence modprobe (some could be compiled in at times)
 
