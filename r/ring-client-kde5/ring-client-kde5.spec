@@ -5,7 +5,7 @@
 
 Name: ring-client-kde5
 Version: 2.3.0
-Release: alt0.1
+Release: alt0.2
 %K5init no_altplace
 
 Group: Communications
@@ -18,6 +18,8 @@ PreReq(post,preun): alternatives >= 0.2
 Requires: ring-daemon
 
 Source: %rname-%version.tar
+Source1: add-po
+Patch1: alt-add-translations.patch
 
 # Automatically added by buildreq on Wed Mar 16 2016 (-bi)
 # optimized out: alternatives boost-devel-headers cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache kde5-akonadi-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libical-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
@@ -48,6 +50,11 @@ developing applications that use %name.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+
+# add translations
+mv .gear/po ./
+cat %SOURCE1 >> CMakeLists.txt
 
 %build
 %K5build
@@ -78,6 +85,9 @@ __EOF__
 %_K5dbus_iface/cx.ring.ring-kde.xml
 
 %changelog
+* Thu May 19 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.2
+- add translations
+
 * Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt0.1
 - new version
 
