@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 16.04.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -13,7 +13,8 @@ Summary: Printer management for KDE
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
-Requires: cups system-config-printer-udev printer-drivers-X11
+Requires: cups printer-drivers-X11
+#Requires: system-config-printer-udev
 
 Source: %rname-%version.tar
 Patch1: alt-lib-sover.patch
@@ -86,6 +87,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt2
+- clean requires
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
