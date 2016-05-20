@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename ja
 %define packagversion 2.2.0
-%define packagedate 201605121341
+%define packagedate 201605191400
 %define moodlebranch 2.2
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Japanese
@@ -68,6 +68,10 @@ ln -s -f $(relative %buildroot%_ttffontsdir/sazanami/gothic/sazanami-gothic.ttf 
 %moodle_langdir/*
 
 %changelog
+* Fri May 20 2016 Cronbuild Service <cronbuild@altlinux.org> 2.2.0.201605191400-alt1
+- repocop cronbuild 20160520. At your service.
+- ja.zip build 2016-05-19 14:00 UTC
+
 * Fri May 13 2016 Cronbuild Service <cronbuild@altlinux.org> 2.2.0.201605121341-alt1
 - repocop cronbuild 20160513. At your service.
 - ja.zip build 2016-05-12 13:41 UTC
