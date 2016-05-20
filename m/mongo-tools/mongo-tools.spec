@@ -20,8 +20,8 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 3.2.0
-Release: alt1.rc5
+Version: 3.2.5
+Release: alt1
 Summary: mongo client shell and tools
 License: ASL 2.0
 Url: https://github.com/mongodb/mongo-tools
@@ -120,5 +120,8 @@ sort -u -o devel.file-list devel.file-list
 %{gopath}/src/%{import_path}
 
 %changelog
+* Tue May 17 2016 Vladimir Didenko <cow@altlinux.org> 3.2.5-alt1
+- 3.2.5
+
 * Wed Dec 2 2015 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1.rc5
 - 3.2.0 rc5
