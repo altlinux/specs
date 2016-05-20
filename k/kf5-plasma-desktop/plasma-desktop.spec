@@ -10,7 +10,7 @@
 
 Name: kf5-%rname
 Version: 5.6.4
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -210,6 +210,9 @@ KF5 library
 %_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt2
+- update menu default favorites
+
 * Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
 - new version
 
