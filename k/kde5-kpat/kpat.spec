@@ -4,7 +4,7 @@
 %define libkcardgame libkcardgame%cardgame_sover
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 16.04.1
 Release: alt1
 %K5init
 
@@ -31,6 +31,7 @@ BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-ki
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel
 BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kcrash-devel
 
 %package common
 Summary: %name common package
@@ -90,5 +91,8 @@ mv %buildroot/%_K5data/mime/packages/kpatience.xml \
 %_K5lib/libkcardgame.so.*
 
 %changelog
+* Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - initial build

@@ -1,7 +1,7 @@
 %define rname knavalbattle
 
 Name: kde5-%rname
-Version: 15.12.2
+Version: 16.04.1
 Release: alt1
 %K5init
 
@@ -21,7 +21,7 @@ BuildRequires: kde5-libkdegames-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools-devel-static kf5-ki18n-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel
+BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel kf5-kcrash-devel
 
 %description
 %summary.
@@ -48,5 +48,8 @@ BuildRequires: kf5-kxmlgui-devel kf5-sonnet-devel
 %_K5conf_up/knavalbattle.upd
 
 %changelog
+* Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
+- new version
+
 * Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
 - initial build
