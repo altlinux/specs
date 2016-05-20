@@ -11,7 +11,7 @@
 %define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define libname lib%name
 
 Group: Graphical desktop/KDE
@@ -223,6 +223,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt2
+- fix PATH in kde4 wrapper script
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 - fix requires
