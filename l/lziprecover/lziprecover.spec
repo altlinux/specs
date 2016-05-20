@@ -1,6 +1,6 @@
 Name: lziprecover
-Version: 1.17
-Release: alt1.1
+Version: 1.18
+Release: alt1
 
 Summary: LZMA compressed file recovery
 License: GPL v3+
@@ -39,6 +39,9 @@ make all info
 %_infodir/%name.info*
 
 %changelog
+* Fri May 20 2016 Michael Shigorin <mike@altlinux.org> 1.18-alt1
+- new version (watch file uupdate)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1.1
 - NMU: added BR: texinfo
 
