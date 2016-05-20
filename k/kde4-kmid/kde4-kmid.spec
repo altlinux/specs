@@ -3,7 +3,7 @@
 
 Name: kde4-kmid
 Version: 2.4.0
-Release: alt2
+Release: alt3
 
 Group: Sound
 Summary: A MIDI/karaoke player for KDE
@@ -11,8 +11,8 @@ Summary: A MIDI/karaoke player for KDE
 License: GPLv2+ / CC-BY-SA
 Url: http://userbase.kde.org/KMid2
 
-Requires: TiMidity++ fluidsynth
-Requires: %libname >= %version
+Requires: fluidsynth
+Requires: TiMidity++
 Conflicts: kdemultimedia-kmid < 3.5.12-alt2
 
 Source0: http://downloads.sourceforge.net/project/%name/%name/%version/kmid-%version.tar.bz2
@@ -35,7 +35,6 @@ It also has a keyboard view to see the notes played by each instrument.
 %package -n %libname
 Group: System/Libraries
 Summary: %name library package
-Requires: kde4libs >= %{get_version kde4libs}
 %description -n %libname
 %summary
 
@@ -89,6 +88,9 @@ desktop-file-install \
 %_K4link/libkmidbackend.so
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 2.4.0-alt3
+- clean requires
+
 * Thu Apr 21 2011 Sergey V Turchin <zerg@altlinux.org> 2.4.0-alt2
 - move to standart place
 
