@@ -1,6 +1,6 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi1
-Version:   1.0
+Version:   1.3
 Release:   alt1
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
@@ -13,6 +13,7 @@ BuildRequires: gcc-c++ boost-devel
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake swig
 BuildRequires: python-devel rpm-build-python
+BuildRequires: libconfuse-devel
 
 %define    namepp libftdipp1
 %define    pyname python-module-ftdi1
@@ -30,6 +31,10 @@ Group:     System/Libraries
 Summary:   Header files and libraries for libftdi
 Group:     Development/C
 Requires:  %name = %version, libusb-devel
+
+%package   -n ftdi-eeprom
+Summary:   Tool for reading/erasing/flashing FTDI USB chip eeproms
+Group:     Development/C
 
 %package   -n %namepp-devel
 Summary:   Header files and libraries for libftdipp
@@ -69,6 +74,11 @@ Full C++ wrapper for libftdi library
 
 %description devel
 Header files for userspace libftdi library
+
+%description -n ftdi-eeprom
+ftdi-eeprom is a small tool for creating and uploading the configuration
+eeprom for the FTDI chip. This eeprom contains information such as vendor
+and product ID, manufacturer and product strings, revision, etc.
 
 %description -n %namepp-devel
 Header files for full libftdi library C++ wrapper
@@ -117,6 +127,11 @@ mv %buildroot%_man3dir/size_and_time.3 %buildroot%_man3dir/ftdi_size_and_time.3
 %_includedir/%name/*.h
 %_libdir/cmake/%name/*.cmake
 
+%files -n ftdi-eeprom
+%_bindir/ftdi_eeprom
+%_docdir/%name/example.conf
+%_man3dir/ftdi_eeprom*
+
 %files -n %namepp-devel
 %_libdir/%sonamepp.so
 %_libdir/pkgconfig/%sonamepp.pc
@@ -131,12 +146,18 @@ mv %buildroot%_man3dir/size_and_time.3 %buildroot%_man3dir/ftdi_size_and_time.3
 %files -n %pyname
 %python_sitelibdir/*.py*
 %python_sitelibdir/*.so
+%_datadir/libftdi/examples/*.py
 
 %files docs
 %doc doc/html
 %_man3dir/*
+%exclude %_man3dir/ftdi_eeprom*
 
 %changelog
+* Sat May 21 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.3-alt1
+- Update to latest release
+- Include ftdi_eeprom subpackage
+
 * Tue Mar 19 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.0-alt1
 - Build new package libftdi1 with soname 2.0.0 using libusb1
 
