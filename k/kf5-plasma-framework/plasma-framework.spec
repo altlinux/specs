@@ -3,8 +3,8 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.21.0
-Release: alt2
+Version: 5.22.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -93,7 +93,7 @@ KF5 library
 
 %files devel
 %_K5inc/plasma_version.h
-%_K5inc/?lasma/
+%_K5inc/?lasma*/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Plasma*
 %_K5data/kdevappwizard/templates/*
@@ -124,6 +124,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
+- new version
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt2
 - fix plasma packages install dir
 

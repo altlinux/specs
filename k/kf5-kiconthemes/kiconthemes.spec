@@ -1,8 +1,8 @@
 %define rname kiconthemes
 
 Name: kf5-%rname
-Version: 5.21.0
-Release: alt2
+Version: 5.22.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -77,6 +77,9 @@ KF5 library
 %_K5lib/libKF5IconThemes.so.*
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
+- new version
+
 * Wed Apr 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt2
 - set breeze as default icon theme
 

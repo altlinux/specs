@@ -1,7 +1,7 @@
 %define rname sonnet
 
 Name: kf5-%rname
-Version: 5.21.0
+Version: 5.22.0
 Release: alt1
 %K5init altplace
 
@@ -71,6 +71,7 @@ KF5 library
 %_K5data/sonnet/
 
 %files devel
+%_K5bin/parsetrigrams
 %_K5inc/sonnet_version.h
 %_K5inc/Sonnet*/
 %_K5link/lib*.so
@@ -84,6 +85,9 @@ KF5 library
 %_K5lib/libKF5SonnetUi.so.*
 
 %changelog
+* Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
+- new version
+
 * Mon Apr 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.21.0-alt1
 - new version
 
