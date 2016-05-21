@@ -1,4 +1,4 @@
-# For update, merge with new tag and do gear-update-tag -a
+# For update, merge with new tag, update version in the spec and do gear-update-tag -a
 
 %define oname glusterfs
 %define major 3.7
@@ -27,8 +27,8 @@
 
 
 Name: glusterfs3
-Version: %major.9
-Release: alt1
+Version: %major.11
+Release: alt3
 
 Summary: Cluster File System
 
@@ -56,12 +56,17 @@ Patch0: %name-%version-%release.patch
 %define _init_file1     %_initdir/glusterd
 #%define _init_file2     %_initdir/glusterfsd
 
+%define glusterlibdir %_libdir/glusterfs/%version
+
+
 # manually removed: -static i586-glibc-devel i586-libssl-devel python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization python3 ruby ruby-stdlibs 
 # Automatically added by buildreq on Sat Jun 13 2015
 # optimized out: gnu-config i586-glibc-core i586-glibc-pthread i586-libcrypto10 libcom_err-devel libdevmapper-devel libdevmapper-event libibverbs-devel libkrb5-devel libncurses-devel libssl-devel libtinfo-devel pkg-config python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-ctypes python3-base userspace-rcu
-BuildRequires: flex git-core glib2-devel glibc-devel libacl-devel libaio-devel libattr-devel libdb4-devel liblvm2-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 libuserspace-rcu-devel zlib-devel
+BuildRequires: flex glib2-devel glibc-devel libacl-devel libaio-devel libattr-devel libdb4-devel liblvm2-devel libreadline-devel libsqlite3-devel libuuid-devel libxml2-devel python-module-cmd2 zlib-devel
 
 BuildPreReq: libssl-devel
+
+BuildPreReq: libuserspace-rcu-devel >= 0.9.1
 
 Conflicts: %oname
 
@@ -280,12 +285,18 @@ This package provides the base GlusterFS libraries.
 %prep
 %setup
 %patch0 -p1
+# due _libexecdir is /usr/lib
+%__subst "s|/libexec/glusterfs|/lib/glusterfs|" ./configure.ac
+# see build-aux/pkg-version
+echo "v%version-%release" >VERSION
 
 %build
 ./autogen.sh
 %configure  %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} \
             %{?_without_ocf} \
+            --with-systemddir=%_unitdir \
             --localstatedir=/var/ \
+            --libexecdir=%_libexecdir \
             --enable-qemu-block \
             --enable-bd-xlator
 
@@ -369,12 +380,12 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %_sbindir/glusterfs*
 %_sbindir/gluster
 %_sbindir/glusterd
-%dir %_libdir/glusterfs/
+%dir %glusterlibdir/
 %dir %_datadir/glusterfs/
-%_libdir/glusterfs/rpc-transport/
-%_libdir/glusterfs/auth/
-%exclude %_libdir/glusterfs/xlator/mount/api.so
-%_libdir/glusterfs/xlator/
+%glusterlibdir/rpc-transport/
+%glusterlibdir/auth/
+%exclude %glusterlibdir/xlator/mount/api.so
+%glusterlibdir/xlator/
 %dir %_libexecdir/glusterfs/
 %_libexecdir/glusterfs/glusterfind/
 %_sbindir/gfind_missing_files
@@ -382,18 +393,18 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %_libexecdir/glusterfs/peer_mountbroker
 %_sbindir/gcron.py
 %_sbindir/snap_scheduler.py
-%exclude %_libdir/glusterfs/xlator/mount/fuse*
+%exclude %glusterlibdir/xlator/mount/fuse*
 %_logdir/glusterfs/
 %_man8dir/*gluster*.8*
 %exclude %_man8dir/mount.glusterfs.8*
 %if 0%{!?_without_rdma:1}
-%exclude %_libdir/glusterfs/rpc-transport/rdma*
+%exclude %glusterlibdir/rpc-transport/rdma*
 %endif
 
 
 %if 0%{!?_without_rdma:1}
 %files rdma
-%_libdir/glusterfs/rpc-transport/rdma*
+%glusterlibdir/rpc-transport/rdma*
 %endif
 
 %if 0%{!?_without_georeplication:1}
@@ -417,7 +428,7 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %files -n lib%name-api
 # libgfapi files
 %_libdir/libgfapi.so.*
-%_libdir/glusterfs/xlator/mount/api.so
+%glusterlibdir/xlator/mount/api.so
 
 %files -n lib%name-api-devel
 %_pkgconfigdir/glusterfs-api.pc
@@ -426,7 +437,7 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 
 %files client
 %config(noreplace) %_sysconfdir/logrotate.d/glusterfs-fuse
-%_libdir/glusterfs/xlator/mount/fuse*
+%glusterlibdir/xlator/mount/fuse*
 %_man8dir/mount.glusterfs.8*
 /sbin/mount.glusterfs
 /sbin/umount.glusterfs
@@ -435,6 +446,7 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %endif
 
 %files server
+%_unitdir/glusterd.service
 %config(noreplace) %_sysconfdir/logrotate.d/glusterd
 %config(noreplace) %_sysconfdir/sysconfig/glusterd
 %config(noreplace) %_sysconfdir/glusterfs
@@ -464,6 +476,7 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 /usr/lib/ganesha/create-export-ganesha.sh
 /usr/lib/ganesha/dbus-send.sh
 /usr/lib/ganesha/ganesha-ha.sh
+/usr/lib/ganesha/generate-epoch.py
 %if 0%{!?_without_ocf:1}
 /usr/lib/ocf/resource.d/heartbeat/
 %endif
@@ -501,6 +514,16 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %preun_service glusterd
 
 %changelog
+* Sat May 21 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.11-alt3
+- set correct build version
+
+* Tue Apr 19 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.11-alt2
+- fix packing
+- pack correct version of systemd service
+
+* Tue Apr 19 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.11-alt1
+- new version 3.7.11
+
 * Tue Mar 22 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.9-alt1
 - new version 3.7.9
 
