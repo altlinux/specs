@@ -2,19 +2,20 @@
 
 %define upstreamname lxdm
 %define theme_name Industrial
-
+%define gtkver 2
 Name: lxde-%upstreamname
-Version: 0.3.0
-Release: alt3
+Version: 0.5.3
+Release: alt1.20160321.1
 
 Summary: Lightweight X11 Display Manager
 License: GPL
 Group: Graphical desktop/Other
 Url: http://lxde.sf.net
+#Url: git://git.lxde.org/lxde/lxdm.git
 
 Packager: LXDE Development Team <lxde@packages.altlinux.org>
 
-Source: %upstreamname-%version.tar.gz
+Source: %upstreamname-%version.tar
 Patch3: lxdm-alt-session-name.patch
 Patch4: lxdm-nonolisten.patch
 Patch5: lxdm-buildfix_syswait.patch
@@ -25,8 +26,7 @@ Source1: alt.lxdm.pam
 Source2: alt.lxdm.conf
 Source3: alt.Xsession
 
-# Automatically added by buildreq on Mon Jan 11 2010 (-bb)
-BuildRequires: imake intltool libConsoleKit-devel libXmu-devel libgtk+2-devel libpam-devel xinitrc xorg-cf-files
+BuildPreReq: imake intltool libConsoleKit-devel libXmu-devel libgtk+%gtkver-devel libpam-devel xinitrc xorg-cf-files
 
 %add_findreq_skiplist %_sbindir/%upstreamname
 
@@ -37,34 +37,41 @@ KDM in LXDE distros. It's still in very early stage of development.
 
 %prep
 %setup -n %upstreamname-%version
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%patch6 -p1
-%patch7 -p2
+#%%patch3 -p2
+#%%patch4 -p2
+#%%patch5 -p2
+#%%patch6 -p1
+#%%patch7 -p2
 
 %build
-autoreconf -fisv
-%configure
-touch -r po/Makefile po/stamp-it
+%autoreconf
+%if %gtkver==3
+    %configure --enable-gtk3
+%else
+    %configure
+%endif
+#touch -r po/Makefile po/stamp-it
 %make_build
 
 %install
 %makeinstall_std
 %find_lang %upstreamname
 
-touch %{buildroot}%{_sysconfdir}/%{upstreamname}/xinitrc
+touch %buildroot%_sysconfdir/%upstreamname/xinitrc
 
 mkdir -p %buildroot/%_altdir
 cat > %buildroot/%_altdir/lxdm-theme-%theme_name << __EOF__
 %_datadir/%upstreamname/themes/default %_datadir/%upstreamname/themes/%theme_name 10
 __EOF__
 
-mkdir -p %{buildroot}%{_sysconfdir}/pam.d
-install -m644 %SOURCE1 %{buildroot}%{_sysconfdir}/pam.d/lxdm
+mkdir -p %buildroot%_sysconfdir/pam.d
+install -m644 %SOURCE1 %buildroot%_sysconfdir/pam.d/lxdm
 
-install -m644 %SOURCE2 %{buildroot}%{_sysconfdir}/%{upstreamname}/lxdm.conf
-install -m755 %SOURCE3 %{buildroot}%{_sysconfdir}/%{upstreamname}/Xsession
+install -m644 %SOURCE2 %buildroot%_sysconfdir/%upstreamname/lxdm.conf
+install -m755 %SOURCE3 %buildroot%_sysconfdir/%upstreamname/Xsession
+
+mkdir -p %buildroot%_unitdir
+install -m644 systemd/lxdm.service %buildroot%_unitdir
 
 %files -f %upstreamname.lang
 %doc ChangeLog INSTALL README
@@ -75,9 +82,17 @@ install -m755 %SOURCE3 %{buildroot}%{_sysconfdir}/%{upstreamname}/Xsession
 %_libexecdir/lxdm-greeter-gdk
 %_libexecdir/lxdm-greeter-gtk
 %_libexecdir/lxdm-numlock
+%_libexecdir/lxdm-session
+%_sysconfdir/lxdm/Xsession
+%config %_sysconfdir/lxdm/lxdm.conf
+%_bindir/*
 %_datadir/%upstreamname
+%_unitdir/lxdm.service
 
 %changelog
+* Sat May 21 2016 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1.20160321.1
+- New snapshot 20160321.
+
 * Mon Feb 02 2015 Michael Shigorin <mike@altlinux.org> 0.3.0-alt3
 - added patch by Alex Moskalenko to fix CPU hogging (closes: #28778)
 
