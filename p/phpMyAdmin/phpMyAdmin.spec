@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.2.13.1
+Version: 4.6.1
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -8,7 +8,8 @@ License: GPL
 Group: System/Servers
 Url: http://www.phpmyadmin.net
 
-Source: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar
+#Source: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar
+Source: https://files.phpmyadmin.net/phpMyAdmin/%version/phpMyAdmin-%version-all-languages.tar
 Source1: config.inc.php
 Source2: %name-README.ALT
 Source3: %name.htaccess
@@ -24,7 +25,7 @@ BuildArch: noarch
 
 Requires: pwgen webserver-common control
 
-BuildPreReq: rpm-macros-fillup rpm-macros-apache rpm-macros-apache2 rpm-macros-webserver-common
+BuildPreReq: rpm-macros-fillup rpm-macros-apache2 rpm-macros-webserver-common
 
 BuildRequires: apache-base apache2-base control
 
@@ -44,37 +45,6 @@ manual. Currently phpMyAdmin can:
   - export (*) and import data to CSV values
   - administer multiple servers and single databases
   - communicate in more than 20 different languages
-
-%package apache
-Summary: phpMyAdmin - web-based MySQL administration (for apache 1.3 and php5)
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: apache-mod_php5
-Requires: apache-base
-Requires: php5-mysqli
-Requires: php5-mcrypt
-Requires: php5-mbstring
-Requires: php5-gd2
-Requires: php5-ctype
-
-%description apache
-phpMyAdmin can administer a whole MySQL-server (needs a super-user)
-but also a single database. To accomplish the latter you'll need a
-properly set up MySQL-user who can read/write only the desired
-database. It's up to you to look up the appropiate part in the MySQL
-manual. Currently phpMyAdmin can:
-  - create and drop databases
-  - create, copy, drop and alter tables
-  - delete, edit and add fields
-  - execute any SQL-statement, even batch-queries
-  - manage keys on fields
-  - load text files into tables
-  - create (*) and read dumps of tables
-  - export (*) and import data to CSV values
-  - administer multiple servers and single databases
-  - communicate in more than 20 different languages
-
-Install this package if you need phpMyAdmin for apache 1.3 and php5.
 
 %package apache2
 Summary: phpMyAdmin - web-based MySQL administration (for apache 2.0 and php5)
@@ -155,25 +125,11 @@ cp %SOURCE8 %buildroot%_controldir/%name-apache2
 %post
 replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 
-%pre apache
-%pre_control %name-apache
-
-%post apache
-%post_control -s restricted %name-apache
-#%_initdir/httpd condreload
-
-#%postun apache
-#%_initdir/httpd condreload
-
 %pre apache2
 %pre_control %name-apache2
 
 %post apache2
 %post_control -s restricted %name-apache2
-#%_initdir/httpd2 condreload
-
-#%postun apache2
-#%_initdir/httpd2 condreload
 
 %files
 %doc phpMyAdmin-README.ALT README* ChangeLog
@@ -184,17 +140,16 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
 %exclude %webserver_webappsdir/%name/setup
 
-%files apache
-%config(noreplace) %apache_addonconfdir/%name.conf
-%apache_modconfdir/%name.conf
-%attr(755,root,root) %_controldir/%name-apache
-
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Sat May 21 2016 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt1
+- new version 4.6.1 (with rpmrb script)
+- drop apache subpackage (was for Apache 1.3)
+
 * Fri Dec 05 2014 Vitaly Lipatov <lav@altlinux.ru> 4.2.13.1-alt1
 - new version 4.2.13.1 (with rpmrb script)
 
