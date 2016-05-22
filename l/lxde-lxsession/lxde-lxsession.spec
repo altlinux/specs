@@ -2,7 +2,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.2
-Release: alt1.20160418.1
+Release: alt2.20160418.1
 
 Summary: LXSession is the default X11 session manager of LXDE.
 License: GPL
@@ -15,9 +15,6 @@ Obsoletes: lxde-lxsession-lite
 
 Provides: lxde-settings-daemon
 Obsoletes: lxde-settings-daemon
-
-Provides: lxde-session-edit
-Obsoletes: lxde-session-edit
 
 Source: %upstreamname-%version.tar
 Patch: lxsession-0.4.6.1-alt-kdmfix.patch
@@ -34,6 +31,14 @@ It's desktop-independent and can be used with any window manager.
 With proper configuration, you can make your own desktop environment with
 LXSession. This is very useful to the users and developers of non-mainstream
 window managers and desktop environemts.
+
+%package -n %name-edit
+Summary: LXDE Desktop Session Settings
+Group: Graphical desktop/Other
+
+%description -n %name-edit
+lxsession-edit is a tool used to manage desktop session autostarts, especially
+for lxsession lite.
 
 %prep
 %setup -n %upstreamname-%version
@@ -60,12 +65,25 @@ window managers and desktop environemts.
 %files -f %upstreamname.lang
 %doc ChangeLog NEWS README
 %_bindir/*
+%exclude %_bindir/lxsession-edit
 %_datadir/%upstreamname
+%exclude %_datadir/%upstreamname/ui/lxsession-edit.ui
 %_man1dir/*
 %_sysconfdir/xdg/autostart/*.desktop
 %_desktopdir/*.desktop
+%exclude %_desktopdir/lxsession-edit.desktop
+
+%files -n %name-edit
+%_bindir/lxsession-edit
+%_desktopdir/lxsession-edit.desktop
+%dir %_datadir/%upstreamname
+%dir %_datadir/%upstreamname/ui
+%_datadir/%upstreamname/ui/lxsession-edit.ui
 
 %changelog
+* Sun May 22 2016 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt2.20160418.1
+- New package lxde-session-edit.
+
 * Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1.20160418.1
 - New snapshot
 - New provides lxde-session-edit
