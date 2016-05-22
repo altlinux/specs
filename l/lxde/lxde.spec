@@ -1,11 +1,11 @@
 Name: lxde
 Version: 1.0
-Release: alt10
+Release: alt11
 Summary: Virtual package for install all parts of LXDE
 Group: Graphical desktop/Other
 License: GPL
 BuildArch: noarch
-Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession
+Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
 Requires: lxde-lxrandr lxde-lxshortcut lxde-lxinput lxde-lxtask lxde-icon-theme gpicview leafpad
 Packager: LXDE Packaging Team <lxde@packages.altlinux.org>
 
@@ -16,7 +16,7 @@ Packager: LXDE Packaging Team <lxde@packages.altlinux.org>
 Summary: Virtual package for install minumal set of LXDE packages
 Group: Graphical desktop/Other
 License: GPL
-Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession
+Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu menu-cache lxde-lxappearance lxde-lxsession-edit
 
 %description lite
 %summary
@@ -25,6 +25,9 @@ Requires: lxde-common lxde-lxpanel lxde-lxsession pcmanfm2 lxde-freedesktop-menu
 %files lite
 
 %changelog
+* Sun May 22 2016 Anton Midyukov <antohami@altlinux.org> 1.0-alt11
+- Added requires lxde-session-edit
+
 * Fri May 20 2016 Anton Midyukov <antohami@altlinux.org> 1.0-alt10
 - Remove requires lxde-session-edit
 - Added requires lxde-lxsession lxde-lxinput lxde-icon-theme.
