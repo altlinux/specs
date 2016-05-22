@@ -1,5 +1,6 @@
+%define git	 e7b0afc
 %define ver      1.9.7
-%define rel      alt0.73.gf3892d1
+%define rel      alt1.%git
 
 Summary: Graphics file browser utility
 Name: gliv
@@ -8,7 +9,8 @@ Release: %rel
 License: GPL
 Group: Graphics
 Url: http://guichaz.free.fr/gliv
-Source: %url/%name-%ver.tar.bz2
+Source: %name-%ver-%git.tar.bz2
+Patch: gliv-gettext-ver.patch
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
@@ -22,7 +24,8 @@ GTK+ with GtkGLExt.  GLiv  is  very  fast  and smooth at rotating, panning  and
 zooming  if  you have an OpenGL accelerated graphics board.
 
 %prep
-%setup -q
+%setup -q -n %name-%version-%git
+%patch -p2
 
 %build
 libtoolize --install --force
@@ -51,6 +54,12 @@ automake
 %_datadir/applications/*
 
 %changelog
+* Sun May 22 2016 L.A. Kostis <lakostis@altlinux.ru> 1.9.7-alt1.e7b0afc
+- Ressurect again.
+- .spec: 
+   + restructured sources
+   + bump gettext version.
+
 * Sat Jan 21 2012 L.A. Kostis <lakostis@altlinux.ru> 1.9.7-alt0.73.gf3892d1
 - 1.9.7.
 - Updated to GIT 73-gf3892d1 snapshot.
