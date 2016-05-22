@@ -5,19 +5,20 @@
 #define theme_version 0.1
 
 %define theme_fullname lxde-settings-%theme_name
-
+%define gtkver 2
 Name: lxde-common
-Version: 0.5.5
-Release: alt18
+Version: 0.99.1
+Release: alt1
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
 License: %gpl2plus
 Group: Graphical desktop/Other
 Url: http://lxde.sf.net
+#Url: git://git.lxde.org/lxde/lxde-common.git
 BuildArch: noarch
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: lxde.wm
 
 AutoReq: yes,nosymlinks
@@ -25,9 +26,11 @@ AutoReq: yes,nosymlinks
 Requires: lxde-settings
 Requires: wm-common-freedesktop
 
-# Automatically added by buildreq on Wed May 05 2010
-BuildRequires: docbook-dtds docbook-style-xsl xsltproc
-BuildPreReq: rpm-build-licenses
+# Automatically added by buildreq on Sat May 21 2016
+# optimized out: perl perl-Encode perl-XML-Parser python-base python-modules xml-common xml-utils
+BuildRequires: docbook-dtds xsltproc
+
+BuildPreReq: rpm-build-licenses intltool libgtk+%gtkver-devel
 
 %description
 Pprovides infrastructure for LXDE components
@@ -76,8 +79,8 @@ mkdir %theme_fullname/pcmanfm/LXDE
 cp %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf %theme_fullname/pcmanfm/LXDE/lxde.conf
 ln -s %_datadir/%theme_virt_dir/pcmanfm/LXDE/lxde.conf %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/
 
-mv lxpanel/profile/LXDE %theme_fullname/lxpanel
-ln -s ../../%theme_virt_dir/lxpanel lxpanel/profile/LXDE
+#mv lxpanel/profile/LXDE %theme_fullname/lxpanel
+#ln -s ../../%theme_virt_dir/lxpanel lxpanel/profile/LXDE
 popd
 
 mkdir -p %buildroot/etc/alternatives/packages.d/
@@ -100,14 +103,25 @@ fi
 %doc ChangeLog INSTALL README
 %_bindir/*
 %_x11sysconfdir/wmsession.d/*
+%dir %_sysconfdir/xdg/lxsession
+%dir %_sysconfdir/xdg/lxsession/LXDE
 %_sysconfdir/xdg/lxsession/LXDE/autostart
+%dir %_sysconfdir/xdg/lxpanel
+%dir %_sysconfdir/xdg/lxpanel/LXDE
+%_sysconfdir/xdg/lxpanel/LXDE/*
+%dir %_sysconfdir/xdg/openbox/LXDE
+%_sysconfdir/xdg/openbox/LXDE/*
+%dir %_datadir/xsessions
 %_datadir/xsessions/*.desktop
 %_man1dir/*
 ### themeable
 %_sysconfdir/xdg/lxsession/LXDE/desktop.conf
+%dir %_sysconfdir/xdg/pcmanfm
+%dir %_sysconfdir/xdg/pcmanfm/LXDE
+
 %config %_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf
 %config %_sysconfdir/xdg/pcmanfm/LXDE/lxde.conf
-%_datadir/lxpanel/profile/LXDE
+#%%_datadir/lxpanel/profile/LXDE
 %_desktopdir/*.desktop
 
 %files -n %theme_fullname
@@ -117,6 +131,10 @@ fi
 #_iconsdir/nuoveXT2
 
 %changelog
+* Sat May 21 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt1
+- New version 0.99.1
+- Fix unowned files.
+
 * Tue Feb 26 2013 Andrey Cherepanov <cas@altlinux.org> 0.5.5-alt18
 - Add desktop files for logout and screen lock
 - Fix black wallpaper by default
