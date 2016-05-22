@@ -9,7 +9,7 @@ Summary(tr):	Tam-ekran [S]VGA Гizimleri kitaplЩПЩ
 Summary(uk_UA.KOI8-U):	Низькор╕внева б╕бл╕отека повноекранно╖ SVGA граф╕ки
 Name: svgalib
 Version: 1.9.25
-Release: alt2.3
+Release: alt2.4
 License: distributable
 Group: System/Libraries
 Source0: %name-%version.tar
@@ -19,6 +19,7 @@ Patch2: %name-threeDKit-make.patch
 Patch3: %name-1.9.23-unresolved.patch
 Patch4: %name-1.9.25-kernel-2.6.26.patch
 Patch5: %name-1.9.25-gtf-patch.patch
+Patch6: %name-threeDKit-glibc.patch
 Url: http://www.arava.co.il/matan/svgalib/
 ExclusiveArch: %ix86 x86_64
 
@@ -220,6 +221,7 @@ kernel-space модуль для %name, позволяющий получить низкоуровневый доступ к
 %patch3 -p1
 %patch4 -p1
 %patch5 -p2
+%patch6 -p2
 
 # remove backup of svgalib.7 - we don't want it in package
 rm -f doc/man7/svgalib.7?*
@@ -297,6 +299,9 @@ for i in threeDKit/0-*; do %__cp $i $i.threeDKit; done
 %_usrsrc/kernel
 
 %changelog
+* Sun May 22 2016 L.A. Kostis <lakostis@altlinux.ru> 1.9.25-alt2.4
+- Fix build with recent glibc.
+
 * Thu Mar 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.25-alt2.3
 - Rebuilt for debuginfo
 
