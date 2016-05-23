@@ -4,8 +4,8 @@
 %def_enable  nss 
 
 Name:           python-module-xmlsec
-Version:        0.3.0
-Release:        alt2
+Version:        0.3.1
+Release:        alt1
 Summary:        Python bindings for the XML Security Library
 
 License:        GPLv2+
@@ -14,7 +14,6 @@ URL:            http://pyxmlsec.labs.libre-entreprise.org/
 Packager:       Andrey Cherepanov <cas@altlinux.org>
 
 Source0:        http://labs.libre-entreprise.org/download.php/430/%{rname}-%{version}.tar.gz
-Patch0:         pyxmlsec-0.3.0-cflags.patch
 
 Provides:       pyxmlsec = %version-%release
 
@@ -34,7 +33,6 @@ Canonical XML.
 
 %prep
 %setup -q -n %rname-%version
-%patch0 -p1
 
 # A non-UTF8 character
 iconv -f iso8859-1 -t utf8 <AUTHORS >AUTHORS.utf8
@@ -56,6 +54,9 @@ echo %{?_enable_openssl:1}%{?_enable_gnutls:2}%{?_enable_nss:3} | %__python setu
 
 
 %changelog
+* Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 0.3.1-alt1
+- New version
+
 * Wed Oct 17 2012 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt2
 - Add docs and examples
 
