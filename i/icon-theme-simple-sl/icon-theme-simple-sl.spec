@@ -2,7 +2,7 @@
 
 Name: icon-theme-simple-sl
 Version: 2.7
-Release: alt1
+Release: alt2
 
 Summary: Additonal sets of icons Simple for Simply Linux
 Summary(ru_RU.UTF-8): Набор пиктограмм Simple для Simply Linux
@@ -17,19 +17,24 @@ BuildArch: noarch
 Sets of icons for Simply Linux based on original icons - Simple.
 
 %description -l ru_RU.UTF-8
-Набор пиктограмм для Simply Linux основанный на оригинальном наборе
-пиктограмм Simple.
+Набор значков для Simply Linux, основанный на оригинальном наборе
+значков Simple.
 
 %install
 install -m755 -d %buildroot%_iconsdir
 tar xf %SOURCE0 -C %buildroot%_iconsdir/
 mv %buildroot%_iconsdir/%icons_name-%version %buildroot%_iconsdir/%icons_name
-ln -s %_iconsdir/%icons_name/scalable/apps/clock.png %buildroot%_iconsdir/%icons_name/scalable/apps/xfce4-clock.png
+rm -rf %buildroot%_iconsdir/%icons_name/scalable
 
 %files
 %_iconsdir/%icons_name
 
 %changelog
+* Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.7-alt2
+- Resize icons from scalable to fixed size (ALT #30292)
+- Copy original small icons from source themes
+- Reduce theme size by using symlinks
+
 * Sat Aug 08 2015 Mikhail Kolchin <mvk@altlinux.org> 2.7-alt1
 - Update to version 2.7
 
