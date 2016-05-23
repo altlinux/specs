@@ -1,8 +1,8 @@
 %def_without smb
 
 Name: mc
-Version: 4.8.16
-Release: alt2
+Version: 4.8.17
+Release: alt1
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -37,9 +37,6 @@ Patch102: mc-4.8.16-alt-forceexec.patch
 # http://www.midnight-commander.org/ticket/34
 Patch103: mc-4.8.6-alt-extfs-udar.patch
 
-# http://www.midnight-commander.org/ticket/3621
-Patch104: mc-4.8.16-3621_cpio_segfault.patch
-
 BuildRequires(pre): rpm-build-licenses
 
 Conflicts: %name-data
@@ -63,22 +60,23 @@ BuildPreReq: libslang2-devel libmount-devel
 %add_findreq_skiplist %_datadir/mc/mc.hint*
 
 %description
-Midnight Commander is a visual shell much like a file manager, only with way
-more features.  It is text mode, but also includes mouse support if you are
-running GPM.  Its coolest feature is the ability to ftp, view tar, zip
-files, and poke into RPMs for specific files.  :-)
+Midnight Commander is a visual shell much like a file manager, only
+with way more features. It is text mode, but also includes mouse
+support if you are running GPM. Its coolest feature is the ability
+to ftp or ssh files access, view various archive files (include cpio),
+poke into RPMs and DEBs for specific files and more others.
 
 %package full
-Summary: Meta package for install Midnight Commander with all needed.
+Summary: Meta package for install Midnight Commander with packages which possible needed.
 Group: File tools
 BuildArch: noarch
 Obsoletes: %name-complete
 Requires: %name
-Requires: cdrkit-utils
+Requires: cdrkit-utils sqlite3
 
 %description full
-This package pulls Midnight Commander with all packages which can be
-needed for working all components (some vfs for example)
+This package pulls Midnight Commander with packages which can be
+needed for working additional components (some vfs for example).
 
 %prep
 %setup -a1
@@ -93,7 +91,6 @@ needed for working all components (some vfs for example)
 #patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -102,10 +99,6 @@ cat <<EOF > version.h
 EOF
 
 sed 's|@@VERSION@@|%version-%release|' -i version.h
-
-# http://www.midnight-commander.org/ticket/3611
-sed 's#elseif (S_ISCHR#elsif (S_ISCHR#' -i src/vfs/fish/helpers/ls
-sed 's#rdev % 256#rdev %%%% 256#' -i src/vfs/fish/helpers/ls
 
 #%%autoreconf
 ./autogen.sh
@@ -183,6 +176,12 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Mon May 23 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.17-alt1
+- 4.8.17 (with MC tickets #3643, #3637, #3648 of 4.8.18 roadmap)
+- added sqlite3 to requires of mc-full
+  (http://forum.altlinux.org/index.php?topic=34864.msg285786#msg285786)
+- updated descriptions in spec
+
 * Fri Mar 18 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.8.16-alt2
 - merged with git://github.com/MidnightCommander/mc:
    Ticket #3606 (fix segfault due to incorrect value of SHELL environment variable)
