@@ -1,6 +1,6 @@
 Name: parallel
-Version: 20160422
-Release: alt2
+Version: 20160522
+Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
 License: GPLv3
@@ -47,6 +47,9 @@ ln -sf parallel %buildroot%_bindir/sem
 %_man7dir/*
 
 %changelog
+* Mon May 23 2016 Michael Shigorin <mike@altlinux.org> 20160522-alt1
+- new version (watch file uupdate)
+
 * Sat Apr 23 2016 Michael Shigorin <mike@altlinux.org> 20160422-alt2
 - suppress extra requires (closes: #32016)
 
