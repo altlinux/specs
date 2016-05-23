@@ -7,13 +7,14 @@
 
 Name: kde5-%rname
 Version: 5.0.1
-Release: alt2
+Release: alt3
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
 License:   GPL
 URL:       http://ktorrent.org
 
+Provides: ktorrent = %version-%release
 Requires: kde5-kross-python
 
 Source: %rname-%version.tar
@@ -79,6 +80,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Mon May 23 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt3
+- fix provides
+
 * Tue Apr 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt2
 - fix requires
 
