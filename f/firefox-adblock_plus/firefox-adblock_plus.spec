@@ -1,5 +1,5 @@
 %define rname	adblock_plus
-%define version 2.6.9.1
+%define version 2.7.3
 %define release alt1
 %define cid 	\{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -44,6 +44,9 @@ fi
 %ciddir
 
 %changelog
+* Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.7.3-alt1
+- New version (for Firefox and Thunderbird <= 49.x)
+
 * Fri Jun 05 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.9.1-alt1
 - New version
 
