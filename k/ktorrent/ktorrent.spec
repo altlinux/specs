@@ -1,10 +1,12 @@
 Name:      ktorrent
 Version:   2.2.8
-Release:   alt5.1
-License:   GPL
-Summary:   KDE client for BitTorrent network 
-URL:       http://ktorrent.org
+Release:   alt5.2
+
 Group:     Networking/File transfer
+Summary:   KDE client for BitTorrent network
+URL:       http://ktorrent.org
+License:   GPL
+
 Source:   http://ktorrent.org/downloads/%version/%name-%version.tar.gz
 Source1:  ktorrent.po
 
@@ -22,13 +24,22 @@ BuildRequires: desktop-file-utils
 %description
 ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 
-%package plugin-webinterface
+%package -n kde3-ktorrent
+Group: Networking/File transfer
+Summary: KDE client for BitTorrent network
+Provides: ktorrent = %version-%release
+Obsoletes: ktorrent < %version-%release
+%description -n kde3-ktorrent
+ktorrent - KDE BitTorrent client. It comes with many useful plugins.
+
+%package -n kde3-ktorrent-plugin-webinterface
 Group: Networking/File transfer
 Summary: Web interface plugin for ktorrent
-Requires: %name = %version-%release
+Provides: ktorrent-plugin-webinterface = %version-%release
+Obsoletes: ktorrent-plugin-webinterface < %version-%release
+Requires: kde3-ktorrent = %version-%release
 Requires: %_bindir/php
-
-%description plugin-webinterface
+%description -n kde3-ktorrent-plugin-webinterface
 Web interface plugin for ktorrent
 
 %prep
@@ -49,7 +60,7 @@ install %SOURCE1 translations/ru/messages/
 
 %K3find_lang --with-kde %name
 
-%files -f %name.lang
+%files -n kde3-ktorrent -f %name.lang
 %_K3bindir/*
 %_K3datadir/applications/kde/*
 %_K3datadir/apps/%name/*
@@ -64,10 +75,13 @@ install %SOURCE1 translations/ru/messages/
 %exclude %_K3libdir/libktorrent.so
 %exclude %_K3libdir/kde3/ktwebinterfaceplugin.so
 
-%files plugin-webinterface
+%files -n kde3-ktorrent-plugin-webinterface
 %_K3libdir/kde3/ktwebinterfaceplugin.so
 
 %changelog
+* Mon May 23 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.8-alt5.2
+- rename package
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.8-alt5.1
 - Fixed build
 
