@@ -11,8 +11,8 @@
 Summary: NoScript extension for Firefox and Pale Moon
 Summary (ru_RU.utf8): Дополнение NoScript для  Firefox и Pale Moon
 Name: firefox-noscript
-Version: 2.9.0.7
-Release: alt2
+Version: 2.9.0.11
+Release: alt1
 Source: noscript-%version.xpi
 License: GPL
 Group: Networking/WWW
@@ -43,7 +43,7 @@ no loss of functionality.
 скрипты JavaScript, Java (и другие расширения ) только с доверенных
 доменов выбранных вами (например: с сайта банковского обслуживания).
 Список доверенных сайтов основанн на принципе упреждающей блокировки
-угроз, и позволяет предотвращать использование уязвимостей 
+угроз, и позволяет предотвращать использование уязвимостей
 (как известных, так и ещё неизвестных) без потери функциональности.
 
 %if_enabled palemoon
@@ -93,6 +93,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.0.11-alt1
+- New version (supports Firefox <= 48.0)
+
 * Sun Mar 20 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.9.0.7-alt2
 - Fix errors in spec
 

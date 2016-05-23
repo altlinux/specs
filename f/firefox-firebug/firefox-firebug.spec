@@ -4,7 +4,7 @@
 Serial: 1
 
 Name:		firefox-firebug
-Version:	2.0.11
+Version:	2.0.16
 Release:	alt1
 
 Summary:	Powerful debugger for JavaScript and HTML
@@ -42,6 +42,9 @@ fi
 %ciddir
 
 %changelog
+* Mon May 23 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.0.16-alt1
+- New version (supports Firefox <= 48.0)
+
 * Wed Jun 24 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.0.11-alt1
 - Updated to 2.0.11.
 
