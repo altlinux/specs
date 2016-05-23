@@ -10,12 +10,12 @@
 %def_enable	mongodb
 
 Name: syslog-ng
-Version: 3.6.3
-Release: alt2
+Version: 3.7.3
+Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
-License: GPL
+License: %gpllgpl2only
 URL: http://www.balabit.com/products/syslog_ng/
 Provides: syslogd-daemon
 Prereq:	syslog-common
@@ -26,13 +26,15 @@ Packager: Sergey Alembekov <rt@altlinux.ru>
 Source: http://www.balabit.com/downloads/files/syslog-ng/sources/%{version}/source/%{name}_%{version}.tar.gz
 Patch1: %name-%version-%release.patch
 
+BuildRequires: rpm-build-licenses
+
 # Automatically added by buildreq on Fri Apr 19 2013 (-bi)
 # optimized out: elfutils libcom_err-devel libkrb5-devel pkg-config python-base python-modules
 # base config:
 # + SSL/TLS
 # + PCRE
 # + SQL
-BuildRequires: flex glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.13 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl
+BuildRequires: flex glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.13 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl python-devel
 
 %if_enabled geoip
 BuildRequires: libGeoIP-devel
@@ -111,6 +113,24 @@ Group: System/Libraries
 %description mongodb
 This module supports the mongodb database via libmongo-client.
 %endif
+
+%package python
+Summary: Python destination support for syslog-ng
+Requires: %name = %version-%release
+Group: System/Libraries
+
+%description python
+This package provides python destination support for syslog-ng
+
+%package -n python-module-%name-debuggercli
+Summary: Debug bundle generator script
+Requires: %name-python = %version-%release
+Group: System/Libraries
+BuildArch: noarch
+
+%description -n python-module-%name-debuggercli
+This package provides debug bundle generator script for
+collecting debug related information.
 
 %package devel
 Summary: Development files for %name
@@ -249,8 +269,6 @@ fi
 # basic plugin set
 %_libdir/%name/libaffile.so
 %_libdir/%name/libafprog.so
-%_libdir/%name/libafsocket-notls.so
-%_libdir/%name/libafsocket-tls.so
 %_libdir/%name/libafsocket.so
 %_libdir/%name/libafstomp.so
 %_libdir/%name/libafuser.so
@@ -265,6 +283,7 @@ fi
 %_libdir/%name/libsyslogformat.so
 %_libdir/%name/libsystem-source.so
 %_libdir/%name/libsdjournal.so
+%_libdir/%name/libkvformat.so
 
 %_libdir/lib%name-*.so.*
 
@@ -285,7 +304,7 @@ fi
 
 %if_enabled geoip
 %files geoip
-%_libdir/%name/libtfgeoip.so
+%_libdir/%name/libgeoip-plugin.so
 %endif
 
 %if_enabled smtp
@@ -308,9 +327,20 @@ fi
 %_libdir/%name/libafmongodb.so
 %endif
 
+%files python
+%_libdir/%name/libmod-python.so
+
+%files -n python-module-%name-debuggercli
+%dir %python_sitelibdir_noarch/syslogng/
+%python_sitelibdir_noarch/syslogng/*.py*
+%python_sitelibdir_noarch/syslogng-1.0-py2.7.egg-info
+
+%dir %python_sitelibdir_noarch/syslogng/debuggercli
+%python_sitelibdir_noarch/syslogng/debuggercli/*.py*
+
 %files devel
 %dir %_includedir/%name
-%_includedir/%name/*.h
+#_includedir/%name/*.h
 %dir %_includedir/%name/*
 %_includedir/%name/*/*.h
 
@@ -326,6 +356,9 @@ fi
 %_libdir/pkgconfig/%name-test.pc
 
 %changelog
+* Mon May 23 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.7.3-alt1
+- 3.7.3
+
 * Thu Jun 25 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.6.3-alt2
 - changed default configuration:
   + removed "unix-dgram ("/var/lib/klogd/dev/log");"
