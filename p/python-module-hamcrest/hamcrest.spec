@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.a1.git20150729.1.1
 %define oname hamcrest
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt2.a1.git20150729.1
+#Release: alt2.a1.git20150729.1
 Summary: Hamcrest framework for matcher objects
 License: BSD
 Group: Development/Python
@@ -23,6 +25,9 @@ BuildRequires: python3-module-html5lib python3-module-pbr python3-module-pytest-
 %endif
 
 %py_provides %oname
+
+# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
+BuildRequires: python2.7(sphinx_rtd_theme)
 
 %description
 PyHamcrest is a framework for writing matcher objects, allowing you to
@@ -136,6 +141,9 @@ popd
 %endif
 
 %changelog
+* Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt2.a1.git20150729.1.1
+- BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt2.a1.git20150729.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

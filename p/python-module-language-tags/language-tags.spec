@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141218.1.1.1
 %define oname language-tags
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20141218.1.1
+#Release: alt1.git20141218.1.1
 Summary: This project is a Python version of the language-tags Javascript project
 License: MIT
 Group: Development/Python
@@ -33,6 +35,9 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-coverage python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytest python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-hotshot python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-xml python3 python3-base python3-module-coverage python3-module-pytest python3-module-setuptools
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest-cov python-module-setuptools-tests python3-module-nose python3-module-pytest-cov python3-module-setuptools-tests python3-module-six rpm-build-python3 time
+
+# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
+BuildRequires: python2.7(sphinx_rtd_theme)
 
 %description
 This Python API offers a way to validate and lookup languages tags.
@@ -138,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20141218.1.1.1
+- BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt1.git20141218.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

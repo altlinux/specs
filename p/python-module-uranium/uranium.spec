@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20150209.1.1.1
 %define oname uranium
 
 %def_with python3
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.0.52
-Release: alt1.git20150209.1.1
+#Release: alt1.git20150209.1.1
 Summary: A build system for python
 License: MIT
 Group: Development/Python
@@ -42,6 +44,9 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-BTrees python-module-PyStemmer python-module-Pygments python-module-ZODB python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-ntlm python-module-persistent python-module-pyasn1 python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-transaction python-module-zc.buildout python-module-zc.lockfile python-module-zc.zlibstorage python-module-zdaemon python-module-zope.event python-module-zope.interface python-module-zope.proxy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-BTrees python3-module-ZODB python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-jinja2 python3-module-ndg-httpsclient python3-module-ntlm python3-module-persistent python3-module-pip python3-module-pycparser python3-module-setuptools python3-module-transaction python3-module-zc.buildout python3-module-zc.lockfile python3-module-zc.zlibstorage python3-module-zdaemon python3-module-zope python3-module-zope.event python3-module-zope.interface python3-module-zope.proxy
 BuildRequires: python-module-alabaster python-module-chardet python-module-docutils python-module-html5lib python-module-ndg-httpsclient python-module-nose python-module-objects.inv python-module-pbr python-module-pip python-module-pycares python-module-pycurl python-module-pytest python-module-unittest2 python-module-virtualenv python-module-yaml python-module-zc.recipe.egg python-modules-wsgiref python3-module-chardet python3-module-html5lib python3-module-mimeparse python3-module-nose python3-module-pbr python3-module-pycares python3-module-pytest python3-module-unittest2 python3-module-urllib3 python3-module-virtualenv python3-module-yaml python3-module-zc.recipe.egg rpm-build-python3 time
+
+# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
+BuildRequires: python2.7(sphinx_rtd_theme)
 
 %description
 uranium is a build system that allows for compilation of python-based
@@ -185,6 +190,9 @@ popd
 %endif
 
 %changelog
+* Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.52-alt1.git20150209.1.1.1
+- BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.52-alt1.git20150209.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
