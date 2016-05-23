@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141109.1.1.1
 %define oname splinter
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.7.0
-Release: alt1.git20141109.1.1
+#Release: alt1.git20141109.1.1
 Summary: splinter - python test framework for web applications
 License: BSD
 Group: Development/Python
@@ -39,6 +41,9 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: libgpg-error python-base python-devel python-module-BeautifulSoup4 python-module-PyStemmer python-module-Pygments python-module-WSGIProxy2 python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-dns python-module-enum34 python-module-genshi python-module-greenlet python-module-html5lib python-module-itsdangerous python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-markupsafe python-module-mechanize python-module-ndg-httpsclient python-module-ntlm python-module-psycopg2 python-module-pyasn1 python-module-pytest python-module-pytz python-module-restkit python-module-setuptools python-module-simplejson python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-waitress python-module-webob python-module-webtest python-module-werkzeug python-module-yaml python-module-zope python-module-zope.cachedescriptors python-module-zope.event python-module-zope.exceptions python-module-zope.interface python-module-zope.schema python-module-zope.testing python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-modules-xml python3 python3-base python3-module-cssselect python3-module-genshi python3-module-html5lib python3-module-jinja2 python3-module-paste python3-module-psycopg2 python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-waitress python3-module-webtest python3-module-wsgiproxy python3-module-yaml python3-module-zope python3-module-zope.interface
 BuildRequires: python-module-alabaster python-module-coverage python-module-django python-module-docutils python-module-flask python-module-objects.inv python-module-selenium python-module-setuptools-tests python-module-zope.testbrowser python3-module-coverage python3-module-django python3-module-flask python3-module-setuptools-tests python3-module-zope.testbrowser rpm-build-python3 time
+
+# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
+BuildRequires: python2.7(sphinx_rtd_theme)
 
 %description
 splinter is a tool for test web applications with a simple for find
@@ -134,6 +139,9 @@ popd
 %endif
 
 %changelog
+* Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt1.git20141109.1.1.1
+- BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt1.git20141109.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

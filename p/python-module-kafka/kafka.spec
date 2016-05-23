@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev.git20150219.1.1.1
 %define oname kafka
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.9.4
-Release: alt1.dev.git20150219.1.1
+#Release: alt1.dev.git20150219.1.1
 Summary: Pure Python client for Apache Kafka
 License: ASLv2.0
 Group: Development/Python
@@ -36,6 +38,9 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: bzr python-base python-devel python-module-Paver python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cryptography python-module-cssselect python-module-enum34 python-module-funcsigs python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-pbr python-module-pluggy python-module-py python-module-pyasn1 python-module-pytest python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-sphinxcontrib python-module-twisted-core python-module-unittest2 python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-cryptography python3-module-cssselect python3-module-enum34 python3-module-genshi python3-module-ntlm python3-module-pbr python3-module-pip python3-module-pluggy python3-module-py python3-module-pycparser python3-module-pytest python3-module-setuptools python3-module-six python3-module-unittest2 xz
 BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-mock python-module-objects.inv python-module-snappy python-module-sphinxcontrib-napoleon python-module-tox python3-module-html5lib python3-module-mock python3-module-snappy python3-module-tox rpm-build-python3 time python3-module-pytest
+
+# optimized out: -=FIXES: python2.7(sphinx_rtd_theme)
+BuildRequires: python2.7(sphinx_rtd_theme)
 
 %description
 This module provides low-level protocol support for Apache Kafka as well
@@ -143,6 +148,9 @@ popd
 %endif
 
 %changelog
+* Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.4-alt1.dev.git20150219.1.1.1
+- BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.4-alt1.dev.git20150219.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
