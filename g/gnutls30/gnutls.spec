@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.4.11
+Version: 3.4.12
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -231,6 +231,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %docdir/[ACNRT]*
 %_libdir/libgnutls.so.*
 
+# ignore test libraries
+%exclude %_libdir/gnutls/
+
 %files -n %libcxx
 %_libdir/libgnutlsxx.so.*
 
@@ -283,6 +286,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Fri May 20 2016 Mikhail Efremov <sem@altlinux.org> 3.4.12-alt1
+- Don't package test libraries.
+- Updated to 3.4.12.
+
 * Tue Apr 12 2016 Mikhail Efremov <sem@altlinux.org> 3.4.11-alt1
 - Updated to 3.4.11.
 
