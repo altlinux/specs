@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.dev0.git20150806.1
 %define oname Pillow
 
 %def_with python3
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 3.0.0
-Release: alt2.dev0.git20150806
+#Release: alt2.dev0.git20150806
 Summary: Python Imaging Library (Fork)
 License: Standard PIL License
 Group: Development/Python
@@ -38,6 +40,9 @@ BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Wed Jan 27 2016 (-bi)
 # optimized out: elfutils fontconfig libX11-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-sphinx python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx_rtd_theme tcl-devel xorg-xproto-devel xz
 BuildRequires: libfreetype-devel libjpeg-devel liblcms2-devel libtiff-devel libwebp-devel python-module-docutils python-module-html5lib python-module-nose python-module-objects.inv python-module-pytest python-modules-tkinter python3-devel python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-pytest python3-module-sphinx python3-module-sphinx-better-theme python3-modules-tkinter rpm-build-python3 time tk-devel zlib-devel
+
+# optimized out: -=FIXES: python3(sphinx_rtd_theme)
+BuildRequires: python3(sphinx_rtd_theme)
 
 %description
 Pillow is the "friendly" PIL fork by Alex Clark and Contributors. PIL is
@@ -187,6 +192,9 @@ popd
 %endif
 
 %changelog
+* Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.0-alt2.dev0.git20150806.1
+- BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
+
 * Sat Apr  2 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.0-alt2.dev0.git20150806
 - (.spec) use the new correct %%__python3_includedir.
 
