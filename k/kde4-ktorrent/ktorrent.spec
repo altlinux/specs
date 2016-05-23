@@ -6,13 +6,14 @@
 
 Name: kde4-%rname
 Version: 4.3.1
-Release: alt5
+Release: alt6
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
 License:   GPL
 URL:       http://ktorrent.org
 
+Provides: ktorrent = %version-%release
 Conflicts: ktorrent <= 2.2.8-alt2
 Requires: kde4-kross-python
 
@@ -57,6 +58,12 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K4xdg_apps \
 	--add-mime-type=x-scheme-handler/magnet \
 	%buildroot/%_K4xdg_apps/%rname.desktop
 
+# remove captions
+find %buildroot/%_K4xdg_apps -type f -name \*.desktop | \
+while read f ; do
+    sed -i '/^Exec=/s/-caption[[:space:]]*\"*%%c\"*//' $f
+done
+
 %K4find_lang --with-kde %rname
 
 
@@ -75,6 +82,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K4xdg_apps \
 
 
 %changelog
+* Mon May 23 2016 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt6
+- fix provides
+
 * Fri Mar 11 2016 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt5
 - sync patches with FC
 
