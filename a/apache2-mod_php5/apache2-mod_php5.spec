@@ -3,7 +3,7 @@
 
 Name: apache2-mod_php5
 Version: %php5_version
-Release: %php5_release.1
+Release: %php5_release
 
 Summary: The PHP5 HTML-embedded scripting language for use with Apache2
 Group: System/Servers
