@@ -1,7 +1,9 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141130.1.1.1
 %define oname clyde
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1.git20141130.1.1
+#Release: alt1.git20141130.1.1
 Summary: Command line interface designer
 License: MIT
 Group: Development/Python3
@@ -26,6 +28,9 @@ BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-modules python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cssselect python3-module-docutils python3-module-genshi python3-module-jinja2 python3-module-markupsafe python3-module-pytest python3-module-pytz python3-module-setuptools python3-module-six python3-module-snowballstemmer python3-module-sphinx python3-module-sphinx_rtd_theme python3-module-sugarbowl xz
 BuildRequires: python3-module-coverage python3-module-html5lib python3-module-jinja2-tests python3-module-nose python3-module-setuptools-tests python3-module-sphinx-settings rpm-build-python3 time
+
+# optimized out: -=FIXES: python3(sphinx_rtd_theme)
+BuildRequires: python3(sphinx_rtd_theme)
 
 %description
 Clyde is a command line interface designer.
@@ -52,6 +57,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.git20141130.1.1.1
+- BR: sphinx_rtd_theme (the theme is optional since sphinx-1.4.1).
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.git20141130.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
