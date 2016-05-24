@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.93
+Release: alt100.94
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,10 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.94
+- shell.req: use the version of (ba|)sh from the shebang.
+- find-{requires,provides}: run all scripts even for empty lists of files.
+
 * Wed Apr  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0.4-alt100.93
 - find-requires fixed for packages consisting completely of symlinks.
 
