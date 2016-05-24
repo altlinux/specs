@@ -44,7 +44,7 @@
 
 Name:    samba-DC
 Version: 4.4.3
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1221,6 +1221,9 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Mon May 23 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.4.3-alt2
+- Fix rpc_server/drsuapi: Set msDS_IntId as attid for linked attributes if exists
+
 * Wed May 04 2016 Andrey Cherepanov <cas@altlinux.org> 4.4.3-alt1
 - New version
 
