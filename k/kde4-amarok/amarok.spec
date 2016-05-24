@@ -2,12 +2,14 @@
 %define rname amarok
 Name: kde4-%rname
 Version: 2.8.90
-Release: alt1
+Release: alt2
 
 Summary: Amarok is a music player for KDE.
 License: GPLv2
 Group: Sound
 Url: http://amarok.kde.org/
+
+Provides: %rname = %version-%release
 
 Requires: qtscriptbindings libqt4-sql-sqlite
 Requires: kde4multimedia-audiocd
@@ -53,48 +55,6 @@ amaroK - передовой аудио плеер. Превосходная по
 Встроенный StreamBrowser делает обнаружение потоков в сети столь же легкими как и использование
 радио: Вы можете выбрать и настроить их прямо в amaroK.
 
-%package engine-phonon
-Summary: Phonon engine for amaroK player
-Group: Sound
-Requires: %name = %version-%release
-Provides: %name-engine
-%description engine-phonon
-amarok-engine-phonon is an engine for amaroK player.
-It uses Phonon for output sound stream.
-
-%package mediadevice-ipod
-Summary: iPod plugin for amaroK player
-Group: Sound
-Requires: %name = %version-%release
-%description mediadevice-ipod
-amarok-mediadevice-ipod is a plugin for Apple iPod
-player
-
-%package mediadevice-generic
-Summary: VFAT plugin for amaroK player
-Group: Sound
-Requires: %name = %version-%release
-Provides: %name-mediadevice-vfat
-%description mediadevice-generic
-amarok-mediadevice-generic is a generic plugin for
-various devices that uses VFAT filesystem
-
-%package mediadevice-daap
-Summary: DAAP (Digital Audio Access Protocol) plugin for amaroK player
-Group: Sound
-Requires: %name = %version-%release
-%description mediadevice-daap
-amarok-mediadevice-daap is a plugin for interoperability
-with various devices that uses Digital Audio Access
-Protocol (DAAP)
-
-%package mediadevice-mtp
-Summary: MTP (Media Transfer Protocol) plugin for amaroK player
-Group: Sound
-Requires: %name = %version-%release
-%description mediadevice-mtp
-amarok-mediadevice-daap is a plugin for interoperability
-with various devices that uses Media Transfer Protocol (MTP)
 
 %prep
 %setup -q -n %rname-%version
@@ -202,6 +162,9 @@ fi
 
 
 %changelog
+* Tue May 24 2016 Sergey V Turchin <zerg@altlinux.org> 2.8.90-alt2
+- update provides
+
 * Tue Nov 17 2015 Sergey V Turchin <zerg@altlinux.org> 2.8.90-alt1
 - new version
 
