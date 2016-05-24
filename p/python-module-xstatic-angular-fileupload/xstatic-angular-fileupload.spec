@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1.1.1
 %define mname xstatic
 %define oname %mname-angular-fileupload
 
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 1.4.0.1
-Release: alt1.1.1
+#Release: alt1.1.1
 Summary: Angular-FileUpload 1.4.0 (XStatic packaging standard)
 License: MIT
 Group: Development/Python
@@ -74,7 +76,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -99,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.0.1-alt1.1.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.0.1-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
