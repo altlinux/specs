@@ -1,7 +1,7 @@
 %define origname python-gammu
 
 Name: python-module-gammu
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: Python module to communicate with mobile phones
@@ -35,6 +35,9 @@ that Gammu supports - many Nokias, Siemens, Alcatel, ...
 %python_sitelibdir/gammu
 
 %changelog
+* Tue May 24 2016 Michael Shigorin <mike@altlinux.org> 2.6-alt1
+- new version (watch file uupdate)
+
 * Tue Jan 19 2016 Michael Shigorin <mike@altlinux.org> 2.5-alt1
 - new version (watch file uupdate)
 
