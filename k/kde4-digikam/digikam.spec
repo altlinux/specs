@@ -6,16 +6,17 @@
 Name: kde4-%rname
 %define lname lib%name
 Version: 4.14.0
-Release: alt3
+Release: alt4
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
 Group: Graphics
 Url: http://www.digikam.org/
 
+Provides: digikam = %version-%release
 Conflicts: digikam <= 0.9.6-alt3
+
 Requires: libqt4-sql-sqlite kde4base-runtime libkipi4 libqt4-sql-mysql
-Requires: %lname = %version-%release
 Requires: %name-i18n = %version-%release
 Requires: %name-data = %version-%release
 %if_enabled marble
@@ -105,7 +106,6 @@ Group: Graphics
 Summary: Languages support for %label
 Requires: %name = %version-%release
 BuildArch: noarch
-
 %description i18n
 Languages support for %label.
 
@@ -113,7 +113,6 @@ Languages support for %label.
 Group: Graphics
 Summary: %label image plugins
 Requires: %name = %version-%release
-
 %description image-plugins
 %label plugins for additional functionalities in ImageEditor and
 Showfoto.
@@ -121,8 +120,6 @@ Showfoto.
 %package -n %lname-devel
 Group: Development/KDE and QT
 Summary: Development files for %label
-Requires: %lname = %version-%release
-
 %description -n %lname-devel
 Development files for %label.
 
@@ -132,7 +129,6 @@ Group: Graphics
 Summary: %label support
 Requires: %name = %version-%release
 Requires: kde4edu-core kde4edu-marble
-
 %description marble
 Marble support for %lname.
 %endif
@@ -229,6 +225,9 @@ rm -f %buildroot/%_K4i18n/*/*/libkgeomap*
 %_K4link/*.so
 
 %changelog
+* Tue May 24 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt4
+- update provides
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt3
 - fix to build with liblensfun-0.3.2
 
