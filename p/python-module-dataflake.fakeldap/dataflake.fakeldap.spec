@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.dev.git20121018.1
 %define oname dataflake.fakeldap
 
 %def_without python3
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt2.dev.git20121018
+#Release: alt2.dev.git20121018
 Summary: LDAP connection library
 License: ZPLv2.1
 Group: Development/Python
@@ -121,7 +123,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -167,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2-alt2.dev.git20121018.1
+- (AUTO) subst_x86_64.
+
 * Mon Mar 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.dev.git20121018
 - Fixed build
 

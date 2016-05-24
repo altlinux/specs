@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141210.1
 %define mname collective
 %define oname %mname.monkeypatcher
 Name: python-module-%oname
 Version: 1.1.1
-Release: alt1.git20141210
+#Release: alt1.git20141210
 Summary: Support for applying monkey patches late in the startup cycle
 License: BSD
 Group: Development/Python
@@ -65,7 +67,7 @@ Core files of %mname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -90,6 +92,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.1-alt1.git20141210.1
+- (AUTO) subst_x86_64.
+
 * Thu Dec 11 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.git20141210
 - Version 1.1.1
 

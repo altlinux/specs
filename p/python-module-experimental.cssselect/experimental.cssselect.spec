@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20120405.1
 %define mname experimental
 %define oname %mname.cssselect
 Name: python-module-%oname
 Version: 0.3
-Release: alt1.git20120405
+#Release: alt1.git20120405
 Summary: Experimental version of lxml.cssselect
 License: BSD
 Group: Development/Python
@@ -37,7 +39,7 @@ Core files of %mname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -58,6 +60,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt1.git20120405.1
+- (AUTO) subst_x86_64.
+
 * Tue Oct 14 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.git20120405
 - Initial build for Sisyphus
 

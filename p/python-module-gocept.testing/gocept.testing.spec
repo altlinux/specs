@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define mname gocept
 %define oname %mname.testing
 Name: python-module-%oname
 Version: 1.10.1
-Release: alt1
+#Release: alt1
 Summary: A collection of test helpers, additional assertions, and the like
 License: ZPL
 Group: Development/Python
@@ -29,7 +31,7 @@ This package collects various helpers for writing tests.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -43,6 +45,9 @@ py.test -vv
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.1-alt1.1
+- (AUTO) subst_x86_64.
+
 * Sun Jan 18 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.1-alt1
 - Initial build for Sisyphus
 

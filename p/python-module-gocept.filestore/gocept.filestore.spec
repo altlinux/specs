@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1
 %define mname gocept
 %define oname %mname.filestore
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.3
-Release: alt2
+#Release: alt2
 Summary: Provides maildir like access to files
 License: ZPLv2.1
 Group: Development/Python
@@ -47,7 +49,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -65,6 +67,9 @@ nosetests -v
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3-alt2.1
+- (AUTO) subst_x86_64.
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 0.3-alt2
 - Rebuild with "def_disable check"
 - Cleanup buildreq

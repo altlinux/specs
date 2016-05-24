@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define mname dm
 %define oname %mname.reuse
 Name: python-module-%oname
 Version: 1.1
-Release: alt1
+#Release: alt1
 Summary: Support for object reuse with slight modifications
 License: BSD
 Group: Development/Python
@@ -46,7 +48,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -63,6 +65,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.1
+- (AUTO) subst_x86_64.
+
 * Mon Dec 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1
 - Initial build for Sisyphus
 

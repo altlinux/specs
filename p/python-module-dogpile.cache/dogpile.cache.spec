@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define mname dogpile
 %define oname %mname.cache
 
@@ -6,7 +8,7 @@
 
 Name: python-module-%oname
 Version: 0.5.7
-Release: alt1
+#Release: alt1
 Summary: A caching front-end based on the Dogpile lock
 License: BSD
 Group: Development/Python
@@ -124,7 +126,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -163,6 +165,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.7-alt1.1
+- (AUTO) subst_x86_64.
+
 * Tue Apr 12 2016 Alexey Shabalin <shaba@altlinux.ru> 0.5.7-alt1
 - 0.5.7
 

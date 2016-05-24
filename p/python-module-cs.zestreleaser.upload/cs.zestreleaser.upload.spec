@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev0.git20141107.1
 %define mname cs.zestreleaser
 %define oname %mname.upload
 Name: python-module-%oname
 Version: 1.1
-Release: alt1.dev0.git20141107
+#Release: alt1.dev0.git20141107
 Summary: zest.releaser plugin to enter from the command-line the destination of the upload
 License: GPLv2+
 Group: Development/Python
@@ -42,7 +44,7 @@ Core files of %mname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -63,6 +65,9 @@ python setup.py test
 %python_sitelibdir/cs/zestreleaser/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt1.dev0.git20141107.1
+- (AUTO) subst_x86_64.
+
 * Tue Dec 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.dev0.git20141107
 - Initial build for Sisyphus
 
