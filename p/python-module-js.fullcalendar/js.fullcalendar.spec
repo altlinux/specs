@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev.git20150107.1.1
 %define oname js.fullcalendar
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 2.2.6
-Release: alt1.dev.git20150107.1
+#Release: alt1.dev.git20150107.1
 Summary: Fanstatic packaging of FullCalendar
 License: BSD
 Group: Development/Python
@@ -64,7 +66,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -93,6 +95,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2.6-alt1.dev.git20150107.1.1
+- (AUTO) subst_x86_64.
+
 * Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 2.2.6-alt1.dev.git20150107.1
 - NMU rebuild.
 

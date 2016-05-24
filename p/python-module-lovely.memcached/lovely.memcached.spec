@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20130514.1
 %define mname lovely
 %define oname %mname.memcached
 Name: python-module-%oname
 Version: 0.2.2
-Release: alt1.git20130514
+#Release: alt1.git20130514
 Summary: A memcached client utiltiy for zope 3
 License: ZPLv2.1
 Group: Development/Python
@@ -71,7 +73,7 @@ Core files of %mname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -98,6 +100,9 @@ python setup.py test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.2-alt1.git20130514.1
+- (AUTO) subst_x86_64.
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1.git20130514
 - Initial build for Sisyphus
 
