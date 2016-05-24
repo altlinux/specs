@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.11
+Release: alt0.12
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -54,7 +54,6 @@ export ac_cv_prog_HAVE_SMBCLIENT=no
 	#
 touch src/intl/gettext/plural.y
 make -C src/intl/gettext V=1 plural.c
-sed -i 's/^YYSTYPE yylval/& = {0}/' src/intl/gettext/plural.c
 
 make -C src V=1 CFLAGS="%optflags -fno-strict-aliasing -Wno-pointer-sign -Werror"
 make -C doc V=1 features.txt manual.html
@@ -83,6 +82,9 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Tue May 24 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12-alt0.12
+- Fixed build with bison-3.0.
+
 * Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.12-alt0.11
 - Fixed build with gcc 4.6.
 
