@@ -1,5 +1,5 @@
 %set_verify_elf_method relaxed
-%def_with gtk3
+%def_without gtk3
 
 %define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix  %_libdir/firefox
@@ -14,7 +14,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
 Version:        45.1.1
-Release:        alt1
+Release:        alt2
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -144,6 +144,9 @@ tar -xf %SOURCE2
 %endif
 
 cp -f %SOURCE4 .mozconfig
+%if_without gtk3
+subst 's/cairo-gtk3/cairo-gtk2/' .mozconfig
+%endif
 
 %ifnarch %{ix86} x86_64 armh
 echo "ac_add_options --disable-methodjit" >> .mozconfig
@@ -297,6 +300,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue May 24 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.1-alt2
+- Build with GTK+ 2.x (ALT #32120)
+
 * Wed May 04 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.1-alt1
 - New ESR version
 
