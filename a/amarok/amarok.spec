@@ -8,7 +8,7 @@
 
 Name: amarok
 Version: 1.4.10
-Release: alt16.1
+Release: alt17
 
 Summary: Amarok is a music player for KDE.
 License: GPL
@@ -18,7 +18,6 @@ Url: http://amarok.kde.org/
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
 %py_provides Publisher
-Requires: %name-engine
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/amarok/%version/src/%name-%version.tar.bz2
 
@@ -71,74 +70,95 @@ amaroK - передовой аудио плеер. Превосходная по
 Встроенный StreamBrowser делает обнаружение потоков в сети столь же легкими как и использование
 радио: Вы можете выбрать и настроить их прямо в amaroK.
 
-%package engine-xine
+%package -n kde3-amarok
+Group: Sound
+Summary: Amarok is a music player for KDE.
+Requires: kde3-amarok-engine
+Provides: amarok = %version-%release
+Obsoletes: amarok < %version-%release
+%description -n kde3-amarok
+amaroK is an advanced audio player.
+Excellent streaming support, audio effects, visualisations and smooth 
+crossfading separate this player from existing KDE solutions. 
+At the same time amaroK provides a very intuitive and quick user interface, 
+with unparalleled playlist handling, optimized for very large playlists.
+The built-in StreamBrowser makes finding web streams as easy as using a radio: 
+you can pick your favorite program right inside of amaroK.
+%description -n kde3-amarok -l ru_RU.UTF-8
+amaroK - передовой аудио плеер. Превосходная поддержка потокового воспроизведения, 
+звуковые эффекты, визуализации. В то же самое время amaroK обеспечивает очень интуитивный
+и быстрый пользовательский интерфейс. Плейлист оптимизирован для очень больших плейлистов.
+Встроенный StreamBrowser делает обнаружение потоков в сети столь же легкими как и использование
+радио: Вы можете выбрать и настроить их прямо в amaroK.
+
+%package -n kde3-amarok-engine-xine
 Summary: Xine engine for amaroK player
 Group: Sound
-Requires: %name = %version-%release
-Provides: %name-engine
-
-%description engine-xine
+Requires: kde3-amarok = %version-%release
+Provides: kde3-amarok-engine
+Provides: amarok-engine-xine = %version-%release
+Obsoletes: amarok-engine-xine < %version-%release
+%description -n kde3-amarok-engine-xine
 amarok-engine-xine is an engine for amaroK player.
 It uses xine library for output sound stream.
-
-%description engine-xine -l ru_RU.UTF-8
+%description -n kde3-amarok-engine-xine -l ru_RU.UTF-8
 amarok-engine-xine - это движок для воспроизведения
 звука для аудиоплеера amaroK. Он использует библиотеку
 xine для вывода аудиопотока.
 
-%package mediadevice-ipod
+%package -n kde3-amarok-mediadevice-ipod
 Summary: iPod plugin for amaroK player
 Group: Sound
-Requires: %name = %version-%release
-
-%description mediadevice-ipod
+Requires: kde3-amarok = %version-%release
+Provides: amarok-mediadevice-ipod = %version-%release
+Obsoletes: amarok-mediadevice-ipod < %version-%release
+%description -n kde3-amarok-mediadevice-ipod
 amarok-mediadevice-ipod is a plugin for Apple iPod
 player
-
-%description mediadevice-ipod -l ru_RU.UTF-8
+%description -n kde3-amarok-mediadevice-ipod -l ru_RU.UTF-8
 amarok-mediadevice-ipod - плагин, использующийся для
 взаимодействия с плеером iPod от Apple
 
-%package mediadevice-generic
+%package -n kde3-amarok-mediadevice-generic
 Summary: VFAT plugin for amaroK player
 Group: Sound
-Requires: %name = %version-%release
+Requires: kde3-amarok = %version-%release
 Provides: %name-mediadevice-vfat
-
-%description mediadevice-generic
+Provides: amarok-mediadevice-generic = %version-%release
+Obsoletes: amarok-mediadevice-generic < %version-%release
+%description -n kde3-amarok-mediadevice-generic
 amarok-mediadevice-generic is a generic plugin for
 various devices that uses VFAT filesystem
-
-%description mediadevice-generic -l ru_RU.UTF-8
+%description -n kde3-amarok-mediadevice-generic -l ru_RU.UTF-8
 amarok-mediadevice-generic - плагин, используемый для работы
 с различного рода медиаустройствами, поддерживающими
 тип файловой системы VFAT
 
-%package mediadevice-daap
+%package -n kde3-amarok-mediadevice-daap
 Summary: DAAP (Digital Audio Access Protocol) plugin for amaroK player
 Group: Sound
-Requires: %name = %version-%release
-
-%description mediadevice-daap
+Requires: kde3-amarok = %version-%release
+Provides: amarok-mediadevice-daap = %version-%release
+Obsoletes: amarok-mediadevice-daap < %version-%release
+%description -n kde3-amarok-mediadevice-daap
 amarok-mediadevice-daap is a plugin for interoperability
 with various devices that uses Digital Audio Access
 Protocol (DAAP)
-
-%description mediadevice-daap -l ru_RU.UTF-8
+%description -n kde3-amarok-mediadevice-daap -l ru_RU.UTF-8
 amarok-mediadevice-daap - плагин для работы с различными
 устройствами, использующими протокол Digital Audio Access
 Protocol (DAAP)
 
-%package mediadevice-mtp
+%package -n kde3-amarok-mediadevice-mtp
 Summary: MTP (Media Transfer Protocol) plugin for amaroK player
 Group: Sound
-Requires: %name = %version-%release
-
-%description mediadevice-mtp
+Requires: kde3-amarok = %version-%release
+Provides: amarok-mediadevice-mtp = %version-%release
+Obsoletes: amarok-mediadevice-mtp < %version-%release
+%description -n kde3-amarok-mediadevice-mtp
 amarok-mediadevice-daap is a plugin for interoperability
 with various devices that uses Media Transfer Protocol (MTP)
-
-%description mediadevice-mtp -l ru_RU.UTF-8
+%description -n kde3-amarok-mediadevice-mtp -l ru_RU.UTF-8
 amarok-mediadevice-daap - плагин для работы с различными
 устройствами, использующими протокол Media Transfer Protocol (MTP)
 
@@ -242,7 +262,7 @@ rm -fr %buildroot%_K3datadir/apps/%name/scripts/templates
 
 %K3find_lang --with-kde %name
 
-%files -f %name.lang
+%files -n kde3-amarok -f %name.lang
 %_K3bindir/amarok
 %_K3bindir/amarokapp
 %_K3bindir/amarok_libvisual
@@ -283,30 +303,33 @@ rm -fr %buildroot%_K3datadir/apps/%name/scripts/templates
 %_kde3_iconsdir/*/*/apps/amarok.png
 %lang(pt_BR) /usr/share/kde/doc/HTML/pt_BR/amarok
 
-%files engine-xine
+%files -n kde3-amarok-engine-xine
 %_K3libdir/kde3/libamarok_xine-engine.so
 %_K3datadir/config.kcfg/xinecfg.kcfg
 %_K3datadir/services/amarok_xine-engine.desktop
 
-%files mediadevice-ipod
+%files -n kde3-amarok-mediadevice-ipod
 %_K3libdir/kde3/libamarok_ipod-mediadevice.so
 %_K3datadir/services/amarok_ipod-mediadevice.desktop
 
-%files mediadevice-generic
+%files -n kde3-amarok-mediadevice-generic
 %_K3libdir/kde3/libamarok_generic-mediadevice.so
 %_K3datadir/services/amarok_generic-mediadevice.desktop
 
-%files mediadevice-mtp
+%files -n kde3-amarok-mediadevice-mtp
 %_K3libdir/kde3/libamarok_mtp-mediadevice.so
 %_K3datadir/services/amarok_mtp-mediadevice.desktop
 
-%files mediadevice-daap
+%files -n kde3-amarok-mediadevice-daap
 %_K3bindir/amarok_daapserver.rb
 %_K3libdir/kde3/libamarok_daap-mediadevice.so
 %_K3datadir/apps/%name/ruby_lib
 %_K3datadir/services/amarok_daap-mediadevice.desktop
 
 %changelog
+* Tue May 24 2016 Sergey V Turchin <zerg@altlinux.org> 1.4.10-alt17
+- rename package
+
 * Wed Nov 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.10-alt16.1
 - Fixed build
 
