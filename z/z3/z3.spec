@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141024.1.1
 %def_with python3
 
 Name: z3
 Version: 4.3.2
-Release: alt1.git20141024.1
+#Release: alt1.git20141024.1
 Summary: High-performance theorem prover
 License: Noncommercial use only
 Group: Sciences/Mathematics
@@ -105,7 +107,7 @@ install -d %buildroot%python_sitelibdir_noarch
 rm -f  %buildroot%python_sitelibdir_noarch/lib%name.so
 ln -s ../../lib%name.so %buildroot%python_sitelibdir_noarch/
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -151,6 +153,9 @@ python3 build/example.py
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.3.2-alt1.git20141024.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.3.2-alt1.git20141024.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1.1
 %define mname codeviking
 %define oname %mname.math
 Name: python3-module-%oname
 Version: 0.10.1
-Release: alt1.1
+#Release: alt1.1
 Summary: Function and method call math
 License: MIT
 Group: Development/Python3
@@ -37,7 +39,7 @@ Core files of %mname.
 %install
 %python3_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -59,6 +61,9 @@ python3 setup.py test
 %python3_sitelibdir/%mname/__pycache__/__init__.*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.1-alt1.1.1
+- (AUTO) subst_x86_64.
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.1-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
