@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20150320.1
 %define oname ContrailOnlineCAClient
 
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1.git20150320
+#Release: alt1.git20150320
 Summary: Certificate Authority Web Service
 License: BSD
 Group: Development/Python
@@ -68,7 +70,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -88,6 +90,9 @@ python setup.py test
 %doc documentation/*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.1-alt1.git20150320.1
+- (AUTO) subst_x86_64.
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20150320
 - Initial build for Sisyphus
 
