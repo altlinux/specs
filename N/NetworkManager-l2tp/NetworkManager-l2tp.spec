@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-l2tp
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -98,12 +98,15 @@ NetworkManager panel applet.
 %_libexecdir/NetworkManager/nm-l2tp-auth-dialog
 %_datadir/gnome-vpn-properties/l2tp
 %_libdir/NetworkManager/libnm-vpn-plugin-l2tp.so
-%_datadir/appdata/*.appdata.xml
+%_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue May 24 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
+- Updated to 1.2.2.
+
 * Wed May 04 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Fix build on i586.
 - Patches from upstream:
