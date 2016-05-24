@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141211.1
 %define oname ContrailOnlineCAService
 
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.1.1
-Release: alt1.git20141211
+#Release: alt1.git20141211
 Summary: Certificate Authority Web Service
 License: BSD
 Group: Development/Python
@@ -64,7 +66,7 @@ Core files of python-module-contrail.security.onlineca.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -85,6 +87,9 @@ python setup.py test
 %python_sitelibdir/contrail/security/onlineca/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.1-alt1.git20141211.1
+- (AUTO) subst_x86_64.
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt1.git20141211
 - Initial build for Sisyphus
 
