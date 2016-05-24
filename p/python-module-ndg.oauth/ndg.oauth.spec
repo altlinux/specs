@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20131210.1
 %define mname ndg
 %define oname %mname.oauth
 Name: python-module-%oname
 Version: 0.5.1
-Release: alt1.git20131210
+#Release: alt1.git20131210
 Summary: Python OAuth 2.0 Implementation including client and server packages
 License: BSD
 Group: Development/Python
@@ -118,7 +120,7 @@ for i in ndg_oauth_server ndg_oauth_client; do
 	popd
 done
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -153,6 +155,9 @@ done
 %python_sitelibdir/ndg/oauth/client/examples
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.1-alt1.git20131210.1
+- (AUTO) subst_x86_64.
+
 * Sat Mar 21 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.git20131210
 - Initial build for Sisyphus
 

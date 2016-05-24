@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.git20141031.1
 %define mname pyannote
 %define oname %mname.server
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.7
-Release: alt2.git20141031
+#Release: alt2.git20141031
 Summary: PyAnnote REST API
 License: MIT
 Group: Development/Python
@@ -39,7 +41,7 @@ sed -i 's|@VERSION@|%version|' %mname/server/_version.py
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -52,6 +54,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7-alt2.git20141031.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.7-alt2.git20141031
 - Rebuild with "def_disable check"
 - Cleanup buildreq

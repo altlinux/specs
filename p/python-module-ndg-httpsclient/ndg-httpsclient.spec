@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1.1.1
 %define oname ndg-httpsclient
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2.1.1
+#Release: alt2.1.1
 
 Summary: Provides enhanced HTTPS support for httplib and urllib2 using PyOpenSSL
 License: BSD
@@ -138,7 +140,7 @@ popd
 
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -190,6 +192,9 @@ rm -f documentation/Makefile
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1.1.1
+- (AUTO) subst_x86_64.
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).

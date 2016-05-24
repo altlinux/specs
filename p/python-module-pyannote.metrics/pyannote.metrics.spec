@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.git20141120.1
 %define mname pyannote
 %define oname %mname.metrics
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt3.git20141120
+#Release: alt3.git20141120
 Summary: PyAnnote metrics
 License: MIT
 Group: Development/Python
@@ -39,7 +41,7 @@ sed -i 's|@VERSION@|%version|' %mname/metrics/_version.py
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -53,6 +55,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt3.git20141120.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.4.1-alt3.git20141120
 - Rebuild with "def_disable check"
 - Cleanup buildreq
