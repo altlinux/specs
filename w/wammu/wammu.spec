@@ -1,5 +1,5 @@
 Name: wammu
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: Mobile phone manager
@@ -7,7 +7,7 @@ License: GPL
 Group: Communications
 
 Url: http://wammu.eu
-Source0: http://dl.cihar.com/wammu/v0/%name-%version.tar.bz2
+Source0: http://dl.cihar.com/wammu/v0/%{name}-%{version}.tar.xz
 Source100: wammu.watch
 Packager: L.A. Kostis <lakostis@altlinux.ru>
 
@@ -49,6 +49,9 @@ subst '/man1/ D' INSTALLED_FILES
 %_mandir/*/man1/*
 
 %changelog
+* Tue May 24 2016 Michael Shigorin <mike@altlinux.org> 0.41-alt1
+- new version (watch file uupdate)
+
 * Tue Nov 24 2015 Michael Shigorin <mike@altlinux.org> 0.40-alt1
 - new version (watch file uupdate)
 
