@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define oname ContrailCA
 
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1
+#Release: alt1
 Summary: Certificate Authority
 License: BSD
 Group: Development/Python
@@ -66,7 +68,7 @@ Core files of contrail.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -91,6 +93,9 @@ python setup.py test
 %python_sitelibdir/contrail/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.0-alt1.1
+- (AUTO) subst_x86_64.
+
 * Fri Mar 20 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus
 
