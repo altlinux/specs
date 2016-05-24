@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1.1
 %define oname js.jqueryui
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.10.3
-Release: alt2.1
+#Release: alt2.1
 Summary: fanstatic jQuery UI
 License: BSD
 Group: Development/Python
@@ -68,7 +70,7 @@ popd
 
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -94,6 +96,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.3-alt2.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.3-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

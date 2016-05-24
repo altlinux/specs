@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20150205.2.1
 %define mname kids
 %define oname %mname.data
 
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.0.3
-Release: alt1.git20150205.2
+#Release: alt1.git20150205.2
 Summary: Kids data manipulation helpers
 License: BSD
 Group: Development/Python
@@ -92,7 +94,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -119,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.3-alt1.git20150205.2.1
+- (AUTO) subst_x86_64.
+
 * Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 0.0.3-alt1.git20150205.2
 - NMU - just rebuild.
 
