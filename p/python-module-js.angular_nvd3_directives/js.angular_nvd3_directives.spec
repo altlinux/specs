@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.2.1
 %define oname js.angular_nvd3_directives
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 2.3.11
-Release: alt1.2
+#Release: alt1.2
 Summary: Fanstatic packaging of angularjs-nvd3-directives
 License: BSD
 Group: Development/Python
@@ -67,7 +69,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -98,6 +100,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.11-alt1.2.1
+- (AUTO) subst_x86_64.
+
 * Tue Mar 15 2016 Denis Medvedev <nbr@altlinux.org> 2.3.11-alt1.2
 - NMU just rebuild.
 

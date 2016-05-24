@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.dev0.git20141106.1
 %define mname hurry
 %define oname %mname.query
 %def_disable check
 
 Name: python-module-%oname
 Version: 1.1.2
-Release: alt2.dev0.git20141106
+#Release: alt2.dev0.git20141106
 Summary: Higher level query system for the zope.catalog
 License: ZPLv2.1
 Group: Development/Python
@@ -58,7 +60,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -76,6 +78,9 @@ py.test -vv src/hurry/query/tests.py
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.2-alt2.dev0.git20141106.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.2-alt2.dev0.git20141106
 - Rebuild with "def_disable check"
 - Cleanup buildreq

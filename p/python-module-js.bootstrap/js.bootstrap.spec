@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev0.git20150113.1.1
 %define oname js.bootstrap
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 3.4
-Release: alt1.dev0.git20150113.1
+#Release: alt1.dev0.git20150113.1
 Summary: fanstatic twitter bootstrap
 License: BSD
 Group: Development/Python
@@ -62,7 +64,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -77,6 +79,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4-alt1.dev0.git20150113.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4-alt1.dev0.git20150113.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
