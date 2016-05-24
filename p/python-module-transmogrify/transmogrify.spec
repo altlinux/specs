@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.beta2.git20130913.1
 %define oname transmogrify
 
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt3.beta2.git20130913
+#Release: alt3.beta2.git20130913
 Summary: Allows for the dynamic alteration of images using the URL
 License: ASL
 Group: Development/Python
@@ -58,7 +60,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -76,6 +78,9 @@ python setup.py test
 %python_sitelibdir/*/test*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt3.beta2.git20130913.1
+- (AUTO) subst_x86_64.
+
 * Wed Jan 13 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.1-alt3.beta2.git20130913
 - remove erronous dependensy to python(settings)
 
