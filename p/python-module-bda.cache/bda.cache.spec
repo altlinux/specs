@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.git20091201.1
 %def_disable check
 
 %define mname bda
 %define oname %mname.cache
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt2.git20091201
+#Release: alt2.git20091201
 Summary: Simple caching infrastructure
 License: GPL
 Group: Development/Python
@@ -63,7 +65,7 @@ Core files of %mname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -90,6 +92,9 @@ py.test
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt2.git20091201.1
+- (AUTO) subst_x86_64.
+
 
 * Fri Feb 05 2016 Sergey Alembekov <rt@altlinux.ru> 1.1.3-alt2.git20091201
 - disabled tests

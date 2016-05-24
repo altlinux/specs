@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev0.git20141027.1
 %define mname collective.js
 %define oname %mname.knockout
 Name: python-module-%oname
 Version: 3.2.1
-Release: alt1.dev0.git20141027
+#Release: alt1.dev0.git20141027
 Summary: knockout.js integration for Plone
 License: GPL
 Group: Development/Python
@@ -37,7 +39,7 @@ Optionally you can use/register the provided not-minified version.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -50,6 +52,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.2.1-alt1.dev0.git20141027.1
+- (AUTO) subst_x86_64.
+
 * Tue Oct 28 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1.dev0.git20141027
 - Initial build for Sisyphus
 

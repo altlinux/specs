@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev0.git20120507.1
 %define mname collective
 %define oname %mname.js.jqsmartTruncation
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt1.dev0.git20120507
+#Release: alt1.dev0.git20120507
 Summary: This Package provides smart truncation
 License: GPLv2+
 Group: Development/Python
@@ -30,7 +32,7 @@ smart Truncation.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -43,6 +45,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt1.dev0.git20120507.1
+- (AUTO) subst_x86_64.
+
 * Wed Dec 24 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.dev0.git20120507
 - Initial build for Sisyphus
 

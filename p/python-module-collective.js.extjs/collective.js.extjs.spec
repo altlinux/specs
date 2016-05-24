@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev0.git20130324.1
 %define mname collective
 %define oname %mname.js.extjs
 Name: python-module-%oname
 Version: 1.3
-Release: alt1.dev0.git20130324
+#Release: alt1.dev0.git20130324
 Summary: ExtJS integration for Plone
 License: GPLv2+
 Group: Development/Python
@@ -36,7 +38,7 @@ It provides:
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -49,6 +51,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3-alt1.dev0.git20130324.1
+- (AUTO) subst_x86_64.
+
 * Sat Nov 29 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.dev0.git20130324
 - Initial build for Sisyphus
 
