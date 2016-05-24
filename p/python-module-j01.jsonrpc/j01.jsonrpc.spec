@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1
 %define mname j01
 %define oname %mname.jsonrpc
 %def_disable check
 
 Name: python-module-%oname
 Version: 2.0.0
-Release: alt2
+#Release: alt2
 Summary: JSON-RPC helpers based on JQuery, z3c.form and z3c.jsonrpc for Zope 3
 License: ZPLv2.1
 Group: Development/Python
@@ -83,7 +85,7 @@ sed -i 's|\r||' $(find src -name '*.txt')
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -109,6 +111,9 @@ nosetests -v
 %python_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.0-alt2.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.0-alt2
 - Rebuild with "def_disable check"
 - Cleanup buildreq

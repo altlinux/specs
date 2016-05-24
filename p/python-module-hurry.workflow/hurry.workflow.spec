@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.dev0.git20130322.1
 %define mname hurry
 %define oname %mname.workflow
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.14
-Release: alt2.dev0.git20130322
+#Release: alt2.dev0.git20130322
 Summary: A simple but quite nifty workflow system for Zope 3
 License: ZPLv2.1
 Group: Development/Python
@@ -55,7 +57,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -74,6 +76,9 @@ python src/hurry/workflow/tests.py -v
 %python_sitelibdir/%mname/*/tests.*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.14-alt2.dev0.git20130322.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.14-alt2.dev0.git20130322
 - Rebuild with "def_disable check"
 - Cleanup buildreq
