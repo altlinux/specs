@@ -15,7 +15,6 @@
 %def_enable libcurl
 %def_enable libidn
 %def_enable libiptc
-%def_enable bootchart
 %def_enable polkit
 %def_enable efi
 %def_enable networkd
@@ -56,8 +55,8 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 229
-Release: alt6
+Version: 230
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -164,7 +163,7 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
-%{?_enable_libcurl:BuildRequires: pkgconfig(libcurl)}
+%{?_enable_libcurl:BuildRequires: pkgconfig(libcurl) >= 7.32.0}
 %{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
@@ -668,7 +667,6 @@ intltoolize --force --automake
 	%{subst_enable libcurl} \
 	%{subst_enable libidn} \
 	%{subst_enable libiptc} \
-	%{subst_enable bootchart} \
 	%{subst_enable polkit} \
 	%{subst_enable efi} \
 	%{subst_enable networkd} \
@@ -686,8 +684,7 @@ intltoolize --force --automake
 	%{subst_enable selinux} \
 	%{subst_enable apparmor} \
 	%{subst_enable utmp} \
-	--disable-static \
-	--enable-compat-libs
+	--disable-static
 
 %make_build GCC_COLORS="" V=1
 
@@ -1216,7 +1213,6 @@ fi
 %_xdgconfigdir/%name
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
 
-%config(noreplace) %_sysconfdir/systemd/bootchart.conf
 %config(noreplace) %_sysconfdir/systemd/journald.conf
 %config(noreplace) %_sysconfdir/systemd/system.conf
 %config(noreplace) %_sysconfdir/systemd/user.conf
@@ -1232,6 +1228,7 @@ fi
 /sbin/systemd-tty-ask-password-agent
 %_bindir/bootctl
 %_bindir/busctl
+%_bindir/systemd-socket-activate
 %_bindir/systemd-cat
 %_bindir/systemd-cgls
 %_bindir/systemd-cgtop
@@ -1243,9 +1240,6 @@ fi
 %_bindir/systemd-stdio-bridge
 /lib/systemd/systemd
 /lib/systemd/systemd-ac-power
-/lib/systemd/systemd-activate
-/lib/systemd/systemd-bootchart
-/lib/systemd/systemd-bus-proxyd
 /lib/systemd/systemd-cgroups-agent
 /lib/systemd/systemd-cryptsetup
 /lib/systemd/systemd-fsck
@@ -1298,7 +1292,6 @@ fi
 %_man1dir/busctl.*
 %_man1dir/systemctl.*
 %_mandir/*/systemd-ask-password*
-%_mandir/*/*bootchart.*
 %_man1dir/systemd-cat.*
 %_man1dir/systemd-cgls.*
 %_man1dir/systemd-cgtop.*
@@ -1309,6 +1302,7 @@ fi
 %_man1dir/systemd-nspawn.*
 %_man1dir/systemd-path.*
 %_man1dir/systemd-run.*
+%_man1dir/systemd-socket-activate.*
 %_mandir/*/systemd-tty-ask-password*
 %_man1dir/systemd.*
 %_man5dir/crypttab*
@@ -1337,8 +1331,6 @@ fi
 %_man5dir/systemd.unit*
 %_mandir/*/*vconsole*
 
-%_man8dir/systemd-activate*
-%_man8dir/systemd-bus-proxyd*
 %_man8dir/systemd-debug-generator*
 %_man8dir/systemd-fsck*
 %_man8dir/systemd-fstab-generator*
@@ -1555,6 +1547,7 @@ fi
 %exclude %_man1dir/systemd-machine-id-*
 %_mandir/*/*locale*
 %_mandir/*/*timedate*
+%_man8dir/systemd-importd.*
 
 %if_enabled networkd
 %files networkd
@@ -1640,7 +1633,7 @@ fi
 %_unitdir/*/systemd-coredump*
 %_man1dir/*coredumpctl.*
 %_man5dir/coredump.conf.*
-%_man8dir/systemd-coredump.*
+%_man8dir/systemd-coredump*
 %dir %_localstatedir/lib/systemd/coredump
 %endif
 
@@ -1770,6 +1763,11 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Mon May 23 2016 Alexey Shabalin <shaba@altlinux.ru> 1:230-alt1
+- 230
+- Drop libsystemd-{id128,daemon,login,journal}.so compat libs
+- Remove systemd-bootchart
+
 * Wed May 18 2016 Mikhail Efremov <sem@altlinux.org> 1:229-alt6
 - Patch from upstream:
     + strbuf: set the proper character when creating new nodes

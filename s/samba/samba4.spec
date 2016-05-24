@@ -35,7 +35,7 @@
 
 Name: samba
 Version: 4.4.3
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -57,6 +57,11 @@ Source200: README.dc
 Source201: README.downgrade
 
 Patch: %name-%version-%release.patch
+Patch10: samba-grouppwd.patch
+
+# fedora patches
+Patch100:         samba-4.4.2-s3-winbind-make-sure-domain-member-can-talk-to-trust.patch
+Patch101:         samba-use-libsystemd.patch
 
 Provides: samba4 = %version-%release
 Obsoletes: samba4 < %version-%release
@@ -465,6 +470,9 @@ and use CTDB instead.
 %prep
 %setup -q
 %patch -p1
+%patch10 -p1
+%patch100 -p 1 -b .samba-4.4.2-s3-winbind-make-sure-domain-member-can-talk-to-trust.patch
+%patch101 -p1
 
 %build
 
@@ -1318,6 +1326,11 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Tue May 24 2016 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt2
+- build with libsystemd without compat libs
+- add patches from fedora
+- add again samba-grouppwd.patch
+
 * Wed May 04 2016 Andrey Cherepanov <cas@altlinux.org> 4.4.3-alt1
 - New version
 
