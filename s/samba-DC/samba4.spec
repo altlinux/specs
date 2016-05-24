@@ -44,7 +44,7 @@
 
 Name:    samba-DC
 Version: 4.4.3
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -68,6 +68,11 @@ Source200: README.dc
 Source201: README.downgrade
 
 Patch: %rname-%version-%release.patch
+Patch10: samba-grouppwd.patch
+
+# fedora patches
+Patch100:         samba-4.4.2-s3-winbind-make-sure-domain-member-can-talk-to-trust.patch
+Patch101:         samba-use-libsystemd.patch
 
 Conflicts: %rname
 Conflicts: %rname-dc
@@ -400,6 +405,9 @@ Microsoft Active Directory.
 %prep
 %setup -q -n %rname-%version
 %patch -p1
+%patch10 -p1
+%patch100 -p 1 -b .samba-4.4.2-s3-winbind-make-sure-domain-member-can-talk-to-trust.patch
+%patch101 -p1
 
 %build
 
@@ -1221,6 +1229,11 @@ TDB_NO_FSYNC=1 %make_build test
 %files -n task-samba-dc
 
 %changelog
+* Tue May 24 2016 Alexey Shabalin <shaba@altlinux.ru> 4.4.3-alt3
+- build with libsystemd without compat libs
+- add patches from fedora
+- add again samba-grouppwd.patch
+
 * Mon May 23 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.4.3-alt2
 - Fix rpc_server/drsuapi: Set msDS_IntId as attid for linked attributes if exists
 
