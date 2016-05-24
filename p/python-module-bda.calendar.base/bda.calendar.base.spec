@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define mname bda.calendar
 %define oname %mname.base
 Name: python-module-%oname
 Version: 1.2.2
-Release: alt1
+#Release: alt1
 Summary: Base common calendaring features: Convinience or not coverd yet
 License: GPL
 Group: Development/Python
@@ -45,7 +47,7 @@ Core files of %mname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -66,6 +68,9 @@ python setup.py test
 %python_sitelibdir/bda/calendar/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt1.1
+- (AUTO) subst_x86_64.
+
 * Fri Dec 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1
 - Initial build for Sisyphus
 

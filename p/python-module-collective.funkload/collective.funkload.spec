@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev0.git20140620.1
 %define mname collective
 %define oname %mname.funkload
 
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.5
-Release: alt1.dev0.git20140620
+#Release: alt1.dev0.git20140620
 Summary: Zope and Plone focussed extensions to funkload
 License: GPL
 Group: Development/Python
@@ -65,7 +67,7 @@ ln -s $PWD/README.rst src/collective/funkload/README.txt
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -85,6 +87,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/test*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5-alt1.dev0.git20140620.1
+- (AUTO) subst_x86_64.
+
 * Mon Oct 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1.dev0.git20140620
 - Initial build for Sisyphus
 

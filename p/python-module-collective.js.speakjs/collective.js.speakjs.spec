@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.dev0.git20130408.1
 %define mname collective
 %define oname %mname.js.speakjs
 Name: python-module-%oname
 Version: 1.0.1
-Release: alt2.dev0.git20130408
+#Release: alt2.dev0.git20130408
 Summary: Text-to-Speech in JavaScript using eSpeak
 License: GPLv3
 Group: Development/Python
@@ -38,7 +40,7 @@ Core files of %mname.js.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -64,6 +66,9 @@ python setup.py test
 %python_sitelibdir/%mname/js/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.1-alt2.dev0.git20130408.1
+- (AUTO) subst_x86_64.
+
 * Mon Jan 25 2016 Sergey Alembekov <rt@altlinux.ru> 1.0.1-alt2.dev0.git20130408
 - remove Zope2-test from build deps
 
