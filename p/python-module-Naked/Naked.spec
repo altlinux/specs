@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.git20140316.1.1.1
 %define oname Naked
 
 %def_with python3
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 1.0.29
-Release: alt2.git20140316.1.1
+#Release: alt2.git20140316.1.1
 Summary: A command line application framework
 License: MIT
 Group: Development/Python
@@ -113,7 +115,7 @@ popd
 
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -182,6 +184,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.29-alt2.git20140316.1.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.29-alt2.git20140316.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

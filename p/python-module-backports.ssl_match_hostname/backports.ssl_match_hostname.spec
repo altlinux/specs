@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define ocore backports
 %define oname %ocore.ssl_match_hostname
 
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 3.5.0.1
-Release: alt1
+#Release: alt1
 Summary: The ssl.match_hostname() function from Python 3.5
 License: Python
 Group: Development/Python
@@ -52,7 +54,7 @@ Core package of %ocore.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -67,6 +69,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python_sitelibdir/%ocore/__init__.py*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0.1-alt1.1
+- (AUTO) subst_x86_64.
+
 * Fri May 6 2016 Vladimir Didenko <cow@altlinux.org> 3.5.0.1-alt1
 - New version
 - Don't pack Python 3 version anymore
