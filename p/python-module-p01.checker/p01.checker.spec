@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define mname p01
 %define oname %mname.checker
 Name: python-module-%oname
 Version: 0.5.6
-Release: alt1
+#Release: alt1
 Summary: Python, ZCML, PT, HTML, JS, CSS source checking/linting
 License: ZPLv2.1
 Group: Development/Python
@@ -32,7 +34,7 @@ sed -i 's|\r||' $(find src -name '*.txt')
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -47,6 +49,9 @@ py.test -vv src/p01/checker/tests.py
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.6-alt1.1
+- (AUTO) subst_x86_64.
+
 * Sat Feb 14 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.6-alt1
 - Initial build for Sisyphus
 

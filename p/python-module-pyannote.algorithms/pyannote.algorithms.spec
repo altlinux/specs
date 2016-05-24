@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.git20150226.1
 %define mname pyannote
 %define oname %mname.algorithms
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.4.1
-Release: alt2.git20150226
+#Release: alt2.git20150226
 Summary: PyAnnote algorithms
 License: MIT
 Group: Development/Python
@@ -54,7 +56,7 @@ sed -i 's|@VERSION@|%version|' %mname/algorithms/_version.py
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -72,6 +74,9 @@ python setup.py test
 %python_sitelibdir/%mname/*/*/test*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt2.git20150226.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.4.1-alt2.git20150226
 - Rebuild with "def_disable check"
 - Cleanup buildreq
