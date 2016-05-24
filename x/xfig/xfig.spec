@@ -1,6 +1,6 @@
 Name:         xfig
-Version:      3.2.5c
-Release:      alt3
+Version:      3.2.6
+Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -13,7 +13,6 @@ Patch1:       %name-%version-alt.patch
 
 Requires:     transfig >= 3.2.5 fonts-type1-urw
 
-BuildPreReq:  imake xorg-cf-files
 BuildPreReq:  libXpm-devel libXt-devel libXmu-devel libXaw-devel
 BuildPreReq:  libpng-devel libjpeg-devel libXi-devel libXp-devel
 BuildPreReq:  libXaw3d-devel >= 1.5e
@@ -48,19 +47,9 @@ XFig documentation
 %patch1 -p1
 
 %build
-CDEBUGFLAGS=OptimizedCDebugFlags
-# Optimization can break xfig on x86_64?
-#%ifarch x86_64
-#CDEBUGFLAGS=NoOpCDebugFlags
-#%endif
-# Uncomment to build with -g flag:
-# CDEBUGFLAGS=DebuggableCDebugFlags
-xmkmf -DXAW3D -DXAW3D1_5E -DDefaultCDebugFlags=$CDEBUGFLAGS
-ln -nfs Doc/xfig.man xfig.man
-make DESTDIR=%buildroot
-
-%install
-make DESTDIR=%buildroot install.all
+%autoreconf
+%configure --with-appdefaultdir=%_x11appconfdir
+%make install DESTDIR=%buildroot
 
 install -D -m 755 xfig.sh      %buildroot/%_bindir/xfig.sh
 install -D -m 644 xfig48.png   %buildroot/%_liconsdir/xfig.png
@@ -87,6 +76,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sun May 15 2016 Vladislav Zavjalov <slazav@altlinux.org> 3.2.6-alt1
+- 3.2.6
+
 * Sun Feb 28 2016 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5c-alt3
 - fix reading png files with libpng16
   See: https://bugzilla.redhat.com/show_bug.cgi?id=1150330
