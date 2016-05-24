@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.git20150216.1
 %define oname zc.zrs
 
 %def_without python3
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 2.5.3
-Release: alt3.git20150216
+#Release: alt3.git20150216
 Summary: ZODB Replicated Storage
 License: ZPLv2.1
 Group: Development/Python
@@ -118,7 +120,7 @@ popd
 
 %python_build_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -167,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.5.3-alt3.git20150216.1
+- (AUTO) subst_x86_64.
+
 * Tue Feb 02 2016 Sergey Alembekov <rt@altlinux.ru> 2.5.3-alt3.git20150216
 - improve spec
 

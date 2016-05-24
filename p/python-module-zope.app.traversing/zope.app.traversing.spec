@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define mname zope.app
 %define oname %mname.traversing
 Name: python-module-%oname
 Version: 3.4.0
-Release: alt1
+#Release: alt1
 Summary: Zope Application Traversal Support
 License: ZPLv2.1
 Group: Development/Python
@@ -33,7 +35,7 @@ computing URLs via the @@absolute_url view.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -46,6 +48,9 @@ python setup.py test
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4.0-alt1.1
+- (AUTO) subst_x86_64.
+
 * Fri Oct 31 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
 - Initial build for Sisyphus
 

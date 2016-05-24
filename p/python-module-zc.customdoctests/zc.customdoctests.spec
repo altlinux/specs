@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev0.git20140409.1.1.1
 %define oname zc.customdoctests
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.0.2
-Release: alt1.dev0.git20140409.1.1
+#Release: alt1.dev0.git20140409.1.1
 Summary: Leverage doctest / manuel hooks to support other languages, such as JavaScript
 License: ZPLv2.1
 Group: Development/Python
@@ -71,7 +73,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -96,6 +98,9 @@ popd
 %endif
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.dev0.git20140409.1.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.2-alt1.dev0.git20140409.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

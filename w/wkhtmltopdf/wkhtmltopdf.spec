@@ -1,6 +1,8 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev.git20141216.1
 Name: wkhtmltopdf
 Version: 0.12.2
-Release: alt1.dev.git20141216
+#Release: alt1.dev.git20141216
 
 Summary: Command line utility to convert html to pdf using WebKit
 License: %gpl3plus
@@ -58,7 +60,7 @@ PATH=$PATH:%_qt4dir/bin qmake
 %install
 %make_install INSTALL_ROOT=%buildroot%prefix install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -75,6 +77,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %_libdir/*.so
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.12.2-alt1.dev.git20141216.1
+- (AUTO) subst_x86_64.
+
 * Wed Dec 17 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.2-alt1.dev.git20141216
 - Version 0.12.2-dev
 

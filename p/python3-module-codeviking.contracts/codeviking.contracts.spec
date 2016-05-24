@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1.1
 %define mname codeviking
 %define oname %mname.contracts
 Name: python3-module-%oname
 Version: 0.13.2
-Release: alt1.1
+#Release: alt1.1
 Summary: Function and method call contracts
 License: MIT
 Group: Development/Python3
@@ -35,7 +37,7 @@ contracts add zero runtime overhead.
 %install
 %python3_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -49,6 +51,9 @@ python3 setup.py test -vv
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.13.2-alt1.1.1
+- (AUTO) subst_x86_64.
+
 * Mon Mar 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.13.2-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

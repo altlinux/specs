@@ -1,9 +1,11 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1
 %define oname z3c.unconfigure
 %def_disable check
 
 Name: python-module-%oname
 Version: 1.1
-Release: alt2
+#Release: alt2
 Summary: Disable specific ZCML directives in other package's configuration
 License: ZPLv2.1
 Group: Development/Python
@@ -49,7 +51,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -68,6 +70,9 @@ py.test
 %python_sitelibdir/z3c/*/test*
 
 %changelog
+* Tue May 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1-alt2.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 1.1-alt2
 - Rebuild with "def_disable check"
 - Cleanup buildreq
