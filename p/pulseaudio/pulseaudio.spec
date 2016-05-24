@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 8.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -19,7 +19,7 @@ BuildRequires: libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libjson-c-devel libgtk+2-devel libGConf-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
-BuildRequires: libsystemd-devel xen-devel
+BuildRequires: libsystemd-devel
 
 Requires: %name-utils = %version-%release
 Requires: %name-daemon = %version-%release
@@ -109,11 +109,6 @@ Summary: PulseAudio -- JACK part
 Group: Sound
 Requires: %name-daemon = %version-%release
 
-%package xen
-Summary: PulseAudio -- XEN PV support
-Group: Sound
-Requires: %name-daemon = %version-%release
-
 %package -n lib%name
 Summary: PulseAudio shared libraries
 Group: System/Libraries
@@ -178,13 +173,6 @@ Sound Daemon (EsounD). PulseAudio is however much more advanced and has
 numerous features.
 
 This package contains JACK modules of PulseAudio.
-
-%description xen
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
-This package contains XEN PV driver.
 
 %description -n lib%name
 PulseAudio is a networked sound server, similar in theory to the Enlightened
@@ -286,8 +274,6 @@ find %buildroot%_libdir -name \*.la -delete
 %exclude %pulsemoduledir/module-jack-sink.so
 %exclude %pulsemoduledir/module-jack-source.so
 
-%exclude %pulsemoduledir/module-xenpv-sink.so
-
 %_man1dir/pactl.1*
 %_man1dir/esdcompat.1*
 %_man1dir/pulseaudio.1*
@@ -356,11 +342,6 @@ find %buildroot%_libdir -name \*.la -delete
 %pulsemoduledir/module-jack-sink.so
 %pulsemoduledir/module-jack-source.so
 
-%files xen
-%dir %pulselibdir
-%dir %pulsemoduledir
-%pulsemoduledir/module-xenpv-sink.so
-
 %files -n lib%name -f %name.lang
 %doc LICENSE README todo
 
@@ -386,6 +367,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Tue May 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.0-alt2
+- drop xen support
+
 * Sun Jan 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.0-alt1
 - 8.0 released
 
