@@ -1,6 +1,6 @@
 %define m_distro Devel-StackTrace-AsHTML
 Name: perl-Devel-StackTrace-AsHTML
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: Devel::StackTrace::AsHTML - Displays stack trace in HTML
 
@@ -36,6 +36,9 @@ sed -i -e '/auto_set_repository/d;/use_test_base/d' Makefile.PL
 %doc Changes README 
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- automated CPAN update
+
 * Tue Jun 24 2014 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
