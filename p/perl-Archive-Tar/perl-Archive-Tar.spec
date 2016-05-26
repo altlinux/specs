@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Archive-Tar
 Name: perl-%dist
-Version: 2.06
+Version: 2.08
 Release: alt1
 
 Summary: Module for creation and manipulation of tar archives
@@ -37,6 +37,9 @@ allowing for the creation of tar file objects for custom manipulation.
 %perl_vendor_privlib/Archive
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1
 - automated CPAN update
 
