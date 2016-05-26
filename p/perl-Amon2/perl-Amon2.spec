@@ -1,5 +1,5 @@
 Name: perl-Amon2
-Version: 6.12
+Version: 6.13
 Release: alt1
 Summary: Amon2 - lightweight web application framework
 
@@ -9,7 +9,7 @@ Url: %CPAN Amon2
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-Module-Build perl-Module-CPANfile perl-Router-Boom perl-Test-Requires perl-Plack perl-Data-OptList perl-MRO-Compat perl-Text-Xslate perl-JSON perl-Module-Find perl-Mouse perl-Router-Simple perl-Router-Simple-Sinatraish perl-Class-Accessor perl-Text-Xslate-Bridge-TT2Like perl-Data-Section-Simple perl-Plack-Middleware-ReverseProxy perl-HTTP-Session perl-HTML-FillInForm-Lite perl-CGI perl-Encode-JP perl-Plack-Middleware-Session perl-AnyEvent perl-Protocol-WebSocket
+BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl-Test-Requires perl-Plack perl-Data-OptList perl-MRO-Compat perl-Text-Xslate perl-JSON perl-Module-Find perl-Mouse perl-Router-Simple perl-Router-Simple-Sinatraish perl-Class-Accessor perl-Text-Xslate-Bridge-TT2Like perl-Data-Section-Simple perl-Plack-Middleware-ReverseProxy perl-HTTP-Session perl-HTML-FillInForm-Lite perl-CGI perl-Encode-JP perl-Plack-Middleware-Session perl-AnyEvent perl-Protocol-WebSocket
 
 %description
 %summary
@@ -31,6 +31,9 @@ BuildRequires: perl-Module-Build perl-Module-CPANfile perl-Router-Boom perl-Test
 %doc TODO Changes
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 6.13-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 6.12-alt1
 - automated CPAN update
 
