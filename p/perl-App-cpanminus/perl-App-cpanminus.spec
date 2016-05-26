@@ -1,5 +1,5 @@
 Name: perl-App-cpanminus
-Version: 1.7040
+Version: 1.7042
 Release: alt1
 
 Summary: App::cpanminus - get, unpack, build and install modules from CPAN
@@ -35,6 +35,9 @@ Requires: perl-base
 %doc Changes README.md
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.7042-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.7040-alt1
 - automated CPAN update
 
