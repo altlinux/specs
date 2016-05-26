@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-List-AllUtils
-Version: 0.09
+Version: 0.10
 Release: alt1
 
 Summary: List-AllUtils - Perl module
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/List-AllUtils-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Sep 14 2009
-BuildRequires: perl-List-MoreUtils perl-Module-Build perl(Test/Warnings.pm)
+BuildRequires: perl-List-MoreUtils perl-Module-Build perl(Test/Warnings.pm) perl(List/SomeUtils.pm)
 
 %description
 None.
@@ -49,6 +49,9 @@ None.
 %perl_vendor_privlib/List/*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
