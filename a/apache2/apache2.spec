@@ -39,7 +39,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: alt2
+Release: alt3
 
 License: %asl
 Group: System/Servers
@@ -840,6 +840,7 @@ EOF
 	--enable-proxy --enable-proxy-connect \
 	--enable-proxy-http --enable-proxy-ftp \
 	--enable-charset_lite=shared \
+	--enable-unixd --enable-mods-static='unixd' \
 	$*
 
 %make_build
@@ -1822,6 +1823,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Thu May 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.4.18-alt3
+- there is no reason to not compile unixd module statically
+
 * Wed Apr 27 2016 Sergey Alembekov <rt@altlinux.ru> 2.4.18-alt2
 - obsoletes mod_macro
 - fixes in mod_ssl defaults
