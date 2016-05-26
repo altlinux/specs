@@ -1,5 +1,5 @@
 Name: mosquito-hive
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: rebuild a collection of packages in hasher
@@ -14,14 +14,16 @@ Source: %name-%version.tar
 Requires: hasher
 
 BuildArch: noarch
-BuildPreReq: bash4
 BuildPreReq: rpm-build-licenses
+# My scripts use it, and hence shell.req uses it:
+BuildPreReq: /bin/bash4
 
 %description
 Simple scripts to rebuild a collection of packages
 in hasher.
 
 The results are reported in a way similar to the beehive of ALT Sisyphus.
+The build progress is reported in a way similar to girar of ALT Sisyphus.
 
 Features:
 
@@ -35,7 +37,7 @@ Features:
   (based on the logs)
 
 The features beyond the first bullet are WORK-IN-PROGRESS (not
-packaged yet).
+packaged yet, but saved in Git).
 
 %prep
 %setup
@@ -56,10 +58,14 @@ install --preserve-timestamps -m 755 rebuild.sh -T %buildroot%_bindir/mosquito-r
 
 %files
 %_bindir/*
-%_datadir/%name/*
+%_datadir/%name
 %doc README.md
 
 %changelog
+* Thu May 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt1
+- rebuild: take the list from stdin lines.
+  (UI unified with my other scripts: pregirar.)
+
 * Wed May 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt1
 - initial build for ALT Linux Sisyphus.
   (Only mosquito-rebuild is packaged; the rest is WIP.)
