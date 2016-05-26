@@ -1,5 +1,5 @@
 Name: perl-Net-Twitter
-Version: 4.01010
+Version: 4.01020
 Release: alt1
 
 Summary: A perl interface to the Twitter API
@@ -10,7 +10,7 @@ Url: %CPAN Net-Twitter
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl(DateTime.pm) perl(DateTime/Format/Strptime.pm) perl(Encode.pm) perl(Digest/SHA.pm) perl(Module/Build.pm) perl(Net/OAuth.pm) perl(Moose/Role.pm) perl(Try/Tiny.pm) perl(Devel/StackTrace.pm) perl(Net/Netrc.pm) perl(Net/OAuth/Message.pm) perl(Moose/Exporter.pm) perl(HTTP/Request/Common.pm) perl-devel perl(HTTP/Response.pm) perl(Data/Visitor/Callback.pm) perl(URI/Escape.pm) perl(Test/Fatal.pm) perl(LWP/Protocol/https.pm) perl(HTML/Entities.pm) perl(Moose.pm) perl(Net/HTTP.pm) perl(URI.pm) perl(namespace/autoclean.pm) perl(Class/Load.pm) perl(Moose/Meta/Method.pm) perl(Test/Warn.pm) perl-libwww perl(Carp/Clan.pm) perl(MooseX/Role/Parameterized.pm) perl(JSON.pm)
+BuildRequires: perl(DateTime.pm) perl(DateTime/Format/Strptime.pm) perl(Encode.pm) perl(Digest/SHA.pm) perl(Module/Build.pm) perl(Net/OAuth.pm) perl(Moose/Role.pm) perl(Try/Tiny.pm) perl(Devel/StackTrace.pm) perl(Net/Netrc.pm) perl(Net/OAuth/Message.pm) perl(Moose/Exporter.pm) perl(HTTP/Request/Common.pm) perl-devel perl(HTTP/Response.pm) perl(Data/Visitor/Callback.pm) perl(URI/Escape.pm) perl(Test/Fatal.pm) perl(LWP/Protocol/https.pm) perl(HTML/Entities.pm) perl(Moose.pm) perl(Net/HTTP.pm) perl(URI.pm) perl(namespace/autoclean.pm) perl(Class/Load.pm) perl(Moose/Meta/Method.pm) perl(Test/Warn.pm) perl-libwww perl(Carp/Clan.pm) perl(MooseX/Role/Parameterized.pm) perl(JSON.pm) perl(JSON/MaybeXS.pm)
 
 %description
 %summary
@@ -30,6 +30,9 @@ BuildRequires: perl(DateTime.pm) perl(DateTime/Format/Strptime.pm) perl(Encode.p
 %doc Changes LICENSE README
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.01020-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 4.01010-alt1
 - automated CPAN update
 
