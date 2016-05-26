@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.39
+Version: 0.40
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -45,6 +45,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_datadir/mate/applications/defaults.list
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
+- KF5 updates (ktorrent, k3b,...)
+
 * Tue Apr 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - updated audio priorities according to community@ poll
 
