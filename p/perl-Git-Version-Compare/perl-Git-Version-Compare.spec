@@ -1,13 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Pod/Coverage/TrustPod.pm) perl(Scalar/Util.pm) perl(Test/CPAN/Meta.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(namespace/clean.pm) perl(strict.pm) perl(warnings.pm)
-# END SourceDeps(oneline)
-%define module_version 1.003
-%define module_name Git-Version-Compare
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Pod/Coverage/TrustPod.pm) perl(Scalar/Util.pm) perl(Test/CPAN/Meta.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(namespace/clean.pm) perl(strict.pm) perl(warnings.pm) perl(Test/NoWarnings.pm)
+# END SourceDeps(oneline)
+%define module_version 1.004
+%define module_name Git-Version-Compare
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.003
+Version: 1.004
 Release: alt1
 Summary: Functions to compare Git versions
 Group: Development/Perl
@@ -40,6 +40,9 @@ was accumulated while developing the Git::Repository manpage.
 %perl_vendor_privlib/G*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1
 - automated CPAN update
 
