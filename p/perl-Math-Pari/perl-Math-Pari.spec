@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Math-Pari
 Name: perl-%dist
-Version: 2.010808
-Release: alt1.1.1
+Version: 2.01080900
+Release: alt1
 Serial: 1
 
 Summary: Perl interface to PARI
@@ -39,6 +39,9 @@ Math::libPARI).
 %perl_vendor_autolib/Math
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:2.01080900-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1:2.010808-alt1.1.1
 - rebuild with new perl 5.22.0
 
