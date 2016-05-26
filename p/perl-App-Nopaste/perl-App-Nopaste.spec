@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(Module/Metadata.pm) perl(Path/Tiny.pm) perl(Test/Fatal.pm)
 # END SourceDeps(oneline)
 Name:           perl-App-Nopaste
-Version:        1.004
-Release:        alt1_4
+Version:        1.006
+Release:        alt1
 Summary:        Easy access to any pastebin
 License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/App-Nopaste/
-Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/E/ET/ETHER/App-Nopaste-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl
@@ -93,6 +94,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.006-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_4
 - update to new release by fcimport
 
