@@ -1,6 +1,6 @@
 %define dist B-Hooks-EndOfScope
 Name: perl-%dist
-Version: 0.19
+Version: 0.21
 Release: alt1
 
 Summary: Execute code after a scope finished compilation
@@ -32,6 +32,9 @@ surrounding scope.
 %perl_vendor_privlib/B/Hooks/EndOfScope*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
