@@ -3,12 +3,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FileHandle.pm) perl(Pod/PlainText.pm) perl(Pod/Text.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define module_version 1.68
+%define module_version 1.69
 %define module_name Pod-Usage
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.68
+Version: 1.69
 Release: alt1
 Summary: Pod::Usage extracts POD documentation and shows usage information
 Group: Development/Perl
@@ -42,6 +42,9 @@ Requires: perl-podlators
 %_man1dir/*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.69-alt1
+- automated CPAN update
+
 * Mon Jan 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.68-alt1
 - automated CPAN update
 
