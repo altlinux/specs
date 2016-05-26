@@ -1,5 +1,5 @@
 Name: perl-Router-Boom
-Version: 1.02
+Version: 1.03
 Release: alt1
 
 Summary: Fast routing engine for web applications
@@ -10,7 +10,7 @@ Url: %CPAN Router-Boom
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl(CPAN/Meta.pm) perl(Module/Build.pm) perl(Class/Accessor/Lite.pm) perl(CPAN/Meta/Prereqs.pm) perl(Test/Deep.pm)
+BuildRequires: perl-devel perl(CPAN/Meta.pm) perl(Module/Build/Tiny.pm) perl(Class/Accessor/Lite.pm) perl(CPAN/Meta/Prereqs.pm) perl(Test/Deep.pm)
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl(CPAN/Meta.pm) perl(Module/Build.pm) perl(Class/Ac
 %doc Changes LICENSE README.md
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
