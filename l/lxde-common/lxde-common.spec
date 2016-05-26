@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.1
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -20,6 +20,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: lxde.wm
+Source2: panel
 
 AutoReq: yes,nosymlinks
 
@@ -92,6 +93,9 @@ __EOF__
 mkdir -p %buildroot%_desktopdir/
 cp -v debian/*.desktop %buildroot%_desktopdir/
 
+#Install panel config
+install -m644 %SOURCE2 %buildroot%_sysconfdir/xdg/lxpanel/LXDE/panels/
+
 %find_lang %name
 
 %pre
@@ -131,6 +135,9 @@ fi
 #_iconsdir/nuoveXT2
 
 %changelog
+* Thu May 26 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt2
+- Added xkb-switch on the panel. 
+
 * Sat May 21 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt1
 - New version 0.99.1
 - Fix unowned files.
