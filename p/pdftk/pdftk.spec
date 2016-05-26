@@ -1,12 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: gcc-java gcc-c++ /usr/bin/dos2unix java-1.5.0-gcj
+BuildRequires: gcc-java gcc-c++ java-1.5.0-gcj
 %define gcj_support	1
 
 Name:		pdftk
 Version:	2.02
-Release:	alt2_2
+Release:	alt2_4
 Summary:	PDF Tool Kit
 License:	GPLv2+
 Group:		Publishing
@@ -15,8 +12,14 @@ Source0:	https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/%{name}-%{version}-
 # since the gcj version is hardcoded in this patch, don't forget to updated it
 # when gcc is updated, current version is 5.2.1
 Patch0:		pdftk-1.44-makefile-fix.patch
-Source44: import.info
+BuildRequires:	gcc-java
+BuildRequires:	libgcj-devel
+BuildRequires:	unzip
+BuildRequires:	fastjar
+BuildRequires:	dos2unix
 
+Requires:	bouncycastle
+Source44: import.info
 
 %description
 Pdftk is a simple tool for doing everyday things with PDF documents.
@@ -62,6 +65,9 @@ install -Dpm 0644 pdftk.1 %{buildroot}%{_mandir}/man1/%{name}.1
 
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.02-alt2_4
+- converted for ALT Linux by srpmconvert tools
+
 * Fri Jan 22 2016 Igor Vlasenko <viy@altlinux.ru> 2.02-alt2_2
 - rebuild
 
