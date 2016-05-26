@@ -1,6 +1,6 @@
 Name: perl-B-C
-Version: 1.52
-Release: alt2.1
+Version: 1.54
+Release: alt1
 
 Summary: Perl compiler's C backend
 License: Perl
@@ -9,13 +9,6 @@ Group: Development/Perl
 URL: %CPAN B-C
 # Cloned from git https://code.google.com/p/perl-compiler
 Source: %name-%version.tar
-
-# kill me on update
-%if 1
-%define _without_test 1
-Patch1: git.diff
-Patch2: B-C-1.52-fix-build.patch
-%endif
 
 BuildRequires: perl-Pod-Parser perl-devel perl-IPC-Run libgdbm-devel libdb4-devel perl-B-Flags perldoc perl-threads perl(Attribute/Handlers.pm) perl(AnyDBM_File.pm) perl(Encode/JP.pm)
 
@@ -28,16 +21,6 @@ for t in issue305
 do
  mv t/$t.t t/$t.t.failed
 done
-
-# kill me on update
-if [ %version = 1.52 ]; then
-%patch1 -p1
-%patch2 -p1
-else
-echo "please, remove Patch1+2"
-echo "and clean spec file, please"
-exit 3
-fi
 
 %build
 %perl_vendor_build
@@ -56,6 +39,9 @@ fi
 %perl_vendor_archlib/BcVersions.pod
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
+- new version
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.52-alt2.1
 - rebuild with new perl 5.22.0
 
