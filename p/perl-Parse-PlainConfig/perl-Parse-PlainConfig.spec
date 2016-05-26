@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define module Parse-PlainConfig
 %define intmodule Parse-PlainConfig
 %define m_name Parse::PlainConfig
 
 Name: perl-%module
-Version: 2.06
-Release: alt1.1
+Version: 3.01
+Release: alt1
 
 Summary: Plain Config parser
 License: GPLv2+
@@ -13,10 +14,10 @@ BuildArch: noarch
 Url: %CPAN %module
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
-Source: http://search.cpan.org/CPAN/authors/id/C/CO/CORLISS/%intmodule/%intmodule-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CO/CORLISS/Parse-PlainConfig/Parse-PlainConfig-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 06 2003
-BuildRequires: perl-devel perl(Paranoid.pm) perl(Text/ParseWords.pm) perl(Text/Tabs.pm)
+BuildRequires: perl-devel perl(Paranoid.pm) perl(Text/ParseWords.pm) perl(Text/Tabs.pm) perl(Class/EHierarchy.pm)
 
 %description
 Parse::PlainConfig provides OO objects which can parse and generate human-readable configuration files.
@@ -35,6 +36,9 @@ Parse::PlainConfig provides OO objects which can parse and generate human-readab
 %perl_vendor_privlib/Parse*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.01-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.06-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
