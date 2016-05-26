@@ -1,5 +1,5 @@
 Name: perl-Git-Repository
-Version: 1.318
+Version: 1.319
 Release: alt1
 
 Summary: Git::Repository - Perl interface to Git repositories
@@ -10,7 +10,7 @@ Url: %CPAN Git-Repository
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-System-Command perl-Module-Build git-core perl(Git/Version/Compare.pm)
+BuildRequires: perl-devel perl-System-Command perl-Module-Build git-core perl(Git/Version/Compare.pm) perl(Test/Requires/Git.pm) perl(namespace/clean.pm)
 
 %description
 %summary
@@ -32,6 +32,9 @@ git config --global user.name "Hasher Bot"
 %doc Changes README
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.319-alt1
+- automated CPAN update
+
 * Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.318-alt1
 - automated CPAN update
 
