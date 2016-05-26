@@ -4,8 +4,8 @@
 %def_with pam
 
 Name: monit
-Version: 5.17.1
-Release: alt3
+Version: 5.18
+Release: alt1
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -179,6 +179,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Thu May 26 2016 Michael Shigorin <mike@altlinux.org> 5.18-alt1
+- new version (watch file uupdate)
+
 * Wed May 11 2016 Michael Shigorin <mike@altlinux.org> 5.17.1-alt3
 - changed "set pidfile" from notice to action (closes: #32086)
 
