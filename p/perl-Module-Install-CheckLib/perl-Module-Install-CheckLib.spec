@@ -1,5 +1,5 @@
 Name: perl-Module-Install-CheckLib
-Version: 0.08
+Version: 0.10
 Release: alt1
 Summary: Module::Install::CheckLib - A Module::Install extension to check that a library is available
 
@@ -30,5 +30,8 @@ BuildRequires: perl-Devel-CheckLib perl-devel perl-Module-Install perl-Module-In
 %doc Changes README 
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Tue Aug 23 2011 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1
 - initial build
