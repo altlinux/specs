@@ -3,8 +3,8 @@
 %define m_name Paranoid
 
 Name: perl-%module
-Version: 0.20
-Release: alt1.1
+Version: 2.00
+Release: alt1
 
 Summary: More secure programming in Perl
 License: GPLv2+
@@ -13,7 +13,7 @@ BuildArch: noarch
 Url: %CPAN %module
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 
-Source: http://search.cpan.org/CPAN/authors/id/C/CO/CORLISS/%intmodule/%intmodule-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CO/CORLISS/Paranoid/Paranoid-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Oct 06 2003
 BuildRequires: perl-devel perl(BerkeleyDB.pm) perl(Net/SMTP.pm) perl(Unix/Syslog.pm) perl(CGI.pm)
@@ -37,6 +37,9 @@ mode.
 %perl_vendor_privlib/Paranoid*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
