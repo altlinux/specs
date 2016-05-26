@@ -3,7 +3,7 @@ Name: sendmail
 %define tarbolversion 8.15.2
 
 Version: %tarbolversion
-Release: alt1
+Release: alt2
 
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -81,6 +81,9 @@ BuildPreReq: libpam0-devel rpm-build-licenses
 BuildRequires: openssl
 # Automatically added by buildreq on Thu Apr 21 2005
 BuildRequires: glibc-devel groff-base libdb4-devel libgdbm-devel libldap-devel libsasl2-devel libssl-devel libwrap-devel
+
+# for cidrexpand
+BuildRequires: perl-Net-CIDR
 
 %description
 The Sendmail program is a widely used Mail Transport Agent (MTA).
@@ -313,6 +316,9 @@ echo -n >$RPM_BUILD_ROOT%_logdir/%name.st
 echo "# apache, mailman, majordomo, uucp, are good candidates" ) \
 	> $RPM_BUILD_ROOT%_sysconfdir/mail/trusted-users
 
+# for CIDR support in mail/access (see /etc/mail/Makefile)
+%__cp contrib/cidrexpand $RPM_BUILD_ROOT%_sbindir/cidrexpand
+
 # /etc/mail/access parts
 %__mkdir_p $RPM_BUILD_ROOT/%_sysconfdir/mail/access.d.shared
 %__mkdir_p $RPM_BUILD_ROOT/%_sysconfdir/mail/access.d
@@ -341,7 +347,7 @@ done
 
 # configugations for libsasl2 in /etc/sasl2/ in AltLinux
 %__install -m755 -d $RPM_BUILD_ROOT/%_sysconfdir/sasl2
-%__install -m644 %SOURCE7 $RPM_BUILD_ROOT/%_sysconfdir/sasl2//Sendmail.conf
+%__install -m644 %SOURCE7 $RPM_BUILD_ROOT/%_sysconfdir/sasl2/Sendmail.conf
 
 # add certs directory for STARTTLS
 %__mkdir -p $RPM_BUILD_ROOT/%_sysconfdir/mail/certs
@@ -402,6 +408,7 @@ EOF
 %_sbindir/mailstats
 %_sbindir/praliases
 %_sbindir/smrsh
+%_sbindir/cidrexpand
 
 %attr(644,root,root) %_mandir/man?/*
 %exclude  %_mandir/man1/vacation.*
@@ -493,6 +500,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Thu May 26 2016 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt2
+- packaged cidrexpand from contrib directory
+- used cidrexpand in /etc/mail/Makefile
+
 * Sat Oct 17 2015 Sergey Y. Afonin <asy@altlinux.ru> 8.15.2-alt1
 - New version
 
