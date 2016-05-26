@@ -19,7 +19,7 @@
 %def_enable python
 
 Name: xplayer
-Version: 1.0.2
+Version: 1.0.5
 Release: alt1
 
 Summary: Xplayer is a generic media player.
@@ -132,6 +132,7 @@ A default plugins for Xplayer:
 	media-player-keys
 	pythonconsole
 	opensubtitles
+	grilo
 
 %package plugins-lirc
 Summary: LIRC (Infrared remote) plugin for Xplayer
@@ -272,6 +273,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/recent/
 %_libdir/%name/plugins/vimeo/
 %_libdir/%name/plugins/chapters/
+# Grilo plugin now doesn't work. See: 
+# https://github.com/linuxmint/xplayer/issues/22
+%exclude %_libdir/%name/plugins/grilo/
 %config %_datadir/glib-2.0/schemas/org.x.player.plugins.opensubtitles.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.x.player.plugins.pythonconsole.gschema.xml
 
@@ -307,5 +311,11 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu May 26 2016 Vladimir Didenko <cow@altlinux.org> 1.0.5-alt1
+- New version
+
+* Tue May 17 2016 Vladimir Didenko <cow@altlinux.org> 1.0.4-alt1
+- New version
+
 * Wed Mar 2 2016 Vladimir Didenko <cow@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
