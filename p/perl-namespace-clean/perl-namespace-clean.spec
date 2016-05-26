@@ -2,7 +2,7 @@
 %define dist namespace-clean
 
 Name: perl-namespace-clean
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: Keep imports and functions out of your namespace
@@ -32,6 +32,9 @@ None.
 %perl_vendor_privlib/namespace/clean/_Util.pm
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
