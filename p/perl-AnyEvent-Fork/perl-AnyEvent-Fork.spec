@@ -1,5 +1,5 @@
 Name: perl-AnyEvent-Fork
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: everything you wanted to use fork() for, but couldn't
@@ -29,6 +29,9 @@ BuildRequires: perl(AnyEvent.pm) perl-devel perl(IO/FDPass.pm) perl(Proc/FastSpa
 %doc README Changes
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1
+- automated CPAN update
+
 * Thu Jan 16 2014 Vladimir Lettiev <crux@altlinux.ru> 1.2-alt1
 - initial build for ALTLinux
 
