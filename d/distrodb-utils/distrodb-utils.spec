@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.02
+Version: 0.03
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -25,7 +25,9 @@ mkdir -p %buildroot%_bindir
 install -m 755 distrodb-helper-* \
 	distrodb-list-duplicates.pl \
 	distrodb-verify-newpkglist.pl \
-	mkdistromap.pl \
+	distrodb-perl-health-checker.pl \
+	mkdistromap-binary.pl \
+	mkdistromap-source.pl \
 	pkglist2distrodb.py \
 	%buildroot%_bindir/
 mkdir -p %buildroot%perl_vendor_privlib
@@ -37,6 +39,9 @@ install -m 644 D*.pm %buildroot%perl_vendor_privlib/
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- added management utils for manual maps
+
 * Fri May 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - added common lib
 
