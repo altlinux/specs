@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.002003
+%define module_version 0.002004
 %define module_name Data-Show
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Contextual/Return.pm) perl(Data/Dump.pm) perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(re.pm) perl(version.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(Contextual/Return.pm) perl(Data/Dump.pm) perl(ExtUtils/MakeM
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002003
+Version: 0.002004
 Release: alt1
 Summary: Dump data structures with name and point-of-origin
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.002004-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.002003-alt1
 - automated CPAN update
 
