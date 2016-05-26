@@ -1,5 +1,9 @@
+# require if alternative not found
+%filter_from_requires /^perl.Test2.Global.pm./d
+%filter_from_requires /^perl.Test2.IPC.Driver.Files.pm./d
+
 Name: perl-Test-SharedFork
-Version: 0.34
+Version: 0.35
 Release: alt1
 
 Summary: Test::SharedFork - fork test
@@ -31,6 +35,9 @@ This module merges test count with parent process & child process.
 %doc Changes README.md
 
 %changelog
+* Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- automated CPAN update
+
 * Thu Oct 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - automated CPAN update
 
