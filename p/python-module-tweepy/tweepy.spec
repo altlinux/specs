@@ -1,6 +1,6 @@
 Name:           python-module-tweepy
-Version:        1.7.1
-Release:        alt1.1
+Version:        3.5.0
+Release:        alt1
 Summary:        Twitter library for python
 
 License:        MIT
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-python
 BuildRequires:  python-devel
 BuildRequires:  python-module-distribute
 BuildRequires:  python-module-simplejson
+BuildRequires:  python-module-pip
 Provides:	tweepy = %version
 Requires:       python-module-simplejson
 
@@ -35,12 +36,16 @@ cp -p %SOURCE1 ./LICENSE
 %python_install
 
 %files
-%doc README LICENSE
+%doc LICENSE
 %dir %python_sitelibdir/tweepy 
 %python_sitelibdir/tweepy
 %python_sitelibdir/tweepy-*.egg-info
 
 %changelog
+* Thu May 26 2016 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
+- New version
+- Add python-module-pip to build requirements
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.7.1-alt1.1
 - Rebuild with Python-2.7
 
