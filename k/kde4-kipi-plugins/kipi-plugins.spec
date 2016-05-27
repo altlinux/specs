@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 4.14.0
-Release: alt2
+Release: alt4
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -71,6 +71,7 @@ Group: Graphics
 Summary: A tool to assemble images as a panorama
 Requires: %name-common = %version-%release
 Requires: hugin enblend
+#Requires: perl-Panotools-Script
 %description panorama
 A tool to assemble images as a panorama
 
@@ -92,6 +93,9 @@ mv %rname-doc-%version doc
 #install -m 0644 %SOURCE10 cmake/modules
 install -m 0644 %SOURCE11 cmake/modules
 install -m 0644 %SOURCE12 cmake/modules
+
+# hide
+echo "NoDisplay=true" >>acquireimages/scangui.desktop
 
 if ! grep -qe '^add_subdirectory([[:space:]]*po[[:space:]]*)' CMakeLists.txt
 then
@@ -184,6 +188,12 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt4
+- hide scangui from menu
+
+* Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt3
+- rebuild with new ImageMagick
+
 * Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.0-alt2
 - split panorama to separate subpackage
 
