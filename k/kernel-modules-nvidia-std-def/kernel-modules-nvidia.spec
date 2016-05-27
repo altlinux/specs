@@ -6,8 +6,8 @@
 %define module_name	nvidia
 %define kmsmodule_name	nvidia-modeset
 %define uvmmodule_name	nvidia-uvm
-%define module_version	361.42
-%define module_release	alt3
+%define module_version	361.45.11
+%define module_release	alt1
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -243,6 +243,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 27 2016 Sergey V Turchin <zerg at altlinux dot org> 361.45.11-alt1..
+- new release (361.45.11)
 
 * Fri Apr 22 2016 Sergey V Turchin <zerg at altlinux dot org> 361.42-alt3..
 - workaround agains absent uvm module
