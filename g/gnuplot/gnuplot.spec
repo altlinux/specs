@@ -1,7 +1,7 @@
-%define ver_major 4.6
+%define ver_major 5.0
 
 Name: gnuplot
-Version: %ver_major.6
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ Summary: A program for plotting mathematical expressions and data
 Summary (ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
 License: gnuplot and MIT
 Group: Sciences/Other
-URL: http://gnuplot.sourceforge.net/
+URL: http://www.gnuplot.info/
 Packager: Alexey Morsov <swi@altlinux.ru>
 
 Source0: %name-%version.tar
@@ -33,6 +33,7 @@ BuildRequires: /usr/bin/dvips
 BuildRequires: /usr/bin/pdflatex
 BuildRequires: /usr/bin/htlatex
 BuildRequires: PDFlib-Lite-utils libpdflib-lite-devel
+BuildRequires: emacs-common texinfo
 
 # for wxt terminal
 BuildRequires: libwxGTK-devel libcairo-devel libpango-devel libgtk+2-devel
@@ -67,26 +68,6 @@ Requires: %name-common = %{?epoch:%epoch:}%version-%release
 Group: Sciences/Other
 Summary: Qt interface for gnuplot
 Requires: %name-common-x11 = %{?epoch:%epoch:}%version-%release
-
-%package -n emacs-mode-%name
-Summary: A GNU Emacs major mode for %name
-Summary(ru_RU.UTF-8): Основной режим GNU Emacs для %name
-BuildArch: noarch
-BuildPreReq: emacs-devel >= 0.0.1-alt2
-BuildRequires: emacs-common texinfo
-Group: Editors
-Requires: %name = %{?epoch:%epoch:}%version-%release emacs-base
-Obsoletes: emacs-gnuplot <= 0.6.0-alt1
-Provides: emacs-gnuplot
-
-%package -n emacs-mode-%name-el
-Summary:  The Emacs Lisp sources for bytecode included in emacs-mode-%name
-Summary(ru_RU.UTF-8): Исходный код Emacs Lisp для emacs-mode-%name
-BuildArch: noarch
-Group: Development/Other
-Requires: emacs-mode-%name = %{?epoch:%epoch:}%version-%release
-Obsoletes: emacs-gnuplot <= 0.6.0-alt1
-Provides: emacs-gnuplot-el
 
 %package doc
 Group: Documentation
@@ -144,18 +125,6 @@ dimensions and in many different formats.
 
 This package provides a Qt based terminal version of gnuplot
 
-%description -n emacs-mode-%name
-A GNU Emacs major mode for %name
-
-%description -n emacs-mode-%name -l ru_RU.UTF-8
-Основной режим GNU Emacs для %name
-
-%description -n emacs-mode-%name-el
-The Emacs Lisp sources for bytecode included in %name
-
-%description -n emacs-mode-%name-el -l ru_RU.UTF-8
-Исходный код Emacs Lisp для emacs-mode-%name
-
 %description doc
 The gnuplot-doc package contains the documentation related to gnuplot
 plotting tool
@@ -171,13 +140,13 @@ plotting tool
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
 
-%define configure_opts --with-readline=gnu --with-png --enable-history-file --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
+%define configure_opts --with-readline=gnu --with-png --with-pdf --enable-history-file --without-linux-vga --without-row-help --enable-thin-splines --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
 
 # at first create minimal version of gnuplot for server SIG purposes
 mkdir minimal
 cd minimal
 ln -s ../configure .
-%configure %configure_opts --disable-wxwidgets --without-cairo --without-x
+%configure %configure_opts --disable-wxwidgets --without-cairo --without-qt --without-x
 %make_build
 cd -
 
@@ -196,19 +165,13 @@ ln -s ../configure .
 %make_build
 cd -
 
-pushd lisp
-	#./configure --prefix=%{_prefix} --datadir=%{_datadir} --with-emacs=emacs --infodir=%{_infodir} \
-	./configure --prefix=%{_prefix} --with-emacs=emacs --infodir=%{_infodir}
-	%make_build
-popd
-
 
 install -p -m644 %SOURCE2 .
 bunzip *.html.bz2
 
 # Docs don't build properly out of tree
 %configure  %configure_opts --with-tutorial
-ln -s ../minimal/src/gnuplot src/
+ln -s ../wx/src/gnuplot src/
 make -C docs html info
 export GNUPLOT_PS_DIR=../../term/PostScript
 make -C docs/psdoc ps_symbols.ps ps_fontfile_doc.pdf
@@ -238,19 +201,6 @@ printf '%_bindir/%name\t%_bindir/gnuplot-minimal\t10\n' > %buildroot%_altdir/%na
 printf '%_bindir/%name\t%_bindir/gnuplot-wx\t20\n' > %buildroot%_altdir/%name-wx
 printf '%_bindir/%name\t%_bindir/gnuplot-qt\t30\n' > %buildroot%_altdir/%name-qt
 
-
-pushd lisp
-    mkdir -p %buildroot%{_emacslispdir}/%name
-    install -m 644 *.el* $RPM_BUILD_ROOT%{_emacslispdir}/%name
-    mkdir -p %buildroot/etc/emacs/site-start.d
-    install -m 644 %SOURCE14 %buildroot/etc/emacs/site-start.d/gnuplot.el
-    %add_lisp_loadpath %buildroot%_emacslispdir/%name
-    %byte_recompile_lispdir
-    make pdf
-    make ps
-    mkdir -p %buildroot%_defaultdocdir/emacs-%{name}-%{version}
-    install -m 644 COPYING ChangeLog README README.1st gpelcard.pdf gpelcard.ps %buildroot%_defaultdocdir/emacs-%{name}-%{version}/
-popd
 
 # menus
 install -D -pm644 %SOURCE3  %buildroot%_desktopdir/%name.desktop
@@ -293,17 +243,6 @@ rm -f demo/html/Makefile*
 %_libexecdir/%name/%ver_major/%{name}_qt
 %_datadir/%name/%ver_major/qt
 
-%files -n emacs-mode-%name
-%dir %_defaultdocdir/emacs-%name-%version/
-%_defaultdocdir/emacs-%name-%version/*
-%dir %_emacslispdir/*.elc
-%_emacslispdir/%name/*.elc
-%config(noreplace) /etc/emacs/site-start.d/gnuplot.el
-
-%files -n emacs-mode-%name-el
-%_emacslispdir/*.el
-%_emacslispdir/%name/*.el
-
 %files doc
 %doc ChangeLog Copyright BUGS  README NEWS RELEASE_NOTES
 %doc tutorial/tutorial.dvi gnuplot-faq.html
@@ -313,6 +252,12 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Fri May 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:5.0.3-alt1
+- 5.0.3
+- Update with latest relase
+- Remove emacs-mode-gnuplot due gnuplot-mode (emacs plugin)
+  now maintained as a separate project
+
 * Tue Dec 16 2014 Alexey Shabalin <shaba@altlinux.ru> 1:4.6.6-alt1
 - 4.6.6
 - fixed gnuplot_qt (ALT#30519)
