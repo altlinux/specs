@@ -4,7 +4,7 @@
 
 Name: keyutils
 Version: %version
-Release: alt1
+Release: alt2
 
 Summary: Linux Key Management Utilities
 License: GPL/LGPL
@@ -78,6 +78,9 @@ ln -snf ../../%_lib/lib%name.so.1 %buildroot%_libdir/lib%name.so
 %_man3dir/*
 
 %changelog
+* Fri May 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.9-alt2
+- cifs-related config entries dropped (closes #32146)
+
 * Fri Apr 25 2014 Alexey Shabalin <shaba@altlinux.ru> 1.5.9-alt1
 - 1.5.9 released
 
