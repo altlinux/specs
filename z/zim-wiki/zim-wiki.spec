@@ -1,9 +1,9 @@
 %define real_name zim
 Summary: A desktop wiki and outliner
 Name: zim-wiki
-Version: 0.48
-Release: alt5.1
-Packager: Anton A. Vinogradov <arc@altlinux.org>
+Version: 0.65
+Release: alt1
+Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
 License: GPLv2
@@ -51,9 +51,14 @@ keep track of TODO lists or to serve as a personal scratch book.
 %python_sitelibdir/*
 %_man1dir/%{real_name}*
 %_datadir/mime/*
+%_datadir/appdata/*
 %_iconsdir/hicolor/*/*/*
+%_datadir/pixmaps/*
 
 %changelog
+* Fri May 27 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.65-alt1
+- Update to latest release
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.48-alt5.1
 - Rebuild with Python-2.7
 
