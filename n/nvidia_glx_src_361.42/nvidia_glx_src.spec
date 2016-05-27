@@ -14,7 +14,7 @@
 %define nv_version 361
 %define nv_release 42
 %define nv_minor %nil
-%define pkg_rel alt151
+%define pkg_rel alt152
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -101,7 +101,8 @@ Sources for %{bin_pkg_name}_%{version} package
 
 %package -n %{bin_pkg_name}_%{version}
 PreReq: %{bin_pkg_name}_common >= %version
-Requires(post): x11presetdrv libGLdispatch
+Requires(post): x11presetdrv
+Requires: libGLdispatch
 #
 Group: %myGroup
 Summary: %mySummary
@@ -218,6 +219,7 @@ fi
 %__install -m 0644 libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
 %__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
 %__install -m 0644 libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
+%__install -m 0644 libGLdispatch.so.0  %buildroot/%nv_lib_dir/libGLdispatch.so
 
 %__install -m 0644 libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
 %__install -m 0644 libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
@@ -275,6 +277,7 @@ fi
 %nv_lib_dir/libGLESv2.so*
 %nv_lib_dir/libGLESv2_nvidia.so*
 %nv_lib_dir/libGLX_nvidia.so*
+%nv_lib_dir/libGLdispatch.so*
 %nv_lib_dir/libnvidia-cfg.so*
 %nv_lib_dir/libvdpau_nvidia.so*
 %nv_lib_dir/libwfb.so
@@ -290,6 +293,9 @@ fi
 %endif
 
 %changelog
+* Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt152
+- package own libGLdispatch
+
 * Mon Apr 11 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt151
 - new version
 

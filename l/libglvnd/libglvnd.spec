@@ -3,8 +3,8 @@
 %def_disable package_all
 
 Name: libglvnd
-Version: 0.0.0
-Release: alt2
+Version: 0.1.0
+Release: alt4
 
 Group: System/Libraries
 Summary: OpenGL vendor-neutral dispatch layer
@@ -12,7 +12,6 @@ Url: http://projects.kde.org/projects/kde/kdeedu/libkcddb
 License: LGPLv2
 
 Source: %name-%version.tar
-Patch1: alt-x11glvnddir.patch
 
 # Automatically added by buildreq on Sat Feb 20 2016 (-bi)
 # optimized out: elfutils gnu-config libX11-devel libpciaccess-devel libpixman-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base ruby ruby-stdlibs xorg-dri3proto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-presentproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xineramaproto-devel xorg-xproto-devel
@@ -73,7 +72,6 @@ Static GL entrypoints which use the context defined in libGLdispatch, while EGL 
 
 %prep
 %setup -q
-%patch1 -p1
 ./autogen.sh
 
 %build
@@ -87,8 +85,22 @@ Static GL entrypoints which use the context defined in libGLdispatch, while EGL 
 %install
 %make install DESTDIR=%buildroot
 
-%files -n glvnd
-%_libdir/X11/modules/extensions/x11glvnd.so
+mkdir -p %buildroot%_sysconfdir/X11/%_lib
+mkdir %buildroot/%_libdir/glvnd
+#
+mv %buildroot/%_libdir/libGLdispatch.so.* %buildroot/%_libdir/glvnd/
+ln -sf ../../..%_libdir/glvnd/libGLdispatch.so.0 %buildroot%_sysconfdir/X11/%_lib/libGLdispatch.so.0
+ln -sf ../..%_sysconfdir/X11/%_lib/libGLdispatch.so.0 %buildroot%_libdir/
+ln -sf glvnd/libGLdispatch.so.0 %buildroot/%_libdir/libGLdispatch.so
+
+%post -n libGLdispatch
+[ -r %_sysconfdir/X11/%_lib/libGLdispatch.so.0 ] || \
+        ln -sf ../../..%_libdir/glvnd/libGLdispatch.so.0 %_sysconfdir/X11/%_lib/libGLdispatch.so.0
+ln -sf ../..%_sysconfdir/X11/%_lib/libGLdispatch.so.0 %_libdir/
+
+
+#%files -n glvnd
+#%_libdir/X11/modules/extensions/x11glvnd.so
 
 %if_enabled package_all
 %files -n libGLES1
@@ -111,7 +123,9 @@ Static GL entrypoints which use the context defined in libGLdispatch, while EGL 
 
 %files -n libGLdispatch
 %_libdir/libGLdispatch.so.0
-%_libdir/libGLdispatch.so.0.*
+%_libdir/glvnd/libGLdispatch.so.0
+%_libdir/glvnd/libGLdispatch.so.0.*
+%ghost %_sysconfdir/X11/%_lib/libGLdispatch.so.0
 
 %files devel
 %if_enabled package_all
@@ -125,6 +139,15 @@ Static GL entrypoints which use the context defined in libGLdispatch, while EGL 
 %_pkgconfigdir/libglvnd.pc
 
 %changelog
+* Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt4
+- move libGLdispatch to _libdir/glvnd
+
+* Wed May 25 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt3
+- fix package
+
+* Wed May 25 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt2
+- update to b7d75429677eecc00c3701aaa4deac1304bc51ff
+
 * Fri Mar 04 2016 Sergey V Turchin <zerg@altlinux.org> 0.0.0-alt2
 - update from master branch
 
