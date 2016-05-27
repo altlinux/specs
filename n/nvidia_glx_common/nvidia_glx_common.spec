@@ -13,8 +13,8 @@
 %define nv_version 361
 %define nv_release 42
 %define nv_minor %nil
-%define pkg_rel alt162
-%define set_gl_nvidia_ver 0.13.0
+%define pkg_rel alt163
+%define set_gl_nvidia_ver 0.14.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -51,6 +51,7 @@
 %define x11_ext_dir /usr/%_lib/X11%exts
 %define x11_ext_old /usr/X11R6/%_lib%exts
 %define x11driver_dir %_libdir/X11
+%define glvnddriver_dir %_libdir/glvnd
 %define nv_lib_dir_prefix %_libdir/nvidia_
 %define nv_lib_dir_prefix_old /usr/X11R6/%_lib/nvidia_
 %define nv_lib_dir %nv_lib_dir_prefix%tbver
@@ -135,6 +136,7 @@ subst "s|@XEXT_DIR@|%x11_ext_dir|" settings.h
 subst "s|@XEXT_DIR_OLD@|%x11_ext_old|" settings.h
 
 subst "s|@X_DRV_DIR@|%x11driver_dir|" settings.h
+subst "s|@GLVND_DRV_DIR@|%glvnddriver_dir|" settings.h
 subst "s|@NV_DRV_DIR_PREFIX@|%nv_lib_dir_prefix|" settings.h
 subst "s|@NV_DRV_DIR_PREFIX_OLD@|%nv_lib_dir_prefix_old|" settings.h
 
@@ -265,6 +267,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt163
+- switch libGLdispatch
+
 * Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt162
 - add nvidia-uvm module support
 
