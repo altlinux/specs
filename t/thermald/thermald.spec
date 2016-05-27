@@ -1,6 +1,6 @@
 Name: thermald
-Version: 1.4.3
-Release: alt2
+Version: 1.5.3
+Release: alt1
 
 Summary: Thermal daemon for IA
 
@@ -55,16 +55,23 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 %dir %_datadir/dbus-1/
 %dir %_datadir/dbus-1/system-services/
 %_datadir/dbus-1/system-services/org.freedesktop.%name.service
+%dir /lib/systemd
 %dir %_unitdir/
 %_unitdir/%name.service
 %_initdir/%name
+%exclude %_sysconfdir/init/%name.conf
 %dir %_sysconfdir/%name
 %_sysconfdir/%name/*
+%dir %_sysconfdir/dbus-1
+%dir %_sysconfdir/dbus-1/system.d
 %_sysconfdir/dbus-1/system.d/*
 %_man5dir/*
 %_man8dir/*
 
 %changelog
+* Fri May 27 2016 Anton Midyukov <antohami@altlinux.org> 1.5.3-alt1
+- New version.
+
 * Mon Mar 21 2016 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt2
 - Remove init-condrestart.
 
