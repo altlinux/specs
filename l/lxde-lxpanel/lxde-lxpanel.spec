@@ -3,7 +3,7 @@
 
 Name: lxde-%origname
 Version: 0.8.2
-Release: alt1
+Release: alt2
 
 Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL
@@ -13,7 +13,8 @@ Url: http://lxde.org
 Source: %origname-%version.tar
 Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
-Requires: lxde-freedesktop-menu
+#Requires: lxde-freedesktop-menu
+Requires: altlinux-freedesktop-menu-lxde
 Requires: menu-cache
 
 # Automatically added by buildreq on Wed Jan 23 2013
@@ -66,6 +67,9 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue May 24 2016 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt2
+- Replaced requires lxde-freedesktop-menu by altlinux-freedesktop-menu-lxde.
+
 * Mon Apr 11 2016 Michael Shigorin <mike@altlinux.org> 0.8.2-alt1
 - 0.8.2 (thx Alexey Borisenkov for suggestion)
 
