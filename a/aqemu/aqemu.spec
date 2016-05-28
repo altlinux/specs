@@ -1,19 +1,20 @@
-Summary: QEMU GUI written in Qt4
+Summary: QEMU GUI written in Qt5
 Name: aqemu
-Version: 0.8.2
-Release: alt1
-License: GPL
+Version: 0.9.1
+Release: alt0.1
+License: GPL2
 Group: Emulators
 Packager: Boris Savelev <boris@altlinux.org>
-Url: http://sourceforge.net/projects/aqemu/
-#Source: http://download.sourceforge.net/sourceforge/aqemu/%name-%version.tar.bz2
+Url: https://github.com/tobimensch/aqemu
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Wed Mar 04 2009
-BuildRequires: gcc-c++ libqt4-devel libvncserver-devel ImageMagick cmake
+BuildRequires: gcc-c++ libvncserver-devel ImageMagick cmake
+BuildRequires: qt5-base-devel
 
 %description
-AQEMU is a QEMU GUI written in Qt4.
+AQEMU is a QEMU GUI written in Qt5.
 The program have user-friendly interface and allows to set up the majority of QEMU options.
 
 %prep
@@ -21,20 +22,21 @@ The program have user-friendly interface and allows to set up the majority of QE
 
 %build
 %cmake
+PATH=%{_datadir}/qt5/bin:$PATH; export PATH
 %make_build -C BUILD
 
 %install
 %makeinstall_std -C BUILD
 mkdir -p %buildroot%_desktopdir
-install -m644 %name.desktop %buildroot%_desktopdir/
 install -d %buildroot{%_niconsdir,%_miconsdir,%_liconsdir}
+install -m644 ./menu_data/%name.desktop %buildroot%_desktopdir/
 convert -size 16x16 ./menu_data/aqemu_64x64.png %buildroot%_miconsdir/%name.png
 convert -size 32x32 ./menu_data/aqemu_64x64.png %buildroot%_niconsdir/%name.png
 convert -size 48x48 ./menu_data/aqemu_64x64.png %buildroot%_liconsdir/%name.png
 rm -rf %buildroot%_datadir/doc/%name
 
 %files
-%doc README AUTHORS CHANGELOG TODO
+%doc README* AUTHORS* CHANGELOG* TODO*
 %_bindir/%name
 %dir %_datadir/%name
 %_datadir/%name/*
@@ -50,6 +52,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Sat May 28 2016 L.A. Kostis <lakostis@altlinux.ru> 0.9.1-alt0.1
+- New version, now with qt5 support.
+
 * Mon Mar 19 2012 Boris Savelev <boris@altlinux.org> 0.8.2-alt1
 - new version (0.8.2) with rpmgs script
 
