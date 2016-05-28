@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt4.git20150829.1.1.1
+Release: alt5.git20150829
 
 Summary: Matlab(TM) style python plotting package
 
@@ -28,7 +28,7 @@ Source1: setup.cfg
 BuildRequires(pre): rpm-macros-sphinx
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: at-spi2-atk dvipng elfutils fontconfig ghostscript-classic gobject-introspection gobject-introspection-x11 ipython libX11-devel libat-spi2-core libatk-gir libcairo-gobject libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libpyside-qt4-py3 libqt4-core libqt5-core libshiboken-py3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-chardet python-module-cryptography python-module-cssselect python-module-cycler python-module-dateutil python-module-docutils python-module-enum34 python-module-functools32 python-module-future python-module-genshi python-module-greenlet python-module-ipykernel python-module-ipyparallel python-module-ipython_genutils python-module-jinja2 python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-matplotlib python-module-mpmath python-module-nbconvert python-module-nbformat python-module-ndg-httpsclient python-module-ntlm python-module-numpy python-module-pexpect python-module-ptyprocess python-module-pyasn1 python-module-pycairo python-module-pycares python-module-pycurl python-module-pygobject3 python-module-pyparsing python-module-pypdf python-module-pytest python-module-pytz python-module-setuptools python-module-sip python-module-six python-module-snowballstemmer python-module-sphinx python-module-terminado python-module-tornado python-module-tornado_xstatic python-module-traitlets python-module-wx2.9 python-module-xstatic python-module-xstatic-term.js python-module-zmq python-module-zope.interface python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest python-modules-wsgiref python-tools-2to3 python3 python3-base python3-module-numpy python3-module-pytest python3-module-setuptools t1lib tcl tcl-devel texlive-base-bin texlive-latex-base xorg-xproto-devel
-BuildRequires: gcc-c++ git-core libfreetype-devel libnumpy-devel libpng-devel poppler python-module-PyQt4 python-module-PyQt5 python-module-html5lib python-module-notebook python-module-numpy-testing python-module-scipy python-module-setuptools-tests python-module-xlwt-future python-modules-tkinter python3-devel python3-module-PySide python3-module-dateutil python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-pyparsing python3-module-pytz python3-module-scipy python3-module-setuptools-tests rpm-build-gir rpm-build-python3 time tk-devel
+BuildRequires: gcc-c++ git-core libfreetype-devel libnumpy-devel libpng-devel poppler python-module-PyQt4 python-module-PyQt5 python-module-html5lib python-module-notebook python-module-numpy-testing python-module-scipy python-module-setuptools-tests python-module-xlwt python-modules-tkinter python3-devel python3-module-PySide python3-module-dateutil python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-module-pyparsing python3-module-pytz python3-module-scipy python3-module-setuptools-tests rpm-build-gir rpm-build-python3 time tk-devel
 
 #BuildRequires: python3-module-pygobject3 git
 #BuildRequires: python-module-setuptools-tests
@@ -372,7 +372,6 @@ sed -i 's|^\(gtkagg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(gtk3agg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(tkagg\).*|\1 = False|' setup.cfg
 sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
-sed -i 's|import xlwt|import xlwt3|' lib/mpl_toolkits/exceltools.py
 export CC=g++
 %python3_build_debug
 popd
@@ -717,6 +716,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt5.git20150829
+- NMU: rebuild with python-module-xlwt
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.0-alt4.git20150829.1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
