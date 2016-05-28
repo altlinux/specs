@@ -1,5 +1,9 @@
+#%%def_enable mate-file-manager-syncthing-gtk
+#%%def_enable nemo-syncthing-gtk
+#%%def_enable nautilus-syncthing-gtk
+
 Name: syncthing-gtk
-Version: 0.8.3
+Version: 0.9.0.2
 Release: alt1
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
@@ -10,7 +14,8 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 BuildPreReq: python-devel python-module-setuptools
-Requires: syncthing >= 0.11
+Requires: syncthing >= 0.13
+Requires: librsvg-gir
 BuildArch: noarch
 
 %description
@@ -51,6 +56,7 @@ Syncthing, основанный на GTK и Python.
 * Интеграция с файловыми менеджерами Caja, Nautilus и Nemo
 * Вывод уведомлений на рабочий стол.
 
+%if_enabled mate-file-manager-syncthing-gtk
 %package -n mate-file-manager-syncthing-gtk
 Summary: Syncthing-GTK+ client integrated into mate-file-manager
 Summary(ru_RU.UTF-8): Интеграция Syncthing-gtk с mate-file-manager
@@ -70,7 +76,9 @@ This package integrates Syncthing-GTK+ seamlessly into mate-file-manager.
 Syncthing, основанный на GTK и Python.
 
 Это пакет интеграции Syncthing-gtk c mate-file-manager.
+%endif
 
+%if_enabled nemo-syncthing-gtk
 %package -n nemo-syncthing-gtk
 Summary: Syncthing-GTK+ client integrated into Nemo
 Summary(ru_RU.UTF-8): Интеграция Syncthing-gtk с Nemo
@@ -90,7 +98,9 @@ This package integrates Syncthing-GTK+ seamlessly into Nemo.
 Syncthing, основанный на GTK и Python.
 
 Это пакет интеграции Syncthing-gtk с файловым менеджером Nemo.
+%endif
 
+%if_enabled nautilus-syncthing-gtk
 %package -n nautilus-syncthing-gtk
 Summary: Syncthing-GTK+ client integrated into Nautilus
 Summary(ru_RU.UTF-8): Интеграция Syncthing-gtk с Nautilus
@@ -110,6 +120,7 @@ This package integrates Syncthing-GTK+ seamlessly into Nautilus.
 Syncthing, основанный на GTK и Python.
 
 Это пакет интеграции Syncthing-gtk с файловым менеджером Nautilus.
+%endif
 
 %prep
 %setup
@@ -122,12 +133,20 @@ Syncthing, основанный на GTK и Python.
 %python_install
 rm -rf %buildroot%python_sitelibdir/syncthing_gtk/windows.*
 
+%if_enabled mate-file-manager-syncthing-gtk
 install -Dm 0644 scripts/syncthing-plugin-caja.py \
   %buildroot%_datadir/caja-python/extensions/syncthing-gtk.py
+%endif
+
+%if_enabled nemo-syncthing-gtk
 install -Dm 0644 scripts/syncthing-plugin-nemo.py \
   %buildroot%_datadir/nemo-python/extensions/syncthing-gtk.py
+%endif
+
+%if_enabled nautilus-syncthing-gtk
 install -Dm 0644 scripts/syncthing-plugin-nautilus.py \
   %buildroot%_datadir/nautilus-python/extensions/syncthing-gtk.py
+%endif
   
 # Add execution bit to scripts with shebangs and remove from others.
 find %{buildroot} -type f -name "*.py" | while read py; do
@@ -149,22 +168,33 @@ done
 %_iconsdir/hicolor/*/*/*.png
 %_pixmapsdir/*.png
 
+%if_enabled mate-file-manager-syncthing-gtk
 %files -n mate-file-manager-syncthing-gtk
 %dir %{_datadir}/caja-python/
 %dir %{_datadir}/caja-python/extensions/
 %{_datadir}/caja-python/extensions/syncthing-gtk.py
+%endif
 
+%if_enabled nemo-syncthing-gtk
 %files -n nemo-syncthing-gtk
 %dir %_datadir/nemo-python/
 %dir %_datadir/nemo-python/extensions/
 %_datadir/nemo-python/extensions/syncthing-gtk.py
+%endif
 
+%if_enabled nautilus-syncthing-gtk
 %files -n nautilus-syncthing-gtk
 %dir %_datadir/nautilus-python/
 %dir %_datadir/nautilus-python/extensions/
 %_datadir/nautilus-python/extensions/syncthing-gtk.py
+%endif
 
 %changelog
+* Fri May 27 2016 Anton Midyukov <antohami@altlinux.org> 0.9.0.2-alt1
+- New version
+- Added requires on librsvg-gir
+- Disable plugin for caja, nemo, nautilus.
+
 * Tue Apr 26 2016 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt1
 - Initial build for ALT Linux Sisyphus
 - Added russian translation.

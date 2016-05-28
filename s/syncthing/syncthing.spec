@@ -1,5 +1,5 @@
 Name: syncthing
-Version: 0.12.22
+Version: 0.13.4
 Release: alt1
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
@@ -31,27 +31,42 @@ Syncthing призван заменить собой проприетарные 
 %setup
 
 %build
-export GOPATH="$PWD/build"
+mkdir -p build/src/ build/vendor/
+export GOPATH="$PWD/build:$PWD/build/vendor"
+
 mkdir -p build/src/github.com/%name/%name
 ls | sed '/^build$/d' | xargs cp -at build/src/github.com/%name/%name
-go run build.go -no-upgrade
+cp -a vendor build/vendor/src
+
+pushd build/src/github.com/%name/%name/
+go run build.go install all \
+  -version v%version -no-upgrade
+popd
 
 %install
-install -Dm 0755 bin/%name %buildroot%_bindir/%name
-install -Dm 0644 etc/linux-systemd/system/%name@.service       \
-%buildroot%_unitdir/%name@.service
-install -Dm 0644 etc/linux-systemd/system/%name-resume.service \
-%buildroot%_unitdir/%name-resume.service
-install -Dm 0644 etc/linux-systemd/user/%name.service \
-%buildroot%_sysconfdir/systemd/user/%name.service
+install -Dm 0755 build/src/github.com/%name/%name/bin/%name \
+  %buildroot%_bindir/%name
+install -Dm 0644 etc/linux-systemd/system/%name@.service        \
+  %buildroot%_unitdir/%name@.service
+install -Dm 0644 etc/linux-systemd/system/%name-resume.service  \
+  %buildroot%_unitdir/%name-resume.service
+install -Dm 0644 etc/linux-systemd/user/%name.service           \
+  %buildroot%_libexecdir/systemd/user/%name.service
 
 %files
 %doc AUTHORS CONDUCT.md CONTRIBUTING.md LICENSE README.md
 %_bindir/%name
+%dir /lib/systemd
+%dir %_unitdir/
 %_unitdir/%name@.service
 %_unitdir/%name-resume.service
-%_sysconfdir/systemd/user/%name.service
+%dir %_libexecdir/systemd
+%dir %_libexecdir/systemd/user
+%_libexecdir/systemd/user/%name.service
 
 %changelog
+* Fri May 27 2016 Anton Midyukov <antohami@altlinux.org> 0.13.4-alt1
+- New version (Closes: 32138).
+
 * Tue Apr 26 2016 Anton Midyukov <antohami@altlinux.org> 0.12.22-alt1
 - Initial build for ALT Linux Sisyphus.
