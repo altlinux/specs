@@ -1,6 +1,6 @@
 Name: libleveldb
-Version: 1.17
-Release: alt3
+Version: 1.18
+Release: alt1
 
 Summary: A fast and lightweight key/value database library by Google
 
@@ -66,6 +66,9 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Sat May 28 2016 Alexei Takaseev <taf@altlinux.org> 1.18-alt1
+- 1.18
+
 * Thu Feb 11 2016 Igor Vlasenko <viy@altlinux.ru> 1.17-alt3
 - NMU: added fedora patches for
   * leveldbjni support
