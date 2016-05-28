@@ -9,7 +9,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 2.0.2
-Release: alt1.1
+Release: alt2
 Group: Sciences/Geosciences
 
 License: MIT
@@ -29,11 +29,11 @@ Patch6: %name-1.11.2-alt-python3.patch
 # Automatically added by buildreq on Thu Aug 12 2010
 BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libnumpy-devel libpng-devel libsqlite3-devel libunixODBC-devel libxerces-c28-devel perl-devel postgresql-devel python-module-BeautifulSoup python-module-genshi python-module-xlwt python-modules-ctypes swig
 
-BuildPreReq: chrpath libnetcdf-devel
+BuildRequires: chrpath libnetcdf-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel libnumpy-py3-devel python3-module-genshi
-BuildPreReq: python3-module-BeautifulSoup python3-module-xlwt-future
+BuildRequires: python3-devel libnumpy-py3-devel python3-module-genshi
+BuildRequires: python3-module-BeautifulSoup python3-module-xlwt
 %endif
 
 Requires: libproj
@@ -248,6 +248,9 @@ sed -i 's|__bool__ = __nonzero__||' \
 # %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt2
+- NMU: rebuild with python3-module-xlwt
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.0.2-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
