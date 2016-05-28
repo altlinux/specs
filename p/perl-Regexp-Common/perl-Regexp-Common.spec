@@ -15,7 +15,7 @@
 %define maketest 1
 
 Name: perl-Regexp-Common
-Version: 2016020301
+Version: 2016052802
 Release: alt1
 
 Summary: Regexp-Common - Provide commonly requested regular expressions
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source: http://www.cpan.org/authors/id/A/AB/ABIGAIL/Regexp-Common-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 06 2005
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(charnames.pm)
 
 %description
 By default, this module exports a single hash (RE) that stores or generates
@@ -53,6 +53,9 @@ There is an alternative, subroutine-based syntax described in
 %perl_vendor_privlib/Regexp/
 
 %changelog
+* Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 2016052802-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 2016020301-alt1
 - automated CPAN update
 
