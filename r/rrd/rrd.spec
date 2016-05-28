@@ -1,6 +1,6 @@
 Name: rrd
 Version: 1.5.4
-Release: alt1.1
+Release: alt2
 
 %define native rrdtool
 %define abiversion 4
@@ -77,12 +77,14 @@ Requires: lib%name = %version-%release
 Provides: %name-perl = %version
 Obsoletes: %name-perl < %version
 
-%package -n python-module-%name
+%package -n python-module-rrdtool
 Summary: Round Robin Database python modules
 Group: Development/Databases
 Requires: lib%name = %version-%release
 Provides: %name-python = %version
 Obsoletes: %name-python < %version
+Provides: python-module-rrd = %version
+Obsoletes: python-module-rrd < 1.5.4-alt2
 
 %if_with tcl
 %package tcl
@@ -179,7 +181,7 @@ put a friendly user interface on it.
 
 This package contains perl modules for access the Round Robin Databases.
 
-%description -n python-module-%name
+%description -n python-module-rrdtool
 RRD is the Acronym for Round Robin Database. RRD is a system to store and
 display time-series data (i.e. network bandwidth, machine-room temperature,
 server load average). It stores the data in a very compact way that will not
@@ -322,7 +324,7 @@ rm -rf %buildroot/usr/lib/perl
 %perl_vendor_archlib/RRD*
 %perl_vendor_autolib/RRD*
 
-%files -n python-module-%name
+%files -n python-module-rrdtool
 %python_sitelibdir/*
 
 %if_with tcl
@@ -332,6 +334,9 @@ rm -rf %buildroot/usr/lib/perl
 %endif
 
 %changelog
+* Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt2
+- NMU: python-module-rrd renamed to python-module-rrdtool
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1.1
 - rebuild with new perl 5.22.0
 
