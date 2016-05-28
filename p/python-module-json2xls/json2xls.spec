@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 0.1.2
-Release: alt1.git20150116.1.1
+Release: alt2.git20150116
 Summary: Generate excel by json
 License: BSD
 Group: Development/Python
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-build-python3
 
 # Automatically added by buildreq on Thu Jan 28 2016 (-bi)
 # optimized out: python-base python-devel python-module-cffi python-module-chardet python-module-cryptography python-module-enum34 python-module-ndg-httpsclient python-module-ntlm python-module-pyasn1 python-module-setuptools python-module-urllib3 python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-enum34 python3-module-future python3-module-ndg-httpsclient python3-module-ntlm python3-module-pycparser python3-module-setuptools python3-module-urllib3
-BuildRequires: python-module-click python-module-pytest python-module-requests python-module-xlwt python3-module-click python3-module-pytest python3-module-requests python3-module-xlwt-future rpm-build-python3 time
+BuildRequires: python-module-click python-module-pytest python-module-requests python-module-xlwt python3-module-click python3-module-pytest python3-module-requests python3-module-xlwt rpm-build-python3 time
 
 %description
 json2xls: Generate Excel by JSON data.
@@ -105,6 +105,9 @@ popd
 %endif
 
 %changelog
+* Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt2.git20150116
+- NMU: rebuild with xlwt
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.2-alt1.git20150116.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
