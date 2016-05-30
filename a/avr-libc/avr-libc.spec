@@ -6,7 +6,7 @@
 Summary: AVR libc
 Name: avr-libc
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
 Group: Development/Other
@@ -16,17 +16,8 @@ Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.bz2
 Source1: avr8-headers-3.5.0.1662.zip
 Patch0: 1.8.0.fix.patch
 
-# Automatically added by buildreq on Fri Feb 01 2013
-# optimized out: avr-binutils avr-gcc fontconfig fonts-ttf-gnu-freefont-mono fonts-ttf-gnu-freefont-sans fonts-ttf-gnu-freefont-serif fonts-type1-urw ghostscript-classic ghostscript-common netpbm ruby texlive-extra-utils
 BuildRequires: azenis-fonts-ttf cups-filters doxygen ruby-stdlibs transfig
-BuildRequires: fonts-otf-oldstandard fonts-otf-stix fonts-ttf-armenian fonts-ttf-baekmuk-batang fonts-ttf-baekmuk-dotum
-BuildRequires: fonts-ttf-baekmuk-gulim fonts-ttf-baekmuk-hline fonts-ttf-bengali fonts-ttf-chinese-big5
-BuildRequires: fonts-ttf-chinese-gb2312 fonts-ttf-church fonts-ttf-dejavu fonts-ttf-dejavu-lgc fonts-ttf-devanagari
-BuildRequires: fonts-ttf-freefont fonts-ttf-georgian fonts-ttf-gost fonts-ttf-gw fonts-ttf-java-1.6.0-sun fonts-ttf-junicode
-BuildRequires: fonts-ttf-kannada fonts-ttf-latex-xft fonts-ttf-liberation fonts-ttf-malayalam fonts-ttf-ms fonts-ttf-oldstandard
-BuildRequires: fonts-ttf-reduce fonts-ttf-sazanami-gothic fonts-ttf-sazanami-mincho fonts-ttf-sil-gentium fonts-ttf-syriac
-BuildRequires: fonts-ttf-tamil fonts-ttf-tempora fonts-ttf-urdu fonts-ttf-vera fonts-ttf-xorg fonts-ttf-znamen
-BuildRequires: fonts-type1-cm-super-pfb fonts-type1-dmtr40in fonts-type1-phonetic fonts-type1-xorg unzip
+BuildRequires: unzip
 
 BuildRequires: avr-binutils >= 2:2.23.1-alt1
 BuildRequires: avr-gcc >= 4.7.2-alt3
@@ -100,6 +91,9 @@ done
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Mon May 30 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt2
+- Remove fonts from BuildRequires
+
 * Tue Feb 16 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt1
 - new version released
 - fix bug #31800
