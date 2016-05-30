@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.28
+Version: 0.29
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Mon May 30 2016 Michael Shigorin <mike@altlinux.org> 0.29-alt1
+- fix mount options (broke live_rw functionality)
+
 * Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.28-alt1
 - remove superfluous rules duplicating propagator's functionality
   (closes: #31069)
