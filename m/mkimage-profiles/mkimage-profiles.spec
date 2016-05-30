@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.91
+Version: 1.1.92
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -90,6 +90,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon May 30 2016 Michael Shigorin <mike@altlinux.org> 1.1.92-alt1
+- server-openstack
+
 * Mon May 23 2016 Michael Shigorin <mike@altlinux.org> 1.1.91-alt1
 - nvidia/nouveau rehash
 - overlayfs support (lakostis@)
