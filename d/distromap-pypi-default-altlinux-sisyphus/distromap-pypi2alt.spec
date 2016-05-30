@@ -6,7 +6,7 @@ BuildRequires: perl(Pod/Usage.pm) perl(Source/Repository/Matcher/PyPI2ALT.pm) pe
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.02
+Version: 0.03
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -51,6 +51,9 @@ install -m 755 bin/* %buildroot%_bindir/
 %_datadir/distromap/*
 
 %changelog
+* Mon May 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- added pypi names unmangling and existance check
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - db update
 
