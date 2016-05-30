@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20150930
+Version: 20160422
 Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -147,6 +147,9 @@ cd ..
 %_man1dir/*
 
 %changelog
+* Fri May 13 2016 Alexey Shabalin <shaba@altlinux.ru> 20160422-alt1
+- 20160422
+
 * Thu Dec 10 2015 Alexey Shabalin <shaba@altlinux.ru> 20150930-alt1
 - Initial build
 - Replace iasl and pmtools packages

@@ -1,7 +1,7 @@
 
 Name: libvirglrenderer
-Version: 0.3.0
-Release: alt0.1.git.e9d3c0c27
+Version: 0.5.0
+Release: alt1
 
 Summary: Virgl Rendering library
 Group: System/Libraries
@@ -10,12 +10,9 @@ License: MIT
 #VCS: git:git://people.freedesktop.org/~airlied/virglrenderer
 Source: %name-%version.tar
 
-BuildRequires: autoconf-archive
-BuildRequires: xorg-util-macros
-BuildRequires: libepoxy-devel
-BuildRequires: libgbm-devel
-BuildRequires: libEGL-devel
-BuildRequires: libdrm-devel >= 2.4.50
+BuildRequires: pkgconfig(libdrm) >= 2.4.50
+BuildRequires: pkgconfig(gbm)
+BuildRequires: pkgconfig(epoxy)
 
 %description
 The virgil3d rendering library is a library used by
@@ -66,7 +63,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Thu May 19 2016 Alexey Shabalin <shaba@altlinux.ru> 0.5.0-alt1
+- 0.5.0
+
 * Thu Dec 17 2015 Alexey Shabalin <shaba@altlinux.ru> 0.3.0-alt0.1.git.e9d3c0c27
 - initial build
-
 

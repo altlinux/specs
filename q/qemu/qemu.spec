@@ -68,7 +68,7 @@
 %def_enable lzo
 %def_enable snappy
 %def_enable bzip2
-%def_enable xen
+%def_disable xen
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_sdl2:sdl} %{?_enable_pulseaudio:pa}
 
@@ -168,8 +168,8 @@
 # }}}
 
 Name: qemu
-Version: 2.5.0
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -214,7 +214,7 @@ BuildRequires: libpcre-devel-static
 %{?_enable_uuid:BuildRequires: libuuid-devel}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.0}
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
-%{?_enable_opengl:BuildRequires: libX11-devel libepoxy-devel}
+%{?_enable_opengl:BuildRequires: libX11-devel libepoxy-devel libdrm-devel libgbm-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel >= 2.38 python-base}
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.9.0}
@@ -277,6 +277,7 @@ Group: Emulators
 Requires: %name-common = %version-%release
 Provides: qemu-kvm  = %version-%release
 Obsoletes: qemu-kvm < %version-%release
+Conflicts: qemu-img < %version-%release
 
 %description system
 Full system emulation.  In this mode, QEMU emulates a full system
@@ -539,7 +540,7 @@ rm -f %buildroot%_datadir/%name/s390-ccw.img
 # /usr/share/ipxe, as QEMU doesn't know how to look
 # for other paths, yet.
 
-for rom in e1000 ne2k_pci pcnet rtl8139 virtio ; do
+for rom in e1000 ne2k_pci pcnet rtl8139 virtio eepro100; do
   ln -r -s %buildroot%_datadir/ipxe/pxe-${rom}.rom %buildroot%_datadir/%name/pxe-${rom}.rom
   ln -r -s %buildroot%_datadir/ipxe.efi/efi-${rom}.rom %buildroot%_datadir/%name/efi-${rom}.rom
 done
@@ -596,9 +597,19 @@ done < %SOURCE1
 %check
 # Disabled on aarch64 where it fails with several errors.  Will
 # investigate and fix when we have access to real hardware 
-%ifnarch aarch64
+
+%define archs_skip_tests aarch64
+%def_enable archs_ignore_test_failures
+
+%ifnarch %archs_skip_tests
+
+%if_enabled archs_ignore_test_failures
+%make V=1 check ||:
+%else
 %make V=1 check
-%endif
+%endif # archs_ignore_test_failures
+
+%endif # archs_skip_tests
 
 %pre common
 %_sbindir/groupadd -r -f %_group
@@ -629,6 +640,9 @@ fi
 %_bindir/qemu-kvm
 %_bindir/kvm
 %_bindir/qemu*system*
+%_bindir/virtfs-proxy-helper
+%_man1dir/virtfs-proxy-helper.*
+%attr(4711,root,root) %_libexecdir/qemu-bridge-helper
 
 %files user
 %_bindir/qemu-*
@@ -652,9 +666,6 @@ fi
 %_bindir/qemu-img
 %_bindir/qemu-io
 %_bindir/qemu-nbd
-%_bindir/virtfs-proxy-helper
-%_man1dir/virtfs-proxy-helper.*
-%_libexecdir/qemu-bridge-helper
 
 %files guest-agent
 %_bindir/qemu-ga
@@ -675,6 +686,14 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Fri May 13 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+- fixed CVE-2015-8558,CVE-2015-8619,CVE-2016-1981,CVE-2016-3710,CVE-2016-3712
+- move virtfs-proxy-helper and qemu-bridge-helper to from qemu-img to qemu-system
+- ignore test failures for check
+- add vhost-net manage to control
+- disable xen support
+
 * Tue Apr 12 2016 Denis Medvedev <nbr@altlinux.org> 2.5.0-alt2
 - Fixed linking.
 

@@ -6,10 +6,11 @@
 # 8086:100e -> pxe-e1000.rom e1000
 # 10ec:8139 -> pxe-rtl8139.rom rtl8139
 # 1af4:1000 -> pxe-virtio.rom virtio-net
+# 8086:1209 -> pxe-eepro100.rom eepro100
 
-%define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000
-%define date 20150516
-%define hash a91b1f7
+%define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209
+%define date 20160525
+%define hash f42b258
 
 Name: ipxe
 Version: %date
@@ -95,29 +96,36 @@ This package contains the iPXE ROMs for devices emulated by QEMU, in
 %patch -p1
 
 %build
-mkdir .git
-touch .git/index
-export ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin
+
+ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin
 
 cd src
-# ath9k drivers are too big for an Option ROM
-rm -rf drivers/net/ath/ath9k
 
-%make_build \
-	bin/undionly.kpxe bin/ipxe.{dsk,iso,usb,lkrn} allroms \
-	ISOLINUX_BIN=${ISOLINUX_BIN} \
+make_ipxe() {
+    %make_build \
 	NO_WERROR=1 \
 	V=1 \
 	GITVERSION=%hash \
-	CROSS_COMPILE=x86_64-linux-gnu-
+	CROSS_COMPILE=x86_64-linux-gnu- \
+        "$@"
+}
+
+make_ipxe bin-i386-efi/ipxe.efi bin-x86_64-efi/ipxe.efi
+
+make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
+	bin/undionly.kpxe \
+	bin/ipxe.{dsk,iso,usb,lkrn}
+
+make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
+	allroms ||:
 
 
 # build roms with efi support for qemu
 mkdir bin-combined
 for rom in %qemuroms; do
-  make NO_WERROR=1 V=1 GITVERSION=%hash CROSS_COMPILE=x86_64-linux-gnu- bin/${rom}.rom
-  make NO_WERROR=1 V=1 GITVERSION=%hash CROSS_COMPILE=x86_64-linux-gnu- bin-i386-efi/${rom}.efidrv
-  make NO_WERROR=1 V=1 GITVERSION=%hash CROSS_COMPILE=x86_64-linux-gnu- bin-x86_64-efi/${rom}.efidrv
+  make_ipxe CONFIG=qemu bin/${rom}.rom
+  make_ipxe CONFIG=qemu bin-i386-efi/${rom}.efidrv
+  make_ipxe CONFIG=qemu bin-x86_64-efi/${rom}.efidrv
   vid="0x${rom%%????}"
   did="0x${rom#????}"
   EfiRom -f "$vid" -i "$did" --pci23 \
@@ -147,6 +155,9 @@ for fmt in %formats; do
 done
 popd
 
+cp -a src/bin-i386-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-i386.efi
+cp -a src/bin-x86_64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-x86_64.efi
+
 # the roms supported by qemu will be packaged separatedly
 # remove from the main rom list and add them to qemu.list
 for fmt in rom ; do
@@ -170,6 +181,7 @@ pxe_link 10ec8029 ne2k_pci
 pxe_link 10222000 pcnet
 pxe_link 10ec8139 rtl8139
 pxe_link 1af41000 virtio
+pxe_link 80861209 eepro100
 
 %files
 %doc README
@@ -179,6 +191,8 @@ pxe_link 1af41000 virtio
 %_datadir/%name/ipxe.usb
 %_datadir/%name/ipxe.dsk
 %_datadir/%name/ipxe.lkrn
+%_datadir/%name/ipxe-i386.efi
+%_datadir/%name/ipxe-x86_64.efi
 %_datadir/%name/undionly.kpxe
 %doc COPYING COPYING.GPLv2 COPYING.UBDL
 
@@ -193,6 +207,10 @@ pxe_link 1af41000 virtio
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Wed May 25 2016 Alexey Shabalin <shaba@altlinux.ru> 20160525-alt1.gitf42b258
+- update to latest upstream snapshot
+- Enable IPv6 for in qemu config
+
 * Mon May 18 2015 Alexey Shabalin <shaba@altlinux.ru> 20150516-alt1.gita91b1f7
 - update to latest upstream snapshot
 - include patches from QEMU submodule

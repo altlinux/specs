@@ -27,14 +27,14 @@
 %def_with avahi
 
 # Then the hypervisor drivers that run on local host
-%def_with xen
+%def_without xen
 %def_with qemu
 %def_with openvz
 %def_with lxc
 %def_with login_shell
 %def_with vbox
 %def_without uml
-%def_with libxl
+%def_without libxl
 %def_with vmware
 
 # Then the hypervisor drivers that talk via a native remote protocol
@@ -100,11 +100,11 @@
 
 %def_without wireshark
 
-%define with_loader_nvram "%_datadir/ovmf/ovmf_code-x64.bin:%_datadir/ovmf/ovmf_vars-x64.bin:%_datadir/ovmf/ovmf_code-ia32.bin:%_datadir/ovmf/ovmf_vars-ia32.bin"
+%define with_loader_nvram "%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd:%_datadir/AAVMF/AAVMF_CODE.fd:%_datadir/AAVMF/AAVMF_VARS.fd"
 
 Name: libvirt
-Version: 1.3.2
-Release: alt3
+Version: 1.3.5
+Release: alt0.rc1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -631,13 +631,14 @@ rm -f %buildroot%_sysconfdir/libvirt/lxc.conf
 rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.lxc
 %endif
 %if_without uml
-rm -rf %buildroot%_sysconfdir/logrotate.d/libvirtd.uml
+rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.uml
 %endif
 %if_without nwfilter
 rm -rf %buildroot%_sysconfdir/libvirt/nwfilter
 %endif
-
-
+%if_without libxl
+rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.libxl
+%endif
 install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
 
 # Temporarily get rid of not-installed admin-related files
@@ -768,7 +769,6 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config /lib/tmpfiles.d/libvirtd.conf
 %_unitdir/libvirtd.service
-%_unitdir/libvirtd.socket
 %_initdir/libvirtd
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
 /lib/sysctl.d/*
@@ -967,6 +967,13 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon May 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt0.rc1
+- 1.3.5-rc1
+
+* Fri May 20 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.4-alt1
+- 1.3.4
+- build without xen support
+
 * Tue Apr 05 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt3
 - fixed typo in trigger
 

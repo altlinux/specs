@@ -1,19 +1,15 @@
-%define SVNDATE 20151225
-%define SVNREV 19549
 %define TOOL_CHAIN_TAG GCC49
-%define openssl_ver 1.0.2e
+%define openssl_ver 1.0.2g
+%def_disable aarch64
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: %{SVNDATE}
-Release: alt1.svn%{SVNREV}
+Version: 20160518
+Release: alt1
 Summary: EFI Development Kit II
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
 Source: %name-%version.tar
-
-#Vcs-Git: https://github.com/tianocore/edk2-FatPkg.git
-Source1: FatPkg.tar
 
 Source2: https://www.openssl.org/source/openssl-%openssl_ver.tar.gz
 
@@ -22,8 +18,8 @@ Patch1: %name-%version-%release.patch
 License: BSD
 Group: Emulators
 Url: http://www.tianocore.org
-
 BuildRequires: gcc-c++-x86_64-linux-gnu gcc-c++
+%{?_enable_aarch64:BuildRequires: gcc-c++-aarch64-linux-gnu}
 BuildRequires: iasl nasm
 BuildRequires: python-devel python-modules-sqlite3
 BuildRequires: libuuid-devel
@@ -90,11 +86,8 @@ rm -rf BaseTools/Bin \
 # add openssl
 tar -C CryptoPkg/Library/OpensslLib -xf %SOURCE2
 (cd CryptoPkg/Library/OpensslLib/openssl-%openssl_ver;
- patch -p0 < ../EDKII_openssl-%openssl_ver.patch)
+ patch -p1 < ../EDKII_openssl-%openssl_ver.patch)
 (cd CryptoPkg/Library/OpensslLib; ./Install.sh)
-
-# add fat
-tar -xf %SOURCE1
 
 # fix build target.txt
 sed -i \
@@ -116,6 +109,30 @@ sed -i \
 %build
 export GCC49_BIN=x86_64-linux-gnu-
 source ./edksetup.sh
+
+# compiler
+CC_FLAGS="-t GCC49"
+
+# common features
+#CC_FLAGS="${CC_FLAGS} -b DEBUG"
+CC_FLAGS="${CC_FLAGS} -b RELEASE"
+CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
+
+# ovmf features
+OVMF_FLAGS="${CC_FLAGS}"
+OVMF_FLAGS="${OVMF_FLAGS} -D HTTP_BOOT_ENABLE"
+OVMF_FLAGS="${OVMF_FLAGS} -D NETWORK_IP6_ENABLE"
+
+# ovmf + secure boot features
+OVMF_SB_FLAGS="${OVMF_FLAGS}"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
+
+# arm firmware features
+ARM_FLAGS="-t GCC49 -b DEBUG --cmd-len=65536"
+ARM_FLAGS="${ARM_FLAGS} -D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
+
 # prepare
 #cp /usr/share/seabios/bios-csm.bin OvmfPkg/Csm/Csm16/Csm16.bin
 #cp /usr/share/seabios/bios-csm.bin corebootPkg/Csm/Csm16/Csm16.bin
@@ -123,42 +140,39 @@ source ./edksetup.sh
 	 -C BaseTools
 
 
-(cd UefiCpuPkg/ResetVector/Vtf0; python Build.py)
+#(cd UefiCpuPkg/ResetVector/Vtf0; python Build.py)
 
-mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
-source ./edksetup.sh
+#mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
+#source ./edksetup.sh
 
-build -p FatPkg/FatPkg.dsc -m FatPkg/EnhancedFatDxe/Fat.inf -b RELEASE -a IA32 -a X64
-cp -a Build/Fat/RELEASE_%{TOOL_CHAIN_TAG}/X64/Fat.efi FatBinPkg/EnhancedFatDxe/X64/Fat.efi
-cp -a Build/Fat/RELEASE_%{TOOL_CHAIN_TAG}/IA32/Fat.efi FatBinPkg/EnhancedFatDxe/Ia32/Fat.efi
+# build ovmf
+build ${OVMF_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
+#build ${OVMF_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
 
-build -p OvmfPkg/OvmfPkgX64.dsc -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a X64
-build -p OvmfPkg/OvmfPkgIa32.dsc -D SECURE_BOOT_ENABLE=TRUE -D FD_SIZE_2MB -b RELEASE -a IA32
+# build ovmf with secure boot
+build ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
+
+%if_enabled aarch64
+# build arm/aarch64 firmware
+export GCC49_AARCH64_PREFIX="aarch64-linux-gnu-"
+mkdir -p aarch64
+build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+cp Build/ArmVirtQemu-AARCH64/*/FV/*.fd aarch64
+dd of="aarch64/QEMU_EFI-pflash.raw" if="/dev/zero" bs=1M count=64
+dd of="aarch64/QEMU_EFI-pflash.raw" if="aarch64/QEMU_EFI.fd" conv=notrunc
+dd of="aarch64/vars-template-pflash.raw" if="/dev/zero" bs=1M count=64
+unset GCC49_AARCH64_PREFIX
+%endif
 
 %install
 # install BaseTools
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_datadir/%name/Conf
-mkdir -p %buildroot%_datadir/%name/Scripts
+mkdir -p %buildroot%_bindir \
+         %buildroot%_datadir/%name/Conf \
+         %buildroot%_datadir/%name/Scripts
 
 pushd BaseTools
 install --strip \
-	Source/C/bin/BootSectImage \
-	Source/C/bin/EfiLdrImage \
-	Source/C/bin/EfiRom \
-	Source/C/bin/GenCrc32 \
-	Source/C/bin/GenFfs \
-	Source/C/bin/GenFv \
-	Source/C/bin/GenFw \
-	Source/C/bin/GenPage \
-	Source/C/bin/GenSec \
-	Source/C/bin/GenVtf \
-	Source/C/bin/GnuGenBootSector \
-	Source/C/bin/LzmaCompress \
-	Source/C/bin/Split \
-	Source/C/bin/TianoCompress \
-	Source/C/bin/VfrCompile \
-	Source/C/bin/VolInfo \
+	Source/C/bin/* \
 	%buildroot%_bindir
 
 ln -f %buildroot%_bindir/GnuGenBootSector \
@@ -173,9 +187,7 @@ install \
 	%buildroot%_datadir/%name
 
 install \
-	Conf/build_rule.template \
-	Conf/tools_def.template \
-	Conf/target.template \
+	Conf/*.template \
 	%buildroot%_datadir/%name/Conf
 
 install \
@@ -197,15 +209,17 @@ done
 popd
 
 #install OVMF
-mkdir -p %buildroot%_datadir/ovmf
-install -D -m644 Build/OvmfIa32/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF.fd %buildroot%_datadir/ovmf/ovmf-ia32.bin
-install -D -m644 Build/OvmfIa32/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_CODE.fd %buildroot%_datadir/ovmf/ovmf_code-ia32.bin
-install -D -m644 Build/OvmfIa32/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildroot%_datadir/ovmf/ovmf_vars-ia32.bin
-#%ifarch x86_64
-install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF.fd %buildroot%_datadir/ovmf/ovmf-x64.bin
-install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_CODE.fd %buildroot%_datadir/ovmf/ovmf_code-x64.bin
-install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildroot%_datadir/ovmf/ovmf_vars-x64.bin
-#%endif
+mkdir -p %buildroot%_datadir/OVMF
+#install -D -m644 Build/OvmfIa32/*/FV/OVMF.fd %buildroot%_datadir/OVMF/ovmf-ia32/
+#install -D -m644 Build/OvmfIa32/*/FV/OVMF_CODE.fd %buildroot%_datadir/OVMF/ovmf-ia32/
+#install -D -m644 Build/OvmfIa32/*/FV/OVMF_VARS.fd %buildroot%_datadir/OVMF/ovmf-ia32/
+install -D -m644 Build/OvmfX64/*/FV/OVMF.fd %buildroot%_datadir/OVMF/
+install -D -m644 Build/OvmfX64/*/FV/OVMF_CODE.fd %buildroot%_datadir/OVMF/
+install -D -m644 Build/OvmfX64/*/FV/OVMF_VARS.fd %buildroot%_datadir/OVMF/
+install -D -m644 Build/Ovmf3264/*/FV/OVMF_CODE.fd %buildroot%_datadir/OVMF/OVMF_CODE.secboot.fd
+%if_enabled aarch64
+install -D -m644 Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd %buildroot%_datadir/AAVMF/
+%endif
 
 %files tools
 %_bindir/BootSectImage
@@ -248,9 +262,15 @@ install -D -m644 Build/OvmfX64/RELEASE_%{TOOL_CHAIN_TAG}/FV/OVMF_VARS.fd %buildr
 %files ovmf
 #%doc FatBinPkg/License.txt
 %doc OvmfPkg/License.txt
-%_datadir/ovmf
+%_datadir/OVMF
+%if_enabled aarch64
+%_datadir/AAVMF/
+%endif
 
 %changelog
+* Wed May 25 2016 Alexey Shabalin <shaba@altlinux.ru> 20160518-alt1
+- master snapshot 855743f7177459bea95798e59b6b18dab867710c
+
 * Mon Dec 28 2015 Alexey Shabalin <shaba@altlinux.ru> 20151225-alt1.svn19549
 - build from branche UDK2015
 
