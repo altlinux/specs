@@ -6,7 +6,7 @@
 Summary: AVR libc
 Name: avr-libc
 Version: 2.0.0
-Release: alt2
+Release: alt3
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
 Group: Development/Other
@@ -16,7 +16,7 @@ Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.bz2
 Source1: avr8-headers-3.5.0.1662.zip
 Patch0: 1.8.0.fix.patch
 
-BuildRequires: azenis-fonts-ttf cups-filters doxygen ruby-stdlibs transfig
+BuildRequires: cups-filters doxygen ruby-stdlibs transfig
 BuildRequires: unzip
 
 BuildRequires: avr-binutils >= 2:2.23.1-alt1
@@ -91,6 +91,9 @@ done
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Mon May 30 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt3
+- Build requires cleanup
+
 * Mon May 30 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt2
 - Remove fonts from BuildRequires
 
