@@ -2,7 +2,7 @@
 Name: drbd-utils
 Summary: DRBD user-land tools and scripts
 Version: 8.9.0
-Release: alt2
+Release: alt3
 Source0: http://oss.linbit.com/%{name}/%{name}-%{version}.tar.gz
 Source1: drbd.service
 Patch0: disable_drbd_checkin.patch
@@ -12,6 +12,16 @@ URL: http://www.drbd.org/
 BuildRequires: udev flex
 Conflicts: drbd-tools
 Conflicts: drbd83-tools
+
+# Always disable xen for now
+%def_without xen
+
+# armv7hl/aarch64 doesn't have Xen packages
+#ifarch %{ix86} x86_64
+#def_with xen
+#else
+#def_without xen
+#endif
 
 %description
 DRBD refers to block devices designed as a building block to form high 
@@ -31,11 +41,7 @@ This packages includes the DRBD administration tools.
     --with-utils \
     --without-km \
     --with-udev \
-%ifarch %{ix86} x86_64
-    --with-xen \
-%else
-    --without-xen \
-%endif
+    %{subst_with xen} \
     --with-pacemaker \
     --with-rgmanager \
     --with-distro=generic \
@@ -83,8 +89,7 @@ mv $RPM_BUILD_ROOT/etc/udev/rules.d/* $RPM_BUILD_ROOT/%{_udevrulesdir}/
 %doc ChangeLog
 %doc README
 
-# armv7hl/aarch64 doesn't have Xen packages
-%ifarch %{ix86} x86_64
+%if_with xen
 %package xen
 Summary: Xen block device management script for DRBD
 Group: System/Kernel and hardware
@@ -156,6 +161,9 @@ management utility.
 %preun_service drbd
 
 %changelog
+* Fri May 27 2016 Mikhail Efremov <sem@altlinux.org> 8.9.0-alt3
+- Disable xen support.
+
 * Tue Jan 26 2016 Lenar Shakirov <snejok@altlinux.ru> 8.9.0-alt2
 - Fixed build (man page packaging)
 
