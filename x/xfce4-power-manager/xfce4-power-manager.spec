@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
 Version: 1.4.4
-Release: alt1
+Release: alt2
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -30,6 +30,8 @@ Requires: xfce4-panel
 Requires: polkit
 Requires: upower
 
+%define _unpackaged_files_terminate_build 1
+
 %description
 xfce4-power-manager is a tool for the Xfce desktop environment for
 managing profiles of policies which affect power consumption, such as
@@ -50,7 +52,7 @@ scaling.
 	--enable-dpms \
 	--enable-network-manager \
 	--with-backend=linux \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -74,6 +76,11 @@ scaling.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon May 30 2016 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt2
+- Enable debug (minimum level).
+- Patch from upstream:
+  + Look up the schema for light-locker's settings recursively
+
 * Mon Mar 23 2015 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt1
 - Updated to 1.4.4.
 
