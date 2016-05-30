@@ -7,7 +7,7 @@
 %define kmsmodule_name	nvidia-modeset
 %define uvmmodule_name	nvidia-uvm
 %define module_version	361.45.11
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -243,6 +243,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon May 30 2016 Sergey V Turchin <zerg at altlinux dot org> 361.45.11-alt2..
+- rebuild with fixed 304.131 module (ALT#32154)
 
 * Fri May 27 2016 Sergey V Turchin <zerg at altlinux dot org> 361.45.11-alt1..
 - new release (361.45.11)
