@@ -2,8 +2,8 @@
 %define spawn_fcgi_group _spawn_fcgi
 
 Name: spawn-fcgi
-Version: 1.6.3
-Release: alt4
+Version: 1.6.4
+Release: alt1
 
 Summary: spawn FastCGI applications
 License: BSD
@@ -60,6 +60,9 @@ install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/s
 %dir %attr(1770,root,%spawn_fcgi_group) %_var/run/spawn-fcgi
 
 %changelog
+* Mon May 30 2016 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
+- updated to 1.6.4
+
 * Fri Apr 18 2014 Anton Farygin <rider@altlinux.ru> 1.6.3-alt4
 - initfile: don't check pidfile in stop target
 
