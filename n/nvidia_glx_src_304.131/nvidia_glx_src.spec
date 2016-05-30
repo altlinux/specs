@@ -14,7 +14,7 @@
 %define nv_version 304
 %define nv_release 131
 %define nv_minor %nil
-%define pkg_rel alt127
+%define pkg_rel alt128
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -81,6 +81,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
+Patch2: disable-mtrr.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 ExclusiveArch: %ix86 x86_64
@@ -143,36 +144,6 @@ License: %myLicense
 %description -n %{bin_pkg_name}-devel
 Development files for NVIDIA OpenGL
 
-%package -n libcuda
-Group: Development/C
-Summary: CUDA library
-License: %myLicense
-%description -n libcuda
-NVIDIA CUDA library
-
-%package -n libcuda-devel
-Group: Development/C
-Summary: Development files for NVIDIA CUDA
-License: %myLicense
-Requires: libcuda = %version-%release
-%description -n libcuda-devel
-Development files for NVIDIA CUDA
-
-%package -n libvdpau
-Group: Development/C
-Summary: VDPAU library
-License: %myLicense
-%description -n libvdpau
-NVIDIA VDPAU library
-
-%package -n libvdpau-devel
-Group: Development/C
-Summary: Development files for NVIDIA VDPAU
-License: %myLicense
-Requires: libvdpau = %version-%release libX11-devel
-%description -n libvdpau-devel
-Development files for NVIDIA VDPAU
-
 %prep
 %setup -T -c -n %tbname-%tbver%dirsuffix
 rm -rf %_builddir/%tbname-%tbver%dirsuffix
@@ -186,6 +157,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -278,16 +250,6 @@ if [ -z "$DURING_INSTALL" ]; then
     else
 	echo "Warning! x11presetdrv program not found!" >&2
     fi
-    X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-    if [ -n "$X11SETUPDRV" ]; then
-	$X11SETUPDRV ||:
-    fi
-fi
-
-%postun -n %{bin_pkg_name}_%{version}
-X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-if [ -n "$X11SETUPDRV" ]; then
-    $X11SETUPDRV ||:
 fi
 
 
@@ -317,6 +279,9 @@ fi
 %endif
 
 %changelog
+* Mon May 30 2016 Sergey V Turchin <zerg@altlinux.org> 304.131-alt128
+- disable MTRR support on kernels >= 4.3
+
 * Mon Nov 23 2015 Sergey V Turchin <zerg@altlinux.org> 304.131-alt127
 - new version
 
