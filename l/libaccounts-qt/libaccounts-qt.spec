@@ -9,7 +9,7 @@ Group: System/Libraries
 Name:           libaccounts-qt
 Summary:        Accounts framework Qt bindings
 Version:        1.13
-Release:        alt1_11
+Release:        alt2_11
 
 License:        LGPLv2
 URL:            https://gitlab.com/accounts-sso/libaccounts-qt
@@ -132,25 +132,28 @@ rm -fv %{buildroot}%{_bindir}/accountstest
 %{_libdir}/pkgconfig/accounts-qt.pc
 %{_libdir}/cmake/AccountsQt/
 
-%files -n libaccounts-qt5
-%doc COPYING
-%{_libdir}/libaccounts-qt5.so.*
-%dir %{_datadir}/accounts/
-%dir %{_datadir}/accounts/providers/
-%dir %{_datadir}/accounts/services/
+#%files -n libaccounts-qt5
+#%doc COPYING
+#%{_libdir}/libaccounts-qt5.so.*
+#%dir %{_datadir}/accounts/
+#%dir %{_datadir}/accounts/providers/
+#%dir %{_datadir}/accounts/services/
 
 
-%files -n libaccounts-qt5-devel
-%{_libdir}/libaccounts-qt5.so
-%{_includedir}/accounts-qt5/
-%{_libdir}/pkgconfig/accounts-qt5.pc
-%{_libdir}/cmake/AccountsQt5
+#%files -n libaccounts-qt5-devel
+#%{_libdir}/libaccounts-qt5.so
+#%{_includedir}/accounts-qt5/
+#%{_libdir}/pkgconfig/accounts-qt5.pc
+#%{_libdir}/cmake/AccountsQt5
 
 #%files doc
 #%{_docdir}/accounts-qt/
 
 
 %changelog
+* Mon May 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt2_11
+- removed account-qt5; preparing for EndOfLife
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_11
 - update to new release by fcimport
 - disabled doc - quickfix for non-identical noarch packages
