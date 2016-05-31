@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.3
-Release: alt3.1
+Version: 1.7.0
+Release: alt1
 Summary: Turbogears Scheduler
 License: MIT
 Group: Development/Python
@@ -107,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Tue May 31 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt1
+- NMU update to 1.7.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.6.3-alt3.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
