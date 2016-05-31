@@ -1,26 +1,28 @@
-%define _disable_ld_no_undefined 1
-
 Summary: An open source software for the creation of electronic schematic diagrams
+Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
-Version: r4029
-Release: alt2
-Source0: ~registry-%name-stable-%version.tgz
-Source1: %name.desktop
+Version: 4.0.2
+Release: alt1
+Epoch: 1
+Packager: Anton Midyukov <antohami@altlinux.org>
+
+Source: %name-%version.tar
+Patch1: kicad-4.0.2-freerouting.patch
+Patch2: kicad-4.0.2-nostrip.patch
 License: GPLv2+
 Group: Sciences/Computer science
 Url: https://code.launchpad.net/kicad
-#Url: https://code.launchpad.net/~registry/kicad/stable
+#Url: https://code.launchpad.net/~stambaughw/kicad/4.0
+#Url: https://github.com/KiCad/kicad-source-mirror.git
 
-BuildRequires: boost-devel ccmake cmake >= 2.6.4 cmake-modules gcc4.7-c++ libGL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel
-BuildRequires: libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel
-BuildRequires: libXxf86misc-devel libxkbfile-devel wxGTK-devel xorg-xf86vidmodeproto-devel zlib-devel
-BuildRequires: fontconfig glibc-pthread libGLU-devel libICE-devel libSM-devel libX11-devel libXdamage-devel libXfixes-devel libXrender-devel
-BuildRequires: libgtk+2-common libstdc++4.7-devel wxGTK xorg-inputproto-devel xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel
-BuildRequires: xorg-xf86miscproto-devel xorg-xineramaproto-devel xorg-xproto-devel
-
-BuildRequires: ImageMagick
+BuildRequires(pre): cmake rpm-macros-cmake
+# Automatically added by buildreq on Mon Sep 28 2015
+# optimized out: at-spi2-atk boost-devel boost-devel-headers boost-polygon-devel cmake cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libat-spi2-core libcairo-gobject libcom_err-devel libgdk-pixbuf libkrb5-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-devel python-modules swig-data xorg-xproto-devel xz
+BuildRequires: boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel ccmake doxygen gcc-c++ libGLEW-devel libcairo-devel libssl-devel swig libwxGTK3.1-gtk2-devel
+BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
 Requires: %name-library %name-doc
+%add_findreq_skiplist %_docdir/%name
 
 %description
 Kicad is an open source (GPL) software for the creation of electronic
@@ -28,102 +30,102 @@ schematic diagrams and printed circuit board artwork.
 
 Kicad is a set of four softwares and a project manager:
 
-Eeschema :  Schematic entry.
-Pcbnew :    Board editor.
-Gerbview :  GERBER viewer (photoplotter documents).
-Cvpcb :     footprint selector for components used in the circuit design.
-Kicad:      project manager.
+Kicad: Project manager.
+Eeschema: Schematic entry.
+Pcbnew: Board editor.
+Cvpcb: Footprint selector for components used in the circuit design.
+Gerbview: GERBER viewer (photoplotter documents).
+
+%description -l ru_RU.UTF-8
+Kicad - это программное обеспечение с открытым исходным кодом для
+проектирования электронных схем и получения на их основе печатных плат.
+
+Для использования рамки ГОСТ необходимо выбрать шаблон
+gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом окне
+"Настройки страницы" в поле "Файл описания разметки листа".
+Стандартные файлы рамки (*.kicad_wks) находятся в %_datadir/kicad/template/.
 
 %prep
-%setup -n ~registry/kicad/stable
+%setup -n %name-%version
 
 %build
-#export LC_ALL=C
-#%add_optflags -fpermissive
-cmake \
+%cmake \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DwxUSE_UNICODE=ON \
-	-DKICAD_GOST=ON \
-	-DKICAD_STABLE_VERSION=ON
-#	-DCMAKE_C_FLAGS="%optflags" \
-#	-DCMAKE_CXX_FLAGS="%optflags" \	
-%make
+	-DDEFAULT_INSTALL_PATH=/usr \
+	-DBUILD_GITHUB_PLUGIN=OFF \
+	-DKICAD_SCRIPTING=OFF \
+	-DKICAD_SCRIPTING_MODULES=OFF \
+	-DKICAD_SCRIPTING_WXPYTHON=OFF \
+	-DKICAD_SKIP_BOOST=ON \
+	-DKICAD_REPO_NAME=stable \
+	-DKICAD_BUILD_VERSION=%version
+
+%make_build -C BUILD
 
 %install
-%make DESTDIR=%buildroot install
-
-mkdir -p %buildroot%_datadir/applications
-install -p -m 644 resources/linux/mime/applications/* %buildroot%_datadir/applications
-
-mkdir -p %buildroot%_datadir/icons/
-cp -r resources/linux/mime/icons/hicolor %buildroot%_datadir/icons/
-
-install -m 0644 %SOURCE1 %buildroot/%_desktopdir/
-
-#mv %{buildroot}usr/lib/kicad/plugins/netlist_form_pads-pcb.xsl %buildroot%_datadir/%name/
-%ifarch x86_64
-mkdir -p %buildroot%_libdir/%name/plugins/
-mv -f %buildroot/usr/lib/%name/plugins/ %buildroot%_libdir/%name/plugins/
-%endif
+%makeinstall_std -C BUILD
 
 %files
 %_bindir/*
 %_datadir/%name/
-%_liconsdir/%name.png
-%_desktopdir/%name.desktop
-%_datadir/icons/hicolor/*/*/*kicad*
-%_datadir/mimelnk/application/*kicad*
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/mimetypes/application-x-*.*
+%_iconsdir/hicolor/*/apps/*.*
+%dir %_datadir/mimelnk
+%dir %_datadir/mimelnk/application
+%_datadir/mimelnk/application/*kicad*.desktop
 %_datadir/mime/packages/kicad.xml
-%_libdir/%name/plugins/*
-%doc %_datadir/doc/%name
+%_libexecdir/%name
+%doc %_docdir/%name
 
 %changelog
-* Sat Feb 27 2016 barssc <barssc@altlinux.ru> r4029-alt2
+* Sat Jun 04 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt1
+- New version.
+
+* Sat Feb 27 2016 barssc <barssc at altlinux.ru> r4029-alt2
 - fix build for Sisyphus
 
-* Sat Nov 29 2014 barssc <barssc@altlinux.ru> r4029-alt1
+* Sat Nov 29 2014 barssc <barssc at altlinux.ru> r4029-alt1
 - new version
 
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110522-alt2.1
 - Fixed build with gcc 4.7
 
-* Tue Jun 07 2011 Denis Klimov <zver@altlinux.org> 20110522-alt2
+* Tue Jun 07 2011 Denis Klimov <zver at altlinux.org> 20110522-alt2
 - fix inherit
 
-* Mon Jun 06 2011 Denis Klimov <zver@altlinux.org> 20110522-alt1
+* Mon Jun 06 2011 Denis Klimov <zver at altlinux.org> 20110522-alt1
 - new version
 
-* Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 20110421-alt1.qa1
+* Tue May 24 2011 Repocop Q. A. Robot <repocop at altlinux.org> 20110421-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
   * freedesktop-desktop-file-proposed-patch for kicad
 
-* Fri Apr 22 2011 Denis Klimov <zver@altlinux.org> 20110421-alt1
+* Fri Apr 22 2011 Denis Klimov <zver at altlinux.org> 20110421-alt1
 - new version
 
-* Tue Apr 12 2011 Denis Klimov <zver@altlinux.org> 20110409-alt2
+* Tue Apr 12 2011 Denis Klimov <zver at altlinux.org> 20110409-alt2
 - fix install netlist_form_pads-pcb.xsl for x86_64
 
-* Mon Apr 11 2011 Denis Klimov <zver@altlinux.org> 20110409-alt1
+* Mon Apr 11 2011 Denis Klimov <zver at altlinux.org> 20110409-alt1
 - new version
 
-* Fri Apr 08 2011 Denis Klimov <zver@altlinux.org> 20110401-alt1
+* Fri Apr 08 2011 Denis Klimov <zver at altlinux.org> 20110401-alt1
 - new version
 
-* Mon Mar 28 2011 Denis Klimov <zver@altlinux.org> 20110325-alt1
+* Mon Mar 28 2011 Denis Klimov <zver at altlinux.org> 20110325-alt1
 - new version
 - remove patches
 - cleanup spec
 
-* Thu Nov 12 2009 Repocop Q. A. Robot <repocop@altlinux.org> 20080825-alt0.2.qa1
+* Thu Nov 12 2009 Repocop Q. A. Robot <repocop at altlinux.org> 20080825-alt0.2.qa1
 - NMU (by repocop): the following fixes applied:
   * pixmap-in-deprecated-location for kicad
   * postclean-05-filetriggers for spec file
 
-* Fri Feb 13 2009 Alexey Shentzev <ashen@altlinux.ru> 20080825-alt0.2
+* Fri Feb 13 2009 Alexey Shentzev <ashen at altlinux.ru> 20080825-alt0.2
 - fix desktop files
 
-* Fri Feb 13 2009 Alexey Shentzev <ashen@altlinux.ru> 20080825-alt0.1
+* Fri Feb 13 2009 Alexey Shentzev <ashen at altlinux.ru> 20080825-alt0.1
 - first build for ALT Linux
-
