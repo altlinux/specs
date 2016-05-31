@@ -1,5 +1,5 @@
 Name: strace
-Version: 4.11.0.735.0cf2
+Version: 4.12
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -43,6 +43,16 @@ complex commands do.
 echo -n %version-%release > .tarball-version
 
 %build
+echo 'BEGIN OF BUILD ENVIRONMENT INFORMATION'
+uname -a |head -1
+libc="$(ldd /bin/sh |sed -n 's|^[^/]*\(/[^ ]*/libc\.so[^ ]*\).*|\1|p' |head -1)"
+$libc |head -1
+file -L /bin/sh
+gcc --version |head -1
+kver="$(echo -e '#include <linux/version.h>\nLINUX_VERSION_CODE' | gcc -E -P -)"
+printf 'kernel-headers %%s.%%s.%%s\n' $(($kver/65536)) $(($kver/256%%256)) $(($kver%%256))
+echo 'END OF BUILD ENVIRONMENT INFORMATION'
+
 ./bootstrap -sv
 mkdir build
 cd build
@@ -55,8 +65,12 @@ cd build
 %set_verify_elf_method strict
 
 %check
-export SLEEP_A_BIT='sleep 0.2' VERBOSE=1
+export SLEEP_A_BIT='sleep 0.5' VERBOSE=1
 %make_build -k check -C build VERBOSE=1
+
+echo 'BEGIN OF TEST SUITE INFORMATION'
+tail -n 99999 -- build/tests*/test-suite.log build/tests*/ksysent.log
+echo 'END OF TEST SUITE INFORMATION'
 
 %files
 %_bindir/strace
@@ -68,6 +82,9 @@ export SLEEP_A_BIT='sleep 0.2' VERBOSE=1
 %_bindir/strace-graph
 
 %changelog
+* Tue May 31 2016 Dmitry V. Levin <ldv@altlinux.org> 4.12-alt1
+- v4.11-735-g0cf24d9 -> v4.12.
+
 * Tue May 24 2016 Dmitry V. Levin <ldv@altlinux.org> 4.11.0.735.0cf2-alt1
 - v4.11-684-gff2b853 -> v4.11-735-g0cf24d9.
 
