@@ -3,7 +3,7 @@
 %def_disable apport
 
 Name: plank
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -135,6 +135,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Tue May 31 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Sat Mar 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
