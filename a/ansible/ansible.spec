@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.0.2.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 License: GPLv3
@@ -20,6 +20,8 @@ BuildArch: noarch
 BuildRequires: python-module-setuptools asciidoc-a2x
 
 Requires: ca-certificates >= 2015.10.29
+%py_requires yaml
+%py_requires paramiko
 
 # Skip findreq on all modules:
 %add_findreq_skiplist %python_sitelibdir/%name/modules/*
@@ -63,6 +65,9 @@ cp -va library/* %buildroot%python_sitelibdir/%name/modules
 %doc README.md CONTRIBUTING.md CHANGELOG.md RELEASES.txt CODING_GUIDELINES.md ISSUE_TEMPLATE.md
 
 %changelog
+* Tue May 31 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.2.0-alt2
+- Add requires to be out-of-box usable
+
 * Wed May 11 2016 Terechkov Evgenii <evg@altlinux.org> 2.0.2.0-alt1
 - 2.0.2.0-1
 
