@@ -1,8 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
+BuildRequires: python-devel swig
 # END SourceDeps(oneline)
 %define oldname python-elements
-# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name python-elements
 %define version 0.13
 # sitelib for noarch packages, sitearch for others (remove the unneeded one)
@@ -19,7 +20,7 @@ BuildRequires(pre): rpm-build-python
 
 Name:           python-module-elements
 Version:        0.13
-Release:        alt1_6.20100110svn
+Release:        alt1_11.%{svndate}svn
 Summary:        A 2D Physics API for Python
 
 Group:          Development/Python
@@ -28,7 +29,7 @@ URL:            http://www.assembla.com/wiki/show/elements
 Source0:        %{tarfile}
 
 BuildArch:      noarch
-BuildRequires:  python-devel
+BuildRequires:  python-dev
 BuildRequires:  python-module-setuptools
 Requires:       python-module-pybox2d
 Source44: import.info
@@ -40,7 +41,7 @@ teaching & learning tools.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 
 # calm rpmlint down
 sed -i elements/elements.py -e 1d
@@ -60,6 +61,9 @@ sed -i elements/elements.py -e 1d
 
 
 %changelog
+* Tue May 31 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_11.20100110svn
+- converted for ALT Linux by srpmconvert tools
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_6.20100110svn
 - new version
 
