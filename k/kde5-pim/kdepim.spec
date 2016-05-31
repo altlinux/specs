@@ -20,7 +20,7 @@
 
 Name: kde5-pim
 Version: 16.04.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -33,7 +33,7 @@ Requires: %name-blogilo
 Requires: %name-kaddressbook
 Requires: %name-kalarm
 Requires: kde5-kleopatra
-Requires: kde5-email-client
+#Requires: kde5-email-client
 Requires: %name-knotes
 Requires: %name-kontact
 Requires: %name-korganizer
@@ -49,7 +49,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: qt5-quick1-devel qt5-tools-devel-static qt5-x11extras-devel
 #BuildRequires: qt5-speech-devel
-BuildRequires: xsltproc grantlee5-devel libassuan-devel libgpgme-devel libldap-devel libsasl2-devel zlib-devel
+BuildRequires: desktop-file-utils xsltproc grantlee5-devel libassuan-devel libgpgme-devel libldap-devel libsasl2-devel zlib-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-search-devel kde5-gpgmepp-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalcore-devel
 BuildRequires: kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel
 BuildRequires: kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-ktnef-devel
@@ -291,6 +291,12 @@ done
 %K5install_move data kdepimwidgets kleopatra kmail2 knode knotes kontact korgac korganizer kwatchgnupg
 %K5install_move data libkleopatra libmessageviewer messagelist messageviewer pimsettingexporter sieve
 
+desktop-file-install \
+    --mode=0755 --dir %buildroot/%_K5xdgapp \
+    --add-category=System \
+    --remove-category=Development \
+    %buildroot/%_K5xdgapp/org.kde.akonadiconsole.desktop
+
 %files
 %files common
 %config(noreplace) %_K5xdgconf/*rc
@@ -325,13 +331,6 @@ done
 %_K5cf_upd/*importwizard*
 %_K5data/importwizard/
 %doc %_K5doc/en/importwizard/
-#
-%_K5bin/sieveeditor
-%_K5xdgapp/org.kde.sieveeditor.desktop
-#%_K5data/sieve/
-%_K5cf_upd/*sieveeditor*
-#%_K5xmlgui/sieveeditor/
-%doc %_K5doc/en/sieveeditor/
 #
 %_K5bin/konsolekalendar
 %_K5xdgapp/konsolekalendar.desktop
@@ -410,11 +409,6 @@ done
 %_K5xdgapp/org.kde.contactthemeeditor.desktop
 #%_K5xmlgui/contactthemeeditor/
 %doc %_K5doc/en/contactthemeeditor/
-#
-%_K5xdgapp/org.kde.headerthemeeditor.desktop
-%_K5bin/headerthemeeditor
-#%_K5xmlgui/headerthemeeditor/
-%doc %_K5doc/en/headerthemeeditor/
 
 %files kalarm
 %config(noreplace) %_K5conf_dbus_sysd/org.kde5.kalarmrtcwake.conf
@@ -477,6 +471,18 @@ done
 #%_K5xmlgui/ktnef/
 %_K5icon/*/*/apps/ktnef.*
 %doc %_K5doc/en/ktnef/
+#
+%_K5xdgapp/org.kde.headerthemeeditor.desktop
+%_K5bin/headerthemeeditor
+#%_K5xmlgui/headerthemeeditor/
+%doc %_K5doc/en/headerthemeeditor/
+#
+%_K5bin/sieveeditor
+%_K5xdgapp/org.kde.sieveeditor.desktop
+#%_K5data/sieve/
+%_K5cf_upd/*sieveeditor*
+#%_K5xmlgui/sieveeditor/
+%doc %_K5doc/en/sieveeditor/
 
 %files knotes
 %_K5bin/knotes
@@ -595,6 +601,10 @@ done
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Tue May 31 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt2
+- change akonadiconsole menu category
+- package sieveeditor and headerthemeeditor with kmail
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
