@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.2
-%define rel alt4.2
+%define rel alt4.3
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -662,6 +662,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Tue May 31 2016 Michael Shigorin <mike@altlinux.org> 3.5.13.2-alt4.3
+- NMU: rebuilt against current libraries
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 3.5.13.2-alt4.2
 - NMU:
 - Fix perl522 issues (Patch5051)
