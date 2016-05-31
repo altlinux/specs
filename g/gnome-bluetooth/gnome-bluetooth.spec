@@ -1,4 +1,4 @@
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -132,6 +132,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Tue May 31 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
 - 3.18.3
 
