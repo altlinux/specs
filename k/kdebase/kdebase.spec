@@ -36,7 +36,7 @@
 %define bugfix 13.2
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt7.3
+Release: alt7.4
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -2007,6 +2007,9 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Tue May 31 2016 Michael Shigorin <mike@altlinux.org> 3.5.13.2-alt7.4
+- NMU: rebuilt against current libraries
+
 * Sat Feb 06 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.5.13.2-alt7.3
 - Fixed build with new Perl (removed 'defined(@array)')
 
