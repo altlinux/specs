@@ -4,8 +4,8 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.10.0
-Release: alt3
+Version: 1.10.1
+Release: alt1
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel
@@ -59,7 +59,7 @@ Summary: GeoIP module for nginx
 Group: System/Servers
 %def_with geoip
 Requires: GeoIP-Lite-City GeoIP-Lite-Country
-Requires: %name
+Requires(pre): %name
 
 %description geoip
 GeoIP module for nginx
@@ -68,7 +68,7 @@ GeoIP module for nginx
 %package image_filter
 Summary: image_filter module for nginx
 Group: System/Servers
-Requires: %name
+Requires(pre): %name
 
 %description image_filter
 image_filter module for nginx
@@ -78,7 +78,7 @@ image_filter module for nginx
 %package perl
 Summary: Perl for nginx
 Group: System/Servers
-Requires: %name
+Requires(pre): %name
 
 %description perl
 Perl for nginx
@@ -88,7 +88,7 @@ Perl for nginx
 Summary: XSLT module for nginx
 Group: System/Servers
 %def_with xslt
-Requires: %name
+Requires(pre): %name
 
 %description xslt
 XSLT module for nginx
@@ -317,6 +317,10 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %_libdir/%name/ngx_http_xslt_filter_module.so
 
 %changelog
+* Wed Jun 01 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.1-alt1
+- 1.10.1
+- CVE-2016-4450
+
 * Sun May 01 2016 Denis Smirnov <mithraen@altlinux.ru> 1.10.0-alt3
 - remove ctpp module (ALT #32041)
 - fix dynamic modules configuration (use %nginx_etc/modules-enabled.d)
