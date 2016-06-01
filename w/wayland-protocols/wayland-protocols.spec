@@ -1,4 +1,4 @@
-%define ver_major 1.3
+%define ver_major 1.4
 
 Name: wayland-protocols
 Version: %ver_major
@@ -31,6 +31,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %find_lang %name
 
 %files -f %name.lang
@@ -39,6 +42,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README
 
 %changelog
+* Wed Jun 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Fri Mar 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 
