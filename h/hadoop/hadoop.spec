@@ -45,7 +45,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:   hadoop
 Version: 2.4.1
-Release: alt1_14jpp8
+Release: alt2_14jpp8
 Summary: A software platform for processing vast amounts of data
 # The BSD license file is missing
 # https://issues.apache.org/jira/browse/HADOOP-9849
@@ -793,7 +793,7 @@ popd
 # Copy the tomcat configuration and overlay with specific configuration bits.
 # This is needed so the httpfs instance won't collide with a system running
 # tomcat
-for cfgfile in catalina.policy catalina.properties context.xml log4j.properties \
+for cfgfile in catalina.policy catalina.properties context.xml \
 	tomcat.conf web.xml server.xml logging.properties;
 do
   cp -a %{_sysconfdir}/tomcat/$cfgfile %{buildroot}/%{_sysconfdir}/%{name}/tomcat
@@ -1121,6 +1121,9 @@ fi
 %attr(6010,root,yarn) %{_bindir}/container-executor
 
 %changelog
+* Wed Jun 01 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2_14jpp8
+- fixed build w/tomcat 8
+
 * Sat Feb 13 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_14jpp8
 - new version
 
