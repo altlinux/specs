@@ -1,5 +1,5 @@
 Name: LibreSSL
-Version: 2.3.4
+Version: 2.3.5
 Release: alt1
 
 %define oname libressl
@@ -202,6 +202,9 @@ popd
 %_man1dir/netcat.*
 
 %changelog
+* Wed Jun 01 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.5-alt1
+- 2.3.5
+
 * Tue May 03 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.4-alt1
 - 2.3.4
 - Fix multiple vulnerabilities in libcrypto relating to ASN.1 and encoding
