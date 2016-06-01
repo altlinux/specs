@@ -8,7 +8,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.1.0
+Version:	45.1.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -468,6 +468,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Wed Jun 01 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.1-alt1
+- New version (45.1.1)
+
 * Fri May 20 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.0-alt1
 - New version (45.1.0)
 - Enigmail 1.9.2
