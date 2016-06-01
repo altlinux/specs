@@ -6,8 +6,8 @@
 %add_findreq_skiplist %_libexecdir/installed-tests/%_name/test/*.py
 
 Name: python-module-dbus
-Version: 1.2.2
-Release: alt1.1
+Version: 1.2.4
+Release: alt1
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
@@ -16,8 +16,6 @@ Url: http://www.freedesktop.org/wiki/Software/DBusBindings
 
 ##Source: dbus-python-%version.tar
 Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
-Patch: dbus-python-1.2.2-alt-link.patch
-Patch2: dbus-python-1.1.1-alt-usc4-impaired-python-hack2-around.patch
 
 %setup_python_module dbus
 
@@ -70,7 +68,6 @@ the functionality of the installed python-dbus package.
 %prep
 %setup -n %_name-%version -a0
 mv %_name-%version py3build
-%patch2 -p1
 
 %build
 %define options %{?_enable_installed_tests:--enable-installed-tests}
@@ -136,6 +133,10 @@ done
 %exclude %_docdir/%_name
 
 %changelog
+* Wed Jun 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
+- 1.2.4
+- removed obsolete patches
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.2-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
