@@ -1,7 +1,7 @@
 %define _name cpopen
 
 Name: python-module-%_name
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: A C reimplementation of the tricky bits of Python's Popen
@@ -31,9 +31,12 @@ using C code.
 %python_sitelibdir/%_name/%_name.so
 %python_sitelibdir/%_name/__init__.py*
 %python_sitelibdir/%_name-%version-py*.egg-info
-%doc AUTHORS readme.md
+%doc AUTHORS README PKG-INFO
 
 %changelog
+* Wed Jun 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
+- 1.4
+
 * Sat Jan 18 2014 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 
