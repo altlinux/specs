@@ -5,7 +5,7 @@
 
 Name: lib%origname
 Version: 3.2p1.4
-Release: alt8.qa1
+Release: alt9
 
 Summary: XView libraries for X11
 License: Distributable
@@ -19,15 +19,11 @@ Source0: %{origname}_%version.orig.tar.gz
 # Gentoo
 #Source0: %{origname}-%version%rel.tar.gz
 # debian
-Patch0: %{origname}_%version-23.diff.gz
+#Patch0: %{origname}_%version-23.diff.gz
+# debian
+Patch0: xview-3.2p1.4-debian-26.patch
 Patch1: %{origname}_%version-alt-xorg7.patch
 Patch2: xview_3.2p1.4-alt-gcc41.patch
-
-# gentoo patches; are mainly included in debian patch;
-# not applied (we use debian)
-Patch3: CAN-2005-0076.patch
-Patch4: lseek.diff
-Patch5: xview-3.2-gcc-4.1-v0.1.patch.bz2
 
 Provides: %origname = %version
 
@@ -95,7 +91,7 @@ sed -e 's/MSG_UTIL = xgettext msgfmt/#MSG_UTIL = xgettext msgfmt/' \
 #sed -i -e 's:/usr/X11R6:/usr:' config/XView.cf Build-LinuxXView.bash
 
 #Patch6: xview-3.2-alt-glibc28.patch
-subst s,__linux__,__old_linux__,g lib/libxview/file_chooser/file_list.c
+#subst s,__linux__,__old_linux__,g lib/libxview/file_chooser/file_list.c
 
 %build
 rm -f make
@@ -161,6 +157,9 @@ ln -sf libxview.so.3.2.4 %buildroot%_libdir/libxview.so
 %endif
 
 %changelog
+* Wed Jun 01 2016 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt9
+- fixed build
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt8.qa1
 - applied repocop patches
 
