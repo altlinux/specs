@@ -1,31 +1,31 @@
 Name: nxsadmin
 Version: 0.2.1
-Release: alt5.qa1.1
+Release: alt7
 
 Summary: Administering graphic tool for FreeNX server
 
 License: GPL
-Url: http://nxsadmin.berlios.de/
+Url: https://github.com/vitlav/nxsadmin
 Group: System/Configuration/Other
-
-Packager: Boris Savelev <boris@altlinux.org>
 
 Requires: freenx-server
 
-Source: http://download.berlios.de/nxsadmin/%name-%version.tar.bz2
+#Source: http://download.berlios.de/nxsadmin/%name-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+Source: %name-%version.tar
 Source1: %name.desktop
 
 # Automatically added by buildreq on Fri Apr 11 2008
-BuildRequires: gcc-c++ glibc-devel libgtkmm2-devel perl-XML-Parser intltool
+BuildRequires: gcc-c++ libgtkmm2-devel perl-XML-Parser intltool
 
 %description
-FreeNX Sessions Administrator provides a graphical tool for managment of active NX sessions on FreeNX server
+FreeNX Sessions Administrator provides a graphical tool for management of active NX sessions on FreeNX server.
 
 %prep
-%setup -q
+%setup
 
 %build
-%autoreconf
 %configure
 %make_build
 
@@ -38,11 +38,19 @@ install -m 644 %name-icon.png %buildroot%_niconsdir
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS COPYING ChangeLog README TODO
+%doc AUTHORS ChangeLog README TODO
 %_sbindir/nxsadmin
 %_desktopdir/%name.desktop
 %_niconsdir/*.png
+
 %changelog
+* Mon May 30 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt7
+- rewrite configure.am
+- enable -std=c++0x if compiler supports it (for gtkmm built with C++11)
+
+* Tue May 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt6
+- cleanup spec
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.1-alt5.qa1.1
 - Rebuilt for gcc5 C++11 ABI.
 
