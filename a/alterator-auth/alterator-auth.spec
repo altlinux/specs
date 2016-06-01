@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29.2
+Version: 0.29.3
 Release: alt1
 
 BuildArch: noarch
@@ -29,7 +29,6 @@ Provides: alterator-nsswitch = %version
 Obsoletes: alterator-nsswitch
 
 BuildPreReq: alterator >= 4.7-alt4
-BuildRequires: perl-Config-IniFiles
 
 %description
 Alterator module for system wide auth settings
@@ -53,6 +52,11 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Jun 01 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.3-alt1
+- Fix Kerberos environment prepare by winbind
+- Comment out unused parameters
+- Support WINS in Samba config file
+
 * Fri Nov 27 2015 Andrey Cherepanov <cas@altlinux.org> 0.29.2-alt1
 - Replace entire section [global] in /etc/samba/smb.conf by new config
 - Support mapping parameters both for Samba 3.x and 4.x
