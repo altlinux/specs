@@ -1,12 +1,13 @@
 Name: scim
-Version: 1.4.15
-Release: alt1.qa1
+Version: 1.4.17
+Release: alt1
 Summary: Smart Common Input Method platform
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 License: LGPLv2+
 Group: System/Configuration/Other
-Url: http://www.scim-im.org/
+Url: https://github.com/scim-im/scim
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+# VCS:   https://github.com/scim-im/scim
 Source1: xinput-scim
 Source2: scim-icons-0.7.tar.gz
 Source3: scim-system-config
@@ -220,6 +221,9 @@ install -pm 644 %SOURCE1 $RPM_BUILD_ROOT/%_xinputconf
 %_libdir/qt4/plugins/
 
 %changelog
+* Thu Jun 02 2016 Andrey Cherepanov <cas@altlinux.org> 1.4.17-alt1
+- New version
+
 * Thu Nov 12 2015 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.4.15-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
