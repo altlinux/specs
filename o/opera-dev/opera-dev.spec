@@ -1,9 +1,9 @@
 %define		softver 39.0
-%define		buildver 2245.0
+%define		buildver 2248.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
-Release:	alt1
+Release:	alt1.1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -65,6 +65,12 @@ subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g'
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Thu Jun 02 2016 Motsyo Gennadi <drool@altlinux.ru> 39.0.2248.0-alt1.1
+- fix 64 content
+
+* Thu Jun 02 2016 Motsyo Gennadi <drool@altlinux.ru> 39.0.2248.0-alt1
+- packaged 39.0.2248.0 snapshot
+
 * Mon May 30 2016 Motsyo Gennadi <drool@altlinux.ru> 39.0.2245.0-alt1
 - packaged 39.0.2245.0 snapshot
 
