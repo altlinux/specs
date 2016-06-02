@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 License: GPLv2+
@@ -127,6 +127,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Jun 2 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt2
+- Set desktop name to X-Cinnamon
+
 * Tue Apr 26 2016 Vladimir Didenko <cow@altlinux.org> 3.0.0-alt1
 - 3.0.0
 
