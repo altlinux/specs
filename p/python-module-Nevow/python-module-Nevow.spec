@@ -1,4 +1,4 @@
-%define version 0.11.1
+%define version 0.14.0
 %define release alt1
 %setup_python_module Nevow
 
@@ -13,7 +13,7 @@ Summary: Web Application Construction Kit
 License: MIT
 Group: Development/Python
 Packager: Alexey Shabalin <shaba@altlinux.ru>
-Url: http://divmod.org/trac/wiki/Divmod%{modulename}
+Url: https://pypi.python.org/pypi/Nevow
 
 Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%modulename-%version.tar.gz
 Patch1: Nevow-0.10.0-fix-twisted.plugins.patch
@@ -138,6 +138,9 @@ install -D -p -m 0644 doc/man/nevow-xmlgettext.1 %buildroot%_man1dir/nevow-xmlge
 %endif
 
 %changelog
+* Thu Jun 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Fri Aug 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.1-alt1
 - Version 0.11.1
 

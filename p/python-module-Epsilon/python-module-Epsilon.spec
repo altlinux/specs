@@ -1,4 +1,4 @@
-%define version 0.7.0
+%define version 0.7.1
 %define release alt1
 %setup_python_module Epsilon
 
@@ -6,14 +6,14 @@
 
 Name: %packagename
 Version:%version
-Release: alt1.1.1
+Release: alt1
 BuildArch: noarch
 
 Summary: A set of utility modules used by Divmod projects
 License: MIT
 Group: Development/Python
 Packager: Alexey Shabalin <shaba@altlinux.ru>
-Url: http://divmod.org/trac/wiki/DivmodEpsilon
+Url: https://pypi.python.org/pypi/Epsilon/
 
 Source: http://divmod.org/trac/attachment/wiki/SoftwareReleases/%modulename-%version.tar.gz
 Patch: Epsilon-0.7.0-alt-python3.patch
@@ -22,6 +22,7 @@ Patch: Epsilon-0.7.0-alt-python3.patch
 # Automatically added by buildreq on Mon Feb 01 2016 (-bi)
 # optimized out: python-base python-devel python-module-numpy python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-cffi python3-module-enum34 python3-module-pycparser python3-module-setuptools python3-module-zope.interface
 BuildRequires: python-module-pycrypto python-module-setuptools python-module-wx python3-module-cryptography python3-module-zope rpm-build-python3 time
+BuildRequires: python-modules-json
 
 #BuildRequires: python-devel python-module-setuptools
 #BuildPreReq: python-module-twisted python-module-OpenSSL
@@ -105,6 +106,7 @@ popd
 %python_sitelibdir/epsilon
 %doc *.txt LICENSE README
 
+%exclude %_bindir/certcreate
 %exclude %_bindir/benchmark
 
 %if_with python3
@@ -115,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

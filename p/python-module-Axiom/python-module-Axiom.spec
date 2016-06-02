@@ -1,4 +1,4 @@
-%define version 0.7.1
+%define version 0.7.5
 %define release alt1
 %setup_python_module Axiom
 
@@ -53,6 +53,9 @@ also support other databases in the future.
 #%%exclude %_bindir/*
 
 %changelog
+* Thu Jun 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
+- 0.7.5
+
 * Tue Aug 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1
 - Version 0.7.1
 
