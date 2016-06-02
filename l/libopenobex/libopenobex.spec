@@ -1,6 +1,6 @@
 Name: libopenobex
-Version: 1.7.1
-Release: alt2
+Version: 1.7.2
+Release: alt1
 
 Summary: OpenOBEX - Free implementation of the Object Exchange protocol
 License: LGPL
@@ -8,6 +8,7 @@ Group: System/Libraries
 URL: http://openobex.sourceforge.net
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
+# VCS: https://gitlab.com/openobex/mainline.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -54,13 +55,16 @@ cp AUTHORS ChangeLog README %buildroot%_pkgdocdir
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_libdir/cmake/OpenObex-1.7.1/openobex-config-version.cmake
-%_libdir/cmake/OpenObex-1.7.1/openobex-config.cmake
-%_libdir/cmake/OpenObex-1.7.1/openobex-target-release.cmake
-%_libdir/cmake/OpenObex-1.7.1/openobex-target.cmake
+%_libdir/cmake/OpenObex-%version/openobex-config-version.cmake
+%_libdir/cmake/OpenObex-%version/openobex-config.cmake
+%_libdir/cmake/OpenObex-%version/openobex-target-release.cmake
+%_libdir/cmake/OpenObex-%version/openobex-target.cmake
 %doc %_pkgdocdir/html/
 
 %changelog
+* Thu Jun 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
 * Mon Jan 19 2015 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt2
 - fixed incorrect udev.rules
 
