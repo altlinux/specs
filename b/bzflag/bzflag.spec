@@ -1,12 +1,12 @@
-%undefine cvs
-
 %def_disable plugins
 
 %def_disable menufile
 
+%undefine cvs
+
 Name: bzflag
-Version: 2.4.2
-Release: alt1
+Version: 2.4.6
+Release: alt1.RC2
 
 Summary: A multiplayer 3D tank battle game
 License: LGPLv2.1
@@ -14,7 +14,7 @@ Group: Games/Arcade
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 
 Url: http://www.bzflag.org
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 
 Source10: %name.16.png
 Source11: %name.32.png
@@ -27,9 +27,10 @@ Summary(uk_UA.KOI8-U): Тривим╕рна мережева гра на танках
 
 Requires: %name-server
 
-# Automatically added by buildreq on Sun Mar 25 2012 (-bi)
-# optimized out: elfutils libGL-devel libGLU-devel libICE-devel libX11-devel libcom_err-devel libkrb5-devel libstdc++-devel libtinfo-devel pkg-config termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ imake libSDL-devel libSM-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libglew-devel libidn-devel libncurses-devel libssl-devel xorg-cf-files zlib-devel
+# Automatically added by buildreq on Wed Jun 01 2016 (-bi)
+# optimized out: elfutils gnu-config libGL-devel libGLU-devel libICE-devel libX11-devel libgpg-error libjson-c libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
+BuildRequires: gcc-c++ imake libSDL-devel libSM-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel xorg-cf-files zlib-devel
+
 
 %description
 BZFlag is a multiplayer 3D tank battle game. It's one of the most popular games
@@ -58,25 +59,11 @@ Group: Games/Arcade
 This package contains BZFlags standalone game server.
 
 %prep
+%setup
 
-%ifdef cvs
-%setup -q -n %name
-%else
-%setup -q
-%endif
-rm -rf src/c-ares/*.h
 
 %build
-
-%ifdef cvs
-%__rm -f missing
-%__libtoolize --copy --force
-%__aclocal -I m4
-%__autoheader
-%__automake -a -c --gnu 
-%__autoconf
-%endif
-      
+%autoreconf
 export CARES_DIR=%_includedir
 %configure \
 	--bindir=%_gamesbindir \
@@ -94,7 +81,7 @@ make
 cd ..
 
 %install
-%make_install DESTDIR="%buildroot" install
+%makeinstall_std
 
 install -pD -m644 %SOURCE10 %buildroot%_miconsdir/%name.png
 install -pD -m644 %SOURCE11 %buildroot%_niconsdir/%name.png
@@ -123,14 +110,14 @@ mkdir -p %buildroot/var/run/%name
 
 %files
 %exclude %_gamesbindir/bzadmin 
-%exclude %_man6dir/bzadmin.6.gz
+%exclude %_man6dir/bzadmin.6.*
 
 %exclude %_gamesbindir/bzfs
-%exclude %_man6dir/bzfs.6.bz2
+%exclude %_man6dir/bzfs.6.*
 
 %attr(755, %name, %name) /var/run/%name
 
-%doc README BUGS misc/bzfs_conf.html misc/bzfs.conf misc/groups.conf
+%doc README README.Linux misc/bzfs.conf misc/groups.conf misc/filter.txt
 
 %_man6dir/*
 %_man5dir/*
@@ -147,14 +134,17 @@ mkdir -p %buildroot/var/run/%name
 
 %files admin
 %_gamesbindir/bzadmin
-%_man6dir/bzadmin.6.gz
+%_man6dir/bzadmin.6.*
 
 %files server
 %_gamesbindir/bzfs
-%_man6dir/bzfs.6.bz2
+%_man6dir/bzfs.6.*
 %_initdir/bzfs
 
 %changelog
+* Thu Jun 02 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.6-alt1.RC2
+- Version 2.4.6-RC2
+
 * Sat Aug 10 2013 Motsyo Gennadi <drool@altlinux.ru> 2.4.2-alt1
 - 2.4.2
 
