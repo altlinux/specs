@@ -1,4 +1,4 @@
-# 5.1.2.1
+# 5.1.3.2
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,12 +7,12 @@
 
 Name: LibreOffice
 Version: 5.1
-%define urelease 2.1
+%define urelease 3.2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt4
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -54,23 +54,23 @@ Patch5: FC-0002-disable-tearability-of-color-window.patch
 Patch6: FC-0001-rhbz-1168757-propagate-selected-slides-to-print-dial.patch
 Patch7: FC-0001-hack-out-optimization-to-build.patch
 Patch8: FC-0001-generate-better-unit-test-assert-message.patch
-Patch9: FC-0001-tdf-97665-Let-s-hope-that-over-activation-isn-t-real.patch
-Patch10: FC-0002-gtk3-some-changes-towards-enabling-native-gtk3-popup.patch
-Patch11: FC-0003-gtk3-vcl-popups-flush-any-unexecuted-Select-events-o.patch
-Patch12: FC-0004-gtk3-replace-old-action-if-same-command-is-added.patch
+Patch9: FC-0001-native-gtk-menubars-and-popup-menus.patch
+Patch10: FC-0001-Resolves-rhbz-1315385-use-preferred-size-if-widget-s.patch
+Patch11: FC-0001-gtk3-various-bits-means-different-things-again.patch
+Patch12: FC-0001-Resolves-tdf-98638-sometimes-menu-grab-doesn-t-take.patch
 Patch13: FC-installfix.patch
-Patch14: FC-0005-gtk3-handle-items-without-commands.patch
-Patch15: FC-0006-mark-checkable-toolbox-menu-entries-as-checkable.patch
-Patch16: FC-0007-set-gtk-layout-direction-to-match-ours.patch
-Patch17: FC-0008-gtk3-implement-native-context-menus.patch
-Patch18: FC-0001-Resolves-rhbz-1315385-use-preferred-size-if-widget-s.patch
-Patch19: FC-0001-gtk3-various-bits-means-different-things-again.patch
-Patch20: FC-0001-Resolves-tdf-98638-sometimes-menu-grab-doesn-t-take.patch
-Patch21: FC-0001-Resolves-tdf-98636.patch
-Patch22: FC-0001-Resolves-tdf-96989-videos-playback-at-maximum-possib.patch
-Patch23: FC-0001-delete-hidden-pages-before-deleting-unused-masters.patch
+Patch14: FC-0001-tdf-39271-allow-to-export-only-notes-pages.patch
+Patch15: FC-0001-Pasting-from-a-pdf-from-a-fallback-font-doesn-t-give.patch
+Patch16: FC-0001-tdf-99460-sw-layout-don-t-split-table-before-fly.patch
+Patch17: FC-0001-Resolves-tdf-99498-don-t-overwrite-trwWidth-value-if.patch
+Patch18: FC-0001-rbhz-1326602-avoid-exp.-bg-bitmaps-from-deleted-slid.patch
+Patch19: FC-0001-gtk3-New-Folder-dialog-from-Templates-dialog-doesn-t.patch
+Patch20: FC-0001-only-set-cur.-page-once-when-removing-mult.-pages.patch
+Patch21: FC-0001-improve-perf.-of-VCL-event-dispatch-take-II.patch
+Patch22: FC-0001-Resolves-tdf-99730-lower-the-barrier-for-inferior-sy.patch
+Patch23: FC-0001-gtk3-min-slider-size-too-small-since-3.20.0.patch
 Patch24: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch25: FC-0001-tdf-39271-allow-to-export-only-notes-pages.patch
+Patch25: FC-0001-rhbz-1327847-emit-.desktop-trans.-in-predictable-ord.patch
 Patch26: FC-0001-disable-firebird-unit-test.patch
 Patch27: FC-0001-Update-liborcus-to-0.11.0.patch
 Patch28: FC-0001-reorder.patch
@@ -97,7 +97,7 @@ Patch403: alt-002-tmpdir.patch
 
 # Automatically added by buildreq on Mon Nov 10 2014
 # optimized out: ant-testutil apache-commons-codec apache-commons-logging boost-devel boost-devel-headers boost-interprocess-devel boost-intrusive-devel cppunit flute fontconfig fontconfig-devel fonts-type1-xorg glib2-devel gstreamer1.0-devel icu-utils java java-devel jpackage-utils junit4 kde4libs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcloog-isl4 libclucene-contribs-lib libclucene-core libclucene-shared libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgdk-pixbuf-xlib libgio-devel libgpg-error libgraphite2-devel libgst-plugins1.0 libharfbuzz-icu libicu-devel libnspr-devel libpango-devel libpng-devel libpoppler-devel libpq-devel libqt4-core libqt4-devel libqt4-gui libqt4-network librasqal-devel librevenge-devel libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel libwayland-client libwayland-server libxml2-devel pentaho-libxml perl-Compress-Raw-Zlib pkg-config poppler-data python-base python-devel python-modules python3 python3-base raptor2-devel sac tzdata tzdata-java xerces-j2 xml-common xml-commons-jaxp-1.4-apis xml-utils xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel xsltproc xz zlib-devel
-BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake kde4libs-devel libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd9-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: ant apache-commons-httpclient apache-commons-lang bsh cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake kde4libs-devel libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel liborcus-devel libpoppler-cpp-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel pentaho-reporting-flow-engine perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
 
 # 4.4
 BuildRequires: libavahi-devel libpagemaker-devel boost-signals-devel
@@ -449,8 +449,9 @@ done
 
 # TODO icon-themes/
 
+# TODO check if qstart is needed
 mkdir -p %buildroot%_desktopdir
-for n in writer impress calc base draw math qstart; do
+for n in writer impress calc base draw math;  do
 	ln -sr %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
 done
 
@@ -522,6 +523,10 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 %_girdir/LOKDocView-*.gir
 
 %changelog
+* Thu Jun 02 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt4
+- Update to 5.1.3.2
+- Fix buildreqs
+
 * Thu Mar 31 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt3
 - Update to 5.1.2.1
 - Build with system python again
