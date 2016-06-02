@@ -1,7 +1,8 @@
 %define _name pthreading
+%define orig_version 0.1.3-3
 
 Name: python-module-%_name
-Version: 0.1.3
+Version: %(echo %orig_version|tr - .)
 Release: alt1
 
 Summary: Re-implement threading.Lock, RLock and Condition with libpthread
@@ -9,7 +10,7 @@ Group: Development/Python
 License: GPLv2+
 Url: http://pypi.python.org/pypi/%_name
 
-Source: http://pypi.python.org/packages/source/p/%_name/%_name-%version.tar.gz
+Source: http://pypi.python.org/packages/source/p/%_name/%_name-%orig_version.tar.gz
 # fc
 Patch: python-pthreading-01-COPYING-and-tests.patch
 
@@ -25,7 +26,7 @@ by the libpthread and has considerable performance benefits over Python 2.x's
 implementation.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%orig_version
 %patch
 
 %install
@@ -37,9 +38,12 @@ implementation.
 %files
 %python_sitelibdir_noarch/pthread.py*
 %python_sitelibdir_noarch/%_name.py*
-%python_sitelibdir_noarch/%_name-%version-py*.egg-info
+%python_sitelibdir_noarch/%_name-*.egg-info
 
 %changelog
+* Thu Jun 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.1.3.3-alt1
+- 0.1.3.3
+
 * Fri Jun 06 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
 - 0.1.3
 
