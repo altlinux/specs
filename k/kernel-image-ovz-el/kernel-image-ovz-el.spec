@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt141
+Release: alt142
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -47,7 +47,7 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source11: config-x86
 Source12: config-x86_64
-Patch0: patch-042stab108.2-combined
+Patch0: patch-042stab116.1-combined
 Patch1: %name-%version-%release.patch
 
 ExclusiveArch: i586 i686 x86_64
@@ -581,6 +581,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Thu Jun 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt142
+- Backported direct firmware loading for compatibility with udev >= 217.
+
 * Fri May 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.32-alt141
 - Updated to 042stab116.1.
 
