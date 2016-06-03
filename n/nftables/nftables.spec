@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch: 1
-Version:        0.5
+Version:        0.6
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -43,6 +43,9 @@ This library is currently used by nftables.
 
 
 %changelog
+* Fri Jun 03 2016 Alexei Takaseev <taf@altlinux.org> 1:0.6-alt1
+- Version 0.6
+
 * Mon Dec 21 2015 Alexei Takaseev <taf@altlinux.org> 1:0.5-alt1
 - Version 0.5
 
