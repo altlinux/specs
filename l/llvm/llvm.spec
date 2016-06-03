@@ -7,15 +7,15 @@
 %def_without gccbootstrap
 %def_with crt
 
-%define llvm_version 3.7.0
-%define clang_version 3.7.0
-%define compilerrt_version 3.7.0
-%define clangtools_version 3.7.0
+%define llvm_version 3.8.0
+%define clang_version 3.8.0
+%define compilerrt_version 3.8.0
+%define clangtools_version 3.8.0
 
 %define clang_name cfe
 
 Name: llvm
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 Summary: The Low Level Virtual Machine
 Group: Development/C
@@ -27,7 +27,7 @@ Source1: http://llvm.org/releases/%version/%clang_name-%clang_version.src.tar.xz
 Source2: http://llvm.org/releases/%version/compiler-rt-%clangtools_version.src.tar.xz
 Source3: http://llvm.org/releases/%version/clang-tools-extra-%clangtools_version.src.tar.xz
 
-Patch1: llvm+clang-3.7.0-alt-add-alt-triple.patch
+Patch1: llvm+clang-3.8.0-alt-add-alt-triple.patch
 Patch2: llvm+clang-3.3-alt-arm-default-to-hardfloat.patch
 # Don't run gcc for ada files
 Patch3: clang-disable-ada-extension.patch
@@ -257,6 +257,8 @@ export OCAMLFIND
 %endif
 
 %define  _configure_script ../configure
+%define optflags_debug %nil
+
 %configure \
 %if_with gccbootstrap
 	--with-extra-options="-fno-devirtualize" \
@@ -315,16 +317,18 @@ mkdir -p %buildroot%_libdir/clang-analyzer
 
 pushd ../tools/clang/tools
 cp -pr scan-{build,view} %buildroot%_libdir/clang-analyzer/
-sed -r -i -e 's,(.*\$Clang.*=.*)\$RealBin/bin(.*),\1/usr/bin\2,' \
-	%buildroot%_libdir/clang-analyzer/scan-build/scan-build
-rm %buildroot%_libdir/clang-analyzer/*/*.bat
+
+find %buildroot%_libdir/clang-analyzer/ \( -name '*\.bat' -or -name Makefile -or -name CMakeLists.txt \) -delete
+
+sed -r -i -e 's@\$RealBin/bin/clang@/usr/bin/clang@g' \
+	%buildroot%_libdir/clang-analyzer/scan-build/bin/scan-build
 mkdir -p %buildroot%_man1dir/
-mv %buildroot%_libdir/clang-analyzer/scan-build/scan-build.1 %buildroot%_man1dir/
+mv %buildroot%_libdir/clang-analyzer/scan-build/man/scan-build.1 %buildroot%_man1dir/
 popd
 
 # create launchers
 for f in scan-{build,view}; do
-  ln -s %_libdir/clang-analyzer/$f/$f %buildroot%_bindir/$f
+  ln -s %_libdir/clang-analyzer/$f/bin/$f %buildroot%_bindir/$f
 done
 
 # Move documentation back to build directory
@@ -373,7 +377,10 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %_bindir/lli*
 %_bindir/llvm*
 %_bindir/opt
-%_bindir/macho-dump
+%_bindir/obj2yaml
+%_bindir/yaml2obj
+%_bindir/verify-uselistorder
+%_bindir/sancov
 %_libdir/*.so
 %exclude %_libdir/libclang.so
 %_man1dir/*.1.*
@@ -445,6 +452,10 @@ ln -s LLVM-Config.cmake %buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
 %endif
 
 %changelog
+* Fri Jun 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.8.0-alt1
+- Updated to 3.8.0.
+- Disabled build with debug symbols.
+
 * Fri Nov 13 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.7.0-alt1
 - Updated to 3.7.0.
 - Updated patches (tnx to lakostis@).
