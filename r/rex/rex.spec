@@ -2,7 +2,7 @@
 
 Name:    rex
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -18,6 +18,7 @@ Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.53.1-alt-fix_use.patch
 Patch2:  %name-0.53.1-sudo_backquotes.patch
+Patch3:  %name-1.4.0-alt-fix_Net_SSH2.patch
 
 BuildArch: noarch
 
@@ -48,6 +49,7 @@ and software deployment.
 
 %patch1 -p0
 %patch2 -p0
+%patch3 -p0
 
 # This creates Makefile.PL from dist.ini
 /usr/bin/dzil build
@@ -74,6 +76,9 @@ cd Rex-%version
 
 
 %changelog
+* Fri Jun 03 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.0-alt2
+- Compatibility fixes for Net::SSH2 >= 0.59
+
 * Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.0-alt1
 - New version
 
