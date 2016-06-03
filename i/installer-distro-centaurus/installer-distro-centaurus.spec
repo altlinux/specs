@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 7.0
-Release: alt8
+Version: 8.0
+Release: alt1
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Jun 03 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt1
+- sshd, ahttpd, alteratord enabled in systemd installations
+
 * Fri Apr 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 7.0-alt8
 - 'users' group added to default group list
 
