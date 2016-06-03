@@ -1,7 +1,7 @@
 %define  pkgname hiera
  
 Name: 	 ruby-%pkgname
-Version: 1.3.2 
+Version: 3.2.0
 Release: alt1
  
 Summary: A simple pluggable Hierarchical Database
@@ -57,5 +57,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
+- New version
+
 * Wed Apr 23 2014 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1
 - Initial build for ALT Linux

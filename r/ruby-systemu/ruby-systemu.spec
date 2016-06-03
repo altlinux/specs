@@ -1,7 +1,7 @@
 %define  pkgname systemu
  
 Name: 	 ruby-%pkgname
-Version: 2.6.4 
+Version: 2.6.5 
 Release: alt1
  
 Summary: Univeral capture of stdout and stderr and handling of child process pid for windows, *nix, etc.
@@ -55,5 +55,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.6.5-alt1
+- New version from https://rubygems.org/gems/systemu/versions/2.6.5
+
 * Mon Oct 19 2015 Andrey Cherepanov <cas@altlinux.org> 2.6.4-alt1
 - Initial build for ALT Linux

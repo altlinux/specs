@@ -1,7 +1,7 @@
 %define  pkgname rspec-support
  
 Name: 	 ruby-%pkgname
-Version: 3.2.2 
+Version: 3.4.1
 Release: alt1
  
 Summary: Common code needed by the other RSpec gems
@@ -54,5 +54,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt1
+- New version
+
 * Wed May 20 2015 Andrey Cherepanov <cas@altlinux.org> 3.2.2-alt1
 - Initial build for ALT Linux
