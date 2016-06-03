@@ -1,6 +1,6 @@
 Name: 	 tellico
 Version: 2.3.11
-Release: alt1
+Release: alt2
 
 Summary: A collection manager for KDE
 License: GPLv2+
@@ -15,7 +15,6 @@ Source2: FindKSane.cmake
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++
 BuildRequires: kde4multimedia-devel
-BuildRequires: kde4-nepomuk-core-devel
 BuildRequires: kde4pimlibs-devel
 BuildRequires: libexempi-devel
 BuildRequires: libksane4-devel
@@ -58,6 +57,9 @@ cp %SOURCE2 cmake/modules/FindKSane.cmake
 %_K4xdg_mime/%name.xml
 
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.11-alt2
+- Build without Nepomuk support
+
 * Tue Dec 08 2015 Andrey Cherepanov <cas@altlinux.org> 2.3.11-alt1
 - New version
 
