@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.42
-Release: alt1.1
+Release: alt2
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -97,6 +97,7 @@ Patch23: %_bname-2.4.31-rh-nss-default-cipher-suite-always-selected.patch
 Patch24: %_bname-2.4.31-rh-nss-multiple-tls-contexts.patch
 Patch25: openldap-2.4.32-alt-gcc5.1.patch
 Patch26: openldap-2.4.42-CVE-2015-6908.patch
+Patch27: openldap-2.4.42-CVE-2015-3276.patch
 
 ### REQUIRE Section
 
@@ -271,6 +272,7 @@ HTML and TXT versions
 
 #%patch25 -p2
 %patch26 -p1
+%patch27 -p1
 
 ### Extract AACLS patch
 %if_enabled aacls
@@ -697,6 +699,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Fri Jun 03 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.42-alt2
+- support for multiple LDAP URLs in systemd service
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.42-alt1.1
 - rebuild with new perl 5.22.0
 
