@@ -1,7 +1,7 @@
 
 Name:           kraft
 Version:        0.58
-Release:        alt1
+Release:        alt2
 
 Summary:        Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -15,7 +15,6 @@ Patch:		kraft-fix-l10n-build-with-cmake.patch
 BuildRequires(pre): kde4libs-devel
 BuildRequires: 	gcc-c++
 BuildRequires:  cmake
-BuildRequires:  kde4-nepomuk-core-devel
 BuildRequires:  kde4pimlibs-devel
 BuildRequires:  libctemplate-devel
 
@@ -51,6 +50,9 @@ sed -iorig 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DI
 %_iconsdir/*/*/*/*.png
 
 %changelog 
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 0.58-alt2
+- Build without Nepomuk support
+
 * Sat Oct 03 2015 Andrey Cherepanov <cas@altlinux.org> 0.58-alt1
 - New version 0.58
 - Fix l10n build in cmake
