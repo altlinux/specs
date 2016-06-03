@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.3
-Release: alt3
+Release: alt7
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -26,10 +26,7 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 # Git: http://git.etersoft.ru/projects/asu/uniset.git
 Source: %name-%version.tar
 
-# manually removed: glibc-devel-static
-# Automatically added by buildreq on Thu Apr 21 2016
-# optimized out: fontconfig gcc-c++ libgpg-error libsasl2-3 libstdc++-devel libwayland-client libwayland-server libxml2-devel pkg-config python-base python-devel python-module-omniidl python-modules
-BuildRequires: doxygen glibc-devel-static libcomedi-devel libcommoncpp2-devel libev-devel libmysqlclient-devel libomniORB-devel libpqxx-devel librrd-devel libsigc++2-devel libsqlite3-devel python-module-distribute python-module-google python-module-sphinxcontrib xsltproc
+BuildRequires: libcommoncpp2-devel libev-devel libomniORB-devel libsigc++2-devel xsltproc
 
 # for uniset2-codegen
 BuildPreReq: xsltproc
@@ -64,7 +61,7 @@ BuildRequires: libmosquitto-devel
 %endif
 
 %if_enabled python
-BuildRequires: python-devel
+BuildRequires: python-devel python-module-distribute
 BuildRequires(pre): rpm-build-python
 
 # swig
@@ -486,6 +483,22 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Fri Jun 03 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt7
+- codegen: fixed bug in updateOutput
+- revert commit: "added several attempts to save the value"
+
+* Fri May 27 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt6
+- codegen: added several attempts to save the value
+
+* Wed May 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt5
+- fixes after coverity_scan
+
+* Thu Apr 28 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt4
+- build new version
+
+* Thu Apr 28 2016 Pavel Vainerman <pv@etersoft.ru> 2.3-alt3.1
+- (ModbusTCPCore): test build
+
 * Wed Apr 27 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt3
 - fixed build for 64-bit
 
