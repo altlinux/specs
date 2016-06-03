@@ -1,7 +1,7 @@
 %define  pkgname polyglot
  
 Name: 	 ruby-%pkgname
-Version: 0.3.4 
+Version: 0.3.5
 Release: alt1
  
 Summary: Augment 'require' to load non-ruby file types
@@ -59,5 +59,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 0.3.5-alt1
+- New version
+
 * Thu Apr 24 2014 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt1
 - Initial build for ALT Linux

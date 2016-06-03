@@ -8,7 +8,7 @@
 %def_without OpenVZ
 
 Name:    ruby-%pkgname
-Version: 1.0.3
+Version: 1.2.0.1
 Release: alt1
 
 Summary: Fast, simple event-processing library for Ruby programs
@@ -83,6 +83,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/TestConnection/*
 
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.0.1-alt1
+- New version
+
 * Mon Apr 21 2014 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt1
 - New version
 - Restore package in Sisyphus

@@ -1,6 +1,6 @@
 
 Name:    ruby-em-http-request
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: EventMachine based, async HTTP Request client
@@ -71,6 +71,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
+- New version
+
 * Wed Mar 05 2014 Andrey Cherepanov <cas@altlinux.org> 1.1.2-alt1
 - Initial build for ALT Linux
 
