@@ -1,7 +1,7 @@
 %define  pkgname multi_json
  
 Name: 	 ruby-%pkgname
-Version: 1.9.2 
+Version: 1.12.1
 Release: alt1
  
 Summary: A common interface to multiple JSON libraries
@@ -36,6 +36,8 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+# Remove unsupported ruby-gson
+rm -f spec/gson_adapter_spec.rb lib/multi_json/adapters/gson.rb
 %update_setup_rb
  
 %build
@@ -59,5 +61,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.12.1-alt1
+- New version
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt1
 - Initial build for ALT Linux
