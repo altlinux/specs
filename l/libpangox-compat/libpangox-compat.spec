@@ -2,7 +2,7 @@
 %define ver_major 0.0
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Obsolete pangox library
@@ -10,7 +10,7 @@ License: LGPL2+
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 Conflicts: libpango < 1.32.0
 
@@ -58,6 +58,9 @@ files to develop with %_name.
 
 
 %changelog
+* Sat Jun 04 2016 Yuri N. Sedunov <aris@altlinux.org> 0.0.2-alt1
+- 0.0.2
+
 * Fri Sep 28 2012 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt1
 - first build for Sisyphus
 
