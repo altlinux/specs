@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -38,6 +38,9 @@ install -m 644 D*.pm %buildroot%perl_vendor_privlib/
 %perl_vendor_privlib/D*
 
 %changelog
+* Sat Jun 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- generic source translation
+
 * Thu Jun 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - pyegg db
 
