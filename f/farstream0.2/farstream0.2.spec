@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: %_name%api_ver
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: A audio/video conferencing framework (0.2)
@@ -30,7 +30,7 @@ Requires: gst-plugins-nice%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-
 BuildRequires: libgio-devel >= %glib_ver libnice-devel >= %nice_ver
 BuildRequires: gst-plugins%gst_api_ver-devel  >= %gst_ver
 BuildRequires: libgupnp-igd-devel gtk-doc
-BuildRequires: rpm-build-python python-module-gst-devel python-module-pygobject-devel
+BuildRequires: rpm-build-python python-module-gst%gst_api_ver python-module-pygobject-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgstreamer%gst_api_ver-gir-devel}
 
 %description
@@ -141,6 +141,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Sat Jun 04 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.8-alt1
+- 0.2.8
+
 * Fri Jan 30 2015 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
 - 0.2.7
 
