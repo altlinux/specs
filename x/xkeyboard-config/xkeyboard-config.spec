@@ -1,7 +1,7 @@
 Name: xkeyboard-config
 Summary: XML-based XKB configuration registry
-Version: 2.13
-Release: alt2
+Version: 2.18
+Release: alt1
 Epoch: 1
 License: X11/MIT
 Group: System/X11
@@ -65,6 +65,9 @@ rm -f %buildroot%_datadir/X11/xkb/compiled
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Sat Jun 04 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:2.18-alt1
+- 2.18
+
 * Fri Dec 26 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:2.13-alt2
 - fixed sintax error (closes: #30605)
 
