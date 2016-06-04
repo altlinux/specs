@@ -3,15 +3,15 @@
 %def_enable vala
 
 Name: lib%_name-gtk
-Version: 0.1.25
-Release: alt2
+Version: 0.1.26
+Release: alt1
 
 Summary: GTK+3 support library for colord daemon
 License: GPLv2+
 Group: System/Libraries
 
 URL: http://www.freedesktop.org/software/%name/
-Source: http://www.freedesktop.org/software/%name/releases/%_name-gtk-%version.tar.xz
+Source: http://www.freedesktop.org/software/colord/releases/%_name-gtk-%version.tar.xz
 
 %define glib_ver 2.31
 %define lcms_ver 2.2
@@ -22,7 +22,7 @@ Requires: lib%_name >= %colord_ver
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: liblcms2-devel >= %lcms_ver
 BuildRequires: lib%_name-devel >= %colord_ver libgtk+3-devel
-BuildRequires: gtk-doc intltool
+BuildRequires: gtk-doc intltool docbook-utils
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel lib%_name-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools lib%_name-vala}
 
@@ -86,6 +86,8 @@ This package provides Vala language bindings for %_name-gtk library.
 %find_lang %_name-gtk
 
 %files  -f %_name-gtk.lang
+%_bindir/cd-convert
+%_man1dir/cd-convert.1.*
 %_libdir/%name.so.*
 
 %files devel
@@ -109,6 +111,9 @@ This package provides Vala language bindings for %_name-gtk library.
 
 
 %changelog
+* Sat Jun 04 2016 Yuri N. Sedunov <aris@altlinux.org> 0.1.26-alt1
+- 0.1.26
+
 * Sun Jun 08 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.25-alt2
 - rebuilt against libcolord.so.2
 
