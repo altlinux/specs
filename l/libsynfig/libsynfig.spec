@@ -6,7 +6,7 @@
 %define oname synfig
 
 Name:    libsynfig
-Version: 1.0.1
+Version: 1.1.9
 Release: alt1
 
 Summary: Vector-based 2D animation software package
@@ -18,7 +18,6 @@ Url:     http://www.synfig.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %oname-%version.tar
-Patch:  libsynfig-isnan.patch
 
 BuildRequires: ImageMagick-tools cvs fontconfig-devel gcc-c++ libavformat-devel
 BuildRequires: libetl-devel libfreetype-devel libjpeg-devel libltdl7-devel
@@ -26,6 +25,7 @@ BuildRequires: libmng-devel libpng-devel libswscale-devel libxml++2-devel openex
 BuildRequires: libtiff-devel libImageMagick-devel libsigc++2-devel
 BuildRequires: libcairo-devel libpango-devel boost-devel boost-program_options-devel
 BuildRequires: libmlt++-devel boost-filesystem-devel
+BuildRequires: libfftw3-devel
 
 %description
 Synfig is a powerful, industrial-strength vector-based 2D animation
@@ -45,7 +45,6 @@ Header files for Synfig.
 
 %prep
 %setup -q -n %oname-%version
-%patch -p2
 
 %build
 %autoreconf
@@ -70,6 +69,9 @@ Header files for Synfig.
 %_libdir/lib*.so
 
 %changelog
+* Sat Jun 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.9-alt1
+- New version
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - New version
 - Spec cleanup

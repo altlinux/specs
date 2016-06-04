@@ -1,5 +1,5 @@
 Name:    synfigstudio
-Version: 1.0.1
+Version: 1.1.9
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -12,7 +12,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 #Source: http://prdownloads.sf.net/synfig/%name-%version.tar.gz
 Source:  %name-%version.tar
-Patch0:  synfigstudio-build-with-sigc++-2.0.patch
 
 BuildPreReq: fonts-ttf-liberation
 BuildRequires: gcc-c++ libgtkmm2-devel
@@ -47,7 +46,6 @@ Header files for Synfig studio.
 
 %prep
 %setup -q
-%patch0 -p2
 
 %build
 %autoreconf
@@ -83,6 +81,9 @@ find %buildroot%_xdgmimedir/ -maxdepth 1 -a -type f -delete
 %_includedir/synfigapp*/
 
 %changelog
+* Sun Jun 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.9-alt1
+- New version
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - New version
 
