@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(FileHandle.pm) perl(Pod/Simple.pm) perl(Pod/Simple/Methody.pm) perl(Test/More.pm) perl(base.pm)
 # END SourceDeps(oneline)
-%define module_version 1.72
+%define module_version 1.73
 %define module_name Pod-Checker
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.72
+Version: 1.73
 Release: alt1
 Summary: Pod::Checker verifies POD documentation contents for compliance with the POD format specifications
 Group: Development/Perl
@@ -36,6 +36,9 @@ BuildArch: noarch
 %_man1dir/*
 
 %changelog
+* Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.73-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
 - automated CPAN update
 
