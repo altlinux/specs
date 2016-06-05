@@ -1,12 +1,12 @@
 %def_disable plugins
 
-%def_disable menufile
+%def_enable menufile
 
 %undefine cvs
 
 Name: bzflag
 Version: 2.4.6
-Release: alt1.RC2
+Release: alt2.RC2
 
 Summary: A multiplayer 3D tank battle game
 License: LGPLv2.1
@@ -16,33 +16,39 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 Url: http://www.bzflag.org
 Source: %name-%version.tar
 
+Source2:  bzflag_ru_utf8.po
 Source10: %name.16.png
 Source11: %name.32.png
 Source12: %name.48.png
 Source13: %name.menu
 Source14: bzfs.init
 
-Summary(ru_RU.KOI8-R): ôÒÅÈÍÅÒÎÁÑ ÓÅÔÅ×ÁÑ ÉÇÒÁ - ÂÉÔ×Á ÎÁ ÔÁÎËÁÈ
-Summary(uk_UA.KOI8-U): ôÒÉ×ÉÍ¦ÒÎÁ ÍÅÒÅÖÅ×Á ÇÒÁ ÎÁ ÔÁÎËÁÈ
+Patch: bzflag_ru_po.patch
+# PATCH-MISSING-TAG -- See http://wiki.opensuse.org/openSUSE:Packaging_Patches_guidelines
+Patch1:         %name-1.10.4-ncursespollution.patch
 
-Requires: %name-server
+Summary(ru_RU.UTF-8): Ð¢Ñ€ÐµÑ…Ð¼ÐµÑ€Ð½Ð°Ñ ÑÐµÑ‚ÐµÐ²Ð°Ñ Ð¸Ð³Ñ€Ð° - Ð±Ð¸Ñ‚Ð²Ð° Ð½Ð° Ñ‚Ð°Ð½ÐºÐ°Ñ…
+Summary(uk_UA.UTF-8): Ð¢Ñ€Ð¸Ð²Ð¸Ð¼Ñ–Ñ€Ð½Ð° Ð¼ÐµÑ€ÐµÐ¶ÐµÐ²Ð° Ð³Ñ€Ð° Ð½Ð° Ñ‚Ð°Ð½ÐºÐ°Ñ…
 
-# Automatically added by buildreq on Wed Jun 01 2016 (-bi)
-# optimized out: elfutils gnu-config libGL-devel libGLU-devel libICE-devel libX11-devel libgpg-error libjson-c libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
-BuildRequires: gcc-c++ imake libSDL-devel libSM-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel xorg-cf-files zlib-devel
+#Requires: %name-server
 
+# Automatically added by buildreq on Sun Jun 05 2016 (-bi)
+# optimized out: elfutils libGL-devel libGLU-devel libICE-devel libX11-devel libgpg-error libjson-c libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
+BuildRequires: catdoc gcc-c++ imake libSDL-devel libSM-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel xorg-cf-files zlib-devel
+
+BuildRequires: catdoc iconv
 
 %description
 BZFlag is a multiplayer 3D tank battle game. It's one of the most popular games
 ever on Silicon Graphics systems.
 
-%description -l ru_RU.KOI8-R
-BZFlag - ÍÎÏÇÏÐÏÌØÚÏ×ÁÔÅÌØÓËÁÑ ÔÁÎËÏ×ÁÑ ÂÉÔ×Á.  ïÄÎÁ ÉÚ ÉÇÒ ×ÓÅÈ ×ÒÅÍÅÎ É ÎÁÒÏÄÏ×
-ÎÁ Silicon Graphics.
+%description -l ru_RU.UTF-8
+BZFlag - Ð¼Ð½Ð¾Ð³Ð¾Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒÑÐºÐ°Ñ Ñ‚Ð°Ð½ÐºÐ¾Ð²Ð°Ñ Ð±Ð¸Ñ‚Ð²Ð°.  ÐžÐ´Ð½Ð° Ð¸Ð· Ð¸Ð³Ñ€ Ð²ÑÐµÑ… Ð²Ñ€ÐµÐ¼ÐµÐ½ Ð¸ Ð½Ð°Ñ€Ð¾Ð´Ð¾Ð²
+Ð½Ð° Silicon Graphics.
 
-%description -l uk_UA.KOI8-U
-BZFlag - ÂÁÇÁÔÏËÏÒÉÓÔÕ×ÁÃØËÁ ÔÁÎËÏ×Á ÇÒÁ.  ïÄÎÁ Ú ¦ÇÏÒ ÕÓ¦È ÞÁÓ¦× ÔÁ ÎÁÒÏÄ¦×
-ÎÁ Silicon Graphics.
+%description -l uk_UA.UTF-8
+BZFlag - Ð±Ð°Ð³Ð°Ñ‚Ð¾ÐºÐ¾Ñ€Ð¸ÑÑ‚ÑƒÐ²Ð°Ñ†ÑŒÐºÐ° Ñ‚Ð°Ð½ÐºÐ¾Ð²Ð° Ð³Ñ€Ð°.  ÐžÐ´Ð½Ð° Ð· Ñ–Ð³Ð¾Ñ€ ÑƒÑÑ–Ñ… Ñ‡Ð°ÑÑ–Ð² Ñ‚Ð° Ð½Ð°Ñ€Ð¾Ð´Ñ–Ð²
+Ð½Ð° Silicon Graphics.
 
 %package admin
 Summary: BZFlag administration utility.
@@ -60,6 +66,63 @@ This package contains BZFlags standalone game server.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
+
+# iconv %SOURCE2 -f utf8 -t koi8-r | catdoc -d us-ascii -s koi8-r | tr wW vV | sed \
+#-e 's/T[Zz]/C/g' \
+#-e 's/tz/c/g' \
+#-e 's/K[Hh]/H/g' \
+#-e 's/kh/h/g' \
+#-e 's/kh/h/g' \
+#-e 's/DZHo/Joy/g' \
+#-e 's/dzho/joy/g' \
+#-e 's/DZH/J/g' \
+#-e 's/dzh/j/g' \
+# > data/l10n/bzflag_ru.po
+
+#-e 's/ÑŒ/\'/g' \
+#-e 's/ÑŠ/\"/g' \
+#-e 's/Ñ‹/^i/g' \
+#-e 's/Ñ‰/s^h\`/g' \
+#-e 's/Ð©/S^h\`/g' \
+
+
+cat %SOURCE2 | LC_ALL=ru_RU.utf8 sed \
+-e '!s!ÑŒ!\`!g' \
+-e 's/ÑŠ/\\"/g' \
+-e 's/Ñ‘/yo/g' \
+-e 's/Ñ‰/$/g' \
+-e 's/Ð©/$/g' \
+-e 's/Ð/Yo/g' \
+-e 's/Ð²/v/g' \
+-e 's/Ð’/V/g' \
+-e 's/Ð¥/H/g' \
+-e 's/Ñ…/h/g' \
+-e 's/Ð¶/zh/g' \
+-e 's/Ð–/Zh/g' \
+-e 's/Ñ†/c/g' \
+-e 's/Ð¦/C/g' \
+-e 's/Ñ‡/ch/g' \
+-e 's/Ð§/Ch/g' \
+-e 's/Ñˆ/sh/g' \
+-e 's/Ð¨/Sh/g' \
+-e 's/ÑŽ/yu/g' \
+-e 's/Ð®/Yu/g' \
+-e 's/Ñ/ya/g' \
+-e 's/Ð¯/Ya/g' \
+-e 's/Ð¾Ð¹/oj/g' \
+-e 's/Ñ‹Ð¹/ij/g' \
+-e 's/Ð¸Ð¹/ij/g' \
+-e 's/Ð°Ð¹/Ð°j/g' \
+-e 's/ÑƒÐ¹/uj/g' \
+-e 's/ÐµÐ¹/ej/g' \
+> data/l10n/bzflag_ru.po_tmp
+
+iconv -c data/l10n/bzflag_ru.po_tmp -f utf8 -t koi8-u | catdoc -d us-ascii -s koi8-u > data/l10n/bzflag_ru.po
+rm data/l10n/bzflag_ru.po_tmp
+
+subst 's/DZHo/Joy/g;s/dzho/joy/g;s/Dzho/Joy/g;s/DZH/J/g;s/dzh/j/g;s/Dzh/J/g'  data/l10n/bzflag_ru.po
 
 
 %build
@@ -69,13 +132,13 @@ export CARES_DIR=%_includedir
 	--bindir=%_gamesbindir \
 	--datadir=%_gamesdatadir \
 	--with-pic \
+        --disable-dependency-tracking \
 	--enable-threads \
 	%{subst_enable plugins} \
 	--without-regex \
 	--enable-robots
 
 %make_build
-
 cd misc
 make
 cd ..
@@ -102,10 +165,10 @@ mkdir -p %buildroot/var/run/%name
 %_sbindir/useradd -r -g %name -d %_localstatedir/%name -s /dev/null \
         -c "BZFlag Game Server" -M -n %name &>/dev/null ||:
 
-%post
+%post server
 %post_service bzfs
 
-%preun
+%preun server
 %preun_service bzfs
 
 %files
@@ -117,7 +180,7 @@ mkdir -p %buildroot/var/run/%name
 
 %attr(755, %name, %name) /var/run/%name
 
-%doc README README.Linux misc/bzfs.conf misc/groups.conf misc/filter.txt
+%doc README README.Linux
 
 %_man6dir/*
 %_man5dir/*
@@ -137,11 +200,15 @@ mkdir -p %buildroot/var/run/%name
 %_man6dir/bzadmin.6.*
 
 %files server
+%doc misc/bzfs.conf misc/filter.txt misc/groups.conf
 %_gamesbindir/bzfs
 %_man6dir/bzfs.6.*
 %_initdir/bzfs
 
 %changelog
+* Sun Jun 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.6-alt2.RC2
+- Add Russian translation
+
 * Thu Jun 02 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.6-alt1.RC2
 - Version 2.4.6-RC2
 
