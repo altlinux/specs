@@ -8,19 +8,19 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt7
+Release: alt8
 
 Summary: GNOME Screensaver
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: https://live.gnome.org/GnomeScreensaver
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
+Url: https://wiki.gnome.org/Projects/GnomeScreensaver
 
 Provides: screen-saver-engine
 Provides: screen-saver-frontend
 Provides: gnome-screensaver-module
 
-Source: http://download.gnome.org/sources/gnome-screensaver/%ver_major/%name-%version.tar.xz
+#Source: http://download.gnome.org/sources/gnome-screensaver/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Patch: gnome-screensaver-2.28.0-alt-pam.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=579430
@@ -47,8 +47,8 @@ BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
 BuildRequires: libpam-devel gsettings-desktop-schemas-devel
 BuildRequires: libXxf86vm-devel libSM-devel
 BuildRequires:libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
-%{?_enable_docbook:Requires: xmlto}
-%{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel}
+%{?_enable_docbook:BuildRequires: xmlto}
+%{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver}
 
 %description
 gnome-screensaver is a screen saver and locker that aims to have
@@ -60,6 +60,7 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %patch -p1 -b .pam
 %patch2 -p1 -b .user_activity
 %patch3 -p1 -b .setuid
+subst 's/\(libsystemd\)-login/\1/' configure.ac
 
 %build
 %autoreconf
@@ -84,12 +85,17 @@ simple, sane, secure defaults and be well integrated with the desktop.
 %files -f %name.lang
 %_bindir/*
 %attr(2711,root,chkpwd) %_libexecdir/%name-dialog
+%_desktopdir/%name.desktop
 %_man1dir/*
-%_sysconfdir/xdg/autostart/gnome-screensaver.desktop
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
 %doc AUTHORS NEWS README
 
 %changelog
+* Sun Jun 05 2016 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt8
+- updated to 3.6.0-21-g8662e42 from master branch
+  (fixed BGO ##683060, 752202)
+- fixed the check for systemd in configure
+
 * Tue Aug 25 2015 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt7
 - rebuilt against libgnome-desktop-3.so.12
 
