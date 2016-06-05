@@ -4,12 +4,12 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
-Version:	0.46
-Release:	alt1_2
+Version:	0.47
+Release:	alt1
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Sysadm-Install/
-Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
 BuildArch:	noarch
 # Module Build
 BuildRequires:	findutils
@@ -87,6 +87,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1_2
 - update to new release by fcimport
 
