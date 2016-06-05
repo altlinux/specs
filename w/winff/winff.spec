@@ -1,5 +1,5 @@
 Name: winff
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: A cross platform batch GUI for FFmpeg
 Summary(ru_RU.UTF-8): Кроссплатформенный графический интерфейс для FFmpeg
@@ -31,7 +31,7 @@ WinFF может одновременно ковертировать видео 
 
 %prep
 %setup -n WinFF-%version-source
-%patch0
+#%%patch0
 %patch1
 dos2unix *.txt
 chmod 644 *.txt docs/*.pdf docs/*.odg docs/*.odt docs/*.txt winff-icons/*.txt
@@ -74,5 +74,9 @@ install -m644 -t %buildroot/%_docdir/%name AUTHORS *.txt docs/*.pdf docs/*.odg d
 #doc AUTHORS *.txt docs/*.pdf docs/*.odg docs/*.odt docs/*.txt winff-icons/*.txt
 
 %changelog
+* Sun Jun 05 2016 Anton Midyukov <antohami@altlinux.org> 1.5.3-alt1
+- New version 1.5.3
+- Disable winff-presets.patch.
+
 * Mon Aug 24 2015 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
 - Initial build for ALT Linux Sisyphus (Closes: 31217).
