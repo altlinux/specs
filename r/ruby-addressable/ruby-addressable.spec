@@ -1,6 +1,6 @@
 
 Name:    ruby-addressable
-Version: 2.3.5
+Version: 2.4.0
 Release: alt1
 
 Summary: Addressable is a replacement for the URI implementation that is part of Ruby's standard library
@@ -55,6 +55,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Jun 05 2016 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Wed Mar 05 2014 Andrey Cherepanov <cas@altlinux.org> 2.3.5-alt1
 - Initial build for ALT Linux
 
