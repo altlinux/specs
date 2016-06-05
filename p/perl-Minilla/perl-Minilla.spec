@@ -1,6 +1,6 @@
 BuildRequires: perl(Module/Build.pm)
 Name: perl-Minilla
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: CPAN module authoring tool
@@ -32,6 +32,9 @@ BuildRequires: perl(Module/Metadata.pm) perl(Test/Requires.pm) perl(CPAN/Meta/Va
 %doc Changes LICENSE README.md
 
 %changelog
+* Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1
 - automated CPAN update
 
