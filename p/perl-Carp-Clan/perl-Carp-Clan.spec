@@ -1,14 +1,14 @@
 %define dist Carp-Clan
 Name: perl-%dist
-Version: 6.04
-Release: alt2
+Version: 6.06
+Release: alt1
 
 Summary: Report errors from perspective of caller of a "clan" of modules
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/K/KE/KENTNL/Carp-Clan-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ which shall never be blamed for any error.
 %doc	%perl_vendor_privlib/Carp/Clan.pod
 
 %changelog
+* Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 6.06-alt1
+- automated CPAN update
+
 * Mon Sep 26 2011 Alexey Tourbin <at@altlinux.ru> 6.04-alt2
 - rebuilt as plain src.rpm
 
