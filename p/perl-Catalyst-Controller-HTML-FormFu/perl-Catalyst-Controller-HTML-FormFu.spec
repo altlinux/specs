@@ -5,13 +5,13 @@ BuildRequires: perl(Test/Aggregate/Nested.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
-Version:        1.00
-Release:        alt1_5
+Version:        2.00
+Release:        alt1
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
 
 URL:            http://search.cpan.org/dist/Catalyst-Controller-HTML-FormFu/
-Source0:        http://search.cpan.org/CPAN/authors/id/C/CF/CFRANKS/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/N/NI/NIGELM/Catalyst-Controller-HTML-FormFu-%{version}.tar.gz
 # Do not use Test::Aggregate::Nested for running tests, bug #1231204
 Patch0:         Catalyst-Controller-HTML-FormFu-1.00-Execute-tests-recusively-under-t.patch
 BuildArch:      noarch
@@ -110,6 +110,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_5
 - update to new release by fcimport
 
