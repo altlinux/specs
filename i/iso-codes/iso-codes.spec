@@ -1,5 +1,5 @@
 Name: iso-codes
-Version: 3.65
+Version: 3.68
 Release: alt1
 
 Group: System/Internationalization
@@ -11,8 +11,7 @@ URL: http://packages.debian.org/unstable/source/iso-codes
 Source: %name-%version.tar
 BuildArch: noarch
 
-# Automatically added by buildreq on Sat Sep 10 2005
-BuildRequires: common-licenses python-base python-module-PyXML python-modules-compiler python-modules-email python-modules-encodings python-modules-logging python-modules-xml
+BuildRequires: common-licenses python3-base
 
 %description
 This package provides several ISO standards:
@@ -32,7 +31,7 @@ This package contains the pkg-config files for development
 when building programs that use %name
 
 %prep
-%setup -q
+%setup
 ln -sf %_licensedir/LGPL-2.1 LICENSE
 
 %build
@@ -42,17 +41,21 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 
 %install
 %makeinstall_std
-%find_lang --output=%name.lang iso_639 iso_639_3 iso_639_5 iso_3166 iso_3166_2 iso_4217 iso_15924
+%find_lang --all-name iso --output=%name.lang
 
 %files -f %name.lang
-%doc ChangeLog README TODO
+%doc ChangeLog README.md TODO
 %doc --no-dereference LICENSE
-%_datadir/xml/%name
+%_datadir/xml/%name/
+%_datadir/%name/json/
 
 %files devel
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Sun Jun 05 2016 Yuri N. Sedunov <aris@altlinux.org> 3.68-alt1
+- 3.68 (updated buildreqs, %files section)
+
 * Sun Feb 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.65-alt1
 - 3.65
 
