@@ -1,6 +1,6 @@
 %define m_distro Check-ISA
 Name: perl-Check-ISA
-Version: 0.04
+Version: 0.06
 Release: alt1
 Summary: Check::ISA perl module
 
@@ -31,5 +31,8 @@ BuildRequires: perl-Sub-Exporter perl-Test-use-ok
 %doc Changes 
 
 %changelog
+* Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- automated CPAN update
+
 * Tue Aug 24 2010 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt1
 - initial build
