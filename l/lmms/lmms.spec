@@ -1,6 +1,8 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.git20140910.1
 Name: lmms
 Version: 1.0.95
-Release: alt2.git20140910
+#Release: alt2.git20140910
 
 Summary: Linux MultiMedia Studio
 License: GPL
@@ -49,7 +51,7 @@ Development files and headers for %name
 %install
 %makeinstall_std -C BUILD
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/%name %buildroot%_libdir/
 %endif
@@ -100,6 +102,9 @@ EOF
 %_includedir/%name
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.95-alt2.git20140910.1
+- (AUTO) subst_x86_64.
+
 * Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.95-alt2.git20140910
 - Rebuilt with new stk
 

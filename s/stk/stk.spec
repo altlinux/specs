@@ -1,6 +1,6 @@
 Name: stk
 Version: 4.5.0
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Sound
 Summary: C++ classes for audio digital signal processing
@@ -177,6 +177,9 @@ mv doc/doxygen/index.txt.tmp doc/doxygen/index.txt
 %doc doc/html doc/*.txt
 
 %changelog
+* Tue Jun  7 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.5.0-alt1.1
+- rebuild for new C++ ABI
+
 * Fri Oct 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.0-alt1
 - Version 4.5.0
 
