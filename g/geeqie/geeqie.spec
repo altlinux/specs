@@ -1,5 +1,7 @@
+%define _libexecdir %_prefix/libexec
+
 Name: geeqie
-Version: 1.2.2
+Version: 1.3
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -9,18 +11,10 @@ Group: Graphics
 Url: http://%name.org
 Source: %url/%name-%version.tar.xz
 
-Patch: %name-1.1-alt-lfs.patch
-Patch1: %name-1.0-libdir-fix.patch
-# add -Wl,--as-needed without disturbing %%configure macro
-Patch2: geeqie-1.1-LDFLAGS.patch
+Patch: %name-1.3-alt-lfs.patch
+Patch1: %name-1.3-libdir-fix.patch
 # in upstream bug tracker
 Patch4: geeqie-1.0-fix-fullscreen.patch
-# reported upstream
-# https://sourceforge.net/tracker/?func=detail&atid=1054680&aid=3602709&group_id=222125
-Patch7: geeqie-1.1-filedata-change-notification.patch
-# reported upstream
-# https://sourceforge.net/tracker/?func=detail&aid=3605406&group_id=222125&atid=1054682
-Patch9: geeqie-1.1-large-files.patch
 
 BuildRequires: gcc-c++ gnome-doc-utils intltool libgtk+2-devel libjpeg-devel
 BuildRequires: liblcms2-devel liblirc-devel libtiff-devel libexiv2-devel
@@ -35,33 +29,35 @@ ExifTool.
 %setup
 %patch -p1
 %patch1 -p1 -b .libdir
-%patch2 -p1 -b .LDFLAGS
 #%patch4 -p1 -b .fix-fullscreen
-%patch7 -p1 -b .filedata-notification
-%patch9 -p1 -b .large-files
 
 %build
 %autoreconf
-%configure --enable-lirc --enable-largefile --with-readmedir=%_datadir/%name
+%configure --enable-lirc \
+	--enable-largefile \
+	--with-readmedir=%_datadir/%name
 %make_build
 
 %install
-mkdir -p %buildroot/usr/share/geeqie/html
 %makeinstall_std
-install -pD -m644 geeqie.png %buildroot%_liconsdir/geeqie.png
+install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
-%_datadir/geeqie/
-%_libdir/geeqie/
-%_desktopdir/*
-%_pixmapsdir/*
-%_liconsdir/*
-%_man1dir/*
+%_bindir/%name
+%_datadir/%name/
+%_libdir/%name/
+%_desktopdir/%name.desktop
+%_pixmapsdir/%name.png
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_man1dir/%name.1.*
 
 %changelog
+* Mon Jun 06 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+- removed upstreamed patches
+
 * Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2 (new url)
 - removed upstreamed patches
