@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.svn20100615.1.1
 %define oname swiginac
 
 Name: python-module-%oname
 Version: 1.5.1.1
-Release: alt3.svn20100615.1
+#Release: alt3.svn20100615.1
 Summary: Extending Python with Symbolic Mathematics
 Group: Development/Python
 License: GPL
@@ -73,7 +75,7 @@ cp -fR tests %buildroot%_docdir/%oname/
 
 rm -f %buildroot%python_sitelibdir_noarch/Symbolic/*.pyo
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %endif
 
@@ -91,6 +93,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %exclude %_docdir/%oname/ChangeLog
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.1.1-alt3.svn20100615.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Jun 18 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.1.1-alt3.svn20100615.1
 - Rebuilt for gcc5 C++11 ABI.
 
