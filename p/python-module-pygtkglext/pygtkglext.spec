@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt5.1.1
 %define qname gtk
 
 Name: python-module-pygtkglext
 Version: 1.1.0
-Release: alt5.1
+#Release: alt5.1
 
 Summary: Python bindings for GtkGLExt
 License: LGPLv2+
@@ -40,7 +42,7 @@ developing applications that use %name.
 %install
 %make_install DESTDIR=%buildroot install
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch/gtk-2.0/%qname/gtkgl" != "%python_sitelibdir/gtk-2.0/%qname/gtkgl"
 mv %buildroot%python_sitelibdir_noarch/gtk-2.0/%qname/gdkgl/* \
 	%buildroot%python_sitelibdir/gtk-2.0/%qname/gdkgl/
 mv %buildroot%python_sitelibdir_noarch/gtk-2.0/%qname/gtkgl/* \
@@ -57,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/gtk-2.0/%qname/gtkgl/* \
 %_datadir/pygtk/2.0/defs/*
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt5.1.1
+- (AUTO) subst_x86_64.
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.0-alt5.1
 - Rebuild with Python-2.7
 

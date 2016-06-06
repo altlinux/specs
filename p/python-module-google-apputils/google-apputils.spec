@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1.1
 %define gname google
 %define oname %gname-apputils
 
@@ -5,7 +7,7 @@
 
 Name: python-module-%oname
 Version: 0.4.0
-Release: alt2.1
+#Release: alt2.1
 Summary: Google Application Utilities for Python
 License: ASLv2.0
 Group: Development/Python
@@ -73,7 +75,7 @@ popd
 
 %install
 %python_install
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -84,7 +86,7 @@ install -p -m644 google/__init__.py \
 %if_with python3
 pushd ../python3
 %python3_install
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
@@ -115,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

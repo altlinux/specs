@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1.1
 %define module_name cl
 
 %def_with python3
 
 Name: python-module-%module_name
 Version: 0.0.3
-Release: alt2.1
+#Release: alt2.1
 Group: Development/Python
 License: BSD License
 Summary: Actor framework for Kombu
@@ -59,7 +61,7 @@ popd
 
 %python_install
 
-%ifarch x86_64
+%if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
@@ -79,6 +81,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.3-alt2.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.0.3-alt2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
