@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 16.01.1
+Version: 16.06
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -32,7 +32,7 @@ Obsoletes: fotox
 
 BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel liblcms2-devel
 BuildRequires: perl-Image-ExifTool ufraw xdg-utils
-BuildRequires: libappstream-glib-devel
+BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
 
 %description
 Fotox is a program for improving digital photos. Navigate through large image
@@ -82,6 +82,10 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Mon Jun 06 2016 Yuri N. Sedunov <aris@altlinux.org> 16.06-alt1
+- 16.06
+- updated buildreqs
+
 * Thu Jan 21 2016 Yuri N. Sedunov <aris@altlinux.org> 16.01.1-alt1
 - 16.01.1
 
