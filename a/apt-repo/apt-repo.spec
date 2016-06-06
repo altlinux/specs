@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.5
+Version:  1.3.6
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,9 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Mon Jun 06 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.6-alt1
+- Fix process writing to file with permission denied
+
 * Mon May  9 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.5-alt1
 - handle both cases without arepo: none (noarch) or empty (ALT #31577).
 - "apt-repo test [task] '' pkg1 ..." will install the packages without
