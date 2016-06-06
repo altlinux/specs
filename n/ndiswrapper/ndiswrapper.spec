@@ -1,7 +1,7 @@
 %define _sbinrootdir /sbin
 
 Name: ndiswrapper
-Version: 1.59
+Version: 1.60
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -17,6 +17,8 @@ Source0: %name-%version.tar.gz
 #Patch0: 	ndiswrapper-1.0-spaces.patch
 # analogous to nvidia_glx deps:
 #Requires: 	NDISWRAPPER_kernel
+Patch1:  	%name-%version-fix-build.patch
+
 
 %description
 Some vendors do not release specifications of the hardware
@@ -42,6 +44,8 @@ Summary: Linux %module_name modules sources
 %prep
 %setup
 #patch0 -p1 -b .spaces
+%patch1 -p1
+
 
 %build
 pushd utils
@@ -89,6 +93,9 @@ echo -e "please download binary driver at http://ndiswrapper.sourceforge.net/wik
 %_usrsrc/kernel/sources/*ndis*
 
 %changelog
+* Mon Jun 06 2016 Ilya Mashkin <oddity@altlinux.ru> 1.60-alt1
+- 1.60: support kernel version up to 4.5
+
 * Thu Dec 05 2013 Ilya Mashkin <oddity@altlinux.ru> 1.59-alt1
 - 1.59
 
