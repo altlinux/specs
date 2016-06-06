@@ -3,7 +3,7 @@
 %def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.8.14
+Version: 0.9.6
 Release: alt1
 
 Summary: An nsswitch module which uses directory servers
@@ -175,6 +175,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Jun 06 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt1
+- New version
+
 * Wed May 14 2014 Andrey Cherepanov <cas@altlinux.org> 0.8.14-alt1
 - New version
 - Implement an -n switch to not daemonise
