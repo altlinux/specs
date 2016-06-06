@@ -1,6 +1,6 @@
 Name: alt-docs-main
-Version: 0.5.1
-Release: alt1.qa3
+Version: 0.6
+Release: alt1
 Group: Documentation
 Packager: ALT Docs Team <docs@packages.altlinux.org>
 
@@ -12,7 +12,6 @@ Url: http://heap.altlinux.ru/alt-docs/index.html
 
 BuildRequires(pre): rpm-build-licenses >= 0.6
 PreReq: alt-docs-genextras >= 0.2
-Requires: webclient
 
 Summary: ALT Linux Documentation main page
 Summary(ru_RU.KOI8-R): Главная страница документации ALT Linux
@@ -59,6 +58,10 @@ make DESTDIR=%buildroot install
 
 
 %changelog
+* Mon Jun 06 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.6-alt1
+- don't require webclient. There are web clinent now in all desktop
+  installations, but there is no need for it in server.
+
 * Sun Apr 10 2011 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1.qa3
 - NMU: .desktop file cleanup (use url_handler)
 
