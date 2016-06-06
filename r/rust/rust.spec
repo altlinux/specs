@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -24,11 +24,11 @@ Source6: liblibc.tar
 
 # Prebuilt rust, downloaded from http://static.rust-lang.org/stage0-snapshots/
 %ifarch x86_64 
-Source7: rust-stage0-2016-02-17-4d3eebf-linux-x86_64-d29b7607d13d64078b6324aec82926fb493f59ba.tar.bz2
+Source7: rust-stage0-2016-03-18-235d774-linux-x86_64-1273b6b6aed421c9e40c59f366d0df6092ec0397.tar.bz2
 %endif
 
 %ifarch %ix86
-Source7: rust-stage0-2016-02-17-4d3eebf-linux-i386-5f194aa7628c0703f0fd48adc4ec7f3cc64b98c7.tar.bz2
+Source7: rust-stage0-2016-03-18-235d774-linux-i386-0e0e4448b80d0a12b75485795244bb3857a0a7ef.tar.bz2
 %endif
 
 Packager: Vladimir Lettiev <crux@altlinux.ru>
@@ -80,6 +80,7 @@ cp %SOURCE7 dl
 %_bindir/rustc
 %_bindir/rustdoc
 %_libdir/lib*
+%dir %_libdir/rustlib
 %_libdir/rustlib/*
 %exclude %_libdir/rustlib/etc/*
 %exclude %_libdir/rustlib/install.log
@@ -95,6 +96,9 @@ cp %SOURCE7 dl
 %_libdir/rustlib/etc/*
 
 %changelog
+* Mon May 30 2016 Vladimir Lettiev <crux@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Fri Apr 22 2016 Vladimir Lettiev <crux@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
