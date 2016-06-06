@@ -2,7 +2,7 @@
 # viewers) into united project named "fbida". But we really not interested in
 # packaging ugly motif apps, so we will name our main package just "fbi".
 Name: fbi
-Version: 2.10
+Version: 2.12
 Release: alt1
 
 Summary: Image viewer for Linux framebuffer console
@@ -12,8 +12,8 @@ Group: Graphics
 Url: http://www.kraxel.org/cgit/fbida/
 Source: http://www.kraxel.org/releases/fbida/fbida-%version.tar.gz
 
-# Automatically added by buildreq on Sun Feb 26 2012
-BuildRequires: fontconfig-devel libImageMagick-devel libcurl-devel libexif-devel libgif-devel libjpeg-devel liblirc-devel libpng-devel libsane-devel libtiff-devel libwebp-devel
+# Automatically added by buildreq on Mon Jun 06 2016
+BuildRequires: libdrm-devel libepoxy-devel libexif-devel libgbm-devel libgif-devel libjpeg-devel liblirc-devel libpoppler-glib-devel libsane-devel libtiff-devel libwebp-devel
 
 %description
 Image viewer for Linux framebuffer console.
@@ -49,6 +49,10 @@ export CFLAGS="%optflags"
 %_man1dir/exiftran*
 
 %changelog
+* Mon Jun 06 2016 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt1
+- 2.12
+- updated buildreqs
+
 * Fri Jan 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10-alt1
 - 2.10
 
