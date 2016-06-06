@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.a2.1.1
 %define oname z3c.contents
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.0.0
-Release: alt2.a2.1
+#Release: alt2.a2.1
 Summary: Container management page based on z3c.form and z3c.table for Zope3
 License: ZPLv2.1
 Group: Development/Python
@@ -88,7 +90,7 @@ popd
 
 %install
 %python_install
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -98,7 +100,7 @@ mv %buildroot%python_sitelibdir_noarch/* \
 pushd ../python3
 %python3_install
 popd
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
@@ -128,6 +130,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt2.a2.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0.0-alt2.a2.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
