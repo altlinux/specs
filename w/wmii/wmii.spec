@@ -1,6 +1,8 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt4.1
 Name: wmii
 Version: 3.9.2
-Release: alt4
+#Release: alt4
 
 Summary: Window manager improved 2
 License: MIT
@@ -35,7 +37,7 @@ a new tagging approach.
 %install
 make install DESTDIR=%buildroot
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/*.so %buildroot%_libdir/
 %endif
@@ -77,6 +79,9 @@ EOF
 %_niconsdir/wmii.png
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.9.2-alt4.1
+- (AUTO) subst_x86_64.
+
 * Fri Jan 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.9.2-alt4
 - Fixed build with make 3.82
 

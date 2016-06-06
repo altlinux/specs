@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.git20121222.1.1
 %define mname cairo
 %define oname py%mname
 Name: python3-module-%oname
 Version: 1.10.1
-Release: alt3.git20121222.1
+#Release: alt3.git20121222.1
 
 Summary: Pycairo is a set of Python bindings for the vector graphics library cairo
 
@@ -77,7 +79,7 @@ popd
 %install
 %python3_install
 
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch/%mname" != "%python3_sitelibdir/%mname"
 install -d %buildroot%_pkgconfigdir
 mv %buildroot%_libexecdir/pkgconfig/* %buildroot%_pkgconfigdir/
 mv %buildroot%python3_sitelibdir_noarch/%mname/* \
@@ -142,6 +144,9 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/%mname/pickle
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.1-alt3.git20121222.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.10.1-alt3.git20121222.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
