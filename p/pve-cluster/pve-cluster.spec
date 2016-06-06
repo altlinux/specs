@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
-Version: 4.0.39
-Release: alt1
+Version: 4.0.40
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -15,7 +15,7 @@ Source1: pve-access-control.tar.xz
 Patch0: %name.patch
 Patch1: pve-access-control.patch
 
-BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel
+BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel xmlto
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Net/SSLeay.pm)
 BuildRequires: perl(MIME/Base32.pm) perl(Net/LDAP.pm) perl(Authen/PAM.pm)
@@ -27,9 +27,9 @@ configuration data on all nodes.
 
 %package -n pve-access-control
 Summary: Proxmox VE access control library
-Version: 4.0.15
+Version: 4.0.16
+Release: alt1
 Group: Development/Perl
-ExclusiveArch: x86_64
 
 %description -n pve-access-control
 This package contains the role based user management and access
@@ -52,18 +52,26 @@ cd data
 
 %install
 install -pD -m644 debian/%name.service %buildroot%systemd_unitdir/%name.service
-install -pD -m644 debian/sysctl.conf %buildroot%_sysconfdir/sysctl.d/pve.conf
+install -pD -m644 debian/sysctl.conf %buildroot%_sysconfdir/sysctl.d/pve-cluster.conf
 cd data
 %make DESTDIR=%buildroot install
 cd ../pve-access-control
 %make DESTDIR=%buildroot install
 mkdir -p %buildroot%_localstatedir/%name
 
+mkdir -p %buildroot%_sysconfdir/network
+cat << __EOF__ > %buildroot%_sysconfdir/network/interfaces
+auto lo
+iface lo inet loopback
+__EOF__
+
 mkdir -p %buildroot%_sysconfdir/sysconfig
 cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/%name
 DAEMON_OPTS=""
 __EOF__
-cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/rrdcached.pve
+
+cd ..
+cat << __EOF__ > rrdcached.sysconfig
 RRDCACHED_USER="root"
 OPTS="-j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/db/ -B"
 SOCKFILE="/var/run/rrdcached.sock"
@@ -81,11 +89,13 @@ __EOF__
 %_sbindir/useradd -g www-data -c 'www-data' -d /var/www -s '/sbin/nologin' -G www-data -r www-data 2>/dev/null || :
 
 %files
+%doc rrdcached.sysconfig
 %systemd_unitdir/%name.service
 %_sysconfdir/bash_completion.d/pvecm
-%_sysconfdir/sysconfig/%name
-%_sysconfdir/sysconfig/rrdcached.pve
-%_sysconfdir/sysctl.d/pve.conf
+%dir %_sysconfdir/network
+%config(noreplace) %_sysconfdir/network/interfaces
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%_sysconfdir/sysctl.d/pve-cluster.conf
 %_bindir/create_pmxcfs_db
 %_bindir/pmxcfs
 %_bindir/pvecm
@@ -117,6 +127,12 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Mon Jun 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.40-alt2
+- pve-access-control 4.0-16
+
+* Wed Jun 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.40-alt1
+- 4.0-40
+
 * Fri May 20 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.39-alt1
 - 4.0-39
 
