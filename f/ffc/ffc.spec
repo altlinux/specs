@@ -1,6 +1,8 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev.git20150430.1
 Name:           ffc
 Version:        1.6.0
-Release:        alt1.dev.git20150430
+#Release:        alt1.dev.git20150430
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
@@ -95,7 +97,7 @@ This package contains development files for UFC.
 install -d %buildroot%_docdir/%name
 install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 
-%ifarch x86_64
+%if "%_libexecdir/pkgconfig" != "%_pkgconfigdir"
 install -d %buildroot%_pkgconfigdir
 mv %buildroot%_libexecdir/pkgconfig/* %buildroot%_pkgconfigdir/
 %endif
@@ -120,6 +122,9 @@ touch %buildroot%python_sitelibdir/ffc_time_ext/__init__.py
 %_datadir/ufc
 
 %changelog
+* Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:1.6.0-alt1.dev.git20150430.1
+- (AUTO) subst_x86_64.
+
 * Sat May 02 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.6.0-alt1.dev.git20150430
 - Version 1.6.0dev
 
