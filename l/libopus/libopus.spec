@@ -1,5 +1,5 @@
 Name: libopus
-Version: 1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Opus Audio Codec library
@@ -39,7 +39,8 @@ statically linked libopus-based software.
 %setup -n opus-%version
 
 %build
-%configure %{subst_enable static}
+%configure \
+	--enable-intrinsics %{subst_enable static}
 %make_build
 
 %install
@@ -64,6 +65,10 @@ statically linked libopus-based software.
 %endif
 
 %changelog
+* Mon Jun 06 2016 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt1
+- 1.1.2 (closes #31585).
+- enabled intrinsics asm optimizations.
+
 * Thu Jul 16 2015 Anton Farygin <rider@altlinux.ru> 1.1-alt1
 - 1.1
 
