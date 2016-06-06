@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.svn20110515.1.1
 %define pyname pulp
 %define somver 0
 
 %define oname PuLP
 Name: Coin%oname
 Version: 1.4.9
-Release: alt1.svn20110515.1
+#Release: alt1.svn20110515.1
 Summary: Linear Programming modeller written in python
 License: MIT
 Group: Sciences/Mathematics
@@ -67,7 +69,7 @@ This package contains examples for PuLP.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -93,6 +95,9 @@ done
 %doc examples
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.4.9-alt1.svn20110515.1.1
+- (AUTO) subst_x86_64.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.9-alt1.svn20110515.1
 - Rebuild with Python-2.7
 

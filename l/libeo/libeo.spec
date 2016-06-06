@@ -1,6 +1,8 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.qa3.1
 Name: libeo
 Version: 1.3.1
-Release: alt1.qa3
+#Release: alt1.qa3
 Summary: EO, the Evolving Objects library
 License: LGPLv2.1
 Url: http://eodev.sourceforge.net
@@ -67,7 +69,7 @@ mkdir -p %buildroot%_libexecdir/eo
 install -D lib/libPyEO.so %buildroot%python_sitelibdir/PyEO.so
 mv %buildroot%_datadir/eo/[^d]* %buildroot%_libexecdir/eo/
 # TODO when building shared, do not move debuginfo
-%ifarch x86_64
+%if "%prefix/lib" != "%_libdir"
 mv %buildroot%prefix/lib/* %buildroot%_libdir/
 %endif
 
@@ -92,6 +94,9 @@ mv %buildroot%prefix/lib/* %buildroot%_libdir/
 #_libexecdir/eo/test
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt1.qa3.1
+- (AUTO) subst_x86_64.
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.3.1-alt1.qa3
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 

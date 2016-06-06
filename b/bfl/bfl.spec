@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt4.svn20110302.1
 %define sover 0
 
 Name: bfl
 Version: 0.8.0
-Release: alt4.svn20110302
+#Release: alt4.svn20110302
 Summary: The Bayesian Filtering Library (BFL)
 
 Group: Sciences/Mathematics
@@ -96,7 +98,7 @@ done
 popd
 rmdir %buildroot%_bindir/%name
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mkdir -p %buildroot%_libdir
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
@@ -123,6 +125,9 @@ mv doc/html %buildroot%_defaultdocdir/lib%name-devel/
 %_defaultdocdir/lib%name-devel
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt4.svn20110302.1
+- (AUTO) subst_x86_64.
+
 * Wed Jun 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt4.svn20110302
 - Rebuilt with new libginac
 

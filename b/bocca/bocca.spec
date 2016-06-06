@@ -1,7 +1,9 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1
 %define python_noarch %_libexecdir/python%_python_version/site-packages
 Name: bocca
 Version: 0.5.7
-Release: alt2
+#Release: alt2
 Summary: Component and Application Generator for CCA
 License: LGPL
 Group: Development/Tools
@@ -80,7 +82,7 @@ This package contains python module of Bocca.
 install -d %buildroot%_docdir/%name
 cp -fR doc/* %buildroot%_docdir/%name 
 
-%ifarch x86_64
+%if "%python_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_noarch/* %buildroot%python_sitelibdir/
 %endif
@@ -98,6 +100,9 @@ sed -i 's|/usr/sbin/lsattr|lsattr|' \
 %_docdir/%name
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5.7-alt2.1
+- (AUTO) subst_x86_64.
+
 * Sat Nov 09 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.7-alt2
 - Fixed build
 

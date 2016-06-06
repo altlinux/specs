@@ -1,9 +1,11 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.git20130815.1
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: icet
 Version: 2.1.0
-Release: alt3.git20130815
+#Release: alt3.git20130815
 Summary: The Image Composition Engine for Tiles (IceT)
 License: Public domain
 Group: Graphics
@@ -116,7 +118,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
@@ -142,6 +144,9 @@ rm -f %buildroot%_libdir/*.cmake
 %_man3dir/*
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.0-alt3.git20130815.1
+- (AUTO) subst_x86_64.
+
 * Wed Nov 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt3.git20130815
 - New snapshot
 

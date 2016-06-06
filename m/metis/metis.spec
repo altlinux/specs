@@ -1,7 +1,9 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %define sover 1
 Name: metis
 Version: 5.1.0
-Release: alt1
+#Release: alt1
 Summary: Family of Multilevel Partitioning Algorithms
 License: GPL
 Group: Sciences/Mathematics
@@ -91,7 +93,7 @@ sed -i 's|@VERSION@|%version|' %name.pc
 
 %install
 %makeinstall_std
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 	install -d %buildroot%_libdir
 	mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
@@ -130,6 +132,9 @@ rm -fR %_libexecdir/metis
 %_datadir/%name
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.1.0-alt1.1
+- (AUTO) subst_x86_64.
+
 * Thu Jul 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.0-alt1
 - Version 5.1.0
 

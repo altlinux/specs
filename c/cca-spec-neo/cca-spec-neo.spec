@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt12.1
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 %define babelver 2.0.0
 
 Name: cca-spec-neo
 Version: 0.2.8
-Release: alt12
+#Release: alt12
 Summary: Neoclassic binding of the CCA specification and design pattern
 License: LGPL
 Group: Sciences/Mathematics
@@ -92,7 +94,7 @@ export MPIDIR=%mpidir
 %make
 %make_install install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
@@ -123,6 +125,9 @@ install doc/README.NEO %buildroot%_docdir/%name-%version
 %_docdir/*
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.8-alt12.1
+- (AUTO) subst_x86_64.
+
 * Fri Nov 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt12
 - Rebuilt with new babel
 

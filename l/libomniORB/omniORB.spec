@@ -1,9 +1,11 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt5.svn20140428.1
 Name:    libomniORB
 License: LGPL
 URL:     http://omniorb.sourceforge.net/
 
 Version: 4.2.0
-Release: alt5.svn20140428
+#Release: alt5.svn20140428
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -144,7 +146,7 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir
 install -p -D -m 755 %SOURCE2 %buildroot%_initdir/omninames
 install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %endif
 
@@ -210,6 +212,9 @@ mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %_libdir/libCOS*.a
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2.0-alt5.svn20140428.1
+- (AUTO) subst_x86_64.
+
 * Thu Jul 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt5.svn20140428
 - Added lsb init header
 

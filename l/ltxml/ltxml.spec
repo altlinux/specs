@@ -1,6 +1,8 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1
 Name:		ltxml
 Version:	1.2.7
-Release:	alt2
+#Release:	alt2
 License:	GPL
 Group:		Text tools
 Summary:	LT XML toolkit
@@ -48,7 +50,7 @@ LT XML API libraries and header files.
 	bindir=%{buildroot}/%{_bindir} \
 	MANDIR=%{buildroot}/%{_mandir}
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir/ltxml* %buildroot%_libdir/
 %endif
 
@@ -63,6 +65,9 @@ mv %buildroot%_libexecdir/ltxml* %buildroot%_libdir/
 %{_libdir}/*.a
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2.7-alt2.1
+- (AUTO) subst_x86_64.
+
 * Mon Jan 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.7-alt2
 - Restored in Sisyphus
 

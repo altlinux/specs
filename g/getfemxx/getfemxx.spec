@@ -1,9 +1,11 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 %set_automake_version 1.11
 
 %define rname getfem
 Name: getfemxx
 Version: 5.0
-Release: alt1
+#Release: alt1
 %setup_python_module getfem
 
 Group: Development/C++
@@ -74,7 +76,7 @@ CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[
 %install
 %makeinstall_std
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch/getfem" != "%python_sitelibdir/getfem"
 mv %buildroot%python_sitelibdir_noarch/getfem/* \
 	%buildroot%python_sitelibdir/getfem/
 %endif
@@ -95,6 +97,9 @@ mv %buildroot%python_sitelibdir_noarch/getfem/* \
 %python_sitelibdir/getfem
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.0-alt1.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 19 2016 Andrey Cherepanov <cas@altlinux.org> 5.0-alt1
 - New version
 - Use bundled libsuperlu

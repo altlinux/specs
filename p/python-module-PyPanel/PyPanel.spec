@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt4.4.1.1.1
 %define oname PyPanel
 
 Name: python-module-%oname
 Version: 2.4
-Release: alt4.4.1.1
+#Release: alt4.4.1.1
 
 Summary: Lightweight panel/taskbar for X11 Window Managers
 Group: Graphical desktop/Other
@@ -46,7 +48,7 @@ configured to display the current desktop name, date/time, a system tray
 
 #unset RPM_PYTHON
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 mv %buildroot%python_sitelibdir_noarch/pypanel \
 	%buildroot%python_sitelibdir/
 %endif
@@ -57,6 +59,9 @@ mv %buildroot%python_sitelibdir_noarch/pypanel \
 %doc README
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4-alt4.4.1.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.4-alt4.4.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
