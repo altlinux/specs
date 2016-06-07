@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1
 %define oname gamera
 
 %def_without python3
 
 Name: python-module-%oname
 Version: 3.4.2
-Release: alt2
+#Release: alt2
 Summary: Framework for building document analysis applications
 License: GPLv2
 Group: Development/Python
@@ -120,7 +122,7 @@ popd
 
 %install
 %python_install --openmp=yes
-%ifarch x86_64
+%if "%python_sitelibdir_noarch/%oname" != "%python_sitelibdir/%oname"
 mv %buildroot%python_sitelibdir_noarch/%oname/src \
 	%buildroot%python_sitelibdir/%oname/
 %endif
@@ -129,7 +131,7 @@ mv %buildroot%python_sitelibdir_noarch/%oname/src \
 pushd ../python3
 %python3_install --openmp=yes
 popd
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch/%oname" != "%python3_sitelibdir/%oname"
 mv %buildroot%python3_sitelibdir_noarch/%oname/src \
 	%buildroot%python3_sitelibdir/%oname/
 %endif
@@ -176,6 +178,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.4.2-alt2.1
+- (AUTO) subst_x86_64.
+
 * Mon Mar 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.4.2-alt2
 - NMU: added python-module-Pygments to BRs.
 

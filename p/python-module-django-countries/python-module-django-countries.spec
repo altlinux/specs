@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20141027.1.1
 %define module_name django-countries
 
 %def_with python3
 
 Name: python-module-%module_name
 Version: 3.0.1
-Release: alt1.git20141027.1
+#Release: alt1.git20141027.1
 Group: Development/Python
 License: BSD License
 Summary: Provides a country field for Django models.
@@ -56,7 +58,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
@@ -71,6 +73,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.1-alt1.git20141027.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.0.1-alt1.git20141027.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
