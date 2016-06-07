@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.6
 Release: alt1
 
 Summary: The Typesafe Callback Framework for C++
@@ -73,6 +73,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
+* Tue Jun 07 2016 Yuri N. Sedunov <aris@altlinux.org> 2.99.6-alt1
+- 2.99.6
+
 * Wed Mar 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.99.1-alt1
 - 2.99.1
 
