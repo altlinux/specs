@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.20
 %define api_ver 3.0
@@ -11,15 +12,18 @@
 
 Name: nautilus
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Nautilus is a network user environment
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Nautilus
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 # http://bugzilla.gnome.org/show_bug.cgi?id=519743
 Patch17: %name-filetype-symlink-fix.patch
@@ -203,6 +207,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Tue Jun 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt2
+- updated to 3.20.0-54-ge91f958
+
 * Thu Apr 28 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
