@@ -4,7 +4,7 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.5.3
+Version: 1.3.5.4
 Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
@@ -15,6 +15,7 @@ Source:  %name-%version.tar
 # VCS:   https://git.fedorahosted.org/git/389/ds.git
 Patch1:  alt-fix-initscripts.patch
 Patch2:  alt-bash3-support.patch
+Patch3:  upstream-fix-several-systemd-modules.patch
 
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
@@ -87,6 +88,8 @@ and without the main package.
 %setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+
 %autoreconf
 # Install SysVInit scripts anyway
 subst 's/@\(INITDDIR_TRUE\|SYSTEMD_FALSE\)@//g' Makefile.in
@@ -191,6 +194,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Tue Jun 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.5.4-alt1
+- New version
+
 * Thu May 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.5.3-alt1
 - New version
 
