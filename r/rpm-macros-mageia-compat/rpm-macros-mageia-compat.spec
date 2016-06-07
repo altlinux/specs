@@ -1,7 +1,7 @@
 %define module mageia-compat
 Name: rpm-macros-%module
 Summary: Mageia compatibility set of macro
-Version: 0.01
+Version: 0.02
 Release: alt1
 License: GPL
 Group: System/Base
@@ -21,13 +21,16 @@ Patch: mageia-compat.patch
 
 %install
 install -D -m644 %module -p %buildroot%_rpmmacrosdir/%module-base
-for ext in cmake ; do
-    install -D -m644 $ext.macros -p %buildroot%_rpmmacrosdir/%module-$ext
+for ext in cmake qt5 scons ; do
+    install -D -m644 orig/$ext.macros -p %buildroot%_rpmmacrosdir/%module-$ext
 done
 
 %files
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Jun 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- added qt5 && scons macros
+
 * Mon Sep 28 2015 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - initial build for ALT Linux Sisyphus
