@@ -1,7 +1,9 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1.1
 %define oname repoze.filecat
 Name: python-module-%oname
 Version: 0.2
-Release: alt2.1
+#Release: alt2.1
 Summary: A file catalog with an HTTP frontend
 License: BSD
 Group: Development/Python
@@ -42,7 +44,7 @@ This package contains tests for repoze.filecat.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -58,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2-alt2.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2-alt2.1
 - Rebuild with Python-2.7
 
