@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-domain
-Version: 0.4
-Release: alt19
+Version: 0.5
+Release: alt1
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -39,6 +39,9 @@ alterator module to edit system network domain
 
 
 %changelog
+* Tue Jun 07 2016 Mikhail Efremov <sem@altlinux.org> 0.5-alt1
+- Write domain in the resolvconf.conf.
+
 * Tue Oct 14 2014 Mikhail Efremov <sem@altlinux.org> 0.4-alt19
 - Drop QT UI leftovers.
 
