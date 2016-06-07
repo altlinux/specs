@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-openldap
-Version: 0.8.1
+Version: 0.9
 Release: alt1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.ru>
@@ -45,6 +45,9 @@ Alterator module for OpenLDAP server.
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Jun 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.9-alt1
+- no more direct /etc/init.d/slapd calls
+
 * Wed Oct 31 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1
 - Add default organization unit Computers
 
