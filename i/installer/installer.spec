@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.31
+Version: 1.8.32
 Release: alt1
 
 Summary: Installer common parts
@@ -72,7 +72,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Provides: %name-stage3 = %version-%release
 Obsoletes: %name-stage3 < %version-%release
-Requires: alterator-wizardface alterator-notes
+Requires: alterator-notes
 # stage2 and stage3 are mutually exclusive
 Conflicts: %name-common-stage2
 
@@ -110,6 +110,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Jun 07 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.8.32-alt1
+- don't require alterator-wizardface in stage3. There is no need
+  for it, but it requires qt4
+
 * Wed Feb 10 2016 Michael Shigorin <mike@altlinux.org> 1.8.31-alt1
 - added 65-setup-control.sh (for m-p at least)
 
