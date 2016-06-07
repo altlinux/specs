@@ -1,22 +1,30 @@
 %define _name gtksourceview
-%define ver_major 2.10
+%define ver_major 2.11
+%define api_ver 2.0
 %def_disable static
 %def_disable gtk_doc
 %def_disable introspection
 
 Name: lib%{_name}
-Version: %ver_major.5
-Release: alt2.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.bz2
-Source1: %name-%ver_major.map
+Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.gz
+Source1: %name-2.10.map
 Patch: %name-2.9.4-alt-symver.patch
+Patch1: %name-2.11.2-alt-tests-deprecation.patch
+
+# fc patches
+Patch10: %_name-2.11.2-cflags.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=672823
+Patch11: %_name-2.11-fix-GCONST-def.patch
+Patch12: %_name-2.11-add-libs.patch
+Patch13: %_name-2.11-glib-unicode-constant.patch
 
 Provides: %{name}2 = %version-%release
 Obsoletes: %{name}2 < %version-%release
@@ -36,7 +44,7 @@ BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildPreReq: libGConf-devel
 BuildPreReq: gtk-doc >= 1.0
 
-BuildRequires: gcc-c++ perl-XML-Parser zlib-devel libgio-devel cvs
+BuildRequires: gcc-c++ perl-XML-Parser zlib-devel libgio-devel libcairo-gobject-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_introspection:BuildRequires: libgtk+2-gir-devel}
 
@@ -53,7 +61,6 @@ Group: Development/GNOME and GTK+
 Requires: %name = %version-%release
 Provides: %{name}2-devel = %version-%release
 Obsoletes: %{name}2-devel < %version-%release
-
 
 %description devel
 This package contains the files required to develop applications against
@@ -93,32 +100,35 @@ GObject introspection devel data for the GtkSourceView library
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q -n %_name-%version
+%setup -n %_name-%version
 install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 %patch
-
-#rm -f gtksourceview/GtkSource-2.0.gir
+%patch1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 %autoreconf
 %configure \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection}
-
+	%{subst_enable introspection} \
+	--disable-deprecations
 %make_build
 
 #%check
 #%%make check
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
-%find_lang %_name-2.0
+%find_lang %_name-%api_ver
 
-%files -f %_name-2.0.lang
+%files -f %_name-%api_ver.lang
 %_libdir/*.so.*
-%_datadir/%_name-2.0
+%_datadir/%_name-%api_ver
 %doc AUTHORS ChangeLog NEWS README
 
 %files devel
@@ -132,14 +142,18 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_libdir/girepository-1.0/GtkSource-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_datadir/gir-1.0/GtkSource-%api_ver.gir
 %endif
 
 
 %changelog
+* Sat Nov 01 2014 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt1
+- 2.11.2
+- applied fc patchset
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.10.5-alt2.1
 - Rebuild with Python-2.7
 
