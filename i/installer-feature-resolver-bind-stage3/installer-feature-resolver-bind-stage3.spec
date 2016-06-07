@@ -1,5 +1,5 @@
 Name: installer-feature-resolver-bind-stage3
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Setup bind as a main local resolver
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Jun 07 2016 Mikhail Efremov <sem@altlinux.org> 0.5-alt1
+- Use name_servers option in the resolvconf.conf again.
+
 * Fri Jun 03 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.4-alt1
 - run even under systemd
 
