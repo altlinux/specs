@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.svn20130102.1.1.1.1
 %define module_name mimeparse
 
 %def_with python3
 
 Name: python-module-%module_name
 Version: 0.1.4
-Release: alt1.svn20130102.1.1.1
+#Release: alt1.svn20130102.1.1.1
 Group: Development/Python
 License: BSD License
 Summary: A module provides basic functions for parsing mime-type names and matching them against a list of media-ranges
@@ -87,7 +89,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
@@ -103,6 +105,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.svn20130102.1.1.1.1
+- (AUTO) subst_x86_64.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.4-alt1.svn20130102.1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
