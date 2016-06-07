@@ -1,7 +1,7 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.24
+Version: 0.25
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 %_man1dir/distro*
 
 %changelog
+* Tue Jun 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
+- support for static distrodb tables
+
 * Mon May 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - added calls to raw distromap
 
