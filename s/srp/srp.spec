@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt6.1
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: srp
 Summary: The Secure Remote Password protocol
 Version: 2.1.2
-Release: alt6
+#Release: alt6
 Group: Networking/Other
 License: MIT
 URL: http://srp.stanford.edu/
@@ -97,7 +99,7 @@ export LIBS=-lcrypto
 
 mv %buildroot%_bindir/* %buildroot%_libdir/%name/bin/
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
 
@@ -141,6 +143,9 @@ EOF
 %doc docs
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.1.2-alt6.1
+- (AUTO) subst_x86_64.
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt6
 - Rebuilt with OpenMPI 1.6
 

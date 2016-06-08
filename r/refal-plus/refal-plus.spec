@@ -1,7 +1,9 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 Name:		refal-plus
 # `svnversion`
 Version:	4137
-Release:	alt1
+#Release:	alt1
 Summary:	A modern dialect of Refal programming language
 Summary(ru_RU.KOI8-R): Современный диалект языка программирования Рефал
 Source:		refal-r%{version}-src.zip
@@ -121,7 +123,7 @@ cd c++
 %install
 cd c++
 %makeinstall INSTALL_DIR=%buildroot%_prefix
-%ifarch x86_64
+%if "%_prefix/lib" != "%_libdir"
 mkdir %buildroot%_libdir
 mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %endif
@@ -140,6 +142,9 @@ mv %buildroot%_prefix/lib/lib* %buildroot%_libdir/
 %doc compiler rfp rfpfilt samples RfpUpgrader
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 4137-alt1.1
+- (AUTO) subst_x86_64.
+
 * Thu Dec 03 2015 Fr. Br. George <george@altlinux.ru> 4137-alt1
 - Update from SVN
 - Drop patch
