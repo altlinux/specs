@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt4.1.1
 %define oname z3c.davapp.zopeappfile
 
 %def_with python3
 
 Name: python-module-%oname
 Version: 1.0b1
-Release: alt4.1
+#Release: alt4.1
 Summary: Define the WebDAV data model from the `zope.app.file' module.
 License: ZPL
 Group: Development/Python
@@ -92,7 +94,7 @@ popd
 
 %install
 %python_install
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -103,7 +105,7 @@ touch %buildroot%python_sitelibdir/z3c/davapp/__init__.py
 pushd ../python3
 %python3_install
 popd
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
@@ -144,6 +146,9 @@ touch %buildroot%python3_sitelibdir/z3c/davapp/__init__.py
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0b1-alt4.1.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.0b1-alt4.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

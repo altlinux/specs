@@ -1,7 +1,9 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.1.1
 %define oname z3c.formjsdemo
 Name: python-module-%oname
 Version: 0.3.1
-Release: alt3.1
+#Release: alt3.1
 Summary: A set of demo applications for ``z3c.formjs``
 License: ZPLv2.1
 Group: Development/Python
@@ -30,7 +32,7 @@ This package is going to show off the different features of the
 %install
 %python_install
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -42,6 +44,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %exclude %python_sitelibdir/*.pth
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.3.1-alt3.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.1-alt3.1
 - Rebuild with Python-2.7
 
