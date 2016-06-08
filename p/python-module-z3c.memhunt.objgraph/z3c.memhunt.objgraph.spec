@@ -1,7 +1,9 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.1.1
 %define oname z3c.memhunt.objgraph
 Name: python-module-%oname
 Version: 0.1dev.r118724
-Release: alt2.1
+#Release: alt2.1
 Summary: Help locate and diagnose memory leaks in zope applications
 License: ZPLv2.1
 Group: Development/Python
@@ -41,7 +43,7 @@ This package contains tests for z3c.memhunt.objgraph.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -56,6 +58,9 @@ touch %buildroot%python_sitelibdir/z3c/memhunt/__init__.py
 %exclude %python_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1dev.r118724-alt2.1.1
+- (AUTO) subst_x86_64.
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1dev.r118724-alt2.1
 - Rebuild with Python-2.7
 
