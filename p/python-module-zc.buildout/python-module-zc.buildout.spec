@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.2.1
 %define oname zc.buildout
 
 %def_with python3
@@ -8,10 +10,10 @@ URL: https://pypi.python.org/pypi/zc.buildout/
 Version: 2.3.1
 #define subver b20
 %ifdef subver
-Release: alt0.%subver
+#Release: alt0.%subver
 Source0: zc.buildout-%version%subver.tar
 %else
-Release: alt1.2
+#Release: alt1.2
 Source0: zc.buildout-%version.tar
 %endif
 License: ZPL
@@ -101,7 +103,7 @@ popd
 pushd ../python3
 %python3_install
 popd
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
@@ -115,7 +117,7 @@ popd
 
 %python_module_declare %python_sitelibdir/zc
 %python_build_install --optimize=2 --record=INSTALLED_FILES
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -149,6 +151,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.1-alt1.2.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.1-alt1.2
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
