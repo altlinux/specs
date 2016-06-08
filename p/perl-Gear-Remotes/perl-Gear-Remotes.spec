@@ -1,7 +1,7 @@
 %define module Gear-Remotes
 
 Name: perl-%module
-Version: 0.008
+Version: 0.009
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -25,6 +25,7 @@ Provides: gear-remotes = %version
 Summary: utilities for manipulating Gear upstream/remotes files
 Group: Development/Other
 Requires: perl-Gear-Remotes = %version-%release
+Requires: gear-uupdate
 
 %description -n gear-remotes-utils
 gear-remotes-utils are utils for managing .gear/upstream/remotes file.
@@ -32,6 +33,7 @@ gear-remotes-utils are utils for managing .gear/upstream/remotes file.
 .git configuration to all maintainers.
 %else
 Provides: gear-remotes-utils = %version
+Requires: gear-uupdate
 %endif
 
 %prep
@@ -53,6 +55,9 @@ Provides: gear-remotes-utils = %version
 %_bindir/*
 
 %changelog
+* Wed Jun 08 2016 Igor Vlasenko <viy@altlinux.ru> 0.009-alt1
+- added gear-uupdate requires (closes: #32182)
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
 - proper argument handling in save
 
