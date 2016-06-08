@@ -1,35 +1,34 @@
 %define oname openpyxl
-
 %def_with python3
 
-Name: python-module-%oname
-Version: 2.3.0
-Release: alt1.b1.1.1
+Name:    python-module-%oname
+Version: 2.3.5
+Release: alt1
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
-Group: Development/Python
-Url: https://pypi.python.org/pypi/openpyxl/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Group:   Development/Python
+Url:     http://openpyxl.readthedocs.io
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
+
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-jdcal python-modules-json
-#BuildPreReq: python-module-et_xmlfile
+%py_requires jdcal json et_xmlfile
+
+BuildRequires: python-module-jdcal
+BuildRequires: python-module-setuptools-tests
+BuildRequires: python-modules-json
+BuildRequires: python-module-memory_profiler
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
-#BuildPreReq: python3-module-jdcal
-#BuildPreReq: python3-module-et_xmlfile
+BuildRequires: python3-module-jdcal
+BuildRequires: python3-module-setuptools-tests
+BuildRequires: python3-module-memory_profiler
 %endif
 
 %py_provides %oname
-%py_requires jdcal json et_xmlfile
-
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-unittest python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-jdcal python-module-setuptools-tests python-modules-json python3-module-jdcal python3-module-setuptools-tests rpm-build-python3
 
 %description
 openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm files.
@@ -50,18 +49,18 @@ It was born from lack of existing library to read/write natively from
 Python the Office Open XML format.
 
 %prep
-%setup
+%setup -q -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
 %endif
 
 %build
-%python_build_debug
+%python_build
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%python3_build
 popd
 %endif
 
@@ -93,6 +92,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.5-alt1
+- New version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.3.0-alt1.b1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

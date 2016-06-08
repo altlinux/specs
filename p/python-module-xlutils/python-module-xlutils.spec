@@ -1,6 +1,7 @@
+%define oname xlutils
 
-Name:	  python-module-xlutils
-Version:  1.7.0
+Name:	  python-module-%oname
+Version:  1.7.1
 Release:  alt1
 
 Summary:  Utilities for working with Excel files that require both xlrd and xlwt
@@ -11,7 +12,8 @@ URL: 	  http://www.python-excel.org/
 BuildArch: noarch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
-Source:   %name-%version.tar
+Source:   %oname-%version.tar
+#VCS:	  https://github.com/python-excel/xlutils
 
 BuildRequires(pre): rpm-build-python
 BuildRequires: python-devel
@@ -25,7 +27,7 @@ This package collects utilities that require both xlrd and xlwt,
 including the ability to copy and modify or filter existing excel files.
 
 %prep
-%setup -q
+%setup -q -n %oname-%version
 
 %build
 %python_build
@@ -40,6 +42,9 @@ including the ability to copy and modify or filter existing excel files.
 %python_sitelibdir/xlutils*.egg-info/
 
 %changelog
+* Tue Jun 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
+- new version 1.7.1
+
 * Thu Mar 27 2014 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - Initial build for ALT Linux
 
