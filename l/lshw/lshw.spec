@@ -1,15 +1,20 @@
+%def_enable snapshot
+
 Name: lshw
-Version: 2.17
-Release: alt1.qa1
+Version: 2.18
+Release: alt1
 %define real_version B.0%version
 
 Summary: Hardware Lister
 License: GPLv2 only
 Group: System/Kernel and hardware
+Url: http://ezix.org/project/wiki/HardwareLiSter
 
-URL: http://lshw.org
-# .... redirects to http://ezix.org/project/wiki/HardwareLiSter
-Source: http://ezix.org/software/files/lshw-%real_version.tar.gz
+%if_disabled snapshot
+Source: http://ezix.org/software/files/%name-%real_version.tar.gz
+%else
+Source: %name-%real_version.tar
+%endif
 Source1: lshw.consolehelper
 Source2: lshw.pam
 Source100: lshw-icons.tar.bz2
@@ -17,6 +22,9 @@ Source101: lshw.desktop
 
 Patch1: lshw-2.11-guiname.patch
 Patch2: lshw-2.13-gcc43.patch
+Patch3: lshw-B.02.18-alt-build_gui.patch
+# fc (rhbz #1332486)
+Patch10: lshw-B.02.18-non-root.patch
 
 Requires: pciids usbids
 
@@ -52,11 +60,14 @@ This package provides graphical (GTK+) front-end to lshw.
 %setup -n lshw-%real_version -a 100
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch10 -p1
 
 %build
-subst 's/\(DEFINES=\)/\1-D_FILE_OFFSET_BITS=64 /' src/core/Makefile src/gui/Makefile src/Makefile
+#subst 's/\(DEFINES=\)/\1-D_FILE_OFFSET_BITS=64 /' src/core/Makefile src/gui/Makefile src/Makefile
+%add_optflags -D_FILE_OFFSET_BITS=64
 export SQLITE=1
-%make_build  all gui
+%make_build all gui
 
 %install
 export SQLITE=1
@@ -97,6 +108,9 @@ ln -s %_bindir/consolehelper %buildroot%_bindir/lshw-gui
 %_desktopdir/*
 
 %changelog
+* Wed Jun 08 2016 Yuri N. Sedunov <aris@altlinux.org> 2.18-alt1
+- 2.18 (B.02.18-6-gcb3c299)
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 2.17-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
