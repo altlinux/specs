@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 8.0
-Release: alt1
+Release: alt2
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -67,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt2
+- xinetd enabled in systemd installations
+
 * Fri Jun 03 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.0-alt1
 - sshd, ahttpd, alteratord enabled in systemd installations
 
