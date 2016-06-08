@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.42
-Release: alt2
+Release: alt3
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -699,6 +699,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.42-alt3
+- ssl keys generation added to service file
+
 * Fri Jun 03 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.42-alt2
 - support for multiple LDAP URLs in systemd service
 
