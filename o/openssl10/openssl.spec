@@ -1,6 +1,6 @@
 Name: openssl10
 Version: 1.0.2h
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -42,6 +42,8 @@ Patch84: openssl-rh-trusted-first-doc.patch
 Patch87: openssl-rh-cc-reqs.patch
 Patch90: openssl-rh-enc-fail.patch
 Patch92: openssl-rh-system-cipherlist.patch
+
+Patch200: openssl-CVE-2016-2178.patch
 
 %define shlib_soversion 10
 %define openssldir /var/lib/ssl
@@ -246,6 +248,8 @@ on the command line.
 %patch87 -p1
 %patch90 -p1
 %patch92 -p1
+
+%patch200 -p1
 
 find -type f -name \*.orig -delete
 
@@ -460,6 +464,9 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Wed Jun 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2h-alt2
+- Backported upstream fix for CVE-2016-2178.
+
 * Tue May 03 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2h-alt1
 - Updated to 1.0.2h (fixes CVE-2016-2105 CVE-2016-2106 CVE-2016-2107
   CVE-2016-2109 CVE-2016-2176).
