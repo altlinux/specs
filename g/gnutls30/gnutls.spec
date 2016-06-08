@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.4.12
+Version: 3.4.13
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -28,6 +28,10 @@ BuildRequires: libnettle-devel autogen libopts-devel libidn-devel
 %if_enabled guile
 BuildRequires: guile-devel
 %endif
+
+# For tests
+BuildRequires: net-tools
+BuildRequires: /proc
 
 %description
 GnuTLS is a project that aims to develop a library which provides a
@@ -231,9 +235,6 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %docdir/[ACNRT]*
 %_libdir/libgnutls.so.*
 
-# ignore test libraries
-%exclude %_libdir/gnutls/
-
 %files -n %libcxx
 %_libdir/libgnutlsxx.so.*
 
@@ -286,6 +287,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Tue Jun 07 2016 Mikhail Efremov <sem@altlinux.org> 3.4.13-alt1
+- Updated BR for tests.
+- Updated to 3.4.13 (CVE-2016-4456).
+
 * Fri May 20 2016 Mikhail Efremov <sem@altlinux.org> 3.4.12-alt1
 - Don't package test libraries.
 - Updated to 3.4.12.
