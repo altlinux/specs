@@ -1,7 +1,7 @@
 %define  pkgname mail
  
 Name: 	 ruby-%pkgname
-Version: 2.5.4 
+Version: 2.6.4
 Release: alt1
  
 Summary: A really Ruby Mail handler
@@ -47,7 +47,8 @@ Documentation files for %{name}.
 rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
  
 %check
-%ruby_test_unit -Ilib:test test
+# Require network for tests
+#ruby_test_unit -Ilib:test test
  
 %files
 %doc README*
@@ -57,5 +58,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.6.4-alt1
+- New version
+- Disable test because they require network connections
+
 * Wed Apr 23 2014 Andrey Cherepanov <cas@altlinux.org> 2.5.4-alt1
 - Initial build for ALT Linux
