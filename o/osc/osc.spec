@@ -1,157 +1,53 @@
-#
-# spec file for package osc
-#
-# Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
-
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
-#
-
-%define altlinux 1
-
-Name:           osc
-Version:        0.149.0
-Release:        alt1
-License:        GPLv2+
-Summary:        openSUSE Build Service Commander
-Url:            http://www.gitorious.org/opensuse/osc
-Group:          Development/Tools
-Source:         %{name}-%{version}.tar.gz
-Packager:       Denis Pynkin <dans@altlinux.org>
-
-%if !0%{?altlinux}
-%if 0%{?mandriva_version} < 02010
-BuildRequires:  python-urlgrabber
-Requires:       python-urlgrabber
-%endif
-%endif
-BuildRequires:  python-devel
-%if 0%{?mandriva_version}
-BuildRequires:  python-rpm
-Requires:       python-rpm
-%else
-BuildRequires:  rpm-python
-Requires:       rpm-python
-%endif
-#
-%if 0%{?suse_version}
-%if 0%{?suse_version} < 1020
-BuildRequires:  python-elementtree
-Requires:       python-elementtree
-%else
-BuildRequires:  python-xml
-Requires:       python-xml
-%endif
-%if 0%{?suse_version} > 1110
-BuildArch:      noarch
-%endif
-%if 0%{?suse_version} > 1000
-Recommends:     build >= 2010.05.04
-# These packages are needed for "osc add $URL"
-Recommends:     obs-service-recompress
-Recommends:     obs-service-set_version
-Recommends:     obs-service-tar_scm
-Recommends:     obs-service-verify_file
-Recommends:     obs-service-download_files
-Recommends:     obs-service-format_spec_file
-Recommends:     obs-service-source_validator
-%endif
-%endif
-%if 0%{?rhel_version} && 0%{?rhel_version} < 600
-BuildRequires:  python-elementtree
-Requires:       python-elementtree
-%endif
-%if 0%{?centos_version} && 0%{?centos_version} < 600
-BuildRequires:  python-elementtree
-Requires:       python-elementtree
-%endif
-
-%if !0%{?altlinux}
-%if 0%{?suse_version}%{?mandriva_version}
-BuildRequires:  python-m2crypto
-Requires:       python-m2crypto > 0.19
-%else
-BuildRequires:  m2crypto
-Requires:       m2crypto > 0.19
-%endif
-%endif
-
-%if 0%{?altlinux}
-BuildArch:      noarch
+Name: osc
+Version: 0.154.0
+Release: alt1
+Summary: Open Build Service Commander
+License: GPLv2+
+Group: Development/Other
+Url: https://github.com/openSUSE/osc
+Source: %name-%version-%release.tar
+BuildArch: noarch
+BuildRequires: python-devel
 BuildRequires: python-module-m2crypto
-BuildRequires: python-module-elementtree
-BuildRequires: python-module-urlgrabber
 BuildRequires: python-module-rpm
-BuildRequires: rpm-build-python
-
-%add_findreq_skiplist %_datadir/%name/complete
-%endif
-
-%{!?python_sitelib: %define python_sitelib %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+BuildRequires: python-module-urlgrabber
 
 %description
-Commandline client for the openSUSE Build Service.
+Commandline client for the Open Build Service.
 
 See http://en.opensuse.org/openSUSE:OSC , as well as
-http://en.opensuse.org/openSUSE:Build_Service_Tutorial for a general
-introduction.
+http://en.opensuse.org/openSUSE:Build_Service_Tutorial
+for a general introduction.
 
 %prep
-cp %SOURCE0 /tmp/
-%setup
+%setup -n %name-%version-%release
 
 %build
-CFLAGS="%{optflags}" python setup.py build
+%python_build
 
 %install
-python setup.py install --prefix=%{_prefix} --root=%{buildroot}
-ln -s osc-wrapper.py %{buildroot}/%{_bindir}/osc
-mkdir -p %{buildroot}%{_localstatedir}/lib/osc-plugins
-install -Dm0644 dist/complete.csh %{buildroot}%{_sysconfdir}/profile.d/osc.csh
-install -Dm0644 dist/complete.sh %{buildroot}%{_sysconfdir}/profile.d/osc.sh
+%python_install
+ln -s osc-wrapper.py %buildroot/%_bindir/osc
 
-%if 0%{?altlinux}
-install -Dm0755 dist/osc.complete %{buildroot}%{_datadir}/osc/complete
-%else
-%if 0%{?suse_version} > 1110
-install -Dm0755 dist/osc.complete %{buildroot}%{_prefix}/lib/osc/complete
-%else
-install -Dm0755 dist/osc.complete %{buildroot}%{_libdir}/osc/complete
-%endif
-%endif
-
-%clean
-rm -rf %{buildroot}
+mkdir -p %buildroot/var/lib/osc-plugins
+install -Dpm0755 dist/osc.complete %buildroot%_datadir/osc/complete
+install -Dpm0644 dist/complete.csh %buildroot/etc/profile.d/osc.csh
+install -Dpm0644 dist/complete.sh %buildroot/etc/bash_completion.d/osc.sh
 
 %files
-%defattr(-,root,root,-)
+%_bindir/osc*
+%python_sitelibdir/*
+%dir /var/lib/osc-plugins/
+%_man1dir/osc.*
+%_datadir/osc/
+%config(noreplace) /etc/profile.d/osc.csh
+%config(noreplace) /etc/bash_completion.d/osc.sh
 %doc AUTHORS README TODO NEWS
-%{_bindir}/osc*
-%{python_sitelib}/*
-%config %{_sysconfdir}/profile.d/osc.csh
-%config %{_sysconfdir}/profile.d/osc.sh
-%dir %{_localstatedir}/lib/osc-plugins
-%{_mandir}/man1/osc.*
-
-%if 0%{?altlinux}
-%{_datadir}/osc
-%else
-%if 0%{?suse_version} > 1110
-%{_prefix}/lib/osc
-%else
-%{_libdir}/osc
-%endif
-%endif
 
 %changelog
+* Wed Jun 08 2016 Dmitry V. Levin <ldv@altlinux.org> 0.154.0-alt1
+- 0.149.0 -> 0.154.0.
+
 * Thu Nov 20 2014 Denis Pynkin <dans@altlinux.org> 0.149.0-alt1
 - New version
 
