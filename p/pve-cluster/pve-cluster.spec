@@ -1,14 +1,14 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
 Version: 4.0.40
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: corosync2 fuse rrd-cached ceph ksmtuned openvswitch sqlite3 vixie-cron
+Requires: corosync2 fuse rrd-cached ceph ksmtuned openvswitch sqlite3 vixie-cron faketime
 
 Source0: %name.tar.xz
 Source1: pve-access-control.tar.xz
@@ -28,7 +28,6 @@ configuration data on all nodes.
 %package -n pve-access-control
 Summary: Proxmox VE access control library
 Version: 4.0.16
-Release: alt1
 Group: Development/Perl
 
 %description -n pve-access-control
@@ -39,10 +38,6 @@ control function used by Proxmox VE.
 %setup -q -n %name -a1
 %patch0 -p1
 %patch1 -p0
-
-sed -i 's|common-auth|passwd|' pve-access-control/PVE/Auth/PAM.pm
-sed -i 's|default|sysconfig|;s|cron|crond|' debian/%name.service
-sed -i 's|Proxmox Virtual Environment|BaseALT Virtual Environment|' data/PVE/Cluster.pm
 
 %build
 cd data
@@ -127,6 +122,9 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Tue Jun 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.40-alt3
+- added requires faketime
+
 * Mon Jun 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.40-alt2
 - pve-access-control 4.0-16
 

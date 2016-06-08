@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.2.11
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -69,6 +69,7 @@ Obsoletes: qemu-server < %version-%release
 This package contains the Qemu Server tools used by Proxmox VE
 
 %add_findreq_skiplist %_datadir/cluster/pvevm
+%add_findreq_skiplist %perl_vendor_privlib/PVE/HA/Env/PVE2.pm
 
 %prep
 %setup -q -c -n pve -a1 -a2 -a3 -a4
@@ -93,6 +94,8 @@ for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-
     %make DESTDIR=%buildroot install
     popd
 done
+
+mkdir -p %buildroot%_datadir/pve-docs
 
 install -m0644 %SOURCE6 %buildroot%_datadir/pve-manager/images/basealt_logo.png
 
@@ -171,6 +174,7 @@ __EOF__
 %_bindir/spiceproxy
 %_bindir/vzdump
 %dir %_datadir/cluster
+%dir %_datadir/pve-docs
 %attr(0755,root,root) %_datadir/cluster/pvevm
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
@@ -236,6 +240,8 @@ __EOF__
 %_man8dir/pveproxy.8*
 %_man8dir/pvestatd.8*
 %_man8dir/spiceproxy.8*
+%dir %_datadir/doc/%name
+%_datadir/doc/%name/*.pubkey
 
 %files -n pve-container
 %_sysconfdir/bash_completion.d/pct
@@ -340,6 +346,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Tue Jun 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.11-alt2
+- rebuild
+
 * Mon Jun 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.11-alt1
 - 4.2-11
 
