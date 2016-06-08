@@ -1,18 +1,19 @@
 %define oname xlwt
 %def_with python3
 Name: python-module-xlwt
-Version: 1.0.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Library to generate spreadsheet files compatible with Microsoft Excel versions 95 to 2003.
 
 License: BSD-style
 Group: Development/Python
-Url: http://pypi.python.org/pypi/xlwt
+Url: http://www.python-excel.org/
 BuildArch: noarch
 
-Packager: Alexey Morsov <swi@altlinux.ru>
-Source: %name-%version.tar
+Packager: Andrey Cherepanov <cas@altlinux.org>
+Source: %oname-%version.tar
+#VCS: https://github.com/python-excel/xlwt
 
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
@@ -46,7 +47,7 @@ packages outside the standard Python distribution.
 %endif
 
 %prep
-%setup -q
+%setup -q -n %oname-%version
 
 %if_with python3
 rm -rf ../python3
@@ -84,6 +85,9 @@ cp -av README.rst docs examples %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Tue Jun 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- new version 1.1.1
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2
 - NMU: added python3 module
 

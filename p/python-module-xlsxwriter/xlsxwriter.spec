@@ -2,32 +2,33 @@
 
 %def_with python3
 
-Name: python-module-%oname
-Version: 0.7.3
-Release: alt1.git20150806.1.1
+Name:    python-module-%oname
+Version: 0.9.1
+Release: alt1
 Summary: A Python module for creating Excel XLSX files
 License: BSD
-Group: Development/Python
-Url: https://pypi.python.org/pypi/XlsxWriter/
+Group:   Development/Python
+Url:     https://github.com/jmcnamara/XlsxWriter
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# https://github.com/jmcnamara/XlsxWriter.git
-Source: %name-%version.tar
+Source: %oname-%version.tar
+#VCS: https://github.com/jmcnamara/XlsxWriter
 BuildArch: noarch
 
-#BuildPreReq: python-devel python-module-setuptools-tests
-#BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools-tests
+BuildRequires: python3-module-pytest
 %endif
 
 %py_provides %oname
 
 BuildRequires(pre): rpm-macros-sphinx
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pluggy python-module-py python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base python3-module-pluggy python3-module-py python3-module-setuptools xz
-BuildRequires: python-module-alabaster python-module-docutils python-module-html5lib python-module-objects.inv python-module-pytest python3-module-pytest rpm-build-python3 time
+BuildRequires: python-module-alabaster
+BuildRequires: python-module-docutils
+BuildRequires: python-module-html5lib
+BuildRequires: python-module-objects.inv
+BuildRequires: python-module-pytest
+BuildRequires: time
 
 %description
 XlsxWriter is a Python module for writing files in the Excel 2007+ XLSX
@@ -72,7 +73,7 @@ file format.
 This package contains documentation for %oname.
 
 %prep
-%setup
+%setup -q -n %oname-%version
 
 %if_with python3
 cp -fR . ../python3
@@ -142,6 +143,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
+- new version 0.9.1
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.7.3-alt1.git20150806.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
