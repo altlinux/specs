@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.6
+Version:  1.3.7
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,9 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.7-alt1
+- Support https://www.altlinux.org/Autoimports sources
+
 * Mon Jun 06 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.6-alt1
 - Fix process writing to file with permission denied
 
