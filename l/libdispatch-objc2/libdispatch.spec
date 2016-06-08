@@ -1,8 +1,10 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt3.git20140226.1
 %set_verify_elf_method unresolved=strict
 
 Name: libdispatch-objc2
 Version: 1.2
-Release: alt3.git20140226
+#Release: alt3.git20140226
 Summary: Linux port of Apple's open-source concurrency library
 License: Apache License v2
 Group: System/Libraries
@@ -59,7 +61,7 @@ cmake \
 %install
 %makeinstall_std -C libdispatch
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 install -d %buildroot%_libdir
 mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %endif
@@ -74,6 +76,9 @@ mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %_man3dir/*
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.2-alt3.git20140226.1
+- (AUTO) subst_x86_64.
+
 * Sun Mar 02 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt3.git20140226
 - New snapshot
 

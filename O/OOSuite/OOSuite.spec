@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.svn20150723.1
 BuildRequires(pre): rpm-build-python
 
 %define dirs DerApproximator FuncDesigner OpenOpt SpaceFuncs
 
 Name: OOSuite
 Version: 0.5600
-Release: alt1.svn20150723
+#Release: alt1.svn20150723
 Summary: OpenOpt Suite
 License: BSD
 Group: Sciences/Mathematics
@@ -209,7 +211,7 @@ done
 install -d  %buildroot%python_sitelibdir
 install -m644 toms587.so %buildroot%python_sitelibdir
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 mv %buildroot%python_sitelibdir_noarch/DerApproximator* \
 	%buildroot%python_sitelibdir/
 mv %buildroot%python_sitelibdir_noarch/FuncDesigner* \
@@ -278,6 +280,9 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %python_sitelibdir/SpaceFuncs/examples
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.5600-alt1.svn20150723.1
+- (AUTO) subst_x86_64.
+
 * Sat Jul 25 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5600-alt1.svn20150723
 - Version 0.560
 

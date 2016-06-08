@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20140302.1.1.1
 %define module_name beanstalkc
 
 %def_with python3
 
 Name: python-module-%module_name
 Version: 0.4.0
-Release: alt1.git20140302.1.1
+#Release: alt1.git20140302.1.1
 Group: Development/Python
 License: Apache License
 Summary: beanstalkc is a simple beanstalkd client library for Python
@@ -57,7 +59,7 @@ pushd ../python3
 popd
 %endif
 
-%ifarch x86_64
+%if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
@@ -73,6 +75,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.git20140302.1.1.1
+- (AUTO) subst_x86_64.
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.git20140302.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).

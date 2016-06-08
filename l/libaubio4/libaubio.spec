@@ -1,10 +1,12 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.git20140312.1
 %define origname aubio
 %define sover 4
 %def_enable python
 
 Name: libaubio%sover
 Version: 0.4.1
-Release: alt2.git20140312
+#Release: alt2.git20140312
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 License: GPL
@@ -120,7 +122,7 @@ pushd python
 popd
 %endif
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %endif
 
@@ -148,6 +150,9 @@ mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %_docdir/lib%origname-doc
 
 %changelog
+* Mon Jun 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.1-alt2.git20140312.1
+- (AUTO) subst_x86_64.
+
 * Sat Mar 12 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.1-alt2.git20140312
 - rebuilt with recent libav
 
