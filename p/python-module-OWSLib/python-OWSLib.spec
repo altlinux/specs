@@ -1,10 +1,7 @@
-# Python3 support doesn't seem to be complete yet
-# https://github.com/geopython/OWSLib/issues/81
-
 %define modulename OWSLib
 
 Name:           python-module-%modulename
-Version:        0.8.8
+Version:        0.11.2
 Release:        alt1
 
 Summary:        Client library for OGC web services
@@ -22,7 +19,8 @@ Provides:	python-%modulename = %version-%release
 
 BuildArch:      noarch
 
-Source0:        http://pypi.python.org/packages/source/O/%{modulename}/%{modulename}-%{version}.tar.gz
+Source0:	%modulename-%version.tar
+#VCS:		git://github.com/geopython/OWSLib.git
 
 %description
 Package for client programming with Open Geospatial Consortium (OGC) web
@@ -44,6 +42,9 @@ models.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 0.11.2-alt1
+- new version 0.11.2
+
 * Wed Jul 16 2014 Andrey Cherepanov <cas@altlinux.org> 0.8.8-alt1
 - Import to ALT Linux from Fedora
 

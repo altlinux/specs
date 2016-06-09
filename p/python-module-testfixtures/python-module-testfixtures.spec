@@ -1,7 +1,7 @@
 %define  modulename testfixtures
 
 Name:    python-module-%modulename
-Version: 4.1.2
+Version: 4.10.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -18,6 +18,7 @@ BuildRequires: python-devel
 BuildRequires: python-module-distribute
 
 Source:  %modulename-%version.tar
+#VCS:    https://github.com/Simplistix/testfixtures
 
 %description
 TestFixtures is a collection of helpers and mock objects that are useful
@@ -37,6 +38,9 @@ when writing unit tests or doc tests.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jun 09 2016 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt1
+- new version 4.10.0
+
 * Tue Mar 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.2-alt1
 - Version 4.1.2
 
