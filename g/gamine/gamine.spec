@@ -1,14 +1,14 @@
 Name:		gamine
-Version:	1.1
-Release:	alt4
-Summary:	Gamine - game for small children :)
+Version:	1.5
+Release:	alt1
+Summary:	An interactive game for young children
 Source:		%name-%version.tar.gz
 Source1:	%name.desktop.in
-URL:		http://gnunux.info/projets/gamine
+URL:		http://gamine-game.sourceforge.net/:q
 Group:		Games/Educational
-License:	Distributable
+License:	GPLv3+
 
-BuildRequires:  libGConf-devel libcairo-devel gstreamer-devel gtk2-devel GConf
+BuildRequires:  gstreamer1.0-devel libgtk+3-devel intltool
 
 %description
 Gamine is a game designed for 2 years old children who are not able to
@@ -24,25 +24,27 @@ GARETTE Emmanuel (gnunux@gnunux.info)
 %prep
 %setup
 cp %SOURCE1 .
-subst 's/^LDLIBS = /LDLIBS = -lX11 -lm /' Makefile
 
 %build
 %make_build
 
 %install
-mkdir -p %buildroot/usr/
-make install PREFIX=%buildroot/usr/
+%makeinstall_std
+%find_lang %name
 
-%files
+%files -f %name.lang
 %_bindir/%name
-%_datadir/applications/%name.desktop
+%config(noreplace) %_sysconfdir/%name.conf
+%_desktopdir/%name.desktop
 %_datadir/doc/%name/*
 %_datadir/%name/*
-%_datadir/icons/%name.png
-%_datadir/icons/hicolor/scalable/apps/%name.svg
-%_datadir/locale/*/LC_MESSAGES/%name.mo
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_man6dir/%name.6*
 
 %changelog
+* Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 1.5-alt1
+- New version
+
 * Fri Feb 21 2014 Andrey Cherepanov <cas@altlinux.org> 1.1-alt4
 - Fix build in Sisyphus (missing libm in linked libs)
 
