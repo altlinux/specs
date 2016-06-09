@@ -1,8 +1,7 @@
-#define git_date .git20130531
-%define git_date %nil
+%define git_date .git20160601
+#define git_date %nil
 
 %define dbus_version 1.1
-%define libdbus_glib_version 0.76
 %define libgudev_version 143
 
 %def_with qmi
@@ -11,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.4.12
+Version: 1.5.992
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -25,7 +24,6 @@ Requires: dbus >= %dbus_version
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: libdbus-glib-devel
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
 %{?_with_qmi:BuildRequires: libqmi-glib-devel}
@@ -43,6 +41,8 @@ BuildRequires: dbus
 
 # Because of starting from the init script
 Conflicts: NetworkManager < 0.9.8.9
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 ModemManager provides a DBus interface to communicate with
@@ -190,6 +190,7 @@ fi
 %_libdir/ModemManager/*.so
 %_sbindir/*
 %_bindir/mmcli
+%_datadir/bash-completion/completions/mmcli
 %_sysconfdir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/interfaces/*.xml
 /lib/udev/rules.d/*
@@ -233,6 +234,9 @@ fi
 %endif
 
 %changelog
+* Thu Jun 09 2016 Mikhail Efremov <sem@altlinux.org> 1.5.992-alt1.git20160601
+- Upstream git snapshot (1.6-rc3 with updates from master branch).
+
 * Tue Oct 27 2015 Mikhail Efremov <sem@altlinux.org> 1.4.12-alt1
 - Updated to 1.4.12.
 

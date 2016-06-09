@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.12.8
+Version: 1.14.2
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: python-modules-json
 BuildRequires: gtk-doc help2man
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 libqmi is a glib-based library for talking to WWAN modems and devices
@@ -60,8 +62,7 @@ touch README ChangeLog
 %autoreconf
 %configure \
 	--disable-static \
-	--enable-gtk-doc \
-	--with-tests
+	--enable-gtk-doc
 %make_build
 
 # Fix qmicli name in the man page
@@ -81,6 +82,7 @@ make check
 %_bindir/*
 %_man1dir/qmicli.1*
 %_man1dir/qmi-network.1*
+%_datadir/bash-completion/completions/*
 
 %files devel
 %_includedir/*
@@ -92,6 +94,12 @@ make check
 
 
 %changelog
+* Thu Jun 09 2016 Mikhail Efremov <sem@altlinux.org> 1.14.2-alt1
+- Updated to 1.14.2.
+
+* Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 1.14.0-alt1
+- Updated to 1.14.0.
+
 * Mon Feb 29 2016 Mikhail Efremov <sem@altlinux.org> 1.12.8-alt1
 - Updated to 1.12.8.
 
