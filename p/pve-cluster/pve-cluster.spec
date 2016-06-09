@@ -1,14 +1,14 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
 Version: 4.0.40
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: corosync2 fuse rrd-cached ceph ksmtuned openvswitch sqlite3 vixie-cron faketime
+Requires: bridge-utils openntpd corosync2 fuse rrd-cached ceph ksmtuned openvswitch sqlite3 vixie-cron faketime
 
 Source0: %name.tar.xz
 Source1: pve-access-control.tar.xz
@@ -52,6 +52,8 @@ cd data
 %make DESTDIR=%buildroot install
 cd ../pve-access-control
 %make DESTDIR=%buildroot install
+
+mkdir -p %buildroot%_sysconfdir/pve
 mkdir -p %buildroot%_localstatedir/%name
 
 mkdir -p %buildroot%_sysconfdir/network
@@ -88,6 +90,7 @@ __EOF__
 %systemd_unitdir/%name.service
 %_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
+%dir %_sysconfdir/pve
 %config(noreplace) %_sysconfdir/network/interfaces
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_sysconfdir/sysctl.d/pve-cluster.conf
@@ -122,6 +125,9 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Thu Jun 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.40-alt4
+- added requires openntpd, bridge-utils
+
 * Tue Jun 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.40-alt3
 - added requires faketime
 
