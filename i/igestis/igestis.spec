@@ -1,6 +1,6 @@
 Name: 	  igestis
 Version:  2.3.18
-Release:  alt1
+Release:  alt3
 
 Summary:  Web administration for LDAP users and groups
 License:  GPL3
@@ -23,11 +23,24 @@ Taken from igestis ERP.
 %setup
 
 %install
-install  -dm 0644 . %buildroot/%_datadir/igestis
+mkdir -p  %buildroot/%_datadir/igestis/
+mkdir -p  %buildroot/%_docdir/igestis/debian_packing
+cp README.md %buildroot/%_docdir/igestis/
+rm igestis.spec
+cp -ar  ./debian/* %buildroot/%_docdir/igestis/debian_packing/
+rm -rf ./debian
+cp -ar ./* %buildroot/%_datadir/igestis/
 
 %files
-%_datadir/igestis
+%_datadir/igestis/*
+%_docdir/igestis/*
 
 %changelog
+* Thu Jun 09 2016 Denis Medvedev <nbr@altlinux.org> 2.3.18-alt3
+- moved debian packaging instructions to doc
+
+* Thu Jun 09 2016 Denis Medvedev <nbr@altlinux.org> 2.3.18-alt2
+- fix packaging
+
 * Fri Jun 03 2016 Denis Medvedev <nbr@altlinux.org> 2.3.18-alt1
 Initial release
