@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.dev.git20150323.qa1.1
 %set_automake_version 1.11
 
 %define mpiimpl openmpi
@@ -5,7 +7,7 @@
 
 Name: ngsolve
 Version: 6.1
-Release: alt1.dev.git20150323.qa1
+#Release: alt1.dev.git20150323.qa1
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -150,7 +152,7 @@ make install DESTDIR=%buildroot \
 install -d %buildroot%_includedir/%name
 mv %buildroot%_includedir/*.h* %buildroot%_includedir/%name/
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %endif
@@ -180,6 +182,9 @@ ln -s %_libdir/ngslib.so %buildroot%python_sitelibdir/
 %python_sitelibdir/*
 
 %changelog
+* Tue Jun 07 2016 Ivan Zakharyaschev <imz@altlinux.org> 6.1-alt1.dev.git20150323.qa1.1
+- (AUTO) subst_x86_64.
+
 * Fri Apr 08 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 6.1-alt1.dev.git20150323.qa1
 - NMU: rebuilt with rebuilt netgen.
 
