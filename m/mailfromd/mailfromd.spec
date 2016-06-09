@@ -6,9 +6,9 @@ Name: mailfromd
 %define baseversion 7.99.94
 
 %if %snapshot
-%define snapshotdate 20151112
+%define snapshotdate 20160426
 Version: %baseversion
-Release: alt0.%snapshotdate.2
+Release: alt0.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
 %else
 Version: %baseversion
@@ -300,6 +300,17 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Thu Jun 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160426.1
+- new snapshot
+- changes in mailfromd.mf:
+  - reject connections with local hostname in helo
+  - graylist and content filter are enabled if level 2 domain of sender's
+    PTR is not correspond with level 2 part of sender's helo
+  - graylist and content filter are enabled if SPF check passed with +all
+  - expanded good CIDR to /23 for SPF check
+  - graylist and content filter are enabled if ${client_resolve} is not "OK"
+  - some changes in the order of checks
+
 * Tue Dec 01 2015 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20151112.2
 - added makeinfo to BuildRequires
   https://lists.altlinux.org/pipermail/devel/2015-November/200445.html
