@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.6
+Version: 0.5.7
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -9,6 +9,7 @@ Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer
 Source: %name-%version.tar
 BuildArch: noarch
+Requires: sfdisk
 
 Conflicts: installer-common-stage2 < 1.8.11-alt1
 
@@ -36,6 +37,10 @@ install -pDm755 initinstall/stop-md-dm.sh \
 %_datadir/install2/initinstall.d/89-stop-md-dm.sh
 
 %changelog
+* Thu Jun 09 2016 Michael Shigorin <mike@altlinux.org> 0.5.7-alt1
+- ensure active partition(s) existence to workaround
+  some intel/dell BIOS "smartness" resulting in boot refusal
+
 * Mon Apr 04 2016 Michael Shigorin <mike@altlinux.org> 0.5.6-alt1
 - defuse gvfs
 
