@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.14.2
-Release: alt1
+Release: alt2
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -427,6 +427,9 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Thu Jun 09 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.14.2-alt2
+- krb5kdc.service: start after slapd
+
 * Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.2-alt1
 - 1.14.2
 - fixed CVE-2015-2695,CVE-2015-2696,CVE-2015-2697,CVE-2015-2698,CVE-2015-8629,CVE-2015-8630,CVE-2015-8631,CVE-2016-3119
