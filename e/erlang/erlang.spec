@@ -53,10 +53,10 @@
 %define ver 18
 Name: erlang
 Epoch: 1
-%define subver 3
+%define subver 3.3
 Version: %ver.%subver
 %define plevel b
-Release: alt2
+Release: alt1
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -82,7 +82,10 @@ BuildRequires: rpm-build-%name
 BuildRequires: gcc-c++ flex libunixODBC-devel zlib-devel /proc symlinks
 #BuildRequires: wxGTK-contrib-stc-devel >= 2.8.4, wxGTK-devel >= 2.8.4
 #BuildRequires: wxGTK-contrib-stc >= 2.8.4, wxGTK >= 2.8.4
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK-contrib-stc
+BuildRequires: libwxGTK-contrib-stc-devel
+
+BuildRequires(pre): libwxGTK-devel libwxGTK wxGTK 
 BuildRequires: libGLU-devel
 BuildRequires: libsystemd-devel
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
@@ -644,6 +647,7 @@ export CXXFLAGS=$CFLAGS
 	%{subst_enable_to lock_counting lock-counting} \
 	%{subst_enable_to clock_gettime clock-gettime} \
 	--enable-systemd \
+	--with-wx-config=/usr/bin/wx-config \
 	--enable-dynamic-ssl-lib \
 	--enable-shared-zlib
 %make depend
@@ -1292,8 +1296,15 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Mon Jun 06 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3.3-alt1
+- 18.3.3.
+ Build with wxGTK2, since wxGTK3.0 produces problems in demo.
+
+* Fri Apr 29 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3.2-alt1
+- 18.3.2
+
 * Thu Apr 07 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3-alt2
-- With wxGTK3.1
+- With wxGTK3.0
 
 * Mon Apr 04 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3-alt1
 - New version OTP-18.3
