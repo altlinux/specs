@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.26
+Version: 0.27
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Thu Jun 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- added static libs and kde*/qt* bin
+
 * Thu Jun 02 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - pyegg fixes
 
