@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.23
-Release: alt2
+Release: alt3
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -706,6 +706,11 @@ fi
 %_datadir/i18n
 
 %changelog
+* Thu Jun 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.23-alt3
+- Backported upstream fixes for sw bugs: 19648 19703 19861 20005 20010
+  20012 20111 20112 (including fix for CVE-2016-4429).
+- Backported upstream implementation of group merging (NSS).
+
 * Tue May 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.23-alt2
 - Backported upstream fixes for sw bugs:
   19679, 19758, 19759, 19762, 19791, 19792, 19822, 19879
