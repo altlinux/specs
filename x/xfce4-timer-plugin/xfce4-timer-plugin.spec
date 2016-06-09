@@ -1,6 +1,6 @@
 Name: xfce4-timer-plugin
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Timer plugin for Xfce
 License: %gpl2plus
@@ -19,6 +19,8 @@ BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
 BuildRequires: perl-XML-Parser intltool
 
 Requires: xfce4-panel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Nothing to describe really. Use the options menu to add timers. You can
@@ -42,8 +44,13 @@ of them can be run at a time.
 %doc README ChangeLog AUTHORS
 %_libexecdir/xfce4/panel-plugins/*
 %_datadir/xfce4/panel/plugins/*.desktop
+%_liconsdir/*
 
 %changelog
+* Wed Jun 08 2016 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
+- Updated translations from upstream git.
+- Updated to 1.6.0.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt2
 - Rebuild with libxfce4util-4.12.
 - Fix Summary.
