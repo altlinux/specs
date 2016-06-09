@@ -11,7 +11,7 @@
 %def_enable vala
 
 Name: %bname
-Version: %ver_major.15
+Version: %ver_major.16
 Release: alt1
 Epoch: 1
 
@@ -182,6 +182,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Thu Jun 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.16-alt1
+- 2.40.16
+
 * Sat Apr 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1:2.40.15-alt1
 - 2.40.15
 
