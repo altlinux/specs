@@ -1,7 +1,7 @@
 %define rname vo-amrwbenc
 
 Name:			lib%rname
-Version:		0.1.2
+Version:		0.1.3
 Release:		alt1
 Summary:		VisualOn AMR-WB encoder library
 Group:			System/Libraries
@@ -45,6 +45,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/vo-amrwbenc.pc
 
 %changelog
+* Thu Jun 09 2016 Andrey Cherepanov <cas@altlinux.org> 0.1.3-alt1
+- New version
+
 * Wed Apr 17 2013 Andrey Cherepanov <cas@altlinux.org> 0.1.2-alt1
 - Initial build in Sisyphus from Fedora
 
