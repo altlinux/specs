@@ -1,6 +1,6 @@
 Name: libcaca
 Version: 0.99
-Release: alt13.beta17.2
+Release: alt14.beta19
 
 Summary: Text mode graphics library
 Group: System/Libraries
@@ -9,15 +9,6 @@ Url: http://sam.zoy.org/projects/libcaca/
 
 # http://caca.zoy.org/files/libcaca/%name-%version.beta17.tar.gz
 Source: %name-%version.tar
-Patch: libcaca-ruby1.9.patch
-
-%ifarch x86_64
-Provides: libcucul.so.0()(64bit)
-Provides: libcucul++.so.0()(64bit)
-%else
-Provides: libcucul.so.0
-Provides: libcucul++.so.0
-%endif
 
 BuildPreReq: rpm-build-ruby
 
@@ -83,7 +74,6 @@ This package contains Ruby bindings for libcaca.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -120,16 +110,17 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %files -n caca-utils
 %_bindir/cacademo
 %_bindir/cacafire
-%_bindir/cacaview
+%_bindir/cacaclock
 %_bindir/cacaplay
 %_bindir/cacaserver
+%_bindir/cacaview
 %_bindir/img2txt
 %_datadir/%name
 %_man1dir/cacademo.1*
 %_man1dir/cacafire.1*
-%_man1dir/cacaview.1*
 %_man1dir/cacaplay.1*
 %_man1dir/cacaserver.1*
+%_man1dir/cacaview.1*
 %_man1dir/img2txt.1*
 
 %files -n ruby-libcaca
@@ -137,6 +128,10 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %ruby_sitearchdir/caca.*
 
 %changelog
+* Fri Jun 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.99-alt14.beta19
+- Updated to v0.99.beta19.
+- Dropped strange arch-dependent provides.
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.99-alt13.beta17.2
 - Rebuilt with ruby-2.0.0-alt1
 
