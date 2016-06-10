@@ -1,5 +1,5 @@
 Name: dosfstools
-Version: 3.0.28
+Version: 4.0
 Release: alt1
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
@@ -31,15 +31,16 @@ code.
 %patch -p1
 
 %build
+autoreconf -fisv
+%configure --prefix=/ --sbindir=/sbin
 %make_build \
-	PREFIX=/ \
 	CFLAGS="%optflags\
 		-D_LARGEFILE_SOURCE \
 		-D_FILE_OFFSET_BITS=64 \
 		-fno-strict-aliasing"
 
 %install
-%makeinstall PREFIX=%buildroot MANDIR=%buildroot%_mandir
+%makeinstall PREFIX=%buildroot MANDIR=%buildroot%_mandir sbindir=%buildroot/sbin
 
 %files
 /sbin/*
@@ -47,6 +48,9 @@ code.
 %doc doc/*
 
 %changelog
+* Thu Jun 09 2016 Anton Farygin <rider@altlinux.ru> 4.0-alt1
+- new version
+
 * Thu Oct 22 2015 Anton Farygin <rider@altlinux.ru> 3.0.28-alt1
 - new version
 

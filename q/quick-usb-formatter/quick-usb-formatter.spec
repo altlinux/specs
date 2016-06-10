@@ -2,7 +2,7 @@
 
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: A small KDE4 application to format usb sticks and devices
@@ -11,7 +11,7 @@ Url: http://kde-apps.org/content/show.php?content=137493
 # git://git.chakraos.org/quick-usb-formatter.git
 
 #Requires: dosfstools e2fsprog ntfs-3g
-Requires: /sbin/mkfs.ntfs /sbin/mkdosfs /sbin/mke2fs /sbin/mkfs.exfat /usr/sbin/mkfs.f2fs
+Requires: /sbin/mkfs.ntfs /sbin/mkfs.fat /sbin/mke2fs /sbin/mkfs.exfat /usr/sbin/mkfs.f2fs
 
 Source: quick-usb-formatter-%version.tar
 Patch1: alt-path.patch
@@ -51,6 +51,9 @@ mv %buildroot/%_kde4_bindir/* %buildroot/%_bindir/
 
 
 %changelog
+* Fri Jun 10 2016 Anton Farygin <rider@altlinux.ru> 0.6-alt2
+- adapted for dostfstools-4.0
+
 * Wed Nov 18 2015 Sergey V Turchin <zerg@altlinux.org> 0.6-alt1
 - new version
 
