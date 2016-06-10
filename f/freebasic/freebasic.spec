@@ -1,6 +1,6 @@
 Name:		freebasic
 Version:	1.05.0
-Release:	alt1
+Release:	alt2
 
 Summary:	FreeBASIC language compiler
 License:	GPLv2+ and LGPLv2+ with exception
@@ -12,10 +12,6 @@ URL: 		http://freebasic.net
 #VCS:           https://github.com/freebasic/fbc
 
 Provides:	FreeBASIC = %version-%release
-%ifarch x86_64
-Provides:	i586-freebasic = %version-%release
-Obsoletes:	i586-freebasic < %version-%release
-%endif
 
 BuildRequires:  freebasic
 BuildRequires:  gcc-c++
@@ -75,6 +71,9 @@ cp -a doc/html/* %buildroot%_docdir/freebasic
 %_man1dir/*
 
 %changelog
+* Fri Jun 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.05.0-alt2
+- Remove biarch provides
+
 * Mon Feb 29 2016 Andrey Cherepanov <cas@altlinux.org> 1.05.0-alt1
 - New version
 
