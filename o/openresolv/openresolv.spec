@@ -1,7 +1,7 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 
 Summary: A framework for managing DNS information 
@@ -120,6 +120,10 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Fri Jun 10 2016 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt1
+- man: Drop note about /etc/net/ifaces/lo.
+- Updated to 3.8.1.
+
 * Wed Apr 13 2016 Mikhail Efremov <sem@altlinux.org> 3.8.0-alt1
 - Drop resolvconf-restartcmd.
 - Simplify detect_init().
