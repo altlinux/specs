@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
-Requires: alterator-hw-functions >= 0.7.3-alt1
+Requires: alterator-hw-functions >= 0.7.6-alt1
 Requires: grub2-pc > 2.00-alt20
 Conflicts: guile-evms < 0.4-alt13
 
@@ -47,6 +47,11 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Fri Jun 10 2016 Michael Shigorin <mike@altlinux.org> 0.11-alt1
+- added test to exclude hybrid installation media
+  (usually USB Flash drive with ISO written onto it)
+  from bootloader installation targets
+
 * Wed Dec 02 2015 Michael Shigorin <mike@altlinux.org> 0.10-alt1
 - added GRUB2 hashed password support
 - NB: depends on fixes made after grub-2.00-alt20 to *not* require
