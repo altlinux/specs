@@ -1,10 +1,11 @@
+%def_disable snapshot
 %define _name metacity
-%define ver_major 3.18
+%define ver_major 3.20
 %define api_ver 3.0
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Metacity window manager
@@ -12,20 +13,26 @@ License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/Metacity
 
+%if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
-
-%define theme_prefix theme
+%else
+Source: %_name-%version.tar
+%endif
 
 # From configure.ac
-%define gtk_ver 3.16.0
-%define glib_ver 2.32.0
+%define gtk_ver 3.20.0
+%define glib_ver 2.44.0
 %define startup_notification_ver 0.7
-%define xcomposite_ver 0.2
+%define xcomposite_ver 0.3
 %define gsds_ver 3.3.0
 
 Conflicts: %_name
-Requires: %name-theme = %version-%release
+Obsoletes: %name-themes-default < %version-%release
+Obsoletes: %name-theme-atlanta < %version-%release	%name-theme-bright < %version-%release
+Obsoletes: %name-theme-crux < %version-%release		%name-theme-esco < %version-%release
+Obsoletes: %name-theme-gorilla < %version-%release	%name-theme-metabox < %version-%release
+Obsoletes: %name-theme-simple < %version-%release
+
 Requires: lib%name = %version-%release
 Requires: zenity
 
@@ -76,100 +83,6 @@ Requires: lib%name-devel = %version-%release
 %description -n lib%name-devel-static
 This package contains the lib%name static library.
 
-%package %{theme_prefix}s-default
-Summary: Metacity default themes
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-themes-default
-Provides: %name-themes = %version-%release
-Requires: %name-%theme_prefix-atlanta = %version-%release	%name-%theme_prefix-bright = %version-%release
-Requires: %name-%theme_prefix-crux = %version-%release		%name-%theme_prefix-esco = %version-%release
-Requires: %name-%theme_prefix-gorilla = %version-%release	%name-%theme_prefix-metabox = %version-%release
-Requires: %name-%theme_prefix-simple = %version-%release
-
-%description %{theme_prefix}s-default
-This is virtual package that provides default themes for Metacity.
-
-%package %theme_prefix-atlanta
-Summary: Metacity theme - Atlanta
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-theme-atlanta
-Provides: %name-theme = %version-%release
-Requires: %name = %version-%release
-
-%description %theme_prefix-atlanta
-This package contains a simple low-overhead default theme for Metacity.
-
-%package %theme_prefix-bright
-Summary: Metacity theme - Bright
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-theme-bright
-Provides: %name-theme = %version-%release
-Requires: %name = %version-%release
-
-%description %theme_prefix-bright
-This package contains a simple theme based on Havoc Pennington's Atlanta.
-
-%package %theme_prefix-crux
-Summary: Metacity theme - Crux
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-theme-crux
-Provides: %name-theme = %version-%release
-Requires: %name = %version-%release
-
-%description %theme_prefix-crux
-This package contains a port of the Crux theme by Arlo Rose and John
-Harper.
-
-%package %theme_prefix-esco
-Summary: Metacity theme - Esco
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-theme-esco
-Provides: %name-theme = %version-%release
-Requires: %name = %version-%release
-
-%description %theme_prefix-esco
-This package contains a simple theme designed to look really good match
-GTK+ well.
-
-%package %theme_prefix-gorilla
-Summary: Metacity theme - AgingGorilla
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-theme-gorilla
-Provides: %name-theme = %version-%release
-Requires: %name = %version-%release
-
-%description %theme_prefix-gorilla
-This package contains a port of the Gorilla theme by Jacub Steiner
-
-%package %theme_prefix-metabox
-Summary: Metacity theme - Metabox
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-theme-metabox
-Provides: %name-theme = %version-%release
-Requires: %name = %version-%release
-
-%description %theme_prefix-metabox
-This package contains a theme that looks a little like BlackBox.
-
-%package %theme_prefix-simple
-Summary: Metacity theme - Simple
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Conflicts: %_name-theme-simple
-Provides: %name-theme = %version-%release
-Requires: %name = %version-%release
-
-%description %theme_prefix-simple
-This package contains default GNOME window theme. It based on Atlanta
-theme.
-
 %prep
 %setup -n %_name-%version
 
@@ -186,19 +99,23 @@ theme.
 %install
 %makeinstall_std
 
-%find_lang  --with-gnome %_name creating-%_name-themes --output=%name.lang
+%find_lang --with-gnome %_name --output=%name.lang
 
 %files -f %name.lang
-%_bindir/*
-%_datadir/%_name
-%_desktopdir/*
-%_datadir/gnome/wm-properties/*.desktop
-%_datadir/gnome-control-center/keybindings/50-metacity*.xml
-%_datadir/glib-2.0/schemas/org.gnome.metacity.gschema.xml
-%_datadir/GConf/gsettings/metacity-schemas.convert
-%_datadir/themes/Adwaita/metacity-1/metacity-theme-3.xml
-%_datadir/themes/HighContrast/metacity-1/metacity-theme-3.xml
-%_man1dir/*
+%_bindir/%_name
+%_bindir/%_name-message
+%_bindir/%_name-theme-viewer
+%_bindir/%_name-window-demo
+%_datadir/%_name/
+%_desktopdir/%_name.desktop
+%_datadir/gnome-control-center/keybindings/50-%{_name}*.xml
+%_datadir/glib-2.0/schemas/org.gnome.%_name.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%_name.keybindings.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%_name.theme.gschema.xml
+%_man1dir/%_name.1.*
+%_man1dir/%_name-message.1.*
+%_man1dir/%_name-theme-viewer.1.*
+%_man1dir/%_name-window-demo.1.*
 %doc README AUTHORS NEWS
 
 %files -n lib%name
@@ -215,30 +132,10 @@ theme.
 %_libdir/*.a
 %endif
 
-%files %{theme_prefix}s-default
-
-%files %theme_prefix-gorilla
-%_datadir/themes/AgingGorilla/*
-
-%files %theme_prefix-atlanta
-%_datadir/themes/Atlanta/*
-
-%files %theme_prefix-bright
-%_datadir/themes/Bright/*
-
-%files %theme_prefix-crux
-%_datadir/themes/Crux/*
-
-%files %theme_prefix-esco
-%_datadir/themes/Esco/*
-
-%files %theme_prefix-metabox
-%_datadir/themes/Metabox/*
-
-%files %theme_prefix-simple
-%_datadir/themes/Simple/*
-
 %changelog
+* Fri Jun 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Sun Apr 24 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.4-alt1
 - 3.18.4
 
