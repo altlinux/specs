@@ -1,5 +1,5 @@
 Name:    libarpack-ng
-Version: 3.0.1
+Version: 3.3.0
 Release: alt1
 Summary: Fortran 77 subroutines for solving large scale eigenvalue problems
 
@@ -9,7 +9,7 @@ URL:     http://forge.scilab.org/index.php/p/arpack-ng/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: http://forge.scilab.org/upload/arpack-ng/files/arpack_%{version}.tar.gz
+Source: arpack-ng-%version.tar
 
 BuildRequires: gcc-fortran
 BuildRequires: libatlas-devel
@@ -59,6 +59,7 @@ library and so links used for building arpack based applications.
 %setup -q -n arpack-ng-%version
 
 %build
+%autoreconf
 %configure --enable-shared \
            --enable-static \
            --with-blas="-L%{_libdir}/atlas -lf77blas -latlas" \
@@ -78,6 +79,7 @@ rm -rf %buildroot%_libdir/*.la
 %files devel
 %doc DOCUMENTS EXAMPLES
 %_libdir/libarpack.so
+%_pkgconfigdir/*.pc
 
 %files doc
 %doc EXAMPLES/ DOCUMENTS/
@@ -86,6 +88,9 @@ rm -rf %buildroot%_libdir/*.la
 %_libdir/libarpack.a
 
 %changelog
+* Thu Jun 09 2016 Andrey Cherepanov <cas@altlinux.org> 3.3.0-alt1
+- new version 3.3.0
+
 * Mon Apr 29 2013 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - Initial build in Sisyphus from Fedora (ALT #28909)
 
