@@ -3,7 +3,7 @@
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,6 +13,9 @@ Group: Development/Other
 License: GPL or Artistic
 Source: %name-%version.tar
 Url: http://repocop.altlinux.org/
+
+Requires: distromap-generic-default-altlinux-sisyphus
+Requires: distrodb-static-altlinux-sisyphus
 
 %description
 %summary
@@ -36,6 +39,9 @@ ln -s %obranch %buildroot/usr/share/distromap/%orepo/default
 /usr/share/distromap/*
 
 %changelog
+* Fri Jun 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- db update
+
 * Mon Jun 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - db update
 
