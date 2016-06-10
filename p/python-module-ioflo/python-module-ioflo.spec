@@ -3,8 +3,8 @@
 
 Summary: Flow Based Programming Automated Reasoning Engine and Automation Operation System
 Name: python-module-%oname
-Version: 1.2.1
-Release: alt3
+Version: 1.5.5
+Release: alt1
 Url: https://github.com/ioflo/ioflo.git
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -77,6 +77,9 @@ popd
 
 
 %changelog
+* Fri Jun 10 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.5-alt1
+- New version
+
 * Mon Aug 31 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 1.2.1-alt3
 - Add cleanup for tests-dir, another try
 
