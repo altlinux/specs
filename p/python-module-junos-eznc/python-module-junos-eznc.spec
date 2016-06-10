@@ -2,7 +2,7 @@
 
 Summary: Junos 'EZ' automation for non-programmers
 Name: python-module-%oname
-Version: 1.1.2
+Version: 1.3.1
 Release: alt1
 Url: https://github.com/Juniper/py-junos-eznc
 Source: %name-%version.tar
@@ -85,6 +85,9 @@ mv %buildroot%python3_sitelibdir/junos %buildroot%python3_sitelibdir/jnpr
 
 
 %changelog
+* Fri Jun 10 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.3.1-alt1
+- New version
+
 * Tue Apr 28 2015 Valentin Rosavitskiy <valintinr@altlinux.org> 1.1.2-alt1
 - New version
 
