@@ -5,7 +5,7 @@
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
 Version: 1.3.5.4
-Release: alt1
+Release: alt2
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
 Group: 	 System/Servers
@@ -117,7 +117,7 @@ export XCFLAGS=$RPM_OPT_FLAGS
 #USE_ADMSERV to avoid strange get_mag_var unresolved symbol
 echo "#define USE_ADMSERV 1" >>config.h
 
-%ifarch x86_64 ppc64 ia64 s390x sparc64
+%if "%(getconf LONG_BIT)" == "64"
 export USE_64=1
 %endif
 
@@ -194,6 +194,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Fri Jun 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.5.4-alt2
+- Fix 64-bit architecture check
+
 * Tue Jun 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.5.4-alt1
 - New version
 
