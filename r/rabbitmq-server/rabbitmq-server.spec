@@ -3,7 +3,7 @@
 
 Name: rabbitmq-server
 Version: 3.5.4
-Release: alt2.1
+Release: alt2.2
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
@@ -120,6 +120,9 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %_datadir/%name
 
 %changelog
+* Fri Jun 10 2016 Denis Medvedev <nbr@altlinux.org> 3.5.4-alt2.2
+- Recompile with OTP-18.3.3
+
 * Sun Apr 10 2016 Denis Medvedev <nbr@altlinux.org> 3.5.4-alt2.1
 - Recompile with OTP-18.3
 
