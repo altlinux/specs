@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29.3
+Version: 0.29.4
 Release: alt1
 
 BuildArch: noarch
@@ -52,6 +52,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Jun 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.29.4-alt1
+- "group: files [SUCCESS=merge] ldap" for glibc groups merging
+
 * Wed Jun 01 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.3-alt1
 - Fix Kerberos environment prepare by winbind
 - Comment out unused parameters
