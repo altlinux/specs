@@ -1,4 +1,4 @@
-%define ver_major 9.1
+%define ver_major 9.2
 %def_with recording
 
 Name: girl
@@ -54,6 +54,9 @@ export ac_cv_path_GIRL_HELPER_RECORD=%_bindir/streamripper
 
 
 %changelog
+* Sat Jun 11 2016 Yuri N. Sedunov <aris@altlinux.org> 9.2.0-alt1
+- 9.2.0
+
 * Tue Jun 07 2016 Yuri N. Sedunov <aris@altlinux.org> 9.1.0-alt1
 - 9.1.0
 
