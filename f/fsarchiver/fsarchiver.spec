@@ -3,13 +3,15 @@ Summary(ru_RU.UTF-8): Архиватор файловых систем
 
 Name: fsarchiver
 Version: 0.6.22
-Release: alt1
+Release: alt2.49af
 Url: https://github.com/fdupoux/fsarchiver
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Epoch: 1
 
 Source: %name-%version.tar
+Patch: cppcheck.patch
+
 License: GPLv2+
 Group: Archiving/Backup
 
@@ -67,6 +69,7 @@ FSArchiver предоставляет следующие возможности:
 
 %prep
 %setup
+%patch -p2
 
 %build
 %autoreconf
@@ -84,6 +87,9 @@ FSArchiver предоставляет следующие возможности:
 %_man8dir/*
 
 %changelog
+* Sat Jun 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.6.22-alt2.49af
+- Update from https://github.com/fdupoux/fsarchiver to git 49af670
+
 * Thu Apr 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.6.22-alt1
 - Update from https://github.com/fdupoux/fsarchiver
 - Version 0.6.22
@@ -113,3 +119,4 @@ FSArchiver предоставляет следующие возможности:
 
 * Fri Nov 27 2009 maik3531 <maik3531 at yahoo.de> 0.6.1-1pclos2010
 - Initial release for PCLinuxOS
+
