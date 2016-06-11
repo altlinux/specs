@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.72
+Version: 1.74
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -102,7 +102,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %files
 %doc readme.txt man/*.html
 %_bindir/%name
+
 %_bindir/%name-htmlreport
+%_bindir/*.py
 %_man1dir/%name.1.*
 %_datadir/%name/cfg
 
@@ -115,6 +117,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jun 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.74-alt1
+- Version 1.74
+
 * Thu Feb 25 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.72-alt1
 - Version 1.72
 
