@@ -1,5 +1,5 @@
 Name:    rsnapshot
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: local and remote filesystem snapshot utility
@@ -15,7 +15,8 @@ Source0: %name-%version.tar
 Source1: %name.logrotate
 Source2: %name.cron
 
-Patch0:  %name-1.3.1-alt-conf_file.patch
+Patch0:  %name-%version-%release.patch
+Patch1:  %name-1.3.1-alt-conf_file.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -38,12 +39,15 @@ without the root user getting involved.
 
 %prep
 %setup
-%patch0
+%patch0 -p1
+
+%patch1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
+./autogen.sh
 %configure \
 	--with-perl="%__perl" \
 	--with-rsync="%_bindir/rsync" \
@@ -139,7 +143,7 @@ exit 0
 %config %_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/cron.d/%name
 
-%dir %attr(0770,root,_%name) %_logdir/%name
+%dir %attr(1770,root,_%name) %_logdir/%name
 
 %_bindir/rsnapshot
 %_bindir/rsnapshot-diff
@@ -147,6 +151,9 @@ exit 0
 %_man1dir/rsnapshot*
 
 %changelog
+* Sun Jun 12 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.2-alt1
+- New version
+
 * Sat Nov 7 2015 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt1
 - New version
 
