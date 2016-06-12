@@ -5,7 +5,7 @@
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	0.7.5.1
+Version:	0.7.6
 Release:	alt1
 
 Summary:	QuickNote plugin for Firefox
@@ -49,6 +49,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Jun 12 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.6-alt1
+- New version
+
 * Thu Jan 07 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.7.5.1-alt1
 - New version 0.7.5.1
 - Signed version to work with Firefox >= 43.x
