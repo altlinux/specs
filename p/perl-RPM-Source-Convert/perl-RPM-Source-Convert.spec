@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.609
+Version: 0.610
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -42,6 +42,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 0.610-alt1
+- mageia support fixes
+
 * Tue Jun 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.609-alt1
 - stable release
 
