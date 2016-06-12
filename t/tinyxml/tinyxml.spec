@@ -3,13 +3,14 @@
 
 Name: tinyxml
 Version: 2.6.2
-Release: alt1.1
+Release: alt1.2
 Summary: A simple, small, C++ XML parser
 Group: System/Libraries
 License: zlib
 Url: http://www.grinninglizard.com/tinyxml/
 BuildRequires: gcc-c++
 Source: http://downloads.sourceforge.net/%name/%{name}_%underscore_version.tar.gz
+Source1:        tinyxml.pc.in
 Patch0: tinyxml-2.5.3-stl.patch
 # http://sourceforge.net/p/tinyxml/patches/51/
 Patch1: tinyxml-2.6.2-entity.patch
@@ -61,6 +62,14 @@ ln -s lib%name.so.0.%version %buildroot%_libdir/lib%name.so.0
 ln -s lib%name.so.0.%version %buildroot%_libdir/lib%name.so
 install -p -m 644 %name.h %buildroot%_includedir
 
+mkdir -p %{buildroot}%{_libdir}/pkgconfig
+sed -e 's![@]prefix[@]!%{_prefix}!g' \
+ -e 's![@]exec_prefix[@]!%{_exec_prefix}!g' \
+ -e 's![@]libdir[@]!%{_libdir}!g' \
+ -e 's![@]includedir[@]!%{_includedir}!g' \
+ -e 's![@]version[@]!%{version}!g' \
+ %{SOURCE1} > %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+
 %check
 LD_LIBRARY_PATH=$PWD${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} ./xmltest
 
@@ -72,8 +81,12 @@ LD_LIBRARY_PATH=$PWD${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} ./xmltest
 %doc docs/*
 %_includedir/*
 %_libdir/*.so
+%{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt1.2
+- NMU: added pc file
+
 * Tue Jun 09 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.2-alt1.1
 - Rebuilt for gcc5 C++11 ABI.
 
