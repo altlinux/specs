@@ -1,7 +1,7 @@
 %define oname xlutils
 
 Name:	  python-module-%oname
-Version:  1.7.1
+Version:  2.0.0
 Release:  alt1
 
 Summary:  Utilities for working with Excel files that require both xlrd and xlwt
@@ -36,12 +36,15 @@ including the ability to copy and modify or filter existing excel files.
 %python_install
 
 %files
-%doc README.txt docs/*
+%doc README* docs/*
 %_bindir/*
 %python_sitelibdir/xlutils/
 %python_sitelibdir/xlutils*.egg-info/
 
 %changelog
+* Sun Jun 12 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Tue Jun 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
 - new version 1.7.1
 
