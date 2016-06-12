@@ -1,7 +1,7 @@
 # SPEC file for gltron game
 
 %define version 0.70
-%define release alt4.2
+%define release alt5
 
 Name: gltron
 Version: %version
@@ -10,7 +10,7 @@ Release: %release
 Summary: a 3d lightcycle game using OpenGL
 Summary(ru_RU.UTF-8): трехмерная игра с использованием OpenGL
 
-License: GPL
+License: %gpl2plus
 Group: Games/Arcade
 URL: http://www.gltron.org/
 
@@ -24,8 +24,13 @@ Source4: armagetronad-48.png
 Patch0:  %name-0.70-alt-build_warnings_fix.patch
 Patch1: %name-0.70-alt-no-Werror.patch
 Patch2: %name-0.70-alt-no-conflict-decl.patch
+Patch3: %name-0.70-alt-stdint.patch
 
-BuildRequires: gcc-c++ libSDL-devel libSDL_sound-devel libsmpeg-devel libmikmod-devel libpng-devel libvorbis-devel
+BuildRequires(pre): rpm-build-licenses
+# Automatically added by buildreq on Sun Apr 17 2016
+# optimized out: gnu-config libGL-devel libGLU-devel libSDL-devel libgpg-error libjson-c libogg-devel libstdc++-devel python-base python-modules python3 zlib-devel
+BuildRequires: gcc-c++ libSDL_sound-devel libmikmod-devel libpng-devel libsmpeg-devel libvorbis-devel
+BuildRequires: libSDL-devel libsmpeg-devel
 
 %description
 A 3D lightcycle Tron game using OpenGL.
@@ -50,13 +55,14 @@ wall while avoiding hitting the AI's own wall themselves.
 %patch0
 %patch1 -p2
 %patch2 -p2
+%patch3
 
 /bin/mv -f COPYING COPYING.GPL.orig
 /bin/ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 %configure
-%make_build  
+%make_build
 
 %install
 /bin/mkdir -p %buildroot
@@ -84,6 +90,9 @@ wall while avoiding hitting the AI's own wall themselves.
 
 
 %changelog
+* Sun Jun 12 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.70-alt5
+- Fix build with Glibc 2.22
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.70-alt4.2
 - Rebuilt with libpng15
 
