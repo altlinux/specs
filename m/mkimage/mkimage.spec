@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.17
+Version: 0.2.18
 Release: alt1
 
 Summary: Simple image creator
@@ -83,6 +83,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Sat Jun 11 2016 Michael Shigorin <mike@altlinux.org> 0.2.18-alt1
+- mki-copy-efiboot: adjusted for dosfstools-4.0
+
 * Mon Mar 09 2015 Michael Shigorin <mike@altlinux.org> 0.2.17-alt1
 - mki-copy-efiboot: added EFI_BOOTARGS support
 
