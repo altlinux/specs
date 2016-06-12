@@ -2,7 +2,7 @@
 
 Name: SFML
 Version: 2.3.2
-Release: alt1
+Release: alt2
 
 Summary: Simple and Fast Multimedia Library
 License: zlib
@@ -13,7 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # https://github.com/%name/%name/archive/%version.tar.gz
 Source: %name-%version.tar.gz
 
-BuildRequires: cmake
+BuildRequires: cmake doxygen
 BuildRequires: gcc-c++
 BuildRequires: libGLU-devel
 BuildRequires: libXcomposite-devel
@@ -63,6 +63,7 @@ developing applications that use SFML
 pushd %_target_platform
 
 cmake .. \
+	-DSFML_INSTALL_PKGCONFIG_FILES=TRUE \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
@@ -78,7 +79,13 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__rm -rf %buildroot%_datadir/%name/{license,readme}.txt
+rm -rf %buildroot%_datadir/%name/{license,readme}.txt
+
+# move FindSFML.cmake to the standard location
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/cmake/Modules
+mv $RPM_BUILD_ROOT%{_datadir}/%{name}/cmake/Modules/FindSFML.cmake \
+   $RPM_BUILD_ROOT%{_datadir}/cmake/Modules
+
 
 %files -n lib%name%soversion
 %doc changelog.txt license.txt readme.txt
@@ -86,13 +93,16 @@ popd
 
 %files -n lib%name-devel
 %dir %_datadir/%name
-%dir %_datadir/%name/cmake
-%dir %_datadir/%name/cmake/Modules
-%_datadir/%name/cmake/Modules/Find%name.cmake
+%dir %_datadir/cmake/Modules
+%_datadir/cmake/Modules/Find%name.cmake
 %_includedir/%name
+%_pkgconfigdir/*
 %_libdir/libsfml-*.so
 
 %changelog
+* Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2
+- NMU: added pkgconfig file, fixed cmake
+
 * Sat Nov 07 2015 Nazarov Denis <nenderus@altlinux.org> 2.3.2-alt1
 - Version 2.3.2
 
