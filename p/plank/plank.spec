@@ -3,7 +3,7 @@
 %def_disable apport
 
 Name: plank
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Elegant, simple, clean dock
@@ -13,15 +13,15 @@ Url: https://launchpad.net/plank
 
 Source: https://launchpad.net/%name/1.0/%version/+download/%name-%version.tar.xz
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
 Requires: bamfdaemon dconf
 
 %define gtk_ver 3.10
+%define glib_ver 2.40
 %define bamf_ver 0.2.92
 
 BuildRequires: intltool xmllint
-BuildRequires: libgtk+3-devel >= %gtk_ver libbamf3-devel >= %bamf_ver libgee0.8-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libbamf3-devel >= %bamf_ver libgee0.8-devel
 BuildRequires: libwnck3-devel libXi-devel libXfixes-devel
 BuildRequires: xvfb-run dbus-tools-gui
 BuildRequires: vala-tools
@@ -135,6 +135,9 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Mon Jun 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
+- 0.11.2
+
 * Tue May 31 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1
 
