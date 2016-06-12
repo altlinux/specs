@@ -13,8 +13,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        45.1.1
-Release:        alt2
+Version:        45.2.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -300,6 +300,17 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Sun Jun 12 2016 Andrey Cherepanov <cas@altlinux.org> 45.2.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2016-58 Entering fullscreen and persistent pointerlock without user permission
+  + MFSA 2016-56 Use-after-free when textures are used in WebGL operations after recycle pool destruction
+  + MFSA 2016-55 File overwrite and privilege escalation through Mozilla Windows updater
+  + MFSA 2016-53 Out-of-bounds write with WebGL shader
+  + MFSA 2016-52 Addressbar spoofing though the SELECT element
+  + MFSA 2016-51 Use-after-free deleting tables from a contenteditable document
+  + MFSA 2016-50 Buffer overflow parsing HTML5 fragments
+
 * Tue May 24 2016 Andrey Cherepanov <cas@altlinux.org> 45.1.1-alt2
 - Build with GTK+ 2.x (ALT #32120)
 
