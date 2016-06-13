@@ -1,5 +1,5 @@
 Name: shotcut
-Version: 16.03
+Version: 16.06
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
@@ -9,7 +9,9 @@ Url: http://www.shotcut.org/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: https://github.com/mltframework/shotcut/archive/%name-%version.tar.gz
 Source1: %name.desktop
-BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools
+BuildRequires: gcc-c++ qt5-base-devel >= 5.5.0 qt5-multimedia-devel qt5-quick1-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libmlt-devel libmlt++-devel qt5-tools ImageMagick-tools libX11-devel
+
+Requires: %name-data = %version
 
 %description
 These are all currently implemented features:
@@ -56,6 +58,14 @@ These are all currently implemented features:
  * UI themes/skins: native-OS look and custom dark and light;
  * control video zoom in the player.
 
+%package data
+Summary: Data files for %name
+Group: Video
+BuildArch: noarch
+
+%description data
+Data files for %name
+
 %prep
 %setup
 for i in 16 32 48; do
@@ -83,8 +93,9 @@ done
 
 
 %files
-#doc COPYING README.md
 %_bindir/%name
+
+%files data
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
@@ -92,6 +103,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Sun Jun 12 2016 Anton Midyukov <antohami@altlinux.org> 16.06-alt1
+- New version.
+
 * Wed Mar 02 2016 Anton Midyukov <antohami@altlinux.org> 16.03-alt1
 - New version.
 
