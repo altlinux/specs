@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SOAP-Lite
 Name: perl-%dist
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Summary: Perl's Web Services Toolkit
@@ -53,6 +53,9 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %exclude %perl_vendor_privlib/IO/SessionSet*
 
 %changelog
+* Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
 - automated CPAN update
 
