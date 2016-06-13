@@ -3,7 +3,7 @@
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.10
+Version: 0.11
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -16,6 +16,8 @@ Url: http://repocop.altlinux.org/
 
 Provides: distromap-generic-generic-altlinux-sisyphus = %version-%release
 Obsoletes: distromap-generic-generic-altlinux-sisyphus < 0.04
+
+Requires: distrodb-static-altlinux-sisyphus
 
 %description
 %summary
@@ -46,6 +48,9 @@ done
 /usr/share/distromap/*
 
 %changelog
+* Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- added requires on distrodb-static-altlinux-sisyphus
+
 * Mon Jun 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - more groups from mageia
 
