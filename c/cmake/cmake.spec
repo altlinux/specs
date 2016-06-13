@@ -1,7 +1,8 @@
 %set_verify_elf_method unresolved=strict
+%def_without check
 Name: cmake
-Version: 3.2.2
-Release: alt3.1
+Version: 3.4.3
+Release: alt0.1
 
 Summary: Cross-platform, open-source make system
 
@@ -17,8 +18,8 @@ Source2: CMakeCache.txt
 Patch: %name-%version-%release.patch
 
 BuildPreReq: bzlib-devel gcc-c++ libarchive-devel >= 2.8.4
-BuildPreReq: libcurl-devel libexpat-devel libncurses-devel libqt4-devel libxml2-devel
-BuildPreReq: liblzma-devel jsoncpp-devel doxygen graphviz
+BuildPreReq: libcurl-devel libexpat-devel libncurses-devel qt5-base-devel libxml2-devel
+BuildPreReq: liblzma-devel jsoncpp-devel doxygen graphviz zlib-devel
 BuildPreReq: python-module-sphinx-devel
 BuildRequires(pre): shared-mime-info rpm-build-vim
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc gcc-fortran java-devel cvs subversion mercurial git-core}}
@@ -175,15 +176,17 @@ install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
 
 %check
+%if_with check
 # CTest.UpdateGIT fails, see #20884
 unset GIT_DIR
 unset GIT_INDEX_FILE
 unset GIT_OBJECT_DIRECTORY
+unset DISPLAY
 pushd build
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make test ARGS="--output-on-failure -E CTestTestUpload"
+%make_build test ARGS="--output-on-failure -E 'CMake.FileDownload|CTestTestUpload'"
 popd
-
+%endif
 
 %files
 %_bindir/cmake
@@ -252,6 +255,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Mon Jun 13 2016 L.A. Kostis <lakostis@altlinux.ru> 3.4.3-alt0.1
+- test build of 3.4.3.
+
 * Wed Sep 02 2015 Sergey V Turchin <zerg@altlinux.org> 3.2.2-alt3.1
 - remove variable dereference from FindPkgConfig
 
