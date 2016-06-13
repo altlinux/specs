@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.29
+Version: 0.30
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- clean plugins
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - added plugins
 
