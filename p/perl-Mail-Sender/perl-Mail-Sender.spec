@@ -2,7 +2,7 @@
 %define dist Mail-Sender
 
 Name: perl-%dist
-Version: 0.8.23
+Version: 0.900003
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JE/JENDA/Mail-Sender-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/C/CA/CAPOEIRAB/Mail-Sender-%{version}.tar.gz
 Source1: Mail-Sender.config
 
 BuildArch: noarch
@@ -53,6 +53,9 @@ rm -f %buildroot%perl_vendor_privlib/Mail/Sender/CType/Win32.pm
 %perl_vendor_privlib/Mail
 
 %changelog
+* Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.900003-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.8.23-alt1
 - automated CPAN update
 
