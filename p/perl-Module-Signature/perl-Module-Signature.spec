@@ -1,7 +1,7 @@
 %define module_name Module-Signature
 
 Name: perl-%module_name
-Version: 0.79
+Version: 0.80
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -54,6 +54,9 @@ mv ../.perl.req .
 %_man1dir/*
 
 %changelog
+* Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.79-alt1
 - automated CPAN update
 
