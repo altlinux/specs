@@ -2,9 +2,10 @@
 
 %define ver_major 3.18
 %define api_ver 3.0
+%define libname gtkhex-3
 
 Name: ghex
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Binary editor for GNOME
@@ -18,6 +19,8 @@ Patch: ghex-3.7.90-alt-lfs.patch
 %define glib_ver 2.31.10
 %define gtk_ver 3.3.8
 
+Requires: libgtkhex = %version-%release
+
 BuildRequires: gnome-common glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgail3-devel intltool yelp-tools
 
@@ -29,13 +32,20 @@ the traditional hex editor view. The display is split in two columns,
 with hexadecimal values in one column and the ASCII representation in
 the other. A useful tool for working with raw data.
 
-%package devel
+%package -n libgtkhex
+Summary: GtkHex shared library
+Group: System/Libraries
+
+%description -n libgtkhex
+This package provides shared librarys needed for GtkGHex to work.
+
+%package -n libgtkhex-devel
 Summary: Development files for GtkHex
 Group: Development/C
-Requires: %name = %version-%release
+Requires: libgtkhex = %version-%release
 
-%description devel
-The %name-devel package contains libraries and header files for
+%description -n libgtkhex-devel
+This package contains libraries and header files for
 developing applications that use GtkGHex library.
 
 %prep
@@ -50,7 +60,7 @@ developing applications that use GtkGHex library.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome --output=%name.lang %name %name-%api_ver
 
@@ -60,16 +70,22 @@ developing applications that use GtkGHex library.
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_libdir/*.so.*
 %_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS README
 
-%files devel
-%_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%files -n libgtkhex
+%_libdir/lib%libname.so.*
+
+%files -n libgtkhex-devel
+%_includedir/%libname/
+%_libdir/lib%libname.so
+%_pkgconfigdir/%libname.pc
 
 %changelog
+* Mon Jun 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+- new libgtkhex{,-devel} subpackages
+
 * Wed May 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 

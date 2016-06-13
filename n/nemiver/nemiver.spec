@@ -2,7 +2,7 @@
 
 Name: nemiver
 Version: %ver_major.6
-Release: alt2
+Release: alt3
 
 Summary: A GNOME C/C++ Debugger
 Group: Development/Debuggers
@@ -16,7 +16,7 @@ Requires: gdb
 
 BuildRequires: mm-common gcc-c++ boost-devel libgtkmm3-devel libxml2-devel
 BuildRequires: libgtksourceviewmm3-devel libgtop-devel libsqlite3-devel libvte3-devel
-BuildRequires: libgdlmm3-devel gsettings-desktop-schemas-devel ghex-devel dconf
+BuildRequires: libgdlmm3-devel gsettings-desktop-schemas-devel libgtkhex-devel dconf
 BuildRequires: intltool yelp-tools itstool doxygen libappstream-glib-devel
 # if autoreconf used
 BuildRequires: libGConf-devel
@@ -67,6 +67,9 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_includedir/%name/
 
 %changelog
+* Mon Jun 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt3
+- fixed buildreqs
+
 * Thu May 05 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt2
 - updated to 0.9.6-39-ge0e4222
 
