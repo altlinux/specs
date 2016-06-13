@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(HTTP/Date.pm) perl(HTTP/Request.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Try/Tiny.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Starlet
-Version:        0.29
+Version:        0.30
 Release:        alt1
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
@@ -62,6 +62,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - automated CPAN update
 
