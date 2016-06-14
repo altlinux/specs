@@ -3,7 +3,7 @@
 %def_enable introspection
 
 Name: gtkspell3
-Version: 3.0.6
+Version: 3.0.8
 Release: alt1
 
 Summary: On-the-fly spell checking for GtkTextView widgets, GTK+3 version
@@ -128,6 +128,9 @@ sed -i 's,GTK_SPELL_CFLAGS,GTK_SPELL3_CFLAGS,' \
 %endif
 
 %changelog
+* Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 3.0.8-alt1
+- 3.0.8
+
 * Tue Jul 01 2014 Alexey Shabalin <shaba@altlinux.ru> 3.0.6-alt1
 - 3.0.6
 
