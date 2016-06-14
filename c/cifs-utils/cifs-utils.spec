@@ -1,5 +1,5 @@
 Name: cifs-utils
-Version: 6.4
+Version: 6.5
 Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -96,6 +96,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %_man8dir/pam_cifscreds.*
 
 %changelog
+* Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 6.5-alt1
+- 6.5
+
 * Mon Jul 28 2014 Alexey Shabalin <shaba@altlinux.ru> 6.4-alt1
 - 6.4
 - revert "move cifs.upcall to /sbin"
