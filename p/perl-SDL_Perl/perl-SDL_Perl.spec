@@ -1,8 +1,8 @@
 %filter_from_provides /^perl\\\(SDL\\\.pm\\\)/d
 %define dist SDL_Perl
-Name: perl-SDL
+Name: perl-%dist
 Version: 2.2.6
-Release: alt8
+Release: alt9
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -13,7 +13,9 @@ Source: %dist-v%version.tar.gz
 Patch: SDL_Perl-v2.2.6-alt-perl522-syntax.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=30568
 Patch1: fix_modify_readonly_value.patch
-Provides: perl-SDL_Perl = %version
+
+Obsoletes: perl-SDL < 2.2.6-alt9
+Conflicts: perl-SDL < 2.2.6-alt9
 
 # avoid crazy dependencies
 %add_findreq_skiplist */SDL/Tutorial*
@@ -21,7 +23,7 @@ Provides: perl-SDL_Perl = %version
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libjpeg-devel libpng-devel libsmpeg-devel perl-Module-Build
 
-%package OpenGL
+%package -n perl-SDL-OpenGL
 Summary: Simple DirectMedia Layer for Perl (OpenGL)
 Group: Development/Perl
 Requires: %name = %version-%release
@@ -32,7 +34,7 @@ SDL_Perl is a wrapper around the cross platform Simple DirectMedia Layer
 game library. Essentially it allows to write cross platform games in Perl,
 using 2d (SDL), or 3d (OpenGL), or a combination of both if you wish.
 
-%description OpenGL
+%description -n perl-SDL-OpenGL
 SDL_Perl is a wrapper around the cross platform Simple DirectMedia Layer
 game library. Essentially it allows to write cross platform games in Perl,
 using 2d (SDL), or 3d (OpenGL), or a combination of both if you wish.
@@ -66,11 +68,14 @@ objdump -p %buildroot%perl_vendor_autolib/SDL_perl/SDL_perl.so |egrep 'NEEDED[[:
 %exclude %perl_vendor_archlib/SDL/OpenGL*
 %exclude %perl_vendor_autolib/SDL/OpenGL*
 
-%files OpenGL
+%files -n perl-SDL-OpenGL
 %perl_vendor_archlib/SDL/OpenGL*
 %perl_vendor_autolib/SDL/OpenGL*
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt9
+- renamed: perl-SDL -> perl-SDL_Perl
+
 * Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt8
 - prepared to be renamed as perl-SDL_Perl
 
