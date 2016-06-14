@@ -25,13 +25,6 @@
 %def_enable strip_beam
 %def_disable pdf_opt
 
-%ifarch amd64
-%define x86_64 amd64
-%else
-%define x86_64 x86_64
-%endif
-
-
 %define subst_enable_to() %{expand:%%{?_enable_%1:--enable-%2}} %{expand:%%{?_disable_%1:--disable-%2}}
 %define subst_with_to() %{expand:%%{?_with_%1:--with-%2}} %{expand:%%{?_without_%1:--without-%2}}
 
@@ -42,7 +35,7 @@
 #----------------------------------------------------------------------
 %{?_enable_smp_io_thread:%set_disable port_tasks}
 
-%ifnarch %ix86 %x86_64 arm sparc ppc ppc64
+%ifnarch %ix86 x86_64 amd64  arm sparc ppc ppc64
 %set_without native
 %endif
 
@@ -56,7 +49,7 @@ Epoch: 1
 %define subver 3.3
 Version: %ver.%subver
 %define plevel b
-Release: alt1
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -825,6 +818,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_docdir/%name-%version/PR.template
 %_docdir/%name-%version/README.md
 %_bindir/*
+%{_unitdir}/*
 %exclude %_bindir/ct_run
 %dir %_otpdir
 %dir %_otpdir/doc
@@ -1296,6 +1290,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Mon Jun 13 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3.3-alt2
+- Added imz patch about architecture. Fixed packaging of systemd files.
+
 * Mon Jun 06 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3.3-alt1
 - 18.3.3.
  Build with wxGTK2, since wxGTK3.0 produces problems in demo.
