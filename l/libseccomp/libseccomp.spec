@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: lib%oname
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
@@ -142,6 +142,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %endif
 
 %changelog
+* Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.1-alt1
+- 2.3.1
+
 * Wed Apr 20 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
 - 2.3.0
 
