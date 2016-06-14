@@ -1,6 +1,7 @@
+%def_without python
 Name: cegui
 Version: 0.8.4
-Release: alt2.qa3
+Release: alt2.qa4
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
 License: MIT
@@ -12,11 +13,15 @@ Source1: http://downloads.sourceforge.net/crayzedsgui/CEGUI-DOCS-%version.tar.gz
 
 BuildRequires: SILLY-devel gcc-c++ libGLU-devel libSM-devel libexpat-devel libfreetype-devel libpcre-devel libxerces-c-devel libxml2-devel tinyxml-devel tolua++-devel tzdata libogre-devel libdirectfb-devel
 
-BuildPreReq: cmake libminizip-devel libfribidi-devel libGLEW-devel
-BuildPreReq: libglm-devel libirrlicht-devel libGLES-devel
-BuildPreReq: libdevil-devel libcorona-devel
-BuildPreReq: python-devel boost-devel doxygen graphviz libgtk+2-devel
-BuildPreReq: libglfw-devel rapidxml boost-python-devel
+BuildRequires: cmake libminizip-devel libfribidi-devel libGLEW-devel
+BuildRequires: libglm-devel libirrlicht-devel libGLES-devel
+BuildRequires: libdevil-devel libcorona-devel
+BuildRequires: python-devel boost-devel doxygen graphviz libgtk+2-devel
+BuildRequires: libglfw-devel rapidxml boost-python-devel
+
+%if_with python
+Requires: python-module-%name = %version-%release
+%endif
 
 %description
 Crazy Eddie's GUI System is a free library providing windowing and widgets for
@@ -42,6 +47,16 @@ BuildArch: noarch
 
 %description devel-doc
 API and Falagard skinning documentation for cegui
+
+%if_with python
+%package -n python-module-%name
+Group: Development/Python
+Summary: python library for %name
+Requires: %name = %version-%release
+
+%description -n python-module-%name
+%summary
+%endif
 
 %prep
 %setup -qb1 -qn CEGUI
@@ -97,7 +112,19 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %_datadir/cegui-0/xml_schemas
 %doc doc/doxygen/html
 
+%if_with python
+%files -n python-module-%name
+%{python_sitelibdir}/*
+%endif
+
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt2.qa4
+- NMU: rebuild with irrlicht
+- TODO: update to a fresh version
+- TODO: add python (can't add due to NEW bad_elf_symbols detected:
+  /usr/lib64/python2.7/site-packages/cegui-0.8/PyCEGUIOpenGLRenderer.so
+  U _ZN5CEGUI18OpenGLRenderTargetINS_12RenderTargetEED2Ev )
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.4-alt2.qa3
 - NMU: rebuilt with libGLEW.so.1.13.
 

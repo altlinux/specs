@@ -4,7 +4,7 @@
 
 Name:		minetest
 Version:	0.4.14
-Release:	alt1
+Release:	alt1.1
 Summary:	Multiplayer infinite-world block sandbox with survival mode
 
 Group:		Games/Other
@@ -157,6 +157,9 @@ fi
 #_man6dir/minetestserver.*
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.14-alt1.1
+- rebuild with irrlicht
+
 * Mon Jun 06 2016 Andrey Cherepanov <cas@altlinux.org> 0.4.14-alt1
 - New version
 
