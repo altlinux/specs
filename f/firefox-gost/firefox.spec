@@ -5,12 +5,13 @@
 %define firefox_cid                    \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
 %define firefox_prefix                 %_libdir/firefox
 %define firefox_datadir                %_datadir/firefox
+%define firefox_noarch_extensionsdir   %mozilla_noarch_extdir/%firefox_cid
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-gost
-Version:        38.7.0
+Version:        38.8.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -25,6 +26,7 @@ Source4:	firefox-mozconfig
 Source6:	firefox.desktop
 Source7:	firefox.c
 Source8:	firefox-prefs.js
+Source9:	ru.xpi
 
 Patch5:		firefox-duckduckgo.patch
 Patch6:		firefox3-alt-disable-werror.patch
@@ -64,6 +66,7 @@ BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libicu-devel
+BuildRequires: hunspell-ru
 
 # Python requires
 BuildRequires: python-module-distribute
@@ -87,10 +90,16 @@ Conflicts:	firefox-settings-desktop
 
 Conflicts:	firefox
 Conflicts:	firefox-esr
+Conflicts:	firefox-ru
+Conflicts:	firefox-esr-ru
 
 Provides:	webclient
 Requires:	mozilla-common
 Requires:	gst-plugins-ugly1.0
+Requires: 	hunspell-ru
+
+Provides:	%name-ru = %version-%release
+Obsoletes:	%name-ru < %version-%release
 
 # Protection against fraudulent DigiNotar certificates
 %if_with system_nss
@@ -286,6 +295,13 @@ rm -rf -- \
 	done
 )
 
+# Install Russian localization
+mkdir -p %buildroot%firefox_noarch_extensionsdir \
+         %buildroot%firefox_prefix/dictionaries
+cp %SOURCE9 %buildroot%firefox_noarch_extensionsdir/langpack-ru@firefox.mozilla.org.xpi
+ln -s %_datadir/myspell/ru_RU.dic %buildroot%firefox_prefix/dictionaries/ru.dic
+ln -s %_datadir/myspell/ru_RU.aff %buildroot%firefox_prefix/dictionaries/ru.aff
+
 %pre
 for n in defaults browserconfig.properties; do
 	[ ! -L "%firefox_prefix/$n" ] || rm -f "%firefox_prefix/$n"
@@ -304,8 +320,14 @@ done
 %_iconsdir/hicolor/32x32/apps/firefox.png
 %_iconsdir/hicolor/48x48/apps/firefox.png
 %_iconsdir/hicolor/256x256/apps/firefox.png
+%firefox_noarch_extensionsdir/langpack-*
+%firefox_prefix/dictionaries/*
 
 %changelog
+* Tue Jun 14 2016 Andrey Cherepanov <cas@altlinux.org> 38.8.0-alt1
+- New ESR version
+- Package Russian localization (instead of separate firefox-gost-ru)
+
 * Fri May 20 2016 Andrey Cherepanov <cas@altlinux.org> 38.7.0-alt1
 - New package with support GOST encryption [firefox-gost_patch38.patch]
 - Build with bundled nss
