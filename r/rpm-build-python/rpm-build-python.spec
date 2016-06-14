@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.36.6
+Version: 0.36.7
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -61,6 +61,11 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Sat Jun 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.7-alt1
+- %%python{,_build}_install: force deterministic behavior (useful in
+  case of conflicting stuff from simultaneous python2 and python3 builds).
+- compileall.py: depth-first processing (like in rpm-build-python3).
+
 * Wed Mar 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.6-alt1
 - implemented %%requires_python_ABI, which ultimately asks verify_elf
   to LD_PRELOAD.

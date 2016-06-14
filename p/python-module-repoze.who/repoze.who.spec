@@ -4,7 +4,7 @@
 
 Name:           python-module-%oname
 Version:        2.2
-Release:        alt1.git20140327.1.1
+Release:        alt2.git20140327
 Summary:        Identification and authentication framework for WSGI
 Group:          Development/Python
 License:        BSD-derived
@@ -179,14 +179,14 @@ popd
 %install
 %python_install
 
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
 %endif
 
 install -p -m644 repoze/__init__.py %buildroot%python_sitelibdir/repoze
-for i in $(find %buildroot%python_sitelibdir/repoze -type d)
+for i in $(find %buildroot%python_sitelibdir/repoze -type d \! -name '__*')
 do
 	touch $i/__init__.py
 done
@@ -198,14 +198,14 @@ cp -fR docs/.build/pickle %buildroot%python_sitelibdir/%oname/
 pushd ../python3
 %python3_install
 
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
 install -p -m644 repoze/__init__.py %buildroot%python3_sitelibdir/repoze
-for i in $(find %buildroot%python3_sitelibdir/repoze -type d)
+for i in $(find %buildroot%python3_sitelibdir/repoze -type d \! -name '__*')
 do
 	touch $i/__init__.py
 done
@@ -244,12 +244,15 @@ popd
 %exclude %python3_sitelibdir/*.pth
 %python3_sitelibdir/repoze/*
 %exclude %python3_sitelibdir/repoze/__init__.py*
+%exclude %python3_sitelibdir/repoze/__pycache__/__init__.*.py*
 %exclude %python3_sitelibdir/repoze/who/tests
 %exclude %python3_sitelibdir/repoze/who/plugins/tests
 
 %files -n python3-module-repoze
 %dir %python3_sitelibdir/repoze
 %python3_sitelibdir/repoze/__init__.py*
+%dir %python3_sitelibdir/repoze/__pycache__
+%python3_sitelibdir/repoze/__pycache__/__init__.*.py*
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/repoze/who/tests
@@ -257,6 +260,11 @@ popd
 %endif
 
 %changelog
+* Tue Jun 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2-alt2.git20140327
+- (.spec) Python3 packaging fixes:
+  package corresponding __pycache__/* & sources together.
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.2-alt1.git20140327.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
