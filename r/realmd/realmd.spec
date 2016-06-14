@@ -1,7 +1,7 @@
 
 Name: realmd
 Version: 0.16.2
-Release: alt1
+Release: alt2
 Summary: Kerberos realm enrollment service
 License: LGPLv2+
 Group: Security/Networking
@@ -13,7 +13,7 @@ BuildRequires: intltool >= 0.35.0
 BuildRequires: pkgconfig(glib-2.0) >= 2.32.0 pkgconfig(gio-2.0) >= 2.32.0 pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(systemd)
-BuildRequires: pkgconfig(libsystemd-journal)
+BuildRequires: pkgconfig(libsystemd)
 BuildRequires: /usr/bin/krb5-config
 BuildRequires: libldap-devel
 BuildRequires: xsltproc xmlto
@@ -69,6 +69,9 @@ applications that use %name.
 %doc %_datadir/doc/realmd/
 
 %changelog
+* Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 0.16.2-alt2
+- build fixed
+
 * Tue Oct 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.16.2-alt1
 - 0.16.2
 - build fixed
