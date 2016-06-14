@@ -1,5 +1,5 @@
 Name: 	 qcad
-Version: 3.12.8.2
+Version: 3.15.3.0
 Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -28,9 +28,12 @@ BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-webkit-devel
+BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: qtscriptgenerator
 BuildRequires: zlib-devel
+
+Requires: qt5-translations
 
 %description
 QCad is a professional CAD System. With QCad you can easily construct
@@ -112,6 +115,13 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Jun 14 2016 Andrey Cherepanov <cas@altlinux.org> 3.15.3.0-alt1
+- new version 3.15.3.0
+- require Qt translations for correct localization
+
+* Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 3.15.2.2-alt1
+- New version
+
 * Fri Mar 11 2016 Andrey Cherepanov <cas@altlinux.org> 3.12.8.2-alt1
 - New version
 
