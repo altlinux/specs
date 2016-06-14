@@ -1,6 +1,6 @@
 Name: vacuum
 Version: 0.13a
-Release: alt1
+Release: alt1.1
 Summary: Vacuum Magic is a fast-paced action game
 License: GPL
 Url: http://apocalypse.rulez.org/vacuum
@@ -11,7 +11,7 @@ Packager: Fr. Br. George <george@altlinux.ru>
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Jan 09 2009
-BuildRequires: perl-Compress-Zlib perl-SDL perl-SDL-OpenGL
+BuildRequires: perl-Compress-Zlib perl-SDL_Perl perl-SDL_Perl-OpenGL
 
 %description
 Vacuum Magic is a fast-paced action game.
@@ -64,6 +64,9 @@ install -D  %name.desktop %buildroot/%_desktopdir/%name.desktop
 %_pixmapsdir/*.png
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.13a-alt1.1
+- NMU: perl-SDL -> perl-SDL_Perl
+
 * Thu Aug 06 2009 Fr. Br. George <george@altlinux.ru> 0.13a-alt1
 - Version up (closes #20729)
 
