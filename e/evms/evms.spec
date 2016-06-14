@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt32
+Release: alt33
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -168,6 +168,9 @@ EOF
 %endif
 
 %changelog
+* Tue Jun 14 2016 Michael Shigorin <mike@altlinux.org> 2.5.5-alt33
+- plugins/fat: updated for dosfstools 4.x
+
 * Thu Oct 22 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.5.5-alt32
 - rebuild with gcc 4.7 (closes: #31388)
 
