@@ -1,7 +1,7 @@
 %define dist SDL
-Name: perl-SDL25
+Name: perl-%dist
 Version: 2.546
-Release: alt1.1
+Release: alt2
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -10,7 +10,10 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar
 
-Conflicts: perl-SDL
+Conflicts: perl-SDL_Perl
+Conflicts: perl-SDL25 < 2.546-alt2
+Obsoletes: perl-SDL25 < 2.546-alt2
+Provides: perl-SDL25 = %version
 
 # avoid crazy dependencies
 %add_findreq_skiplist */SDL/SMPEG*
@@ -68,6 +71,9 @@ application/game into PAR archive.
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.546-alt2
+- rename perl-SDL -> perl-SDL_Perl, perl-SDL25 -> perl-SDL
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.546-alt1.1
 - rebuild with new perl 5.22.0
 
