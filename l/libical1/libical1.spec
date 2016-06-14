@@ -1,6 +1,6 @@
 Name: libical1
 Version: 1.0.1
-Release: alt6
+Release: alt7
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -22,7 +22,6 @@ component properties, parameters, and subcomponents
 Summary: Files for developing applications that use libical
 Requires: %name = %version-%release
 Group: Development/C
-Provides: libical-devel <= %version
 Conflicts: libical-devel > %version
 
 %description devel
@@ -57,6 +56,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 
 
 %changelog
+* Tue Jun 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.0.1-alt7
+- fix for alt6: removed Provides from devel subpackage
+
 * Tue Jun 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.0.1-alt6
 - add Provides/Conflicts for devel subpackage
 
