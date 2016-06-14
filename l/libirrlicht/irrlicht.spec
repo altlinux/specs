@@ -1,9 +1,11 @@
 %def_disable static
 %define realname irrlicht
+%define major 1
+%define libname lib%{name}%{major}
 
 Name: libirrlicht
-Version: 1.7.1
-Release: alt2.1
+Version: 1.8.3
+Release: alt1
 
 Summary: Fast Open-source 3D engine
 License: BSD-style
@@ -12,11 +14,30 @@ Url: http://irrlicht.sourceforge.net/
 Packager: Damir Shayhutdinov <damir@altlinux.ru>
 
 Source0: %realname-%version.tar.bz2
-Patch0: irrlicht-%version-alt-autotools.patch
-Patch1: irrlicht-%version-alt-use-system-libs.patch
-Patch2: irrlicht-1.7.1-alt-libpng15.patch
-BuildPreReq: libX11-devel libXxf86vm-devel libGLU-devel libpng-devel gcc-c++ zlib-devel
-BuildPreReq: libjpeg-devel pkg-config unzip bzlib-devel
+
+# TODO: remake for 1.8 and uncomment doc and examples
+Patch0: irrlicht-1.7.1-alt-autotools.patch
+
+# Patch1-4 from mageia irrlicht
+Patch1:		irrlicht-1.8-library-makefile.patch
+# corrected: see irrlicht-1.8-use-system-libs.patch.diff
+Patch2:		irrlicht-1.8-use-system-libs.patch
+Patch3:		irrlicht-1.8.1-mga-system-glext.patch
+Patch4:		irrlicht-1.8.1-fdr-mesa10.patch
+
+BuildRequires:  pkg-config unzip gcc-c++ zlib-devel
+BuildRequires:	ImageMagick
+BuildRequires:	zlib-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libGLU-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	libXext-devel
+BuildRequires:	libXxf86vm-devel
+BuildRequires:	libXft-devel
+BuildRequires:	bzlib-devel
+BuildRequires:	fontconfig-devel
+BuildRequires:	libXcursor-devel
 
 
 %description
@@ -29,7 +50,6 @@ shadows, particle systems, character animation, indoor and outdoor
 technology, and collision detection. All this is accessible through
 a well designed C++ interface, which is extremely easy to use.
 
-
 %package devel
 Summary: Headers for %name
 Group: Development/C
@@ -37,6 +57,27 @@ Requires: %name = %version-%release
 
 %description devel
 Headers for building software that uses %name
+
+%package -n %{libname}
+Summary:	Shared libraries for Irrlicht 3D engine
+Group:		System/Libraries
+
+Provides: libirrlicht = %version
+Obsoletes: libirrlicht < 1.8
+Conflicts: libirrlicht < 1.8
+
+%description -n %{libname}
+Shared libraries for Irrlicht 3D engine.
+
+The Irrlicht Engine is a cross-platform high performance realtime 3D
+engine written in C++. It is a powerful high level API for creating
+complete 3D and 2D applications like games or scientific visualizations.
+It comes with an excellent documentation and integrates all the
+state-of-the-art features for visual representation like dynamic
+shadows, particle systems, character animation, indoor and outdoor
+technology, and collision detection. All this is accessible through
+a well designed C++ interface, which is extremely easy to use.
+
 
 %package examples
 Summary: Examples for %name
@@ -58,31 +99,52 @@ Static libs for building statically linked software that uses %name
 
 %prep
 %setup -q -n %realname-%version
-%patch0 -p2
+#patch0 -p2
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+# make readme.txt and changes.txt utf8 with LF line endings
+sed -i 's/\r//' readme.txt changes.txt
+iconv -o readme.txt.utf8 -f iso88591 -t utf8 readme.txt
+mv readme.txt.utf8 readme.txt
+
+# use system wide libs, see patch2
+rm -rf source/Irrlicht/{jpeglib,zlib,libpng,bzip2}
+# FIXME: Unbundle lzmadec if possible
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1035757
+sed -i -e '/_IRR_MATERIAL_MAX_TEXTURES_/s/4/8/' include/IrrCompileConfig.h
 
 %build
-autoreconf -fisv
-%configure %{subst_enable static}
-%make_build
+#autoreconf -fisv
+#configure %{subst_enable static}
+#make_build
+%make -C source/Irrlicht sharedlib NDEBUG=1
 
 %install
-%makeinstall
+#makeinstall
+mkdir -p %{buildroot}%{_libdir}
+make -C source/Irrlicht INSTALL_DIR=%{buildroot}%{_libdir} install
+ln -s libIrrlicht.so.%{version} %{buildroot}%{_libdir}/libIrrlicht.so.%{major}
 
-%files
-%_libdir/*.so.*
+mkdir -p %{buildroot}%{_includedir}/%{realname}
+cp -a include/*.h %{buildroot}%{_includedir}/%{realname}/
+
+%files -n %{libname}
+%_libdir/libIrrlicht.so.%{major}*
 
 %files devel
 %_libdir/*.so
 %_includedir/irrlicht
-%doc doc/html doc/index.html
+#doc doc/html doc/index.html
 %doc doc/upgrade-guide.txt
 %doc readme.txt changes.txt
 
-%files examples
-%_bindir/*
-%_datadir/irrlicht
+#%files examples
+#%_bindir/*
+#%_datadir/irrlicht
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -90,6 +152,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt1
+- NMU update
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt2.1
 - Fixed build with libpng15
 
