@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.12
+Version: 0.4.13
 Release: alt1
 Summary: A library handling all the details of proxy configuration
 
@@ -38,7 +38,7 @@ BuildPreReq: cmake ctest gcc-c++ zlib-devel
 %{?_with_webkit:BuildRequires: pkgconfig(webkit-1.0)}
 %{?_with_webkit3:BuildRequires: pkgconfig(javascriptcoregtk-4.0)}
 # NetworkManager
-%{?_with_networkmanager:BuildRequires: pkgconfig(NetworkManager) pkgconfig(dbus-1)}
+%{?_with_networkmanager:BuildRequires: pkgconfig(libnm) pkgconfig(dbus-1)}
 # dotnet
 %{?_with_dotnet:BuildPreReq: mono-devel >= 2.0.0 /proc rpm-build-mono mono-mcs}
 
@@ -241,6 +241,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.13-alt1
+- 0.4.13
+
 * Wed Mar 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.12-alt1
 - 0.4.12
 
