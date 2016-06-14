@@ -3,7 +3,7 @@ Name: apt-conf-autoimports-sisyphus
 Summary(ru_RU.UTF-8): Настройки для использования пакетов из репозитория Autoimports/%{destbranch}
 Summary: Autoimports repository for %{destbranch}
 Version: 1.0
-Release: alt3
+Release: alt4
 
 # branches conflicts with Sisyphus
 Conflicts: apt-conf-autoimports-p7
@@ -57,8 +57,14 @@ simple-key "cronport" {
 }
 EOF
 cat > %buildroot%_sysconfdir/apt/sources.list.d/autoimports-%{destbranch}.list <<'EOF'
-rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ noarch autoimports
-rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ %{_arch} autoimports
+#rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ noarch autoimports
+#rpm [cronbuild] ftp://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ %{_arch} autoimports
+
+#rpm [cronbuild] http://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ noarch autoimports
+#rpm [cronbuild] http://ftp.altlinux.ru/pub/distributions/ALTLinux/autoimports/%{destbranch}/ %{_arch} autoimports
+
+rpm [cronbuild] rsync://ftp.altlinux.ru/ALTLinux/autoimports/%{destbranch}/ noarch autoimports
+rpm [cronbuild] rsync://ftp.altlinux.ru/ALTLinux/autoimports/%{destbranch}/ %{_arch} autoimports
 EOF
 
 mkdir -p %buildroot%_sysconfdir/apt/apt.conf.d
@@ -72,6 +78,9 @@ echo "APT::Cache-Limit $(( (2*64 + 32) * 1024 * 1024 ));" > %buildroot%_sysconfd
 %config %_sysconfdir/apt/apt.conf.d/50-autoimports-cache-limit.conf
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4
+- rsync is made default protocol
+
 * Fri Oct 30 2015 Ivan Zakharyaschev <imz@altlinux.org> 1.0-alt3
 - Currently, Sisyphus+Autoimports need a bigger APT cache limit (ALT#31411).
 
