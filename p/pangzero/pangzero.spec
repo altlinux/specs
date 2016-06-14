@@ -1,6 +1,6 @@
 Name: pangzero
 Version: 1.3
-Release: alt1
+Release: alt1.1
 
 Summary: Clone of Super Pang, a fast-paced action game
 License: GPLv2
@@ -14,7 +14,7 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Jan 25 2008
-BuildRequires: perl-SDL
+BuildRequires: perl-SDL_Perl
 
 %description
 Pang Zero is a clone of Super Pang, a fast-paced action game that involves
@@ -42,6 +42,9 @@ http://apocalypse.rulez.org/pangzero
 %_datadir/pangzero/
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1.1
+- NMU: perl-SDL -> perl-SDL_Perl
+
 * Fri Jan 25 2008 Igor Zubkov <icesik@altlinux.org> 1.3-alt1
 - 0.13 -> 1.3
 - buildreq
