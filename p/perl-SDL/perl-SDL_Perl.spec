@@ -1,7 +1,8 @@
+%filter_from_provides /^perl\\\(SDL\\\.pm\\\)/d
 %define dist SDL_Perl
 Name: perl-SDL
 Version: 2.2.6
-Release: alt7
+Release: alt8
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -12,6 +13,7 @@ Source: %dist-v%version.tar.gz
 Patch: SDL_Perl-v2.2.6-alt-perl522-syntax.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=30568
 Patch1: fix_modify_readonly_value.patch
+Provides: perl-SDL_Perl = %version
 
 # avoid crazy dependencies
 %add_findreq_skiplist */SDL/Tutorial*
@@ -23,6 +25,7 @@ BuildRequires: libSDL_gfx-devel libSDL_image-devel libSDL_mixer-devel libSDL_net
 Summary: Simple DirectMedia Layer for Perl (OpenGL)
 Group: Development/Perl
 Requires: %name = %version-%release
+Provides: perl-SDL_Perl-OpenGL = %version
 
 %description
 SDL_Perl is a wrapper around the cross platform Simple DirectMedia Layer
@@ -68,6 +71,9 @@ objdump -p %buildroot%perl_vendor_autolib/SDL_perl/SDL_perl.so |egrep 'NEEDED[[:
 %perl_vendor_autolib/SDL/OpenGL*
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt8
+- prepared to be renamed as perl-SDL_Perl
+
 * Sun Jan 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt7
 - added patch from ALT#30568
 
