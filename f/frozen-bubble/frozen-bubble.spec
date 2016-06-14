@@ -1,6 +1,6 @@
 Name: frozen-bubble
 Version: 2.2.0
-Release: alt3.1.1
+Release: alt3.2
 
 Summary: Frozen Bubble arcade game
 License: GPL
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 Requires: %name-data = %version
 
 # Automatically added by buildreq on Sun Oct 16 2011 (-bi)
-BuildRequires: libSDL_mixer-devel libSDL_pango-devel perl-Locale-gettext perl-Math-Complex perl-SDL perl-devel
+BuildRequires: libSDL_mixer-devel libSDL_pango-devel perl-Locale-gettext perl-Math-Complex perl-SDL_Perl perl-devel
 
 %description
 Colorful 3D rendered penguin animations, 100 levels of 1p game,
@@ -98,6 +98,9 @@ transition effects, 8 unique logo eye-candies.
 # - package locales
 
 %changelog
+* Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt3.2
+- preparing for perl-SDL rename
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt3.1.1
 - rebuild with new perl 5.22.0
 
