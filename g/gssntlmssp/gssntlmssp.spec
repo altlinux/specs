@@ -1,8 +1,8 @@
 %def_with wbclient
 
 Name: gssntlmssp
-Version: 0.6.0
-Release: alt1.qa1
+Version: 0.7.0
+Release: alt1
 Summary: GSSAPI NTLMSSP Mechanism
 
 Group: System/Libraries
@@ -67,6 +67,9 @@ make test_gssntlmssp
 %_includedir/gssapi/*
 
 %changelog
+* Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.0-alt1.qa1
 - NMU: rebuilt with libunistring.so.2.
 
