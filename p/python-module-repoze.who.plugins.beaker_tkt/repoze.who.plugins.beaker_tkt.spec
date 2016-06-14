@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.1
-Release: alt4.1
+Release: alt5
 Summary: Identifier (auth_tkt) plugin with beaker.session cache implementation
 License: Free
 Group: Development/Python
@@ -82,7 +82,7 @@ popd
 
 %install
 %python_install
-%ifarch x86_64
+%if "%python_sitelibdir_noarch" != "%python_sitelibdir"
 install -d %buildroot%python_sitelibdir
 mv %buildroot%python_sitelibdir_noarch/* \
 	%buildroot%python_sitelibdir/
@@ -92,19 +92,35 @@ mv %buildroot%python_sitelibdir_noarch/* \
 pushd ../python3
 %python3_install
 popd
-%ifarch x86_64
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 %endif
 
+# rm is a better way to do
+#
+#   %%exclude %%python3_sitelibdir/some/thing.py
+#
+# because it will also remove the compiled stuff from __pycache__ automatically
+# (by means of brp-compileall).
+pushd %buildroot%python_sitelibdir
+rm -v ./*/__init__.*
+rm -v ./*/*/__init__.*
+rm -v ./*/*/*/__init__.*
+popd
+%if_with python3
+pushd %buildroot%python3_sitelibdir
+rm -v ./*/__init__.*
+rm -v ./*/*/__init__.*
+rm -v ./*/*/*/__init__.*
+popd
+%endif
+
 %files
 %doc *.txt
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/__init__.*
-%exclude %python_sitelibdir/*/*/__init__.*
-%exclude %python_sitelibdir/*/*/*/__init__.*
 %exclude %python_sitelibdir/*/*/*/test*
 
 %files tests
@@ -114,9 +130,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/__init__.*
-%exclude %python3_sitelibdir/*/*/__init__.*
-%exclude %python3_sitelibdir/*/*/*/__init__.*
 %exclude %python3_sitelibdir/*/*/*/test*
 %exclude %python3_sitelibdir/*/*/*/*/test*
 
@@ -126,6 +139,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %changelog
+* Tue Jun 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt5
+- (.spec) Python3 packaging fixes: exclude extra __pycache__/* junk.
+- (AUTO) subst_x86_64.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1-alt4.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
