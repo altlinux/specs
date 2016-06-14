@@ -2,8 +2,8 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 26.2.2
-Release: alt1
+Version: 26.3.0
+Release: alt1.0.b333
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -381,6 +381,9 @@ done
 %_rpmmacrosdir/%sname
 
 %changelog
+* Tue Jun 14 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.0-alt1.0.b333
+- Update from git
+
 * Sun May 08 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.2-alt1
 - Version 26.2.2 Release
 
