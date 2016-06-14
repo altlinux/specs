@@ -11,8 +11,8 @@
 %def_without unit_tests
 
 Name: cyrus-imapd
-Version: 2.5.7
-Release: alt2
+Version: 2.5.8
+Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -423,6 +423,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Tue Jun 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.5.8-alt1
+- 2.5.8
+
 * Fri Feb 05 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.5.7-alt2
 - rebuilt with libical1-devel
 
