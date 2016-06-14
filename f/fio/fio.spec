@@ -1,8 +1,11 @@
 %def_enable gfio
-%def_disable numa
+%def_enable numa
+%def_enable rbd
+%def_enable gfapi
+%def_enable rdmacm
 
 Name: fio
-Version: 2.1.4
+Version: 2.12
 Release: alt1
 
 Summary: IO testing tool
@@ -16,6 +19,9 @@ BuildRequires: libaio-devel zlib-devel
 
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel }
+%{?_enable_rbd:BuildRequires: ceph-devel}
+%{?_enable_gfapi:BuildRequires: libglusterfs3-devel}
+%{?_enable_rdmacm:BuildRequires: librdmacm-devel}
 
 %description
 fio is a tool that will spawn a number of threads or processes doing a
@@ -56,14 +62,15 @@ This package conteon gtk frontend for %name
 
 %build
 ./configure \
+	--prefix=%_prefix \
+	--disable-optimizations \
 	%{subst_enable gfio} \
-	%{subst_enable numa} \
 	--extra-cflags="%optflags"
 
 %make_build V=1 EXTFLAGS="%optflags"
 
 %install
-%make_install DESTDIR=%buildroot install prefix=/usr mandir=/usr/share/man
+%make_install DESTDIR=%buildroot install prefix=%_prefix mandir=%_mandir
 
 %files
 %doc HOWTO README REPORTING-BUGS examples
@@ -72,16 +79,22 @@ This package conteon gtk frontend for %name
 %_man1dir/%name.1.*
 
 %files tools
-%_bindir/fio2gnuplot
-%_bindir/fio_generate_plots
+%_bindir/*
 %_datadir/%name
-%_man1dir/fio2gnuplot.*
-%_man1dir/fio_generate_plots.*
+%_man1dir/*
+%exclude %_bindir/gfio
+%exclude %_bindir/fio
+%exclude %_bindir/genfio
+%exclude %_man1dir/%name.1.*
 
 %files -n gfio
 %_bindir/gfio
 
 %changelog
+* Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 2.12-alt1
+- 2.12
+- build with support numa, ceph, gluster, rdmacm
+
 * Sun Jan 19 2014 Alexey Shabalin <shaba@altlinux.ru> 2.1.4-alt1
 - 2.1.4
 - add packages fio-tools and gfio
