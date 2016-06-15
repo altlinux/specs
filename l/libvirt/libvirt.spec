@@ -104,7 +104,7 @@
 
 Name: libvirt
 Version: 1.3.5
-Release: alt0.rc1
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -167,7 +167,6 @@ BuildRequires: zlib-devel
 BuildRequires: iproute2 perl-Pod-Parser
 BuildRequires: dmidecode
 BuildRequires: /sbin/rmmod
-BuildRequires: libsystemd-devel
 
 %description
 Libvirt is a C toolkit to interact with the virtualization capabilities
@@ -967,6 +966,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Jun 15 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
+- 1.3.5 release
+
 * Mon May 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt0.rc1
 - 1.3.5-rc1
 
