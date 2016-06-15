@@ -1,6 +1,6 @@
 Name: libcaca
 Version: 0.99
-Release: alt14.beta19
+Release: alt14.beta19.1
 
 Summary: Text mode graphics library
 Group: System/Libraries
@@ -14,9 +14,12 @@ BuildPreReq: rpm-build-ruby
 
 %def_disable static
 
-# Automatically added by buildreq on Mon Apr 25 2011
-# optimized out: imlib2 libX11-devel libstdc++-devel libtinfo-devel pkg-config ruby tex-common texlive-base texlive-base-bin texlive-common texlive-fonts-recommended texlive-latex-base texlive-latex-recommended texmf-latex-xcolor xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ imake imlib2-devel libncurses-devel libruby-devel libslang2-devel texlive-generic-recommended texlive-publishers texlive-xetex xorg-cf-files
+# Automatically added by buildreq on Wed Jun 15 2016
+# optimized out: imlib2 libX11-devel libstdc++-devel libtinfo-devel perl pkg-config python-base python-modules ruby ruby-stdlibs tex-common texlive-base texlive-base-bin texlive-common texlive-fonts-recommended texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-publishers texlive-xetex texmf-latex-xcolor xorg-kbproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ imake imlib2-devel libncurses-devel libruby-devel libslang2-devel xorg-cf-files zlib-devel
+
+# buildreqs drowns in loops and misses all latex stuff
+BuildPreReq: texlive-generic-recommended texlive-publishers texlive-xetex
 
 %description
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -128,6 +131,9 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %ruby_sitearchdir/caca.*
 
 %changelog
+* Wed Jun 15 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.99-alt14.beta19.1
+- Rebuilt with zlib support.
+
 * Fri Jun 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.99-alt14.beta19
 - Updated to v0.99.beta19.
 - Dropped strange arch-dependent provides.
