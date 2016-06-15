@@ -1,6 +1,6 @@
 Name: linux-pam
-Version: 1.1.8
-Release: alt5
+Version: 1.3.0
+Release: alt1
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
@@ -167,7 +167,7 @@ find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
 # Unlink unwanted modules.
 for d in cracklib keyinit radius tty_audit unix \
 		%{?!_enable_selinux:selinux sepermit}; do
-	sed -i "s,modules/pam_$d/Makefile,," configure.in
+	sed -i "s,modules/pam_$d/Makefile,," configure.ac
 	sed -i "s/pam_$d //" modules/Makefile.am
 	sed -i "s/tst-pam_$d[0-9]* //" xtests/Makefile.am
 done
@@ -336,6 +336,9 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Tue Jun 14 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3.0-alt1
+- v1.1.8-54-g5df44a3 -> v1.3.0-4-gdce30cd.
+
 * Fri Nov 28 2014 Dmitry V. Levin <ldv@altlinux.org> 1.1.8-alt5
 - Updated to v1.1.8-54-g5df44a3.
 
