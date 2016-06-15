@@ -2,7 +2,7 @@
 
 Name: memcached
 Version: 1.4.13
-Release: alt3.1
+Release: alt4
 
 Summary: memcached - memory caching daemon
 License: BSD
@@ -93,6 +93,9 @@ fi
 %exclude %_datadir/%name/scripts/memcached.sysv
 
 %changelog
+* Wed Jun 15 2016 Lenar Shakirov <snejok@altlinux.ru> 1.4.13-alt4
+- Systemd unit file fixed
+
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.13-alt3.1
 - Fixed build
 
