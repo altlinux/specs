@@ -1,5 +1,5 @@
 Name:     librecad
-Version:  2.0.10
+Version:  2.1.0
 Release:  alt1
 
 Summary:  Computer-aided design (CAD) system
@@ -14,10 +14,14 @@ Patch:    0001-Adding-DXF-.desktop-file.patch
 Patch1:   librecad-fix-desktop.patch
 
 Requires: librecad-data
-#Suggests:	librecad-doc
-#Suggests:	librecad-plugins
 
-BuildRequires: boost-devel-headers gcc-c++ libmuparser-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 phonon-devel
+BuildRequires: boost-devel-headers gcc-c++
+BuildRequires: libmuparser-devel
+BuildRequires: libfreetype-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-svg-devel
+BuildRequires: qt5-sql-interbase qt5-sql-mysql qt5-sql-odbc qt5-sql-postgresql qt5-sql-sqlite3
+BuildRequires: qt5-tools
 
 %description
 LibreCAD is an application for computer aided design (CAD) in two
@@ -61,15 +65,12 @@ Contains the plugins files for LibreCAD.
 find . -type f -executable -a \( -name '*.cpp' -o -name '*.h' \) | xargs -i{} chmod 644 {}
 
 %build
-export QTDIR=%_qt4dir/
-export PATH=$PATH:$QTDIR/bin
-
-%define qmake_qt4 qmake-qt4
-%qmake_qt4 librecad.pro
+export PATH=%_qt5_bindir:$PATH
+%qmake_qt5 librecad.pro
 %make_build
 
 pushd plugins
-	%qmake_qt4
+	%qmake_qt5
 	%make_build plugins.pro
 popd
 
@@ -103,7 +104,6 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %doc LICENSE README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
-#%_iconsdir/hicolor/48x48/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/mime/packages/%name.xml
 
@@ -115,12 +115,16 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_datadir/%name/qm/
 
 #files doc
-#%_datadir/%name/doc/*
+#_datadir/%name/doc/*
 
 %files plugins
 %_libdir/%name/plugins/
 
 %changelog
+* Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+- Build with Qt5
+
 * Tue Apr 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.10-alt1
 - New version
 
