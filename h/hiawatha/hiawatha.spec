@@ -1,5 +1,5 @@
 Name: hiawatha
-Version: 10.2
+Version: 10.3
 Release: alt1
 
 Summary: A secure and advanced webserver
@@ -85,6 +85,9 @@ install -pDm644 %_sourcedir/hiawatha.logrotate \
 %_logdir/%name
 
 %changelog
+* Wed Jun 15 2016 Michael Shigorin <mike@altlinux.org> 10.3-alt1
+- 10.3
+
 * Tue May 03 2016 Michael Shigorin <mike@altlinux.org> 10.2-alt1
 - 10.2
 
