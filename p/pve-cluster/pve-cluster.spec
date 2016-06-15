@@ -1,14 +1,14 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
-Version: 4.0.40
-Release: alt4
+Version: 4.0.42
+Release: alt5
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: bridge-utils openntpd corosync2 fuse rrd-cached ceph ksmtuned openvswitch sqlite3 vixie-cron faketime
+Requires: bridge-utils openntpd ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch sqlite3 vixie-cron faketime tzdata
 
 Source0: %name.tar.xz
 Source1: pve-access-control.tar.xz
@@ -18,7 +18,7 @@ Patch1: pve-access-control.patch
 BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel xmlto
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Net/SSLeay.pm)
-BuildRequires: perl(MIME/Base32.pm) perl(Net/LDAP.pm) perl(Authen/PAM.pm)
+BuildRequires: perl(MIME/Base32.pm) perl(Net/LDAP.pm) perl(Authen/PAM.pm) perl(UUID.pm)
 
 %description
 This package contains the Cluster Infrastructure for the Proxmox
@@ -67,14 +67,6 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/%name
 DAEMON_OPTS=""
 __EOF__
 
-cd ..
-cat << __EOF__ > rrdcached.sysconfig
-RRDCACHED_USER="root"
-OPTS="-j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/db/ -B"
-SOCKFILE="/var/run/rrdcached.sock"
-SOCKPERMS=0660
-__EOF__
-
 %post
 %post_service %name
 
@@ -86,7 +78,6 @@ __EOF__
 %_sbindir/useradd -g www-data -c 'www-data' -d /var/www -s '/sbin/nologin' -G www-data -r www-data 2>/dev/null || :
 
 %files
-%doc rrdcached.sysconfig
 %systemd_unitdir/%name.service
 %_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
@@ -125,6 +116,9 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Wed Jun 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.42-alt5
+- 4.0-42
+
 * Thu Jun 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.40-alt4
 - added requires openntpd, bridge-utils
 

@@ -1,6 +1,6 @@
 Name: pve-storage
 Summary: Proxmox VE storage management library
-Version: 4.0.52
+Version: 4.0.54
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -35,6 +35,9 @@ This package contains the storage management library used by Proxmox VE
 %_man1dir/pvesm.1*
 
 %changelog
+* Wed Jun 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.54-alt1
+- 4.0-54
+
 * Wed Jun 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.52-alt1
 - 4.0-52
 
