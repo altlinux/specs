@@ -1,5 +1,5 @@
 Name: libp11
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Library for using PKCS#11 modules
@@ -8,13 +8,13 @@ License: LGPLv2+
 
 Url: https://github.com/OpenSC/libp11/wiki
 Source: %name-%version.tar
-Patch: libp11-err-remove-state.patch
 
-# Automatically added by buildreq on Fri Aug 28 2009
-BuildRequires: doxygen libltdl7-devel libssl-devel xsltproc
+Provides: openssl-engine_pkcs11 = %version-%release
+Obsoletes: openssl-engine_pkcs11 < %version-%release
 
-BuildRequires: openssl-devel
-BuildRequires: pkgconfig
+BuildRequires: pkgconfig(p11-kit-1)
+BuildRequires: libssl-devel >= 0.9.8
+BuildRequires: doxygen xsltproc
 
 # needed for testsuite
 BuildRequires: softhsm opensc
@@ -34,14 +34,44 @@ Development files for %name.
 
 %prep
 %setup
-%patch -p1 -b .test-suite
+cat > README.ALT <<EOF
+In ALTLinux, the engine file has been placed in the
+%_libdir/openssl/engines directory instead of the default
+%_libdir/engines. This was done so in order to match our openssl
+installation.
+
+Considering this new path, below is the suggested change to openssl.cnf
+in order to use this engine:
+
+openssl_conf = openssl_def
+
+[openssl_def]
+engines = engine_section
+
+[engine_section]
+pkcs11 = pkcs11_section
+
+[pkcs11_section]
+engine_id = pkcs11
+dynamic_path = %_libdir/openssl/engines/pkcs11.so
+MODULE_PATH = %_libdir/opensc-pkcs11.so
+init = 0
+
+EOF
+
+chmod 0644 README.ALT
 
 %build
 %autoreconf
-%configure --disable-static --enable-api-doc
+%configure \
+        --disable-static \
+        --enable-api-doc \
+        --with-enginesdir=%_libdir/openssl/engines
+
 %make_build
 
 %install
+mkdir -p %buildroot%_libdir/openssl/engines
 %makeinstall_std
 
 # Use %%doc to install documentation in a standard location
@@ -50,16 +80,21 @@ mv %buildroot%_datadir/doc/%name/api/ __docdir/
 rm -rf %buildroot%_datadir/doc/%name/
 
 %files
-%doc COPYING NEWS
+%doc COPYING NEWS README.md README.ALT
 %_libdir/*.so.*
+%_libdir/openssl/engines/*.so*
 
 %files devel
 %doc examples/ __docdir/api/
 %_libdir/libp11.so
-%_libdir/pkgconfig/libp11.pc
-%_includedir/libp11.h
+%_pkgconfigdir/*.pc
+%_includedir/*
 
 %changelog
+* Wed Jun 15 2016 Alexey Shabalin <shaba@altlinux.ru> 0.4.0-alt1
+- 0.4.0
+- merge engine_pkcs11
+
 * Fri Oct 30 2015 Michael Shigorin <mike@altlinux.org> 0.3.0-alt1
 - 0.3.0
 - recreated gear repo to use upstream git
