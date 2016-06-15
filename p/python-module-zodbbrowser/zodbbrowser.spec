@@ -1,9 +1,11 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt2.dev0.git20150225.1
 %define oname zodbbrowser
 %def_disable check
 
 Name: python-module-%oname
 Version: 0.12.1
-Release: alt2.dev0.git20150225
+#Release: alt2.dev0.git20150225
 Summary: ZODB browser
 License: ZPLv2.1
 Group: Development/Python
@@ -89,7 +91,7 @@ This package contains tests for %oname.
 %install
 %python_install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -108,6 +110,9 @@ py.test -vv
 %python_sitelibdir/*/*test*
 
 %changelog
+* Wed Jun 15 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.12.1-alt2.dev0.git20150225.1
+- (AUTO) subst_x86_64.
+
 * Tue Jan 26 2016 Sergey Alembekov <rt@altlinux.ru> 0.12.1-alt2.dev0.git20150225
 - Rebuild with "def_disable check"
 - Cleanup buildreq
