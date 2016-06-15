@@ -1,6 +1,6 @@
 Name: 	 gpaint
 Version: 0.3.3
-Release: alt1
+Release: alt2
 Summary: GPaint Easy to use paint program for GNOME
 Summary(ru_RU.UTF-8): Простая рисовалка на GTK
 
@@ -52,7 +52,7 @@ gpaint is a simple, easy to use paint program for GNOME.
 %patch13 -p1
 
 touch src/menu.h
-#subst "s,Icon=/usr/share/pixmaps/Clipboard.xpm,Icon=gpaint," %name.desktop
+subst "s,Icon=/usr/share/pixmaps/Clipboard.xpm,Icon=gpaint," %name.desktop
 
 %build
 %configure
@@ -65,9 +65,10 @@ install -Dp -m0644 %SOURCE1 %buildroot%_pixmapsdir/%name.xpm
 install -Dp -m0644 %SOURCE2 %buildroot%_iconsdir/hicolor/scalable/%name.svg
 install -Dp -m0644 %SOURCE3 %buildroot%_man1dir/%name.1
 
-%files
+%find_lang %{name}-2 --output=%name.lang
+
+%files -f %name.lang
 %_bindir/gpaint-2
-%_datadir/locale/*/LC_MESSAGES/gpaint-2.mo
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.xpm
@@ -75,6 +76,9 @@ install -Dp -m0644 %SOURCE3 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt2
+- Fix l10n detection
+
 * Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 0.3.3-alt1
 - New version
 - Apply patches from Debian
