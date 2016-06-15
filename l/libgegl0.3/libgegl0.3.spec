@@ -1,3 +1,4 @@
+%def_disable snapshot
 %define _name gegl
 %define ver_major 0.3
 %define api_ver %ver_major
@@ -5,25 +6,32 @@
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: %ver_major.5
-Release: alt0.1
+Version: %ver_major.8
+Release: alt1
 
 Summary: A graph based image processing framework
 License: LGPLv3+/GPLv3+
 Group: System/Libraries
 Url: http://www.gimp.org
 
+%if_disabled snapshot
+Source: http://download.gimp.org/pub/%_name/%ver_major/%_name-%version.tar.bz2
+%else
 Source: %_name-%version.tar
+%endif
 
-%define babl_ver 0.1.14
+%define babl_ver 0.1.12
 
 BuildRequires: asciidoc gcc-c++ graphviz glib2-devel gtk-doc intltool libSDL-devel
-BuildRequires: libavformat-devel libbabl-devel >= %babl_ver libjpeg-devel libraw-devel
+BuildRequires: libbabl-devel >= %babl_ver  libjpeg-devel libtiff-devel libraw-devel
 BuildRequires: libgomp-devel librsvg-devel libspiro-devel openexr-devel python-modules-encodings
 BuildRequires: ruby w3m liblua5-devel libgtk+3-devel enscript
 BuildRequires: libexiv2-devel libjasper-devel libpng-devel liblensfun-devel
-BuildRequires: liblcms2-devel libwebp-devel libv4l-devel libpoly2tri-c-devel
+BuildRequires: liblcms2-devel libwebp-devel  libv4l-devel libpoly2tri-c-devel
+BuildRequires: libgexiv2-devel
 BuildRequires: libjson-glib-devel gobject-introspection-devel vala-tools
+# ffmpeg version of this libraries required
+#BuildRequires: libavformat-devel libavcodec-devel libswscale-devel
 
 %description
 GEGL (Generic Graphics Library) is a graph based image processing framework.
@@ -83,7 +91,6 @@ GObject introspection devel data for the GEGL library.
 %files -f %_name-%api_ver.lang
 # temporarily exclude to avoid conflict with libgegl-0.2
 %exclude %_bindir/%_name
-%_bindir/%_name-tester
 %_bindir/%_name-imgcmp
 %_libdir/lib%_name-%api_ver.so.*
 %_libdir/lib%_name-sc-%api_ver.so
@@ -111,6 +118,9 @@ GObject introspection devel data for the GEGL library.
 %_girdir/Gegl-%api_ver.gir
 
 %changelog
+* Wed Jun 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.8-alt1
+- 0.3.8
+
 * Sat Feb 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt0.1
 - updated to GEGL_0_3_4-96-ga299466
 
