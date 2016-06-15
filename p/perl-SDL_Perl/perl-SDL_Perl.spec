@@ -2,7 +2,7 @@
 %define dist SDL_Perl
 Name: perl-%dist
 Version: 2.2.6
-Release: alt9
+Release: alt10
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -14,6 +14,7 @@ Patch: SDL_Perl-v2.2.6-alt-perl522-syntax.patch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=30568
 Patch1: fix_modify_readonly_value.patch
 
+Provides: perl-SDL = %version
 Obsoletes: perl-SDL < 2.2.6-alt9
 Conflicts: perl-SDL < 2.2.6-alt9
 
@@ -73,6 +74,9 @@ objdump -p %buildroot%perl_vendor_autolib/SDL_perl/SDL_perl.so |egrep 'NEEDED[[:
 %perl_vendor_autolib/SDL/OpenGL*
 
 %changelog
+* Wed Jun 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt10
+- added Provides: perl-SDL = version to help upgrade (closes: #32191)
+
 * Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt9
 - renamed: perl-SDL -> perl-SDL_Perl
 
