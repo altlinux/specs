@@ -1,6 +1,6 @@
 Name: autofs
-Version: 5.1.1
-Release: alt2
+Version: 5.1.2
+Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPL
@@ -58,13 +58,14 @@ export ac_cv_path_MOUNT_NFS=/sbin/mount.nfs
 
 %install
 %make_install install INSTALLROOT=%buildroot
-rm -f %buildroot%_sysconfdir/auto.{misc,net}
+rm -fv %buildroot%_sysconfdir/auto.{misc,net}
 (cd altlinux && find . -type f |cpio -pumd %buildroot)
 chmod 0644 samples/auto.*
 
 %define docdir %_defaultdocdir/%name-%version
 mkdir -p %buildroot%docdir
-rm -f samples/rc.autofs* samples/autofs.conf.default* samples/Makefile
+rm -fv samples/rc.autofs* samples/autofs.conf.default* samples/autofs.init* \
+	samples/autofs.service* samples/Makefile
 cp -pr CHANGELOG CREDITS COPYRIGHT README* samples %buildroot%docdir
 
 %post
@@ -118,6 +119,9 @@ fi
 %_libdir/%name/lookup_ldap.so
 
 %changelog
+* Wed Jun 15 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.2-alt1
+- 5.1.2 released
+
 * Wed Apr 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.1-alt2
 - rebuilt with libtirpc-1.0.1
 
