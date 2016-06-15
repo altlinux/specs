@@ -1,6 +1,8 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.1
 Name: wkhtmltopdf-static
 Version: 0.12.2.4
-Release: alt1
+#Release: alt1
 
 Summary: Shell utility to convert html to pdf using the QT webkit rendering engine
 License: %lgpl3plus
@@ -174,7 +176,7 @@ qt-wk/bin/qmake
 %install
 %make_install INSTALL_ROOT=%buildroot%prefix install
 
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -197,6 +199,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Wed Jun 15 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.12.2.4-alt1.1
+- (AUTO) subst_x86_64.
+
 * Sun Sep 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.12.2.4-alt1
 - New version based on patched QT 4.8
 - Subpackages for libwkhtmltox-static library
