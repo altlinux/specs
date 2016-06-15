@@ -1,5 +1,5 @@
 Name:           kamoso
-Version:        3.1.0
+Version:        3.2
 Release:        alt1
 
 Group:          Video
@@ -56,7 +56,7 @@ Kamoso is an application to take pictures and videos out of your webcam.
 
 %install
 %K5install
-install -Dm0644 %name.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
+install -Dm0644 org.kde.kamoso.appdata.xml %buildroot%_datadir/appdata/org.kde.kamoso.appdata.xml
 
 %find_lang %name --all
 
@@ -65,10 +65,14 @@ install -Dm0644 %name.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
 %_K5bin/%name
 %_K5icon/hicolor/*/*/*.*
 %_K5xdgapp/*%name.desktop
-%_datadir/appdata/%name.appdata.xml
+%_datadir/appdata/org.kde.kamoso.appdata.xml
 %doc %_K5doc/*/%name
 
 %changelog
+* Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 3.2-alt1
+- New version
+- New appdata.xml name
+
 * Tue Mar 15 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
 - New version used KF5
 
