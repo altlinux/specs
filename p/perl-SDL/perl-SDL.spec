@@ -1,7 +1,7 @@
 %define dist SDL
 Name: perl-%dist
 Version: 2.546
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL
@@ -10,6 +10,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar
 
+Conflicts: frozen-bubble < 2.2.0-alt3.2
 Conflicts: perl-SDL_Perl
 Conflicts: perl-SDL25 < 2.546-alt2
 Obsoletes: perl-SDL25 < 2.546-alt2
@@ -71,6 +72,9 @@ application/game into PAR archive.
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Wed Jun 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.546-alt3
+- added conflict with frozen-bubble to help upgrade (closes: #32191)
+
 * Tue Jun 14 2016 Igor Vlasenko <viy@altlinux.ru> 2.546-alt2
 - rename perl-SDL -> perl-SDL_Perl, perl-SDL25 -> perl-SDL
 
