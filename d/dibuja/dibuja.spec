@@ -1,7 +1,7 @@
 %define ver_major 0.2
 Name: dibuja
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Gtk based basic paint program
 License: GPLv3
@@ -19,7 +19,7 @@ Dibuja is a program for quick small editing and drawing.
 %setup
 
 %build
-%configure --htmldir=%_datadir/%name
+%configure
 %make_build
 
 %install
@@ -32,13 +32,16 @@ Dibuja is a program for quick small editing and drawing.
 %_libdir/gegl-0.2/*.so
 %_desktopdir/%name.desktop
 %_datadir/%name/
+%_defaultdocdir/%name/
 %_datadir/pixmaps/dibuja.*
-%doc README
 
 %exclude %_libdir/gegl-0.2/*.la
-%exclude %_datadir/doc/%name/
+
 
 %changelog
+* Thu Jun 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt2
+- fixed docdir
+
 * Thu Jun 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - first build for Sisyphus
 
