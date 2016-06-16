@@ -1,14 +1,15 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.2.11
-Release: alt2
+Version: 4.2.14
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: cstream lzop pve-vncterm pve-novnc
+Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm
+Requires: ceph gdisk parted
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -17,6 +18,10 @@ Source3: pve-ha-manager.tar.xz
 Source4: qemu-server.tar.xz
 Source5: pve-manager-altwww.patch
 Source6: basealt_logo.png
+
+Source10: 50-rbd.rules
+Source11: 60-ceph-partuuid-workaround.rules
+Source12: 95-ceph-osd.rules
 
 Patch1: pve-manager-alt.patch
 Patch2: pve-firewall-alt.patch
@@ -112,6 +117,17 @@ f /var/lock/pveproxy.lck 0644 www-data www-data
 f /var/lock/spiceproxy.lck 0644 www-data www-data
 __EOF__
 
+cat << __EOF__ > %buildroot%_datadir/doc/%name/rrdcached.sysconfig
+RRDCACHED_USER="root"
+OPTS="-j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/db/ -B"
+SOCKFILE="/var/run/rrdcached.sock"
+SOCKPERMS=0660
+__EOF__
+
+install -m0644 %SOURCE10 %buildroot%_datadir/doc/%name/
+install -m0644 %SOURCE11 %buildroot%_datadir/doc/%name/
+install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
+
 %post
 %post_service %name
 
@@ -125,16 +141,6 @@ __EOF__
 %preun -n pve-firewall
 %preun_service pvefw-logger
 %preun_service pve-firewall
-
-%post -n pve-ha-manager
-%post_service watchdog-mux
-%post_service pve-ha-crm
-%post_service pve-ha-lrm
-
-%preun -n pve-ha-manager
-%preun_service watchdog-mux
-%preun_service pve-ha-crm
-%preun_service pve-ha-lrm
 
 %files
 %_sysconfdir/bash_completion.d/pveam
@@ -242,6 +248,8 @@ __EOF__
 %_man8dir/spiceproxy.8*
 %dir %_datadir/doc/%name
 %_datadir/doc/%name/*.pubkey
+%_datadir/doc/%name/*.rules
+%_datadir/doc/%name/rrdcached.sysconfig
 
 %files -n pve-container
 %_sysconfdir/bash_completion.d/pct
@@ -346,6 +354,9 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Wed Jun 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.14-alt3
+- 4.2-14
+
 * Tue Jun 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.11-alt2
 - rebuild
 
