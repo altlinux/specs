@@ -1,6 +1,6 @@
 Name: hydra
-Version: 8.1
-Release: alt2
+Version: 8.2
+Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
 Summary(ru_RU.KOI8-R): Очень быстрый сетевой взломщик с поддержкой множства сервисов
@@ -131,6 +131,9 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Fri Jun 17 2016 Ilya Mashkin <oddity@altlinux.ru> 8.2-alt1
+- 8.2
+
 * Tue Jul 28 2015 Ilya Mashkin <oddity@altlinux.ru> 8.1-alt2
 - build with libssh (Closes: #31173)
 - add man pages
