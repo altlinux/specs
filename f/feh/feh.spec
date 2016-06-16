@@ -1,13 +1,14 @@
-%define rev 89256a02
+%define rev %nil
 Name: feh
-Version: 2.12
-Release: alt4.%rev
+Version: 2.16
+Release: alt1
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
 Packager: Andrew Clark <andyc@altlinux.org>
-Url: http://derf.homelinux.org/projects/feh/
-Source: http://derf.homelinux.org/projects/feh/%name-%version.tar.bz2
+Url: https://feh.finalrewind.org/
+# git://github.com/derf/feh.git refs/tags/v%%version
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Thu Sep 08 2011
 # optimized out: imlib2 imlib2-devel libX11-devel xorg-xproto-devel zlib-devel
@@ -22,30 +23,31 @@ montages as index prints with many user-configurable options.
 
 %prep
 %setup -q
+sed -in 's/\(VERSION *?=\).*/\1 %version-%release/' config.mk
+sed -in 's/^\(CFLAGS *?=\).*/\1 %optflags/' config.mk
 sed -in 's/\/usr\/local/\/usr\//' config.mk
 sed -in 's#exif\ ?= 0#exif\ ?= 1#' config.mk
 
 %build
-%make_build PREFIX="%_prefix" 
-#CFLAGS="optflags" 
+%make_build PREFIX="%_prefix"
 
 %install
-#makeinstall
-mkdir -p %buildroot{%_bindir,%_datadir,%_man1dir}
-install -pm755 %_builddir/%name-%version/src/%name %buildroot%_bindir/%name
-install -pm755 %_builddir/%name-%version/cam/%name-cam %buildroot%_bindir/%name-cam
-install -pm755 %_builddir/%name-%version/cam/gen-cam-menu %buildroot%_bindir/gen-cam-menu
-mv %_builddir/%name-%version/share/ %buildroot%_datadir/%name
-cp %_builddir/%name-%version/man/*.1 %buildroot%_man1dir/
+%makeinstall_std
 
 %files
 %_bindir/*
 %_man1dir/*
 %_datadir/%name
+%_desktopdir/%name.desktop
+
+%exclude %_datadir/doc/%name
 
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Thu Jun 16 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.16-alt1
+- Updated to 2.16.
+
 * Wed Dec 24 2014 Andrew Clark <andyc@altlinux.org> 2.12-alt4.89256a02
 - version update to 2.12-alt4.89256a02
 
