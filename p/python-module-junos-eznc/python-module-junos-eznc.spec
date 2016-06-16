@@ -3,7 +3,7 @@
 Summary: Junos 'EZ' automation for non-programmers
 Name: python-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Url: https://github.com/Juniper/py-junos-eznc
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
@@ -12,6 +12,10 @@ Group: Development/Python
 
 BuildArch: noarch
 BuildRequires: python-dev python-module-setupdocs python-module-setuptools
+
+# For more detailed autoreqs (under jnpr.*), which will be self-satisfied;
+# this fixes the general UNMET python2.X(jnpr), which used to appear.
+%python_req_hier
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -61,18 +65,6 @@ pushd ../python3
 popd
 %endif
 
-mv %buildroot%python_sitelibdir/jnpr/junos %buildroot%python_sitelibdir/
-rm -rf %buildroot%python_sitelibdir/jnpr
-mv %buildroot%python_sitelibdir/junos %buildroot%python_sitelibdir/jnpr
-
-%if_with python3
-mv %buildroot%python3_sitelibdir/jnpr/junos %buildroot%python3_sitelibdir/
-rm -rf %buildroot%python3_sitelibdir/jnpr
-mv %buildroot%python3_sitelibdir/junos %buildroot%python3_sitelibdir/jnpr
-%endif
-
-
-
 %files
 %doc COPYRIGHT INSTALL-FEDORA.md INSTALL-FREEBSD.md INSTALL-OSX.md INSTALL-UBUNTU-DEBIAN.md LICENSE README.md README.txt RELEASE-NOTES.md development.txt docreq.txt requirements.txt
 %python_sitelibdir/*
@@ -85,6 +77,14 @@ mv %buildroot%python3_sitelibdir/junos %buildroot%python3_sitelibdir/jnpr
 
 
 %changelog
+* Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.1-alt2
+- Do not move jnpr/junos stuff to jnpr directory (ALT#32198)
+  (thx Andrey Cherepanov cas@).
+- %%python_req_hier -- for more detailed self-satisfied autoreqs (jnpr.*),
+  without the general UNMET python2.X(jnpr).
+
+* Thu Jun 16 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt2
+
 * Fri Jun 10 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.3.1-alt1
 - New version
 
