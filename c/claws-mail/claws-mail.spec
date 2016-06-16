@@ -13,7 +13,7 @@
 
 Name:   	claws-mail
 Version:	3.13.2
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	%gpl3plus
@@ -815,6 +815,9 @@ ln -s %_iconsdir/%name.png %buildroot%_pixmapsdir
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Jun 16 2016 Mikhail Efremov <sem@altlinux.org> 3.13.2-alt2
+- Rebuild with libetpan-1.7.2.
+
 * Tue Jan 19 2016 Mikhail Efremov <sem@altlinux.org> 3.13.2-alt1
 - Updated to 3.13.2.
 
