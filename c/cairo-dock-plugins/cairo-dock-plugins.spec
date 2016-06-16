@@ -5,7 +5,7 @@ Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 Name: cairo-dock-plugins
 Version: 3.4.1
-Release: alt5
+Release: alt6
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Anton Midyukov <antohami@altlinux.org>
@@ -1100,6 +1100,9 @@ binding for Cairo-Dock.
 %find_lang %name
 
 %changelog
+* Thu Jun 16 2016 Mikhail Efremov <sem@altlinux.org> 3.4.1-alt6
+- Rebuild with libetpan-1.7.2.
+
 * Mon May 02 2016 Anton Midyukov <antohami@altlinux.org> 3.4.1-alt5
 - Fix Requires.
 

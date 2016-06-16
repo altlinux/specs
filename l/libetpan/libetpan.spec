@@ -1,5 +1,5 @@
 Name: libetpan
-Version: 1.7
+Version: 1.7.2
 Release: alt1
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
@@ -75,6 +75,11 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Thu Jun 16 2016 Mikhail Efremov <sem@altlinux.org> 1.7.2-alt1
+- Patch from upstream:
+  + Fixed memory leak.
+- Updated to 1.7.2.
+
 * Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7-alt1
 - Updated to 1.7.
 
