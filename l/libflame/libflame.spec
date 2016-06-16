@@ -1,3 +1,5 @@
+# REMOVE ME (I was set for NMU) and uncomment real Release tags:
+Release: alt1.git20140417.1
 %define mpiimpl openmpi
 %define mpidir %_libexecdir/%mpiimpl
 %define somver 0
@@ -6,7 +8,7 @@
 Name: libflame
 Epoch: 1
 Version: 5.1.0
-Release: alt1.git20140417
+#Release: alt1.git20140417
 Summary: Formal Linear Algebra Method Environment
 License: LGPL v2.1
 Group: System/Libraries
@@ -123,7 +125,7 @@ popd
 
 rm -f %buildroot%_includedir
 mv %buildroot%prefix/include-%_arch-%version %buildroot%_includedir
-%ifarch x86_64
+%if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
@@ -147,6 +149,9 @@ mv doxygen/html %buildroot%_docdir/%name/
 %doc examples
 
 %changelog
+* Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:5.1.0-alt1.git20140417.1
+- (AUTO) subst_x86_64.
+
 * Fri May 30 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.1.0-alt1.git20140417
 - Version 5.1.0
 
