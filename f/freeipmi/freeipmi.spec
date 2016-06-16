@@ -3,8 +3,8 @@
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.4.9
-Release: alt1.1
+Version: 1.5.2
+Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -17,10 +17,7 @@ Source: %name-%version.tar
 Source1: %name.watch
 Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Tue Apr 10 2007
-BuildRequires: libgcrypt-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: libgcrypt-devel texinfo
 
 %description
 This project provides "Remote-Console" (out-of-band) and
@@ -179,6 +176,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Tue Jun 14 2016 Anton Farygin <rider@altlinux.ru> 1.5.2-alt1
+- new version 1.5.2
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4.9-alt1.1
 - NMU: added BR: texinfo
 
