@@ -1,6 +1,6 @@
 Name: python-module-pyrax
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: Python language bindings for OpenStack Clouds
 
@@ -30,6 +30,7 @@ standard Swift deployment.
 %setup -n pyrax-%version
 
 %build
+%python_build
 
 %install
 %python_install
@@ -39,6 +40,9 @@ standard Swift deployment.
 %python_sitelibdir/*
 
 %changelog
+* Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.9.0-alt2
+- Actually do build me. (%%python_build had been forgotten.)
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - initial build for ALT Linux Sisyphus
 
