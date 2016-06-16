@@ -4,17 +4,21 @@
 Summary: Flow Based Programming Automated Reasoning Engine and Automation Operation System
 Name: python-module-%oname
 Version: 1.5.5
-Release: alt1
+Release: alt2
 Url: https://github.com/ioflo/ioflo.git
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: ASL 2.0
 Group: Development/Python
 
+# For more detailed autoreqs (to be on the safer side).
+%python_req_hier
+
 BuildArch: noarch
 BuildRequires: python-dev python-module-setupdocs python-module-setuptools
 
 %if_with python3
+%python3_req_hier
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setupdocs python3-module-setuptools
 %endif
@@ -77,6 +81,9 @@ popd
 
 
 %changelog
+* Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.5-alt2
+- %%python_req_hier -- for more detailed autoreqs (to be on the safer side).
+
 * Fri Jun 10 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.5.5-alt1
 - New version
 
