@@ -1,7 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt7
+%define release_pre alt8
 
 # for distr selected
 %def_without M24
@@ -695,6 +695,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Thu Jun 16 2016 Anton Farygin <rider@altlinux.ru> 2.6.5-alt8
+- rebuild with new freeipmi
+
 * Fri May 02 2014 Michael Shigorin <mike@altlinux.org> 2.6.5-alt7
 - skip findreq upon that helper script (closes: #30053)
 
