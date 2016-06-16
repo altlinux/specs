@@ -4,7 +4,7 @@
 
 Name: python-module-%sname
 Version: 3.3.0
-Release: alt1
+Release: alt2
 Summary: OpenStack oslo.log library
 Group: Development/Python
 License: ASL 2.0
@@ -94,6 +94,8 @@ Documentation for the Oslo log handling library.
 # Remove bundled egg-info
 rm -rf %sname.egg-info
 
+sed 's/requests.packages.urllib3/urllib3/' -i oslo_log/_options.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -139,6 +141,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc html
 
 %changelog
+* Thu Jun 16 2016 Lenar Shakirov <snejok@altlinux.ru> 3.3.0-alt2
+- Fix urllib3 import in _options.py
+
 * Mon Apr 11 2016 Alexey Shabalin <shaba@altlinux.ru> 3.3.0-alt1
 - 3.3.0
 
