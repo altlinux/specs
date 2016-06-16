@@ -1,7 +1,7 @@
 %define _localstatedir /var
 
 Name: spice-vdagent
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -12,13 +12,14 @@ Source: http://spice-space.org/download/releases/%name-%version.tar
 Source2: spice-vdagentd.init-alt
 Patch: %name-%version-%release.patch
 
-BuildRequires: pkgconfig(glib-2.0) >= 2.12
-BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr)  >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
+BuildRequires: pkgconfig(glib-2.0) >= 2.28
+BuildRequires: pkgconfig(xfixes) pkgconfig(xrandr) >= 1.3 pkgconfig(xinerama) pkgconfig(x11)
 BuildRequires: pkgconfig(spice-protocol) >= 0.12.8
 BuildRequires: pkgconfig(alsa) >= 1.0.22
+BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(pciaccess) >= 0.10
 BuildRequires: desktop-file-utils
-BuildRequires: pkgconfig(systemd) pkgconfig(libsystemd-login) >= 42
+BuildRequires: pkgconfig(systemd) pkgconfig(libsystemd) >= 209
 
 %description
 Spice agent for Linux guests offering the following features:
@@ -39,7 +40,7 @@ Features:
 %build
 %autoreconf
 %configure \
-	--with-session-info=systemd \
+	--with-session-info=auto \
 	--with-init-script=systemd+redhat
 
 %make_build
@@ -69,6 +70,9 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_man1dir/*
 
 %changelog
+* Thu Jun 16 2016 Alexey Shabalin <shaba@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Fri Jul 03 2015 Alexey Shabalin <shaba@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 
