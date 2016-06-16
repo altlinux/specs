@@ -1,5 +1,5 @@
 # check deps/npm/package.json for it
-%define npmver 2.15.1
+%define npmver 2.15.5
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -21,7 +21,7 @@
 %def_disable check
 
 Name: node
-Version: 4.4.3
+Version: 4.4.5
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -219,6 +219,9 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Thu Jun 16 2016 Vitaly Lipatov <lav@altlinux.ru> 4.4.5-alt1
+- build 2016-05-24 Version 4.4.5 'Argon' (LTS)
+
 * Wed Apr 13 2016 Vitaly Lipatov <lav@altlinux.ru> 4.4.3-alt1
 - build 2016-04-12, Version 4.4.3 'Argon' (LTS)
 - drop gnuplot and convert reqs from npm
