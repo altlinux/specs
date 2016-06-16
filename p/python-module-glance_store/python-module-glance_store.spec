@@ -5,7 +5,7 @@
 
 Name: python-module-%sname
 Version: 0.13.1
-Release: alt1
+Release: alt3
 Summary: OpenStack Image Service Store Library
 Group: Development/Python
 License: ASL 2.0
@@ -96,6 +96,8 @@ Documentation for OpenStack Image Service Store Library
 # Remove bundled egg-info
 #rm -rf %sname.egg-info
 
+sed 's/requests.packages.urllib3.util/urllib3.util/' -i glance_store/_drivers/vmware_datastore.py
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -125,11 +127,10 @@ popd
 %python_install
 
 # Delete tests
-rm -fr %buildroot%python_sitelibdir/tests
-rm -fr %buildroot%python_sitelibdir/*/tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
-
+rm -fr %buildroot%python_sitelibdir/tests/{unit,functional,utils.py,base.py}
+rm -fr %buildroot%python_sitelibdir/*/tests/{unit,functional,utils.py,base.py}
+rm -fr %buildroot%python3_sitelibdir/tests/{unit,functional,utils.py,base.py}
+rm -fr %buildroot%python3_sitelibdir/*/tests/{unit,functional,utils.py,base.py}
 
 %files
 %doc AUTHORS ChangeLog LICENSE PKG-INFO README.rst
@@ -145,6 +146,12 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %doc doc/build/html
 
 %changelog
+* Thu Jun 16 2016 Lenar Shakirov <snejok@altlinux.ru> 0.13.1-alt3
+- tests.fakes packed: needed for glance-{api,registry}
+
+* Thu Jun 16 2016 Lenar Shakirov <snejok@altlinux.ru> 0.13.1-alt2
+- Fix urllib3.util import in vmware_datastore.py
+
 * Wed Apr 13 2016 Alexey Shabalin <shaba@altlinux.ru> 0.13.1-alt1
 - 0.13.1
 
