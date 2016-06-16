@@ -1,27 +1,25 @@
 %define oname ConfirmAccount
-%define major 1.22
-%define revision 74fabfc
+%define major 1.23
+%define revision b0651c1
 
 Name: mediawiki-extensions-%oname
 Version: %major.%revision
 Release: alt1
 
-BuildArch: noarch
-
-Group: Networking/WWW
 Summary: This extension disables direct account creation and requires submission and approval.
 
+License: GPL
+Group: Networking/WWW
 Url: http://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+BuildArch: noarch
 
 BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.22
+Requires: mediawiki-common >= 1.23
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://git.wikimedia.org/zip/?r=mediawiki/extensions/ConfirmAccount.git&h=74fabfc4a00443f06ba4d7a658d346501c0bfe78&format=bzip2
+# Source-url: https://extdist.wmflabs.org/dist/extensions/ConfirmAccount-REL1_23-b0651c1.tar.gz
 Source: %oname-%version.tar
 
 %description
@@ -39,6 +37,9 @@ such as if you wanted Sysops/Bureaucrats to be able to directly make them.
 %files -f %oname.files
 
 %changelog
+* Thu Jun 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.23.b0651c1-alt1
+- new version (1.23.b0651c1) with rpmgs script
+
 * Wed Feb 05 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22.74fabfc-alt1
 - new version (1.22.74fabfc) with rpmgs script
 
