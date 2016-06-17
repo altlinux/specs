@@ -3,7 +3,7 @@
 %def_enable gtk_doc
 
 Name: grilo
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Content discovery framework
@@ -144,6 +144,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %endif
 
 %changelog
+* Fri Jun 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Wed Feb 03 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
