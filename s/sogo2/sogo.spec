@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo2
-Version:      2.3.10
-Release:      alt2
+Version:      2.3.12
+Release:      alt1
 Epoch:        1
 
 License:      GPL
@@ -20,7 +20,7 @@ Patch:        %name-%version-%release.patch
 BuildPreReq:   gnustep-make-devel rpm-build-apache2
 BuildRequires: gcc-objc
 BuildRequires: gnustep-base-devel
-BuildRequires: sope2-appserver-devel sope2-core-devel sope2-ldap-devel sope2-mime-devel sope2-xml-devel sope2-gdl1-devel sope2-sbjson-devel
+BuildRequires: sope-appserver-devel sope-core-devel sope-ldap-devel sope-mime-devel sope-xml-devel sope-gdl1-devel sope-sbjson-devel
 BuildRequires: libcurl-devel
 BuildRequires: libffi-devel
 BuildRequires: libgcrypt-devel
@@ -40,14 +40,6 @@ Requires:      stmpclean
 Requires:      zip
 Provides:      sogo = %epoch:%version-%release
 Obsoletes:     sogo < %epoch:%version-%release
-
-Requires: sope2-core
-Requires: sope2-appserver
-Requires: sope2-gdl1
-Requires: sope2-ldap
-Requires: sope2-mime
-Requires: sope2-sbjson
-Requires: sope2-xml
 
 %filter_from_requires /^\/usr\/%_lib\/samba-dc\/lib/d
 %{!?sogo_major_version: %global sogo_major_version %(/bin/echo %version | /bin/cut -f 1 -d .)}
@@ -84,10 +76,10 @@ Provides: task-sogo2 = %version-%release
 Requires: sogo2
 Requires: sogo2-activesync
 Requires: sogo2-tool
-Requires: sope2-cards
+Requires: sope-cards-sogo2
 Requires: sogo2-apache2
 Requires: apache2-base
-Requires: apache2-mod_ngobjweb-sope2
+Requires: apache2-mod_ngobjweb
 Requires: memcached 
 %if_with openchange
 Requires: %name-openchange-backend
@@ -120,8 +112,8 @@ Group:        Communications
 Requires:     sogo2 = %epoch:%version-%release
 Provides:     sogo-tool = %epoch:%version-%release
 Obsoletes:    sogo-tool < %epoch:%version-%release
-Requires:     sope2-core
-Requires:     sope2-appserver
+Requires:     sope-core
+Requires:     sope-appserver
 
 %description tool
 Administrative tool for SOGo that provides the following internal commands:
@@ -135,7 +127,7 @@ Summary:      SOGo backend for slapd and back-sock
 Group:        Communications
 Provides:     sogo-slapd-sockd = %epoch:%version-%release
 Obsoletes:    sogo-slapd-sockd < %epoch:%version-%release
-Requires:     sope2-core
+Requires:     sope-core
 
 %description slapd-sockd
 SOGo backend for slapd and back-sock, enabling access to private
@@ -146,8 +138,8 @@ Summary:      SOGo utility for executing email alarms
 Group:        Communications
 Provides:     sogo-ealarms-notify = %epoch:%version-%release
 Obsoletes:    sogo-ealarms-notify < %epoch:%version-%release
-Requires:     sope2-core
-Requires:     sope2-mime
+Requires:     sope-core
+Requires:     sope-mime
 
 %description ealarms-notify
 SOGo utility executed each minute via a cronjob for executing email
@@ -159,13 +151,13 @@ Group:        Communications
 Requires:     sogo2 = %epoch:%version-%release
 Provides:     sogo-activesync = %epoch:%version-%release
 Obsoletes:    sogo-activesync < %epoch:%version-%release
-Requires:     sope2-appserver
-Requires:     sope2-core
-Requires:     sope2-gdl1
-Requires:     sope2-ldap
-Requires:     sope2-mime
-Requires:     sope2-sbjson
-Requires:     sope2-xml
+Requires:     sope-appserver
+Requires:     sope-core
+Requires:     sope-gdl1
+Requires:     sope-ldap
+Requires:     sope-mime
+Requires:     sope-sbjson
+Requires:     sope-xml
 
 %description activesync
 SOGo module to handle ActiveSync requests
@@ -179,63 +171,50 @@ Obsoletes:    sogo-devel < %epoch:%version-%release
 %description devel
 Development headers and libraries for SOGo. Needed to create modules.
 
-%package -n sope2-gdl1-contentstore
+%package -n sope-gdl1-contentstore-sogo2
 Summary:      Storage backend for folder abstraction.
 Group:        Development/Objective-C
-Requires:     sope2-gdl1
-Provides:     sope-gdl1-contentstore = %epoch:%version-%release
-Obsoletes:    sope-gdl1-contentstore < %epoch:%version-%release
-Provides:     sope-gdl1-contentstore-sogo2 = %epoch:%version-%release
-Obsoletes:    sope-gdl1-contentstore-sogo2 < %epoch:%version-%release
-Requires:     sope2-core
-Requires:     sope2-gdl1
+Requires:     sope-gdl1
+Requires:     sope-core
+Conflicts:    sope-gdl1-contentstore
 
-%description -n sope2-gdl1-contentstore
+%description -n sope-gdl1-contentstore-sogo2
 The storage backend implements the "low level" folder abstraction, which
 is basically an arbitary "BLOB" containing some document.
 
 SOPE is a framework for developing web applications and services. The
 name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 
-%package -n sope2-gdl1-contentstore-devel
+%package -n sope-gdl1-contentstore-sogo2-devel
 Summary:      Development files for the GNUstep database libraries
 Group:        Development/Objective-C
-Requires:     sope2-gdl1
-Provides:     sope-gdl1-contentstore-devel = %epoch:%version-%release
-Obsoletes:    sope-gdl1-contentstore-devel < %epoch:%version-%release
-Provides:     sope-gdl1-contentstore-devel-sogo2 = %epoch:%version-%release
-Obsoletes:    sope-gdl1-contentstore-devel-sogo2 < %epoch:%version-%release
+Requires:     sope-gdl1-contentstore-sogo2
+Conflicts:    sope-gdl1-contentstore-devel
 
-%description -n sope2-gdl1-contentstore-devel
+%description -n sope-gdl1-contentstore-sogo2-devel
 This package contains the header files for SOPE's GDLContentStore
 library.
 
 SOPE is a framework for developing web applications and services. The
 name "SOPE" (SKYRiX Object Publishing Environment) is inspired by ZOPE.
 
-%package -n sope2-cards
+%package -n sope-cards-sogo2
 Summary:      SOPE versit parsing library for iCal and VCard formats
 Group:        Development/Objective-C
-Provides:     sope-cards = %epoch:%version-%release
-Obsoletes:    sope-cards < %epoch:%version-%release
-Provides:     sope-cards-sogo2 = %epoch:%version-%release
-Obsoletes:    sope-cards-sogo2 < %epoch:%version-%release
-Requires:     sope2-core
-Requires:     sope2-xml
+Requires:     sope-core
+Requires:     sope-xml
+Conflicts:    sope-cards
 
-%description -n sope2-cards
+%description -n sope-cards-sogo2
 SOPE versit parsing library for iCal and VCard formats
 
-%package -n sope2-cards-devel
+%package -n sope-cards-sogo2-devel
 Summary:      SOPE versit parsing library for iCal and VCard formats
 Group:        Development/Objective-C
-Requires:     sope2-cards
-Provides:     sope-cards-devel = %epoch:%version-%release
-Obsoletes:    sope-cards-devel < %epoch:%version-%release
-Provides:     sope-cards-devel-sogo2 = %epoch:%version-%release
-Obsoletes:    sope-cards-devel-sogo2 < %epoch:%version-%release
+Requires:     sope-cards-sogo2
+Conflicts:    sope-cards-devel
 
-%description -n sope2-cards-devel
+%description -n sope-cards-sogo2-devel
 SOPE versit parsing library for iCal and VCard formats
 
 %if_with openchange
@@ -245,7 +224,7 @@ Group:        Communications
 Requires:     samba-DC-libs
 Provides:     sogo-openchange-backend = %epoch:%version-%release
 Obsoletes:    sogo-openchange-backend < %epoch:%version-%release
-Requires:     sope2-appserver
+Requires:     sope-appserver
 
 %description openchange-backend
 SOGo backend for OpenChange
@@ -398,20 +377,20 @@ popd
 %_libdir/GNUstep/Frameworks/SOGo.framework/Versions/%{sogo_major_version}/sogo/libSOGo.so
 %_libdir/GNUstep/Frameworks/SOGo.framework/Versions/%{sogo_major_version}/sogo/SOGo
 
-%files -n sope2-gdl1-contentstore
+%files -n sope-gdl1-contentstore-sogo2
 %_libdir/sogo/libGDLContentStore*.so.*
 
-%files -n sope2-gdl1-contentstore-devel
+%files -n sope-gdl1-contentstore-sogo2-devel
 %_includedir/GDLContentStore
 %_libdir/sogo/libGDLContentStore*.so
 
-%files -n sope2-cards
+%files -n sope-cards-sogo2
 %_libdir/sogo/libNGCards.so.*
 %_libdir/GNUstep/SaxDrivers-*
 %_libdir/GNUstep/SaxMappings
 %_libdir/GNUstep/Libraries/Resources/NGCards
 
-%files -n sope2-cards-devel
+%files -n sope-cards-sogo2-devel
 %_includedir/NGCards
 %_libdir/sogo/libNGCards.so
 
@@ -435,6 +414,16 @@ fi
 %preun_service sogo
 
 %changelog
+* Wed Jun 15 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.12-alt1
+- New version
+- Build with one sope
+
+* Thu Jun 09 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.11-alt1
+- New version
+
+* Thu Jun 09 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.10-alt3
+- Rebuild with Apache 2.4
+
 * Thu Apr 21 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.10-alt2
 - Use apache2-mod_ngobjweb-sope2 for task-sogo
 
