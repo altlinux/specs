@@ -1,7 +1,7 @@
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.2.4
+Version: 3.4.0
 Release: alt1
 Summary: A shared storage lock manager
 
@@ -200,6 +200,9 @@ install -Dd -m 0775 %buildroot%_localstatedir/run/fence_sanlockd
 %_man8dir/sanlk-reset*
 
 %changelog
+* Fri Jun 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.4.0-alt1
+- 3.4.0
+
 * Tue Jun 30 2015 Alexey Shabalin <shaba@altlinux.ru> 3.2.4-alt1
 - 3.2.4
 
