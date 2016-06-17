@@ -5,7 +5,7 @@
 %def_disable lua_factory
 
 Name: grilo-plugins
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -91,6 +91,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.so*
 
 %changelog
+* Fri Jun 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
