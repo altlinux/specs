@@ -1,5 +1,5 @@
-%define lvm2version 2.02.151
-%define dmversion 1.02.123
+%define lvm2version 2.02.156
+%define dmversion 1.02.127
 
 %def_enable cluster
 %def_enable selinux
@@ -550,6 +550,9 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 16 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.156-alt1
+- 2.02.156
+
 * Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.151-alt1
 - 2.02.151
 - update requires for lockd package

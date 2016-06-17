@@ -1,5 +1,7 @@
+%def_disable cluster
+
 Name: mdadm
-Version: 3.3.4
+Version: 3.4
 Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
@@ -11,6 +13,7 @@ Url: http://neil.brown.name/blog/mdadm
 Source: %name-%version-%release.tar
 
 BuildRequires: binutils-devel
+%{?_enable_cluster:BuildRequires: libcorosync2-devel libdlm-devel}
 
 # due to /lib/udev/rules.d/64-md-raid.rules
 Conflicts: udev < 151
@@ -66,6 +69,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Thu Jun 16 2016 Alexey Shabalin <shaba@altlinux.ru> 3.4-alt1
+- 3.4
+
 * Tue Aug 11 2015 Alexey Shabalin <shaba@altlinux.ru> 3.3.4-alt1
 - 3.3.4
 
