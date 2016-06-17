@@ -3,8 +3,8 @@
 %define _libmpathdir %_libdir/multipath
 
 Name: multipath-tools
-Version: 0.5.0
-Release: alt3
+Version: 0.6.1
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Source2: multipath.rules
 Source3: multipathd.init
 Source4: multipath.modules
+Source5: multipath.conf
 Patch1: %name-snapshot.patch
 Patch2: %name-alt-patches.patch
 
@@ -61,7 +62,7 @@ kpartx manages partition creation and removal for device-mapper devices.
 
 %build
 # non-SMP build
-%make_build LIB=%_lib SYSTEMDPATH=lib
+%make_build LIB=%_lib RUN=run SYSTEMDPATH=lib
 
 %install
 mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
@@ -69,6 +70,7 @@ mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrules
 	DESTDIR=%buildroot \
 	SYSTEMDPATH=lib \
 	LIB=%_lib \
+	RUN=run \
 	bindir=%_sbindir \
 	syslibdir=%_libdir \
 	libdir=%_libmpathdir \
@@ -76,11 +78,10 @@ mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrules
 	udevrulesdir=%_udevrulesdir \
 	unitdir=%_unitdir
 
-install -pm644 %SOURCE2 %buildroot%_udevrulesdir/56-multipath.rules
+#install -pm644 %SOURCE2 %buildroot%_udevrulesdir/56-multipath.rules
 install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
 #install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
-mv -f %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
-cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
+install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 
 %post
 %post_service multipathd
@@ -89,13 +90,13 @@ cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 %preun_service multipathd
 
 %files
-%doc AUTHOR README FAQ TODO ChangeLog multipath.conf.annotated multipath.conf.synthetic
+%doc AUTHOR README FAQ ChangeLog
 %_sbindir/multipath
 %_sbindir/multipathd
 #%_sbindir/mpathconf
 %_sbindir/mpathpersist
 %_udevrulesdir/*
-%exclude %_udevrulesdir/kpartx.rules
+%exclude %_udevrulesdir/*kpartx.rules
 #%_modulesloaddir/*
 %dir %_sysconfdir/multipath
 %config(noreplace) %attr(644,root,root) %_sysconfdir/multipath.conf
@@ -107,17 +108,22 @@ cp -a multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
 
 %files -n libmultipath
 %_libdir/libmultipath.so.*
+%_libdir/libmpathcmd.so.*
 %_libdir/libmpathpersist.so.*
-%dir %_libdir/multipath
+%dir %_libmpathdir
 %_libmpathdir/*
 
 %files -n kpartx
-%_udevrulesdir/kpartx.rules
+%_udevrulesdir/*kpartx.rules
 /sbin/kpartx
 /lib/udev/kpartx_id
 %_man8dir/kpartx.8.*
 
 %changelog
+* Fri Jun 17 2016 Alexey Shabalin <shaba@altlinux.ru> 0.6.1-alt1
+- 0.6.1
+- use upstream udev rules
+
 * Wed Apr 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.5.0-alt3
 - updated multipath.rules
 
