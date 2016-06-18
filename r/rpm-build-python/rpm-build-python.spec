@@ -1,5 +1,5 @@
 Name: rpm-build-python
-Version: 0.36.7
+Version: 0.36.8
 Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
@@ -61,6 +61,14 @@ unset RPM_PYTHON
 %doc python-module-SAMPLE.spec policy notes doc
 
 %changelog
+* Sat Jun 18 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.8-alt1
+(Minor backports from rpm-build-python3.)
+- .prov.py: generalize to generate longer provs, too.
+- %%python_req_nohier added, the reverse to %%python_req_hier
+  (in future, when there is enough provs, we'd like to
+  use the req_hier mode by default; packages can prepare beforehand)
+- Print a bit more diagnostics for ignored/skipped/hidden autoreqs.
+
 * Sat Jun 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.36.7-alt1
 - %%python{,_build}_install: force deterministic behavior (useful in
   case of conflicting stuff from simultaneous python2 and python3 builds).
