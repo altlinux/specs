@@ -1,5 +1,5 @@
 Name: LibreSSL
-Version: 2.3.5
+Version: 2.3.6
 Release: alt1
 
 %define oname libressl
@@ -202,6 +202,11 @@ popd
 %_man1dir/netcat.*
 
 %changelog
+* Sun Jun 19 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.6-alt1
+- 2.3.6
+- Correct a problem that prevents the DSA signing algorithm from running
+  in constant time even if the flag BN_FLG_CONSTTIME is set.
+
 * Wed Jun 01 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.5-alt1
 - 2.3.5
 
