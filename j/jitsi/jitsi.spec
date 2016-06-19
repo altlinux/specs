@@ -1,8 +1,8 @@
 %set_verify_elf_method textrel=relaxed
-%define rev	5426
+%define rev	5521
 
 Name:           jitsi
-Version:        2.8.%rev
+Version:        2.9.%rev
 Release:        alt1
 
 Summary:        Multiprotocol (SIP, XMPP/Jabber, ecc.) VoIP and instant messaging software
@@ -18,6 +18,7 @@ Source1:        jitsi.sh
 Source2:        jitsi.desktop
 
 BuildRequires(pre): rpm-build-java
+BuildRequires:  java-devel
 BuildRequires:  ant
 BuildRequires:  gcc-c++
 BuildRequires:  gnome-vfs-devel
@@ -49,6 +50,8 @@ many other useful features such as voice and chat encryption.
 %prep
 %setup
 sed -i "s/0\.build\.by\.SVN/%rev/" src/net/java/sip/communicator/impl/version/NightlyBuildID.java
+# Version
+#sed -n 's/^.*VERSION_M.*= \([0-9]*\);/\1/p' src/net/java/sip/communicator/impl/version/VersionImpl.java | tr '\n' '.' | sed 's/\.$/\n/'
 
 %build
 #Build main program
@@ -57,9 +60,9 @@ sed -i "s/0\.build\.by\.SVN/%rev/" src/net/java/sip/communicator/impl/version/Ni
 %install
 find lib/ lib/bundle/ -maxdepth 1 -type f -exec install -Dm644 {} "%buildroot%_libdir/%name/"{} \;
 %ifarch x86_64
-find lib/native/linux-64/ -maxdepth 1 -type f -execdir install -Dm644 {} "%buildroot%_libdir/%name/lib/native/"{} \;
+find lib/native/linux-64/ -maxdepth 1 -type f -execdir install -Dm644 {} "%buildroot%_libdir/%name/lib/native/"{} \; 2>/dev/null ||:
 %else
-find lib/native/linux/ -maxdepth 1 -type f -execdir install -Dm644 {} "%buildroot%_libdir/%name/lib/native/"{} \;
+find lib/native/linux/ -maxdepth 1 -type f -execdir install -Dm644 {} "%buildroot%_libdir/%name/lib/native/"{} \; 2>/dev/null ||:
 %endif
 find sc-bundles/{,os-specific/linux/} -maxdepth 1 -type f -execdir install -Dm644 {} "%buildroot%_libdir/%name/sc-bundles/"{} \;
 
@@ -81,6 +84,14 @@ done
 %_desktopdir/jitsi.desktop
 
 %changelog
+* Sun Jun 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.5521-alt1
+- New version
+- Return check arch for correct copy bundled libs
+
+* Fri Jun 10 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.5518-alt1
+- New version
+- Simplify copy by arch-independed way
+
 * Sun May 03 2015 Andrey Cherepanov <cas@altlinux.org> 2.8.5426-alt1
 - Initial build in Sisyphus
 
