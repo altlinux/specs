@@ -4,8 +4,8 @@
 
 Summary: 389 Directory Server (base)
 Name: 	 389-ds-base
-Version: 1.3.5.4
-Release: alt2
+Version: 1.3.5.6
+Release: alt1
 License: GPLv3+ with exceptions
 Url: 	 http://port389.org
 Group: 	 System/Servers
@@ -15,7 +15,6 @@ Source:  %name-%version.tar
 # VCS:   https://git.fedorahosted.org/git/389/ds.git
 Patch1:  alt-fix-initscripts.patch
 Patch2:  alt-bash3-support.patch
-Patch3:  upstream-fix-several-systemd-modules.patch
 
 BuildRequires: 389-adminutil-devel gcc-c++ libdb4-devel libicu-devel 
 BuildRequires: libldap-devel libnet-snmp-devel libnl-devel libpam-devel 
@@ -88,7 +87,6 @@ and without the main package.
 %setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %autoreconf
 # Install SysVInit scripts anyway
@@ -116,10 +114,6 @@ export XCFLAGS=$RPM_OPT_FLAGS
 
 #USE_ADMSERV to avoid strange get_mag_var unresolved symbol
 echo "#define USE_ADMSERV 1" >>config.h
-
-%if "%(getconf LONG_BIT)" == "64"
-export USE_64=1
-%endif
 
 %make_build
 
@@ -194,6 +188,9 @@ Turn 389-ds off and make 'setup-ds -u' then"
 %preun_service %pkgname-snmp
 
 %changelog
+* Sun Jun 19 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.5.6-alt1
+- new version 1.3.5.6
+
 * Fri Jun 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.5.4-alt2
 - Fix 64-bit architecture check
 
