@@ -1,5 +1,5 @@
 Name: gpac
-Version: 0.5.0
+Version: 0.6.1
 Release: alt1
 
 Summary: GPAC is a multimedia framework covering MPEG-4, VRML/X3D and SVG.
@@ -19,32 +19,30 @@ BuildRequires: libXv-devel libXext-devel libSDL-devel libGL-devel libGLU-devel
 BuildRequires: libssl-devel gcc-c++ 
 BuildRequires: libjpeg-devel libopenjpeg-devel libpng-devel libmad-devel libfaad-devel
 BuildRequires: liba52-devel libvorbis-devel libtheora-devel
-BuildRequires: libxmlrpc-devel libwxGTK2.9-devel
+BuildRequires: libxmlrpc-devel libwxGTK3.1-devel
 
 %description
-GPAC is a multimedia framework for MPEG-4, VRML/X3D and SVG/SMIL. GPAC
-is built upon an implementation of the MPEG-4 Systems
+GPAC is a multimedia framework for MPEG-4, VRML/X3D and SVG/SMIL.
+GPAC is built upon an implementation of the MPEG-4 Systems
 standard (ISO/IEC 14496-1) developed from scratch in C.
 
 The main development goal is to provide a clean (a.k.a. readable by as
 many people as possible), small and flexible alternative to the MPEG-4
 Systems reference software (known as IM1 and distributed in ISO/IEC
-14496-5).
+14496-5). GPAC covers a very large part of the MPEG-4 standard, and
+features what can probably be seen as the most advanced and robust 2D
+MPEG-4 Player available worldwide, as well as a decent 3D MPEG-4/VRML
+player.
 
 The second development goal is to achieve integration of recent
-multimedia standards (SVG/SMIL, VRML, X3D, SWF, etc) into a single
-framework. GPAC already supports most of VRML97 and SVG Tiny 1.2, as
-well as some X3D and simple SWF support.
-
-GPAC already features 2D and 3D multimedia playback, MPEG-4 Systems
-encoders/multiplexers and publishing tools for content distribution.
+multimedia standards for content playback (SVG/SMIL, VRML, X3D, SWF,
+etc) and content delivery into a single framework.
+GPAC features 2D and 3D multimedia playback, MPEG-4 Systems (BIFS and
+LASeR) encoders, multiplexers and publishing tools for content
+distribution, such as RTP streamers, MPEG-2 TS muxers, ISO Base Media
+File (MP4 & 3GP a.k.a. ISO/IEC 14496-12) and MPEG DASH muxers.
 
 GPAC is licensed under the GNU Lesser General Public License.
-
-The current GPAC release (0.4.5) already covers a very large part of the
-MPEG-4 standard, and features what can probably be seen as the most
-advanced and robust 2D MPEG-4 Player available worldwide, as well as a
-decent 3D MPEG-4/VRML player.
 
 %package -n lib%name
 Summary: GPAC library
@@ -87,17 +85,20 @@ like AVI, MPG, TS, but mostly on ISO media files (e.g. MP4, 3GP), e.g.:
 
 %install
 %make_install install DESTDIR="%buildroot" STRIP=/bin/true
+install -m 644 doc/man/mp42ts* %buildroot%_man1dir/
 
 %files
 %_bindir/MP4Client
+%_bindir/MP42TS
 %_man1dir/mp4client*
+%_man1dir/mp42ts*
 %_datadir/%name
 %_libdir/%name
 
 %files -n lib%name
 %_libdir/lib%name.so*
 %_man1dir/gpac*
-%doc AUTHORS BUGS Changelog COPYING README TODO
+%doc AUTHORS BUGS Changelog COPYING README.md TODO
 
 %files -n mp4box
 %_bindir/MP4Box
@@ -105,6 +106,12 @@ like AVI, MPG, TS, but mostly on ISO media files (e.g. MP4, 3GP), e.g.:
 
 
 %changelog
+* Sun Jun 19 2016 Michael A. Kangin <prividen@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
+* Sun Jun 19 2016 Michael A. Kangin <prividen@altlinux.org> 0.5.0-alt2
+- Update build dependencies
+
 * Wed Feb 13 2013 Michael A. Kangin <prividen@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
