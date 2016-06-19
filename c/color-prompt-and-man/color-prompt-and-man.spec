@@ -1,5 +1,5 @@
 Name:    color-prompt-and-man
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Colorize shell prompt and man page view
@@ -16,11 +16,14 @@ Source1:  %name.sh
 Colorize shell prompt and man page view.
 
 %install
-install -Dm0755 %SOURCE1 %buildroot%_sysconfdir/profile.d/%name.sh
+install -Dm0755 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/%name.sh
 
 %files
-%_sysconfdir/profile.d/%name.sh
+%attr(0755,root,root) %_sysconfdir/bashrc.d/%name.sh
 
 %changelog
+* Sun Jun 19 2016 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- Move script to /etc/bashrc.d for use in any DE and shells
+
 * Thu Jun 02 2016 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build in Sisyphus
