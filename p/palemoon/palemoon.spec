@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.3.0
-Release: alt1.0.b333
+Release: alt2
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -45,37 +45,31 @@ Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 
 Patch21: cpp_check.patch
-Patch23: palemoon_version-26.2.0.patch
+Patch23: palemoon_version-26.3.0.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
+# Automatically added by buildreq on Sat Jun 18 2016
+# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-PyStemmer python-module-cssselect python-module-ferari python-module-fiat python-module-instant python-module-mpmath python-module-numpy python-module-pyasn1 python-module-pyparsing python-module-ufl python-module-uflacs python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: doxygen gcc-c++ imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel 
+BuildRequires: python-module-cmd2 python-module-contextlib2 python-module-dns python-module-docutils python-module-ecdsa python-module-ed25519 python-module-ffc python-module-greenlet python-module-html5lib python-module-kerberos
+BuildRequires: python-module-libcf python-module-mimeparse python-module-netaddr python-module-nss python-module-paste python-module-pbr python-module-polib python-module-psycopg2 python-module-pycares python-module-pycrypto
+BuildRequires: python-module-pycurl python-module-pyev python-module-pygobject3 python-module-pyinotify python-module-pysnmp4 python-module-pytz python-module-sidl python-module-sidlx python-module-snappy
+BuildRequires: python-module-snowballstemmer python-module-wrapt python-module-yaml python-modules-wsgiref python3-base
+BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
 
-# BEGIN SourceDeps(oneline):
-BuildRequires: autoconf-common bzlib-devel fontconfig-devel gcc-c++-common glib2-devel libSM-devel libX11-devel libXcomposite-devel libXext-devel libcairo-devel libdbus-devel
-BuildRequires: libdbus-glib-devel libevent-devel libffi-devel libfreetype-devel libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel
-BuildRequires: libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel
-BuildRequires: perl perl-Archive-Zip perl-CGI perl-DBI perl-GD perl-GD-Graph perl-HTTP-Message perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww
-BuildRequires: python-base python-devel qt4-mobility-devel qt5-base-devel texinfo wcslib-devel xsltproc
-BuildRequires: zlib-devel
-# END SourceDeps(oneline)
+BuildPreReq: bzlib-devel fontconfig-devel gcc-c++-common glib2-devel libSM-devel libX11-devel libXcomposite-devel libXext-devel libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libffi-devel libfreetype-devel
+BuildPreReq: libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel
+BuildPreReq: libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel libwine-devel
+BuildPreReq: perl perl-Archive-Zip perl-CGI perl-DBI perl-GD perl-GD-Graph perl-HTTP-Message perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww python-base python-devel
+BuildPreReq: qt4-mobility-devel qt5-base-devel texinfo wcslib-devel xsltproc zlib-devel
 
+BuildPreReq: python3-base unzip xorg-cf-files
 
-# Automatically added by buildreq on Tue May 03 2016
-# optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-PyStemmer python-module-cssselect python-module-enum34 python-module-ferari python-module-fiat python-module-instant python-module-mpmath python-module-numpy python-module-pyasn1 python-module-pyparsing python-module-serial python-module-twisted-core python-module-ufl python-module-uflacs python-module-zope python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ imake libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel
-BuildRequires: python-module-cmd2 python-module-contextlib2 python-module-dns python-module-docutils python-module-ecdsa python-module-ed25519 python-module-ffc python-module-greenlet python-module-html5lib
-BuildRequires: python-module-kerberos python-module-libcf python-module-mimeparse python-module-ndg python-module-netaddr python-module-nss python-module-paste python-module-pbr python-module-polib python-module-psycopg2
-BuildRequires: python-module-pycares python-module-pycrypto python-module-pycurl python-module-pyev python-module-pygobject3 python-module-pyinotify python-module-pysnmp4 python-module-pytz python-module-repoze
-BuildRequires: python-module-sidl python-module-sidlx python-module-snappy python-module-snowballstemmer python-module-wrapt python-module-yaml python-modules-wsgiref python3-base
-BuildRequires: unzip wget xorg-cf-files yasm zip
+BuildPreReq: chrpath
 
-BuildRequires: python3-base unzip xorg-cf-files
-
-
-BuildRequires: chrpath
-
-BuildRequires: autoconf_2.13 
+BuildPreReq: autoconf_2.13
 
 %set_autoconf_version 2.13
 
@@ -176,7 +170,7 @@ echo %version > browser/config/version.txt
 
 cp -f %SOURCE4 .mozconfig
 
-%ifnarch %ix86 x86_64 armh
+%ifnarch %ix86 x86_64
 echo "ac_add_options --disable-methodjit" >> .mozconfig
 echo "ac_add_options --disable-monoic" >> .mozconfig
 echo "ac_add_options --disable-polyic" >> .mozconfig
@@ -186,6 +180,14 @@ echo "ac_add_options --disable-tracejit" >> .mozconfig
 echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --enable-media-plugins --disable-elf-hack --enable-media-plugins --enable-media-navigator" >> .mozconfig
 echo "ac_add_options --with-system-libvpx --enable-wave --enable-alsa --enable-pulseaudio" >> .mozconfig
+
+
+# Add  Ofiicial Options:
+#  --enable-shared-js --enable-jemalloc --enable-jemalloc-lib --with-pthreads --x-libraries=/usr/lib/X11
+echo "ac_add_options --with-pthreads" >> .mozconfig
+echo "ac_add_options --enable-shared-js"  >> .mozconfig
+echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
+echo "ac_add_options --x-libraries=/usr/lib/X11" >> .mozconfig
 
 %ifarch %ix86
 echo "ac_add_options --with-arch=i586" >> .mozconfig
@@ -267,7 +269,6 @@ mkdir -p \
 	%buildroot/%mozilla_noarch_extdir/%palemoon_cid \
 	#
 
-
 pushd objdir
 
 %makeinstall_std MOZ_APP_VERSION=
@@ -298,9 +299,7 @@ sed \
 	-e 's,@palemoon_release@,%release,' \
 	rpm-build/rpm.macros.%sname.standalone > %buildroot/%_rpmmacrosdir/%sname
 
-
 pushd %buildroot
-
 
 # Remove devel files
 rm -rf -- \
@@ -321,7 +320,6 @@ cat > %buildroot/%palemoon_prefix/browser/defaults/preferences/%sname-l10n.js <<
 pref("intl.locale.matchOS",		true);
 pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
 EOF
-
 
 # install menu file
 install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
@@ -352,7 +350,7 @@ rm -f -- \
 	done
 )
 
-popd 
+popd
 
 # Add Docdir
 install -D -m 644 %SOURCE9 ../
@@ -381,6 +379,9 @@ done
 %_rpmmacrosdir/%sname
 
 %changelog
+* Thu Jun 16 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.0-alt2
+- Version 26.2.3 Release
+
 * Tue Jun 14 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.0-alt1.0.b333
 - Update from git
 
@@ -390,7 +391,7 @@ done
 * Tue May 03 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt5.5c81
 - add Docdir
 - Correct Buildreq
- 
+
 * Sat Apr 30 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.2.1-alt4.5c81
 - Update from git
 
@@ -410,10 +411,10 @@ done
 - Version 26.2-RC2
 
 * Tue Mar 29 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt5.d870
-- Update from upstream/master git 
+- Update from upstream/master git
 
 * Wed Mar 23 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt4.46aa4
-- Update from upstream/master git 
+- Update from upstream/master git
 
 * Wed Mar 16 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.1.1-alt3.ec88
 - Version from https://github.com/trav90/Pale-Moon/tree/gstreamer1.x
