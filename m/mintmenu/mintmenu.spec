@@ -3,8 +3,8 @@
 # see /usr/share/linuxmint/mintMenu/plugins/applications.py
 
 Name:           mintmenu
-Version:        5.6.7
-Release:        alt2
+Version:        5.7.0
+Release:        alt1
 # MIT is needed for keybinding.py
 License:        GPLv2+ and MIT
 Summary:        Advanced Menu for the MATE Desktop
@@ -30,15 +30,16 @@ Patch4:         mintmenu-run_as_superuser.patch
 Patch9:         mintmenu-change_locale_directory.patch
 
 # alt patches
-Patch34:	mintmenu-5.6.3-alt-drop-mintinstall-check.patch
-Patch35:	mintmenu-5.6.3-alt-apt-cache.patch
-Patch36:	mintmenu-5.6.5-alt-no-mintengines.patch
-Patch37:	mintmenu-5.6.3-alt-GPL-path.patch
-Patch38:	mintmenu-5.5.1-alt-use-rpminstall.patch
-#Patch39:	mintmenu-5.2.1-alt-cyrillic.patch
-Patch40:	mintmenu-5.6.2-alt-xfce-logout.patch
+Patch34:	mintmenu-alt-drop-mintinstall-check.patch
+Patch35:	mintmenu-alt-apt-cache.patch
+Patch36:	mintmenu-alt-no-mintengines.patch
+Patch37:	mintmenu-alt-GPL-path.patch
+Patch38:	mintmenu-alt-use-rpminstall.patch
+#Patch39:	mintmenu-alt-cyrillic.patch
+Patch40:	mintmenu-alt-xfce-logout.patch
 # Use Synaptic via consolehelper intead of gksu
 Patch41:	mintmenu-alt-fix-package-manager.patch
+Patch42:	mintmenu-alt-do-not-use-mint-utils.patch
 
 Requires: GConf2 mate-search-tool
 Requires: python-module-gnome-menus
@@ -80,12 +81,13 @@ added to your gnome-panel or launched in its own window.
 %else
 %patch35 -p0
 %endif
-%patch36 -p1
+%patch36 -p0
 %patch37 -p0
-%patch38 -p1
+%patch38 -p0
 #%%patch39 -p1
 %patch40 -p0
-%patch41 -p1
+%patch41 -p0
+%patch42 -p1
 
 # Replace path to %%_datadir
 subst 's,/usr/lib/linuxmint,%_datadir/linuxmint,g' `find usr -type f`
@@ -144,6 +146,9 @@ printf "/usr/share/linuxmint/mintMenu/mintMenu.png\t%_pixmapsdir/mintmenu-altlin
 %config /etc/buildreqs/files/ignore.d/*
 
 %changelog
+* Sun Jun 19 2016 Andrey Cherepanov <cas@altlinux.org> 5.7.0-alt1
+- New version
+
 * Tue May 10 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.7-alt2
 - Replace mozo with mate-menu-editor (ALT #32083)
 
