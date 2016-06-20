@@ -1,5 +1,5 @@
 Name: fossil
-Version: 1.34
+Version: 1.35
 Release: alt1
 
 Summary: A distributed SCM with bug tracking and wiki
@@ -53,6 +53,9 @@ install -pDm644 fossil.1 %buildroot%_man1dir/fossil.1
 #doc www
 
 %changelog
+* Mon Jun 20 2016 Mikhail Efremov <sem@altlinux.org> 1.35-alt1
+- Updated to 1.35.
+
 * Thu Nov 12 2015 Mikhail Efremov <sem@altlinux.org> 1.34-alt1
 - Updated to 1.34.
 
