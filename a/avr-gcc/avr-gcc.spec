@@ -8,7 +8,7 @@
 Summary: GNU Compiler for AVR (C language only).
 Name: %cross_arch-gcc
 Version: 4.9.2
-Release: alt2
+Release: alt3
 
 Copyright: GPL
 Group: Development/Other
@@ -17,11 +17,10 @@ URL: http://gcc.gnu.org
 Source0: avr-gcc-%version.tar.bz2
 Source1: fix-device-specs.sh
 
-# Automatically added by buildreq on Thu Mar 13 2014
-# optimized out: avr-binutils avr-gcc avr-gcc-c++ libgmp-devel libmpfr-devel libstdc++-devel makeinfo perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage
-BuildRequires: expect flex gcc-c++ glibc-devel-static libmpc-devel perl-podlators ruby ruby-stdlibs zlib-devel
+BuildRequires: expect flex gcc-c++ glibc-devel-static libmpc-devel zlib-devel
+# perl-podlators ruby ruby-stdlibs
 
-BuildRequires: avr-binutils >= 2:2.23.1-alt1
+BuildRequires: avr-binutils >= 2:2.25-alt2
 BuildRequires: zlib-devel libmpc-devel libmpfr-devel libgmp-devel
 Requires: avr-binutils >= 2:2.23.1-alt1
 
@@ -182,6 +181,9 @@ rename avr-avr avr %buildroot%_man1dir/*
 %_man1dir/avr-g++.1*
 
 %changelog
+* Mon Jun 20 2016 Grigory Milev <week@altlinux.ru> 4.9.2-alt3
+- Buildreq cleanup
+
 * Tue May 17 2016 Grigory Milev <week@altlinux.ru> 4.9.2-alt2
 - Remove avr-libc from build requires, need for initial ARM build
 
