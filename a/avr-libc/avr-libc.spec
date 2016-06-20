@@ -6,7 +6,7 @@
 Summary: AVR libc
 Name: avr-libc
 Version: 2.0.0
-Release: alt3
+Release: alt4
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
 Group: Development/Other
@@ -16,16 +16,17 @@ Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.bz2
 Source1: avr8-headers-3.5.0.1662.zip
 Patch0: 1.8.0.fix.patch
 
-BuildRequires: cups-filters doxygen ruby-stdlibs transfig
+BuildRequires: doxygen netpbm transfig
+# ruby-stdlibs transfig cups-filters
 BuildRequires: unzip
 
-BuildRequires: avr-binutils >= 2:2.23.1-alt1
-BuildRequires: avr-gcc >= 4.7.2-alt3
-BuildRequires: avr-gcc-c++ >= 4.7.2-alt3
+BuildRequires: avr-binutils >= 2:2.25-alt2
+BuildRequires: avr-gcc >= 4.9.2-alt2
+BuildRequires: avr-gcc-c++ >= 4.9.2-alt2
 
-Requires: avr-binutils >= 2:2.23.1-alt1
-Requires: avr-gcc >= 4.7.2-alt3
-Requires: avr-gcc-c++ >= 4.7.2-alt3
+Requires: avr-binutils >= 2:2.25-alt2
+Requires: avr-gcc >= 4.9.2-alt2
+Requires: avr-gcc-c++ >= 4.9.2-alt2
 
 %define libavrdir %_libdir/%cross_arch
 %define includeavrdir %_includedir/%cross_arch
@@ -91,6 +92,9 @@ done
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Mon Jun 20 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt4
+- Buildreq cleanup
+
 * Mon May 30 2016 Grigory Milev <week@altlinux.ru> 1:2.0.0-alt3
 - Build requires cleanup
 

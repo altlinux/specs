@@ -7,7 +7,7 @@
 Summary: A GNU collection of binary utilities.
 Name: %cross_arch-binutils
 Version: 2.25
-Release: alt2
+Release: alt3
 Serial: 2
 Copyright: GPL
 Group: Development/Other
@@ -22,9 +22,8 @@ Patch1: 30-binutils-2.20.1-avr-size.patch
 
 BuildRequires: makeinfo
 
-# Automatically added by buildreq on Sat Jan 09 2016
-# optimized out: avr-gcc avr-gcc-c++ glibc-devel-static libncurses-devel libstdc++-devel libtinfo-devel makeinfo perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base python-devel python-modules xorg-xproto-devel zlib-devel
-BuildRequires: expect flex gcc-c++ imake libX11-devel libelf-devel libexpat-devel python-module-distribute python-module-fonttools python-module-google ruby ruby-stdlibs xorg-cf-files zlib-devel-static
+BuildRequires: expect flex gcc-c++ imake libelf-devel libexpat-devel zlib-devel-static
+BuildRequires: libncurses-devel
 
 %description
 Avr-Binutils is a collection of binary utilities, including avr-ar (for
@@ -127,6 +126,9 @@ done
 %_man1dir/*
 
 %changelog
+* Mon Jun 20 2016 Grigory Milev <week@altlinux.ru> 2:2.25-alt3
+- Cleanup build requires
+
 * Mon May 16 2016 Grigory Milev <week@altlinux.ru> 2:2.25-alt2
 - Remove avr-binutils from build requires - fix for fist ARM build
 
