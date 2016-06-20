@@ -2,8 +2,8 @@
 %define _cups_serverbin %_libexecdir/cups
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
-Version: 1.0.76
-Release: alt6
+Version: 1.9.0
+Release: alt1
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -21,6 +21,7 @@ Source1: %name.watch
 Source2: cups-browsed.init
 Patch0: %name-alt.patch
 Patch1: %name-alt-php-5.4.14-fix.patch
+Patch2: %name-braille-indexv4-path.patch
 Url: http://www.linuxfoundation.org/collaborate/workgroups/openprinting/pdf_as_standard_print_job_format
 Conflicts: cups < 1.6.1-alt1
 Conflicts: ghostscript-cups
@@ -51,6 +52,7 @@ BuildRequires: fontconfig-devel
 BuildRequires: liblcms2-devel
 BuildRequires: php5-devel
 BuildRequires: libgio-devel
+BuildRequires: libavahi-devel libavahi-glib-devel
 
 # Make sure we get postscriptdriver tags.
 BuildRequires: python-module-cups
@@ -108,6 +110,7 @@ serial backend for cups
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch2 -p2
 
 %build
 # work-around Rpath
@@ -159,12 +162,22 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_cups_serverbin/filter/gstopxl
 %_cups_serverbin/filter/gstoraster
 %attr(0755,root,root) %_cups_serverbin/backend/parallel
+%attr(0755,root,root) %_cups_serverbin/backend/beh
+%attr(0755,root,root) %_cups_serverbin/backend/implicitclass
 %_datadir/cups/banners
 %_datadir/cups/charsets
+%_datadir/cups/braille
 %_datadir/cups/data/*
+%_datadir/cups/ppdc/*
 %_datadir/cups/drv/cupsfilters.drv
+%_datadir/cups/drv/generic-brf.drv
+%_datadir/cups/drv/indexv3.drv
+%_datadir/cups/drv/indexv4.drv
+%_datadir/cups/mime/braille.types
+%_datadir/cups/mime/braille.convs
 %_datadir/cups/mime/cupsfilters.types
 %_datadir/cups/mime/cupsfilters.convs
+%_datadir/cups/mime/cupsfilters-ghostscript.convs
 %_datadir/ppd/cupsfilters
 %_bindir/ttfread
 %_bindir/foomatic-rip
@@ -194,6 +207,11 @@ ln -sf ../lib/cups/filter/foomatic-rip %buildroot/%_bindir/foomatic-rip
 %_libdir/libfontembed.so
 
 %changelog
+* Thu Jun 16 2016 Anton Farygin <rider@altlinux.ru> 1.9.0-alt1
+- new version 1.9.0
+- build with avahi
+
+
 * Mon May 30 2016 Anton Farygin <rider@altlinux.ru> 1.0.76-alt6
 - rebuild with php5-5.6.22
 
