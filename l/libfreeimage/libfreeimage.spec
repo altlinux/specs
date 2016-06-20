@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.17.0
-Release: alt1
+Release: alt1.1
 
 Summary: Multi-format image decoder library
 License: GPL and FIPL (see the license-fi.txt)
@@ -55,9 +55,6 @@ sh ./genfipsrclist.sh
 %make_build -f Makefile.fip
 
 %install
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
 %makeinstall_std INSTALLDIR=%buildroot%_libdir
 
 %files
@@ -70,6 +67,9 @@ LIB_SUFFIX=64
 %_libdir/libfreeimage.so
 
 %changelog
+* Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.17.0-alt1.1
+- small spec cleanup
+
 * Thu Feb 04 2016 Yuri N. Sedunov <aris@altlinux.org> 3.17.0-alt1
 - 3.17.0
 
