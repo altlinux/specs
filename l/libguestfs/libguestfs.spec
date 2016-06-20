@@ -17,7 +17,7 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.32.4
+Version: 1.33.38
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -34,13 +34,13 @@ Patch1: %name-%version-alt-fixes.patch
 BuildPreReq: /proc
 BuildRequires: gcc gcc-c++ flex
 BuildRequires: glibc-utils libselinux-devel libaugeas-devel
-BuildRequires: libgio-devel libgtk+2-devel
+BuildRequires: libgio-devel libgtk+3-devel
 BuildRequires: gtk-doc
 BuildRequires: gettext-tools
 BuildRequires: gobject-introspection-devel libgjs
 BuildRequires: cpio gperf genisoimage xml-utils db4-utils zip unzip
 # po4a 
-BuildRequires: qemu-kvm qemu-system
+BuildRequires: qemu-kvm qemu-system >= 1.3.0
 BuildRequires: libncurses-devel libtinfo-devel libreadline-devel
 BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
 BuildRequires: libacl-devel libcap-devel
@@ -163,7 +163,7 @@ Requires: guestfs-data
 Requires: libosinfo
 
 # for virt-make-fs:
-Requires: qemu-img
+Requires: qemu-img >= 1.3.0
 Requires: libvirt-daemon-driver-qemu >= 0.10.2
 
 # for virt-sysprep:
@@ -617,6 +617,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %endif
 
 %changelog
+* Wed Jun 22 2016 Alexey Shabalin <shaba@altlinux.ru> 1.33.38-alt1
+- 1.33.38
+
 * Thu May 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1.32.4-alt1
 - 1.32.4
 

@@ -1,8 +1,8 @@
 %define _name labltk
 
 Name: ocaml4-%_name
-Version: 8.06.0
-Release: alt3
+Version: 8.06.1
+Release: alt1
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -82,6 +82,9 @@ make install \
 %_bindir/ocamlbrowser
 
 %changelog
+* Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 8.06.1-alt1
+- Version update.
+
 * Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 8.06.0-alt3
 - Rebuild with new rpm-build-ocaml4.
 

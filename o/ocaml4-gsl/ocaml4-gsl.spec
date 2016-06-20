@@ -2,8 +2,8 @@
 %set_verify_elf_method textrel=relaxed
 
 Name:           ocaml4-gsl
-Version:        1.18.5
-Release:        alt1
+Version:        1.19.1
+Release:        alt2
 Summary:        Interface to GSL (GNU scientific library) for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотеки GSL для OCaml
 License:        GPLv2
@@ -25,6 +25,9 @@ Summary: Development files for programs which will use the OcamlGSL library
 Summary(ru_RU.UTF-8): Заголовочные файлы для программ, использующих библиотеку OcamlGSL
 Group: Development/ML
 Requires: %name = %version-%release
+Provides:	ocaml-gsl-devel
+Obsoletes:	ocaml-gsl-devel
+Conflicts:	ocaml-gsl-devel
 
 %description
 This is an interface to GSL (GNU scientific library), for the
@@ -85,6 +88,12 @@ mkdir -p %buildroot/%docdir
 %ocamlsitelib/gsl/META
 
 %changelog
+* Mon Jun 20 2016 Andrey Bergman <vkni@altlinux.org> 1.19.1-alt2
+- Rebuild with ocaml4 4.03.0.
+
+* Fri Nov 27 2015 Andrey Bergman <vkni@altlinux.org> 1.19.1-alt1
+- Version update.
+
 * Thu Aug 27 2015 Andrey Bergman <vkni@altlinux.org> 1.18.5-alt1
 - Version update. Corrected packaging of *.a files.
 
