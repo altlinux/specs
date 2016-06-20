@@ -1,17 +1,22 @@
+%def_enable snapshot
+
 %def_with bdb
 %def_disable introspection
 
 Name: libical
 Version: 2.0.1
-Release: alt0.3
+Release: alt0.4
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
 License: LGPL2.1+/MPL-1.0
 Url: https://github.com/%name
 
-#Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
+%if_disabled snapshot
+Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
+%endif
 Patch: %name-1.0.1-alt-libdir.patch
 
 BuildRequires: cmake gcc-c++ ctest libicu-devel
@@ -62,8 +67,8 @@ GObject introspection devel data for the Libical library.
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 	-DSHARED_ONLY:BOOL=ON \
 	%{?_with_bdb:-DWITH_BDB:BOOL=ON} \
-	%{?_enable_introspection:-DGOBJECT_INTROSPECTION:BOOL=ON}
-
+	%{?_enable_introspection:-DGOBJECT_INTROSPECTION:BOOL=ON} \
+	-DUSE_INTEROPERABLE_VTIMEZONES:BOOL=ON
 %cmake_build
 
 %install
@@ -92,6 +97,11 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test -C BUILD
 %endif
 
 %changelog
+* Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt0.4
+- updated to v2.0.0-8-g6feb01a
+- used interoperable rather than exact vtimezones
+  (https://sourceforge.net/p/freeassociation/bugs/95/#ff5c)
+
 * Mon Feb 08 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt0.3
 - rebuild against libicu*.so.56
 
