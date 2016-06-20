@@ -1,84 +1,57 @@
-Name:    yakuake
-Version: 3.0.2
-Release: alt1
+Name: kde4-yakuake
+Version: 2.9.9
+Release: alt2
 
-Summary: Very powerful Quake style Konsole for KF5
+Summary: Very powerful Quake style Konsole for KDE4
 License: GPLv2, GPLv3 or any later version accepted by the membership of KDE e.V.
 Group: Terminals
+
 Url: http://extragear.kde.org/apps/yakuake/
+Packager: Andrey Rahmatullin <wrar@altlinux.org>
 
-Source: http://download.kde.org/stable/yakuake/%version/src/%name-%version.tar.xz
+Source: http://download.berlios.de/yakuake/yakuake-%version.tar.bz2
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: qt5-declarative-devel
-BuildRequires: kf5-kauth-devel
-BuildRequires: kf5-kbookmarks-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kdeclarative-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-kservice-devel
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-purpose-devel
-BuildRequires: kf5-solid-devel
-BuildRequires: libkf5quickaddons
+BuildPreReq: bzlib-devel gcc-c++ kde4libs-devel
+BuildRequires(pre): kde-common-devel
 
-BuildRequires: kf5-karchive-devel
-BuildRequires: kf5-kcrash-devel
-BuildRequires: kf5-kdbusaddons-devel
-BuildRequires: kf5-kglobalaccel-devel
-BuildRequires: kf5-kiconthemes-devel
-BuildRequires: kf5-knewstuff-devel
-BuildRequires: kf5-knotifications-devel
-BuildRequires: kf5-knotifyconfig-devel
-BuildRequires: kf5-kparts-devel
-BuildRequires: kf5-ktextwidgets-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: kf5-sonnet-devel
-BuildRequires: qt5-x11extras-devel
+Requires: kde4base-konsole
 
-Requires:  kde5-konsole
-Conflicts: kde4-yakuake
+%define _unpackaged_files_terminate_build 1
+%define __kde4_alternate_placement 1
+
+Provides: yakuake = %version-%release
+Conflicts: yakuake >= 3.0.0
 
 %description
 A KDE konsole which looks like those found in Quake.
 
-This version is built with KF5.
+This version is built with KDE4.
 
 %prep
-%setup
+%setup -n yakuake-%version
 
 %build
-%K5build
+%K4build
 
 %install
-%K5install
-%find_lang --with-kde %name
+%K4install
 
-%files -f %name.lang
-%doc AUTHORS COPYING COPYING.DOC ChangeLog NEWS README TODO
-%_K5bin/*
-%_K5xdgconf/%name.knsrc
-%_K5xdgapp/*.desktop
-%_K5icon/*/*/apps/*
-%_datadir/%name
-%_K5notif/%name.notifyrc
+%K4find_lang --with-kde yakuake
+
+
+%files -f yakuake.lang
+%doc AUTHORS ChangeLog KDE4FAQ NEWS README TODO
+%_kde4_bindir/*
+%_kde4_xdg_apps/*.desktop
+%_kde4_iconsdir/*/*/apps/*
+%_K4apps/yakuake
+%_K4conf_update/yakuake*
+%_K4conf/yakuake.knsrc
+
 
 %changelog
-* Mon Jun 20 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
-- New version on KF5
-- Place in standard directories
-- Requires kde-konsole
+* Mon Jun 20 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.9-alt2
+- Rename package to kde4-yakuake (ALT #32098)
 
 * Thu Apr 04 2013 Andrey Cherepanov <cas@altlinux.org> 2.9.9-alt1
 - New version 2.9.9
