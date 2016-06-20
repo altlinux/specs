@@ -1,5 +1,5 @@
 Name: sqlite3
-Version: 3.12.2
+Version: 3.13.0
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: Public Domain
@@ -21,6 +21,8 @@ Patch4: sqlite3-fedora-percentile-test.patch
 
 BuildRequires(Pre): tcl-devel
 BuildRequires: libreadline-devel
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 SQLite is a C library that implements an SQL database engine.
@@ -166,6 +168,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Mon Jun 20 2016 Mikhail Efremov <sem@altlinux.org> 3.13.0-alt1
+- 3.13.0.
+
 * Fri Apr 22 2016 Mikhail Efremov <sem@altlinux.org> 3.12.2-alt1
 - Update sqlite3-fedora-no-malloc-usable-size.patch.
 - 3.12.2 (closes: #31984).
