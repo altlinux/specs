@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Tue Jun 21 2016 Mikhail Efremov <sem@altlinux.org> 5.0.3-alt1
+- check_ip: Use valid_ipv4addr().
+
 * Thu May 19 2016 Mikhail Efremov <sem@altlinux.org> 5.0.2-alt1
 - Qt UI: Fix alterator-net-wifi call.
 - write_iface: Fix wireless detection.
