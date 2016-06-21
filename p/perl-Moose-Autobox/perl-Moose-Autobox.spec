@@ -3,7 +3,7 @@
 %define real_name Moose-Autobox
 
 Name: perl-Moose-Autobox
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Autoboxed wrappers for Native Perl datatypes
@@ -22,9 +22,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildPreReq: rpm-build-licenses
 
-# Automatically added by buildreq on Sun Oct 06 2013
-# optimized out: perl-Class-Load perl-Data-OptList perl-Devel-GlobalDestruction perl-Eval-Closure perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Moose perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Scope-Guard perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Try-Tiny perl-devel perl-parent
-BuildRequires: perl-Moose perl-Pod-Escapes perl-Syntax-Keyword-Junction perl-Test-Exception perl-autobox
+# Automatically added by buildreq on Tue Jun 21 2016
+# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Carp-Clan perl-Class-Load perl-Data-OptList perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-CheckConflicts perl-Encode perl-Eval-Closure perl-Exporter-Tiny perl-ExtUtils-Config perl-ExtUtils-Helpers perl-ExtUtils-InstallPaths perl-JSON-PP perl-List-MoreUtils perl-MRO-Compat perl-Module-Implementation perl-Module-Load perl-Module-Metadata perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-Role-Parameterized perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Parse-CPAN-Meta perl-Role-Tiny perl-Scope-Guard perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Uplevel perl-Syntax-Keyword-Junction perl-Term-ANSIColor perl-Throwable perl-Try-Tiny perl-Variable-Magic perl-aliased perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-base python-modules python3
+BuildRequires: perl-Class-XSAccessor perl-Config-MVP perl-Module-Build-Tiny perl-MooseX-LazyRequire perl-MooseX-Params-Validate perl-MooseX-SemiAffordanceAccessor perl-MooseX-SetOnce perl-MooseX-StrictConstructor perl-MooseX-Types perl-Pod-Coverage perl-Test-Exception perl-Test-Moose-More perl-autobox
 
 %description
 Perl module Moose::Autobox provides an implementation of SCALAR,
@@ -46,6 +46,9 @@ hierarchy of roles in a manner similar to what Perl 6 might do.
 %perl_vendor_privlib/Moose/Autobox*
 
 %changelog
+* Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.16-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.15-alt1
 - New version
 
