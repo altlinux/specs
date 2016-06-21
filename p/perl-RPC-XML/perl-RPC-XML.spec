@@ -2,7 +2,7 @@
 ## Used in ikiwiki
 
 Name: perl-RPC-XML
-Version: 0.79
+Version: 0.80
 Release: alt1
 
 Summary: an implementation of XML-RPC
@@ -69,6 +69,9 @@ sed -e "s/localhost\([':]\)/$HOST\1/g" -i t/40_server.t
 
 
 %changelog
+* Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.80-alt1
+- New version
+
 * Sat Jun 06 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.79-alt1
 - New version
 
