@@ -6,14 +6,14 @@
 
 %define gst_version 1.0
 %define nspr_version 4.12.0
-%define nss_version 3.23.0
+%define nss_version 3.24.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        46.0.1
-Release:        alt2
+Version:        47.0
+Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -29,16 +29,16 @@ Source7:        firefox.c
 Source8:        firefox-prefs.js
 
 Patch5:         firefox-duckduckgo.patch
-Patch6:         firefox3-alt-disable-werror.patch
+Patch6:         firefox-alt-disable-werror.patch
+Patch7:         firefox-alt-disable-profiler.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
-Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
+#Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
 
 # Red Hat
-Patch300:       rhbz-1219542-s390-build.patch
 Patch301:       rhbz-1291190-appchooser-crash.patch
 Patch302:       rhbz-966424.patch
 Patch303:       rh-firefox-gtk3-20.patch
@@ -131,13 +131,11 @@ tar -xf %SOURCE2
 
 %patch5  -p1
 %patch6  -p1
+%patch7  -p1
 %patch14 -p1
 %patch16 -p1
 %patch17 -p2
 
-%patch201 -p1
-
-%patch300 -p1
 %patch301 -p1
 %patch302 -p1
 %patch303 -p1
@@ -299,6 +297,23 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Jun 10 2016 Alexey Gladkov <legion@altlinux.ru> 47.0-alt1
+- New release (47.0).
+- Fixed:
+  + 2016-61 Network Security Services (NSS) vulnerabilities
+  + 2016-60 Java applets bypass CSP protections
+  + 2016-59 Information disclosure of disabled plugins through CSS pseudo-classes
+  + 2016-58 Entering fullscreen and persistent pointerlock without user permission
+  + 2016-57 Incorrect icon displayed on permissions notifications
+  + 2016-56 Use-after-free when textures are used in WebGL operations after recycle pool destruction
+  + 2016-55 File overwrite and privilege escalation through Mozilla Windows updater
+  + 2016-54 Partial same-origin-policy through setting location.host through data URI
+  + 2016-53 Out-of-bounds write with WebGL shader
+  + 2016-52 Addressbar spoofing though the SELECT element
+  + 2016-51 Use-after-free deleting tables from a contenteditable document
+  + 2016-50 Buffer overflow parsing HTML5 fragments
+  + 2016-49 Miscellaneous memory safety hazards (rv:47.0 / rv:45.2)
+
 * Tue May 31 2016 Alexey Gladkov <legion@altlinux.ru> 46.0.1-alt2
 - New release (46.0.1).
 

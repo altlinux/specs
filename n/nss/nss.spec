@@ -2,7 +2,7 @@
 
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.23.0
+Version:	3.24.0
 Release:	alt1
 License:	MPL/GPL/LGPL
 Group:		System/Libraries
@@ -26,10 +26,7 @@ Patch5:		nss-fix-objdir.patch
 
 # Fedora patches
 Patch10:	nss-enable-pem.patch
-Patch11:	disableSSL2libssl.patch
-Patch12:	disableSSL2tests.patch
-Patch13:	tstclnt-ssl2-off-by-default.patch
-Patch14:	skip_stress_TLS_RC4_128_with_MD5.patch
+Patch11:	mozbz1277569backport.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:	chrpath zlib-devel libsqlite3-devel
@@ -116,9 +113,6 @@ Netscape Network Security Services Utilities
 
 %patch10 -p0
 %patch11 -p0
-%patch12 -p0
-%patch13 -p0
-%patch14 -p0
 
 :>nss/coreconf/Werror.mk
 
@@ -265,6 +259,9 @@ f="%_libdir/libnssckbi.so.alternatives_save"
 %_libdir/*.a
 
 %changelog
+* Fri Jun 10 2016 Alexey Gladkov <legion@altlinux.ru> 3.24.0-alt1
+- New version (3.24).
+
 * Mon Mar 21 2016 Alexey Gladkov <legion@altlinux.ru> 3.23.0-alt1
 - New version (3.23).
 - Add tstclnt and vfyserv (ALT#31803)
