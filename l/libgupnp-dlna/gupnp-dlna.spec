@@ -2,7 +2,7 @@
 %define ver_major 0.10
 
 Name: libgupnp-dlna
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 Summary: A collection of helpers for building UPnP AV applications
 
@@ -103,6 +103,9 @@ Contains developer documentation for %_name.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt1
+- 0.10.5
+
 * Tue Feb 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.4-alt1
 - 0.10.4
 
