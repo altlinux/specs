@@ -1,7 +1,7 @@
 # SPEC file for Perl module PDF::API2
 
 Name: perl-PDF-API2
-Version: 2.027
+Version: 2.028
 Release: alt1
 
 Summary: Perl module for creation and modification PDF files
@@ -22,9 +22,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: perl-Compress-Raw-Zlib perl-Encode perl-IO-Compress perl-Pod-Escapes perl-Pod-Simple perl-Unicode-Normalize perl-devel
-BuildRequires: perl-Font-TTF perl-Math-Complex perl-Test-Pod perl-unicore
+# Automatically added by buildreq on Tue Jun 21 2016
+# optimized out: fontconfig perl perl-Compress-Raw-Zlib perl-Encode perl-IO-Compress perl-Math-Complex perl-unicore python-base python-modules python3
+BuildRequires: perl-Font-TTF perl-GD perl-Unicode-Normalize
 
 %description
 PDF::API2 is a Perl module to facilitate the creation and
@@ -78,6 +78,9 @@ ln -s -- $(relative %_licensedir/LGPL %_docdir/%name/LICENSE) LICENSE
 %exclude /.perl.req
 
 %changelog
+* Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.028-alt1
+- New version
+
 * Sat Mar 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.027-alt1
 - New version
 
