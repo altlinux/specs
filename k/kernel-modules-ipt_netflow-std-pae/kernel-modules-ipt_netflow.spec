@@ -1,5 +1,5 @@
 %define module_name	ipt_netflow
-%define module_version	2.1
+%define module_version	2.2
 
 %define module_release alt1
 
