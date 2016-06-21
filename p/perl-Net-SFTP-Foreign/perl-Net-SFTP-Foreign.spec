@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Net::SFTP::Foreign
 
 Name: perl-Net-SFTP-Foreign
-Version: 1.81
+Version: 1.86
 Release: alt1
 
 Summary: SSH File Transfer Protocol client
@@ -19,9 +19,9 @@ Source: %name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sun Oct 25 2015
-# optimized out: perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-devel
-BuildRequires: openssh-clients openssh-server perl-File-Which perl-Test-Pod ruby ruby-stdlibs
+# Automatically added by buildreq on Tue Jun 21 2016
+# optimized out: perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-devel python-base python-modules python3
+BuildRequires: openssh-clients openssh-server perl-File-Which perl-Test-Pod
 
 %description
 Perl module Net::SFTP::Foreign implements an SFTP client in Perl
@@ -45,6 +45,9 @@ chmod 644 samples/*
 %perl_vendor_privlib/Net/SFTP/Foreign*
 
 %changelog
+* Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.86-alt1
+- New version
+
 * Mon Jan 04 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.81-alt1
 - New version
 
