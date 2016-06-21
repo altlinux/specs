@@ -1,6 +1,6 @@
 Name: kernel-source-ipt_netflow
-Version: 2.1
-Release: alt2
+Version: 2.2
+Release: alt1
 
 Summary: Netflow iptables module for Linux kernel 
 License: GPL
@@ -30,6 +30,10 @@ tar -cjf %kernel_srcdir/ipt_netflow-%version.tar.bz2 ipt_netflow-%version
 %attr(0644,root,root) %kernel_src/ipt_netflow-%version.tar.bz2
 
 %changelog
+* Tue Jun 21 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.2-alt1
+- 2.2
+- updated from git: kernel 4.6 compatibility
+
 * Tue Sep 29 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.1-alt2
 - updated from git: kernel 4.2 compatibility
 
