@@ -1,8 +1,8 @@
 %define _libexecdir /usr/libexec
 
 Name: ceph
-Version: 0.94.6
-Release: alt1
+Version: 0.94.7
+Release: alt3
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-python
 Requires: librados2 = %version-%release
 Requires: librbd1 = %version-%release
 Requires: lsb-release
+Provides: ceph-mds
 %description
 Ceph is a distributed network file system designed to provide excellent
 performance, reliability, and scalability.
@@ -159,7 +160,7 @@ install -Dpm 644 %name.tmpfiles %buildroot%_tmpfilesdir/%name.conf
 ln -sf ../../etc/init.d/ceph %buildroot%_sbindir/rcceph
 ln -sf ../../etc/init.d/ceph-radosgw %buildroot%_sbindir/rcceph-radosgw
 install -m 0644 -D src/logrotate.conf %buildroot%_sysconfdir/logrotate.d/ceph
-mkdir -p %buildroot%_localstatedir/ceph/tmp/
+mkdir -p %buildroot%_localstatedir/ceph/{tmp,mon,osd,mds,radosgw,bootstrap-osd,bootstrap-mds,bootstrap-rgw}/
 mkdir -p %buildroot/var/log/ceph
 mkdir -p %buildroot/var/log/radosgw
 mkdir -p %buildroot%_runtimedir/ceph/
@@ -249,7 +250,14 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/ceph-rest-api.8*
 %_mandir/man8/ceph-disk.8*
 %_mandir/man8/ceph-deploy.8*
-%_localstatedir/ceph/
+%dir %_localstatedir/ceph/
+%_localstatedir/ceph/tmp
+%_localstatedir/ceph/mon
+%_localstatedir/ceph/osd
+%_localstatedir/ceph/mds
+%_localstatedir/ceph/bootstrap-osd
+%_localstatedir/ceph/bootstrap-mds
+%_localstatedir/ceph/bootstrap-rgw
 /var/log/ceph/
 %_runtimedir/ceph/
 %_unitdir/ceph-*
@@ -281,6 +289,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_mandir/man8/radosgw-admin.8*
 /usr/sbin/rcceph-radosgw
 /var/log/radosgw
+%dir %_localstatedir/ceph/radosgw
 
 %files resource-agents
 %defattr(0755,root,root,-)
@@ -300,6 +309,15 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Mon Jun 20 2016 Lenar Shakirov <snejok@altlinux.ru> 0.94.7-alt3
+- Provides: ceph-mds added, needed by ceph-deploy
+
+* Mon Jun 20 2016 Lenar Shakirov <snejok@altlinux.ru> 0.94.7-alt2
+- Dirs under _localstatedir/ceph packed, needed by ceph-deploy
+
+* Fri Jun 17 2016 Lenar Shakirov <snejok@altlinux.ru> 0.94.7-alt1
+- 0.94.7
+
 * Tue Apr 05 2016 Alexei Takaseev <taf@altlinux.org> 0.94.6-alt1
 - 0.94.6
 
