@@ -7,8 +7,8 @@
 %define askpass_package "openssh-askpass"
 
 Name: virt-manager
-Version: 1.3.2
-Release: alt2
+Version: 1.4.0
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 # https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+# Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %version-%release
 Requires: virt-install = %version-%release
@@ -90,7 +90,7 @@ machine).
 
 %prep
 %setup
-%patch -p1
+#%%patch -p1
 
 %build
 python setup.py configure \
@@ -109,6 +109,13 @@ python setup.py \
 	install --root=%buildroot
 
 %find_lang --with-gnome %name
+
+# Replace '#!/usr/bin/env python2' with '#!/usr/bin/python2'
+# The format is ideal for upstream, but not a distro. See:
+# https://fedoraproject.org/wiki/Features/SystemPythonExecutablesUseSystemPython
+for f in $(find %buildroot -type f -executable -print); do
+    sed -i "1 s|^#!/usr/bin/env python2|#!%__python|" $f || :
+done
 
 %files
 %_bindir/%name
@@ -146,6 +153,9 @@ python setup.py \
 %_man1dir/virt-xml.1*
 
 %changelog
+* Tue Jun 21 2016 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Thu May 26 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt2
 - upstream master snapshot
 
