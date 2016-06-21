@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xfce4-calculator-plugin
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: A calculator plugin for the Xfce panel
@@ -38,6 +38,9 @@ Simple command line based calculator for the Xfce panel
 %makeinstall_std
 %find_lang %name
 
+%check
+make check
+
 %files -f %name.lang
 %doc README AUTHORS NEWS
 %_libexecdir/xfce4/panel-plugins/*
@@ -45,6 +48,10 @@ Simple command line based calculator for the Xfce panel
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Jun 21 2016 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Enabled tests.
+- Updated to 0.6.0.
+
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Initial build.
 
