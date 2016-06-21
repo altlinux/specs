@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Requires: libshell >= 0.1.3 etcnet
@@ -41,6 +41,9 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Tue Jun 21 2016 Mikhail Efremov <sem@altlinux.org> 2.0.1-alt1
+- valid_ipv4addr: Allow 255 in 2nd and 3th bytes.
+
 * Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 2.0.0-alt1
 - Drop unneeded line.
 - Add functions for read current default route and DNS settings.
