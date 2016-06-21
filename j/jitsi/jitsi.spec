@@ -3,7 +3,7 @@
 
 Name:           jitsi
 Version:        2.9.%rev
-Release:        alt1
+Release:        alt2
 
 Summary:        Multiprotocol (SIP, XMPP/Jabber, ecc.) VoIP and instant messaging software
 Group:          Networking/Instant messaging
@@ -12,6 +12,8 @@ URL:            http://www.jitsi.org
 # VCS:          https://github.com/jitsi/jitsi.git
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
+
+ExclusiveArch:  %ix86 x86_64
 
 Source0:        jitsi-%{version}.tar
 Source1:        jitsi.sh
@@ -84,6 +86,9 @@ done
 %_desktopdir/jitsi.desktop
 
 %changelog
+* Tue Jun 21 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.5521-alt2
+- Add ExclusiveArch for support architectures
+
 * Sun Jun 19 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.5521-alt1
 - New version
 - Return check arch for correct copy bundled libs
