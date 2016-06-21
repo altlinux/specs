@@ -1,7 +1,9 @@
-%define rev 30210b3a
+%set_verify_elf_method unresolved=relaxed
+%add_findreq_skiplist  %_libdir/trikStudio/*.so* %_libdir/trikStudio/plugins/tools/kitPlugins/*.so %_libdir/trikStudio/plugins/tools/*.so %_libdir/trikStudio/plugins/editors/*.so
+%define rev 91af0cec
 Name: trikStudio
 Version: 3.1.3
-Release: alt4.%rev.1
+Release: alt5.%rev.1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache License 2.0
@@ -12,10 +14,10 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar.gz
 Patch1: install.patch
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel libusb-devel libudev-devel libgmock-devel libqscintilla2-qt5-devel
+BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel libusb-devel libudev-devel libgmock-devel
 
-Requires: lib%name = %version-%release
 Requires: %name-data = %version-%release
+Conflicts: lib%name
 
 %description
 Intuitive programming environment allows you to program robots using a sequence
@@ -46,26 +48,10 @@ BuildArch: noarch
 %description data
 Data files for %name
 
-%package  -n lib%name
-Summary: Library for %name
-Group: Education
-Conflicts: qextserialport
-
-%description -n lib%name
-Library for %name
-
-%package  -n lib%name-devel
-Summary: Library for %name
-Group: Development/C++
-Conflicts: libqscintilla2-qt4-devel
-
-%description -n lib%name-devel
-Developments file for %name
-Requires: lib%name = %version-%release
-
 %prep
 %setup
 %patch1
+sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/trikStudio\/' -i installer/platform/trikStudio.sh
 
 %build
 %qmake_qt5 -r CONFIG-=debug CONFIG+=release CONFIG+=no_rpath PREFIX=/usr qrealRobots.pro
@@ -74,17 +60,12 @@ Requires: lib%name = %version-%release
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
+mv %buildroot%_libdir/*.so* %buildroot%_libdir/%name
 
 %files
 %_bindir/*
 %_libdir/%name
 %_sysconfdir/%name.config
-
-%files -n lib%name
-%_libdir/*.so.*
-
-%files -n lib%name-devel
-%_libdir/*.so
 
 %files data
 %_datadir/%name
@@ -92,8 +73,14 @@ Requires: lib%name = %version-%release
 %_liconsdir/*
 %_niconsdir/*
 %_desktopdir/*
+%doc LICENSE NOTICE README.md
 
 %changelog
+* Tue Jun 21 2016 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt5.91af0cec.1
+- New snapshot
+- Replaced library
+- Packages libtrikStudio, libtrikStudio-devel united into a package trikStudio.
+
 * Sat Mar 26 2016 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt4.30210b3a.1
 - Move config file from package trikStudio-data in package trikStudio
 - Added conflict with libqscintilla2-qt4-devel.
