@@ -1,8 +1,8 @@
 ## SPEC file for Perl module XML::Tidy
 
 Name: perl-XML-Tidy
-Version: 1.12
-Release: alt2
+Version: 1.16
+Release: alt1
 
 Summary: Perl module for tidy indenting of XML documents 
 Summary(ru_RU.UTF-8): модуль Perl для выравнивания документов XML
@@ -18,8 +18,6 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
 
 Source: %real_name-%real_version.tar
-Patch0: %real_name-1.12-alt-version_fix.patch
-Patch1: %real_name-1.12-alt-add_pod_encoding.patch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
@@ -45,8 +43,6 @@ document object.
 
 %prep
 %setup -q -n %real_name-%real_version
-%patch0
-%patch1
 
 %build
 %perl_vendor_build
@@ -62,6 +58,9 @@ document object.
 
 
 %changelog
+* Tue Jun 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.16-alt1
+- New version
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.12-alt2
 - Fix build with Perl 5.16
 
