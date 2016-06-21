@@ -1,24 +1,29 @@
 %define origname gwenhywfar
+# Qt5 support is stiil failed to build
+%def_without qt5
 
 Name:     libgwenhywfar
-Version:  4.14.0
-Release:  alt3
+Version:  4.15.3
+Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
 Group:    System/Libraries
 License:  LGPLv2+
 URL:      http://www2.aquamaniac.de/sites/download/packages.php
+# VCS:    http://git.aqbanking.de/git/gwenhywfar.git
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source:   %origname-%version.tar.bz2
+Source:   %origname-%version.tar
 Source1:  %name.watch
 Patch1:   %name-pthread.patch
-Patch2:   %name-gwen-gnutls.patch
 
 BuildRequires: gcc-c++ glibc-devel graphviz libcom_err-devel 
 BuildRequires: libgnutls-devel libssl-devel tzdata
 BuildRequires: libqt4-devel libgtk+2-devel
+%if_with qt5
+BuildRequires: qt5-base-devel
+%endif
 BuildRequires: zlib-devel libgcrypt-devel ncurses-devel
 BuildRequires: ca-certificates
 
@@ -49,12 +54,25 @@ Requires: %name = %version-%release
 %description qt4
 Gwenhywfar support for Qt4
 
+%if_with qt5
+%package  qt5
+Summary:  Gwenhywfar support for Qt5
+Group:    System/Libraries
+Requires: %name = %version-%release
+
+%description qt5
+Gwenhywfar support for Qt5
+%endif
+
 %package  devel
 Summary:  Gwenhywfar development kit
 Group:    Development/C
 Requires: %name = %version-%release
 Requires: %name-gtk2 = %version-%release
 Requires: %name-qt4  = %version-%release
+%if_with qt5
+Requires: %name-qt5  = %version-%release
+%endif
 
 %description devel
 This package contains gwenhywfar-config and header files for writing and
@@ -63,15 +81,24 @@ compiling programs using Gwenhywfar.
 %prep
 %setup -q -n %origname-%version
 %patch1 -p2
-%patch2 -p1
 
 %build
 %autoreconf
+%if_with qt5
+export PATH=$PATH:%_qt5_bindir
+%endif
 %configure \
 	--disable-static \
 	--with-openssl-libs=%_libdir \
-	--with-guis="qt4 gtk2" \
-	--with-qt4-libs="%_libdir" 
+%if_with qt5
+	--with-guis="gtk2 qt4 qt5" \
+	--with-qt5-qmake=%_bindir/qmake-qt5 \
+	--with-qt5-moc=%_bindir/moc-qt5 \
+	--with-qt5-uic=%_bindir/uic-qt5 \
+%else
+	--with-guis="gtk2 qt4" \
+%endif
+	--with-qt4-libs="%_libdir"
 
 %make_build
 
@@ -84,7 +111,7 @@ rm -f %buildroot%_datadir/gwenhywfar/ca-bundle.crt
 ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-bundle.crt
 
 %files -f %origname.lang
-%doc AUTHORS README ChangeLog TODO NEWS
+%doc AUTHORS README TODO
 %_bindir/gct-tool
 %_bindir/gsa
 %_libdir/*.so.*
@@ -100,6 +127,11 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %files qt4
 %_libdir/libgwengui-qt4.so.*
 
+%if_with qt5
+%files qt5
+%_libdir/libgwengui-qt5.so.*
+%endif
+
 %files devel
 %_bindir/%origname-config
 %_bindir/xmlmerge
@@ -109,12 +141,14 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_libdir/*.so
 %_includedir/gwenhywfar4/
 %_pkgconfigdir/*
-%_libdir/cmake/*
 %_datadir/%origname/typemaker2/*
 %_datadir/aclocal/gwenhywfar.m4
-%_libdir/cmake/gwenhywfar-*/gwenhywfar-config*.cmake
+%_libdir/cmake/*
 
 %changelog
+* Tue Jun 21 2016 Andrey Cherepanov <cas@altlinux.org> 4.15.3-alt1
+- New version
+
 * Sun Dec 27 2015 Andrey Cherepanov <cas@altlinux.org> 4.14.0-alt3
 - Update watch file after upstream site reconstruction
 - Fix build with new gnutls
