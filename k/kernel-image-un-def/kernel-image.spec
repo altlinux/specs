@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.5
-%define kernel_sublevel .7
+%define kernel_base_version	4.6
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -287,6 +287,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
+Requires: libelf-devel
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -545,14 +546,14 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Fri Jun 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.2-alt1
+- 4.6.2
+
 * Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.7-alt1
-- v4.5.7
+- v4.7
 
-* Thu Jun 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.6-alt1
-- v4.5.6
-
-* Mon May 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.5-alt1
-- v4.5.5
+* Thu May 19 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.0-alt1
+- 4.6.0
 
 * Thu May 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.4-alt1
 - 4.5.4
