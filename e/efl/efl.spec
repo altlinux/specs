@@ -21,7 +21,7 @@
 %def_disable gl_drm
 
 Name: efl
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -315,6 +315,9 @@ find %buildroot%_libdir -name "*.la" -delete
 
 
 %changelog
+* Wed Jun 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.2-alt1
+- 1.17.2
+
 * Sun Jun 05 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.1-alt1
 - 1.17.1
 
