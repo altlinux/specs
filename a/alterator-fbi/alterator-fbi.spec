@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.31
-Release: alt1
+Version: 5.32
+Release: alt1.1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -44,6 +44,7 @@ this is an alterator based engine (form based interface) to create a simple form
 
 %install
 export LD_LIBRARY_PATH=$(pwd)/src/libguile-xmltokenizer/
+mkdir -p %buildroot/%_localstatedir/alterator/csrf-tokens
 %makeinstall HTMLROOT=%buildroot%_var/www/ unitdir=%buildroot%_unitdir
 
 #ahttpd
@@ -54,6 +55,7 @@ export LD_LIBRARY_PATH=$(pwd)/src/libguile-xmltokenizer/
 %__install -Dpm644 acl.conf %buildroot%_sysconfdir/ahttpd/acl.conf
 %__install -Dpm755 ahttpd.init %buildroot/%_initrddir/ahttpd
 %__install -d %buildroot/%_cachedir/ahttpd
+%__install -d %buildroot/
 
 #ssl
 touch %buildroot%_sysconfdir/ahttpd/ahttpd.cnf
@@ -108,6 +110,7 @@ fi ||:
 %_datadir/alterator/type/*
 %_datadir/alterator/interfaces/*/*
 %_datadir/alterator/applications/*
+%dir %_localstatedir/alterator/csrf-tokens
 
 #server
 %config(noreplace) %_sysconfdir/logrotate.d/*
@@ -131,6 +134,12 @@ fi ||:
 
 
 %changelog
+* Wed Jun 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.32-alt1.1
+- build fixed
+
+* Wed Jun 22 2016 Denis Medvedev <nbr@altlinux.org> 5.32-alt1
+- Fixes CSRF.
+
 * Fri Sep 18 2015 Mikhail Efremov <sem@altlinux.org> 5.31-alt1
 - Use empty password to check in case of blocked IP.
 - Allow empty passwords.
@@ -729,7 +738,7 @@ fi ||:
 - remove /var/lib/alterator/rss directory
 
 * Thu Jun 05 2008 Stanislav Ievlev <inger@altlinux.org> 2.6-alt3
-- fix daemon restart on upgrade 
+- fix daemon restart on upgrade
 
 * Tue Jun 03 2008 Stanislav Ievlev <inger@altlinux.org> 2.6-alt2
 - rebuild to fix localization
@@ -864,7 +873,7 @@ fi ||:
 - fix woo action hackaround
 
 * Tue Feb 05 2008 Stanislav Ievlev <inger@altlinux.org> 0.15-alt4
-- remove old hack (requires for alterator-apt), 
+- remove old hack (requires for alterator-apt),
   all ve-* should require alterator-apt (or alterator pkg) now
 
 * Thu Jan 24 2008 Stanislav Ievlev <inger@altlinux.org> 0.15-alt3
@@ -1143,7 +1152,7 @@ fi ||:
 * Fri Dec 08 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt1
 - fbi is an alterator module now
 - woo-args return plist now
-- rewrite fbi template engine and rename it to frontend	
+- rewrite fbi template engine and rename it to frontend
 
 * Wed Dec 06 2006 Stanislav Ievlev <inger@altlinux.org> 0.2-alt1
 - move common JS code to common.js
