@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Screenshot
 
 Name: gnome-screenshot
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME Screenshot Tool
@@ -45,6 +45,9 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %doc NEWS
 
 %changelog
+* Wed Jun 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Sat Jun 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
