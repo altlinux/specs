@@ -1,15 +1,13 @@
 Name: luajit
-Version: 2.0.4
-Release: alt2
+Version: 2.1
+Release: alt1
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
 Group: Development/Other
 Url: http://luajit.org
-Packager: Vladimir Didenko <cow@altlinux.org>
-# git://git.altlinux.org/gears/l/luajit.git
+
 Source: %name-%version.tar
-Patch: %name-2.0.4-alt-luadir-path.patch
 Requires: lib%name = %EVR
 
 %description
@@ -48,24 +46,17 @@ It may be embedded or used as a general-purpose, stand-alone language.
 
 %prep
 %setup
-%patch -p1
-
-%ifarch x86_64
-%define multilib_flag lib64
-%else
-%define multilib_flag lib
-%endif
 
 %build
 %make_build amalg \
 	    PREFIX=%_prefix \
-	    MULTILIB=%multilib_flag \
+	    MULTILIB=%_lib \
 	    TARGET_STRIP='@:' \
 	    Q=
 
 %install
 %makeinstall_std PREFIX=%_prefix \
-		 MULTILIB=%multilib_flag \
+		 MULTILIB=%_lib \
 		 INSTALL_LMOD=%buildroot%_datadir/lua5 \
 		 INSTALL_CMOD=%buildroot%_libdir/lua5 \
 		 LDCONFIG=true \
@@ -90,6 +81,9 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %_libdir/*.a
 
 %changelog
+* Thu Jun 23 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
+- 2.1 released
+
 * Mon Jul 20 2015 Vladimir Didenko <cow@altlinux.org> 2.0.4-alt2
 - git20150717
 
