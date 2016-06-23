@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.10
-Release: alt2
+Release: alt3
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -27,7 +27,6 @@ Source7: docs-2.0.tar
 
 Patch1: mod_perl-2.0.5-lfs.patch
 Patch2: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
-Patch3: mod_perl-2.0.10-rt101962.patch
 Patch4: mod_perl-2.0.10-test_config.patch
 
 Provides: mod_perl = %version
@@ -128,7 +127,6 @@ module.
 %setup -n mod_perl-%version
 %patch1 -p1
 %patch2
-%patch3 -p1
 %patch4 -p1
 
 # Complete installation with separate projects
@@ -259,6 +257,9 @@ install -p -m 644 -- xs/tables/current/ModPerl/FunctionTable.pm  %buildroot%perl
 %doc docs/*
 
 %changelog
+* Thu Jun 23 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.10-alt3
+- Updating to the current 2.0.10-dev to support Perl 5.22.x (Closes: #32179)
+
 * Thu May 12 2016 Sergey Alembekov <rt@altlinux.ru> 2.0.10-alt2
 - fix tests httpd.conf
 - revert test switching off
