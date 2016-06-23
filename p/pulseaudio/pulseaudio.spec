@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 8.0
-Release: alt2
+Version: 9.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -221,7 +221,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-8.0
+%define pulselibdir %_libdir/pulse-9.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -250,7 +250,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-8.0.so
+%_libdir/pulseaudio/libpulsecore-9.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio.socket
@@ -353,7 +353,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-8.0.so
+%_libdir/pulseaudio/libpulsecommon-9.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -367,6 +367,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Thu Jun 23 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.0-alt1
+- 9.0 released
+
 * Tue May 24 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.0-alt2
 - drop xen support
 
