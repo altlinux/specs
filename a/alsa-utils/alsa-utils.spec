@@ -1,5 +1,5 @@
 Name: alsa-utils
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1.1
 Serial: 1
 
@@ -20,6 +20,10 @@ Conflicts: alsa-utils < 1.0.9a-alt1
 
 BuildRequires: intltool libalsa-devel libncursesw-devel xmlto libfftw3-devel
 Requires: libncursesw >= 5.7
+Requires: sysfsutils
+
+Obsoletes: alsa-bat <= 1.1.0
+Provides: alsa-bat = %version
 
 %add_findreq_skiplist %_sbindir/alsa-info.sh
 
@@ -45,19 +49,6 @@ Group: Sound
 amixer allows command-line control of the mixer for the ALSA soundcard
 driver.  amixer supports multiple soundcards.
 
-%package -n alsa-bat
-Summary: Basic Audio Tester
-License: GPL
-Group: Sound
-Conflicts: bacula-bat
-
-%description -n alsa-bat
-BAT(Basic Audio Tester) is a simple command-line utility intended
-to help automate audio driver and sound server testing with
-little human interaction. BAT can be used to test audio quality,
-stress test features and test audio before and after PM state
-changes.
-
 %prep
 %setup
 %patch -p1
@@ -78,11 +69,11 @@ touch config.rpath
 
 %files -f %name.lang
 %doc ChangeLog README
+/lib/udev/rules.d/90-alsa-restore.rules
 %_bindir/*
 %exclude %_bindir/aplay
 %exclude %_bindir/arecord
 %exclude %_bindir/amixer
-%exclude %_bindir/bat
 %_sbindir/*
 %_datadir/alsa/speaker-test
 %_datadir/alsa/init
@@ -91,7 +82,6 @@ touch config.rpath
 %exclude %_man1dir/aplay.1*
 %exclude %_man1dir/arecord.1*
 %exclude %_man1dir/amixer.1*
-%exclude %_man1dir/bat.1*
 %_man7dir/*.7*
 
 %files -n aplay
@@ -104,11 +94,18 @@ touch config.rpath
 %_bindir/amixer
 %_man1dir/amixer.1*
 
-%files -n alsa-bat
-%_bindir/bat
-%_man1dir/bat.1*
-
 %changelog
+* Thu Jun 23 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.1-alt1.1
+- dropped alsa-bat subpackage: upstream renamed bat(1)
+  which conflicted with existing bacula binary to alsabat(1)
+- added 90-alsa-restore.rules
+
+* Mon Jun 20 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.1-alt1
+- 1.1.1
+
+* Thu May 05 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1.1.1
+- added R: sysfsutils (closes: #32065)
+
 * Mon Nov 09 2015 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1.1
 - added alsa-bat subpackage (Conflicts: bacula-bat over %_bindir/bat)
 

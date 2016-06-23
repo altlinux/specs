@@ -1,6 +1,6 @@
 Name: libalsa
-Version: 1.1.0
-Release: alt1.1.1
+Version: 1.1.1
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -161,6 +161,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Mon Jun 20 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.1-alt1
+- 1.1.1
+
 * Tue Feb 02 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.0-alt1.1.1
 - added %_localstatedir/alsa (thx aris@)
 
