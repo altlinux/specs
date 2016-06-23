@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.2.14
-Release: alt3
+Version: 4.2.15
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -9,7 +9,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm
-Requires: ceph gdisk parted
+Requires: ceph gdisk parted hdparm
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -49,7 +49,7 @@ Tool to manage Linux Containers on Proxmox VE
 Summary: Proxmox VE Firewall
 Version: 2.0.29
 Group: System/Servers
-Requires: ipset
+Requires: ipset iptables iptables-ipv6
 
 %description -n pve-firewall
 This package contains the Proxmox VE Firewall
@@ -64,9 +64,9 @@ HA Manager Proxmox VE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.79
+Version: 4.0.83
 Group: System/Servers
-Requires: nc6 pve-qemu-system
+Requires: nc6 pve-qemu-system socat
 Provides: qemu-server = %version-%release
 Obsoletes: qemu-server < %version-%release
 
@@ -129,18 +129,24 @@ install -m0644 %SOURCE11 %buildroot%_datadir/doc/%name/
 install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 
 %post
-%post_service %name
+%post_service pvedaemon
+%post_service pveproxy
+%post_service pvestatd
+%post_service spiceproxy
 
 %preun
-%preun_service %name
+%preun_service pvedaemon
+%preun_service pveproxy
+%preun_service pvestatd
+%preun_service spiceproxy
 
 %post -n pve-firewall
-%post_service pvefw-logger
 %post_service pve-firewall
+%post_service pvefw-logger
 
 %preun -n pve-firewall
-%preun_service pvefw-logger
 %preun_service pve-firewall
+%preun_service pvefw-logger
 
 %files
 %_sysconfdir/bash_completion.d/pveam
@@ -163,7 +169,7 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %systemd_unitdir/spiceproxy.service
 /lib/tmpfiles.d/%name.conf
 %_bindir/pveam
-%_bindir/pvebanner
+#_bindir/pvebanner
 %_bindir/pveceph
 %_bindir/pvedaemon
 %_bindir/pvemailforward
@@ -175,7 +181,7 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_bindir/pvestatd
 %_bindir/pvesubscription
 %_bindir/pveupdate
-%_bindir/pveupgrade
+#_bindir/pveupgrade
 %_bindir/pveversion
 %_bindir/spiceproxy
 %_bindir/vzdump
@@ -238,7 +244,7 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man1dir/pvereport.1*
 %_man1dir/pvesh.1*
 %_man1dir/pvesubscription.1*
-%_man1dir/pveupgrade.1*
+#_man1dir/pveupgrade.1*
 %_man1dir/pveversion.1*
 %_man1dir/vzdump.1*
 %_man1dir/pveam.1.xz
@@ -247,6 +253,7 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man8dir/pvestatd.8*
 %_man8dir/spiceproxy.8*
 %dir %_datadir/doc/%name
+%_datadir/doc/%name/aplinfo.dat
 %_datadir/doc/%name/*.pubkey
 %_datadir/doc/%name/*.rules
 %_datadir/doc/%name/rrdcached.sysconfig
@@ -273,7 +280,7 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %files -n pve-firewall
 %_sysconfdir/bash_completion.d/pve-firewall
 %_sysconfdir/logrotate.d/pve-firewall
-%_sysconfdir/sysctl.d/pve-firewall.conf
+#_sysconfdir/sysctl.d/pve-firewall.conf
 %systemd_unitdir/pve-firewall.service
 %systemd_unitdir/pvefw-logger.service
 %_sbindir/pve-firewall
@@ -347,6 +354,8 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %perl_vendor_privlib/PVE/CLI/qmrestore.pm
 %perl_vendor_privlib/PVE/VZDump/QemuServer.pm
 %perl_vendor_privlib/PVE/QemuServer/Memory.pm
+%perl_vendor_privlib/PVE/QemuServer/PCI.pm
+%perl_vendor_privlib/PVE/QemuServer/USB.pm
 %_datadir/qemu-server
 %_localstatedir/qemu-server
 %_man1dir/qm.1*
@@ -354,6 +363,10 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Tue Jun 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.15-alt4
+- pve-manager 4.2-15
+- qemu-server 4.0-83
+
 * Wed Jun 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.14-alt3
 - 4.2-14
 

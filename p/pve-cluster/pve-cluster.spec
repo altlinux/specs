@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
 Version: 4.0.42
-Release: alt5
+Release: alt6
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -81,7 +81,6 @@ __EOF__
 %systemd_unitdir/%name.service
 %_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
-%dir %_sysconfdir/pve
 %config(noreplace) %_sysconfdir/network/interfaces
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_sysconfdir/sysctl.d/pve-cluster.conf
@@ -116,6 +115,9 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Thu Jun 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.42-alt6
+- fixed upgrading from a previous version
+
 * Wed Jun 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.42-alt5
 - 4.0-42
 
