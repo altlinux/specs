@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt1.1
+Release: alt2
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,9 @@ fi ||:
 
 
 %changelog
+* Thu Jun 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.32-alt2
+- login without old cookie fixed
+
 * Wed Jun 22 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.32-alt1.1
 - build fixed
 
