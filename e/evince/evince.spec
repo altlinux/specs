@@ -9,7 +9,7 @@
 %def_enable multimedia
 
 Name: evince
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A document viewer
@@ -40,7 +40,7 @@ BuildRequires: libgnome-desktop3-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
 %{?_enable_browser_plugin:BuildRequires:browser-plugins-npapi-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
-BuildRequires: libSM-devel libICE-devel libXi-devel
+BuildRequires: libXi-devel
 BuildRequires: systemd-devel
 
 %if_enabled introspection
@@ -205,6 +205,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Thu Jun 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
