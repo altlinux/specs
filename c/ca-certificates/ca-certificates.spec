@@ -1,5 +1,5 @@
 Name: ca-certificates
-Version: 2016.02.25
+Version: 2016.05.25
 Release: alt1
 
 Summary: Common CA Certificates
@@ -51,6 +51,10 @@ ln -s %_datadir/%name/ca-bundle.crt %{buildroot}%_sysconfdir/pki/tls/certs
 %_datadir/%name
 
 %changelog
+* Fri Jun 24 2016 L.A. Kostis <lakostis@altlinux.ru> 2016.05.25-alt1
+- mozilla: updated to May 2016 CA batch root changes.
+  (#bmo 1275533).
+
 * Wed May 04 2016 L.A. Kostis <lakostis@altlinux.ru> 2016.02.25-alt1
 - mozilla: updated to February 2016 batch root CA changes.
   (#bmo 1247990).
