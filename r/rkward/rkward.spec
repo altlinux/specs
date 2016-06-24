@@ -1,7 +1,7 @@
 
 Name: rkward
-Version: 0.6.3
-Release: alt9
+Version: 0.6.5
+Release: alt1
 Summary: Graphical frontend for R language
 Summary(fr):    Interface graphique pour le langage R
 Summary(ru_RU.UTF-8):    Интерфейс к языку программирования R
@@ -79,6 +79,9 @@ rm %buildroot/%_kde4_prefix/apps/katepart/syntax/r.xml
 %_K4datadir/locale/x-test/LC_MESSAGES/rkward.mo
 
 %changelog
+* Fri Jun 24 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.5-alt1
+- New 0.6.5 version
+
 * Wed Jan 27 2016 Konstantin Artyushkin <akv@altlinux.org> 0.6.3-alt9
 - add kde4-kate-core to requires
 
