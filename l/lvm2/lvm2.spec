@@ -1,4 +1,4 @@
-%define lvm2version 2.02.156
+%define lvm2version 2.02.157
 %define dmversion 1.02.127
 
 %def_enable cluster
@@ -19,7 +19,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt2
 License: GPL
 
 Group: System/Base
@@ -550,6 +550,9 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jun 24 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.157-alt2
+- 2.02.157
+
 * Thu Jun 16 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.156-alt1
 - 2.02.156
 
