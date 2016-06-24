@@ -2,7 +2,7 @@
 %define ucddir %unicodedir/ucd
 
 Name: unicode-ucd
-Version: 8.0.0
+Version: 9.0.0
 Release: alt1
 
 Summary: Unicode Character Database
@@ -37,11 +37,14 @@ cp -p %SOURCE1 %buildroot%ucddir
 cp -p %SOURCE2 .
 
 %files
-%doc copyright.html
 %dir %unicodedir
 %ucddir/
+%doc copyright.html
 
 %changelog
+* Fri Jun 24 2016 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1
+- 9.0.0
+
 * Tue Apr 05 2016 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
 - first build for sisyphus
 
