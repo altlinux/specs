@@ -4,12 +4,14 @@
 Summary: This library is used to gain direct access to the functions exposed by Daniel J. Bernstein's nacl library via libsodium or tweetnacl
 Name: python-module-%oname
 Version: 1.4.5
-Release: alt1
+Release: alt2
 Url: https://github.com/saltstack/libnacl
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: ASL 2.0
 Group: Development/Python
+
+Requires: libsodium13
 
 BuildArch: noarch
 BuildRequires: python-dev python-module-setupdocs python-module-setuptools
@@ -81,6 +83,9 @@ popd
 
 
 %changelog
+* Fri Jun 24 2016 Lenar Shakirov <snejok@altlinux.ru> 1.4.5-alt2
+- Requires: libsodium13 added
+
 * Fri Jun 10 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.4.5-alt1
 - New version
 
