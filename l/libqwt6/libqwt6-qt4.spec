@@ -1,8 +1,8 @@
 %define oname libqwt
 %define ver_major 6.1
 Name: %{oname}6
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: 2D plotting widget extension to the Qt GUI
 
@@ -77,10 +77,7 @@ echo 'QMAKE_CXXFLAGS += %optflags' >> $f
 done
 
 %build
-#export QTDIR=%_qt4dir
-#export PATH=$QTDIR/bin:$PATH
 %qmake_qt4 QWT_CONFIG+=QwtMathML
-
 # incompatible with SMP build
 %make
 
@@ -91,20 +88,13 @@ popd
 %install
 %make_install install INSTALL_ROOT=%buildroot
 
-# man absent in 6.0.1
-#install -d %buildroot%_man3dir
-#install -m644 doc/man/man3/* %buildroot%_man3dir
+install -d %buildroot%_man3dir
+install -m644 doc/man/man3/* %buildroot%_man3dir
 
 # clean up the example tree
-(cd examples; make distclean)
-(cd examples; rm -f .*.cache */.*.cache */*/.*.cache)
-(cd examples; rm -rf Makefile */moc */obj */*/moc */*/obj)
-
-#install -d %buildroot%_qt4dir
-#mv %buildroot%prefix/plugins %buildroot%_qt4dir/
-#install -d %buildroot%_includedir/qwt
-#mv %buildroot%_includedir/*.h %buildroot%_includedir/qwt/
-#mv %buildroot%prefix/features/* %buildroot%_includedir/qwt/
+#(cd examples; make distclean)
+#(cd examples; rm -f .*.cache */.*.cache */*/.*.cache)
+#(cd examples; rm -rf Makefile */moc */obj */*/moc */*/obj)
 
 chrpath -d %buildroot%_libdir/qt4/plugins/designer/libqwt_designer_plugin.so
 
@@ -126,9 +116,12 @@ chrpath -d %buildroot%_libdir/qt4/plugins/designer/libqwt_designer_plugin.so
 %files devel-doc
 %doc doc/html
 %doc examples
-#_man3dir/*
+%_man3dir/*
 
 %changelog
+* Fri Jun 24 2016 Yuri N. Sedunov <aris@altlinux.org> 6.1.3-alt1
+- 6.1.3
+
 * Fri Oct 16 2015 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt2
 - rebuilt with gcc5
 
