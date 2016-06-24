@@ -1,6 +1,6 @@
 Name: rpm-build-ocaml4
 Version: 1.1.2
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild OCaml packages
@@ -13,7 +13,6 @@ Conflicts: rpm-build-ocaml
 
 # for proper dependencies
 BuildPreReq: rpm-build >= 4.0.4-alt81 
-BuildPreReq: ocaml4
 
 Requires: %_bindir/ocamlrun
 Requires: %_rpmlibdir/ocaml-reqprov
@@ -32,6 +31,9 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Sun Jun 19 2016 Andrey Bergman <vkni@altlinux.org> 1.1.2-alt2
+- Rebuild with ocaml4 4.03.0.
+
 * Tue Jun 30 2015 Andrey Bergman <vkni@altlinux.org> 1.1.2-alt1
 - Corrected cmi required: skips dependencies if md5 sum is 0. This
 is necessary for modules with C interfaces (C modules are

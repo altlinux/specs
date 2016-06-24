@@ -1,7 +1,7 @@
 %define _name findlib
 Name: ocaml4-%_name
-Version: 1.5.5
-Release: alt2
+Version: 1.6.2
+Release: alt1
 
 Summary: A module packaging tool for OCaml
 License: Distributable
@@ -11,6 +11,7 @@ Url: http://www.ocaml-programming.de/packages/documentation/findlib/
 Source: %_name-%version.tar
 Patch1: findlib-1.1.2pl1-alt-native.patch
 Patch2: findlib-1.1.2pl1-alt-wizard.patch
+Patch3: findlib-1.6.2-alt-install-doc.patch
 
 # Automatically added by buildreq on Tue Apr 08 2008 (-bi)
 BuildRequires: rpm-build-ocaml4 ocaml4-camlp4 ocaml4-labltk libtinfo-devel ocaml4-ocamldoc
@@ -55,6 +56,7 @@ findlib-enabled Makefiles.
 %setup -q -n %_name-%version
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 sed -i -e 's,@LIBDIR@,%_libdir,g' src/findlib-toolbox/make_wizard.ml
 
@@ -74,6 +76,7 @@ install -m755 src/findlib-toolbox/make_wizard.opt %buildroot%_bindir/findlib-mak
 
 # remove native dynlink plugin
 rm -f %buildroot%_libdir/ocaml/site-lib/findlib/findlib.cmxs
+rm -f %buildroot%_libdir/ocaml/site-lib/findlib/*.cmxs
 
 %files -n ocaml4-ocamlfind-mini
 %doc mini/README
@@ -91,10 +94,13 @@ rm -f %buildroot%_libdir/ocaml/site-lib/findlib/findlib.cmxs
 %_libdir/ocaml/topfind
 %_libdir/ocaml/site-lib/*
 %_man1dir/ocamlfind.1*
-%_man5dir/*.5*
+%_man5dir/*
 %doc doc/* LICENSE
 
 %changelog
+* Sat Jun 18 2016 Andrey Bergman <vkni@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Wed Jul 01 2015 Andrey Bergman <vkni@altlinux.org> 1.5.5-alt2
 - Rebuild with new rpm-build-ocaml4.
 

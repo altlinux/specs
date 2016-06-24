@@ -7,7 +7,7 @@
 %set_verify_elf_method textrel=relaxed
 
 Name: ocaml4
-Version: 4.02.3
+Version: 4.03.0
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
@@ -63,12 +63,6 @@ Group: Development/ML
 Requires: %name = %version-%release
 Conflicts: ocamldoc
 
-%package ocamlbuild
-Summary: The Objective Caml project compilation tool
-Group: Development/ML
-Requires: %name = %version-%release
-Conflicts: ocamlbuild
-
 %package doc
 Summary: Documentation for OCaml
 Group: Development/ML
@@ -111,13 +105,6 @@ object-oriented programming language from the ML family of languages.
 This package provides OCamldoc, a tool that generates documentation
 from special comments embedded in source files.
 
-%description ocamlbuild
-Objective Caml is a high-level, strongly-typed, functional and
-object-oriented programming language from the ML family of languages.
-
-This package provides ocamlbuild, a tool automating the compilation
-of OCaml projects.
-
 %description doc
 Objective Caml is a high-level, strongly-typed, functional and
 object-oriented programming language from the ML family of languages.
@@ -128,17 +115,8 @@ with Objective Caml" O'Reilly book translation.
 %prep
 %setup -q -T -b 0
 
-# Проблема в том, что git не восстанавливает пустые каталоги,
-# а сборочный механизм Ocaml'а не может его создать. :-(
-# Поэтому создаём сами.
-mkdir compilerlibs
-
 %patch1 -p1
 %patch2 -p1
-
-# Руководство по ocamlbuild переехало в каталог ocamlbuild/man, но
-# ocamlbuild/Makefile об этом не знает.
-bzip2 -z9 ocamlbuild/man/ocamlbuild.1
 
 %build
 
@@ -167,7 +145,7 @@ install -p -m644 bytecomp/cmo_format.{mli,cmi} %buildroot%_libdir/ocaml/
 install -p -m644 typing/annot.{mli,cmi} %buildroot%_libdir/ocaml/
 install -p -m644 asmcomp/clambda.{mli,cmi,cmo,cmx,o} %buildroot%_libdir/ocaml/
 install -p -m644 asmcomp/cmx_format.{mli,cmi} %buildroot%_libdir/ocaml/
-install -p -m644 asmcomp/debuginfo.{mli,cmi,cmx} %buildroot%_libdir/ocaml/
+# install -p -m644 asmcomp/debuginfo.{mli,cmi,cmx} %buildroot%_libdir/ocaml/
 
 install -p -m644 tools/depend.{mli,cmi,cmo,cmx,o} %buildroot%_libdir/ocaml/
 
@@ -187,18 +165,13 @@ while read f; do [ -f "${f%%.cmx}.o" ] || rm "$f"; done
 
 install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
-# Вручную устанавливаем руководство по ocamlbuild
-install -p -m644 ocamlbuild/man/ocamlbuild.1.bz2 %buildroot%_man1dir/
-
 %files
-%doc Changes LICENSE README 
+%doc Changes LICENSE README.adoc
 %_bindir/ocaml*
 %exclude %_bindir/ocamlrun
-%exclude %_bindir/ocamlbuild
 %exclude %_bindir/ocamldoc*
 %_man1dir/ocaml*
 %exclude %_man1dir/ocamldoc*
-%exclude %_man1dir/ocamlbuild*
 %_man3dir/*.3o*
 %_libdir/ocaml/camlheader
 %_libdir/ocaml/camlheader_ur
@@ -241,15 +214,13 @@ install -p -m644 ocamlbuild/man/ocamlbuild.1.bz2 %buildroot%_man1dir/
 %_man1dir/ocamldoc*
 %_libdir/ocaml/ocamldoc/
 
-%files ocamlbuild
-%_bindir/ocamlbuild
-%_man1dir/ocamlbuild*
-%_libdir/ocaml/ocamlbuild/
-
 %files doc
 %doc ocamldoc/stdlib.pdf 
 
 %changelog
+* Sat Jun 18 2016 Andrey Bergman <vkni@altlinux.org> 4.03.0-alt1
+- Update to version 4.03.0. Splitted out ocamlbuild.
+
 * Fri Aug 07 2015 Andrey Bergman <vkni@altlinux.org> 4.02.3-alt1
 - Update to version 4.02.3
 

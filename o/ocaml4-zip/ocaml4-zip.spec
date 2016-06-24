@@ -1,5 +1,5 @@
 Name: ocaml4-zip
-Version: 1.05
+Version: 1.06
 Release: alt1
 Summary: OCaml library for reading and writing zip, jar and gzip files
 
@@ -56,6 +56,9 @@ cp META %buildroot%_libdir/ocaml/site-lib/zip
 %ocamlsitelib/zip
 
 %changelog
+* Wed Jun 22 2016 Andrey Bergman <vkni@altlinux.org> 1.06-alt1
+- Update to version 1.06.
+
 * Mon Jun 17 2013 Andrey Bergman <vkni@altlinux.org> 1.05-alt1
 - Update to version 1.05. Built with ocaml4.
 
