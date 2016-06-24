@@ -1,7 +1,7 @@
 %def_enable gtk_doc
 
 Name: muffin
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -156,6 +156,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Fri Jun 24 2016 Vladimir Didenko <cow@altlinux.org> 3.0.5-alt1
+- 3.0.5
+
 * Fri May 20 2016 Vladimir Didenko <cow@altlinux.org> 3.0.4-alt1
 - 3.0.4
 
