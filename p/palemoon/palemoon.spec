@@ -2,8 +2,8 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 26.3.0
-Release: alt2
+Version: 26.3.1
+Release: alt1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -35,6 +35,7 @@ Source6: %bname.desktop
 Source7: firefox.c
 Source8: firefox-prefs.js
 Source9: HISTORY_GIT
+Source10: Changelog
 
 Patch5: firefox-duckduckgo.patch
 Patch6: firefox3-alt-disable-werror.patch
@@ -354,6 +355,7 @@ popd
 
 # Add Docdir
 install -D -m 644 %SOURCE9 ../
+install -D -m 644 %SOURCE10 ../
 install -D -m 644 AUTHORS ../
 install -D -m 644 LICENSE ../
 
@@ -363,7 +365,7 @@ for n in defaults browserconfig.properties; do
 done
 
 %files -n %bname
-%doc AUTHORS LICENSE HISTORY_GIT
+%doc AUTHORS LICENSE HISTORY_GIT Changelog
 %_altdir/%bname
 %_bindir/%sname
 %dir %palemoon_prefix
@@ -377,10 +379,15 @@ done
 
 %files -n rpm-build-%sname
 %_rpmmacrosdir/%sname
+%exclude %_includedir/*
+%exclude %_datadir/idl/*
 
 %changelog
+* Sat Jun 25 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.1-alt1
+- Version 26.3.1 Release
+
 * Thu Jun 16 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.0-alt2
-- Version 26.2.3 Release
+- Version 26.3.0 Release
 
 * Tue Jun 14 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.0-alt1.0.b333
 - Update from git
