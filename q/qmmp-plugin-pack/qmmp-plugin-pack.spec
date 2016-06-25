@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 
-%define		branch 0.10
-%define		svn svn6199
+%define		branch 0.11
+%define		svn svn6521
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -133,6 +133,9 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %
 %_libdir/qmmp/Effect/libsrconverter.so
 
 %changelog
+* Sun Jun 26 2016 Motsyo Gennadi <drool@altlinux.ru> 0.11.0-alt1.svn6521
+- build svn6521
+
 * Sun Mar 27 2016 Motsyo Gennadi <drool@altlinux.ru> 0.10.0-alt1.svn6199
 - build svn6199
 

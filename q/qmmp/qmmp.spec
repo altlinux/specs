@@ -1,5 +1,5 @@
-%define branch 0.10
-%define svn svn6342
+%define branch 0.11
+%define svn svn6521
 
 %define rel alt1
 
@@ -18,7 +18,7 @@
 %define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
 %endif
 
-%if "%rel" == "alt0.M80T"
+%if "%rel" == "alt0.M80P"
 %define PLUG_DISABLE "UDISKS_PLUGIN"
 %define PLUG_ENABLE "UDISKS2_PLUGIN WITH_NEW_JACK"
 %endif
@@ -59,7 +59,7 @@ BuildRequires: libgme-devel libGLU-devel libsidplayfp-devel >= 1.0.3
 %if "%rel" == "alt1"
 %define libcdio libcdio-paranoia-devel
 %endif
-%if "%rel" == "alt0.M80T"
+%if "%rel" == "alt0.M80P"
 %define libcdio libcdio-paranoia-devel
 %endif
 BuildRequires: %libcdio
@@ -699,7 +699,7 @@ qmake	"QMAKE_CFLAGS+=%optflags" \
 	"QMAKE_CXXFLAGS+=%optflags" \
 	LIB_DIR=/%_lib \
 	'DISABLED_PLUGINS=OSS4_PLUGIN %PLUG_DISABLE' \
-	'CONFIG+=%PLUG_ENABLE' \
+	'CONFIG+=%PLUG_ENABLE QMMP_DEFAULT_OUTPUT=pulse' \
 	%name.pro
 %make_build VERBOSE=1
 
@@ -747,7 +747,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n lib%name
 %_libdir/*.so.0
-%_libdir/*.so.0.10*
+%_libdir/*.so.0.11*
 
 # Output plugins
 %files -n %name-out-pulseaudio
@@ -913,6 +913,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Sat Jun 25 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.11.0-alt1.svn6521
+- 0.11.0 svn6521 version
+
 * Mon May 09 2016 Motsyo Gennadi <drool@altlinux.ru> 1:0.10.0-alt1.svn6342
 - 0.10.0 svn6342 version
 
