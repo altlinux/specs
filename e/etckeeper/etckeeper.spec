@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: etckeeper
-Version: 1.18.1
+Version: 1.18.4
 Release: alt1
 
 Summary: Etckeeper help to keep your /etc directory in VCS repository
@@ -54,12 +54,16 @@ fi
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %_sysconfdir/apt/apt.conf.d/%name.conf
 %_man8dir/%{name}.*
-%_sysconfdir/bash_completion.d/%name
+/usr/share/bash-completion/completions/%name
 %_cachedir/%name
 %_sysconfdir/cron.daily/%name
+%_unitdir/%{name}.*
 %doc README.md
 
 %changelog
+* Sat Jun 25 2016 Terechkov Evgenii <evg@altlinux.org> 1.18.4-alt1
+- 1.18.4
+
 * Sat Apr  4 2015 Terechkov Evgenii <evg@altlinux.org> 1.18.1-alt1
 - 1.18.1
 
