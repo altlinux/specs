@@ -19,7 +19,7 @@
 %def_enable python
 
 Name: xplayer
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Xplayer is a generic media player.
@@ -273,7 +273,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/recent/
 %_libdir/%name/plugins/vimeo/
 %_libdir/%name/plugins/chapters/
-# Grilo plugin now doesn't work. See: 
+# Grilo plugin now doesn't work. See:
 # https://github.com/linuxmint/xplayer/issues/22
 %exclude %_libdir/%name/plugins/grilo/
 %config %_datadir/glib-2.0/schemas/org.x.player.plugins.opensubtitles.gschema.xml
@@ -311,6 +311,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu Jun 23 2016 Vladimir Didenko <cow@altlinux.org> 1.0.6-alt1
+- New version
+
 * Thu May 26 2016 Vladimir Didenko <cow@altlinux.org> 1.0.5-alt1
 - New version
 
