@@ -2,13 +2,13 @@
 
 Name:    trickle
 Version: 1.07
-Release: alt1
+Release: alt2
 
 Summary: a portable lightweight userspace bandwidth shaper
 
 License: %bsd
 Group:   Networking/Other
-URL:     http://monkey.org/~marius/pages/?page=trickle
+URL:     https://github.com/mariusae/trickle
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
@@ -22,8 +22,9 @@ Patch3:  %name-1.07-debian-trickle-overload.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sat Oct 01 2011
-BuildRequires: libevent-devel
+# Automatically added by buildreq on Sun Apr 17 2016
+# optimized out: python-base python-modules python3
+BuildRequires: glibc-devel-static libbsd-devel libevent-devel
 
 %description
 trickle is a portable lightweight userspace bandwidth shaper. It can run in
@@ -70,6 +71,9 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/%{name}d.conf
 %_libdir/%name
 
 %changelog
+* Sat Jun 25 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.07-alt2
+- Fix build: updating BuildRequires
+- Updating URL
+
 * Sat Oct 1 2011 Nikolay A. Fetisov <naf@altlinux.ru> 1.07-alt1
 - Initial build
-
