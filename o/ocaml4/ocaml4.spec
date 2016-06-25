@@ -8,7 +8,7 @@
 
 Name: ocaml4
 Version: 4.03.0
-Release: alt1
+Release: alt2
 
 Summary: The Objective Caml compiler and programming environment
 License: QPL & LGPL
@@ -160,8 +160,11 @@ ln -snf ocamllex.opt %buildroot%_bindir/ocamllex
 install -pD -m755 tools/objinfo %buildroot%_bindir/ocamlobjinfo
 install -pD -m755 tools/reqprov %buildroot%_rpmlibdir/ocaml-reqprov
 
-find %buildroot%_libdir/ocaml -type f -name '*.cmx' |
-while read f; do [ -f "${f%%.cmx}.o" ] || rm "$f"; done
+# Removal of .cmx files prevents global optimization and triggers
+# annoying warning 58 introduced in Ocaml 4.03. This is the
+# reason for commenting out the following lines.
+# find %buildroot%_libdir/ocaml -type f -name '*.cmx' |
+# while read f; do [ -f "${f%%.cmx}.o" ] || rm "$f"; done
 
 install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
@@ -218,6 +221,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc ocamldoc/stdlib.pdf 
 
 %changelog
+* Sat Jun 25 2016 Andrey Bergman <vkni@altlinux.org> 4.03.0-alt2
+- Added stdlib cmx files to disable warning 58.
+
 * Sat Jun 18 2016 Andrey Bergman <vkni@altlinux.org> 4.03.0-alt1
 - Update to version 4.03.0. Splitted out ocamlbuild.
 
