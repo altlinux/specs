@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt3
+Release: alt3.1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,9 @@ fi ||:
 
 
 %changelog
+* Sun Jun 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.32-alt3.1
+- backend don't raise exceptoins
+
 * Fri Jun 24 2016 Denis Medvedev <nbr@altlinux.org> 5.32-alt3
 - rewriting tag a with token.
 
