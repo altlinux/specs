@@ -40,9 +40,7 @@ BUILD_HAVE=`echo %php5_extension | tr '[:lower:]-' '[:upper:]_'`
 %add_optflags -fPIC -L%_libdir 
 export LDFLAGS=-lphp-%_php5_version
 %configure \
-%ifarch x86_64
 	--with-libdir=%_lib \
-%endif
 	--with-gdbm \
 	--with-db4=%_usr \
 	--enable-%php5_extension
