@@ -57,7 +57,7 @@
 
 Name: virtualbox
 Version: 5.0.20
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -598,6 +598,10 @@ install -pDm644 %SOURCE22 %buildroot%_unitdir/%name.service
 
 %post
 %post_control -s vboxusers %name
+%post_service virtualbox
+
+%preun
+%preun_service virtualbox
 
 %pre common
 %pre_control %name
@@ -751,6 +755,10 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Fri Jun 24 2016 Denis Medvedev <nbr@altlinux.org> 5.0.20-alt2
+- fixed translation of message that happens when virtualbox 
+service is not started.
+
 * Wed May 11 2016 Denis Medvedev <nbr@altlinux.org> 5.0.20-alt1
 - 5.0.20
 
