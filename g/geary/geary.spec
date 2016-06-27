@@ -1,8 +1,8 @@
 %define ver_major 0.11
-%def_disable contractor
+%def_enable contractor
 
 Name: geary
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Email client
@@ -80,6 +80,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Mon Jun 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Sun May 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
