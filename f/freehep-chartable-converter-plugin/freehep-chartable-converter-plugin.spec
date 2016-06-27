@@ -1,7 +1,7 @@
 
 Name:           freehep-chartable-converter-plugin
 Version:        2.2.1
-Release:        alt2
+Release:        alt3
 Summary:        Converts 16 bit Unicode text files into lookup tables
 
 Group:          Development/Java
@@ -9,7 +9,7 @@ License:        Apache 2.0 and LGPL 2.1
 URL:            http://java.freehep.org/freehep-chartableconverter-plugin/
 Source0:        %name-%version.tar
 
-BuildRequires(pre): maven-local
+BuildRequires(pre): maven-local rpm-build-java
 BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  /proc
 BuildRequires:  maven
@@ -17,6 +17,8 @@ BuildRequires:  maven
 BuildArch:	noarch
 Requires:       java >= 1.6.0
 Requires:       jpackage-utils
+
+%filter_from_requires /^java-headless/d
 
 %description
 Converts 16 bit Unicode text files into lookup tables. These tables are
@@ -39,32 +41,21 @@ Javadoc for %name.
 %setup
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-# jars
-install -Dpm 644 target/%{name}-%{version}.jar \
-                 %buildroot%_javadir/%{name}.jar
+%mvn_install
 
-# pom
-install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-%name.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# javadoc
-install -d -m 755 %buildroot%_javadocdir/%name
-cp -pr target/site/api*/* %buildroot%_javadocdir/%name/
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%_javadir/*
-%_mavenpomdir/*
-%_mavendepmapfragdir/*
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%doc %_javadocdir/%name
 
 %changelog
+* Mon Jun 27 2016 Andrey Cherepanov <cas@altlinux.org> 2.2.1-alt3
+- Use new Java package build style
+
 * Wed Aug 27 2014 Andrey Cherepanov <cas@altlinux.org> 2.2.1-alt2
 - Build with maven-local
 
