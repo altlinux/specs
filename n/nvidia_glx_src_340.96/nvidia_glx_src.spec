@@ -14,7 +14,7 @@
 %define nv_version 340
 %define nv_release 96
 %define nv_minor %nil
-%define pkg_rel alt141
+%define pkg_rel alt142
 %ifarch x86_64
 %def_enable egl
 %else
@@ -86,6 +86,7 @@ Source2: nvidia.xinf
 Source100: nvidia_create_xinf
 
 Patch1: buildfix_kernel_3.14.patch
+Patch2: buildfix_kernel_4.6.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -149,36 +150,6 @@ License: %myLicense
 %description -n %{bin_pkg_name}-devel
 Development files for NVIDIA OpenGL
 
-%package -n libcuda
-Group: Development/C
-Summary: CUDA library
-License: %myLicense
-%description -n libcuda
-NVIDIA CUDA library
-
-%package -n libcuda-devel
-Group: Development/C
-Summary: Development files for NVIDIA CUDA
-License: %myLicense
-Requires: libcuda = %version-%release
-%description -n libcuda-devel
-Development files for NVIDIA CUDA
-
-%package -n libvdpau
-Group: Development/C
-Summary: VDPAU library
-License: %myLicense
-%description -n libvdpau
-NVIDIA VDPAU library
-
-%package -n libvdpau-devel
-Group: Development/C
-Summary: Development files for NVIDIA VDPAU
-License: %myLicense
-Requires: libvdpau = %version-%release libX11-devel
-%description -n libvdpau-devel
-Development files for NVIDIA VDPAU
-
 %prep
 %setup -T -c -n %tbname-%tbver%dirsuffix
 rm -rf %_builddir/%tbname-%tbver%dirsuffix
@@ -192,6 +163,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 %patch1 -p1
+%patch2 -p1
 rm -rf precompiled
 popd
 
@@ -294,16 +266,6 @@ if [ -z "$DURING_INSTALL" ]; then
     else
 	echo "Warning! x11presetdrv program not found!" >&2
     fi
-    X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-    if [ -n "$X11SETUPDRV" ]; then
-	$X11SETUPDRV ||:
-    fi
-fi
-
-%postun -n %{bin_pkg_name}_%{version}
-X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-if [ -n "$X11SETUPDRV" ]; then
-    $X11SETUPDRV ||:
 fi
 
 
@@ -342,6 +304,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 340.96-alt142
+- add fix against 4.6 kernel
+
 * Mon Nov 23 2015 Sergey V Turchin <zerg@altlinux.org> 340.96-alt141
 - new version
 
