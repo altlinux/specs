@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt4
+Release: alt5
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,9 @@ fi ||:
 
 
 %changelog
+* Mon Jun 27 2016 Denis Medvedev <nbr@altlinux.org> 5.32-alt5
+- Fix handling of prefix-href option in a tag
+
 * Sun Jun 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.32-alt4
 - Made the session-dependent code in translate.scm clean and simple.
   (This fixes the previously mentioned login problems, too.)
