@@ -1,5 +1,5 @@
 Name: netsurf
-Version: 3.3
+Version: 3.5
 Release: alt1
 
 Summary: Lightweight Web Browser With Good HTML 4 And CSS Support
@@ -47,7 +47,7 @@ and comprehensive Web browsing solution.
 Легкий кроссплатформенный Web-браузер с хорошей поддержкой HTML и CSS.
 
 %prep
-%setup -n "netsurf-all"
+%setup -c %name-%version
 
 mkdir -p netsurf/!NetSurf/Resources/ru
 cp -a %SOURCE3 netsurf/!NetSurf/Resources/ru/Messages
@@ -124,6 +124,9 @@ export RPM_FIXUP_METHOD="binconfig pkgconfig libtool"
 %_datadir/pixmaps/*
 
 %changelog
+* Mon Jun 27 2016 Andrey Cherepanov <cas@altlinux.org> 3.5-alt1
+- New version
+
 * Mon Nov 23 2015 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
 - Initial build in Sisyphus (thanks mike@ and YYY for spec)
 
