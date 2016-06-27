@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt5
+Release: alt6
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,9 @@ fi ||:
 
 
 %changelog
+* Mon Jun 27 2016 Denis Medvedev <nbr@altlinux.org> 5.32-alt6
+- Redirecting possible CSRFs to "/"
+
 * Mon Jun 27 2016 Denis Medvedev <nbr@altlinux.org> 5.32-alt5
 - Fix handling of prefix-href option in a tag
 
