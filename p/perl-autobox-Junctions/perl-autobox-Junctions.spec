@@ -3,7 +3,7 @@
 %define real_name autobox-Junctions
 
 Name: perl-autobox-Junctions
-Version: 0.001
+Version: 0.002
 Release: alt1
 
 Summary: Perl module for autoboxified junction-style operators
@@ -45,5 +45,8 @@ methods for arrays: any, all, one, and none.
 %perl_vendor_privlib/autobox/Junctions*
 
 %changelog
+* Mon Jun 27 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.002-alt1
+- New version
+
 * Tue Sep 23 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.001-alt1
 - Initial build for ALT Linux Sisyphus
