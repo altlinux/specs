@@ -1,6 +1,6 @@
 Name: virt-viewer
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -58,6 +58,9 @@ intltoolize --force
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Mon Jun 27 2016 Alexey Shabalin <shaba@altlinux.ru> 3.1-alt2
+- rebuild with spice-gtk-0.32-alt1
+
 * Mon Jan 11 2016 Alexey Shabalin <shaba@altlinux.ru> 3.1-alt1
 - 3.1
 

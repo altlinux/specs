@@ -10,7 +10,7 @@
 
 Name: vinagre
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: VNC client for the GNOME Desktop
 License: GPLv2
@@ -76,6 +76,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Jun 27 2016 Alexey Shabalin <shaba@altlinux.ru> 3.20.2-alt2
+- rebuild with spice-gtk-0.32-alt1
+
 * Tue May 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

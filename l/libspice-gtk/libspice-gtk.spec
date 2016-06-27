@@ -11,11 +11,11 @@
 %def_disable gtk_doc
 %def_enable pulse
 %def_enable gstaudio
+%def_enable gstvideo
 %def_enable epoxy
-%def_with gtk3
 
 Name: libspice-gtk
-Version: 0.31
+Version: 0.32
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -39,7 +39,7 @@ BuildRequires: hwdatabase >= 0.3.31-alt1
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.12.11
-BuildRequires: glib2-devel >= 2.28 libgio-devel >= 2.10.0 libcairo-devel >= 1.2.0
+BuildRequires: glib2-devel >= 2.36 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
 BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
@@ -47,33 +47,19 @@ BuildRequires: libopus-devel >= 0.9.14
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 0.1.2}
 %{?_enable_usbredir:BuildRequires: libgudev-devel libusb-devel >= 1.0.16 libusbredir-devel >= 0.4.2}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
-BuildRequires: libgtk+2-devel
 BuildRequires: libpolkit-devel >= 0.96 libacl-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+2-gir-devel}
-%if_with gtk3
-BuildRequires: libgtk+3-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel }
+BuildRequires: libgtk+3-devel >= 3.12
 %{?_enable_introspection:BuildRequires: libgtk+3-gir-devel}
-%endif
 %{?_enable_epoxy:BuildRequires: libepoxy-devel libdrm-devel}
 %{?_enable_gstaudio:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gstreamer1.0-utils gst-plugins-base1.0 gst-plugins-good1.0}
+%{?_enable_gstvideo:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 BuildRequires: perl-Text-CSV perl-Text-CSV_XS python-module-pygtk-devel python-module-pyparsing
 BuildRequires: /usr/bin/pod2man
 
 %description
 A Gtk client and libraries for SPICE remote desktop servers.
-
-%package devel
-Summary: Development files to build GTK2 applications with spice-gtk
-Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
-Requires: libspice-glib-devel = %version-%release
-
-%description devel
-spice-client-glib is a SPICE client library for GLib.
-spice-client-gtk provides a SPICE viewer widget for GTK.
-
-Libraries, includes, etc. to compile with the spice-gtk libraries
 
 %package devel-doc
 Summary: Development docs package for spice-gtk libraries
@@ -138,24 +124,6 @@ Requires: libspice-glib-devel = %version-%release
 %description -n libspice-glib-gir-devel
 GObject introspection devel data for the spice-glib-2.0 library
 
-%package gir
-Summary: GObject introspection data for the spice-gtk library
-Group: System/Libraries
-Requires: %name = %version-%release
-Requires: libspice-glib-gir = %version-%release
-
-%description gir
-GObject introspection data for the spice-gtk library
-
-%package gir-devel
-Summary: GObject introspection devel data for the spice-gtk library
-Group: Development/GNOME and GTK+
-BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: libspice-glib-gir-devel = %version-%release
-
-%description gir-devel
-GObject introspection devel data for the spice-gtk library
 
 %package -n libspice-gtk3-gir
 Summary: GObject introspection data for the spice-gtk library
@@ -176,20 +144,10 @@ Requires: libspice-glib-gir-devel = %version-%release
 %description -n libspice-gtk3-gir-devel
 GObject introspection devel data for the spice-gtk library
 
-%package -n python-module-%_name
-Summary: Python bindings for the spice-gtk library
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description -n python-module-%_name
-SpiceClientGtk module provides a SPICE viewer widget for GTK.
-
-A module allowing use of the spice-gtk widget from python
-
 %package tools
 Summary: Spice-gtk tools
 Group: Networking/Remote access
-Requires: %name = %version-%release
+Requires: libspice-gtk3 = %version-%release
 
 %description tools
 Provides useful utilities for interacting with
@@ -197,20 +155,13 @@ SPICE servers. Includes snappy, a program for capturing
 screen-shots of a SPICE desktop
 
 %prep
-%setup -q -c
-%__tar -xf %SOURCE2 -C %name-%version/spice-common
-mv %name-%version %_name-%version
-cd %_name-%version
+%setup
+%__tar -xf %SOURCE2 -C spice-common
 # %patch -p1
 # %patch2 -p1
 echo "%version" > .tarball-version
-cd ..
-%if_with gtk3
-cp -a %_name-%version spice-gtk3-%version
-%endif
 
 %build
-cd %_name-%version
 %autoreconf
 %configure \
 	%{subst_enable introspection} \
@@ -229,57 +180,14 @@ cd %_name-%version
 	--with-usb-acl-helper-dir=%_libexecdir/spice-gtk/ \
 	--with-pnp-ids-path=%_datadir/misc \
 	--with-usb-ids-path=%_datadir/misc \
-	--with-gtk=2.0
-
-%make_build
-cd ..
-
-%if_with gtk3
-cd spice-gtk3-%version
-%autoreconf
-%configure \
-	%{subst_enable introspection} \
-	%{subst_with sasl} \
-	%{subst_enable vala} \
-	%{subst_enable smartcard} \
-	%{subst_enable webdav} \
-	%{subst_enable lz4} \
-%if_disabled usbredir
-	--enable-usbredir=no \
-%endif
-	--disable-static \
-	--disable-rpath \
-	--enable-polkit \
-	--with-usb-acl-helper-dir=%_libexecdir/spice-gtk/ \
-	--with-pnp-ids-path=%_datadir/misc \
-	--with-usb-ids-path=%_datadir/misc \
 	--with-gtk=3.0
 
 %make_build
-cd ..
-%endif
 
 %install
-%if_with gtk3
-cd spice-gtk3-%version
 %make DESTDIR=%buildroot install
-cd ..
-%endif
-
-cd %_name-%version
-%make DESTDIR=%buildroot install
-cd ..
 
 %find_lang %_name
-
-%files
-%_libdir/libspice-client-gtk-2.0.so.*
-
-%files devel
-%_libdir/libspice-client-gtk-2.0.so
-%_includedir/spice-client-gtk-2.0
-%_pkgconfigdir/spice-client-gtk-2.0.pc
-%_datadir/vala/vapi/spice-client-gtk-2.0.*
 
 %files -n libspice-gtk3
 %_libdir/libspice-client-gtk-3.0.so.*
@@ -312,10 +220,6 @@ cd ..
 %_datadir/gtk-doc/html/*
 %endif
 
-%files -n python-module-%_name
-%python_sitelibdir/*.so
-%exclude %python_sitelibdir/*.la
-
 %files tools
 %_bindir/*
 %_man1dir/*.1*
@@ -327,12 +231,6 @@ cd ..
 %files -n libspice-glib-gir-devel
 %_girdir/SpiceClientGLib-2.0.gir
 
-%files gir
-%_typelibdir/SpiceClientGtk-2.0.typelib
-
-%files gir-devel
-%_girdir/SpiceClientGtk-2.0.gir
-
 %files -n libspice-gtk3-gir
 %_typelibdir/SpiceClientGtk-3.0.typelib
 
@@ -342,6 +240,11 @@ cd ..
 %endif
 
 %changelog
+* Fri Jun 24 2016 Alexey Shabalin <shaba@altlinux.ru> 0.32-alt1
+- 0.32
+- drop gtk+ 2.0 support
+- drop python module
+
 * Thu May 19 2016 Alexey Shabalin <shaba@altlinux.ru> 0.31-alt1
 - 0.31
 

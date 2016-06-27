@@ -5,7 +5,7 @@
 
 Name: gnome-boxes
 Version: 3.20.2
-Release: alt1
+Release: alt2
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Group: Emulators
@@ -104,6 +104,9 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Mon Jun 27 2016 Alexey Shabalin <shaba@altlinux.ru> 3.20.2-alt2
+- rebuild with spice-gtk-0.32-alt1
+
 * Tue May 10 2016 Alexey Shabalin <shaba@altlinux.ru> 3.20.2-alt1
 - 3.20.2
 
