@@ -6,9 +6,9 @@
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
 %define ver_fake   11
-%define ver_ix86   11.2.202.621
-%define ver_x86_64 11.2.202.621
-Release: alt62
+%define ver_ix86   11.2.202.626
+%define ver_x86_64 11.2.202.626
+Release: alt63
 Serial: 3
 
 %define ver_real %ver_fake
@@ -138,6 +138,19 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
 %endif
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 3:11-alt63
+- new version
+- security fixes:
+  CVE-2016-4122, CVE-2016-4123, CVE-2016-4124, CVE-2016-4125,
+  CVE-2016-4127, CVE-2016-4128, CVE-2016-4129, CVE-2016-4130,
+  CVE-2016-4131, CVE-2016-4132, CVE-2016-4133, CVE-2016-4134,
+  CVE-2016-4135, CVE-2016-4136, CVE-2016-4137, CVE-2016-4138,
+  CVE-2016-4139, CVE-2016-4140, CVE-2016-4141, CVE-2016-4142,
+  CVE-2016-4143, CVE-2016-4144, CVE-2016-4145, CVE-2016-4146,
+  CVE-2016-4147, CVE-2016-4148, CVE-2016-4149, CVE-2016-4150,
+  CVE-2016-4151, CVE-2016-4152, CVE-2016-4153, CVE-2016-4154,
+  CVE-2016-4155, CVE-2016-4156, CVE-2016-4166, CVE-2016-4171
+
 * Fri May 13 2016 Sergey V Turchin <zerg@altlinux.org> 3:11-alt62
 - new version
 - security fixes:
