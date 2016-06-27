@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt3.1
+Release: alt4
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,10 @@ fi ||:
 
 
 %changelog
+* Sun Jun 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.32-alt4
+- Made the session-dependent code in translate.scm clean and simple.
+  (This fixes the previously mentioned login problems, too.)
+
 * Sun Jun 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.32-alt3.1
 - backend don't raise exceptoins
 
