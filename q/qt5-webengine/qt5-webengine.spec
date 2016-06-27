@@ -5,8 +5,8 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.6.0
-Release: alt2
+Version: 5.6.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -16,14 +16,13 @@ License: GPLv2 / GPLv3 / LGPLv3
 Source: %qt_module-opensource-src-%version.tar
 # FC
 Patch1: qtwebengine-opensource-src-5.6.0-beta-no-format.patch
-Patch2: qtwebengine-opensource-src-5.6.0-rc-linux-pri.patch
+Patch2: qtwebengine-opensource-src-5.6.1-linux-pri.patch
 Patch3: qtwebengine-opensource-src-5.6.0-no-icudtl-dat.patch
 Patch4: qtwebengine-opensource-src-5.6.0-beta-fix-extractcflag.patch
 Patch5: qtwebengine-opensource-src-5.6.0-beta-no-neon.patch
 Patch6: qtwebengine-opensource-src-5.6.0-beta-system-nspr-prtime.patch
 Patch7: qtwebengine-opensource-src-5.6.0-beta-system-icu-utf.patch
-Patch8: qtwebengine-opensource-src-5.6.0-beta-chimera-nss-init.patch
-Patch9: qtwebengine-opensource-src-5.6.0-rc-no-sse2.patch
+Patch8: qtwebengine-opensource-src-5.6.1-no-sse2.patch
 # ATL
 Patch100: alt-pepflashplayer.patch
 
@@ -111,7 +110,6 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch100 -p1
 syncqt.pl-qt5 -version %version -private
 
@@ -209,6 +207,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Mon Apr 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt2
 - fix find flash plugin
 - properly package translations

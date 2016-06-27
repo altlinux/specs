@@ -3,7 +3,7 @@
 %def_disable bootstrap
 
 Name: qt5-sensors
-Version: 5.6.0
+Version: 5.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -104,6 +104,9 @@ syncqt.pl-qt5 -version %version -private
 %endif
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 

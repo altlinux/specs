@@ -2,7 +2,7 @@
 %global qt_module qtquick1
 
 Name: qt5-quick1
-Version: 5.6.0
+Version: 5.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -11,7 +11,6 @@ License: LGPLv2 / GPLv3
 Url: http://qt.io/
 
 Source: %qt_module-opensource-src-%version.tar
-Patch1: alt-version.patch
 
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: qt5-base-devel qt5-script-devel qt5-declarative-devel qt5-webkit-devel qt5-xmlpatterns-devel qt5-tools qt5-tools-devel
@@ -67,7 +66,6 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -qn %qt_module-opensource-src-%version
-%patch1 -p1
 syncqt.pl-qt5 -version %version -private
 
 %build
@@ -109,6 +107,9 @@ syncqt.pl-qt5 -version %version -private
 #%_qt5_docdir/*
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 

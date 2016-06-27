@@ -4,8 +4,8 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.6.0
-Release: alt2
+Version: 5.6.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -14,9 +14,12 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 # FC
-Patch1: 0008-Fix-crash-when-Canvas-has-negative-width-or-height.patch
-Patch2: 0019-Revert-Fix-crash-on-QQmlEngine-destruction.patch
-Patch3: 0029-Avoid-div-by-zero-when-nothing-is-rendered.patch
+Patch1: 0007-Revert-Remove-this-piece-of-code.patch
+Patch2: 0010-Fix-crash-for-unknown-QQmlListModel-roles-in-debug-b.patch
+Patch3: 0011-Avoid-Canvas-crashes-with-qtquickcompiler.patch
+Patch4: 0016-Fix-crash-with-SignalTransition.patch
+Patch5: 0024-Revert-removal-of-Fixed-MouseArea-threshold-with-pre.patch
+Patch6: 0027-Fix-crash-when-using-with-statement-with-an-expressi.patch
 Patch10: qtdeclarative-opensource-src-5.5.0-no_sse2.patch
 Patch11: Check-for-NULL-from-glGetString.patch
 Patch12: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
@@ -101,6 +104,9 @@ Requires: %name-common = %EVR
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -184,6 +190,9 @@ syncqt.pl-qt5 -version %version -private
 #%_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Thu Mar 31 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt2
 - build docs
 
