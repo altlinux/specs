@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.14
-Release: alt7
+Release: alt8
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -690,6 +690,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Mon Jun 27 2016 Anton Farygin <rider@altlinux.ru> 7.1.14-alt8
+- rebuild with php-5.6.23
+
 * Mon May 30 2016 Anton Farygin <rider@altlinux.ru> 7.1.14-alt7
 - rebuild with php-5.6.22
 
