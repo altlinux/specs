@@ -1,7 +1,7 @@
 %global myname make-initrd
 
 Name: make-initrd2
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -11,8 +11,10 @@ Group: System/Base
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 BuildRequires: help2man
-BuildRequires: makeinfo
 BuildRequires: libkmod-devel
+BuildRequires: zlib-devel
+BuildRequires: bzlib-devel
+BuildRequires: liblzma-devel
 
 Conflicts: make-initrd <= 2.0.0
 Provides: mkinitrd = 2:%version-%release
@@ -122,7 +124,17 @@ AutoReq: noshell, noshebang
 %description mdadm
 Mdadm module for %name
 
-%prep
+%package ucode
+Summary: CPU microcode module for %name
+Group: System/Base
+Requires: %name = %version-%release
+Requires: iucode_tool, firmware-intel-ucode, linux-firmware
+AutoReq: noshell, noshebang
+
+%description ucode
+CPU microcode autoloading module for %name
+
+%%prep
 %setup -q
 
 %build
@@ -146,7 +158,6 @@ fi
 %_sbindir/*
 %_datadir/%myname
 %_man1dir/*
-%_infodir/*
 %exclude %_datadir/%myname/features/devmapper
 %exclude %_datadir/%myname/features/lvm
 %exclude %_datadir/%myname/features/luks
@@ -154,7 +165,8 @@ fi
 %exclude %_datadir/%myname/features/multipath
 %exclude %_datadir/%myname/features/plymouth
 %exclude %_datadir/%myname/features/mdadm
-%doc README.ru
+%exclude %_datadir/%myname/features/ucode
+%doc docs/*.md
 
 %files devmapper
 %_datadir/%myname/features/devmapper
@@ -177,7 +189,18 @@ fi
 %files mdadm
 %_datadir/%myname/features/mdadm
 
+%files ucode
+%_datadir/%myname/features/ucode
+
 %changelog
+* Mon Jun 27 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.1-alt1
+- Add initrd-ls.
+- Add ucode feature for early loading microcode.
+- Add libnss_* only for target arch (closes: #32180).
+- Add documentation (closes: #28967).
+- Remove obsolete guess-kbd (closes: #29688).
+- Fix compress detection for complex images.
+
 * Mon May 02 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.0-alt1
 - New major release (2.0.0).
 - Use sysv init in the initramfs.
