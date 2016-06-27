@@ -1,7 +1,7 @@
 
 Name:           freehep-vectorgraphics
-Version:        2.3
-Release:        alt2
+Version:        2.4
+Release:        alt1
 Summary:        Java library for export to a variety of vector and bitmap image formats
 
 Group:          Development/Java
@@ -9,14 +9,14 @@ License:        Apache 2 and LGPL 2
 URL:            http://freehep.github.io/freehep-vectorgraphics/
 Source0:        %name-%version.tar
 
-BuildRequires(pre): maven-local
+BuildRequires(pre): maven-local rpm-build-java
 BuildRequires:  java-devel >= 1.6.0
 BuildRequires:  /proc
 BuildRequires:  maven
 BuildRequires:  maven-plugin-exec
 BuildRequires:  maven-shared-artifact-resolver
-BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  maven-shade-plugin
+BuildRequires:  maven-surefire-provider-junit
 
 BuildRequires:  freehep-io
 BuildRequires:  freehep-chartable-converter-plugin
@@ -29,6 +29,8 @@ Requires:	freehep-chartable-converter-plugin
 
 Provides:	freehep-graphicsio = %version-%release
 Provides:	freehep-graphics2d = %version-%release
+
+%filter_from_requires /^java-headless/d
 
 %description
 The Vector Graphics package of the FreeHEP Java Library enables any Java
@@ -58,31 +60,22 @@ rm -rf  freehep-graphics3d \
 	freehep-graphicsio-latex
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
 
 %install
-# install submodules
-for m in freehep-graphics*; do
-	install -Dpm 644 $m/pom.xml %buildroot%_mavenpomdir/JPP-$m.pom
-	install -Dpm 644 $m/target/$m-%{version}.jar %buildroot%_javadir/$m.jar
-	%add_maven_depmap JPP-$m.pom $m.jar
-done
- 
-# javadoc
-install -d -m 755 %buildroot%_javadocdir/%name
-cp -pr target/site/api*/* %buildroot%_javadocdir/%name/
- 
-%files
-%doc README.txt LICENSE.txt
-%_javadir/*
-%_mavenpomdir/*
-%_mavendepmapfragdir/*
- 
-%files javadoc
+%mvn_install
+
+%files -f .mfiles
 %doc LICENSE.txt
-%doc %_javadocdir/%name
- 
+
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE.txt
+
 %changelog
+* Mon Jun 27 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
+- New version
+- Use new Java package build style
+
 * Wed Aug 27 2014 Andrey Cherepanov <cas@altlinux.org> 2.3-alt2
 - Rebuild with maven-local
 
