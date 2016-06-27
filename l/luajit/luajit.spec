@@ -1,6 +1,6 @@
 Name: luajit
 Version: 2.1
-Release: alt1
+Release: alt2
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -63,6 +63,9 @@ It may be embedded or used as a general-purpose, stand-alone language.
 		 INSTALL_LIB=%buildroot%_libdir \
 		 Q=
 
+mv %buildroot%_bindir/luajit-2.1.0-beta2 %buildroot%_bindir/luajit
+
+
 %files
 %_bindir/*
 %_man1dir/*
@@ -81,6 +84,9 @@ It may be embedded or used as a general-purpose, stand-alone language.
 %_libdir/*.a
 
 %changelog
+* Mon Jun 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt2
+- packaged non-versioned luajit binary (closes: #32223)
+
 * Thu Jun 23 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
 - 2.1 released
 
