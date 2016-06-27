@@ -1,5 +1,5 @@
 Name: filezilla
-Version: 3.18.0
+Version: 3.19.0
 Release: alt1
 Summary: FileZilla is a fast and reliable FTP client
 
@@ -43,6 +43,9 @@ of useful features and an intuitive interface
 %_man5dir/*
 
 %changelog
+* Mon Jul 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.19.0-alt1
+- Updated to 3.19.0.
+
 * Thu Jun 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.18.0-alt1
 - Updated to 3.18.0.
 
