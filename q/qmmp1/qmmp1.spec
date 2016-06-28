@@ -5,8 +5,8 @@
 
 %define rname qmmp
 Name: qmmp1
-Version: 1.0.9
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -36,7 +36,7 @@ BuildRequires: libmms-devel libprojectM-devel libtag-devel
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
 BuildRequires: libbs2b-devel libcddb-devel libcdio-paranoia-devel libcurl-devel libenca-devel
 BuildRequires: libavformat-devel libwildmidi-devel libsidplayfp-devel
-BuildRequires: libfaad-devel libflac-devel libgme-devel libopusfile-devel libsamplerate-devel
+BuildRequires: libfaad-devel libflac-devel libgme-devel libopusfile-devel libsamplerate-devel libsoxr-devel
 BuildRequires: libmad-devel libmodplug-devel libmpcdec-devel libvorbis-devel libwavpack-devel
 
 %description
@@ -269,8 +269,11 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Tue Jun 28 2016 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
+- new version
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.9-alt2
-- hide to tray on sloce by default
+- hide to tray on close by default
 - use standart icons for statusicon
 
 * Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 1.0.9-alt1
