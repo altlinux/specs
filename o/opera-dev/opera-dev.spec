@@ -1,9 +1,9 @@
-%define		softver 39.0
-%define		buildver 2248.0
+%define		softver 40.0
+%define		buildver 2273.0
 
 Name:		opera-dev
 Version:	%softver.%buildver
-Release:	alt1.1
+Release:	alt1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -55,6 +55,13 @@ subst 's|usr/lib/|%_libdir/|g' %buildroot%_datadir/lintian/overrides/opera-devel
 %endif
 subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g' %buildroot%_libdir/*-linux-gnu/opera-developer/resources/pepper_flash_config.json
 
+%post
+%ifarch %ix86
+chmod 4755 %_libdir/i386-linux-gnu/opera-developer/opera_sandbox
+%else
+chmod 4755 %_libdir/x86_64-linux-gnu/opera-developer/opera_sandbox
+%endif
+
 %files
 %_docdir/opera-developer
 %_bindir/*
@@ -65,6 +72,12 @@ subst 's|PepperFlash/libpepflashplayer.so|pepper-plugins/libpepflashplayer.so|g'
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Tue Jun 28 2016 Motsyo Gennadi <drool@altlinux.ru> 40.0.2273.0-alt1
+- packaged 40.0.2273.0 snapshot
+
+* Wed Jun 22 2016 Motsyo Gennadi <drool@altlinux.ru> 40.0.2267.0-alt1
+- packaged 40.0.2267.0 snapshot
+
 * Thu Jun 02 2016 Motsyo Gennadi <drool@altlinux.ru> 39.0.2248.0-alt1.1
 - fix 64 content
 
