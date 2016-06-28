@@ -23,7 +23,7 @@
 %define minor  5
 %define bugfix 0
 Name: qt5-base
-Version: 5.6.0
+Version: 5.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -36,16 +36,17 @@ Source1: rpm-macros
 Source2: rpm-macros-addon
 # FC
 Patch1: moc-get-the-system-defines-from-the-compiler-itself.patch
-Patch2: qtbase-opensource-src-5.6.0-alsa-1.1.patch
+#
 Patch3: qtbase-opensource-src-5.6.0-arm.patch
 Patch4: qtbase-opensource-src-5.6.0-moc_WORDSIZE.patch
 Patch11: QTBUG-35459.patch
-Patch12: QTBUG-50930.patch
-Patch13: QTBUG-51086.patch
-Patch14: QTBUG-51648.patch
-Patch15: QTBUG-51649.patch
-Patch16: QTBUG-51676.patch
 # upstream
+Patch51: 0001-xcb-Properly-interpret-data.l-0-field-of-XdndStatus-.patch
+Patch52: 0011-XCB-Auto-detect-xcb-glx-also-with-xcb-qt.patch
+Patch53: 0032-xcb-Fix-drop-of-text-uri-list-and-text-html.patch
+Patch54: 0033-xcb-Fix-dropping-URL-on-Firefox-window.patch
+Patch55: 0148-xcb-Disable-GLX-pbuffers-with-Chromium-in-VMs.patch
+Patch56: 0155-xcb-Fix-transient-parent-and-Qt-Window-flag.patch
 # SuSE
 Patch100: 0001-Fix-QWidget-setWindowRole.patch
 Patch101: 0005-Restore-documented-behavior-for-the-WA_X11NetWmWindo.patch
@@ -337,15 +338,16 @@ EGL integration library for the Qt%major toolkit
 %prep
 %setup -n %rname-opensource-src-%version
 %patch1 -p1
-%patch2 -p1
+#
 %patch3 -p1
 %patch4 -p1
 %patch11 -p1 -b .QTBUG
-%patch12 -p1 -b .QTBUG
-%patch13 -p1 -b .QTBUG
-%patch14 -p1 -b .QTBUG
-%patch15 -p1 -b .QTBUG
-%patch16 -p1 -b .QTBUG
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
@@ -492,7 +494,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.6.0
+Version: 5.6.1
 __EOF__
 
 # rpm macros
@@ -745,6 +747,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 

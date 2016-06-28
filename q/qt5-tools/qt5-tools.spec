@@ -8,8 +8,8 @@
 %define minor 5
 %define bugfix 0
 Name: qt5-tools
-Version: 5.6.0
-Release: alt3
+Version: 5.6.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -319,6 +319,9 @@ done
 
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Tue May 31 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt3
 - hide qdbusviewer from menu
 

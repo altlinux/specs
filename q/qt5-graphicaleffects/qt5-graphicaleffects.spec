@@ -2,7 +2,7 @@
 %global qt_module qtgraphicaleffects
 
 Name: qt5-graphicaleffects
-Version: 5.6.0
+Version: 5.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -64,6 +64,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
+- new version
+
 * Thu Mar 24 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.0-alt1
 - new version
 
