@@ -4,7 +4,7 @@
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
 Version: 2.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -60,6 +60,9 @@ install -pD -m0644 %sname.1 %buildroot%_man1dir/%sname.1
 %_man1dir/%sname.1*
 
 %changelog
+* Tue Jun 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0-alt2
+- fixed keymaps path
+
 * Mon Mar 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0-alt1
 - initial release
 
