@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt7
+Release: alt8
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,10 @@ fi ||:
 
 
 %changelog
+* Tue Jun 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.32-alt8
+- Optimization: do not call the token backend that many times for
+  generating a page (but only a few times).
+
 * Mon Jun 27 2016 Denis Medvedev <nbr@altlinux.org> 5.32-alt7
 - Fixed behavour of Help and Configure buttons
 
