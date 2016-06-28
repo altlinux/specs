@@ -2,8 +2,8 @@
 %define libarchive libarchive%sover
 
 Name: libarchive
-Version: 3.1.2
-Release: alt3
+Version: 3.2.1
+Release: alt1
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -12,12 +12,10 @@ Url: http://www.libarchive.org/
 #Url: https://github.com/libarchive/libarchive
 
 Source0: libarchive-%version.tar.gz
-Patch1: libarchive-3.1.2-acl.patch
-Patch2: libarchive-3.1.2-security-rhbz-1216891.patch
-Patch3: libarchive-3.1.2-testsuite.patch
-Patch4: libarchive-3.1.3-CVE-2013-0211_read_buffer_overflow.patch
-Patch10: directory-traversal-fix.patch
+# SuSE
 Patch11: libarchive-openssl.patch
+# ALT
+Patch100: alt-disable-lzma-mt.patch
 
 # Automatically added by buildreq on Mon Mar 11 2013 (-bi)
 # optimized out: elfutils pkg-config python-base ruby ruby-stdlibs
@@ -45,11 +43,18 @@ Requires: %libarchive = %EVR
 The bsdtar program is a full-featured tar replacement built on libarchive.
 
 %package -n bsdcpio
-Summary: Full-featured tar replacement built on libarchive
+Summary: Full-featured cpio replacement built on libarchive
 Group: Archiving/Backup
 Requires: %libarchive = %EVR
 %description -n bsdcpio
-The bsdcpio program is a full-featured tar replacement built on libarchive.
+The bsdcpio program is a full-featured cpio replacement built on libarchive.
+
+%package -n bsdcat
+Summary: Full-featured cat replacement built on libarchive
+Group: Archiving/Backup
+Requires: %libarchive = %EVR
+%description -n bsdcat
+The bsdcpio program is a full-featured cat replacement built on libarchive.
 
 %package devel
 Summary: Development files for %name
@@ -62,12 +67,8 @@ developing applications that use %name.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch10 -p1
 %patch11 -p0
+%patch100 -p1
 %autoreconf
 
 
@@ -100,6 +101,10 @@ developing applications that use %name.
 %_bindir/bsdcpio
 %_man1dir/bsdcpio*
 
+%files -n bsdcat
+%_bindir/bsdcat
+%_man1dir/bsdcat*
+
 %files devel
 %doc
 %_includedir/*
@@ -109,6 +114,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jun 28 2016 Sergey V Turchin <zerg@altlinux.org> 3.2.1-alt1
+- new version
+
 * Wed Dec 16 2015 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt3
 - rebuild with new libnettle
 
