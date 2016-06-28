@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.2.15
-Release: alt5
+Release: alt6
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -39,7 +39,7 @@ This package contains the Proxmox Virtual Environment management tools
 
 %package -n pve-container
 Summary: Proxmox VE Container management tool
-Version: 1.0.67
+Version: 1.0.70
 Group: Development/Perl
 Requires: pve-lxc dtach
 
@@ -364,6 +364,9 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Tue Jun 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.15-alt6
+- pve-container 1.0-70
+
 * Sun Jun 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.15-alt5
 - pve-container: requires pve-lxc
 
