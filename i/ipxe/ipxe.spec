@@ -9,12 +9,13 @@
 # 8086:1209 -> pxe-eepro100.rom eepro100
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209
-%define date 20160525
-%define hash f42b258
+%define date 20150821
+%define hash 4e03af8
 
 Name: ipxe
 Version: %date
 Release: alt1.git%{hash}
+Epoch: 1
 
 Summary: PXE boot firmware
 License: GPLv2 with additional permissions and BSD
@@ -66,7 +67,7 @@ UNDI formats.
 %package roms
 Summary: Network boot loader roms in .rom format
 Group: Development/Tools
-Requires: %name-roms-qemu = %version-%release
+Requires: %name-roms-qemu = %EVR
 Provides: gpxe-roms
 Obsoletes: gpxe-roms
 
@@ -207,6 +208,9 @@ pxe_link 80861209 eepro100
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Tue Jun 28 2016 Alexey Shabalin <shaba@altlinux.ru> 1:20150821-alt1.git4e03af8
+- rollback to 20150821
+
 * Wed May 25 2016 Alexey Shabalin <shaba@altlinux.ru> 20160525-alt1.gitf42b258
 - update to latest upstream snapshot
 - Enable IPv6 for in qemu config
