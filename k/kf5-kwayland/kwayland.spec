@@ -1,7 +1,7 @@
 %define rname kwayland
 
 Name: kf5-%rname
-Version: 5.22.0
+Version: 5.23.0
 Release: alt1
 %K5init altplace
 
@@ -29,6 +29,12 @@ BuildArch: noarch
 Requires: kf5-filesystem
 %description common
 %name common package
+
+%package tools
+Group: Development/KDE and QT
+Summary: Tools for %name
+%description tools
+Tools for %name.
 
 %package devel
 Group: Development/KDE and QT
@@ -66,6 +72,9 @@ KF5 library
 %doc COPYING.LIB
 %config(noreplace) %_K5xdgconf/org_kde_kwayland.categories
 
+%files tools
+%_K5libexecdir/org-kde-kf5-kwayland-testserver
+
 %files devel
 %_K5inc/kwayland_version.h
 %_K5inc/KWayland/
@@ -79,6 +88,9 @@ KF5 library
 %_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Tue Jun 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.23.0-alt1
+- new version
+
 * Mon May 23 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
 - new version
 

@@ -1,6 +1,6 @@
 
 Name: extra-cmake-modules
-Version: 5.22.0
+Version: 5.23.0
 Release: alt1
 
 Group: Development/Other
@@ -41,6 +41,9 @@ Additional modules for CMake build system needed by KDE Frameworks.
 %doc %_man7dir/*
 
 %changelog
+* Tue Jun 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.23.0-alt1
+- new version
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
 - new version
 

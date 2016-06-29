@@ -1,7 +1,7 @@
 %define rname kcmutils
 
 Name: kf5-%rname
-Version: 5.22.0
+Version: 5.23.0
 Release: alt1
 %K5init altplace
 
@@ -79,6 +79,9 @@ KF5 library
 %_K5srvtyp/kcm*.desktop
 
 %changelog
+* Tue Jun 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.23.0-alt1
+- new version
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.22.0-alt1
 - new version
 
