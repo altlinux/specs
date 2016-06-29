@@ -10,16 +10,12 @@
 Name: kaffeine
 Version: 0.8.8
 %define beta %nil
-Release: alt9.3
+Release: alt10
 
 Group: Video
 Summary: A Xine-based Media Player for KDE
 License: GPL
 Url: http://kaffeine.sourceforge.net/
-
-Requires: kdelibs
-Requires: lib%{name} = %version-%release
-Requires: %name-engine >= %version-%release
 
 Source: %name-%version%beta.tar.bz2
 # FC
@@ -38,7 +34,7 @@ Patch10: kaffeine-0.8.8-mp3InputPlugBuild.patch
 # Automatically added by buildreq on Tue Jun 23 2009 (-bi)
 #BuildRequires: doxygen gcc-c++ gcc-fortran graphviz gst-plugins-devel imake kdepim-devel libXt-devel libXtst-devel libcdio-devel libjpeg-devel liblame-devel libxine-devel qt3-designer qt3-doc-html rpm-build-ruby xml-utils xorg-cf-files xorg-inputproto-devel
 BuildRequires(pre): kdelibs-devel
-BuildRequires: doxygen gcc-c++ graphviz kdepim-devel libpng-devel
+BuildRequires: doxygen gcc-c++ graphviz kdelibs-devel libpng-devel
 BuildRequires: libcdio-paranoia-devel libjpeg-devel liblame-devel libxine-devel xml-utils
 %if_with gstreamer
 BuildRequires: gst-plugins-devel
@@ -58,29 +54,38 @@ Base libraries for %name
 %package -n lib%{name}-devel
 Group: Development/KDE and QT
 Summary: Headers and development files for lib%{name}
-Requires: lib%{name} = %version-%release
+Requires: lib%{name} = %EVR
 %description -n lib%{name}-devel
 Headers and development files for lib%{name}
 
-%package engine-xine
+%package -n kde3-kaffeine
+Group: Video
+Summary: A Xine-based Media Player for KDE
+Provides: kaffeine = %version-%release
+Obsoletes: kaffeine < %version-%release
+Requires: kde3-kaffeine-engine >= %version-%release
+%description -n kde3-kaffeine
+Kaffeine is a Xine-based Media Player for QT/KDE
+
+%package -n kde3-kaffeine-engine-xine
 Group: Video
 Summary: Kaffeine Xine player part
-Provides: %name-engine = %version-%release
-Requires: lib%{name} = %version-%release
+Provides: kde3-kaffeine-engine = %version-%release
+Obsoletes: kaffeine-engine-xine < %version-%release
 Conflicts: kaffeine <= 0.8.5-alt3
-%description engine-xine
+%description -n kde3-kaffeine-engine-xine
 A Kaffeine engine based on xine.
 
-%package engine-gstreamer
+%package -n kde3-kaffeine-engine-gstreamer
 Group: Video
 Summary: Kaffeine GStreamer player part
-Provides: %name-engine = %version-%release
-Requires: lib%{name} = %version-%release
+Provides: kde3-kaffeine-engine = %version-%release
+Obsoletes: kaffeine-engine-gstreamer < %version-%release
 Requires: gst-ffmpeg gst-plugins-alsa gst-plugins-base-audio-filters gst-plugins-base-video-filters
 Requires: gst-plugins-good-audio-formats gst-plugins-good-container-formats gst-plugins-good-tags
 Requires: gst-plugins-good-video-filters gst-plugins-lame gst-plugins-mad gst-plugins-ogg
 Requires: gst-plugins-theora gst-plugins-vorbis gst-plugins-xvideo
-%description engine-gstreamer
+%description -n kde3-kaffeine-engine-gstreamer
 A Kaffeine engine based on GStreamer.
 
 %prep
@@ -129,7 +134,7 @@ export PATH=%qtdir/bin:%kdedir/bin:$PATH
 %_K3lib/lib*%{name}*.la
 %_K3includedir/%{name}*
 
-%files -f %name.lang
+%files -n kde3-kaffeine -f %name.lang
 %doc AUTHORS ChangeLog README TODO kaffeine/README.* kaffeine/CREDITS kaffeine/BUGS
 #%_man1dir/*
 #
@@ -150,19 +155,23 @@ export PATH=%qtdir/bin:%kdedir/bin:$PATH
 %_kde3_iconsdir/*/*/actions/*.png
 %_kde3_iconsdir/*/*/mimetypes/*%{name}*.png
 
-%files engine-xine
+%files -n kde3-kaffeine-engine-xine
 %_K3lib/libxinepart.so*
 %_K3apps/%name/xine_part.rc
 %_K3srv/xine_part.desktop
 
 %if_with gstreamer
-%files engine-gstreamer
+%files -n kde3-kaffeine-engine-gstreamer
 %_K3lib/libgstreamerpart.so*
 %_K3apps/gstreamerpart
 %_K3srv/gstreamer_part.desktop
 %endif
 
 %changelog
+* Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 0.8.8-alt10
+- rename package
+- fix requires, build requires
+
 * Wed Aug 05 2015 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt9.3
 - rebuilt against libcdio_{cdda,paranoia}.so.2
 
