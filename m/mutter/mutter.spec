@@ -1,10 +1,12 @@
+%def_disable snapshot
+
 %define ver_major 3.20
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 
 Name: mutter
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -16,8 +18,11 @@ Url: http://ftp.gnome.org/pub/gnome/sources/%name
 Requires: lib%name = %epoch:%version-%release
 Requires: zenity
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
@@ -159,6 +164,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Wed Jun 29 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.20.3-alt1
+- 3.20.3
+
 * Wed May 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.20.2-alt1
 - 3.20.2
 
