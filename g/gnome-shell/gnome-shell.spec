@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
 %define ver_major 3.20
@@ -5,7 +7,7 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -13,15 +15,14 @@ Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: https://wiki.gnome.org/Projects/GnomeShell
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Patch1: gnome-shell-3.11.90-alt-gir.patch
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 Patch4: gnome-shell-3.9.92-alt-makefile.patch
-
-# https://bugzilla.gnome.org/show_bug.cgi?id=764898
-# https://bug764898.bugzilla-attachments.gnome.org/attachment.cgi?id=325731
-Patch10: gnome-shell-3.20.0-bgo764898.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
@@ -32,7 +33,7 @@ AutoReqProv: nopython
 %define session_ver 3.16
 %define clutter_ver 1.21.5
 %define gjs_ver 1.40.0
-%define mutter_ver 3.20.2
+%define mutter_ver 3.20.3
 %define gtk_ver 3.16.0
 %define gio_ver 2.46.0
 %define gstreamer_ver 1.0
@@ -181,7 +182,6 @@ GNOME Shell.
 #%%patch1 -p1 -b .gir
 %patch3 -b .shells
 %patch4
-%patch10 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -240,6 +240,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed Jun 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
+- 3.20.3
+
 * Wed May 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 
