@@ -1,13 +1,13 @@
 Name: btrfs-progs
-Version: 4.6
+Version: 4.6.1
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
 Group: System/Kernel and hardware
 Url: http://btrfs.wiki.kernel.org/
-
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel libblkid-devel libattr-devel liblzo2-devel asciidoc xmlto
 
@@ -47,7 +47,8 @@ btrfs filesystem-specific programs.
 
 
 %prep
-%setup -q -n %name-%version-%release
+%setup -q
+%patch0 -p1
 
 %build
 autoreconf -fisv
@@ -74,6 +75,9 @@ ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so
 %_includedir/btrfs
 
 %changelog
+* Wed Jun 29 2016 Anton Farygin <rider@altlinux.ru> 4.6.1-alt1
+- new version
+
 * Mon Jun 20 2016 Anton Farygin <rider@altlinux.ru> 4.6-alt1
 - new version
 
