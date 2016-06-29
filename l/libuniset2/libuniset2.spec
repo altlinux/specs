@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.3
-Release: alt7
+Release: alt8
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -84,7 +84,7 @@ There are set of base components to construct this kind of systems:
 * base interfaces for your implementation of control algorithms.
 * algorithms for the discrete and analog input/output based on COMEDI interface.
 * IPC mechanism based on CORBA (omniORB).
-* logging system based on MySQL database.
+* logging system based on MySQL,SQLite,PostgreSQL databases.
 * Web interface to display logging and statistic information.
 * utilities for system's configuration based on XML.
 
@@ -460,6 +460,7 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 %endif
 
 %files extension-common-devel
+%dir %_includedir/%oname/extensions
 %_includedir/%oname/extensions/*.*
 %_libdir/libUniSet2Extensions.so
 %_libdir/libUniSet2MB*.so
@@ -483,6 +484,9 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Wed Jun 29 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt8
+- DBServer_PGSQL: added support for the insert buffer
+
 * Fri Jun 03 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt7
 - codegen: fixed bug in updateOutput
 - revert commit: "added several attempts to save the value"
