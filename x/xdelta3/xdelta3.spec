@@ -1,6 +1,6 @@
 Summary: A binary delta generator
 Name: xdelta3
-Version: 3.0.8
+Version: 3.0.11
 Epoch: 1
 Release: alt1
 Source0: http://xdelta.googlecode.com/files/%name-%version.tar
@@ -31,11 +31,14 @@ after zlib, in addition to a command-line utility, use of the RFC3284
 %makeinstall
 
 %files
-%doc COPYING README
+%doc COPYING README.md
 %_bindir/*
 %_man1dir/*.1*
 
 %changelog
+* Wed Jun 29 2016 Anton Farygin <rider@altlinux.ru> 1:3.0.11-alt1
+- new version
+
 * Tue Oct 20 2015 Anton Farygin <rider@altlinux.ru> 1:3.0.8-alt1
 - new version
 
