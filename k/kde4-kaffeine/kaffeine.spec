@@ -1,7 +1,7 @@
 
 %define rname kaffeine
 Name: kde4-%rname
-Version: 1.3.1
+Version: 1.4.0
 Release: alt2
 
 Group: Video
@@ -9,6 +9,7 @@ Summary: Multimedia Player
 Url: http://kaffeine.sourceforge.net/
 License: GPLv2
 
+Provides: kaffeine = %version-%release
 Requires: libqt4-sql-sqlite
 
 Requires: vlc-mini
@@ -34,11 +35,14 @@ Conflicts: kaffeine <= 0.8.8-alt4
 
 # svn.kde.org/home/kde/trunk/extragear/multimedia/kaffeine
 Source0: %rname-%version.tar
+Source1: po.tar
+Patch1: alt-fix-build.patch
 
 # Automatically added by buildreq on Mon Mar 14 2016 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-sql libqt4-svg libqt4-xml libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base python3 python3-base rpm-build-python3 xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libXxf86misc-devel libicu50 libqt3-devel libqt4-webkit-devel libvlc-devel python3.3-site-packages qt4-desi#gner ruby ruby-stdlibs zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel libXxf86misc-devel libqt4-webkit-devel libvlc-devel zlib-devel
+BuildRequires: libv4l-devel
 
 %description
 Kaffeine plays all files and devices supported by Xine. For example,
@@ -47,7 +51,8 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 
 
 %prep
-%setup -q -n %rname-%version
+%setup -q -n %rname-%version -a1
+%patch1 -p1
 
 %build
 %K4cmake
@@ -72,6 +77,12 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 %_K4xdg_apps/kaffeine.desktop
 
 %changelog
+* Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
+- fix build requires
+
+* Tue Jun 28 2016 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
+- new version
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2
 - update requires
 
