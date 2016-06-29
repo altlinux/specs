@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.84
-Release: alt1.git20141109.1
+Version: 0.89
+Release: alt1
 Summary: Universal Python binding for the LMDB 'Lightning' Database
 License: OpenLDAP BSD
 Group: Development/Python
@@ -14,11 +14,12 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/dw/py-lmdb.git
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
+
 BuildPreReq: liblmdb-devel
 BuildPreReq: python-devel python-module-setuptools-tests
 BuildPreReq: python-module-memsink
 %if_with python3
-BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel python3-module-setuptools-tests
 %endif
 
@@ -87,10 +88,12 @@ popd
 %endif
 
 %changelog
+* Wed Jun 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.89-alt1
+- Updated to 0.89.
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.84-alt1.git20141109.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
 
 * Sat Nov 22 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.84-alt1.git20141109
 - Initial build for Sisyphus
-
