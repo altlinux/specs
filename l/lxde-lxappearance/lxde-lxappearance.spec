@@ -4,7 +4,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: %name is desktop-independent theme swither for GTK+.
 License: GPL
@@ -15,7 +15,7 @@ Url: http://lxde.sf.net
 Source: %upstreamname-%version.tar
 Patch1: lxappearance-0.5.2-alt-fixbuild.patch
 
-BuildPreReq: libgtk+%gtkver-devel intltool gtk-doc xsltproc
+BuildPreReq: libgtk+%gtkver-devel intltool gtk-doc xsltproc libdbus-glib-devel
 
 %description
 LXAppearance is part of LXDE project.
@@ -34,10 +34,10 @@ This package contains files needed to build plugins for lxappearance
 
 %build
 %autoreconf
+%configure --enable-man \
+           --enable-dbus \
 %if %gtkver==3
-    %configure --enable-man --enable-gtk3
-%else
-    %configure --enable-man
+           --enable-gtk3
 %endif
 
 #touch -r po/Makefile po/stamp-it
@@ -50,7 +50,7 @@ mkdir -p %buildroot%_libdir/%upstreamname/plugins
 %find_lang %upstreamname
 
 %files -f %upstreamname.lang
-%doc ChangeLog README
+%doc ChangeLog README AUTHORS COPYING
 %_bindir/*
 %_desktopdir/*
 %_datadir/%upstreamname
@@ -62,6 +62,9 @@ mkdir -p %buildroot%_libdir/%upstreamname/plugins
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jun 29 2016 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt2
+- Enable dbus support.
+
 * Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt1
 - New version (0.6.2).
 
