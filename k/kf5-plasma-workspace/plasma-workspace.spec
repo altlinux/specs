@@ -14,8 +14,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.6.4
-Release: alt2
+Version: 5.6.5
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -272,6 +272,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
+- new version
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt2
 - don't bold clock font by default
 
