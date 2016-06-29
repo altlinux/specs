@@ -1,11 +1,12 @@
 %def_enable python
 %def_enable server
+%define samba_version 4.4.4
 
 # Licensing Note: The code is GPLv3+ and the IDL files are public domain.
 
 Name:    openchange
 Version: 2.4
-Release: alt5.zentyal23
+Release: alt6.zentyal23
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -24,7 +25,8 @@ BuildRequires: libtevent-devel
 BuildRequires: libldb-devel
 BuildRequires: libtdb-devel
 BuildRequires: bison
-BuildRequires: samba-DC-devel >= 4.0.0
+BuildRequires: samba-DC-devel >= %samba_version
+BuildRequires: samba-DC-util-private-headers = %samba_version
 BuildRequires: python-module-samba-DC
 BuildRequires: samba-DC-pidl
 BuildRequires: doxygen
@@ -182,6 +184,8 @@ for Samba, using wsgi.
 %prep
 %setup -q
 %patch -p1
+ln -s %_includedir/samba-4.0/private/lib lib
+ln -s %_includedir/samba-4.0/private/libcli libcli
 
 %build
 mkdir -p bin
@@ -308,6 +312,10 @@ popd
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Wed Jun 29 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt6.zentyal23
+- Use private libsamba_util private headers from
+  samba-DC-util-private-headers with exact Samba version
+
 * Mon Jun 27 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt5.zentyal23
 - Build with headers from Samba 4.4.4 and -Werror=implicit
 
