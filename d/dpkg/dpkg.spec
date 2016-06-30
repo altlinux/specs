@@ -1,18 +1,21 @@
 ## define _requires_exceptions perl(controllib.pl)\\|perl(file)
 
-Summary: Package maintenance system for Debian Linux
 Name: dpkg
-Version: 1.18.1
+Version: 1.18.7
 Release: alt1
+
+Summary: Package maintenance system for Debian Linux
+
 License: GPLv2+
 Group: System/Configuration/Packaging
 Url: http://packages.debian.org/unstable/base/dpkg.html
+
 Source0: ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
 
 # Automatically added by buildreq on Mon Dec 13 2010
 BuildRequires: dpkg perl-podlators po4a zlib-devel
 
-BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent
+BuildRequires: perl-Storable perl-TimeDate perl-File-FcntlLock perl-parent perl-Time-Piece
 ## BuildRequires: gettext-devel
 ## Provides: usineagaz = 0.1-0.beta1mdk
 
@@ -33,7 +36,7 @@ This module provides dpkg functionalities.
 %build
 %configure \
     --disable-dselect \
-    --with-admindir=%_localstatedir/lib/%name
+    --with-admindir=/var/lib/%name
 
 %make
 
@@ -46,31 +49,37 @@ rm -fr %buildroot%_sysconfdir/alternatives
 rm -f %buildroot%_bindir/update-alternatives
 rm -f %buildroot%_sbindir/update-alternatives
 rm -fr %buildroot/usr/share/doc
-mv %buildroot/%_man8dir/start-stop-daemon.8 %buildroot/%_man8dir/dpkg-start-stop-daemon.8
+rm -f %buildroot/%_man8dir/start-stop-daemon.8
+rm -f %buildroot/%_sbindir/start-stop-daemon
 
 find %buildroot -name "md5sum*" -exec rm -f {} \;
 find %buildroot%_mandir -name "update-alternatives*" -exec rm -f {} \;
+
+%if_without extbuild
+rm -rf %buildroot %_mandir/??/
+rm -rf %buildroot%_includedir/dpkg/*
+rm -rf %buildroot%_libdir/libdpkg.a
+rm -rf %buildroot%_libdir/pkgconfig/libdpkg.pc
+%endif
 
 %find_lang %name
 %find_lang dpkg-dev
 cat dpkg-dev.lang >> %name.lang
 
 %files -f dpkg.lang
-%defattr(644,root,root,755)
 %attr(0755,root,root) %_bindir/dpkg*
-%dir %_libdir/%name
-%dir %_libdir/%name/parsechangelog
+%dir %_libdir/%name/
+%dir %_libdir/%name/parsechangelog/
 %attr(0755,root,root) %dir %_libdir/%name/parsechangelog/debian
-%attr(0755,root,root) %_sbindir/*
 %dir %_datadir/%name
-%dir %_localstatedir/lib/%name
 %_datadir/%name/*table
 %_datadir/%name/*.mk
-%_localstatedir/lib/%name/*
+%dir /var/lib/%name/
+/var/lib/%name/*
 %dir %_sysconfdir/%name
 %_man1dir/dpkg*
 %_man5dir/*
-%_man8dir/*
+%if_with extbuild
 %lang(pl) %_mandir/pl/man?/*
 %lang(de) %_mandir/de/man?/*
 %lang(ja) %_mandir/ja/man?/*
@@ -80,15 +89,21 @@ cat dpkg-dev.lang >> %name.lang
 %lang(es) %_mandir/es/man?/*
 %lang(it) %_mandir/it/man?/*
 %_includedir/dpkg/*
-%_man3dir/*
 %_libdir/libdpkg.a
 %_libdir/pkgconfig/libdpkg.pc
+%endif
 
 %files -n perl-Dpkg
-%perl_vendorlib/Dpkg
+%_man3dir/*
+%perl_vendorlib/Dpkg/
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Thu Jun 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.18.7-alt1
+- new version 1.18.7 (with rpmrb script)
+- cleanup spec
+- drop start-stop-daemon (ALT bug #32238)
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 1.18.1-alt1
 - Autobuild version bump to 1.18.1
 

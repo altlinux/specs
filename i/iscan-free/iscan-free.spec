@@ -1,6 +1,6 @@
 Name: iscan-free
 Version: 2.20.0
-Release: alt3
+Release: alt4
 
 Summary: Free Image Scan Version with epkowa Driver for Epson Scanners
 
@@ -25,7 +25,7 @@ Group: Graphics
 # Pack the remaining free sources:
 # tar -cjvf iscan-free_2.10.0-1.tar.bz2 iscan-2.10.0/*
 
-Source: iscan-free-2.20.0.tar.bz2
+Source: iscan-free-2.20.0.tar
 # A README regarding the changes of the free version:
 Source1: README
 
@@ -158,7 +158,9 @@ sed -e 's|^:mfg[[:space:]][[:space:]]*"EPSON".*|:mfg "Epson"|' doc/epkowa.desc >
 mv %buildroot%_libdir/iscan/* %buildroot%_datadir/iscan/
 # Remove the installed man page for the "iscan" frontend because it is not included in this package:
 rm -f %buildroot%_man1dir/iscan.1
+
 rm -f %buildroot%_libdir/sane/libsane-epkowa.la
+rm -f %buildroot%_datadir/iscan/fix-udev-rules
 
 %files
 %_sbindir/iscan-registry
@@ -172,6 +174,9 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 
 
 %changelog
+* Fri Jul 01 2016 Vitaly Lipatov <lav@altlinux.ru> 2.20.0-alt4
+- drop dpkg require
+
 * Mon Feb 08 2016 Lenar Shakirov <snejok@altlinux.ru> 2.20.0-alt3
 - man packaging fixed
 
