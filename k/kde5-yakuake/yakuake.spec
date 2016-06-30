@@ -1,13 +1,15 @@
-Name:    yakuake
+%define oname yakuake
+
+Name:    kde5-%oname
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 Summary: Very powerful Quake style Konsole for KF5
 License: GPLv2, GPLv3 or any later version accepted by the membership of KDE e.V.
 Group: Terminals
 Url: http://extragear.kde.org/apps/yakuake/
 
-Source: http://download.kde.org/stable/yakuake/%version/src/%name-%version.tar.xz
+Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -48,7 +50,8 @@ BuildRequires: kf5-sonnet-devel
 BuildRequires: qt5-x11extras-devel
 
 Requires:  kde5-konsole
-Conflicts: kde4-yakuake
+Provides:  %oname = %version-release
+Obsoletes: %oname < %version-release 
 
 %description
 A KDE konsole which looks like those found in Quake.
@@ -56,25 +59,28 @@ A KDE konsole which looks like those found in Quake.
 This version is built with KF5.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %build
 %K5build
 
 %install
 %K5install
-%find_lang --with-kde %name
+%find_lang --with-kde %oname
 
-%files -f %name.lang
+%files -f %oname.lang
 %doc AUTHORS COPYING COPYING.DOC ChangeLog NEWS README TODO
 %_K5bin/*
-%_K5xdgconf/%name.knsrc
+%_K5xdgconf/%oname.knsrc
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/*
-%_datadir/%name
-%_K5notif/%name.notifyrc
+%_datadir/%oname
+%_K5notif/%oname.notifyrc
 
 %changelog
+* Thu Jun 30 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt2
+- Rename package to kde5-yakuake (ALT #32098)
+
 * Mon Jun 20 2016 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
 - New version on KF5
 - Place in standard directories
