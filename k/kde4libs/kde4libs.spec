@@ -14,7 +14,7 @@
 
 %define major 4
 %define minor 14
-%define bugfix 20
+%define bugfix 21
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -360,6 +360,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.21-alt1
+- new version
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 4.14.20-alt1
 - new version
 - det default colors from Breeze color scheme
