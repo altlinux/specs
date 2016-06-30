@@ -44,7 +44,7 @@
 
 Name:    samba-DC
 Version: 4.4.4
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1247,6 +1247,13 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Jun 30 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.4.4-alt3
+- Apply fixes for DRSUAPI limits of too strict for some workloads,
+  e.g. DRSUAPI replication with large objects.
+   https://bugzilla.samba.org/show_bug.cgi?id=11948
+ + Set DCERPC_NCACN_{REQUEST,RESPONSE}_DEFAULT_MAX_SIZE
+ + Allow a total reassembled response payload of 240 MBytes
+
 * Wed Jun 29 2016 Andrey Cherepanov <cas@altlinux.org> 4.4.4-alt2
 - Package libsamba_util private headers to package
   samba-DC-util-private-headers
