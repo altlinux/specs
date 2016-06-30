@@ -2,7 +2,7 @@
 
 Name: libldb
 Version: 1.1.26
-Release: alt1
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -68,8 +68,8 @@ Development files for the Python bindings for the LDB library
 %install
 %makeinstall_std
 
-install -D -m755 %SOURCE1 %buildroot%_sysconfdir/profile.d/ldb-modules.sh
-sed -i s,@libdir@,%_libdir,g %buildroot%_sysconfdir/profile.d/ldb-modules.sh
+install -D -m755 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/ldb-modules.sh
+sed -i s,@libdir@,%_libdir,g %buildroot%_sysconfdir/bashrc.d/ldb-modules.sh
 
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot/%_man3dir/_*
@@ -98,7 +98,7 @@ make test
 %exclude %_libdir/libpyldb-util.so
 
 %files -n ldb-tools
-%_sysconfdir/profile.d/ldb-modules.sh
+%_sysconfdir/bashrc.d/ldb-modules.sh
 %_bindir/*
 %_man1dir/*
 %_libdir/ldb/libldb-cmdline.so
@@ -114,6 +114,9 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Thu Jun 30 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.26-alt2
+- Move ldb-modules.sh from profile.d to bashrc.d to run everywhere
+
 * Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.26-alt1
 - 1.1.26
 
