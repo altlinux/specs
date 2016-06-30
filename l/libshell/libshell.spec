@@ -1,6 +1,6 @@
 Name: libshell
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: A library of shell functions
 License: GPL
@@ -43,6 +43,10 @@ as single file.
 /bin/shell-lib
 
 %changelog
+* Thu Jun 30 2016 Alexey Gladkov <legion@altlinux.ru> 0.4.1-alt2
+- shell-ini-config changes:
+  + Preserve file permissions (ALT#32139).
+
 * Tue Nov 24 2015 Alexey Gladkov <legion@altlinux.ru> 0.4.1-alt1
 - New version (0.4.1).
 - shell-ini-config changes:
