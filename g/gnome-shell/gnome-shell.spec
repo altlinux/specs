@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -8,7 +8,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -240,6 +240,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Wed Jun 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt2
+- updated to 3.20.3-1-g71c26cc (fixed BGO #766353)
+
 * Wed Jun 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 
