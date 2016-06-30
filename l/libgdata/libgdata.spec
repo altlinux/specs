@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -124,6 +124,9 @@ GObject introspection devel data for the GData library.
 %_girdir/GData-%api_ver.gir
 
 %changelog
+* Thu Jun 30 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17.5-alt1
+- 0.17.5
+
 * Wed Dec 16 2015 Yuri N. Sedunov <aris@altlinux.org> 0.17.4-alt1
 - 0.17.4
 
