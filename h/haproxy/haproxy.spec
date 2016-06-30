@@ -8,7 +8,7 @@
 
 Name: haproxy
 Version: 1.6.5
-Release: alt1
+Release: alt2
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -65,7 +65,7 @@ pushd contrib/systemd
 popd
 
 %install
-%make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix"
+%make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix" TARGET="linux2628"
 %make_install install-man DESTDIR=%buildroot PREFIX="%_prefix"
 
 install -p -D -m 0644 %SOURCE1 %buildroot%haproxy_confdir/%name.cfg
@@ -106,6 +106,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Thu Jun 30 2016 Lenar Shakirov <snejok@altlinux.ru> 1.6.5-alt2
+- Pack haproxy-systemd-wrapper
+
 * Tue Jun 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.6.5-alt1
 - 1.6.5
 
