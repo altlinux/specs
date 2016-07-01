@@ -1,6 +1,6 @@
 Name: apt-cacher-ng
 Version: 0.8.5
-Release: alt3
+Release: alt4
 
 Summary: Caching HTTP download proxy for software packages
 
@@ -100,6 +100,9 @@ chmod ug+rw %_logdir/%name/* ||:
 %preun_service acng
 
 %changelog
+* Mon Jun 27 2016 Terechkov Evgenii <evg@altlinux.org> 0.8.5-alt4
+- Add release.debuginfo to vfilepattern
+
 * Fri May 20 2016 Terechkov Evgenii <evg@altlinux.org> 0.8.5-alt3
 - Add manual Requires: su
 
