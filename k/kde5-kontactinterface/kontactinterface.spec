@@ -1,7 +1,7 @@
 %define rname kontactinterface
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.04.2
 Release: alt1
 %K5init altplace
 
@@ -76,6 +76,9 @@ KF5 library
 %_K5lib/libKF5KontactInterface.so.*
 
 %changelog
+* Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kholidays
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.04.2
 Release: alt1
 %K5init altplace
 
@@ -83,6 +83,9 @@ KF5 library
 %_K5qml/org/kde/kholidays/
 
 %changelog
+* Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 

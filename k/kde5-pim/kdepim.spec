@@ -19,8 +19,8 @@
 %define libnotesharedprivate libnotesharedprivate%pim_sover
 
 Name: kde5-pim
-Version: 16.04.1
-Release: alt2
+Version: 16.04.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -601,6 +601,9 @@ desktop-file-install \
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Tue May 31 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt2
 - change akonadiconsole menu category
 - package sieveeditor and headerthemeeditor with kmail

@@ -6,7 +6,7 @@
 %define libshorturlpluginprivate libshorturlpluginprivate%sover
 
 Name: kde5-pim-addons
-Version: 16.04.1
+Version: 16.04.2
 Release: alt1
 %K5init
 
@@ -161,6 +161,9 @@ Requires: %name-common
 %_K5lib/libshorturlpluginprivate.so.*
 
 %changelog
+* Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
