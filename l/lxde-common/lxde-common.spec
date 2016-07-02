@@ -8,7 +8,7 @@
 %define gtkver 2
 Name: lxde-common
 Version: 0.99.1
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -26,7 +26,6 @@ AutoReq: yes,nosymlinks
 
 Requires: lxde-settings
 Requires: wm-common-freedesktop
-
 # Automatically added by buildreq on Sat May 21 2016
 # optimized out: perl perl-Encode perl-XML-Parser python-base python-modules xml-common xml-utils
 BuildRequires: docbook-dtds xsltproc
@@ -68,21 +67,21 @@ sed -i '/XDG_MENU/ a\\n# Since shared-mime-info-0.90-alt3 XDG_DATA_DIRS not expo
 
 install -m644 -D %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/09LXDE
 
-pushd %buildroot%_datadir
-
-mv lxde %theme_fullname
-
-mv %buildroot%_sysconfdir/xdg/lxsession/LXDE/desktop.conf %theme_fullname
+mv %buildroot%_datadir/lxde %buildroot%_datadir/%theme_fullname
+mkdir -p %buildroot%_datadir/%theme_fullname/pcmanfm
+mv %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf %buildroot%_datadir/%theme_fullname/pcmanfm/lxde.conf
+mv %buildroot%_sysconfdir/xdg/lxsession/LXDE/desktop.conf %buildroot%_datadir/%theme_fullname
+mkdir -p %buildroot%_datadir/%theme_fullname/openbox
+mv %buildroot%_sysconfdir/xdg/openbox/LXDE/* %buildroot%_datadir/%theme_fullname/openbox
+rm -fR %buildroot%_sysconfdir/xdg/openbox/LXDE
+mkdir -p %buildroot%_datadir/%theme_fullname/lxpanel
+mv %buildroot%_sysconfdir/xdg/lxpanel/LXDE/* %buildroot%_datadir/%theme_fullname/lxpanel
+rm -fR %buildroot%_sysconfdir/xdg/lxpanel/LXDE
 ln -s %_datadir/%theme_virt_dir/desktop.conf %buildroot%_sysconfdir/xdg/lxsession/LXDE/desktop.conf
-
-mkdir %theme_fullname/pcmanfm
-mkdir %theme_fullname/pcmanfm/LXDE
-cp %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf %theme_fullname/pcmanfm/LXDE/lxde.conf
-ln -s %_datadir/%theme_virt_dir/pcmanfm/LXDE/lxde.conf %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/
-
-#mv lxpanel/profile/LXDE %theme_fullname/lxpanel
-#ln -s ../../%theme_virt_dir/lxpanel lxpanel/profile/LXDE
-popd
+ln -s %_datadir/%theme_virt_dir/pcmanfm/lxde.conf %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf
+ln -s %_datadir/%theme_virt_dir/pcmanfm/lxde.conf %buildroot%_sysconfdir/xdg/pcmanfm/LXDE/lxde.conf
+ln -s %_datadir/%theme_virt_dir/lxpanel/ %buildroot%_sysconfdir/xdg/lxpanel/LXDE
+ln -s %_datadir/%theme_virt_dir/openbox %buildroot%_sysconfdir/xdg/openbox/LXDE
 
 mkdir -p %buildroot/etc/alternatives/packages.d/
 cat > %buildroot/etc/alternatives/packages.d/%theme_fullname << __EOF__
@@ -94,7 +93,7 @@ mkdir -p %buildroot%_desktopdir/
 cp -v debian/*.desktop %buildroot%_desktopdir/
 
 #Install panel config
-install -m644 %SOURCE2 %buildroot%_sysconfdir/xdg/lxpanel/LXDE/panels/
+install -m644 %SOURCE2 %buildroot%_datadir/%theme_fullname/lxpanel/panels/
 
 %find_lang %name
 
@@ -103,38 +102,33 @@ if [ -d %_datadir/lxpanel/profile/LXDE ] && [ ! -L %_datadir/lxpanel/profile/LXD
  rm -fR %_datadir/lxpanel/profile/LXDE
 fi
 
+rm -fR %_sysconfdir/xdg/lxsession/LXDE/desktop.conf \
+       %_sysconfdir/xdg/pcmanfm/LXDE \
+       %_sysconfdir/xdg/lxpanel/LXDE \
+       %_sysconfdir/xdg/openbox/LXDE    
+
 %files -f %name.lang
 %doc ChangeLog INSTALL README
 %_bindir/*
 %_x11sysconfdir/wmsession.d/*
-%dir %_sysconfdir/xdg/lxsession
-%dir %_sysconfdir/xdg/lxsession/LXDE
-%_sysconfdir/xdg/lxsession/LXDE/autostart
-%dir %_sysconfdir/xdg/lxpanel
-%dir %_sysconfdir/xdg/lxpanel/LXDE
-%_sysconfdir/xdg/lxpanel/LXDE/*
-%dir %_sysconfdir/xdg/openbox/LXDE
-%_sysconfdir/xdg/openbox/LXDE/*
+%_sysconfdir/xdg/*
 %dir %_datadir/xsessions
 %_datadir/xsessions/*.desktop
 %_man1dir/*
-### themeable
-%_sysconfdir/xdg/lxsession/LXDE/desktop.conf
-%dir %_sysconfdir/xdg/pcmanfm
-%dir %_sysconfdir/xdg/pcmanfm/LXDE
 
-%config %_sysconfdir/xdg/pcmanfm/LXDE/pcmanfm.conf
-%config %_sysconfdir/xdg/pcmanfm/LXDE/lxde.conf
-#%%_datadir/lxpanel/profile/LXDE
 %_desktopdir/*.desktop
 
 %files -n %theme_fullname
-%config /etc/alternatives/packages.d/%theme_fullname
+%_sysconfdir/alternatives/packages.d/%theme_fullname
 %_datadir/%theme_fullname
 
 #_iconsdir/nuoveXT2
 
 %changelog
+* Wed Jun 29 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt3
+- Replace config files to /usr/share/lxde
+- Fix config panel.
+
 * Thu May 26 2016 Anton Midyukov <antohami@altlinux.org> 0.99.1-alt2
 - Added xkb-switch on the panel. 
 
