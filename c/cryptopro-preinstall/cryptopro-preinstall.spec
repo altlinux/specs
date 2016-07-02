@@ -1,7 +1,7 @@
 Name:     cryptopro-preinstall
 Version:  4.0.0
-Release:  alt1
-Summary:  Prepare environment for install official CryptoPro SCP packages (with Rutoken support)
+Release:  alt2
+Summary:  Prepare environment for install official CryptoPro SCP packages (with Rutoken S and ECP support)
 License:  GPL
 Group:    Security/Networking
 URL:      https://www.altlinux.org/CryptoPro
@@ -18,10 +18,11 @@ Requires: lsb >= 3.0
 # Need for cprocsp-rdr-gui-gtk
 Requires: libpangox-compat
 
-# Need for Rutoken support
+# Need for Rutoken S and ECP support
 Requires: opensc
 Requires: pcsc-lite
 Requires: pcsc-lite-rutokens
+Requires: pcsc-lite-ccid
 
 %description
 Prepare environment for install official CryptoPro SCP packages.
@@ -37,5 +38,9 @@ install -Dm0755 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/cryptopro-paths.sh
 %attr(0755,root,root) %_sysconfdir/bashrc.d/cryptopro-paths.sh
 
 %changelog
+* Sat Jul 02 2016 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt2
+- Fix path add if CryproPro is not installed
+- Add Rutoken ECP support
+
 * Tue Jun 28 2016 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
 - Initial build for Sisyphus
