@@ -1,5 +1,5 @@
 Name: shotcut
-Version: 16.06
+Version: 16.07
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
@@ -103,6 +103,9 @@ done
 %_liconsdir/%name.png
 
 %changelog
+* Sat Jul 02 2016 Anton Midyukov <antohami@altlinux.org> 16.07-alt1
+- New version 16.07-alt1
+
 * Sun Jun 12 2016 Anton Midyukov <antohami@altlinux.org> 16.06-alt1
 - New version.
 
