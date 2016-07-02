@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 15.08.2
+Version: 16.04.2
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -81,6 +81,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Sun Jul 03 2016 Ilya Mashkin <oddity@altlinux.ru> 16.04.2-alt1
+- 16.04.2
+
 * Tue Dec 01 2015 Ilya Mashkin <oddity@altlinux.ru> 15.08.2-alt1
 - 15.08.2
 - missing files added
