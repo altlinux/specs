@@ -1,18 +1,27 @@
+%def_enable snapshot
+
 %def_enable updatedb
 
 Name: shared-mime-info
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
 License: %gpl2plus
 Url: http://www.freedesktop.org/wiki/Software/%name
 
+%if_disabled snapshot
 Source: http://www.freedesktop.org/~hadess/%name-%version.tar.xz
-Source2: %name.filetrigger
+%else
+Source: %name-%version.tar
+%endif
+
+Source1: %name.filetrigger
 Patch: %name-0.19-alt-cachedir-param.patch
 Patch1: %name-1.5-alt-swf.patch
+Patch2: %name-1.6-alt-q_option.patch
+
 Requires: rpm-build-xdg
 
 BuildPreReq: rpm-build-licenses rpm-build-xdg
@@ -47,11 +56,14 @@ format and merging them together.
 
 %prep
 %setup
+cp %SOURCE1 .
 %patch
 %patch1 -b .swf
+%patch2 -b .quiet
 rm -f freedesktop.org.xml
 
 %build
+%autoreconf
 %configure %{?_disable_updatedb:--disable-update-mimedb}
 # SMP-incompatible build
 %make
@@ -71,7 +83,7 @@ install -pD -m755 %name.sh %buildroot%_sysconfdir/profile.d/%name.sh
 install -pD -m755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 
 # posttrans filetrigger
-install -pD -m 755 %SOURCE2 %buildroot%_rpmlibdir/mime-database.filetrigger
+install -pD -m 755 shared-mime-info.filetrigger %buildroot%_rpmlibdir/mime-database.filetrigger
 
 # do empty db files and create file list
 find %buildroot%_xdgmimedir -type f |fgrep -v "/packages/" > db.files
@@ -86,8 +98,8 @@ multipart,text,video,XMLnamespaces}
 %files -f db.files
 %_bindir/update-mime-database
 %_xdgmimedir/packages/freedesktop.org.xml
-%_man1dir/*
-%_datadir/pkgconfig/*
+%_man1dir/update-mime-database.1.*
+%_datadir/pkgconfig/%name.pc
 
 %exclude  %config(noreplace) %_sysconfdir/profile.d/*
 
@@ -98,6 +110,10 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Fri Jul 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt2
+- updated to 1-6-39-g01fa61f
+- added -q option to update-mime-database (ALT #22431)
+
 * Sat Mar 26 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6
 
