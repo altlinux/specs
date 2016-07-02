@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 3.20
 %define api_ver 1.0
 %define _name GPaste
@@ -5,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major
+Version: %ver_major.4
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -13,11 +15,13 @@ Group: Text tools
 License: BSD-like
 Url: https://github.com/Keruspe/GPaste
 
+%if_disabled snapshot
 Source: http://www.imagination-land.org/files/%name/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 # from pkg-config 0.29.1
 Source1: pkg.m4
-Patch: %name-3.20-alt-link.patch
 
 Requires: lib%name = %version-%release
 
@@ -94,7 +98,6 @@ in notification area.
 
 %prep
 %setup
-%patch 
 # pkg-config-0.27, automake 1.15 required
 subst 's/0\.27/0.25/
        s/1\.15/1.14/' configure.ac
@@ -160,6 +163,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Sat Jul 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
+- 3.20.4
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20-alt1
 - 3.20
 
