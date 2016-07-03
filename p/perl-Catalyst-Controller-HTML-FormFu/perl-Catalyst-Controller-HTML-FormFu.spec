@@ -5,7 +5,7 @@ BuildRequires: perl(Test/Aggregate/Nested.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(Locale/Maketext.pm)
 Name:           perl-Catalyst-Controller-HTML-FormFu
-Version:        2.00
+Version:        2.01
 Release:        alt1
 Summary:        HTML::FormFu controller for Catalyst
 License:        GPL+ or Artistic
@@ -110,6 +110,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
