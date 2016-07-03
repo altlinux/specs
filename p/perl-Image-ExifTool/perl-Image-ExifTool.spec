@@ -2,7 +2,7 @@
 %define dist Image-ExifTool
 
 Name: perl-%dist
-Version: 10.15
+Version: 10.20
 Release: alt1
 
 Summary: Perl module for manipulating EXIF data
@@ -48,6 +48,9 @@ and Sony.
 %_man1dir/exiftool*
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 10.20-alt1
+- automated CPAN update
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 10.15-alt1
 - automated CPAN update
 
