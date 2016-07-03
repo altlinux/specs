@@ -55,10 +55,12 @@
 %define src_4_2_version 2.06
 %define src_4_3_version 2.08
 %define src_4_4_version 2.08
+%define src_4_5_version 2.08
+%define src_4_6_version 2.08
 
 Name: etercifs
-Version: 5.4.14
-Release: alt2
+Version: 5.4.15
+Release: alt1
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
 
@@ -123,6 +125,8 @@ Source141: %src_package_name-4.1-%src_4_1_version.tar.bz2
 Source142: %src_package_name-4.2-%src_4_2_version.tar.bz2
 Source143: %src_package_name-4.3-%src_4_3_version.tar.bz2
 Source144: %src_package_name-4.4-%src_4_4_version.tar.bz2
+Source145: %src_package_name-4.5-%src_4_5_version.tar.bz2
+Source146: %src_package_name-4.6-%src_4_6_version.tar.bz2
 
 Conflicts: linux-cifs
 
@@ -167,6 +171,8 @@ Provides: %src_package_name-4.1 = %version-%release
 Provides: %src_package_name-4.2 = %version-%release
 Provides: %src_package_name-4.3 = %version-%release
 Provides: %src_package_name-4.4 = %version-%release
+Provides: %src_package_name-4.5 = %version-%release
+Provides: %src_package_name-4.6 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -321,6 +327,8 @@ cp %SOURCE141 %buildroot/%etercifs_src/
 cp %SOURCE142 %buildroot/%etercifs_src/
 cp %SOURCE143 %buildroot/%etercifs_src/
 cp %SOURCE144 %buildroot/%etercifs_src/
+cp %SOURCE145 %buildroot/%etercifs_src/
+cp %SOURCE146 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -420,6 +428,10 @@ ln -s ../../../../%etercifs_src/%src_package_name-4.3-%src_4_3_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-4.3-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-4.4-%src_4_4_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-4.4-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-4.5-%src_4_5_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.5-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-4.6-%src_4_6_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-4.6-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -449,6 +461,23 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 %_sbindir/%name-build
 
 %changelog
+* Sun Jul 03 2016 Pavel Shilovsky <piastry@altlinux.org> 5.4.15-alt1
+- Add sources for 4.6 (v4.6.3)
+- Add sources for 4.5 (v4.5.7)
+- Update 4.2 sources from stable (v4.2.8-ckt12)
+- Update 3.19 sources from stable (v3.19.8-ckt22)
+- Update 3.13 sources from stable (v3.13.11-ckt39)
+- Update 4.4 sources from stable (v4.4.14)
+- Update 4.1 sources from stable (v4.1.27)
+- Update 3.18 sources from stable (v3.18.36)
+- Update 3.16 sources from stable (v3.16.36)
+- Update 3.14 sources from stable (v3.14.73)
+- Update 3.12 sources from stable (v3.12.61)
+- Update 3.10 sources from stable (v3.10.102)
+- Update 3.4 sources from stable (v3.4.112)
+- Update 3.2 sources from stable (v3.2.81)
+- Add support for 3.10.0-327.10.1.el7 CentOS 7
+
 * Fri Feb 05 2016 Vitaly Lipatov <lav@altlinux.ru> 5.4.14-alt2
 - functions.sh: small workround and update comments
 - rewrite for separate OpenVZ-kernels checking
