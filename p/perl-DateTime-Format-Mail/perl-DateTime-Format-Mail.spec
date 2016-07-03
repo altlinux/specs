@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Format-Mail
 Name: perl-%dist
-Version: 0.402
+Version: 0.403
 Release: alt1
 Serial:  1
 
@@ -35,6 +35,9 @@ This module parses and emits such dates.
 %perl_vendor_privlib/DateTime*
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.403-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.402-alt1
 - automated CPAN update
 
