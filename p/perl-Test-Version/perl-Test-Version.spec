@@ -7,12 +7,12 @@ BuildRequires: perl-devel perl-podlators
 %global debug_package %{nil}
 
 Name:		perl-Test-Version
-Version:	2.03
-Release:	alt1_2
+Version:	2.04
+Release:	alt1
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
 URL:		http://search.cpan.org/dist/Test-Version/
-Source0:	http://search.cpan.org/CPAN/authors/id/P/PL/PLICEASE/Test-Version-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/P/PL/PLICEASE/Test-Version-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Module build requirements
@@ -97,6 +97,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1_2
 - update to new release by fcimport
 
