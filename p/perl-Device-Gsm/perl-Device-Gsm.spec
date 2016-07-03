@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Device-Gsm
-Version: 1.60
+Version: 1.61
 Release: alt1
 
 Summary: Perl extension to interface GSM phones / modems
@@ -69,6 +69,9 @@ so I can add better support for your device in the future!
 %perl_vendor_privlib/Device/*
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.61-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
 - automated CPAN update
 
