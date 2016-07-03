@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Capture/Tiny.pm) perl(File/Path.pm) perl(FindBin.pm) perl(IO/All.pm) perl(Mo.pm) perl(Safe.pm) perl(Test/Builder.pm) perl(Test/Pod.pm) perl(Text/Diff.pm) perl(Time/HiRes.pm) perl-devel perl-podlators perl(XXX.pm)
 # END SourceDeps(oneline)
 Name:           perl-Pegex
-Version:        0.60
-Release:        alt2_4
+Version:        0.61
+Release:        alt1
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Pegex/
-Source0:        http://search.cpan.org/CPAN/authors/id/I/IN/INGY/Pegex-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/I/IN/INGY/Pegex-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -80,6 +80,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Tue Dec 08 2015 Igor Vlasenko <viy@altlinux.ru> 0.60-alt2_4
 - to Sisyphus
 
