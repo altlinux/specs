@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Hash-Util-FieldHash-Compat
 Name: perl-%dist
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Use Hash::Util::FieldHash or ties, depending on availability
@@ -37,6 +37,9 @@ available it will use that instead.
 %perl_vendor_privlib/Hash
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
 - automated CPAN update
 
