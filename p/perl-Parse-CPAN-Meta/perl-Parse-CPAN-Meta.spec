@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Parse-CPAN-Meta
 Name: perl-%dist
-Version: 1.4417
+Version: 1.4422
 Release: alt1
 
 Summary: Base class for image manipulation
@@ -38,6 +38,9 @@ and Image::Xpm.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.4422-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.4417-alt1
 - automated CPAN update
 
