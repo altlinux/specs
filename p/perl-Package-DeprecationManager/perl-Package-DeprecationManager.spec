@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Package-DeprecationManager
 Name: perl-%dist
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Manage deprecation warnings for your distribution
@@ -33,6 +33,9 @@ This module allows you to manage a set of deprecations for one or more modules.
 %perl_vendor_privlib/Package*
 
 %changelog
+* Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Wed Mar 23 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
