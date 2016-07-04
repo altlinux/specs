@@ -1,5 +1,5 @@
 Name: libfilezilla
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
@@ -84,6 +84,9 @@ LC_ALL=en_US.UTF-8 make check
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jun 27 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.3-alt1
+- Updated to 0.5.3.
+
 * Thu Jun 02 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
