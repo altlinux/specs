@@ -11,7 +11,7 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.04.2
 Release: alt1
 %K5init
 
@@ -24,6 +24,7 @@ Requires: kde5-kalgebra
 
 Source: %rname-%version.tar
 Patch1: alt-lib-so-ver.patch
+Patch2: alt-find-luajit.patch
 
 # Automatically added by buildreq on Wed Mar 30 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -85,6 +86,13 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
+
+pushd src/backends/lua
+for f in *.{h,cpp} ; do
+    sed -i 's|luajit-2.0/lua.hpp|luajit-%{get_version libluajit-devel}/lua.hpp|' $f
+done
+popd
 
 %build
 %K5build \
@@ -129,6 +137,9 @@ KF5 library
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
