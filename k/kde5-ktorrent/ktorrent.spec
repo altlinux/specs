@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 5.0.1
-Release: alt3
+Release: alt4
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
@@ -18,7 +18,11 @@ Provides: ktorrent = %version-%release
 Requires: kde5-kross-python
 
 Source: %rname-%version.tar
-Patch1: alt-defaults.patch
+# upstream
+Patch1: mimetype.patch
+Patch2: sharedconfigptr.patch
+# ALT
+Patch10: alt-defaults.patch
 
 # Automatically added by buildreq on Tue Apr 19 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgcrypt-devel libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-svg libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel qt5-webkit-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -50,6 +54,8 @@ KTorrent library
 %prep
 %setup -q -n %rname-%version
 %patch1 -p1
+%patch2 -p1
+%patch10 -p1
 
 sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
@@ -80,6 +86,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt4
+- fix using mimetypes
+
 * Mon May 23 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt3
 - fix provides
 
