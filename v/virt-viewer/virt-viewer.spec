@@ -1,6 +1,6 @@
 Name: virt-viewer
-Version: 3.1
-Release: alt2
+Version: 4.0
+Release: alt1
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -11,11 +11,12 @@ Source: %name-%version.tar
 
 Obsoletes: spice-client < 0.12.5-alt3
 
-BuildRequires: glib2-devel >= 2.22.0
+BuildRequires: glib2-devel >= 2.38.0 libgio-devel
 BuildRequires: libxml2-devel
-BuildRequires: libvirt-devel >= 0.9.7
+BuildRequires: libvirt-devel >= 0.9.7 libvirt-glib-devel >= 0.1.8
+BuildRequires: libgtk+3-devel >= 3.10
 BuildRequires: perl-podlators intltool
-BuildRequires: libspice-gtk3-devel >= 0.30 spice-protocol >= 0.12.7
+BuildRequires: libspice-gtk3-devel >= 0.31 spice-protocol >= 0.12.7
 BuildRequires: libgtk3vnc-devel >= 0.4.0
 BuildRequires: libgovirt-devel >= 0.3.2
 
@@ -38,7 +39,6 @@ intltoolize --force
 %configure \
 	--disable-static \
 	--disable-update-mimedb \
-	--with-gtk=3.0 \
 	--with-buildid=-%release
 
 %make_build
@@ -51,13 +51,16 @@ intltoolize --force
 %doc README COPYING AUTHORS ChangeLog NEWS
 %_bindir/*
 %_man1dir/*
-%_datadir/%name/ui/*.xml
 %_datadir/mime/packages/*.xml
 %_desktopdir/*.desktop
+%_datadir/appdata/remote-viewer.appdata.xml
 %_iconsdir/hicolor/*/apps/*
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Mon Jul 04 2016 Alexey Shabalin <shaba@altlinux.ru> 4.0-alt1
+- 4.0
+
 * Mon Jun 27 2016 Alexey Shabalin <shaba@altlinux.ru> 3.1-alt2
 - rebuild with spice-gtk-0.32-alt1
 
