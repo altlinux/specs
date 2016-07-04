@@ -13,7 +13,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -59,6 +59,7 @@ Requires: %name-rocs = %version-%release
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: alt-kstars-fix-compile.patch
 Patch2: alt-kturtle-default-language.patch
+Patch3: alt-find-luajit.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
@@ -655,6 +656,13 @@ KDE 4 library
 %setup -q -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+
+pushd cantor/src/backends/lua
+for f in *.{h,cpp} ; do
+    sed -i 's|luajit-2.0/lua.hpp|luajit-%{get_version libluajit-devel}/lua.hpp|' $f
+done
+popd
 
 %if_disabled artikulate
 rm -rf artikulate
@@ -1114,6 +1122,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt3
+- fix to build with new luajit
+
 * Tue Mar 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt2
 - rebuild with new wcslib
 
