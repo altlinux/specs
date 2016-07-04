@@ -1,6 +1,6 @@
 %define mversion	6
 %define dversion	%mversion.9.4
-%define drelease	7
+%define drelease	10
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -226,6 +226,9 @@ mv %buildroot%_docdir/%name-6 %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Jun 29 2016 Anton Farygin <rider@altlinux.ru> 6.9.4.10-alt1
+- new version
+
 * Sun Jun 05 2016 Anton Farygin <rider@altlinux.ru> 6.9.4.7-alt1
 - new version with fixes for CVE-2016-5118 (closes: #32174)
 
