@@ -1,6 +1,6 @@
-%define svnrev 27532
+%define svnrev 27609
 Name: openttd
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe".
@@ -89,6 +89,9 @@ install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 %_man6dir/*
 
 %changelog
+* Mon Jul 04 2016 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
+- new version
+
 * Thu Jun 16 2016 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
 - new version
 
