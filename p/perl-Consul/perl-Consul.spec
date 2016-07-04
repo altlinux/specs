@@ -4,7 +4,7 @@
 
 Name: perl-Consul
 Version: 0.016
-Release: alt1
+Release: alt2
 
 Summary:  Perl client library for Consul
 
@@ -22,9 +22,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sat Apr 23 2016
-# optimized out: perl-Encode perl-JSON-MaybeXS perl-Moo perl-Try-Tiny perl-URI perl-devel perl-namespace-autoclean python-base python-modules python3
-BuildRequires: perl-Convert-Base64 perl-HTTP-Tiny perl-Hash-MultiValue perl-Type-Tiny perl-JSON-MaybeXS perl-JSON-PP perl-JSON-XS
+# Automatically added by buildreq on Mon Jul 04 2016
+# optimized out: perl perl-Encode perl-JSON-MaybeXS perl-Moo perl-Try-Tiny perl-URI perl-devel python-base python-modules python3
+BuildRequires: perl-Convert-Base64 perl-HTTP-Tiny perl-Hash-MultiValue perl-Type-Tiny perl-namespace-autoclean perl-JSON-PP perl-JSON-XS
 
 %description
 Perl module Consul provides a client library for accessing and
@@ -53,5 +53,8 @@ this module provides.
 %perl_vendor_privlib/Consul*
 
 %changelog
+* Mon Jul 04 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.016-alt2
+- Fix build (updating BuildRequires)
+
 * Sat Apr 23 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.016-alt1
 - Initial build for ALT Linux Sisyphus
