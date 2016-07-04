@@ -1,6 +1,6 @@
 Name: attr
-Version: 2.4.47.0.35.dce9
-Release: alt2
+Version: 2.4.47.0.44.315a
+Release: alt1
 
 Summary: Utilities for managing filesystem extended attributes
 License: GPLv2+
@@ -105,6 +105,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 04 2016 Dmitry V. Levin <ldv@altlinux.org> 2.4.47.0.44.315a-alt1
+- v2.4.47-35-gdce9b44 -> v2.4.47-44-g315af30 (closes: #32244).
+
 * Mon Sep 21 2015 Dmitry V. Levin <ldv@altlinux.org> 2.4.47.0.35.dce9-alt2
 - attr/xattr.h: Reintroduced more old stuff for backwards compatibility.
 
