@@ -7,7 +7,7 @@
 
 Name: transmission
 Version: 2.92
-Release: alt3
+Release: alt4
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -123,6 +123,10 @@ Daemonised BitTorrent client
 %patch0 -p1
 sed -i "s|\(^CONFIG.*\+=.*[[:space:]]\)debug\([[:space:]].*$\)|\1release\2|" qt/qtr.pro
 sed -i "s|^LIBS.*\+=.*libevent\.a$|LIBS += -levent|" qt/qtr.pro
+
+%if "%(rpmvercmp '%{get_version glib2}' '2.48.0')" >= "0"
+rm -f m4/glib-gettext.m4
+%endif
 
 %build
 ./autogen.sh
@@ -267,6 +271,9 @@ fi
 %attr(770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Mon Jul 04 2016 Yuri N. Sedunov <aris@altlinux.org> 2.92-alt4
+- fixed build with glib2 >= 2.48
+
 * Fri Mar 11 2016 Anton Farygin <rider@altlinux.ru> 2.92-alt3
 - fixed permission for access to the daemon Download directory  (closes: #26984)
 
