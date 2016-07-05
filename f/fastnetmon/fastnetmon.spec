@@ -1,6 +1,6 @@
 Name: fastnetmon
-Version: 1.1.2
-Release: alt4
+Version: 1.1.3
+Release: alt1
 Summary: A high performance DoS/DDoS load analyzer.
 Group: Networking/Other
 
@@ -57,6 +57,9 @@ install -m755 %name.init %buildroot%_initdir/%name
 
 
 %changelog
+* Tue Jul 05 2016 Alexei Takaseev <taf@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Mon Jul 04 2016 Alexei Takaseev <taf@altlinux.org> 1.1.2-alt4
 - fix build with luajit-2.1
 - update to git:11522e4d905ca2bacb1510a107b7bd654f58016e
