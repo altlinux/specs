@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde5-%rname
 Version: 2.0.4
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Video
@@ -52,12 +52,12 @@ It also handles Video CDs, DVDs, and DVB cards.
 %patch1 -p1
 
 %build
-%K5build
+%K5build -DDATA_INSTALL_DIR=%_K5data
 
 
 %install
 %K5install
-%K5install_move data kaffeine profiles solid
+#K5install_move data kaffeine profiles solid
 %find_lang --with-kde %rname
 
 
@@ -73,6 +73,9 @@ It also handles Video CDs, DVDs, and DVB cards.
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt3
+- fix find system scanfile.dvb
+
 * Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt2
 - fix to build with libdvbv5
 
