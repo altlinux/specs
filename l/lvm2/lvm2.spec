@@ -1,12 +1,18 @@
-%define lvm2version 2.02.157
-%define dmversion 1.02.127
+%define lvm2version 2.02.158
+%define dmversion 1.02.128
+
+%define _sbindir /sbin
+%define _runtimedir /run
+%define _lockdir /run/lock
+%def_enable static
 
 %def_enable cluster
 %def_enable selinux
 %def_enable lvmetad
+%def_disable udev_systemd_background_jobs
 %def_enable lvmpolld
 %def_disable lvmlockd
-%def_disable blkid_wiping
+%def_enable blkid_wiping
 %def_disable lvmdbusd
 
 %if_enabled lvmlockd
@@ -19,7 +25,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt2
+Release: alt1
 License: GPL
 
 Group: System/Base
@@ -40,8 +46,6 @@ Requires: dmsetup  >= %{dmversion}-%{release}
 Requires: dmeventd >= %{dmversion}-%{release}
 Requires: liblvm2  = %{lvm2version}-%{release}
 
-%define _sbindir /sbin
-%def_enable static
 
 BuildRequires: gcc-c++
 BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
@@ -238,6 +242,7 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 %configure \
 	--disable-readline \
 	--disable-selinux \
+	--disable-blkid_wiping \
 	--disable-nls \
 	--enable-lvm1_fallback \
 	--enable-static_link \
@@ -250,7 +255,12 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 	--with-device-uid=0 \
 	--with-device-gid=6 \
 	--with-device-mode=0660 \
-	--with-dmeventd-path="%_sbindir/dmeventd"
+	--with-dmeventd-path="%_sbindir/dmeventd" \
+	--with-default-pid-dir=%_runtimedir \
+	--with-default-dm-run-dir=%_runtimedir \
+	--with-default-run-dir=%_runtimedir/lvm \
+	--with-default-locking-dir=%_lockdir/lvm
+
 	#
 %__make libdm
 %__make lib
@@ -285,7 +295,7 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-udevdir=%_udevrulesdir \
 %if_enabled lvmetad
 	%{subst_enable lvmetad} \
-	--enable-udev-systemd-background-jobs \
+	%{?_disable_udev_systemd_background_jobs:--disable-udev-systemd-background-jobs} \
 %endif
 	%{subst_enable lvmpolld} \
 	--enable-udev_sync \
@@ -298,7 +308,8 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-tmpfilesdir=%_tmpfilesdir \
 	--with-default-pid-dir=%_runtimedir \
 	--with-default-dm-run-dir=%_runtimedir \
-	--with-default-run-dir=%_runtimedir \
+	--with-default-run-dir=%_runtimedir/lvm \
+	--with-default-locking-dir=%_lockdir/lvm \
 	--with-pool=internal \
 	--with-cluster=internal \
 	--with-snapshots=internal \
@@ -369,9 +380,6 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 install -m 0755 %SOURCE4 %buildroot%_initdir/lvm2-lvmetad
 install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
-
-# Fix tmpfiles
-sed -i -e '/run/d' %buildroot%_tmpfilesdir/%name.conf
 
 mv %buildroot%_prefix/sbin/clvmd %buildroot%_sbindir/
 mkdir -p %buildroot%_sysconfdir/sysconfig
@@ -455,7 +463,7 @@ __EOF__
 %dir %_sysconfdir/lvm/backup
 %dir %_sysconfdir/lvm/archive
 %dir %_sysconfdir/lvm/cache
-%_lockdir/lvm
+#%ghost %_lockdir/lvm
 %ghost %_sysconfdir/lvm/cache/.cache
 
 %if_enabled static
@@ -550,6 +558,14 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jul 05 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.158-alt1
+- 2.02.158
+- build with --enable-blkid_wiping
+- build with --disable-udev-systemd-background-jobs; else need move systemd-run to rootbindir
+- don't run pvscan in background
+- define %_runtimedir as /run (need for systemd socket activation lvm2-lvmetad service without /var mounted) (fixed bug #32216)
+- define %_lockdir as /run/lock
+
 * Fri Jun 24 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.157-alt2
 - 2.02.157
 
