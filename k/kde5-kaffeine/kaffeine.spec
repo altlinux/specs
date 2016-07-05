@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde5-%rname
 Version: 2.0.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Video
@@ -33,6 +33,7 @@ Requires: vlc-plugin-dbus
 Requires: vlc-plugin-taglib
 
 Source0: %rname-%version.tar
+Patch1: alt-find-libdvbv5.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-x11extras-devel
@@ -48,6 +49,7 @@ It also handles Video CDs, DVDs, and DVB cards.
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -71,6 +73,9 @@ It also handles Video CDs, DVDs, and DVB cards.
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt2
+- fix to build with libdvbv5
+
 * Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt1
 - new version
 
