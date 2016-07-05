@@ -1,7 +1,7 @@
 %define rname kshisen
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.04.2
 Release: alt1
 %K5init
 
@@ -46,6 +46,9 @@ BuildRequires: kf5-kxmlgui-devel kf5-kcrash-devel
 %_K5cfg/kshisen.kcfg
 
 %changelog
+* Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
