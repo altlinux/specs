@@ -1,6 +1,6 @@
-%define geany_ver 1.24.1
+%define geany_ver 1.27
 Name: geany-plugins
-Version: 1.24
+Version: 1.27
 Release: alt1
 
 Summary: Plugins for Geany
@@ -15,9 +15,10 @@ BuildRequires(pre): geany geany-devel intltool
 
 Requires: geany-plugins-vc
 
-# Automatically added by buildreq on Thu Jul 26 2012
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+2-devel libjavascriptcoregtk2-devel libpango-devel libsoup-devel perl-XML-Parser pkg-config xorg-xproto-devel zlib-devel
-BuildRequires: geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgpgme-devel libgtkspell-devel liblua5-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel vala
+# Automatically added by buildreq on Tue Jul 05 2016
+# optimized out: fontconfig fontconfig-devel geany glib2-devel gnu-config libX11-devel libXext-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+2-devel libjavascriptcoregtk2-devel libpango-devel libsoup-devel perl-XML-Parser pkg-config python-base python-devel python-module-pygobject-devel python-modules vala xorg-xproto-devel zlib-devel
+BuildRequires: cppcheck geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgit2-devel libgpgme-devel libgtkspell-devel liblua5-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel
+# TODO python-module-pygtk-devel
 
 %description
 This is Geany plugin collection
@@ -56,7 +57,7 @@ Various VCS integration (Git, SVN, ...) for Geany
 %_datadir/geany-plugins/*
 #dir #_libexecdir/geany-plugins
 #_libexecdir/geany-plugins/*
-%_iconsdir/hicolor/*/apps/gproject*
+%_iconsdir/hicolor/*/apps/*
 %exclude %_libdir/geany/geanyvc*
 %exclude %_libdir/geany/*.la
 %exclude %_libdir/geany-plugins/*/*.la
@@ -67,6 +68,10 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Tue Jul 05 2016 Fr. Br. George <george@altlinux.ru> 1.27-alt1
+- Autobuild version bump to 1.27
+- Build additional modules
+
 * Mon May 12 2014 Fr. Br. George <george@altlinux.ru> 1.24-alt1
 - Autobuild version bump to 1.24
 
