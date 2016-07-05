@@ -1,7 +1,7 @@
 
 Name: kde5-virtual
-Version: 5.3.1
-Release: alt1
+Version: 5.4.0
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
@@ -41,9 +41,18 @@ Requires: kf5-plasma-nm-maxi
 %description -n kde5-network-manager-4-nm
 %summary
 
+%package -n kde5-video-player-0-dummy
+Group: Graphical desktop/KDE
+Summary: Dummy video player
+Provides: kde5-video-player = %EVR
+Provides: kde5-video-player-dummy = %EVR
+Requires: kf5-filesystem
+%description -n kde5-video-player-0-dummy
+%summary
+
 %package -n kde5-video-player-2-dragon
 Group: Graphical desktop/KDE
-Summary: NetworkManager network manager
+Summary: Dragon video player
 Provides: kde5-video-player = %EVR
 Provides: kde5-video-player-dragon = %EVR
 Requires: kf5-filesystem
@@ -51,14 +60,33 @@ Requires: kde5-dragon
 %description -n kde5-video-player-2-dragon
 %summary
 
+%package -n kde5-video-player-3-kaffeine
+Group: Graphical desktop/KDE
+Summary: Kaffeine video player
+Provides: kde5-video-player = %EVR
+Provides: kde5-video-player-kaffeine = %EVR
+Requires: kf5-filesystem
+Requires: kde5-kaffeine
+%description -n kde5-video-player-3-kaffeine
+%summary
+
 %package -n kde5-video-player-4-smplayer
 Group: Graphical desktop/KDE
-Summary: NetworkManager network manager
+Summary: SMplayer video player
 Provides: kde5-video-player = %EVR
 Provides: kde5-video-player-smplayer = %EVR
 Requires: kf5-filesystem
 Requires: kde5-smplayer
 %description -n kde5-video-player-4-smplayer
+%summary
+
+%package -n kde5-volume-control-0-dummy
+Group: Graphical desktop/KDE
+Summary: Dummy volume control
+Provides: kde5-volume-control = %EVR
+Provides: kde5-volume-control-dummy = %EVR
+Requires: kf5-filesystem
+%description -n kde5-volume-control-0-dummy
 %summary
 
 %package -n kde5-volume-control-2-kmix
@@ -81,13 +109,22 @@ Requires: kf5-plasma-pa
 %description -n kde5-volume-control-4-plasmapulse
 %summary
 
+%package -n kde5-email-client-0-dummy
+Group: Graphical desktop/KDE
+Summary: Dummy email client
+Provides: kde5-email-client = %EVR
+Provides: kde5-email-client-dummy = %EVR
+Requires: kf5-filesystem
+%description -n kde5-email-client-0-dummy
+%summary
+
 %package -n kde5-email-client-2-kmail
 Group: Graphical desktop/KDE
 Summary: KMail email client
 Provides: kde5-email-client = %EVR
 Provides: kde5-email-client-kmail = %EVR
 Requires: kf5-filesystem
-Requires: kde5-pim-kmail kde5-pim-addons-kmail kde5-pim-addons-plugins
+Requires: kde5-pim-kmail kde5-pim-addons-kmail kde5-pim-addons-plugins bogofilter bogofilter-utils
 %description -n kde5-email-client-2-kmail
 %summary
 
@@ -97,8 +134,17 @@ Summary: Thunderbird email client
 Provides: kde5-email-client = %EVR
 Provides: kde5-email-client-thunderbird = %EVR
 Requires: kf5-filesystem
-Requires: thunderbird thunderbird-ru
+Requires: thunderbird thunderbird-ru thunderbird-lightning-ru
 %description -n kde5-email-client-4-thunderbird
+%summary
+
+%package -n kde5-audio-player-0-dummy
+Group: Graphical desktop/KDE
+Summary: Dummy audio player
+Provides: kde5-audio-player = %EVR
+Provides: kde5-audio-player-dummy = %EVR
+Requires: kf5-filesystem
+%description -n kde5-audio-player-0-dummy
 %summary
 
 %package -n kde5-audio-player-4-qmmp
@@ -115,18 +161,30 @@ Requires: qmmp1
 %files -n kde5-network-manager-2-etcnet
 %files -n kde5-network-manager-4-nm
 
+%files -n kde5-video-player-0-dummy
 %files -n kde5-video-player-2-dragon
+%files -n kde5-video-player-3-kaffeine
 %files -n kde5-video-player-4-smplayer
 
+%files -n kde5-volume-control-0-dummy
 %files -n kde5-volume-control-2-kmix
 %files -n kde5-volume-control-4-plasmapulse
 
+%files -n kde5-email-client-0-dummy
 %files -n kde5-email-client-2-kmail
 %files -n kde5-email-client-4-thunderbird
 
+%files -n kde5-audio-player-0-dummy
 %files -n kde5-audio-player-4-qmmp
 
 %changelog
+* Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt2
+- fix requires
+
+* Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
+- add dummies for all alternatives
+- add kaffeine video player
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.3.1-alt1
 - update requires
 
