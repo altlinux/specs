@@ -8,7 +8,7 @@
 %def_with gnutls
 
 Name: squid
-Version: 3.5.19
+Version: 3.5.20
 Release: alt1
 %define langpack_ver 20150704
 Summary: The Squid proxy caching server
@@ -306,6 +306,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Tue Jul 05 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.20-alt1
+- Updated to 3.5.20.
+
 * Mon May 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.5.19-alt1
 - Updated to 3.5.19 (inludes fixes for CVE-2016-4553, CVE-2016-4554,
   CVE-2016-4555, CVE-2016-4556).
