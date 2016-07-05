@@ -1,8 +1,8 @@
 
 %define rname kaffeine
 Name: kde5-%rname
-Version: 2.0.3
-Release: alt2
+Version: 2.0.4
+Release: alt1
 %K5init
 
 Group: Video
@@ -71,6 +71,9 @@ It also handles Video CDs, DVDs, and DVB cards.
 %_K5xdgapp/org.kde.kaffeine.desktop
 
 %changelog
+* Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.4-alt1
+- new version
+
 * Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt2
 - fix provides, build requires
 
