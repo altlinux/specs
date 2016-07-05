@@ -1,7 +1,7 @@
 Name: ntp
 Version: 4.2.8
 #define patchlevel p6
-Release: alt5
+Release: alt6
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -336,6 +336,9 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Tue Jul 05 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt6
+- 4.2.8p8 (CVE-2016-4957 and other CVEs)
+
 * Mon Mar 21 2016 Sergey Y. Afonin <asy@altlinux.ru> 4.2.8-alt5
 - 4.2.8p6
 - removed "Packager" from spec
