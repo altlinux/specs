@@ -26,7 +26,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.1.14
+Version: 10.1.15
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -90,7 +90,7 @@ Patch34: mariadb-covscan-stroverflow.patch
 
 Requires: %name-server = %EVR %name-client = %EVR
 
-BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam0-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
+BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
 BuildRequires: libaio-devel libwrap-devel boost-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel
 BuildRequires: chrooted control
@@ -727,6 +727,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 06 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.15-alt1
+- 10.1.15
+
 * Tue May 10 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.14-alt1
 - 10.1.14
 
