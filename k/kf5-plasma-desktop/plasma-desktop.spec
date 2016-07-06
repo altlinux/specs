@@ -4,12 +4,10 @@
 %define libkfontinst libkfontinst%kfontinst_sover
 %define kfontinstui_sover 5
 %define libkfontinstui libkfontinstui%kfontinstui_sover
-%define kf5activitiesexperimentalstats_sover 1
-%define libkf5activitiesexperimentalstats libkf5activitiesexperimentalstats%kf5activitiesexperimentalstats_sover
 
 
 Name: kf5-%rname
-Version: 5.6.5
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -55,7 +53,7 @@ BuildRequires: kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-de
 BuildRequires: kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libksysguard-devel
 BuildRequires: kf5-plasma-framework-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: kf5-kdeclarative-devel kf5-kpeople-devel
+BuildRequires: kf5-kdeclarative-devel kf5-kpeople-devel kf5-kactivities-stats-devel
 BuildRequires: kf5-kded kf5-kded-devel kf5-kscreenlocker-devel
 
 %description
@@ -98,13 +96,6 @@ Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
 %description -n %libkfontinstui
-KF5 library
-
-%package -n %libkf5activitiesexperimentalstats
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libkf5activitiesexperimentalstats
 KF5 library
 
 
@@ -183,7 +174,7 @@ KF5 library
 %_K5data/kdisplay/
 %_K5data/kfontinst/
 %_K5data/konqsidebartng/
-%_K5data/ksmserver/
+#%_K5data/ksmserver/
 %_K5dbus_srv/*.service
 %_K5dbus_sys_srv/*.service
 
@@ -205,11 +196,11 @@ KF5 library
 %files -n %libkfontinstui
 %_K5lib/libkfontinstui.so.*
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
-%files -n %libkf5activitiesexperimentalstats
-%_K5lib/libKF5ActivitiesExperimentalStats.so.*
-%_K5lib/libKF5ActivitiesExperimentalStats.so.%kf5activitiesexperimentalstats_sover
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
 * Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
 - new version
 

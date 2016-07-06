@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: kf5-%rname
-Version: 5.6.5
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -23,6 +23,7 @@ BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompl
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-kwayland-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-breeze-devel
 
 %description
 Framework Integration is a set of plugins responsible for better integration of
@@ -44,6 +45,9 @@ Qt applications when running on a KDE Plasma workspace.
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme.so
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
 * Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
 - new version
 

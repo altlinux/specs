@@ -1,7 +1,7 @@
 %define rname libkscreen
 
 Name: kf5-%rname
-Version: 5.6.4
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -46,6 +46,12 @@ Requires: hwdatabase
 %description -n libkf5screen
 KF5 library
 
+%package utils
+Group: Graphical desktop/KDE
+Summary: %name utils
+Requires: %name-common = %version-%release
+%description utils
+%name utils.
 
 %prep
 %setup -n %rname-%version
@@ -60,6 +66,9 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING.LIB
+
+%files utils
+%_K5bin/*
 
 %files devel
 %_K5inc/kscreen_version.h
@@ -76,6 +85,12 @@ KF5 library
 %_K5dbus_srv/org.kde.kscreen.service
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
+* Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
+- new version
+
 * Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
 - new version
 

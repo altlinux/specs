@@ -4,7 +4,7 @@
 %define libkdecorationsprivate libkdecorations2private%sover
 
 Name: kf5-%rname
-Version: 5.6.3
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -84,6 +84,15 @@ KF5 library
 %_K5lib/libkdecorations2private.so.%sover.*
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
+* Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
+- new version
+
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
+- new version
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
 - new version
 

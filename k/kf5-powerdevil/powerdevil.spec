@@ -8,7 +8,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: kf5-%rname
-Version: 5.6.4
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -37,6 +37,9 @@ BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-libkscreen-devel kf5-kactivities-devel kf5-kwayland-devel
+BuildRequires: kf5-networkmanager-qt-devel kf5-bluez-qt-devel
+# tmp
+BuildRequires: libnm-devel
 
 %description
 Advanced power management settings.
@@ -125,6 +128,12 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
+* Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
+- new version
+
 * Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
 - new version
 
