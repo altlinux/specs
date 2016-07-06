@@ -5,7 +5,7 @@
 
 Name: kde3-yakuake
 Version: 2.8.1
-Release: alt6
+Release: alt7
 
 Summary: Very powerful Quake style Konsole
 License: %gpl2plus
@@ -27,6 +27,9 @@ BuildPreReq: gcc-c++ kdelibs-devel libtqt-devel
 %if_with arts
 BuildRequires:  libarts-devel
 %endif 
+
+Provides:  %origname = %version-%release
+Obsoletes: %origname < %version-%release
 
 %description
 A KDE konsole which looks like those found in Quake.
@@ -71,6 +74,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3i18n/*/*/*.mo
 
 %changelog
+* Thu Jun 30 2016 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt7
+- Provides yakuake
+
 * Tue Nov 05 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.1-alt6
 - Rebuild with patch for automake-1.14 using
 - Rebuild with default gcc-4.7

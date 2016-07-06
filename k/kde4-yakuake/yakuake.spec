@@ -1,6 +1,6 @@
 Name: kde4-yakuake
 Version: 2.9.9
-Release: alt2
+Release: alt3
 
 Summary: Very powerful Quake style Konsole for KDE4
 License: GPLv2, GPLv3 or any later version accepted by the membership of KDE e.V.
@@ -19,8 +19,8 @@ Requires: kde4base-konsole
 %define _unpackaged_files_terminate_build 1
 %define __kde4_alternate_placement 1
 
-Provides: yakuake = %version-%release
-Conflicts: yakuake >= 3.0.0
+Provides:  yakuake = %version-%release
+Obsoletes: yakuake < %version-%release
 
 %description
 A KDE konsole which looks like those found in Quake.
@@ -50,6 +50,9 @@ This version is built with KDE4.
 
 
 %changelog
+* Thu Jun 30 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.9-alt3
+- Obsoletes yakuake instead of conflicts
+
 * Mon Jun 20 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.9-alt2
 - Rename package to kde4-yakuake (ALT #32098)
 
