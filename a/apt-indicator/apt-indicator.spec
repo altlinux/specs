@@ -1,5 +1,5 @@
 Name: apt-indicator
-Version: 0.2.11
+Version: 0.3.0
 Release: alt1
 
 Summary: Applet for indication that newer packages are available
@@ -14,7 +14,7 @@ Provides: egg = %version-%release, alt-update = %version-%release
 Obsoletes: egg < %version-%release, alt-update < %version-%release
 Requires: /usr/bin/xdg-su /usr/sbin/synaptic
 
-BuildRequires: gcc-c++ libstdc++-devel libqt4-devel
+BuildRequires: gcc-c++ libstdc++-devel qt5-base-devel qt5-tools
 BuildRequires: docbook-dtds docbook-style-xsl help2man libapt-devel
 BuildRequires: xml-common xsltproc
 #BuildRequires: libdb4.4-devel
@@ -26,13 +26,13 @@ made notifications for users that newer packages are available.
 
 %prep
 %setup -q -n %name-%version
-qmake-qt4 "CONFIG += release"
+%qmake_qt5 "CONFIG += release"
 
 %build
 %make
 %make -C doc
-lrelease-qt4 checker/checker.pro
-lrelease-qt4 agent/agent.pro
+lrelease-qt5 checker/checker.pro
+lrelease-qt5 agent/agent.pro
 help2man --output=apt-indicator.1 --no-info apt-indicator ||:
 
 %install
@@ -69,6 +69,9 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.0-alt1
+- port to Qt5
+
 * Tue Oct 13 2015 Sergey V Turchin <zerg at altlinux dot org> 0.2.11-alt1
 - fix system tray icon pixmap
 
