@@ -1,10 +1,10 @@
 Name: galera
-Version: 25.3.15
+Version: 25.3.16
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
 License: GPLv2
-Url: http://www.http://galeracluster.com/
+Url: http://galeracluster.com/
 Source: %name-%version.tar
 
 Source1: garbd.init
@@ -93,6 +93,9 @@ install -D -m 644 scripts/packages/README-MySQL %buildroot%_docdir/galera/README
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Wed Jul 06 2016 Alexey Shabalin <shaba@altlinux.ru> 25.3.16-alt1
+- 25.3.16
+
 * Fri Mar 18 2016 Alexey Shabalin <shaba@altlinux.ru> 25.3.15-alt1
 - 25.3.15
 
