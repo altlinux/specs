@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.24.1
-Release: alt1.qa1
+Version: 1.27
+Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
 License: GPLv2
@@ -15,7 +15,9 @@ Source: %name-%version.tar.bz2
 Requires: libvte
 Requires: %name-data = %version
 BuildPreReq: desktop-file-utils
-BuildRequires: libgtk+2-devel gcc-c++ intltool
+# Automatically added by buildreq on Tue Jul 05 2016
+# optimized out: fontconfig fontconfig-devel glib2-devel gnu-config libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-lxml python-modules python-modules-compiler python-modules-encodings xorg-xproto-devel
+BuildRequires: gcc-c++ intltool libgtk+2-devel python-module-docutils time
 
 %add_findreq_skiplist %_datadir/%name/templates/files/*
 
@@ -84,7 +86,10 @@ end.
 @@@
 
 %build
-%configure --docdir=%_defaultdocdir/%name-%version
+NOCONFIGURE=1 ./autogen.sh
+
+%configure --docdir=%_defaultdocdir/%name-%version --enable-html-docs
+
 %make_build --silent --no-print-directory
 
 %install
@@ -92,25 +97,31 @@ end.
 %find_lang %name
 bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 
+%check
+%make check
+
 %files
 %_bindir/%name
 %_libdir/%name/
+%_libdir/*.so.*
 
 %files -f %name.lang data
 %_datadir/%name/
 %_man1dir/%name.1.*
 %_desktopdir/%name.desktop
-%_miconsdir/classviewer-*.png
-%_miconsdir/%name.png
-%_liconsdir/%name.png
 %_iconsdir/*/*/*/*
 %_defaultdocdir/%name-%version/
 
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name.pc
+%_libdir/*.so
 
 %changelog
+* Tue Jul 05 2016 Fr. Br. George <george@altlinux.ru> 1.27-alt1
+- Autobuild version bump to 1.27
+- Build documentation
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.24.1-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
