@@ -6,7 +6,7 @@
 
 Name:    openchange
 Version: 2.4
-Release: alt6.zentyal23
+Release: alt7.zentyal23
 Group:   Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -123,6 +123,7 @@ Requires: libmapiproxy = %version-%release
 Requires: libmapistore = %version-%release
 %endif
 Requires: samba-DC-devel
+Requires: samba-DC-util-private-headers = %samba_version
 
 %description devel
 This package provides the development tools and headers for OpenChange,
@@ -251,6 +252,9 @@ pushd mapiproxy/services/web/rpcproxy
 cp -a rpcproxy %buildroot%_libexecdir/openchange/web/rpcproxy
 popd
 
+# Add Samba private headers to libmapi.pc
+subst 's,^\(Cflags:.*\)$,\1 -I%_includedir/samba-4.0/private,' %buildroot%_pkgconfigdir/libmapi.pc
+
 %files -n libmapi
 %doc CHANGES.md COPYING IDL_LICENSE.txt README.md README.smbconf.md
 %doc apidocs/html/libmapi
@@ -312,6 +316,9 @@ popd
 %_libexecdir/openchange/web/rpcproxy
 
 %changelog
+* Wed Jul 06 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt7.zentyal23
+- Add path to libsamba_util private headers to libmapi.pc
+
 * Wed Jun 29 2016 Andrey Cherepanov <cas@altlinux.org> 2.4-alt6.zentyal23
 - Use private libsamba_util private headers from
   samba-DC-util-private-headers with exact Samba version
