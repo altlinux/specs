@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.30
+Version: 0.31
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Wed Jul 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- added DependencyAnalyzer python
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - clean plugins
 
