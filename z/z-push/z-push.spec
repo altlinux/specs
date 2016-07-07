@@ -1,23 +1,23 @@
-%define with_ldap 0
+%def_with ldap
 
-Name: z-push
-Version: 2.0.2
+Name:    z-push
+Version: 2.2.10
 Release: alt1
 
 Summary: ActiveSync over-the-air implementation for mobile syncing
 License: AGPLv3 with exceptions
-Group: Networking/WWW
+Group:   Networking/WWW
 
-Url: http://z-push.sourceforge.net/
-Source: http://download.berlios.de/%name/%name-%version.tar
+Url:     http://z-push.org/
+Source:  http://download.z-push.org/final/2.2/%name-%version.tar.gz
 Source1: z-push.conf
-Packager: Radik Usupov <radik@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-apache2
 Requires: apache2
 Requires: php5-imap
 
-%if %with_ldap
+%if_with ldap
 Requires: php5-ldap
 %endif
 
@@ -57,18 +57,13 @@ mv -f %buildroot%_datadir/%name/config.php %buildroot%_sysconfdir/zarafa/%name/c
 ln -sf ../../..%_sysconfdir/zarafa/%name/config.php %buildroot%_datadir/%name/config.php
 
 # Install the apache2 configuration file
-	mkdir -p %buildroot%apache2_sites_available
-	mkdir -p %buildroot%apache2_sites_enabled
-	install -p -m 644 %SOURCE1 %buildroot%apache2_sites_available/%name.conf
-	pushd %buildroot%apache2_sites_enabled
-	    ln -sf ../sites-available/%name.conf
-	popd
+install -Dm 644 %SOURCE1 %buildroot%apache2_sites_available/%name.conf
 
 # Remove all non-Zarafa related files
 rm -f %buildroot%_datadir/%name/backend/{diffbackend,imap,maildir,vcarddir}.php
 
 # Move searchldap configuration to its place
-%if %with_ldap
+%if_with ldap
 mv -f %buildroot%_datadir/%name/backend/searchldap/config.php %buildroot%_sysconfdir/zarafa/%name/searchldap.php
 ln -sf ../../../../..%_sysconfdir/zarafa/%name/searchldap.php %buildroot%_datadir/%name/backend/searchldap/config.php
 %else
@@ -87,15 +82,17 @@ rm -f %buildroot%_datadir/%name/{INSTALL,LICENSE,{config,debug}.php.{package,zar
 %files
 %doc %name/LICENSE
 %config(noreplace) %apache2_sites_available/%name.conf
-%config(noreplace) %apache2_sites_enabled/%name.conf
 %dir %_sysconfdir/zarafa/%name/
 %config(noreplace) %_sysconfdir/zarafa/%name/config.php
-%if %with_ldap
+%if_with ldap
 %config(noreplace) %_sysconfdir/zarafa/%name/searchldap.php
 %endif
 %_datadir/%name/
 
 %changelog
+* Thu Jul 07 2016 Andrey Cherepanov <cas@altlinux.org> 2.2.10-alt1
+- New version
+
 * Wed Sep 12 2012 Radik Usupov <radik@altlinux.org> 2.0.2-alt1
 - New version (2.0.2-1437)
 
