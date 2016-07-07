@@ -1,6 +1,6 @@
 Name: gip
 Version: 1.7.0
-Release: alt2.1
+Release: alt3
 Summary: Internet Protocol Calculator for Gnome
 
 Group: Networking/Other
@@ -8,6 +8,8 @@ License: GPL
 Url: http://code.google.com/p/gip/
 
 Source: %name-%version.tar
+Patch1: %name-%version-ubuntu.patch
+Patch2: %name-%version-c++11.patch
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: libgtkmm2-devel intltool gcc-c++
@@ -19,6 +21,8 @@ It is also possible to calculate subnets.
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
 
 %build
 export LIBDIR=lib
@@ -35,12 +39,14 @@ export LIBDIR=lib
 %_libexecdir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
-%_niconsdir/calc.png
-%_liconsdir/calc.png
 %_datadir/mime/packages/%name.xml
 %doc AUTHORS ChangeLog COPYING
 
 %changelog
+* Thu Jul 07 2016 Vladimir Lettiev <crux@altlinux.ru> 1.7.0-alt3
+- applied patches to FTBFS.
+- removed icons (Closes: #32253)
+
 * Fri Jun 12 2015 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt2.1
 - Rebuilt for gcc5 C++11 ABI.
 
