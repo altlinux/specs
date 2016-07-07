@@ -4,7 +4,7 @@
 %def_enable telepathy
 
 Name: pidgin-sipe
-Version: 1.20.1
+Version: 1.21.1
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -34,6 +34,7 @@ BuildRequires: libgmime-devel >= 2.4.16
 A third-party plugin for the Pidgin multi-protocol instant messenger.
 It implements the extended version of SIP/SIMPLE used by various products:
 
+    * Skype for Business
     * Microsoft Office 365
     * Microsoft Business Productivity Online Suite (BPOS)
     * Microsoft Lync Server
@@ -54,6 +55,7 @@ Requires: gst-plugins-nice1.0
 A Telepathy connection manager that implements the extended version of
 SIP/SIMPLE used by various products:
 
+    * Skype for Business
     * Microsoft Office 365
     * Microsoft Business Productivity Online Suite (BPOS)
     * Microsoft Lync Server
@@ -87,6 +89,7 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %doc AUTHORS ChangeLog HACKING COPYING NEWS README TODO
 %_libdir/purple-2/libsipe.so
 %_pixmapsdir/pidgin/protocols/*/sipe.*
+%_datadir/appdata/%name.metainfo.xml
 
 %files -n telepathy-sipe
 %_libexecdir/telepathy-sipe
@@ -95,6 +98,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_datadir/telepathy/profiles/sipe.profile
 
 %changelog
+* Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 1.21.1-alt1
+- 1.21.1
+
 * Wed Feb 10 2016 Alexey Shabalin <shaba@altlinux.ru> 1.20.1-alt1
 - 1.20.1
 
