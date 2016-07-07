@@ -1,5 +1,5 @@
 
-Version: 3.5
+Version: 3.8.4
 Release: alt1
 Name: mercurial
 %setup_python_module %name
@@ -7,7 +7,7 @@ Name: mercurial
 Summary: Mercurial source code management system
 Group: Development/Other
 License: GPLv2+
-Url: http://mercurial.selenic.com/
+Url: https://mercurial-scm.org
 
 Source0: %name-%version.tar
 
@@ -127,6 +127,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python_sitelibdir/hgext/*
 
 %changelog
+* Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 3.8.4-alt1
+- 3.8.4
+
 * Tue Aug 18 2015 Alexey Shabalin <shaba@altlinux.ru> 3.5-alt1
 - 3.5
 
