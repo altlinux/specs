@@ -103,7 +103,7 @@
 %define with_loader_nvram "%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd:%_datadir/AAVMF/AAVMF_CODE.fd:%_datadir/AAVMF/AAVMF_VARS.fd"
 
 Name: libvirt
-Version: 1.3.5
+Version: 2.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -156,7 +156,7 @@ Requires: libvirt-client = %version-%release
 %{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel}
 
 BuildRequires: bridge-utils libblkid-devel
-BuildRequires: libgcrypt-devel libgnutls-devel libp11-kit-devel
+BuildRequires: libgcrypt-devel libgnutls-devel >= 2.2.0 libp11-kit-devel
 BuildRequires: libreadline-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libattr-devel attr
@@ -295,6 +295,8 @@ Summary: Qemu driver plugin for the libvirtd daemon
 Group: System/Libraries
 Requires: %name-daemon = %version-%release
 Requires: %name-daemon-driver-network = %version-%release
+Requires: %name-daemon-driver-storage = %version-%release
+Requires: /usr/bin/qemu-img
 
 %description daemon-driver-qemu
 The qemu driver plugin for the libvirtd daemon, providing
@@ -370,6 +372,7 @@ Summary: Server side daemon, driver & default configs required to run QEMU or KV
 Group: System/Servers
 BuildArch: noarch
 Requires: %name-daemon-config-network = %version-%release
+Requires: %name-daemon-driver-interface = %version-%release
 Requires: %name-daemon-config-nwfilter = %version-%release
 Requires: %name-daemon = %version-%release
 %if_with driver_modules
@@ -640,12 +643,6 @@ rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.libxl
 %endif
 install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
 
-# Temporarily get rid of not-installed admin-related files
-rm -f %buildroot%_libdir/libvirt-admin.so
-rm -f %buildroot%_bindir/virt-admin
-rm -f %buildroot%_man1dir/virt-admin.1*
-rm -f %buildroot%_sysconfdir/libvirt/libvirt-admin.conf
-
 %find_lang %name
 
 %check
@@ -727,11 +724,14 @@ fi
 %_libdir/lib*.so.*
 
 %config(noreplace) %_sysconfdir/libvirt/libvirt.conf
+%config(noreplace) %_sysconfdir/libvirt/libvirt-admin.conf
 %_bindir/virsh
+%_bindir/virt-admin
 %_bindir/virt-xml-validate
 %_bindir/virt-pki-validate
 %_bindir/virt-host-validate
 %_man1dir/virsh.*
+%_man1dir/virt-admin.1*
 %_man1dir/virt-xml-validate.*
 %_man1dir/virt-pki-validate.*
 %_man1dir/virt-host-validate.*
@@ -966,6 +966,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Wed Jun 15 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
 - 1.3.5 release
 
