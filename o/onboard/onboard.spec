@@ -1,7 +1,6 @@
-
 Name:           onboard
-Version:        0.96.2
-Release:        alt2.1
+Version:        1.2.0
+Release:        alt1
 
 Summary:        Simple on-screen Keyboard
 License:        GPLv3
@@ -9,73 +8,86 @@ Group:          Graphical desktop/GNOME
 URL:            https://launchpad.net/onboard/
 
 Source0:        http://launchpad.net/%name/0.96/%version/+download/%name-%version.tar.gz
-# To build the .desktop files. This can be upstreamed:
-Patch0:         onboard-setup.patch
 
-Patch1:         onboard-no-appindicator.patch
-
-Patch2:         onboard-startup-hackaround.patch
-
-BuildRequires(pre): etersoft-build-utils libGConf-devel rpm-build-gnome python-devel
-BuildRequires:  glibc-devel-static intltool libgtk+2-devel 
-BuildRequires:  python-module-pygtk-devel python-module-vte
-BuildRequires:  python-module-distutils-extra >= 2.12
-BuildRequires:  python-module-virtkey
+BuildRequires(pre): etersoft-build-utils rpm-build-gnome python3-devel
+BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
-BuildRequires:  libgtk+3-devel libXi-devel libXtst-devel libX11-devel
+BuildRequires:  intltool
+BuildRequires:  libXi-devel
+BuildRequires:  libXtst-devel
+BuildRequires:  libcanberra-devel
+BuildRequires:  libdconf-devel
+BuildRequires:  libgtk+3-devel 
+BuildRequires:  libhunspell-devel
+BuildRequires:  libxkbfile-devel
+BuildRequires:  python3-module-distutils-extra >= 2.12
+BuildRequires:  libappindicator-gtk3-gir-devel
 
-Requires:  GConf
+Requires:  python3-module-dbus
 
 %description
 An on-screen keyboard useful on tablet PCs or for mobility impaired
 users.
 
+%package gnome
+Group:    Graphical desktop/GNOME
+Summary:  GNOME Shell support for onboard
+Requires: onboard = %version-%release
+Requires: gnome-shell
+
+%description gnome
+GNOME Shell support for onboard.
+
 %prep
 %setup -q
-%patch0 -p2
-%patch1 -p2
-%patch2 -p2
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
-#fix wrong permissons
-chmod a+x %buildroot%_datadir/onboard/layoutstrings.py
-for file in %buildroot%python_sitelibdir/Onboard/{settings,IconPalette,KeyboardSVG,utils}.py; do
-   chmod a+x $file
-done
+%python3_install
 
 desktop-file-install --dir %buildroot%_desktopdir       \
     --remove-category="X-GNOME-PersonalSettings"        \
     --add-category="Utility;"                           \
-    %buildroot%_desktopdir/%name.desktop
+    build/share/applications/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir       \
     --remove-category="X-GNOME-PersonalSettings"        \
     --add-category="Utility;"                           \
-    %buildroot%_desktopdir/%name-settings.desktop
+    build/share/applications/%name-settings.desktop
 
 mkdir -p %buildroot%_datadir/locale
 cp -a build/mo/* %buildroot%_datadir/locale
+
+# remove themed icons
+rm -rf %buildroot%_iconsdir/ubuntu-mono-*
+
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS COPYING NEWS README docs/
+%doc AUTHORS COPYING* NEWS README HACKING
 %_bindir/%name
 %_bindir/%name-settings
 %_datadir/%name/
-%_sysconfdir/xdg/autostart/*
+%_datadir/glib-2.0/schemas/*.gschema.xml
+%_xdgconfigdir/autostart/%name-autostart.desktop
 %_desktopdir/%name.desktop
 %_desktopdir/%name-settings.desktop
-%_datadir/glib-2.0/schemas/*
-%_datadir/GConf/gsettings/*
-%_datadir/icons/hicolor/scalable/apps/onboard.svg
-%_datadir/icons/hicolor/scalable/apps/onboard2.svg
-%python_sitelibdir/Onboard/
-%python_sitelibdir/%{name}*.egg-info
+%_man1dir/%{name}*.1*
+%_iconsdir/HighContrast/scalable/apps/onboard.svg
+%_iconsdir/hicolor/scalable/apps/onboard.svg
+%_iconsdir/hicolor/22x22/apps/onboard.png
+%_datadir/sounds/freedesktop/stereo/onboard-key-feedback.oga
+%python3_sitelibdir/Onboard/
+%python3_sitelibdir/%{name}*.egg-info
+
+%files gnome
+%_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Thu Jul 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version (use Python3)
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.96.2-alt2.1
 - Rebuild to remove redundant libpython2.7 dependency
 
