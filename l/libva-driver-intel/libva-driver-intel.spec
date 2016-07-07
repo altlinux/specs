@@ -1,5 +1,5 @@
 Name: libva-driver-intel
-Version: 1.4.1
+Version: 1.7.1
 Release: alt1
 
 Summary: VDPAU-based backend for VA API
@@ -12,7 +12,8 @@ Conflicts: libva < 1.1.0
 Source: %name-%version-%release.tar
 
 BuildRequires: intel-gen4asm
-BuildRequires: libva-devel libX11-devel libGL-devel libEGL-devel
+BuildRequires: libdrm-devel libX11-devel libGL-devel libEGL-devel
+BuildRequires: libva-devel >= 1.7.0
 
 %description
 Video decode driver for Intel chipsets.
@@ -36,6 +37,9 @@ Note that contents of this package were previously in libva package.
 %_libdir/dri/*.so
 
 %changelog
+* Thu Jul 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.1-alt1
+- 1.7.1 released
+
 * Tue Nov 18 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 

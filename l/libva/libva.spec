@@ -1,8 +1,6 @@
-%define git 1f026
-
 Name: libva
-Version: 1.6.3
-Release: alt0.2.git%git
+Version: 1.7.1
+Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
 License: MIT
@@ -11,7 +9,7 @@ Url: http://www.splitted-desktop.com/~gbeauchesne/
 
 Obsoletes: libva1 < %version-%release vainfo < %version-%release
 
-Source: %name-%version-%git.tar
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libGL-devel libEGL-devel libXext-devel libXfixes-devel
@@ -35,7 +33,7 @@ Obsoletes: libva1-devel < %version-%release
 This package provides the development environment for libva
 
 %prep
-%setup -n %name-%version-%git
+%setup
 %patch -p1
 
 %build
@@ -59,6 +57,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.1-alt1
+- 1.7.1 released
+
 * Sat Feb 06 2016 L.A. Kostis <lakostis@altlinux.ru> 1.6.3-alt0.2.git1f026
 - Added patches:
   + va/va.c: use libva.conf when looking for driver name.
