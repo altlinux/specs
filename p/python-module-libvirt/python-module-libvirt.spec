@@ -1,7 +1,7 @@
 
 Summary: Python bindings for the libvirt library
 Name: python-module-libvirt
-Version: 1.3.5
+Version: 2.0.0
 Release: alt1
 Url: http://libvirt.org
 #http://libvirt.org/git/?p=libvirt-python.git
@@ -11,7 +11,7 @@ Group: Development/Python
 
 Requires: libvirt-client
 
-BuildRequires: libvirt-devel >= 0.9.11
+BuildRequires: libvirt-devel >= 2.0.0
 BuildPreReq: rpm-build-python rpm-build-python3
 BuildRequires: python-devel python3-devel
 
@@ -58,6 +58,9 @@ of recent versions of Linux (and other OSes).
 %doc  NEWS README COPYING COPYING.LESSER examples
 
 %changelog
+* Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
+- 2.0.0
+
 * Wed Jun 15 2016 Alexey Shabalin <shaba@altlinux.ru> 1.3.5-alt1
 - 1.3.5
 
