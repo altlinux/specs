@@ -3,7 +3,7 @@
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ ln -s %obranch %buildroot/usr/share/distromap/%orepo/default
 /usr/share/distromap/*
 
 %changelog
+* Thu Jul 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- db update
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - db update
 
