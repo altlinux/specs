@@ -1,5 +1,5 @@
 Name:           bleachbit
-Version:        1.10
+Version:        1.12
 Release:        alt1
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
@@ -9,7 +9,7 @@ URL:            http://bleachbit.sourceforge.net/
 
 Packager:       Andrey Cherepanov <cas@altlinux.org>
 
-Source0:        http://downloads.sourceforge.net/%name/%name-%version.tar.lzma
+Source0:        %name-%version.tar
 Source1:	%name.watch
 
 Patch1:		%name-apt-rpm-specific.patch
@@ -52,6 +52,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Jul 08 2016 Andrey Cherepanov <cas@altlinux.org> 1.12-alt1
+- new version 1.12
+
 * Thu Jan 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.10-alt1
 - New version
 
