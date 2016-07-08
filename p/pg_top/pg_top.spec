@@ -1,7 +1,7 @@
 
 Name: pg_top
-Version: 3.6.2
-Release: alt1.qa1
+Version: 3.7.0
+Release: alt1
 License: BSD
 
 Summary: 'top' for PostgreSQL process
@@ -35,6 +35,9 @@ query plans, issued locks, and table and index statistics.
 %_man1dir/*
 
 %changelog
+* Fri Jul 08 2016 Alexey Shabalin <shaba@altlinux.ru> 3.7.0-alt1
+- 3.7.0
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.6.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
