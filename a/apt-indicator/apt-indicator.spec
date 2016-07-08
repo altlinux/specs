@@ -1,5 +1,5 @@
 Name: apt-indicator
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Applet for indication that newer packages are available
@@ -69,6 +69,10 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Fri Jul 08 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.1-alt1
+- prefer icons from current icon theme
+- update internal icons from Breeze icon theme
+
 * Wed Jul 06 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.0-alt1
 - port to Qt5
 
