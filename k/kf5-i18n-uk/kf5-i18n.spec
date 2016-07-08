@@ -3,7 +3,7 @@
 %define lngg Ukrainian
 
 Name: kf5-i18n-%lng
-Version: 5.6.4
+Version: 5.6.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Fri Jul 08 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
+- new version
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
 - new version
 
