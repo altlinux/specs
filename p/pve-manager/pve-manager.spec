@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.2.15
-Release: alt6
+Version: 4.2.16
+Release: alt7
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -57,7 +57,7 @@ This package contains the Proxmox VE Firewall
 
 %package -n pve-ha-manager
 Summary: Proxmox VE HA Manager
-Version: 1.0.31
+Version: 1.0.32
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -164,7 +164,7 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 #systemd_unitdir/pvebanner.service
 %systemd_unitdir/pvedaemon.service
 %systemd_unitdir/pve-manager.service
-#systemd_unitdir/pvenetcommit.service
+%systemd_unitdir/pvenetcommit.service
 %systemd_unitdir/pveproxy.service
 %systemd_unitdir/pvestatd.service
 %systemd_unitdir/spiceproxy.service
@@ -364,6 +364,10 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Fri Jul 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.16-alt7
+- 4.2-16
+- pve-ha-manager 1.0-32
+
 * Tue Jun 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.15-alt6
 - pve-container 1.0-70
 
