@@ -43,8 +43,8 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.4.4
-Release: alt3
+Version: 4.4.5
+Release: alt1
 
 Group:   System/Servers
 Summary: Samba Active Directory Domain Controller
@@ -1247,6 +1247,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Jul 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.4.5-alt1
+- Update for security release with CVE-2016-2119
+
 * Thu Jun 30 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.4.4-alt3
 - Apply fixes for DRSUAPI limits of too strict for some workloads,
   e.g. DRSUAPI replication with large objects.
