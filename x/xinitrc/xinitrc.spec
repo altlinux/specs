@@ -1,5 +1,5 @@
 Name: xinitrc
-Version: 2.4.44
+Version: 2.4.45
 Release: alt1
 
 Summary: The default startup scripts for the X Window System
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Fri Jul 08 2016 Dmitry V. Levin <ldv@altlinux.org> 2.4.45-alt1
+- xserverrc: fix typo introduced in 2.4.44-alt1 (closes: #32258).
+
 * Wed Jul 06 2016 Dmitry V. Levin <ldv@altlinux.org> 2.4.44-alt1
 - xserverrc: specify -auth option to Xserver.
 
