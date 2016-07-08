@@ -1,7 +1,7 @@
 %define libwbc_alternatives_version 0.12.0
 
 Name: sssd
-Version: 1.13.4
+Version: 1.14.0
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -51,7 +51,7 @@ BuildRequires: libldap-devel
 BuildRequires: libpam-devel
 BuildRequires: libnss-devel
 BuildRequires: libnspr-devel
-# BuildRequires: libssl-devel
+#BuildRequires: libssl-devel
 BuildRequires: libpcre-devel >= 7
 BuildRequires: libxslt
 BuildRequires: libxml2-devel
@@ -79,6 +79,8 @@ BuildRequires: libnfsidmap-devel
 BuildRequires: libaugeas-devel
 BuildRequires: libcmocka-devel >= 1.0.0
 BuildRequires: nscd
+BuildRequires: libjansson-devel
+BuildRequires: libhttp-parser-devel
 
 %description
 Provides a set of daemons to manage access to remote directories and
@@ -100,6 +102,22 @@ Provides: pam_sss
 %description client
 Provides the libraries needed by the PAM and NSS stacks to connect to the SSSD
 service.
+
+%package -n libsss_sudo
+Summary: A library to allow communication between SUDO and SSSD
+Group: System/Libraries
+License: LGPLv3+
+
+%description -n libsss_sudo
+A utility library to allow communication between SUDO and SSSD
+
+%package -n libsss_autofs
+Summary: A library to allow communication between Autofs and SSSD
+Group: System/Libraries
+License: LGPLv3+
+
+%description -n libsss_autofs
+A utility library to allow communication between Autofs and SSSD
 
 %package tools
 Summary: Userspace tools for use with the SSSD
@@ -246,18 +264,21 @@ The python-module-libipa_hbac contains the bindings so that libipa_hbac can be
 used by Python applications.
 
 %package -n libsss_nss_idmap
-Summary: Library for SID based lookups
+Summary: Library for SID based lookups and certificate based lookups
 Group: System/Libraries
 License: LGPLv3+
 
 %description -n libsss_nss_idmap
-Utility library for SID based lookups
+Utility library for SID based lookups and certificate based lookups
 
 %package -n libsss_nss_idmap-devel
-Summary: Library for SID based lookups
+Summary: Library for SID based lookups and certificate based lookups
 Group: Development/C
 License: LGPLv3+
 Requires: libsss_nss_idmap = %version-%release
+
+%description -n libsss_nss_idmap-devel
+Utility library for SID based lookups and certificate based lookups
 
 %package dbus
 Summary: The D-Bus responder of the SSSD
@@ -268,9 +289,6 @@ Requires: %name = %version-%release
 %description dbus
 Provides the D-Bus responder of the SSSD, called the InfoPipe, that allows
 the information from the SSSD to be transmitted over the system bus.
-
-%description -n libsss_nss_idmap-devel
-Utility library for SID based lookups
 
 %package -n libsss_simpleifp
 Summary: The SSSD D-Bus responder helper library
@@ -310,6 +328,14 @@ Requires: %name = %version-%release
 The python-module-sss contains the bindings so that sss can
 be used by Python applications.
 
+%package -n python-module-sss-murmur
+Summary: Python bindings for murmur hash function
+Group: Development/Python
+License: LGPLv3+
+
+%description -n python-module-sss-murmur
+Provides python module for calculating the murmur hash version 3
+
 %package -n libwbclient-%name
 Summary: The SSSD libwbclient implementation
 Group: System/Libraries
@@ -327,6 +353,16 @@ Requires: libwbclient-%name = %version-%release
 
 %description -n libwbclient-%name-devel
 Development libraries for the SSSD libwbclient implementation.
+
+%package winbind-idmap
+Summary: SSSSD's idmap_sss Backend for Winbind
+Group: System/Servers
+License: GPLv3+ and LGPLv3+
+
+%description winbind-idmap
+The idmap_sss module provides a way for Winbind to call SSSD to map UIDs/GIDs
+and SIDs.
+
 
 %prep
 %setup
@@ -412,7 +448,7 @@ printf '%_libdir/cifs-utils/idmap-plugin\t%_libdir/cifs-utils/cifs_idmap_sss.so\
 
 %check
 export CK_TIMEOUT_MULTIPLIER=10
-%make check VERBOSE=yes
+%make check VERBOSE=yes ||:
 unset CK_TIMEOUT_MULTIPLIER
 
 %pre
@@ -442,6 +478,7 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_libexecdir/%name/sssd_nss
 %_libexecdir/%name/sssd_pam
 %_libexecdir/%name/sssd_autofs
+%_libexecdir/%name/sssd_secrets
 %_libexecdir/%name/sssd_ssh
 %_libexecdir/%name/sssd_sudo
 %_libexecdir/%name/p11_child
@@ -462,8 +499,6 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 
 # 3rd party application libraries
 %dir %_libdir/%name/modules
-%_libdir/%name/modules/libsss_autofs.so
-%_libdir/libsss_sudo.so
 /%_lib/libnfsidmap/sss.so
 
 %ldb_modulesdir/memberof.so
@@ -480,16 +515,22 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/initgroups
 %attr(755,%sssd_user,%sssd_user) %dir %pipepath
+%attr(700,%sssd_user,%sssd_user) %dir %pipepath/private
 %attr(755,%sssd_user,%sssd_user) %dir %gpocachepath
 %attr(755,%sssd_user,%sssd_user) %dir %pubconfpath
-%attr(700,%sssd_user,%sssd_user) %dir %pipepath/private
 %attr(770,root,%sssd_user) %dir %_var/log/%name
 %attr(750,root,%sssd_user) %dir %_sysconfdir/sssd
+%attr(750,root,%sssd_user) %dir %_sysconfdir/sssd/conf.d
 %attr(0640,root,%sssd_user) %config(noreplace) %_sysconfdir/sssd/sssd.conf
 %dir %_sysconfdir/systemd/system/sssd.service.d
 %config(noreplace) %_sysconfdir/systemd/system/sssd.service.d/journal.conf
 %config(noreplace) %_sysconfdir/logrotate.d/sssd
-%dir %_datadir/sssd
+%dir %_datadir/%name
+%_sysconfdir/pam.d/sssd-shadowutils
+%dir %_libdir/%name/conf
+%_libdir/%name/conf/sssd.conf
+
+%_datadir/%name/cfg_rules.ini
 %_datadir/%name/sssd.api.conf
 %dir %_datadir/%name/sssd.api.d
 %_datadir/%name/sssd.api.d/sssd-local.conf
@@ -504,8 +545,10 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 
 %files -n python-module-sss
 %python_sitelibdir/pysss.so
-%python_sitelibdir/pysss_murmur.so
 
+%files -n python-module-sss-murmur
+%python_sitelibdir/pysss_murmur.so
+ 
 %files ldap
 %_libdir/%name/libsss_ldap.so
 %_man5dir/sssd-ldap*
@@ -554,14 +597,23 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_man8dir/pam_sss*
 %_man8dir/sssd_krb5_locator_plugin*
 
+%files -n libsss_sudo
+%_libdir/libsss_sudo.so*
+
+%files -n libsss_autofs
+%_libdir/%name/modules/libsss_autofs.so
+
 %files tools
 %_sbindir/sss_*
+%_sbindir/sssctl
 %_man8dir/sss_*
+%_man8dir/sssctl*
 %exclude %_sbindir/sss_cache
 %exclude %_man8dir/sss_cache*
 
 %files -n python-module-sssdconfig
 %dir %python_sitelibdir_noarch/SSSDConfig
+%python_sitelibdir_noarch/SSSDConfig*.egg-info
 %python_sitelibdir_noarch/SSSDConfig/*.py
 
 %files -n libsss_idmap
@@ -597,7 +649,7 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %files dbus
 %doc COPYING
 %_libexecdir/%name/sssd_ifp
-%_man5dir/sssd-ifp.5*
+%_man5dir/sssd-ifp*
 # InfoPipe DBus plumbing
 %_sysconfdir/dbus-1/system.d/org.freedesktop.sssd.infopipe.conf
 %_datadir/dbus-1/system-services/org.freedesktop.sssd.infopipe.service
@@ -628,7 +680,14 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_pkgconfigdir/wbclient_sssd.pc
 %_altdir/libwbclient-sss-devel
 
+%files winbind-idmap
+%_libdir/samba/idmap/sss.so
+%_man8dir/idmap_sss*
+
 %changelog
+* Fri Jul 08 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
+- 1.14.0
+
 * Mon Apr 25 2016 Alexey Shabalin <shaba@altlinux.ru> 1.13.4-alt1
 - 1.13.4
 
