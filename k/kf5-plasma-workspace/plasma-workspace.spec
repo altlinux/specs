@@ -6,15 +6,17 @@
 %define libkworkspace5 libkworkspace5%kworkspace5_sover
 %define plasma_geolocation_interface_sover 5
 %define libplasma_geolocation_interface libplasma-geolocation-interface%plasma_geolocation_interface_sover
-%define taskmanager_sover 5
+%define taskmanager_sover 6
 %define libtaskmanager libtaskmanager%taskmanager_sover
 %define weather_ion_sover 7
 %define libweather_ion libweather_ion%weather_ion_sover
+%define legacytaskmanager_sover 5
+%define liblegacytaskmanager liblegacytaskmanager%legacytaskmanager_sover
 
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.6.5
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -68,7 +70,7 @@ BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-de
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-libkscreen-devel kf5-libksysguard-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel
-BuildRequires: kf5-networkmanager-qt-devel kf5-kscreenlocker-devel
+BuildRequires: kf5-networkmanager-qt-devel kf5-kscreenlocker-devel kde5-kholidays-devel
 
 %description
 KDE Plasma Workspace
@@ -115,6 +117,15 @@ Obsoletes: libtaskmanager < %version-%release
 %description -n %libtaskmanager
 KF5 library
 
+%package -n %liblegacytaskmanager
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+Provides: libtaskmanager = %version-%release
+Obsoletes: libtaskmanager < %version-%release
+%description -n %liblegacytaskmanager
+KF5 library
+
 %package -n %libweather_ion
 Group: System/Libraries
 Summary: KF5 library
@@ -149,7 +160,7 @@ KF5 library
 %install
 %K5install
 
-%K5install_move data drkonqi ksmserver ksplash kstyle solid
+%K5install_move data drkonqi ksmserver ksplash kstyle solid kdevappwizard
 %K5install_move data desktop-directories doc kconf_update kio_desktop
 
 # fix dbus service
@@ -210,7 +221,7 @@ done
 %dir %_K5qml/org/kde/plasma/private/
 %dir %_K5qml/org/kde/plasma/wallpapers/
 %dir %_K5qml/org/kde/plasma/workspace/
-%dir %_K5qml/org/kde/private/
+#%dir %_K5qml/org/kde/private/
 %_bindir/*
 %_K5bin/*
 %_K5exec/*
@@ -221,10 +232,13 @@ done
 %_K5plug/kpackage/
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/desktop.so
+%_K5plug/plasmacalendarplugins/
 %_K5qml/org/kde/plasma/private/*
 %_K5qml/org/kde/plasma/wallpapers/*
 %_K5qml/org/kde/plasma/workspace/*
-%_K5qml/org/kde/private/*
+#%_K5qml/org/kde/private/*
+%_K5qml/org/kde/taskmanager/
+%_K5qml/org/kde/holidayeventshelperplugin/
 %_K5data/drkonqi/
 %_K5data/plasma/
 %_K5data/kio_desktop/
@@ -251,12 +265,15 @@ done
 %_K5inc/kworkspace5/
 %_K5inc/plasma/
 %_K5inc/taskmanager/
+%_K5inc/legacytaskmanager/
 %_K5link/lib*.so
-%_K5lib/cmake/KRunnerAppDBusInterface
-%_K5lib/cmake/KSMServerDBusInterface
-%_K5lib/cmake/LibKWorkspace
-%_K5lib/cmake/LibTaskManager
+%_K5lib/cmake/KRunnerAppDBusInterface/
+%_K5lib/cmake/KSMServerDBusInterface/
+%_K5lib/cmake/LibKWorkspace/
+%_K5lib/cmake/LibTaskManager/
+%_K5lib/cmake/LibLegacyTaskManager/
 %_K5dbus_iface/*.xml
+%_K5data/kdevappwizard/templates/*
 
 %files -n %libkworkspace5
 %_K5lib/libkworkspace5.so.*
@@ -267,11 +284,17 @@ done
 %files -n %libtaskmanager
 %_K5lib/libtaskmanager.so.*
 %_K5lib/libtaskmanager.so.%taskmanager_sover
+%files -n %liblegacytaskmanager
+%_K5lib/liblegacytaskmanager.so.*
+%_K5lib/liblegacytaskmanager.so.%legacytaskmanager_sover
 %files -n %libweather_ion
 %_K5lib/libweather_ion.so.*
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
 * Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
 - new version
 

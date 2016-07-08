@@ -12,7 +12,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.6.5
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -46,7 +46,7 @@ BuildRequires: kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-k
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel kf5-kidletime-devel
-BuildRequires: kf5-kscreenlocker-devel
+BuildRequires: kf5-kscreenlocker-devel kf5-breeze-devel
 
 %description
 KDE Window Manager
@@ -133,6 +133,7 @@ KF5 library
 %_K5plug/org.kde.kglobalaccel5.platforms/
 %_K5plug/org.kde.kdecoration2/
 %_K5plug/org.kde.kwin.waylandbackends/
+%_K5plug/org.kde.kwin.platforms/
 %_K5plug/*.so
 %_K5cf_bin/kwin5*
 %_K5qml/org/kde/kwin/
@@ -172,6 +173,9 @@ KF5 library
 
 
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
 * Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
 - new version
 

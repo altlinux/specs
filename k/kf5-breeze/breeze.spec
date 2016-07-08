@@ -1,7 +1,7 @@
 %define rname breeze
 
 Name: kf5-%rname
-Version: 5.6.3
+Version: 5.7.0
 Release: alt1
 %K5init altplace
 
@@ -23,6 +23,7 @@ BuildRequires: kf5-frameworkintegration-devel kf5-kauth-devel kf5-kcodecs-devel 
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdecoration-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kcmutils-devel kf5-plasma-framework-devel kf5-kpackage-devel
+BuildRequires: kf5-kwayland-devel
 
 %description
 Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
@@ -38,6 +39,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kf5-filesystem
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -81,7 +83,19 @@ KF5 library
 %_K5cf_upd/*
 %_K5wall/*
 
+%files devel
+%_libdir/cmake/Breeze/
+
 %changelog
+* Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
+- new version
+
+* Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.5-alt1
+- new version
+
+* Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.4-alt1
+- new version
+
 * Thu Apr 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
 - new version
 
