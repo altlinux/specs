@@ -2,7 +2,7 @@
 %define abiversion 0
 
 Name: iperf3
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
@@ -14,6 +14,8 @@ Source0: http://downloads.es.net/pub/iperf/%native-%version.tar.gz
 Source1: iperf3.sysconfig
 Source2: iperf3.init
 Source3: iperf3.service
+
+Patch0: iperf3-3.1.3-name.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -55,6 +57,8 @@ This package contains development files of iperf3
 
 %prep
 %setup -q -n %native-%version
+
+%patch0 -p2
 
 %build
 
@@ -101,6 +105,9 @@ install -pDm0644 %SOURCE3 %buildroot/%_unitdir/%name.service
 
 
 %changelog
+* Sat Jul 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.1.3-alt1
+- New version (CVE-2016-4303)
+
 * Sat Feb 13 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.1.2-alt1
 - New version
 - Added lsb init header (fixed repocop's warninig)
