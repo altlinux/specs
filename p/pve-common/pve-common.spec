@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: Proxmox VE base library
 Version: 4.0.70
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -40,6 +40,9 @@ cd src
 %perl_vendor_privlib/PVE
 
 %changelog
+* Sat Jul 09 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.70-alt2
+- OVS fixes
+
 * Wed Jul 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.70-alt1
 - 4.0-70
 
