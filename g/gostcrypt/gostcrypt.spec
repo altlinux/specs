@@ -1,5 +1,5 @@
 Name: 	  gostcrypt
-Version:  1.0
+Version:  1.3
 Release:  alt1
 
 Summary:  Fork of the (late) Truecrypt project
@@ -38,9 +38,12 @@ install -Dm0755 Main/%name %buildroot%_bindir/%name
 #./Main/gostcrypt --text --test
 
 %files
-%doc Readme.txt License.txt Release/Setup\ Files/GostCryptUserGuide.pdf
+%doc README.md Contributors.md License.txt Release/Setup\ Files/GostCryptUserGuide.pdf
 %_bindir/%name
 
 %changelog
+* Sat Jul 09 2016 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
+- New version
+
 * Sat Oct 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build for ALT Linux
