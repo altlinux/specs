@@ -6,7 +6,7 @@ Name: mailfromd
 %define baseversion 7.99.94
 
 %if %snapshot
-%define snapshotdate 20160426
+%define snapshotdate 20160706
 Version: %baseversion
 Release: alt0.%snapshotdate.1
 %define srcdir %name-%baseversion-%snapshotdate
@@ -300,6 +300,11 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Sat Jul 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160706.1
+- new snapshot
+- changes in mailfromd.mf:
+  - handled PermError for SPF checking
+
 * Thu Jun 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 7.99.94-alt0.20160426.1
 - new snapshot
 - changes in mailfromd.mf:
