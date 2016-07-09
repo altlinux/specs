@@ -1,5 +1,5 @@
 Name: shutter
-Version: 0.88.2
+Version: 0.93.1
 Release: alt1
 
 Packager: Radik Usupov <radik@altlinux.org>
@@ -28,11 +28,13 @@ Requires: perl-Gtk2-ImageView
 Requires: perl-Gtk2-Unique
 Requires: perl-HTML-Form
 Requires: perl-Net-DBus
+Requires: perl-Net-OAuth
 Requires: perl-Magick
 Requires: perl-WWW-Mechanize
 Requires: perl-X11-Protocol
 Requires: perl-XML-Simple
 Requires: perl-libwww-perl
+Requires: perl-podlators
 Requires: procps
 
 
@@ -91,6 +93,10 @@ cp -a share %buildroot/usr
 %_iconsdir/hicolor/scalable/*/*
 
 %changelog
+* Sat Jul 09 2016 Andrey Cherepanov <cas@altlinux.org> 0.93.1-alt1
+- 0.93.1 (ALT #32228)
+- Add requires of perl-podlators (ALT #31413)
+
 * Tue Feb 28 2012 Radik Usupov <radik@altlinux.org> 0.88.2-alt1
 - 0.88.2
 - Added requires (Closes: 26996)
