@@ -1,6 +1,6 @@
 Name: nfdump
-Version: 1.6.13
-Release: alt3
+Version: 1.6.15
+Release: alt1
 Summary: collect and process netflow data
 
 Group: Monitoring
@@ -20,13 +20,13 @@ Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: rpm-build-licenses
 
-BuildRequires: librrd-devel libpcap-devel flex bison zlib-devel
+BuildRequires: librrd-devel libpcap-devel flex bison zlib-devel bzlib-devel
 
 %description
 Nfdump is a set of tools to collect and process netflow data.
 It's fast and has a powerful filter pcap like syntax. Nfdump
-supports netflow versions v5, v7 and v9 as well as a limited
-set of sflow and is IPv6 compatible.
+supports netflow versions v5, v7, v9 and IPFIX as well as a
+limited set of sflow and is IPv6 compatible.
 
 %package nfprofile
 Summary: nfprofile - netflow profiler
@@ -45,12 +45,27 @@ Group: Monitoring
 %description nftrack
 nftrack - Port tracking decoder for NfSen plugin PortTracker.
 
+%package -n libnfdump
+Summary: nfdump shared library
+Group: System/Libraries
+
+%description -n libnfdump
+nfdump shared library
+
+%package -n libnfdump-devel
+Summary: nfdump development files
+Group: Development/C
+
+%description -n libnfdump-devel
+nfdump development files
+
 %prep
 %setup -q
 
 %build
 %autoreconf
 %configure \
+	--disable-static \
 	--enable-nfprofile \
 	--enable-nftrack \
 	--enable-sflow \
@@ -111,7 +126,17 @@ install -m0644 %SOURCE8 %buildroot%_unitdir/sfcapd.service
 %files nftrack
 %_bindir/nftrack
 
+%files -n libnfdump
+%_libdir/libnfdump-%version.so
+
+%files -n libnfdump-devel
+%_libdir/libnfdump.so
+
 %changelog
+* Sat Jul 09 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.6.15-alt1
+- 1.6.15 (Security update)
+- added libnfdump and libnfdump-devel packages
+
 * Thu Jul 16 2015 Alexey Shabalin <shaba@altlinux.ru> 1.6.13-alt3
 - fixed init and unit names
 
