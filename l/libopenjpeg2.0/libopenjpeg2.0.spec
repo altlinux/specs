@@ -1,25 +1,24 @@
+%def_disable snapshot
+
 %define _name openjpeg
 %define ver_major 2.1
 %define api_ver 2.0
 %define libname libopenjp2
-%define rev 3004
 
 Name: lib%_name%api_ver
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
 License: BSD
 Group: System/Libraries
 Url: http://www.openjpeg.org/
 
-%if %rev
-# Snapshots taken from stable release branch:
-#   svn co http://openjpeg.googlecode.com/svn/branches/openjpeg-%ver_major openjpeg-%version
-#   find openjpeg-%version -name ".svn" -print0| xargs -r0 rm -rf -- \;
-#   tar -cf openjpeg-%version-%rev.tar openjpeg-%version
+%if_enabled snapshot
+# VCS: https://github.com/uclouvain/openjpeg.git
 Source: %_name-%version-%rev.tar
 %else
+#Source: https://github.com/uclouvain/%_name/archive/%_name-%version.tar.gz
 Source: http://www.openjpeg.org/%_name-%version.tar.gz
 %endif
 
@@ -69,7 +68,7 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 
 %files
 %_libdir/%libname.so.*
-%doc AUTHORS LICENSE NEWS README
+%doc AUTHORS* LICENSE NEWS* README* CHANGELOG*
 
 %files devel
 %_includedir/%_name-%ver_major/
@@ -88,6 +87,9 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 %exclude %_datadir/doc/html/
 
 %changelog
+* Sat Jul 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
 * Thu May 28 2015 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt2
 - updated to 2.1.0-rev3004
 
