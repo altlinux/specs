@@ -2,7 +2,7 @@
 %def_disable cgi
 
 Name: apcupsd
-Version: 3.14.13
+Version: 3.14.14
 Release: alt1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
@@ -26,7 +26,7 @@ Patch3: %name-3.14.8-apctest.date.patch
 Patch10: apcupsd-3.14.4-hal_policy-Makefile.patch
 
 #Errata/FR
-Patch100: apcupsd-3.14.13-invalid-socket.patch
+#Patch100:
 
 BuildRequires: rpm-build-licenses
 
@@ -80,7 +80,7 @@ Web status for UPS.
 
 %patch10 -p0
 
-%patch100 -p0
+#patch100 -p0
 
 tar xzf %{SOURCE1}
 
@@ -183,6 +183,9 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Sun Jul 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.14.14-alt1
+- New version
+
 * Fri Feb 20 2015 Sergey Y. Afonin <asy@altlinux.ru> 3.14.13-alt1
 - New version (added MODBUS USB support)
 - added TIMELEFT to some short messages
