@@ -2,7 +2,7 @@
 
 Name: make-initrd2
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL3
@@ -193,6 +193,9 @@ fi
 %_datadir/%myname/features/ucode
 
 %changelog
+* Sun Jul 10 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.1-alt2
+- Fix install.
+
 * Mon Jun 27 2016 Alexey Gladkov <legion@altlinux.ru> 2.0.1-alt1
 - Add initrd-ls.
 - Add ucode feature for early loading microcode.
