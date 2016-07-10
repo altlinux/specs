@@ -170,7 +170,7 @@
 # }}}
 
 Name: pve-%rname
-Version: 2.5.1.1
+Version: 2.6.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -192,76 +192,76 @@ Source10: qemu-guest-agent.init
 Source11: OVMF-pure-efi.fd
 Source12: OVMF_VARS-pure-efi.fd
 
-Patch0: qemu-alt.patch
+Patch0: qemu-2.6-alt.patch
 
 Patch10: 0001-fr-ca-keymap-corrections.patch
 Patch11: 0001-i386-kvmvapic-initialise-imm32-variable.patch
-Patch12: 0001-rng-remove-the-unused-request-cancellation-code.patch
-Patch13: 0001-target-i386-do-not-read-write-MSR_TSC_AUX-from-KVM-i.patch
-Patch14: 0001-vga-add-sr_vbe-register-set.patch
-Patch15: 0001-vnc-clear-vs-tlscreds-after-unparenting-it.patch
-Patch16: 0002-Adjust-network-script-path-to-etc-kvm.patch
-Patch17: 0002-rng-move-request-queue-from-RngEgd-to-RngBackend.patch
-Patch18: 0003-rng-move-request-queue-cleanup-from-RngEgd-to-RngBac.patch
-Patch19: 0003-vnc-altgr-emulation.patch
-Patch20: 0004-qemu-img-return-success-on-info-without-snapshots.patch
-Patch21: 0004-vmsvga-move-fifo-sanity-checks-to-vmsvga_fifo_length.patch
-Patch22: 0005-use-kvm-by-default.patch
-Patch23: 0005-virtio-rng-ask-for-more-data-if-queue-is-not-fully-d.patch
-Patch24: 0005-vmsvga-add-more-fifo-checks.patch
-Patch25: 0006-virtio-balloon-fix-query.patch
-Patch26: 0006-vmsvga-shadow-fifo-registers.patch
-Patch27: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
-Patch28: 0007-vmsvga-don-t-process-more-than-1024-fifo-commands-at.patch
-Patch29: 0008-qapi-modify-query-machines.patch
-Patch30: 0009-qapi-modify-spice-query.patch
-Patch31: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
-Patch32: 0011-introduce-new-vma-archive-format.patch
-Patch33: 0012-vma-add-verify-command.patch
-Patch34: 0013-vma-add-config-command-to-dump-the-config.patch
-Patch35: 0014-vma-restore-tolerate-a-size-difference-up-to-4M.patch
-Patch36: 0015-backup-modify-job-api.patch
-Patch37: 0016-backup-add-pve-monitor-commands.patch
-Patch38: 0017-backup-vma-add-dir-format.patch
-Patch39: 0018-backup-do-not-return-errors-in-dump-callback.patch
-Patch40: 0019-backup-vma-correctly-propagate-error.patch
-Patch41: 0020-backup-vma-remove-async-queue.patch
-Patch42: 0021-backup-vma-run-flush-inside-coroutine.patch
-Patch43: 0022-backup-do-not-use-bdrv_drain_all.patch
-Patch44: 0023-internal-snapshot-async.patch
-Patch45: 0024-backup-vma-allow-empty-backups.patch
-Patch46: 0025-backup-vma-add-BlockDriver-to-bdrv_open-in-extract_c.patch
-Patch47: 0026-glusterfs-daemonize.patch
-Patch48: 0027-gluster-possiblity-to-specify-a-secondary-server.patch
-Patch49: 0028-qmp-add-get_link_status.patch
-Patch50: 0029-smm_available-false.patch
-Patch51: 0030-use-whitespace-between-VERSION-and-PKGVERSION.patch
-Patch52: 0031-vma-add-firewall.patch
-Patch53: 0032-vma-writer-aio_set_fd_handler-update.patch
-Patch54: 0033-vma-bdrv_open-dropped-the-drv-parameter.patch
-Patch55: 0034-blockdev-bdrv_open-dropped-the-drv-parameter.patch
-Patch56: 0035-blockdev-backup_start-now-takes-a-BlockJobTxn.patch
-Patch57: 0036-savevm-async-migration-and-bdrv_open-update.patch
-Patch58: 0037-qapi-qmp_marshal_-renames-for-pve-monitor-commands.patch
-Patch59: 0038-qapi-qmp_mashal_-renames-for-async-snapshot.patch
-Patch60: 0039-qapi-qmp_mashal_-renames-for-get_link_status.patch
-Patch61: 0040-vnc-make-x509-imply-tls-again.patch
-Patch62: 0041-PVE-VNC-authentication.patch
-Patch63: 0042-vma-writer-don-t-bail-out-on-zero-length-files.patch
-Patch64: 0043-vma-better-driver-guessing-for-bdrv_open.patch
-Patch65: 0044-block-add-zeroinit.patch
-Patch66: 0045-vma-add-format-option-to-device-mapping.patch
-Patch67: CVE-2016-2198-ehci-null-pointer.patch
-Patch68: CVE-2016-2391-usb-ohci-avoid-multiple-eof-timers.patch
-Patch69: CVE-2016-2858-0004-rng-add-request-queue-support-to-rng-random.patch
+Patch12: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch13: 0001-vga-add-sr_vbe-register-set.patch
+Patch14: 0002-Adjust-network-script-path-to-etc-kvm.patch
+Patch15: 0003-vnc-altgr-emulation.patch
+Patch16: 0004-qemu-img-return-success-on-info-without-snapshots.patch
+Patch17: 0004-vmsvga-move-fifo-sanity-checks-to-vmsvga_fifo_length.patch
+Patch18: 0005-use-kvm-by-default.patch
+Patch19: 0005-vmsvga-add-more-fifo-checks.patch
+Patch20: 0006-virtio-balloon-fix-query.patch
+Patch21: 0006-vmsvga-shadow-fifo-registers.patch
+Patch22: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
+Patch23: 0007-vmsvga-don-t-process-more-than-1024-fifo-commands-at.patch
+Patch24: 0008-qapi-modify-query-machines.patch
+Patch25: 0009-qapi-modify-spice-query.patch
+Patch26: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
+Patch27: 0011-introduce-new-vma-archive-format.patch
+Patch28: 0012-vma-add-verify-command.patch
+Patch29: 0013-vma-add-config-command-to-dump-the-config.patch
+Patch30: 0014-vma-restore-tolerate-a-size-difference-up-to-4M.patch
+Patch31: 0015-backup-modify-job-api.patch
+Patch32: 0016-backup-add-pve-monitor-commands.patch
+Patch33: 0017-backup-vma-add-dir-format.patch
+Patch34: 0018-backup-do-not-return-errors-in-dump-callback.patch
+Patch35: 0019-backup-vma-correctly-propagate-error.patch
+Patch36: 0020-backup-vma-remove-async-queue.patch
+Patch37: 0021-backup-vma-run-flush-inside-coroutine.patch
+Patch38: 0022-backup-do-not-use-bdrv_drain_all.patch
+Patch39: 0023-internal-snapshot-async.patch
+Patch40: 0024-backup-vma-allow-empty-backups.patch
+Patch41: 0025-backup-vma-add-BlockDriver-to-bdrv_open-in-extract_c.patch
+Patch42: 0026-glusterfs-daemonize.patch
+Patch43: 0027-gluster-possiblity-to-specify-a-secondary-server.patch
+Patch44: 0028-qmp-add-get_link_status.patch
+Patch45: 0029-smm_available-false.patch
+Patch46: 0030-use-whitespace-between-VERSION-and-PKGVERSION.patch
+Patch47: 0031-vma-add-firewall.patch
+Patch48: 0032-vma-writer-aio_set_fd_handler-update.patch
+Patch49: 0033-vma-bdrv_open-dropped-the-drv-parameter.patch
+Patch50: 0034-blockdev-bdrv_open-dropped-the-drv-parameter.patch
+Patch51: 0035-blockdev-backup_start-now-takes-a-BlockJobTxn.patch
+Patch52: 0036-savevm-async-migration-and-bdrv_open-update.patch
+Patch53: 0037-qapi-qmp_marshal_-renames-for-pve-monitor-commands.patch
+Patch54: 0038-qapi-qmp_mashal_-renames-for-async-snapshot.patch
+Patch55: 0039-qapi-qmp_mashal_-renames-for-get_link_status.patch
+Patch56: 0040-vnc-make-x509-imply-tls-again.patch
+Patch57: 0041-PVE-VNC-authentication.patch
+Patch58: 0042-vma-writer-don-t-bail-out-on-zero-length-files.patch
+Patch59: 0043-vma-better-driver-guessing-for-bdrv_open.patch
+Patch60: 0044-block-add-zeroinit.patch
+Patch61: 0045-vma-add-format-option-to-device-mapping.patch
+Patch62: 0046-pve-cleanup-includes-all-over-the-place.patch
+Patch63: 0047-zeroinit-bdrv_get_block_status-got-a-new-param.patch
+Patch64: 0048-BDRV_O_CACHE_WB-was-removed.patch
+Patch65: 0049-backup-bdrv_set_enable_write_cache-is-no-more.patch
+Patch66: 0050-fix-possible-unitialised-return-value.patch
+Patch67: 0051-net-NET_CLIENT_OPTIONS_KIND_MAX-changed.patch
+Patch68: 0052-vnc-refactor-to-QIOChannelSocket.patch
+Patch69: 0053-vma-use-BlockBackend-on-extract.patch
 Patch70: CVE-2016-4952-scsi-pvscsi-check-command-descriptor-ring-buffer-siz.patch
 Patch71: CVE-2016-5105-scsi-megasas-initialise-local-configuration-data-buf.patch
 Patch72: CVE-2016-5106-scsi-megasas-use-appropriate-property-buffer-size.patch
 Patch73: CVE-2016-5107-scsi-megasas-check-read_queue_head-index-value.patch
-Patch74: CVE-2016-5126-block-iscsi-avoid-potential-overflow-of-acb-task-cdb.patch
 
 %set_verify_elf_method fhs=relaxed
 
+%set_gcc_version 4.7
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
@@ -500,65 +500,11 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch71 -p1
 %patch72 -p1
 %patch73 -p1
-%patch74 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
 %build
 export CFLAGS="%optflags"
-%if_enabled binfmt_misc
-# non-GNU configure
-./configure \
-	--target-list='%target_list_user' \
-	--prefix=%_prefix \
-	--sysconfdir=%_sysconfdir \
-	--libdir=%_libdir \
-	--mandir=%_mandir \
-	--libexecdir=%_libexecdir \
-	--localstatedir=%_localstatedir \
-	--static \
-	--disable-debug-tcg \
-	--disable-sparse \
-	--disable-strip \
-	--disable-system \
-	--disable-attr \
-	--disable-xfsctl \
-	--disable-smartcard \
-	--disable-usb-redir \
-	--disable-linux-aio \
-	--disable-linux-aio \
-	--disable-libusb \
-	--disable-rdma \
-	--disable-libiscsi \
-	--disable-rbd \
-	--disable-libnfs \
-	--disable-glusterfs \
-	--disable-libssh2 \
-	--disable-gnutls \
-	--disable-nettle \
-	--disable-gcrypt \
-	--disable-virglrenderer \
-	--disable-lzo \
-	--disable-numa \
-	--disable-jemalloc \
-	--disable-gtk
-
-# Please do not touch this
-sed -i "/TARGET_ARM/ {
-N
-/cpu_model/ s,any,cortex-a8,
-}" linux-user/main.c
-
-%make_build
-mv arm-linux-user/qemu-arm arm-linux-user/qemu-armh
-
-sed -i '/cpu_model =/ s,cortex-a8,arm926,' linux-user/main.c
-%make_build
-find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
-%make_build clean
-sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
-%endif
-
 # non-GNU configure
 ./configure \
 	--target-list='%target_list_system %target_list_user' \
@@ -623,7 +569,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	--enable-pie \
-	--disable-xfsctl
+	--enable-xfsctl
 
 %make_build
 
@@ -635,10 +581,6 @@ sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 %define docdir %_docdir/%name-%version
 mv %buildroot%_docdir/qemu %buildroot%docdir
 install -m644 LICENSE MAINTAINERS %buildroot%docdir/
-
-%if_enabled binfmt_misc
-find -regex '.*linux-user/qemu.*\.static' -exec install -m755 '{}' %buildroot%_bindir ';'
-%endif
 
 install -m 0755 %SOURCE5 %buildroot%_bindir/qemu-kvm
 ln -r -s %buildroot%_bindir/qemu-kvm %buildroot%_bindir/kvm
@@ -791,11 +733,6 @@ fi
 %exclude %_bindir/qemu-nbd
 %exclude %_bindir/qemu-ga
 
-%if_enabled binfmt_misc
-%files user-binfmt_misc
-%_bindir/qemu-*.static
-%endif
-
 %files img
 %_bindir/qemu-img
 %_bindir/qemu-io
@@ -823,6 +760,9 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Sun Jul 10 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Wed Jun 01 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.5.1.1-alt1
 - 2.5.1.1
 
