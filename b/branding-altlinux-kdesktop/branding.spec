@@ -9,7 +9,7 @@
 %define bugfix 0
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt0.4
 BuildArch: noarch
 
 %define theme %name
@@ -311,6 +311,14 @@ HOME_URL="%url"
 BUG_REPORT_URL="https://bugs.altlinux.org/"
 __EOF__
 
+# limits
+mkdir -p %buildroot%_sysconfdir/security/limits.d/
+cat <<__EOF__ >%buildroot%_sysconfdir/security/limits.d/77-%name.conf
+*		soft	nproc	3072
+root		soft	nproc	1024
+*		hard	nproc	4096
+__EOF__
+
 #notes
 pushd notes
 %makeinstall
@@ -447,6 +455,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %files release
 %_sysconfdir/*-*
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%config(noreplace) %_sysconfdir/security/limits.d/77-%name.conf
 %dir %_datadir/%name/
 
 
@@ -487,6 +496,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Jul 11 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.4
+- add system limits defaults
+
 * Tue May 10 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.3
 - rebuild with new gfxboot
 - add GTK2 defaults
