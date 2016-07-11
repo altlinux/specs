@@ -1,6 +1,6 @@
 Name: love
-Version: 0.9.2
-Release: alt2
+Version: 0.10.1
+Release: alt1
 Summary: Legendary Orthogonal Virtual Environment
 Group: Games/Other
 License: zlib
@@ -10,9 +10,9 @@ Url: http://love2d.org/
 
 BuildPreReq: rpm-build-xdg chrpath
 
-# Automatically added by buildreq on Mon Feb 24 2014
-# optimized out: gnu-config libGL-devel libX11-devel libcloog-isl4 libogg-devel libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: gcc-c++ glibc-devel-static libSDL2-devel libdevil-devel libfreetype-devel libluajit-devel libmodplug-devel libmpg123-devel libopenal-devel libphysfs-devel libvorbis-devel
+# Automatically added by buildreq on Mon Jul 11 2016
+# optimized out: gnu-config libX11-devel libogg-devel libstdc++-devel pkg-config python-base python-modules xorg-xproto-devel
+BuildRequires: gcc-c++ glibc-devel-static libSDL2-devel libfreetype-devel libluajit-devel libmodplug-devel libmpg123-devel libopenal-devel libphysfs-devel libtheora-devel libvorbis-devel lua5 zlib-devel
 
 %description
 As you probably know by now, LO:VE is a framework for making 2D games in
@@ -56,6 +56,12 @@ chrpath -d  %buildroot%_libdir/lib*.so*
 %_pixmapsdir/*
 
 %changelog
+* Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 0.10.1-alt1
+- Autobuild version bump to 0.10.1
+
+* Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 0.9.2-alt3
+- Fix build
+
 * Tue Aug 11 2015 Fr. Br. George <george@altlinux.ru> 0.9.2-alt2
 - Re-release with fixes
 
