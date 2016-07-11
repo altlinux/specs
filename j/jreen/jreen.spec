@@ -1,5 +1,5 @@
 Name: jreen
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 Epoch: 7
 
@@ -13,10 +13,11 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://codeload.github.com/euroelessar/%name/tar.gz/v%version
 Source: %name-%version.tar.gz
+Patch0: %name-%version-qt56-alt.patch
 
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: libgsasl-devel
+BuildRequires: libqt4-webkit-devel
 BuildRequires: libspeex-devel
 BuildRequires: phonon-devel
 BuildRequires: qt4-designer
@@ -125,14 +126,10 @@ Jreen - Открытая и свободная Jabber-библиотека, на
 - Очень быстрый
 
 %prep
-%setup -q
+%setup
+%patch0 -p1
 
 %build
-%define lib_suffix %nil
-%ifarch x86_64
-%define lib_suffix 64
-%endif
-
 # Build Qt4 version
 mkdir -p %_target_platform-qt4
 pushd %_target_platform-qt4
@@ -141,10 +138,10 @@ cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DLIB_SUFFIX=%lib_suffix \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DGSASL_INCLUDE_DIRS:PATH=%_includedir \
-	-DJREEN_FORCE_QT4:BOOL=TRUE
+	-DJREEN_FORCE_QT4:BOOL=TRUE \
+	-Wno-dev
 popd
 
 %make_build -C %_target_platform-qt4
@@ -157,9 +154,9 @@ cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
-	-DLIB_SUFFIX=%lib_suffix \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
-	-DGSASL_INCLUDE_DIRS:PATH=%_includedir
+	-DGSASL_INCLUDE_DIRS:PATH=%_includedir \
+	-Wno-dev
 popd
 
 %make_build -C %_target_platform-qt5
@@ -196,6 +193,9 @@ popd
 %_includedir/%name-qt5/%name/experimental/*.h
 
 %changelog
+* Mon Jul 11 2016 Nazarov Denis <nenderus@altlinux.org> 7:1.2.1-alt1
+- Version 1.2.1
+
 * Thu Sep 18 2014 Nazarov Denis <nenderus@altlinux.org> 7:1.2.0-alt1
 - Version 1.2.0
 - Add Qt5 version
