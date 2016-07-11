@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -22,19 +22,10 @@ Source5: rust-installer.tar
 # Cloned from https://github.com/rust-lang-nursery/libc
 Source6: liblibc.tar
 
-# Prebuilt rust, downloaded from http://static.rust-lang.org/stage0-snapshots/
-%ifarch x86_64 
-Source7: rust-stage0-2016-03-18-235d774-linux-x86_64-1273b6b6aed421c9e40c59f366d0df6092ec0397.tar.bz2
-%endif
-
-%ifarch %ix86
-Source7: rust-stage0-2016-03-18-235d774-linux-i386-0e0e4448b80d0a12b75485795244bb3857a0a7ef.tar.bz2
-%endif
-
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildPreReq: /proc
-BuildRequires: curl gcc-c++ python-devel
+BuildRequires: curl gcc-c++ python-devel rust
 
 %description
 Rust is a systems programming language that runs blazingly fast, prevents
@@ -53,11 +44,10 @@ Requires: %name = %version-%release
 mv llvm jemalloc compiler-rt rust-installer liblibc src
 mv hoedown src/rt
 
-mkdir dl
-cp %SOURCE7 dl
-
 %build
 ./configure --disable-manage-submodules \
+    --enable-local-rust \
+    --local-rust-root=%prefix \
     --release-channel=stable \
     --disable-docs \
     --enable-dist-host-only \
@@ -96,6 +86,9 @@ cp %SOURCE7 dl
 %_libdir/rustlib/etc/*
 
 %changelog
+* Mon Jul 11 2016 Vladimir Lettiev <crux@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+
 * Mon May 30 2016 Vladimir Lettiev <crux@altlinux.ru> 1.9.0-alt1
 - 1.9.0
 
