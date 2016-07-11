@@ -1,6 +1,6 @@
 %def_without bootstrap
 Name: rust-cargo
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Summary: The Rust package manager
 
@@ -75,9 +75,12 @@ rm -rf %_tmpdir/cargo
 %files
 %doc LICENSE-APACHE LICENSE-MIT LICENSE-THIRD-PARTY README.md
 %_bindir/cargo
-%_man1dir/cargo.*
+%_man1dir/cargo*
 
 %changelog
+* Mon Jul 11 2016 Vladimir Lettiev <crux@altlinux.ru> 0.11.0-alt1
+- 0.11.0
+
 * Mon Apr 25 2016 Vladimir Lettiev <crux@altlinux.ru> 0.10.0-alt1
 - 0.10.0
 
