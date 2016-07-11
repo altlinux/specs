@@ -1,12 +1,12 @@
 Name: liborcus
-Version: 0.11.0
+Version: 0.11.2
 Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
 Group: System/Libraries
 License: MIT
 Url: http://gitorious.org/orcus
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar.xz
 
 Patch: liborcus-alt-mdds-pkgconfig.patch
 
@@ -83,6 +83,9 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %_bindir/orcus-*
 
 %changelog
+* Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 0.11.2-alt1
+- Autobuild version bump to 0.11.2
+
 * Thu Mar 10 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.11.0-alt1
 - Updated to 0.11.0.
 
