@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29.4
+Version: 0.29.5
 Release: alt1
 
 BuildArch: noarch
@@ -19,6 +19,7 @@ Requires: alterator-l10n >= 2.0-alt1
 Requires: pam-config >= 1.7.0-alt1
 Requires: pam_krb5
 Requires: nss-ldap
+Requires: libnss-myhostname
 Requires: avahi-daemon
 Requires: settime-rfc867
 
@@ -52,6 +53,16 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Jul 11 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.5-alt1
+- Fix join to Active Directory domain in some cases:
+  - Increase available idmap range from 10.000 to 20 millions
+  - Use system keytab for share files to domain users
+  - Require libnss-myhostname to prevent "DNS update failed!" error
+    (see https://lists.samba.org/archive/samba/2009-June/148869.html)
+  - Check Nebios name length (shoud not be more 15 chars) both in script
+    and form
+- Inform user to succesful join to Active Directory domain
+
 * Fri Jun 10 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.29.4-alt1
 - "group: files [SUCCESS=merge] ldap" for glibc groups merging
 
