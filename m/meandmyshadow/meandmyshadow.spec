@@ -1,6 +1,6 @@
 Name: meandmyshadow
 Version: 0.4.1
-Release: alt2
+Release: alt3
 License: GPLv3
 Summary: Puzzle/platform game with two protagonists performing shared task
 Url: http://meandmyshadow.sourceforge.net/
@@ -31,10 +31,12 @@ Data files for %name, %summary
 
 %prep
 %setup
+sed -i '/OpenGL REQUIRED/aINCLUDE(FindX11)' CMakeLists.txt
 
 %build
-%cmake
+%cmake -DHARDWARE_ACCELERATION=True
 %make_build -C BUILD
+
 
 %install
 cp -al data BUILD
@@ -56,6 +58,9 @@ done
 %_datadir/%name/*
 
 %changelog
+* Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 0.4.1-alt3
+- Fix DSO build
+
 * Thu Dec 11 2014 Fr. Br. George <george@altlinux.ru> 0.4.1-alt2
 - Rebuild with new SDL
 
