@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.28
+Version: 2.9.29
 Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -114,6 +114,9 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Jul 11 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.29-alt1
+- Update alterator-auth translations
+
 * Fri Apr 29 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.28-alt1
 - Update timezone information (tzdata-2016d)
 
