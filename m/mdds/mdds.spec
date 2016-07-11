@@ -1,18 +1,16 @@
 Name: mdds
-Version: 1.0.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: A collection of multi-dimensional data structures and indexing algorithms
 
 Group: Development/C++
 License: MIT
 Url: http://code.google.com/p/multidimalgorithm/
-Source0: http://kohei.us/files/%name/src/%{name}_%version.tar.bz2
+Source0: http://kohei.us/files/%name/src/%{name}-%version.tar.bz2
 
-# Automatically added by buildreq on Sun Nov 08 2015
-# optimized out: libstdc++-devel python3-base
-BuildRequires: boost-devel-headers doxygen gcc-c++ python3
-
-#BuildRequires: boost-interprocess-devel
+# Automatically added by buildreq on Mon Jul 11 2016
+# optimized out: libstdc++-devel python-base python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-docutils python-module-ecdsa python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pycrypto python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python-modules-xml
+BuildRequires: ctags doxygen gcc-c++ git-core python-module-alabaster python-module-breathe python-module-html5lib python-module-sphinx-bootstrap-theme time boost-devel
 
 %description
 A collection of multi-dimensional data structures and indexing algorithms.
@@ -47,47 +45,43 @@ Headers for %name.
 Docs for %name.
 
 %prep
-%setup -n %{name}_%version
+%setup
 # this is only used in tests
-./autogen.sh
+%autoreconf
 sed -i -e '/^CPPFLAGS_NODEBUG=/s/=.*/="%optflags"/' configure
-%make pre
 
 %build
-%configure
-%make_build all
-# Lightweight, but ctritical -- leave it here
+%configure --enable-docs
+%make_build all html
+
+%check
 %make check
-#sphinx3_rel
-%make build-doc-doxygen
 
 %install
-install -d %buildroot/%_includedir/mdds
-install include/mdds/* %buildroot/%_includedir/mdds/
-ln -s %name %buildroot/%_includedir/%name-1.0
+%makeinstall
 
-install -D misc/%name.pc %buildroot/%_datadir/pkgconfig/%name.pc
-ln -s %name.pc %buildroot/%_datadir/pkgconfig/%name-1.0.pc
+ln -sr %buildroot/%_includedir/%name-*/%name  %buildroot/%_includedir/%name
+
+ln -sr %buildroot/%_datadir/pkgconfig/%name-*pc %buildroot/%_datadir/pkgconfig/%name.pc
 
 install -dm 755 %buildroot/%_docdir/%name-%version
-install -dm 755 %buildroot/%_docdir/%name-%version/html
-install -dm 755 %buildroot/%_docdir/%name-%version/html/search
-install -Dm 644 AUTHORS README.md VERSION %buildroot/%_docdir/%name-%version
-cp ./doc/html/search/*.*  %buildroot/%_docdir/%name-%version/html/search
-cp ./doc/html/*.* %buildroot/%_docdir/%name-%version/html/
+
+cp -a ./doc/_build %buildroot/%_docdir/%name-%version/html
+cp -a ./example %buildroot/%_docdir/%name-%version/
 
 %files doc
-%exclude %_docdir/%name-%version/AUTHORS
-%exclude %_docdir/%name-%version/README.md
-%exclude %_docdir/%name-%version/VERSION
-%_docdir/%name-%version/html
+%_docdir/%name-%version/*
 
 %files devel
+%doc README* NEWS VERSION AUTHORS
 %_includedir/*
 %_datadir/pkgconfig/*
-%doc AUTHORS README.md VERSION
 
 %changelog
+* Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 1.2.1-alt1
+- Autobuild version bump to 1.2.1
+- Build documentation
+
 * Wed Apr 13 2016 Fr. Br. George <george@altlinux.ru> 1.0.0-alt2
 - Add ABI-depended include simlink
 
