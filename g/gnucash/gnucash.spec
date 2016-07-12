@@ -1,10 +1,10 @@
 # TODO:fix build Python bindings
 %def_disable python
-%define  git_rev a1c7f64
+%define  git_rev ddf84d0
 
 Name: 	 gnucash
-Version: 2.6.12
-Release: alt2
+Version: 2.6.13
+Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
 Summary(ru_RU.UTF8): Программа учёта финансов GnuCash
@@ -21,7 +21,9 @@ Source7: conv_gnucash2.sh
 
 AutoReq: yes, noperl
 
-BuildRequires: doxygen graphviz guile18-devel intltool libglade-devel libgnomeoffice-devel libgnomeui-devel libgtkhtml3-devel libofx-devel libreadline-devel slib-guile
+BuildRequires: doxygen graphviz guile18-devel intltool libglade-devel
+BuildRequires: libgnomeoffice-devel libgnomeui-devel libgtkhtml3-devel
+BuildRequires: libofx-devel libreadline-devel slib-guile
 BuildRequires: libGConf-devel
 BuildRequires: libdbi-devel
 BuildRequires: libdbi-drivers-devel
@@ -177,6 +179,9 @@ rm -f %buildroot%_datadir/gnucash/gnome \
 %files quotes
 
 %changelog
+* Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 2.6.13-alt1
+- New version
+
 * Mon May 02 2016 Andrey Cherepanov <cas@altlinux.org> 2.6.12-alt2
 - Rebuild with new aqbanking
 
