@@ -1,5 +1,5 @@
 Name: qbs
-Version: 1.4.4
+Version: 1.5.2
 Release: alt1
 
 Summary: Qt Build Suite
@@ -11,10 +11,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source: http://download.qt-project.org/official_releases/%name/%version/%name-src-%version.tar.gz
 
-BuildRequires: gcc-c++
-BuildRequires: glibc-devel-static
 BuildRequires: qt5-script-devel
-BuildRequires: rpm-build-gir
 
 %description
 The Qt Build Suite (Qbs) is a tool that helps simplify the build process for
@@ -88,6 +85,9 @@ Provides examples for using the %name
 %_datadir/%name/examples
 
 %changelog
+* Tue Jul 12 2016 Nazarov Denis <nenderus@altlinux.org> 1.5.2-alt1
+- Version 1.5.2
+
 * Sat Jan 16 2016 Nazarov Denis <nenderus@altlinux.org> 1.4.4-alt1
 - Version 1.4.4
 
