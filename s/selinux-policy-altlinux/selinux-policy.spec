@@ -1,11 +1,11 @@
 %define policy_name altlinux
-%define date 20160303
+%define date 20160704
 %define seconf %_sysconfdir/selinux/config
 %define default_mode permissive
 
 Summary: SELinux %policy_name policy
 Name: selinux-policy-altlinux
-Version: 0.0.24
+Version: 0.0.25
 Release: alt1
 License: %distributable
 Group: System/Base
@@ -262,6 +262,9 @@ exit 0 # End of %%preun section
 %ghost %policy_conf/modules/active/modules/psql.pp
 
 %changelog
+* Tue Jul 12 2016 Sergey V Turchin <zerg@altlinux.org> 0.0.25-alt1
+- set object_r:trusted_exec_t:s0 for /usr/sbin/crond
+
 * Wed Mar 02 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.0.24-alt1
 - allow transition from officer_r:officet_t to generic_r:generic_t
 
