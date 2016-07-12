@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
 Version:      3.1.3
-Release:      alt2
+Release:      alt3
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -85,6 +85,7 @@ Requires: postfix-dovecot
 Requires: postfix-ldap
 Requires: postfix-tls
 Requires: dovecot
+Requires: dovecot-pigeonhole
 Requires: cadaver
 Requires: libpst-tools
 Requires: vixie-cron
@@ -393,6 +394,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt3
+- Add dovecot-pigeonhole to task-sogo3
+
 * Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt2
 - Add more requirements to task-sogo3
 
