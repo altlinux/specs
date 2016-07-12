@@ -1,5 +1,5 @@
 %define module_name             jool
-%define module_version          3.4.3
+%define module_version          3.4.4
 %define module_release          alt1
 
 %define flavour		std-def
@@ -59,6 +59,9 @@ install -m644 -D mod/stateless/jool_siit.ko %buildroot/%module_dir/jool_siit.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jul 12 2016 Alexei Takaseev <taf@altlinux.org> 3.4.4-alt1
+- 3.4.4
 
 * Thu May 12 2016 Alexei Takaseev <taf@altlinux.org> 3.4.3-alt1
 - 3.4.3
