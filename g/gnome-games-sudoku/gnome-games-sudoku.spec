@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Sudoku game
@@ -34,6 +34,7 @@ in popularity.
 %setup -n %__name-%version
 
 %build
+%add_optflags -std=c++11
 %autoreconf
 %configure --disable-schemas-compile
 %make_build
@@ -55,6 +56,9 @@ in popularity.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Tue Jul 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
+- 3.20.3
+
 * Mon May 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 
