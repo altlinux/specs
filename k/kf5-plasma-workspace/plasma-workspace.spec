@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.7.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -257,7 +257,7 @@ done
 %_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
 %_datadir/xsessions/plasma.desktop
-%_datadir/wayland-sessions/plasmawayland.desktop
+#%_datadir/wayland-sessions/plasmawayland.desktop
 %_datadir/sddm/themes/*/
 
 %files devel
@@ -292,6 +292,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Jul 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt2
+- apply upstream fix against KDEBUG#364530
+
 * Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
 - new version
 
