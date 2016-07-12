@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
 Version:      3.1.3
-Release:      alt1
+Release:      alt2
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -76,14 +76,19 @@ Requires: sope-cards-%name
 Requires: %name-apache2
 Requires: apache2-base
 Requires: apache2-mod_ngobjweb
+Requires: apache2-mod_wsgi
 Requires: memcached 
 Requires: sope-gdl1-postgresql
-%if_with openchange
-Requires: %name-openchange-backend
-Requires: openchange-server
-Requires: openchange-ocsmanager
-Requires: openchange-rpcproxy
-%endif
+Requires: postgresql9.5-server
+Requires: postfix
+Requires: postfix-dovecot
+Requires: postfix-ldap
+Requires: postfix-tls
+Requires: dovecot
+Requires: cadaver
+Requires: libpst-tools
+Requires: vixie-cron
+Requires: openldap-clients
 Conflicts: task-sogo
 
 %description -n task-sogo3
@@ -388,6 +393,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt2
+- Add more requirements to task-sogo3
+
 * Thu Jun 23 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt1
 - New version
 - Add sope-gdl1-postgresql to task-sogo3
