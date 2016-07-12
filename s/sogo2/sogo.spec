@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo2
-Version:      2.3.12
-Release:      alt2
+Version:      2.3.13
+Release:      alt1
 Epoch:        1
 
 License:      GPL
@@ -80,14 +80,20 @@ Requires: sope-cards-sogo2
 Requires: sogo2-apache2
 Requires: apache2-base
 Requires: apache2-mod_ngobjweb
+Requires: apache2-mod_wsgi
 Requires: memcached 
 Requires: sope-gdl1-postgresql
-%if_with openchange
-Requires: %name-openchange-backend
-Requires: openchange-server
-Requires: openchange-ocsmanager
-Requires: openchange-rpcproxy
-%endif
+Requires: postgresql9.5-server
+Requires: postfix
+Requires: postfix-dovecot
+Requires: postfix-ldap
+Requires: postfix-tls
+Requires: dovecot
+Requires: dovecot-pigeonhole
+Requires: cadaver
+Requires: libpst-tools
+Requires: vixie-cron
+Requires: openldap-clients
 
 %description -n task-sogo
 SOGo is a groupware server built around OpenGroupware.org (OGo) and
@@ -415,6 +421,10 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.13-alt1
+- New version
+- Add more requirements to task-sogo
+
 * Thu Jun 23 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.12-alt2
 - Add sope-gdl1-postgresql to task-sogo
 
