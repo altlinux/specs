@@ -1,187 +1,110 @@
-%define mate_plugins compiz-annotate compiz-blur compiz-clone compiz-commands compiz-core compiz-cube compiz-dbus compiz-decoration compiz-fade compiz-fs compiz-mateconf compiz-glib compiz-matecompat compiz-ini compiz-inotify compiz-minimize compiz-move compiz-obs compiz-place compiz-png compiz-regex compiz-resize compiz-rotate compiz-scale compiz-screenshot compiz-svg compiz-switcher compiz-video compiz-water compiz-wobbly compiz-zoom gwd
-%define default_plugins animation,core,dbus,decoration,expo,glib,matecompat,imgjpeg,move,place,png,regex,resize,scale,session,svg,switcher,text,wall,wobbly,workarounds
-
 Name: compiz
-Version: 0.8.8
-Release: alt12
+Version: 0.9.13.0
+Release: alt1
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
 Url: http://www.compiz-fusion.org/
+Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Obsoletes: compiz-manager
-Provides: compiz-manager = %version-%release
-Provides: COMPIZ_CORE_ABIVERSION = 20091102
+ExclusiveArch: i586 x86_64
+Provides: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
+Provides: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
+Obsoletes: libcompizconfig compiz-fusion-plugins-extra compiz-gtk python-module-compizconfig compiz-gnome
+Obsoletes: compiz-fusion-plugins-main compizconfig-backend-gconf ccsm emerald
 
-# KDE 4.11 made kdecorationbridge.h private
-# GIT_DIR=/gears/k/kde4base-workspace.git git show HEAD:kwin/libkdecorations/kdecorationbridge.h \
-# > kde/window-decorator-kde4/kdecorationbridge.h
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.xz
+Patch0: compiz-0.9.13.0-alt-python_sitelibdir.patch
+Patch1: compiz-0.9.13.0-alt-mate-window-settings.patch
+Patch2: compiz-0.9.13.0-alt-po.patch
 
-BuildRequires: gcc-c++ intltool libGLU-devel libXcomposite-devel
-BuildRequires: libdbus-glib-devel libmetacity-devel librsvg-devel
-BuildRequires: libwnck-devel xsltproc libxslt-devel xorg-xextproto-devel kde4libs-devel kde4base-workspace-devel
-BuildRequires: kdebase-devel libdbus-tqt-devel libtqt-devel libpng-devel
-
-BuildRequires: libfuse-devel libstartup-notification-devel
+BuildRequires: boost-devel-headers cmake gcc-c++ intltool libGLU-devel libSM-devel libXcomposite-devel
+BuildRequires: libXcursor-devel libXdamage-devel libXi-devel libXinerama-devel libXrandr-devel libdbus-devel
+BuildRequires: libglibmm-devel libjpeg-devel libmetacity3.0-devel libnotify-devel libprotobuf-devel librsvg-devel
+BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler python-module-Pyrex xsltproc
+BuildRequires: pkgconfig(mate-window-settings-2.0) pkgconfig(gnome-desktop-2.0)
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
 for binding redirected top-level windows to texture objects. It has a flexible
 plug-in system and it is designed to run well on most graphics hardware.
 
-%package mate
-Summary: Mate Window Manager
-Group: Graphical desktop/Other
-Requires: %name = %version-%release %name-gtk = %version-%release simple-ccsm
-
-%description mate
-Compiz Window Manager for Mate
-
-%package gtk
-Summary: Gtk Compiz window decorator
-Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
-Requires: compizconfig-backend-gconf >= 0.8.4
-
-%description gtk
-Compiz window decorator for Gtk
-
-%package kde
-Summary: KDE Compiz window decorator
-Group: Graphical desktop/KDE
-Requires: %name = %version-%release
-#Requires: compizconfig-backend-kconfig4 >= 0.8.4 simple-ccsm
-
-%description kde
-Compiz window decorator for KDE
-
-%package kde4
-Summary: KDE4 Compiz window decorator
-Group: Graphical desktop/KDE
-Requires: %name = %version-%release
-Requires: compizconfig-backend-kconfig4 >= 0.8.4 simple-ccsm
-
-%description kde4
-Compiz window decorator for KDE4
-
-%package devel
-Summary: Development files for Compiz
-Group: Development/C
-Requires: %name = %version-%release
-
-%description devel
-Development files for Compiz
-
-%package -n rpm-build-%name
-Summary: RPM macros for sawfish-related packages
-Group: Development/Other
-
-%description -n rpm-build-%name
-RPM macros for sawfish-related packages
-
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-%autoreconf
-%configure \
-	--with-default-plugins="%default_plugins" \
-	--enable-librsvg \
-	--enable-gtk \
-	--disable-mate \
-	--enable-marco \
-	--disable-mateconf \
-	--enable-mate-keybindings \
-	--enable-kde \
-	--enable-kde4 \
-	--disable-static
-
-%make_build
-
-echo "%%compiz_core_abi_version $(sed -ne 's|^#define[[:space:]]*CORE_ABIVERSION[[:space:]]*\(.*\)|\1|p' include/%name-core.h)" > %name-core.rpmmacros
+%define lib_suffix %nil
+%ifarch x86_64
+%define lib_suffix 64
+%endif
+mkdir -p %_target_platform
+pushd %_target_platform
+cmake .. \
+	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_CXX_FLAGS_RELEASE='%optflags' \
+	-DCOMPIZ_PACKAGING_ENABLED=TRUE \
+	-DLIB_SUFFIX=%lib_suffix \
+	-DCOMPIZ_BUILD_WITH_RPATH=FALSE \
+	-DCOMPIZ_DISABLE_GS_SCHEMAS_INSTALL=OFF \
+	-DCOMPIZ_DISABLE_PLUGIN_KDE=ON \
+	-DCOMPIZ_BUILD_TESTING=OFF \
+	-DUSE_KDE4=OFF
+popd
+%make_build -C %_target_platform
 
 %install
-%make DESTDIR=%buildroot install
+%make -C %_target_platform DESTDIR=%buildroot install
 
-rm -f %buildroot%_libdir/%name/*.la
+mkdir -p %buildroot%_sysconfdir/compizconfig
+cat << __EOF__ > %buildroot%_sysconfdir/compizconfig/config
+[general]
+backend = gsettings
+profile = mate
+integration = true
+plugin_list_autosort = true
+__EOF__
+cat << __EOF__ > %buildroot%_sysconfdir/compizconfig/mate.ini
+[core]
+s0_active_plugins = core;composite;opengl;decor;matecompat;move;resize;imgpng;wall;session;copytex;compiztoolbox;wobbly;switcher;scale;
+__EOF__
 
-# rpm macros
-install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
-
-%find_lang %name
-
-%if_enabled mateconf
-%post mate
-%mateconf_schema_upgrade %mate_plugins
-
-%preun mate
-if [ $1 = 0 ]; then
-%mateconf_schema_remove %mate_plugins
-fi
+%ifarch x86_64
+mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
 %endif
 
+rm -fr %buildroot%_datadir/compiz/cmake
+rm -f %buildroot%_bindir/compiz-decorator
+#rm -f %buildroot%_libdir/*.so
+rm -fr %buildroot%_includedir
+rm -fr %buildroot%_pkgconfigdir
+rm -fr %buildroot%_datadir/cmake*
 
-%files -f %name.lang
-%doc AUTHORS COPYING COPYING.GPL COPYING.MIT README TODO NEWS
-%_bindir/%name
-%dir %_libdir/%name
-%_libdir/*.so.*
-%if_enabled mateconf
-%exclude %_libdir/%name/libmateconf.so
-%endif
-%exclude %_libdir/%name/libmatecompat.so
-%exclude %_libdir/%name/libglib.so
-%exclude %_libdir/%name/libkconfig.so
-%_libdir/%name/lib*.so
+%find_lang --output=global.lang %name ccsm
+
+%files -f global.lang
+%dir %_sysconfdir/compizconfig
+%config(noreplace) %_sysconfdir/compizconfig/*
+%_bindir/*
+%_libdir/%name
+%_libdir/compizconfig
+%_libdir/lib*.so.*
+%_libdir/libcompizconfig_gsettings_backend.so
+%python_sitelibdir/c*
+%_desktopdir/*.desktop
+%_datadir/ccsm
 %_datadir/%name
-%exclude %_datadir/%name/kc*
-%exclude %_datadir/%name/mateconf.xml
-%exclude %_datadir/%name/matecompat.xml
-%exclude %_datadir/%name/glib.xml
-
-%if_enabled mate
-%files mate
-%if_enabled mateconf
-%_sysconfdir/mateconf/schemas/*.schemas
-%exclude %_sysconfdir/mateconf/schemas/*kconfig.schemas
-%_libdir/%name/libmateconf.so
-%_datadir/%name/mateconf.xml
-%_libdir/window-manager-settings/libcompiz.so
-%endif
-%_libdir/%name/libmatecompat.so
-%_libdir/%name/libglib.so
-%_libdir/window-manager-settings/libmarco.so
-%_desktopdir/%name.desktop
-%_datadir/%name/matecompat.xml
-%_datadir/%name/glib.xml
-%_datadir/mate-control-center/keybindings/*.xml
-%_datadir/mate/wm-properties/%name-wm.desktop
-%endif
-
-%files gtk
-%_bindir/gtk-window-decorator
-
-%files kde
-%_bindir/kde-window-decorator
-%_libdir/%name/libkconfig.so
-%_K3conf/*
-%_K3cfg/*
-
-%files kde4
-%_bindir/kde4-window-decorator
-
-%files devel
-%_includedir/compiz
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-
-%files -n rpm-build-%name
-%_rpmmacrosdir/%name-core
+%_datadir/glib-2.0/schemas/*.gschema.xml
+%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Jul 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13.0-alt1
+- 0.9.13.0
+
 * Tue Apr 29 2014 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt12
 - gtk/window-decorator: fixed DSO linking against libm.
 
