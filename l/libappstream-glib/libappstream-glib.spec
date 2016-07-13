@@ -3,10 +3,11 @@
 %define api_ver 1.0
 %define asb_ver 5
 %def_disable rpm
+%def_disable stemmer
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.16
+Version: %ver_major.17
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -31,7 +32,7 @@ BuildRequires: gtk-doc docbook-utils docbook-dtds
 BuildRequires: libyaml-devel gcab libgcab-devel gperf libuuid-devel
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 %{?_enable_rpm:BuildRequires: librpm-devel}
-
+%{?_enable_stemmer:BuildRequires: libstemmer-devel}
 %description
 This library provides GObjects and helper methods to make it easy to read and
 write AppStream metadata. It also provides a simple DOM implementation that
@@ -130,8 +131,8 @@ the functionality of the installed %_name library.
 %configure \
         --enable-gtk-doc \
         --disable-static \
+        %{subst_enable stemmer} \
         %{subst_enable installed_tests}
-
 %make_build
 
 %install
@@ -196,6 +197,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Wed Jul 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.17-alt1
+- 0.5.17
+
 * Thu Jun 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.16-alt1
 - 0.5.16
 
