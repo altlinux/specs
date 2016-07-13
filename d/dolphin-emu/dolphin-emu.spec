@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt1.rc.1
+Release: alt2
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -11,8 +11,11 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-Source: dolphin-%version-rc.tar.gz
-Patch0: %name-%version-rc-alt-git.patch
+#https://github.com/%name/dolphin/archive/%version.tar.gz
+Source: dolphin-%version.tar.gz
+Patch0: %name-%version-alt-git.patch
+
+BuildPreReq: libavresample-devel
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -30,9 +33,12 @@ BuildRequires: libalsa-devel
 BuildRequires: libao-devel
 BuildRequires: libavformat-devel
 BuildRequires: libbluez-devel
+BuildRequires: libcurl-devel
 BuildRequires: libevdev-devel
+BuildRequires: libgtest-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: liblzo2-devel
+BuildRequires: libmbedtls-devel
 BuildRequires: libminiupnpc-devel
 BuildRequires: libopenal-devel
 BuildRequires: libportaudio2-devel
@@ -42,30 +48,47 @@ BuildRequires: libsoundtouch-devel
 BuildRequires: libswscale-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
+BuildRequires: libwxGTK3.1-gtk2-devel
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%version-rc
+%setup -n dolphin-%version
 %patch0 -p1
 
 %build
-%cmake
-%make_build -C BUILD
+%__mkdir_p %_target_platform
+pushd %_target_platform
+
+cmake .. \
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_C_FLAGS:STRING='%optflags' \
+	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
+	-DCMAKE_BUILD_TYPE:STRING="Release"
+
+popd
+
+%make_build -C %_target_platform
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std -C %_target_platform
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/%name.desktop
 %_datadir/%name
-%_pixmapsdir/%name.xpm
+%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
+%_man6dir/%{name}*
 
 %changelog
+* Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 5.0-alt2
+- Version 5.0
+
 * Sat Feb 20 2016 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1.rc.1
 - rebuilt against libSoundTouch.so.1
 
