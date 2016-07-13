@@ -1,17 +1,18 @@
-%define soversion 16
+%define pkgname miniupnpc
+%define soversion 10
 
-Name: miniupnpc
-Version: 2.0
-Release: alt1
+Name: %pkgname%soversion
+Version: 1.9
+Release: alt3
 
 Summary: UPnP client library
 License: BSD
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: http://miniupnp.free.fr/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://miniupnp.free.fr/files/%name-%version.tar.gz
+Source: http://miniupnp.free.fr/files/%pkgname-%version.tar.gz
 
 BuildRequires: cmake
 
@@ -19,24 +20,16 @@ BuildRequires: cmake
 The miniupnpc library implement the UPnP protocol defined
 to dialog with Internet Gateway Devices.
 
-%package -n lib%name%soversion
+%package -n lib%pkgname
 Summary: UPnP client library
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%description -n lib%name%soversion
+%description -n lib%pkgname
 The miniupnpc library implement the UPnP protocol defined
 to dialog with Internet Gateway Devices.
 
-%package -n lib%name-devel
-Summary: Development files for %name
-Group: Development/C
-
-%description -n lib%name-devel
-Contains libraries and header files for
-developing applications that use %name.
-
 %prep
-%setup
+%setup -n %pkgname-%version
 
 %build
 %define lib_suffix %nil
@@ -60,22 +53,17 @@ popd
 
 %install
 %makeinstall_std -C %_target_platform
-%__xz man3/%name.3
-%__install -Dp -m0644 man3/%name.3.xz %buildroot%_man3dir/%name.3.xz
 
-%files -n lib%name%soversion
+%__rm -rf %buildroot%_includedir/%pkgname
+%__rm -rf %buildroot%_libdir/lib%pkgname.so
+
+%files -n lib%pkgname
 %doc Changelog.txt LICENSE README VERSION
-%_libdir/lib%name.so.*
-
-%files -n lib%name-devel
-%dir %_includedir/%name
-%_includedir/%name/*.h
-%_libdir/lib%name.so
-%_man3dir/%name.3.*
+%_libdir/lib%pkgname.so.*
 
 %changelog
-* Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 2.0-alt1
-- Version 2.0
+* Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 1.9-alt3
+- Build as legacy library
 
 * Sun Jan 24 2016 Nazarov Denis <nenderus@altlinux.org> 1.9-alt2
 - Fix man file
