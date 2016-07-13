@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 3.20
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
@@ -7,21 +9,23 @@
 
 Name: gnome-bluetooth
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Bluetooth Subsystem
 License: GPLv2/LGPLv2
 Group: System/Libraries
-Url: https://live.gnome.org/GnomeBluetooth
+Url: https://wiki.gnome.org/Projects/GnomeBluetooth
 
 Provides: bluez-gnome = %version
 Obsoletes: bluez-gnome < %version
-Conflicts: blueman < 1.10-alt4
-#Requires:  bluez >= 5
+Requires:  bluez >= 5
 Requires: lib%name = %version-%release rfkill
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 %define gtk_ver 3.12.0
 
@@ -132,6 +136,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Wed Jul 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
+- removed conflict with blueman provided by blueberry now
+
 * Tue May 31 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
