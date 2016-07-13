@@ -2,7 +2,7 @@
 %define install_all_tests 0
 
 Name: repocop-unittest-altlinux-python
-Version: 0.11
+Version: 0.12
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -55,6 +55,9 @@ install -pD -m 755 repocop-helper-altlinux-python-filelist-pattern-filter \
 %endif
 
 %changelog
+* Wed Jul 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- python mismatch tests
+
 * Tue Mar 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - added support for repocop hints
 
