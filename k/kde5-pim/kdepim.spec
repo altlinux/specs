@@ -19,7 +19,7 @@
 %define libnotesharedprivate libnotesharedprivate%pim_sover
 
 Name: kde5-pim
-Version: 16.04.2
+Version: 16.04.3
 Release: alt1
 %K5init altplace
 
@@ -601,6 +601,9 @@ desktop-file-install \
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
