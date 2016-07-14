@@ -19,7 +19,7 @@
 
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.04.3
 Release: alt1
 %K5init altplace
 
@@ -181,6 +181,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
