@@ -3,7 +3,7 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
 %K5init altplace
 
@@ -197,5 +197,8 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 3.4.1-alt1
+- new version
+
 * Mon Nov 09 2015 Sergey V Turchin <zerg@altlinux.org> 3.3.0-alt1
 - initial build
