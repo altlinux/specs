@@ -1,7 +1,7 @@
 Name: jot
-Version: 10.2
+Version: 10.3
 Release: alt1
-Source: jot-10.2.tar
+Source: jot-10.3.tar
 Patch: %name-urandom.patch
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/jot
 Summary: jot is a simple tool that prints random or sequential data
@@ -35,6 +35,9 @@ install %name.1 %buildroot%_man1dir/
 %_man1dir/%name.*
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 10.3-alt1
+- Autobuild version bump to 10.3
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 10.2-alt1
 - Autobuild version bump to 10.2
 
