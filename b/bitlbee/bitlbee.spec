@@ -1,5 +1,5 @@
 Name: bitlbee
-Version: 3.4.1
+Version: 3.4.2
 Release: alt1
 Group: Networking/IRC
 License: GPLv2
@@ -82,7 +82,6 @@ install -m 755 -D %SOURCE1  %buildroot%_initdir/%name
 
 %postun
 %preun_service %name
-
 %files
 %doc doc/{AUTHORS,CHANGES,CREDITS,FAQ,README}
 %doc doc/user-guide/*.xml doc/user-guide/*.txt
@@ -113,6 +112,9 @@ install -m 755 -D %SOURCE1  %buildroot%_initdir/%name
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 3.4.2-alt1
+- Autobuild version bump to 3.4.2
+
 * Thu Jul 16 2015 Fr. Br. George <george@altlinux.ru> 3.4.1-alt1
 - Autobuild version bump to 3.4.1
 - Fix documentation files
