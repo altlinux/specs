@@ -1,7 +1,7 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.04.3
 Release: alt1
 %K5init altplace
 
@@ -62,6 +62,12 @@ KDE help center.
 %_K5xmlgui/*
 
 %changelog
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
+* Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
