@@ -1,27 +1,26 @@
-%define archiv_name cku211
+%define archiv_name cku302
 Name: ckermit
-License: Artistic License
+License: BSD-3-Clause
 Group: System/Kernel and hardware
 Summary: A Combined Serial and Network Communication Software Package
 Provides: kermit
-Version: 8.0.211
-Release: alt1.1.1.qa1
+Version: 9.0.302
+Release: alt1
 Url: http://www.columbia.edu/kermit/
-Source: %archiv_name.tar.bz2
+Source: %archiv_name.tar.gz
 Source1: skel.kermrc
-Patch: %archiv_name-fmt.diff
-Patch1: %archiv_name-prototypes.diff
-Patch2: %archiv_name-paths.diff
-Patch3: %archiv_name-return.diff
-Patch4: %archiv_name-EMrename.diff
-Patch5: %archiv_name-debug.diff
-Patch6: %archiv_name-uninitialized.diff
-Patch7: %archiv_name-string_comparison.diff
-Patch8: %archiv_name-strncat.diff
+Patch0: cku302-fmt.diff
+Patch1: cku211-prototypes.diff
+Patch2: cku211-paths.diff
+Patch3: cku302-return.diff
+Patch4: cku211-EMrename.diff
+Patch5: cku211-debug.diff
+Patch6: cku211-uninitialized.diff
+Patch7: cku211-string_comparison.diff
 Packager: Boris Savelev <boris@altlinux.org>
 
 # Automatically added by buildreq on Fri Jul 25 2008
-BuildRequires: libncurses-devel libssl-devel
+BuildRequires: libncurses-devel libssl-devel zlib-devel libpam0-devel
 
 %description
 C-Kermit is a combined serial and network communication software
@@ -35,11 +34,9 @@ character-set translation, and automation of communication tasks.
 %patch1
 #%patch2
 %patch3
-%patch4
 #%patch5
 %patch6
-%patch7
-%patch8
+#%patch7
 
 %build
 %make linux+openssl+shadow KFLAGS="$RPM_OPT_FLAGS" \
@@ -60,6 +57,11 @@ install -D -m 644 %{S:1} %buildroot%_sysconfdir/skel/.kermrc
 %_bindir/*
 
 %changelog
+* Fri Jul 15 2016 Terechkov Evgenii <evg@altlinux.org> 9.0.302-alt1
+- 9.0.302
+- Patch4, Patch8 dropped (not needed anymore)
+- Patch7 turned off (seems unneeded)
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 8.0.211-alt1.1.1.qa1
 - NMU: rebuilt for debuginfo.
 
