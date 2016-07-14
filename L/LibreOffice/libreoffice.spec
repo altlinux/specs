@@ -1,4 +1,4 @@
-# 5.1.3.2
+# 5.2.0.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -6,13 +6,13 @@
 %def_without lto
 
 Name: LibreOffice
-Version: 5.1
-%define urelease 3.2
+Version: 5.2
+%define urelease 0.1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -48,42 +48,19 @@ Source300:	update_from_fc
 ## FC patches
 Patch1: FC-openoffice.org-2.4.0.ooo86080.unopkg.bodge.patch
 Patch2: FC-openoffice.org-3.1.0.oooXXXXX.solenv.allowmissing.patch
-Patch3: FC-0001-tdf-95450-avoid-double-swap-on-big-endian-arches.patch
-Patch4: FC-0001-these-popups-should-start-invisible-and-take-default.patch
-Patch5: FC-0002-disable-tearability-of-color-window.patch
-Patch6: FC-0001-rhbz-1168757-propagate-selected-slides-to-print-dial.patch
-Patch7: FC-0001-hack-out-optimization-to-build.patch
-Patch8: FC-0001-generate-better-unit-test-assert-message.patch
-Patch9: FC-0001-native-gtk-menubars-and-popup-menus.patch
-Patch10: FC-0001-Resolves-rhbz-1315385-use-preferred-size-if-widget-s.patch
-Patch11: FC-0001-gtk3-various-bits-means-different-things-again.patch
-Patch12: FC-0001-Resolves-tdf-98638-sometimes-menu-grab-doesn-t-take.patch
-Patch13: FC-installfix.patch
-Patch14: FC-0001-tdf-39271-allow-to-export-only-notes-pages.patch
-Patch15: FC-0001-Pasting-from-a-pdf-from-a-fallback-font-doesn-t-give.patch
-Patch16: FC-0001-tdf-99460-sw-layout-don-t-split-table-before-fly.patch
-Patch17: FC-0001-Resolves-tdf-99498-don-t-overwrite-trwWidth-value-if.patch
-Patch18: FC-0001-rbhz-1326602-avoid-exp.-bg-bitmaps-from-deleted-slid.patch
-Patch19: FC-0001-gtk3-New-Folder-dialog-from-Templates-dialog-doesn-t.patch
-Patch20: FC-0001-only-set-cur.-page-once-when-removing-mult.-pages.patch
-Patch21: FC-0001-improve-perf.-of-VCL-event-dispatch-take-II.patch
-Patch22: FC-0001-Resolves-tdf-99730-lower-the-barrier-for-inferior-sy.patch
-Patch23: FC-0001-gtk3-min-slider-size-too-small-since-3.20.0.patch
-Patch24: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch25: FC-0001-rhbz-1327847-emit-.desktop-trans.-in-predictable-ord.patch
-Patch26: FC-0001-disable-firebird-unit-test.patch
-Patch27: FC-0001-Update-liborcus-to-0.11.0.patch
-Patch28: FC-0001-reorder.patch
-Patch29: FC-0002-reduce-copypasta.patch
-Patch30: FC-0003-detect-Boost.Filesystem.patch
-Patch31: FC-0004-define-boost_filestystem-external-for-system-boost-t.patch
-Patch32: FC-0001-never-run-autogen.sh.patch
-Patch33: FC-0001-disable-libe-book-support.patch
-Patch34: FC-0001-fix-build-with-gcc-4.8.patch
-Patch35: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch36: FC-0001-disable-PSD-import-test-which-deadlocks-on-ARM.patch
-Patch37: FC-0001-but-only-for-dialog.patch
-Patch38: FC-0003-gtk3-wayland-start-floating-windows-hidden.patch
+Patch3: FC-0001-Resolves-rhbz-1353069-don-t-clear-XATTR_FILL-from-st.patch
+Patch4: FC-0001-Resolves-rhbz-1351224-wayland-grab-related-crashes.patch
+Patch5: FC-0001-Resolves-rhbz-1352965-gtk3-infinite-clipboard-recurs.patch
+Patch6: FC-0001-rhbz-1351292-correctly-set-edit-mode.patch
+Patch7: FC-installfix.patch
+Patch8: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch9: FC-0001-disable-firebird-unit-test.patch
+Patch10: FC-0001-never-run-autogen.sh.patch
+Patch11: FC-0001-disable-libe-book-support.patch
+Patch12: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch13: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
+Patch14: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
+Patch15: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
 
 ## Long-term FC patches
 
@@ -106,6 +83,8 @@ BuildRequires: libe-book-devel
 BuildRequires: junit xsltproc java-1.8.0-openjdk-devel
 # 5.1.2
 BuildRequires: libgtk+3-gir-devel
+# 5.2.0
+BuildRequires: libCoinMP-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -221,7 +200,7 @@ echo Direct build
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+##patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -232,29 +211,6 @@ echo Direct build
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
 
 ## Long-term FC patches applying
 
@@ -301,19 +257,21 @@ test -r %conffile && . %conffile ||:
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
 ./autogen.sh \
+	--prefix=%_prefix \
+	--libdir=%_libdir \
+	--disable-lto \
         --with-vendor="ALT Linux Team" \
         --disable-odk \
-        --disable-systray \
+        --enable-systray \
 	--disable-firebird-sdbc \
 	--disable-gltf \
-	--disable-coinmp \
+	--enable-coinmp \
         --enable-dbus \
         --enable-evolution2 \
         --enable-gio \
         --with-alloc=system \
         --without-fonts \
         --without-myspell-dicts \
-	--without-system-npapi-headers \
 	\
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
@@ -362,6 +320,7 @@ export CXX=%_target_platform-g++
 %endif
 
 #        --disable-gnome-vfs \
+# --without-system-npapi-headers \
 
 %if_with forky
 # Make forky
@@ -452,7 +411,7 @@ done
 # TODO check if qstart is needed
 mkdir -p %buildroot%_desktopdir
 for n in writer impress calc base draw math;  do
-	ln -sr %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
+	ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
 done
 
 # Hack out "Education" category from Math
@@ -523,6 +482,9 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 %_girdir/LOKDocView-*.gir
 
 %changelog
+* Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt1
+- Update to 5.2.0.1
+
 * Thu Jun 02 2016 Fr. Br. George <george@altlinux.ru> 5.1-alt4
 - Update to 5.1.3.2
 - Fix buildreqs
