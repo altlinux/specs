@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.24.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Requires: %name-common = %version-%release
 
 Source: %rname-%version.tar
+Patch1: alt-find-epoxy.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libX11-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-xproto-devel
@@ -72,6 +73,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -104,6 +106,9 @@ KF5 library
 %_K5lib/libKF5QuickAddons.so.*
 
 %changelog
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt2
+- fix to build with libepoxy
+
 * Mon Jul 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt1
 - new version
 
