@@ -2,7 +2,7 @@
 %define install_all_tests 1
 
 Name: repocop-unittest-altlinux-python
-Version: 0.13
+Version: 0.14
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -57,6 +57,9 @@ install -pD -m 755 repocop-helper-altlinux-python-filelist-pattern-filter \
 %endif
 
 %changelog
+* Thu Jul 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- added exception for python-module-pygobject3-common-devel
+
 * Thu Jul 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - enabled all tests
 
