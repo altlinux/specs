@@ -2,7 +2,7 @@
 
 Name: python-module-%pypi_name
 Version: 3.6.3
-Release: alt1
+Release: alt2
 Summary: A tool to generate a static blog from reStructuredText or Markdown input files
 Group: Development/Python
 
@@ -23,7 +23,21 @@ BuildPreReq: python-module-django
 %py_requires unidecode
 
 %description
-Pelican is a static site generator, written in Python_.
+Pelican is a static site generator, written in Python.
+
+* Write your weblog entries directly with your editor of choice (vim!)
+  in reStructuredText_ or Markdown_
+* Includes a simple CLI tool to ...
+
+%package -n pelican
+Summary: A tool to generate a static blog from reStructuredText or Markdown input files
+Group: Publishing
+Requires: python-module-pelican
+Requires: python-module-markdown
+Requires: python-module-Pygments-tests
+
+%description -n pelican
+Pelican is a static site generator, written in Python.
 
 * Write your weblog entries directly with your editor of choice (vim!)
   in reStructuredText_ or Markdown_
@@ -72,7 +86,12 @@ LC_ALL=en_US.UTF-8 python -m unittest discover ||:
 %python_sitelibdir/%pypi_name
 %python_sitelibdir/%pypi_name-*-py?.?.egg-info
 
+%files -n pelican
+
 %changelog
+* Thu Jul 14 2016 Andrey Cherepanov <cas@altlinux.org> 3.6.3-alt2
+- Add metapackage pelican with all requirements needed for generation
+
 * Wed Jul 13 2016 Andrey Cherepanov <cas@altlinux.org> 3.6.3-alt1
 - new version 3.6.3
 
