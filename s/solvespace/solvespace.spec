@@ -1,19 +1,20 @@
 %def_without gtk3
 
 Name: 	 solvespace
-Version: 20160214
+Version: 2.1
 Release: alt1
+Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
 License: GPLv3
 Group: 	 Graphics
 Url: 	 http://solvespace.com/
-#VCS:    https://github.com/whitequark/solvespace
+#VCS:    https://github.com/solvespace/solvespace
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0:  %name-%version.tar
-
-Patch1:   %name-alt-set-arch-libdir.patch
+Source1:  libdxfrw.tar
+Patch1: disable-git-commit-check.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -29,6 +30,15 @@ BuildRequires: libgtkmm2-devel
 BuildRequires: libpangomm-devel
 BuildRequires: libjson-c-devel
 BuildRequires: libpng-devel
+BuildRequires: libharfbuzz-devel
+BuildRequires: libdrm-devel
+BuildRequires: libpcre-devel
+BuildRequires: libpixman-devel
+BuildRequires: libexpat-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXxf86vm-devel
+BuildRequires: libspnav-devel
 BuildRequires: zlib-devel
 
 %description
@@ -68,7 +78,8 @@ This package includes development files for libslvs.
 
 %prep
 %setup -q
-%patch1 -p0
+tar xf %SOURCE1
+%patch1 -p1
 
 %build
 %cmake
@@ -93,6 +104,9 @@ This package includes development files for libslvs.
 %_includedir/slvs.h
 
 %changelog
+* Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.1-alt1
+- New version
+
 * Tue Feb 16 2016 Andrey Cherepanov <cas@altlinux.org> 20160214-alt1
 - Inital build in Sisyphus
 
