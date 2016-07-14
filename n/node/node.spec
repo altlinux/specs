@@ -1,9 +1,9 @@
 # check deps/npm/package.json for it
-%define npmver 2.15.5
+%define npmver 2.15.8
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
-%global nodejs_abi 4.2
+%global nodejs_abi 4.4
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
 %global v8_abi 4.5
@@ -21,7 +21,7 @@
 %def_disable check
 
 Name: node
-Version: 4.4.5
+Version: 4.4.7
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -215,10 +215,13 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 
 %files -n npm
 %_bindir/npm
-%_libexecdir/node_modules/npm
+%_libexecdir/node_modules/npm/
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Thu Jul 14 2016 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt1
+- build 2016-06-28 Node.js v4.4.7 'Argon' (LTS) Release
+
 * Thu Jun 16 2016 Vitaly Lipatov <lav@altlinux.ru> 4.4.5-alt1
 - build 2016-05-24 Version 4.4.5 'Argon' (LTS)
 
