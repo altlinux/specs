@@ -1,5 +1,5 @@
 Name: SDL2_ttf
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
@@ -59,6 +59,9 @@ applications.
 %_libdir/lib%name.so
 
 %changelog
+* Thu Jul 14 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.14-alt1
+- Version 2.0.14
+
 * Mon Jan 25 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.13-alt1
 - Version 2.0.13 
 
