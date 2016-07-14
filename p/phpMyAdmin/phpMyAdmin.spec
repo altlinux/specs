@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 4.6.1
+Version: 4.6.3
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -10,12 +10,9 @@ Url: http://www.phpmyadmin.net
 
 #Source: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar
 Source: https://files.phpmyadmin.net/phpMyAdmin/%version/phpMyAdmin-%version-all-languages.tar
-Source1: config.inc.php
 Source2: %name-README.ALT
 Source3: %name.htaccess
-Source5: %name.conf
 Source6: %name.A.conf
-Source7: %name-apache.control
 Source8: %name-apache2.control
 
 Provides: phpmyadmin
@@ -24,10 +21,12 @@ Obsoletes: %name-common
 BuildArch: noarch
 
 Requires: pwgen webserver-common control
+Requires: apache2-base >= 2.4
 
-BuildPreReq: rpm-macros-fillup rpm-macros-apache2 rpm-macros-webserver-common
+BuildPreReq: rpm-build-apache2 rpm-macros-webserver-common
 
-BuildRequires: apache-base apache2-base control
+BuildRequires: apache2-base >= 2.4
+BuildRequires: control
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
@@ -81,33 +80,16 @@ Install this package if you need phpMyAdmin for apache 2.0 and php5.
 
 %install
 mkdir -p %buildroot%webserver_webappsdir
+cp config.sample.inc.php config.inc.php
 cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 
-# remove doc sources
+# remove unneeded
+rm -rf %buildroot%webserver_webappsdir/%name/test/
 rm -rf %buildroot%webserver_webappsdir/%name/doc/{_ext,doctrees,Makefile,make.bat,conf.py,*.rst}
-
 rm -f %buildroot%webserver_webappsdir/%name/.coveralls.yml
-
-#install -m755 -d %buildroot%webserver_webappsdir/%name/{lang,js{/mooRainbow{/images,},},themes,libraries{/auth,},css}
-#install -m644 *.php *.html *.css favicon.ico %buildroot%webserver_webappsdir/%name/
-#install -m644 js/*.js %buildroot%webserver_webappsdir/%name/js/
-#install -m644 js/mooRainbow/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow
-#install -m644 js/mooRainbow/images/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow/images
-
-#install -m644 lang/*.php %buildroot%webserver_webappsdir/%name/lang/
-#cp -a libraries/ %buildroot%webserver_webappsdir/%name/
-#cp -a themes %buildroot%webserver_webappsdir/%name/
 
 cp -a %SOURCE3 %buildroot%webserver_webappsdir/%name/.htaccess
 cp %SOURCE2 .
-cp %SOURCE1 %buildroot%webserver_webappsdir/%name/
-
-#make httpd config
-%__mkdir_p %buildroot%apache_addonconfdir
-%__mkdir_p %buildroot%apache_modconfdir
-cp %SOURCE5 %buildroot%apache_addonconfdir/%name.conf
-%__subst 's|--dir--|%webserver_webappsdir/%name|g' %buildroot%apache_addonconfdir/%name.conf
-ln -s %apache_addonconfdir/%name.conf %buildroot%apache_modconfdir/%name.conf
 
 %__mkdir_p %buildroot%apache2_extra_available
 %__mkdir_p %buildroot%apache2_extra_enabled
@@ -116,20 +98,18 @@ cp %SOURCE6 %buildroot%apache2_extra_available/%name.conf
 ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name.conf
 
 #make control modules
-%__mkdir_p %buildroot%_controldir
-cp %SOURCE7 %buildroot%_controldir/%name-apache
-%__subst 's|--dir--|%apache_addonconfdir|g' %buildroot%_controldir/%name-apache
-cp %SOURCE8 %buildroot%_controldir/%name-apache2
-%__subst 's|--dir--|%apache2_extra_available|g' %buildroot%_controldir/%name-apache2
+#__mkdir_p %buildroot%_controldir
+#cp %SOURCE8 %buildroot%_controldir/%name-apache2
+#__subst 's|--dir--|%apache2_extra_available|g' %buildroot%_controldir/%name-apache2
 
 %post
-replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
+%__subst "s|\(blowfish_secret'\] = \)''|\1'$(pwgen -0s1)'|" %webserver_webappsdir/%name/config.inc.php
 
-%pre apache2
-%pre_control %name-apache2
+#pre apache2
+#pre_control %name-apache2
 
-%post apache2
-%post_control -s restricted %name-apache2
+#post apache2
+#post_control -s restricted %name-apache2
 
 %files
 %doc phpMyAdmin-README.ALT README* ChangeLog
@@ -143,9 +123,12 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %files apache2
 %config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
-%attr(755,root,root) %_controldir/%name-apache2
+#attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Fri Jul 15 2016 Vitaly Lipatov <lav@altlinux.ru> 4.6.3-alt1
+- new version 4.6.3 (with rpmrb script)
+
 * Sat May 21 2016 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt1
 - new version 4.6.1 (with rpmrb script)
 - drop apache subpackage (was for Apache 1.3)
