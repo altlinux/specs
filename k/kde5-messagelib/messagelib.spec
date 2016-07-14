@@ -8,7 +8,7 @@
 %define libkf5messageparser libkf5messageparser%sover
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.04.3
 Release: alt1
 %K5init
 
@@ -137,6 +137,9 @@ KF5 library
 %_K5lib/libKF5TemplateParser.so.*
 
 %changelog
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
