@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.24.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -49,6 +49,11 @@ Requires: kf5-filesystem
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name
+Requires: qt5-base-devel
+Requires: kf5-karchive-devel kf5-kauth-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
+Requires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kguiaddons-devel
+Requires: kf5-kiconthemes-devel kf5-knotifications-devel kf5-kparts-devel kf5-ktextwidgets-devel
+Requires: kf5-kunitconversion-devel kf5-kwindowsystem-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -118,6 +123,9 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt2
+- update requires
+
 * Mon Jul 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt1
 - new version
 
