@@ -1,8 +1,8 @@
 #define testname spec-has-obsolete-macroses
-%define install_all_tests 0
+%define install_all_tests 1
 
 Name: repocop-unittest-altlinux-python
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,8 +36,10 @@ done
 install -d -m 755 %buildroot%_datadir/repocop/fixscripts/
 install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
 %else 
-    testname=altlinux-python-test-is-packaged
+    testnames="altlinux-python-test-is-packaged altlinux-python-python3-requires-python altlinux-python-python-requires-python3"
+    for testname in $testnames; do
     install -pD -m 755 $testname.posttest %buildroot%_datadir/repocop/pkgtests/$testname/posttest
+    done
 %endif
 
 install -pD -m 755 repocop-helper-altlinux-python-filelist-pattern-filter \
@@ -55,6 +57,9 @@ install -pD -m 755 repocop-helper-altlinux-python-filelist-pattern-filter \
 %endif
 
 %changelog
+* Thu Jul 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- enabled all tests
+
 * Wed Jul 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - python mismatch tests
 
