@@ -1,12 +1,12 @@
 # check deps/npm/package.json for it
-%define npmver 2.15.8
+%define npmver 3.10.3
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
-%global nodejs_abi 4.4
+%global nodejs_abi 6.3
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%global v8_abi 4.5
+%global v8_abi 5.0
 
 # TODO: we do not pack v8 headers
 %def_without systemv8
@@ -15,14 +15,14 @@
 # see https://github.com/nodejs/node/issues/2783
 %def_with systemssl
 
-# too old in repo
+%global libuv_abi 1.9.1
 %def_with systemuv
 
 %def_disable check
 
 Name: node
-Version: 4.4.7
-Release: alt1
+Version: 6.3.0
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -36,10 +36,9 @@ Patch: addon.gypi-alt-linkage-fixes.patch
 
 BuildRequires: python-devel gcc-c++ zlib-devel libcares-devel gyp
 
+%if_with systemv8
 #BuildRequires: libv8-%v8_abi-devel
 %define libv8_package libv8-chromium
-
-%if_with systemv8
 BuildRequires: %libv8_package-devel >= %v8_abi-devel
 %endif
 
@@ -48,7 +47,7 @@ BuildRequires: openssl-devel >= 1.0.2 openssl
 %endif
 
 %if_with systemuv
-BuildRequires: libuv-devel >= 1.8.0
+BuildRequires: libuv-devel >= %libuv_abi
 %endif
 
 BuildRequires: curl
@@ -84,7 +83,7 @@ Requires:	%libv8_package-devel >= %{v8_abi}
 Requires:	openssl-devel >= 1.0.2
 %endif
 %if_with systemuv
-Requires: libuv-devel >= 1.8.0
+Requires: libuv-devel >= %libuv_abi
 %else
 Conflicts:      libuv-devel
 %endif
@@ -219,8 +218,11 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
-* Thu Jul 14 2016 Vitaly Lipatov <lav@altlinux.ru> 4.4.7-alt1
-- build 2016-06-28 Node.js v4.4.7 'Argon' (LTS) Release
+* Fri Jul 15 2016 Vitaly Lipatov <lav@altlinux.ru> 6.3.0-alt2
+- cleanup spec
+
+* Thu Jul 14 2016 Evgeny Bovykin <missingdays@etersoft.ru> 6.3.0-alt1
+- build 2016-07-06 Node.js v6.3.0 Release
 
 * Thu Jun 16 2016 Vitaly Lipatov <lav@altlinux.ru> 4.4.5-alt1
 - build 2016-05-24 Version 4.4.5 'Argon' (LTS)
