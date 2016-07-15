@@ -3,7 +3,7 @@
 
 Name:    python-module-%modulename
 Version: 0.41
-Release: alt1
+Release: alt2
 
 Summary: Monitor Memory usage of Python code
 License: BSD
@@ -68,7 +68,8 @@ popd
 %endif
 
 %files
-%_bindir/mprof
+%doc *.rst
+#_bindir/mprof
 %python_sitelibdir/%modulename.*
 %python_sitelibdir/*.egg-info
 
@@ -79,5 +80,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 15 2016 Andrey Cherepanov <cas@altlinux.org> 0.41-alt2
+- Do not package executable in module
+- Add documentation to python2 module
+
 * Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 0.41-alt1
 - Initial build for ALT Linux
