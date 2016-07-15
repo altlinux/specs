@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.1.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Metacity window manager
@@ -133,6 +133,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Fri Jul 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Sat Jun 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1.1-alt1
 - 3.20.1.1
 
