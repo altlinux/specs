@@ -1,5 +1,5 @@
 Name: ganttproject
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: GanttProject is a tool for creating a project schedule by means of Gantt chart and resource load chart
@@ -8,11 +8,12 @@ License: GPLv2 with library exceptions
 Group: Office
 Url: http://www.ganttproject.biz/
 
-# Source-url: http://www.ganttproject.biz/dl/2.7.1/any
 Source: %name-%version.tar
-Packager: Denis Medvedev <nbr@altlinux.ru> 
+Packager: Andrey Chetepanov <cas@altlinux.org> 
 
 BuildArch: noarch
+
+BuildRequires: rpm-build-java java-devel ant
 
 AutoProv: yes,noosgi
 
@@ -35,29 +36,29 @@ and spreadsheet applications.
 
 %prep
 %setup
+cd ganttproject-builder
+ant clean
 
 %build
 
 %install
-install -d %buildroot%_datadir/%name
-install -d %buildroot%_bindir
-cp -a * %buildroot%_datadir/%name/
+cd ganttproject-builder
+%ant -Dinstall.dir=%buildroot%_datadir/%name build
 
-#cat > %buildroot%_bindir/%name << EOF
-##!/bin/sh
-#cd %_datadir/%name
-#./%name \$@
-#EOF
-#chmod 755 %buildroot%_bindir/%name %buildroot%_datadir/%name/%name
+# Fix executable bit to program
+chmod +x %buildroot%_datadir/%name/%name
+
+# Make symlink to /usr/bin
+install -d %buildroot%_bindir
 ln -s %_datadir/%name/%name %buildroot%_bindir/%name 
 
-#Create the desktop entry
+# Create the desktop entry
 mkdir -p %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/%name.desktop << EOF
 [Desktop Entry]
 Name=GanttProject
 Comment=Project Management
-Exec=%_bindir/%name
+Exec=%name
 Icon=%name
 Terminal=false
 Type=Application
@@ -65,7 +66,7 @@ StartupNotify=true
 Categories=Office;Development;ProjectManagement;X-MandrivaLinux-Office-TasksManagement;
 EOF
 
-#Create the mime-type for GanttProject
+# Create the mime-type for GanttProject
 mkdir -p %buildroot%_datadir/mimelnk/application
 cat > %buildroot%_datadir/mimelnk/application/x-%name.desktop << EOF
 [Desktop Entry]
@@ -82,7 +83,7 @@ Type=QString
 Value=.gan
 EOF
 
-#Associate the mime-type with GanttProject
+# Associate the mime-type with GanttProject
 mkdir -p %buildroot%_datadir/application-registry
 cat > %buildroot%_datadir/application-registry/%name.applications << EOF
 ganttproject
@@ -95,10 +96,11 @@ ganttproject
         mime_types=application/x-ganttproject
 EOF
 
-#Copy the icon
-install -D %buildroot%_datadir/%name/plugins/net.sourceforge.ganttproject/data/resources/icons/ganttproject.png %buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
+# Copy the icon
+install -D ../ganttproject/data/resources/icons/ganttproject.png %buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
 
 %files
+%doc ganttproject/AUTHORS ganttproject/LICENSE ganttproject/README
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/*
@@ -107,6 +109,10 @@ install -D %buildroot%_datadir/%name/plugins/net.sourceforge.ganttproject/data/r
 %_datadir/icons/hicolor/32x32/apps/*
 
 %changelog
+* Thu Jul 14 2016 Andrey Cherepanov <cas@altlinux.org> 2.7.2-alt1
+- New version
+- Build from upstream Git repository
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
 - new version 2.7.1 (with rpmrb script) (alt bug #30172)
 - cleanup spec
