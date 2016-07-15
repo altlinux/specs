@@ -1,5 +1,5 @@
 Name: apt-indicator
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Applet for indication that newer packages are available
@@ -69,6 +69,9 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Fri Jul 15 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.4-alt1
+- decrease default interval between checkings
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.3-alt1
 - load help browser control button icons from current theme
 - set window icon
