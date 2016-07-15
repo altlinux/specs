@@ -4,7 +4,7 @@
 %define rname kid3
 Name: kde5-%rname
 Version: 3.4.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Sound
@@ -138,7 +138,7 @@ done
     -DWITH_DATAROOTDIR=%_datadir \
     -DWITH_PLUGINSDIR=%_libdir/kid3-kf5/plugins \
     -DWITH_QMLDIR=%_datadir/kid3-kf5/qml \
-    -DWITH_TRANSLATIONSDIR=%_datadir/kid3-kf5/translations \
+    -DWITH_TRANSLATIONSDIR=share/kid3-kf5/translations \
     -DWITH_DOCDIR=%_docdir/%name \
     -DWITH_QT4:BOOL=OFF \
     -DWITH_QT5:BOOL=ON \
@@ -197,6 +197,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 3.4.1-alt2
+- fix load translations
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 3.4.1-alt1
 - new version
 
