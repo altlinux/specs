@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
-Version:      3.1.3
-Release:      alt3
+Version:      3.1.4
+Release:      alt1
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -58,7 +58,6 @@ applications, and to reduce the load of the transactions on the server.
 %package apache2
 Summary: SOGo configuration for Apache2
 Group: System/Servers
-BuildArch: noarch
 Requires: sogo3 = %version-%release
 Conflicts: sogo3-apache2
 
@@ -394,6 +393,10 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Jul 14 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.4-alt1
+- New version 3.1.4
+- Build sogo3-apache2 as arch-dependent
+
 * Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt3
 - Add dovecot-pigeonhole to task-sogo3
 
