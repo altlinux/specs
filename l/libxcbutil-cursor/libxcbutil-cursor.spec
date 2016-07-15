@@ -1,5 +1,5 @@
 Name: libxcbutil-cursor
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 Summary: Client and window-manager helper library on top of libxcb
 License: MIT
@@ -32,7 +32,7 @@ Development and header files for %name
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static --with-cursorpath="~/.icons:/usr/share/icons:/usr/share/pixmaps"
 %make_build
 
 %install
@@ -48,6 +48,9 @@ Development and header files for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt1
+- new version
+
 * Fri Oct 30 2015 Sergey V Turchin <zerg@altlinux.org> 0.1.2-alt1
 - new version
 
