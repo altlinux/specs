@@ -1,5 +1,5 @@
 Name: volumes-profile-lite
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Volumes description for School Lite distribution
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Jul 15 2016 Andrey Cherepanov <cas@altlinux.org> 0.4-alt1
+- Increase size of / to 15G
+
 * Mon Sep 30 2013 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
 - Change autopartition algorithm: swap==RAM, 10G for / and 512M minimum for home
 
