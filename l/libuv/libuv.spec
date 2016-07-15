@@ -1,5 +1,5 @@
 Name: libuv
-Version: 1.8.0
+Version: 1.9.1
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -57,6 +57,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Thu Jul 14 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
+- new version 1.9.1 (with rpmrb script)
+
 * Tue Feb 09 2016 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0 (with rpmrb script)
 - move sources to libuv subdir
