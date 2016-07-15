@@ -1,5 +1,5 @@
 Name: libxcbutil-proto
-Version: 1.11
+Version: 1.12
 Release: alt1
 Summary: XCB protocol descriptions
 License: MIT
@@ -40,6 +40,9 @@ the protocol.
 %doc COPYING NEWS README TODO HACKING doc/xml-xcb.txt
 
 %changelog
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 1.12-alt1
+- 1.12
+
 * Fri Oct 30 2015 Sergey V Turchin <zerg@altlinux.org> 1.11-alt1
 - 1.11 (ALT #31415)
 
