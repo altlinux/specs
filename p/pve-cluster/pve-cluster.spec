@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
-Version: 4.0.42
-Release: alt6
+Version: 4.0.43
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -27,7 +27,7 @@ configuration data on all nodes.
 
 %package -n pve-access-control
 Summary: Proxmox VE access control library
-Version: 4.0.16
+Version: 4.0.17
 Group: Development/Perl
 
 %description -n pve-access-control
@@ -81,7 +81,7 @@ __EOF__
 %systemd_unitdir/%name.service
 %_sysconfdir/bash_completion.d/pvecm
 %dir %_sysconfdir/network
-%config(noreplace) %_sysconfdir/network/interfaces
+%ghost %_sysconfdir/network/interfaces
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %_sysconfdir/sysctl.d/pve-cluster.conf
 %_bindir/create_pmxcfs_db
@@ -115,6 +115,10 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Fri Jul 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.43-alt1
+- 4.0-43
+- pve-access-control 4.0-16
+
 * Thu Jun 23 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.42-alt6
 - fixed upgrading from a previous version
 
