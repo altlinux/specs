@@ -2,8 +2,8 @@
 %add_findreq_skiplist  %_libdir/trikStudio/*.so* %_libdir/trikStudio/plugins/tools/kitPlugins/*.so %_libdir/trikStudio/plugins/tools/*.so %_libdir/trikStudio/plugins/editors/*.so
 %define rev 91af0cec
 Name: trikStudio
-Version: 3.1.3
-Release: alt5.%rev.1
+Version: 3.1.4
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache License 2.0
@@ -12,7 +12,6 @@ Url: https://github.com/qreal/qreal/
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar.gz
-Patch1: install.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel libusb-devel libudev-devel libgmock-devel
 
@@ -50,7 +49,6 @@ Data files for %name
 
 %prep
 %setup
-%patch1
 sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/trikStudio\/' -i installer/platform/trikStudio.sh
 
 %build
@@ -76,6 +74,10 @@ mv %buildroot%_libdir/*.so* %buildroot%_libdir/%name
 %doc LICENSE NOTICE README.md
 
 %changelog
+* Fri Jul 15 2016 Anton Midyukov <antohami@altlinux.org> 3.1.4-alt1
+- New version 3.1.4
+- Remove install.patch
+
 * Tue Jun 21 2016 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt5.91af0cec.1
 - New snapshot
 - Replaced library
