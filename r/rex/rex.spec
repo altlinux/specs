@@ -2,7 +2,7 @@
 
 Name:    rex
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -31,6 +31,9 @@ BuildRequires: perl-Digest-HMAC perl-IPC-Shareable
 
 # Perl find-requires skips File::Spec::* modules, add File::Spec::Win32 manually
 Requires: perl-PathTools
+
+# Perl find-requires skips modules inside eval{}, add them manually
+Requires: perl(Expect.pm) perl(Net/SSH2.pm) perl(Term/ANSIColor.pm)
 
 
 # Template files does't contains a proper Perl code
@@ -77,6 +80,9 @@ install -p -m 644 ../misc/rex-tab-completion.bash %buildroot%_sysconfdir/bash_co
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Sat Jul 16 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt2
+- Adding missing Requires
+
 * Sat Jul 16 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt1
 - New version
 
