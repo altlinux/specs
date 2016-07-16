@@ -1,5 +1,5 @@
 Name: seafile
-Version: 5.1.1
+Version: 5.1.3
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -152,6 +152,9 @@ install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.3-alt1
+- new version 5.1.3 (with rpmrb script)
+
 * Tue May 17 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.1-alt1
 - new version 5.1.1 (with rpmrb script)
 

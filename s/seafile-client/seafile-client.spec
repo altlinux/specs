@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 5.1.1
+Version: 5.1.3
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -14,6 +14,7 @@ Packager: Denis Baranov <baraka@altlinux.ru>
 Source: %name-%version.tar
 
 Requires: seafile >= %version
+Requires: python-module-ccnet >= %version
 
 # manually removed: git-core i586-libxcb libfreetype-infinality python-module-mwlib ruby ruby-stdlibs python-module-google python3-dev python3-module-yieldfrom python3-module-zope 
 # Automatically added by buildreq on Tue May 17 2016
@@ -52,6 +53,9 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
+* Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.3-alt1
+- new version 5.1.3 (with rpmrb script)
+
 * Tue May 17 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.1-alt1
 - new version 5.1.1 (with rpmrb script)
 - build with Qt5, update buildreqs
