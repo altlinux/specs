@@ -1,6 +1,6 @@
 
 Name:     aqbanking
-Version:  5.6.10
+Version:  5.6.11
 Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
@@ -251,6 +251,9 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Sat Jul 16 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.11-alt1
+- new version 5.6.11
+
 * Fri Apr 29 2016 Andrey Cherepanov <cas@altlinux.org> 5.6.10-alt1
 - new version 5.6.10
 
