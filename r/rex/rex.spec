@@ -1,8 +1,8 @@
 # SPEC file for rex package
 
 Name:    rex
-Version: 1.4.0
-Release: alt3
+Version: 1.4.1
+Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -17,10 +17,7 @@ Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.53.1-alt-fix_use.patch
-Patch2:  %name-0.53.1-sudo_backquotes.patch
-Patch3:  %name-1.4.0-alt-fix_Net_SSH2.patch
-
-Patch4:  %name-1.4.0_01-perltidy.patch
+Patch2:  %name-1.4.0_01-perltidy.patch
 
 BuildArch: noarch
 
@@ -49,21 +46,18 @@ and software deployment.
 %setup
 %patch0 -p1
 
-#%%patch1 -p0
-#%%patch2 -p0
-#%%patch3 -p0
-
-%patch4 -p0
+%patch1 -p0
+%patch2 -p0
 
 # This creates Makefile.PL from dist.ini
 /usr/bin/dzil build
 
 %build
-cd Rex-%{version}_01
+cd Rex-%{version}
 %perl_vendor_build
 
 %install
-cd Rex-%{version}_01
+cd Rex-%{version}
 %perl_vendor_install
 
 install -dp %buildroot%_sysconfdir/bash_completion.d/
@@ -83,6 +77,9 @@ install -p -m 644 ../misc/rex-tab-completion.bash %buildroot%_sysconfdir/bash_co
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Sat Jul 16 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt1
+- New version
+
 * Tue Jun 28 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.0-alt3
 - Updating to the development version 1.4.0_01
 - Compatibility fixes for Net::SSH2
