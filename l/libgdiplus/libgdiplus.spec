@@ -4,7 +4,7 @@
 
 Name: libgdiplus
 Version: 2.10.9
-Release: alt1
+Release: alt2
 
 Summary: An Open Source implementation of the GDI+ API.
 License: MPL
@@ -55,12 +55,18 @@ NOCONFIGURE=1 ./autogen.sh --skip-cairo
 %files
 %doc COPYING NEWS README TODO MPL-1.1.html AUTHORS ChangeLog
 %_libdir/*.so.*
+%_libdir/*.so
 
 %files devel
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 
 %changelog
+* Sun Jul 17 2016 Denis Medvedev <nbr@altlinux.org> 2.10.9-alt2
+- Added needed for mono4 so link. Library cannot have more than one
+soname and is excempt from soname policy.
+Fixes #32246
+
 * Tue Apr 23 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.9-alt1
 - 2.10.9
 
