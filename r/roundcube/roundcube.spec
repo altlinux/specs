@@ -1,7 +1,7 @@
 %define oname roundcubemail
 Name: roundcube
-Version: 1.1.5
-Release: alt1
+Version: 1.2.0
+Release: alt2
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
 
@@ -15,21 +15,24 @@ Source1: %name.apache.conf
 Source2: composer.json-dist
 BuildArch: noarch
 
+BuildPreReq: rpm-build-apache2
 BuildRequires: rpm-macros-webserver-common
 BuildRequires: php5
+
+Requires: composer >= 1.1.3
 
 # check it with composer.json or on http://trac.roundcube.net/wiki/Howto_Requirements
 Requires: php5 >= 5.3.7
 Requires: webserver-common php-engine
-Requires: pear-Mail_Mime >= 1.9.0
+Requires: pear-Mail_Mime >= 1.10.0
 Requires: pear-Net_SMTP >= 1.7.1
 Requires: pear-Net_IDNA2 >= 0.1.1
 Requires: pear-Auth_SASL >= 1.0.6
 # managesieve plugin
 Requires: pear-Net_Sieve >= 1.3.4
 # for enigma plugin
-#Requires: pear-Crypt_GPG >= 1.2.0
-Requires: pear-Net_Socket
+#Requires: pear-Crypt_GPG >= 1.4.1
+Requires: pear-Net_Socket >= 1.0.12
 Requires: pear-Mail_mimeDecode
 
 Requires: php5-dom php5-mcrypt php5-openssl
@@ -51,13 +54,14 @@ It provides full functionality you expect from an e-mail client, including MIME 
 folder manipulation, message searching and spell checking.
 RoundCube Webmail is written in PHP and requires a MySQL or Postgres database.
 
-%package apache
+%package apache2
 Summary: %name's apache config file
 Group: System/Servers
-Requires: %name = %version-%release, apache
+Requires: %name = %version-%release
+Requires: apache2-httpd
 BuildArch: noarch
 
-%description apache
+%description apache2
 %name's apache config file
 
 %prep
@@ -72,15 +76,24 @@ install -Dpm 0644 robots.txt %buildroot%_datadir/%name/robots.txt
 cp -ar SQL bin program installer plugins skins %buildroot%_datadir/%name/
 
 cat > %buildroot%_datadir/%name/installer/.htaccess << EOF
-Order Allow,Deny
-Deny from all
+# deny webserver access to this directory
+<ifModule mod_authz_core.c>
+    Require all denied
+</ifModule>
+<ifModule !mod_authz_core.c>
+    Deny from all
+</ifModule>
 EOF
 
-mkdir -p %buildroot%_localstatedir/%name/{temp,logs}/
+mkdir -p %buildroot%_localstatedir/%name/{temp,logs,enigma}/
 ln -s %_localstatedir/%name/logs/ %buildroot%_datadir/%name/
 ln -s %_localstatedir/%name/temp/ %buildroot%_datadir/%name/
+rm -rf %buildroot%_datadir/%name/plugins/enigma/home/
+ln -s %_localstatedir/%name/enigma/ %buildroot%_datadir/%name/plugins/enigma/home
+
 cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/temp/
 cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/logs/
+cp %buildroot%_datadir/%name/installer/.htaccess %buildroot%_localstatedir/%name/enigma/
 
 mkdir -p %buildroot%_sysconfdir/%name/
 cp -ar config/* %buildroot%_sysconfdir/%name/
@@ -91,29 +104,38 @@ ln -s  %_sysconfdir/%name/composer.json %buildroot%_datadir/%name/composer.json
 
 ln -s  %_docdir/%name-%version %buildroot%_datadir/%name/doc
 
-install -pD -m0644 %SOURCE1 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
+install -pD -m0644 %SOURCE1 %buildroot%apache2_extra_available/%name.conf
 
-%post apache
-service httpd condreload
+%post apache2
+service httpd2 condreload
 
-%postun apache
-service httpd condreload
+%postun apache2
+service httpd2 condreload
 
 %files
 %_datadir/%name/
 %dir %attr(2775,root,%webserver_group) %_localstatedir/%name/
 %dir %attr(2775,root,%webserver_group) %_localstatedir/%name/logs/
 %dir %attr(2775,root,%webserver_group) %_localstatedir/%name/temp/
+%dir %attr(2775,root,%webserver_group) %_localstatedir/%name/enigma/
 %_localstatedir/%name/logs/.htaccess
 %_localstatedir/%name/temp/.htaccess
+%_localstatedir/%name/enigma/.htaccess
 %dir %attr(0750,root,%webserver_group) %_sysconfdir/%name/
 %config(noreplace) %attr(0640,root,%webserver_group) %_sysconfdir/%name/*
 %doc CHANGELOG LICENSE README.md UPGRADING SQL/
 
-%files apache
-%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
+%files apache2
+%config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
+- cleanup spec, change apache package to apache2
+- fix enigma plugin home dir
+
+* Wed Jun 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Fri Apr 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt1
 - new version 1.1.5 (with rpmrb script)
 
