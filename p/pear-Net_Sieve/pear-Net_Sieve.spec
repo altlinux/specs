@@ -1,17 +1,18 @@
 %define pear_name Net_Sieve
 
 Name: pear-Net_Sieve
-Version: 1.3.4
+Version: 1.5.2
 Release: alt1
 
 Summary: Handles talking to timsieved
 
 License: BSD
 Group: Development/Other
-Url: http://pear.php.net/package/Net_Sieve
+Url: https://github.com/roundcube/Net_Sieve
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://github.com/roundcube/Net_Sieve/archive/%version.tar.gz
 Source: http://pear.php.net/get/Net_Sieve-%version.tar
 
 BuildArchitectures: noarch
@@ -48,6 +49,9 @@ sieve scripts.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
+- new version 1.5.2 (with rpmrb script)
+
 * Fri Feb 12 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt1
 - new version 1.3.4 (with rpmrb script)
 

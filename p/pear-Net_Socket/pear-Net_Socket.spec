@@ -1,7 +1,7 @@
 %define pear_name Net_Socket
 
 Name: pear-Net_Socket
-Version: 1.0.9
+Version: 1.0.12
 Release: alt1
 
 Summary: Network Socket Interface
@@ -43,6 +43,9 @@ byte-order ip addresses).
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.12-alt1
+- new version 1.0.12 (with rpmrb script)
+
 * Thu Oct 07 2010 Vitaly Lipatov <lav@altlinux.ru> 1.0.9-alt1
 - new version (1.0.9) import in git (ALT bug #15965)
 

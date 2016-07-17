@@ -1,6 +1,8 @@
+#!!! Create new vendor cache for new composer version by get_vendor_cache.sh !!!
+
 Name: composer
-Version: 1.0.0
-Release: alt4
+Version: 1.1.3
+Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.
 
@@ -12,24 +14,21 @@ Source: %name-%version.tar
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
-Requires: php5-openssl php5
+Requires: php5-openssl php5 php5-curl
 
-#BuildPreReq: php5 php5-openssl php5-suhosin
-# Automatically added by buildreq on Thu May 28 2015
-# optimized out: fontconfig libgnome-keyring libgpg-error php5-libs php5-pdo php5-suhosin python-base python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-compiler python-modules-encodings python3-base
-#BuildRequires: git-core libcrypto7 libdb4-devel libsubversion-auth-gnome-keyring mercurial php5 php5-curl php5-dom php5-imagick2 php5-mbstring php5-mysql php5-openssl php5-pdo_sqlite php5-zip python-module-cmd2 python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization python3 ruby ruby-stdlibs subversion time unzip
 BuildRequires: git-core php5-openssl php5
+BuildRequires: git-core
+
 BuildArch: noarch
 
 %description
-Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere.
+Composer helps you declare, manage and install dependencies of PHP projects,
+ensuring you have the right stack everywhere.
 
 %prep
 %setup
 
 %build
-
-#!!! Create new vendor cache for new composer version by get_vendor_cache.sh !!!
 
 #Move vendor cache with build requires
 mv .gear/vendor/ vendor/
@@ -51,7 +50,7 @@ cp composer.phar %buildroot/%_datadir/
 mkdir -p %buildroot/%_bindir/
 cat >%buildroot/%_bindir/%name <<EOF
 #!/bin/sh
-php -d suhosin.executor.include.whitelist=phar %_datadir/composer.phar "\$@"
+php -d suhosin.executor.include.whitelist=phar -d memory_limit=256M %_datadir/composer.phar "\$@"
 EOF
 
 %pre
@@ -61,6 +60,10 @@ EOF
 %attr(755,root,root) %_datadir/%name.phar
 
 %changelog
+* Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
+- build new version 1.1.3
+- set memory_limit 256M
+
 * Wed Nov 25 2015 Danil Mikhailov <danil@altlinux.org> 1.0.0-alt4
 - Added php5 req
 
