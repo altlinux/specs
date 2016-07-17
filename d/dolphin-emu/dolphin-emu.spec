@@ -1,6 +1,6 @@
 Name: dolphin-emu
 Version: 5.0
-Release: alt2
+Release: alt3
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -34,6 +34,7 @@ BuildRequires: libao-devel
 BuildRequires: libavformat-devel
 BuildRequires: libbluez-devel
 BuildRequires: libcurl-devel
+BuildRequires: libenet-devel
 BuildRequires: libevdev-devel
 BuildRequires: libgtest-devel
 BuildRequires: libgtk+2-devel
@@ -67,7 +68,9 @@ cmake .. \
 	-DCMAKE_C_FLAGS:STRING='%optflags' \
 	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
 	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
-	-DCMAKE_BUILD_TYPE:STRING="Release"
+	-DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DUSE_SHARED_ENET:BOOL=TRUE \
+	-DUSE_SHARED_GTEST:BOOL=TRUE
 
 popd
 
@@ -86,6 +89,9 @@ popd
 %_man6dir/%{name}*
 
 %changelog
+* Sun Jul 17 2016 Nazarov Denis <nenderus@altlinux.org> 5.0-alt3
+- Rebuilt with shared enet and gtest libraries
+
 * Wed Jul 13 2016 Nazarov Denis <nenderus@altlinux.org> 5.0-alt2
 - Version 5.0
 
