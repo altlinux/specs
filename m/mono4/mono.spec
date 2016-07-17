@@ -2,7 +2,7 @@
 
 Name: mono4
 Version: 4.3.1.1
-Release: alt8
+Release: alt9
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -807,6 +807,9 @@ mkdir -p  %buildroot%_sysconfdir/mono-4.5/
 %_pkgconfigdir/monodoc.pc
 
 %changelog
+* Sun Jul 17 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt9
+- Moved library libMonoPosixHelper to arch-depended dir (fixes #32246).
+
 * Sun Jan 24 2016 Denis Medvedev <nbr@altlinux.org> 4.3.1.1-alt8
 - Removing remains of mono2
 
