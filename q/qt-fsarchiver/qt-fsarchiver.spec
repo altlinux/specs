@@ -1,5 +1,5 @@
 %define subversion alt
-%define subver 19
+%define subver 20.1
 %define sname qt5-fsarchiver
 
 
@@ -18,6 +18,7 @@ Source4: %{sname}_ru-%version-%subver.ts
 
 Patch: qt5-fsarchiver-0.6.19-alt-glibc-2.16.patch
 Patch1: qt5-fsarchiver_qmake_pro.patch
+Patch2: qt5-fsarchiver-0.6.20-cppcheck.patch
 
 License: GPLv2+
 Group: Archiving/Backup
@@ -98,10 +99,11 @@ fsarchiver  - системный инструментарий, позволяя�
 
 %prep
 %setup -n %sname
+%patch2 -p2
 %patch -p1
 %patch1 -p1
 
-cp %SOURCE4 ./translations/%{sname}_ru.ts
+# cp %SOURCE4 ./translations/%{sname}_ru.ts
 
 echo QMAKE_CXXFLAGS_RELEASE = %optflags >>  qt5-fsarchiver.pro
 echo QMAKE_CFLAGS_RELEASE = %optflags >>  qt5-fsarchiver.pro
@@ -153,6 +155,12 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Sun Jul 17 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.20.1
+- Version 0.6.19-20,1 
+
+* Fri Jun 10 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.19.1
+- version 0.6.19-19,1 
+
 * Sat Jun 04 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.19
 - version 0.6.19-19 with qt5
 
@@ -184,4 +192,5 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 
 * Wed Jun 29 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.12-alt1
 - Initial build for ALT Linux
+
 
