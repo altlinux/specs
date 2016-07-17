@@ -4,7 +4,7 @@
 %def_with python3
 
 Name: python-module-%_name
-Version: 0.24
+Version: 0.24.1
 Release: alt1
 
 Summary: C-extensions for Python
@@ -12,7 +12,7 @@ Group: Development/Python
 License: Python
 Url: http://www.cython.org
 
-Source: http://www.cython.org/release/Cython-%version.tar.gz
+Source: http://cython.org/release/Cython-%version.tar.gz
 
 Provides: %_name = %version-%release
 Conflicts: python-module-Cython0.18
@@ -223,6 +223,9 @@ mv %buildroot/%_bindir/cygdb %buildroot/%_bindir/cygdb3
 %endif
 
 %changelog
+* Sun Jul 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.1-alt1
+- 0.24.1
+
 * Fri Apr 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24-alt1
 - 0.24
 
