@@ -4,7 +4,7 @@
 %define gst_api_ver 1.0
 
 Name: gst-transcoder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GStreamer Transcoding library
@@ -62,6 +62,9 @@ This package provides development files for GStreamer Transcoder.
 
 
 %changelog
+* Sun Jul 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Fri Jul 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - first build for Sisyphus
 
