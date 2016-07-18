@@ -14,7 +14,7 @@
 %define nv_version 367
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt155
+%define pkg_rel alt156
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -58,8 +58,7 @@
 %define nv_lib_dir_prefix_old /usr/X11R6/%_lib/nvidia_
 %define nv_lib_dir %nv_lib_dir_prefix%tbver
 
-%add_findprov_lib_path %nv_lib_dir/*
-%add_findreq_skiplist %nv_lib_dir/*
+#add_findreq_skiplist %nv_lib_dir/*
 %add_findreq_skiplist %x11_lib_old/*
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
 
@@ -84,7 +83,7 @@ Patch2: alt-ignore-dma-remap.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
-#BuildRequires: libGLdispatch libGLX
+BuildRequires: libGLdispatch libGLX
 ExclusiveArch: %ix86 x86_64
 #ExcludeArch: ppc64 x86_64 ppc s390 s390x ia64
 
@@ -102,7 +101,6 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 PreReq: %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
-Requires: libGLdispatch >= 0.1.0 libGLX
 #
 Group: %myGroup
 Summary: %mySummary
@@ -294,6 +292,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt156
+- fix requires
+
 * Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt155
 - fix automatic requires
 
