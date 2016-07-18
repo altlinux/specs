@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radvd
-Version: 2.13
+Version: 2.14
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -85,6 +85,9 @@ install -Dm0644 %SOURCE4 %buildroot%systemd_unitdir/%name.service
 %_sbindir/radvdump
 
 %changelog
+* Mon Jul 18 2016 Mikhail Efremov <sem@altlinux.org> 2.14-alt1
+- Updated to 2.14.
+
 * Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 2.13-alt1
 - Updated to 2.13.
 
