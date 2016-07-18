@@ -1,6 +1,6 @@
 Name: binutils
-Version: 2.26.0
-Release: alt1.1
+Version: 2.26.1
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -259,6 +259,9 @@ XFAIL_TESTS=
 %doc NEWS*
 
 %changelog
+* Fri Jul 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.26.1-alt1
+- Updated to 2.26.1 20160701.
+
 * Fri Apr 01 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.26.0-alt1.1
 - Applied upstream fix for sw#19886.
 
