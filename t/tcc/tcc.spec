@@ -8,13 +8,13 @@
 %define Name TCC
 Name: tcc
 %define lname lib%name
-Version: 0.9.26
-Release: alt1.1
+Version: 0.9.26.0.727.4134994
+Release: alt1
 Summary: A small but hyper fast C compiler
 Group: Development/C
 License: LGPLv2.1+
 URL: http://bellard.org/%name
-Source: http://download.savannah.nongnu.org/releases/tinycc//%name-%version.tar
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Provides: %alias = %version-%release
 
@@ -141,6 +141,10 @@ make test
 
 
 %changelog
+* Mon Jul 18 2016 Fr. Br. George <george@altlinux.ru> 0.9.26.0.727.4134994-alt1
+- Upstream chenged to http://repo.or.cz/tinycc.git
+- Update to 0.9.26-727-g4134994
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.9.26-alt1.1
 - NMU: added BR: texinfo
 
