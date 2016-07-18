@@ -3,11 +3,12 @@
 %define nvIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%define module_name	nvidia
-%define kmsmodule_name	nvidia-modeset
-%define uvmmodule_name	nvidia-uvm
-%define module_version	361.45.11
-%define module_release	alt2
+%define module_name		nvidia
+%define modesetmodule_name	nvidia-modeset
+%define uvmmodule_name		nvidia-uvm
+%define drmmodule_name		nvidia-drm
+%define module_version	367.35
+%define module_release	alt1
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -176,8 +177,10 @@ do
     sffx=`echo "$ver"| sed -e "s|\.||g"`
     pushd kernel-source-%module_name-$sffx
     install -p -m644 %module_name%module_ext %buildroot/%module_local_dir/%kversion-%flavour-%krelease-$ver
-    [ -e %kmsmodule_name%module_ext ] &&
-	install -p -m644 %kmsmodule_name%module_ext %buildroot/%module_local_dir/modeset-%kversion-%flavour-%krelease-$ver
+    [ -e %modesetmodule_name%module_ext ] &&
+	install -p -m644 %modesetmodule_name%module_ext %buildroot/%module_local_dir/modeset-%kversion-%flavour-%krelease-$ver
+    [ -e %drmmodule_name%module_ext ] &&
+	install -p -m644 %drmmodule_name%module_ext %buildroot/%module_local_dir/drm-%kversion-%flavour-%krelease-$ver
     [ -e uvm/%uvmmodule_name%module_ext ] &&
 	install -p -m644 uvm/%uvmmodule_name%module_ext %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver
     [ -e %uvmmodule_name%module_ext ] &&
@@ -197,10 +200,12 @@ fi
 
 echo -n "%version" >%buildroot/%nvidia_workdir/%kversion-%flavour-%krelease
 ln -s `relative %nvidia_workdir/%kversion-%flavour-%krelease %module_version_dir/%module_name` %buildroot/%module_version_dir/%module_name
-ln -s nvidia %buildroot/%module_version_dir/%kmsmodule_name
+ln -s nvidia %buildroot/%module_version_dir/%modesetmodule_name
+ln -s nvidia %buildroot/%module_version_dir/%drmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%uvmmodule_name
 ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%version         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
-ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%version %module_dir/%kmsmodule_name%module_ext` %buildroot/%module_dir/%kmsmodule_name%module_ext
+ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%version %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
+ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%version %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
 ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%version     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
 
 
@@ -233,16 +238,24 @@ fi
 %defattr(644,root,root,755)
 %module_dir
 %module_version_dir/%module_name
-%module_version_dir/%kmsmodule_name
+%module_version_dir/%modesetmodule_name
+%module_version_dir/%drmmodule_name
 %module_version_dir/%uvmmodule_name
 %module_local_dir/%kversion-%flavour-%krelease-*
 %module_local_dir/modeset-%kversion-%flavour-%krelease-*
+%module_local_dir/drm-%kversion-%flavour-%krelease-*
 %module_local_dir/uvm-%kversion-%flavour-%krelease-*
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jul 18 2016 Sergey V Turchin <zerg at altlinux dot org> 367.35-alt1..
+- new release (367.35)
+
+* Fri Jul 01 2016 Sergey V Turchin <zerg at altlinux dot org> 367.27-alt1..
+- new release (367.27)
 
 * Mon May 30 2016 Sergey V Turchin <zerg at altlinux dot org> 361.45.11-alt2..
 - rebuild with fixed 304.131 module (ALT#32154)
