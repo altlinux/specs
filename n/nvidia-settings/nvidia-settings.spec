@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 361.42
+Version: 367.35
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -21,7 +21,8 @@ Patch3: alt-ui-modules-dir.patch
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
 #BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libvdpau-devel ruby ruby-stdlibs
-BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libGL-devel libvdpau-devel
+BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libGL-devel libvdpau-devel
+BuildRequires: libgtk+2-devel libgtk+3-devel
 
 %description
 The `nvidia-settings` utility is a tool for configuring the NVIDIA
@@ -95,20 +96,27 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 
 
 %files
-%doc doc/*.txt samples
+%doc doc/*.txt
 %_man1dir/%name.*
 %_bindir/%name
-%_libdir/%name/
+%_libdir/%name/*gtk3*.so*
 %_sysconfdir/X11/xinit.d/%name.sh
 %_desktopdir/%name.desktop
 %_iconsdir/*/*/apps/%name.png
 
 %files devel
-%doc doc/FRAMELOCK.txt doc/NV-CONTROL-API.txt
+%doc doc/FRAMELOCK.txt doc/NV-CONTROL-API.txt samples/README samples/*.{c,h}
 %_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt1
+- new version
+
+* Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 367.27-alt1
+- new version
+- build with GTK3
+
 * Fri Apr 22 2016 Sergey V Turchin <zerg@altlinux.org> 361.42-alt1
 - new version
 
