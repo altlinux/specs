@@ -7,7 +7,7 @@
 %define rname kdeconnect-kde
 Name: kde4-connect
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Group: Communications
 Summary: KDE Connect client for communication with smartphones
@@ -69,6 +69,10 @@ Development files for %name
 %setup -n %rname-%version
 %patch1 -p0
 
+sed -i "/^add_subdirectory.*tests.*/d" CMakeLists.txt
+echo "macro_optional_add_subdirectory( po )" >> CMakeLists.txt
+
+
 %build
 %K4build
 
@@ -126,6 +130,9 @@ Development files for %name
 %_K4dbus_interfaces/org.kde.kdeconnect.*.xml
 
 %changelog
+* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 0.8-alt2
+- 0.8b (ALT#32277)
+
 * Thu Feb 04 2016 Sergey V Turchin <zerg@altlinux.org> 0.8-alt1
 - new version
 
