@@ -3,7 +3,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -20,7 +20,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: libgtk+2-devel libgtk+2-gir-devel
 BuildRequires: libgtk+3-devel libgtk+3-gir-devel
 BuildRequires: libindicator-devel libindicator-gtk3-devel
-BuildRequires: python-dev python-module-pygtk-devel
+BuildRequires: python-devel python-module-pygtk-devel
 BuildRequires: libgtk-sharp2-devel libgtk-sharp2-gapi
 BuildRequires: mono-devel mono-nunit-devel
 
@@ -230,6 +230,9 @@ popd
 %_pkgconfigdir/appindicator-sharp-0.1.pc
 
 %changelog
+* Mon Jul 18 2016 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt4
+- Fix buildrequires.
+
 * Mon Jan 25 2016 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt3
 - Fix build:
   - enable single make build;
