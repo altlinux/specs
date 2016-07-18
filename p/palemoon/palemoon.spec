@@ -2,8 +2,8 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 26.3.3
-Release: alt1
+Version: 26.4.0
+Release: alt0.1.d177
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -46,7 +46,7 @@ Patch18: mozilla_palimoon-bug-1153109-enable-stdcxx-compat.patch
 Patch20: mozilla_palimoon-bug-1025605-GLIBCXX-26.0.0.patch
 
 Patch21: cpp_check.patch
-Patch23: palemoon_version-26.3.0.patch
+Patch23: palemoon_version-26.4.0.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
@@ -137,6 +137,7 @@ These helper macros provide possibility to rebuild
 %patch21 -p1
 %patch20 -p1
 %patch23 -p1
+
 
 cd %sname
 
@@ -383,8 +384,8 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
-* Sun Jul 03 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.3-alt1
-- Version 26.3.3 Release
+* Mon Jul 18 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt0.1.d177
+- Update from git
 
 * Sat Jun 25 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.3.1-alt1
 - Version 26.3.1 Release
