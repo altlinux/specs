@@ -4,7 +4,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.4
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -216,6 +216,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %_sbindir/semodule
 %_sbindir/sestatus
 %_bindir/secon
+%_libexecdir/selinux/hll/
 %config(noreplace) %_sysconfdir/sestatus.conf
 
 #
@@ -330,7 +331,6 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %add_python_req_skip templates
 
 %files devel
-%_libexecdir/selinux/hll/
 %_bindir/sepolgen
 %_bindir/sepolgen-ifgen
 %_bindir/sepolgen-ifgen-attr-helper
@@ -398,6 +398,9 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt2
+- move _libexecdir/selinux/hll to main package
+
 * Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
 - new version
 
