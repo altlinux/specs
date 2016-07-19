@@ -1,4 +1,4 @@
-# 5.2.0.1
+# 5.2.0.2
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,12 +7,12 @@
 
 Name: LibreOffice
 Version: 5.2
-%define urelease 0.1
+%define urelease 0.2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -39,11 +39,9 @@ Source1:	libreoffice-dictionaries-%uversion.tar.xz
 Source2:	libreoffice-help-%uversion.tar.xz
 Source3:	libreoffice-translations-%uversion.tar.xz
 
-
 Source10:	libreoffice-ext_sources.%uversion.tar
 Source100:	forky.c
-Source200:	oasis-master-document-template.icns
-Source300:	update_from_fc
+Source300:	libreoffice.unused
 
 ## FC patches
 Patch1: FC-openoffice.org-2.4.0.ooo86080.unopkg.bodge.patch
@@ -52,15 +50,16 @@ Patch3: FC-0001-Resolves-rhbz-1353069-don-t-clear-XATTR_FILL-from-st.patch
 Patch4: FC-0001-Resolves-rhbz-1351224-wayland-grab-related-crashes.patch
 Patch5: FC-0001-Resolves-rhbz-1352965-gtk3-infinite-clipboard-recurs.patch
 Patch6: FC-0001-rhbz-1351292-correctly-set-edit-mode.patch
-Patch7: FC-installfix.patch
-Patch8: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch9: FC-0001-disable-firebird-unit-test.patch
-Patch10: FC-0001-never-run-autogen.sh.patch
-Patch11: FC-0001-disable-libe-book-support.patch
-Patch12: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch13: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
-Patch14: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
-Patch15: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
+Patch7: FC-0001-Related-rhbz-1351369-gtk3-clipboards-have-to-live-to.patch
+Patch8: FC-installfix.patch
+Patch9: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch10: FC-0001-disable-firebird-unit-test.patch
+Patch11: FC-0001-never-run-autogen.sh.patch
+Patch12: FC-0001-disable-libe-book-support.patch
+Patch13: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch14: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
+Patch15: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
+Patch16: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
 
 ## Long-term FC patches
 
@@ -202,7 +201,7 @@ echo Direct build
 %patch4 -p1
 ##patch5 -p1
 %patch6 -p1
-%patch7 -p1
+##patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
@@ -211,6 +210,7 @@ echo Direct build
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 ## Long-term FC patches applying
 
@@ -219,12 +219,8 @@ echo Direct build
 ##patch402 -p1
 %patch403 -p1
 
-# Hacked git binary patch
-cp %SOURCE300 sysui/desktop/icons/
-
-# Unhack liborcus version from configure
-# TODO check after 5.0.2.1
-#sed -Ei 's/(libo_CHECK_SYSTEM_MODULE.*liborcus)-[0-9.]+/\1/' configure.ac
+# Hack in proper LibreOffice PATH in libreofficekit
+sed -i 's@/libreoffice/@/LibreOffice/@' libreofficekit/Library_libreofficekitgtk.mk
 
 rm -fr %name-tnslations/git-hooks
 
@@ -482,6 +478,10 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 %_girdir/LOKDocView-*.gir
 
 %changelog
+* Tue Jul 19 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt2
+- Update to 5.2.0.2
+- (closes: #31953)
+
 * Mon Jul 11 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt1
 - Update to 5.2.0.1
 
