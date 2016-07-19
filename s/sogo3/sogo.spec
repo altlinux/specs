@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
 Version:      3.1.4
-Release:      alt1
+Release:      alt2
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -393,6 +393,10 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Jul 19 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.4-alt2
+- Fix the unrecognized selector exception in the fresh pieces of the EAS
+  implementation (by writing the queries analoguously to the other ones).
+
 * Thu Jul 14 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.4-alt1
 - New version 3.1.4
 - Build sogo3-apache2 as arch-dependent
