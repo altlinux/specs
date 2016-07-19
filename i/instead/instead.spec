@@ -1,6 +1,6 @@
 
 Name: instead
-Version: 2.3.0
+Version: 2.4.1
 Release: alt1
 Group: Games/Adventure
 License: GPLv2
@@ -79,6 +79,9 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 2.4.1-alt1
+- Autobuild version bump to 2.4.1
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 2.3.0-alt1
 - Autobuild version bump to 2.3.0
 
