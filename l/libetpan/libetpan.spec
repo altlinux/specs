@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.7.2
-Release: alt1
+Release: alt2
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: %bsdstyle
@@ -11,6 +11,10 @@ Url: http://www.etpan.org/libetpan.html
 # git://github.com/dinhviethoa/libetpan.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+# Patch from upstream.
+# Must be dropped when new version will be released.
+Patch1: fixed-crash-with-IDLE.patch
 
 %def_with gnutls
 %def_without openssl
@@ -49,6 +53,7 @@ program which use lib%name.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 ln -s README.md README
 
 %build
@@ -75,6 +80,10 @@ ln -s README.md README
 %_libdir/%name.so
 
 %changelog
+* Tue Jul 19 2016 Mikhail Efremov <sem@altlinux.org> 1.7.2-alt2
+- Patch from upstream:
+  + Fixed crash with IDLE.
+
 * Thu Jun 16 2016 Mikhail Efremov <sem@altlinux.org> 1.7.2-alt1
 - Patch from upstream:
   + Fixed memory leak.
