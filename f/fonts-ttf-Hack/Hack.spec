@@ -1,5 +1,5 @@
 Name: fonts-ttf-Hack
-Version: 2.018
+Version: 2.020
 Release: alt1
 
 Summary: A hand groomed and optically balanced font familly to be your go-to code face
@@ -33,6 +33,9 @@ necessary. Install and go.
 
 %files -f Hack.files
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 2.020-alt1
+- Autobuild version bump to 2.020
+
 * Wed Nov 18 2015 Fr. Br. George <george@altlinux.ru> 2.018-alt1
 - Autobuild version bump to 2.018
 
