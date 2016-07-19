@@ -21,7 +21,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.18.3
+Version: 1.18.4
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -43,9 +43,9 @@ PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release 
 Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-evdev
 %ifarch %ix86 x86_64
 Requires: xorg-drv-vesa
+%endif
 Provides: xorg-drv-modesetting = %epoch:%version-%release
 Obsoletes: xorg-drv-modesetting < %epoch:%version-%release
-%endif
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -280,11 +280,8 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_man4dir/exa.4*
 %_man5dir/xorg.conf.5*
 %_man5dir/xorg.conf.d.5*
-# modesetting - video driver for framebuffer device
-%ifarch %ix86 x86_64
 %_modulesdir/drivers/modesetting_drv.so
 %_man4dir/modesetting.4*
-%endif
 
 %files common
 %dir %_sysconfdir/X11/app-defaults
@@ -330,6 +327,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Jul 19 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.18.4-alt1
+- 1.18.4
+
 * Fri Apr 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.18.3-alt1
 - 1.18.3
 
