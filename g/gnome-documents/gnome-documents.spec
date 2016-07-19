@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define xdg_name org.gnome.Documents
 %define xdg_name1 org.gnome.Books
 %define ver_major 3.20
@@ -6,17 +8,24 @@
 
 Name: gnome-documents
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A document manager application for GNOME
 Group: Office
 License: GPLv2+
 Url: https://wiki.gnome.org/Apps/Documents
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
+
+%define lok_ver 5.2-alt2
 
 Requires: %name-data = %version-%release
 Requires: gnome-online-miners
+Requires: libreofficekit >= %lok_ver
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(cairo)
@@ -33,7 +42,7 @@ Requires: typelib(GnomeDesktop)
 Requires: typelib(Goa)
 Requires: typelib(GObject)
 Requires: typelib(Gtk)
-#Requires: typelib(LOKDocView)
+Requires: typelib(LOKDocView)
 Requires: typelib(Pango)
 Requires: typelib(Soup)
 Requires: typelib(Tracker)
@@ -157,6 +166,10 @@ GObject introspection devel data for the %name library.
 %_datadir/appdata/%xdg_name1.appdata.xml
 
 %changelog
+* Tue Jul 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
+- updated to 3.20.0-11-gb2c58e7
+- updated reqs
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
