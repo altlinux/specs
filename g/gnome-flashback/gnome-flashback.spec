@@ -1,18 +1,23 @@
+%def_enable snapshot
+
 %define ver_major 3.20
 %define _libexecdir %_prefix/libexec
-%def_without compiz
+%def_with compiz
 
 Name: gnome-flashback
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: GNOME Flashback session
 License: GPLv3
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeFlashback
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.20.0
@@ -87,7 +92,6 @@ This package permits to log into GNOME Flashback with Compiz.
 %autoreconf
 %configure \
     --disable-schemas-compile
-
 %make_build
 
 %install
@@ -125,6 +129,10 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Thu Jul 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt2
+- updated to 3.20.1-7-ge76b61f
+- packaged compiz session
+
 * Wed May 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
