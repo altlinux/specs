@@ -1,6 +1,6 @@
 Summary: Flat assembler
 Name: fasm
-Version: 1.71.49
+Version: 1.71.54
 Release: alt1
 License: distributable
 Group: Development/Tools
@@ -32,6 +32,9 @@ install -Dm755 source/Linux/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 1.71.54-alt1
+- Autobuild version bump to 1.71.54
+
 * Thu Dec 24 2015 Fr. Br. George <george@altlinux.ru> 1.71.49-alt1
 - Autobuild version bump to 1.71.49
 
