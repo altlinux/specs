@@ -1,7 +1,7 @@
 %define _name libmbim
 
 Name: %_name-glib
-Version: 1.12.4
+Version: 1.14.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: glib2-devel libgio-devel libgudev-devel
 BuildRequires: python-modules-json
 BuildRequires: gtk-doc help2man
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The Mobile Broadband Interface Model (MBIM) is a new standard
@@ -66,8 +68,8 @@ touch README ChangeLog
 %autoreconf
 %configure \
 	--disable-static \
-	--enable-gtk-doc \
-	--with-tests
+	--with-udev \
+	--enable-gtk-doc
 %make_build
 
 # Fix mbimcli name in the man page
@@ -86,6 +88,7 @@ make check
 %files utils
 %_bindir/*
 %_man1dir/*
+%_datadir/bash-completion/completions/*
 
 %files devel
 %_includedir/*
@@ -97,6 +100,10 @@ make check
 
 
 %changelog
+* Tue Jul 19 2016 Mikhail Efremov <sem@altlinux.org> 1.14.0-alt1
+- Explicitly use --with-udev configure option.
+- Updated to 1.14.0.
+
 * Wed Mar 23 2016 Mikhail Efremov <sem@altlinux.org> 1.12.4-alt1
 - Updated to 1.12.4.
 
