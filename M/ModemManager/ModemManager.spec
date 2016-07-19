@@ -1,5 +1,5 @@
-%define git_date .git20160601
-#define git_date %nil
+#define git_date .git20160601
+%define git_date %nil
 
 %define dbus_version 1.1
 %define libgudev_version 143
@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.5.992
+Version: 1.5.993
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -33,6 +33,7 @@ BuildRequires: libgio-devel
 BuildRequires: intltool
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel
+BuildRequires: libsystemd-devel >= 209
 BuildRequires: gtk-doc
 
 # For tests
@@ -132,6 +133,7 @@ Requires: libmm-glib-devel = %version-%release
 	--with-udev-base-dir=/lib/udev \
 	--with-polkit \
 	--with-systemdsystemunitdir=%_unitdir \
+	--with-suspend-resume=systemd \
 	%{subst_with qmi} \
 	%{subst_with mbim} \
 	%{subst_enable introspection} \
@@ -234,6 +236,10 @@ fi
 %endif
 
 %changelog
+* Tue Jul 19 2016 Mikhail Efremov <sem@altlinux.org> 1.5.993-alt1
+- Enable suspend/resume support (systemd).
+- Updated to 1.5.993 (1.6-rc4).
+
 * Thu Jun 09 2016 Mikhail Efremov <sem@altlinux.org> 1.5.992-alt1.git20160601
 - Upstream git snapshot (1.6-rc3 with updates from master branch).
 

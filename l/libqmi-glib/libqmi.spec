@@ -1,7 +1,7 @@
 %define _name libqmi
 
 Name: %_name-glib
-Version: 1.14.2
+Version: 1.16.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -16,6 +16,7 @@ Patch: %_name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: glib2-devel libgio-devel
+BuildRequires: libmbim-glib-devel
 BuildRequires: python-modules-json
 BuildRequires: gtk-doc help2man
 
@@ -62,6 +63,7 @@ touch README ChangeLog
 %autoreconf
 %configure \
 	--disable-static \
+	--enable-mbim-qmux \
 	--enable-gtk-doc
 %make_build
 
@@ -94,6 +96,10 @@ make check
 
 
 %changelog
+* Tue Jul 19 2016 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
+- Build with mbim-qmux support.
+- Updated to 1.16.0.
+
 * Thu Jun 09 2016 Mikhail Efremov <sem@altlinux.org> 1.14.2-alt1
 - Updated to 1.14.2.
 
