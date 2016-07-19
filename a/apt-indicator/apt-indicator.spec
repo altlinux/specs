@@ -1,5 +1,5 @@
 Name: apt-indicator
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Applet for indication that newer packages are available
@@ -69,6 +69,9 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Tue Jul 19 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.5-alt1
+- use help text images from from current icon theme
+
 * Fri Jul 15 2016 Sergey V Turchin <zerg at altlinux dot org> 0.3.4-alt1
 - decrease default interval between checkings
 
