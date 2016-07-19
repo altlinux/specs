@@ -1,5 +1,5 @@
 Name: audit
-Version: 2.5.2
+Version: 2.6.5
 Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
@@ -143,6 +143,7 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 
 %attr(700,root,root) %dir %_sysconfdir/%name
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/auditd.conf
+%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/audit-stop.rules
 %attr(700,root,root) %dir %_sysconfdir/%name/rules.d
 %config(noreplace) %attr(600,root,root) %_sysconfdir/%name/rules.d/*.rules
 
@@ -173,6 +174,9 @@ install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.
 %python_sitelibdir/*
 
 %changelog
+* Tue Jul 19 2016 Anton Farygin <rider@altlinux.ru> 2.6.5-alt1
+- new version
+
 * Tue May 10 2016 Anton Farygin <rider@altlinux.ru> 2.5.2-alt1
 - new version
 
