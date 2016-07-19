@@ -1,5 +1,5 @@
 Name: angband
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Summary: Angband is a "graphical" dungeon adventure game
@@ -60,6 +60,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 4.0.5-alt1
+- Autobuild version bump to 4.0.5
+
 * Mon Jan 18 2016 Fr. Br. George <george@altlinux.ru> 4.0.4-alt1
 - Autobuild version bump to 4.0.4
 
