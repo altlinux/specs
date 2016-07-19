@@ -1,5 +1,5 @@
 %define module_name	r8168
-%define module_version	8.041.01
+%define module_version	8.042.00
 %define module_release	alt2
 
 %define flavour		un-def
@@ -21,8 +21,6 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 ExclusiveArch: %karch
-
-Patch0: r8168-build-kernel4.5.patch
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
@@ -48,10 +46,6 @@ Gigabit Ethernet controllers with PCI-Express interface.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%if "%kversion" >= "4.5.0"
-%patch0 -p0
-%endif
-
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -66,6 +60,12 @@ install -Dp -m0744 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jul 19 2016 Nazarov Denis <nenderus@altlinux.org> 8.042.00-alt2
+- build for kernel un-def
+
+* Tue Jul 12 2016 Nazarov Denis <nenderus@altlinux.org> 8.042.00-alt1
+- Version 8.042.00
 
 * Wed Mar 16 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.041.01-alt2
 - build with kernel 4.5 fixed
