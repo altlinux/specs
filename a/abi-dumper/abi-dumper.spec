@@ -1,5 +1,5 @@
 Name: abi-dumper
-Version: 0.99.13
+Version: 0.99.16
 Release: alt1
 Group: Development/Other
 License: GPLv2
@@ -26,6 +26,9 @@ perl Makefile.pl -install --prefix=%buildroot%prefix
 %_bindir/*
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 0.99.16-alt1
+- Autobuild version bump to 0.99.16
+
 * Mon Jan 18 2016 Fr. Br. George <george@altlinux.ru> 0.99.13-alt1
 - Autobuild version bump to 0.99.13
 
