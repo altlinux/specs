@@ -1,5 +1,5 @@
 Name: notmuch
-Version: 0.20.2
+Version: 0.22.1
 Release: alt1
 
 Summary: new email reading system called notmuch
@@ -66,7 +66,7 @@ based on lib%name
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
-./configure --prefix=%prefix
+./configure --prefix=%prefix --without-ruby
 
 %make_build V=1
 
@@ -108,6 +108,9 @@ install -m0755 notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_libdir/lib%name.so
 
 %changelog
+* Tue Jul 19 2016 Terechkov Evgenii <evg@altlinux.org> 0.22.1-alt1
+- 0.22.1
+
 * Sat Jul  4 2015 Terechkov Evgenii <evg@altlinux.org> 0.20.2-alt1
 - 0.20.2
 
