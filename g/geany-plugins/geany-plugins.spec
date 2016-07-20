@@ -1,7 +1,7 @@
-%define geany_ver 1.27
 Name: geany-plugins
-Version: 1.27
+Version: 1.28
 Release: alt1
+%define geany_ver %version
 
 Summary: Plugins for Geany
 
@@ -26,7 +26,8 @@ This is Geany plugin collection
 %package common
 Group: Development/Tools
 Requires: geany = %geany_ver
-Summary: localization for geany-plugins
+Summary: Localization and other platform independent stuff of geany-plugins
+BuildArch: noarch
 
 %description common
 Common files of geany-plugins, including localization
@@ -68,6 +69,9 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 1.28-alt1
+- Autobuild version bump to 1.28
+
 * Tue Jul 05 2016 Fr. Br. George <george@altlinux.ru> 1.27-alt1
 - Autobuild version bump to 1.27
 - Build additional modules

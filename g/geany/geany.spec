@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
@@ -118,6 +118,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Thu Jul 14 2016 Fr. Br. George <george@altlinux.ru> 1.28-alt1
+- Autobuild version bump to 1.28
+
 * Tue Jul 05 2016 Fr. Br. George <george@altlinux.ru> 1.27-alt1
 - Autobuild version bump to 1.27
 - Build documentation
