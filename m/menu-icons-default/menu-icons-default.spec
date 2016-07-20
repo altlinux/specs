@@ -1,5 +1,5 @@
 Name: menu-icons-default
-Version: 0.2.0.18
+Version: 0.2.0.19
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -55,6 +55,9 @@ install -m644 64x64/apps/*.png %buildroot%_iconsdir/hicolor/64x64/apps/
 %_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Wed Jul 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.2.0.19-alt1
+- Add basealt icon for all popular icon sizes and in SVG format
+
 * Wed Jun 22 2016 Andrey Cherepanov <cas@altlinux.org> 0.2.0.18-alt1
 - Add altlinux.png icon for size 24x24 (need for MATE menu)
 
