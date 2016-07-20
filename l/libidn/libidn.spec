@@ -1,6 +1,6 @@
 Name: libidn
-Version: 1.32
-Release: alt2
+Version: 1.33
+Release: alt1
 
 Summary: Internationalized Domain Name support library
 Group: System/Libraries
@@ -182,6 +182,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif #java
 
 %changelog
+* Wed Jul 20 2016 Dmitry V. Levin <ldv@altlinux.org> 1.33-alt1
+- 1.32 -> 1.33.
+
 * Tue Feb 09 2016 Igor Vlasenko <viy@altlinux.ru> 1.32-alt2
 - NMU: added java subpackage (required by jxmpp)
 
