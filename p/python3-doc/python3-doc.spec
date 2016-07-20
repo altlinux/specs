@@ -1,6 +1,6 @@
 Name: python3-doc
-Version: 3.4.2
-Release: alt2
+Version: 3.5.2
+Release: alt1
 
 Summary: Documentation for the Python 3 programming language
 Summary(ru_RU.UTF-8): Документация по языку программирования Python.
@@ -31,6 +31,9 @@ and bundled module library in the HTML format.
 %doc *
 
 %changelog
+* Wed Jul 20 2016 Fr. Br. George <george@altlinux.ru> 3.5.2-alt1
+- Autobuild version bump to 3.5.2
+
 * Sat Oct 10 2015 Fr. Br. George <george@altlinux.ru> 3.4.2-alt2
 - Change group
 
