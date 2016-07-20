@@ -1,7 +1,7 @@
 %define _name cpopen
 
 Name: python-module-%_name
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: A C reimplementation of the tricky bits of Python's Popen
@@ -21,9 +21,11 @@ using C code.
 %setup -n %_name-%version
 
 %build
+export CPOPEN_VERSION=%version
 %python_build
 
 %install
+export CPOPEN_VERSION=%version
 %__python setup.py install --root %buildroot
 
 %files
@@ -34,6 +36,9 @@ using C code.
 %doc AUTHORS README PKG-INFO
 
 %changelog
+* Wed Jul 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+
 * Wed Jun 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
 - 1.4
 
