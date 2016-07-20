@@ -3,13 +3,13 @@
 
 Name: cppcheck
 Version: 1.74
-Release: alt1
+Release: alt1.3eef
 
 Summary: A tool for static C/C++ code analysis
 
 License: GPLv3
 Group: Development/Tools
-Url: http://sourceforge.net/projects/cppcheck/
+Url:  git://github.com/danmar/cppcheck.git
 
 Source: %name-%version.tar.bz2
 Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
@@ -117,6 +117,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Jul 20 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.74-alt1.3eef
+- Update from  git://github.com/danmar/cppcheck.git
+
 * Sat Jun 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.74-alt1
 - Version 1.74
 
