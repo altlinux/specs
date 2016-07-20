@@ -2,7 +2,7 @@
 
 Name:    rex
 Version: 1.4.1
-Release: alt2
+Release: alt3
 
 Summary: (R)?ex - Remote Execution Framework
 
@@ -18,6 +18,8 @@ Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.53.1-alt-fix_use.patch
 Patch2:  %name-1.4.0_01-perltidy.patch
+
+Patch3:  %name-0.53.1-sudo_backquotes.patch
 
 BuildArch: noarch
 
@@ -52,6 +54,8 @@ and software deployment.
 %patch1 -p0
 %patch2 -p0
 
+%patch3 -p0
+
 # This creates Makefile.PL from dist.ini
 /usr/bin/dzil build
 
@@ -80,6 +84,9 @@ install -p -m 644 ../misc/rex-tab-completion.bash %buildroot%_sysconfdir/bash_co
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Tue Jul 19 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt3
+- Fix backquotes escaping
+
 * Sat Jul 16 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.1-alt2
 - Adding missing Requires
 
