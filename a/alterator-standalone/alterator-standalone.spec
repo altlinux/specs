@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-standalone
-Version: 7.1.1
-Release: alt2
+Version: 7.1.2
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -75,6 +75,10 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 7.1.2-alt1
+- change desktp-file icon
+- update bugzilla url
+
 * Sun Mar 24 2013 Andrey Cherepanov <cas@altlinux.org> 7.1.1-alt2
 - Add Kazakh translation for System management center (ALT #28744)
 
