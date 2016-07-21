@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.10.9
+Version: 0.1.10.10
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -41,6 +41,7 @@ install -pD -m755 python3.prov.py %buildroot%_rpmlibdir/python3.prov.py
 install -pD -m755 python3.prov.files %buildroot%_rpmlibdir/python3.prov.files
 install -pD -m755 python3.req %buildroot%_rpmlibdir/python3.req
 install -pD -m755 python3.req.py %buildroot%_rpmlibdir/python3.req.py
+install -pD -m755 python3.req.constraint.py %buildroot%_rpmlibdir/python3.req.constraint.py
 install -pD -m755 python3.req.files %buildroot%_rpmlibdir/python3.req.files
 install -pD -m755 python3.compileall.py %buildroot%_rpmlibdir/python3.compileall.py
 install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-bytecompile_python3.brp
@@ -61,7 +62,11 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 #unset RPM_PYTHON
 
 %check
-./test.sh
+rpm_builddir="$PWD"
+pushd %buildroot/%_rpmlibdir
+# It calls ./python3.req, therefore we've changed the CWD:
+"$rpm_builddir"/test.sh
+popd
 
 %files
 %_rpmmacrosdir/python3
@@ -73,12 +78,16 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.compileall.py
 %_rpmlibdir/python3.req
 %_rpmlibdir/python3.req.py
+%_rpmlibdir/python3.req.constraint.py
 %_rpmlibdir/python3.req.files
 %_rpmlibdir/python3.prov
 %_rpmlibdir/python3.prov.py
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Fri Jul 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.10-alt1
+- %%py3_requires will honor the constraints of %%allow_python3_import_path.
+
 * Fri Jul 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.9-alt1
 - .prov.py: honor non-std %%python3_path also if it is inside the std path.
 
