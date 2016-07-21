@@ -1,0 +1,117 @@
+Name: libntirpc
+Version: 1.4.0
+%global		dev pre2
+%global		dev_version 1.4.0%dev
+Release: alt1
+
+Summary: New Transport Independent RPC Library
+
+Group: System/Libraries
+License: BSD
+Url: https://github.com/nfs-ganesha/ntirpc
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+# Source-url: https://github.com/nfs-ganesha/ntirpc/archive/v%dev_version/ntirpc-%dev_version.tar.gz
+Source: %name-%version.tar
+
+BuildRequires: cmake
+BuildRequires: libjemalloc-devel
+BuildRequires: libkrb5-devel
+
+# libtirpc has /etc/netconfig, most machines probably have it anyway
+# for NFS client
+Requires: libtirpc
+
+%description
+This package contains a new implementation of the original libtirpc,
+transport-independent RPC (TI-RPC) library for NFS-Ganesha. It has
+the following features not found in libtirpc:
+ 1. Bi-directional operation
+ 2. Full-duplex operation on the TCP (vc) transport
+ 3. Thread-safe operating modes
+ 3.1 new locking primitives and lock callouts (interface change)
+ 3.2 stateless send/recv on the TCP transport (interface change)
+ 4. Flexible server integration support
+ 5. Event channels (remove static arrays of xprt handles, new EPOLL/KEVENT
+    integration)
+
+%package devel
+Summary: Development headers for %name
+Requires: %name%{?_isa} = %version
+Group: Development/Other
+
+%description devel
+Development headers and auxiliary files for developing with %name.
+
+%prep
+%setup
+
+%build
+%cmake -DOVERRIDE_INSTALL_PREFIX=%_prefix -DTIRPC_EPOLL=1 -DUSE_GSS=ON "-GUnix Makefiles"
+
+%make_build -C BUILD
+
+%install
+## make install is broken in various ways
+## make install DESTDIR=%%{buildroot}
+cd BUILD
+mkdir -p %buildroot%_pkgconfigdir/
+install -p -m 0755 src/%name.so.%version %buildroot%_libdir/
+ln -s %name.so.%version %buildroot%_libdir/%name.so.1
+ln -s %name.so.%version %buildroot%_libdir/%name.so
+mkdir -p %buildroot%_includedir/ntirpc
+cp -a ntirpc %buildroot%_includedir/
+install -p -m 644 libntirpc.pc %buildroot%_pkgconfigdir/
+
+%files
+%_libdir/libntirpc.so.*
+%doc COPYING
+%doc NEWS README
+
+%files devel
+%_libdir/libntirpc.so
+%_includedir/ntirpc/
+%_pkgconfigdir/libntirpc.pc
+
+%changelog
+* Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- initial build for ALT Linux Sisyphus
+
+* Mon Feb 29 2016 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.4.0-0.2pre2
+- libntirpc 1.4.0-pre2
+
+* Fri Feb 5 2016 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.4.0-0.1pre1
+- libntirpc 1.4.0-pre1, correct release
+
+* Fri Feb 5 2016 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.4.0-1pre1
+- libntirpc 1.4.0-pre1
+
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Dec 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com>
+- Requires: libtirpc for /etc/netconfig (most already have it)
+
+* Mon Oct 26 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.1-1
+- libntirpc 1.3.1 GA
+
+* Fri Oct 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.0-3
+- libntirpc 1.3.0 GA, w/ -DTIRPC_EPOLL=ON
+
+* Wed Sep 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.0-2
+- libntirpc 1.3.0 GA, w/ correct top-level CMakeList.txt
+
+* Wed Sep 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.0-1
+- libntirpc 1.3.0 GA
+
+* Thu Jul 16 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.2.1-3
+- RHEL 6 finally has new enough cmake
+- use -isystem ... to ensure correct <rpc/rpc*.h> are used
+- ensure -DTIRPC_EPOLL is defined for correct evchan functionality
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Mon Mar 23 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.2.1-1
+- Initial commit
