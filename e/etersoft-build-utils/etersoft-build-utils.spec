@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,22 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
+- rpmcs: replace /usr/lib with libexecdir (semifix ALT bug #32056)
+- rpmbp: fix to pass extra (-z) option
+- update buildreqs
+- rpmreqs: skip gcc-c++
+- many fix in pkrepls
+- rpmbb: exit on error when use short-circuit
+- add apt conf for p8
+- fix gnutls for ALT
+- rpmbp: add -n after other params
+- update libicu: move to libicu56 from Sisyphus, update versions for a latest distros
+- add pkgrepl for AstraLinux/orel
+- rpmbs: fix builde32on64 CentOS glibc-devel requires
+- runinhsh: update for p8
+- fix error with spec in koi8-r
+
 * Wed Apr 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
 - rpmbsh: add -w for build via gear --hasher and make src.rpm in hasher (ALT bug #31673)
 - small fixes
