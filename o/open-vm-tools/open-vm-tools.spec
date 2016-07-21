@@ -15,7 +15,7 @@
 
 Name: open-vm-tools
 Version: %toolsversion
-Release: alt3
+Release: alt4
 Summary: Open Virtual Machine Tools for virtual machines hosted on VMware
 Group: System/Kernel and hardware
 License: GPLv2
@@ -207,6 +207,9 @@ fi
 %_libdir/libvmtools.so
 
 %changelog
+* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 10.0.7-alt4
+- add basealt detection
+
 * Wed Mar 23 2016 Sergey V Turchin <zerg@altlinux.org> 10.0.7-alt3
 - fix to use git repo for source instead of tarball
 
