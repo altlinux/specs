@@ -1,8 +1,8 @@
+%define dev_version 1.4.0pre2
+
 Name: libntirpc
 Version: 1.4.0
-%global		dev pre2
-%global		dev_version 1.4.0%dev
-Release: alt1
+Release: alt2
 
 Summary: New Transport Independent RPC Library
 
@@ -38,7 +38,7 @@ the following features not found in libtirpc:
 
 %package devel
 Summary: Development headers for %name
-Requires: %name%{?_isa} = %version
+Requires: %name = %version
 Group: Development/Other
 
 %description devel
@@ -48,21 +48,13 @@ Development headers and auxiliary files for developing with %name.
 %setup
 
 %build
-%cmake -DOVERRIDE_INSTALL_PREFIX=%_prefix -DTIRPC_EPOLL=1 -DUSE_GSS=ON "-GUnix Makefiles"
+%cmake -DOVERRIDE_INSTALL_PREFIX=%prefix -DTIRPC_EPOLL=1 -DUSE_GSS=ON "-GUnix Makefiles"
 
 %make_build -C BUILD
 
 %install
-## make install is broken in various ways
-## make install DESTDIR=%%{buildroot}
-cd BUILD
-mkdir -p %buildroot%_pkgconfigdir/
-install -p -m 0755 src/%name.so.%version %buildroot%_libdir/
+%makeinstall_std -C BUILD
 ln -s %name.so.%version %buildroot%_libdir/%name.so.1
-ln -s %name.so.%version %buildroot%_libdir/%name.so
-mkdir -p %buildroot%_includedir/ntirpc
-cp -a ntirpc %buildroot%_includedir/
-install -p -m 644 libntirpc.pc %buildroot%_pkgconfigdir/
 
 %files
 %_libdir/libntirpc.so.*
@@ -75,6 +67,9 @@ install -p -m 644 libntirpc.pc %buildroot%_pkgconfigdir/
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
+- cleanup install
+
 * Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - initial build for ALT Linux Sisyphus
 
