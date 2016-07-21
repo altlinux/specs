@@ -1,7 +1,7 @@
 Summary:	Secure PIN handling using NSS crypto
 Name:		svrcore
 Version:	4.1.2
-Release:	alt1
+Release:	alt2
 License:	MPL/GPL/LGPL
 URL:		https://pagure.io/svrcore
 Group:		System/Libraries
@@ -12,6 +12,7 @@ Source0:	%name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: libnss-devel >= 3.12.9.0-alt2
+BuildRequires: libsystemd-devel
 
 %description
 svrcore provides applications with several ways to handle secure PIN
@@ -49,7 +50,7 @@ if you need to develop programs which will use the svrcore library.
 %setup -q
 
 %build
-%configure --disable-static
+%configure --disable-static --with-systemd
 %make_build
 
 %install
@@ -65,6 +66,10 @@ if you need to develop programs which will use the svrcore library.
 %_includedir/svrcore.h
 
 %changelog
+* Wed Jul 27 2016 Andrey Cherepanov <cas@altlinux.org> 4.1.2-alt2
+- Use gear remotes
+- Build with systemd
+
 * Thu May 12 2016 Andrey Cherepanov <cas@altlinux.org> 4.1.2-alt1
 - New version
 - Build from upstream Git repository
