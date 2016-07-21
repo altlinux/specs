@@ -3,7 +3,7 @@
 %define real_name Net-Graphite
 
 Name: perl-Net-Graphite
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Perl module with interface for Graphite
@@ -43,5 +43,8 @@ http://graphite.readthedocs.org/
 %perl_vendor_privlib/Net/Graphite*
 
 %changelog
+* Thu Jul 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.17-alt1
+- New version
+
 * Tue Mar 29 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.16-alt1
 - Initial build for ALT Linux Sisyphus
