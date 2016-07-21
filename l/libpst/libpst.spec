@@ -1,5 +1,5 @@
 Name: libpst
-Version: 0.6.65
+Version: 0.6.67
 Release: alt1
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
@@ -98,6 +98,9 @@ Developer's documentation for libpst
 %exclude %pkgdocdir/[A-Z]*
 
 %changelog
+* Thu Jul 21 2016 Denis Medvedev <nbr@altlinux.org> 0.6.67-alt1
+- new version (0.6.67 uupdate).
+
 * Sat Sep 12 2015 Michael Shigorin <mike@altlinux.org> 0.6.65-alt1
 - new version (watch file uupdate)
 
