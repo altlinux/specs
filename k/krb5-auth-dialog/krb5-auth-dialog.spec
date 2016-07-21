@@ -1,4 +1,4 @@
-%define ver_major 3.14
+%define ver_major 3.20
 %define gtk_api_ver 3.0
 %def_with pkcs11
 
@@ -10,8 +10,6 @@ Summary: Kerberos 5 authentication dialog
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://redhat.com
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -28,7 +26,7 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: NetworkManager-glib-devel >= %nm_ver
 BuildRequires: flex libgio-devel libkrb5-devel libcap-devel libcap-utils libpam-devel
-BuildRequires: intltool perl-XML-Parser gnome-doc-utils
+BuildRequires: intltool yelp-tools
 BuildRequires: gnome-control-center-devel >= %control_center_ver
 %{?_with_pkcs11:BuildRequires: libopensc}
 
@@ -59,7 +57,6 @@ pops up a dialog when they are about to expire.
 %_libdir/%name/plugins/libka-plugin-pam.so
 %_libdir/%name/plugins/libka-plugin-afs.so
 %_libdir/%name/plugins/libka-plugin-gnomelock.so
-%_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/dbus-1/services/org.gnome.KrbAuthDialog.service
 %_iconsdir/hicolor/*/*/*.*
@@ -73,6 +70,9 @@ pops up a dialog when they are about to expire.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Thu Jul 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
+- 3.20.0
+
 * Thu Oct 23 2014 Yuri N. Sedunov <aris@altlinux.org> 3.14.0-alt1
 - 3.14.0
 
