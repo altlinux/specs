@@ -1,5 +1,5 @@
 Name: notmuch-addrlookup
-Version: 5
+Version: 7
 Release: alt1
 
 Summary: Notmuch Address Lookup tool
@@ -37,8 +37,11 @@ install -p -D -m 755 %name %buildroot%_bindir/%name
 
 %files
 %_bindir/%name
-%doc README.md
+%doc README.md CHANGELOG.md
 
 %changelog
+* Tue Jul 19 2016 Terechkov Evgenii <evg@altlinux.org> 7-alt1
+- 7
+
 * Sun Jul 26 2015 Terechkov Evgenii <evg@altlinux.org> 5-alt1
 - Initial build for ALT Linux Sisyphus
