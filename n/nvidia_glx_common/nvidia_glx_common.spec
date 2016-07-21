@@ -13,8 +13,8 @@
 %define nv_version 367
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt166
-%define set_gl_nvidia_ver 0.15.0
+%define pkg_rel alt167
+%define set_gl_nvidia_ver 0.16.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -136,7 +136,6 @@ subst "s|@XEXT_DIR@|%x11_ext_dir|" settings.h
 subst "s|@XEXT_DIR_OLD@|%x11_ext_old|" settings.h
 
 subst "s|@X_DRV_DIR@|%x11driver_dir|" settings.h
-subst "s|@GLVND_DRV_DIR@|%glvnddriver_dir|" settings.h
 subst "s|@NV_DRV_DIR_PREFIX@|%nv_lib_dir_prefix|" settings.h
 subst "s|@NV_DRV_DIR_PREFIX_OLD@|%nv_lib_dir_prefix_old|" settings.h
 
@@ -267,6 +266,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt167
+- switch libGLX
+
 * Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt166
 - bump version
 

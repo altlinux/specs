@@ -14,7 +14,7 @@
 %define nv_version 367
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt156
+%define pkg_rel alt157
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -58,7 +58,7 @@
 %define nv_lib_dir_prefix_old /usr/X11R6/%_lib/nvidia_
 %define nv_lib_dir %nv_lib_dir_prefix%tbver
 
-#add_findreq_skiplist %nv_lib_dir/*
+%add_findreq_skiplist %nv_lib_dir/libGLX.*
 %add_findreq_skiplist %x11_lib_old/*
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
 
@@ -101,6 +101,7 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 PreReq: %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
+Requires: libGLdispatch libGLX
 #
 Group: %myGroup
 Summary: %mySummary
@@ -210,8 +211,8 @@ fi
 %__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
 %__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
 
-%__install -m 0644 libGL.so.1.0.0  %buildroot/%nv_lib_dir/libGL.so
-#%__install -m 0644 libGL.so.%tbver  %buildroot/%nv_lib_dir/libGL.so
+#%__install -m 0644 libGL.so.1.0.0  %buildroot/%nv_lib_dir/libGL.so
+%__install -m 0644 libGL.so.%tbver  %buildroot/%nv_lib_dir/libGL.so
 #
 %__install -m 0644 libEGL.so.1  %buildroot/%nv_lib_dir/libEGL.so
 %__install -m 0644 libGLESv2.so.2  %buildroot/%nv_lib_dir/libGLESv2.so
@@ -219,6 +220,7 @@ fi
 %__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
 %__install -m 0644 libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
 %__install -m 0644 libGLdispatch.so.0  %buildroot/%nv_lib_dir/libGLdispatch.so
+%__install -m 0644 libGLX.so.0  %buildroot/%nv_lib_dir/libGLX.so
 
 %__install -m 0644 libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
 %__install -m 0644 libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
@@ -277,6 +279,7 @@ fi
 %nv_lib_dir/libGLESv2_nvidia.so*
 %nv_lib_dir/libGLX_nvidia.so*
 %nv_lib_dir/libGLdispatch.so*
+%nv_lib_dir/libGLX.so*
 %nv_lib_dir/libnvidia-cfg.so*
 %nv_lib_dir/libvdpau_nvidia.so*
 %nv_lib_dir/libwfb.so
@@ -292,6 +295,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt157
+- package libGLX
+
 * Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt156
 - fix requires
 

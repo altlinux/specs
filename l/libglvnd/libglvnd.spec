@@ -4,7 +4,7 @@
 
 Name: libglvnd
 Version: 0.1.0
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: OpenGL vendor-neutral dispatch layer
@@ -86,17 +86,26 @@ Static GL entrypoints which use the context defined in libGLdispatch, while EGL 
 %make install DESTDIR=%buildroot
 
 mkdir -p %buildroot%_sysconfdir/X11/%_lib
-mkdir %buildroot/%_libdir/glvnd
+mkdir %buildroot/%_libdir/X11
 #
-mv %buildroot/%_libdir/libGLdispatch.so.* %buildroot/%_libdir/glvnd/
-ln -sf ../../..%_libdir/glvnd/libGLdispatch.so.0 %buildroot%_sysconfdir/X11/%_lib/libGLdispatch.so.0
+mv %buildroot/%_libdir/libGLdispatch.so.* %buildroot/%_libdir/X11/
+ln -sf ../../..%_libdir/X11/libGLdispatch.so.0 %buildroot%_sysconfdir/X11/%_lib/libGLdispatch.so.0
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLdispatch.so.0 %buildroot%_libdir/
-ln -sf glvnd/libGLdispatch.so.0 %buildroot/%_libdir/libGLdispatch.so
+ln -sf X11/libGLdispatch.so.0 %buildroot/%_libdir/libGLdispatch.so
+#
+mv %buildroot/%_libdir/libGLX.so.* %buildroot/%_libdir/X11/
+ln -sf ../../..%_libdir/X11/libGLX.so.0 %buildroot%_sysconfdir/X11/%_lib/libGLX.so.0
+ln -sf ../..%_sysconfdir/X11/%_lib/libGLX.so.0 %buildroot%_libdir/
+ln -sf X11/libGLX.so.0 %buildroot/%_libdir/libGLX.so
 
 %post -n libGLdispatch
 [ -r %_sysconfdir/X11/%_lib/libGLdispatch.so.0 ] || \
-        ln -sf ../../..%_libdir/glvnd/libGLdispatch.so.0 %_sysconfdir/X11/%_lib/libGLdispatch.so.0
+        ln -sf ../../..%_libdir/X11/libGLdispatch.so.0 %_sysconfdir/X11/%_lib/libGLdispatch.so.0
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLdispatch.so.0 %_libdir/
+%post -n libGLX
+[ -r %_sysconfdir/X11/%_lib/libGLX.so.0 ] || \
+        ln -sf ../../..%_libdir/X11/libGLX.so.0 %_sysconfdir/X11/%_lib/libGLX.so.0
+ln -sf ../..%_sysconfdir/X11/%_lib/libGLX.so.0 %_libdir/
 
 
 #%files -n glvnd
@@ -117,14 +126,17 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLdispatch.so.0 %_libdir/
 %files -n libOpenGL
 %_libdir/libOpenGL.so.0
 %_libdir/libOpenGL.so.0.*
+
 %files -n libGLX
 %_libdir/libGLX.so.0
-%_libdir/libGLX.so.0.*
+%_libdir/X11/libGLX.so.0
+%_libdir/X11/libGLX.so.0.*
+%ghost %_sysconfdir/X11/%_lib/libGLX.so.0
 
 %files -n libGLdispatch
 %_libdir/libGLdispatch.so.0
-%_libdir/glvnd/libGLdispatch.so.0
-%_libdir/glvnd/libGLdispatch.so.0.*
+%_libdir/X11/libGLdispatch.so.0
+%_libdir/X11/libGLdispatch.so.0.*
 %ghost %_sysconfdir/X11/%_lib/libGLdispatch.so.0
 
 %files devel
@@ -139,6 +151,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLdispatch.so.0 %_libdir/
 %_pkgconfigdir/libglvnd.pc
 
 %changelog
+* Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt5
+- move libGLdispatch and libGLX to _libdir/X11
+
 * Fri May 27 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt4
 - move libGLdispatch to _libdir/glvnd
 
