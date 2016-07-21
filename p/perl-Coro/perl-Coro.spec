@@ -1,8 +1,8 @@
 # Spec file for Perl module Coro
 
 Name: perl-Coro
-Version: 6.49
-Release: alt2.1
+Version: 6.511
+Release: alt1
 
 Summary: cooperative multitasking Perl module
 
@@ -21,9 +21,9 @@ Patch1: Coro-6.48-rurban-perl-5.22.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Oct 25 2015 (-bi)
-# optimized out: elfutils perl-AnyEvent perl-BDB perl-Guard perl-IO-AIO perl-IO-Socket-IP perl-IO-Socket-SSL perl-Log-Agent perl-Net-HTTP perl-Net-SSLeay perl-URI perl-common-sense perl-devel perl-libnet python-base ruby ruby-stdlibs
-BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-BDB perl-Canary-Stability perl-EV perl-Event python-module-distribute python-module-google rpm-build-ruby
+# Automatically added by buildreq on Thu Jul 21 2016 (-bi)
+# optimized out: elfutils perl perl-AnyEvent perl-BDB perl-Encode perl-Guard perl-IO-AIO perl-IO-Socket-IP perl-IO-Socket-SSL perl-Log-Agent perl-Net-HTTP perl-Net-SSLeay perl-URI perl-common-sense perl-devel perl-libnet python-base python-modules python3 rpm-build-python3 ruby ruby-stdlibs
+BuildRequires: gcc-c++ perl-AnyEvent-AIO perl-AnyEvent-BDB perl-Canary-Stability perl-EV perl-Event
 
 BuildRequires:  perl-Log-Agent perl-devel perl-libnet
 # python-module-distribute python-module-zope rpm-build-ruby
@@ -56,6 +56,9 @@ export CORO_INTERFACE=u
 %perl_vendor_autolib/Coro
 
 %changelog
+* Thu Jul 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 6.511-alt1
+- New version
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 6.49-alt2.1
 - rebuild with new perl 5.22.0
 
