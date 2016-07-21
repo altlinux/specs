@@ -1,7 +1,7 @@
 Summary: Inotify cron system
 Name: incron
-Version: 0.5.10
-Release: alt2
+Version: 0.5.12
+Release: alt1
 
 Group: System/Base
 License: GPLv2
@@ -11,7 +11,6 @@ Source1: incrond.init
 Source2: incrontab.control
 Source3: incrond.service
 Patch0: %name-%version-%release.patch
-Patch1: incron-0.5.9-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Sun May 24 2009
 BuildRequires: gcc-c++
@@ -26,7 +25,6 @@ filesystem events rather than time periods.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p2
 
 %build
 %make CXXFLAGS="%optflags"
@@ -63,15 +61,18 @@ make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
 %_initdir/incrond
 %config(noreplace) %_sysconfdir/%name.conf
 %_controldir/incrontab
-%_mandir/man1/incrontab.1.gz
-%_mandir/man5/incrontab.5.gz
-%_mandir/man5/incron.conf.5.gz
-%_mandir/man8/incrond.8.gz
+%_mandir/man1/incrontab.1.*
+%_mandir/man5/incrontab.5.*
+%_mandir/man5/incron.conf.5.*
+%_mandir/man8/incrond.8.*
 %attr(3730,root,incrontab) %dir %_var/spool/%name
 %attr(700,root,root) %dir %_sysconfdir/%name.d
 %_unitdir/incrond.service
 
 %changelog
+* Thu Jul 21 2016 Anton Farygin <rider@altlinux.ru> 0.5.12-alt1
+- new version
+
 * Fri Aug 15 2014 Denis Smirnov <mithraen@altlinux.ru> 0.5.10-alt2
 - add systemd unit
 
