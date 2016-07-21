@@ -2,7 +2,7 @@ Summary: An open source software for the creation of electronic schematic diagra
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -18,10 +18,12 @@ Url: https://code.launchpad.net/kicad
 BuildRequires(pre): cmake rpm-macros-cmake
 # Automatically added by buildreq on Mon Sep 28 2015
 # optimized out: at-spi2-atk boost-devel boost-devel-headers boost-polygon-devel cmake cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libat-spi2-core libcairo-gobject libcom_err-devel libgdk-pixbuf libkrb5-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server pkg-config python-base python-devel python-modules swig-data xorg-xproto-devel xz
-BuildRequires: boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel ccmake doxygen gcc-c++ libGLEW-devel libcairo-devel libssl-devel swig libwxGTK3.1-gtk2-devel
+BuildRequires: boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel ccmake doxygen gcc-c++ libGLEW-devel libcairo-devel libssl-devel swig libwxGTK3.1-gtk2-devel pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) dos2unix
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
+Requires: %name-data = %version
 Requires: %name-library %name-doc
+Requires: %name-i18n = %version
 %add_findreq_skiplist %_docdir/%name
 
 %description
@@ -45,6 +47,37 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 "Настройки страницы" в поле "Файл описания разметки листа".
 Стандартные файлы рамки (*.kicad_wks) находятся в %_datadir/kicad/template/.
 
+%package data
+Summary: An open source software for the creation of electronic schematic diagrams
+Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
+Group: Games/Strategy
+BuildArch: noarch
+
+%description data
+Kicad is an open source (GPL) software for the creation of electronic
+schematic diagrams and printed circuit board artwork.
+
+Kicad is a set of four softwares and a project manager:
+
+Kicad: Project manager.
+Eeschema: Schematic entry.
+Pcbnew: Board editor.
+Cvpcb: Footprint selector for components used in the circuit design.
+Gerbview: GERBER viewer (photoplotter documents).
+
+Package contains data files.
+
+%description data -l ru_RU.UTF-8
+Kicad - это программное обеспечение с открытым исходным кодом для
+проектирования электронных схем и получения на их основе печатных плат.
+
+Для использования рамки ГОСТ необходимо выбрать шаблон
+gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом окне
+"Настройки страницы" в поле "Файл описания разметки листа".
+Стандартные файлы рамки (*.kicad_wks) находятся в %_datadir/kicad/template/.
+
+Пакет содержит архитектурно-независимые файлы.
+
 %prep
 %setup -n %name-%version
 
@@ -52,7 +85,7 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 %cmake \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DDEFAULT_INSTALL_PATH=/usr \
-	-DBUILD_GITHUB_PLUGIN=OFF \
+	-DBUILD_GITHUB_PLUGIN=ON \
 	-DKICAD_SCRIPTING=OFF \
 	-DKICAD_SCRIPTING_MODULES=OFF \
 	-DKICAD_SCRIPTING_WXPYTHON=OFF \
@@ -65,20 +98,36 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 %install
 %makeinstall_std -C BUILD
 
+#fix line ending
+dos2unix %buildroot%_desktopdir/*.desktop
+dos2unix %buildroot%_datadir/mimelnk/application/*kicad*.desktop
+
+#validate desktop files
+desktop-file-validate %buildroot%_desktopdir/*.desktop
+#desktop-file-validate %buildroot%_datadir/mimelnk/application/*kicad*.desktop
+
 %files
 %_bindir/*
-%_datadir/%name/
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/*/mimetypes/application-x-*.*
-%_iconsdir/hicolor/*/apps/*.*
+%_libexecdir/%name
 %dir %_datadir/mimelnk
 %dir %_datadir/mimelnk/application
 %_datadir/mimelnk/application/*kicad*.desktop
-%_datadir/mime/packages/kicad.xml
-%_libexecdir/%name
+
+%files data
 %doc %_docdir/%name
+%_datadir/mime/packages/kicad.xml
+%_iconsdir/hicolor/*/mimetypes/application-x-*.*
+%_iconsdir/hicolor/*/apps/*.*
+%_datadir/%name/
 
 %changelog
+* Thu Jul 21 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt2
+- Enable build github plugin
+- New packages kicad-data (fix arch-dep-package-has-big-usr-share)
+- Fix line ending in desktop files
+- Fix missing buildrequires.
+
 * Sat Jun 04 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt1
 - New version.
 
