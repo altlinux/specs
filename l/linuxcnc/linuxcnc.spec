@@ -1,7 +1,8 @@
+%define rtai 0
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.7.4
-Release: alt1.20160506.1
+Version: 2.7.5
+Release: alt1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -12,7 +13,6 @@ Url: https://github.com/LinuxCNC/linuxcnc
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
-Source1: linuxcnc-documentation.desktop
 Patch1: fix_install-alt.patch
 BuildPreReq: gcc-c++ imake libGL-devel libGLU-devel libXaw-devel libXinerama-devel libXmu-devel libXt-devel libncurses-devel libreadline-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libgnomeprintui-2.2) pkgconfig(libmodbus) pkgconfig(libudev) pkgconfig(libusb-1.0) python-devel tcl-devel tk-devel xorg-cf-files kmod bwidget tcl-img tclx python-modules-tkinter python-module-lxml boost-python-devel ImageMagick-tools xsltproc groff procps psmisc graphviz dblatex docbook-xsl netcat texlive-lang-cyrillic texlive-lang-french texlive-lang-spanish texlive-lang-german asciidoc-a2x source-highlight ghostscript-utils
 
@@ -109,7 +109,14 @@ Python modules for %name
 %build
 pushd src
 %autoreconf
-%configure --with-realtime=uspace --enable-build-documentation=pdf
+%configure --enable-build-documentation=pdf \
+           --enable-non-distributable=yes\
+           %if %rtai==1
+           --with-realtime=/patch/to/rtai
+           %else
+           --with-realtime=uspace
+           %endif
+           
 %make_build
 popd
 
@@ -118,64 +125,80 @@ pushd src
 %makeinstall_std SITEPY=%python_sitelibdir
 popd
 
-mkdir -p %buildroot%_initdir
-mv %buildroot%_sysconfdir/init.d/* %buildroot%_initdir
+%if %rtai==1
+    mv %buildroot%_sysconfdir/init.d/* %buildroot%_initdir
+%else
+    rm -fR %buildroot%_sysconfdir/init.d/*
+%endif
 
 install -d -m755 %buildroot%_desktopdir
 cp debian/extras/usr/share/applications/linuxcnc.desktop %buildroot%_desktopdir
 cp debian/extras/usr/share/applications/linuxcnc-latency.desktop %buildroot%_desktopdir
 cp debian/extras/usr/share/applications/linuxcnc-pncconf.desktop %buildroot%_desktopdir
 cp debian/extras/usr/share/applications/linuxcnc-stepconf.desktop %buildroot%_desktopdir
-cp %SOURCE1  %buildroot%_desktopdir
-install -d -m755 %buildroot%_datadir/desktop-directories
-cp debian/extras/usr/share/desktop-directories/* %buildroot%_datadir/desktop-directories
+
+#fix desktop categories
+sed 's/X-CNC/Development;Engineering/' -i %buildroot%_desktopdir/*
+
+### == desktop file documentation
+cat>%buildroot%_desktopdir/%name-documentation.desktop<<END
+[Desktop Entry]
+Name=LinuxCNC Documentation
+Name[ru_RU]= Документация LinuxCNC 
+Comment=LinuxCNC Documentation
+Comment[ru_RU]=Документация LinuxCNC
+Exec=%_bindir/xdg-open %_docdir/%name
+Icon=linuxcncicon
+Terminal=false
+Type=Application
+Categories=Development;Engineering;
+END
+
+#install rules
 install -d -m755 %buildroot%_udevrulesdir
 cp debian/extras/lib/udev/rules.d/* %buildroot%_udevrulesdir
-install -d -m755 %buildroot%_sysconfdir/xdg/menus/applications-merged
-cp debian/extras/etc/xdg/menus/applications-merged/* %buildroot%_sysconfdir/xdg/menus/applications-merged
 
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps
 	convert linuxcncicon.png -resize $x'x'$x \
 	        %buildroot%_iconsdir/hicolor/$x'x'$x/apps/linuxcncicon.png
 done
-#%%find_lang %name gmoccapy.lang
+%find_lang %name
+%find_lang gmoccapy
 
-%files
+%files -f %name.lang 
 %_bindir/*
 %_libexecdir/%name
 %_sysconfdir/%name
+%if_with %rtai
 %_initdir/realtime
+%endif
 %_udevrulesdir/*.rules
-%_datadir/desktop-directories/*
 %_desktopdir/*.desktop
 %exclude %_desktopdir/%name-documentation.desktop
-%dir %_sysconfdir/xdg/menus/applications-merged/
-%_sysconfdir/xdg/menus/applications-merged/*.menu
-#%%dir %_sysconfdir/X11/app-defaults/
 %_sysconfdir/X11/app-defaults/*
-%_datadir/%name
 %_datadir/axis/tcl
+%_datadir/%name/hallib
+%_datadir/%name/ncfiles
 
 %files -n lib%name
 %_libdir/*.so.*
 %exclude %_libdir/*.a
 
-%files data
+%files data -f gmoccapy.lang
+%_datadir/%name
+%exclude %_datadir/%name/hallib
+%exclude %_datadir/%name/ncfiles
 %dir %_datadir/axis
 %_datadir/axis/images
-%dir %_datadir/glade3
-%_datadir/glade3/*
-%dir %_datadir/gmoccapy
-%_datadir/gmoccapy/*
-%dir %_datadir/gscreen
-%_datadir/gscreen/*
+%_datadir/glade3
+%_datadir/gmoccapy
+%_datadir/gscreen
 %_datadir/gtksourceview-2.0/*
 %_liconsdir/*
 %_niconsdir/*
 %_miconsdir/*
 %_mandir/man?/*
-%_datadir/locale/*/LC_MESSAGES/*.mo
 
 %files doc
 %_desktopdir/%name-documentation.desktop
@@ -201,5 +224,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Fri Jul 22 2016 Anton Midyukov <antohami@altlinux.org> 2.7.5-alt1
+- New version 2.7.5
+- Fix repocop warning.
+
 * Thu May 12 2016 Anton Midyukov <antohami@altlinux.org> 2.7.4-alt1.20160506.1
 - Initial build for Alt Linux Sisyphus.
