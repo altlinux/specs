@@ -1,11 +1,12 @@
-%define git_date .git20150306
+#define git_date .git20150306
+%define git_date %nil
 
 %def_enable git
 %def_enable subversion
 
 Name: thunar-vcs-plugin
-Version: 0.1.4
-Release: alt2%git_date
+Version: 0.1.5
+Release: alt1%git_date
 
 Summary: Version Contol System plugin for Thunar
 License: %gpl2plus
@@ -56,6 +57,9 @@ menu. It also shows the svn file status in the file properties window.
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Fri Jul 22 2016 Mikhail Efremov <sem@altlinux.org> 0.1.5-alt1
+- Updated to 0.1.5.
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt2.git20150306
 - Rebuild with libxfce4util-4.12.
 - Upstream git snapshot.
