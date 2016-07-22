@@ -1,5 +1,5 @@
 Name: passwdqc
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A passphrase strength checking and policy enforcement toolset
@@ -146,6 +146,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Fri Jul 22 2016 Dmitry V. Levin <ldv@altlinux.org> 1.3.1-alt1
+- Merged with 1.3.1-owl1.
+
 * Sun Sep 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1.3.0-alt1
 - Merged with 1.3.0-owl1.
 
