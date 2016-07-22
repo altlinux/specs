@@ -4,8 +4,8 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: kf5-%rname
-Version: 5.7.0
-Release: alt1
+Version: 5.7.1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -59,6 +59,10 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
+sed -i 's|\(^Name.*=.*\)|\1 KDE5|' app/systemsettings.desktop
+sed -i '/^Name.*=/s/KDE/KDE5/' app/kdesystemsettings.desktop
+sed -i 's|\(^Exec.*=\)\(.*\)|\1kde5 \2|' app/kdesystemsettings.desktop
+
 %build
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
@@ -66,6 +70,9 @@ KF5 library
 
 %install
 %K5install
+
+mkdir -p %buildroot/%_desktopdir/kf5
+mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5/
 
 %K5install_move data systemsettings
 
@@ -83,6 +90,7 @@ KF5 library
 %_K5srvtyp/*.desktop
 %_K5xmlgui/*
 %_K5xdgapp/*.desktop
+%_desktopdir/kf5/kdesystemsettings.desktop
 
 %files devel
 %_K5inc/systemsettingsview/
@@ -93,6 +101,12 @@ KF5 library
 %_K5lib/libsystemsettingsview.so.%systemsettingsview_sover
 
 %changelog
+* Fri Jul 22 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2
+- mark is KDE5 for menu
+
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
+- new version
+
 * Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
 - new version
 
