@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.10.8
+Version: 0.1.10.9
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -79,6 +79,9 @@ install -pD -m755 brp-fix_python3_site-packages_location %buildroot%_rpmlibdir/b
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Fri Jul 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.9-alt1
+- .prov.py: honor non-std %%python3_path also if it is inside the std path.
+
 * Sat Jun 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.10.8-alt1
 - %%python3{,_build}_install: force deterministic behavior (useful in
   case of conflicting stuff from simultaneous python2 and python3 builds).
