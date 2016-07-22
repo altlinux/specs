@@ -1,6 +1,6 @@
 Name: poezio
 Version: 0.9
-Release: alt3
+Release: alt4
 Summary: A console Jabber/XMPP client
 Group: Networking/Instant messaging
 Url: http://poez.io/en
@@ -49,7 +49,7 @@ BuildArch: noarch
 # Workaround a module name clash between the externally visible namespace and
 # the internal one (which we want to allow to use in our subpkgs) --
 # we expose the externally visible module by force:
-%filter_from_provides s|%(%__python3_deps_internal %name)= [^ ]*$||
+%filter_from_provides /^%(%__python3_deps_internal %name)= [^ ]*$/ d
 %py3_provides %name
 # Workaround RPM interdep optimization, which gives different results on different
 # archs (depending on whether poopt requires %%python3_sitelibdir_noarch):
@@ -108,6 +108,9 @@ mv %buildroot%python3_sitelibdir_noarch/poezio/poopt* %buildroot%python3_sitelib
 %python3_sitelibdir_noarch/%{name}_themes
 
 %changelog
+* Fri Jul 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt4
+- (.spec) minor cleanup (of a workaround).
+
 * Fri Jul 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt3
 - (.spec) %%python3_req_hier for more accurate deps.
 
