@@ -1,6 +1,6 @@
 Name: poezio
 Version: 0.9
-Release: alt2
+Release: alt3
 Summary: A console Jabber/XMPP client
 Group: Networking/Instant messaging
 Url: http://poez.io/en
@@ -19,6 +19,9 @@ Requires: python3-module-%name-plugins = %version
 
 %add_python3_path %python3_sitelibdir_noarch/%name
 %allow_python3_import_path %python3_sitelibdir_noarch/%name
+
+# For more accurate deps:
+%python3_req_hier
 
 %description
 Poezio is a console Jabber/XMPP client.  Its goal is to use anonymous
@@ -105,6 +108,9 @@ mv %buildroot%python3_sitelibdir_noarch/poezio/poopt* %buildroot%python3_sitelib
 %python3_sitelibdir_noarch/%{name}_themes
 
 %changelog
+* Fri Jul 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt3
+- (.spec) %%python3_req_hier for more accurate deps.
+
 * Thu Jul 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9-alt2
 - (.spec) declare that our modules set up a non-std path for imports
   (when they are loaded) with %%allow_python3_import_path.
