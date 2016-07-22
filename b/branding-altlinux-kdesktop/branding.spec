@@ -9,7 +9,7 @@
 %define bugfix 0
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.4
+Release: alt0.5
 BuildArch: noarch
 
 %define theme %name
@@ -496,6 +496,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Jul 22 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.5
+- fix boot.jpg
+
 * Mon Jul 11 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.4
 - add system limits defaults
 
