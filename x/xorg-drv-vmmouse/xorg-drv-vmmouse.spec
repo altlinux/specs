@@ -1,7 +1,9 @@
 
+%define _xconfdir %_sysconfdir/X11/xorg.conf.d
+
 Name: xorg-drv-vmmouse
 Version: 13.1.0
-Release: alt1
+Release: alt2
 
 Summary: VMWare mouse input driver
 License: MIT/X11
@@ -40,14 +42,21 @@ Xorg input driver for VMWare mouse.
 %install
 %make DESTDIR=%buildroot install
 
+mkdir -p %buildroot/%_xconfdir
+install -m 0644 %buildroot/%_xorgsysconfigdir/*vmmouse*.conf %buildroot/%_xconfdir/
+
 %files
-%_udevrulesdir/*vmmouse*.rules
+%config(noreplace) %_xconfdir/*vmmouse*.conf
 %_xorgsysconfigdir/*vmmouse*.conf
+%_udevrulesdir/*vmmouse*.rules
 %_bindir/*vmmouse*
 %_x11modulesdir/input/*vmmouse*.so
 %_man1dir/*vmmouse*.*
 %_man4dir/*vmmouse*.*
 
 %changelog
+* Fri Jul 22 2016 Sergey V Turchin <zerg@altlinux.org> 13.1.0-alt2
+- install configuration
+
 * Fri Jul 22 2016 Sergey V Turchin <zerg@altlinux.org> 13.1.0-alt1
 - initial build
