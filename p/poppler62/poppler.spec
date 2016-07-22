@@ -4,7 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_enable compat
+%def_disable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -29,18 +29,18 @@
 %endif
 
 %define rname poppler
-%define somajor 59
+%define somajor 62
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_glib 8
 %define major 0
-%define minor 42
+%define minor 45
 %define bugfix 0
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %if_disabled compat
 %define poppler_devel_name lib%rname-devel
@@ -65,7 +65,6 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
-Patch1: FDBUG-94873.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -268,7 +267,6 @@ statically linked libpoppler-based software
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 
 %autoreconf
 #aclocal --force -I m4
@@ -397,8 +395,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Fri Jul 22 2016 Sergey V Turchin <zerg@altlinux.org> 0.42.0-alt3
-- build compat library
+* Fri Jul 22 2016 Sergey V Turchin <zerg@altlinux.org> 0.45.0-alt1
+- new version
 
 * Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 0.42.0-alt2
 - add fix against crash on certain PDF form item activation actions
