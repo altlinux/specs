@@ -1,19 +1,20 @@
-Summary:  Library for kicad (creation of electronic schematic diagrams)
+Summary: Library for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Библиотеки для kicad (разработка печатных плат)
-Name:     kicad-library
-Version:  4.0.0
-Epoch:    1
-Release:  alt1
-Source0:  %name-%version.tar
-License:  GPLv2+
-Group:    Sciences/Computer science
-Url: 	  https://code.launchpad.net/kicad
+Name: kicad-library
+Version: 4.0.0
+Epoch: 1
+Release: alt2
+Source: %name-%version.tar
+Source1: pretty-%version.tar
+License: GPLv2+
+Group: Sciences/Computer science
+Url: https://code.launchpad.net/kicad
 #Url: 	  http://bazaar.launchpad.net/~kicad-product-committers/kicad/library
 #Url: 	  https://github.com/KiCad/kicad-library
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 BuildArch: noarch
-BuildRequires(pre): cmake rpm-macros-cmake gcc-c++
+BuildRequires(pre): cmake rpm-macros-cmake gcc-c++ rpm-macros-fedora-compat
 
 %description
 Kicad is an open source (GPL) software for the creation of electronic
@@ -39,6 +40,10 @@ Kicad-library содержит в себе библиотеки для kicad.
 %install
 %makeinstall_std -C BUILD
 
+# Footprints
+tar xf %SOURCE1 --strip-components=1 -C %buildroot%_datadir/kicad/modules/$P
+ln -f %buildroot%_datadir/kicad/template/fp-lib-table{.for-pretty,}
+
 %files
 %dir %_datadir/kicad
 %_datadir/kicad/library
@@ -46,6 +51,9 @@ Kicad-library содержит в себе библиотеки для kicad.
 %_datadir/kicad/template
 
 %changelog
+* Sat Jul 23 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.0-alt2
+- Added pretty.
+
 * Sat Dec 05 2015 Anton Midyukov <antohami@altlinux.org> 1:4.0.0-alt1
 - New version.
 
