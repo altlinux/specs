@@ -1,13 +1,13 @@
 %define dbus_user      messagebus
 %define dbus_group     messagebus
 
-%define system_socket_dir %_var/run/dbus
+%define system_socket_dir /run/dbus
 %define session_socket_dir %system_socket_dir/users
 %define system_socket %system_socket_dir/system_bus_socket
 %define	systemdsystemunitdir /lib/systemd/system
 
 Name: dbus
-Version: 1.10.6
+Version: 1.10.8
 Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -98,7 +98,7 @@ mkdir -p m4
 	--enable-systemd \
 	--bindir=/bin \
 	--libexecdir=/lib/dbus-1 \
-	--with-system-pid-file=%_var/run/messagebus.pid \
+	--with-system-pid-file=/run/messagebus.pid \
 	--with-system-socket=%system_socket \
 	--with-session-socket-dir=%session_socket_dir \
 	--with-systemdsystemunitdir=%systemdsystemunitdir \
@@ -133,6 +133,12 @@ mkdir -p %buildroot%_localstatedir/dbus
 touch %buildroot%_localstatedir/dbus/machine-id
 touch %buildroot%_sysconfdir/machine-id
 
+mkdir -p %buildroot/lib/tmpfiles.d
+cat << __EOF__ > %buildroot/lib/tmpfiles.d/%name.conf
+d /run/dbus 0755 root root -
+d /run/dbus/users 1777 root root -
+__EOF__
+
 %pre
 %_sbindir/groupadd -r -f %dbus_group 2> /dev/null ||:
 %_sbindir/useradd -r -n -g %dbus_group -d %system_socket_dir -s /dev/null -c "D-Bus System User" %dbus_user 2> /dev/null ||:
@@ -161,6 +167,7 @@ fi
 %ghost %_sysconfdir/machine-id
 %_initdir/messagebus
 %systemdsystemunitdir/*
+/lib/tmpfiles.d/%name.conf
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
 /bin/dbus-uuidgen
@@ -175,8 +182,8 @@ fi
 %dir %_datadir/dbus-1/system-services
 %_datadir/dbus-1/session.conf
 %_datadir/dbus-1/system.conf
-%attr(0755,root,root) %dir %system_socket_dir
-%attr(1777,root,root) %dir %session_socket_dir
+#attr(0755,root,root) #dir #system_socket_dir
+#attr(1777,root,root) #dir #session_socket_dir
 %dir %_localstatedir/dbus
 %ghost %_localstatedir/dbus/machine-id
 %_man1dir/dbus-cleanup-sockets.1*
@@ -213,6 +220,10 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Sun Jul 24 2016 Valery Inozemtsev <shrek@altlinux.ru> 1.10.8-alt1
+- 1.10.8
+- moved /var/run/dbus to /run/dbus
+
 * Sun Dec 06 2015 Valery Inozemtsev <shrek@altlinux.ru> 1.10.6-alt1
 - 1.10.6
 
