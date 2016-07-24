@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	2.3.0
+Version: 	2.4.0
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KF5
@@ -8,7 +8,6 @@ URL: 		http://skrooge.org/
 Packager: 	Andrey Cherepanov <cas@altlinux.org> 
 
 Source: 	%name-%version.tar.xz
-Patch1:         %name-alt-fix-build-with-math.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-kf5
@@ -77,7 +76,6 @@ and intuitive.
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %K5init no_altplace
@@ -109,6 +107,9 @@ and intuitive.
 %_datadir/%name
 
 %changelog
+* Sun Jul 24 2016 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
 - New version is based on KF5
 - Build without sqlcipher support
