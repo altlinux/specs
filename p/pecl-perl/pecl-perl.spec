@@ -3,7 +3,7 @@
 
 Name: pecl-%pecl_name
 Version: 1.0.1
-Release: alt14
+Release: alt15
 # see commit a3d7db22eb7964ea9cb39ea2f866d10df26655d4
 # of git://github.com/do-aki/php-ext-perl.git
 Patch0: %name-1.0.1-alt-fix_php5.4.patch
@@ -55,6 +55,9 @@ phpize
 %pecl_files
 
 %changelog
+* Mon Jul 25 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt15
+- rebuild with php5-5.6.24
+
 * Mon Jun 27 2016 Anton Farygin <rider@altlinux.ru> 1.0.1-alt14
 - rebuild with php5-5.6.23
 
