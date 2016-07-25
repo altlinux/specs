@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.0216
+%define module_version 0.0217
 %define module_name Devel-PerlySense
 %add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense.pm
 %add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense*.pm
@@ -10,7 +10,7 @@ BuildRequires: perl(App/Ack.pm) perl(Cache/Cache.pm) perl(Cache/FileCache.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.0216
+Version: 0.0217
 Release: alt1
 Summary: Perl IDE backend with Emacs frontend.
 Group: Development/Perl
@@ -50,6 +50,9 @@ rm t/PerlySense-Editor-Emacs-class-overview.t
 %_bindir/*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.0217-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.0216-alt1
 - automated CPAN update
 
