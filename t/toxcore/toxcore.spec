@@ -3,12 +3,13 @@
 # Created by specgen utility from files in specs/ subdir
 #============================================================================
 Name: toxcore
-Summary: %name
+Summary: All-in-one secure communication platform
 Version: 0.0.1
-Release: alt1.20160725
+Release: alt2.20160725
 License: ISC license
 Group: System/Libraries
 BuildRequires: libopus-devel libsodium-devel libvpx-devel libcheck-devel
+BuildPreReq: libconfig-devel >= 1.4
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -42,6 +43,13 @@ Group: System/Libraries
 %description -n libtoxencryptsave0
 %summary
 
+%package bootstrapd
+Summary: %summary
+Group: System/Libraries
+
+%description bootstrapd
+%summary
+
 %package devel
 Summary: %summary
 Group: System/Libraries
@@ -58,7 +66,10 @@ Requires: toxcore-devel
 %summary
 
 %description
-%name
+With the rise of governmental monitoring programs,
+Tox, a FOSS initiative, aims to be an easy to use,
+all-in-one communication platform that ensures
+their users full privacy and secure message delivery.
 
 
 %prep
@@ -67,12 +78,20 @@ Requires: toxcore-devel
 
 %build
 %autoreconf
-%configure
+%configure --enable-daemon
 %make_build
 
 %install
 %makeinstall
 rm -f %buildroot%_bindir/DHT_bootstrap
+install -d -m700 %buildroot/var/lib/tox-bootstrapd/
+install -D -m644 other/bootstrap_daemon/tox-bootstrapd.conf %buildroot/etc/tox-bootstrapd.conf
+install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service %buildroot%_unitdir/tox-bootstrapd.service
+%__subst "s|/usr/local/bin|%_bindir|g" %buildroot%_unitdir/tox-bootstrapd.service
+
+%pre bootstrapd
+/usr/sbin/groupadd -r -f tox-bootstrapd
+/usr/sbin/useradd -r -d /var/lib/tox-bootstrapd -s /dev/null -c 'TOX DHT bootstrap daemon' -g tox-bootstrapd tox-bootstrapd >/dev/null 2>&1 ||:
 
 %files -n libtoxav0
 %_libdir/libtoxav.so.0
@@ -90,6 +109,13 @@ rm -f %buildroot%_bindir/DHT_bootstrap
 %_libdir/libtoxencryptsave.so.0
 %_libdir/libtoxencryptsave.so.0.0.0
 
+%files bootstrapd
+%doc other/bootstrap_daemon/README.md
+%_bindir/tox-bootstrapd
+%dir %attr(700,tox-bootstrapd,tox-bootstrapd) /var/lib/tox-bootstrapd
+%_sysconfdir/tox-bootstrapd.conf
+%_unitdir/tox-bootstrapd.service
+
 %files devel
 %_includedir/tox
 %_libdir/libtoxav.so
@@ -106,6 +132,9 @@ rm -f %buildroot%_bindir/DHT_bootstrap
 %_libdir/libtoxencryptsave.a
 
 %changelog
+* Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt2.20160725
+- build tox-bootstrapd subpackage
+
 * Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.0.1-alt1.20160725
 - update from upstream git (ALT #32105)
 
