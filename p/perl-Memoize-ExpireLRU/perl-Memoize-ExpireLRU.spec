@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Memoize-ExpireLRU
 Name: perl-%dist
-Version: 0.55
+Version: 0.56
 Release: alt1
 
 Summary: Expiry plug-in for Memoize that adds LRU cache expiration
@@ -9,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Memoize-ExpireLRU-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -29,9 +30,6 @@ cached.
 %prep
 %setup -q -n %dist-%version
 
-# fix syntax (AutoLoader) so that B::Deparse works
-%__subst -p 's/^1;$/sub ShowStats;\n&/' ExpireLRU.pm
-
 %build
 %perl_vendor_build
 
@@ -44,5 +42,8 @@ cached.
 %perl_vendor_privlib/auto/Memoize*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
+- automated CPAN update
+
 * Tue Apr 27 2010 Alexey Tourbin <at@altlinux.ru> 0.55-alt1
 - decoupled from perl-Memoize
