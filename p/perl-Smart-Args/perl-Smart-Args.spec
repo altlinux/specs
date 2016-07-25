@@ -1,20 +1,20 @@
-%define module_version 0.12
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.13
 %define module_name Smart-Args
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types/Moose.pm) perl(Mouse.pm) perl(Mouse/Util/TypeConstraints.pm) perl(MouseX/Types.pm) perl(MouseX/Types/Mouse.pm) perl(PadWalker.pm) perl(Params/Validate.pm) perl(Scalar/Util.pm) perl(Test/Builder/Module.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(base.pm) perl(if.pm)
+BuildRequires: perl(Benchmark.pm) perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/Types/Moose.pm) perl(Mouse.pm) perl(Mouse/Util/TypeConstraints.pm) perl(MouseX/Types.pm) perl(MouseX/Types/Mouse.pm) perl(PadWalker.pm) perl(Params/Validate.pm) perl(Scalar/Util.pm) perl(Test/Builder/Module.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(base.pm) perl(if.pm) perl(Module/Build/Tiny.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.12
-Release: alt2
+Version: 0.13
+Release: alt1
 Summary: argument validation for you
 Group: Development/Perl
 License: perl
 URL: https://github.com/tokuhirom/Smart-Args
 
-Source0: http://cpan.org.ua/authors/id/T/TO/TOKUHIROM/%module_name-%module_version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TOKUHIROM/Smart-Args-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -37,6 +37,9 @@ This module makes your module more readable, and writable =)
 %perl_vendor_privlib/S*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Tue Dec 03 2013 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2
 - uploaded to Sisyphus as Scalar-Does dependency
 
