@@ -6,7 +6,7 @@ BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/O
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-Runtime
 Summary:        Catalyst Framework Runtime
-Version:        5.90105
+Version:        5.90111
 Release:        alt1
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -181,6 +181,9 @@ make clean
 %{_mandir}/man1/*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.90111-alt1
+- automated CPAN update
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 5.90105-alt1
 - automated CPAN update
 
