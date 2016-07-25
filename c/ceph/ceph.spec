@@ -2,7 +2,7 @@
 
 Name: ceph
 Version: 0.94.7
-Release: alt3
+Release: alt4
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-python
 Requires: librados2 = %version-%release
 Requires: librbd1 = %version-%release
 Requires: lsb-release
+Requires: gdisk
 Provides: ceph-mds
 %description
 Ceph is a distributed network file system designed to provide excellent
@@ -309,6 +310,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Mon Jul 25 2016 Lenar Shakirov <snejok@altlinux.ru> 0.94.7-alt4
+- Requires: gdisk added, sgdisk needed by ceph-disk (ALT bug #32132)
+
 * Mon Jun 20 2016 Lenar Shakirov <snejok@altlinux.ru> 0.94.7-alt3
 - Provides: ceph-mds added, needed by ceph-deploy
 
