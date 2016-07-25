@@ -1,17 +1,17 @@
 Name: nasm
-Version: 2.11.08
+Version: 2.12.02
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
 License: BSD 2-clause
 Group: Development/Other
-
 URL: http://www.nasm.us/
+
 # http://nasm.sourceforge.net/
 Source: http://www.nasm.us/pub/nasm/releasebuilds/%version/nasm-%version.tar.bz2
 #Source: http://dl.sourceforge.net/nasm/nasm-%version.tar.bz2
 
-BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x
+BuildRequires: ghostscript-utils groff-base xmlto asciidoc-a2x texinfo
 
 %package doc
 Summary: Extensive documentation for NASM
@@ -38,6 +38,7 @@ include linker, library manager, loader, and information dump.
 
 %prep
 %setup
+subst '/mv -f \*.info \*.info-\* info/d' doc/Makefile.in
 
 %build
 %configure
@@ -48,7 +49,7 @@ make INSTALLROOT="%buildroot" INSTALL="install -pD" install install_rdf
 
 cd doc
 install -d %buildroot%_infodir
-install info/* %buildroot%_infodir/
+install nasm.info %buildroot%_infodir/
 gzip -9f *.txt *.ps || true
 cd html
 ln -sf nasmdoc0.html index.html
@@ -79,6 +80,9 @@ ln -sf nasmdoc0.html index.html
 %_man1dir/rdx*
 
 %changelog
+* Mon Jul 25 2016 Yuri N. Sedunov <aris@altlinux.org> 2.12.02-alt1
+- 2.12.02
+
 * Wed Mar 11 2015 Yuri N. Sedunov <aris@altlinux.org> 2.11.08-alt1
 - 2.11.08
 
