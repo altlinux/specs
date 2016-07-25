@@ -3,13 +3,13 @@
 
 Summary: The PHP5 scripting language
 Name:	 php5
-Version: 5.6.23
+Version: 5.6.24
 Release: alt1
 
 %define php5_name      %name
 %define _php5_version  %version
 %define _php5_major  5.6
-%define _php5_snapshot 20160621
+%define _php5_snapshot 20160721
 %define php5_release   %release
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
 
@@ -138,7 +138,6 @@ Provides: php5-sysvshm = %php5_version-%php5_release
 Provides: php5-tokenizer = %php5_version-%php5_release
 Provides: php5-wddx = %php5_version-%php5_release
 Provides: php5-xml = %php5_version-%php5_release
-Provides: php5-xmlreader = %php5_version-%php5_release
 Provides: php5-xmlwriter = %php5_version-%php5_release
 Provides: php5-zlib = %php5_version-%php5_release
 Provides: php5-libs = %php5_version-%release
@@ -406,6 +405,9 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %doc tests run-tests.php 
 
 %changelog
+* Mon Jul 25 2016 Anton Farygin <rider@altlinux.ru> 5.6.24-alt1
+- new version
+
 * Mon Jun 27 2016 Anton Farygin <rider@altlinux.ru> 5.6.23-alt1
 - new version
 - build xmlreader as external module
