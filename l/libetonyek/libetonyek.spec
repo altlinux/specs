@@ -1,6 +1,6 @@
 Name: libetonyek
 Version: 0.1.6
-Release: alt1
+Release: alt2
 Summary: A library for import of Apple Keynote presentations
 
 Group: System/Libraries
@@ -46,8 +46,11 @@ Currently supported: XHTML, raw, text.
 
 %prep
 %setup
+# XXX hack out mdds=1.0 (too lower)
+sed -i 's/mdds-1.0/mdds/' configure.ac
 
 %build
+%autoreconf
 %configure --disable-silent-rules --disable-static --disable-werror
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
@@ -83,6 +86,9 @@ make check
 %_bindir/*
 
 %changelog
+* Mon Jul 25 2016 Fr. Br. George <george@altlinux.ru> 0.1.6-alt2
+- Fix build
+
 * Wed Apr 13 2016 Fr. Br. George <george@altlinux.ru> 0.1.6-alt1
 - Autobuild version bump to 0.1.6
 
