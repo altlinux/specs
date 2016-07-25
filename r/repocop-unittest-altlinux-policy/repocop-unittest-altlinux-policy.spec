@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.33
+Version: 0.34
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
+- added exception for libgdiplus.so
+
 * Thu Jul 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - perl 5.22 quoting in pl fixscripts
 
