@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.34
+Version: 0.35
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,9 @@ install -m 755 repocop-report-* %buildroot/%_bindir/
 #%_man1dir/repocop-report-*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- added exception for libgdiplus
+
 * Wed Jul 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - python fixes
 
