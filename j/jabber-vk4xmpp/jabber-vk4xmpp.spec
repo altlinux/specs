@@ -1,7 +1,7 @@
 %define fuser _vk4xmpp
 
 Name: jabber-vk4xmpp
-Version: 0.20140903
+Version: 0.20160725
 Release: alt1
 
 Summary: VKontakte jabber transport
@@ -70,6 +70,9 @@ install -D systemd/vk4xmpp.service %buildroot%_unitdir/%name
 %dir %attr (0770,%fuser,root) %_runtimedir/%name/
 
 %changelog
+* Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.20160725-alt1
+- update to 20160725
+
 * Fri Sep 05 2014 Vitaly Lipatov <lav@altlinux.ru> 0.20140903-alt1
 - update to 20140903
 
