@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.10
+Version: 0.8.11
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -168,6 +168,9 @@ fi
 %_datadir/%name/features/mdadm
 
 %changelog
+* Mon Jul 25 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.8.11-alt1
+- fixed udev rules names for multipath
+
 * Mon Mar 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.8.10-alt1
 - fix plymouth by explicitly set tty
 - build fixed
