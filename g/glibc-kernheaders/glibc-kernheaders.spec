@@ -1,4 +1,4 @@
-%define kernel_base_version 4.6
+%define kernel_base_version 4.7
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -81,6 +81,9 @@ done
 %hdr_dir
 
 %changelog
+* Mon Jul 25 2016 Dmitry V. Levin <ldv@altlinux.org> 4.7-alt1
+- v4.6 -> v4.7.
+
 * Mon May 23 2016 Dmitry V. Levin <ldv@altlinux.org> 4.6-alt1
 - Updated to v4.6.
 
