@@ -1,6 +1,6 @@
 
 Name: rofi
-Version: 1.0.1
+Version: 1.1.0
 Release: alt2
 Summary: A window switcher, run dialog and dmenu replacement
 License: MIT
@@ -55,6 +55,9 @@ like a run-dialog, ssh-launcher and can act as a drop-in dmenu replacement, maki
 %_man1dir/%name-*
 
 %changelog
+* Wed Jul 13 2016 Konstantin Artyushkin <akv@altlinux.org> 1.1.0-alt2
+- new 1.1.0 version
+
 * Thu May 12 2016 Konstantin Artyushkin <akv@altlinux.org> 1.0.1-alt2
 - new version 1.0.1
 
