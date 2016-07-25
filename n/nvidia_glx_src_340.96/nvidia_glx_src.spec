@@ -14,12 +14,8 @@
 %define nv_version 340
 %define nv_release 96
 %define nv_minor %nil
-%define pkg_rel alt142
-%ifarch x86_64
+%define pkg_rel alt143
 %def_enable egl
-%else
-%def_enable egl
-%endif
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -229,6 +225,7 @@ fi
 %if_enabled egl
 %__install -m 0644 libEGL.so.%tbver  %buildroot/%nv_lib_dir/libEGL.so
 %__install -m 0644 libGLESv2.so.%tbver  %buildroot/%nv_lib_dir/libGLESv2.so
+%__install -m 0644 libGLESv1_CM.so.%tbver  %buildroot/%nv_lib_dir/libGLESv1_CM.so
 %endif
 
 %__install -m 0644 libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
@@ -288,6 +285,7 @@ fi
 %if_enabled egl
 %nv_lib_dir/libEGL.so*
 %nv_lib_dir/libGLESv2.so*
+%nv_lib_dir/libGLESv1_CM.so*
 %endif
 %nv_lib_dir/libnvidia-cfg.so*
 %nv_lib_dir/libvdpau_nvidia.so*
@@ -304,6 +302,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 340.96-alt143
+- package libGLESv1_CM
+
 * Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 340.96-alt142
 - add fix against 4.6 kernel
 
