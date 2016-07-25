@@ -14,7 +14,7 @@
 %define nv_version 367
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt158
+%define pkg_rel alt160
 %def_enable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -80,6 +80,8 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
+Patch3: buildfix_kernel_4.7-1.patch
+Patch4: buildfix_kernel_4.7-2.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 BuildRequires: libXext-devel
@@ -151,6 +153,10 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%ifarch x86_64
+%patch4 -p1
+%endif
 rm -rf precompiled
 popd
 
@@ -211,16 +217,19 @@ fi
 %__install -m 0644 libglx.so.%tbver %buildroot/%nv_lib_dir/libglx.so
 %__ln_s libglx.so %buildroot/%nv_lib_dir/libglx.a
 
+%__install -m 0644 libGLdispatch.so.0  %buildroot/%nv_lib_dir/libGLdispatch.so
+#
 #%__install -m 0644 libGL.so.1.0.0  %buildroot/%nv_lib_dir/libGL.so
 %__install -m 0644 libGL.so.%tbver  %buildroot/%nv_lib_dir/libGL.so
 #
 %__install -m 0644 libEGL.so.1  %buildroot/%nv_lib_dir/libEGL.so
-%__install -m 0644 libGLESv2.so.2  %buildroot/%nv_lib_dir/libGLESv2.so
 %__install -m 0644 libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
+%__install -m 0644 libGLESv2.so.2  %buildroot/%nv_lib_dir/libGLESv2.so
 %__install -m 0644 libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
-%__install -m 0644 libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
-%__install -m 0644 libGLdispatch.so.0  %buildroot/%nv_lib_dir/libGLdispatch.so
+%__install -m 0644 libGLESv1_CM.so.1  %buildroot/%nv_lib_dir/libGLESv1_CM.so
+%__install -m 0644 libGLESv1_CM_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv1_CM_nvidia.so
 %__install -m 0644 libGLX.so.0  %buildroot/%nv_lib_dir/libGLX.so
+%__install -m 0644 libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
 
 %__install -m 0644 libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
 %__install -m 0644 libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
@@ -277,6 +286,8 @@ fi
 %nv_lib_dir/libEGL_nvidia.so*
 %nv_lib_dir/libGLESv2.so*
 %nv_lib_dir/libGLESv2_nvidia.so*
+%nv_lib_dir/libGLESv1_CM.so*
+%nv_lib_dir/libGLESv1_CM_nvidia.so*
 %nv_lib_dir/libGLX_nvidia.so*
 %nv_lib_dir/libGLdispatch.so*
 %nv_lib_dir/libGLX.so*
@@ -295,6 +306,12 @@ fi
 %endif
 
 %changelog
+* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt160
+- package libGLESv1_CM
+
+* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt159
+- add fix against 4.7 kernel
+
 * Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt158
 - fix requires
 
