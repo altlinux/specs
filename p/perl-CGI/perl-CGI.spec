@@ -2,10 +2,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(HTML/Entities.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Warn.pm) perl(Text/ParseWords.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define module_version 4.31
+%define module_version 4.32
 %define module_name CGI
 Name: perl-CGI
-Version: 4.31
+Version: 4.32
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -67,6 +67,9 @@ chmod -c -x examples/*
 %perl_vendor_privlib/Fh.pm
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 4.32-alt1
+- automated CPAN update
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 4.31-alt1
 - automated CPAN update
 
