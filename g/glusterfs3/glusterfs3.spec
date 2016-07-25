@@ -1,7 +1,7 @@
 # For update, merge with new tag, update version in the spec and do gear-update-tag -a
 
 %define oname glusterfs
-%define major 3.7
+%define major 3.8
 %define _with_fusermount yes
 %define _without_ocf yes
 
@@ -27,8 +27,8 @@
 
 
 Name: glusterfs3
-Version: %major.11
-Release: alt3
+Version: %major.1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -50,6 +50,7 @@ Source7: glusterd.init
 Patch0: %name-%version-%release.patch
 
 %add_verify_elf_skiplist %_libdir/libgfdb.so.0.0.1
+%add_verify_elf_skiplist %_libdir/libgfrpc.so.0.0.1
 %add_verify_elf_skiplist %_libdir/glusterfs/xlator/mount/fuse.so
 
 %define _init_install() install -D -p -m 0755 %1 %buildroot%_initdir/%2 ;
@@ -112,8 +113,9 @@ This package provides support to ib-verbs library.
 Summary: NFS-Ganesha configuration
 Group: System/Base
 Requires: %name-server = %version-%release
-#Requires:         nfs-ganesha-gluster
+Requires: nfs-ganesha
 #Requires:         pcs
+AutoReq: yes,noshell
 
 %description ganesha
 GlusterFS is a distributed file-system capable of scaling to several
@@ -291,6 +293,7 @@ This package provides the base GlusterFS libraries.
 echo "v%version-%release" >VERSION
 
 %build
+# need from build from git repo (but incorporated in tarballs)
 ./autogen.sh
 %configure  %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} \
             %{?_without_ocf} \
@@ -369,9 +372,6 @@ install -D -p -m 644 extras/glusterfs.vim \
 %if 0%{?_without_ocf:1}
 rm -rf %buildroot/usr/lib/ocf/
 %endif
-
-mv %buildroot/etc/ganesha/ganesha-ha.conf.sample %buildroot/etc/ganesha/ganesha.conf
-touch %buildroot%_sysconfdir/sysconfig/ganesha
 
 # TODO: move common part to -common?
 %files
@@ -470,10 +470,9 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 
 %files ganesha
 %dir /etc/ganesha/
-%config(noreplace) /etc/ganesha/ganesha.conf
-%config(noreplace) %_sysconfdir/sysconfig/ganesha
-%dir /usr/lib/ganesha/
+%config(noreplace) /etc/ganesha/ganesha-ha.conf.sample
 /usr/lib/ganesha/create-export-ganesha.sh
+/usr/lib/ganesha/copy-export-ganesha.sh
 /usr/lib/ganesha/dbus-send.sh
 /usr/lib/ganesha/ganesha-ha.sh
 /usr/lib/ganesha/generate-epoch.py
@@ -514,6 +513,15 @@ touch %buildroot%_sysconfdir/sysconfig/ganesha
 %preun_service glusterd
 
 %changelog
+* Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.1-alt2
+- fix build with nfs-ganesha
+
+* Sun Jul 10 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.1-alt1
+- new version 3.8.1
+
+* Mon Jun 20 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.0-alt0
+- build around 3.8.0 version from 3.8 branch
+
 * Sat May 21 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.11-alt3
 - set correct build version
 
