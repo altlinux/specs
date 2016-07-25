@@ -1,11 +1,12 @@
 Name: mscgen
 Version: 0.20
-Release: alt2
+Release: alt3
 Summary: Message Sequence Chart Renderer
 Group: Publishing
 License: GPLv2+
-# svn checkout http://mscgen.googlecode.com/svn/tags/release_%version %name-%version
+# http://www.mcternan.me.uk/mscgen/software/
 Source: %name-%version.tar
+Patch: mscgen-0.20-bison3.patch
 Url: http://www.mcternan.me.uk/mscgen/
 
 # Automatically added by buildreq on Wed Sep 18 2013
@@ -25,6 +26,7 @@ common image formats for display or printing.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -40,6 +42,10 @@ common image formats for display or printing.
 %_man1dir/*
 
 %changelog
+* Mon Jul 25 2016 Fr. Br. George <george@altlinux.ru> 0.20-alt3
+- Fix build
+- Upstream googlecode is gone
+
 * Wed Sep 18 2013 Fr. Br. George <george@altlinux.ru> 0.20-alt2
 - Update to SVN r201
 
