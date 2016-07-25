@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 5.1.0
-Release: alt1.1.1
+Version: 5.3.0
+Release: alt1
 
 Summary: Python module to generate QR Codes
 
@@ -40,7 +40,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 This module uses image libraries, Python Imaging Library (PIL) by default,
-to generate QR Codes. 
+to generate QR Codes.
 %endif
 
 
@@ -88,6 +88,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 22 2016 Vladimir Didenko <cow@altlinux.org> 5.3.0-alt1
+- new version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.1.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)

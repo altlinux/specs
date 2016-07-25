@@ -2,14 +2,14 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.4.0
-Release: alt1.1.1
+Version: 0.4.1
+Release: alt1
 
 Summary: A simple, lightweight OAuth2 client
 
 License: MIT
 Group: Development/Python
-Url: http://code.google.com/p/psutil/
+Url: https://github.com/demianbrecht/sanction
 
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
 # Source-url: https://pypi.python.org/packages/source/s/sanction/sanction-0.4.tar.gz
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-build-python3
 
 %description
 Sanction is a ridiculously easy to use OAuth 2.0 client intended for rapid
-development against OAuth 2.0 providers with minimal keyboard bashing. 
+development against OAuth 2.0 providers with minimal keyboard bashing.
 
 %if_with python3
 %package -n python3-module-%oname
@@ -40,7 +40,7 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 Sanction is a ridiculously easy to use OAuth 2.0 client intended for rapid
-development against OAuth 2.0 providers with minimal keyboard bashing. 
+development against OAuth 2.0 providers with minimal keyboard bashing.
 %endif
 
 
@@ -82,6 +82,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 25 2016 Vladimir Didenko <cow@altlinux.ru> 0.4.1-alt1
+- New version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.4.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
