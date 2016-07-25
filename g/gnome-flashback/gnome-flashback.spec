@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GNOME Flashback session
 License: GPLv3
@@ -129,6 +129,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Mon Jul 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Thu Jul 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt2
 - updated to 3.20.1-7-ge76b61f
 - packaged compiz session
