@@ -1,7 +1,7 @@
 %define module Class-Base
 
 Name: perl-%module
-Version: 0.06
+Version: 0.08
 Release: alt1
 
 Summary: Class::Base - useful base class for deriving other modules
@@ -34,6 +34,9 @@ new(), init(), params(), clone(), error() and debug().
 %perl_vendor_privlib/Class
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Mon Sep 01 2014 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
