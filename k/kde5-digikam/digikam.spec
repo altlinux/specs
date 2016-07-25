@@ -3,10 +3,16 @@
 %define rname digikam
 %define label digiKam
 
+%define sover 5
+%define libdigikamdatabase libdigikamdatabase%sover
+%define libdigikamcore libdigikamcore%sover
+%define libdigikamgui libdigikamgui%sover
+
+
 Name: kde5-%rname
 %define lname lib%name
 Version: 5.0.0
-Release: alt1
+Release: alt2
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -28,7 +34,7 @@ BuildRequires(pre): rpm-build-kf5
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glib2-devel glibc-devel-static gtk-update-icon-cache kde5-akonadi-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libdbusmenu-qt52 libdc1394-22 libgdk-pixbuf libgpg-error libgphoto2-6 libgphoto2_port-12 libgst-plugins1.0 libical-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpangox-compat libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
 BuildRequires: doxygen eigen3 extra-cmake-modules flex graphviz
-BuildRequires: qt5-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel
+BuildRequires: qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel
 BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel libpng-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
@@ -63,20 +69,40 @@ as Showfoto.
 DigiKam also uses KIPI plugins (KDE Image Plugin Interface) to increase
 its functionalities.
 
-%package -n %lname
-Group: System/Libraries
-Summary: %label library
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+%description common
+%name common package
 
-%description -n %lname
-%label library.
+%package -n %libdigikamdatabase
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libdigikamdatabase
+%name library
+
+%package -n %libdigikamcore
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libdigikamcore
+%name library
+
+%package -n %libdigikamgui
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libdigikamgui
+%name library
 
 %package data
 Group: Graphics
 Summary: A Photo Management Application for KDE
-Requires: %name = %version-%release
+Requires: %name-common = %version-%release
 BuildArch: noarch
-Conflicts: digikam-data <= 0.9.6-alt3
-
 %description data
 DigiKam is an advanced digital photo management application for KDE.
 Photos can be collected into albums which can be sorted chronologically,
@@ -126,6 +152,10 @@ ECM_OPTIONAL_ADD_SUBDIRECTORY(doc)
 ECM_OPTIONAL_ADD_SUBDIRECTORY(doc-translated)
 __EOF__
 
+find -type f -name CMakeLists.txt | \
+while read f ; do
+    sed -i '/^set_target_properties.*SOVERSION.*DIGIKAM_VERSION_SHORT/s|\(SOVERSION.*\)DIGIKAM_VERSION_SHORT}|\1DIGIKAM_MAJOR_VERSION}|' $f
+done
 
 %build
 %K5build \
@@ -145,6 +175,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %find_lang --with-kde %rname
 %find_lang --with-kde --append --output=%rname.lang showfoto
 
+%files common
 %files
 %_K5bin/%rname
 %_K5bin/showfoto
@@ -158,9 +189,6 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5xmlgui/%{rname}/
 %_K5xmlgui/showfoto/
 %_K5notif/%{rname}.notifyrc
-
-%files -n %lname
-%_K5lib/lib%{rname}*.so*
 
 %files data -f %rname.lang
 %doc AUTHORS ChangeLog HACKING NEWS README TODO
@@ -179,10 +207,22 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5icon/hicolor/*/actions/underexposure.*
 %_K5conf_up/*
 
-
 %files devel
 %_K5link/*.so
 
+%files -n %libdigikamdatabase
+%_K5lib/libdigikamdatabase.so.%sover
+%_K5lib/libdigikamdatabase.so.*
+%files -n %libdigikamcore
+%_K5lib/libdigikamcore.so.%sover
+%_K5lib/libdigikamcore.so.*
+%files -n %libdigikamgui
+%_K5lib/libdigikamgui.so.%sover
+%_K5lib/libdigikamgui.so.*
+
 %changelog
+* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt2
+- split libraries
+
 * Mon Jul 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt1
 - initial build
