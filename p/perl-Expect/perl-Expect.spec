@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Expect
 Name: perl-%dist
-Version: 1.32
+Version: 1.33
 Release: alt1
 
 Summary: Perl Expect interface
@@ -9,7 +9,7 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Expect-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/J/JA/JACOBY/Expect-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +25,7 @@ without operator assistance. This concept makes more sense if you are
 already familiar with the versatile Tcl version of Expect.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n expect.pm-%dist-%version
 
 %build
 %perl_vendor_build
@@ -43,6 +43,9 @@ cp -p examples/kibitz/kibitz.man %buildroot%_man1dir/kibitz.pl.1
 %_man1dir/kibitz.pl.1*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
+- automated CPAN update
+
 * Tue Dec 16 2014 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
 - automated CPAN update
 
