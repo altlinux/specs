@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-didot-classic
 Version: 20080702
-Release: alt3_15
+Release: alt3_16
 Summary: GFS Didot Classic Greek font
 
 License:   OFL
@@ -114,6 +114,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20080702-alt3_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20080702-alt3_15
 - update to new release by fcimport
 
