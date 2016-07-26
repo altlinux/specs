@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Danga/Socket.pm) perl(Errno.pm) perl(FindBin.pm) perl(Gearman/Util.pm) perl(IO/Handle.pm) perl(IO/Socket/INET.pm) perl(Scalar/Util.pm) perl(Socket.pm) perl(Sys/Hostname.pm) perl(base.pm) perl(fields.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Gearman-Server
-Version:        1.12
-Release:        alt1_4
+Version:        1.130.1
+Release:        alt1
 Summary:        Function call "router" and load balancer
 License:        GPL+ or Artistic
 Group:          System/Servers
 URL:            http://search.cpan.org/dist/Gearman-Server/
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-Server-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-Server-v%{version}.tar.gz
 BuildArch:      noarch
 
-BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm) perl(Test/Script.pm)
 
 
 Source44: import.info
@@ -27,7 +28,7 @@ Gearman::Client, Gearman::Client::Async, etc) request work to be done from
 one of the Gearman servers.
 
 %prep
-%setup -q -n Gearman-Server-%{version}
+%setup -q -n Gearman-Server-v%{version}
 
 %build
 perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -48,6 +49,9 @@ make test
 %{_mandir}/man1/gearmand.*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.130.1-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_4
 - update to new release by fcimport
 
