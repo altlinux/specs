@@ -3,7 +3,7 @@
 
 Name:           icon-theme-faience
 Version:        0.5
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Faience icon theme
 Group:          Graphical desktop/Other
 
@@ -78,6 +78,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_4
 - update to new release by fcimport
 
