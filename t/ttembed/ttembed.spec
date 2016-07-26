@@ -1,7 +1,7 @@
 Group: Development/Tools
 Name:       ttembed
 Version:    1.1
-Release:    alt1_4
+Release:    alt1_5
 Summary:    Remove embedding limitations from TrueType fonts
 License:    Public Domain
 URL:        https://github.com/hisdeedsaredust/ttembed
@@ -40,6 +40,9 @@ fi
 rm test
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_4
 - update to new release by fcimport
 
