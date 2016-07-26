@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name fontpackages
 %define version 1.44
@@ -13,7 +13,7 @@ BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 
 Name:    fontpackages
 Version: 1.44
-Release: alt4_15
+Release: alt4_17
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -48,7 +48,7 @@ including the correct permissions for the directories.
 Group: System/Configuration/Other
 Summary: Templates and macros used to create font packages
 
-Requires: rpmdevtools
+Requires: qa-robot rpmdevtools spectool
 Requires: fontconfig
 Requires: rpm-macros-fontpackages rpm-build-fonts xorg-font-encodings
 
@@ -61,9 +61,9 @@ create font packages.
 Group: System/Configuration/Other
 Summary: Tools used to check fonts and font packages
 
-Requires: fontconfig fontforge
-Requires: curl make mutt1.5
-%if 0%{fedora} >= 22
+Requires: fontconfig fontforge libfontforge
+Requires: curl, make, mutt
+%if 0%{?fedora} >= 22
 Requires: dnf-command(repoquery)
 Requires: createrepo_c
 %else
@@ -140,6 +140,9 @@ rm -rf %buildroot%{spectemplatedir}
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_15
 - update to new release by fcimport
 
