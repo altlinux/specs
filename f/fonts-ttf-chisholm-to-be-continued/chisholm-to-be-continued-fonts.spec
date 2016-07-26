@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-chisholm-to-be-continued
 Version:        20090124
-Release:        alt3_12
+Release:        alt3_13
 Summary:        Decorative Sans Serif Font
 
 License:        OFL
@@ -89,6 +89,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_13
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_12
 - update to new release by fcimport
 
