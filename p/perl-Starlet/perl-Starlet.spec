@@ -1,33 +1,47 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(HTTP/Date.pm) perl(HTTP/Request.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Try/Tiny.pm) perl(YAML/Tiny.pm) perl-devel perl-podlators
+BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(IO/All.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Markdown.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Starlet
 Version:        0.30
-Release:        alt1
+Release:        alt1_1
 Summary:        Simple, high-performance PSGI/Plack HTTP server
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Starlet/
-Source:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Starlet-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KA/KAZUHO/Starlet-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  /usr/bin/start_server
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+
+BuildRequires:  perl(base.pm)
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(constant.pm)
+BuildRequires:  perl(Fcntl.pm)
+BuildRequires:  perl(File/Basename.pm)
 BuildRequires:  perl(File/Temp.pm)
+BuildRequires:  perl(HTTP/Date.pm)
+BuildRequires:  perl(HTTP/Status.pm)
 BuildRequires:  perl(IO/Socket/INET.pm)
+BuildRequires:  perl(List/Util.pm)
+BuildRequires:  perl(LWP/UserAgent.pm)
 BuildRequires:  perl(Net/EmptyPort.pm)
 BuildRequires:  perl(Parallel/Prefork.pm)
 BuildRequires:  perl(Plack.pm)
+BuildRequires:  perl(Plack/HTTPParser.pm)
 BuildRequires:  perl(Plack/Loader.pm)
+BuildRequires:  perl(Plack/TempBuffer.pm)
 BuildRequires:  perl(Plack/Test.pm)
+BuildRequires:  perl(Plack/Util.pm)
+BuildRequires:  perl(POSIX.pm)
 BuildRequires:  perl(Server/Starter.pm)
 BuildRequires:  perl(Socket.pm)
+BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/TCP.pm)
-BuildRequires:  perl(LWP/UserAgent.pm)
-BuildRequires:  perl(strict.pm)
+BuildRequires:  perl(Time/HiRes.pm)
+BuildRequires:  perl(Try/Tiny.pm)
 BuildRequires:  perl(warnings.pm)
 
 # Eliminate inc/*
@@ -62,6 +76,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_1
+- update to new release by fcimport
+
 * Mon Jun 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
 - automated CPAN update
 
