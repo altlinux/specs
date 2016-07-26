@@ -3,7 +3,7 @@
 %def_without svgalib
 
 Name: links2
-Version: 2.12
+Version: 2.13
 Release: alt1
 
 Summary: Lynx-like text and graphics WWW browser
@@ -126,6 +126,9 @@ chmod +x %buildroot%_bindir/x%name
 %doc README SITES mailcap.pl
 
 %changelog
+* Tue Jul 26 2016 Michael Shigorin <mike@altlinux.org> 2.13-alt1
+- new version (watch file uupdate)
+
 * Mon Sep 21 2015 Michael Shigorin <mike@altlinux.org> 2.12-alt1
 - new version (watch file uupdate)
 
