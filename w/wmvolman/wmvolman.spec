@@ -1,9 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(gio-2.0)
-# END SourceDeps(oneline)
 Name: wmvolman
 Version: 2.0.1
-Release: alt2_5
+Release: alt2_6
 
 Summary: Window Maker Volume Manager
 License: GPLv2+
@@ -12,7 +9,7 @@ Group: Graphical desktop/Window Maker
 Url: http://github.com/raorn/%{name}
 Source: %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: autoconf automake glib2-devel libudisks2-devel libdockapp-devel libX11-devel
+BuildRequires: autoconf-common automake-common glib2-devel libgio libgio-devel libudisks2-devel libudisks2-gir-devel libdockapp-devel libX11-devel
 Source44: import.info
 
 %description
@@ -38,6 +35,9 @@ make %{?_smp_mflags}
 %{_datadir}/wmvolman
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_5
 - update to new release by fcimport
 
