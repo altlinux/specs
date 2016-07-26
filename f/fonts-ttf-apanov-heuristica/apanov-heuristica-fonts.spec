@@ -11,7 +11,7 @@ Group: System/Fonts/True type
 
 Name:    fonts-ttf-apanov-heuristica
 Version: 1.0.2
-Release: alt1_5
+Release: alt1_6
 Epoch:   1
 Summary: A serif latin & cyrillic font
 
@@ -99,6 +99,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_6
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_5
 - update to new release by fcimport
 
