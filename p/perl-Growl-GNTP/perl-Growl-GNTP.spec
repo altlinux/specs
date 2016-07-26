@@ -4,7 +4,7 @@ BuildRequires: perl(Encode.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Growl-GNTP
 Version:        0.21
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_2
+- update to new release by fcimport
+
 * Wed Apr 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
