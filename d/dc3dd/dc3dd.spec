@@ -3,7 +3,7 @@ BuildRequires: perl(Digest/MD5.pm) perl(Digest/SHA1.pm) perl(Locale/gettext.pm) 
 # END SourceDeps(oneline)
 Name:           dc3dd
 Version:        7.1.614
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Patched version of GNU dd for use in computer forensics
 
 Group:          Editors
@@ -15,9 +15,9 @@ Source0:        http://downloads.sourceforge.net/dc3dd/%{name}-%{version}.tar.gz
 #Removing the check for AM_C_PROTOTYPES
 Patch0:         dc3dd-automake.patch
 
-BuildRequires:  gettext
-BuildRequires:  gettext-devel
-BuildRequires:  m4 readline-devel autoconf automake
+BuildRequires: gettext gettext-tools gettext-tools-python
+BuildRequires: gettext-tools libasprintf-devel
+BuildRequires:  m4, readline-devel, autoconf-common, automake-common
 Source44: import.info
 
 %description
@@ -70,6 +70,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}.*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 7.1.614-alt2_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 7.1.614-alt2_9
 - update to new release by fcimport
 
