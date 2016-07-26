@@ -1,7 +1,7 @@
 Name: stardict-dic-ja
 Summary: Japanese(ja) dictionaries for StarDict
 Version: 2.4.2
-Release: alt2_13
+Release: alt2_14
 Group: Text tools
 # Upstream calls this the "EDRDG" license
 # but it is just CC-BY-SA
@@ -15,7 +15,7 @@ Source2: http://downloads.sourceforge.net/stardict/stardict-jmdict-ja-en-2.4.2.t
 
 BuildArchitectures: noarch
 
-Requires: stardict >= 2.4.2
+Requires: stardict stardict-plugin-espeak stardict-plugin-spell
 Source44: import.info
 
 %description
@@ -41,6 +41,9 @@ cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_13
 - update to new release by fcimport
 
