@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-CPAN-DistnameInfo
 Version:        0.12
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Extract distribution name and version from a distribution filename
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/CPAN/
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt2_6
 - update to new release by fcimport
 
