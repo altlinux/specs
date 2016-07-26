@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(File/Temp.pm) perl(Module/CoreList.pm) perl-devel perl-podlators
+BuildRequires: perl(File/Temp.pm) perl(Module/CoreList.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-Hide
 Version:        0.0009
-Release:        alt1_8
+Release:        alt1_9
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_9
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_8
 - update to new release by fcimport
 
