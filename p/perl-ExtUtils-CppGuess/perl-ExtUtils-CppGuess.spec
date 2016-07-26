@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: gcc-c++
 Name:           perl-ExtUtils-CppGuess
 Version:        0.11
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -51,6 +51,9 @@ make test
 %{perl_vendor_privlib}/ExtUtils*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_2
 - update to new release by fcimport
 
