@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/runtest libICE-devel libSM-devel libsocket
+BuildRequires: imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 24
 
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_16
+Release:        alt1_17
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -40,13 +40,11 @@ Patch6:         environment-modules-py3-and-doc-fix.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1117334
 Patch7:         environment-modules-3.2.10-unload-from-module.patch
 
-BuildRequires:  tcl-devel tclx libX11-devel
+BuildRequires:  tcl-devel, tclx, libX11-devel
 BuildRequires:  dejagnu
-BuildRequires:  man
+BuildRequires: man man-whatis
 #For ps in startup script
-Requires:       procps
-Requires(post): alternatives
-Requires(postun): alternatives
+Requires: procps sysvinit-utils
 Provides:	environment(modules)
 Source44: import.info
 
@@ -140,6 +138,9 @@ EOF
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_16
 - update to new release by fcimport
 
