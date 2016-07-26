@@ -1,12 +1,12 @@
 Name: libpagemaker
-Version: 0.0.2
-Release: alt1.qa1
+Version: 0.0.3
+Release: alt1
 Summary: A library for import of Adobe PageMaker documents
 Group: System/Libraries
 
 License: MPLv2.0
 Url: http://wiki.documentfoundation.org/DLP/Libraries/libpagemaker
-Source: http://dev-www.libreoffice.org/src/%name/%name-%version.tar.xz
+Source: %name-%version.tar.xz
 
 # Automatically added by buildreq on Tue Feb 03 2015
 BuildRequires: boost-devel-headers doxygen gcc-c++ help2man librevenge-devel
@@ -84,6 +84,9 @@ install -m 0644 pmd2*.1 %buildroot/%_man1dir
 %_man1dir/*
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 0.0.3-alt1
+- Autobuild version bump to 0.0.3
+
 * Wed Apr 13 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 0.0.2-alt1.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
