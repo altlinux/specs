@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:       mathjax
 Version:    2.4.0
-Release:    alt1_2
+Release:    alt1_3
 Summary:    JavaScript library to render math in the browser
 License:    ASL 2.0
 URL:        http://mathjax.org
@@ -255,6 +255,9 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/MathJax_WinChrome*.svg
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_3
+- update to new release by fcimport
+
 * Thu Dec 31 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1_2
 - new version
 
