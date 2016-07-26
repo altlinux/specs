@@ -1,6 +1,6 @@
 Name: python-module-pygame_sdl2
-Version: 6.99.6.739
-Release: alt2
+Version: 6.99.10.1227
+Release: alt1
 %setup_python_module pygame_sdl2
 
 Summary: A reimplementation of the Pygame API using SDL2
@@ -60,6 +60,9 @@ sed -i 's/sdl_libs = /sdl_libs = ["m"]+/' setup.py
 %python_includedir/%modulename/
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 6.99.10.1227-alt1
+- Autobuild version bump to 6.99.10.1227
+
 * Mon Nov 23 2015 Fr. Br. George <george@altlinux.ru> 6.99.6.739-alt2
 - Synchronize with Nov 3, 2015 version
 
