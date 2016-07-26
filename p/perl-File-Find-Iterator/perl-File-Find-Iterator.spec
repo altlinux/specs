@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Find-Iterator
 Version:        0.4
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Iterator interface for search files
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -55,6 +55,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_12
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_11
 - update to new release by fcimport
 
