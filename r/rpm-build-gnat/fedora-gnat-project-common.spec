@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 %define oldname fedora-gnat-project-common
 Name:           rpm-build-gnat
 Version:        3.9
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
@@ -80,6 +80,9 @@ cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_5
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 3.9-alt1_4
 - update to new release by fcimport
 
