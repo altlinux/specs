@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.5.0
-Release: alt1.1.1
+Version: 1.5.1
+Release: alt1
 Summary: Quick and small memcached client for Python
 License: BSD
 Group: Development/Python
@@ -68,6 +68,9 @@ popd
 %endif
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.5.1-alt1
+- Autobuild version bump to 1.5.1
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.0-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
