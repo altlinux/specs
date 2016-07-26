@@ -1,5 +1,5 @@
 Group: Networking/Other
-%global revdate 20151208
+%global revdate 20160713
 
 Name:           publicsuffix-list
 Version:        %{revdate}
@@ -45,6 +45,9 @@ ln -s public_suffix_list.dat $RPM_BUILD_ROOT/%{_datadir}/publicsuffix/effective_
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20160713-alt1_1
+- update to new release by fcimport
+
 * Wed Jan 20 2016 Igor Vlasenko <viy@altlinux.ru> 20151208-alt1_1
 - to Sisyphus
 
