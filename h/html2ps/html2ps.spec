@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/convert /usr/bin/desktop-file-install
+# END SourceDeps(oneline)
 %filter_from_requires /perl(www.pl/d
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.20.%{my_subversion}
+Release:        alt2_0.22.%{my_subversion}
 Summary:        HTML to PostScript converter
 
 Group:          Publishing
@@ -40,7 +43,7 @@ An HTML to PostScript converter written in Perl.
 %package -n xhtml2ps
 Summary:     GUI front-end for html2ps
 Group:       Publishing
-Requires:    html2ps = %{version}-%{release}
+Requires:    html2ps = %{version}
 Requires:    xdg-utils
 
 %description -n xhtml2ps
@@ -102,6 +105,9 @@ desktop-file-install \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.22.b7
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.20.b7
 - update to new release by fcimport
 
