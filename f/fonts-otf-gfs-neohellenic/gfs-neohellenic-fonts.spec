@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-neohellenic
 Version: 20090918
-Release: alt3_9
+Release: alt3_10
 Summary: A 20th century Greek typeface
 
 License:   OFL
@@ -122,6 +122,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20090918-alt3_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20090918-alt3_9
 - update to new release by fcimport
 
