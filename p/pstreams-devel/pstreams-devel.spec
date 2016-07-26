@@ -1,17 +1,15 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-%define packagename pstreams
-
 Name:           pstreams-devel
 Version:        0.8.1
-Release:        alt1_2
+Release:        alt1_4
 Summary:        POSIX Process Control in C++
 
 Group:          Development/C
 License:        LGPLv3+
-URL:            http://%{packagename}.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{packagename}/%{packagename}-%{version}.tar.gz
+URL:            http://pstreams.sourceforge.net/
+Source0:        http://downloads.sourceforge.net/pstreams/pstreams-%{version}.tar.gz
 
 BuildRequires:  doxygen
 BuildArch:      noarch
@@ -22,24 +20,27 @@ Obsoletes: pstreams < %version
 
 
 %description
-PStreams class is like a C++ wrapper for the POSIX.2 functions
+PStreams classes are like C++ wrappers for the POSIX.2 functions
 popen(3) and pclose(3), using C++ iostreams instead of C's stdio
 library.
 
 %prep
-%setup -q -n %{packagename}-%{version}
+%setup -q -n pstreams-%{version}
 
 %build
 make %{?_smp_mflags}
 
 %install
-make install  DESTDIR=$RPM_BUILD_ROOT prefix=/usr
+make install  DESTDIR=$RPM_BUILD_ROOT includedir=%{_includedir}
 
 %files
 %doc doc/html COPYING.LIB README AUTHORS ChangeLog
 %{_includedir}/pstreams
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_4
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt1_2
 - update to new release by fcimport
 
