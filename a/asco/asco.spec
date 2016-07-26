@@ -1,6 +1,6 @@
 Name: asco
-Version: 0.4.6
-Release: alt1.qa1
+Version: 0.4.9
+Release: alt1
 
 Summary: A SPICE Circuit Optimizer
 
@@ -10,7 +10,8 @@ Url: http://asco.sourceforge.net/
 License: GPL
 Group: Video
 
-Source: http://dl.sourceforge.net/%name/%name-%version.tar.bz2
+# Source-url: http://downloads.sourceforge.net/project/asco/asco/%version/ASCO-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-as-needed.patch
 
 # Automatically added by buildreq on Sun Sep 03 2006
@@ -34,10 +35,13 @@ SPICE simulators using a high-performance parallel differential evolution
 install -D -m755 %name %buildroot%_bindir/%name
 
 %files
-%doc AUTHORS README examples/ doc/asco.pdf
+%doc AUTHORS README examples/ doc/ASCO.pdf
 %_bindir/*
 
 %changelog
+* Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.9-alt1
+- new version (0.4.9) with rpmgs script
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.4.6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
