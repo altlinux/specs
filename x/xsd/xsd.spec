@@ -1,26 +1,38 @@
+Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-Name:           xsd
-Version:        3.3.0
-Release:        alt2_16.qa1
-Summary:        W3C XML schema to C++ data binding compiler
-
-Group:          Development/Tools
+%define fedora 24
+Name: xsd
+Version: 4.0.0
+Release: alt1_15
+Summary: W3C XML schema to C++ data binding compiler
 # Exceptions permit otherwise GPLv2 incompatible combination with ASL 2.0
-License:        GPLv2 with exceptions and ASL 2.0  
-URL:            http://www.codesynthesis.com/products/xsd/
-Source0:        http://www.codesynthesis.com/download/xsd/3.3/xsd-%{version}-2+dep.tar.bz2
-# Sent suggestion to upstream via e-mail 20090707
-Patch0:         xsd-3.3.0-xsdcxx-rename.patch
+License: GPLv2 with exceptions and ASL 2.0  
+URL: http://www.codesynthesis.com/products/xsd/
+Source0: http://www.codesynthesis.com/download/xsd/4.0/xsd-%{version}+dep.tar.bz2
 
-BuildRequires:  m4 boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel xerces-c-devel
+Obsoletes: xsd-devel <= 0:4.0.0-9
+
+# Sent suggestion to upstream via e-mail 20090707
+# http://anonscm.debian.org/cgit/collab-maint/xsd.git/tree/debian/patches/0001-xsd_xsdcxx-rename.patch
+Patch0: %{name}-3.3.0-xsdcxx-rename.patch
+
+# Fix bug in C++/Parser Expat Support
+# http://codesynthesis.com/pipermail/xsd-users/2015-October/004705.html
+Patch1: %{name}-Fix_bug_C++_Parser_Expat_Support.patch
+
+BuildRequires: m4, libxerces-c-devel, libcutl-devel
+%if 0%{?rhel}
+BuildRequires: boost148-devel
+%else
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
+%endif
+
+%if 0%{?rhel}
+Requires: boost148
+%endif
 Source44: import.info
-# Requires:  ace-devel - only needed for applications using
-#                        Adaptive Communication Environment (ACE) streams,
-#                        enable when Fedora gets ACE packages.
-#                        See http://www.cs.wustl.edu/~schmidt/ACE.html and
-#                        https://bugzilla.redhat.com/show_bug.cgi?id=450164
 
 %description
 CodeSynthesis XSD is an open-source, cross-platform W3C XML Schema to
@@ -31,50 +43,36 @@ You can then access the data stored in XML using types and functions
 that semantically correspond to your application domain rather than
 dealing with intricacies of reading and writing XML.
 
-
-%package        doc
-Group:          Documentation
-Summary:        API documentation files for %{name}
+%package   doc
+Group: Documentation
+BuildArch: noarch
+Summary:   API documentation files for %{name}
 
 %description    doc
 This package contains API documentation for %{name}.
 
-
 %prep
-%setup -q -n xsd-%{version}-2+dep
-pushd xsd
+%setup -q -n xsd-%{version}+dep
 %patch0 -p1 -b .xsdcxx-rename
-popd
+%patch1 -p0
 
+##Unbundle libcutl
+rm -rf libcutl
 
 %build
-
-# Default GCC on EL-5 will fail on this code with internal
-# compiler error when debugging symbol generation is requested with -g
-# Reducing debug level to 1 will "fix" this problem. A better way would
-# be to use gcc-44, but old versions of boost headers do not compile 
-# with it (https://svn.boost.org/trac/boost/ticket/2069).
-# Also boost-1.33.1 on those systems does not have boost_system library
-# thus we need to disable explicit linking against it.
-
-%if 0%{?el5}
-make verbose=1 CXXFLAGS="$RPM_OPT_FLAGS -g1" BOOST_LINK_SYSTEM=n
-%else
-make verbose=1 CXXFLAGS="$RPM_OPT_FLAGS"
+%if 0%{?rhel} < 7
+%{!?__global_ldflags: %global __global_ldflags -Wl,-z,relro}
 %endif
-
+make verbose=1 CXX=g++ CC=gcc CXXFLAGS="$RPM_OPT_FLAGS -fPIC -pie -Wl,-z,now" LDFLAGS="%{__global_ldflags} -fPIC -pie -Wl,-z,now" BOOST_LINK_SYSTEM=y EXTERNAL_LIBCUTL=y
 
 %install
 rm -rf apidocdir
 
-%if 0%{?el5}
-make install_prefix="$RPM_BUILD_ROOT%{_prefix}" BOOST_LINK_SYSTEM=n install
-%else
-make install_prefix="$RPM_BUILD_ROOT%{_prefix}" install
-%endif
+make install DESTDIR=$RPM_BUILD_ROOT LDFLAGS="%{__global_ldflags}" install_prefix=$RPM_BUILD_ROOT%{_prefix} \
+ install_bin_dir=$RPM_BUILD_ROOT%{_bindir} install_man_dir=$RPM_BUILD_ROOT%{_mandir} EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
 
 # Split API documentation to -doc subpackage.
-mkdir apidocdir
+mkdir -p apidocdir
 mv $RPM_BUILD_ROOT%{_datadir}/doc/xsd/*.{xhtml,css} apidocdir/
 mv $RPM_BUILD_ROOT%{_datadir}/doc/xsd/cxx/ apidocdir/
 mv $RPM_BUILD_ROOT%{_datadir}/doc/xsd/ docdir/
@@ -107,17 +105,32 @@ find apidocdir -name "*.doxygen" \
             -o -name "makefile" \
             -o -name "*.html2ps" | xargs rm -f
 
+##Test failed on EPEL6 due to "bad" xerces-c
+##http://codesynthesis.com/pipermail/xsd-users/2015-October/004696.html
+##https://bugzilla.redhat.com/show_bug.cgi?id=1270978
+%if 0%{?fedora} || 0%{?rhel} >= 7
+%check
+make -j 1 test EXTERNAL_LIBCUTL=y BOOST_LINK_SYSTEM=y
+%endif
+
 %files
-%doc docdir/*
+%{!?_licensedir:%global license %doc}
+%doc docdir/README docdir/NEWS docdir/FLOSSE
+%doc docdir/GPLv2 docdir/LICENSE
 %{_bindir}/xsdcxx
-%{_includedir}/xsd/
 %{_mandir}/man1/xsdcxx.1*
+%{_includedir}/xsd/
 
 %files doc
+%{!?_licensedir:%global license %doc}
+%doc docdir/README docdir/NEWS docdir/FLOSSE
+%doc docdir/GPLv2 docdir/LICENSE
 %doc apidocdir/*
 
-
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt1_15
+- update to new release by fcimport
+
 * Thu Apr 07 2016 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.3.0-alt2_16.qa1
 - NMU: rebuilt with boost 1.57.0 -> 1.58.0.
 
