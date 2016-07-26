@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-Comments
 Version:        1.1.4
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Debug with executable smart comments to logs
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -67,6 +67,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_13
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_12
 - update to new release by fcimport
 
