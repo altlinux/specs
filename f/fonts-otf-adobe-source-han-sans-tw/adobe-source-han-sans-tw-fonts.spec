@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-adobe-source-han-sans-tw
 Version:        1.004
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Adobe OpenType Pan-CJK font family for Traditional Chinese
 
 License:        OFL
@@ -101,6 +101,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_3
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.004-alt1_2
 - update to new release by fcimport
 
