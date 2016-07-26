@@ -11,7 +11,7 @@ serif and sans-serif versions. The fonts cover all European Latin characters.
 
 Name:          fonts-ttf-dustin-dustismo
 Version:       20030318
-Release:       alt3_13
+Release:       alt3_14
 Summary:       General purpose sans-serif font with bold, italic and bold-italic variations
 
 License:       GPLv2+
@@ -44,7 +44,7 @@ This package consists of files used by other %{oldname} packages.
 %package -n fonts-ttf-dustin-dustismo-sans
 Group: System/Fonts/True type
 Summary:       General purpos sans-serif fonts
-Requires:      %{name}-common = %{version}-%{release}
+Requires:      %{name}-common = %{version}
 Provides:      %{oldname} = 20030318-3
 Obsoletes:     %{oldname} < 20030318-3
 
@@ -65,7 +65,7 @@ General purpose sans-serif font with bold, italic and bold-italic variations
 %package -n fonts-ttf-dustin-dustismo-roman
 Group: System/Fonts/True type
 Summary:       General purpose serif font
-Requires:      %{name}-common = %{version}-%{release}
+Requires:      %{name}-common = %{version}
 Provides:      %{oldname}-roman = 20030318-3
 Obsoletes:     %{oldname}-roman < 20030318-3
 
@@ -150,6 +150,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20030318-alt3_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20030318-alt3_13
 - update to new release by fcimport
 
