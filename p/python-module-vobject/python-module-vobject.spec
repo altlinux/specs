@@ -1,11 +1,11 @@
-%define version 0.8.1d
-%define release alt1.git20140128
+%define version 0.9.2
+%define release alt1
 %setup_python_module vobject
 
 Name: %packagename
 Version: %version
 Release: %release
-Packager: Alexey Shabalin <shaba at altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Summary: Python module for parsing and generating vCard files
 License: ASL 1.1
@@ -13,12 +13,27 @@ Group: Development/Python
 Url: http://vobject.skyhouseconsulting.com
 BuildArch: noarch
 
-Source0: http://vobject.skyhouseconsulting.com/%modulename-%version.tar.gz
+Source0: %modulename-%version.tar
+#VCS: https://github.com/eventable/vobject
 Patch1: python-module-vobject-no-ez-setup.patch
 
 BuildRequires:  python-module-setuptools
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 
 %description
+vobject is intended to be a full featured Python package for parsing
+and generating vCard and vCalendar files.
+
+Currently, iCalendar files are supported and well tested. vCard 3.0
+files are supported, and all data should be imported, but only a few
+components are understood in a sophisticated way.
+
+%package -n python3-module-%modulename
+Summary: Python module for parsing and generating vCard files
+Group: Development/Python3
+
+%description -n python3-module-%modulename
 vobject is intended to be a full featured Python package for parsing
 and generating vCard and vCalendar files.
 
@@ -31,17 +46,32 @@ components are understood in a sophisticated way.
 #patch1 -p1
 # remove win32 files
 rm -f vobject/win32tz.py
+rm -rf ../python3
+cp -a . ../python3
 
 %build
 %python_build
+pushd ../python3
+%python3_build
+popd
 
 %install
-%python_install --record=INSTALLED_FILES
+%python_install 
+pushd ../python3
+%python3_install
+popd
 
-%files -f INSTALLED_FILES
-%doc LICENSE-2.0.txt ACKNOWLEDGEMENTS.txt README.txt
+%files
+%doc ACKNOWLEDGEMENTS.txt LICENSE-2.0.txt README.md
+%python_sitelibdir/%{modulename}*
+
+%files -n python3-module-%modulename
+%python3_sitelibdir/%{modulename}*
 
 %changelog
+* Tue Jul 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
+- New version 0.9.2
+
 * Wed Aug 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1d-alt1.git20140128
 - Version 0.8.1d
 
