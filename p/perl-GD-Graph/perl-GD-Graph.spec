@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist GDGraph
 Name: perl-GD-Graph
-Version: 1.52
+Version: 1.53
 Release: alt1
 Epoch: 1
 
@@ -15,7 +15,7 @@ Source: http://www.cpan.org/authors/id/R/RU/RUZ/GDGraph-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Nov 19 2011
-BuildRequires: perl-GD-Text perl-devel perl(CGI.pm) perl(Config.pm) perl(DBI.pm) perl(Data/Dumper.pm) perl(GD.pm)  perl(Test.pm) perl(Test/More.pm) perl(Text/ParseWords.pm)
+BuildRequires: perl-GD-Text perl-devel perl(CGI.pm) perl(Config.pm) perl(DBI.pm) perl(Data/Dumper.pm) perl(GD.pm)  perl(Test.pm) perl(Test/More.pm) perl(Text/ParseWords.pm) perl(Test/Exception.pm) perl(Capture/Tiny.pm)
 
 %description
 This is GDGraph, a package to generate charts, using Lincoln Stein's
@@ -35,6 +35,9 @@ GD.pm. See the documentation for some history and more information.
 %perl_vendor_privlib/GD
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.53-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.52-alt1
 - automated CPAN update
 
