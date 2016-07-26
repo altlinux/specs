@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 9.16
+Version: 9.19
 Release: alt1
 
 %define ijsver	0.35
@@ -17,7 +17,7 @@ Group: Publishing
 
 Source: %name-%version.tar.gz
 Source1: repatch_spec.sh
-Source2: repatch_spec.unused
+Source2: ghostscript.unused
 Source3: README.patches
 
 ## FC patches
@@ -33,24 +33,30 @@ Patch9: FC-system-zlib.patch
 Patch10: FC-urw-fonts-naming.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-2001_docdir_fix_for_debian.patch
-Patch102: Ubuntu-2002_gs_man_fix_debian.patch
-Patch103: Ubuntu-2003_support_multiarch.patch
-Patch104: Ubuntu-1002_pxl-make-dicctransform-default.patch
-Patch105: Ubuntu-1003_gdevcups-fix-cupsrasteropen-pwg-raster.patch
-Patch106: Ubuntu-020150413_3e71154_pdfwrite_optimise_pdf_foget_resource_with_charproc_resources.patch
+Patch101: Ubuntu-020160315~15240a6.patch
+Patch102: Ubuntu-1001_fix_openjp2_dynamic_linking.patch
+Patch103: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch104: Ubuntu-2002_gs_man_fix_debian.patch
+Patch105: Ubuntu-2003_support_multiarch.patch
+Patch106: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
+Patch107: Ubuntu-2005_fix_Debian_paths_in_docs.patch
+Patch108: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
+Patch109: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
+Patch110: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch111: Ubuntu-2010_add_build_timestamp_setting.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
+Patch501: alt-urw-fonts-naming.patch
 
 #compatibility requires
 Requires: %name-classic = %version-%release
 Provides: %esp_name = %version, %gnu_name = %version
 Obsoletes: %gnu_name, %esp_name
 
-# Automatically added by buildreq on Mon Apr 22 2013
-# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libpng-devel libwayland-client libwayland-cursor libwayland-server pkg-config xorg-xproto-devel zlib-devel
-BuildRequires: glibc-devel-static imake libXt-devel libcups-devel libgtk+3-devel libjpeg-devel libpaper-devel libtiff-devel xorg-cf-files
+# Automatically added by buildreq on Tue Aug 23 2016
+# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libpng12-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server perl pkg-config python-base python-modules xorg-xproto-devel zlib-devel
+BuildRequires: glibc-devel-static imake libXt-devel libcups-devel libgtk+3-devel libjpeg-devel liblcms2-devel libopenjpeg2.0-devel libpaper-devel libtiff-devel xorg-cf-files
 
 %package module-X
 Summary: PostScript interpreter and renderer (additional support for X)
@@ -174,30 +180,37 @@ Common files for the %name
 %setup
 
 # force system library usage
-rm -rf -- libpng zlib jpeg jasper freetype
+##rm -rf -- libpng zlib jpeg jasper freetype
+rm -rf expat freetype icclib jasper jpeg jpegxr lcms lcms2 libpng openjpeg zlib cups/libs
 
 ## FC apply patches
-%patch1 -p1 -b .multilib
+#patch1 -p1 -b .multilib
 %patch2 -p1 -b .scripts
-%patch3 -p1 -b .noopt
+#patch3 -p1 -b .noopt
 %patch4 -p1
-%patch5 -p1 -b .icc-missing-check
+#patch5 -p1 -b .icc-missing-check
 %patch6 -p1
-%patch7 -p1 -b .wrf-snprintf
-%patch8 -p1 -b .system-openjpeg2
-%patch9 -p1 -b .system-zlib
-%patch10 -p1 -b .urw-fonts-naming
+#patch7 -p1 -b .wrf-snprintf
+#patch8 -p1 -b .system-openjpeg2
+#patch9 -p1 -b .system-zlib
+#patch10 -p1 -b .urw-fonts-naming
 
 ## Ubuntu apply patches
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
-%patch105 -p1
-#patch106 -p1
+#patch104 -p1
+#patch105 -p1
+%patch106 -p1
+#patch107 -p1
+#patch108 -p1
+#patch109 -p1
+#patch110 -p1
+%patch111 -p1
 
 ## ALT apply patches
 %patch500 -p1
+%patch501 -p2
 
 %build
 %autoreconf
@@ -278,7 +291,6 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 #common excludes
 %exclude %_bindir/gs
 %exclude %_bindir/gsx
-%exclude %_bindir/*ijs*
 %exclude %_bindir/pdf2dsc
 %exclude %_bindir/pdf2ps
 %exclude %_bindir/gsnd
@@ -300,12 +312,15 @@ mv %buildroot/%_datadir/doc/ghostscript/examples %buildroot%_docdir/%name-%versi
 
 %files -n libijs-devel
 %doc ijs/README
-%_bindir/ijs-config
 %_libdir/pkgconfig/*
 %_libdir/libijs.so
 %_includedir/ijs
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 9.19-alt1
+- Autobuild version bump to 9.19
+- Freshen third-party patches
+
 * Tue Apr 21 2015 Fr. Br. George <george@altlinux.ru> 9.16-alt1
 - Autobuild version bump to 9.16
 - Freshen third-party patches
