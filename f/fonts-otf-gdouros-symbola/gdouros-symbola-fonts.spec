@@ -7,8 +7,8 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-symbola
-Version:        8.00
-Release:        alt1_4
+Version:        9.00
+Release:        alt1_1
 Summary:        A symbol font
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -28,7 +28,8 @@ BuildRequires:  libappstream-glib
 Source44: import.info
 
 %description
-Symbola covers many scripts and symbols supported by Unicode.
+Symbola was created with Mathematics and other technical documents in mind. It
+covers many scripts and symbols supported by Unicode.
 
 These include those in Basic Latin, Latin-1 Supplement, Latin Extended-A, IPA
 Extensions, Spacing Modifier Letters, Greek and Coptic, Cyrillic, Cyrillic
@@ -104,6 +105,9 @@ appstream-util validate-relax --nonet \
 %doc Symbola.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 9.00-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 8.00-alt1_4
 - update to new release by fcimport
 
