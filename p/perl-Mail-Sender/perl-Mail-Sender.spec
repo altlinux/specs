@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Serial: 1
-Version: 0.901
+Version: 0.902
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -54,6 +54,9 @@ rm -f %buildroot%perl_vendor_privlib/Mail/Sender/CType/Win32.pm
 %perl_vendor_privlib/Mail
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.902-alt1
+- automated CPAN update
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.901-alt1
 - automated CPAN update
 
