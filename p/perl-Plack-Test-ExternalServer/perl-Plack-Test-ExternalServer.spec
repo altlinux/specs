@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Plack-Test-ExternalServer
 Version:        0.02
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Run HTTP tests on external live servers
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -55,6 +55,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/Plack*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_4
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_2
 - update to new release by fcimport
 
