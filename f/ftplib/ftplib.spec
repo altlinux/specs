@@ -1,6 +1,6 @@
 Name:		ftplib
 Version:	4.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Library of FTP routines
 Group:		System/Libraries
 License:	LGPLv2+
@@ -17,7 +17,7 @@ instead of needing to fork and exec an interactive ftp client program.
 %package devel
 Summary:	Development files for ftplib
 Group:		Development/C
-Requires:	ftplib = %{version}-%{release}
+Requires:	ftplib = %{version}
 
 %description devel
 Development libraries and headers for ftplib.
@@ -76,6 +76,9 @@ done
 %{_bindir}/qftp
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1
 - update to new release by fcimport
 
