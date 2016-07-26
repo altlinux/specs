@@ -1,6 +1,6 @@
 Name: cflow
-Version: 1.4
-Release: alt2.1
+Version: 1.5
+Release: alt1
 
 Summary: Analyzes C files charting control flow within the program
 
@@ -51,9 +51,13 @@ make check
 %doc AUTHORS ChangeLog COPYING NEWS README THANKS TODO
 %_bindir/%name
 %_infodir/%name.info.*
+%_man1dir/*
 %_datadir/emacs/site-lisp/%name-mode.el
 
 %changelog
+* Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
+- new version 1.5 (with rpmrb script)
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2.1
 - NMU: added BR: texinfo
 
