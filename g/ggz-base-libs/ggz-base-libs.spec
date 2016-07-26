@@ -1,13 +1,10 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires: libexpat-devel
-# END SourceDeps(oneline)
 
 
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_18
+Release: alt3_19
 
 License: LGPLv2+ and GPLv2+
 URL: http://www.ggzgamingzone.org/
@@ -28,10 +25,10 @@ Source1: ggz.modules
 # see http://fedoraproject.org/wiki/PackagingDrafts/GGZ
 Source2: macros.ggz
 
-BuildRequires: expat-devel
-BuildRequires: gettext
-BuildRequires: libgcrypt-devel >= 1.4
-BuildRequires: nss-devel
+BuildRequires: libexpat-devel
+BuildRequires: gettext gettext-tools gettext-tools-python
+BuildRequires: gcrypt-utils libgcrypt-devel
+BuildRequires: libnss-devel libnss-devel-static
 Source44: import.info
 
 
@@ -47,7 +44,8 @@ Obsoletes: libggz-devel < 1:0.99.5
 Obsoletes: ggz-client-libs-devel < 1:0.99.5
 Provides: libggz-devel = 1:%{version}-%{release}
 Provides: ggz-client-libs-devel = 1:%{version}-%{release}
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
+Requires: pkg-config
 # %{_sysconfdir}/rpm ownership
 %description devel
 %{summary}.
@@ -146,6 +144,9 @@ make check ||:
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_18
 - update to new release by fcimport
 
