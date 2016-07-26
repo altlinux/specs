@@ -1,7 +1,7 @@
 %define rname breeze
 
 Name: kde4-styles-%rname
-Version: 5.6.3
+Version: 5.7.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -45,6 +45,9 @@ Artwork, styles and assets for the Breeze visual style for KDE4
 %_K4apps/color-schemes/Breeze*.colors
 
 %changelog
+* Tue Jul 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.2-alt1
+- new version
+
 * Mon Apr 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.3-alt1
 - new version
 - package color schemes
