@@ -1,6 +1,6 @@
 Name: unar
-Version: 1.9.1
-Release: alt1.1
+Version: 1.10.1
+Release: alt1
 Summary: Multi-format archive extractor
 License: LGPLv2+
 Group: Archiving/Compression
@@ -41,6 +41,9 @@ install -D Extra/unar.bash_completion %buildroot%_datadir/bash-completion/comple
 %_datadir/bash-completion/*
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.10.1-alt1
+- Autobuild version bump to 1.10.1
+
 * Sun Feb 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.1-alt1.1
 - Rebuild with new icu
 
