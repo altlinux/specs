@@ -6,14 +6,14 @@ BuildRequires: libgomp-devel /proc
 %global libname libimagequant
 
 Name:       pngquant
-Version:    2.7.0
+Version:    2.7.1
 Release:    alt1_1
 Summary:    PNG quantization tool for reducing image file size
 
 License:    GPLv3+
 
 URL:        http://%{name}.org
-Source0:    https://github.com/pornel/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:    https://github.com/pornel/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  libpng-devel >= 1.2.46
 BuildRequires:  zlib-devel >= 1.2.3
@@ -87,16 +87,12 @@ make test.shared
 
 
 %files
-# EPEL6 support https://fedoraproject.org/wiki/EPEL:Packaging#The_.25license_tag
-%{!?_licensedir:%global license %doc}
 %doc README.md CHANGELOG
 %doc COPYRIGHT
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
 %files -n %{libname}
-# EPEL6 support https://fedoraproject.org/wiki/EPEL:Packaging#The_.25license_tag
-%{!?_licensedir:%global license %doc}
 %doc lib/COPYRIGHT
 %{_libdir}/%{libname}.so.*
 
@@ -107,6 +103,9 @@ make test.shared
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_1
+- update to new release by fcimport
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
