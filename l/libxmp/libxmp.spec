@@ -1,12 +1,14 @@
-Name:		libxmp
-Version:	4.3.13
-Release:	alt1
-Summary:	Module Player library for MOD, S3M, IT and others
-License:	LGPLv2.1
-Group:		System/Libraries
-Url:		http://xmp.sf.net/
+Name: libxmp
+Version: 4.4.0
+Release: alt1
 
-Source0:	http://downloads.sf.net/xmp/%name-%version.tar.gz
+Summary: Module Player library for MOD, S3M, IT and others
+License: LGPLv2.1
+Group: System/Libraries
+
+Url: http://xmp.sf.net/
+Source0: http://downloads.sf.net/xmp/%name-%version.tar.gz
+Source100: %name.watch
 
 %description
 libxmp is a module player library which supports many module formats,
@@ -59,10 +61,16 @@ mv "$b/%_docdir/%name/libxmp.3" "$b/%_man3dir/"
 %_docdir/%name/
 
 %changelog
+* Tue Jul 26 2016 Michael Shigorin <mike@altlinux.org> 4.4.0-alt1
+- new version (watch file uupdate)
+
 * Fri Apr 22 2016 Michael Shigorin <mike@altlinux.org> 4.3.13-alt1
-- 4.3.13
-  + NB: there were quite a few fixes for issues found during
-    fuzzing/coverity scan in 4.3.9 and 4.3.10
+- new version (watch file uupdate)
+
+* Mon Mar 07 2016 Michael Shigorin <mike@altlinux.org> 4.3.12-alt1
+- added watch file
+- new version (watch file uupdate)
+  + includes fixes for problems found by Coverity Scan and OpenMPT tests
 
 * Thu Jun 11 2015 Motsyo Gennadi <drool@altlinux.ru> 4.3.8-alt1
 -initial build for ALT Linux from OpenSUSE
