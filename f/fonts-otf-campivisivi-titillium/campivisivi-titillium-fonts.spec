@@ -3,22 +3,23 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname campivisivi-titillium-fonts
-%global fontname campivisivi-titillium-fonts
+%global fontname campivisivi-titillium
 %global fontconf 61-%{fontname}.conf
 
-Name:           fonts-otf-campivisivi-titillium
-Version:        20120913
-Release:        alt1_6
-Summary:        Sans-serif typeface designed inside Campi Visivi's Type Design course
+Name:		fonts-otf-campivisivi-titillium
+Version:	20120913
+Release:	alt1_12
+Summary:	Sans-serif typeface designed inside Campi Visivi's Type Design course
 
-License:        OFL
-URL:            http://www.campivisivi.net/titillium/
-Source0:        http://www.campivisivi.net/titillium/download/Titillium_roman_upright_italic_2_0_OT.zip
-Source1:        %{oldname}-fontconfig.conf
-Source2:        %{fontname}.metainfo.xml
+License:	OFL
+URL:		http://www.campivisivi.net/titillium/
+Source0:	http://www.campivisivi.net/titillium/download/Titillium_roman_upright_italic_2_0_OT.zip
+Source1:	%{oldname}-fontconfig.conf
+Source2:	%{oldname}.metainfo.xml
 
-BuildArch:      noarch
-BuildRequires:  fontpackages-devel
+BuildArch:	noarch
+BuildRequires:	fontpackages-devel
+BuildRequires:	libappstream-glib
 Source44: import.info
 
 %description
@@ -42,16 +43,17 @@ install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
+		%{buildroot}%{_fontconfig_confdir}
 
 install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+		%{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
-      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
+		%{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 # Add AppStream metadata
 install -Dm 0644 -p %{SOURCE2} \
-        %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
+		%{buildroot}%{_datadir}/appdata/%{oldname}.metainfo.xml
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{oldname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -91,12 +93,15 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.otf
-%{_datadir}/appdata/%{fontname}.metainfo.xml
 
+%{_datadir}/appdata/%{oldname}.metainfo.xml
 %doc OFL-FAQ.txt OFL-titillium.txt
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20120913-alt1_6
 - update to new release by fcimport
 
