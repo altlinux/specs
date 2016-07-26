@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-ekmukta
 Version:        1.2.2
-Release:        alt1_3
+Release:        alt1_4
 Summary:        A Unicode compliant mono-linear typeface
 
 License:        OFL
@@ -90,6 +90,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_4
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_3
 - new version
 
