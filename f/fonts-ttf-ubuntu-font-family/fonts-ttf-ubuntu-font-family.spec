@@ -1,7 +1,7 @@
 %define fname ubuntu-font-family
 
 Name: fonts-ttf-%fname
-Version: 0.80
+Version: 0.83
 Release: alt1
 
 Summary: Ubuntu Font Family, sans-serif typeface hinted for clarity
@@ -47,6 +47,9 @@ install -m644 *.ttf %buildroot%_ttffontsdir/%fname/
 %doc *.txt
 
 %changelog
+* Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 0.83-alt1
+- new version 0.83 (with rpmrb script)
+
 * Tue Sep 18 2012 Vitaly Lipatov <lav@altlinux.ru> 0.80-alt1
 - new version 0.80 (with rpmrb script)
 - remove Ubuntu-MI.ttf, Ubuntu-M.ttf (ALT bug #27736)
