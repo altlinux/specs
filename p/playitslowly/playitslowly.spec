@@ -1,5 +1,5 @@
 Name: playitslowly
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: Play back audio files at a different speed or pitch
 Group: Sound
@@ -8,12 +8,12 @@ Url: http://29a.ch/playitslowly/
 Source: %name-%version.tar.gz
 BuildArch: noarch
 
-%setup_python_module %name
-Requires: %packagename
+Requires: python3-module-%name
+Obsoletes: python-module-%name
 
 # Automatically added by buildreq on Mon Sep 05 2011
 # optimized out: python-base python-modules
-BuildRequires: python-devel
+BuildRequires: python3-devel
 
 %description
 Play it slowly is a software to play back audio files at a different
@@ -30,20 +30,20 @@ Features:
 - Loop over certain parts
 - Export to wav
 
-%package -n %packagename
+%package -n python3-module-%name
 Group: Sound
-Summary: Python module for playing audio files at a different speed or pitch
-%description -n %packagename
-Python module for playing audio files at a different speed or pitch
+Summary: Python3 module for playing audio files at a different speed or pitch
+%description -n python3-module-%name
+Python3 module for playing audio files at a different speed or pitch
 
 %prep
 %setup
 
 %build
-%python_build
+%python3_build
 
 %install
-%python_install
+%python3_install
 
 %files
 %doc README
@@ -52,10 +52,14 @@ Python module for playing audio files at a different speed or pitch
 %_iconsdir/hicolor/*/%name.*
 %_pixmapsdir/%name.*
 
-%files -n %packagename
-%python_sitelibdir_noarch/%{name}*
+%files -n python3-module-%name
+%python3_sitelibdir_noarch/%{name}*
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.5.1-alt1
+- Upstreeam switch to python3
+- Autobuild version bump to 1.5.1
+
 * Thu Dec 24 2015 Fr. Br. George <george@altlinux.ru> 1.5.0-alt1
 - Autobuild version bump to 1.5.0
 
