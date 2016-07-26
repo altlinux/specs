@@ -1,9 +1,9 @@
+Group: Text tools
 %define dicname stardict-english-czech
 Name: stardict-dic-cs_CZ
 Summary: Czech dictionaries for StarDict
 Version: 20150213
-Release: alt1_3
-Group: Text tools
+Release: alt1_5
 License: GFDL
 Provides: stardict-dic-cs = %{?epoch:%{epoch}:}%{version}-%{release}
 
@@ -11,8 +11,8 @@ URL: http://cihar.com/software/slovnik/
 Source0: http://dl.cihar.com/slovnik/stable/%{dicname}-%{version}.tar.gz
 
 BuildArch: noarch
+Requires: stardict stardict-plugin-espeak stardict-plugin-spell
 Source44: import.info
-
 
 %description
 Czech-English and English-Czech translation dictionaries for StarDict, a
@@ -24,7 +24,6 @@ GUI-based dictionary software.
 %build
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
 install -m 0755 -p -d ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic
 install -m 0644 -p  %{dicname}-%{version}/cz* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 install -m 0644 -p  %{dicname}-%{version}/en* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
@@ -33,8 +32,10 @@ install -m 0644 -p  %{dicname}-%{version}/en* ${RPM_BUILD_ROOT}%{_datadir}/stard
 %doc %{dicname}-%{version}/README
 %{_datadir}/stardict/dic/*
 
-
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20150213-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20150213-alt1_3
 - update to new release by fcimport
 
