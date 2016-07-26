@@ -1,19 +1,16 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(libcurl)
-# END SourceDeps(oneline)
 Summary: Tool for Authenticode signing of EXE/CAB files
 Name: osslsigncode
 Version: 1.7.1
-Release: alt1_1
+Release: alt1_2
 License: GPLv2+
 Group: File tools
 URL: http://sourceforge.net/projects/osslsigncode/
 Source: http://downloads.sf.net/osslsigncode/osslsigncode-%{version}.tar.gz
 BuildRequires: libssl-devel
-BuildRequires: curl-devel
-BuildRequires: libgsf-devel
-BuildRequires: autoconf
-BuildRequires: automake
+BuildRequires: libcurl-devel
+BuildRequires: libgsf libgsf-devel libgsf-gir-devel
+BuildRequires: autoconf-common
+BuildRequires: automake-common
 Source44: import.info
 
 %description
@@ -39,6 +36,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_1
 - update to new release by fcimport
 
