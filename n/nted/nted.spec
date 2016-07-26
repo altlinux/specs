@@ -1,6 +1,6 @@
 Name: nted
-Version: 1.10.17
-Release: alt1.qa3
+Version: 1.10.18
+Release: alt1
 
 Summary: A new musical score editor for Linux
 
@@ -50,6 +50,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.10.18-alt1
+- new version 1.10.18 (with rpmrb script)
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.17-alt1.qa3
 - Fixed build with gcc 4.7
 
