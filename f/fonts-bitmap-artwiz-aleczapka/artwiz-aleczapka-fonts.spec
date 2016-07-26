@@ -2,7 +2,7 @@
 %global fontname artwiz-aleczapka
 %global fontconf 60-%{fontname}
 
-%define common_desc \
+%global common_desc \
 Artwiz is a family of very small futuristic fonts, with varying styles of \
 typefaces designed at a single pixel size. The minimal nature of the \
 fonts makes them popular with users of lightweight window managers. These \
@@ -11,7 +11,7 @@ software and support an extended character set. \
 
 Name:		fonts-bitmap-artwiz-aleczapka
 Version:	1.3
-Release:	alt2_17
+Release:	alt2_19
 Summary:	Very small futuristic font family
 Group:		System/Fonts/True type
 License:	GPLv2
@@ -37,22 +37,22 @@ Source17:	artwiz-aleczapka-fonts-snap-fontconfig.conf
 Patch0:		artwiz-aleczapka-fkp-cleanups.patch
 Patch1:		artwiz-aleczapka-fonts-1.3-fix-makepcf.patch
 BuildArch:	noarch
-BuildRequires:	xorg-x11-font-utils fontpackages-devel
-Requires:	fonts-bitmap-artwiz-aleczapka-anorexia = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-aqui = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-cure = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-drift = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-edges = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-fkp = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-gelly = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-glisp = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-kates = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-lime = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-mints-mild = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-mints-strong = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-nu = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-smoothansi = %{version}-%{release}
-Requires:	fonts-bitmap-artwiz-aleczapka-snap = %{version}-%{release}
+BuildRequires: bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils, fontpackages-devel
+Requires:	fonts-bitmap-artwiz-aleczapka-anorexia = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-aqui = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-cure = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-drift = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-edges = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-fkp = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-gelly = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-glisp	= %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-kates = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-lime = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-mints-mild = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-mints-strong = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-nu = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-smoothansi = %{version}
+Requires:	fonts-bitmap-artwiz-aleczapka-snap = %{version}
 Source44: import.info
 
 %description
@@ -69,7 +69,7 @@ Group:		System/Fonts/True type
 %package -n fonts-bitmap-artwiz-aleczapka-anorexia
 Summary:	Anorexia font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-anorexia
 %common_desc
@@ -84,7 +84,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-aqui
 Summary:	Aqui font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-aqui
 %common_desc
@@ -99,7 +99,7 @@ Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-cure
 Summary:	Cure font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-cure
 %common_desc
@@ -114,7 +114,7 @@ Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-drift
 Summary:	Drift font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-drift
 %common_desc
@@ -129,7 +129,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-edges
 Summary:	Edges font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-edges
 %common_desc
@@ -144,7 +144,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-fkp
 Summary:	Fkp font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-fkp
 %common_desc
@@ -159,7 +159,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-gelly
 Summary:	Gelly font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-gelly
 %common_desc
@@ -174,7 +174,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-glisp
 Summary:	Glisp fonts in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-glisp
 %common_desc
@@ -190,7 +190,7 @@ each encoding.
 %package -n fonts-bitmap-artwiz-aleczapka-kates
 Summary:	Kates font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-kates
 %common_desc
@@ -205,7 +205,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-lime
 Summary:	Lime font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-lime
 %common_desc
@@ -220,7 +220,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-mints-mild
 Summary:	Mints Mild font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-mints-mild
 %common_desc
@@ -235,7 +235,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-mints-strong
 Summary:	Mints Strong font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-mints-strong
 %common_desc
@@ -250,7 +250,7 @@ German, and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-nu
 Summary:	Nu font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-nu
 %common_desc
@@ -265,7 +265,7 @@ and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-smoothansi
 Summary:	Smoothansi font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-smoothansi
 %common_desc
@@ -280,7 +280,7 @@ German, and Swedish.
 %package -n fonts-bitmap-artwiz-aleczapka-snap
 Summary:	Snap font in Artwiz family
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-bitmap-artwiz-aleczapka-snap
 %common_desc
@@ -374,12 +374,16 @@ fi
 %files -n fonts-bitmap-artwiz-aleczapka-common
 # generic docs are the same for every lang (AUTHORS has all info in german dir
 # so use it from german font dir)
-%doc artwiz-aleczapka-de-sources-1.3/{AUTHORS,COPYING,README,VERSION}
+%doc artwiz-aleczapka-de-sources-1.3/COPYING
+%doc artwiz-aleczapka-de-sources-1.3/{AUTHORS,README,VERSION}
 %doc artwiz-aleczapka-de-sources-1.3/README.DE
 %doc artwiz-aleczapka-se-sources-1.3/README.SE
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_17
 - update to new release by fcimport
 
