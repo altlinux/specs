@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-aegyptus
 Version:        5.03
-Release:        alt1_0.7.%{checkout}
+Release:        alt1_0.8.%{checkout}
 Summary:        A font for Egyptian hieroglyphs
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -107,6 +107,9 @@ appstream-util validate-relax --nonet \
 %doc *.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 5.03-alt1_0.8.20151024
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 5.03-alt1_0.7.20151024
 - update to new release by fcimport
 
