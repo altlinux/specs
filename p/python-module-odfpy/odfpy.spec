@@ -1,6 +1,6 @@
 %define oname odfpy
 Name: python-module-%oname
-Version: 1.3.1
+Version: 1.3.3
 Release: alt1
 Summary: Python library for manipulating OpenDocument files
 
@@ -50,6 +50,9 @@ understanding of data types.
 %python_sitelibdir/odf/
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.3.3-alt1
+- Autobuild version bump to 1.3.3
+
 * Mon Aug 03 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
 - Version 1.3.1
 
