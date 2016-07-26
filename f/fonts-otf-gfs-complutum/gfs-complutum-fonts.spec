@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-complutum
 Version: 20070413
-Release: alt3_21
+Release: alt3_22
 Summary: GFS Complutum Greek font
 
 License:   OFL
@@ -125,6 +125,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20070413-alt3_22
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20070413-alt3_21
 - update to new release by fcimport
 
