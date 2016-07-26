@@ -7,12 +7,12 @@ BuildRequires: unzip
 %global fontconf 60-%{fontname}.conf
 
 Name:		fonts-ttf-fontawesome
-Version:	4.4.0
-Release:	alt1_2
+Version:	4.6.3
+Release:	alt1_1
 
 Summary:	Iconic font set
 License:	OFL
-URL:		http://fontawesome.io/
+URL:		http://fontawesome.io
 Source0:	http://fontawesome.io/assets/font-awesome-%{version}.zip
 Source1:	%{oldname}-fontconfig.conf
 Source2:	README-Trademarks.txt
@@ -33,7 +33,7 @@ locally.
 %package web
 Group: System/Fonts/True type
 License:	OFL and MIT
-Requires:	fonts-ttf-fontawesome = %{version}-%{release}
+Requires:	fonts-ttf-fontawesome = %{version}
 Summary:	Iconic font set, web files
 
 %description web
@@ -123,6 +123,9 @@ fi
 %{_datadir}/fonts/fontawesome/fontawesome-webfont.eot
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.6.3-alt1_1
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 4.4.0-alt1_2
 - update to new release by fcimport
 
