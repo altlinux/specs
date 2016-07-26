@@ -1,17 +1,16 @@
 Name: libaff
-Version: 3.7.4
+Version: 3.7.7
 Release: alt1
 
 Summary: A set of programs for creating and manipulating AFF files
 
 Group: System/Libraries
 License: BSD
-# afflib.org unavailable, refs dropped by recent commits
-Url: http://digitalcorpora.org/downloads/afflib/
+Url: https://github.com/sshock/AFFLIBv3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/simsong/AFFLIBv3/archive/%version.tar
+# Source-url: https://github.com/sshock/AFFLIBv3/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Mar 30 2011
@@ -108,6 +107,9 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 3.7.7-alt1
+- new version 3.7.7 (with rpmrb script)
+
 * Sat Apr 19 2014 Michael Shigorin <mike@altlinux.org> 3.7.4-alt1
 - 3.7.4
   + borrowed rpath cleanup from fedora's 3.7.3-1 spec
