@@ -1,6 +1,6 @@
 Name: binwalk
-Version: 2.0.1
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Summary: Firmware Analysis Tool
 
@@ -13,10 +13,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/devttys0/binwalk/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-# manually removed:  python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Sun Jul 12 2015
-# optimized out: python-base python-devel python-module-distribute python-module-oslo.i18n python-module-oslo.utils python-modules python-modules-compiler python-modules-email python3-base
-BuildRequires: libdb4-devel python-module-cmd2 python-module-google python-module-mwlib python-module-oslo.config python-module-oslo.serialization
+# TODO:
+%add_python_req_skip lzma
+%add_python_req_skip capstone
+
+BuildRequires: libdb4-devel python-module-cmd2 python-module-setuptools
 
 # TODO (see https://bugzilla.altlinux.org/show_bug.cgi?id=19293):
 #BuildPreReq: python-module-magic > 5.0.0
@@ -47,18 +48,10 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 %prep
 %setup
 
-# HACK before we will have new python-module-magic (from file package) > 5.0.x
-# https://bugzilla.altlinux.org/show_bug.cgi?id=19293
-#%__subst "s|^\(import magic\)|\1\n		magic.MAGIC_NO_CHECK_TEXT = 0|g" src/setup.py
-# Note! changed direct in the repo
-
 %build
-%configure --disable-bundles
 %python_build
-#make_build
 
 %install
-#makeinstall_std prefix=%buildroot%_prefix
 %python_install
 [ "%_libdir" = "/usr/lib" ] || mv %buildroot/usr/lib %buildroot%_libdir
 
@@ -68,6 +61,9 @@ firmware headers, kernels, bootloaders, filesystems, etc.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+
 * Sun Jul 12 2015 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
 - fix build
 
