@@ -10,7 +10,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-astloch
 Version:       1.00
-Release:       alt1_4.%{checkout}
+Release:       alt1_5.%{checkout}
 Summary:       Astloch fonts released by Dan Rhatigan
 License:       OFL
 URL:           http://www.google.com/fonts/specimen/Astloch
@@ -20,7 +20,7 @@ Source2:       https://googlefontdirectory.googlecode.com/hg/ofl/astloch/OFL.txt
 Source10:      %{fontconf}
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: ttname
 Source44: import.info
 
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_5.41528389c445hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_4.41528389c445hg
 - new version
 
