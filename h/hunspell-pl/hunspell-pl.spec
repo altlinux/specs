@@ -4,9 +4,9 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-pl
 Summary: Polish hunspell dictionaries
-%global upstreamid 20130130
+%global upstreamid 20160720
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_1
 Source: http://sjp.pl/slownik/ort/sjp-myspell-pl-%{upstreamid}.zip
 URL: http://www.kurnik.pl/dictionary/
 License: LGPLv2+ or GPL+ or MPLv1.1 or CC-BY-SA
@@ -34,6 +34,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.20160720-alt1_1
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_6
 - update to new release by fcimport
 
