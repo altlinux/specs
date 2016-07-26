@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Eval-LineNumbers
 Version:        0.34
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Add line numbers to hereis blocks that contain perl source code
 License:        Artistic 2.0 or LGPLv2+
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/Eval
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1_6
 - update to new release by fcimport
 
