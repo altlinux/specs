@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Cwd.pm) perl(Data/Dumper.pm) perl(File/Spec/Functions.pm) perl(POE.pm) perl(Sub/Exporter.pm) perl(YAML.pm) perl(namespace/autoclean.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Cwd.pm) perl(Data/Dumper.pm) perl(File/Spec/Functions.pm) perl(POE.pm) perl(Sub/Exporter.pm) perl(YAML.pm) perl(namespace/autoclean.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Daemonize
 Version:        0.21
-Release:        alt1_1.1
+Release:        alt1_2
 Summary:        Role for daemonizing your Moose based application
 License:        GPL+ or Artistic
 
@@ -53,6 +53,9 @@ roles as an infrastructure to do that.
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_2
+- update to new release by fcimport
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_1.1
 - rebuild to restore role requires
 
