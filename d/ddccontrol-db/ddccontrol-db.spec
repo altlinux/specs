@@ -18,7 +18,7 @@ BuildRequires: /usr/bin/perl
 Name:             ddccontrol-db
 URL:              http://ddccontrol.sourceforge.net/
 Version:          20061014
-Release:          alt1_7.%{git_suffix}
+Release:          alt1_8.%{git_suffix}
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
@@ -28,7 +28,7 @@ Summary:          DDC/CI control database for ddccontrol
 Source0:          %{name}-%{version}-%{git_suffix}.tar.bz2
 # use autopoint instead of gettextize that is interactive tool
 Patch0:           %{name}-autopoint.patch
-BuildRequires:    gettext gettext-devel libtool perl(XML/Parser.pm)
+BuildRequires: gettext gettext-tools gettext-tools-python gettext-tools libasprintf-devel, libtool-common, perl(XML/Parser.pm)
 BuildArch:        noarch
 Source44: import.info
 Patch33: ddccontrol-db-0.4.2-russian.patch
@@ -57,6 +57,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_8.20120904gite8cc385a
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_7.20120904gite8cc385a
 - update to new release by fcimport
 
