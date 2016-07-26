@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-akkadian
 Version:        7.13
-Release:        alt1_0.5.%{checkout}
+Release:        alt1_0.6.%{checkout}
 Summary:        A font for Sumero-Akkadian cuneiform
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -104,6 +104,9 @@ appstream-util validate-relax --nonet \
 %doc Akkadian.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 7.13-alt1_0.6.20151024
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 7.13-alt1_0.5.20151024
 - update to new release by fcimport
 
