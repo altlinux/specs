@@ -1,7 +1,7 @@
 %define rname breeze
 
 Name: kf5-%rname
-Version: 5.7.1
+Version: 5.7.2
 Release: alt1
 %K5init altplace
 
@@ -87,6 +87,9 @@ KF5 library
 %_libdir/cmake/Breeze/
 
 %changelog
+* Tue Jul 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.2-alt1
+- new version
+
 * Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
 - new version
 
