@@ -2,19 +2,19 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname dustin-domestic-manners-fonts
-%define fontname dustin-domestic-manners
-%define fontconf 63-%{fontname}.conf
+%global fontname dustin-domestic-manners
+%global fontconf 63-%{fontname}.conf
 
 Name:          fonts-ttf-dustin-domestic-manners
 Version:       20030527
-Release:       alt3_12
+Release:       alt3_14
 Summary:       Handwriting font by Dustin Norlander
 
 Group:         System/Fonts/True type
 License:       GPLv2+
 URL:           http://www.dustismo.com
 # Actual download URL
-#URL:           http://ftp.de.debian.org/debian/pool/main/t/ttf-dustin/ttf-dustin_20030517.orig.tar.gz 
+# URL:         http://ftp.de.debian.org/debian/pool/main/t/ttf-dustin/ttf-dustin_20030517.orig.tar.gz 
 Source0:       Domestic_Manners.zip
 Source1:       %{oldname}-fontconfig.conf
 Source2:       %{fontname}.metainfo.xml
@@ -38,7 +38,6 @@ sed -i 's/\r//' license.txt
 %build
 
 %install
-rm -fr %{buildroot}
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -91,11 +90,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %{_datadir}/appdata/%{fontname}.metainfo.xml
-
 %doc license.txt
-%dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20030527-alt3_12
 - update to new release by fcimport
 
