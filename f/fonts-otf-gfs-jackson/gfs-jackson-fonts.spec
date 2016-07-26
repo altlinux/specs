@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-jackson
 Version: 20080303
-Release: alt3_14
+Release: alt3_15
 Summary: GFS Jackson majuscule Greek font
 
 License:   OFL
@@ -120,6 +120,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20080303-alt3_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20080303-alt3_14
 - update to new release by fcimport
 
