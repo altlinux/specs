@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-solomos
 Version: 20071114
-Release: alt3_19
+Release: alt3_20
 Summary: GFS Solomos oblique Greek font
 
 Group:     System/Fonts/True type
@@ -119,6 +119,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20071114-alt3_20
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20071114-alt3_19
 - update to new release by fcimport
 
