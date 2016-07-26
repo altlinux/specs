@@ -2,8 +2,8 @@
 %define oldver 2.0
 
 Name: gimp
-Version: %ver_major.16
-Release: alt2
+Version: %ver_major.18
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: GPLv3, LGPL
@@ -117,6 +117,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Tue Jul 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.8.18-alt1
+- 2.8.18
+
 * Fri Jul 15 2016 Andrey Cherepanov <cas@altlinux.org> 2.8.16-alt2
 - Fix greenish border when antialiasing of text is on
 
