@@ -9,7 +9,7 @@ Group: Other
 
 Name:           html401-dtds
 Version:        4.01
-Release:        alt1_%{date}.12.6
+Release:        alt1_%{date}.12.7
 Summary:        HTML 4.01 document type definitions
 
 # W3C Software License for DTDs etc:
@@ -54,6 +54,14 @@ touch %{name}-%{version}-%{release}.soc
 ln -s %{name}-%{version}-%{release}.soc %{name}.soc
 cd -
 
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.soc
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
+
+
 
 %post
 /usr/bin/install-catalog --add \
@@ -73,6 +81,9 @@ cd -
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.6
 - update to new release by fcimport
 
