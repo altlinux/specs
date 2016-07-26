@@ -2,13 +2,13 @@
 BuildRequires: python unzip
 # END SourceDeps(oneline)
 %define oldname cf-bonveno-fonts
-%define	fontname	cf-bonveno
-%define fontconf	60-%{fontname}.conf
+%global	fontname	cf-bonveno
+%global fontconf	60-%{fontname}.conf
 
 
 Name:		fonts-ttf-cf-bonveno
 Version:	1.1
-Release:	alt3_17
+Release:	alt3_19
 Summary:	A fun font by Barry Schwartz
 
 Group:		System/Fonts/True type
@@ -19,7 +19,7 @@ Source1:	%{oldname}-fontconfig.conf
 Source2:	%{fontname}.metainfo.xml
 
 BuildArch: 	noarch
-BuildRequires:	fontforge fontpackages-devel
+BuildRequires: fontforge libfontforge, fontpackages-devel
 Source44: import.info
 
 
@@ -114,6 +114,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}/
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_17
 - update to new release by fcimport
 
