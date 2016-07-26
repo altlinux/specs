@@ -1,5 +1,5 @@
 Name: pyclewn
-Version: 2.2
+Version: 2.3
 Release: alt1
 License: GPLv2
 Summary: Using vim as a front end to a debugger (supports gdb and pdb)
@@ -69,6 +69,9 @@ install -D %name %buildroot%_bindir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 2.3-alt1
+- Autobuild version bump to 2.3
+
 * Wed Jan 13 2016 Fr. Br. George <george@altlinux.ru> 2.2-alt1
 - Autobuild version bump to 2.2
 
