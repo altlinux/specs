@@ -1,12 +1,13 @@
 Name:           bcrypt
 Version:        1.1
-Release:        alt2_13
+Release:        alt2_14
 Summary:        File encryption utility
 
 Group:          File tools
 License:        BSD
 URL:            http://%{name}.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Patch0:         bcrypt-fencepost.patch
 BuildRequires:  zlib-devel
 Source44: import.info
 
@@ -28,6 +29,8 @@ Bruce Schneier in 1993.
 %prep
 %setup -q
 
+%patch0 -p1 -b .fencepost
+
 %{__perl} -pi.orig -e 's|\${PREFIX}/man/man1|\${PREFIX}/share/man/man1|g' Makefile
 
 
@@ -45,6 +48,9 @@ Bruce Schneier in 1993.
 %{_bindir}/bcrypt
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_14
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_13
 - update to new release by fcimport
 
