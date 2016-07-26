@@ -7,18 +7,12 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-ttf-gdouros-anaktoria
-Version:        6.00
+Version:        6.31
 Release:        alt1_1
 Summary:        A font based on "Grecs du roi" and the "First Folio Edition of Shakespeare"
-
-# https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
-# "in lieu of a licence:
-# Fonts and documents in this site are not pieces of property or merchandise
-# items; they carry no trademark, copyright, license or other market tags;
-# they are free for any use. George Douros"
 License:        Public Domain
-URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/TextFonts.zip
+URL:            http://users.teilar.gr/~g1951d/Textfonts.htm
+Source0:        http://users.teilar.gr/~g1951d/Anaktoria.zip
 Source1:        http://users.teilar.gr/~g1951d/Textfonts.pdf
 Source2:        %{oldname}-fontconfig.conf
 Source3:        %{fontname}.metainfo.xml
@@ -115,6 +109,9 @@ appstream-util validate-relax --nonet \
 %doc Textfonts.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 6.31-alt1_1
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 6.00-alt1_1
 - new version
 
