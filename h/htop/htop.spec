@@ -4,7 +4,7 @@
 %def_enable oom
 
 Name: htop
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
@@ -80,6 +80,9 @@ rm -r %buildroot%_pixmapsdir/
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Tue Jul 26 2016 Michael Shigorin <mike@altlinux.org> 2.0.2-alt1
+- new version (watch file uupdate)
+
 * Wed Mar 09 2016 Michael Shigorin <mike@altlinux.org> 2.0.1-alt1
 - new version (watch file uupdate)
 
