@@ -1,6 +1,6 @@
 Name:           gt
 Version:        0.4
-Release:        alt1_21
+Release:        alt1_22
 Summary:        Modified Timidity which supportes enhanced gus format patches
 Group:          Sound
 License:        GPLv2+
@@ -77,6 +77,9 @@ touch -r utils/midifile.c $RPM_BUILD_ROOT%{_mandir}/man1/midi-disasm.1
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_22
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_21
 - update to new release by fcimport
 
