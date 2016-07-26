@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(XSLoader.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(B.pm) perl(Exporter.pm) perl(Scalar/Util.pm) perl(Symbol.pm) perl(XSLoader.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-Refcount
 Version:        0.10
-Release:        alt3_9
+Release:        alt3_10
 Summary:        Obtain the REFCNT value of a referent
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Devel*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_9
 - update to new release by fcimport
 
