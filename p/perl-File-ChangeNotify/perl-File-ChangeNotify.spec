@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-ChangeNotify
 Name: perl-%dist
-Version: 0.24
+Version: 0.26
 Release: alt1
 
 Summary: Watch for changes to files, cross-platform style
@@ -17,7 +17,7 @@ BuildArch: noarch
 %add_findreq_skiplist */File/ChangeNotify/Watcher/KQueue.pm
 
 # Automatically added by buildreq on Sat Dec 18 2010
-BuildRequires: perl-Linux-Inotify2 perl-Module-Build perl-Module-Pluggable perl-MooseX-Params-Validate perl-MooseX-SemiAffordanceAccessor perl-Test-Exception perl-namespace-autoclean
+BuildRequires: perl-Linux-Inotify2 perl-Module-Build perl-Module-Pluggable perl-MooseX-Params-Validate perl-MooseX-SemiAffordanceAccessor perl-Test-Exception perl-namespace-autoclean perl(Test/Requires.pm) perl(Types/Standard.pm)
 
 %description
 This module provides an API for creating a File::ChangeNotify::Watcher
@@ -33,10 +33,13 @@ subclass that will work on your platform.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README*
 %perl_vendor_privlib/File*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Mon Dec 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
