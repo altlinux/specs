@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # Test suite needs patching if we have Test::More < 0.88
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION) < 0.88 ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:		perl-ExtUtils-Helpers
 Version:	0.022
-Release:	alt1_8
+Release:	alt1_10
 Summary:	Various portability utilities for module builders
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -75,6 +75,9 @@ make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1_10
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1_8
 - update to new release by fcimport
 
