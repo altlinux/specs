@@ -1,6 +1,6 @@
 Name: scummvm-tools
-Version: 1.7.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 
 Summary: Utilities for the SCUMM graphic adventure game interpreter
 Group: Games/Adventure
@@ -33,6 +33,9 @@ mkdir -p %buildroot%_bindir
 %_datadir/scummvm-tools
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 1.8.0-alt1
+- Autobuild version bump to 1.8.0
+
 * Mon Sep 14 2015 Fr. Br. George <george@altlinux.ru> 1.7.0-alt2
 - Rebuild with new C++,wx ABI
 
