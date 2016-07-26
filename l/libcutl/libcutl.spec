@@ -2,13 +2,13 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 23
+%define fedora 24
 # The base of the version (just major and minor without point)
 %global base_version 1.10
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_3
+Release:        alt1_4
 Summary:        C++ utility library from Code Synthesis
 
 Group:          System/Libraries
@@ -23,13 +23,13 @@ Patch0:         libcutl_no_boost_license.patch
 # If building on Fedora or RHEL 6/7
 %if 0%{?rhel}%{?fedora} >= 6
 # Use the system Boost instead of the internal one
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 %else
 # Otherwise, on RHEL 5 use the EPEL Boost 1.41 instead of the internal one
 BuildRequires: boost141-devel
 %endif
 # Uses pkgconfig
-BuildRequires: expat-devel
+BuildRequires: libexpat-devel
 Source44: import.info
 
 
@@ -89,6 +89,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_4
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1_3
 - update to new release by fcimport
 
