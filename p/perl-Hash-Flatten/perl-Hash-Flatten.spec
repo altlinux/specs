@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Hash-Flatten
 Version:        1.19
-Release:        alt3_16
+Release:        alt3_17
 Summary:        Flatten/unflatten complex data hashes
 License:        GPLv2
 URL:            http://search.cpan.org/dist/Hash-Flatten/
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_17
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_16
 - update to new release by fcimport
 
