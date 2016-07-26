@@ -1,26 +1,23 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/pkg-config gcc-c++
+BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
 Name:           grhino
-Version:        0.16.0
-Release:        alt3_20
+Version:        0.16.1
+Release:        alt1_1
 Summary:        Reversi game for GNOME, supporting the Go/Game Text Protocol
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://rhino.sourceforge.net/
-Source0:        http://dl.sourceforge.net/rhino/grhino-%{version}.tar.gz
-Patch0:         grhino-0.16.0-gcc43.patch
-Patch1:         grhino-0.16.0-types.patch
-Patch2:         grhino-0.16.0-emptyelse.patch
+Source0:        http://downloads.sourceforge.net/rhino/grhino-%{version}.tar.gz
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
+BuildRequires: gettext gettext-tools gettext-tools-python
 BuildRequires:  libgnomeui-devel
-BuildRequires:  scrollkeeper
+BuildRequires:  librarian
 #Requires:       
-Requires(post):         scrollkeeper
-Requires(postun):       scrollkeeper
+Requires(post):         librarian
+Requires(postun):       librarian
 Source44: import.info
 
 %description
@@ -40,9 +37,6 @@ an engine for a GTP-compliant controller like Quarry.
 
 %prep
 %setup -q
-%patch0 -p1 -b .gcc43
-%patch1 -p1 -b .types
-%patch2 -p1 -b .emptyelse
 
 
 %build
@@ -65,7 +59,8 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc ChangeLog COPYING NEWS README TODO
+%doc COPYING
+%doc ChangeLog NEWS README TODO
 %{_bindir}/grhino
 %{_bindir}/gtp-rhino
 %{_datadir}/applications/*.desktop
@@ -76,6 +71,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.1-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.16.0-alt3_20
 - update to new release by fcimport
 
