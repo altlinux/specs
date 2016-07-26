@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libreadline-devel
+BuildRequires: texinfo
 # END SourceDeps(oneline)
 Name:           malaga
 Version:        7.12 
-Release:        alt2_18.1
+Release:        alt2_19
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -20,11 +20,9 @@ Patch0:         malaga-rename-map_file.diff
 Patch1:         malaga-malshow-lm.patch
 Patch2:         malaga-aarch64.patch
 
-BuildRequires:  gtk2-devel readline-devel
-Requires: lib%{name} = %{version}-%{release}
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel readline-devel
+Requires: lib%{name} = %{version}
 Source44: import.info
-# explicitly added texinfo for info files
-BuildRequires: texinfo
 
 %description
 A software package for the development and application of
@@ -40,7 +38,7 @@ University of Erlangen, Germany.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/Other
-Requires:       lib%{name} = %{version}-%{release}
+Requires:       lib%{name} = %{version}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -101,6 +99,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_19
+- update to new release by fcimport
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_18.1
 - NMU: added BR: texinfo
 
