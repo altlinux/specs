@@ -10,7 +10,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.5.993
+Version: 1.6.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -236,6 +236,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 26 2016 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Tue Jul 19 2016 Mikhail Efremov <sem@altlinux.org> 1.5.993-alt1
 - Enable suspend/resume support (systemd).
 - Updated to 1.5.993 (1.6-rc4).
