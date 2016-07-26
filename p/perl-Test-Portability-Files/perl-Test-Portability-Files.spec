@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # We need to patch the test suite if we have an old version of Test::More
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.88) ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:           perl-Test-Portability-Files
 Version:        0.06
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -60,6 +60,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_6
 - update to new release by fcimport
 
