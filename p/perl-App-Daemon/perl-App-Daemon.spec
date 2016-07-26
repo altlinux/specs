@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.pm) perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(FindBin.pm) perl(Pod/Usage.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-App-Daemon
 Version:        0.22
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Start an Application as a Daemon
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_5
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_4
 - update to new release by fcimport
 
