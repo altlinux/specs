@@ -2,8 +2,8 @@
 %define module Geo-IP
 
 Name: perl-%module
-Version: 1.45
-Release: alt1.1
+Version: 1.50
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -34,11 +34,14 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_install
 
 %files
-%doc README Changes example
+%doc README* Changes example
 %perl_vendor_archlib/Geo
 %perl_vendor_autolib/Geo
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1.1
 - rebuild with new perl 5.22.0
 
