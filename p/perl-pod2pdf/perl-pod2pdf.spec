@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-pod2pdf
 Version:        0.42
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Converts Pod to PDF format
 License:        Artistic 2.0
 Group:          Development/Perl
@@ -62,6 +62,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_12
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.42-alt2_11
 - update to new release by fcimport
 
