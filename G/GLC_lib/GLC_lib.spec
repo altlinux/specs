@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libqt4-devel unzip
+BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           GLC_lib
 Version:        2.2.0
-Release:        alt2_12
+Release:        alt2_14
 Summary:        C++ class library for OpenGL application based on Qt 4
 
 Group:          System/Libraries
@@ -13,7 +13,7 @@ Source0:        http://downloads.sourceforge.net/glc-lib/GLC_lib_src_%{version}.
 Patch0:         GLC_lib_src_2.2.0-nointernal.patch
 Patch1:         GLC_lib_src_2.2.0-gcc46.patch
 
-BuildRequires:  qt4-devel
+BuildRequires: libqt4-declarative libqt4-devel qt4-designer
 BuildRequires:  lib3ds-devel
 BuildRequires:  libquazip-devel
 Source44: import.info
@@ -27,7 +27,8 @@ textured file support, 3D Primitive... And more.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
+Requires: libqt4-declarative qt4-designer
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -53,7 +54,7 @@ rm -rf 3rdparty
 
 %build
 cd glc_lib
-qmake-qt4 GLC_lib.pro
+%{qmake_qt4} GLC_lib.pro
 make %{?_smp_mflags}
 
 
@@ -72,6 +73,9 @@ make install INSTALL_ROOT=$RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt2_12
 - update to new release by fcimport
 
