@@ -9,7 +9,7 @@ ghostscript font configuration files for Chinese fonts.
 
 Name:           ghostscript-chinese
 Version:        0.4.0
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Ghostscript Chinese fonts configuration files
 Group:          System/Fonts/True type
 License:        GPLv2+
@@ -31,7 +31,7 @@ Summary:      Ghostscript Simplified Chinese fonts configuration files
 Group:        System/Fonts/True type
 Requires: ghostscript-utils ghostscript
 Requires:     fonts-ttf-wqy-zenhei >= %{zenheiver}
-Requires:     %{name} = %{version}-%{release}
+Requires:     %{name} = %{version}
 
 %description zh_CN
 %common_desc
@@ -44,7 +44,7 @@ Group:        System/Fonts/True type
 Requires: ghostscript-utils ghostscript
 Requires:     fonts-ttf-cjkuni-uming = %{umingver}
 Requires:     fonts-ttf-cjkuni-ukai = %{ukaiver}
-Requires:     %{name} = %{version}-%{release}
+Requires:     %{name} = %{version}
 
 %description zh_TW
 %common_desc
@@ -84,6 +84,9 @@ done
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_6
 - update to new release by fcimport
 
