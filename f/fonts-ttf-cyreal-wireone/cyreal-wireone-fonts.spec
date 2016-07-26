@@ -8,7 +8,7 @@ Group: System/Fonts/True type
 
 Name:          fonts-ttf-cyreal-wireone
 Version:       1.000
-Release:       alt1_0.3.%{alphatag}
+Release:       alt1_0.4.%{alphatag}
 Summary:       Wire One font by Alexei Vanyashin and Gayaneh Bagdasaryan
 License:       OFL
 URL:           http://www.cyreal.org/2012/07/wire/
@@ -97,6 +97,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.4.20140916hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.000-alt1_0.3.20140916hg
 - new version
 
