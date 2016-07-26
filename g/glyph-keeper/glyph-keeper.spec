@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           glyph-keeper
 Version:        0.32
-Release:        alt3_18
+Release:        alt3_19
 Summary:        Library for text rendering
 Group:          System/Libraries
 License:        zlib
@@ -43,7 +43,7 @@ with Allegro apps.
 %package        allegro-devel
 Summary:        Development files for glyph-keeper-allegro
 Group:          Development/C
-Requires:       glyph-keeper-allegro = %{version}-%{release}
+Requires:       glyph-keeper-allegro = %{version}
 Provides:       %{name}-devel = %{version}-%{release}
 Obsoletes:      %{name}-devel < 0.32-9
 
@@ -66,7 +66,7 @@ with SDL apps.
 %package        SDL-devel
 Summary:        Development files for glyph-keeper-SDL
 Group:          Development/C
-Requires:       glyph-keeper-SDL = %{version}-%{release}
+Requires:       glyph-keeper-SDL = %{version}
 
 %description    SDL-devel
 The glyph-keeper-SDL-devel package contains libraries and header files for
@@ -119,6 +119,9 @@ install -m 644 include/glyph.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_19
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.32-alt3_18
 - update to new release by fcimport
 
