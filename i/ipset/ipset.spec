@@ -3,7 +3,7 @@
 %define _prefix /
 Name: ipset
 Version: 6.29
-Release: alt1
+Release: alt2.git.caaa86
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -96,6 +96,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Tue Jul 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.29-alt2.git.caaa86
+- updated for kernel 4.7 support
+
 * Tue Jun 28 2016 Anton Farygin <rider@altlinux.ru> 6.29-alt1
 - new version
 
