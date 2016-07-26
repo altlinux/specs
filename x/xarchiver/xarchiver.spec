@@ -1,6 +1,6 @@
 Name: xarchiver
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 Summary: A GTK+2 only archive manager
 License: %gpl2plus
@@ -10,6 +10,9 @@ Url: http://xarchiver.sourceforge.net/
 Source: %name-%version.tar
 Patch1: xarchiver-0.5.4-debian-desktop-file.patch
 Patch2: xarchiver-0.5.4-debian-encrypted-7z-archives.patch
+# https://github.com/ib/xarchiver/commit/cfa1d536312abb8d81f9cd74c15cf21038f03a8c
+Patch3: xarchiver-0.5.4-fix-crash-cancelling-progress.patch
+Patch4: xarchiver-0.5.4-alt-tar-detection.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -28,6 +31,8 @@ supported.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %xfce4reconf
@@ -49,6 +54,10 @@ supported.
 %doc %_docdir/%name
 
 %changelog
+* Tue Jul 26 2016 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt2
+- Fix detection of a tar program (closes: #32303).
+- Fix crash when cancelling progress bar.
+
 * Thu Oct 02 2014 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
 - Patches from Debian:
   + Detect encrypted 7z archives.
