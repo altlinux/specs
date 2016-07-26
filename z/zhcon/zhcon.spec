@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libggi-devel libgpm-devel libncurses-devel libpth-devel
+BuildRequires: gcc-c++ libggi-devel libpth-devel
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 24
 Name: zhcon
 Summary: A Fast Console CJK System Using FrameBuffer
 Version: 0.2.6
-Release: alt1_28
+Release: alt1_29
 Group: File tools
 License: GPLv2+
 URL:   http://zhcon.sourceforge.net/
@@ -26,9 +26,9 @@ Summary(zh_TW): Zhcon 是一個支援 Framebuffer 及多內碼 Linux 中日韓�
 %endif
 
 
-BuildRequires: autoconf automake
-BuildRequires: gettext-devel ncurses-devel gpm-devel
-Requires: gpm ncurses%{!?ncurse_libs_postfix: }
+BuildRequires: autoconf-common automake-common 
+BuildRequires: gettext-tools libasprintf-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgpm-devel
+Requires: gpm gpm-root termutils
 Source44: import.info
 
 
@@ -90,6 +90,9 @@ make DESTDIR=${RPM_BUILD_ROOT} INSTALL="install -c -p" install
 %{_datadir}/%{name}/
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_29
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_28
 - update to new release by fcimport
 
