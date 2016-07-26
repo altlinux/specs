@@ -14,7 +14,7 @@ Special character &#x2708; ( a'. ) depicts two cats.
 
 Name:		fonts-otf-beteckna
 Version:	0.3
-Release:	alt4_14
+Release:	alt4_15
 Summary:	Beteckna sans-serif fonts
 
 Group:		System/Fonts/True type
@@ -29,8 +29,8 @@ Source5:	%{fontname}-lower-case.metainfo.xml
 Source6:	%{fontname}-small-caps.metainfo.xml
 
 BuildArch:	noarch
-BuildRequires:	fontforge fontpackages-devel
-Requires:	%{name}-common = %{version}-%{release}
+BuildRequires: fontforge libfontforge, fontpackages-devel
+Requires:	%{name}-common = %{version}
 Source44: import.info
 
 %description
@@ -55,7 +55,7 @@ This package consists of files used by other %{oldname} packages.
 %package -n fonts-otf-beteckna-lower-case
 Group: System/Fonts/True type
 Summary:	Beteckna lower case sfd fonts
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-otf-beteckna-lower-case
 %common_desc
@@ -73,7 +73,7 @@ These are lower case Beteckna Fonts.
 %package -n fonts-otf-beteckna-small-caps
 Group: System/Fonts/True type
 Summary:	Beteckna small caps sfd fonts
-Requires:	%{name}-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}
 
 %description -n fonts-otf-beteckna-small-caps
 %common_desc
@@ -175,6 +175,9 @@ fi
 %doc AUTHORS LICENSE CHANGELOG readme.html
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.3-alt4_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.3-alt4_14
 - update to new release by fcimport
 
