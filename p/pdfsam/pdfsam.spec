@@ -1,5 +1,5 @@
 Name: pdfsam
-Version: 2.2.2e
+Version: 2.2.4e
 Release: alt1
 
 Summary: PDF Split And Merge
@@ -10,7 +10,8 @@ Url: http://www.pdfsam.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://sourceforge.net/projects/pdfsam/files/pdfsam-enhanced/%version/pdfsam-%version-out-src.tar
+# Source-url: http://sourceforge.net/projects/pdfsam/files/pdfsam-enhanced/%version/pdfsam-%version-out-src.zip
+Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires: ant
@@ -25,7 +26,7 @@ BuildRequires: java-1.8.0-openjdk-devel
 A Java based free open source tool to split and merge PDF documents.
 
 %prep
-%setup -c %name-%version
+%setup
 # extract all individual source zip files
 for FILE in *.zip; do
     unzip -q -o "$FILE" ; rm -f "$FILE"
@@ -93,6 +94,9 @@ EOF
 %_pixmapsdir/pdfsam*.svg
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2.4e-alt1
+- new version (2.2.4e) with rpmgs script
+
 * Thu Jun 23 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2.2e-alt1
 - initial build for ALT Linux Sisyphus
 
