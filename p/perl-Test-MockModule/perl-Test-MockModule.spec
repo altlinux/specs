@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Scalar/Util.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(Scalar/Util.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-MockModule
 Version:        0.11
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Override subroutines in a module for unit testing
 Group:          Development/Perl
 License:        GPL+ or Artistic
@@ -39,6 +39,9 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_3
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1_2
 - update to new release by fcimport
 
