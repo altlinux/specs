@@ -1,6 +1,6 @@
 Name:		xbiso
 Version:	0.6.1
-Release:	alt2_14
+Release:	alt2_15
 Summary:	ISO extraction utility for xdvdfs images
 Group:		Archiving/Other
 License:	GPLv2+
@@ -33,6 +33,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %{_bindir}/xbiso
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt2_15
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt2_14
 - update to new release by fcimport
 
