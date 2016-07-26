@@ -1,6 +1,7 @@
 Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-build-python3
+BuildRequires: python3-devel
 # END SourceDeps(oneline)
 %define oldname pycanberra
 %global commit 88c53cd44a626ede3b07dab0b548f8bcfda42867
@@ -13,19 +14,15 @@ License:       LGPLv2
 
 # There's no versioning upstream, it's all about the Git hash
 Version:       0
-Release:       alt2_0.9.git%{shortcommit}.1.1.1
+Release:       alt2_0.11.git%{shortcommit}
 
 # There aren't any release yet, I'm downloading straight from the last commit
 Source0:       https://github.com/psykoyiko/pycanberra/archive/%{commit}/%{oldname}-%{version}-%{shortcommit}.tar.gz
 
 BuildArch:     noarch
 
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: python-base python-modules python3 python3-base
-BuildRequires: rpm-build-python3
-
-#BuildRequires: python-devel
-#BuildRequires: python3-devel
+BuildRequires: python-devel
+BuildRequires: python3-dev
 
 # This will break at run time when libcanberra bumps its soname :(
 Requires:      libcanberra
@@ -70,6 +67,9 @@ install -p -m 0644 pycanberra.py %{buildroot}%{python3_sitelibdir_noarch}
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.11.git88c53cd
+- update to new release by fcimport
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0-alt2_0.9.git88c53cd.1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
