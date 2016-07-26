@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-analecta
 Version:        5.00
-Release:        alt1_1
+Release:        alt1_2
 Summary:        An ecclesiastic scripts font
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -101,6 +101,9 @@ appstream-util validate-relax --nonet \
 %doc Analecta.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 5.00-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 19 2015 Igor Vlasenko <viy@altlinux.ru> 5.00-alt1_1
 - update to new release by fcimport
 
