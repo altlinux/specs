@@ -12,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-otf-drehatlas-widelands
 Version:	1.0.3.1
-Release:	alt3_14
+Release:	alt3_15
 Summary:	A Latin typeface inspired by feudal calligraphy
 License:	OFL
 URL:		http://www.drehatlas.de/
@@ -20,7 +20,7 @@ Source0:	http://downloads.sourceforge.net/project/drehatlas-fonts/Font-Packages/
 Source1:	%{fontconf}
 Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel fontforge
+BuildRequires:	fontpackages-devel fontforge libfontforge
 Source44: import.info
 
 %description
@@ -100,6 +100,9 @@ fi
 %doc drehatlas-fonts-%{metapkgver}/Widelands-%{version}/LICENSE drehatlas-fonts-%{metapkgver}/Widelands-%{version}/FONTLOG
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.3.1-alt3_15
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.3.1-alt3_14
 - update to new release by fcimport
 
