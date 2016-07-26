@@ -3,7 +3,7 @@ BuildRequires: xml-utils
 
 Name:           xhtml1-dtds
 Version:        1.0
-Release:        alt1_%{date}.13
+Release:        alt1_%{date}.13.1
 Summary:        XHTML 1.0 document type definitions
 
 Group:          Text tools
@@ -19,8 +19,8 @@ Patch0:         %{name}-sgml-catalog.patch
 Patch1:         %{name}-sgml-dcl.patch
 
 BuildArch:      noarch
-BuildRequires:  libxml2 >= 2.4.8
-Requires:       libxml2 >= 2.4.8
+BuildRequires: libxml2 xml-utils
+Requires: libxml2 xml-utils
 Requires:       xml-common
 Requires: xml-common sgml-common
 Requires(post): /usr/bin/xmlcatalog
@@ -83,6 +83,14 @@ touch %{name}-%{version}-%{release}.soc
 ln -s %{name}-%{version}-%{release}.soc %{name}.soc
 cd -
 
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.soc
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
+
+
 
 %post
 cd %{_sysconfdir}/xml
@@ -113,6 +121,9 @@ cd - >/dev/null
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.13.1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_20020801.13
 - update to new release by fcimport
 
