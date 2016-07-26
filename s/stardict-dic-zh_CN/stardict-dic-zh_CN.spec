@@ -1,8 +1,8 @@
+Group: Text tools
 Name: stardict-dic-zh_CN
 Summary: Simplified Chinese(zh_CN) dictionaries for StarDict
 Version: 2.4.2
-Release: alt2_14
-Group: Text tools
+Release: alt2_16
 License: GPL+
 URL: http://stardict.sourceforge.net
 
@@ -26,9 +26,8 @@ Source5: http://downloads.sourceforge.net/stardict/stardict-stardict1.3-2.4.2.ta
 Source6: http://downloads.sourceforge.net/stardict/stardict-xdict-ce-gb-2.4.2.tar.bz2
 Source7: http://downloads.sourceforge.net/stardict/stardict-xdict-ec-gb-2.4.2.tar.bz2
 
-BuildArchitectures: noarch
-
-Requires: stardict >= 2.4.2
+BuildArch: noarch
+Requires: stardict stardict-plugin-espeak stardict-plugin-spell
 Source44: import.info
 
 %description
@@ -49,9 +48,9 @@ You can download more at: http://stardict.sourceforge.net
 %setup -q -n %{name}-%{version} -D -T -a 7
 
 %build
+#nothing to build here
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic
 cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 
@@ -59,6 +58,9 @@ cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_16
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_14
 - update to new release by fcimport
 
