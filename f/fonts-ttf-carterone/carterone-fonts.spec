@@ -10,7 +10,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-carterone
 Version:       1.00
-Release:       alt1_5.%{checkout}
+Release:       alt1_6.%{checkout}
 Summary:       CarterOne fonts released by Vernon Adams
 License:       OFL
 URL:           http://www.google.com/fonts/specimen/Carter+One
@@ -19,7 +19,7 @@ Source1:       https://googlefontdirectory.googlecode.com/hg/ofl/carterone/src/C
 Source10:      %{fontconf}
 BuildArch:     noarch
 BuildRequires: fontpackages-devel
-BuildRequires: fontforge
+BuildRequires: fontforge libfontforge
 BuildRequires: ttname
 Source44: import.info
 
@@ -110,6 +110,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_6.716ff965e2b0hg
+- update to new release by fcimport
+
 * Sat Nov 07 2015 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1_5.716ff965e2b0hg
 - new version
 
