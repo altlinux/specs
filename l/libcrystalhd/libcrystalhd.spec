@@ -11,10 +11,10 @@ BuildRequires(pre): kernel-build-tools
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt3_12
+Release:       alt3_13
 License:       LGPLv2
 Group:         System/Libraries
-URL:           http://www.broadcom.com/support/crystal_hd/
+URL:           http://www.broadcom.com/support/crystal-hd/
 ExcludeArch:   s390 s390x
 
 #Source:       http://www.broadcom.com/docs/support/crystalhd/crystalhd_linux_20100703.zip
@@ -32,9 +32,9 @@ Patch0:        libcrystalhd-nosse2.patch
 # https://patchwork2.kernel.org/patch/2247431/
 Patch1:        crystalhd-gst-Port-to-GStreamer-1.0-API.patch
 
-BuildRequires: autoconf automake libtool
-BuildRequires: gstreamer1.0-devel >= %{majorminor}
-BuildRequires: gst-plugins1.0-devel >= %{majorminor}
+BuildRequires: autoconf-common automake-common libtool-common
+BuildRequires: gstreamer1.0-devel libgstreamer1.0-gir-devel
+BuildRequires: gst-plugins1.0-devel gst-plugins1.0-gir-devel
 Requires:      firmware-crystalhd
 Source44: import.info
 Patch33: libcrystalhd-alt-from-zerg-bug30916.patch
@@ -121,8 +121,8 @@ popd > /dev/null 2>&1
 
 rm -rf $RPM_BUILD_ROOT/lib/firmware/
 mkdir -p $RPM_BUILD_ROOT/lib/firmware/
-cp -p %{SOURCE2} $RPM_BUILD_ROOT/lib/firmware/
-cp -p %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
+install -pm 0644 %{SOURCE2} $RPM_BUILD_ROOT/lib/firmware/
+install -pm 0644 %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
 
 #Install udev rule
 mkdir -p $RPM_BUILD_ROOT%{_udevrulesdir}
@@ -159,6 +159,9 @@ mv driver kernel-source-crystalhd-%version
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_13
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_12
 - update to new release by fcimport
 
