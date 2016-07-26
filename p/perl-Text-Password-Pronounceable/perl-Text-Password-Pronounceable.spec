@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:       perl-Text-Password-Pronounceable 
 Version:    0.30
-Release:    alt1_11
+Release:    alt1_12
 # lib/Text/Password/Pronounceable.pm -> GPL+ or Artistic
 License:    GPL+ or Artistic 
 Group:      Development/Perl
@@ -42,6 +42,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_12
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1_11
 - update to new release by fcimport
 
