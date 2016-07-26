@@ -1,5 +1,5 @@
 Name: pymunk
-Version: 4.0.0
+Version: 5.0.0
 Release: alt1
 %setup_python_module %name
 Summary: Example files for %packagename
@@ -46,6 +46,9 @@ cp -a examples tests tools %buildroot%_datadir/%name/
 %python_sitelibdir_noarch/pymunkoptions
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 5.0.0-alt1
+- Autobuild version bump to 5.0.0
+
 * Wed Oct 16 2013 Fr. Br. George <george@altlinux.ru> 4.0.0-alt1
 - Autobuild version bump to 4.0.0
 - Drop inactual patch
