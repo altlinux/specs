@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: libsocket pkgconfig(lwp)
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname rpc2
 Name:           librpc2
 Version:        2.10
-Release:        alt1_13
+Release:        alt1_14
 Summary:        C library for remote procedure calls over UDP
 Group:          System/Libraries
 License:        LGPLv2
@@ -14,7 +11,7 @@ Source0:        ftp://ftp.coda.cs.cmu.edu/pub/rpc2/src/%{oldname}-%{version}.tar
 Source1:        ftp://ftp.coda.cs.cmu.edu/pub/rpc2/src/%{oldname}-%{version}.tar.gz.asc
 Patch0:		rpc2-2.10-lua-5.2-fix.patch
 Patch1:		rpc2-2.10-format-security-fix.patch
-BuildRequires:  lwp-devel liblua5-devel flex bison
+BuildRequires:  liblwp-devel liblua5-devel flex bison
 Source44: import.info
 Provides: rpc2 = %{version}-%{release}
 
@@ -26,7 +23,7 @@ Summary:        Development files for %{oldname}
 Group:          Development/C
 # headers are LGPLv2, rp2gen is GPLv2
 License:        LGPLv2 and GPLv2
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       librpc2 = %{version}
 Provides: rpc2-devel = %{version}-%{release}
 
 %description    devel
@@ -62,6 +59,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_13
 - update to new release by fcimport
 
