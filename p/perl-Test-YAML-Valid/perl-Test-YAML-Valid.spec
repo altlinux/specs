@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(base.pm) perl(inc/Module/Install.pm) perl-devel perl-podlators
+BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(FileHandle.pm) perl(FindBin.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Socket.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-YAML-Valid
 Version:        0.04
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Lets you test the validity of YAML files in unit tests
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -56,6 +56,9 @@ make test
 %{perl_vendor_privlib}/Test/YAML/Valid.pm
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_18
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2_17
 - update to new release by fcimport
 
