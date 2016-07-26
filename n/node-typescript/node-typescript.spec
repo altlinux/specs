@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-typescript
-Version: 1.7.5
+Version: 1.8.10
 Release: alt1
 
 Summary: TypeScript is a language for application scale JavaScript development
@@ -13,7 +13,7 @@ License: Apache License 2.0
 Group: Development/Other
 Url: http://www.typescriptlang.org
 
-# Source-url: http://registry.npmjs.org/%node_module/-/%node_module-%version.tar.gz
+# Source-url: https://github.com/Microsoft/TypeScript/archive/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
@@ -56,6 +56,9 @@ ln -s %nodejs_sitelib/%node_module/bin/tsserver %buildroot%_bindir
 %nodejs_sitelib/%node_module
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.8.10-alt1
+- new version 1.8.10 (with rpmrb script)
+
 * Thu Feb 11 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
 - new version 1.7.5 (with rpmrb script)
 
