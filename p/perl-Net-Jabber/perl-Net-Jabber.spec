@@ -4,7 +4,7 @@ BuildRequires: perl(threads.pm) perl(threads/shared.pm) perl-pod perl-podlators 
 # END SourceDeps(oneline)
 Name:           perl-Net-Jabber
 Version:        2.0
-Release:        alt3_28
+Release:        alt3_29
 Summary:        Net::Jabber - Jabber Perl Library
 Group:          Development/Perl
 License:        (GPL+ or Artistic) or LGPLv2+
@@ -76,6 +76,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_29
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_28
 - update to new release by fcimport
 
