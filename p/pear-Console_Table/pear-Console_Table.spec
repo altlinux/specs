@@ -1,7 +1,7 @@
 %define pear_name Console_Table
 
 Name: pear-Console_Table
-Version: 1.1.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Class that makes it easy to build console style tables
@@ -45,6 +45,9 @@ console tables with or without headers.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
