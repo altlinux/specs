@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 Summary: Utility to create fonts.scale files for truetype fonts
 Name: ttmkfdir
 Version: 3.0.9
-Release: alt2_46
+Release: alt2_48
 # Only licensing attribution is in README, no version.
 License: LGPLv2+
 Group: File tools
@@ -22,12 +22,12 @@ Patch6: ttmkfdir-3.0.9-segfaults.patch
 Patch7: ttmkfdir-3.0.9-encoding-dir.patch
 Patch8: ttmkfdir-3.0.9-font-scale.patch
 Patch9: ttmkfdir-3.0.9-bug434301.patch
-Patch10:ttmkfdir-3.0.9-freetype-header-fix.patch
+Patch10:ttmkfdir-3.0.9-freetype-header-fix2.patch
 Source10: ttmkfdir.1
 
 BuildRequires: libfreetype-devel >= 2.0
-BuildRequires: flex libtool
-BuildRequires: bzip2-devel
+BuildRequires: flex libtool-common
+BuildRequires: bzlib-devel
 BuildRequires: zlib-devel
 Source44: import.info
 Patch33: ttmkfdir-3.0.9-alt-Makefile-tag-cxx.patch
@@ -49,9 +49,8 @@ by the font server.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-#patch10 -p1
+%patch10 -p1
 %patch33 -p0
-
 
 %build
 make %{?_smp_mflags} OPTFLAGS="$RPM_OPT_FLAGS"
@@ -67,6 +66,9 @@ cp -p %{SOURCE10} %{buildroot}%{_mandir}/man1/
 %{_mandir}/man1/ttmkfdir.1*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt2_48
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt2_46
 - fixed build
 
