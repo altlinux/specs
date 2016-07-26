@@ -7,14 +7,15 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-aegean
-Version:        8.01
+Version:        8.91
 Release:        alt1_1
 Summary:        A font for ancient scripts in the greater Aegean vicinity
 License:        Public Domain
-URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/Aegean.zip
-Source1:        %{oldname}-fontconfig.conf
-Source2:        %{fontname}.metainfo.xml
+URL:            http://users.teilar.gr/~g1951d/Aegean.htm
+Source0:        http://users.teilar.gr/~g1951d/AegeanFonts.zip
+Source1:        http://users.teilar.gr/~g1951d/Aegean.pdf
+Source2:        %{oldname}-fontconfig.conf
+Source3:        %{fontname}.metainfo.xml
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -35,6 +36,7 @@ It was created by George Douros.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
+cp -p %{SOURCE1} .
 
 %build
 
@@ -45,12 +47,12 @@ install -m 0644 -p Aegean.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-install -Dm 0644 -p %{SOURCE2} \
+install -Dm 0644 -p %{SOURCE3} \
         %{buildroot}%{_datadir}/appdata/%{fontname}.metainfo.xml
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -100,6 +102,9 @@ appstream-util validate-relax --nonet \
 %doc Aegean.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 8.91-alt1_1
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 8.01-alt1_1
 - update to new release by fcimport
 
