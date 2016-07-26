@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-musica
 Version:        3.12
-Release:        alt1_0.4.20150430
+Release:        alt1_0.5.%{checkout}
 Summary:        A font for musical symbols
 
 # https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
@@ -105,6 +105,9 @@ appstream-util validate-relax --nonet \
 %doc Musica.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 3.12-alt1_0.5.20150430
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 3.12-alt1_0.4.20150430
 - update to new release by fcimport
 
