@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl-devel perl-podlators
+BuildRequires: perl(IO/File.pm) perl(IO/Handle.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Inplace
 Version:        0.20
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Perl module for in-place editing of files
 License:        (GPL+ or Artistic)
 Group:          Development/Perl
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_15
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt2_14
 - update to new release by fcimport
 
