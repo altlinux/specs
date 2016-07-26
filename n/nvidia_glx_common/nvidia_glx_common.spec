@@ -13,8 +13,8 @@
 %define nv_version 367
 %define nv_release 35
 %define nv_minor %nil
-%define pkg_rel alt167
-%define set_gl_nvidia_ver 0.16.0
+%define pkg_rel alt168
+%define set_gl_nvidia_ver 0.17.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -190,6 +190,7 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libnvidia-cfg.so.1
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libEGL_nvidia.so.0
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv2_nvidia.so.2
+%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLX_nvidia.so.0
 
 %__ln_s ../../..%nv_etclib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/vdpau/libvdpau_nvidia.so
@@ -197,6 +198,7 @@ install -m 0755 %SOURCE3 %buildroot/%_bindir/
 %__ln_s ../..%nv_etclib_sym_dir/libnvidia-cfg.so.1 %buildroot/%x11_lib_dir/libnvidia-cfg.so.1
 %__ln_s ../..%nv_etclib_sym_dir/libEGL_nvidia.so.0 %buildroot/%x11_lib_dir/libEGL_nvidia.so.0
 %__ln_s ../..%nv_etclib_sym_dir/libGLESv2_nvidia.so.2 %buildroot/%x11_lib_dir/libGLESv2_nvidia.so.2
+%__ln_s ../..%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1 %buildroot/%x11_lib_dir/libGLESv1_CM_nvidia.so.1
 %__ln_s ../..%nv_etclib_sym_dir/libGLX_nvidia.so.0 %buildroot/%x11_lib_dir/libGLX_nvidia.so.0
 
 
@@ -248,6 +250,7 @@ fi
 %nv_etclib_sym_dir/libnvidia-cfg.so.?
 %nv_etclib_sym_dir/libEGL_nvidia.so.?
 %nv_etclib_sym_dir/libGLESv2_nvidia.so.?
+%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.?
 %nv_etclib_sym_dir/libGLX_nvidia.so.?
 #%nv_etclib_sym_dir/nvidia.xinf
 %if "%_lib" == "lib64"
@@ -259,6 +262,7 @@ fi
 %x11_lib_dir/libnvidia-cfg.so.?
 %x11_lib_dir/libEGL_nvidia.so.?
 %x11_lib_dir/libGLESv2_nvidia.so.?
+%x11_lib_dir/libGLESv1_CM_nvidia.so.?
 %x11_lib_dir/libGLX_nvidia.so.?
 #
 %_bindir/nvidia-clean-driver
@@ -266,6 +270,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt168
+- switch libGLESv1_CM
+
 * Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 367.35-alt167
 - switch libGLX
 
