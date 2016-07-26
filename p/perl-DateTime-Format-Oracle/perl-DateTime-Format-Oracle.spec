@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Oracle
 Version:        0.06
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Parse and format Oracle dates and timestamps
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_12
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_11
 - update to new release by fcimport
 
