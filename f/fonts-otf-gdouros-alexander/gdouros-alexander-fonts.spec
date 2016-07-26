@@ -3,23 +3,16 @@ Group: System/Fonts/True type
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname gdouros-alexander-fonts
-# https://web.archive.org/web/20150625020428/http://users.teilar.gr/~g1951d/
-# "in lieu of a licence:
-# Fonts and documents in this site are not pieces of property or merchandise
-# items; they carry no trademark, copyright, license or other market tags;
-# they are free for any use. George Douros"
-
 %global fontname gdouros-alexander
 %global fontconf 65-%{fontname}.conf
 
 Name:           fonts-otf-gdouros-alexander
-Version:        6.00
-Release:        alt1_2
+Version:        6.31
+Release:        alt1_1
 Summary:        A Greek typeface inspired by Alexander Wilson
-
 License:        Public Domain
-URL:            http://users.teilar.gr/~g1951d/
-Source0:        http://users.teilar.gr/~g1951d/TextFonts.zip
+URL:            http://users.teilar.gr/~g1951d/Textfonts.htm
+Source0:        http://users.teilar.gr/~g1951d/Alexander.zip
 Source1:        http://users.teilar.gr/~g1951d/Textfonts.pdf
 Source2:        %{oldname}-fontconfig.conf
 Source3:        %{fontname}.metainfo.xml
@@ -115,6 +108,9 @@ appstream-util validate-relax --nonet \
 %doc Textfonts.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 6.31-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6.00-alt1_2
 - update to new release by fcimport
 
