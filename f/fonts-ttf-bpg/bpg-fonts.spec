@@ -13,7 +13,7 @@ BuildRequires: unzip
 Name:		fonts-ttf-bpg
 Summary: 	Georgian Unicode fonts
 Version:	%{common_ver}
-Release:	alt5_6
+Release:	alt5_7
 # Font exception
 # See: http://groups.google.com/group/bpg-fonts/web/gpl-gnu-license
 # No version of the GPL is specified.
@@ -116,7 +116,7 @@ This package consists of files used by other BPG font packages.
 Group: System/Fonts/True type
 Summary:	Algeti Family of BPG Georgian Fonts
 Version:	2.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-algeti
 %common_desc
@@ -133,7 +133,7 @@ This package contains the Algeti font family.
 Group: System/Fonts/True type
 Summary:	Chveulebrivi family of BPG Georgian fonts
 Version:	3.002
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-chveulebrivi
 %common_desc
@@ -150,7 +150,7 @@ This package contains the Chveulebrivi font family.
 Group: System/Fonts/True type
 Summary:	Classic family of BPG Georgian fonts
 Version:	8.500
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-classic
 %common_desc
@@ -167,7 +167,7 @@ This package contains the Classic font family.
 Group: System/Fonts/True type
 Summary:	Courier family of BPG Georgian fonts
 Version:	4.002
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-courier
 %common_desc
@@ -184,7 +184,7 @@ This package contains the Courier font family.
 Group: System/Fonts/True type
 Summary:	Courier S family of BPG Georgian fonts
 Version:	4.000
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-courier-s
 %common_desc
@@ -201,7 +201,7 @@ This package contains the Courier S font family.
 Group: System/Fonts/True type
 Summary:	DedaEna Block family of BPG Georgian fonts
 Version:	3.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-dedaena-block
 %common_desc
@@ -219,7 +219,7 @@ Group: System/Fonts/True type
 Summary:	DejaVu Sans with BPG Georgian changes
 Version:	2.28
 License:	Bitstream Vera
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-dejavu-sans
 %common_desc
@@ -237,7 +237,7 @@ changes.
 Group: System/Fonts/True type
 Summary:	Elite family of BPG Georgian fonts
 Version:	3.000
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-elite
 %common_desc
@@ -254,7 +254,7 @@ This package contains the Elite font family.
 Group: System/Fonts/True type
 Summary:	Excelsior family of BPG Georgian fonts
 Version:	2.03
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 License:	Bitstream Vera
 
 %description -n fonts-ttf-bpg-excelsior
@@ -272,7 +272,7 @@ This package contains the Excelsior font family.
 Group: System/Fonts/True type
 Summary:	Excelsior Caps family of BPG Georgian fonts
 Version:	2.003
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 License:	Bitstream Vera
 
 %description -n fonts-ttf-bpg-excelsior-caps
@@ -290,7 +290,7 @@ This package contains the Excelsior Caps font family.
 Group: System/Fonts/True type
 Summary:	Excelsior Condenced family of BPG Georgian fonts
 Version:	2.003
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 License:	Bitstream Vera
 
 %description -n fonts-ttf-bpg-excelsior-condenced
@@ -308,7 +308,7 @@ This package contains the Excelsior Condenced font family.
 Group: System/Fonts/True type
 Summary:	Glaho family of BPG Georgian fonts
 Version:	9.000
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-glaho
 %common_desc
@@ -324,7 +324,7 @@ This package contains the Glaho font family.
 Group: System/Fonts/True type
 Summary:	Gorda family of BPG Georgian fonts
 Version:	2.003
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-gorda
 %common_desc
@@ -341,7 +341,7 @@ This package contains the Gorda font family.
 Group: System/Fonts/True type
 Summary:	Ingiri family of BPG Georgian fonts
 Version:	4.000
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-ingiri
 %common_desc
@@ -358,7 +358,7 @@ This package contains the Ingiri font family.
 Group: System/Fonts/True type
 Summary:	Irubaqidze family of BPG Georgian fonts
 Version:	1.000
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-irubaqidze
 %common_desc
@@ -382,7 +382,7 @@ replica of this casted type.
 Group: System/Fonts/True type
 Summary:	Mikhail Stephan family of BPG Georgian fonts
 Version:	2.500
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-mikhail-stephan
 %common_desc
@@ -403,7 +403,7 @@ in Tbilisi by Hungarian Master Michael Stefan Hungaro-Valakhian.
 Group: System/Fonts/True type
 Summary:	Mrgvlovani family of BPG Georgian fonts
 Version:	1.002
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-mrgvlovani
 %common_desc
@@ -420,7 +420,7 @@ This package contains the Mrgvlovani font family.
 Group: System/Fonts/True type
 Summary:	Mrgvlovani Caps family of BPG Georgian fonts
 Version:	1.002
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-mrgvlovani-caps
 %common_desc
@@ -437,7 +437,7 @@ This package contains the Mrgvlovani Caps font family.
 Group: System/Fonts/True type
 Summary:	Nateli family of BPG Georgian fonts
 Version:	2.003
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-nateli
 %common_desc
@@ -454,7 +454,7 @@ This package contains the Nateli font family.
 Group: System/Fonts/True type
 Summary:	Nateli Caps family of BPG Georgian fonts
 Version:	2.003
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-nateli-caps
 %common_desc
@@ -471,7 +471,7 @@ This package contains the Nateli Caps font family.
 Group: System/Fonts/True type
 Summary:	Nateli Condenced family of BPG Georgian fonts
 Version:	2.003
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-nateli-condenced
 %common_desc
@@ -488,7 +488,7 @@ This package contains the Nateli Condenced font family.
 Group: System/Fonts/True type
 Summary:	Nino Medium family of BPG Georgian fonts
 Version:	4.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-nino-medium
 %common_desc
@@ -505,7 +505,7 @@ This package contains the Nino Medium font family.
 Group: System/Fonts/True type
 Summary:	Nino Medium Cond family of BPG Georgian fonts
 Version:	4.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-nino-medium-cond
 %common_desc
@@ -522,7 +522,7 @@ This package contains the Nino Medium Cond font family.
 Group: System/Fonts/True type
 Summary:	Sans family of BPG Georgian fonts
 Version:	1.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-sans
 %common_desc
@@ -539,7 +539,7 @@ This package contains the Sans font family.
 Group: System/Fonts/True type
 Summary:	Sans Medium family of BPG Georgian fonts
 Version:	1.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-sans-medium
 %common_desc
@@ -557,7 +557,7 @@ Group: System/Fonts/True type
 Summary:	Sans Modern family of BPG Georgian fonts
 Version:	2.025
 License:	Bitstream Vera
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-sans-modern
 %common_desc
@@ -574,7 +574,7 @@ This package contains the Sans Modern font family.
 Group: System/Fonts/True type
 Summary:	Sans Regular family of BPG Georgian fonts
 Version:	1.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-sans-regular
 %common_desc
@@ -591,7 +591,7 @@ This package contains the Sans Regular font family.
 Group: System/Fonts/True type
 Summary:	Serif family of BPG Georgian fonts
 Version:	1.005
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-serif
 %common_desc
@@ -609,7 +609,7 @@ Group: System/Fonts/True type
 Summary:	Serif Modern family of BPG Georgian fonts
 Version:	2.028
 License:	Bitstream Vera
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-serif-modern
 %common_desc
@@ -626,7 +626,7 @@ This package contains the Serif Modern font family.
 Group: System/Fonts/True type
 Summary:	Ucnobi family of BPG Georgian fonts
 Version:	3.300
-Requires:	%{name}-common = %{common_ver}-%{release}
+Requires:	%{name}-common = %{common_ver}
 
 %description -n fonts-ttf-bpg-ucnobi
 %common_desc
@@ -795,6 +795,9 @@ fi
 %doc Docs/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt5_7
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt5_6
 - update to new release by fcimport
 
