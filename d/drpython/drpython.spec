@@ -1,5 +1,5 @@
 Name: drpython
-Version: 3.11.3
+Version: 3.11.4
 Release: alt1
 Epoch: 1
 
@@ -10,7 +10,7 @@ Url: http://drpython.sourceforge.net/
 License: GPL
 Group: Development/Python
 
-# Source-url: http://prdownloads.sourceforge.net/drpython/%version/DrPython_%version.zip
+# Source-url: http://downloads.sourceforge.net/project/drpython/DrPython%20%283.x%29/%version/DrPython_%version.zip
 Source: %name-%version.tar
 Source1: %name.desktop
 
@@ -21,9 +21,9 @@ BuildArch: noarch
 BuildPreReq: python-devel
 # Automatically added by buildreq on Sat Oct 12 2013
 # optimized out: fontconfig libgdk-pixbuf libwayland-client libwayland-server python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python3-base
-BuildRequires: python-module-cmd2 python-module-mwlib python-module-protobuf python-module-wx2.9
+BuildRequires: python-module-cmd2 python-module-wx3.0
 
-BuildRequires: ImageMagick, rpm-build-compat >= 1.2
+BuildRequires: ImageMagick, rpm-build-intro
 BuildRequires: desktop-file-utils
 
 Requires: webclient
@@ -40,12 +40,15 @@ DrPython -- это хорошо настраиваемая простая сре
 
 %prep
 %setup
+
+%remove_repo_info
+
 chmod 644 %name.py
 
 # Fix default paths to docs
-sed -i "s/mozilla/url_handler.sh/" drPreferences.py
-sed -i "s|http://www.python.org/doc/current/|%_docdir/python-doc-2.4.2/index.html|" drPreferences.py
-sed -i "s|http://www.wxwidgets.org/docs.htm|%_docdir/wxGTK2-doc-2.6.2|" drPreferences.py
+#sed -i "s/mozilla/url_handler.sh/" drPreferences.py
+#sed -i "s|http://www.python.org/doc/current/|%_docdir/python-doc-2.4.2/index.html|" drPreferences.py
+#sed -i "s|http://www.wxwidgets.org/docs.htm|%_docdir/wxGTK2-doc-2.6.2|" drPreferences.py
 
 # Change Windows line endings to Unix line endings
 for file in $(find *.txt *.TXT -type f); do
@@ -60,15 +63,13 @@ rm -f setup.cfg
 %python_build
 
 %install
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_datadir/%name
-mkdir -p %buildroot%_datadir/%name/documentation
-cp *.py* %buildroot%_datadir/%name
-cp -r examples bitmaps %buildroot%_datadir/%name
-cp -r documentation/* %buildroot%_datadir/%name/documentation/
+mkdir -p %buildroot%_bindir/
+mkdir -p %buildroot%_datadir/%name/
+#mkdir -p %buildroot%_datadir/%name/documentation
+cp *.py* %buildroot%_datadir/%name/
+cp -r examples bitmaps %buildroot%_datadir/%name/
 
 echo '#!/bin/bash' > %buildroot%_bindir/%name
-#echo 'cd %_datadir/%name' >> %buildroot%_bindir/%name
 echo 'python %_datadir/%name/drpython.py' >> %buildroot%_bindir/%name
 chmod 755 %buildroot%_bindir/%name
 
@@ -76,13 +77,13 @@ install -D -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 #icons
 mkdir -p %buildroot%_liconsdir
-convert -size 16x16 documentation/%name.png %buildroot%_liconsdir/%name.png
+convert -size 16x16 bitmaps/%name.png %buildroot%_liconsdir/%name.png
 mkdir -p %buildroot%_niconsdir
-convert -size 32x32 documentation/%name.png %buildroot%_niconsdir/%name.png
+convert -size 32x32 bitmaps/%name.png %buildroot%_niconsdir/%name.png
 mkdir -p %buildroot%_miconsdir
-convert -size 48x48 documentation/%name.png %buildroot%_miconsdir/%name.png
+convert -size 48x48 bitmaps/%name.png %buildroot%_miconsdir/%name.png
 
-rm -rf %buildroot%_datadir/drpython/bitmaps/24/.xvpics
+#rm -rf %buildroot%_datadir/drpython/bitmaps/24/.xvpics
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=IDE \
 	%buildroot%_desktopdir/drpython.desktop
@@ -97,6 +98,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/%name.png
 
 %changelog
+* Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1:3.11.4-alt1
+- new version 3.11.4 (with rpmrb script)
+
 * Sat Oct 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1:3.11.3-alt1
 - new version (3.11.3) with rpmgs script
 - cleanup spec
