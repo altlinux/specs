@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:		fonts-otf-drehatlas-warender-bibliothek
 Version:	1.0.2.1
-Release:	alt3_9
+Release:	alt3_10
 Summary:	A Latin typeface that is decorative, surreal, and hairy
 Group:		System/Fonts/True type
 License:	OFL
@@ -17,7 +17,7 @@ Source0:	http://downloads.sourceforge.net/project/drehatlas-fonts/Font-Packages/
 Source1:	%{fontconf}
 Source2:	%{fontname}.metainfo.xml
 BuildArch:	noarch
-BuildRequires:	fontpackages-devel fontforge
+BuildRequires:	fontpackages-devel fontforge libfontforge
 Source44: import.info
 
 %description
@@ -101,6 +101,9 @@ fi
 %doc drehatlas-fonts-%{metapkgver}/WarenderBibliothek-%{version}/LICENSE drehatlas-fonts-%{metapkgver}/WarenderBibliothek-%{version}/FONTLOG
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.2.1-alt3_10
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0.2.1-alt3_9
 - update to new release by fcimport
 
