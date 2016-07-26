@@ -1,11 +1,11 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(overload.pm) perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl(overload.pm) perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-WWW-Pastebin-PastebinCom-Create
 Version:        1.003
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Paste to http://pastebin.com from Perl
 License:        GPL+ or Artistic
 
@@ -53,6 +53,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.003-alt1_6
 - update to new release by fcimport
 
