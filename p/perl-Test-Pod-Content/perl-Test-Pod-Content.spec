@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-Module-Build perl-devel perl-podlators
+BuildRequires: perl-Module-Build perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Pod-Content
 Version:        0.0.6
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Test a Pod's content
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_13
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.6-alt2_12
 - update to new release by fcimport
 
