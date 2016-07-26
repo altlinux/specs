@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-alef
 Version:        1.0
-Release:        alt1_4
+Release:        alt1_5
 Summary:        A free multi-lingual font designed for screens
 
 Group:          System/Fonts/True type
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_4
 - update to new release by fcimport
 
