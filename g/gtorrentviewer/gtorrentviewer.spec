@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/curl-config /usr/bin/glib-gettextize libgtk+2-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
-%define fedora 21
+%define fedora 24
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_32
+Release:	alt4_33
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
 Group:		Networking/WWW
 License:	GPL+
@@ -17,7 +17,7 @@ Patch3:		gtorrentviewer-0.2b-trackerdetails.patch
 Patch4:		GTorrentViewer-0.2b-curl-types.patch
 Patch5:		GTorrentViewer-0.2b-format.patch
 Patch6:		GTorrentViewer-0.2b-missing-tracker.patch
-BuildRequires:	curl-devel gtk2-devel >= 2.4 desktop-file-utils gettext intltool
+BuildRequires:	libcurl-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel, desktop-file-utils gettext gettext-tools gettext-tools-python, intltool
 
 Requires(post):	  desktop-file-utils
 Requires(postun): desktop-file-utils
@@ -100,6 +100,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_33
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_32
 - update to new release by fcimport
 
