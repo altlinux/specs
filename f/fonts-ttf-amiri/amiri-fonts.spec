@@ -21,7 +21,7 @@ O.U.O.U.O. O.O.U.U.O.O.O.O. O.U.O.U.U.O.U.O.O. U.U.U. U.U.O. O.O.O. O.U.O.O. O.O
 
 Name: fonts-ttf-amiri
 Version: 0.108
-Release: alt1_1
+Release: alt1_2
 License: OFL
 
 Source0: https://github.com/khaledhosny/amiri-font/releases/download/%{version}/%{fontname}-%{version}.zip
@@ -30,7 +30,7 @@ Source2: %{fontname}-fontconfig.conf
 
 BuildArch: noarch
 BuildRequires: fontpackages-devel
-Requires: %{name}-common = %{version}-%{release}
+Requires: %{name}-common = %{version}
 
 Summary: A classical Arabic font in Naskh style
 Summary(ar): الخطوط الأميرية ذات المظهر الأنيق و التّراث العريق
@@ -63,7 +63,7 @@ This package consists of files used by other %{oldname} packages.
 Group: System/Fonts/True type
 Summary: Quran type of Amiri fonts
 Summary(ar): النّمط القُرآني من الخط الأميري
-Requires: %{name}-common = %{version}-%{release}
+Requires: %{name}-common = %{version}
 
 %description -n fonts-ttf-amiri-quran
 %common_desc
@@ -152,6 +152,9 @@ fi
 %doc amiri-table.pdf NEWS README README-Arabic NEWS-Arabic documentation-arabic.pdf
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.108-alt1_2
+- update to new release by fcimport
+
 * Sun Dec 27 2015 Igor Vlasenko <viy@altlinux.ru> 0.108-alt1_1
 - update to new release by fcimport
 
