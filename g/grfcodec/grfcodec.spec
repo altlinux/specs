@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 #global prever r821
 
 Name:           grfcodec
-Version:        6.0.5
-Release:        alt1_5
+Version:        6.0.6
+Release:        alt1_1
 Summary:        A suite of programs to modify Transport Tycoon Deluxe's GRF files
 Group:          Development/Tools
 License:        GPLv2+
@@ -13,7 +13,7 @@ URL:            http://dev.openttdcoop.org/projects/grfcodec
 Source0:        http://binaries.openttd.org/extra/grfcodec/%{version}/grfcodec-%{version}-source.tar.xz
 #Source0:        http://binaries.openttd.org/extra/grfcodec-nightly/%{prever}/grfcodec-nightly-%{prever}-source.tar.xz
 
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libpng-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel libpng-devel
 Source44: import.info
 
 
@@ -53,6 +53,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 6.0.6-alt1_1
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 6.0.5-alt1_5
 - update to new release by fcimport
 
