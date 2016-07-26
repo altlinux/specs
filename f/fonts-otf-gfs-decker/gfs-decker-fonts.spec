@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-decker
 Version: 20090618
-Release: alt3_11
+Release: alt3_12
 Summary: A 19th century Greek typeface
 
 License:   OFL
@@ -115,6 +115,9 @@ fi
 %{_datadir}/appdata/%{fontname}.metainfo.xml
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_12
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 20090618-alt3_11
 - update to new release by fcimport
 
