@@ -1,5 +1,5 @@
 Name: dia2code
-Version: 0.8.7
+Version: 0.8.8
 Release: alt1
 License: GPLv2+
 Group: Development/Tools
@@ -42,6 +42,9 @@ install -D dia2code.kaptn %buildroot%_datadir/kaptain/dia2code.kaptn
 %_datadir/kaptain/dia2code.kaptn
 
 %changelog
+* Tue Jul 26 2016 Fr. Br. George <george@altlinux.ru> 0.8.8-alt1
+- Autobuild version bump to 0.8.8
+
 * Wed Jul 09 2014 Fr. Br. George <george@altlinux.ru> 0.8.7-alt1
 - Autobuild version bump to 0.8.7
 - Fix kaptain location
