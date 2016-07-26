@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bbrun /usr/bin/firefox /usr/bin/gencat /usr/bin/gvim gcc-c++ libICE-devel libSM-devel libX11-devel libsocket
+BuildRequires: /usr/bin/bbrun /usr/bin/firefox /usr/bin/gencat /usr/bin/gnome-terminal /usr/bin/gvim gcc-c++ imake libX11-devel xorg-cf-files
 # END SourceDeps(oneline)
 Summary: The bastard son of Blackbox, a small and fast Window Manager
 Name: hackedbox
 Version: 0.8.5
-Release: alt1_16
+Release: alt1_17
 # Most of the sources are MIT-licensed from blackbox, but a (very) small
 # portion is GPLv2+, so that is the resulting license
 License: GPLv2+
@@ -14,9 +14,9 @@ Source0: http://scrudgeware.org/downloads/hackedbox/hackedbox-%{version}.tar.gz
 Source1: hackedbox.desktop
 Patch0: hackedbox-0.8.5-noblackbox.patch
 Patch1: hackedbox-0.8.5-gcc43.patch
-BuildRequires: libXt-devel libXext-devel
+BuildRequires: libXt-devel, libXext-devel
 # We heavily patch *.in files...
-BuildRequires: autoconf automake libtool
+BuildRequires: autoconf-common, automake-common, libtool-common
 Source44: import.info
 Source45: hackedbox.alternatives
 Source46: hackedbox.menu
@@ -110,6 +110,9 @@ rm -f %buildroot/etc/X11/gdm/Sessions/Hackedbox
 
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_17
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.8.5-alt1_16
 - update to new release by fcimport
 
