@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-WikiConverter-Markdown
 Version:        0.06
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Convert HTML to Markdown markup
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_5
+- update to new release by fcimport
+
 * Thu Feb 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_4
 - to Sisyphus for publican
 
