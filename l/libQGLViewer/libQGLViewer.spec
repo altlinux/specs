@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 Name:           libQGLViewer
-Version:        2.5.1
-Release:        alt1_8
+Version:        2.6.3
+Release:        alt1_1
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -13,17 +14,21 @@ Source0:        http://www.libqglviewer.com/src/%{name}-%{version}.tar.gz
 
 # QGLViewer/VRender/gpc.cpp uses exit(0) to "abort" from a failure of malloc
 # Use abort() instead.
-Patch0:         libQGLViewer-2.3.1-exit.patch
+Patch0:         libQGLViewer-2.6.3-exit.patch
 
 # libQGLViewer .pro files explicitely remove "-g" from compile flags. Make
 # them back.
-Patch1:         libQGLViewer-2.5.1-dbg.patch
+Patch1:         libQGLViewer-2.6.3-dbg.patch
 
-# Compilation error
-Patch2:         libQGLViewer-2.5.1-qflag.patch
+# libQGLViewer-2.6.3 does not compile on armv7:
+#    vec.h: In member function 'qglviewer::Vec::operator const double*() const':
+#    vec.h:175:10: error: cannot convert 'const qreal* {aka const float*}' to 'const double*' in return
+#       return v_;
+#              ^~
+Patch2:        libQGLViewer-2.6.3-qreal.patch
 
 
-BuildRequires:  qt4-devel qt5-base-devel
+BuildRequires: libqt4-declarative libqt4-devel qt4-designer qt5-base-devel
 Source44: import.info
 Patch33: libQGLViewer-alt-glu.patch
 
@@ -39,6 +44,7 @@ complex applications, being fully customizable and easy to extend.
 %package        qt5
 Summary:        Qt5 version of %{name}
 Group:          Development/C
+Requires: libqt5-concurrent libqt5-core libqt5-dbus libqt5-network libqt5-sql libqt5-test libqt5-xml
 
 %description    qt5
 %{name} is a C++ library based on Qt that eases the creation of OpenGL
@@ -52,7 +58,8 @@ complex applications, being fully customizable and easy to extend.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{version}
+Requires: libqt4-declarative qt4-designer
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -61,7 +68,7 @@ developing applications that use %{name}.
 %package        qt5-devel
 Summary:        Development files for %{name} using Qt5
 Group:          Development/C
-Requires:       %{name}-qt5 = %{version}-%{release}
+Requires:       %{name}-qt5 = %{version}
 
 %description    qt5-devel
 The %{name}-devel package contains libraries and header files for
@@ -71,7 +78,7 @@ developing applications that use %{name} and Qt5.
 %package doc
 Summary: API documentation, demos and example programs for %{name}
 Group: Documentation
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 BuildArch: noarch
 %description doc
 %{summary}.
@@ -80,7 +87,10 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}
 %patch0 -p1 -b .exit
 %patch1 -p1 -b .dbg
-%patch2 -p1 -b .qflag
+%patch2 -p1 -b .qreal
+
+# Fix permissions
+chmod a-x examples/*/*.vcproj
 
 %patch33 -p1
 rm -rf ../%{name}-%{version}-qt5
@@ -185,6 +195,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/libQGLViewer-qt5.so.%{version}\\* || true
 %doc examples
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.3-alt1_1
+- update to new release by fcimport
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_8
 - new version
 
