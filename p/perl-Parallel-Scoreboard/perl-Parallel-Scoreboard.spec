@@ -4,7 +4,7 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(Filter/Util/Call.pm) perl
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Scoreboard
 Version:        0.07
-Release:        alt1_6
+Release:        alt1_7
 Summary:        Scoreboard for monitoring status of many processes
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -63,6 +63,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_7
+- update to new release by fcimport
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1_6
 - update to new release by fcimport
 
