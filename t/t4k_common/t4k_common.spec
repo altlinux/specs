@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libSDL_ttf-devel pkgconfig(SDL_ttf)
+BuildRequires: gcc-c++ libSDL_ttf-devel
 # END SourceDeps(oneline)
 Name: t4k_common
 Version: 0.1.1
-Release: alt2_13
+Release: alt2_14
 URL: http://tux4kids.alioth.debian.org/
 Summary: Library for Tux4Kids applications
 License: GPLv3+
@@ -11,7 +11,7 @@ Source0: https://alioth.debian.org/frs/download.php/3540/%{name}-%{version}.tar.
 Patch0: t4k_common-0.1.1-libpng15.patch
 Group: System/Libraries
 BuildRequires: libSDL-devel libSDL_mixer-devel libSDL_image-devel
-BuildRequires: libSDL_pango-devel libSDL_net-devel librsvg-devel libcairo-devel
+BuildRequires: libSDL_pango-devel libSDL_net-devel librsvg-devel librsvg-gir-devel libcairo-devel
 BuildRequires: libpng-devel libxml2-devel doxygen
 Provides: bundled(liblinebreak)
 Source44: import.info
@@ -19,7 +19,8 @@ Source44: import.info
 %package devel
 Summary: Development files for the Tux4Kids library
 Group: Development/C++
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}
+Requires: pkg-config
 
 %description
 library of code shared by TuxMath, TuxType, and
@@ -61,6 +62,9 @@ chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/t4k_common.pc
 
 %changelog
+* Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_14
+- update to new release by fcimport
+
 * Sun Sep 20 2015 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_13
 - update to new release by fcimport
 
