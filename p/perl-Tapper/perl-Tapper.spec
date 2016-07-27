@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper
 %define upstream_version 4.1
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_7
+Release:    alt1_8
 
 Summary:    Automated OS testing, also virtualized
 License:    GPL+ or Artistic
@@ -47,6 +47,9 @@ testing infrastructure, extending it with automation and advanced querying.
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_8
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1-alt1_7
 - update by mgaimport
 
