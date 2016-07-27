@@ -1,7 +1,7 @@
 %define pear_name HTML_CSS
 
 Name: pear-HTML_CSS
-Version: 1.5.1
+Version: 1.5.4
 Release: alt1
 
 Summary: HTML_CSS is a class for generating CSS declarations
@@ -61,6 +61,9 @@ In addition, it shares the following with HTML_Common based classes:
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.4-alt1
+- new version 1.5.4 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
 - new version 1.5.1 (with rpmrb script)
 
