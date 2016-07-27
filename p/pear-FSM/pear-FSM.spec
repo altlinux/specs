@@ -1,7 +1,7 @@
 %define pear_name FSM
 
 Name: pear-FSM
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Finite State Machine
@@ -46,10 +46,14 @@ finite state machine with memory).
 %doc LICENSE CHANGELOG
 %pear_testdir/FSM/
 %pear_dir/FSM.php
+%pear_dir/FSM/
 %pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0 (with rpmrb script)
 
