@@ -1,7 +1,7 @@
 %define pear_name DB_DataObject
 
 Name: pear-DB_DataObject
-Version: 1.8.10
+Version: 1.11.5
 Release: alt1
 
 Summary: An SQL Builder, Object Interface to Database Tables
@@ -55,6 +55,9 @@ rm -rf %buildroot%_bindir/DB
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.11.5-alt1
+- new version 1.11.5 (with rpmrb script)
+
 * Fri Jul 10 2009 Vitaly Lipatov <lav@altlinux.ru> 1.8.10-alt1
 - new version 1.8.10 (with rpmrb script)
 
