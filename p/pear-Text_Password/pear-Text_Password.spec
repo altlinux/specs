@@ -1,8 +1,8 @@
 %define pear_name Text_Password
 
 Name: pear-Text_Password
-Version: 1.1.0
-Release: alt4
+Version: 1.1.1
+Release: alt1
 
 Summary: Creating passwords with PHP
 
@@ -46,6 +46,9 @@ http://pear.php.net/manual/.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Wed Dec 10 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt4
 - fix php requires
 
