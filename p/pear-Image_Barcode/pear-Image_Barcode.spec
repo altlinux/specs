@@ -1,8 +1,8 @@
 %define pear_name Image_Barcode
 
 Name: pear-Image_Barcode
-Version: 1.1.0
-Release: alt3
+Version: 1.1.3
+Release: alt1
 
 Summary: Barcode generation
 
@@ -45,9 +45,13 @@ any of GD supported supported image types.
 %doc LICENSE CHANGELOG
 %pear_dir/Image
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
+- new version 1.1.3 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
