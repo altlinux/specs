@@ -1,8 +1,8 @@
 %define pear_name Math_RPN
 
 Name: pear-Math_RPN
-Version: 1.1.1
-Release: alt3
+Version: 1.1.2
+Release: alt1
 
 Summary: Reverse Polish Notation
 
@@ -43,6 +43,9 @@ Change Expression To RPN (Reverse Polish Notation) and evaluate it.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
