@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBIx/Class.pm) perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    DBIx-Class-InflateColumn-Object-Enum
 %define upstream_version 0.06
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Allows a DBIx::Class user to define a Object::Enum column
 License:    GPL+ or Artistic
@@ -45,6 +45,9 @@ no description found
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_5
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_4
 - update by mgaimport
 
