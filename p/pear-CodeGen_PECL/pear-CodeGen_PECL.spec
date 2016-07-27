@@ -1,7 +1,7 @@
 %define pear_name CodeGen_PECL
 
 Name: pear-CodeGen_PECL
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Tool to generate PECL extensions from an XML description
@@ -51,6 +51,9 @@ PECL extension.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
+- new version 1.1.3 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - new version 1.1.2 (with rpmrb script)
 
