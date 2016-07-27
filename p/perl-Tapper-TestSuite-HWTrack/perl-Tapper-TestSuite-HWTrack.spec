@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper-TestSuite-HWTrack
 %define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    Report hardware meta information
 License:    GPL+ or Artistic
@@ -56,6 +56,9 @@ framework.
 /usr/share/man/man1/tapper-testsuite-hwtrack.1*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_7
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_6
 - update by mgaimport
 
