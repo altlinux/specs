@@ -1,8 +1,8 @@
 %define pear_name HTML_Template_Flexy
 
 Name: pear-HTML_Template_Flexy
-Version: 1.3.4
-Release: alt2
+Version: 1.3.13
+Release: alt1
 
 Summary: An extremely powerful Tokenizer driven Template engine
 
@@ -45,9 +45,13 @@ still has a very simple set of goals.
 %doc LICENSE CHANGELOG
 %pear_dir/HTML
 %pear_testdir/HTML_Template_Flexy/
+%pear_datadir/HTML_Template_Flexy/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.13-alt1
+- new version 1.3.13 (with rpmrb script)
+
 * Wed Dec 10 2008 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt2
 - fix php requires
 
