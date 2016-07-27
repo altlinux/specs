@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Number-Fraction
 %define upstream_version 2.00
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_5
+Release:    alt2_6
 
 Summary:    No summary found
 License:    GPL+ or Artistic
@@ -52,6 +52,9 @@ If you use the module in your program in the usual way
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_6
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_5
 - update by mgaimport
 
