@@ -1,8 +1,8 @@
 %define pear_name HTML_Template_IT
 
 Name: pear-HTML_Template_IT
-Version: 1.2.1
-Release: alt3
+Version: 1.3.0
+Release: alt1
 
 Summary: Integrated Templates
 
@@ -75,6 +75,9 @@ you to modify some parts of your layout easily.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
