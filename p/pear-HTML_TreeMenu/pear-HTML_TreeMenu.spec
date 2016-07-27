@@ -1,7 +1,7 @@
 %define pear_name HTML_TreeMenu
 
 Name: pear-HTML_TreeMenu
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Provides an api to create a HTML tree
@@ -49,10 +49,14 @@ from Chip Chapin (http://www.chipchapin.com).
 %doc LICENSE CHANGELOG
 %pear_dir/HTML/
 %pear_datadir/HTML_TreeMenu/
+%pear_testdir/HTML_TreeMenu/
 %pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
+- new version 1.2.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
