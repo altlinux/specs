@@ -1,6 +1,6 @@
 %define pear_name HTTP_Request2
 Name: pear-%pear_name
-Version: 0.5.2
+Version: 2.3.0
 Release: alt1
 
 Summary: Provides an easy way to perform HTTP requests
@@ -48,9 +48,13 @@ Proxy Authentication, SSL, file uploads etc.
 %pear_dir/HTTP/
 %pear_xmldir/%pear_name.xml
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_testdir/%pear_name/
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version 2.3.0 (with rpmrb script)
+
 * Sat Oct 23 2010 Vitaly Lipatov <lav@altlinux.ru> 0.5.2-alt1
 - initial build for ALT Linux Sisyphus
 
