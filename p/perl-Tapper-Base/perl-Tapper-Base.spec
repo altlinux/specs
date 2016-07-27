@@ -9,7 +9,7 @@ BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(File/Find/Rul
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Require that we are running on a particular OS
 License:    GPL+ or Artistic
@@ -61,6 +61,9 @@ Linux, Solaris, AIX etc.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_2
+- update by mgaimport
+
 * Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_1
 - update by mgaimport
 
