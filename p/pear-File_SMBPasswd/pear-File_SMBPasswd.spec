@@ -1,8 +1,8 @@
 %define pear_name File_SMBPasswd
 
 Name: pear-File_SMBPasswd
-Version: 1.0.2
-Release: alt3
+Version: 1.0.3
+Release: alt1
 
 Summary: Class for managing SAMBA style password files
 
@@ -46,6 +46,9 @@ With this package, you can maintain smbpasswd-files, usualy used by SAMBA.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
