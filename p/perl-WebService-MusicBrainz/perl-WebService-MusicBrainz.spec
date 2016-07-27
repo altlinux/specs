@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Build.pm) perl(URI/Escape.pm) perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    WebService-MusicBrainz
 %define upstream_version 0.93
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_7
+Release:    alt2_8
 
 Summary:    No summary found
 License:    GPL+ or Artistic
@@ -53,6 +53,9 @@ web service objects;
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_8
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_7
 - update by mgaimport
 
