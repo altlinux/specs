@@ -1,8 +1,8 @@
 %define pear_name Net_Geo
 
 Name: pear-Net_Geo
-Version: 1.0.4
-Release: alt3
+Version: 1.0.5
+Release: alt1
 
 Summary: Geographical locations based on Internet address
 
@@ -48,6 +48,9 @@ localizer extension.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
+- new version 1.0.5 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
