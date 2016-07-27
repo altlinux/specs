@@ -1,8 +1,8 @@
 %define pear_name DB_NestedSet
 
 Name: pear-DB_NestedSet
-Version: 1.2.4
-Release: alt3
+Version: 1.4.1
+Release: alt1
 
 Summary: API to build and query nested sets
 
@@ -53,9 +53,13 @@ o It also features caching of SQL queries using PEAR::Cache
 %doc LICENSE CHANGELOG
 %pear_dir/DB/
 %pear_docdir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.4-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
