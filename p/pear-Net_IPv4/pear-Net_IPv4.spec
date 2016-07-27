@@ -1,8 +1,8 @@
 %define pear_name Net_IPv4
 
 Name: pear-Net_IPv4
-Version: 1.3.0
-Release: alt3
+Version: 1.3.4
+Release: alt1
 
 Summary: IPv4 network calculations and validation
 
@@ -42,9 +42,13 @@ validity.
 %files
 %doc LICENSE CHANGELOG
 %pear_dir/Net
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt1
+- new version 1.3.4 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
