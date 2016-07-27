@@ -9,7 +9,7 @@ BuildRequires: perl(Scalar/Util.pm) perl(base.pm) perl(overload.pm) perl-podlato
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Perl Enum Replacement
 License:    GPL+ or Artistic
@@ -51,6 +51,9 @@ rm -f %{buildroot}%{perl_vendor_privlib}/.DS_Store
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.075-alt1_2
+- update by mgaimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.075-alt1_1
 - update by mgaimport
 
