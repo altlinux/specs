@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Array/RefElem.pm) perl(Carp.pm) perl(Data/Dumper.pm) perl(Devel/Peek.pm) perl(English.pm) perl(Exporter.pm) perl(Fatal.pm) perl(File/Spec.pm) perl(HTML/LinkExtor.pm) perl(HTML/TreeBuilder.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(LWP/UserAgent.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Scalar/Util/Instance.pm) perl(Smart/Comments.pm) perl(Symbol.pm) perl(Text/Diff.pm) perl(Tie/RefHash.pm) perl(Tie/RefHash/Weak.pm) perl(URI/URL.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(Array/RefElem.pm) perl(Fatal.pm) perl(HTML/LinkExtor.pm) perl(HTML/TreeBuilder.pm) perl(LWP/UserAgent.pm) perl(Math/BigFloat.pm) perl(Math/BigInt.pm) perl(Scalar/Util/Instance.pm) perl(Smart/Comments.pm) perl(Text/Diff.pm) perl(Tie/RefHash.pm) perl(Tie/RefHash/Weak.pm) perl(URI/URL.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Test-Weaken
 %define upstream_version 3.022000
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_6
+Release:    alt2_7
 
 Summary:    Test that freed memory is, in fact, freed
 License:    GPL+ or Artistic
@@ -55,6 +55,9 @@ are weakened and expected to be then freed.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.022000-alt2_7
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 3.022000-alt2_6
 - update by mgaimport
 
