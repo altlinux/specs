@@ -1,6 +1,6 @@
 Name: polkit
 Version: 0.113
-Release: alt1
+Release: alt2
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -126,7 +126,9 @@ touch ChangeLog
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_datadir/gtk-doc/html/%name-1
+%_datadir/gettext/its/%name.its
+%_datadir/gettext/its/%name.loc
+%_datadir/gtk-doc/html/%name-1/
 
 %files -n lib%name-gir-devel
 %_datadir/gir-1.0/*.gir
@@ -136,6 +138,9 @@ touch ChangeLog
 %exclude %_datadir/polkit-1/actions/org.freedesktop.policykit.examples.pkexec.policy
 
 %changelog
+* Wed Jul 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.113-alt2
+- updated to 0.113-24-g2cc5ed5
+
 * Thu Jul 02 2015 Yuri N. Sedunov <aris@altlinux.org> 0.113-alt1
 - 0.113
 
