@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.34
+Version: 0.35
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- added exception for hpmud.so
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - added exception for libgdiplus.so
 
