@@ -1,8 +1,8 @@
 %define pear_name HTML_Progress
 
 Name: pear-HTML_Progress
-Version: 1.2.5
-Release: alt4
+Version: 1.2.6
+Release: alt1
 
 Summary: How to include a loading bar in your XHTML documents quickly and easily
 
@@ -64,6 +64,9 @@ properties.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.6-alt1
+- new version 1.2.6 (with rpmrb script)
+
 * Wed Dec 10 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.5-alt4
 - fix php requires
 
