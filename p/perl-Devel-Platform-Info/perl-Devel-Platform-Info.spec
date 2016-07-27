@@ -9,7 +9,7 @@ BuildRequires: perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Retrieve Solaris platform metadata
 License:    GPL+ or Artistic
@@ -56,6 +56,9 @@ the usage for CPAN Testers.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_2
+- update by mgaimport
+
 * Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1_1
 - update by mgaimport
 
