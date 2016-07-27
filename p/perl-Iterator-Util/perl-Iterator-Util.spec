@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(Test/More.pm) perl(base.pm) perl-devel perl-podlators
+BuildRequires: perl(Exporter.pm) perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Iterator-Util
 %define upstream_version 0.02
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    Essential utilities for the Iterator class
 License:    GPL+ or Artistic
@@ -53,6 +53,9 @@ the the Iterator manpage documentation.
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_7
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1_6
 - update by mgaimport
 
