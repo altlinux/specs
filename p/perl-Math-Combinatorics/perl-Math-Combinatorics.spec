@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Data/Dumper.pm) perl(Exporter.pm) perl(Test/More.pm) perl-devel perl-podlators
+BuildRequires: perl(Data/Dumper.pm) perl(Exporter.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Math-Combinatorics
 %define upstream_version 0.09
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt3_7
+Release:    alt3_8
 
 Summary:    Perform combinations and permutations on lists
 License:    GPL+ or Artistic
@@ -54,6 +54,9 @@ problems such as the following to be solved:
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_8
+- update by mgaimport
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt3_7
 - to Sisyphus
 
