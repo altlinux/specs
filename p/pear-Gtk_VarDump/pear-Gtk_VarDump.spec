@@ -1,7 +1,7 @@
 %define pear_name Gtk_VarDump
 
 Name: pear-Gtk_VarDump
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: A simple GUI to example php data trees
@@ -40,9 +40,13 @@ cd %pear_name-%version
 %doc LICENSE CHANGELOG
 %pear_dir/Gtk
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Sat Jan 05 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Linux Sisyphus
 
