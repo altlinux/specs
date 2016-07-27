@@ -1,14 +1,13 @@
 %define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.20
+Version: 1.24
 Release: alt1
-Source: %name-%version-1.tar.gz
+Source: %version.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
 Group: Games/Arcade
 License: GPL
-Patch: %name-1.19-icons.patch
-Packager: Fr. Br. George <george@altlinux.ru>
+Patch: %name-1.24-icons.patch
 Requires: %name-data = %version
 
 # Automatically added by buildreq on Sun Feb 28 2010
@@ -64,6 +63,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Wed Jul 27 2016 Fr. Br. George <george@altlinux.ru> 1.24-alt1
+- Autobuild version bump to 1.24
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.20-alt1
 - Autobuild version bump to 1.20
 
