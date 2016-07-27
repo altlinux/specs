@@ -1,8 +1,8 @@
 %define pear_name Net_LMTP
 
 Name: pear-Net_LMTP
-Version: 1.0.1
-Release: alt3
+Version: 1.0.2
+Release: alt1
 
 Summary: Provides an implementation of the RFC2033 LMTP protocol
 
@@ -42,11 +42,15 @@ Auth_SASL class.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/Net
-%pear_testdir/Net_LMTP/test_lmtp.php
+%pear_dir/Net/
+%pear_testdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
