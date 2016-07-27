@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(Fcntl.pm) perl(IPC/Cmd.pm) perl-devel perl-podlators
+BuildRequires: perl(IPC/Cmd.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Proc-InvokeEditor
 %define upstream_version 1.07
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_6
 
 Summary:    Perl extension for starting a text editor
 License:    GPL+ or Artistic
@@ -60,6 +60,9 @@ editor. A shell is not used but this should cover most simple cases.
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_6
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1_5
 - update by mgaimport
 
