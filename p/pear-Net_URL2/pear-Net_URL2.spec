@@ -1,6 +1,6 @@
 %define pear_name Net_URL2
 Name: pear-%pear_name
-Version: 0.3.1
+Version: 2.2.1
 Release: alt1
 
 Summary: Class for parsing and handling URL
@@ -41,8 +41,12 @@ URL generation, and resolving of relative URLs.
 %pear_dir/Net/
 %pear_xmldir/%pear_name.xml
 %pear_docdir/%pear_name/
+%pear_testdir/%pear_name/
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
+- new version 2.2.1 (with rpmrb script)
+
 * Sat Oct 23 2010 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
 - initial build for ALT Linux Sisyphus
 
