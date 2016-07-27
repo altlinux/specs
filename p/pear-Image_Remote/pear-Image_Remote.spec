@@ -1,8 +1,8 @@
 %define pear_name Image_Remote
 
 Name: pear-Image_Remote
-Version: 1.0.1
-Release: alt3
+Version: 1.0.2
+Release: alt1
 
 Summary: Retrieve information on remote image files
 
@@ -44,6 +44,9 @@ files via http without downloading the whole image.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
