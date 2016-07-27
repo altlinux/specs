@@ -1,8 +1,8 @@
 %define pear_name Net_DNS
 
 Name: pear-Net_DNS
-Version: 1.0.0
-Release: alt3
+Version: 1.0.7
+Release: alt1
 
 Summary: Resolver library used to communicate with a DNS server
 
@@ -46,9 +46,13 @@ system resolver library and communicates directly with the server.
 %files
 %doc LICENSE CHANGELOG
 %pear_dir/Net
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.7-alt1
+- new version 1.0.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
