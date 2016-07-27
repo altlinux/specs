@@ -1,7 +1,7 @@
 %define pear_name Date
 
 Name: pear-Date
-Version: 1.5.0a1
+Version: 1.5.0a4
 Release: alt1
 
 Summary: Generic date/time handling class for PEAR
@@ -50,9 +50,13 @@ to convert date strings between Gregorian and Human calendar formats.
 %pear_testdir/Date/
 %pear_dir/Date.php
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.0a4-alt1
+- new version 1.5.0a4 (with rpmrb script)
+
 * Mon Nov 29 2010 Vitaly Lipatov <lav@altlinux.ru> 1.5.0a1-alt1
 - new version 1.5.0a1 (with rpmrb script)
 
