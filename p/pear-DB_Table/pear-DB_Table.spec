@@ -1,7 +1,7 @@
 %define pear_name DB_Table
 
 Name: pear-DB_Table
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 
 Summary: An object oriented interface to, and model of, a database. Integrates with HTML_QuickForm
@@ -64,6 +64,9 @@ create an interface to an existing database.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.6-alt1
+- new version 1.5.6 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.5-alt1
 - new version 1.5.5 (with rpmrb script)
 
