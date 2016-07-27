@@ -1,8 +1,8 @@
 %define pear_name Math_Matrix
 
 Name: pear-Math_Matrix
-Version: 0.8.0
-Release: alt3
+Version: 0.8.7
+Release: alt1
 
 Summary: Class to represent matrices and matrix operations
 
@@ -48,9 +48,14 @@ Requires the Math_Vector package.
 %doc LICENSE CHANGELOG
 %pear_dir/Math
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 0.8.7-alt1
+- new version 0.8.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.8.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
