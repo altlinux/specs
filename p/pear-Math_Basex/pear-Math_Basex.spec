@@ -1,8 +1,8 @@
 %define pear_name Math_Basex
 
 Name: pear-Math_Basex
-Version: 0.3
-Release: alt3
+Version: 0.3.1
+Release: alt1
 
 Summary: Simple class for converting base set of numbers with a customizable character base set
 
@@ -44,6 +44,9 @@ Base X conversion class
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
+- new version 0.3.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
