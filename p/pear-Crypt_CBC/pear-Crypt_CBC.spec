@@ -1,8 +1,8 @@
 %define pear_name Crypt_CBC
 
 Name: pear-Crypt_CBC
-Version: 0.4
-Release: alt3
+Version: 1.0.1
+Release: alt1
 
 Summary: A class to emulate Perl's Crypt::CBC module
 
@@ -39,10 +39,14 @@ A class to emulate Perl's Crypt::CBC module.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/Crypt
+%pear_dir/Crypt/
+%pear_docdir/Crypt_CBC/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
