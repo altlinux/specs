@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name udisks
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
@@ -11,16 +13,19 @@
 %def_disable fhs_media
 
 Name: %{_name}2
-Version: 2.1.7
-Release: alt1
+Version: 2.1.8
+Release: alt0.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-#Source: %_name-%version.tar
+%if_disabled snapshot
 Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+%else
+Source: %_name-%version.tar
+%endif
 Source1: %name.control
 
 Obsoletes: %_name
@@ -103,6 +108,7 @@ This package contains development documentation for lib%name.
 
 %prep
 %setup -n %_name-%version
+subst 's/mkfs.vfat/mkfs.fat/' src/udiskslinuxfsinfo.c
 
 %build
 %autoreconf
@@ -182,6 +188,10 @@ fi
 %endif
 
 %changelog
+* Wed Jul 27 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.8-alt0.1
+- updated to 2.1.7-5-ga05e89d
+- used mkfs.fat instead of old mkfs.vfat
+
 * Tue Mar 01 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.7-alt1
 - 2.1.7
 
