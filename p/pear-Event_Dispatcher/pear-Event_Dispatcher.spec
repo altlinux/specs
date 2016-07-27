@@ -1,8 +1,8 @@
 %define pear_name Event_Dispatcher
 
 Name: pear-Event_Dispatcher
-Version: 1.0.0
-Release: alt3
+Version: 1.1.0
+Release: alt1
 
 Summary: Dispatch notifications using PHP callbacks
 
@@ -52,6 +52,9 @@ observer, passing the notification as the sole argument.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
