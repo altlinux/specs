@@ -1,8 +1,6 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: thunar
 Version: 1.6.10
-Release: alt2
+Release: alt3
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -23,6 +21,8 @@ BuildPreReq: libxfce4panel-devel >= 4.8 libxfconf-devel >= 4.8 libexo-devel >= 0
 BuildRequires: gtk-doc intltool libSM-devel libdbus-glib-devel libexif-devel libgamin-devel libpcre-devel time
 BuildRequires: libnotify4-devel libgudev-devel
 BuildRequires: desktop-file-utils
+
+%define _unpackaged_files_terminate_build 1
 
 Requires: lib%name = %version-%release
 Requires: eject
@@ -121,6 +121,11 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Fri Jul 22 2016 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt3
+- Patch from Xfce bugzilla (Xfce bug #12264, ALT bug #32271):
+  + Take a reference to the ThunarFile before g_idle_add, release
+    it after.
+
 * Fri Feb 12 2016 Mikhail Efremov <sem@altlinux.org> 1.6.10-alt2
 - Enable debug (minimum level).
 - Fix potential buffer overflow (CVE-2013-7447).
