@@ -1,8 +1,8 @@
 %define pear_name Net_Dict
 
 Name: pear-Net_Dict
-Version: 1.0.5
-Release: alt3
+Version: 1.0.7
+Release: alt1
 
 Summary: Interface to the DICT Protocol
 
@@ -48,6 +48,9 @@ to make it easy for a developer to use DICT servers in their programs.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.7-alt1
+- new version 1.0.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
