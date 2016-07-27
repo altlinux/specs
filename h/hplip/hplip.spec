@@ -4,6 +4,8 @@
 %def_enable autostart
 %def_enable PPDs
 %def_disable qt3
+%def_enable qt4
+%def_disable qt5
 %def_enable policykit
 # udev >= 145
 # note: flag dropped upstream
@@ -23,7 +25,7 @@
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
-Version: 3.15.9
+Version: 3.16.7
 Release: alt1
 License: GPL/MIT/BSD
 Group: Publishing
@@ -110,35 +112,39 @@ Patch2: hplip-3.9.12-alt-fix-udev-rules-ppdev.patch
 Patch4: hplip-3.9.12-alt-hplip-desktop.patch
 Patch5: hplip-3.15.9-alt-link-libhpipp.patch
 Patch6: hplip-3.15.9-alt-systemd.patch
-Patch7: hplip-3.15.9-alt-link-python2.patch
+Patch7: hplip-3.16.7-alt-link-python2.patch
+Patch8: hplip-3.16.7-alt-link-python3.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
 # it is patch 10 rediffed
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.15.9-2-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.15.9-2-hplip-strstr-const.patch
-Patch103: fedora-3.15.9-2-hplip-ui-optional.patch
-Patch104: fedora-3.15.9-2-hplip-no-asm.patch
-Patch105: fedora-3.15.9-2-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.15.9-2-hplip-udev-rules.patch
-Patch107: fedora-3.15.9-2-hplip-retry-open.patch
-Patch108: fedora-3.15.9-2-hplip-snmp-quirks.patch
-Patch109: fedora-3.15.9-2-hplip-hpijs-marker-supply.patch
-Patch110: fedora-3.15.9-2-hplip-clear-old-state-reasons.patch
-Patch111: fedora-3.15.9-2-hplip-hpcups-sigpipe.patch
-Patch112: fedora-3.15.9-2-hplip-logdir.patch
-Patch113: fedora-3.15.9-2-hplip-bad-low-ink-warning.patch
-Patch114: fedora-3.15.9-2-hplip-deviceIDs-ppd.patch
-Patch115: fedora-3.15.9-2-hplip-ppd-ImageableArea.patch
-Patch116: fedora-3.15.9-2-hplip-scan-tmp.patch
-Patch117: fedora-3.15.9-2-hplip-log-stderr.patch
-Patch118: fedora-3.15.9-2-hplip-avahi-parsing.patch
-Patch120: fedora-3.15.9-2-hplip-dj990c-margin.patch
-Patch121: fedora-3.15.9-2-hplip-strncpy.patch
-Patch122: fedora-3.15.9-2-hplip-no-write-bytecode.patch
-Patch123: fedora-3.15.9-2-hplip-silence-ioerror.patch
+Patch101: fedora-3.16.7-1-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.16.7-1-hplip-strstr-const.patch
+Patch103: fedora-3.16.7-1-hplip-ui-optional.patch
+Patch104: fedora-3.16.7-1-hplip-no-asm.patch
+Patch105: fedora-3.16.7-1-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.16.7-1-hplip-udev-rules.patch
+Patch107: fedora-3.16.7-1-hplip-retry-open.patch
+Patch108: fedora-3.16.7-1-hplip-snmp-quirks.patch
+Patch109: fedora-3.16.7-1-hplip-hpijs-marker-supply.patch
+Patch110: fedora-3.16.7-1-hplip-clear-old-state-reasons.patch
+Patch111: fedora-3.16.7-1-hplip-hpcups-sigpipe.patch
+Patch112: fedora-3.16.7-1-hplip-logdir.patch
+Patch113: fedora-3.16.7-1-hplip-bad-low-ink-warning.patch
+Patch114: fedora-3.16.7-1-hplip-deviceIDs-ppd.patch
+Patch115: fedora-3.16.7-1-hplip-ppd-ImageableArea.patch
+Patch116: fedora-3.16.7-1-hplip-scan-tmp.patch
+Patch117: fedora-3.16.7-1-hplip-log-stderr.patch
+Patch118: fedora-3.16.7-1-hplip-avahi-parsing.patch
+Patch120: fedora-3.16.7-1-hplip-dj990c-margin.patch
+Patch121: fedora-3.16.7-1-hplip-strncpy.patch
+Patch122: fedora-3.16.7-1-hplip-no-write-bytecode.patch
+Patch123: fedora-3.16.7-1-hplip-silence-ioerror.patch
+Patch124: fedora-3.16.7-1-hplip-3165-sourceoption.patch
+Patch125: fedora-3.16.7-1-hplip-include-ppdh.patch
+
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -176,8 +182,11 @@ BuildArch: noarch
 
 %if_enabled qt3
 Requires: python%{pysuffix}-module-qt >= 3.16
-%else
+%endif
+%if_enabled qt4
 Requires: python%{pysuffix}-module-PyQt4
+%else
+Requires: python%{pysuffix}-module-PyQt5
 %endif
 
 # some utils do require dbus user session
@@ -391,7 +400,12 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 %patch4 -p1 -b .desktop
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
+%if_with python3
+#patch8 -p2
+%else
+#patch7 -p2
+%endif
+
 
 # The pstotiff filter is rubbish so replace it (launchpad #528394).
 %patch101 -p1 -b .pstotiff-is-rubbish
@@ -415,8 +429,6 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
        prnt/drv/hpijs.drv.in.deviceIDs-drv-hpijs \
        > prnt/drv/hpijs.drv.in
 
-# Move udev rule for calling hp-config_usb_printer into separate file.
-# Don't specify python version in hplip-printer@.service.
 # Move udev rules from /etc/ to /usr/lib/ (bug #748208).
 %patch106 -p1 -b .udev-rules
 
@@ -463,11 +475,18 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # Fixed uses of strncpy throughout.
 %patch121 -p1 -b .strncpy
 
-# Don't try to write bytecode cache for hpfax backend (bug #1192761).
+# Don't try to write bytecode cache for hpfax backend (bug #1192761)
+# or hp-config_usb_printer (bug #1266903)
+# or hpps filter (bug #1241548).
 %patch122 -p1 -b .no-write-bytecode
 
 # Ignore IOError when logging output (bug #712537).
 %patch123 -p1 -b .silence-ioerror
+ 
+# [abrt] hplip: hp-scan:663:<module>:NameError: name 'source_option' is not defined (bug #1341304)
+%patch124 -p1 -b .sourceoption
+
+%patch125 -p1 -b .include-ppdh
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -504,7 +523,13 @@ gzip_n_mov_ppd prnt/ps
 gzip_n_mov_ppd ppd/hpijs
 gzip_n_mov_ppd ppd/hpcups
 
-#autoreconf -fisv
+# Work-around Makefile.am imperfections.
+sed -i 's|^AM_INIT_AUTOMAKE|AM_INIT_AUTOMAKE([foreign subdir-objects])|g' configure.in
+# Upstream uses old libtool, which causes problems (due to libhpmud requiring
+# libhpdiscovery) when we try to remove rpath from it.
+# Regenerating all autotools files works-around these rpath issues.
+autoreconf -fisv
+
 cat > /dev/null <<EOF
   --disable-option-checking  ignore unrecognized --enable/--with options
   --enable-static[=PKGS]  build static libraries [default=no]
@@ -558,7 +583,8 @@ EOF
     --enable-network-build=yes \
     %{subst_enable policykit} \
     %{subst_enable qt3} \
-    --enable-qt4 \
+    %{subst_enable qt4} \
+    %{subst_enable qt5} \
 %if_enabled sane_backend
     --enable-scan-build \
 %else
@@ -570,10 +596,6 @@ EOF
 %else
     --enable-hpijs-only-build 
 %endif
-
-# from fedora 3.9.2-4 spec
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 %make
 
@@ -609,6 +631,8 @@ mkdir -p $RPM_BUILD_ROOT%_sysconfdir/hp
 mkdir -p %buildroot%_runtimedir/hplip
 ## Create /run/hplip
 #mkdir -p %{buildroot}/run/hplip
+# Create /var/lib/hp
+mkdir -p %{buildroot}%{_sharedstatedir}/hp
 
 # install /usr/lib/tmpfiles.d/hplip.conf (bug #1015831)
 mkdir -p %{buildroot}%{_tmpfilesdir}
@@ -826,7 +850,6 @@ fi
 %if_enabled policykit
 %{_datadir}/hplip/pkservice.py*
 %{_datadir}/PolicyKit/policy/com.hp.hplip.policy
-%{_udevrulesdir}/56-hp_conf_usb.rules
 %{_unitdir}/hplip-printer@.service
 %endif
 # global dbus service
@@ -847,8 +870,8 @@ fi
 %{_datadir}/hplip/pcard
 %{_datadir}/hplip/prnt
 %{_datadir}/hplip/scan
-%dir %_localstatedir/hp
-#%_localstatedir/hp/hplip.state
+%dir %_sharedstatedir/hp
+#%_sharedstatedir/hp/hplip.state
 #%dir %attr(0775,root,lp) %{_var}/log/hp
 #%dir %attr(1775,root,lp) %{_var}/log/hp/tmp
 %dir %attr(0775,root,lp) %_runtimedir/hplip
@@ -896,7 +919,14 @@ fi
 %{_datadir}/hplip/plugins
 %{_datadir}/hplip/ui
 %endif
+# qt4 interface
+%if_enabled qt4
 %{_datadir}/hplip/ui4
+%endif
+# qt5 interface
+%if_enabled qt5
+%{_datadir}/hplip/ui5
+%endif
 
 # HPLIP menu files
 %_datadir/applications/%name.desktop
@@ -930,7 +960,11 @@ fi
 
 %files common
 # HPIP
-%_libdir/libhpip*so*
+%_libdir/libhpip*so.*
+%_libdir/libhpdiscovery.so.*
+%exclude %_libdir/libhpip*so
+%exclude %_libdir/libhpdiscovery.so
+# The so symlink is required here (see RH bug #489059).
 %_libdir/libhpmud*so*
 %{_udevrulesdir}/56-hpmud.rules
 %{_tmpfilesdir}/hplip.conf
@@ -964,6 +998,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.16.7-alt1
+- new version (closes: #31946)
+
 * Fri Oct 23 2015 Igor Vlasenko <viy@altlinux.ru> 3.15.9-alt1
 - new version
 
