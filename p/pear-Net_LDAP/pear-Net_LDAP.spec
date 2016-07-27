@@ -1,7 +1,7 @@
 %define pear_name Net_LDAP
 
 Name: pear-Net_LDAP
-Version: 1.1.2
+Version: 1.1.5
 Release: alt1
 
 Summary: Object oriented interface for searching and manipulating LDAP-entries
@@ -56,6 +56,9 @@ Net_LDAP layers itself on top of PHP's existing ldap extensions.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt1
+- new version 1.1.5 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - new version 1.1.2 (with rpmrb script)
 
