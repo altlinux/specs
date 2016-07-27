@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm) perl(subs.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec/Functions.pm) perl(Test/More.pm) perl(subs.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    ConfigReader-Simple
 %define upstream_version 1.29
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_6
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
@@ -55,6 +55,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_6
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1_5
 - update by mgaimport
 
