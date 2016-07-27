@@ -1,8 +1,8 @@
 %define pear_name Net_Portscan
 
 Name: pear-Net_Portscan
-Version: 1.0.2
-Release: alt3
+Version: 1.0.3
+Release: alt1
 
 Summary: Portscanner utilities
 
@@ -46,6 +46,9 @@ checking a whole range of ports on a machine.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
