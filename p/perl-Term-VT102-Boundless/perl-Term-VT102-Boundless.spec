@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(base.pm) perl(ok.pm) perl-devel perl-podlators
+BuildRequires: perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Term-VT102-Boundless
 %define upstream_version 0.04
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_6
+Release:    alt1_7
 
 Summary:    A L<Term::VT102> that grows automatically to
 License:    GPL+ or Artistic
@@ -52,6 +52,9 @@ media.
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_7
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_6
 - update by mgaimport
 
