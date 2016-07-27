@@ -1,7 +1,7 @@
 %define pear_name I18N_UnicodeString
 
 Name: pear-I18N_UnicodeString
-Version: 0.2.1
+Version: 0.3.1
 Release: alt1
 
 Summary: Provides a way to work with self contained multibyte strings
@@ -41,10 +41,15 @@ of storing Unicode in 8 byte strings like UTF-8 and HTML entities.
 %doc LICENSE CHANGELOG
 %dir %pear_dir/I18N/
 %pear_dir/I18N/UnicodeString.php
+%pear_dir/I18N/UnicodeString/
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
+- new version 0.3.1 (with rpmrb script)
+
 * Wed Jul 01 2009 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt1
 - initial build for ALT Linux Sisyphus (with pear make-rpm-spec)
 
