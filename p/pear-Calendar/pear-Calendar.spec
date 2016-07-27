@@ -1,7 +1,7 @@
 %define pear_name Calendar
 
 Name: pear-Calendar
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: A package for building Calendar data structures (irrespective of output)
@@ -57,6 +57,9 @@ on lunar cycles).
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.5-alt1
+- new version 0.5.5 (with rpmrb script)
+
 * Wed Jul 01 2009 Vitaly Lipatov <lav@altlinux.ru> 0.5.4-alt1
 - initial build for ALT Linux Sisyphus (with pear make-rpm-spec)
 
