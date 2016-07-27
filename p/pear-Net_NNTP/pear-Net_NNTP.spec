@@ -1,7 +1,7 @@
 %define pear_name Net_NNTP
 
 Name: pear-Net_NNTP
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Implementation of the NNTP protocol
@@ -46,6 +46,9 @@ Package for communicating with NNTP/Usenet servers
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
