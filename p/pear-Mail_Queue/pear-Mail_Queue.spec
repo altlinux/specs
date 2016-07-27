@@ -1,8 +1,8 @@
 %define pear_name Mail_Queue
 
 Name: pear-Mail_Queue
-Version: 1.2.2
-Release: alt2
+Version: 1.2.7
+Release: alt1
 
 Summary: Class for put mails in queue and send them later in background
 
@@ -52,9 +52,13 @@ mails every few minutes) by crontab or in other way.
 %doc LICENSE CHANGELOG
 %pear_dir/Mail
 %pear_docdir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.7-alt1
+- new version 1.2.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
 - autorebuild for correct requires(pre) (see bug #16086)
 
