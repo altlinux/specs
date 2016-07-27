@@ -9,7 +9,7 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Fil
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Packaging up SeleniumRC java server
 License:    GPL+ or Artistic
@@ -53,6 +53,9 @@ a pure-HTML+JS library that performs automated tasks in JavaScript.
 /usr/bin/selenium-rc
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1_3
+- update by mgaimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.95-alt1_2
 - update by mgaimport
 
