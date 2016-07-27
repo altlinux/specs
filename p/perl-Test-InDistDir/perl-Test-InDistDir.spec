@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Test-InDistDir
 %define upstream_version 1.112071
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_6.1
+Release:    alt2_7
 
 Summary:    Test environment setup for development with IDE
 License:    GPL+ or Artistic
@@ -59,6 +59,9 @@ when it's actually run inside the t/ directory.
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.112071-alt2_7
+- update by mgaimport
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.112071-alt2_6.1
 - to Sisyphus
 
