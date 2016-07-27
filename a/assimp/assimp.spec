@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: gcc-c++ libGL-devel libGLU-devel python-devel swig unzip
+BuildRequires: gcc-c++ libGL-devel libGLU-devel swig unzip
 # END SourceDeps(oneline)
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name assimp
@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ libGL-devel libGLU-devel python-devel swig unzip
 
 Name:           assimp
 Version:        3.2
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Library to import various 3D model formats into applications
 Group:          Graphics
 License:        BSD
@@ -22,6 +22,7 @@ Source0:        https://github.com/assimp/assimp/archive/v%{version}/%{name}-%{v
 Patch0:         assimp-3.1.1-mga-fdr-doxyfile.patch
 Patch1:         assimp-3.2-mga-fdr-system-poly2tri-clipper.patch
 Patch2:         assimp-3.2-mga-system-unzip.patch
+Patch3:         assimp-3.2-git-Fix-debug-postfix.patch
 
 BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-python3-devel boost-signals-devel boost-wave-devel
 BuildRequires:  cmake
@@ -87,6 +88,7 @@ You need to install it if you want to develop programs using assimp.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # Get rid of bundled libs so we can't accidently build against them
 #rm -rf contrib/clipper
@@ -117,6 +119,9 @@ popd
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_3
+- update by mgaimport
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
