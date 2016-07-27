@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Cache-Ref
 %define upstream_version 0.04
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt4_7
+Release:    alt4_8
 
 Summary:    No summary found
 License:    GPL+ or Artistic
@@ -56,6 +56,9 @@ This collection of classes implements a number of semi related algorithms.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt4_8
+- update by mgaimport
+
 * Tue Mar 22 2016 Igor Vlasenko <viy@altlinux.ru> 0.04-alt4_7
 - to Sisyphus
 
