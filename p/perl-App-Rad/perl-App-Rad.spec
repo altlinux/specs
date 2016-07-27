@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    App-Rad
 %define upstream_version 1.05
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_6
 
 Summary:    Extend the App::Rad framework!
 License:    GPL+ or Artistic
@@ -60,6 +60,9 @@ Extending App::Rad - Plugins!
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_6
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.05-alt1_5
 - update by mgaimport
 
