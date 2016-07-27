@@ -9,7 +9,7 @@ BuildRequires: perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_2
+Release:    alt1_3
 
 Summary:    Easy YAML serialisation
 License:    GPL+ or Artistic
@@ -49,6 +49,9 @@ tripping of YAML serialized Perl data structures.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.7-alt1_3
+- update by mgaimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.0.7-alt1_2
 - update by mgaimport
 
