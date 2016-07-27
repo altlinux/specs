@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper-TestSuite-AutoTest
 %define upstream_version 4.1.2
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_5
+Release:    alt1_6
 
 Summary:    Complete OS testing in a box via autotest for Tapper
 License:    GPL+ or Artistic
@@ -60,6 +60,9 @@ Tapper.
 
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_6
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.2-alt1_5
 - update by mgaimport
 
