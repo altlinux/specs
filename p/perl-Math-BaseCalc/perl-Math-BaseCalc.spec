@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(English.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Math-BaseCalc
 %define upstream_version 1.017
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt2_5
+Release:    alt2_6
 
 Summary:    %{upstream_name} perl module
 License:    GPL or Artistic
@@ -22,7 +22,7 @@ BuildRequires: perl(Module/Build.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(integer.pm)
 BuildRequires: perl(vars.pm)
-BuildRequires: perl-devel
+BuildRequires: perl-CPAN perl-Digest-SHA perl-Encode perl-Encode-devel perl-JSON-PP perl-Module-CoreList perl-Pod-Checker perl-Pod-Parser perl-Pod-Usage perl-devel
 BuildArch:  noarch
 Source44: import.info
 
@@ -48,6 +48,9 @@ make PREFIX=$RPM_BUILD_ROOT%{_prefix} install DESTDIR=$RPM_BUILD_ROOT
 %{perl_vendor_privlib}/Math/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.017-alt2_6
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.017-alt2_5
 - update by mgaimport
 
