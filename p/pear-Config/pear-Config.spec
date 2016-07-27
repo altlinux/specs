@@ -1,8 +1,8 @@
 %define pear_name Config
 
 Name: pear-Config
-Version: 1.10.11
-Release: alt3
+Version: 1.10.12
+Release: alt1
 
 Summary: Your configuration's swiss-army knife
 
@@ -53,6 +53,9 @@ The Config package provides methods for configuration manipulation.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.10.12-alt1
+- new version 1.10.12 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.10.11-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
