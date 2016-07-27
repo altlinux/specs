@@ -1,8 +1,8 @@
 %define pear_name Net_UserAgent_Detect
 
 Name: pear-Net_UserAgent_Detect
-Version: 2.4.0
-Release: alt3
+Version: 2.5.2
+Release: alt1
 
 Summary: Net_UserAgent_Detect determines the Web browser, version, and platform from an HTTP user agent string
 
@@ -52,6 +52,9 @@ version 1.3 of Horde.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
+- new version 2.5.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
