@@ -1,8 +1,8 @@
 %define pear_name File_Passwd
 
 Name: pear-File_Passwd
-Version: 1.1.6
-Release: alt4
+Version: 1.1.7
+Release: alt1
 
 Summary: Manipulate many kinds of password files
 
@@ -49,6 +49,9 @@ and custom formatted password files.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt1
+- new version 1.1.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.6-alt4
 - autorebuild for correct requires(pre) (see bug #16086)
 
