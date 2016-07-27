@@ -1,8 +1,8 @@
 %define pear_name MIME_Type
 
 Name: pear-MIME_Type
-Version: 1.0.0
-Release: alt3
+Version: 1.4.1
+Release: alt1
 
 Summary: Utility class for dealing with MIME types
 
@@ -46,11 +46,15 @@ types.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/MIME
-%pear_dir/docs
+%pear_dir/MIME/
+%pear_docdir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
