@@ -1,8 +1,8 @@
 %define pear_name System_Mount
 
 Name: pear-System_Mount
-Version: 1.0.0
-Release: alt3
+Version: 1.0.1
+Release: alt1
 
 Summary: Mount and unmount devices in fstab
 
@@ -53,6 +53,9 @@ Features:
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
