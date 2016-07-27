@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl-devel perl-podlators
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Catalyst-Plugin-Redirect
 %define upstream_version 0.02
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt3_7
+Release:    alt3_8
 
 Summary:    Redirect for Catalyst used easily is offered
 License:    GPL+ or Artistic
@@ -42,6 +42,9 @@ Redirect for Catalyst used easily is offered.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt3_8
+- update by mgaimport
+
 * Mon Mar 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.02-alt3_7
 - to Sisyphus
 
