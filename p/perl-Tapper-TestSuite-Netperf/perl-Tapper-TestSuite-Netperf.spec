@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Tapper-TestSuite-Netperf
 %define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_7
+Release:    alt1_8
 
 Summary:    Tapper - Network performance measurements - Client
 License:    GPL+ or Artistic
@@ -55,6 +55,9 @@ Network performance measurements client for Tapper.
 /usr/share/man/man1/tapper-testsuite-netperf-server.1*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_8
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_7
 - update by mgaimport
 
