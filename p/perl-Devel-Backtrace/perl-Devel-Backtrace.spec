@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Class/Accessor/Fast.pm) perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(base.pm) perl(overload.pm) perl-devel perl-podlators
+BuildRequires: perl(base.pm) perl(overload.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Devel-Backtrace
 %define upstream_version 0.12
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_8
+Release:    alt1_9
 
 Summary:    Object-oriented backtrace
 License:    GPL+ or Artistic
@@ -46,6 +46,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_9
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1_8
 - update by mgaimport
 
