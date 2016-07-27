@@ -1,7 +1,7 @@
 %define pear_name File_IMC
 
 Name: pear-File_IMC
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Create and parse Internet Mail Consortium-style files (like vCard and vCalendar)
@@ -51,6 +51,9 @@ is the use of a factory pattern.  Again, see the examples.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+
 * Wed Jul 01 2009 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - initial build for ALT Linux Sisyphus
 
