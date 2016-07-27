@@ -1,8 +1,8 @@
 %define pear_name HTML_Table_Matrix
 
 Name: pear-HTML_Table_Matrix
-Version: 1.0.9
-Release: alt3
+Version: 1.0.10
+Release: alt1
 
 Summary: Autofill a table with data
 
@@ -60,11 +60,13 @@ elements in the table.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/HTML
-%pear_dir/doc
+%pear_dir/HTML/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.10-alt1
+- new version 1.0.10 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.9-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
