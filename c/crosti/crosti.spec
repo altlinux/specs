@@ -1,5 +1,5 @@
 Name: crosti
-Version: 1.13.0
+Version: 1.13.2
 Release: alt1
 
 Summary: Tool to create cross stitch scheme from custom image
@@ -9,6 +9,7 @@ Group: Graphics
 Url: https://sites.google.com/site/crostiapp/
 Source: http://garr.dl.sourceforge.net/project/crosti/crosti%%20%version/%name-%version-source.zip
 Source1: crosti.xml
+Source100: crosti.watch
 
 BuildRequires: gcc-c++ qt4-devel unzip
 
@@ -52,6 +53,10 @@ install -pDm644 %SOURCE1 %buildroot%_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/mimetypes/*
 
 %changelog
+* Wed Jul 27 2016 Michael Shigorin <mike@altlinux.org> 1.13.2-alt1
+- added watch file
+- new version (watch file uupdate)
+
 * Mon Nov 24 2014 Michael Shigorin <mike@altlinux.org> 1.13.0-alt1
 - built for ALT Linux
 - based on rosa contrib package for 1.10.1
