@@ -9,7 +9,7 @@ BuildRequires: perl(Test/Pod.pm) perl-Module-Build perl-podlators
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Override LWP's HTTP/HTTPS backend with your own PSGI applciation
 License:    GPL+ or Artistic
@@ -58,6 +58,9 @@ without modifying the calling code or its internals.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_2
+- update by mgaimport
+
 * Sat May 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1_1
 - update by mgaimport
 
