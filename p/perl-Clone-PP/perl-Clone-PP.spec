@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name	 Clone-PP
 %define upstream_version 1.06
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Recursively copy Perl datatypes
 License:    Artistic/GPL
@@ -50,6 +50,9 @@ variables and objects.
 %{perl_vendor_privlib}/Clone
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1_5
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.06-alt1_4
 - update by mgaimport
 
