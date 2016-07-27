@@ -1,8 +1,8 @@
 %define pear_name HTTP_Header
 
 Name: pear-HTTP_Header
-Version: 1.2.0
-Release: alt3
+Version: 1.2.1
+Release: alt1
 
 Summary: OO interface to modify and handle HTTP headers and status codes
 
@@ -49,6 +49,9 @@ It also provides methods for checking Status types.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
