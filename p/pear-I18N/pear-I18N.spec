@@ -1,8 +1,8 @@
 %define pear_name I18N
 
 Name: pear-I18N
-Version: 0.8.6
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Internationalization package
 
@@ -45,6 +45,9 @@ Localizing Numbers, DateTime and currency is also implemented.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.8.6-alt2
 - autorebuild for correct requires(pre) (see bug #16086)
 
