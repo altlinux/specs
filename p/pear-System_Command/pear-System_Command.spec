@@ -1,8 +1,8 @@
 %define pear_name System_Command
 
 Name: pear-System_Command
-Version: 1.0.6
-Release: alt3
+Version: 1.0.8
+Release: alt1
 
 Summary: PEAR::System_Command is a commandline execution interface
 
@@ -47,10 +47,15 @@ every sense of the word, it gives php shell capabilities.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/System
+%pear_dir/System/
+%pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.8-alt1
+- new version 1.0.8 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
