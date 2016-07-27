@@ -1,8 +1,8 @@
 %define pear_name Net_DNSBL
 
 Name: pear-Net_DNSBL
-Version: 1.3.0
-Release: alt3
+Version: 1.3.7
+Release: alt1
 
 Summary: Checks if a given Host or URL is listed on an DNS-based Blackhole List (DNSBL, Real-time Blackhole List or RBL) or Spam URI Realtime Blocklist (SURBL)
 
@@ -44,10 +44,15 @@ Checks if a given Host or URL is listed on an DNS-based Blackhole List
 %files
 %doc LICENSE CHANGELOG
 %pear_dir/Net
+%pear_datadir/Net_DNSBL/
+%pear_docdir/Net_DNSBL/
 %pear_testdir/Net_DNSBL/tests
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.7-alt1
+- new version 1.3.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
