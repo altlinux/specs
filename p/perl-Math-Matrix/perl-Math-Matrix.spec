@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Config.pm) perl(Test.pm) perl(overload.pm) perl-podlators
+BuildRequires: perl(Config.pm) perl(overload.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    Math-Matrix
 %define upstream_version 0.8
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_4
+Release:    alt1_5
 
 Summary:    Matrix data type (transpose, multiply etc)
 License:    GPL or Artistic
@@ -16,7 +16,7 @@ Source0:     http://www.cpan.org/modules/by-module/Math/%{upstream_name}-%{upstr
 Url:        http://search.cpan.org/dist/%{upstream_name}
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
-BuildRequires: perl-devel
+BuildRequires: perl-CPAN perl-Digest-SHA perl-Encode perl-Encode-devel perl-JSON-PP perl-Module-CoreList perl-Pod-Checker perl-Pod-Parser perl-Pod-Usage perl-devel
 BuildArch:  noarch
 Source44: import.info
 
@@ -41,6 +41,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_5
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_4
 - update by mgaimport
 
