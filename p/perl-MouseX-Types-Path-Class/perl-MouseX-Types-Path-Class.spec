@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(ExtUtils/MM_Unix.pm) perl(ExtUtils/Manifest.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(MouseX/Getopt.pm) perl(MouseX/Types/Mouse.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/ParseLink.pm) perl(Pod/Parser.pm) perl(Pod/Text.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(inc/Module/Install.pm) perl(parent.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Cwd.pm) perl(Fcntl.pm) perl(File/Basename.pm) perl(File/Find.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(FileHandle.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Module/Build.pm) perl(MouseX/Getopt.pm) perl(Net/FTP.pm) perl(Parse/CPAN/Meta.pm) perl(Pod/Parser.pm) perl(Socket.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(parent.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    MouseX-Types-Path-Class
 %define upstream_version 0.07
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt3_7
+Release:    alt3_8
 
 Summary:    A Path::Class type library for Mouse
 License:    GPL+ or Artistic
@@ -54,6 +54,9 @@ Path::Class::Dir manpage and the Path::Class::File manpage.
 %perl_vendor_privlib/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3_8
+- update by mgaimport
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt3_7
 - update by mgaimport
 
