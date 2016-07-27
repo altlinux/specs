@@ -1,8 +1,8 @@
 %define pear_name Console_Getargs
 
 Name: pear-Console_Getargs
-Version: 1.3.4
-Release: alt3
+Version: 1.3.5
+Release: alt1
 
 Summary: A command-line arguments parser
 
@@ -48,6 +48,9 @@ based on the given configuration.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.5-alt1
+- new version 1.3.5 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.3.4-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
