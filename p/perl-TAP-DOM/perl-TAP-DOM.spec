@@ -10,7 +10,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_2
 
 Summary:    Accessors for TAP::DOM summary part
 License:    GPL+ or Artistic
@@ -66,6 +66,9 @@ change, so your data tools can, well, rely on it.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_2
+- update by mgaimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1_1
 - update by mgaimport
 
