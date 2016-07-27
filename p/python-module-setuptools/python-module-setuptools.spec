@@ -5,7 +5,7 @@
 Name: python-module-%modulename
 Epoch: 1
 Version: 18.1
-Release: alt3.1
+Release: alt3.2
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
@@ -148,6 +148,10 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Wed Jul 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:18.1-alt3.2
+- rebuild with rpm-build-python{,3} where the incomplete packaging of
+  __pycache__/* files has been fixed (due to unlink/compile ordering).
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:18.1-alt3.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
