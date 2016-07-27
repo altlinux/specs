@@ -1,8 +1,8 @@
 %define pear_name HTML_QuickForm_advmultiselect
 
 Name: pear-HTML_QuickForm_advmultiselect
-Version: 1.4.0
-Release: alt3
+Version: 1.5.1
+Release: alt1
 
 Summary: Element for HTML_QuickForm that emulate a multi-select
 
@@ -45,11 +45,15 @@ emulating a multi-select.
 %files
 %doc LICENSE CHANGELOG
 %pear_dir/HTML/
-%pear_datadir/HTML_QuickForm_advmultiselect/
+%pear_datadir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
+- new version 1.5.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
