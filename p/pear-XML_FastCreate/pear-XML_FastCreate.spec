@@ -1,8 +1,8 @@
 %define pear_name XML_FastCreate
 
 Name: pear-XML_FastCreate
-Version: 1.0.3
-Release: alt4
+Version: 1.0.4
+Release: alt1
 
 Summary: Fast creation of valid XML with DTD control
 
@@ -62,9 +62,14 @@ BuildRequires: pear-core rpm-build-pear
 %doc LICENSE CHANGELOG
 %pear_dir/XML
 %pear_dir/script
+%pear_datadir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+
 * Wed Dec 10 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt4
 - fix php requires
 
