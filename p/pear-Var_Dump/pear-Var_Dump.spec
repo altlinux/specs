@@ -1,8 +1,8 @@
 %define pear_name Var_Dump
 
 Name: pear-Var_Dump
-Version: 1.0.3
-Release: alt3
+Version: 1.0.4
+Release: alt1
 
 Summary: Provides methods for dumping structured information about a variable
 
@@ -43,6 +43,7 @@ displaying the result in various graphical ways :
 
 %install
 %pear_install_std
+rm -rf %buildroot%_bindir/
 
 %post
 %register_pear_module
@@ -60,6 +61,9 @@ displaying the result in various graphical ways :
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
