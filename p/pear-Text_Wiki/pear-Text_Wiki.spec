@@ -1,8 +1,8 @@
 %define pear_name Text_Wiki
 
 Name: pear-Text_Wiki
-Version: 1.2.0
-Release: alt3
+Version: 1.2.1
+Release: alt1
 
 Summary: Transforms Wiki and BBCode markup into XHTML, LaTeX or plain text markup. This is the base engine for all of the Text_Wiki sub-classes
 
@@ -56,6 +56,9 @@ It is highly configurable and can be easily extended.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
