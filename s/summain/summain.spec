@@ -1,5 +1,5 @@
 Name: summain
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: File manifest generator
@@ -52,6 +52,9 @@ exit 0
 %python_sitelibdir/*
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 0.20-alt1
+- new version 0.20 (with rpmrb script)
+
 * Thu Aug 13 2015 Vitaly Lipatov <lav@altlinux.ru> 0.19-alt1
 - initial build for ALT Linux Sisyphus
 
