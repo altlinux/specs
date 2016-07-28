@@ -1,7 +1,7 @@
 %define pear_name Text_CAPTCHA
 
 Name: pear-Text_CAPTCHA
-Version: 0.3.1
+Version: 1.0.1
 Release: alt1
 
 Summary: Generation of CAPTCHAs
@@ -41,9 +41,13 @@ computers and humans apart)
 %pear_dir/Text/CAPTCHA/
 %pear_dir/Text/CAPTCHA.php
 %pear_docdir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Wed Jul 01 2009 Vitaly Lipatov <lav@altlinux.ru> 0.3.1-alt1
 - initial build for ALT Linux Sisyphus (with pear make-rpm-spec)
 
