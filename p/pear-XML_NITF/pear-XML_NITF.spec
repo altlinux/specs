@@ -1,8 +1,8 @@
 %define pear_name XML_NITF
 
 Name: pear-XML_NITF
-Version: 1.1.0
-Release: alt4
+Version: 1.1.1
+Release: alt1
 
 Summary: Parse NITF documents
 
@@ -45,10 +45,14 @@ was originally tested against the Associated Press's (AP) XML data feed.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_dir/XML
+%pear_dir/XML/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script)
+
 * Wed Dec 10 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt4
 - fix php requires
 
