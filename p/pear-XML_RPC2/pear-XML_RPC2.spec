@@ -1,8 +1,8 @@
 %define pear_name XML_RPC2
 
 Name: pear-XML_RPC2
-Version: 1.0.2
-Release: alt3
+Version: 1.1.2
+Release: alt1
 
 Summary: XML-RPC client/server library
 
@@ -49,9 +49,13 @@ exporting local methods as remotely callable procedures.
 %doc LICENSE CHANGELOG
 %pear_testdir/XML_RPC2/
 %pear_dir/XML/
+%pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
