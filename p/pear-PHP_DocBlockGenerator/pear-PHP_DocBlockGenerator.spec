@@ -1,8 +1,8 @@
 %define pear_name PHP_DocBlockGenerator
 
 Name: pear-PHP_DocBlockGenerator
-Version: 1.1.1
-Release: alt3
+Version: 1.1.2
+Release: alt1
 
 Summary: DocBlock Generator
 
@@ -55,9 +55,13 @@ Fully tested with phpUnit. Code coverage test close to 100%%.
 %_bindir/docblockgen
 %pear_testdir/%pear_name/
 %pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
