@@ -24,7 +24,7 @@
 %define bugfix 0
 Name: qt5-base
 Version: 5.6.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -48,8 +48,8 @@ Patch54: 0033-xcb-Fix-dropping-URL-on-Firefox-window.patch
 Patch55: 0148-xcb-Disable-GLX-pbuffers-with-Chromium-in-VMs.patch
 Patch56: 0155-xcb-Fix-transient-parent-and-Qt-Window-flag.patch
 # SuSE
-Patch100: 0001-Fix-QWidget-setWindowRole.patch
-Patch101: 0005-Restore-documented-behavior-for-the-WA_X11NetWmWindo.patch
+Patch100: disable-rc4-ciphers-bnc865241.diff
+Patch101: xcb-Send-also-text-plain-when-a-text-uri-list-is-dropped.patch
 Patch102: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
@@ -747,6 +747,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Thu Jul 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt3
+- update SuSE patches
+
 * Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt2
 - build with egldevice support
 
