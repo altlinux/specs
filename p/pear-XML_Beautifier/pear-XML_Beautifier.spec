@@ -1,8 +1,8 @@
 %define pear_name XML_Beautifier
 
 Name: pear-XML_Beautifier
-Version: 1.1
-Release: alt4
+Version: 1.2.2
+Release: alt1
 
 Summary: Class to format XML documents
 
@@ -46,9 +46,13 @@ options.
 %doc LICENSE CHANGELOG
 %pear_dir/XML
 %pear_docdir/%pear_name/
+%pear_testdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
+- new version 1.2.2 (with rpmrb script)
+
 * Wed Dec 10 2008 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt4
 - fix php requires
 
