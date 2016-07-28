@@ -9,7 +9,7 @@ Group: System/Libraries
 Name:           libaccounts-qt
 Summary:        Accounts framework Qt bindings
 Version:        1.13
-Release:        alt2_11
+Release:        alt2_12
 
 License:        LGPLv2
 URL:            https://gitlab.com/accounts-sso/libaccounts-qt
@@ -151,6 +151,9 @@ rm -fv %{buildroot}%{_bindir}/accountstest
 
 
 %changelog
+* Thu Jul 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt2_12
+- new fc release
+
 * Mon May 30 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt2_11
 - removed account-qt5; preparing for EndOfLife
 
