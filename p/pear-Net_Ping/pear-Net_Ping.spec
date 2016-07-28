@@ -1,8 +1,8 @@
 %define pear_name Net_Ping
 
 Name: pear-Net_Ping
-Version: 2.4.3
-Release: alt3
+Version: 2.4.5
+Release: alt1
 
 Summary: Execute ping
 
@@ -44,6 +44,9 @@ OS independet wrapper class for executing ping calls
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
+- new version 2.4.5 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
