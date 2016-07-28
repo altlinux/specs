@@ -2,7 +2,7 @@
 %def_without tests
 
 Name:           ninja-build
-Version:        1.6.0
+Version:        1.7.1
 Release:        alt1
 Summary:        A small build system with a focus on speed
 
@@ -67,6 +67,9 @@ install -Dpm 644 misc/zsh-completion %buildroot%_datadir/zsh/site-functions/_nin
 
 
 %changelog
+* Thu Jul 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
+- new version 1.7.1
+
 * Mon Aug 03 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version
 
