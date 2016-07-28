@@ -1,8 +1,8 @@
 %define pear_name Numbers_Words
 
 Name: pear-Numbers_Words
-Version: 0.15.0
-Release: alt2
+Version: 0.18.1
+Release: alt1
 
 Summary: The PEAR Numbers_Words package provides methods for spelling numerals in words
 
@@ -77,6 +77,9 @@ H.C.T.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 0.18.1-alt1
+- new version 0.18.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.15.0-alt2
 - autorebuild for correct requires(pre) (see bug #16086)
 
