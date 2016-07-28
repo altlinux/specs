@@ -1,8 +1,8 @@
 %define pear_name XML_image2svg
 
 Name: pear-XML_image2svg
-Version: 0.1
-Release: alt3
+Version: 0.1.1
+Release: alt1
 
 Summary: Image to SVG conversion
 
@@ -50,6 +50,9 @@ increase approx. 30%% in size compared to the conventional image.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.1-alt1
+- new version 0.1.1 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt3
 - autorebuild for correct requires(pre) (see bug #16086)
 
