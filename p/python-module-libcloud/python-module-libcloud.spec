@@ -1,16 +1,18 @@
 %define oname libcloud
 
-%def_without python3
+%def_with python3
 
 Summary: A Python library to address multiple cloud provider APIs
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt3
 Url: http://libcloud.apache.org/
 Source: %name-%version.tar
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 License: ASL 2.0
 Group: Development/Python
+
+Patch1: python-module-libcloud-1.1.0-alt2-drop-pysphere.patch
 
 BuildArch: noarch
 BuildRequires: python-dev python-module-setupdocs python-module-setuptools
@@ -55,6 +57,7 @@ Unit tests for python-module-libcloud
 
 %if_with python3
 cp -fR . ../python3
+%patch1 -p1
 %endif
 
 %build
@@ -76,6 +79,7 @@ popd
 pushd ../python3
 %python3_install
 popd
+rm -rf libcloud/compute/drivers/vsphere.py
 %endif
 
 
@@ -97,10 +101,17 @@ popd
 %doc CHANGES.rst CONTRIBUTING.rst NOTICE README.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/libcloud/test
+%exclude %python3_sitelibdir/libcloud/compute/drivers/vsphere.py
 %endif
 
 
 %changelog
+* Thu Jul 28 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.1.0-alt3
+- Dropped pysphere for build with python3
+
+* Thu Jul 28 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.1.0-alt2
+- Build with python3 (ALT 32321)
+
 * Mon Jul 25 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 1.1.0-alt1
 - New version
 - Build with python3
