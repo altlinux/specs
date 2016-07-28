@@ -5,7 +5,7 @@
 Name: python-module-%modulename
 Epoch: 1
 Version: 18.1
-Release: alt3.2
+Release: alt4
 
 Summary: Python Distutils Enhancements
 License: PSF/ZPL
@@ -18,12 +18,16 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel
+# For more precise reqs:
+%python_req_hier
 
 Provides: python-module-distribute = %epoch:%version-%release
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
+# For more precise reqs:
+%python3_req_hier
 %endif
 
 %description
@@ -148,6 +152,9 @@ ln -s easy_install-%_python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Thu Jul 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:18.1-alt4
+- %%python{,3}_req_hier for more precise safer reqs
+
 * Wed Jul 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:18.1-alt3.2
 - rebuild with rpm-build-python{,3} where the incomplete packaging of
   __pycache__/* files has been fixed (due to unlink/compile ordering).
