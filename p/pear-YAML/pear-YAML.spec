@@ -1,7 +1,7 @@
 %define pear_name YAML
 
 Name: pear-%pear_name
-Version: 1.0.4
+Version: 1.0.6
 Release: alt1
 
 Summary: The Symfony YAML Component
@@ -46,6 +46,9 @@ The Symfony YAML Component.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
+- new version 1.0.6 (with rpmrb script)
+
 * Tue Dec 21 2010 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
 - initial build for ALT Linux Sisyphus
 
