@@ -1,8 +1,8 @@
 %define pear_name XML_Serializer
 
 Name: pear-XML_Serializer
-Version: 0.18.0
-Release: alt2
+Version: 0.21.0
+Release: alt1
 
 Summary: Swiss-army knive for reading and writing XML files. Creates XML files from data structures and vice versa
 
@@ -53,13 +53,15 @@ the simplexml extension of PHP 5.
 
 %files
 %doc LICENSE CHANGELOG
-%pear_datadir/XML_Serializer/doc/todo.txt
 %pear_dir/XML/Serializer.php
 %pear_dir/XML/Unserializer.php
 %pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 0.21.0-alt1
+- new version 0.21.0 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.18.0-alt2
 - autorebuild for correct requires(pre) (see bug #16086)
 
