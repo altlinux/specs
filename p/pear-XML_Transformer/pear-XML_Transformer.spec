@@ -1,7 +1,7 @@
 %define pear_name XML_Transformer
 
 Name: pear-XML_Transformer
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: XML Transformations in PHP
@@ -48,6 +48,9 @@ transform an XML document without the need for and the limitations of XSLT.
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Tue Jan 13 2009 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - new version 1.1.1 (with rpmrb script)
 
