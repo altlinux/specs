@@ -1,7 +1,7 @@
 %define pear_name Tree
 
 Name: pear-Tree
-Version: 0.3.3
+Version: 0.3.7
 Release: alt1
 
 Summary: Generic tree management, currently supports DB and XML as data sources
@@ -59,6 +59,9 @@ either structure to another (from XML into DB).
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 0.3.7-alt1
+- new version 0.3.7 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 0.3.3-alt1
 - new version 0.3.3 (with rpmrb script)
 
