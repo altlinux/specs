@@ -1,6 +1,6 @@
 %define oname RemoteBox
 Name: remotebox
-Version: 0.4
+Version: 2.1
 Release: alt1
 
 Summary: Open Source VirtualBox Client with Remote Management
@@ -14,6 +14,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://remotebox.knobgoblin.org.uk/downloads/%oname-%version.tar
 
 BuildArch: noarch
+
+Autoreq: yes,noperl
 
 %add_perl_lib_path %_datadir/%name
 
@@ -46,5 +48,8 @@ cp -a share/remotebox/* %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt1
+- new version 2.1 (with rpmrb script)
+
 * Tue Oct 26 2010 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - initial build for ALT Linux Sisyphus
