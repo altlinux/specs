@@ -1,7 +1,7 @@
 %define pear_name PEAR_Info
 
 Name: pear-PEAR_Info
-Version: 1.8.0
+Version: 1.9.2
 Release: alt1
 
 Summary: Show Information about your PEAR install and its packages
@@ -55,6 +55,9 @@ PackageName is a case-sensitive PEAR package name
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.2-alt1
+- new version 1.9.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0 (with rpmrb script)
 
