@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.72
+Version: 0.76
 Release: alt1
 
 Summary: Interface to read and parse BibTeX files
@@ -14,7 +14,7 @@ Patch0: perl-Text-BibTeX-0.61-alt-rpath.patch
 Patch1:	perl-Text-BibTeX-0.61-alt-gcc47.patch
 
 # Automatically added by buildreq on Wed Oct 19 2011
-BuildRequires: perl-Capture-Tiny perl-Config-AutoConf perl-ExtUtils-LibBuilder perl-Module-Build perl-Pod-Parser
+BuildRequires: perl-Capture-Tiny perl-Config-AutoConf perl-ExtUtils-LibBuilder perl-Module-Build perl-Pod-Parser perl(Unicode/Normalize.pm)
 
 %description
 Text::BibTeX is a Perl library for reading, parsing, and processing
@@ -26,7 +26,7 @@ dealing with BibTeX data.
 %patch0 -p1 
 %patch1 -p1 
 # Sub::Util 
-[ %version = 0.72 ] && sed -i -e s,1.42,0.00, META.json Build.PL META.yml
+[ %version = 0.76 ] && sed -i -e s,1.42,0.00, META.json Build.PL META.yml
 
 
 %build
@@ -47,6 +47,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %perl_vendor_archlib/Text
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.76-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - automated CPAN update
 
