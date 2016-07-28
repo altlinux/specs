@@ -1,7 +1,7 @@
 %define pear_name Translation2
 
 Name: pear-Translation2
-Version: 2.0.1
+Version: 2.0.4
 Release: alt1
 
 Summary: Class for multilingual applications management
@@ -66,6 +66,9 @@ Currently, the following decorators are provided:
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
+- new version 2.0.4 (with rpmrb script)
+
 * Wed Jul 01 2009 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
 - initial build for ALT Linux Sisyphus (with pear make-rpm-spec)
 
