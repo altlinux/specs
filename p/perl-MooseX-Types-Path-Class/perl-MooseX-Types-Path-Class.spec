@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-Path-Class
 Name: perl-%dist
-Version: 0.08
-Release: alt1.1
+Version: 0.09
+Release: alt1
 
 Summary: A Path::Class type library for Moose
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Types-Path-Class-%{vers
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Apr 13 2010
-BuildRequires: perl-Class-C3-XS perl-Module-Install perl-MooseX-Types perl-Path-Class perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Class-C3-XS perl-Module-Install perl-MooseX-Types perl-Path-Class perl-Test-Pod perl-Test-Pod-Coverage perl(Test/Needs.pm)
 
 %description
 MooseX::Types::Path::Class creates common Moose types,
@@ -35,6 +35,9 @@ with Path::Class objects as Moose attributes.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Sat Apr 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1.1
 - rebuild to restore role requires
 
