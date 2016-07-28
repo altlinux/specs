@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist URI-Fetch
 Name: perl-%dist
-Version: 0.11
+Version: 0.13
 Release: alt1
 
 Summary: Smart URI fetching/caching
@@ -14,7 +14,7 @@ Source: http://www.cpan.org/authors/id/N/NE/NEILB/URI-Fetch-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Class-ErrorHandler perl-Filter perl-Pod-Escapes perl-devel perl-libwww
+BuildRequires: perl-Class-ErrorHandler perl-Filter perl-Pod-Escapes perl-devel perl-libwww perl(Test/RequiresInternet.pm)
 
 %description
 URI::Fetch is a smart client for fetching HTTP pages, notably
@@ -40,6 +40,9 @@ rm t/01-fetch.t
 %perl_vendor_privlib/URI
 
 %changelog
+* Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
