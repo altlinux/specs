@@ -1,8 +1,8 @@
 %define pear_name XML_SVG
 
 Name: pear-XML_SVG
-Version: 1.0.1
-Release: alt4
+Version: 1.1.0
+Release: alt1
 
 Summary: XML_SVG API
 
@@ -40,9 +40,14 @@ This package provides an object-oriented API for building SVG documents.
 %files
 %doc LICENSE CHANGELOG
 %pear_dir/XML
+%pear_docdir/%pear_name/
+%pear_datadir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Wed Dec 10 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt4
 - fix php requires
 
