@@ -1,7 +1,7 @@
 %define pear_name PHP_CodeSniffer
 
 Name: pear-PHP_CodeSniffer
-Version: 1.0.1
+Version: 2.6.2
 Release: alt1
 
 Summary: PHP_CodeSniffer tokenises PHP code and detects violations of a defined set of coding standards
@@ -33,6 +33,7 @@ It can even help prevent some common semantic errors made by developers.
 
 %install
 %pear_install_std
+rm -rf %buildroot%_bindir/scripts/
 
 %post
 %register_pear_module
@@ -43,12 +44,17 @@ It can even help prevent some common semantic errors made by developers.
 %files
 %doc LICENSE CHANGELOG
 %_bindir/phpcs
+%_bindir/phpcbf
 %pear_testdir/PHP_CodeSniffer/
 %pear_dir/PHP/
 %pear_datadir/%pear_name/
+%pear_docdir/%pear_name/
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt1
+- new version 2.6.2 (with rpmrb script)
+
 * Fri Jun 20 2008 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
 
