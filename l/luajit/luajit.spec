@@ -1,6 +1,6 @@
 Name: luajit
 Version: 2.1
-Release: alt2
+Release: alt3
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -84,6 +84,9 @@ mv %buildroot%_bindir/luajit-2.1.0-beta2 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Fri Jul 29 2016 Vladimir Didenko <cow@altlinux.org> 2.1-alt3
+- git20160722
+
 * Mon Jun 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt2
 - packaged non-versioned luajit binary (closes: #32223)
 
