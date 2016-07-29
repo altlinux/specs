@@ -2,7 +2,7 @@
 
 Name:           cura
 Version:        15.04.4
-Release:        alt2
+Release:        alt3
 Summary:        3D printer control software
 
 Group:		Other
@@ -50,6 +50,8 @@ BuildRequires:  gettext
 
 Requires: 	python-module-numpy-addons python-module-numpy-testing
 Requires:       CuraEngine >= 15.04
+# So that it just works
+Requires:	      3dprinter-udev-rules
 
 %description
 Cura is a project which aims to be an single software solution for 3D
@@ -115,6 +117,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 15.04.4-alt3
+- NMU: sync with fc cura-15.04.4-4
+
 * Thu Mar 17 2016 Andrey Cherepanov <cas@altlinux.org> 15.04.4-alt2
 - Initial build in Sisyphus
 
