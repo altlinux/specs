@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Load-Conditional
 Name: perl-%dist
-Version: 0.64
+Version: 0.68
 Release: alt1
 
 Summary: Looking up module information / loading at runtime
@@ -42,6 +42,9 @@ rm t/01_Module_Load_Conditional.t
 %perl_vendor_privlib/Module
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.68-alt1
+- automated CPAN update
+
 * Mon Jan 19 2015 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
 - automated CPAN update
 
