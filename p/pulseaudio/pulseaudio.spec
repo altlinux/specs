@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 9.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -206,6 +206,7 @@ touch config.rpath
     --localstatedir=/var \
     --with-access-group=audio \
     --enable-per-user-esound-socket \
+    --disable-bluez4 \
     --disable-static \
     #
 
@@ -260,9 +261,6 @@ find %buildroot%_libdir -name \*.la -delete
 
 %pulsemoduledir/*.so
 
-%exclude %pulsemoduledir/libbluez4-util.so
-%exclude %pulsemoduledir/module-bluez4-device.so
-%exclude %pulsemoduledir/module-bluez4-discover.so
 %exclude %pulsemoduledir/libbluez5-util.so
 %exclude %pulsemoduledir/module-bluez5-device.so
 %exclude %pulsemoduledir/module-bluez5-discover.so
@@ -321,9 +319,6 @@ find %buildroot%_libdir -name \*.la -delete
 %files bluez
 %dir %pulselibdir
 %dir %pulsemoduledir
-%pulsemoduledir/libbluez4-util.so
-%pulsemoduledir/module-bluez4-device.so
-%pulsemoduledir/module-bluez4-discover.so
 %pulsemoduledir/libbluez5-util.so
 %pulsemoduledir/module-bluez5-device.so
 %pulsemoduledir/module-bluez5-discover.so
@@ -367,6 +362,9 @@ find %buildroot%_libdir -name \*.la -delete
 %doc doxygen/html
 
 %changelog
+* Fri Jul 29 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.0-alt2
+- drop bluez4 support
+
 * Thu Jun 23 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.0-alt1
 - 9.0 released
 
