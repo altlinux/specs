@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde4-%rname
 Version: 1.4.0
-Release: alt2
+Release: alt3
 
 Group: Video
 Summary: Multimedia Player
@@ -77,6 +77,9 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 %_K4xdg_apps/kaffeine.desktop
 
 %changelog
+* Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt3
+- fix build with new cmake
+
 * Wed Jun 29 2016 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt2
 - fix build requires
 
