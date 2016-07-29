@@ -6,15 +6,15 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
-Summary: Library for JavaScript Object Notation format
+Summary: GLib-based JSON manipulation library
 Group: System/Libraries
 License: LGPLv2+
-Url: http://live.gnome.org/JsonGlib
+Url: https://wiki.gnome.org/Projects/JsonGlib
 
-Source: ftp://ftp.gnome.org/pub/GNOME/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define glib_ver 2.46.0
 %define gi_ver 0.10.5
@@ -23,8 +23,11 @@ Source: ftp://ftp.gnome.org/pub/GNOME/sources/%_name/%ver_major/%_name-%version.
 BuildRequires: glib2-devel >= %glib_ver gtk-doc
 
 %description
-%_name is a library providing serialization and deserialization support
-for the JavaScript Object Notation (JSON) format.
+JSON-GLib implements a full JSON parser using GLib and GObject. Use
+JSON-GLib it is possible to parse and generate valid JSON data
+structures, using a DOM-like API. JSON-GLib also offers GObject
+integration, providing the ability to serialize and deserialize GObject
+instances to and from JSON data types.
 
 %package devel
 Summary: Development files for %_name
@@ -76,7 +79,7 @@ GObject introspection devel data for the JSON-GLib library
 %_libdir/*.so.*
 %_man1dir/%_name-format.1.*
 %_man1dir/%_name-validate.1.*
-%doc NEWS
+%doc NEWS ChangeLog
 
 %files devel
 %_libdir/*.so
@@ -93,6 +96,9 @@ GObject introspection devel data for the JSON-GLib library
 %endif
 
 %changelog
+* Fri Jul 29 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
