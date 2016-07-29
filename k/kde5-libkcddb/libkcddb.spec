@@ -1,12 +1,12 @@
 %define rname libkcddb
 
-%define sover 5
-%define libkcddb libkcddb%sover
-%define libkcddbwidgets libkcddbwidgets%sover
+%define sover 16
+%define libkf5cddb libkf5cddb%sover
+%define libkf5cddbwidgets libkf5cddbwidgets%sover
 
 
 Name: kde5-%rname
-Version: 4.90.0
+Version: 16.07.0
 Release: alt1
 %K5init
 
@@ -40,23 +40,23 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Conflicts: libkcddb4-devel
+#Conflicts: libkcddb4-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libkcddb
+%package -n %libkf5cddb
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %EVR
-%description -n %libkcddb
+%description -n %libkf5cddb
 KF5 library
 
-%package -n %libkcddbwidgets
+%package -n %libkf5cddbwidgets
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %EVR
-%description -n %libkcddbwidgets
+%description -n %libkf5cddbwidgets
 KF5 library
 
 
@@ -64,9 +64,7 @@ KF5 library
 %setup -n %rname-%version
 
 %build
-%K5build \
-    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
-    #
+%K5build
 
 %install
 %K5install
@@ -77,19 +75,24 @@ KF5 library
 %_K5cfg/libkcddb.kcfg
 
 %files devel
-%_K5inc/libkcddb/
+%_K5inc/kcddb_version.h
+%_K5inc/KCddb/
 %_K5link/lib*.so
-%_K5lib/cmake/libkcddb/
+%_K5lib/cmake/KF5Cddb/
+%_K5archdata/mkspecs/modules/qt_KCddb.pri
 
-%files -n %libkcddb
-%_K5lib/libkcddb.so.%sover
-%_K5lib/libkcddb.so.*
+%files -n %libkf5cddb
+%_K5lib/libKF5Cddb.so.%sover
+%_K5lib/libKF5Cddb.so.*
 %_K5plug/kcm_cddb.so
 %_K5srv/libkcddb.desktop
-%files -n %libkcddbwidgets
-%_K5lib/libkcddbwidgets.so.%sover
-%_K5lib/libkcddbwidgets.so.*
+%files -n %libkf5cddbwidgets
+%_K5lib/libKF5CddbWidgets.so.%sover
+%_K5lib/libKF5CddbWidgets.so.*
 
 %changelog
+* Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 16.07.0-alt1
+- new version
+
 * Mon May 23 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt1
 - initial build
