@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.803
+%define module_version 1.804
 %define module_name MCE
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MMCE::Util'
 %add_findreq_skiplist %perl_vendor_privlib/MCE/Core/Input*
@@ -12,7 +12,7 @@ BuildRequires: perl(Carp.pm) perl(DBD/SQLite.pm) perl(DBI.pm) perl(Exporter.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.803
+Version: 1.804
 Release: alt1
 Summary: Many-Core Engine for Perl. Provides parallel processing capabilities.
 Group: Development/Perl
@@ -50,6 +50,9 @@ scripts for %module_name
 #%_bindir/*
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.804-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.803-alt1
 - automated CPAN update
 
