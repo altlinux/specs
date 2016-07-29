@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.20
 %define api_ver 3.0
@@ -11,8 +11,8 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Nautilus is a network user environment
 License: GPLv2+
@@ -207,6 +207,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Fri Jul 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Tue Jun 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt2
 - updated to 3.20.0-54-ge91f958
 
