@@ -12,7 +12,7 @@
 Name: kde5-%rname
 %define lname lib%name
 Version: 5.0.0
-Release: alt2
+Release: alt3
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -28,6 +28,8 @@ Requires: %name-data = %version-%release
 %if_enabled mysql
 Requires: qt5-sql-mysql
 %endif
+# libs/dimg/filters/icc
+Requires: icc-profiles
 
 BuildRequires(pre): rpm-build-kf5
 # Automatically added by buildreq on Wed Jul 20 2016 (-bi)
@@ -221,6 +223,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt3
+- fix requires
+
 * Mon Jul 25 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt2
 - split libraries
 
