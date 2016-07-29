@@ -1,5 +1,5 @@
 Name: perl-Specio
-Version: 0.17
+Version: 0.24
 Release: alt1
 
 Summary: Type constraints and coercions for Perl
@@ -10,7 +10,7 @@ Url: %CPAN Specio
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) perl(parent.pm) perl(MooseX/Clone.pm) perl(Eval/Closure.pm) perl-devel perl(List/AllUtils.pm) perl(Sub/Name.pm) perl(Devel/PartialDump.pm) perl(Test/Fatal.pm) perl(Throwable/Error.pm) perl(Params/Util.pm) perl(Lingua/EN/Inflect.pm) perl(MooseX/SemiAffordanceAccessor.pm) perl(Moose.pm) perl(namespace/autoclean.pm) perl(Class/Load.pm) perl(MooseX/Params/Validate.pm) perl(Devel/StackTrace.pm) perl(Test/Requires.pm)
+BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) perl(parent.pm) perl(MooseX/Clone.pm) perl(Eval/Closure.pm) perl-devel perl(List/AllUtils.pm) perl(Sub/Name.pm) perl(Devel/PartialDump.pm) perl(Test/Fatal.pm) perl(Throwable/Error.pm) perl(Params/Util.pm) perl(Lingua/EN/Inflect.pm) perl(MooseX/SemiAffordanceAccessor.pm) perl(Moose.pm) perl(namespace/autoclean.pm) perl(Class/Load.pm) perl(MooseX/Params/Validate.pm) perl(Devel/StackTrace.pm) perl(Test/Requires.pm) perl(Test/Needs.pm)
 
 %description
 %summary
@@ -29,6 +29,9 @@ BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) per
 %doc Changes LICENSE README* TODO*
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Sun Jun 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
