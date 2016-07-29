@@ -1,6 +1,6 @@
 Name: fmit
-Version: 1.0.12
-Release: alt2
+Version: 1.1.8
+Release: alt1
 
 Summary: Free Music Instrument Tuner
 
@@ -10,12 +10,13 @@ Url: http://gillesdegottex.github.io/fmit/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/gillesdegottex/fmit/archive/v1.0.12.tar.gz
+# Source-url: https://github.com/gillesdegottex/fmit/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Sat Aug 03 2013
-# optimized out: cmake cmake-modules fontconfig libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
-BuildRequires: ccmake gcc-c++ libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXres-devel libXxf86misc-devel libXxf86vm-devel libalsa-devel libfftw3-devel libfreeglut-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libxkbfile-devel phonon-devel qt4-designer
+# manually removed: git-core i586-libxcb python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope  ruby ruby-stdlibs
+# Automatically added by buildreq on Fri Jul 29 2016
+# optimized out: gcc-c++ libGL-devel libgpg-error libjson-c libqt5-core libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-svg libqt5-widgets libstdc++-devel python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-xmlpatterns-devel
+BuildRequires: libalsa-devel libfftw3-devel libportaudio2-devel qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webkit-devel qt5-websockets-devel
 
 BuildRequires: desktop-file-utils
 
@@ -33,21 +34,21 @@ JACK, OSS, ALSA, Portaudio support
 %setup
 
 %build
-sed -i "s|share/mimelnk/application/|share/applications/|g" CMakeLists.txt
-%cmake -DSOUNDSYSTEM_USE_JACK=OFF -DSOUNDSYSTEM_USE_OSS=OFF
-
+mkdir BUILD
 cd BUILD
+qmake-qt5 "CONFIG+=acs_qt acs_alsa acs_portaudio" "PREFIX=%prefix" ../fmit.pro
+
 %make_build
 
 %install
 cd BUILD
-%makeinstall_std
+%makeinstall_std INSTALL_ROOT=%buildroot
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Music \
 	%buildroot%_desktopdir/fmit.desktop
 
 %files
-%doc ChangeLog TODO
+%doc README.txt
 %_bindir/%name
 %_datadir/%name/
 # FIXME: add macro for appdata
@@ -56,6 +57,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Jul 29 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
+- new version 1.1.8 (with rpmrb script)
+
 * Thu Mar 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.0.12-alt2
 - fix packing
 
