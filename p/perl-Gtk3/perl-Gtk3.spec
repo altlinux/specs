@@ -1,6 +1,6 @@
 Name: perl-Gtk3
-Version: 0.026
-Release: alt2
+Version: 0.028
+Release: alt1
 
 Summary: Perl interface to the 3.x series of the gtk+ toolkit
 Group: Development/Perl
@@ -31,6 +31,9 @@ Requires: libgtk+3-gir
 %doc LICENSE NEWS README
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 0.028-alt1
+- automated CPAN update
+
 * Wed Jun 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt2
 - added Requires: libgtk+3-gir (closes: #32152)
 
