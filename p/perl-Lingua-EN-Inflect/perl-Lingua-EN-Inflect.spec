@@ -1,6 +1,6 @@
 %define dist Lingua-EN-Inflect
 Name: perl-%dist
-Version: 1.899
+Version: 1.900
 Release: alt1
 
 Summary: Convert singular to plural, select "a" or "an"
@@ -35,6 +35,9 @@ rm Build.PL
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.900-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 1.899-alt1
 - automated CPAN update
 
