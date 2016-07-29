@@ -2,15 +2,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-%dist
-Version: 1.27
-Release: alt3
+Version: 1.28
+Release: alt1
 
 Summary: functions for manipulations with pidfiles
 License: %perl_license
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DM/DMITRI/Proc-PID-File-%{version}.tar.gz
 
 Patch1: Proc-PID-File-1.27-108434.patch
 
@@ -45,6 +45,9 @@ which are files that store a process identifier.
 %perl_vendor_privlib/Proc*
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1
+- automated CPAN update
+
 * Thu Apr 28 2016 Sergey Y. Afonin <asy@altlinux.ru> 1.27-alt3
 - applied patch for CPAN bug 108434
 
