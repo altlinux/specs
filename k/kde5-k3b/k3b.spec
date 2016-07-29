@@ -20,7 +20,7 @@
 %define rname k3b
 Name: kde5-%rname
 Version: 2.9.90
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Archiving/Cd burning
@@ -35,8 +35,7 @@ Requires: %req_all
 Conflicts: k3b-mini < 1.0.5-alt7
 
 Source0: %rname-%version.tar
-Patch1: alt-libav10.patch
-Patch2: alt-permhalper.patch
+Patch1: alt-permhalper.patch
 
 # Automatically added by buildreq on Mon May 23 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ glibc-devel-static gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libavcodec-devel libavutil-devel libdbusmenu-qt52 libflac-devel libgpg-error libgst-plugins1.0 libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -115,8 +114,7 @@ KDE 4 library.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
-#%patch2 -p1
+#%patch1 -p1
 
 mv .gear/po .
 
@@ -178,5 +176,8 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 2.9.90-alt2
+- update from KF5 branch
+
 * Tue May 24 2016 Sergey V Turchin <zerg@altlinux.org> 2.9.90-alt1
 - initial build
