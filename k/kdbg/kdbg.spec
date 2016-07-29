@@ -1,7 +1,7 @@
 
 Name: kdbg
 Version: 2.5.5
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: A Graphical Debugger Interface
@@ -12,7 +12,8 @@ Requires: gdb
 
 Source: %name-%version.tar
 
-Patch1: kdbg-2.5.4-alt-parse-gdb-output.patch
+Patch1: alt-parse-gdb-output.patch
+Patch2: alt-fix-build.patch
 
 BuildRequires: gcc-c++ kde4libs-devel kde-common-devel
 BuildRequires: libqt4-devel libstdc++-devel zlib-devel
@@ -26,6 +27,7 @@ inspecting variables, and stepping through code.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 
 %build
@@ -48,6 +50,9 @@ inspecting variables, and stepping through code.
 #%_iconsdir/*/*/apps/kdbg.*
 
 %changelog
+* Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 2.5.5-alt2
+- fix for new cmake
+
 * Fri Jul 03 2015 Sergey V Turchin <zerg@altlinux.org> 2.5.5-alt1
 - new version
 
