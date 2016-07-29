@@ -2,7 +2,7 @@
 %define origname py%shortname
 Name: python-module-%shortname
 Version: 0.2.0
-Release: alt2.git
+Release: alt3.git
 
 %if "" == ""
 %define pyver 2
@@ -58,7 +58,8 @@ scripts, powershell scripts, and fetching WMI variables.
 
 This package is for Python%pyver.
 
-Usage example:
+To try it out, you can run the included winexe_py3winrm script
+(needs Python3) or consider the following usage example:
 
 import winrm
 
@@ -87,6 +88,11 @@ This package runs %name's tests immediately at install time.
 %install
 %python_install
 
+%if "" == "3"
+mkdir -p %buildroot%_bindir
+install -m755 winexe_py3winrm -t %buildroot%_bindir
+%endif
+
 mkdir -p %buildroot%_usrsrc/%name
 {
   echo '#!/usr/bin/python'
@@ -105,6 +111,9 @@ su nobody -s /bin/sh \
 %files
 %python_sitelibdir/*
 %exclude %python_sitelibdir/winrm/tests
+%if "" == "3"
+%_bindir/*py3*
+%endif
 %doc README.md LICENSE CHANGELOG.md
 
 %files tests
@@ -114,6 +123,10 @@ su nobody -s /bin/sh \
 %_usrsrc/%name
 
 %changelog
+* Fri Jul 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt3.git
+- winexe_py3winrm -- simple wrapper around pywinrm with a command-line interface
+  similar to winexe based on Samba <https://sourceforge.net/projects/winexe/>.
+
 * Wed Jul 27 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.2.0-alt2.git
 - (.spec) checkpkg subpkg - Immediately test %%name (at install time).
 - Repeat the install_requires from setup.py (particularly useful
