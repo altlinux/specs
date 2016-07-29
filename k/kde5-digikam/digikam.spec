@@ -8,11 +8,10 @@
 %define libdigikamcore libdigikamcore%sover
 %define libdigikamgui libdigikamgui%sover
 
-
 Name: kde5-%rname
 %define lname lib%name
 Version: 5.0.0
-Release: alt3
+Release: alt4
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -129,7 +128,7 @@ Summary: Development files for %label
 Development files for %label.
 
 %prep
-%setup -q -n %rname-%version  -a1 -a2 -a3
+%setup -n %rname-%version  -a1 -a2 -a3
 
 # change double to qreal for casting on arm
 find -type f -name \*.cpp | \
@@ -157,6 +156,7 @@ __EOF__
 find -type f -name CMakeLists.txt | \
 while read f ; do
     sed -i '/^set_target_properties.*SOVERSION.*DIGIKAM_VERSION_SHORT/s|\(SOVERSION.*\)DIGIKAM_VERSION_SHORT}|\1DIGIKAM_MAJOR_VERSION}|' $f
+    sed -i 's|${DATA_INSTALL_DIR}/digikam|${KDE_INSTALL_DATADIR_KF5}/digikam|' $f
 done
 
 %build
@@ -169,7 +169,7 @@ done
 
 %install
 %K5install
-%K5install_move data digikam kconf_update showfoto solid locale
+%K5install_move data kconf_update showfoto solid locale
 
 rm -f %buildroot/%_K5i18n/*/*/kipiplugin*
 rm -f %buildroot/%_K5i18n/*/*/lib*
@@ -178,26 +178,29 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %find_lang --with-kde --append --output=%rname.lang showfoto
 
 %files common
+%dir %_K5data/%rname
+%dir %_K5data/showfoto
+
 %files
 %_K5bin/%rname
+%_K5data/%rname/utils/
 %_K5bin/showfoto
 %_K5bin/cleanup_digikamdb
 %_K5bin/digitaglinktree
-#%_K5plug/kio_%{rname}*.so
 %_K5plug/%{rname}imageplugin_*.so
 %_K5xdgapp/*.desktop
 %_K5srv/%{rname}imageplugin_*.desktop
 %_K5srvtyp/*.desktop
-%_K5xmlgui/%{rname}/
+%_K5xmlgui/%rname/
 %_K5xmlgui/showfoto/
-%_K5notif/%{rname}.notifyrc
+%_K5notif/%rname.notifyrc
+%_K5data/solid/actions/%rname-*.desktop
 
 %files data -f %rname.lang
 %doc AUTHORS ChangeLog HACKING NEWS README TODO
-%_K5data/%rname
-%_K5data/showfoto
-%_K5data/solid/actions/%{rname}-opencamera.desktop
-#%_K5srv/%{rname}*.protocol
+%_K5data/%rname/*
+%exclude %_K5data/%rname/utils/
+%_K5data/showfoto/*
 %_K5icon/hicolor/*/apps/%rname.*
 %_K5icon/hicolor/*/apps/showfoto.*
 %_K5icon/hicolor/*/apps/panorama.*
@@ -223,6 +226,10 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt4
+- fix requires
+- fix solid actions
+
 * Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt3
 - fix requires
 
