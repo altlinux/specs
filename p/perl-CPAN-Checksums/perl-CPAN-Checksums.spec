@@ -1,6 +1,6 @@
 %define m_distro CPAN-Checksums
 Name: perl-CPAN-Checksums
-Version: 2.11
+Version: 2.12
 Release: alt1
 Summary: CPAN::Checksums - Write a "CHECKSUMS" file for a directory as on CPAN
 
@@ -33,6 +33,9 @@ BuildRequires: perl-Test-Pod-Coverage perl-Test-Pod
 %doc README 
 
 %changelog
+* Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 2.11-alt1
 - automated CPAN update
 
