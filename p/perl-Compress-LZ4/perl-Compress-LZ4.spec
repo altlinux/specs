@@ -3,8 +3,8 @@
 %define real_name Compress-LZ4
 
 Name: perl-Compress-LZ4
-Version: 0.22
-Release: alt1.1
+Version: 0.23
+Release: alt1
 
 Summary: Perl interface to the LZ4 (de)compressor
 
@@ -18,6 +18,10 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 Source: %real_name-%version.tar
 
 BuildRequires(pre): perl-devel rpm-build-licenses
+
+# Automatically added by buildreq on Sat Jul 30 2016
+# optimized out: perl python-base python-modules python3
+BuildRequires: perl-Encode
 
 %description
 Perl module Compress::LZ4 provides a Perl interface
@@ -38,6 +42,9 @@ to the LZ4 (de)compressor.
 %perl_vendor_autolib/Compress/LZ4*
 
 %changelog
+* Sat Jul 30 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.23-alt1
+- New version
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1.1
 - rebuild with new perl 5.22.0
 
