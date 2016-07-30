@@ -1,144 +1,159 @@
 %def_enable qt4
+%def_enable qt5
+%define rev 3d313d5
 
 Name:    qtcurve
-Version: 1.8.15
-Release: alt2
+Version: 1.8.18
+Release: alt1.git%rev
 Serial:  1
 
-Summary: QtCurve (KDE and GTK2 style)
-License: GPLv2
+Summary: A set of widget styles for GTK+ and Qt widget toolkits
+License: LGPLv2 or LGPLv3
 Group:   Graphical desktop/Other
-Url:     http://www.kde-look.org/content/show.php?content=40492
+Url:     git://anongit.kde.org/qtcurve.git
+#VCS:    https://github.com/QtCurve/qtcurve
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Patch1: QtCurve-Gtk2-1.0.0-alt-qtrc.patch
-Patch2: QtCurve-Gtk2-0.62.4-alt-icons.patch
-Patch3: QtCurve-KDE3-1.0.2-alt-link-fixes.patch
+Patch1: qtcurve-1.8.18-no_env.patch
+Patch2: qtcurve-1.8.18-%rev.patch
 
-BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4
-BuildPreReq: gcc-c++ libgtk+2-devel libqt3-devel kde4libs-devel
+BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4 rpm-macros-cmake
+BuildPreReq: gcc-c++ libgtk+2-devel kde4libs-devel
 BuildPreReq: kde4base-workspace-devel
+BuildRequires: git-core
+BuildRequires: pkgconfig(x11-xcb)
+%if_enabled qt5
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: pkgconfig(Qt5Gui) pkgconfig(Qt5Widgets) pkgconfig(Qt5Svg) pkgconfig(Qt5DBus)
+BuildRequires: pkgconfig(Qt5Quick)
+BuildRequires: pkgconfig(Qt5X11Extras)
+BuildRequires: extra-cmake-modules
+BuildRequires: kf5-kio-devel
+BuildRequires: kf5-kdelibs4support-devel
+# TODO missing dependencies in kf5-kdelibs4support-devel
+BuildRequires: kf5-kemoticons-devel
+BuildRequires: kf5-kitemmodels-devel
+BuildRequires: kf5-kinit-devel
+BuildRequires: kf5-kconfigwidgets-devel
+# TODO missing dependencies in kf5-ktextwidgets-devel
+BuildRequires: kf5-sonnet-devel
+BuildRequires: kf5-ki18n-devel
+
+BuildRequires: kf5-kdoctools-devel-static
+%endif
+
+Requires: %name-gtk2 = %version-%release
+Requires: %name-qt4 = %version-%release
+%if_enabled qt5
+Requires: %name-qt5 = %version-%release
+Requires: %name-kf5 = %version-%release
+%endif
 
 %description
-This is a set of widget styles for KDE and GTK2 based apps.
-The underlying code is based upon Blue/FreeCurve - however,
-*extensive* modifications have been made.
+QtCurve is a desktop theme for the GTK+ and Qt widget toolkits, allowing
+users to achieve a uniform look between these widget toolkits.
 
-%package -n kde4-styles-%name
-Version: 1.8.14
-Group:   Graphical desktop/KDE
-Summary: QtCurve style for KDE 4
+%package libs
+Summary: Runtime libraries for QtCurve
+Group:   Graphical desktop/Other
 
-%description -n kde4-styles-%name
-This is a set of widget styles for KDE 4
-
-%package -n qt4-styles-%name
-Version: 1.8.14
-Group:   Graphical desktop/KDE
-Summary: QtCurve style for Qt4
-Conflicts: kde4-styles-%name
-
-%description -n qt4-styles-%name
-This is a set of widget styles for Qt4
-
-%package -n qt3-styles-%name
-Version: 1.8.5
-Group:   Graphical desktop/KDE
-Summary: QtCurve style for Qt3
-Obsoletes: kde-styles-%name < 1.1.0-alt1
-Provides: kde-styles-%name = 1.8.5-%release
-
-%description -n qt3-styles-%name
-This is a set of widget styles for Qt3
+%description libs
+Runtime libraries for QtCurve
 
 %package -n gtk2-themes-%name
 Summary: The QtCurve engine for GTK2
 Group:   Graphical desktop/GNOME
 Provides: gtk-engines-%name
+Provides: %name-gtk2 = %version-%release
 Obsoletes: gtk-engines-%name < %version-%release gtk1-themes-%name < %version-%release
 
 %description -n gtk2-themes-%name
 The QtCurve engine for GTK2
 
+%if_enabled qt4
+%package -n qt4-styles-%name
+Group:   Graphical desktop/KDE
+Summary: QtCurve style for Qt4
+Provides: kde4-styles-%name = %version-%release
+Obsoletes: kde4-styles-%name < %version-%release
+Provides: %name-qt4 = %version-%release
+
+%description -n qt4-styles-%name
+This is a set of widget styles for Qt4
+%endif
+
+%if_enabled qt5
+%package -n qt5-styles-%name
+Group:   Graphical desktop/KDE
+Summary: QtCurve style for Qt5
+Provides: %name-qt5 = %version-%release
+
+%description -n qt5-styles-%name
+This is a set of widget styles for Qt5
+
+%package -n kf5-styles-%name
+Group:   Graphical desktop/KDE
+Summary: QtCurve style for KF5
+Provides: %name-kf5 = %version-%release
+
+%description -n kf5-styles-%name
+This is a set of widget styles for KF5
+%endif
+
 %prep
 %setup
 %patch1 -p1
-%patch2 -p0
-%patch3 -p1
+%patch2 -p1
+chmod +x tools/gen-version.sh
 
 %build
-pushd QtCurve-KDE4
-%if_enabled qt4
-# Qt4
-%K4cmake -DQTC_QT_ONLY:BOOL=1
-%K4make
-mv BUILD-%_target_platform{,-qt}
-%endif
-# KDE4
-%K4build
-popd
-
-mkdir QtCurve-KDE3/build
-pushd QtCurve-KDE3/build
-# Qt3
-cmake .. \
-        -DCMAKE_C_FLAGS:STRING="%optflags" \
-        -DCMAKE_CXX_FLAGS:STRING="%optflags"
-%make_build VERBOSE=1
-popd
-
-mkdir QtCurve-Gtk2/build
-pushd QtCurve-Gtk2/build
-# Gtk2
-cmake .. \
-        -DCMAKE_C_FLAGS:STRING="%optflags"
-%make_build VERBOSE=1
-popd
+%cmake -DDENABLE_QT5:BOOL=%{?_enable_qt5:ON}%{!?_enable_qt5:OFF} \
+       -DQTC_QT4_ENABLE_KDE:BOOL=OFF
+%cmake_build
 
 %install
-%makeinstall_std -C QtCurve-KDE4/BUILD-%_target_platform/
-%makeinstall_std -C QtCurve-KDE3/build/
-%makeinstall_std -C QtCurve-Gtk2/build/
+%cmakeinstall_std
 
-%if_enabled qt4
-install -pD -m644 QtCurve-KDE4/BUILD-%_target_platform-qt/style/%name.so %buildroot%_qt4dir/plugins/styles/%name.so
-%endif
+# unpackaged files
+rm -fv %buildroot%_libdir/libqtcurve-{cairo,utils}.so
+rm -f %buildroot%_datadir/kxmlgui5/QtCurve/QtCurveui.rc
 
-%files -n kde4-styles-%name
-%_K4lib/*.so
-%_K4plug/styles/*.so
-%_K4apps/QtCurve
-%_K4apps/kstyle/themes/*.themerc
-%_K4apps/color-schemes/*.colors
-%_K4apps/kwin/*.desktop
-%doc QtCurve-KDE4/AUTHORS QtCurve-KDE4/ChangeLog QtCurve-KDE4/README QtCurve-KDE4/TODO
+# Move KF5 file to appropriate place
+mkdir -p %buildroot%_K5data/kstyle/themes/
+mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_K5data/kstyle/themes/
+
+%files
+
+%files libs
+%doc AUTHORS Bugs.md README.md TODO.md ChangeLog.md COPYING
+%_libdir/libqtcurve-utils.so.2*
+
+%files -n gtk2-themes-%name
+%_libdir/gtk-2.0/*/engines/libqtcurve.so
+%_libdir/libqtcurve-cairo.so.1*
+%_datadir/themes/QtCurve/
 
 %if_enabled qt4
 %files -n qt4-styles-%name
-%dir %_qt4dir/plugins/styles/
-%_qt4dir/plugins/styles/%name.so
-%doc QtCurve-KDE4/AUTHORS QtCurve-KDE4/ChangeLog QtCurve-KDE4/README QtCurve-KDE4/TODO
+%_qt4dir/plugins/styles/qtcurve.so
 %endif
 
-%files -n qt3-styles-%name
-%dir %_qt3dir/plugins/styles/
-%_qt3dir/plugins/styles/%name.so
-%doc QtCurve-KDE3/AUTHORS QtCurve-KDE3/ChangeLog QtCurve-KDE3/README QtCurve-KDE3/TODO
+%if_enabled qt5
+%files -n qt5-styles-%name
+%_qt5_plugindir/styles/qtcurve.so
 
-%files -n gtk2-themes-%name
-%_libdir/gtk-2.0/*/engines/lib%name.so*
-%dir %_datadir/themes/QtCurve
-%_datadir/themes/QtCurve/gtk-2.0
-%dir %_datadir/themes/QtCurve/mozilla
-%_datadir/themes/QtCurve/mozilla/preferences-rev.xml
-%_datadir/themes/QtCurve/mozilla/QtCurve.css
-%_datadir/themes/QtCurve/mozilla/QtCurve-KDEButtonOrder.css
-%doc QtCurve-Gtk2/AUTHORS QtCurve-Gtk2/ChangeLog QtCurve-Gtk2/README QtCurve-Gtk2/TODO
-
+%files -n kf5-styles-%name
+%_qt5_plugindir/kstyle_qtcurve5_config.so
+%_K5data/kstyle/themes/qtcurve.themerc
+%endif
 
 %changelog
+* Sat Jul 30 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.8.18-alt1.git3d313d5
+- New version 1.8.18
+- Build from upstream Git repository
+
 * Mon Oct 05 2015 Andrey Cherepanov <cas@altlinux.org> 1:1.8.15-alt2
 - rebuilt against gcc5-built qt3
 
