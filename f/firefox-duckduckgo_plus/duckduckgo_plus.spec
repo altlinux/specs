@@ -1,7 +1,7 @@
 # SPEC file for the DuckDuckGo Plus Firefox extension
 
 %define rname	duckduckgo_plus
-%define version 0.5.2
+%define version 0.5.6
 %define release alt1
 %define cid	jid1-ZAdIEUB7XOzOJw@jetpack
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -63,6 +63,9 @@ fi
 %ciddir
 
 %changelog
+* Sat Jul 30 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.6-alt1
+- New version
+
 * Sun Jun 12 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.2-alt1
 - New version
 
