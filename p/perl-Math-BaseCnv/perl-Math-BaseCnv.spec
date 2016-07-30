@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Math-BaseCnv
 
 Name: perl-Math-BaseCnv
-Version: 1.8
+Version: 1.12
 Release: alt1
 
 Summary: Perl module with functions to convert between number bases
@@ -18,13 +18,13 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
 
 Source: %real_name-%real_version.tar
-Patch0: %real_name-1.8-alt-version_fix.patch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Nov 28 2010
-BuildRequires: perl-Math-BigInt-FastCalc perl-Memoize perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sat Jul 30 2016
+# optimized out: perl perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Devel-Symdump perl-Encode perl-JSON-PP perl-Math-BigInt perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-parent perl-podlators python-base python-modules python3
+BuildRequires: perl-Math-BigInt-FastCalc perl-HTML-Parser perl-Memoize perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
 
 %description
 Perl module Math::BaseCnv provides a few simple functions
@@ -37,7 +37,6 @@ for converting between arbitrary number bases.
 
 %prep
 %setup -q -n %real_name-%real_version
-%patch0
 
 %build
 %perl_vendor_build
@@ -46,12 +45,15 @@ for converting between arbitrary number bases.
 %perl_vendor_install
 
 %files
-%doc README CHANGES
+%doc README Changes
 %doc bin ex
 %perl_vendor_privlib/Math/BaseCnv*
 %exclude %_bindir/cnv
 
 %changelog
+* Sat Jul 30 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.12-alt1
+- New version
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 1.8-alt1
 - New version 1.8
 
