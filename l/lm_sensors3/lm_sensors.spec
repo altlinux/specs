@@ -1,11 +1,11 @@
 %def_disable static
 
 Name: lm_sensors3
-Version: 3.3.2
-Release: alt3
+Version: 3.4.0
+Release: alt1
 
 Summary: Hardware Health Monitoring Tools
-License: GPL
+License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
 Group: System/Kernel and hardware
 Url: http://www.lm-sensors.org/
 Packager: Afanasov Dmitry <ender@altlinux.org> 
@@ -13,12 +13,19 @@ Packager: Afanasov Dmitry <ender@altlinux.org>
 Source: %name-%version.tar
 Source1: lm_sensors.init
 Source2: lm_sensors.service
-Source3: fancontrol.service
+Source3: lm_sensors.sysconfig
+Source4: lm_sensors-modprobe-wrapper
+Source5: lm_sensors-modprobe-r-wrapper
+Source6: sensord.service
+Source7: sensord.sysconfig
+Source8: sensord-service-wrapper
 
-Patch1: lm_sensors3-3.1.0-alt-set_limit.patch
+Patch1: lm_sensors3-3.4.0-alt-set_limit.patch
 Patch2: lm_sensors3-3.1.0-makefile-norpath.patch
 
 Requires: libsensors3 = %version-%release
+Provides: lm_sensors
+Obsoletes: lm_sensors
 Conflicts: lm_sensors < 3.1.0-alt1
 
 Provides: lm_sensors = %version-%release
@@ -34,22 +41,31 @@ BuildPreReq: rpm-macros-make
 Summary: Hardware Health Monitoring utils
 Group: Monitoring
 Requires: %name = %version-%release
+Provides: lm_sensors-utils
+Obsoletes: lm_sensors-utils
+Conflicts: sensorfw
 
 %package -n libsensors3
 Summary: Shared library for hardware health monitoring tools
 Group: System/Libraries
+Provides: libsensors
+Obsoletes: libsensors
 
 %package -n libsensors3-devel
 Summary: Development environment for hardware health monitoring tools
 Group: Development/C
 Requires: libsensors3 = %version-%release
 Provides: %name-devel = %version
+Provides: libsensors-devel
+Obsoletes: libsensors-devel
 Conflicts: libsensors-devel
 
 %package -n libsensors3-devel-static
 Summary: Static library for developing hardware health monitoring tools
 Group: Development/C
 Requires: libsensors-devel = %version-%release
+Provides: libsensors-devel-static
+Obsoletes: libsensors-devel-static
 Conflicts: libsensors-devel-static
 
 %description
@@ -92,8 +108,14 @@ user space applications for general SMBus access and hardware monitoring.
 
 %prep
 %setup -q
-%patch1 -p1
+%patch1 -p2
 %patch2 -p2
+
+# fixing the sensord-service-wrapper path
+cp -p %SOURCE2 lm_sensors.service
+cp -p %SOURCE6 sensord.service
+sed -i "s|\@WRAPPER_DIR\@|%_libexecdir/%name|" lm_sensors.service
+sed -i "s|\@WRAPPER_DIR\@|%_libexecdir/%name|" sensord.service
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -113,9 +135,23 @@ user space applications for general SMBus access and hardware monitoring.
       EXLDFLAGS= \
       install
 
+mkdir -p %buildroot%_sysconfdir/sysconfig
+install -pm 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/lm_sensors
+install -pm 644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/sensord
+
+# service files
 install -pD -m755 %SOURCE1 %buildroot%_initrddir/lm_sensors
-install -pD -m644 %SOURCE2 %buildroot/lib/systemd/system/lm_sensors.service
-install -pD -m644 %SOURCE3 %buildroot/lib/systemd/system/fancontrol.service
+install -pD -m644 lm_sensors.service %buildroot%_unitdir/lm_sensors.service
+install -pD -m644 lm_sensors.service %buildroot%_unitdir/sensord.service
+install -pD -m644 prog/init/fancontrol.service %buildroot%_unitdir/fancontrol.service
+
+# customized modprobe calls
+mkdir -p %buildroot%_libexecdir/%name
+install -pm 755 %SOURCE4 %buildroot%_libexecdir/%name/lm_sensors-modprobe-wrapper
+install -pm 755 %SOURCE5 %buildroot%_libexecdir/%name/lm_sensors-modprobe-r-wrapper
+
+# sensord service wrapper
+install -pm 755 %SOURCE8 %buildroot%_libexecdir/%name/sensord-service-wrapper
 
 install -pD -m755 prog/init/sensord.init %buildroot%_datadir/%name/sensord.init
 install -pD -m755 prog/init/fancontrol.init %buildroot%_datadir/%name/fancontrol.init
@@ -147,11 +183,12 @@ if [ $1 -eq 0 ] && [ $2 -eq 1 ] && [ -f /etc/sysconfig/lm_sensors.old ]; then
 fi
 
 %files
-%doc doc/temperature-sensors doc/progs doc/vid doc/fan-divisors doc/chips doc/donations doc/fancontrol.txt
+%doc doc/ README CHANGES COPYING COPYING.LGPL
 %config(noreplace) %_sysconfdir/sensors3.conf
 %dir %_sysconfdir/sensors.d
+%config(noreplace) %_sysconfdir/sysconfig/lm_sensors
 %config %_initdir/lm_sensors
-/lib/systemd/system/lm_sensors.service
+%_unitdir/lm_sensors.service
 %_bindir/sensors
 %_bindir/sensors-conf-convert
 %_sbindir/sensors-detect
@@ -161,11 +198,14 @@ fi
 %_man8dir/sensors-detect.8*
 %dir %_datadir/%name
 %_datadir/%name/sysconfig-lm_sensors-convert
+%dir %_libexecdir/%name
+%_libexecdir/%name/lm_sensors-modprobe*wrapper
 
 %files utils
 %_sbindir/sensord
+%_unitdir/sensord.service
 %_sbindir/fancontrol
-/lib/systemd/system/fancontrol.service
+%_unitdir/fancontrol.service
 %ifnarch %arm
 %_sbindir/isadump
 %_sbindir/isaset
@@ -178,8 +218,11 @@ fi
 %_man8dir/isaset.*
 %endif
 %_man8dir/pwmconfig.*
+%_man8dir/sensors-conf-convert.8.*
 %_man8dir/sensord.*
 %exclude %_datadir/%name/sysconfig-lm_sensors-convert
+%_libexecdir/%name/sensord-service-wrapper
+%config(noreplace) %{_sysconfdir}/sysconfig/sensord
 
 %files -n libsensors3
 %_libdir/*.so.*
@@ -197,6 +240,13 @@ fi
 %endif #static
 
 %changelog
+* Sat Jul 30 2016 Anton Midyukov <antohami@altlinux.org> 3.4.0-alt1
+- new version 3.4.0 (Closes: 30090)
+- update license
+- added provides and obsoletes lm_sensors (Closes: 28974)
+- added conflict with sensorfw (both contain the file /usr/sbin/sensord)
+- added lsb-header in lm_sensors.init
+
 * Thu Aug 07 2014 Denis Smirnov <mithraen@altlinux.ru> 3.3.2-alt3
 - add systemd unit (#30221)
 - add fancontrol.service (#30186)
