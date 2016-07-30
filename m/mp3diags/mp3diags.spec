@@ -1,5 +1,5 @@
 Name: mp3diags
-Version: 1.2.02
+Version: 1.2.03
 Release: alt1
 
 Summary: Finds problems in MP3 files and helps the user fix many of them
@@ -41,6 +41,9 @@ install -pD -m644 desktop/MP3Diags48.png %buildroot%_liconsdir/mp3diags.png
 %_liconsdir/*
 
 %changelog
+* Sat Jul 30 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.03-alt1
+- 1.2.03
+
 * Thu Apr 07 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.02-alt1
 - 1.2.02
 
