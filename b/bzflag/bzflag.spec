@@ -6,7 +6,7 @@
 
 Name: bzflag
 Version: 2.4.6
-Release: alt3.RC2
+Release: alt4
 
 Summary: A multiplayer 3D tank battle game
 License: LGPLv2.1
@@ -206,6 +206,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Sun Jul 31 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.6-alt4
+- Version 2.4.6 (Release)
+
 * Sat Jun 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.6-alt3.RC2
 - Fix Translate
 
