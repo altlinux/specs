@@ -2,7 +2,7 @@
 %define fname dejavu
 
 Name: fonts-ttf-%fname
-Version: 2.36
+Version: 2.37
 Release: alt1
 
 Summary: A font family based on the Bitstream Vera Fonts with a wider set of characters
@@ -10,7 +10,7 @@ License: Freely distributable
 Group: System/Fonts/True type
 
 Url: http://dejavu.sourceforge.net
-Source: http://downloads.sourceforge.net/%fname/%_name-%version.tar.bz2
+Source0: http://downloads.sourceforge.net/%fname/dejavu-fonts-ttf-%{version}.tar.bz2
 Source100: dejavu-fonts-ttf.watch
 Packager: Alexey Rusakov <ktirf@altlinux.ru>
 
@@ -51,6 +51,9 @@ install -m644 -pD fontconfig/{??-unhint-small-dejavu*.conf,??-dejavu*.conf} \
 %doc AUTHORS BUGS LICENSE NEWS README* status.txt unicover.txt
 
 %changelog
+* Sun Jul 31 2016 Michael Shigorin <mike@altlinux.org> 2.37-alt1
+- new version (watch file uupdate)
+
 * Tue Jul 26 2016 Michael Shigorin <mike@altlinux.org> 2.36-alt1
 - new version (watch file uupdate)
 

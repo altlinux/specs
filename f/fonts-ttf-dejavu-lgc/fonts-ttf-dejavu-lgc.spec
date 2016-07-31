@@ -2,7 +2,7 @@
 %define fname dejavu-lgc
 
 Name: fonts-ttf-%fname
-Version: 2.36
+Version: 2.37
 Release: alt1
 
 Summary: A font family based on the Bitstream Vera Fonts (Latin, Greek, Cyrillic)
@@ -10,7 +10,7 @@ License: %gpl2plus
 Group: System/Fonts/True type
 
 Url: http://dejavu.sourceforge.net
-Source0: http://downloads.sourceforge.net/dejavu/%_name-%version.tar.bz2
+Source0: http://downloads.sourceforge.net/dejavu/dejavu-lgc-fonts-ttf-%{version}.tar.bz2
 Source1: 59-dejavu-lgc-minimal.conf
 Source2: 20-unhint-small-dejavu-lgc-minimal.conf
 Source3: dejavu-lgc-minimal-README.ALT
@@ -81,6 +81,9 @@ install -pm644 %SOURCE3 README.ALT
 %doc LICENSE README.ALT
 
 %changelog
+* Sun Jul 31 2016 Michael Shigorin <mike@altlinux.org> 2.37-alt1
+- new version (watch file uupdate)
+
 * Tue Jul 26 2016 Michael Shigorin <mike@altlinux.org> 2.36-alt1
 - new version (watch file uupdate)
 
