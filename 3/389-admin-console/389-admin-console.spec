@@ -5,7 +5,7 @@
 %define pkgname dirsrv
 
 Name: 389-admin-console
-Version: %major_version.%minor_version
+Version: 1.1.11
 Release: alt1
 Group:   Networking/Other
 Url:     http://port389.org
@@ -14,7 +14,7 @@ License: GPLv2
 Summary: 389 Admin Server Management Console
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires(Pre): rpm-build-java
 BuildRequires: java-devel
@@ -83,6 +83,9 @@ popd
 %doc %_datadir/%pkgname/manual/en/admin/help/*.html
 
 %changelog
+* Sun Jul 31 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.11-alt1
+- new version 1.1.11
+
 * Tue Nov 17 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.10-alt1
 - New version
 - Use dirsrv as pkgname

@@ -1,5 +1,5 @@
 %define major_version 1.1
-%define minor_version 16
+%define minor_version 17
 
 Name:    389-console
 Version: %major_version.%minor_version
@@ -37,7 +37,7 @@ Administration Server and Fedora Directory Server.
 
 %build
 %ant -Dlib.dir=%_libdir -Dbuilt.dir=`pwd`/built -Dldapjdk.jar.name=ldapsdk.jar \
-     -Djss.local.location=%_javadir -Dman.dir=`pwd`/built%_mandir
+     -Djss.local.location=%_javadir -Dman.dir=%_mandir
 
 %install
 install -d %buildroot%_javadir
@@ -61,6 +61,10 @@ popd
 %_man8dir/*
 
 %changelog
+* Sun Jul 31 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.17-alt1
+- New version
+- Fix path to man.dir because it become relative to build.dir
+
 * Thu May 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.16-alt1
 - New version
 
