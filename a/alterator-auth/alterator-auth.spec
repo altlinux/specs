@@ -3,7 +3,7 @@
 
 Name: alterator-auth
 Version: 0.29.5
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -34,6 +34,19 @@ BuildPreReq: alterator >= 4.7-alt4
 %description
 Alterator module for system wide auth settings
 
+%package -n task-auth-ad
+Summary: Metapackage to authenticate in Active Directory domain
+Group: System/Configuration/Other
+Requires: alterator-auth
+Requires: samba-winbind
+Requires: samba-winbind-clients
+Requires: samba-common-tools
+Requires: krb5-kinit
+Requires: pam_mount
+
+%description -n task-auth-ad
+Metapackage to authenticate in Active Directory domain.
+
 %prep
 %setup -q
 
@@ -52,7 +65,13 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_hooksdir/90-auth
 %_alterator_backend3dir/*
 
+%files -n task-auth-ad
+
 %changelog
+* Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.5-alt2
+- Add metapackage task-auth-ad to setup authentication in Active
+  Directory domain
+
 * Mon Jul 11 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.5-alt1
 - Fix join to Active Directory domain in some cases:
   - Increase available idmap range from 10.000 to 20 millions
