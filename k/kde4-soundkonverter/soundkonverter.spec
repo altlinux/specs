@@ -7,7 +7,7 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: A frontend to various audio converters
@@ -22,6 +22,7 @@ Conflicts: soundkonverter <= 0.3.9-alt8.1
 Url: https://github.com/HessiJames/soundkonverter
 Source: %tname-%version.tar
 Patch1: alt-mp3gain1.4.patch
+Patch2: alt-lib-sover.patch
 
 Requires: /usr/bin/avconv vorbis-tools vorbisgain flac lame mp3gain cdparanoia speex wavpack faad mppenc sox
 #Requires: faac
@@ -29,9 +30,11 @@ Requires: /usr/bin/avconv vorbis-tools vorbisgain flac lame mp3gain cdparanoia s
 # Automatically added by buildreq on Mon Mar 15 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libcdparanoia-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby xorg-xf86vidmodeproto-devel
 BuildRequires(pre): kde4libs-devel mp3gain
-BuildRequires: gcc-c++ kde4multimedia-devel libcdparanoia-devel libtag-devel
-#BuildRequires: libmediainfo-devel libzen-devel
+BuildRequires: gcc-c++ libcdparanoia-devel libtag-devel
+BuildRequires: libkcddb4-devel
+#BuildRequires: kde4multimedia-devel
 BuildRequires: glib2-devel glibc-devel
+#BuildRequires: libmediainfo-devel libzen-devel
 
 %description
 %rname project is a frontend to various audio converters.
@@ -59,6 +62,7 @@ Requires: %name-common = %version-%release
 %_K_if_ver_lt %mp3gain_ver 1.5
 %patch1 -p1
 %endif
+%patch2 -p1
 
 rm -f cmake/modules/FindTaglib.cmake
 
@@ -98,6 +102,9 @@ popd
 %_K4libdir/libsoundkonvertercore.so.*
 
 %changelog
+* Mon Aug 01 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 2.2.1-alt1
 - new version
 
