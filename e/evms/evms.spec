@@ -1,4 +1,4 @@
-%def_with x
+%def_without x
 %def_enable gpt
 %def_disable ha
 %def_disable ogfs
@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt33
+Release: alt34
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -18,8 +18,6 @@ Source: %name-%version-%release.tar
 
 BuildRequires: glib2-devel libe2fs-devel libncurses-devel libreadline-devel libuuid-devel
 BuildRequires: libcryptsetup-devel >= 1.4.0
-BuildRequires: gcc4.7
-%set_gcc_version 4.7
 
 %if_with x
 BuildRequires: gtk+-devel
@@ -94,11 +92,13 @@ GTK+ ui tool for EVMS
 
 %prep
 %setup
+# die early, die often
+sed -i /SEGV/d engine/faulthdlr.c
 
 %build
-export CC=gcc
+%define _optlevel 0
 %autoreconf
-%add_optflags -DEVMS_DEBUG
+%add_optflags -DEVMS_DEBUG -std=gnu89
 %configure  --libdir=/%_lib --sbindir=/sbin \
     --disable-s390 \
     %{subst_enable gpt} \
@@ -168,6 +168,10 @@ EOF
 %endif
 
 %changelog
+* Wed Jul 20 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.5-alt34
+- built without ancient gtk1 gui
+- built with default gcc5
+
 * Tue Jun 14 2016 Michael Shigorin <mike@altlinux.org> 2.5.5-alt33
 - plugins/fat: updated for dosfstools 4.x
 
