@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 5.4.0
+Version: 5.4.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -75,7 +75,7 @@ Requires: kde5-konversation kde5-kate
 Requires: kde5-pim kde5-pim-addons kde5-baseapps kde5-kcron kde5-kruler kde5-ffmpegthumbs
 Requires: kf5-plasma-mediacenter kde5-krfb
 Requires: kid3-ui-kde5 ring-client-kde5
-Requires: kde5-kipi-plugins-core
+#Requires: kde5-kipi-plugins-core
 %description -n kde5-big
 %summary
 
@@ -90,7 +90,7 @@ Requires: kde5-printing
 Requires: kde5-scanning
 Requires: kdenlive kde5-connect
 Requires: kde5-k3b
-Requires: kde5-digikam kde5-kipi-plugins
+#Requires: kde5-digikam kde5-kipi-plugins
 %description -n kde5-maxi
 %summary
 
@@ -155,6 +155,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Mon Aug 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
+- temporary exclude digikam, kipi-plugins
+
 * Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.0-alt1
 - add k3b, digikam, kipi-plugins
 
