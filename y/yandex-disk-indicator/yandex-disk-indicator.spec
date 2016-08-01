@@ -1,5 +1,5 @@
 Name:		yandex-disk-indicator
-Version:	1.8.16
+Version:	1.9.0
 Release:	alt1
 Summary:	Panel indicator for YandexDisk CLI client for Linux
 Group:		Communications
@@ -35,5 +35,8 @@ chmod 644 %buildroot%_desktopdir/*
 %_datadir/yd-tools
 
 %changelog
+* Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
+- new version 1.9.0
+
 * Mon Jul 25 2016 Andrey Cherepanov <cas@altlinux.org> 1.8.16-alt1
 - Initial build in Sisyphus (thanks ROSA for the spec)
