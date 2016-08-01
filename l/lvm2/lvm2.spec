@@ -1,5 +1,5 @@
-%define lvm2version 2.02.158
-%define dmversion 1.02.128
+%define lvm2version 2.02.162
+%define dmversion 1.02.132
 
 %define _sbindir /sbin
 %define _runtimedir /run
@@ -558,6 +558,9 @@ __EOF__
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 01 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.162-alt1
+- 2.02.162
+
 * Tue Jul 05 2016 Alexey Shabalin <shaba@altlinux.ru> 2.02.158-alt1
 - 2.02.158
 - build with --enable-blkid_wiping
