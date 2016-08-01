@@ -1,5 +1,5 @@
 Name: rpmorphan
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: Find orphaned RPM packages
@@ -14,7 +14,12 @@ Source: http://prdownloads.sourceforge.net/rpmorphan/%version/%name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: perl-Pod-Parser
+# manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs
+# Automatically added by buildreq on Mon Aug 01 2016 (-bi)
+# optimized out: fontconfig perl perl-Curses perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-TermReadKey perl-Tk perl-podlators python-base python-modules python3 python3-base rpm-build-python3 xz
+BuildRequires: perl-Curses-UI perl-Pod-Usage perl-Tk-MListbox
+
+BuildRequires: perl-Pod-Parser perl-Curses-UI
 
 Requires: perl-podlators
 
@@ -62,6 +67,9 @@ rm -f %buildroot%_logdir/*
 %_var/lib/rpmorphan/keep
 
 %changelog
+* Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt1
+- new version 1.16 (with rpmrb script)
+
 * Sat Oct 17 2015 Vitaly Lipatov <lav@altlinux.ru> 1.15-alt1
 - new version 1.15 (with rpmrb script)
 
