@@ -2,7 +2,7 @@
 %define minor_version 14
 
 Name:    idm-console-framework
-Version: %major_version.%minor_version
+Version: 1.1.15
 Release: alt1
 Group:   Networking/Other
 Url:     http://port389.org
@@ -10,9 +10,9 @@ Url:     http://port389.org
 License: LGPLv2
 Summary: Identity Management Console Framework
 BuildArch: noarch
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Packager: Andrey Cherepanov <cas@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 #Patch: %name-alt-classnames.patch
 BuildRequires(Pre): rpm-build-java
 BuildRequires: java-devel
@@ -46,6 +46,9 @@ install -m777 built/release/jars/idm-console-* %buildroot%_javadir
 %_javadir/idm-console-nmclf_en.jar
 
 %changelog
+* Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.15-alt1
+- new version 1.1.15
+
 * Wed Nov 18 2015 Andrey Cherepanov <cas@altlinux.org> 1.1.14-alt1
 - New version
 - Build from upstream git repository
