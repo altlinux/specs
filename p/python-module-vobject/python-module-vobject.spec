@@ -1,5 +1,5 @@
 %define version 0.9.2
-%define release alt1
+%define release alt2
 %setup_python_module vobject
 
 Name: %packagename
@@ -15,7 +15,8 @@ BuildArch: noarch
 
 Source0: %modulename-%version.tar
 #VCS: https://github.com/eventable/vobject
-Patch1: python-module-vobject-no-ez-setup.patch
+# Upstream patch
+Patch1: fix-ORG-field-parse.patch
 
 BuildRequires:  python-module-setuptools
 BuildRequires(pre): rpm-build-python3
@@ -43,7 +44,7 @@ components are understood in a sophisticated way.
 
 %prep
 %setup -n %modulename-%version
-#patch1 -p1
+%patch1 -p1
 # remove win32 files
 rm -f vobject/win32tz.py
 rm -rf ../python3
@@ -69,6 +70,9 @@ popd
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt2
+- vcard: Fix ORG fields with multiple components (commit fe78218)
+
 * Tue Jul 26 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
 - New version 0.9.2
 
