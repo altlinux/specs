@@ -3,11 +3,11 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 6.11.1
+Version: 6.11.2
 Release: alt1
 
 Summary: DHCP Client
-License: %bsdstyle
+License: %bsd
 Group: System/Servers
 
 URL: http://roy.marples.name/projects/%name
@@ -76,6 +76,10 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Mon Aug 01 2016 Mikhail Efremov <sem@altlinux.org> 1:6.11.2-alt1
+- Fix License.
+- Updated to 6.11.2.
+
 * Mon Jun 20 2016 Mikhail Efremov <sem@altlinux.org> 1:6.11.1-alt1
 - Drop obsoleted patch.
 - Updated to 6.11.1.
