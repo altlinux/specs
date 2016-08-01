@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.12.0
-Release: alt1
+Release: alt2
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -65,6 +65,11 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Aug 01 2016 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
+- Fix segfault when upowerd is not running (closes: #32331).
+- Patch from upstream:
+  + Make sure icon == NULL if no icon is found.
+
 * Fri Mar 06 2015 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt1
 - Updated to 4.12.0.
 
