@@ -1,5 +1,6 @@
-%def_disable expoblending
-%def_disable panorama
+%def_disable plug_expoblending
+%def_disable plug_panorama
+%def_disable plug_imgur
 
 %define libsover 5
 %define libkf5kipiplugins libkf5kipiplugins%libsover
@@ -7,7 +8,7 @@
 %define rname kipi-plugins
 Name: kde5-%rname
 Version: 5.0.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphics
@@ -20,10 +21,10 @@ Source1: po.tar
 Source2: doc.tar
 
 Requires: %name-core
-%if_enabled expoblending
+%if_enabled plug_expoblending
 Requires: %name-expoblending
 %endif
-%if_enabled expoblending
+%if_enabled plug_panorama
 Requires: %name-panorama
 %endif
 
@@ -98,10 +99,16 @@ while read f ; do
     sed -i 's|<double>|<qreal>|g' $f
 done
 
+# set lib soname
 find -type f -name CMakeLists.txt | \
 while read f ; do
     sed -i '/.*SOVERSION.*KIPIPLUGINS_LIB_SO_VERSION_STRING/s|\(SOVERSION.*\)KIPIPLUGINS_LIB_SO_VERSION_STRING}|\1KIPIPLUGINS_MAJOR_VERSION}|' $f
 done
+
+%if_disabled plug_imgur
+    sed -i 's|add_subdirectory(imgur)||' CMakeLists.txt
+    rm -rf imgur
+%endif
 
 # build docs and translations
 cat >> CMakeLists.txt <<__EOF__
@@ -142,13 +149,13 @@ done
 %_K5xdgapp/kipiplugins.desktop
 %_K5data/kipiplugin_*/
 
-%if_enabled expoblending
+%if_enabled plug_expoblending
 # exclude expoblending
 %exclude %_K5plug/kipiplugin_expoblending.so
 %exclude %_K5srv/kipiplugin_expoblending.desktop
 %exclude %_K5data/kipiplugin_expoblending
 %endif
-%if_enabled expoblending
+%if_enabled plug_panorama
 # exclude panorama
 %exclude %_K5plug/kipiplugin_panorama.so
 %exclude %_K5data/kipi/kipiplugin_panoramaui.rc
@@ -156,7 +163,7 @@ done
 %exclude %_K5srv/kipiplugin_panorama.desktop
 %endif
 
-%if_enabled expoblending
+%if_enabled plug_expoblending
 %files expoblending
 %_K5bin/expoblending
 %_K5plug/kipiplugin_expoblending.so
@@ -165,7 +172,7 @@ done
 %_K5xdgapp/expoblending.desktop
 %endif
 
-%if_enabled expoblending
+%if_enabled plug_panorama
 %files panorama
 %_K5bindir/panoramagui
 %_K5plug/kipiplugin_panorama.so
@@ -180,5 +187,8 @@ done
 %_K5lib/libKF5kipiplugins.so.%libsover.*
 
 %changelog
+* Tue Aug 02 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt2
+- disable imgur plugin
+
 * Thu Jul 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt1
 - initial build
