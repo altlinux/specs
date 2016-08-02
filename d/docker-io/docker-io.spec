@@ -6,11 +6,11 @@
 %global repo            %{project}
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      590d5108bbdaabb05af590f76c9757daceb6d02e
-%global shortcommit 590d510
+%global commit      8eab29edd820017901796eb60d4bea28d760f16f
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       %{repo}-io
-Version:    1.11.2
+Version:    1.12.0
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -83,7 +83,9 @@ cp contrib/syntax/vim/README.md README-vim-syntax.md
 %install
 # install binary
 install -d %{buildroot}%{_bindir}
-install -p -m 755 bundles/%{version}/dynbinary/docker-%{version} %{buildroot}%{_bindir}/docker
+ls -la bundles/%{version}/
+install -p -m 755 bundles/%{version}/dynbinary-client/docker-%{version} %{buildroot}%{_bindir}/docker
+install -p -m 755 bundles/%{version}/dynbinary-daemon/dockerd-%{version} %{buildroot}%{_bindir}/dockerd
 
 # create symlinks on runc/containerd
 ln -s %_bindir/runc %{buildroot}%{_bindir}/docker-runc
@@ -124,12 +126,12 @@ install -p -m 644 altlinux/%{repo}-containerd.service %{buildroot}%{_unitdir}
 install -p -D -m 755 altlinux/%{repo}.init %{buildroot}%{_initddir}/%{repo}
 
 # sources
-install -d -p %{buildroot}/%{gopath}/src/%{import_path}
-rm -rf pkg/symlink/testdata
-
-for dir in api builder cli cliconfig container daemon docker image opts pkg registry runconfig utils volume
-do
-    cp -rpav $dir %{buildroot}/%{gopath}/src/%{import_path}/
+install -d -p %{buildroot}/%{gopath}/src/%{import_path}/
+echo "%%dir %%{gopath}/src/%%{import_path}/." >> devel.file-list
+# find all *.go but no *_test.go files and generate devel.file-list
+for file in $(find . -iname "*.go" \! -iname "*_test.go") ; do
+    install -d -p %{buildroot}/%{gopath}/src/%{import_path}/$(dirname $file)
+    cp -pav $file %{buildroot}/%{gopath}/src/%{import_path}/$file
 done
 
 install -d %buildroot%_sysconfdir/sysconfig
@@ -154,6 +156,7 @@ exit 0
 %{_mandir}/man1/docker*.1.*
 %{_mandir}/man5/Dockerfile.5.*
 %{_bindir}/docker
+%{_bindir}/dockerd
 %{_bindir}/docker-runc
 %{_bindir}/docker-containerd
 %{_bindir}/docker-containerd-shim
@@ -171,13 +174,13 @@ exit 0
 
 %files devel
 %doc AUTHORS CHANGELOG.md CONTRIBUTING.md LICENSE MAINTAINERS NOTICE README.md
-%exclude %{gopath}/src/%{import_path}/builder/dockerfile/parser/testfiles
-%exclude %{gopath}/src/%{import_path}/builder/dockerfile/parser/testfiles-negative
-%exclude %{gopath}/src/%{import_path}/builder/dockerfile/parser/testfile-line
 %dir %{gopath}/src/%{provider}.%{provider_tld}/%{project}
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Tue Aug 2 2016 Vladimir Didenko <cow@altlinux.org> 1.12.0-alt1
+- New version
+
 * Thu Jun 2 2016 Vladimir Didenko <cow@altlinux.org> 1.11.2-alt1
 - New version
 
