@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -155,6 +155,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Tue Aug 02 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
+- use digikam, kipi-plugins
+
 * Mon Aug 01 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.1-alt1
 - temporary exclude digikam, kipi-plugins
 
