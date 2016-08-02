@@ -1,10 +1,12 @@
+%def_without build_docs
+
 Name:    synfigstudio
-Version: 1.1.9
+Version: 1.1.10
 Release: alt1
 
 Summary: Synfig studio - animation program
 Group:   Office
-License: GPL
+License: GPLv2+
 Url:     http://www.synfig.org
 # VCS:	 https://github.com/synfig/synfig
 
@@ -14,24 +16,72 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:  %name-%version.tar
 
 BuildPreReq: fonts-ttf-liberation
-BuildRequires: gcc-c++ libgtkmm2-devel
-BuildRequires: libsynfig-devel >= %version
-BuildRequires: intltool
-BuildRequires: ImageMagick-tools
-BuildRequires: libgtkmm3-devel
-BuildRequires: libsigc++2-devel
+BuildRequires: gcc-c++
 BuildRequires: /proc
+BuildRequires: ImageMagick-tools
+BuildRequires: apt
+BuildRequires: boost-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: fontconfig-devel
+BuildRequires: gcc-c++
+BuildRequires: git-core
+BuildRequires: intltool
+BuildRequires: libImageMagick-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXfixes-devel
+BuildRequires: libXi-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXt-devel
+BuildRequires: libavformat-devel
+BuildRequires: libcairo-devel
+BuildRequires: libdirectfb-devel
+BuildRequires: libfftw3-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libgtkmm3-devel
+BuildRequires: libjasper-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libltdl7-devel
+BuildRequires: libmlt++-devel
+BuildRequires: libmng-devel
+BuildRequires: libpango-devel
+BuildRequires: libpng-devel
+BuildRequires: libsigc++2-devel
+BuildRequires: libswscale-devel
+BuildRequires: libtiff-devel
+BuildRequires: libxml++2-devel
+BuildRequires: openexr-devel
+BuildRequires: libjack-devel
+BuildRequires: libavcodec-devel
+BuildRequires: libdv-devel
+%if_with build_docs
+BuildRequires: docbook-style-dsssl-utils
+BuildRequires: openjade
+#BuildRequires: ldp-docbook-dsssl
+%endif
 
-BuildPreReq: libsynfig-devel = %version
 Requires: lib%name = %version-%release
 
 %description
-Synfig studio is a animation program.
+Synfig Animation Studio is a powerful, industrial-strength vector-based
+2D animation software, designed from the ground-up for producing
+feature-film quality animation with fewer people and resources.
+It is designed to be capable of producing feature-film quality
+animation. It eliminates the need for tweening, preventing the
+need to hand-draw each frame. Synfig features spatial and temporal
+resolution independence (sharp and smoothat any resolution or
+framerate), high dynamic range images, and a flexible plugin system.
 
 %package -n lib%name
 Summary: Library for Synfig studio
 Group: Development/C++
-Requires: libsynfig = %version
+Provides:  libetl = %version-%release
+Obsoletes: libetl < %version-%release
+Provides:  libsynfig = %version-%release
+Obsoletes: libsynfig < %version-%release
 
 %description -n lib%name
 Library for Synfig studio.
@@ -40,30 +90,90 @@ Library for Synfig studio.
 Summary: Header files for Synfig studio
 Group: Development/C++
 Requires: lib%name = %version-%release
+Provides:  libetl-devel = %version-%release
+Obsoletes: libetl-devel < %version-%release
+Provides:  libsynfig-devel = %version-%release
+Obsoletes: libsynfig-devel < %version-%release
 
 %description -n lib%name-devel
 Header files for Synfig studio.
 
 %prep
 %setup -q
+mkdir local-pkg-config
 
 %build
+%add_optflags -fpermissive -std=c++11 -I%_includedir/sigc++-2.0 -I%_libdir/sigc++-2.0/include
+export PKG_CONFIG_PATH=../local-pkg-config:$PKG_CONFIG_PATH
+%undefine _configure_gettext
+%define rpm_synfig_dir %_builddir/%name-%version/synfig-core/src/synfig/.libs
+
+# Build ETL
+pushd ETL
 %autoreconf
-%add_optflags -std=c++11 -I%_includedir/sigc++-2.0 -I%_libdir/sigc++-2.0/include
 %configure
 %make_build
+cp ETL.pc ../local-pkg-config
+subst 's,^includedir=.*,includedir=%_builddir/%name-%version/ETL,' ../local-pkg-config/ETL.pc
+popd
+
+# Build synfig-core
+pushd synfig-core
+%autoreconf
+%configure --with-dv --enable-profiling --enable-profile-arcs
+%make_build
+cp synfig.pc ../local-pkg-config
+subst 's,^libdir=.*,libdir=%rpm_synfig_dir,;s,^includedir=.*,includedir=%_builddir/%name-%version/synfig-core/src,' ../local-pkg-config/synfig.pc
+export PATH=%_builddir/%name-%version/synfig-core/src/tool/.libs:$PATH
+export LD_LIBRARY_PATH=%rpm_synfig_dir:$LD_LIBRARY_PATH
+mkdir -p $HOME/.local/share/synfig
+cp src/modules/synfig_modules.cfg $HOME/.local/share/synfig
+cp src/modules/*/.libs/lib*.so %rpm_synfig_dir
+popd
+
+# Build main executable
+pushd synfig-studio
+%autoreconf
+%configure
+%make_build
+popd
+
+%if_with build_docs
+# Build docs
+pushd synfig-docs
+%make_build
+popd
+%endif
 
 %install
+for dir in ETL synfig-core synfig-studio; do
+pushd $dir
 %makeinstall_std
+popd
+done
+
+%if_with build_docs
+# Install docs
+pushd synfig-docs
+%makeinstall_std
+popd
+%endif
 
 # Remove generated mime database
 find %buildroot%_xdgmimedir/ -maxdepth 1 -a -type f -delete
 
+# Remove .la files
+rm -f %buildroot%_libdir/synfig/modules/*.la
+
+%find_lang synfig
 %find_lang %name
+cat synfig.lang >> %name.lang
 
 %files -f %name.lang
-%doc INSTALL NEWS README TODO
+%doc synfig-studio/AUTHORS synfig-studio/NEWS synfig-studio/README synfig-studio/TODO
 %_bindir/*
+%config(noreplace) %_sysconfdir/synfig_modules.cfg
+%exclude %_bindir/synfig
 %_pixmapsdir/*
 %_iconsdir/*/*/*/*.png
 %_iconsdir/*/*/*/*.svg
@@ -75,12 +185,21 @@ find %buildroot%_xdgmimedir/ -maxdepth 1 -a -type f -delete
 %_xdgmimedir/packages/%name.xml
 
 %files -n lib%name
-%_libdir/libsynfigapp.*
+%_bindir/synfig
+%_libdir/lib*.so.*
+%_libdir/synfig/glsl
+%_libdir/synfig/modules
 
 %files -n lib%name-devel
-%_includedir/synfigapp*/
+%_libdir/lib*.so
+%_includedir/*/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jul 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.10-alt1
+- New version
+- Build all libraries from one package
+
 * Sun Jun 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.9-alt1
 - New version
 
