@@ -1,5 +1,5 @@
 Name: c-ares
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
@@ -8,6 +8,9 @@ Group: System/Libraries
 
 Url: http://c-ares.haxx.se/
 Source: %url/download/c-ares-%version.tar.gz
+
+# need for test/configure
+BuildRequires: gcc-c++
 
 %description -n c-ares
 c-ares is a C library that performs DNS requests and name resolves
@@ -64,6 +67,9 @@ install -pm755 .libs/{acountry,adig,ahost} %buildroot%_bindir/
 %_man3dir/*
 
 %changelog
+* Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
+- new version 1.11.0 (with rpmrb script)
+
 * Wed Sep 10 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt1
 - Version 1.10.0
 
