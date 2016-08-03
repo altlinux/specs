@@ -1,6 +1,6 @@
 Name: nfqfilter
 Version: 0.2
-Release: alt17.git20160616
+Release: alt17.git20160801
 Summary: Pattern-based packet filtering system
 Group: Networking/Other
 
@@ -57,6 +57,10 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Mon Aug 01 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt17.git20160801
+- Optimized search algorithm url in the block list
+- The speed-up search on the lists ssl ip
+
 * Sat Jul 30 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt17.git20160616
 - Add custom ssl_ips networks
 
