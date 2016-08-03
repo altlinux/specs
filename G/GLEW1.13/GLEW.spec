@@ -1,18 +1,19 @@
-%define soversion 2.0
-%def_disable static
+%define soversion 1.13
+%define libglew libGLEW%soversion
+%define glew_devel libGLEW-devel
+%define libglewmx libGLEWmx%soversion
+%define glewmx_devel libGLEWmx-devel
 
-Name: GLEW
-Version: 2.0.0
-Release: alt1
+Name: GLEW1.13
+Version: 1.13.0
+Release: alt4
 
 Summary: The OpenGL Extension Wrangler library
 License: BSD, MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: http://glew.sourceforge.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
-
-# https://sourceforge.net/projects/glew/files/glew/%version/glew-%version.tgz/download
 Source: glew-%version.tgz
 
 BuildRequires: gcc-c++
@@ -25,47 +26,33 @@ which OpenGL extensions are supported on the target platform. OpenGL core and ex
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-%package -n lib%name%soversion
+%package -n %libglew
 Summary: The OpenGL Extension Wrangler library
-Group: System/Libraries
+Group: System/Legacy libraries
 Provides: libGLEW = %version-%release
 
-%description -n lib%name%soversion
+%description -n %libglew
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
 which OpenGL extensions are supported on the target platform. OpenGL core and extension
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-%package -n lib%name-devel
-Summary: The OpenGL Extension Wrangler library development files
-Group: Development/C
-Provides: libglew-devel = %version-%release
-Obsoletes: libglew-devel < %version-%release
-Provides: lib%{name}mx-devel = %EVR
-Obsoletes: lib%{name}mx-devel < %EVR
+%package -n %libglewmx
+Summary: The OpenGL Extension Wrangler MX library
+Group: System/Legacy libraries
+Provides: libGLEWmx = %version-%release
+Provides: libGLEW%{soversion}mx = %EVR
+Obsoletes: libGLEW%{soversion}mx < %EVR
 
-%description -n lib%name-devel
+%description -n %libglewmx
 The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
 extension loading library. GLEW provides efficient run-time mechanisms for determining 
 which OpenGL extensions are supported on the target platform. OpenGL core and extension
 functionality is exposed in a single header file. GLEW has been tested on a variety of 
 operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
 
-The package contains the C headers to compile programs based on %name.
-
-%if_enabled static
-%package -n lib%name-devel-static
-Summary: The OpenGL Extension Wrangler library development files
-Group: Development/C
-
-%description -n lib%name-devel-static
-The OpenGL Extension Wrangler Library (GLEW) is a cross-platform open-source C/C++
-extension loading library. GLEW provides efficient run-time mechanisms for determining 
-which OpenGL extensions are supported on the target platform. OpenGL core and extension
-functionality is exposed in a single header file. GLEW has been tested on a variety of 
-operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solaris.
-%endif
+This package contains libGLEW variant with multiple rendering contexts.
 
 %prep
 %setup -n glew-%version
@@ -74,26 +61,22 @@ operating systems, including Windows, Linux, Mac OS X, FreeBSD, Irix, and Solari
 %make_build
 
 %install
-%makeinstall_std BINDIR=%_bindir LIBLIR=%_libdir INCDIR=%_includedir/GL PKGDIR=%_pkgconfigdir
+mkdir -p %buildroot%_libdir
 
-%files -n lib%name%soversion
-%doc doc/*
-%_libdir/lib%name.so.%soversion
-%_libdir/lib%name.so.%soversion.*
+install -Dp -m0644 lib/libGLEW.so.%version %buildroot%_libdir
+install -Dp -m0644 lib/libGLEWmx.so.%version %buildroot%_libdir
 
-%files -n lib%name-devel
-%_includedir/GL/*.h
-%_libdir/lib*.so
-%_pkgconfigdir/*.pc
+%files -n %libglew
+%_libdir/libGLEW.so.%soversion
+%_libdir/libGLEW.so.%soversion.*
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/lib%name.a
-%endif
+%files -n %libglewmx
+%_libdir/libGLEWmx.so.%soversion
+%_libdir/libGLEWmx.so.%soversion.*
 
 %changelog
-* Tue Aug 02 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
-- Version 2.0.0
+* Tue Aug 02 2016 Nazarov Denis <nenderus@altlinux.org> 1.13.0-alt4
+- Build as legacy Library
 
 * Wed Nov 11 2015 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt3
 - merge devel subpackages
