@@ -1,5 +1,5 @@
 Name: LibreSSL
-Version: 2.3.6
+Version: 2.4.2
 Release: alt1
 
 %define oname libressl
@@ -12,6 +12,10 @@ Url: http://www.libressl.org/
 
 Packager: Vladimir D. Seleznev <vseleznv@altlinux.org>
 Source: %oname-%version.tar.gz
+Patch4: netcat-1.159-alt-usage.patch
+Patch8: netcat-1.159-alt-execcmd.patch
+Patch9: netcat-1.159-alt-proxy_pass.patch
+Patch10: LibreSSL-2.4.2-alt-openssl-manpage.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in \
@@ -21,12 +25,13 @@ applying best practice development processes.
 %description
 %common_descr
 
-%package openssl
+%package -n openssl-LibreSSL
 Summary: LibreSSL openssl utility, which provides tools for managing keys, certificates, etc
 Group: Security/Networking
-Conflicts: openssl openssl-doc
+Obsoletes: LibreSSL-openssl
+Conflicts: openssl
 
-%description openssl
+%description -n openssl-LibreSSL
 %common_descr
 
 This package contains openssl(1) utility.
@@ -108,13 +113,16 @@ applications.
 
 Thins package contains manual pages for libtls
 
-%package -n netcat-openbsd
+%package -n netcat-tls
 Summary: Reads and writes data across network connections using TCP or UDP
 Group: Networking/Other
 License: BSD
+Obsoletes: netcat-openbsd
 Conflicts: netcat
+Provides: netcat
+Provides: netcat-ssl
 
-%description -n netcat-openbsd
+%description -n netcat-tls
 The nc (or netcat) utility is used for just about anything under the sun
 involving TCP, UDP, or UNIX-domain sockets.  It can open TCP connections,
 send UDP packets, listen on arbitrary TCP and UDP ports, do port scanning,
@@ -132,35 +140,45 @@ Common uses include:
 
 %prep
 %setup -n %oname-%version
+%patch8 -p2
+%patch9 -p2
+%patch4 -p2
+%patch10 -p2
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
 	--enable-nc \
-	--with-openssldir='/etc/libressl/' \
+	--with-openssldir='%_sysconfdir/%oname/' \
 	#
 %make check
 
 %install
 %makeinstall_std
+
 pushd %buildroot%_bindir
+	mv openssl{,-LibreSSL}
 	ln -s nc netcat
 popd
+
 install -m 0644 apps/nc/nc.1 %buildroot%_man1dir
+
 pushd %buildroot%_man1dir
 	for nc_manpage in nc.*; do
 		netcat_manpage=$(echo $nc_manpage | sed -e 's/nc/netcat/')
 		cp $nc_manpage $netcat_manpage
 	done
+
+	for openssl_manpage in openssl.*; do
+		openssl_LibreSSL_manpage=$(echo $openssl_manpage | sed -e 's/\(openssl\)/\1-LibreSSL/')
+		mv $openssl_manpage $openssl_LibreSSL_manpage
+	done
 popd
 
-%files openssl
-%_bindir/openssl
-%_man1dir/openssl.*
-%_man3dir/dsa.*
-%_man3dir/rsa.*
-%_man3dir/x509.*
+%files -n openssl-LibreSSL
+%_bindir/openssl-LibreSSL
+%_man1dir/openssl-LibreSSL.*
 
 %files devel
 %_includedir/openssl
@@ -172,9 +190,6 @@ popd
 %files doc
 %_man3dir/*
 %exclude %_man3dir/tls_*
-%exclude %_man3dir/dsa.*
-%exclude %_man3dir/rsa.*
-%exclude %_man3dir/x509.*
 
 %files -n libcrypto-LibreSSL
 %dir %_sysconfdir/%oname/
@@ -195,13 +210,45 @@ popd
 %files -n libtls-doc
 %_man3dir/tls_*
 
-%files -n netcat-openbsd
+%files -n netcat-tls
 %_bindir/nc
 %_bindir/netcat
 %_man1dir/nc.*
 %_man1dir/netcat.*
 
 %changelog
+* Wed Aug 03 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.2-alt1
+- 2.4.2
+- LibreSSL
+  + Bug fixes and improvements:
+    - Fixed loading default certificate locations with openssl s_client.
+    - Ensured OSCP only uses and compares GENERALIZEDTIME values as per
+      RFC6960. Also added fixes for OCSP to work with intermediate
+      certificates provided in responses.
+    - Improved behavior of arc4random on Windows to not appear to leak
+      memory in debug tools, reduced privileges of allocated memory.
+    - Fixed incorrect results from BN_mod_word() when the modulus is too
+      large, thanks to Brian Smith from BoringSSL.
+    - Correctly handle an EOF prior to completing the TLS handshake in
+      libtls.
+    - Improved libtls ceritificate loading and cipher string validation.
+    - Updated libtls cipher group suites into four categories:
+      - "secure"   (TLSv1.2+AEAD+PFS)
+      - "compat"   (HIGH:!aNULL)
+      - "legacy"   (HIGH:MEDIUM:!aNULL)
+      - "insecure" (ALL:!aNULL:!eNULL)
+      This allows for flexibility and finer grained control, rather than
+      having two extremes.
+    - Limited support for 'backward com
+- openssl-LibreSSL:
+  + rename package from LibreSSL-openssl
+  + remove conflict with openssl
+  + rename binary and manpages fro openssl to openssl-LibreSSL
+  + move some man pages to LibreSSL-doc package
+- netcat-tls:
+  + rename package from netcat-openbsd
+  + adopt many of original netcat alt and owl patches
+
 * Sun Jun 19 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.3.6-alt1
 - 2.3.6
 - Correct a problem that prevents the DSA signing algorithm from running
