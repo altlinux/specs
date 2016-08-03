@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        45.2.0
+Version:        45.3.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -300,6 +300,23 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Aug 02 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt1
+- New ESR version
+- Security fixes:
+  + MFSA 2016-80 Same-origin policy violation using local HTML file and saved shortcut file
+  + MFSA 2016-79 Use-after-free when applying SVG effects
+  + MFSA 2016-78 Type confusion in display transformation
+  + MFSA 2016-77 Buffer overflow in ClearKey Content Decryption Module (CDM) during video playback
+  + MFSA 2016-76 Scripts on marquee tag can execute in sandboxed iframes
+  + MFSA 2016-73 Use-after-free in service workers with nested sync events
+  + MFSA 2016-72 Use-after-free in DTLS during WebRTC session shutdown
+  + MFSA 2016-70 Use-after-free when using alt key and toplevel menus
+  + MFSA 2016-67 Stack underflow during 2D graphics rendering
+  + MFSA 2016-65 Cairo rendering crash due to memory allocation issue with FFmpeg 0.10
+  + MFSA 2016-64 Buffer overflow rendering SVG with bidirectional content
+  + MFSA 2016-63 Favicon network connection can persist when page is closed
+
+
 * Sun Jun 12 2016 Andrey Cherepanov <cas@altlinux.org> 45.2.0-alt1
 - New ESR version
 - Security fixes:
