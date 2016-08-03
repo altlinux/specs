@@ -2,7 +2,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 
 Summary: Python client for Docker.
@@ -67,16 +67,25 @@ popd
 
 %files
 %doc LICENSE README.md
+# Exclude Windows specific stuff
+%exclude %python_sitelibdir/%oname/transport/npipesocket.py
+%exclude %python_sitelibdir/%oname/transport/npipeconn.py
 %python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
 
 %if_with python3
 %files -n python3-module-%oname
+# Exclude Windows specific stuff
+%exclude %python3_sitelibdir/%oname/transport/npipesocket.py
+%exclude %python3_sitelibdir/%oname/transport/npipeconn.py
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-*
 %endif
 
 %changelog
+* Wed Aug 3 2016 Vladimir Didenko <cow@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Fri May 6 2016 Vladimir Didenko <cow@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 

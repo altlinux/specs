@@ -1,5 +1,5 @@
 %global import_path github.com/docker/containerd
-%global commit 0e9e24c6470321f134ab2484f921e2c3c9382022
+%global commit 0ac3cd1be170d180b2baed755e8f0da547ceb267
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -10,7 +10,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	0.2.0
+Version:	0.2.2
 Release:	alt1.git%abbrev
 Summary:	A daemon to control runC
 
@@ -71,5 +71,8 @@ cp -a -- %SOURCE3 %buildroot/%_sysconfdir/sysconfig/limits.d/%name
 %_unitdir/%name.service
 
 %changelog
+* Tue Aug 2 2016 Vladimir Didenko <cow@altlinux.org> 0.2.2-alt1.git0ac3cd1b
+- New version
+
 * Mon Apr 25 2016 Alexey Gladkov <legion@altlinux.ru> 0.2.0-alt1.git0e9e24c6
 - First build for ALTLinux.
