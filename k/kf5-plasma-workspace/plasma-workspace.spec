@@ -17,7 +17,7 @@
 
 Name: kf5-%rname
 Version: 5.7.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -40,7 +40,7 @@ Patch103: alt-plasma-konsole.patch
 Patch104: alt-def-digital-clock.patch
 Patch105: alt-lock-widgets.patch
 Patch106: alt-digital-clock-date.patch
-#
+Patch107: alt-freespacenotifier.patch
 Patch108: alt-breeze-background.patch
 Patch109: alt-def-start-empty-session.patch
 
@@ -145,7 +145,7 @@ KF5 library
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
-#
+%patch107 -p1
 %patch108 -p1
 %patch109 -p1
 
@@ -292,6 +292,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Wed Aug 03 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.2-alt2
+- disable hide of free space notifier
+
 * Tue Jul 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.2-alt1
 - new version
 
