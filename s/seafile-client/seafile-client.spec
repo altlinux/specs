@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 5.1.3
+Version: 5.1.4
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -43,16 +43,21 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 
 %install
 %makeinstall_std
+ln -s seafile-applet %buildroot%_bindir/%name
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/seafile-applet
+%_bindir/%name
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 %_pixmapsdir/*
 
 %changelog
+* Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt1
+- new version 5.1.4 (with rpmrb script)
+
 * Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.3-alt1
 - new version 5.1.3 (with rpmrb script)
 
