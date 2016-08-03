@@ -1,5 +1,5 @@
 Name: ccnet
-Version: 5.1.3
+Version: 5.1.4
 Release: alt1
 
 Summary: Framework for writing networked applications in C
@@ -13,9 +13,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/haiwen/ccnet/archive/v%version.tar.gz
 Source: %name-%version.tar
 
+# manually removed: python-module-mwlib 
 # Automatically added by buildreq on Fri Sep 06 2013
 # optimized out: glib2-devel gnu-config libgio-devel pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
-BuildRequires: libevent-devel libsqlite3-devel libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
+BuildRequires: libevent-devel libsqlite3-devel libssl-devel libuuid-devel python-module-paste python-module-peak
 
 BuildRequires: libsearpc-devel >= 3.0.4
 
@@ -50,6 +51,7 @@ developing applications that use lib%name.
 %package server
 Summary: Ccnet server
 Requires: lib%name = %version-%release
+Requires: %name = %version-%release
 Group: Networking/File transfer
 
 %description server
@@ -101,6 +103,9 @@ Ccnet python module.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt1
+- new version 5.1.4 (with rpmrb script)
+
 * Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.3-alt1
 - new version 5.1.3 (with rpmrb script)
 
