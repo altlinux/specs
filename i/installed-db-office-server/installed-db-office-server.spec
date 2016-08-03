@@ -1,6 +1,6 @@
 Name: installed-db-office-server
 Version: 1.4
-Release: alt12
+Release: alt13
 Summary: Databases and config files for moodle, mediawiki and rujel (common)
 License: GPL
 Group: System/Configuration/Other
@@ -22,7 +22,7 @@ Databases and config files for mediawiki
 %package moodle
 Group: System/Configuration/Other
 Requires: %name = %version-%release
-Requires: moodle-install-tools moodle2.2 
+Requires: moodle-install-tools moodle2.5
 Summary: Databases and config files for moodle
 
 %description moodle
@@ -89,6 +89,10 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 
 
 %changelog
+* Mon Jul 25 2016 Andrey Cherepanov <cas@altlinux.org> 1.4-alt13
+- Support moodle2.5 instead of moodle2.2
+- Enable mod_filter
+
 * Tue Apr 14 2015 Andrey Cherepanov <cas@altlinux.org> 1.4-alt12
 - New hook in postinstall.d/95-office-server-postinstall
 - Fix path to School Portal in DocumentRoot
