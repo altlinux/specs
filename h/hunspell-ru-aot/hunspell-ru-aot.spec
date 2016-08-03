@@ -1,7 +1,9 @@
+%define myspelldir	%_datadir/myspell
 %define oname dict_ru_ru-aot
+
 Name: hunspell-ru-aot
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Russian hunspell dictionaries
 
@@ -32,14 +34,32 @@ http://sourceforge.net/projects/seman/ (http://www.aot.ru)
 
 %install
 mkdir -p %buildroot%_datadir/myspell
-iconv -fKOI8-R -tUTF-8 russian-aot.aff > %buildroot%_datadir/myspell/ru_RU.aff
-iconv -fKOI8-R -tUTF-8 russian-aot.dic > %buildroot%_datadir/myspell/ru_RU.dic
-%__subst 's|^SET KOI8-R|SET UTF-8|' %buildroot%_datadir/myspell/ru_RU.aff
+iconv -fKOI8-R -tUTF-8 russian-aot.aff > %buildroot%_datadir/myspell/ru_RU-aot.aff
+iconv -fKOI8-R -tUTF-8 russian-aot.dic > %buildroot%_datadir/myspell/ru_RU-aot.dic
+%__subst 's|^SET KOI8-R|SET UTF-8|' %buildroot%_datadir/myspell/ru_RU-aot.aff
+
+
+# install alternatives
+install -d %buildroot%_altdir
+
+# myspell/hunspell
+cat > %buildroot%_altdir/%name << EOF
+%myspelldir/ru_RU.dic	%myspelldir/ru_RU-aot.dic	30
+%myspelldir/ru_RU.aff	%myspelldir/ru_RU-aot.aff	%myspelldir/ru_RU-aot.dic
+%myspelldir/ru.dic	%myspelldir/ru_RU.dic	1000
+%myspelldir/ru.aff	%myspelldir/ru_RU.aff	1000
+EOF
+
 
 %files
-%_datadir/myspell/ru_RU.*
+%doc copyright.txt
+%_altdir/%name
+%_datadir/myspell/ru_RU-aot.*
 
 %changelog
+* Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt2
+- add alternatives
+
 * Tue Aug 02 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - build for ALT Linux Sisyphus (ALT bug #28912)
 - update to 0.4.0
