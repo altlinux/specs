@@ -8,7 +8,7 @@
 # so we need to be more explicit until spot fixes that
 %global v8_abi 5.0
 
-# TODO: we do not pack v8 headers
+# TODO: build with system libv8
 %def_without systemv8
 
 # supports only openssl >= 1.0.2
@@ -21,8 +21,8 @@
 %def_disable check
 
 Name: node
-Version: 6.3.0
-Release: alt2
+Version: 6.3.1
+Release: alt3
 
 Summary: Evented I/O for V8 Javascript
 
@@ -49,6 +49,10 @@ BuildRequires: openssl-devel >= 1.0.2 openssl
 %if_with systemuv
 BuildRequires: libuv-devel >= %libuv_abi
 %endif
+
+BuildRequires: libicu-devel
+BuildRequires: libhttp-parser-devel
+BuildRequires: libcares-devel >= 1.10.0
 
 BuildRequires: curl
 Provides: nodejs(engine) = %version
@@ -123,6 +127,9 @@ node programs. It manages dependencies and does other cool stuff.
 ./configure \
     --prefix=%_prefix \
     --shared-zlib \
+    --with-intl=system-icu \
+    --shared-http-parser \
+    --shared-cares \
 %if_with systemssl
     --shared-openssl \
     --shared-openssl-includes=%_includedir \
@@ -203,11 +210,12 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %endif
 %_includedir/node/node*
 # deps/cares
-%_includedir/node/ares*
+#_includedir/node/ares*
 %_includedir/node/common.gypi
 %_includedir/node/config.gypi
 %_includedir/node/libplatform/
-%_includedir/node/nameser.h
+# deps/http_parser
+#_includedir/node/nameser.h
 %_datadir/node/common.gypi
 %_rpmlibdir/nodejs_native.req*
 #%_datadir/node/sources
@@ -218,6 +226,10 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 6.3.1-alt3
+- build 2016-07-21 Node.js v6.3.1 (Current) Release
+- build with system libicu, libhttp_parser, c-ares
+
 * Fri Jul 15 2016 Vitaly Lipatov <lav@altlinux.ru> 6.3.0-alt2
 - cleanup spec
 
