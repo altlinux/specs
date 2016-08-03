@@ -1,5 +1,5 @@
 Name: seafile
-Version: 5.1.3
+Version: 5.1.4
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -53,15 +53,20 @@ so even the server admin cannot view a file's contents.
 Seafile allows users to create groups with file syncing,
 wiki, and discussion to enable easy collaboration around documents within a team.
 
+
 %package server
 Summary: Seafile server
 Group: Networking/File transfer
 Requires: lib%name = %version-%release
 
+Requires: ccnet-server >= %version
+
 %description server
 Seafile server.
 Seafile is a next-generation open source cloud storage system
 with advanced support for file syncing, privacy protection and teamwork.
+
+See https://www.altlinux.org/Seafile for detail instructions.
 
 %package nginx
 Summary: Seafile nginx server config
@@ -116,7 +121,9 @@ developing applications that use lib%name.
 %install
 %makeinstall_std
 cp %SOURCE1 .
-install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.conf.example
+install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/seafile.conf.example
+mkdir -p %buildroot%_datadir/seafile-server/scripts/
+cp -a scripts/upgrade %buildroot%_datadir/seafile-server/scripts/
 
 %files
 %_bindir/seaf-cli
@@ -134,13 +141,14 @@ install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.
 %_bindir/seafile-controller
 %_bindir/seafserv-gc
 
+%_datadir/seafile-server/scripts/upgrade/
 %python_sitelibdir/seaserv/
 
 %files -n fuse-seafile
 %_bindir/seaf-fuse
 
 %files nginx
-%_sysconfdir/nginx/sites-available.d/nginx.conf.example
+%_sysconfdir/nginx/sites-available.d/seafile.conf.example
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -152,6 +160,9 @@ install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/nginx.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt1
+- new version 5.1.4 (with rpmrb script)
+
 * Sat Jul 16 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.3-alt1
 - new version 5.1.3 (with rpmrb script)
 
