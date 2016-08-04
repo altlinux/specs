@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-domain
-Version: 0.5
+Version: 0.6
 Release: alt1
 Source:%name-%version.tar
 
@@ -39,6 +39,11 @@ alterator module to edit system network domain
 
 
 %changelog
+* Thu Aug 04 2016 Andrey Cherepanov <cas@altlinux.org> 0.6-alt1
+- Support provision Active Directory domain
+- Refactor module ui: choose domain type, make unavailable option
+  disabled
+
 * Tue Jun 07 2016 Mikhail Efremov <sem@altlinux.org> 0.5-alt1
 - Write domain in the resolvconf.conf.
 
