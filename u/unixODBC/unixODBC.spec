@@ -1,7 +1,7 @@
 %define abiversion 2
 
-Name: unixODBC
-Version: 2.3.2
+Name:    unixODBC
+Version: 2.3.4
 Release: alt1
 
 Summary: Unix ODBC driver manager and database drivers
@@ -12,6 +12,8 @@ Url: http://www.unixODBC.org
 
 Requires: lib%name%abiversion = %version-%release
 Provides: MyODBC = %version-%release
+Provides:  unixodbc = %version-%release
+Obsoletes: unixodbc < %version-%release
 
 Source0: http://www.unixodbc.org/%name-%version.tar.gz
 
@@ -22,17 +24,23 @@ Source3: %name-ODBCConfig.desktop
 Patch1: %name-depcomp.patch
 Patch3: %name-2.2.11-export-symbols.patch
 Patch4: %name-2.2.11-symbols.patch
+Patch5: %name-remove-rpath-to-libdir.patch
 # Patches from Fedora
 Patch11: keep-typedefs.patch
 Patch12: so-version-bump.patch
 
+BuildRequires(pre): qt4-devel
 BuildRequires: flex gcc-c++ libltdl7-devel libreadline-devel
+BuildRequires: chrpath
 
 %description
 UnixODBC is a free/open and solution for ODBC. ODBC is an open
 specifican for providing application developers with a predictable API
 with which to access Data Sources. Data Sources include SQL Servers and
 any Data Source with an ODBC Driver.
+You will also need the mysql-connector-odbc package if you want to
+access a MySQL database, and/or the postgresql-odbc package for
+PostgreSQL.
 
 %description -l ru_RU.UTF-8
 UnixODBC - это свободное ODBC решение.
@@ -45,14 +53,16 @@ ODBC представляет из себя открытую специфика�
 Summary: Shared libraries for ODBC
 Summary(ru_RU.UTF-8): Разделяемые библиотеки для ODBC
 Group: Development/Databases
+Provides:  libunixodbc%abiversion = %version-%release
+Obsoletes: libunixodbc%abiversion < %version-%release
 
 %description -n lib%name%abiversion
-unixODBC aims to provide a complete ODBC solution for the Linux platform.
-This package contains the shared libraries.
+unixODBC aims to provide a complete ODBC solution for the Linux
+platform.  This package contains the shared libraries.
 
 %description -n lib%name%abiversion -l ru_RU.UTF-8
-unixODBC представляет из себя полную спецификацию ODBC для Linux платформы.
-Этот пакет содержит в себе раделяемые библиотеки.
+unixODBC представляет из себя полную спецификацию ODBC для Linux
+платформы.  Этот пакет содержит в себе раделяемые библиотеки.
 
 %package -n lib%name-devel-compat
 Summary: Compat libraries for Java build
@@ -77,18 +87,20 @@ Requires: lib%name%abiversion = %version-%release
 Requires: lib%name-devel-compat = %version-%release
 
 %description -n lib%name-devel
-unixODBC aims to provide a complete ODBC solution for the Linux platform.
-This package contains the include files for development.
+unixODBC aims to provide a complete ODBC solution for the Linux
+platform.  This package contains the include files for development.
 
 %description -n lib%name-devel -l ru_RU.UTF-8
-unixODBC представляет из себя полную спецификацию ODBC для Linux платформы.
-Этот пакет содержит заголовочные файлы для разработки с использованием ODBC
+unixODBC представляет из себя полную спецификацию ODBC для Linux
+платформы.  Этот пакет содержит заголовочные файлы для разработки с
+использованием ODBC
 
 %prep
 %setup -q
-%patch1 -p1
+#patch1 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 %patch11 -p1
 %patch12 -p1
 
@@ -117,18 +129,21 @@ CXXFLAGS="$CFLAGS"
 export CFLAGS CXXFLAGS
 
 %configure \
---with-gnu-ld \
-:	--enable-threads \
---enable-gui \
---enable-drivers \
---enable-driverc \
---enable-ltdllib \
---with-qt-libraries=%_qt4dir/lib \
---disable-static
+	--with-gnu-ld \
+	:	--enable-threads \
+	--enable-gui \
+	--enable-drivers \
+	--enable-driverc \
+	--enable-ltdllib \
+	--with-qt-libraries=%_qt4dir/lib \
+	--disable-static
 %make_build
 
 %install
 %makeinstall_std
+
+# Remove standard libdir from exacutables and library RPATH
+chrpath -d %buildroot%_bindir/* %buildroot%_libdir/libodbccr.so*
 
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/odbcinst.ini
 subst "s,@libdir@,%_libdir," %buildroot%_sysconfdir/odbcinst.ini
@@ -145,6 +160,7 @@ find doc -name Makefile\* -delete
 %_bindir/slencheck
 %doc %_man1dir/*
 %doc %_man5dir/*
+%doc %_man7dir/*
 
 %files -n lib%name%abiversion
 %_libdir/lib*.so.*
@@ -168,6 +184,10 @@ find doc -name Makefile\* -delete
 %exclude %_libdir/libodbcmyS.so
 
 %changelog
+* Thu Aug 04 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.4-alt1
+- New version (ALT #32355)
+- [patch] Remove rpath with default libdir
+
 * Mon Dec 09 2013 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt1
 - New version
 - Exclude libunixodbc-devel-compat for Java build (ALT #29638)
