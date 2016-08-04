@@ -1,6 +1,6 @@
 Name: torsocks
-Version: 2.1.0
-Release: alt1
+Version: 2.2.0
+Release: alt1.gite389c999
 
 Summary: Use SOCKS-friendly applications with Tor
 Group: Security/Networking
@@ -55,6 +55,9 @@ install -p -m755 %SOURCE2 %buildroot%_bindir/torify
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Aug 3 2016 Vladimir Didenko <cow@altlinux.org> 2.2.0-alt1.gite389c999
+- new version
+
 * Fri Jun 12 2015 Vladimir Didenko <cow@altlinux.org> 2.1.0-alt1
 - new version
 
