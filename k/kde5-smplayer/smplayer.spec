@@ -2,12 +2,12 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 7558
+%define svn 8066
 %define xde kde5
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 16.4.0.%svn
+Version: 16.8.0.%svn
 Release: alt1
 
 %define qt_bin_dir %_qt5_bindir
@@ -33,7 +33,8 @@ Patch3: alt-ui-defaults.patch
 Patch4: alt-config-dir.patch
 Patch5: alt-youtube-browser.patch
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-script-devel zlib-devel
+BuildRequires: gcc-c++ qt5-base-devel qt5-tools-devel qt5-script-devel
+BuildRequires: libXext-devel zlib-devel
 
 %package common
 Summary: %name common package
@@ -162,6 +163,9 @@ done
 
 
 %changelog
+* Thu Aug 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.8.0.8066-alt1
+- new version
+
 * Thu Apr 07 2016 Sergey V Turchin <zerg@altlinux.org> 16.4.0.7558-alt1
 - new version
 
