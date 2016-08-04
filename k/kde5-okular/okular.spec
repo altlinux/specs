@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 4.90.0
-Release: alt3
+Release: alt4
 %K5init
 
 Group: Office
@@ -122,13 +122,14 @@ KF5 library
 %_K5qml/org/kde/okular/
 %_K5plug/okular/
 %_K5plug/okularpart.so
-%_K5srv/okular_*.desktop
+%_K5srv/okular*.desktop
 %_K5conf_up/okular*
 %_K5cfg/*okular*
 %_K5cfg/*settings*
 %if_enabled msits
 %_K5plug/kio_msits.so
 %_K5srv/msits.protocol
+#%_K5srv/okularChm.desktop
 %endif
 
 %files devel
@@ -141,6 +142,9 @@ KF5 library
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu Aug 04 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt4
+- update from frameworks branch
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt3
 - fix package
 
