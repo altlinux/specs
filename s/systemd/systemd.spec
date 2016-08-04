@@ -20,7 +20,6 @@
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolved
-%def_enable kdbus
 %def_disable gnuefi
 %def_enable utmp
 %def_enable xz
@@ -55,7 +54,7 @@ Name: systemd
 # for pkgs both from p7/t7 and Sisyphus
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
-Version: 230
+Version: 231
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -168,6 +167,10 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 
+# for make check
+#BuildRequires: /proc
+#BuildRequires: lz4
+
 Requires: dbus >= %dbus_ver
 Requires: udev = %EVR
 Requires: filesystem >= 2.3.10-alt1
@@ -176,7 +179,7 @@ Requires: acl
 Requires: util-linux >= 2.27.1
 
 # Requires: selinux-policy >= 3.8.5
-
+Requires: libsystemd-shared = %EVR
 Requires: %name-utils = %EVR
 Requires: %name-services = %EVR
 Requires: pam_%name = %EVR
@@ -207,6 +210,14 @@ Linux cgroups, supports snapshotting and restoring of the system
 state, maintains mount and automount points and implements an
 elaborate transactional dependency-based service control logic. It can
 work as a drop-in replacement for sysvinit.
+
+%package -n libsystemd-shared
+Group: System/Libraries
+Summary: Private Systemd Shared Library
+
+%description -n libsystemd-shared
+The libsystemd-shared private library for link as many binaries as possible with it,
+to save storage space.
 
 %package -n libsystemd
 Group: System/Libraries
@@ -336,6 +347,7 @@ Drop-in replacement for the System V init tools of systemd.
 %package utils
 Group: System/Configuration/Boot and Init
 Summary: systemd utils
+Requires: libsystemd-shared = %EVR
 Conflicts: %name < %EVR
 
 %description utils
@@ -352,6 +364,7 @@ Summary: systemd services
 Conflicts: %name < %EVR
 Requires: pam_%name = %EVR
 Requires: %name-utils = %EVR
+Requires: libsystemd-shared = %EVR
 Requires: dbus >= %dbus_ver
 Conflicts: service <= 0.5.25-alt1
 Conflicts: chkconfig <= 1.3.59-alt3
@@ -409,6 +422,7 @@ Group: System/Configuration/Boot and Init
 Summary: Tool to query the journal from systemd.
 Provides: /bin/journalctl
 Provides: /sbin/journalctl
+Requires: libsystemd-shared = %EVR
 # File conflict with the releases before splitting out journalctl.
 # 0:208-alt3 was the first release when the pkg was split in Sisyphus.
 # The split pkgs for p7/t7 have lesser releases, so they couldn't coexist
@@ -678,7 +692,6 @@ intltoolize --force --automake
 	%{subst_enable ldconfig} \
 	%{subst_enable firstboot} \
 	%{subst_enable gnuefi} \
-	%{subst_enable kdbus} \
 	%{subst_enable seccomp} \
 	%{subst_enable ima} \
 	%{subst_enable selinux} \
@@ -944,6 +957,9 @@ echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
 install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
+%check
+# %make check VERBOSE=1 || { cat test-suite.log; exit 1; }
+
 %pre
 %_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
 
@@ -985,14 +1001,7 @@ rm -f /.readahead > /dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
         # Enable the services we install by default
-        /sbin/systemctl preset \
-                remote-fs.target \
-                getty@.service \
-                serial-getty@.service \
-                console-getty.service \
-                console-shell.service \
-                debug-shell.service \
-                 >/dev/null 2>&1 || :
+        /sbin/systemctl preset-all >/dev/null 2>&1 || :
 fi
 
 %postun
@@ -1373,6 +1382,7 @@ fi
 /lib/udev/rules.d/70-uaccess.rules
 /lib/udev/rules.d/71-seat.rules
 /lib/udev/rules.d/73-seat-late.rules
+/lib/udev/rules.d/90-vconsole.rules
 /lib/udev/rules.d/99-systemd.rules
 %_man7dir/*
 %exclude %_man7dir/hwdb*
@@ -1404,10 +1414,14 @@ fi
 %exclude %_bindir/kernel-install
 %exclude %_man8dir/kernel-install.*
 
+%files -n libsystemd-shared
+/%_lib/libsystemd-shared.so.*
+
 %files -n libsystemd
 /%_lib/*.so.*
 %exclude /%_lib/*udev*.so.*
 %exclude /%_lib/libnss*
+%exclude /%_lib/libsystemd-shared*
 
 %files -n libsystemd-devel
 %_libdir/*.so
@@ -1424,7 +1438,6 @@ fi
 %files -n libnss-myhostname
 /%_lib/libnss_myhostname.so.*
 %_man8dir/*myhostname.*
-
 
 %files -n libnss-mymachines
 /%_lib/libnss_mymachines.so.*
@@ -1562,6 +1575,7 @@ fi
 /lib/systemd/systemd-networkd
 /lib/systemd/systemd-networkd-wait-online
 /lib/systemd/systemd-resolved
+/lib/systemd/resolv.conf
 %_bindir/systemd-resolve
 /lib/tmpfiles.d/systemd-network.conf
 %_unitdir/systemd-networkd.*
@@ -1745,6 +1759,7 @@ fi
 %exclude /lib/udev/rules.d/70-uaccess.rules
 %exclude /lib/udev/rules.d/71-seat.rules
 %exclude /lib/udev/rules.d/73-seat-late.rules
+%exclude /lib/udev/rules.d/90-vconsole.rules
 %exclude /lib/udev/rules.d/99-systemd.rules
 
 %files -n udev-hwdb
@@ -1763,6 +1778,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Wed Jul 27 2016 Alexey Shabalin <shaba@altlinux.ru> 1:231-alt1
+- 231
+
 * Mon May 23 2016 Alexey Shabalin <shaba@altlinux.ru> 1:230-alt1
 - 230
 - Drop libsystemd-{id128,daemon,login,journal}.so compat libs
