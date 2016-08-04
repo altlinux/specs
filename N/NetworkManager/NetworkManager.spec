@@ -33,7 +33,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.2.2
+Version: 1.2.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -68,6 +68,7 @@ BuildRequires: iptables libsoup-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: libndp-devel
 BuildRequires: libreadline-devel
+BuildRequires: libaudit-devel
 %{?_enable_teamdctl:BuildRequires: libteam-devel}
 %{?_enable_nmtui:BuildRequires: libnewt-devel}
 %{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
@@ -389,6 +390,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--with-dhcpcd=yes \
 	--with-dnsmasq=/usr/sbin/dnsmasq \
 	--enable-gtk-doc=yes \
+	--with-config-dns-rc-manager-default=resolvconf \
 	--with-resolvconf=/sbin/resolvconf \
 	--enable-concheck \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
@@ -428,9 +430,13 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--enable-introspection=auto \
 	%{subst_enable lto} \
 	%{subst_enable vala} \
+	--with-libaudit=yes-disabled-by-default \
 	--enable-more-warnings=error
 
 %make_build
+
+# Set charset utf8 for utf8 man page
+sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' man/nmcli-examples.7
 
 %install
 %makeinstall_std
@@ -656,6 +662,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Aug 04 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Build with libaudit support.
+- Fix nmcli-examples(7) charset.
+- Updated to 1.2.4.
+
 * Wed May 11 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 

@@ -7,8 +7,8 @@
 %def_without appindicator
 
 Name: NetworkManager-applet-gtk
-Version: 1.2.2
-Release: alt2%git_date
+Version: 1.2.4
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -209,6 +209,9 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Thu Aug 04 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Updated to 1.2.4.
+
 * Fri May 27 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt2
 - Fix libnma-devel requires.
 - Fix work without gnome-keyring (closes: #32123).
