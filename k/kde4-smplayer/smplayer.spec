@@ -2,12 +2,12 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 7558
+%define svn 8066
 %define xde kde4
 %define XDE KDE4
 %define xapp kde4
 Name: %xde-%rname
-Version: 16.4.0.%svn
+Version: 16.8.0.%svn
 Release: alt1
 
 %define qt_bin_dir %_qt4dir/bin
@@ -162,6 +162,9 @@ done
 
 
 %changelog
+* Thu Aug 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.8.0.8066-alt1
+- new version
+
 * Thu Apr 07 2016 Sergey V Turchin <zerg@altlinux.org> 16.4.0.7558-alt1
 - new version
 
