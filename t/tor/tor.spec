@@ -10,8 +10,8 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.2.7.6
-Release: alt2
+Version: 0.2.8.6
+Release: alt3
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -57,9 +57,6 @@ sed -i 's:^#DataDirectory.*:DataDirectory %_var/cache/%name:' src/config/torrc.s
 %build
 %configure --with-tor-user=%{toruser} --with-tor-group=%{toruser}
 %make_build
-
-# Perform unit test
-%make check
 
 %install
 %makeinstall_std
@@ -140,6 +137,15 @@ fi
 %_var/cache/%name
 
 %changelog
+* Thu Aug 4 2016 Vladimir Didenko <cow@altlinux.ru> 0.2.8.6-alt3
+- don't run unit tests (requires IPv6 support)
+
+* Thu Aug 4 2016 Vladimir Didenko <cow@altlinux.ru> 0.2.8.6-alt2
+- print log of failed test
+
+* Wed Aug 3 2016 Vladimir Didenko <cow@altlinux.ru> 0.2.8.6-alt1
+- new version
+
 * Tue Dec 15 2015 Vladimir Didenko <cow@altlinux.ru> 0.2.7.6-alt2
 - add sticky bit on log directory
 
