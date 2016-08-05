@@ -1,7 +1,7 @@
 %define rname sddm-kcm
 
 Name: kf5-%rname
-Version: 5.7.0
+Version: 5.7.3
 Release: alt1
 %K5init altplace
 
@@ -15,6 +15,7 @@ License: GPLv2+ / LGPLv2+
 Requires: sddm
 
 Source: %rname-%version.tar
+Patch1: alt-uid-min-max.patch
 
 # Automatically added by buildreq on Tue Mar 31 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-attica-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -56,6 +57,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -78,6 +80,16 @@ KF5 library
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Fri Aug 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.3-alt1
+- new version
+- fix min/max uid
+
+* Tue Jul 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.2-alt1
+- new version
+
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
+- new version
+
 * Wed Jul 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.0-alt1
 - new version
 
