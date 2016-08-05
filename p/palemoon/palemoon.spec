@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.4.0
-Release: alt0.1.d177
+Release: alt0.2.1fd9
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -14,11 +14,13 @@ Epoch: 2
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-%ifarch x86_64
+# %%ifarch x86_64
+# %%def_enable gst1   // Enable gstreamer 1.0
+# %%else
+# %%def_disable gst1   // Disable gstreamer 1.0
+# %%endif
+
 %def_enable gst1   // Enable gstreamer 1.0
-%else
-%def_disable gst1   // Disable gstreamer 1.0
-%endif
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
@@ -103,7 +105,7 @@ Conflicts: palemoon
 Requires: libgstreamer1.0 gst-libav
 Requires: gst-plugins-base1.0
 %else
-Requires: libgstreamer
+Requires: libgstreamer gst-ffmpeg
 Requires: gst-plugins-base gst-plugins-good
 %endif
 # Protection against fraudulent DigiNotar certificates
@@ -384,6 +386,12 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Fri Aug 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt0.2.1fd9
+- Update from git
+
+* Fri Aug 05 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt0.2.1de4
+- Update from git
+
 * Mon Jul 18 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt0.1.d177
 - Update from git
 
