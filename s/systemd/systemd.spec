@@ -13,7 +13,7 @@
 %def_enable microhttpd
 %def_enable gnutls
 %def_enable libcurl
-%def_enable libidn
+%def_disable libidn
 %def_enable libiptc
 %def_enable polkit
 %def_enable efi
@@ -55,7 +55,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 231
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1778,6 +1778,9 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Aug 05 2016 Alexey Shabalin <shaba@altlinux.ru> 1:231-alt2
+- build without libidn support (ALT #32362)
+
 * Wed Jul 27 2016 Alexey Shabalin <shaba@altlinux.ru> 1:231-alt1
 - 231
 
