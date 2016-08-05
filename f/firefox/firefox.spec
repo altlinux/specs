@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        47.0.1
+Version:        48.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -30,13 +30,14 @@ Source8:        firefox-prefs.js
 
 Patch5:         firefox-duckduckgo.patch
 Patch6:         firefox-alt-disable-werror.patch
-Patch7:         firefox-alt-disable-profiler.patch
+#Patch7:         firefox-alt-disable-profiler.patch
 Patch14:        firefox-fix-install.patch
 Patch16:        firefox-cross-desktop.patch
 Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
-#Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
+Patch200:       mozilla-bug-256180.patch
+Patch201:       mozilla-bug-1272332.patch
 
 # Red Hat
 Patch301:       rhbz-1291190-appchooser-crash.patch
@@ -131,10 +132,13 @@ tar -xf %SOURCE2
 
 %patch5  -p1
 %patch6  -p1
-%patch7  -p1
+#patch7  -p1
 %patch14 -p1
 %patch16 -p1
 %patch17 -p2
+
+%patch200 -p1
+%patch201 -p1
 
 %patch301 -p1
 %patch302 -p1
@@ -198,6 +202,7 @@ make -f client.mk \
 	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS" \
 	mozappdir=%buildroot/%firefox_prefix \
+	libdir=%_libdir \
 	build
 
 %__cc %optflags \
@@ -216,10 +221,11 @@ cd mozilla
 	#
 
 make -C objdir \
-    DESTDIR=%buildroot \
-    INSTALL="/bin/install -p" \
-    mozappdir=%firefox_prefix \
-    install
+	DESTDIR=%buildroot \
+	INSTALL="/bin/install -p" \
+	mozappdir=%firefox_prefix \
+	libdir=%_libdir \
+	install
 
 # install altlinux-specific configuration
 install -D -m 644 %SOURCE8 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
@@ -297,6 +303,33 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Fri Aug 05 2016 Alexey Gladkov <legion@altlinux.ru> 48.0-alt1
+- New release (48.0).
+- Fixed:
+  + 2016-84 Information disclosure through Resource Timing API during page navigation
+  + 2016-83 Spoofing attack through text injection into internal error pages
+  + 2016-82 Addressbar spoofing with right-to-left characters on Firefox for Android
+  + 2016-81 Information disclosure and local file manipulation through drag and drop
+  + 2016-80 Same-origin policy violation using local HTML file and saved shortcut file
+  + 2016-79 Use-after-free when applying SVG effects
+  + 2016-78 Type confusion in display transformation
+  + 2016-77 Buffer overflow in ClearKey Content Decryption Module (CDM) during video playback
+  + 2016-76 Scripts on marquee tag can execute in sandboxed iframes
+  + 2016-75 Integer overflow in WebSockets during data buffering
+  + 2016-74 Form input type change from password to text can store plain text password in session restore file
+  + 2016-73 Use-after-free in service workers with nested sync events
+  + 2016-72 Use-after-free in DTLS during WebRTC session shutdown
+  + 2016-71 Crash in incremental garbage collection in JavaScript
+  + 2016-70 Use-after-free when using alt key and toplevel menus
+  + 2016-69 Arbitrary file manipulation by local user through Mozilla updater and callback application path parameter
+  + 2016-68 Out-of-bounds read during XML parsing in Expat library
+  + 2016-67 Stack underflow during 2D graphics rendering
+  + 2016-66 Location bar spoofing via data URLs with malformed/invalid mediatypes
+  + 2016-65 Cairo rendering crash due to memory allocation issue with FFmpeg 0.10
+  + 2016-64 Buffer overflow rendering SVG with bidirectional content
+  + 2016-63 Favicon network connection can persist when page is closed
+  + 2016-62 Miscellaneous memory safety hazards (rv:48.0 / rv:45.3)
+
 * Tue Jul 26 2016 Alexey Gladkov <legion@altlinux.ru> 47.0.1-alt1
 - New release (47.0.1).
 
