@@ -1,5 +1,5 @@
 Name: deltarpm
-Version: 3.6
+Version: 3.6.1
 Release: alt1
 
 Summary: Tools to Create and Apply deltarpms
@@ -10,7 +10,9 @@ Group: System/Configuration/Packaging
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: ftp://ftp.suse.com/pub/projects/deltarpm/%name-%version.tar
+# Source-url: https://github.com/rpm-software-management/deltarpm/archive/%version.tar.gz
+Source: %name-%version.tar
+#Source: ftp://ftp.suse.com/pub/projects/deltarpm/%name-%version.tar
 Patch: %name.patch
 
 # Automatically added by buildreq on Sat Aug 03 2013 (-bi)
@@ -44,6 +46,9 @@ make CFLAGS="$RPM_OPT_FLAGS -I%_includedir/rpm" prefix="%prefix" rpmdumpheader="
 #%_libdir/rpm/rpmdumpheader
 
 %changelog
+* Fri Aug 05 2016 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt1
+- new version (3.6.1) with rpmgs script
+
 * Sat Aug 03 2013 Vitaly Lipatov <lav@altlinux.ru> 3.6-alt1
 - new version 3.6 (with rpmrb script)
 
