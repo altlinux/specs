@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.13.0
-Release: alt8
+Release: alt9
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -86,7 +86,7 @@ ability to create smooth, animated user interfaces.
     -DQT_IMPORTS_DIR="%_qt5_qmldir" \
     -DDBUS_CONFIG_FILENAME="sddm_org.freedesktop.DisplayManager.conf" \
     -DUID_MIN=500 \
-    -DUID_MAX=60000 \
+    -DUID_MAX=32000 \
     #
 
 %install
@@ -131,6 +131,9 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Fri Aug 05 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt9
+- decrease MAX_UID to 32000
+
 * Fri May 20 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt8
 - fix systemd service order
 
