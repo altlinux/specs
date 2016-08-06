@@ -1,6 +1,6 @@
 # TODO: fix lib soname
 Name: libevhtp
-Version: 1.2.9
+Version: 1.2.11n
 Release: alt1
 
 Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API
@@ -39,7 +39,7 @@ developing applications that use %name.
 
 %prep
 %setup
-%__subst "s| lib)| \${LIB_DESTINATION})|g" CMakeLists.txt
+%__subst "s|PREFIX}/lib|PREFIX}/\${LIB_DESTINATION}|g" CMakeLists.txt
 
 %build
 %cmake_insource -DEVHTP_BUILD_SHARED:STRING=ON
@@ -48,12 +48,18 @@ developing applications that use %name.
 %makeinstall_std
 
 %files
+%_libdir/libevhtp.so.*
+# TODO: wait for fix with major soname
 %_libdir/libevhtp.so
 
 %files devel
-%_includedir/*.h
+%_pkgconfigdir/evhtp.pc
+%_includedir/evhtp/*.h
 
 %changelog
+* Fri Aug 05 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.11n-alt1
+- new version 1.2.11n via git merge
+
 * Sun Aug 24 2014 Vitaly Lipatov <lav@altlinux.ru> 1.2.9-alt1
 - new version 1.2.9 (with rpmrb script)
 - add devel package

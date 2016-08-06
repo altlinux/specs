@@ -1,6 +1,6 @@
 Name: seafile
 Version: 5.1.4
-Release: alt1
+Release: alt2
 
 Summary: Full-fledged cloud storage platform
 
@@ -112,11 +112,12 @@ developing applications that use lib%name.
 
 %build
 %autoreconf
+# hack for build with libevhtp >= 1.2.11 (use pkgconfig!)
+export CPPFLAGS="$CPPFLAGS -I%_includedir/evhtp/"
 %configure --enable-client --enable-server \
 	--enable-python --enable-fuse --disable-static
 # FIXME: breakes build
-#make_build
-%make
+%make_build || %make
 
 %install
 %makeinstall_std
@@ -141,7 +142,7 @@ cp -a scripts/upgrade %buildroot%_datadir/seafile-server/scripts/
 %_bindir/seafile-controller
 %_bindir/seafserv-gc
 
-%_datadir/seafile-server/scripts/upgrade/
+%_datadir/seafile-server/
 %python_sitelibdir/seaserv/
 
 %files -n fuse-seafile
@@ -160,6 +161,9 @@ cp -a scripts/upgrade %buildroot%_datadir/seafile-server/scripts/
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Sat Aug 06 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt2
+- fix build with libevhtp >= 1.2.11
+
 * Wed Aug 03 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt1
 - new version 5.1.4 (with rpmrb script)
 
