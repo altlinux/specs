@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 8.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -43,5 +43,8 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Sun Aug 07 2016 Artem Zolochevskiy <azol@altlinux.ru> 8.0-alt2
+- removed obsolete stuff
+
 * Thu Aug 04 2016 Artem Zolochevskiy <azol@altlinux.ru> 8.0-alt1
 - initial build for Sisyphus
