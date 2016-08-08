@@ -1,6 +1,6 @@
 Name: libidn
 Version: 1.33
-Release: alt1
+Release: alt2
 
 Summary: Internationalized Domain Name support library
 Group: System/Libraries
@@ -119,7 +119,15 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %if_enabled java
  libidn_jardir=%{_javadir}
 %endif
-#
+
+# Relocate shared libraries from %_libdir/ to /%_lib/.
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/*.so; do
+	t=$(readlink -v "$f")
+	ln -fnrs %buildroot/%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
 rm %buildroot%_infodir/*.png
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir/reference/html
@@ -149,7 +157,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %make_build -k check VERBOSE=1
 
 %files -f %name.lang
-%_libdir/*.so.*
+/%_lib/*.so.*
 %_bindir/idn
 %_man1dir/*
 %dir %docdir
@@ -182,6 +190,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif #java
 
 %changelog
+* Mon Aug 08 2016 Dmitry V. Levin <ldv@altlinux.org> 1.33-alt2
+- Relocated shared library from %%_libdir to /%%_lib (closes: #32362).
+
 * Wed Jul 20 2016 Dmitry V. Levin <ldv@altlinux.org> 1.33-alt1
 - 1.32 -> 1.33.
 
