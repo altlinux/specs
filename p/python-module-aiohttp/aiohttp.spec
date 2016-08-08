@@ -4,8 +4,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.15.3
-Release: alt7.git20150425.1
+Version: 0.21.5
+Release: alt1
 Summary: http client/server for asyncio
 License: ASLv2.0
 Group: Development/Python
@@ -32,21 +32,26 @@ BuildPreReq: python3-module-objects
 BuildPreReq: python-module-sphinx-devel
 %endif
 #python-module-alabaster
+BuildPreReq: python-module-sphinxcontrib-asyncio
+BuildPreReq: python-module-sphinxcontrib-newsfeed
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-devel
-BuildPreReq: python-module-sphinx-devel 
+BuildPreReq: python-module-sphinx-devel
 #BuildRequires: python3-module-Cython python3-module-aiohttp python3-module-flake8 python3-module-html5lib python3-module-nose python3-module-notebook
-BuildPreReq:  python3-module-setuptools
-BuildPreReq:  python3-module-setuptools-tests
+BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-module-setuptools-tests
 BuildPreReq: python3-module-asyncio
 BuildPreReq: python3-module-trollius python3-module-nose
-#BuildPreReq: python3-module-gunicorn
+BuildPreReq: python3-module-sphinxcontrib-asyncio
+BuildPreReq: python3-module-sphinxcontrib-newsfeed
+BuildPreReq: python3-module-multidict
+BuildPreReq: python3-module-gunicorn
 BuildPreReq: python3-module-chardet
 #BuildPreReq: python3-module-flake8 python3-module-coverage
 #BuildPreReq: python3-module-path 
 #python3-module-bumpversion
-#BuildPreReq: python3-module-Cython
+BuildPreReq: python3-module-Cython
 %endif
 
 %py_provides %oname
@@ -176,12 +181,12 @@ python setup.py test
 nosetests -s -v ./tests/
 %endif
 %if_with python3
-pushd ../python3
-python3 setup.py test
-sed -i 's|nosetests|nosetests3|' Makefile
-sed -i 's|flake8|python3-flake8|' Makefile
-nosetests3 -s -v ./tests/
-popd
+#pushd ../python3
+#python3 setup.py test
+#sed -i 's|nosetests|nosetests3|' Makefile
+#sed -i 's|flake8|python3-flake8|' Makefile
+#nosetests3 -s -v ./tests/
+#popd
 %endif
 
 %if_with python2
@@ -214,10 +219,14 @@ popd
 %endif
 
 %changelog
-* Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.3-alt7.git20150425.1
+* Sun Aug 07 2016 Anton Midyukov <antohami@altlinux.org> 0.21.5-alt1
+- New version 0.21.5 (Closes: 32363)
+- Disable tests (girar not support IPv6)
+
+* Sun Mar 13 2016 Ivan Zakharyaschev <imz at altlinux.org> 0.15.3-alt7.git20150425.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
-
+  
 * Sat Mar  5 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.15.3-alt7.git20150425
 - (.spec) cleanup unneeded BuildRequires(pre): rpm-macros-sphinx
   (and other BuildReq cleanups)
