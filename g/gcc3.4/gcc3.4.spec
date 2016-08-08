@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 3.4.5
-Release: alt16
+Release: alt17
 
 Summary: GNU Compiler Collection
 License: GPL
@@ -98,6 +98,10 @@ Patch703: gcc34-alt-as-needed.patch
 Patch704: gcc34-alt-makeinfo.patch
 Patch705: gcc34-alt-bison.patch
 Patch706: gcc34-up-siginfo.patch
+
+Patch707: gcc34-bison.patch
+Patch708: gcc34-makeinfo.patch
+
 
 Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
 Obsoletes: egcs, gcc3.0, gcc3.1
@@ -676,6 +680,9 @@ rm -f gcc/po/*rw.po
 %patch705 -p1
 %patch706 -p0
 
+%patch707 -p0
+%patch708 -p0
+
 find -type f -name \*.orig -delete -print
 
 # Set proper version & contact info.
@@ -944,10 +951,6 @@ cat >%buildroot%_sysconfdir/buildreqs/files/ignore.d/%name <<EOF
 ^%gcc_target_libexecdir(/include)?$
 EOF
 
-# no valid g++ manpage exists in 3.4 series.
-rm -fv %buildroot%_man1dir/g++%psuffix.1
-ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
-
 %find_lang gcc%psuffix
 
 %if_enabled debug
@@ -955,13 +958,13 @@ ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
 %set_strip_method none
 %endif #enabled_debug
 
-%set_compress_method bzip2
+%set_compress_method xz
 
 #install alternatives stuff
 install -d %buildroot%_altdir
 cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
 %_bindir/%_target_platform-cpp	%_bindir/%_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%_target_platform-cpp%psuffix
+%_man1dir/cpp.1.xz	%_man1dir/cpp%psuffix.1.xz	%_bindir/%_target_platform-cpp%psuffix
 EOF
 
 cat >%buildroot%_altdir/%name <<EOF
@@ -969,20 +972,18 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%_target_platform-gcov	%_bindir/%_target_platform-gcov%psuffix	%_bindir/%_target_platform-gcc%psuffix
 %_bindir/%_target_platform-protoize	%_bindir/%_target_platform-protoize%psuffix	%_bindir/%_target_platform-gcc%psuffix
 %_bindir/%_target_platform-unprotoize	%_bindir/%_target_platform-unprotoize%psuffix	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
+%_man1dir/gcov.1.xz	%_man1dir/gcov%psuffix.1.xz	%_bindir/%_target_platform-gcc%psuffix
 EOF
 
 cat >%buildroot%_altdir/c++%gcc_branch <<EOF
 %_bindir/%_target_platform-g++	%_bindir/%_target_platform-g++%psuffix	%priority
 %_bindir/%_target_platform-c++filt	%_bindir/%_target_platform-c++filt%psuffix	%_bindir/%_target_platform-g++%psuffix
-%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%_target_platform-g++%psuffix
 EOF
 
 %if_with fortran
 cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
 %_bindir/%_target_platform-gfortran	%_bindir/%_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.bz2	%_man1dir/g77%psuffix.1.bz2	%_bindir/%_target_platform-gfortran%psuffix
+%_man1dir/gfortran.1.xz	%_man1dir/g77%psuffix.1.xz	%_bindir/%_target_platform-gfortran%psuffix
 EOF
 %endif
 
@@ -999,11 +1000,11 @@ $(for i in fastjar gcjh gij grepjar grmic grmiregistry jcf-dump jv-convert jv-sc
 	echo "%_bindir/%_target_platform-$i	%_bindir/%_target_platform-$i%psuffix	%_bindir/%_target_platform-gcj%psuffix"
 done)
 $(for i in gcj gcjh gij grepjar jcf-dump jv-convert jv-scan; do
-	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix"
+	echo "%_man1dir/$i.1.xz	%_man1dir/$i%psuffix.1.xz	%_bindir/%_target_platform-gcj%psuffix"
 done)
-%_man1dir/grmic.1.bz2	%_man1dir/rmic%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix
-%_man1dir/fastjar.1.bz2	%_man1dir/jar%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix
-%_man1dir/grmiregistry.1.bz2	%_man1dir/rmiregistry%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix
+%_man1dir/grmic.1.xz	%_man1dir/rmic%psuffix.1.xz	%_bindir/%_target_platform-gcj%psuffix
+%_man1dir/fastjar.1.xz	%_man1dir/jar%psuffix.1.xz	%_bindir/%_target_platform-gcj%psuffix
+%_man1dir/grmiregistry.1.xz	%_man1dir/rmiregistry%psuffix.1.xz	%_bindir/%_target_platform-gcj%psuffix
 EOF
 %endif
 
@@ -1023,7 +1024,6 @@ EOF
 %_bindir/%_target_platform-gcov%psuffix
 %_bindir/%_target_platform-protoize%psuffix
 %_bindir/%_target_platform-unprotoize%psuffix
-%_man1dir/gcc%psuffix.*
 %_man1dir/gcov%psuffix.*
 %dir %gcc_target_libdir
 %dir %gcc_target_libdir/include
@@ -1091,7 +1091,6 @@ EOF
 %gcc_doc_dir/g++
 %_bindir/g++%psuffix
 %_bindir/%_target_platform-g++%psuffix
-%_man1dir/g++%psuffix.*
 %dir %gcc_target_libexecdir
 %gcc_target_libexecdir/cc1plus
 
@@ -1278,6 +1277,10 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Mon Aug 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.4.5-alt17
+- Fixed BFS.
+- Changed compress_method to xz.
+
 * Wed Feb 27 2013 Dmitry V. Levin <ldv@altlinux.org> 3.4.5-alt16
 - Backported upstream change to fix build with glibc-2.16.
 - Disabled build and packaging of ada subpackages.
