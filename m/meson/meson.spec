@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.32.0
+Version: 0.33.0
 Release: alt1
 
 Summary: High productivity build system
@@ -78,6 +78,9 @@ done
 
 
 %changelog
+* Mon Aug 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
+- 0.33.0
+
 * Thu Jun 30 2016 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
 - first build for Sisyphus
   (based on fc 0.31.0-1 package http://pkgs.fedoraproject.org/cgit/rpms/meson.git/)
