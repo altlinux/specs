@@ -1,6 +1,6 @@
 Name: libbelle-sip
-Version: 1.4.2
-Release: alt2
+Version: 1.5.0
+Release: alt1
 Summary: Linphone sip stack
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Patch0: %name-%version-%release.patch
 Patch1: belle-sip-1.4.2-antlr34.patch
 # Automatically added by buildreq on Fri Jul 31 2015
 # optimized out: antlr3-C antlr3-java gnu-config java jpackage-utils libstdc++-devel pkg-config stringtemplate4 tzdata-java
-BuildRequires: antlr3-C-devel antlr3-tool gcc-c++ java-devel
+BuildRequires: antlr3-C-devel antlr3-tool gcc-c++ java-devel libmbedtls-devel libbctoolbox-devel
 
 BuildRequires: /proc rpm-build-java
 
@@ -35,17 +35,8 @@ Libraries and headers required to develop software with belle-sip
 %patch1 -p1
 
 %build
-pushd polarssl
-sh ./autogen.sh
-./configure --prefix=/usr --libdir=%_libdir
-make
-popd
 
 ./autogen.sh
-
-export LDFLAGS="$LDFLAGS -L${RPM_BUILD_DIR}/%name-%version/polarssl/library/.libs"
-export CFLAGS="$CFLAGS -I${RPM_BUILD_DIR}/%name-%version/polarssl/include"
-export CPPFLAGS="$CPPFLAGS -I${RPM_BUILD_DIR}/%name-%version/polarssl/include"
 
 ./configure --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin \
             --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share \
@@ -62,10 +53,6 @@ make
 
 %makeinstall
 
-pushd polarssl
-make install DESTDIR=%buildroot
-popd
-
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README
 %_libdir/*.so.*
@@ -76,6 +63,10 @@ popd
 %_libdir/pkgconfig/belle-sip.pc
 
 %changelog
+* Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 1.5.0-alt1
+- 1.5.0
+- Use system libmbedtls
+
 * Mon Feb 15 2016 Alexei Takaseev <taf@altlinux.org> 1.4.2-alt2
 - Add patch for antlr >= 3.4
 

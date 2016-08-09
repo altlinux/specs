@@ -1,6 +1,6 @@
 Name: linphone
-Version: 3.9.1
-Release: alt2
+Version: 3.10.0
+Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -17,7 +17,7 @@ BuildRequires: doxygen intltool libexosip2-devel libglade-devel libgsm-devel
 BuildRequires: libnotify-devel libssl-devel libbelle-sip-devel
 BuildRequires: libmediastreamer-devel libreadline-devel libspeex-devel
 BuildRequires: libSDL-devel libosip2-devel >= 3.5.0 libncurses-devel
-BuildRequires: libxml2-devel
+BuildRequires: libxml2-devel libsqlite3-devel
 
 Requires: %name-gui = %version-%release
 Requires: %name-cli = %version-%release
@@ -58,6 +58,18 @@ over the internet. It has a gtk+ and console interface.
 
 This package contains console interface for %name.
 
+%package tester
+Summary: This is the test suite of liblinphone.
+Group: Communications
+Requires: %name-cli = %version-%release
+
+%description tester
+This is the test suite of liblinphone, with many tests suites
+for Register, Calls, Message, Presence.
+
+All thoses tests suites require a SIP server configured
+accordingly in order to execute.
+
 %package devel
 Summary: Development files for %name
 Group: Communications
@@ -79,6 +91,7 @@ This package contains development files for %name.
  --enable-notify \
  --enable-ssl \
  --disable-static
+
 %make_build
 
 %install
@@ -110,6 +123,8 @@ This package contains development files for %name.
 %files cli
 %_bindir/linphonec
 %_bindir/linphonecsh
+%_bindir/linphone-daemon
+%_bindir/lp-sendmsg
 %_bindir/lp-autoanswer
 %_bindir/lp-gen-wrappers
 %_man1dir/linphonec.1*
@@ -124,7 +139,20 @@ This package contains development files for %name.
 %_libdir/*.so
 %_datadir/tutorials/%name
 
+%files tester
+%doc tester/README
+%_bindir/liblinphone_tester
+%_bindir/linphone-daemon-pipetest
+%_bindir/lp-test-ecc
+%_bindir/lpc2xml_test
+%_bindir/xml2lpc_test
+%_datadir/lib%{name}_tester
+
+
 %changelog
+* Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Mon Jan 11 2016 Alexei Takaseev <taf@altlinux.org> 3.9.1-alt2
 - Fix loss man pages
 
