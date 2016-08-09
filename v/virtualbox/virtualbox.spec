@@ -56,8 +56,8 @@
 %define gcc_version 5
 
 Name: virtualbox
-Version: 5.0.20
-Release: alt2
+Version: 5.1.2
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -82,6 +82,7 @@ Source10:	vboxweb-service.init
 Source15:	os_altlinux.png
 Source16:	os_altlinux_64.png
 Source22:	%name.service
+Source23:	virtualbox.conf
 
 %if_enabled debug
 Source99:	%vboxdbg.in
@@ -94,16 +95,31 @@ BuildPreReq: libIDL-devel libSDL-devel libpng-devel
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
 BuildPreReq: rpm-build-kernel
-BuildPreReq: rpm-macros-qt4
+BuildPreReq: rpm-macros-qt5
 BuildRequires: genisoimage
 BuildRequires: docbook-dtds
 BuildPreReq: libpulseaudio-devel
 BuildRequires: libdevmapper-devel
 BuildRequires: makeself
+BuildRequires: qt5-tools
+BuildRequires: qt5-connectivity-devel
+BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-gstreamer1-devel
+BuildRequires: qt5-location-devel 
+BuildRequires: qt5-multimedia-devel
+BuildRequires: qt5-phonon-devel
+BuildRequires: qt5-quick1-devel 
+BuildRequires: qt5-quickcontrols2-devel 
+BuildRequires: qt5-script-devel
+BuildRequires: qt5-sensors-devel
+BuildRequires: qt5-serialbus-devel
+BuildRequires: qt5-x11extras-devel
+
 BuildRequires: libxml2-devel libxslt-devel
-BuildRequires: libqt4-devel libalsa-devel
+BuildRequires: qt5-base-devel libalsa-devel
 BuildRequires: libcap-devel libcurl-devel
 BuildRequires: libXmu-devel libGLU-devel
+BuildRequires: libXinerama-devel libXrandr-devel
 BuildRequires: libXdamage-devel libXcomposite-devel libXcomposite
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
@@ -323,9 +339,12 @@ export GCC_VERSION=%gcc_version
 %endif
 %if_without manual
     --disable-docs \
-%endif
-    --with-qt-dir=%_qt4dir \
-    --with-kbuild=%_bindir
+%endif    
+    --with-qt-dir=%_qt5_prefix \
+
+
+kbuild=%_bindir
+
 %if_without additions
 echo "VBOX_WITH_X11_ADDITIONS    := " >> LocalConfig.kmk
 %endif
@@ -354,7 +373,7 @@ echo "VBOX_WITH_DOCS_CHM         := 1" >> LocalConfig.kmk
 echo "VBOX_CHMCMD                := 1" >> LocalConfig.kmk
 %endif
 
-source env.sh
+#source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs; kmk -j$NPROCS  VBOXDIR=%vboxdir
 
 %if_enabled debug
@@ -577,6 +596,9 @@ cp -r ../obj/manual/en_US/HTMLHelp %buildroot%_defaultdocdir/%name-doc-%version/
 
 # install unit file
 install -pDm644 %SOURCE22 %buildroot%_unitdir/%name.service
+install -pDm644 %SOURCE23 %buildroot%_sysconfdir/modules-load.d/%name.conf
+
+
 
 %if_with vnc
  cp -a ExtensionPacks/VNC %buildroot%vboxdir/ExtensionPacks/
@@ -734,6 +756,7 @@ mountpoint -q /dev || {
 %config %_udevrulesdir/90-%name.rules
 %dir %vboxdatadir
 %vboxdatadir/VBoxCreateUSBNode.sh
+%config %_sysconfdir/modules-load.d/%name.conf
 
 %if_with manual
 %files doc
@@ -755,9 +778,12 @@ mountpoint -q /dev || {
 %vboxdir/sdk/bindings/xpcom/include/VBox/com
 
 %changelog
+* Wed Jul 27 2016 Denis Medvedev <nbr@altlinux.org> 5.1.2-alt1
+- new version 5.1.2 (clean)
+
 * Fri Jun 24 2016 Denis Medvedev <nbr@altlinux.org> 5.0.20-alt2
-- fixed translation of message that happens when virtualbox 
-service is not started.
+- fixed translation of message that happens when virtualbox
+service is not started
 
 * Wed May 11 2016 Denis Medvedev <nbr@altlinux.org> 5.0.20-alt1
 - 5.0.20
