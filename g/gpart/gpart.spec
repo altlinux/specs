@@ -1,31 +1,23 @@
+%define _sbindir /sbin
+
 Name: gpart
-Version: 0.1h
-Release: alt8
+Version: 0.3
+Release: alt1
 
 Summary: Hard disk partition table reconstruction
 Group: System/Configuration/Hardware
 License: GPL
-
-Url: http://home.pages.de/~michab/gpart/
-Source: %name-%version.tar.bz2
-Patch0: gpart-0.1h-ALT-cflags.patch
-# The right way to use errno:
-Patch1: gpart-errno.patch
-# Portability fixes to 64-bit & big-endian platforms (mdk):
-Patch2: gpart-0.1h-fixes.patch
-Patch3: ftp://ftp.namesys.com/pub/misc-patches/gpart-0.1h-reiserfs-3.6.patch.gz
-Patch4: gpart-0.1h-reiserfs-3.6-typo-fix.patch
-Patch6: gpart-0.1h-deb-ext3.patch
-Patch7: gpart-0.1h-deb-llseek.patch
-Patch8: gpart-0.1h-alt-open.patch
+Url: https://github.com/baruch/%name/
 Packager: Michael Shigorin <mike@altlinux.org>
+
+Source: %url/archive/%version.tar.gz#/%name-%version.tar.gz
+Patch: %name-0.3-alt-lfs.patch
 
 Requires: common-licenses
 
-# Automatically added by buildreq on Thu Dec 20 2007
 BuildRequires: common-licenses
 
-Summary(ru_RU.KOI8-R): Восстановление таблицы разделов жёсткого диска
+Summary(ru_RU.UTF-8): п▓п╬я│я│я┌п╟п╫п╬п╡п╩п╣п╫п╦п╣ я┌п╟п╠п╩п╦я├я▀ я─п╟п╥п╢п╣п╩п╬п╡ п╤я▒я│я┌п╨п╬пЁп╬ п╢п╦я│п╨п╟
 
 %description
 A tool which tries to guess the partition table of a PC-type
@@ -39,31 +31,26 @@ ext2 and swap, OS/2 HPFS, Windows NTFS, FreeBSD and Solaris/x86
 disklabels, Minix FS, QNX 4 FS, Reiser FS, LVM physical volumes,
 BeOS FS, SGI XFS.
 
-%description -l ru_RU.KOI8-R
-Эта программа пытается определить расположение разделов на
-жестком диске в случае, если таблица разделов повреждена,
-нарушена или удалена. Для этого анализируется содержимое жесткого
-диска (или его побитовой копии). Воссозданная на основании
-собранных данных таблица разделов может быть записана в файл или
-на устройство.
+%description -l ru_RU.UTF-8
+п╜я┌п╟ п©я─п╬пЁя─п╟п╪п╪п╟ п©я▀я┌п╟п╣я┌я│я▐ п╬п©я─п╣п╢п╣п╩п╦я┌я▄ я─п╟я│п©п╬п╩п╬п╤п╣п╫п╦п╣ я─п╟п╥п╢п╣п╩п╬п╡ п╫п╟
+п╤п╣я│я┌п╨п╬п╪ п╢п╦я│п╨п╣ п╡ я│п╩я┐я┤п╟п╣, п╣я│п╩п╦ я┌п╟п╠п╩п╦я├п╟ я─п╟п╥п╢п╣п╩п╬п╡ п©п╬п╡я─п╣п╤п╢п╣п╫п╟,
+п╫п╟я─я┐я┬п╣п╫п╟ п╦п╩п╦ я┐п╢п╟п╩п╣п╫п╟. п■п╩я▐ я█я┌п╬пЁп╬ п╟п╫п╟п╩п╦п╥п╦я─я┐п╣я┌я│я▐ я│п╬п╢п╣я─п╤п╦п╪п╬п╣ п╤п╣я│я┌п╨п╬пЁп╬
+п╢п╦я│п╨п╟ (п╦п╩п╦ п╣пЁп╬ п©п╬п╠п╦я┌п╬п╡п╬п╧ п╨п╬п©п╦п╦). п▓п╬я│я│п╬п╥п╢п╟п╫п╫п╟я▐ п╫п╟ п╬я│п╫п╬п╡п╟п╫п╦п╦
+я│п╬п╠я─п╟п╫п╫я▀я┘ п╢п╟п╫п╫я▀я┘ я┌п╟п╠п╩п╦я├п╟ я─п╟п╥п╢п╣п╩п╬п╡ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╥п╟п©п╦я│п╟п╫п╟ п╡ я└п╟п╧п╩ п╦п╩п╦
+п╫п╟ я┐я│я┌я─п╬п╧я│я┌п╡п╬.
 
-Поддерживаются следующие типы разделов: DOS/Windows FAT, Linux
-ext2 и swap, OS/ 2 HPFS, Windows NTFS, FreeBSD и Solaris/x86
-disklabels, Minix FS, QNX 4 FS, Reiser FS, физические тома LVM,
+п÷п╬п╢п╢п╣я─п╤п╦п╡п╟я▌я┌я│я▐ я│п╩п╣п╢я┐я▌я┴п╦п╣ я┌п╦п©я▀ я─п╟п╥п╢п╣п╩п╬п╡: DOS/Windows FAT, Linux
+ext2 п╦ swap, OS/ 2 HPFS, Windows NTFS, FreeBSD п╦ Solaris/x86
+disklabels, Minix FS, QNX 4 FS, Reiser FS, я└п╦п╥п╦я┤п╣я│п╨п╦п╣ я┌п╬п╪п╟ LVM,
 BeOS FS, SGI XFS.
 
 %prep
 %setup
-%patch0 -p1 -b .cflags
-%patch1 -p1 -b .errno
-%patch2 -p1 -b .fixes
-%patch3 -p2 -b .reiser
-%patch4 -p1 -b .reiser-typo
-%patch6 -p1 -b .ext3
-%patch7 -p1 -b .llseek
-%patch8 -p1 -b .open
+%patch
 
 %build
+%autoreconf
+%configure
 %make_build
 ln -sf %_licensedir/GPL-2 COPYING
 
@@ -72,11 +59,14 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 %files
 /sbin/%name
-%_mandir/*/*
-%doc README Changes 
+%_man8dir/%name.8*
+%doc README* Changes
 %doc --no-dereference COPYING
 
 %changelog
+* Tue Aug 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3-alt1
+- 0.3 (new url)
+
 * Thu Dec 24 2009 Sergey Vlasov <vsu@altlinux.ru> 0.1h-alt8
 - Fixed cflags patch:
   + added -fno-strict-aliasing for sloppy old code
