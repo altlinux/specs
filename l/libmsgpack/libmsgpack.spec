@@ -1,6 +1,6 @@
 %define oname msgpack
 Name: libmsgpack
-Version: 1.4.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Binary-based efficient object serialization library
@@ -14,6 +14,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/msgpack/msgpack-c/releases/download/cpp-%version/%oname-%version.tar.gz
 Source: %name-%version.tar
 Patch: msgpack-fix-int-float-test.patch
+
+# Automatically added by buildreq on Wed Aug 10 2016
+# optimized out: cmake cmake-modules libstdc++-devel openssh-common python-base python-modules python3 python3-base zlib-devel
+BuildRequires: cmake libgtest-devel zlib-devel
 
 BuildRequires: gcc-c++ >= 4.8
 
@@ -43,17 +47,18 @@ Libraries and header files for %name
 %prep
 %setup
 #patch0 -p1 -b .fix-int-float-test
+%__subst "s|/lib|/%_lib|g" CMakeLists.txt
 
 %build
-%autoreconf
-%configure --disable-static
+%cmake_insource -DCMAKE_INSTALL_LIBDIR=%_lib
 %make_build
 
-%check
-make check
+#check
+#make check
 
 %install
 %makeinstall_std
+rm -f %buildroot%_libdir/*.a
 
 %files
 %doc AUTHORS COPYING ChangeLog LICENSE_1_0.txt NOTICE README README.md
@@ -66,6 +71,10 @@ make check
 %_pkgconfigdir/msgpack.pc
 
 %changelog
+* Wed Aug 10 2016 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0 (with rpmrb script)
+- note: breaking changes
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version 1.4.1 (with rpmrb script)
 
