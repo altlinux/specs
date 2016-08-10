@@ -7,8 +7,8 @@
 
 %define rname kipi-plugins
 Name: kde5-%rname
-Version: 5.0.0
-Release: alt2
+Version: 5.1.0
+Release: alt1
 %K5init
 
 Group: Graphics
@@ -187,6 +187,9 @@ done
 %_K5lib/libKF5kipiplugins.so.%libsover.*
 
 %changelog
+* Wed Aug 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
+- new version
+
 * Tue Aug 02 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt2
 - disable imgur plugin
 

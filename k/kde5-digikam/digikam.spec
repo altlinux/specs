@@ -10,8 +10,8 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.0.0
-Release: alt4
+Version: 5.1.0
+Release: alt1
 %K5init
 
 Summary: digiKam is an advanced digital photo management application for linux
@@ -52,6 +52,7 @@ Source0: %rname-%version.tar
 Source1: po.tar
 Source2: doc.tar
 Source3: doc-translated.tar
+Patch1: alt-libraw-ix86.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -129,6 +130,7 @@ Development files for %label.
 
 %prep
 %setup -n %rname-%version  -a1 -a2 -a3
+%patch1 -p1
 
 # change double to qreal for casting on arm
 find -type f -name \*.cpp | \
@@ -140,10 +142,8 @@ while read f ; do
     sed -i 's|<double>|<qreal>|g' $f
 done
 
-sed -i 's|add_subdirectory|ECM_OPTIONAL_ADD_SUBDIRECTORY|' doc-translated/CMakeLists.txt
-sed -i 's|add_subdirectory|ECM_OPTIONAL_ADD_SUBDIRECTORY|' doc-translated/digikam/CMakeLists.txt
-
-rm -rf doc-translated/digikam/showfoto
+#sed -i 's|add_subdirectory|ECM_OPTIONAL_ADD_SUBDIRECTORY|' doc-translated/CMakeLists.txt
+#rm -rf doc-translated/showfoto
 
 cat >> CMakeLists.txt <<__EOF__
 find_package(KF5I18n CONFIG REQUIRED)
@@ -226,6 +226,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Wed Aug 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
+- new version
+
 * Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt4
 - fix requires
 - fix solid actions
