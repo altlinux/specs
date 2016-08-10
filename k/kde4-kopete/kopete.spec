@@ -8,6 +8,7 @@
 %endif
 
 %def_enable kopete_irc
+%def_disable mediastreamer
 
 %ifdef _kde_alternate_placement
 %add_findreq_skiplist %_kde4_bindir/kopete_*.sh
@@ -20,8 +21,8 @@
 
 %define rname kopete
 Name: kde4-kopete
-Version: 15.12.1
-Release: alt1
+Version: 16.04.3
+Release: alt2
 
 Group: Networking/Instant messaging
 Summary: Instant Messaging client
@@ -31,12 +32,14 @@ Provides: kde4network-kopete = %EVR
 Obsoletes: kde4network-kopete < %EVR
 
 Requires: qca2-ossl
+%if_enabled mediastreamer
 Requires: libmediastreamer-ilbc
+%endif
 
 Source: %rname-%version.tar
 # ALT
 Patch1: alt-mobile.patch
-Patch2: alt-xmpp-service-reg-form-layout.patch
+#Patch2: alt-xmpp-service-reg-form-layout.patch
 
 # Automatically added by buildreq on Thu Sep 26 2013 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static kde4libs kde4libs-devel kde4pimlibs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgcrypt-devel libgif-devel libgpg-error libgpg-error-devel libopencore-amrnb0 libopencore-amrwb0 libortp-devel libp11-kit libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel libxml2-devel phonon-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-xproto-devel xsltproc zlib-devel
@@ -46,7 +49,10 @@ BuildRequires: kde4base-runtime-devel kde4pim-devel
 BuildRequires: kde4pimlibs-devel libgpgme-devel
 BuildRequires: libexpat-devel libidn-devel libjasper-devel libjpeg-devel
 BuildRequires: libgadu-devel libgnutls-devel libtasn1-devel jsoncpp-devel
-BuildRequires: libmeanwhile-devel libmediastreamer-devel libmediastreamer-ilbc libmsn-devel libotr5-devel libalsa-devel
+BuildRequires: libmeanwhile-devel libotr5-devel libalsa-devel libmsn-devel
+%if_enabled mediastreamer
+BuildRequires: libmediastreamer-devel libmediastreamer-ilbc
+%endif
 BuildRequires: libqca2-devel libqimageblitz-devel libsqlite3-devel 
 BuildRequires: libsrtp-devel libortp-devel libv4l-devel libxslt-devel python-devel
 BuildRequires: kde-common-devel rpm-macros-browser-plugins
@@ -209,7 +215,7 @@ based on %name.
 %if_disabled desktop
 %patch1 -p1
 %endif
-%patch2 -p1
+#%patch2 -p1
 
 %build
 %K4build \
@@ -231,7 +237,9 @@ based on %name.
 #%files core
 
 %files
+%if_enabled mediastreamer
 %_K4bindir/libjingle-call
+%endif
 %_K4bindir/kopete
 %_K4bindir/kopete_latexconvert.sh
 %_K4bindir/winpopup-install
@@ -315,6 +323,12 @@ based on %name.
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Aug 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt2
+- disable voice support in gtalk and msn
+
+* Tue Aug 09 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Mon Jan 18 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 
