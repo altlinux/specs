@@ -1,6 +1,6 @@
 Name: libmediastreamer
-Version: 2.12.1
-Release: alt1.1
+Version: 2.14.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Audio/Video real-time streaming
@@ -86,6 +86,9 @@ mkdir -p %buildroot/%_libdir/mediastreamer/plugins
 %_includedir/*
 
 %changelog
+* Tue Aug 09 2016 Alexei Takaseev <taf@altlinux.org> 2.14.0-alt1
+- 2.14.0
+
 * Mon Nov 30 2015 Igor Vlasenko <viy@altlinux.ru> 2.12.1-alt1.1
 - fixed build - added BR: libspeexdsp-devel
 
