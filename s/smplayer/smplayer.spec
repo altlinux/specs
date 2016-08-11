@@ -1,4 +1,4 @@
-%define		svn 7822
+%define		svn 8066
 
 %define		rel alt1
 
@@ -9,7 +9,7 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT4
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	16.4.0
+Version:	16.8.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://downloads.sourceforge.net/smplayer/%name-%version.tar.bz2
@@ -80,6 +80,26 @@ BuildArch: noarch
 Virtual package for SMPlayer, requires a MPlayer
 %endif
 
+%if "%rel" == "alt0.M80P"
+%package -n %name-mpv
+Summary: A great MPV front-end (QT4)
+Group: Video
+Requires: %name mpv
+BuildArch: noarch
+
+%description -n %name-mpv
+Virtual package for SMPlayer, requires a MPV
+
+%package -n %name-mplayer
+Summary: A great MPlayer front-end (QT4)
+Group: Video
+Requires: %name mplayer
+BuildArch: noarch
+
+%description -n %name-mplayer
+Virtual package for SMPlayer, requires a MPlayer
+%endif
+
 %prep
 %setup -q
 %patch0 -p1
@@ -114,6 +134,9 @@ export OPTFLAGS="%optflags"
 %endif
 
 %changelog
+* Thu Aug 11 2016 Motsyo Gennadi <drool@altlinux.ru> 16.8.0-alt1.8066
+- 16.8.0 version (svn8066)
+
 * Mon May 09 2016 Motsyo Gennadi <drool@altlinux.ru> 16.4.0-alt1.7822
 - 16.4.0 version (svn7822)
 
