@@ -1,5 +1,5 @@
 Name: lnav
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: The log file navigator
@@ -51,6 +51,9 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Thu Aug 11 2016 Michael Shigorin <mike@altlinux.org> 0.8.1-alt1
+- new version (watch file uupdate)
+
 * Mon Nov 16 2015 Michael Shigorin <mike@altlinux.org> 0.8.0-alt1
 - new version (watch file uupdate)
 - tweaked default logfile location
