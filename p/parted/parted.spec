@@ -1,3 +1,4 @@
+%def_enable snapshot
 %set_verify_elf_method unresolved=relaxed
 
 %def_enable static
@@ -24,7 +25,8 @@ Name: parted
 %define lname lib%name
 Version: 3.2
 %define prerel %nil
-Release: alt2.1
+%define git_version %{version}.46-e4ae
+Release: alt3
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.CP1251): Универсальний інструмент для роботи з разділами диску
@@ -33,10 +35,13 @@ License: GPL3+
 Group: System/Configuration/Hardware
 URL: http://www.gnu.org/software/%name
 
+%if_disabled snapshot
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version%prerel.tar.xz
+%else
+Source: %name-%git_version.tar.xz
+%endif
 Source1: %name-pam
 Source2: %name-security
-Patch: parted-3.2-fat16-bgo735669.patch
 
 Requires: %lname = %version-%release
 
@@ -127,8 +132,11 @@ with %lname.
 
 
 %prep
+%if_disabled snapshot
 %setup -n %name-%version%prerel
-%patch -p1
+%else
+%setup -n %name-%git_version
+%endif
 
 %build
 %autoreconf
@@ -215,6 +223,7 @@ __MENU__
 %{?_enable_shared:%_libdir/*.so}
 %_includedir/%name/
 %_pkgconfigdir/%lname.pc
+%_pkgconfigdir/%lname-fs-resize.pc
 
 %if_enabled static
 %files -n %lname-devel-static
@@ -223,6 +232,9 @@ __MENU__
 
 
 %changelog
+* Thu Aug 04 2016 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt3
+- updated to v3.2-46-ge4ae433
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.2-alt2.1
 - NMU: added BR: texinfo
 
