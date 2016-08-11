@@ -27,8 +27,8 @@
 
 
 Name: glusterfs3
-Version: %major.1
-Release: alt2
+Version: %major.2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -36,6 +36,7 @@ License: GPLv2/LGPLv3
 Group: System/Base
 Url: http://www.gluster.org/
 
+# Source-git: https://github.com/gluster/glusterfs.git
 Source0: %name-%version.tar
 Source1: glusterd.sysconfig
 Source2: %name.watch
@@ -354,6 +355,9 @@ mkdir -p %buildroot%_sharedstatedir/glusterd
 sed -i 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
     %buildroot%_sysconfdir/glusterfs/glusterd.vol
 
+# FIXME: missed install in Makefile since 1.8.2
+install -D -m644 extras/systemd/glusterd.service %buildroot/%_unitdir/glusterd.service
+
 # Install init script and sysconfig file
 %_init_install %SOURCE7 glusterd
 install -D -p -m 0644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/glusterd
@@ -513,6 +517,9 @@ rm -rf %buildroot/usr/lib/ocf/
 %preun_service glusterd
 
 %changelog
+* Thu Aug 11 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.2-alt1
+- new version 3.8.2 - 2nd update to the 3.8 Long-Term-Maintenance version
+
 * Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.1-alt2
 - fix build with nfs-ganesha
 
