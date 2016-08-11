@@ -27,7 +27,7 @@
 %def_enable google
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -535,6 +535,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Thu Aug 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.28.3-alt1
+- 1.28.3
+
 * Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1.28.2-alt1
 - 1.28.2
 
