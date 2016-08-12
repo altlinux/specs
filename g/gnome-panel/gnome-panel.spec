@@ -7,7 +7,7 @@
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -60,6 +60,7 @@ BuildPreReq: libgweather-devel >= %gweather_ver
 BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildRequires: libX11-devel libXt-devel libXau-devel libXrandr-devel libXi-devel libxml2-devel
 BuildRequires: libdconf-devel >= %dconf_ver libpolkit-devel libSM-devel
+BuildRequires: gdm-libs-devel
 %{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver} libicu-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
@@ -192,6 +193,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Fri Aug 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 
