@@ -1,6 +1,6 @@
 Name: fontconfig
-Version: 2.11.1
-Release: alt4
+Version: 2.12.1
+Release: alt1
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -13,8 +13,6 @@ Source1: fontconfig-firsttime
 Source2: fontconfig.filetrigger
 # FC
 Patch1: fontconfig-sleep-less.patch
-Patch2: fontconfig-fix-fccache-fail.patch
-Patch3: fontconfig-fix-broken-cache.patch
 # ALT
 Patch11: alt-symbols-map.patch
 Patch12: alt-config.patch
@@ -24,6 +22,7 @@ Patch14: alt-disable-postscript-aliases.patch
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
 BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel
+BuildRequires: python2.7(urllib2) python2.7(lxml) python2.7(six) python2.7(distutils)
 
 %description
 Fontconfig is designed to locate fonts within the system and
@@ -43,8 +42,6 @@ documentation required for development of fontconfig-based software.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -57,7 +54,9 @@ documentation required for development of fontconfig-based software.
 	--with-baseconfigdir=%_sysconfdir/fonts \
 	--with-default-fonts=%_datadir/fonts \
 	--with-cache-dir=%_var/cache/%name \
-	--docdir=%docdir
+	--docdir=%docdir \
+	--with-default-hinting=full \
+	#
 
 %make PDF_FILES=
 
@@ -104,16 +103,16 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %_sysconfdir/fonts/conf.d/[2-9]*.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-antialias.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting.conf
-%config(noreplace) %_sysconfdir/fonts/conf.d/10-style-full.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-full.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/11-lcdfilter-default.conf
 %ghost %_sysconfdir/fonts/conf.d/10-autohint.conf
 %ghost %_sysconfdir/fonts/conf.d/10-no-antialias.conf
 %ghost %_sysconfdir/fonts/conf.d/10-no-sub-pixel.conf
 %ghost %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
-%ghost %_sysconfdir/fonts/conf.d/10-style-light.conf
-%ghost %_sysconfdir/fonts/conf.d/10-style-medium.conf
-%ghost %_sysconfdir/fonts/conf.d/10-style-none.conf
+%ghost %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
+%ghost %_sysconfdir/fonts/conf.d/10-hinting-medium.conf
+%ghost %_sysconfdir/fonts/conf.d/10-hinting-none.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-bgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vbgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vrgb.conf
@@ -142,6 +141,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Fri Aug 12 2016 Sergey V Turchin <zerg@altlinux.org> 2.12.1-alt1
+- new version
+
 * Tue Nov 10 2015 Sergey V Turchin <zerg@altlinux.org> 2.11.1-alt4
 - increase priority of alt-post-user.conf (ALT#31462)
 
