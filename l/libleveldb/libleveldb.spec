@@ -1,5 +1,5 @@
 Name: libleveldb
-Version: 1.18
+Version: 1.19
 Release: alt1
 
 Summary: A fast and lightweight key/value database library by Google
@@ -57,7 +57,7 @@ Additional header files for development with %name.
 make install DESTDIR=%buildroot
 
 %files
-%doc doc/ AUTHORS LICENSE README
+%doc doc/ AUTHORS LICENSE README.md
 %_libdir/%name.so.*
 
 %files devel
@@ -66,6 +66,9 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Fri Aug 12 2016 Alexei Takaseev <taf@altlinux.org> 1.19-alt1
+- 1.19
+
 * Sat May 28 2016 Alexei Takaseev <taf@altlinux.org> 1.18-alt1
 - 1.18
 
