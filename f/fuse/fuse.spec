@@ -1,12 +1,12 @@
 Name: fuse
-Version: 2.9.4
-Release: alt3
+Version: 2.9.7
+Release: alt1
 
 Summary: a tool for creating virtual filesystems
 License: GPL
 Group: System/Kernel and hardware
 
-Url: http://sourceforge.net/projects/fuse
+Url: https://github.com/libfuse/
 
 Source: %name-%version.tar
 Source1: fusermount-control
@@ -92,7 +92,7 @@ install -pD %SOURCE2 %buildroot%_bindir/fuserumount
 %post_control -s fuseonly fusermount
 
 %files
-%doc AUTHORS NEWS README Filesystems README.NFS
+%doc AUTHORS NEWS README.md README.NFS doc/how-fuse-works doc/kernel.txt doc/html
 %_sysconfdir/control.d/facilities/fusermount
 %_udevrulesdir/*
 /sbin/mount.fuse
@@ -112,6 +112,9 @@ install -pD %SOURCE2 %buildroot%_bindir/fuserumount
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Aug 13 2016 Denis Smirnov <mithraen@altlinux.ru> 2.9.7-alt1
+- 2.9.7
+
 * Sun Sep 06 2015 Denis Smirnov <mithraen@altlinux.ru> 2.9.4-alt3
 - fix fuserumount script access (ALT#31225)
 
