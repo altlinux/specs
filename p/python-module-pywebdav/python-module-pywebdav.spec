@@ -1,53 +1,48 @@
-%define srcname PyWebDAV
-%define oname pywebdav
+%define srcname PyWebDAV3
 
-%def_with python3
-
-Name:           python-module-%oname
-Version:        0.9.8
-Release:        alt1.1.1.1
-Summary:        WebDAV library
+Name:           python-module-pywebdav
+Version:        0.9.11
+Release:        alt1
+Summary:        PyWebDAV is a standards compliant WebDAV server and library written in Python
 
 Group:          Development/Python
 License:        LGPLv2+
-URL:            http://www.webdav.de/
-Source0:        http://pywebdav.googlecode.com/files/%srcname-%version.tar.gz
+URL:            https://github.com/andrewleech/PyWebDAV3
+Source0:        %srcname-%version.tar
 
 BuildArch:      noarch
 BuildRequires(pre): rpm-build-python
-# Automatically added by buildreq on Thu Jan 28 2016 (-bi)
-# optimized out: python-base python-devel python-module-pytest python-module-setuptools python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-unittest python-tools-2to3 python3 python3-base python3-module-pytest python3-module-setuptools
-BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests rpm-build-python3 time
-
-#BuildRequires:  python-devel
-#BuildRequires:  python-module-setuptools-tests
-%if_with python3
+BuildRequires:  python-devel
+BuildRequires:  python-module-distribute
 BuildRequires(pre): rpm-build-python3
-#BuildRequires:  python3-devel
-#BuildRequires:  python3-module-setuptools-tests
-#BuildPreReq: python-tools-2to3
-%endif
+BuildRequires:  python3-devel
+BuildRequires:  python3-module-distribute
+BuildRequires: python-module-setuptools-tests python3-module-setuptools-tests time
 
 Provides:       pywebdav = %version-%release
+Provides:       pywebdav3 = %version-%release
 
 %description
 WebDAV library for Python. WebDAV is an extension to the normal HTTP/1.1
-protocol allowing the user to upload data, create collections of objects,
-store properties for objects, etc.
+protocol allowing the user to upload data, create collections of
+objects, store properties for objects, etc.
 
-%package -n python3-module-%oname
-Summary:        WebDAV library
+%package -n python3-module-pywebdav
+Summary:        PyWebDAV is a standards compliant WebDAV server and library written in Python3
 Group:          Development/Python3
-Provides:       py3webdav = %version-%release
 
-%description -n python3-module-%oname
+%description -n python3-module-pywebdav
 WebDAV library for Python. WebDAV is an extension to the normal HTTP/1.1
-protocol allowing the user to upload data, create collections of objects,
-store properties for objects, etc.
+protocol allowing the user to upload data, create collections of
+objects, store properties for objects, etc.
+
+This module built for Python3.
 
 %prep
 %setup -n %srcname-%version
 rm -f doc/INSTALL
+mkdir ../python3
+cp -a * ../python3
 
 %if_with python3
 cp -fR . ../python3
@@ -58,6 +53,9 @@ find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 export LC_ALL=en_US.UTF-8
 
 %python_build
+pushd ../python3
+%python3_build
+popd
 
 %if_with python3
 pushd ../python3
@@ -71,6 +69,11 @@ export LC_ALL=en_US.UTF-8
 %python_install
 rm -f %buildroot%_bindir/*
 rm -rf %buildroot%python_sitelibdir/pywebdav/server
+pushd ../python3
+%python3_install
+rm -f %buildroot%_bindir/*
+rm -rf %buildroot%python3_sitelibdir/pywebdav/server
+popd
 
 %if_with python3
 pushd ../python3
@@ -94,14 +97,15 @@ popd
 %python_sitelibdir/pywebdav
 %python_sitelibdir/%{srcname}*.egg-info
 
-%if_with python3
-%files -n python3-module-%oname
+%files -n python3-module-pywebdav
 %doc doc/*
 %python3_sitelibdir/pywebdav
 %python3_sitelibdir/%{srcname}*.egg-info
-%endif
 
 %changelog
+* Sat Aug 13 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt1
+- New version
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.9.8-alt1.1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
