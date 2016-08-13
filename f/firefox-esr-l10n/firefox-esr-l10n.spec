@@ -6,7 +6,7 @@
 
 Name:		firefox-esr-l10n
 Version:	45.3.0
-Release:	alt1
+Release:	alt2
 Summary:	Language Pack for Firefox ESR
 
 License:	MPL/GPL/LGPL
@@ -402,6 +402,9 @@ for locale in %dictionaries; do
 done
 
 %changelog
+* Sat Aug 13 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt2
+- Require firefox-esr to prevent work with ordinary firefox
+
 * Tue Aug 02 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt1
 - New version
 
