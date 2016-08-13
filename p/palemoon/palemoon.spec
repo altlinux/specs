@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.4.0
-Release: alt1.2.1fd9
+Release: alt1.3.1841
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -22,12 +22,14 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 %def_enable gst1   // Enable gstreamer 1.0
 
+
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
 %define palemoon_prefix                 %_libdir/%bname
 %define palemoon_datadir                %_datadir/%sname
 %define palemoon_arch_extensionsdir     %palemoon_prefix/extensions
 %define palemoon_noarch_extensionsdir   %palemoon_datadir/extensions
+
 
 Source: %sname-source-%version-%release.tar
 Source1: rpm-build.tar
@@ -38,6 +40,8 @@ Source7: firefox.c
 Source8: firefox-prefs.js
 Source9: HISTORY_GIT
 Source10: Changelog
+
+#Patch1: palemoon_google_add-26.4.0.patch
 
 Patch5: firefox-duckduckgo.patch
 Patch6: firefox3-alt-disable-werror.patch
@@ -53,20 +57,20 @@ Patch23: palemoon_version-26.4.0.patch
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 
-# Automatically added by buildreq on Sat Jun 18 2016
+# Automatically added by buildreq on Sat Aug 13 2016
 # optimized out: alternatives fontconfig fontconfig-devel glib2-devel gstreamer1.0-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins1.0 libpango-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-PyStemmer python-module-cssselect python-module-ferari python-module-fiat python-module-instant python-module-mpmath python-module-numpy python-module-pyasn1 python-module-pyparsing python-module-ufl python-module-uflacs python-modules python-modules-compiler python-modules-curses python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python3 xorg-kbproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: doxygen gcc-c++ imake java-devel libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libgtk+2-devel libpulseaudio-devel libsocket libvpx-devel 
 BuildRequires: python-module-cmd2 python-module-contextlib2 python-module-dns python-module-docutils python-module-ecdsa python-module-ed25519 python-module-ffc python-module-greenlet python-module-html5lib python-module-kerberos
-BuildRequires: python-module-libcf python-module-mimeparse python-module-netaddr python-module-nss python-module-paste python-module-pbr python-module-polib python-module-psycopg2 python-module-pycares python-module-pycrypto
+BuildRequires: python-module-libcf python-module-mimeparse python-module-netaddr python-module-nss python-module-paste python-module-pbr python-module-polib python-module-psycopg2 python-module-pycrypto
 BuildRequires: python-module-pycurl python-module-pyev python-module-pygobject3 python-module-pyinotify python-module-pysnmp4 python-module-pytz python-module-sidl python-module-sidlx python-module-snappy
-BuildRequires: python-module-snowballstemmer python-module-wrapt python-module-yaml python-modules-wsgiref python3-base
+BuildRequires: python-module-snowballstemmer python-module-wrapt python-module-yaml python-module-zope python-modules-wsgiref python3-base 
 BuildRequires: unzip wget xorg-cf-files xsltproc yasm zip
 
 BuildPreReq: bzlib-devel fontconfig-devel gcc-c++-common glib2-devel libSM-devel libX11-devel libXcomposite-devel libXext-devel libcairo-devel libdbus-devel libdbus-glib-devel libevent-devel libffi-devel libfreetype-devel
 BuildPreReq: libgio-devel libgnomeui-devel libgraphite2-devel libgtk+3-devel libhunspell-devel libjpeg-devel libnspr libpango-devel libpixman-devel libpng-devel libproxy-devel libqt4-devel libreadline-devel
 BuildPreReq: libsqlite3-devel libssl-devel libstartup-notification-devel libunwind-devel libwebp-devel libwine-devel
 BuildPreReq: perl perl-Archive-Zip perl-CGI perl-DBI perl-GD perl-GD-Graph perl-HTTP-Message perl-XML-LibXML perl-XML-LibXSLT perl-devel perl-libwww python-base python-devel
-BuildPreReq: qt4-mobility-devel qt5-base-devel texinfo wcslib-devel xsltproc zlib-devel
+BuildPreReq: qt4-mobility-devel qt5-base-devel texinfo wcslib-devel xsltproc zlib-devel gst-transcoder-devel
 
 BuildPreReq: python3-base unzip xorg-cf-files
 
@@ -77,10 +81,10 @@ BuildPreReq: autoconf_2.13
 %set_autoconf_version 2.13
 
 %if_enabled gst1
-BuildRequires(pre): gst-plugins1.0-devel
-
+BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel
 %else
 BuildRequires(pre): gst-plugins-devel
+BuildPreReq: gstreamer-devel gst-plugins-devel
 %endif
 
 %description
@@ -136,6 +140,7 @@ These helper macros provide possibility to rebuild
 
 %prep
 %setup -n %sname-%version -c
+
 %patch21 -p1
 %patch20 -p1
 %patch23 -p1
@@ -143,18 +148,22 @@ These helper macros provide possibility to rebuild
 
 cd %sname
 
+#%%patch1  -p1
+%patch6  -p1
+%patch16 -p1
+%patch18 -p1
+
 tar -xf %SOURCE1
 
 pushd browser/locales/en-US/
-tar -xf %SOURCE2
+ tar -xf %SOURCE2
 popd
 
 #patch5  -p1
-%patch6  -p1
 #patch14 -p1
-%patch16 -p1
 #patch17 -p1
-%patch18 -p1
+
+
 
 cat >> browser/confvars.sh <<EOF
 MOZ_UPDATER=
@@ -386,6 +395,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Sat Aug 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt1.3.1841
+- Update from git
+
 * Sat Aug 06 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt1.2.1fd9
 - Fix Version
 
@@ -537,3 +549,5 @@ done
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+
+
