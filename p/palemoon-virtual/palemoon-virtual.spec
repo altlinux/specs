@@ -1,6 +1,6 @@
 Name: palemoon-virtual
 Version: 25.6.0
-Release: alt2
+Release: alt3
 
 %define smr palemoon/newmoon (dependencies package)
 
@@ -29,8 +29,8 @@ Requires: gst-plugins-nice1.0
 Requires: gst-plugins-ugly1.0 
 Requires: gst-plugins1.0-tools
 #Requires: gstreamer-java 
-Requires: gstreamer-vaapi 
 Requires: gstreamer1.0-utils 
+
 
 %package -n palemoon-suggested
 Summary: %smr
@@ -83,6 +83,9 @@ Full set natives plugins to  newmoon
 %files -n palemoon-html5
 
 %changelog
+* Sat Aug 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0-alt3
+- Fix palemoon-html5
+
 * Sun Aug 07 2016 Hihin Ruslan <ruslandh@altlinux.ru> 25.6.0-alt2
 - Add palemoon-html5
 
