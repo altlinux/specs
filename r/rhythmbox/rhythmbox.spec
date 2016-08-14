@@ -1,19 +1,18 @@
-%define ver_major 3.3
+%define ver_major 3.4
 %define rev %nil
 %define gst_api_ver 1.0
 
 %def_without hal
 %def_with gudev
-%def_with webkit
 %def_enable daap
 %def_enable visualizer
-%def_disable grilo
+%def_enable grilo
 %def_disable gtk_doc
 %def_enable zeitgeist
 %def_enable soundcloud
 
 Name: rhythmbox
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -27,18 +26,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 #Source: %name-%version.tar
 
 %define dbus_ver 0.35
-%define glib_ver 2.34.0
+%define glib_ver 2.36.0
 %define gst_ver 1.0
 %define gtk_ver 3.6.0
 %define mtp_ver 0.3
 %define brasero_ver 2.31.5
-%define soup_ver 2.34.0
+%define soup_ver 2.42.0
 %define totem_ver 3.2.0
 %define udev_ver 143
 %define gpod_ver 0.8
 %define mx_ver 1.0.1
 %define secret_ver 0.18
 %define dmapsharing_ver 2.9.19
+%define grilo_ver 0.3
 
 Requires: lib%name = %version-%release
 
@@ -87,9 +87,8 @@ BuildRequires: libICE-devel libSM-devel libsecret-devel >= %secret_ver
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libxml2-devel libjson-glib-devel libpng-devel
-%{?_with_webkit:BuildRequires: libwebkit2gtk-devel}
 BuildRequires: libpeas-devel libtdb-devel zlib-devel
-%{?_enable_grilo:BuildRequires: libgrilo-devel}
+%{?_enable_grilo:BuildRequires: libgrilo-devel >= %grilo_ver}
 BuildRequires: libavahi-glib-devel
 BuildRequires: libdmapsharing-devel >= %dmapsharing_ver
 %{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst2.0-devel libmx-devel >= %mx_ver}
@@ -360,7 +359,6 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 	--with-ipod \
 	%{subst_with hal} \
 	%{subst_with gudev} \
-	%{subst_with webkit} \
 	%{subst_enable grilo}
 
 %make_build
@@ -482,9 +480,10 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/artsearch/
 %_libdir/%name/plugins/lyrics/
 #%_libdir/%name/plugins/magnatune/
-%{?_with_webkit:%_libdir/%name/plugins/context/}
+%_libdir/%name/plugins/context/
 %_libdir/%name/plugins/replaygain/
 %_libdir/%name/plugins/sendto/
+%_libdir/%name/plugins/webremote/
 %{?_enable_zeitgeist:%_libdir/%name/plugins/rbzeitgeist/}
 %{?_enable_soundcloud:%_libdir/%name/plugins/soundcloud/}
 
@@ -501,6 +500,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sun Aug 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
+- 3.4
+
 * Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
