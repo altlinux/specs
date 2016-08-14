@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Math-BaseCnv
 
 Name: perl-Math-BaseCnv
-Version: 1.12
+Version: 1.14
 Release: alt1
 
 Summary: Perl module with functions to convert between number bases
@@ -51,6 +51,9 @@ for converting between arbitrary number bases.
 %exclude %_bindir/cnv
 
 %changelog
+* Sun Aug 14 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.14-alt1
+- New version
+
 * Sat Jul 30 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.12-alt1
 - New version
 
