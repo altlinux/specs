@@ -10,7 +10,7 @@ BuildRequires: %_bindir/gcov %_bindir/gprof %_bindir/lcov %_bindir/rrdtool libev
 
 Name: opendkim
 Version: 2.10.3
-Release: alt3
+Release: alt4
 
 Summary: A DomainKeys Identified Mail (DKIM) milter to sign and/or verify mail
 
@@ -24,13 +24,13 @@ Source: http://downloads.sourceforge.net/%name/%name-%version.tar
 
 Requires: lib%name = %version-%release
 
-BuildRequires: sendmail-devel, libssl-devel, libtool, libbsd, libbsd-devel, opendbx-devel
+# skip libbsd-devel (can be used for bsd/string.h)
+
+BuildRequires: sendmail-devel, libssl-devel, libtool, opendbx-devel
 Requires(pre): shadow-utils
 
 BuildRequires: libdb4.7-devel, libmemcached-devel
 #, libldap-devel
-
-Source44: import.info
 
 #Patch: %name.init.patch
 
@@ -65,7 +65,7 @@ required for developing applications against libopendkim.
 # properly handle 32 versus 64 bit detection and settings
 %define LIBTOOL LIBTOOL=`which libtool`
 
-%configure --with-odbx --with-db --with-libmemcached --with-openldap
+%configure --with-odbx --with-db --with-libmemcached --with-openldap --localstatedir=/var
 
 # Remove rpath
 %__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -435,6 +435,10 @@ exit 0
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 14 2016 Vitaly Lipatov <lav@altlinux.ru> 2.10.3-alt4
+- build without libbsd-devel
+- fix configure localstatedir
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.10.3-alt3
 - initial manual build for ALT Linux Sisyphus
 
