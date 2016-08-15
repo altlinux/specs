@@ -1,5 +1,5 @@
 Name:		kmod
-Version:	21
+Version:	23
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -11,8 +11,6 @@ Requires:	lib%name = %version-%release
 
 Source0:	%name-%version.tar
 Patch0:		%name-manpage.patch
-
-Patch100:	0001-libkmod-module-fix-return-code-in-error-path.patch
 
 BuildRequires:	docbook-dtds docbook-style-xsl glibc-devel-static liblzma-devel xsltproc zlib-devel
 
@@ -48,7 +46,6 @@ applications that wish to load or unload Linux kernel modules.
 
 %prep
 %setup -q
-%patch100 -p1
 
 %build
 touch libkmod/docs/gtk-doc.make
@@ -118,6 +115,9 @@ ln -s kmod %buildroot/bin/lsmod
 %_libdir/libkmod.so
 
 %changelog
+* Mon Aug 15 2016 Alexey Gladkov <legion@altlinux.ru> 23-alt1
+- Version (23).
+
 * Tue Jul 21 2015 Alexey Gladkov <legion@altlinux.ru> 21-alt1
 - Version (21).
 - Backport: fix return code in error path.
