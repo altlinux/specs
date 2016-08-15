@@ -1,6 +1,6 @@
 Name: web-cyradm
 Version: 0.5.5e3
-Release: alt2
+Release: alt3
 
 Summary: Web Based Management tool for Postfix, Cyrus IMAP, and MySQL or PostgreSQL
 License: GPL
@@ -90,6 +90,9 @@ install -d -m1770 %buildroot%_var/log/%name
 %config(noreplace) %apache2_confdir/addon.d/A.%name.conf
 
 %changelog
+* Mon Aug 15 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.5e3-alt3
+- cyradm.php: fix getqouta
+
 * Wed Mar 09 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.5e3-alt2
 - update create_mysql.sql (ALT bug #31860)
 - update README.ALT (ALT bug #31860)
