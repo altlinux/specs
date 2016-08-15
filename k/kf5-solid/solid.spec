@@ -1,7 +1,7 @@
 %define rname solid
 
 Name: kf5-%rname
-Version: 5.24.0
+Version: 5.25.0
 Release: alt1
 %K5init altplace
 
@@ -19,7 +19,7 @@ Patch1: alt-no-hal.patch
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules flex gcc-c++ libudev-devel media-player-info python-module-google qt5-declarative-devel qt5-tools-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules flex gcc-c++ libudev-devel qt5-declarative-devel qt5-tools-devel
+BuildRequires: extra-cmake-modules flex bison libudev-devel qt5-declarative-devel qt5-tools-devel
 
 %description
 Solid is a device integration framework.  It provides a way of querying and
@@ -54,7 +54,10 @@ KF5 library
 %patch1 -p1
 
 %build
-%K5build
+%K5build ||:
+# hack against ALTBUG#32378
+sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexer.c
+%K5make
 
 %install
 %K5install
@@ -81,6 +84,9 @@ KF5 library
 %_K5qml/org/kde/solid/
 
 %changelog
+* Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
+- new version
+
 * Mon Jul 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt1
 - new version
 

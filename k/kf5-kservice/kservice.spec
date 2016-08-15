@@ -1,8 +1,8 @@
 %define rname kservice
 
 Name: kf5-%rname
-Version: 5.24.0
-Release: alt2
+Version: 5.25.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -18,7 +18,8 @@ Patch2: alt-initial-preference.patch
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kwindowsystem-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires: extra-cmake-modules qt5-base-devel
+BuildRequires: docbook-style-xsl flex bison
 BuildRequires: kf5-karchive-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdoctools kf5-kdoctools-devel-static
 BuildRequires: kf5-ki18n-devel kf5-kwindowsystem-devel
@@ -60,7 +61,10 @@ KF5 library
 %patch2 -p1
 
 %build
-%K5build
+%K5build ||:
+# hack against ALTBUG#32378
+sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD//src/lex.c
+%K5make
 
 %install
 %K5install
@@ -84,6 +88,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
+- new version
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt2
 - update requires
 
