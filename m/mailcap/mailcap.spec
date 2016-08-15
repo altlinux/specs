@@ -1,15 +1,17 @@
 Name: mailcap
-Version: 2.1.23
-Release: alt2
+Version: 2.1.46
+Release: alt1
 
 Summary: Associates helper applications with particular file types
-License: Public domain
+License: Public domain and MIT
 Group: System/Configuration/Networking
 
+# https://fedorahosted.org/released/mailcap/%{name}-%{version}.tar.xz
 Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
+BuildRequires: perl
 BuildArch: noarch
 
 %description
@@ -33,11 +35,24 @@ mkdir -p %buildroot{%_sysconfdir,%_man4dir}
 install -pm644 mailcap mime.types %buildroot%_sysconfdir
 install -pm644 mailcap.4 %buildroot%_man4dir
 
+%check
+make check
+
 %files
-%_sysconfdir/*
+%config(noreplace) %_sysconfdir/*
+%doc NEWS
 %_man4dir/*
 
+# TODO
+# - add nginx-mimetypes?
+
 %changelog
+* Mon Aug 15 2016 Michael Shigorin <mike@altlinux.org> 2.1.46-alt1
+- 2.1.46 (sync with F26) (closes: #32375)
+- License: s/Public Domain/& and MIT/ according to fedora spec
+- updated patch (basically dropped mailcap bits, just mime.types)
+- added %%check section
+
 * Fri Apr 22 2011 Michael Shigorin <mike@altlinux.org> 2.1.23-alt2
 - added text/x-patch to /etc/mime.types (closes: #25498)
 
