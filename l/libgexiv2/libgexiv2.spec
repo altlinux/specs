@@ -4,8 +4,8 @@
 %def_disable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.3
-Release: alt2.1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
 Group: System/Libraries
@@ -81,6 +81,8 @@ This package provides Python3 bindings for the gexiv2 library.
 %setup -n %_name-%version
 # decrease required pkg-config version
 subst 's/0\.26/0.25/' configure*
+# fix typelibdir
+subst 's/\(typelibdir[[:space:]]*=[[:space:]]*\).*/\1$(INTROSPECTION_TYPELIBDIR)/' Makefile.am
 
 %build
 %autoreconf
@@ -121,6 +123,9 @@ subst 's/0\.26/0.25/' configure*
 %endif
 
 %changelog
+* Tue Aug 16 2016 Yuri N. Sedunov <aris@altlinux.org> 0.10.4-alt1
+- 0.10.4
+
 * Mon Apr 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.10.3-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.10 (for new-style python3(*) reqs)
   and with python3-3.5 (for byte-compilation).
