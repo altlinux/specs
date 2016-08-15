@@ -5,7 +5,7 @@
 
 Name: monit
 Version: 5.19.0
-Release: alt1
+Release: alt2
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -19,6 +19,7 @@ Source3: monitrc
 Source4: %name.cnf
 Source5: README.Certificate-Creation
 Source6: monitrc.d.tar.gz
+Source7: monit.service
 Source100: monit.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -110,6 +111,7 @@ cat %SOURCE3 >>monitrc
 install -pDm755 %SOURCE2  %buildroot%_initdir/%name
 install -pDm600 monitrc %buildroot%_sysconfdir/monitrc
 install -pDm644 %SOURCE4  %buildroot%_ssldir/%name.cnf
+install -pDm644 %SOURCE7 %buildroot%_unitdir/%name.service
 
 #mkdir -p %buildroot%_sysconfdir/monitrc.d/available/
 mkdir -p %buildroot%_sysconfdir/monitrc.d/
@@ -157,6 +159,7 @@ fi
 %files
 %doc README* examples/
 %config %_initdir/%name
+%_unitdir/%name.service
 %ghost %attr(600,root,root) %config(noreplace,missingok) %_pemdir/*
 %dir %_sysconfdir/monitrc.d/templates/
 %config(noreplace) %_sysconfdir/monitrc.d/templates/*
@@ -179,6 +182,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Tue Aug 16 2016 Terechkov Evgenii <evg@altlinux.org> 5.19.0-alt2
+- add systemd unit (closes: #32374)
+
 * Thu Aug 11 2016 Michael Shigorin <mike@altlinux.org> 5.19.0-alt1
 - new version (watch file uupdate)
 
