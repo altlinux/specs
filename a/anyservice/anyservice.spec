@@ -1,6 +1,6 @@
 Name: anyservice
-Version: 0.1
-Release: alt4
+Version: 0.2
+Release: alt1
 
 Summary: Anyservice - scripts for making systemd like service from any programs
 
@@ -45,6 +45,11 @@ cp %name.sh %buildroot/%_bindir/%name
 %dir /var/log/anyservice/
 
 %changelog
+* Mon Aug 15 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
+- anyservice.sh: some refactoring
+- anyservice.sh: use .off file if exists
+- anyservice.sh: add support for EnviromentFile and Environment fields
+
 * Fri Aug 12 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt4
 - build for ALT Linux Sisyphus
 
