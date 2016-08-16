@@ -1,6 +1,6 @@
 Name: pgmodeler
 Version: 0.8.2
-Release: alt0beta
+Release: alt1
 
 Summary: PostgreSQL Database Modeler
 
@@ -11,7 +11,7 @@ Url: http://pgmodeler.com.br/
 # Source-git: https://github.com/pgmodeler/pgmodeler.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ qt5-base-devel libpq5.7-devel libxml2-devel libXext-devel postgresql9.4-devel
+BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel libpq-devel libxml2-devel libXext-devel postgresql-devel
 
 BuildPreReq: rpm-macros-qt5
 
@@ -37,6 +37,10 @@ of entity-relationship diagrams and the features that PostgreSQL implements as e
 %_libexecdir/%name/
 
 %changelog
+* Tue Aug 16 2016 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt1
+- build 0.8.2 release
+- PostgreSQL version agnostic build
+
 * Sun Dec 06 2015 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt0beta
 - initial build for ALT Linux Sisyphus
 
