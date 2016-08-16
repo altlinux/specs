@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-weather
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Access current weather conditions and forecasts
@@ -22,7 +22,7 @@ Provides:  %name-data = %version-%release
 %define gtk_ver 3.12
 %define gi_ver 1.36.0
 %define gjs_ver 1.40.0
-%define gweather_ver 3.20.1
+%define gweather_ver 3.20.2
 
 Requires: libgweather-gir >= %gweather_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -78,6 +78,9 @@ subst 's@\$(LN_S)@ln -s@' src/Makefile.am
 %doc NEWS
 
 %changelog
+* Tue Aug 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
