@@ -3,8 +3,8 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.27.1
-Release: alt2
+Version: 2.28.1
+Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
@@ -712,9 +712,6 @@ rm -f -- %buildroot/%_infodir/dir
 install -pD -m755 rpm/blkid.initramfs %buildroot/lib/mkinitrd/udev/sbin/blkid
 install -pD -m755 rpm/vol_id %buildroot/lib/mkinitrd/udev/lib/udev/vol_id
 
-mkdir -p %buildroot/lib/udev/devices
-touch %buildroot/lib/udev/devices/loop{0,1,2,3}
-
 mkdir -p %buildroot/lib/tmpfiles.d
 cat > %buildroot/lib/tmpfiles.d/losetup-loop.conf <<EOF
 b /dev/loop0 0660 root disk - 7:0
@@ -768,10 +765,6 @@ fi
 %files -n losetup
 /sbin/losetup
 %_man8dir/losetup*
-%attr(0660, root, disk) %dev(b, 7, 0) /lib/udev/devices/loop0
-%attr(0660, root, disk) %dev(b, 7, 1) /lib/udev/devices/loop1
-%attr(0660, root, disk) %dev(b, 7, 2) /lib/udev/devices/loop2
-%attr(0660, root, disk) %dev(b, 7, 3) /lib/udev/devices/loop3
 /lib/tmpfiles.d/losetup-loop.conf
 
 %files -n hwclock
@@ -919,6 +912,10 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Tue Aug 16 2016 Alexey Gladkov <legion@altlinux.ru> 2.28.1-alt1
+- New version (2.28.1).
+- Remove /lib/udev/devices/loop{0,1,2,3} (ALT#31890).
+
 * Mon Dec 07 2015 Alexey Gladkov <legion@altlinux.ru> 2.27.1-alt2
 - Add uuidd subpackage.
 
