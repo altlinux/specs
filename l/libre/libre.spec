@@ -1,6 +1,6 @@
 %define oname re
 Name: libre
-Version: 0.4.11
+Version: 0.4.17
 Release: alt1
 
 Summary: Library for real-time communications with async IO support and a complete SIP stack
@@ -47,9 +47,12 @@ rm -f %buildroot%_libdir/lib%oname.a
 %_includedir/%oname/
 %_datadir/%oname/
 #%_libdir/lib%oname.so
-#%_pkgconfigdir/*.pc
+%_pkgconfigdir/*.pc
 
 %changelog
+* Tue Aug 16 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.17-alt1
+- new version 0.4.17 (with rpmrb script)
+
 * Fri Jan 02 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.11-alt1
 - 0.4.11
 
