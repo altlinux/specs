@@ -1,6 +1,6 @@
 Name: opm-core
 Version: 2.3
-Release: alt1.1
+Release: alt2
 
 Summary: Central module of the Open PostgreSQL Monitoring
 License: BSD like
@@ -17,7 +17,7 @@ BuildArchitectures: noarch
 # optimized out: perl-Compress-Raw-Zlib perl-Digest-SHA perl-EV perl-Encode perl-IO-Socket-IP perl-Net-SSLeay perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-URI perl-common-sense perl-devel python-base python3 python3-base
 BuildRequires: perl-DBI perl-IO-Socket-SSL perl-podlators rpm-build-gir
 
-BuildPreReq: postgresql9.4-devel
+BuildPreReq: postgresql-devel
 BuildPreReq: perl-Mojolicious >= 4.50
 
 Requires: perl-DBD-Pg perl-Locale-Maketext
@@ -38,7 +38,8 @@ Open PostgreSQL Monitoring central part.
 %package postgresql
 Summary: PostgreSQL extension for OPM
 Group: Development/Python
-Requires: postgresql9.3-contrib
+#Requires: postgresql9.5-contrib
+Requires: /usr/bin/pgbench
 
 %description postgresql
 PostgreSQL extension for Open PostgreSQL Monitoring central part.
@@ -71,6 +72,9 @@ ln -s %_sysconfdir/%name/opm.conf %buildroot%_datadir/%name/ui/opm.conf
 %_datadir/pgsql/extension/opm_core*
 
 %changelog
+* Tue Aug 16 2016 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt2
+- PostgreSQL version agnostic build
+
 * Wed Mar 04 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3-alt1.1
 - Rebuilt with PostgreSQL 9.4
 
