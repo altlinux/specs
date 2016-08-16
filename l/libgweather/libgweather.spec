@@ -5,7 +5,7 @@
 %def_enable vala
 
 Name: libgweather
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A library for weather information
@@ -154,6 +154,9 @@ This package provides Vala language bindings for the %name library.
 
 
 %changelog
+* Tue Aug 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
