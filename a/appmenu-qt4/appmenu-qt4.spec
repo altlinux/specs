@@ -1,8 +1,8 @@
 
 %define rname appmenu-qt
 Name: appmenu-qt4
-Version: 0.2.6
-Release: alt1
+Version: 0.2.7
+Release: alt0.1
 
 Group: Graphical desktop/Other
 Summary: Global application menu to Qt
@@ -24,7 +24,9 @@ This package allows Qt to export its menus over DBus.
 %setup -qn %rname-%version
 
 %build
-%Kbuild
+%Kbuild \
+    -DUSE_QT4=ON \
+    #
 
 %install
 %Kinstall
@@ -34,6 +36,9 @@ This package allows Qt to export its menus over DBus.
 %_qt4dir/plugins/menubar/libappmenu-qt.so
 
 %changelog
+* Wed Aug 17 2016 Sergey V Turchin <zerg@altlinux.org> 0.2.7-alt0.1
+- use 0.2.7 20140305 snapshot
+
 * Mon Feb 11 2013 Sergey V Turchin <zerg@altlinux.org> 0.2.6-alt1
 - initial build
 
