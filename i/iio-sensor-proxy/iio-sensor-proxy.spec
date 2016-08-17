@@ -6,7 +6,7 @@
 
 Name: iio-sensor-proxy
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: IIO sensors to input device proxy
 Group: System/Kernel and hardware
@@ -67,7 +67,7 @@ Developer documentation for %name.
 %_sbindir/%name
 %_bindir/monitor-sensor
 %_unitdir/%name.service
-%_udevrulesdir/40-%name.rules
+%_udevrulesdir/80-%name.rules
 %_sysconfdir/dbus-1/system.d/net.hadess.SensorProxy.conf
 %doc README.md NEWS
 
@@ -76,6 +76,9 @@ Developer documentation for %name.
 
 
 %changelog
+* Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt2
+- updated to 1.1-28-gae82958
+
 * Mon Jul 27 2015 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - 1.1
 
