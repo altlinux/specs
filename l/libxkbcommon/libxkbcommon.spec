@@ -1,16 +1,15 @@
 %def_enable x11
 
 Name: libxkbcommon
-Version: 0.5.0
+Version: 0.6.1
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
 Group: System/Libraries
 License: MIT
-Url: http://www.x.org
+Url: http://www.xkbcommon.org
 
-Source0: http://xkbcommon.org/download/%name-%version.tar.xz
-Source1: make-git-snapshot.sh
+Source: %url/download/%name-%version.tar.xz
 
 BuildRequires: xorg-util-macros bison flex bison
 BuildRequires: xorg-bigreqsproto-devel xorg-compositeproto-devel xorg-damageproto-devel
@@ -73,7 +72,7 @@ X.Org X11 XKB keymap creation library development package
 %makeinstall_std
 
 %files
-%doc COPYING
+%doc LICENSE NEWS README* TODO
 %_libdir/libxkbcommon.so.*
 
 %files devel
@@ -98,6 +97,9 @@ X.Org X11 XKB keymap creation library development package
 %endif
 
 %changelog
+* Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Tue Nov 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
