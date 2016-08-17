@@ -3,8 +3,8 @@
 %def_disable package_all
 
 Name: libglvnd
-Version: 0.1.0
-Release: alt5
+Version: 0.1.1
+Release: alt1
 
 Group: System/Libraries
 Summary: OpenGL vendor-neutral dispatch layer
@@ -151,6 +151,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLX.so.0 %_libdir/
 %_pkgconfigdir/libglvnd.pc
 
 %changelog
+* Wed Aug 17 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
+- new version
+
 * Thu Jul 21 2016 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt5
 - move libGLdispatch and libGLX to _libdir/X11
 
