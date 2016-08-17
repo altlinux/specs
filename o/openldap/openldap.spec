@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.42
-Release: alt3
+Release: alt4
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -420,10 +420,7 @@ popd
 %endif
 
 %check
-# TODO!!!
-if [ %release != alt2.1.1 ]; then
 %make_build test
-fi
 
 %install
 
@@ -591,6 +588,10 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %files -n libldap
 /%_lib/*.so.*
 %_libdir/*.so.*
+# libldap/client config
+%_man5dir/ldap.conf.*
+# the common format
+%_man5dir/ldif.*
 
 %files -n libldap-devel
 %_libdir/*.so
@@ -642,6 +643,11 @@ rm -f /var/lib/ldap/%_lib/*.so*
 
 %_man5dir/*
 %_man8dir/*
+# Not server-related file formats:
+# libldap/client config
+%exclude %_man5dir/ldap.conf.*
+# the common format
+%exclude %_man5dir/ldif.*
 
 %doc %_docdir/%_bname-servers-%version
 #attr(0775,root,ldap) %dir %_logdir/ldap
@@ -699,6 +705,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Aug 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.42-alt4
+- general libldap manpages moved out of %name-servers (ALT#32385).
+
 * Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.42-alt3
 - ssl keys generation added to service file
 
@@ -718,7 +727,6 @@ rm -f /var/lib/ldap/%_lib/*.so*
 
 * Tue Dec 09 2014 Igor Vlasenko <viy@altlinux.ru> 2.4.32-alt2.1.1
 - rebuild with new perl 5.20.1
-- disabled tests just for this release (TODO: clean up %%check section!)
 
 * Thu Oct 31 2013 Sergey Y. Afonin <asy@altlinux.ru> 2.4.32-alt2.1
 - NMU: rebuilt with cyrus-sasl 2.1.26 (ALT #29485)
