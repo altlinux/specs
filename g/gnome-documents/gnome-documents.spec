@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define xdg_name org.gnome.Documents
 %define xdg_name1 org.gnome.Books
@@ -7,8 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A document manager application for GNOME
 Group: Office
@@ -166,6 +166,9 @@ GObject introspection devel data for the %name library.
 %_datadir/appdata/%xdg_name1.appdata.xml
 
 %changelog
+* Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
+- 3.20.1
+
 * Tue Jul 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
 - updated to 3.20.0-11-gb2c58e7
 - updated reqs
