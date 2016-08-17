@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 
 Name: palemoon
 Version: 26.4.0
-Release: alt2.0
+Release: alt2.1
 License: MPL/GPL/LGPL
 Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
@@ -144,7 +144,6 @@ These helper macros provide possibility to rebuild
 %patch21 -p1
 %patch20 -p1
 %patch23 -p1
-
 
 cd %sname
 
@@ -395,6 +394,9 @@ done
 %exclude %_datadir/idl/*
 
 %changelog
+* Wed Aug 17 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt2.1
+- Update Changelog
+
 * Wed Aug 17 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2:26.4.0-alt2.0
 - Version 26.4.0 Release
 
