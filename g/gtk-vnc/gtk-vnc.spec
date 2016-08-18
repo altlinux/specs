@@ -1,4 +1,4 @@
-%define ver_major 0.5
+%define ver_major 0.6
 
 %def_disable static
 %def_with python
@@ -9,8 +9,8 @@
 %def_disable vapi
 
 Name: gtk-vnc
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: VNC viewer widget
 Group: System/Libraries
@@ -26,7 +26,7 @@ Requires: libgtkvnc = %version-%release
 BuildRequires: intltool gnome-common
 # pod2man
 BuildRequires: perl-podlators
-BuildRequires: libgnutls-devel libgcrypt-devel libcairo-gobject-devel libsasl2-devel
+BuildRequires: libgnutls-devel >= 2.2.0 libgcrypt-devel libcairo-gobject-devel libsasl2-devel
 BuildRequires: libpulseaudio-devel zlib-devel perl-Text-CSV
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_with_python:BuildRequires: python-module-pygobject-devel}
@@ -215,6 +215,7 @@ pushd %name-%version
 	%{subst_with python} \
 	--with-libview \
 	%{subst_enable introspection} \
+	--with-gtk=2.0 \
 	--disable-vala
 
 %make_build
@@ -229,20 +230,18 @@ pushd gtk3-build
 	--with-libview \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
-	--with-gtk=3.0 \
 	--program-suffix=-3
-
 %make_build
 popd
 
 %install
 pushd %name-%version
-%make DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang %name --output %_builddir/%name.lang
 popd
 
 pushd gtk3-build
-%make DESTDIR=%buildroot install
+%makeinstall_std
 popd
 
 %files -f %_builddir/%name.lang
@@ -323,6 +322,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Wed Apr 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt2
 - rebuilt against libgnutls.so.30
 
