@@ -6,7 +6,7 @@
 #endif
 
 Name: wine-gecko
-Version: 2.44
+Version: 2.47
 Release: alt1
 
 Summary: Custom version of Mozilla's Gecko Layout Engine for Wine
@@ -44,6 +44,9 @@ install -m 644 %SOURCE0 %buildroot%geckodir
 %geckodir/wine_gecko-%version-%curarch.msi
 
 %changelog
+* Thu Aug 18 2016 Vitaly Lipatov <lav@altlinux.ru> 2.47-alt1
+- new version 2.47 (use with wine since 1.9.13)
+
 * Wed Feb 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.44-alt1
 - new version 2.44 (use with wine since 1.9.3)
 

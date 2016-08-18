@@ -1,8 +1,8 @@
-%define gecko_version 2.44
+%define gecko_version 2.47
 %define mono_version 4.6.3
 
 Name: wine-vanilla
-Version: 1.9.12
+Version: 1.9.19
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -87,6 +87,7 @@ Requires: desktop-file-utils
 
 Requires: lib%name = %version-%release
 Conflicts: wine
+Provides: wine = %version-%release
 
 Provides: winetricks
 Requires: cabextract
@@ -175,6 +176,7 @@ Requires: lib%name = %version-%release
 Obsoletes: wine-devel
 Provides: wine-devel
 Conflicts: libwine-devel
+Provides: libwine-devel = %version-%release
 
 %description -n lib%name-devel
 lib%name-devel contains the header files and some utilities needed to
@@ -190,7 +192,6 @@ Summary: Static libraries for lib%name
 Group: Development/C
 Requires: lib%name = %version-%release
 Conflicts: libwine-devel-static
-Conflicts: libwine-devel
 
 %description -n lib%name-devel-static
 lib%name-devel-static contains the static libraries needed to
@@ -222,8 +223,10 @@ develop programs which make use of Wine.
 %makeinstall_std
 install -m755 %SOURCE1 %buildroot%_bindir/winetricks
 # unpack desktop files
-cd %buildroot%_desktopdir
+cd %buildroot%_desktopdir/
 tar xvf %SOURCE2
+mkdir -p %buildroot%_datadir/desktop-directories/
+mv *.directory %buildroot%_datadir/desktop-directories/
 
 # Do not pack non english man pages yet
 rm -rf %buildroot%_mandir/*.UTF-8
@@ -269,7 +272,8 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 #%_initdir/wine
 #%_initdir/wine.outformat
-%_desktopdir/*
+%_desktopdir/*.desktop
+%_datadir/desktop-directories/*.directory
 
 %if_without build64
 %_man1dir/wine.*
@@ -375,6 +379,22 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.19-alt1
+- new version 1.9.19
+
+* Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.18-alt1
+- new version 1.9.18
+
+* Fri Sep 02 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.17-alt2
+- add wine and libwine-devel provides
+
+* Sun Aug 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.17-alt1
+- new version 1.9.17
+
+* Thu Aug 18 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.16-alt1
+- new version 1.9.16 (requires wine-gecko = 2.47 since 1.9.13)
+- update winetricks to 20160724
+
 * Thu Jun 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.12-alt1
 - new version 1.9.12
 
