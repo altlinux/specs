@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.25.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-simplify-kde4home.patch
 
 # Automatically added by buildreq on Thu Dec 25 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools ruby ruby-stdlibs shared-mime-info
@@ -50,6 +51,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -78,6 +80,9 @@ KF5 library
 %_K5lib/libKF5CoreAddons.so.*
 
 %changelog
+* Thu Aug 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt2
+- don't try ~/.kde as kde4 home dir
+
 * Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
 - new version
 
