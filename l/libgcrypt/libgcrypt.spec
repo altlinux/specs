@@ -6,7 +6,7 @@
 %define soversion 20
 
 Name: libgcrypt
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 %define soname %{name}%{soversion}
@@ -167,6 +167,9 @@ install -m 0644 doc/*.info %buildroot/%_infodir/
 %endif
 
 %changelog
+* Thu Aug 18 2016 Sergey V Turchin <zerg@altlinux.org> 1.6.6-alt1
+- new version
+
 * Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 1.6.5-alt1
 - new version
 - security fixes: CVE-2015-7511
