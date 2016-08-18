@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.5.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -58,7 +58,7 @@ BuildArch: noarch
 
 %description
 Python libraries implementing the Automatic Certificate Management Environment
-(ACME) protocol. It is used by the Let's Encrypt project.
+(ACME) protocol. It is used by the Certbot Project.
 
 #%package -n python-module-acme
 #Group: Development/Python
@@ -98,7 +98,7 @@ Summary: %summary
 
 %description -n python3-module-acme
 Python 3 library for use of the Automatic Certificate Management Environment
-protocol as defined by the IETF. It's used by the Let's Encrypt project.
+protocol as defined by the IETF. It's used by the Certbot Project.
 %endif
 
 %package doc
@@ -130,20 +130,6 @@ Documentation for the ACME python libraries
 %endif
 
 %python_install
-# man page is pretty useless but api pages are decent
-# Issue opened upstream for improving man page
-# Need to cd as parent makefile tries to build libraries
-#(  cd docs && make  html )
-# Clean up stuff we don't need for docs
-#rm -rf docs/_build/html/{.buildinfo,man,_sources}
-# Unbundle fonts already on system
-# Lato ttf is in texlive but that adds a lot of dependencies (30+MB) for just a font in documentation
-# and lato is not in it's own -fonts package, only texlive
-#rm -f docs/_build/html/_static/fonts/fontawesome*
-#ln -sf %_datadir/fonts/fontawesome/fontawesome-webfont.eot docs/_build/html/_static/fonts/fontawesome-webfont.eot
-#ln -sf %_datadir/fonts/fontawesome/fontawesome-webfont.svg docs/_build/html/_static/fonts/fontawesome-webfont.svg
-#ln -sf %_datadir/fonts/fontawesome/fontawesome-webfont.ttf docs/_build/html/_static/fonts/fontawesome-webfont.ttf
-#ln -sf %_datadir/fonts/fontawesome/fontawesome-webfont.woff docs/_build/html/_static/fonts/fontawesome-webfont.woff
 
 %check
 #__python setup.py test
@@ -172,6 +158,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Thu Aug 18 2016 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt1
+- new version 0.8.1
+
 * Thu Apr 21 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
 - new version 0.5.0 (with rpmrb script)
 
