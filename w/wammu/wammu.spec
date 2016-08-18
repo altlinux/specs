@@ -1,5 +1,5 @@
 Name: wammu
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: Mobile phone manager
@@ -49,6 +49,9 @@ subst '/man1/ D' INSTALLED_FILES
 %_mandir/*/man1/*
 
 %changelog
+* Thu Aug 18 2016 Michael Shigorin <mike@altlinux.org> 0.42-alt1
+- new version (watch file uupdate)
+
 * Tue May 24 2016 Michael Shigorin <mike@altlinux.org> 0.41-alt1
 - new version (watch file uupdate)
 
