@@ -1,5 +1,5 @@
 Name: lsof
-Version: 4.84
+Version: 4.89
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -10,7 +10,9 @@ Group: Monitoring
 
 URL: ftp://lsof.itap.purdue.edu/pub/tools/unix/lsof
 # This is REPACKAGED upstream source, read README.lsof.maintainer!
-Source: lsof-%version.tar.bz2
+#Source: lsof-%version.tar.bz2
+# Repackaged file is picked from http://pkgs.fedoraproject.org/repo/pkgs/lsof
+Source: %name-%version.tar.xz
 Source1: README.lsof.maintainer
 
 %description
@@ -37,6 +39,12 @@ install -pD -m644 lsof.8 %buildroot%_man8dir/lsof.8
 %doc 00*
 
 %changelog
+* Thu Aug 18 2016 Fr. Br. George <george@altlinux.ru> 4.89-alt1
+- Update, taking tarball from RH
+
+* Thu Aug 18 2016 Fr. Br. George <george@altlinux.ru> 4.88-alt1
+- Update, taking tarball from RH
+
 * Mon Oct 18 2010 Victor Forsiuk <force@altlinux.org> 4.84-alt1
 - 4.84
 
