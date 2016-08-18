@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	4.6
-%define kernel_sublevel .7
+%define kernel_base_version	4.7
+%define kernel_sublevel .1
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -546,14 +546,14 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Aug 18 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.1-alt1
+- v4.7.1
+
 * Wed Aug 17 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.7-alt1
 - v4.6.7
 
-* Mon Aug 15 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.6-alt1
-- v4.6.6
-
-* Thu Jul 28 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.5-alt1
-- v4.6.5
+* Mon Jul 25 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.7.0-alt1
+- v4.7
 
 * Mon Jul 11 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.4-alt1
 - v4.6.4
@@ -565,7 +565,7 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 - 4.6.2
 
 * Wed Jun 08 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.5.7-alt1
-- v4.7
+- v4.5.7
 
 * Thu May 19 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:4.6.0-alt1
 - 4.6.0
