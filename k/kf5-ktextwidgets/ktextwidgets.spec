@@ -1,7 +1,7 @@
 %define rname ktextwidgets
 
 Name: kf5-%rname
-Version: 5.24.0
+Version: 5.25.0
 Release: alt1
 %K5init altplace
 
@@ -37,6 +37,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kf5-sonnet-devel kf5-ki18n-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -75,6 +76,9 @@ KF5 library
 %_K5srvtyp/*desktop
 
 %changelog
+* Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
+- new version
+
 * Mon Jul 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt1
 - new version
 

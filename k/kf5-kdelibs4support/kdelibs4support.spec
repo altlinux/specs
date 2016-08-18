@@ -1,8 +1,8 @@
 %define rname kdelibs4support
 
 Name: kf5-%rname
-Version: 5.24.0
-Release: alt2
+Version: 5.25.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -30,6 +30,7 @@ BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-dev
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-kded kf5-kded-devel
+BuildRequires: kf5-kemoticons-devel
 
 %description
 This framework provides code and utilities to ease the transition from
@@ -53,7 +54,8 @@ Requires: qt5-base-devel
 Requires: kf5-karchive-devel kf5-kauth-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
 Requires: kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kguiaddons-devel
 Requires: kf5-kiconthemes-devel kf5-knotifications-devel kf5-kparts-devel kf5-ktextwidgets-devel
-Requires: kf5-kunitconversion-devel kf5-kwindowsystem-devel
+Requires: kf5-kunitconversion-devel kf5-kwindowsystem-devel kf5-kemoticons-devel kf5-kitemmodels-devel
+Requires: kf5-kinit-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -123,6 +125,9 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
+- new version
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt2
 - update requires
 

@@ -1,8 +1,8 @@
 %define rname kio
 
 Name: kf5-%rname
-Version: 5.24.0
-Release: alt2
+Version: 5.25.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -141,6 +141,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
+- new version
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt2
 - update requires
 
