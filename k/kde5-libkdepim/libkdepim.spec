@@ -4,7 +4,7 @@
 %define libkf5libkdepim libkf5libkdepim%sover
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init
 
@@ -21,7 +21,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-quick1-devel qt5-tools-devel-static
 BuildRequires: libldap-devel libsasl2-devel
-BuildRequires: kde5-akonadi-search-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kldap-devel kde5-kmime-devel kde5-pimlibs-devel
+BuildRequires: kde5-akonadi-search-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kldap-devel kde5-kmime-devel
+BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel-static kf5-kemoticons-devel
@@ -90,6 +91,12 @@ KF5 library
 %_K5srv/kcmldap.desktop
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 

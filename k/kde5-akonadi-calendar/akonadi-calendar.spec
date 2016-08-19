@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init altplace
 
@@ -19,7 +19,8 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: boost-devel-headers libsasl2-devel
 BuildRequires: kde5-akonadi-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
-BuildRequires: kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-pimlibs-devel
+BuildRequires: kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel
+BuildRequires: kde5-akonadi-mime-devel kde5-akonadi-contacts-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static
@@ -79,6 +80,12 @@ KF5 library
 %_K5lib/libKF5AkonadiCalendar.so.*
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 

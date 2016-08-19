@@ -8,7 +8,7 @@
 %define libkf5sendlater libkf5sendlater%sover
 
 Name: kde5-pim-apps-libs
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init
 
@@ -27,7 +27,9 @@ BuildRequires: extra-cmake-modules qt5-tools-devel-static
 BuildRequires: grantlee5-devel
 BuildRequires: libgpgme-devel libsasl2-devel
 BuildRequires: kde5-gpgmepp-devel kde5-grantleetheme-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kimap-devel kde5-kmime-devel
-BuildRequires: kde5-kpimtextedit-devel kde5-libkleo-devel kde5-pimcommon-devel kde5-pimlibs-devel kf5-karchive-devel kf5-kauth-devel
+BuildRequires: kde5-kpimtextedit-devel kde5-libkleo-devel kde5-pimcommon-devel
+BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
+BuildRequires: kf5-karchive-devel kf5-kauth-devel
 BuildRequires: kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
 BuildRequires: kf5-kdewebkit-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
@@ -103,7 +105,7 @@ KF5 library
 %files common -f %name.lang
 #%doc COPYING*
 %config(noreplace) %_K5xdgconf/*.categories
-%_K5data/composereditor/
+#%_K5data/composereditor/
 
 %files devel
 #%_K5inc/kdepim-apps-libs_version.h
@@ -112,9 +114,9 @@ KF5 library
 %_K5lib/cmake/KF*/
 %_K5archdata/mkspecs/modules/qt_*.pri
 
-%files -n %libkf5composereditorng
-%_K5lib/libKF5ComposerEditorNG.so.%sover
-%_K5lib/libKF5ComposerEditorNG.so.*
+#%files -n %libkf5composereditorng
+#%_K5lib/libKF5ComposerEditorNG.so.%sover
+#%_K5lib/libKF5ComposerEditorNG.so.*
 %files -n %libkf5followupreminder
 %_K5lib/libKF5FollowupReminder.so.%sover
 %_K5lib/libKF5FollowupReminder.so.*
@@ -130,6 +132,12 @@ KF5 library
 
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
