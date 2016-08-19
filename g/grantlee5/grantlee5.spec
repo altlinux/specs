@@ -4,12 +4,13 @@
 %define libtextdocument libgrantlee_textdocument%sover
 
 Name: grantlee5
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Group: System/Libraries
 Summary: Qt string template engine based on the Django template system
-Url: http://www.gitorious.org/grantlee/pages/Home
+#Url: http://www.gitorious.org/grantlee/pages/Home
+Url: https://github.com/steveire/grantlee
 License: LGPLv2+
 
 Source: %name-%version.tar
@@ -96,7 +97,7 @@ mkdir -p %buildroot%_docdir/HTML/en/grantlee5-apidocs
 cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 
 %files common
-%doc AUTHORS CHANGELOG README
+%doc AUTHORS CHANGELOG README*
 %dir %_libdir/grantlee/
 %dir %_libdir/grantlee/*/
 
@@ -119,6 +120,9 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 %doc %_docdir/HTML/en/grantlee5-apidocs/
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
+- new version
+
 * Fri Aug 07 2015 Sergey V Turchin <zerg@altlinux.org> 5.0.0-alt1
 - new version
 - build with Qt5
