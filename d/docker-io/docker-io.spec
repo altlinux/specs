@@ -10,7 +10,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       %{repo}-io
-Version:    1.12.0
+Version:    1.12.1
 Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
@@ -178,6 +178,9 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Fri Aug 19 2016 Vladimir Didenko <cow@altlinux.org> 1.12.1-alt1
+- New version
+
 * Tue Aug 2 2016 Vladimir Didenko <cow@altlinux.org> 1.12.0-alt1
 - New version
 
