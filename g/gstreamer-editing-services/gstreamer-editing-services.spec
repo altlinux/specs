@@ -6,7 +6,7 @@
 %def_disable python3
 
 Name: gstreamer-editing-services
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -29,6 +29,7 @@ AutoReqProv: nopython
 %endif
 
 BuildRequires: gcc-c++ flex gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
+BuildRequires: gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver-devel
 BuildRequires: libgst-validate-devel libxml2-devel
 BuildRequires: gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: gtk-doc
@@ -129,6 +130,9 @@ library.
 %_datadir/gtk-doc/html/%_name-%api_ver/
 
 %changelog
+* Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
+- 1.8.3
+
 * Thu Jun 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
