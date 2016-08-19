@@ -2,7 +2,7 @@
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: Little cms color engine, version 2
@@ -93,6 +93,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.8-alt1
+- 2.8
+
 * Fri Apr 10 2015 Yuri N. Sedunov <aris@altlinux.org> 2.7-alt1
 - 2.7
 
