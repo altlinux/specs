@@ -5,9 +5,10 @@
 %def_enable dconf
 %def_disable gconf
 %def_enable wayland
+%def_disable emoji_dict
 
 Name: ibus
-Version: 1.5.13
+Version: 1.5.14
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -53,6 +54,8 @@ BuildRequires: libGConf-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libxkbcommon-devel}
 # gsettings-schema-convert
 BuildRequires: GConf
+# since 1.5.14
+%{?_enable_emoji_dict:BuildRequires: libjson-glib-devel nodejs-emojione-json}
 
 %define _xinputconf %_sysconfdir/X11/xinit/xinput.d/ibus.conf
 
@@ -158,7 +161,8 @@ override some functions in GObject-Introspection.
     %{?_enable_gconf:--disable-schemas-install} \
     %{subst_enable wayland} \
     --enable-surrounding-text \
-    --enable-introspection
+    --enable-introspection \
+    %{?_disable_emoji_dict:--disable-emoji-dict}
 %make_build
 
 %install
@@ -209,6 +213,7 @@ fi
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.freedesktop.%name.gschema.xml
 %endif
+%_datadir/dbus-1/services/org.freedesktop.IBus.service
 
 %config %_xinputconf
 %_man1dir/%name-daemon.1.*
@@ -253,6 +258,9 @@ fi
 %python_sitelibdir/gi/overrides/IBus.py*
 
 %changelog
+* Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.14-alt1
+- 1.5.14
+
 * Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1.5.13-alt1
 - 1.5.13
 
