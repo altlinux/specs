@@ -17,7 +17,7 @@
 %def_disable webkit2
 
 Name: libwebkitgtk3
-Version: 2.4.10
+Version: 2.4.11
 Release: alt1
 
 Summary: Web browser engine
@@ -333,6 +333,9 @@ chrpath --delete %buildroot%_libexecdir/%_name/MiniBrowser
 
 
 %changelog
+* Fri Aug 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.11-alt1
+- 2.4.11
+
 * Mon Mar 14 2016 Yuri N. Sedunov <aris@altlinux.org> 2.4.10-alt1
 - 2.4.10 (CVE-2015-1120, CVE-2015-1076, CVE-2015-1071, CVE-2015-1081,
   CVE-2015-1122, CVE-2015-1155, CVE-2014-1748, CVE-2015-3752,
