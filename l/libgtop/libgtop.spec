@@ -7,8 +7,8 @@
 %def_enable introspection
 
 Name: libgtop
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: LibGTop library
 License: GPLv2+
@@ -26,7 +26,6 @@ Patch4: %name-2.9.90-alt-examples_makefile.patch
 %define glib_ver 2.26.0
 
 BuildPreReq: rpm-build-gnome
-BuildPreReq: intltool >= 0.35
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: gtk-doc >= 1.4
 BuildRequires: makeinfo
@@ -120,16 +119,15 @@ rm -rf doc/*.info
 %configure \
 	%{subst_enable static} \
 	--enable-gtk-doc \
-	%{?_with_examples:--with-libgtop-examples} \
-
+	%{subst_with examples}
 %make_build
 
 %install
 %makeinstall_std
 
-%find_lang %name-%api_ver
+%find_lang %name
 
-%files -f %name-%api_ver.lang
+%files -f %name.lang
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -162,6 +160,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Sat Aug 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.34.1-alt1
+- 2.34.1
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1.1
 - 2.34.0
 
