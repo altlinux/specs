@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -7,8 +7,8 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -240,6 +240,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Sat Aug 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
+- 3.20.4
+
 * Wed Jun 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt2
 - updated to 3.20.3-1-g71c26cc (fixed BGO #766353)
 
