@@ -5,12 +5,13 @@
 Name: asterisk11cert
 Summary: Open source PBX
 Version: 11.6.cert11
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 %if_with corosync
 BuildRequires: libcorosync2-devel
 %endif
+BuildRequires: libspeexdsp-devel
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel
 BuildRequires: libtiff-devel
 BuildRequires: libiksemel-devel
@@ -26,7 +27,7 @@ BuildPreReq: libical-devel
 BuildPreReq: libbluez-devel
 BuildPreReq: libcap-devel
 BuildPreReq: libneon-devel
-BuildPreReq: libsrtp
+BuildPreReq: libsrtp-devel
 BuildPreReq: libnl-devel libsensors3-devel
 %if_with hoard
 BuildPreReq: libhoard-devel
@@ -93,6 +94,7 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %if_with hoard
 %endif
 %set_autoconf_version 2.60
+%set_gcc_version 4.9
 %define modules_dir	%_libdir/asterisk/%version/modules
 %define agi_dir     /usr/lib/asterisk/agi-bin
 %define spandsp		0.0.5-alt3.pre4
@@ -275,6 +277,7 @@ Requires: %name-res_crypto = %version-%release
 SIP channel module for Asterisk
 
 
+%if_with chan_vpb
 %package chan_vpb
 Summary: Voicetronix API channel driver
 Group: %group
@@ -282,6 +285,7 @@ Requires: %name = %version-%release
 
 %description chan_vpb
 Voicetronix API channel driver
+%endif
 
 %package codec_gsm
 Summary: Asterisk GSM 6.10 codec support
@@ -377,7 +381,9 @@ Requires: %name-cdr_sqlite   = %version-%release
 Requires: %name-sqlite3  = %version-%release
 Requires: %name-cdr_tds      = %version-%release
 Requires: %name-chan_console = %version-%release
+%if_with chan_vpb
 Requires: %name-chan_vpb     = %version-%release
+%endif
 Requires: %name-jack         = %version-%release
 Requires: %name-ldap         = %version-%release
 Requires: %name-chan_alsa    = %version-%release
@@ -1155,8 +1161,10 @@ ln -sf libasteriskssl%version.so.1 %buildroot%_libdir/libasteriskssl%version.so
 %astsample sip_notify
 %astsample udptl
 
+%if_with chan_vpb
 %files chan_vpb
 %astmodule chan_vpb
+%endif
 
 %files codec_gsm
 %astmodule format_gsm
@@ -1358,6 +1366,10 @@ ln -sf libasteriskssl%version.so.1 %buildroot%_libdir/libasteriskssl%version.so
 %_libdir/libasteriskssl%version.so.1
 
 %changelog
+* Sun Aug 21 2016 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert11-alt2
+- fix build
+- disable chan_vpb
+
 * Sat Apr 11 2015 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert11-alt1
 - new version 11.6-cert11
 
