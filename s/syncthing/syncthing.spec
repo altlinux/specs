@@ -1,5 +1,5 @@
 Name: syncthing
-Version: 0.13.10
+Version: 0.14.4
 Release: alt1
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
@@ -39,8 +39,7 @@ ls | sed '/^build$/d' | xargs cp -at build/src/github.com/%name/%name
 cp -a vendor build/vendor/src
 
 pushd build/src/github.com/%name/%name/
-go run build.go install all \
-  -version v%version -no-upgrade
+go run build.go -version v%version -no-upgrade
 popd
 
 %install
@@ -65,6 +64,10 @@ install -Dm 0644 etc/linux-systemd/user/%name.service           \
 %_libexecdir/systemd/user/%name.service
 
 %changelog
+* Sun Aug 21 2016 Denis Smirnov <mithraen@altlinux.ru> 0.14.4-alt1
+- new version 0.14.4
+- disable auto update
+
 * Mon Jul 18 2016 Anton Midyukov <antohami@altlinux.org> 0.13.10-alt1
 - new version 0.13.10
 
