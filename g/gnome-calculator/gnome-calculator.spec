@@ -1,16 +1,21 @@
+%def_enable snapshot
 %define ver_major 3.20
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: GTK+3 based desktop calculator
 License: %gpl2plus
 Group: Sciences/Mathematics
 Url: https://wiki.gnome.org/Apps/Calculator
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Obsoletes: gcalctool <= 6.6.2
 Provides: gcalctool = 6.6.2
@@ -34,8 +39,10 @@ A single graphics driver for GTK included with this package.
 
 %prep
 %setup
+#find ./ -name "*.stamp" -delete
 
 %build
+%autoreconf
 %configure --disable-static \
     --disable-schemas-compile
 %make_build
@@ -61,6 +68,9 @@ A single graphics driver for GTK included with this package.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Sun Aug 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt2
+- use git snapshot with some *.ui that were missed in tarball
+
 * Mon Aug 01 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 
