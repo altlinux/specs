@@ -26,7 +26,7 @@
 %define init_script systemd
 
 Name: lxc
-Version: 2.0.0
+Version: 2.0.4
 Release: alt1
 Packager: Denis Pynkin <dans@altlinux.org>
 
@@ -152,7 +152,6 @@ mkdir -p %buildroot%_cachedir/%name
 %{_libexecdir}/%{name}/lxc-apparmor-load
 %{_libexecdir}/%{name}/lxc-monitord
 %attr(555,root,root) %{_libexecdir}/%{name}/lxc-containers
-%attr(555,root,root) %{_libexecdir}/%{name}/lxc-devsetup
 %attr(555,root,root) %{_libexecdir}/%{name}/lxc-net
 %attr(4111,root,root) %{_libexecdir}/%{name}/lxc-user-nic
 %{_libexecdir}/%{name}/hooks/*
@@ -170,6 +169,10 @@ mkdir -p %buildroot%_cachedir/%name
 
 
 %changelog
+* Mon Aug 22 2016 Denis Pynkin <dans@altlinux.org> 2.0.4-alt1
+- Bugfix release
+- Fixes #32391
+
 * Mon Apr 11 2016 Denis Pynkin <dans@altlinux.org> 2.0.0-alt1
 - Release version
 
