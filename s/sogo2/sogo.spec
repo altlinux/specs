@@ -3,7 +3,7 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo2
-Version:      2.3.13
+Version:      2.3.14
 Release:      alt1
 Epoch:        1
 
@@ -421,6 +421,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Mon Aug 22 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.14-alt1
+- New version
+
 * Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.3.13-alt1
 - New version
 - Add more requirements to task-sogo
