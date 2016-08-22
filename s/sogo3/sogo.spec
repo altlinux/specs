@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
-Version:      3.1.4
-Release:      alt2
+Version:      3.1.5
+Release:      alt1.git
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -393,6 +393,14 @@ fi
 %preun_service sogo
 
 %changelog
+* Mon Aug 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.5-alt1.git
+- Latest fixes:
+  + [eas] properly generate the BusyStatus for normal events
+  + [web] restored functionality to save unknown recipient emails to
+    address book on send
+  + [core] strip protocol value from proxyAddresses attribute (#3182)
+- 3.1.5
+
 * Tue Jul 19 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.4-alt2
 - Fix the unrecognized selector exception in the fresh pieces of the EAS
   implementation (by writing the queries analoguously to the other ones).
