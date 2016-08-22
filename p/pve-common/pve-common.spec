@@ -1,6 +1,6 @@
 Name: pve-common
 Summary: Proxmox VE base library
-Version: 4.0.71
+Version: 4.0.72
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -40,6 +40,9 @@ cd src
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.72-alt1
+- 4.0-72
+
 * Fri Jul 15 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.71-alt1
 - 4.0-71
 

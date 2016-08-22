@@ -1,7 +1,7 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 1.1.5
+Version: 2.0.4
 Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 Requires: cgmanager lxcfs
-Conflicts: %rname > %version %rname-libs > %version
+Conflicts: %rname %rname-libs
 
 Source: %rname.tgz
 Patch0: fix-systemd-service-depends.patch
@@ -19,14 +19,9 @@ Patch1: remove-systemd-delegate-flag.patch
 Patch2: include-linux-sched.patch
 Patch3: use-var-lib-vz-as-default-dir.patch
 Patch4: run-lxcnetaddbr.patch
-Patch5: 0001-added-stop-hook-entries.patch
-Patch6: 0002-run-stop-hook-between-STOPPING-and-STOPPED-states.patch
-Patch7: 0003-pass-namespace-handles-to-the-stop-hook.patch
-Patch8: 0004-document-the-stop-hook.patch
-Patch9: 0005-added-the-unmount-namespace-hook.patch
-Patch10: 0006-hooks-put-binary-hooks-in-usr-lib-lxc-hooks.patch
-Patch11: delete_network_show_error.diff
-Patch13: 0002-Added-lxc.monitor.unshare.patch
+Patch5: 0001-tools-move-rcfile-to-the-common-options-list.patch
+Patch6: 0002-tools-set-configfile-after-load_config.patch
+Patch7: 0003-doc-add-rcfile-to-common-opts.patch
 
 Patch20: lxc-alt.patch
 
@@ -52,11 +47,6 @@ an applications or a system.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch13 -p1
 
 %patch20 -p1
 
@@ -100,6 +90,9 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0.4-alt1
+- 2.0.4
+
 * Fri Jun 24 2016 Valery Inozemtsev <shrek@altlinux.ru> 1.1.5-alt1
 - initial release
 
