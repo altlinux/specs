@@ -2,7 +2,7 @@
 
 Summary: Tools for Linux kernel block layer cache
 Name: bcache-tools
-Version: 0.9
+Version: 1.0.8
 Epoch: 1
 Release: alt1
 License: GPLv2
@@ -65,6 +65,10 @@ install -p  -m 755 bcache-status %buildroot%_sbindir/bcache-status
 %_man8dir/bcache-status.8.*
 
 %changelog
+* Mon Aug 22 2016 Alexei Takaseev <taf@altlinux.org> 1:1.0.8-alt1
+- 1.0.8
+- fix build with gcc5
+
 * Thu Jan 23 2014 Terechkov Evgenii <evg@altlinux.org> 1:0.9-alt1
 - 0.9
 
