@@ -1,9 +1,9 @@
 %define _name python-efl
-%define efl_ver 1.17.0
+%define efl_ver 1.18.0
 
 Name: python-module-efl
-Version: 1.17.0
-Release: alt2
+Version: 1.18.0
+Release: alt1
 
 Summary: Python bindings for EFL libraries
 Group: Development/Python
@@ -94,6 +94,9 @@ popd
 %exclude %python3_sitelibdir/efl/utils/setup.py*
 
 %changelog
+* Mon Aug 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Thu Apr 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt2
 - exclude utils/setup.py that can be used only by other apps
   in the setup.py script (ALT #32010)
