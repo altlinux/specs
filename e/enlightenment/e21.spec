@@ -1,7 +1,7 @@
-%define ver_major 0.20
+%define ver_major 0.21
 %define beta %nil
 # since 0.20.4 requires ecore_wl2 available in efl >= 1.17
-%define efl_ver_major 1.17
+%define efl_ver_major 1.18
 %define snapshot 2015-10-28
 %define cvs_date 5469c3b6
 %undefine cvs_date
@@ -19,7 +19,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.10
+Version: %ver_major.2
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -65,7 +65,6 @@ Obsoletes: e17-default e18-default
 Provides: e17-default = %EVR
 Provides: e18-default = %EVR
 
-Requires: evas_generic_loaders >= %efl_ver_major emotion_generic_players >= %efl_ver_major
 # default terminal
 Requires: terminology
 #Requires: empower
@@ -204,11 +203,17 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 
 %files devel
 %_includedir/%name/
-%_libdir/pkgconfig/%name.pc
-%_libdir/pkgconfig/everything.pc
+%_pkgconfigdir/%name.pc
+%_pkgconfigdir/everything.pc
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Aug 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.2-alt1
+- 0.21.2
+
+* Thu Aug 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.1-alt1
+- 0.21.1
+
 * Fri Jul 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.20.10-alt1
 - 0.20.10
 

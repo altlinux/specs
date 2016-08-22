@@ -1,9 +1,11 @@
+%def_disable snapshot
+
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.17
+%define ver_major 1.18
 %define beta %nil
 %define gst_api_ver 1.0
-%define wayland_ver 1.8.0
+%define wayland_ver 1.11.0
 
 %def_enable multisense
 %def_enable fb
@@ -15,13 +17,15 @@
 %def_enable gstreamer1
 
 %def_enable wayland
-%def_disable wayland_egl
+# wayland requires elput and drm
+%def_enable elput
+%def_enable wayland_egl
 %def_disable egl
 # currently with GLES only
 %def_disable gl_drm
 
 Name: efl
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -29,15 +33,22 @@ License: BSD/LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
 
+%if_disabled snapshot
 Source: http://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 Patch: efl-1.15.0-alt-ecore_fb.patch
+
+# to skip libreoffice dependency for evas_generic_loaders
+%add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
+#Requires: LibreOffice
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel libgif-devel libwebp-devel
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
-BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel  zlib-devel
+BuildRequires: libpulseaudio-devel libsndfile-devel libbullet-devel zlib-devel liblz4-devel
 BuildRequires: libluajit-devel libssl-devel libcurl-devel libdbus-devel
 BuildRequires: libmount-devel libblkid-devel
 BuildRequires: libudev-devel systemd-devel libsystemd-journal-devel libsystemd-daemon-devel
@@ -52,12 +63,23 @@ BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libGL-devel
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel libxkbcommon-devel libuuid-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel libxkbcommon-devel >= 0.6.0 libuuid-devel}
 %{?_enable_wayland_egl:BuildRequires: libwayland-egl-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 %{?_enable_gstreamer1:BuildRequires: gst-plugins%gst_api_ver-devel}
 %{?_enable_drm:BuildRequires: libdrm-devel libgbm-devel libinput-devel}
 #%{?_enable_gl_drm:BuildRequires:}
+# for elementary
+BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
+# for emotion_generic_players
+BuildRequires: libvlc-devel >= 2.0
+# for evas_generic_loaders
+BuildRequires: libpoppler-cpp-devel
+BuildRequires: libspectre-devel
+BuildRequires: librsvg-devel
+BuildRequires: gst-plugins1.0-devel
+BuildRequires: zlib-devel
+BuildRequires: libraw-devel libgomp-devel
 
 %description
 EFL is a collection of libraries for handling many common tasks a
@@ -104,6 +126,11 @@ Provides: libemotion = %version-%release
 Provides: libeo = %version-%release
 Provides: libephysics = %version-%release
 Provides: libeldbus = %version-%release
+# since 1.18
+Obsoletes: evas_generic_loaders < 1.18
+Obsoletes: emotion_generic_players < 1.18
+Provides: evas_generic_loaders = %version-%release
+Provides: emotion_generic_players = %version-%release
 
 %description -n %name-libs
 This package contains shared EFL libraries.
@@ -144,9 +171,47 @@ Provides: libeldbus-devel = %version-%release
 This package contains headers, development libraries, test programs and
 documentation for EFL.
 
+%package -n libelementary
+Summary: Libraries for %name
+Group: System/Libraries
+Requires: efl-libs = %version-%release
+Requires: elementary-data = %version-%release
+Obsoletes: libelementary1.8
+Provides:  libelementary1.8 = %version-%release
+
+%description -n libelementary
+Elementary is a widget set based on the Enlightenment Foundation
+Libraries, primarily aimed at creating graphical user interfaces for
+mobile and embedded devices. This package contains shared libraries.
+
+%package -n elementary-data
+Summary: noarch data for %name
+Group: Graphical desktop/Enlightenment
+BuildArch: noarch
+Obsoletes: elementary1.8-data
+Provides:  elementary1.8-data = %version-%release
+
+%description -n elementary-data
+The elementary-data package contains architecture independent data files for
+Elementary.
+
+%package -n libelementary-devel
+Summary: Development files for Elementary
+Group: Development/C
+Requires: libelementary = %version-%release
+Requires: efl-libs-devel = %version-%release
+Obsoletes: libelementary1.8-devel
+Provides:  libelementary1.8-devel = %version-%release
+
+%description -n libelementary-devel
+The libelementary-devel package contains libraries and header files for
+developing applications that use Elementary libraries.
+
 %prep
 %setup -n %name-%version%beta
 %patch -p1
+# fix path to soffice.bin
+subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.libreoffice
 #subst 's/xcb-xprint//
 #	/ECORE_XCB_XPRINT/d' configure.ac
 
@@ -158,11 +223,14 @@ documentation for EFL.
 	--enable-systemd \
 	--enable-image-loader-webp \
 	--enable-harfbuzz \
+	--enable-liblz4 \
+	--enable-image-loader-webp \
 	%{subst_enable multisense} \
 	%{subst_enable tslib} \
 	%{subst_enable wayland} \
 	%{subst_enable fb} \
 	%{subst_enable egl} \
+	%{subst_enable elput} \
 	%{subst_enable drm} \
 	%{?_enable_gl_drm:--enable-gl-drm} \
 	%{subst_enable ibus} \
@@ -204,6 +272,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/evas_cserve2_usage
 %_bindir/vieet
 %_libdir/*.so.*
+%exclude %_libdir/libelementary.so.*
 %_libdir/ecore/
 %_libdir/ecore_evas/
 %_libdir/ecore_imf/
@@ -250,14 +319,17 @@ find %buildroot%_libdir -name "*.la" -delete
 %_bindir/efl_debugd
 %_bindir/eina_btlog
 %_includedir/*
+%exclude %_includedir/elementary*/
 %_libdir/cmake/*
+%exclude %_libdir/cmake/Elementary/
 %_libdir/*.so
+%exclude %_libdir/libelementary.so
 %_pkgconfigdir/ecore-audio-cxx.pc
 %_pkgconfigdir/ecore-audio.pc
 %_pkgconfigdir/ecore-avahi.pc
 %_pkgconfigdir/ecore-con.pc
 %_pkgconfigdir/ecore-cxx.pc
-%_pkgconfigdir/ecore-drm.pc
+%{?_enable_drm:%_pkgconfigdir/ecore-drm2.pc}
 %_pkgconfigdir/ecore-evas.pc
 %{?_enable_fb:%_pkgconfigdir/ecore-fb.pc}
 %_pkgconfigdir/ecore-file.pc
@@ -266,8 +338,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/ecore-input-evas.pc
 %_pkgconfigdir/ecore-input.pc
 %_pkgconfigdir/ecore-ipc.pc
-%_pkgconfigdir/ecore-wayland.pc
-%_pkgconfigdir/ecore-wl2.pc
+%{?_enable_wayland:%_pkgconfigdir/ecore-wl2.pc}
 %_pkgconfigdir/ecore-x.pc
 %_pkgconfigdir/ecore.pc
 %_pkgconfigdir/ector.pc
@@ -287,6 +358,7 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/eio.pc
 %_pkgconfigdir/eldbus.pc
 %_pkgconfigdir/elocation.pc
+%{?_enable_elput:%_pkgconfigdir/elput.pc}
 %_pkgconfigdir/elua.pc
 %_pkgconfigdir/embryo.pc
 %_pkgconfigdir/emile.pc
@@ -299,22 +371,59 @@ find %buildroot%_libdir -name "*.la" -delete
 %_pkgconfigdir/ethumb.pc
 %_pkgconfigdir/ethumb_client.pc
 %_pkgconfigdir/evas-cxx.pc
-%_pkgconfigdir/evas-drm.pc
+%{?_enable_drm:%_pkgconfigdir/evas-drm.pc}
 %{?_enable_fb:%_pkgconfigdir/evas-fb.pc}
 %_pkgconfigdir/evas-opengl-x11.pc
 %_pkgconfigdir/evas-software-buffer.pc
 %_pkgconfigdir/evas-software-x11.pc
-%_pkgconfigdir/evas-wayland-shm.pc
+%{?_enable_wayland:%_pkgconfigdir/evas-wayland-shm.pc}
 %_pkgconfigdir/evas.pc
 %dir %_datadir/eolian/
 %dir %_datadir/eolian/include
 %_datadir/eolian/include/*
+
+%exclude %_datadir/eolian/include/elementary*
+
 %_datadir/gdb/
 %exclude %_datadir/gdb/auto-load/*/*/libeo.so.*-gdb.py
 %exclude %_datadir/eo/gdb/eo_gdb.py
 
+%files -n libelementary
+%_bindir/elementary_config
+%_bindir/elementary_quicklaunch
+%_bindir/elementary_run
+%_libdir/libelementary*.so.*
+%_libdir/edje/modules/elm/*/*.so
+%exclude %_libdir/edje/modules/elm/*/module.so
+%_libdir/elementary/modules/test_entry/*/*.so
+%_libdir/elementary/modules/access_output/*/*.so
+%_libdir/elementary/modules/test_map/*/*.so
+%_libdir/elementary/modules/datetime_input_ctxpopup/*/*.so
+%_libdir/elementary/modules/prefs/*/*.edj
+%_libdir/elementary/modules/prefs/*/*.so
+%_libdir/elementary/modules/web/*/*/module.so
+
+%files -n libelementary-devel
+%_bindir/elementary_codegen
+%_bindir/elementary_test
+%_bindir/elm_prefs_cc
+%_includedir/elementary*/
+%_libdir/libelementary*.so
+%_libdir/cmake/Elementary/
+%_pkgconfigdir/elementary*.pc
+%_datadir/eolian/include/elementary*/
+
+%files -n elementary-data
+%_datadir/elementary/
+%_desktopdir/elementary_config.desktop
+%_desktopdir/elementary_test.desktop
+%_iconsdir/elementary.png
+%_iconsdir/Enlightenment-X/
 
 %changelog
+* Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Wed Jun 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.17.2-alt1
 - 1.17.2
 
