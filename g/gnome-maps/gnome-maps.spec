@@ -4,7 +4,7 @@
 %define _name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Maps is a map application for GNOME
@@ -57,6 +57,7 @@ BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: geoclue2-devel >= %geoclue_ver
 BuildRequires: libgee0.8-devel libfolks-devel libgeocode-glib-devel libchamplain-gtk3-devel
 BuildRequires: libgeocode-glib-gir-devel libchamplain-gtk3-gir-devel librest-gir-devel
+BuildRequires: libclutter-gir-devel libcogl-gir-devel
 
 %description
 Maps is a map application for GNOME.
@@ -94,6 +95,9 @@ Maps is a map application for GNOME.
 %exclude %_girdir/GnomeMaps-%api_ver.gir
 
 %changelog
+* Mon Aug 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
+- 3.20.3
+
 * Sun Jul 31 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 
