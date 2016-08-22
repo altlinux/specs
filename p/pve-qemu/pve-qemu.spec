@@ -170,7 +170,7 @@
 # }}}
 
 Name: pve-%rname
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -195,19 +195,19 @@ Source12: OVMF_VARS-pure-efi.fd
 Patch0: qemu-2.6-alt.patch
 
 Patch10: 0001-fr-ca-keymap-corrections.patch
-Patch11: 0001-i386-kvmvapic-initialise-imm32-variable.patch
+Patch11: 0001-net-check-fragment-length-during-fragmentation.patch
 Patch12: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch13: 0001-vga-add-sr_vbe-register-set.patch
-Patch14: 0002-Adjust-network-script-path-to-etc-kvm.patch
-Patch15: 0003-vnc-altgr-emulation.patch
-Patch16: 0004-qemu-img-return-success-on-info-without-snapshots.patch
-Patch17: 0004-vmsvga-move-fifo-sanity-checks-to-vmsvga_fifo_length.patch
-Patch18: 0005-use-kvm-by-default.patch
-Patch19: 0005-vmsvga-add-more-fifo-checks.patch
-Patch20: 0006-virtio-balloon-fix-query.patch
-Patch21: 0006-vmsvga-shadow-fifo-registers.patch
-Patch22: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
-Patch23: 0007-vmsvga-don-t-process-more-than-1024-fifo-commands-at.patch
+Patch13: 0002-Adjust-network-script-path-to-etc-kvm.patch
+Patch14: 0002-net-vmxnet3-check-for-device_active-before-write.patch
+Patch15: 0002-scsi-esp-fix-migration.patch
+Patch16: 0003-net-vmxnet-use-g_new-for-pkt-initialisation.patch
+Patch17: 0003-vnc-altgr-emulation.patch
+Patch18: 0004-net-vmxnet-check-IP-header-length.patch
+Patch19: 0004-qemu-img-return-success-on-info-without-snapshots.patch
+Patch20: 0005-net-vmxnet-initialise-local-tx-descriptor.patch
+Patch21: 0005-use-kvm-by-default.patch
+Patch22: 0006-virtio-balloon-fix-query.patch
+Patch23: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
 Patch24: 0008-qapi-modify-query-machines.patch
 Patch25: 0009-qapi-modify-spice-query.patch
 Patch26: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
@@ -244,7 +244,7 @@ Patch56: 0040-vnc-make-x509-imply-tls-again.patch
 Patch57: 0041-PVE-VNC-authentication.patch
 Patch58: 0042-vma-writer-don-t-bail-out-on-zero-length-files.patch
 Patch59: 0043-vma-better-driver-guessing-for-bdrv_open.patch
-Patch60: 0044-block-add-zeroinit.patch
+Patch60: 0044-block-add-the-zeroinit-block-driver-filter.patch
 Patch61: 0045-vma-add-format-option-to-device-mapping.patch
 Patch62: 0046-pve-cleanup-includes-all-over-the-place.patch
 Patch63: 0047-zeroinit-bdrv_get_block_status-got-a-new-param.patch
@@ -254,10 +254,9 @@ Patch66: 0050-fix-possible-unitialised-return-value.patch
 Patch67: 0051-net-NET_CLIENT_OPTIONS_KIND_MAX-changed.patch
 Patch68: 0052-vnc-refactor-to-QIOChannelSocket.patch
 Patch69: 0053-vma-use-BlockBackend-on-extract.patch
-Patch70: CVE-2016-4952-scsi-pvscsi-check-command-descriptor-ring-buffer-siz.patch
-Patch71: CVE-2016-5105-scsi-megasas-initialise-local-configuration-data-buf.patch
-Patch72: CVE-2016-5106-scsi-megasas-use-appropriate-property-buffer-size.patch
-Patch73: CVE-2016-5107-scsi-megasas-check-read_queue_head-index-value.patch
+Patch70: 0054-rbd-disable-rbd_cache_writethrough_until_flush-with-.patch
+Patch71: 0055-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
+Patch72: CVE-2016-6490-virtio-check-vring-descriptor-buffer-length.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -499,7 +498,6 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch70 -p1
 %patch71 -p1
 %patch72 -p1
-%patch73 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -725,9 +723,6 @@ fi
 /lib/binfmt.d/qemu-*.conf
 %exclude %_bindir/qemu*system*
 %exclude %_bindir/qemu-kvm
-%if_enabled binfmt_misc
-%exclude %_bindir/qemu-*.static
-%endif
 %exclude %_bindir/qemu-img
 %exclude %_bindir/qemu-io
 %exclude %_bindir/qemu-nbd
@@ -760,6 +755,12 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+
+* Tue Aug 02 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.0-alt2
+- fixed CVE-2016-6490, CVE-2016-2391, CVE-2016-5126
+
 * Sun Jul 10 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 

@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.2.16
-Release: alt7
+Version: 4.2.18
+Release: alt8
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -39,7 +39,7 @@ This package contains the Proxmox Virtual Environment management tools
 
 %package -n pve-container
 Summary: Proxmox VE Container management tool
-Version: 1.0.70
+Version: 1.0.73
 Group: Development/Perl
 Requires: pve-lxc dtach
 
@@ -57,7 +57,7 @@ This package contains the Proxmox VE Firewall
 
 %package -n pve-ha-manager
 Summary: Proxmox VE HA Manager
-Version: 1.0.32
+Version: 1.0.33
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -65,7 +65,7 @@ HA Manager Proxmox VE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.83
+Version: 4.0.85
 Group: System/Servers
 Requires: nc6 pve-qemu-system socat
 Provides: qemu-server = %version-%release
@@ -364,6 +364,12 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.18-alt8
+- 4.2-18
+- pve-container 1.0-73
+- pve-ha-manager 1.0-33
+- qemu-server 4.0-85
+
 * Fri Jul 08 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.16-alt7
 - 4.2-16
 - pve-ha-manager 1.0-32
