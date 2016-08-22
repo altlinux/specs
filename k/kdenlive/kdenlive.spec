@@ -1,7 +1,7 @@
 %define req_ver_mlt 0.9.0
 
 Name: kdenlive
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init no_altplace man
 
@@ -12,7 +12,7 @@ License: GPL
 Group: Video
 URL: http://kdenlive.org/
 
-Requires: mlt-utils >= %req_ver_mlt frei0r-plugins /usr/bin/avconv /usr/bin/avplay
+Requires: mlt-utils >= %req_ver_mlt frei0r-plugins /usr/bin/avconv /usr/bin/avplay /usr/bin/avprobe
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: icon-theme-breeze
 
@@ -73,6 +73,9 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Mon Aug 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
 * Thu Jul 07 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
