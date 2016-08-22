@@ -3,7 +3,7 @@
 #%%def_enable nautilus-syncthing-gtk
 
 Name: syncthing-gtk
-Version: 0.9.0.2
+Version: 0.9.1
 Release: alt1
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
@@ -14,7 +14,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 BuildPreReq: python-devel python-module-setuptools
-Requires: syncthing >= 0.13
+Requires: syncthing >= 0.14
 Requires: librsvg-gir
 BuildArch: noarch
 
@@ -190,6 +190,9 @@ done
 %endif
 
 %changelog
+* Mon Aug 22 2016 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
+- New version
+
 * Fri May 27 2016 Anton Midyukov <antohami@altlinux.org> 0.9.0.2-alt1
 - New version
 - Added requires on librsvg-gir
