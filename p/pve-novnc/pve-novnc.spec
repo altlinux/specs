@@ -3,7 +3,7 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 0.5.5
+Version: 0.5.8
 Release: alt1
 License: MPL 2.0
 Group: Networking/WWW
@@ -12,8 +12,10 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source0: %sname.tgz
 
-Patch1: novnc-pveui.patch
-Patch2: novnc-fix-base-css.patch
+Patch1: pveui.patch
+Patch2: fix-base-css.patch
+Patch3: fix-ie11-resize.patch
+Patch4: fix-CtrlAltDel-button-mobile.patch
 
 BuildArch: noarch
 
@@ -26,6 +28,8 @@ Proxmox VE to provide HTML VM console
 cp include/ui.js pveui.js
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %install
 mkdir -p %buildroot%_datadir/%pname
@@ -60,6 +64,9 @@ install -m0644 pveui.js %buildroot%_datadir/%pname/include/pveui.js
 %_datadir/%pname/images
 
 %changelog
+* Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.5.8-alt1
+- 0.5-8
+
 * Tue Dec 15 2015 Valery Inozemtsev <shrek@altlinux.ru> 0.5.5-alt1
 - initial release
 
