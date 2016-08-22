@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.9.4
+Version: 1.9.9
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -111,6 +111,23 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Tue Aug 23 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.9-alt1
+- add _localstatedir = /var to rpm-build-intro
+
+* Mon Aug 22 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.8-alt1
+- add webserver-common
+- ALT Linux: hard set _localstatedir to /var
+
+* Sun Aug 14 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.7-alt1
+- set _localstatedir to /var (see ALT bug #10382)
+
+* Mon Jul 18 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.6-alt1
+- astra: fix lib32dir
+
+* Mon Jul 18 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.5-alt1
+- update distr_vendor
+- add AstraLinux support
+
 * Sat Apr 16 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt1
 - distr_vendor: use Sisyphus for ALT Linux as default
 
@@ -119,7 +136,7 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 - distr_vendor: add Cygwin support, improve ALT Linux version detection
 
 * Mon Jan 25 2016 Vitaly Lipatov <lav@altlinux.ru> 1.9.2-alt1
-- remove empty file for CentOS/6 (makes wrong macros list) (eterbug #10965
+- remove empty file for CentOS/6 (makes wrong macros list) (eterbug #10965)
 
 * Mon Nov 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
 - set udev macros for CentOS/5
