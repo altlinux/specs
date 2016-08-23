@@ -1,12 +1,12 @@
 %global import_path github.com/mattn/go-runewidth
 
-%global commit e882a96ec18dd43fa283187b66af74497c9101c0
-%global abbrev %(c=%{commit}; echo ${c:0:8})
+#global commit e882a96ec18dd43fa283187b66af74497c9101c0
+#global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-mattn-go-runewidth
-Version: 0
-Release: alt1.git%abbrev
+Version: 0.0.1
+Release: alt1
 Summary: Provides functions to get fixed width of the character or string.
 License: MIT
 Group: Development/Other
@@ -62,6 +62,9 @@ done
 %go_path/src/*
 
 %changelog
+* Tue Aug 23 2016 Denis Pynkin <dans@altlinux.org> 0.0.1-alt1
+- Update
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 0-alt1.gite882a96e
 - Initial package
 

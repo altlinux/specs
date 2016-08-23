@@ -1,11 +1,11 @@
 %global import_path     github.com/dustinkirkland/golang-petname
 
-%global commit 2182cecef7f257230fc998bc351a08a5505f5e6c
+%global commit 552e8d4d6d9c3be95722c99da0bb41488d12714d
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-github-dustinkirkland-golang-petname
-Version: 1.11
+Version: 2.2
 Release: alt1.git%abbrev
 Summary: This utility will generate "pet names", consisting of a random combination
 License: BSD
@@ -58,6 +58,9 @@ rm -rf -- %buildroot/%go_path/src/%import_path/debian
 %go_path/src/*
 
 %changelog
+* Mon Aug 22 2016 Denis Pynkin <dans@altlinux.org> 2.2-alt1.git552e8d4d
+- New version
+
 * Tue Feb 16 2016 Denis Pynkin <dans@altlinux.ru> 1.11-alt1.git2182cece
 - Initial package for development only
 

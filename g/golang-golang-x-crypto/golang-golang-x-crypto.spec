@@ -1,12 +1,12 @@
 %global import_path golang.org/x/crypto
 
-%global commit 1777f3ba8c1fed80fcaec3317e3aaa4f627764d2
+%global commit b35ccbc95a0eaae49fb65c5d627cb7149ed8d1ab
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 
 Name: golang-golang-x-crypto
 Version: 0
-Release: alt2.git%abbrev
+Release: alt3.git%abbrev
 Summary: Supplementary Go cryptography libraries
 License: MIT
 Group: Development/Other
@@ -93,6 +93,9 @@ export GOPATH="%go_path"
 %go_path/src/*
 
 %changelog
+* Tue Aug 23 2016 Denis Pynkin <dans@altlinux.org> 0-alt3.gitb35ccbc9
+- Update
+
 * Thu Apr 14 2016 Denis Pynkin <dans@altlinux.org> 0-alt2.git1777f3ba
 - Update
 
