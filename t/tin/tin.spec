@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.2.1
+Version: 2.4.0
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -70,6 +70,9 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %exclude %_man5dir/mmdf.*
 
 %changelog
+* Tue Aug 23 2016 Michael Shigorin <mike@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Thu Dec 24 2015 Michael Shigorin <mike@altlinux.org> 2.2.1-alt1
 - added debian watch file
 - new version (watch file uupdate)
