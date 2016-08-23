@@ -27,13 +27,16 @@
 # There is no sources in debuginfo with LTO
 %def_disable lto
 
+# NOTE: ONLY use sanitizers for debug purposes
+%def_disable sanitizers
+
 %define _name %name-daemon
 %define dispatcherdir %_sysconfdir/NetworkManager/dispatcher.d
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.2.4
+Version: 1.3.91
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -69,7 +72,7 @@ BuildRequires: libmm-glib-devel
 BuildRequires: libndp-devel
 BuildRequires: libreadline-devel
 BuildRequires: libaudit-devel
-%{?_enable_teamdctl:BuildRequires: libteam-devel}
+%{?_enable_teamdctl:BuildRequires: libteam-devel libjansson-devel}
 %{?_enable_nmtui:BuildRequires: libnewt-devel}
 %{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
@@ -431,6 +434,14 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	%{subst_enable lto} \
 	%{subst_enable vala} \
 	--with-libaudit=yes-disabled-by-default \
+	--with-ofono=no \
+%if_enabled sanitizers
+	--enable-address-sanitizer \
+	--enable-undefined-sanitizer \
+%else
+	--disable-address-sanitizer \
+	--disable-undefined-sanitizer \
+%endif
 	--enable-more-warnings=error
 
 %make_build
@@ -662,6 +673,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Aug 23 2016 Mikhail Efremov <sem@altlinux.org> 1.3.91-alt1
+- Updated to 1.3.91 (1.4-rc1).
+
 * Thu Aug 04 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
 - Build with libaudit support.
 - Fix nmcli-examples(7) charset.

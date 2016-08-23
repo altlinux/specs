@@ -1,13 +1,14 @@
-%define nm_version 1.1.90
+%define nm_version 1.3.91
 #define git_date .git20151102
 %define git_date %nil
 
 %define _unpackaged_files_terminate_build 1
 
 %def_without appindicator
+%def_without team
 
 Name: NetworkManager-applet-gtk
-Version: 1.2.4
+Version: 1.3.91
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -37,6 +38,7 @@ BuildRequires: libmm-glib-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libsecret-devel
 %{?_with_appindicator:BuildRequires: libappindicator-gtk3-devel}
+%{?_with_team:BuildRequires: libjansson-devel}
 
 Requires: NetworkManager-daemon >= %nm_version
 Requires: dbus-tools-gui
@@ -151,6 +153,7 @@ GObject introspection devel data for the libnma.
 	--localstatedir=%_var \
 	--with-wwan \
 	%{subst_with appindicator} \
+	%{subst_with team} \
 	--enable-more-warnings=error
 
 %make_build
@@ -209,6 +212,9 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Tue Aug 23 2016 Mikhail Efremov <sem@altlinux.org> 1.3.91-alt1
+- Updated to 1.3.91 (1.4-rc1).
+
 * Thu Aug 04 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
 - Updated to 1.2.4.
 
