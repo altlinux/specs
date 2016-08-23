@@ -1,5 +1,5 @@
 Name:    appstream
-Version: 0.9.6
+Version: 0.9.8
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -112,6 +112,9 @@ touch %{buildroot}/var/cache/app-info/cache.watch
 %_libdir/libAppstreamQt.so
 
 %changelog
+* Tue Aug 23 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.8-alt1
+- New version
+
 * Mon May 16 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.6-alt1
 - New version
 
