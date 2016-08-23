@@ -3,7 +3,7 @@
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
-%define apache_version 2.4.18
+%define apache_version 2.4.23
 
 %define mmn 20120211
 
@@ -39,7 +39,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: alt3
+Release: alt1
 
 License: %asl
 Group: System/Servers
@@ -96,7 +96,7 @@ Source71: apache2-cert-sh.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.2.patch
+Patch1: apache2-2.4.18-alt-all-0.2.patch
 Patch2: Makefile.in.patch
 Patch3: apachectl.patch
 Patch4: configure.in.patch
@@ -1823,6 +1823,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Aug 23 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 2.4.23-alt1
+- updated to 2.4.23
+
 * Thu May 26 2016 Sergey Alembekov <rt@altlinux.ru> 2.4.18-alt3
 - there is no reason to not compile unixd module statically
 
