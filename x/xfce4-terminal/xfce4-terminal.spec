@@ -1,6 +1,6 @@
 Name: xfce4-terminal
-Version: 0.6.3
-Release: alt2
+Version: 0.6.90
+Release: alt1
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -14,16 +14,18 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libexo-devel libxfce4ui-devel
+BuildPreReq: libexo-devel libxfce4ui-gtk3-devel
 BuildPreReq: gnome-doc-utils xml-utils xsltproc
 
 # Automatically added by buildreq on Fri Aug 07 2009
-BuildRequires: docbook-dtds docbook-style-xsl intltool libSM-devel libdbus-glib-devel libvte-devel time xorg-cf-files
+BuildRequires: docbook-dtds docbook-style-xsl intltool libSM-devel libdbus-glib-devel libvte3-devel time xorg-cf-files
 
 Requires: xfce4-common
 
 Obsoletes: Terminal < %version
 Provides: Terminal = %version-%release
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This is the xfce4-terminal emulator application. xfce4-terminal is
@@ -47,7 +49,7 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 	--enable-maintainer-mode \
 	--enable-dbus \
 	--enable-gen-doc \
-	--enable-debug=no
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -65,6 +67,10 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' %buildroot%_mandir/*/man1/%na
 %_desktopdir/*
 
 %changelog
+* Fri Aug 05 2016 Mikhail Efremov <sem@altlinux.org> 0.6.90-alt1
+- Enable debug (minimum level).
+- Updated to 0.6.90 (closes: #31856, #32252).
+
 * Sat Mar 07 2015 Mikhail Efremov <sem@altlinux.org> 0.6.3-alt2
 - Rebuild with libxfce4util-4.12.
 
