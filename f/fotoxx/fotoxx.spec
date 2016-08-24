@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 16.06
+Version: 16.08.1
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -33,6 +33,7 @@ Obsoletes: fotox
 BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel liblcms2-devel
 BuildRequires: perl-Image-ExifTool ufraw xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
+BuildRequires: libraw-devel
 
 %description
 Fotox is a program for improving digital photos. Navigate through large image
@@ -56,7 +57,7 @@ This package provides noarch data needed for Fotox to work.
 %setup
 
 %build
-%make_build PREFIX=/usr CXXFLAGS="%optflags"
+%make_build PREFIX=/usr CXXFLAGS="%optflags -D_FILE_OFFSET_BITS=64"
 
 %install
 install -d %buildroot%_man1dir
@@ -82,6 +83,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %doc doc/README* doc/changelog doc/copyright
 
 %changelog
+* Wed Aug 24 2016 Yuri N. Sedunov <aris@altlinux.org> 16.08.1-alt1
+- 16.08.1
+
 * Mon Jun 06 2016 Yuri N. Sedunov <aris@altlinux.org> 16.06-alt1
 - 16.06
 - updated buildreqs
