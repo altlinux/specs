@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 %define theme %name
@@ -38,7 +38,7 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 %define ProductName %Brand %major.%minor %Theme
 %define ProductName_ru %Brand_ru %major.%minor %Theme_ru
 
-%define variants alt-kdesktop alt-workstation alt-server altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
+%define variants alt-kdesktop alt-workstation alt-server altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
 
 Source: %name.tar
 
@@ -89,7 +89,7 @@ Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt brandi
 Provides: alterator-icons design-alterator design-alterator-%theme
 Obsoletes:  branding-alt-%theme-browser-qt  branding-altlinux-%theme-browser-qt 
 
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-browser-qt ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server 
 PreReq(post,preun): alternatives >= 0.2 alterator
 
@@ -497,6 +497,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Aug 24 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt3
+- update conflicts
+
 * Wed Aug 24 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt2
 - rebuild
 
