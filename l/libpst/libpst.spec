@@ -1,6 +1,6 @@
 Name: libpst
 Version: 0.6.67
-Release: alt1
+Release: alt3
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
@@ -9,7 +9,6 @@ Group: System/Libraries
 Url: http://www.five-ten-sg.com/libpst
 Source0: %url/packages/%name-%version.tar.gz
 Source100: libpst.watch
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -98,6 +97,10 @@ Developer's documentation for libpst
 %exclude %pkgdocdir/[A-Z]*
 
 %changelog
+* Wed Aug 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.67-alt3
+- readpst -r: don't produce malformed mbox files
+  for folders with mixed content (RH#1369499, ALT#32422).
+
 * Thu Jul 21 2016 Denis Medvedev <nbr@altlinux.org> 0.6.67-alt1
 - new version (0.6.67 uupdate).
 
