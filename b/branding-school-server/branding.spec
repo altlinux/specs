@@ -16,10 +16,10 @@
 
 Name: branding-%brand-%theme
 Version: 7.0.5
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
-BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
+BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-google-droid-sans
 BuildRequires: design-bootloader-source >= 5.0-alt2
 
 BuildRequires(pre): libqt4-core 
@@ -47,8 +47,8 @@ Summary(ru_RU.UTF-8): Тема для экрана выбора варианто
 License: GPLv2+
 
 PreReq:    coreutils
-Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
+Provides:  design-bootloader-system-%brand-%theme design-bootloader-livecd-%brand-%theme design-bootloader-%brand-%theme branding-alt-%brand-%theme-bootloader
+Obsoletes: design-bootloader-system-%brand-%theme design-bootloader-livecd-%brand-%theme design-bootloader-%brand-%theme branding-alt-%brand-%theme-bootloader
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootloader ";done )
 
 %define grub_normal white/light-blue
@@ -72,7 +72,7 @@ Provides: plymouth-theme-%theme
 Requires: plymouth-plugin-script
 PreReq:   plymouth
 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-bootsplash ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootsplash ";done )
 
 %description bootsplash
 This package contains graphics for boot process for %distro_name
@@ -87,14 +87,14 @@ Summary: Design for alterator for %distro_name
 Summary(ru_RU.UTF-8): Тема для "Центра управления системой" и QT для дистрибутива %distro_name_ru
 License: GPL
 Group: System/Configuration/Other
-Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
-Provides: alterator-icons design-alterator design-alterator-%theme
-Obsoletes:  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt 
+Provides: design-alterator-browser-%brand-%theme  branding-alt-%brand-%theme-browser-qt branding-altlinux-%brand-%theme-browser-qt
+Provides: alterator-icons design-alterator design-alterator-%brand-%theme
+Obsoletes:  branding-alt-%brand-%theme-browser-qt branding-altlinux-%brand-%theme-browser-qt
 
 # lexicographically first of the village
 Conflicts: branding-sisyphus-server-light-alterator
 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-alterator ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
 PreReq(post,preun): alternatives >= 0.2 alterator
 
@@ -111,12 +111,12 @@ Summary(ru_RU.UTF-8): Тема для дистрибутива %distro_name_ru
 License: Different licenses
 Group: Graphics
 
-Provides: design-graphics-%theme  branding-alt-%theme-graphics
-Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme
+Provides: design-graphics-%brand-%theme  branding-alt-%brand-%theme-graphics
+Obsoletes:  branding-alt-%brand-%theme-graphics design-graphics-%brand-%theme
 Provides: design-graphics = 12.0.0
 
 PreReq(post,preun): alternatives >= 0.2
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-graphics ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
 
 %description graphics
 This package contains some graphics for %distro_name design.
@@ -134,10 +134,10 @@ Summary:  %distro_name release file
 Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
 License:  GPL
 Group:    System/Configuration/Other
-Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
-Obsoletes: %obsolete_list  branding-alt-%theme-release
+Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%brand-%theme  branding-alt-%brand-%theme-release
+Obsoletes: %obsolete_list  branding-alt-%brand-%theme-release
 Conflicts: %conflicts_list
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-release ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-release ";done )
 
 %description release
 %distro_name release file.
@@ -147,8 +147,8 @@ Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-r
 
 %package notes
 BuildArch: noarch
-Provides:  alt-license-theme = %version alt-notes-%theme
-Obsoletes: alt-license-%theme alt-notes-%theme
+Provides:  alt-license-theme = %version alt-notes-%brand-%theme
+Obsoletes: alt-license-%brand-%theme alt-notes-%brand-%theme
 Summary:   Distribution license and release notes
 Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %distro_name_ru
 License:   Distributable
@@ -211,7 +211,7 @@ Requires: etcskel gtk3-theme-clearlooks-phenix
 Requires: gnome-icon-theme icon-theme-simple-sl
 Requires: branding-%brand-%theme-graphics
 Obsoletes: xfce-settings-lite xfce-settings-school-lite
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-xfce-settings ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-xfce-settings ";done )
 Conflicts: xfce-settings-simply-linux
 
 %description xfce-settings
@@ -222,7 +222,7 @@ Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
 License: Distributable
 Group: System/Configuration/Other 
-Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-slideshow ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-slideshow ";done )
 BuildArch: noarch
 
 %description slideshow
@@ -238,7 +238,7 @@ Summary:  HTML welcome page for %distro_name
 Summary(ru_RU.UTF-8): Стартовая страница для дистрибутива %distro_name_ru
 License:  distributable
 Group:    System/Base
-Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
+Provides: indexhtml indexhtml-%brand-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
 
 Conflicts: indexhtml-sisyphus
@@ -505,6 +505,19 @@ subst 's/#theme-name=/theme-name=Clearlooks-Phenix/' /etc/lightdm/lightdm-gtk-gr
 #%config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Aug 24 2016 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt2
+- Use full brand name (%brand-%theme) to prevent wrong replacement of
+  branding with same %theme but different %brand
+
+* Mon Apr 13 2015 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt0.M70P.2
+- Update copyright years, fix VK group URL and update company address
+- Fix button gluing in web interface
+- Fix package name with Droid fonts
+- Generate image for selection bar in GRUB menu from specified color
+
+* Wed Jun 11 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt0.M70P.1
+- Backport to p7 branch
+
 * Wed Jun 11 2014 Andrey Cherepanov <cas@altlinux.org> 7.0.5-alt1
 - New release
 
