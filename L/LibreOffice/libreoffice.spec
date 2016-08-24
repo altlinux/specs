@@ -1,4 +1,4 @@
-# 5.2.0.2
+# 5.2.1.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,12 +7,12 @@
 
 Name: LibreOffice
 Version: 5.2
-%define urelease 0.2
+%define urelease 1.1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -46,20 +46,21 @@ Source300:	libreoffice.unused
 ## FC patches
 Patch1: FC-openoffice.org-2.4.0.ooo86080.unopkg.bodge.patch
 Patch2: FC-openoffice.org-3.1.0.oooXXXXX.solenv.allowmissing.patch
-Patch3: FC-0001-Resolves-rhbz-1353069-don-t-clear-XATTR_FILL-from-st.patch
-Patch4: FC-0001-Resolves-rhbz-1351224-wayland-grab-related-crashes.patch
-Patch5: FC-0001-Resolves-rhbz-1352965-gtk3-infinite-clipboard-recurs.patch
-Patch6: FC-0001-rhbz-1351292-correctly-set-edit-mode.patch
-Patch7: FC-0001-Related-rhbz-1351369-gtk3-clipboards-have-to-live-to.patch
-Patch8: FC-installfix.patch
-Patch9: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch10: FC-0001-disable-firebird-unit-test.patch
-Patch11: FC-0001-never-run-autogen.sh.patch
-Patch12: FC-0001-disable-libe-book-support.patch
-Patch13: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch14: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
-Patch15: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
-Patch16: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
+Patch3: FC-0001-Resolves-rhbz-1351224-wayland-grab-related-crashes.patch
+Patch4: FC-0001-Resolves-rhbz-1352965-gtk3-infinite-clipboard-recurs.patch
+Patch5: FC-0001-Related-rhbz-1351369-gtk3-clipboards-have-to-live-to.patch
+Patch6: FC-0001-gtk3-style-combobox-never-becomes-sensitive-if-it-st.patch
+Patch7: FC-0001-Resolves-tdf-91533-rhbz-1364335-Tooltips-are-truncat.patch
+Patch8: FC-0001-Resolves-tdf-101165-crash-on-deselecting-all-filters.patch
+Patch9: FC-installfix.patch
+Patch10: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch11: FC-0001-disable-firebird-unit-test.patch
+Patch12: FC-0001-never-run-autogen.sh.patch
+Patch13: FC-0001-disable-libe-book-support.patch
+Patch14: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch15: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
+Patch16: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
+Patch17: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
 
 ## Long-term FC patches
 
@@ -198,10 +199,10 @@ echo Direct build
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-##patch5 -p1
+#patch4 -p1
+#patch5 -p1
 %patch6 -p1
-##patch7 -p1
+%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
@@ -211,6 +212,7 @@ echo Direct build
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 ## Long-term FC patches applying
 
@@ -372,18 +374,10 @@ for l in %with_lang; do
 done
 
 # Create gnome plugin list
-(
-cd %buildroot
-find .%lodir/program/gnome*
-find .%lodir/program/*gtk3*.so
-find .%lodir/share/registry/gnome.xcd
-) | sed 's/^[.]//' > files.gnome
+find %buildroot%lodir -name "gnome*" -o -name "*gtk3*" | sed 's@^%buildroot@@' > files.gnome
 
 # Create kde plugin list
-(
-cd %buildroot
-find .%lodir/program/*kde*
-) | sed 's/^[.]//' > files.kde4
+find %buildroot%lodir -name "*kde4*" | sed 's@^%buildroot@@' > files.kde4
 
 # Generate base filelist by removing files from  separated packages
 { cat %buildroot/gid_* | sort -u ; cat *.lang files.gnome files.kde4; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | grep -v '/share/extensions/.' > files.nolang
@@ -478,6 +472,9 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 %_girdir/LOKDocView-*.gir
 
 %changelog
+* Wed Aug 24 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt3
+- Update to 5.2.1.1
+
 * Tue Jul 19 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt2
 - Update to 5.2.0.2
 - (closes: #31953)
