@@ -12,7 +12,7 @@
 
 Name:		lxd
 Version:	2.1.0
-Release:	alt2
+Release:	alt3
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -25,6 +25,7 @@ Source0:	%name-%version.tar
 Source2:	lxd-image-update.cron
 Source3:	lxd.default
 Source4:	lxd.dnsmasq
+Source5:	lxd-bridge.default
 
 # services
 Source11:	lxd.service
@@ -127,6 +128,8 @@ ln -fs -- "$what" %buildroot/%go_root/bin/lxd-bridge-proxy
 %__install -D %SOURCE3 %buildroot/%_sysconfdir/sysconfig/lxd
 # configuration for dnsmasq called in lxd-bridge
 %__install -D %SOURCE4 %buildroot/%_sysconfdir/lxd/dnsmasq.conf
+# lxd-bridge config
+%__install -D %SOURCE5 %buildroot/%_sysconfdir/sysconfig/lxd-bridge
 
 #services
 # systemd
@@ -172,7 +175,7 @@ cp -av scripts/lx* %buildroot/%_bindir/
 
 %_sysconfdir/cron.hourly/*
 
-%_sysconfdir/sysconfig/*
+%config(noreplace) %_sysconfdir/sysconfig/*
 %dir %_sysconfdir/lxd
 %config(noreplace) %_sysconfdir/lxd/dnsmasq.conf
 
@@ -181,6 +184,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Wed Aug 24 2016 Denis Pynkin <dans@altlinux.org> 2.1.0-alt3
+- configuration fixes for lxd-bridge service
+
 * Wed Aug 24 2016 Denis Pynkin <dans@altlinux.org> 2.1.0-alt2
 - Added squashfs-tools in Requires
 
