@@ -4,8 +4,8 @@
 #============================================================================
 Name: asterisk11cert
 Summary: Open source PBX
-Version: 11.6.cert11
-Release: alt2
+Version: 11.6.cert13
+Release: alt1
 License: GPL
 Group: System/Servers
 %if_with corosync
@@ -1204,8 +1204,6 @@ ln -sf libasteriskssl%version.so.1 %buildroot%_libdir/libasteriskssl%version.so
 %_libdir/libasteriskssl%version.so
 
 %files docs
-%_docdir/%name-%version/Asterisk-Admin-Guide.pdf
-%_docdir/%name-%version/Asterisk-Admin-Guide
 %_docdir/%name-%version/CODING-GUIDELINES
 %dir %_docdir/%name-%version
 %dir %_docdir/%name-%version/samples
@@ -1366,6 +1364,9 @@ ln -sf libasteriskssl%version.so.1 %buildroot%_libdir/libasteriskssl%version.so
 %_libdir/libasteriskssl%version.so.1
 
 %changelog
+* Thu Aug 25 2016 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert13-alt1
+- 11.6-cert13
+
 * Sun Aug 21 2016 Denis Smirnov <mithraen@altlinux.ru> 11.6.cert11-alt2
 - fix build
 - disable chan_vpb
