@@ -1,5 +1,5 @@
 %define module_name LiME 
-%define module_version 1
+%define module_version 1.7.5
 %define module_release	alt1
 
 %define module_source	%module_name-%module_version.tar
@@ -36,6 +36,9 @@ cd ..
 %_usrsrc/*
 
 %changelog
+* Wed Aug 24 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Tue Jan 20 2015 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1-alt1
 - initial build
 
