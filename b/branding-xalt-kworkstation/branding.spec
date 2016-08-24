@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 %define theme %name
@@ -497,6 +497,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Aug 24 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt2
+- rebuild
+
 * Tue Aug 23 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt1
 - update wallpapers
 
