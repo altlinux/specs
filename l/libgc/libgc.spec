@@ -1,5 +1,5 @@
 Name: libgc
-Version: 7.4.4
+Version: 7.6.0
 Release: alt1
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
@@ -100,6 +100,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Wed Aug 24 2016 Vitaly Lipatov <lav@altlinux.ru> 7.6.0-alt1
+- new version 7.6.0 (with rpmrb script)
+
 * Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 7.4.4-alt1
 - new version 7.4.4 (with rpmrb script)
 
