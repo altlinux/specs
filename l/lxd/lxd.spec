@@ -12,7 +12,7 @@
 
 Name:		lxd
 Version:	2.1.0
-Release:	alt1
+Release:	alt2
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -42,6 +42,7 @@ Requires:	cgmanager
 Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
+Requires:	squashfs-tools
 
 
 # lxc
@@ -180,6 +181,9 @@ cp -av scripts/lx* %buildroot/%_bindir/
 %go_path/src/*
 
 %changelog
+* Wed Aug 24 2016 Denis Pynkin <dans@altlinux.org> 2.1.0-alt2
+- Added squashfs-tools in Requires
+
 * Tue Aug 23 2016 Denis Pynkin <dans@altlinux.org> 2.1.0-alt1
 - Release 2.1
 
