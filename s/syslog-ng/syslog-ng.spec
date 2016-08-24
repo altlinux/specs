@@ -8,9 +8,10 @@
 %def_enable	json
 %def_disable	amqp
 %def_enable	mongodb
+%def_enable	curl
 
 Name: syslog-ng
-Version: 3.7.3
+Version: 3.8.1
 Release: alt1
 
 Summary: syslog-ng daemon
@@ -34,7 +35,7 @@ BuildRequires: rpm-build-licenses
 # + SSL/TLS
 # + PCRE
 # + SQL
-BuildRequires: flex glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.13 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl python-devel
+BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel libeventlog-devel >= 0.2.13 libnet2-devel libpcre-devel libpopt-devel libssl-devel libuuid-devel libwrap-devel libivykis-devel xsltproc docbook-style-xsl python-devel
 
 %if_enabled geoip
 BuildRequires: libGeoIP-devel
@@ -49,9 +50,11 @@ BuildRequires: libesmtp-devel
 BuildRequires: librabbitmq-c-devel
 %endif
 %if_enabled mongodb
-BuildRequires: libmongo-client-devel
+BuildRequires: libmongoc-devel
 %endif
-
+%if_enabled curl
+BuildRequires: libcurl-devel
+%endif
 
 %description
 syslog-ng, as the name shows, is a syslogd replacement, but with new
@@ -111,7 +114,16 @@ Summary: mongodb support for %{name}
 Group: System/Libraries
 
 %description mongodb
-This module supports the mongodb database via libmongo-client.
+This module supports the mongodb database via libmongoc
+%endif
+
+%if_enabled curl
+%package curl
+Summary: curl support for %{name}
+Group: System/Libraries
+
+%description curl
+This module supports the curl.
 %endif
 
 %package python
@@ -173,11 +185,16 @@ autoconf
 %build
 skip_submodules=1 ./autogen.sh
 %add_optflags -levtlog -livykis -lgmodule-2.0 -lglib-2.0 -lpcre
+
+# configure is searching libmongoc instead of libmongoc-1.0 via pkg-config
+export LIBMONGO_CFLAGS="-I%_includedir/libmongoc-1.0 -I%_includedir/libbson-1.0"
+export LIBMONGO_LIBS="-lsasl2 -lssl -lcrypto -lrt -lmongoc-1.0 -lbson-1.0"
+
 %configure \
  --sbindir=/sbin \
  --sysconfdir=%_sysconfdir/%name \
  --localstatedir=/var/lib/syslog-ng \
- --datadir=%_datadir/%name \
+ --datadir=%_datadir \
  --mandir=%_mandir \
  --with-ivykis=system \
  --with-pidfile-dir=/var/run \
@@ -194,7 +211,7 @@ skip_submodules=1 ./autogen.sh
  %{subst_enable amqp} \
 %if_enabled mongodb
  %{subst_enable mongodb} \
- --with-libmongo-client=system
+ --with-mongoc=system
 %endif
 
 ##
@@ -264,6 +281,7 @@ fi
 %_bindir/loggen
 %_bindir/pdbtool
 %_bindir/update-patterndb
+%_bindir/dqtool
 
 %dir %_libdir/%name
 # basic plugin set
@@ -284,6 +302,11 @@ fi
 %_libdir/%name/libsystem-source.so
 %_libdir/%name/libsdjournal.so
 %_libdir/%name/libkvformat.so
+# added in 3.8
+%_libdir/%name/libadd-contextual-data.so
+%_libdir/%name/libcef.so
+%_libdir/%name/libdate.so
+%_libdir/%name/libdisk-buffer.so
 
 %_libdir/lib%name-*.so.*
 
@@ -327,6 +350,11 @@ fi
 %_libdir/%name/libafmongodb.so
 %endif
 
+%if_enabled curl
+%files curl
+%_libdir/%name/libcurl.so
+%endif
+
 %files python
 %_libdir/%name/libmod-python.so
 
@@ -342,7 +370,9 @@ fi
 %dir %_includedir/%name
 #_includedir/%name/*.h
 %dir %_includedir/%name/*
+%dir %_includedir/%name/*/*
 %_includedir/%name/*/*.h
+%_includedir/%name/*/*/*.h
 
 %dir %_datadir/%name/tools
 %_datadir/%name/tools/*
@@ -350,12 +380,18 @@ fi
 %_libdir/lib%name.so
 %_libdir/pkgconfig/%name.pc
 
+%_libdir/pkgconfig/%name-native-connector.pc
+%_libdir/libsyslog-ng-native-connector.a
+
 %files devel-test
 %dir %_libdir/%name/libtest
 %_libdir/%name/libtest/libsyslog-ng-test.a
 %_libdir/pkgconfig/%name-test.pc
 
 %changelog
+* Wed Aug 24 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.8.1-alt1
+- 3.8.1
+
 * Mon May 23 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.7.3-alt1
 - 3.7.3
 
