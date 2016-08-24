@@ -5,8 +5,8 @@
 %def_without   	jit
 
 Name:		gambas3
-Version:	3.8.4
-Release:	alt2
+Version:	3.9.0
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -86,10 +86,8 @@ BuildRequires:	zlib-devel
 
 Patch1:		%name-2.99.1-nolintl.patch
 Patch2:		%name-2.99.1-noliconv.patch
-Patch3:		%name-3.8.0-fix-bad-elf-symbol-in-gb.sdl2.patch
 # Use libv4l1
 Patch4:		%name-3.3.4-use-libv4l1.patch
-Patch5:		gambas3-gcc-fix.patch
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -264,6 +262,8 @@ Requires:      %name-gb-form-editor = %version-%release
 Requires:      %name-gb-qt5 = %version-%release
 Requires:      %name-gb-qt5-opengl = %version-%release
 Requires:      %name-gb-qt5-webkit = %version-%release
+Requires:      %name-gb-qt5-ext = %version-%release
+Requires:      %name-gb-form-terminal = %version-%release
 
 %description full
 Gambas3 with all components.
@@ -962,7 +962,7 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-qt5-opengl
-This package contains the Gambas3 qt-opengl components.
+This package contains the Gambas3 qt5-opengl components.
 
 %package gb-qt5-webkit
 Summary:	Gambas3 component package for qt5-webkit
@@ -970,16 +970,30 @@ Group:		Development/Tools
 Requires:	%name-runtime = %version-%release
 
 %description gb-qt5-webkit
-This package contains the Gambas3 qt-webkit components.
+This package contains the Gambas3 qt5-webkit components.
+
+%package gb-qt5-ext
+Summary:	Gambas3 component package for qt5 (additional)
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-qt5-ext
+This package contains the Gambas3 qt5 component with additional stuff.
+
+%package gb-form-terminal
+Summary:	Gambas3 component package for terminal in forms
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+
+%description gb-form-terminal
+This package contains the Gambas3 component for terminal in form.
 
 
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
 %patch4 -p2
-%patch5 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1491,6 +1505,7 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %files gb-web
 %_libdir/%name/gb.web.*
 %appdir/info/gb.web.*
+%appdir/control/gb.web.*
 
 %files gb-xml
 %_libdir/%name/gb.xml.component
@@ -1536,7 +1551,20 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.qt5.webkit.*
 %appdir/info/gb.qt5.webkit.*
 
+%files gb-qt5-ext
+%_libdir/%name/gb.qt5.ext.*
+%appdir/info/gb.qt5.ext.*
+
+%files gb-form-terminal
+%_libdir/%name/gb.form.terminal.*
+%appdir/info/gb.form.terminal.*
+%appdir/control/gb.form.terminal/
+
 %changelog
+* Mon Aug 22 2016 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.9.0)
+- New components: gb.qt5.ext, gb.form.terminal
+
 * Mon Apr 04 2016 Andrey Cherepanov <cas@altlinux.org> 3.8.4-alt2
 - Rebuild with new poppler
 - Fix build with GCC
