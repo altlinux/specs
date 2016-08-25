@@ -1,5 +1,6 @@
+# Note: be in sync with gtkspell, see http://gtkspell.sourceforge.net/NEWS
 Name: libgtkspellmm3
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: On-the-fly spell checking for GtkTextView widgets - C++ bindings
@@ -16,6 +17,9 @@ Source: http://prdownloads.sf.net/gtkspell/gtkspellmm/gtkspellmm-%version.tar
 # Automatically added by buildreq on Fri Oct 10 2014
 # optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libat-spi2-core libatk-devel libatkmm-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcairomm-devel libcloog-isl4 libenchant-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+3-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-server pkg-config python3-base
 BuildRequires: doxygen gcc-c++ glibc-devel graphviz libdb4-devel libgtkmm3-devel libgtkspell3-devel xsltproc
+
+# http://gtkspell.sourceforge.net/NEWS
+BuildRequires: libgtkspell3-devel >= 3.0.8
 
 %description
 GtkSpell provides word-processor-style highlighting and replacement of
@@ -44,7 +48,8 @@ This package contains the full API documentation for %name.
 %setup -n gtkspellmm-%version
 
 %build
-%configure
+%add_optflags -std=c++11
+%configure --disable-static
 %make_build
 
 %install
@@ -67,6 +72,9 @@ find %buildroot -name "*.la" -exec rm {} \;
 %_docdir/gtkspellmm-3.0
 
 %changelog
+* Tue Jul 26 2016 Vitaly Lipatov <lav@altlinux.ru> 3.0.4-alt1
+- new version 3.0.4 (with rpmrb script)
+
 * Fri Oct 10 2014 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1
 - initial build for ALT Linux Sisyphus
 
