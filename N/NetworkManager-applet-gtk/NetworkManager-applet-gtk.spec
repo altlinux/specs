@@ -8,7 +8,7 @@
 %def_without team
 
 Name: NetworkManager-applet-gtk
-Version: 1.3.91
+Version: 1.4.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -212,6 +212,10 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Thu Aug 25 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Fix handling of wired 802-1x security setting.
+- Updated to 1.4.0.
+
 * Tue Aug 23 2016 Mikhail Efremov <sem@altlinux.org> 1.3.91-alt1
 - Updated to 1.3.91 (1.4-rc1).
 
