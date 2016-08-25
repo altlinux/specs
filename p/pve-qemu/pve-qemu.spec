@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -257,10 +257,15 @@ Patch69: 0053-vma-use-BlockBackend-on-extract.patch
 Patch70: 0054-rbd-disable-rbd_cache_writethrough_until_flush-with-.patch
 Patch71: 0055-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
 Patch72: CVE-2016-6490-virtio-check-vring-descriptor-buffer-length.patch
+Patch73: 0006-virtio-recalculate-vq-inuse-after-migration.patch
+Patch74: 0007-virtio-decrement-vq-inuse-in-virtqueue_discard.patch
+Patch75: 0008-iscsi-pass-SCSI-status-back-for-SG_IO.patch
+Patch76: 0009-net-limit-allocation-in-nc_sendv_compat.patch
+Patch77: 0010-ui-fix-refresh-of-VNC-server-surface.patch
 
 %set_verify_elf_method fhs=relaxed
 
-%set_gcc_version 4.7
+#set_gcc_version 4.7
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: libxfs-devel
@@ -498,6 +503,11 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch70 -p1
 %patch71 -p1
 %patch72 -p1
+%patch73 -p1
+%patch74 -p1
+%patch75 -p1
+%patch76 -p1
+%patch77 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -755,6 +765,9 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Thu Aug 25 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt2
+- added in some stable hotfixes
+
 * Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 
