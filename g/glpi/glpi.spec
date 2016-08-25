@@ -3,7 +3,7 @@
 
 Name: glpi
 Version: 0.90.5
-Release: alt1
+Release: alt2
 
 
 Summary: IT and asset management software
@@ -69,7 +69,7 @@ PHP5 dependencies for %name
 %install
 # install apache config
 install -pD -m0644 %_sourcedir/apache.conf %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
-install -pD -m0644 %_sourcedir/apache2.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
+install -pD -m0644 %_sourcedir/apache2.conf %buildroot%_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 # install glpi
 mkdir -p %buildroot%installdir
@@ -95,9 +95,11 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %post apache2
+a2ensite %name
 %_initdir/httpd2 condreload
 
 %postun apache2
+a2dissite %name
 %_initdir/httpd2 condreload
 
 
@@ -135,13 +137,16 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 
 
 %files apache2
-%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
+%config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 
 %files php5
 
 
 %changelog
+* Thu Aug 25 2016 Pavel Zilke <zidex at altlinux dot org> 0.90.5-alt2
+- Conf for Apache2 moved to sites-available
+
 * Thu Aug 25 2016 Pavel Zilke <zidex at altlinux dot org> 0.90.5-alt1
 - New version 0.90.5
 
