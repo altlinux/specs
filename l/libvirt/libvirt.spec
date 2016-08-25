@@ -62,7 +62,7 @@
 %def_with udev
 %def_without hal
 %def_with yajl
-%def_without sanlock
+%def_with sanlock
 %def_with fuse
 %def_with pm_utils
 
@@ -103,7 +103,7 @@
 %define with_loader_nvram "%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd:%_datadir/AAVMF/AAVMF_CODE.fd:%_datadir/AAVMF/AAVMF_VARS.fd"
 
 Name: libvirt
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -114,11 +114,12 @@ Source1: gnulib-%name-%version.tar
 Patch1: %name-%version-%release.patch
 
 
-%{?_with_libvirtd:Requires: libvirt-daemon = %version-%release}
-%{?_with_network:Requires: libvirt-daemon-config-network = %version-%release}
-%{?_with_nwfilter:Requires: libvirt-daemon-config-nwfilter = %version-%release}
-%{?_with_qemu:Requires: libvirt-qemu-common = %version-%release}
-Requires: libvirt-client = %version-%release
+%{?_with_libvirtd:Requires: %name-daemon = %version-%release}
+%{?_with_network:Requires: %name-daemon-config-network = %version-%release}
+%{?_with_nwfilter:Requires: %name-daemon-config-nwfilter = %version-%release}
+%{?_with_qemu:Requires: %name-qemu-common = %version-%release}
+Requires: %name-client = %version-%release
+Requires: %name-libs = %version-%release
 
 %{?_with_xen:BuildRequires: xen-devel xen-runtime}
 %{?_with_libxl:BuildRequires: xen-devel}
@@ -153,7 +154,7 @@ Requires: libvirt-client = %version-%release
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
 %{?_with_pm_utils:BuildRequires: pm-utils}
-%{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel}
+%{?_with_wireshark:BuildRequires: glib2-devel wireshark tshark wireshark-devel >= 2.1.0}
 
 BuildRequires: bridge-utils libblkid-devel
 BuildRequires: libgcrypt-devel libgnutls-devel >= 2.2.0 libp11-kit-devel
@@ -184,7 +185,7 @@ Copy of the libvirt website documentation
 %package daemon
 Summary: Server side daemon and supporting files for libvirt library
 Group: System/Servers
-Requires: %name-client = %version-%release
+Requires: %name-libs = %version-%release
 Requires: iptables
 %{?_with_pm_utils:Requires: pm-utils}
 
@@ -297,6 +298,10 @@ Requires: %name-daemon = %version-%release
 Requires: %name-daemon-driver-network = %version-%release
 Requires: %name-daemon-driver-storage = %version-%release
 Requires: /usr/bin/qemu-img
+# For image compression
+Requires: gzip
+Requires: bzip2
+Requires: xz
 
 %description daemon-driver-qemu
 The qemu driver plugin for the libvirtd daemon, providing
@@ -486,11 +491,9 @@ Server side daemon, driver and default network & firewall configs
 required to manage the virtualization capabilities of VirtualBox.
 
 %package client
-Summary: Client side library and utilities of the libvirt library
+Summary: Client side utilities of the libvirt library
 Group: System/Libraries
-# So remote clients can access libvirt over SSH tunnel
-# (client invokes 'nc' against the UNIX socket on the server)
-Requires: nc
+Requires: %name-libs = %version-%release
 # Needed by libvirt-guests init script.
 Requires: gettext
 # For virConnectGetSysinfo
@@ -501,26 +504,76 @@ Requires: gnutls-utils
 Conflicts: %name < 0.9.11
 
 %description client
-Shared libraries and client binaries needed to access to the
-virtualization capabilities of recent versions of Linux (and other OSes).
+The client binaries needed to access the virtualization
+capabilities of recent versions of Linux (and other OSes).
+
+%package libs
+Summary: Client side libraries
+Group: System/Libraries
+# So remote clients can access libvirt over SSH tunnel
+# (client invokes 'nc' against the UNIX socket on the server)
+Requires: nc
+Requires: /etc/sasl2
+
+%description libs
+Shared libraries for accessing the libvirt daemon.
+
+%package admin
+Summary: Set of tools to control libvirt daemon
+Group: System/Servers
+Requires: %name-libs = %version-%release
+
+%description admin
+The client side utilities to control the libvirt daemon.
 
 %package -n wireshark-plugin-%name
 Summary: Wireshark dissector plugin for libvirt RPC transactions
-Group: Development/Libraries
+Group: Networking/Other
 Requires: wireshark
-Requires: %name-client = %version-%release
+Requires: %name-libs = %version-%release
 
 %description -n wireshark-plugin-%name
 Wireshark dissector plugin for better analysis of libvirt RPC traffic.
 
+%package login-shell
+Summary: Login shell for connecting users to an LXC container
+Group: System/Libraries
+Requires: %name-libs = %version-%release
+
+%description login-shell
+Provides the set-uid virt-login-shell binary that is used to
+connect a user to an LXC container when they login, by switching
+namespaces.
+
 %package devel
 Summary: Libraries, includes, etc. to compile with the libvirt library
 Group: Development/C
-Requires: %name-client = %version-%release
+Requires: %name-libs = %version-%release
 
 %description devel
 Includes and documentations for the C library providing an API to use
 the virtualization capabilities of recent versions of Linux (and other OSes).
+
+%package lock-sanlock
+Summary: Sanlock lock manager plugin for QEMU driver
+Group: System/Libraries
+PreReq: sanlock >= 2.4
+#for virt-sanlock-cleanup require augeas
+Requires: augeas
+Requires: %name-daemon = %version-%release
+Requires: %name-libs = %version-%release
+
+%description lock-sanlock
+Includes the Sanlock lock manager plugin for the QEMU
+driver
+
+%package -n nss-%name
+Summary: Libvirt plugin for Name Service Switch
+Group: System/Libraries
+Requires: %name-daemon-driver-network = %version-%release
+
+%description -n nss-%name
+Libvirt plugin for NSS for translating domain names into IP addresses.
 
 %prep
 %setup -a1
@@ -643,6 +696,11 @@ rm -f %buildroot%_sysconfdir/logrotate.d/libvirtd.libxl
 %endif
 install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
 
+# Relocate nss library from %_libdir/libnss_libvirt.so.* to /%_lib/libnss_libvirt.so.* .
+mkdir -p %buildroot/%_lib
+mv %buildroot%_libdir/libnss_libvirt.so.* %buildroot/%_lib/
+ln -sf ../../%_lib/libnss_libvirt.so.2 %buildroot%_libdir/libnss_libvirt.so
+
 %find_lang %name
 
 %check
@@ -657,8 +715,10 @@ do
 done
 %make check ||:
 
-%if_with libvirtd
-%pre daemon
+%pre login-shell
+%_sbindir/groupadd -r -f virtlogin
+
+%pre daemon-driver-qemu
 %_sbindir/groupadd -r -f %qemu_group
 %_sbindir/useradd -M -r -d %_localstatedir/lib/%name -s /bin/false -c "libvirt user" -g %qemu_group %qemu_user >/dev/null 2>&1 || :
 
@@ -679,11 +739,12 @@ fi
 %preun_service virtlogd
 %preun_service virtlockd
 
+
+%triggerpostun daemon -- libvirt-daemon < 1.3.0
 # In upgrade scenario we must explicitly enable virtlockd/virtlogd
 # sockets, if libvirtd is already enabled and start them if
 # libvirtd is running, otherwise you'll get failures to start
 # guests
-%triggerpostun daemon -- libvirt-daemon < 1.3.0
 if [ $1 -ge 1 ] ; then
     if service libvirtd status; then
         chkconfig virtlogd on && service virtlogd start
@@ -691,7 +752,6 @@ if [ $1 -ge 1 ] ; then
     fi
 fi
 
-%if_with network
 %post daemon-config-network
 if [ $1 -eq 1 ]; then
     if [ ! -f %_sysconfdir/libvirt/qemu/networks/default.xml ]; then
@@ -701,8 +761,6 @@ if [ $1 -eq 1 ]; then
          > /etc/libvirt/qemu/networks/default.xml
     fi
 fi
-%endif #if_with network
-%endif #if_with libvirtd
 
 %post client
 %post_service libvirt-guests
@@ -719,44 +777,37 @@ fi
 
 %doc docs/html docs/devhelp docs/*.gif
 
-%files client -f %name.lang
-%doc AUTHORS ChangeLog.gz README COPYING COPYING.LESSER TODO
-%_libdir/lib*.so.*
 
-%config(noreplace) %_sysconfdir/libvirt/libvirt.conf
-%config(noreplace) %_sysconfdir/libvirt/libvirt-admin.conf
+%files client
 %_bindir/virsh
-%_bindir/virt-admin
 %_bindir/virt-xml-validate
 %_bindir/virt-pki-validate
 %_bindir/virt-host-validate
 %_man1dir/virsh.*
-%_man1dir/virt-admin.1*
 %_man1dir/virt-xml-validate.*
 %_man1dir/virt-pki-validate.*
 %_man1dir/virt-host-validate.*
-%dir %_datadir/libvirt
-%dir %_datadir/libvirt/schemas
-%_datadir/libvirt/schemas/*.rng
-%_datadir/libvirt/cpu_map.xml
-%_datadir/libvirt/libvirtLogo.png
-
-%if_with login_shell
-%config(noreplace) %_sysconfdir/libvirt/virt-login-shell.conf
-%_bindir/virt-login-shell
-%_man1dir/virt-login-shell.*
-%endif
-
-%if_with sasl
-%config(noreplace) %_sysconfdir/sasl2/libvirt.conf
-%endif
 
 %config(noreplace) %_sysconfdir/sysconfig/libvirt-guests
 %_initdir/libvirt-guests
 %_libexecdir/libvirt-guests.sh
 %systemd_unitdir/libvirt-guests.service
 
+%files libs -f %name.lang
+%doc COPYING COPYING.LESSER
+%config(noreplace) %_sysconfdir/libvirt/libvirt.conf
+%config(noreplace) %_sysconfdir/libvirt/libvirt-admin.conf
+%_libdir/lib*.so.*
+%dir %_datadir/libvirt
+%dir %_datadir/libvirt/schemas
 %dir %_localstatedir/lib/libvirt
+%_datadir/libvirt/schemas/*.rng
+%_datadir/libvirt/cpu_map.xml
+%_datadir/libvirt/libvirtLogo.png
+
+%if_with sasl
+%config(noreplace) %_sysconfdir/sasl2/libvirt.conf
+%endif
 
 %if_with libvirtd
 %files daemon
@@ -852,7 +903,7 @@ fi
 
 %files daemon-driver-interface
 %_libdir/%name/connection-driver/libvirt_driver_interface.so
-%endif
+%endif #if_with udev
 
 %if_with nwfilter
 %files daemon-driver-nwfilter
@@ -864,7 +915,6 @@ fi
 
 %files daemon-driver-storage
 %_libdir/%name/connection-driver/libvirt_driver_storage.so
-%endif
 
 %if_with qemu
 %files daemon-driver-qemu
@@ -915,7 +965,7 @@ fi
 %files kvm
 %endif
 
-%endif #qemu
+%endif #if_with qemu
 
 %if_with lxc
 %files lxc
@@ -946,26 +996,74 @@ fi
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd.libxl
 %_datadir/augeas/lenses/libvirtd_libxl.aug
 %_datadir/augeas/lenses/tests/test_libvirtd_libxl.aug
-%endif
+%endif #if_with libxl
+%endif #if_with xen
 
 %if_with vbox
 %files vbox
 %endif
 
+#if_with sanlock
+%files lock-sanlock
+%_libdir/libvirt/lock-driver/sanlock.so
+
+%if_with qemu
+%config(noreplace) %_sysconfdir/libvirt/qemu-sanlock.conf
+%endif
+
+%if_with libxl
+%config(noreplace) %_sysconfdir/libvirt/libxl-sanlock.conf
+%endif
+
+%_datadir/augeas/lenses/libvirt_sanlock.aug
+%_datadir/augeas/lenses/tests/test_libvirt_sanlock.aug
+%dir %attr(0770, root, sanlock) %_localstatedir/lib/libvirt/sanlock
+%_sbindir/virt-sanlock-cleanup
+%_man8dir/virt-sanlock-cleanup.*
+%_libexecdir/libvirt_sanlock_helper
+#endif #if_with sanlock
+
 %endif #if_with libvirtd
+
+%files admin
+%_bindir/virt-admin
+%_man1dir/virt-admin.1*
+
+%files  -n nss-%name
+/%_lib/libnss_libvirt.so.*
 
 %if_with wireshark
 %files -n wireshark-plugin-%name
-%_libdir/wireshark/plugins/*/%name.so
+%_libdir/wireshark/plugins/%name.so
+%endif
+
+%if_with lxc
+%if_with login_shell
+%files login-shell
+%config(noreplace) %_sysconfdir/libvirt/virt-login-shell.conf
+%attr(4710, root, virtlogin) %_bindir/virt-login-shell
+%_man1dir/virt-login-shell.*
+%endif
 %endif
 
 %files devel
-%_pkgconfigdir/lib*.pc
-%_libdir/lib*.so
+%_pkgconfigdir/*.pc
+%_libdir/*.so
 %_includedir/libvirt
 %_datadir/libvirt/api
 
 %changelog
+* Tue Aug 23 2016 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt1
+- 2.1.0
+- build with sanlock
+- move libs from libvirt-client to lilbvirt-libs
+- add new subpackages:
+  + libvirt-libs
+  + libvirt-admin
+  + libvirt-shell
+  + libvirt-nss
+  + libvirt-lock-sanlock
+
 * Thu Jul 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 
