@@ -6,10 +6,10 @@
 %define aliases_default_alt 20-aliases-default-alt.conf
 %define aliases_os_alt 41-aliases-os-alt.conf
 
-Summary: Fontconfig configuration meant to be used in conjunction with Freetype patches from http://www.infinality.net.  
+Summary: Fontconfig configuration meant to be used in conjunction with Freetype patches from http://www.infinality.net.
 Name: %{name}
 Version: %{version}
-Release: alt6.git%{infinality_release}
+Release: alt7.git%{infinality_release}
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -26,8 +26,8 @@ Source2: 41-aliases-os-alt.conf
 A configurable fontconfig configuration meant to be used in conjunction
 with Freetype patches from http://www.infinality.net.  It should drop
 cleanly into most existing fontconfig setups.  While this package will
-work without infinality patches, much of it is tailored to rendering 
-when using those patches, and may not look correct otherwise. 
+work without infinality patches, much of it is tailored to rendering
+when using those patches, and may not look correct otherwise.
 
 %install
 %define confdir %{buildroot}/etc/fonts/
@@ -64,6 +64,9 @@ ln -s styles.conf.avail/alt %confinfdir/conf.d
 %doc %_docdir/%{name}-%{version}/
 
 %changelog
+* Thu Aug 25 2016 Vladimir Didenko <cow@altlinux.org> 1-alt7.git20130126
+- don't ban Type-1 fonts (closes: #32427)
+
 * Wed Aug 28 2013 Vladimir Didenko <cow@altlinux.org> 1-alt6.git20130126
 - fix user settings overriding
 
@@ -87,4 +90,3 @@ ln -s styles.conf.avail/alt %confinfdir/conf.d
 
 * Thu Nov 17 2011 Infinality <infinality@infinality.net>
 - New version created
-
