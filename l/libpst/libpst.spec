@@ -1,14 +1,18 @@
 Name: libpst
 Version: 0.6.67
-Release: alt3
+Release: alt4
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
 Group: System/Libraries
 
 Url: http://www.five-ten-sg.com/libpst
-Source0: %url/packages/%name-%version.tar.gz
+Source0: %url/packages/%name-%version.tar
 Source100: libpst.watch
+# A quick fix:
+Patch1: %name-0.6.67-no-bad-mboxes.patch
+# The enhanced fix for the underlying problem:
+Patch2: %name-0.6.67-mixed.items.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -60,12 +64,22 @@ Summary: libpst documentation
 Group: Documentation
 Requires: %name = %version-%release
 BuildArch: noarch
+# License for xml/MAPI_definitions.pdf is GFDL1.1 with no invariant sections etc.,
+# therefore it must be GPL2-compatible. (In case that file is packaged.)
 
 %description docs
 Developer's documentation for libpst
 
+%package -n python-module-%name
+Summary: Python interface to libpst (for reading Outlook files)
+Group: Development/Python
+
+%description  -n python-module-%name
+Python interface to libpst (for reading Outlook files)
+
 %prep
 %setup
+%patch2 -p1
 
 %build
 %autoreconf
@@ -77,9 +91,14 @@ Developer's documentation for libpst
 %install
 %makeinstall_std
 
+# Some reverse-engineered documentation:
+mkdir -p %buildroot%pkgdocdir/format-documentation
+install -m0644 xml/*.pdf -t %buildroot%pkgdocdir/format-documentation/
+
 %files
 %_libdir/*.so.*
 %dir %pkgdocdir
+# LICENSE etc.
 %pkgdocdir/[A-Z]*
 
 %files devel
@@ -93,10 +112,20 @@ Developer's documentation for libpst
 %_man1dir/*
 
 %files docs
-%pkgdocdir/*/
+%pkgdocdir/*
+# LICENSE etc.
 %exclude %pkgdocdir/[A-Z]*
 
+%files -n python-module-%name
+%python_sitelibdir/*.so
+
 %changelog
+* Fri Aug 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.67-alt4
+- all items are saved in folders with mixed items
+  (thx Carl Byington, RH#1369499) (ALT#32425).
+- python-module-libpst packaged.
+- libpst-docs: include the .pdf with old reverse-engeneered documentation.
+
 * Wed Aug 24 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.67-alt3
 - readpst -r: don't produce malformed mbox files
   for folders with mixed content (RH#1369499, ALT#32422).
