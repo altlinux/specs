@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.2
+Version: 2.5.3
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,14 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Aug 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt1
+- rpmbs: fix set branch name in common task
+- rpmbph: fix passed args
+- loginhsh: fix params with white spaces handling
+- runinhsh: fix running firefox-gost
+- rpmbsh: use -b BINARYREPO for loginhsh and rpmbs instead MENVARG
+- rpmgs: initial support for Source-git
+
 * Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.2-alt1
 - rpmcs: replace /usr/lib with libexecdir (semifix ALT bug #32056)
 - rpmbp: fix to pass extra (-z) option
