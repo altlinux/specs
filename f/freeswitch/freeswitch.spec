@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.6.6
-Release: alt2
+Version: 1.6.10
+Release: alt1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -29,12 +29,12 @@ BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
 BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel erlang-devel postgresql-devel
-BuildRequires: java-common java-1.7.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
+BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
 BuildRequires: libmemcached-devel libopus-devel libv8-3.24-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel 
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libsilk-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
 
 %ifarch %ix86 x86_64
-BuildRequires: libsangoma-devel
+BuildRequires: libsangoma-devel nasm
 %endif
 
 %description
@@ -235,6 +235,8 @@ This package provides simple web-based UI.
 %build
 ./bootstrap.sh
 cat %SOURCE4 >modules.conf
+# special hack for building libvpx by nasm
+export ASFLAGS='-Ox'
 %configure \
     --enable-fhs \
     --enable-system-xmlrpc-c \
@@ -617,6 +619,15 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Aug 26 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.10-alt1
+- new version
+
+* Mon Jul 25 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.9-alt1
+- new version
+
+* Tue Jun 14 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.8-alt1
+- new version
+
 * Fri Mar 18 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.6-alt2
 - removed default configuration from freeswitch-daemon package
 - added subpackage with mod_vlc 
