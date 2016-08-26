@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt3
+Release: alt4
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -19,6 +19,7 @@ BuildRequires: libXrandr-devel libXtst-devel xorg-inputproto-devel xorg-fontspro
 BuildRequires: xorg-renderproto-devel xorg-xextproto-devel xorg-xf86driproto-devel xorg-dri2proto-devel xorg-xineramaproto-devel
 BuildRequires: libXrender-devel libxcbutil-devel xorg-util-macros libXfixes-devel libudev-devel intel-gen4asm
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel xorg-dri3proto-devel libxshmfence-devel
+BuildRequires: libXScrnSaver-devel libXcomposite-devel libXxf86vm-devel
 
 %description
 intel  is  an  Xorg  driver  for  Intel  integrated  graphics
@@ -56,6 +57,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Wed Aug 24 2016 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt4
+- git snapshot master.71d3273
+
 * Thu Nov 26 2015 Valery Inozemtsev <shrek@altlinux.ru> 7:2.99.917-alt3
 - git snapshot master.0995ad2
 
