@@ -6,8 +6,8 @@
 %define mod_name py2pack
 
 Name: py2pack
-Version: 0.4.4
-Release: alt2
+Version: 0.6.4
+Release: alt1
 
 Summary: Generate distribution packages from Python packages on PyPI
 
@@ -17,10 +17,16 @@ Group: Development/Python
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pypi.python.org/packages/source/p/%mod_name-%version.tar
+# FIXME: some troubles with pypi sources
+# NOSource-url: https://files.pythonhosted.org/packages/source/p/py2pack/%name-%version.tar.gz
+# Source-url: https://github.com/openSUSE/py2pack/archive/%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python-module-setuptools python-module-jinja2
+# from requirements.txt
+BuildRequires: python-module-setuptools python-module-jinja2 python-module-six
+# setup_requires=["cssselect", "lxml", "requests"], from setup.py
+BuildRequires: python-module-cssselect python-module-lxml python-module-requests
 
 Requires: python-module-py2pack = %version-%release
 
@@ -107,6 +113,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Sat Aug 27 2016 Vitaly Lipatov <lav@altlinux.ru> 0.6.4-alt1
+- new version 0.6.4 (with rpmrb script) from github sources
+
 * Sat Aug 27 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4.4-alt2
 - initial build for ALT Linux Sisyphus
 
