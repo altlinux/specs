@@ -1,12 +1,10 @@
 %define _libexecdir /usr/libexec
 
 Name: ceph
-Version: 0.94.7
-Release: alt4
+Version: 0.94.8
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
 
 License: LGPLv2
 Url: http://ceph.com/
@@ -310,6 +308,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sat Aug 27 2016 Alexei Takaseev <taf@altlinux.org> 0.94.8-alt1
+- 0.94.8
+
 * Mon Jul 25 2016 Lenar Shakirov <snejok@altlinux.ru> 0.94.7-alt4
 - Requires: gdisk added, sgdisk needed by ceph-disk (ALT bug #32132)
 
