@@ -1,6 +1,6 @@
 Name:		focuswriter
-Version:	1.5.6
-Release:	alt1
+Version:	1.6.0
+Release:	alt2
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
@@ -8,7 +8,9 @@ Group:		Text tools
 Url:		http://gottcode.org/focuswriter/
 Source0:	http://gottcode.org/focuswriter/%name-%version-src.tar.bz2
 
-BuildRequires: gcc-c++ libenchant-devel libzip-devel libqt4-devel libhunspell-devel
+# Automatically added by buildreq on Sat Aug 27 2016 (-bi)
+# optimized out: elfutils gcc-c++ libGL-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-widgets libstdc++-devel pkg-config python-base python-modules qt5-base-devel xz
+BuildRequires: libhunspell-devel qt5-multimedia-devel zlib-devel
 
 %description
 FocusWriter is a fullscreen, distraction-free word processor
@@ -22,7 +24,7 @@ that only one thing matters: your writing.
 %setup
 
 %build
-qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
+qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 %make_build
 
 %install
@@ -37,6 +39,12 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Aug 27 2016 Motsyo Gennadi <drool@altlinux.ru> 1.6.0-alt2
+- fix BuildRequires for Qt5
+
+* Sat Aug 27 2016 Motsyo Gennadi <drool@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Sat Jun 25 2016 Motsyo Gennadi <drool@altlinux.ru> 1.5.6-alt1
 - 1.5.6
 
