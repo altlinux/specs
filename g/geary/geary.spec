@@ -1,8 +1,10 @@
+%def_disable snapshot
+
 %define ver_major 0.11
 %def_enable contractor
 
 Name: geary
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Email client
@@ -10,12 +12,15 @@ License: LGPLv2.1+
 Group: Networking/Mail
 Url: https://wiki.gnome.org/Apps/Geary
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define vala_ver 0.22.1
-%define gtk_ver 3.10.0
-%define sqlite_ver 3.7.4
+%define gtk_ver 3.12.0
+%define sqlite_ver 3.12.0
 %define gcr_ver 3.10.1
 
 BuildPreReq: vala-tools >= %vala_ver libvala-devel
@@ -80,6 +85,9 @@ Geary's development.
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun Aug 28 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
+- 0.11.2
+
 * Mon Jun 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1
 
