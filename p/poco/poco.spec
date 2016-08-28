@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.7.4
-Release: alt1
+Release: alt2
 Summary: POrtable COmponents C++ Libraries
 License: Boost Software License v1.0
 Group: Development/C++
@@ -40,6 +40,89 @@ POrtable COmponents C++ Libraries are:
 * Based on and complementing the C++ Standard Library/STL.
 * Highly portable and available on many different platforms.
 * Open Source, licensed under the Boost Software License.
+
+%package -n lib%name-net
+Summary: POrtable COmponents C++ Libraries (net)
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-net
+POrtable COmponents C++ Libraries: Poco network library
+
+%package -n lib%name-data
+Summary: POrtable COmponents C++ Libraries (data)
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-data
+POrtable COmponents C++ Libraries: Poco data library
+
+%package -n lib%name-crypto
+Summary: POrtable COmponents C++ Libraries (crypto)
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-crypto
+POrtable COmponents C++ Libraries: Poco crypto library
+
+%package -n lib%name-mysql
+Summary: POrtable COmponents C++ Libraries (mysql)
+Group: Development/C++
+Requires: lib%name-data = %EVR
+
+%description -n lib%name-mysql
+POrtable COmponents C++ Libraries: Poco mysql library
+
+%package -n lib%name-sqlite
+Summary: POrtable COmponents C++ Libraries (sqlite)
+Group: Development/C++
+Requires: lib%name-data = %EVR
+
+%description -n lib%name-sqlite
+POrtable COmponents C++ Libraries: Poco sqlite library
+
+%package -n lib%name-odbc
+Summary: POrtable COmponents C++ Libraries (odbc)
+Group: Development/C++
+Requires: lib%name-data = %EVR
+
+%description -n lib%name-odbc
+POrtable COmponents C++ Libraries: Poco odbc library
+
+%package -n lib%name-mongodb
+Summary: POrtable COmponents C++ Libraries (mongodb)
+Group: Development/C++
+Requires: lib%name-net = %EVR
+
+%description -n lib%name-mongodb
+POrtable COmponents C++ Libraries: Poco mongodb library
+
+%package -n lib%name-zip
+Summary: POrtable COmponents C++ Libraries (zip)
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-zip
+POrtable COmponents C++ Libraries: Poco zip library
+
+%package -n lib%name-util
+Summary: POrtable COmponents C++ Libraries (util)
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-util
+POrtable COmponents C++ Libraries: Poco util library
+
+%package -n lib%name-ssl
+Summary: POrtable COmponents C++ Libraries (ssl)
+Group: Development/C++
+Requires: lib%name = %EVR
+Requires: lib%name-crypto = %EVR
+Requires: lib%name-net = %EVR
+Requires: lib%name-util = %EVR
+
+%description -n lib%name-ssl
+POrtable COmponents C++ Libraries: Poco ssl network library
 
 %package -n lib%name-devel
 Summary: Development files of POrtable COmponents C++ Libraries
@@ -119,7 +202,40 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 
 %files -n lib%name
 %doc CHANGELOG CONTRIBUTORS libversion LICENSE NEWS README* VERSION
-%_libdir/*.so.*
+%_libdir/libPocoFoundation*.so.*
+%_libdir/libPocoXML*.so.*
+%_libdir/libPocoJSON*.so.*
+%_libdir/libPocoCppParser*.so.*
+
+%files -n lib%name-data
+%_libdir/libPocoData*.so.*
+
+%files -n lib%name-net
+%_libdir/libPocoNet*.so.*
+
+%files -n lib%name-ssl
+%_libdir/libPocoNetSSL*.so.*
+
+%files -n lib%name-crypto
+%_libdir/libPocoCrypto*.so.*
+
+%files -n lib%name-mysql
+%_libdir/libPocoDataMySQL*.so.*
+
+%files -n lib%name-sqlite
+%_libdir/libPocoDataSQLite*.so.*
+
+%files -n lib%name-mongodb
+%_libdir/libPocoMongoDB*.so.*
+
+%files -n lib%name-odbc
+%_libdir/libPocoDataODBC*.so.*
+
+%files -n lib%name-util
+%_libdir/libPocoUtil*.so.*
+
+%files -n lib%name-zip
+%_libdir/libPocoZip*.so.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -128,6 +244,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Fri Aug 26 2016 Pavel Vainerman <pv@altlinux.ru> 1.7.4-alt2
+- split to subpackages
+
 * Sat Jul 30 2016 Alexei Takaseev <taf@altlinux.org> 1.7.4-alt1
 - 1.7.4
 
