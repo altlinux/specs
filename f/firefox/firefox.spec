@@ -6,13 +6,13 @@
 
 %define gst_version 1.0
 %define nspr_version 4.12.0
-%define nss_version 3.24.0
+%define nss_version 3.26.0
 
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        48.0
+Version:        48.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -303,6 +303,9 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Sun Aug 28 2016 Alexey Gladkov <legion@altlinux.ru> 48.0.1-alt1
+- New release (48.0.1).
+
 * Fri Aug 05 2016 Alexey Gladkov <legion@altlinux.ru> 48.0-alt1
 - New release (48.0).
 - Fixed:
