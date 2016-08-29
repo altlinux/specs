@@ -3,7 +3,7 @@
 %def_enable python
 
 Name: gitg
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
@@ -27,9 +27,9 @@ AutoReqProv: nopython
 %endif
 
 %define glib_ver 2.38
-%define gtk_ver 3.12
+%define gtk_ver 3.20
 %define gtksourceview_ver 3.10
-%define git2_ver 0.24.0
+%define git2_ver 0.24.3
 %define webkit_ver 2.6.0
 %define gtkspell_ver 3.0.3
 %define peas_ver 1.5.0
@@ -107,6 +107,7 @@ library.
 
 %build
 #%autoreconf
+%autoreconf
 %configure --disable-static \
 	%{subst_enable python}
 %make
@@ -159,6 +160,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Sat Aug 27 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
+- 3.20.2
+
 * Wed Jun 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 
