@@ -7,8 +7,8 @@
 %define sddm_confdir %x11confdir/sddm
 
 Name: sddm
-Version: 0.13.0
-Release: alt9
+Version: 0.14.0
+Release: alt2
 %K5init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -25,25 +25,24 @@ Source10: sddm.pam
 Source11: sddm-autologin.pam
 Source12: sddm-greeter.pam
 Source20: Xsetup
+Source21: Xstop
 # upstream
-Patch1: 0033-Activate-window-for-the-primary-screen.patch
-Patch2: 0034-Theme-Maui-Prevent-losing-focus.patch
 # SuSE
 Patch10: create_pid_file.patch
 # ALT
 Patch100: alt-defaults.patch
-Patch101: alt-branding.patch
+Patch101: alt-branding-faces.patch
 Patch102: alt-wmsession.patch
 Patch103: alt-systemctl-path.patch
 Patch104: alt-fix-desktop-session-name.patch
-Patch105: alt-fix-crash-configreader.patch
+Patch105: alt-branding-background.patch
 Patch106: alt-flicker-free-plymouth.patch
 
 # Automatically added by buildreq on Thu Apr 02 2015 (-bi)
 # optimized out: cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-test libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-module-BeautifulSoup python-module-PyStemmer python-module-Pygments python-module-google python-module-google-apputils python-module-matplotlib python-module-numpy python-module-pyExcelerator python-module-pyparsing python-module-pytz python-module-setuptools python-module-snowballstemmer python-module-zope.interface python-modules python-modules-compiler python-modules-email python-modules-encodings qt5-base-devel qt5-tools
 #BuildRequires: cmake gcc-c++ glibc-devel-static libpam-devel libsystemd-devel nss-ldapd python-module-Reportlab python-module-cssselect python-module-docutils python-module-ecdsa python-module-ed25519 python-module-html5lib python-module-nss python-module-polib python-module-protobuf python-module-pycparser python-module-pycrypto python-module-pygobject3 python-module-pygraphviz python-module-xlwt qt5-declarative-devel qt5-tools-devel ruby ruby-stdlibs time xsetroot
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: cmake gcc-c++ glibc-devel
+BuildRequires: cmake extra-cmake-modules glibc-devel
 BuildRequires: libpam-devel libsystemd-devel
 BuildRequires: libxcb-devel libXau-devel libXdmcp-devel
 BuildRequires: qt5-declarative-devel qt5-tools-devel
@@ -57,11 +56,9 @@ ability to create smooth, animated user interfaces.
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
-%patch2 -p1
 %patch10 -p1
 %patch100 -p1 -b .defaults
-%patch101 -p1
+#%patch101 -p1
 %patch102 -p1 -b .wmsession
 %patch103 -p1
 %patch104 -p1
@@ -98,22 +95,24 @@ install -d %buildroot/%_runtimedir/sddm
 install -d %buildroot/%_localstatedir/sddm
 
 install -m 0755 %SOURCE20 %buildroot/%sddm_confdir/
+install -m 0755 %SOURCE21 %buildroot/%sddm_confdir/
+rm -f %buildroot/%_datadir/sddm/scripts/X*
 
 install -p -m 0644 %SOURCE10 %buildroot%_sysconfdir/pam.d/sddm
 install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 #install -p -m 0644 %SOURCE12 %buildroot%_sysconfdir/pam.d/sddm-greeter
 
 # create default theme
-cp -ar %buildroot/%_datadir/sddm/themes/maui %buildroot/%_datadir/sddm/themes/default
-sed -i 's|^background=.*|background=%_datadir/design/current/backgrounds/xdm.png|' %buildroot/%_datadir/sddm/themes/default/theme.conf
-sed -i 's|^\(Name=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/default/metadata.desktop
-sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/default/metadata.desktop
+#cp -ar %buildroot/%_datadir/sddm/themes/maui %buildroot/%_datadir/sddm/themes/default
+#sed -i 's|^background=.*|background=%_datadir/design/current/backgrounds/xdm.png|' %buildroot/%_datadir/sddm/themes/default/theme.conf
+#sed -i 's|^\(Name=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/default/metadata.desktop
+#sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/default/metadata.desktop
 
 %pre
 /usr/sbin/useradd -c 'SDDM User' -s /sbin/nologin -d %_localstatedir/sddm -r %sddm_user 2> /dev/null || :
 
 %files
-%doc COPYING* README*
+%doc docs/*.md ChangeLog LICENSE* README* CONTRIBUTORS
 %dir %sddm_confdir
 %config(noreplace) %sddm_confdir/*
 %config(noreplace) %_sysconfdir/pam.d/sddm*
@@ -131,6 +130,12 @@ sed -i 's|^\(Description=.*\)|\1 Default|' %buildroot/%_datadir/sddm/themes/defa
 /lib/tmpfiles.d/sddm.conf
 
 %changelog
+* Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt2
+- fix build requires
+
+* Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt1
+- new version
+
 * Fri Aug 05 2016 Sergey V Turchin <zerg@altlinux.org> 0.13.0-alt9
 - decrease MAX_UID to 32000
 
