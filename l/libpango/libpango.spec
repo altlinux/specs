@@ -9,7 +9,7 @@
 %def_enable libthai
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -26,9 +26,7 @@ Source13: pangoft2-compat.lds
 Source14: pangocairo-compat.map
 Source15: pangocairo-compat.lds
 
-Patch: pango-1.37.0-alt-compat-version-script.patch
-# check.defs always true
-Patch3: pango-1.30.0-alt-check_defs.patch
+Patch: pango-1.40.2-alt-compat-version-script.patch
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
@@ -44,10 +42,6 @@ Obsoletes: gscript
 %define gi_ver 0.9.5
 %define hb_ver 0.9.30
 %define thai_ver 0.1.9
-
-# We need to prereq these so we can run pango-querymodules in post
-#PreReq: glib2 >= %glib_ver
-#PreReq: libXft
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses gnome-common gtk-doc
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
@@ -130,7 +124,6 @@ the functionality of the installed Pango library.
 %setup -n %_name-%version
 %patch -p1
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
-%patch3
 
 %build
 %autoreconf
@@ -189,6 +182,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Aug 29 2016 Yuri N. Sedunov <aris@altlinux.org> 1.40.2-alt1
+- 1.40.2
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.40.1-alt1
 - 1.40.1
 
