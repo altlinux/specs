@@ -1,6 +1,6 @@
 Name: gdb
 Version: 7.9
-Release: alt2
+Release: alt3
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -9,7 +9,6 @@ Url: http://www.gnu.org/software/gdb/
 
 # ftp://sourceware.org/pub/gdb/releases/gdb-%version.tar.bz2
 Source: gdb-%version.tar
-Source1: gdb.desktop
 # Cleanup any leftover testsuite processes as it may stuck hasher builds.
 Source2: gdb-orphanripper.c
 # Man page for gstack(1).
@@ -582,7 +581,6 @@ popd #light
 install -pm755 light/gdb/gdb %buildroot%_bindir/gdb-light
 
 install -pm644 %_sourcedir/gdb-gstack.man %buildroot%_man1dir/gstack.1
-install -pDm644 %_sourcedir/gdb.desktop %buildroot%_desktopdir/gdb.desktop
 
 # These files are already packaged as a part of binutils.
 rm %buildroot%_infodir/bfd*
@@ -626,7 +624,6 @@ popd
 %_man1dir/*
 %_infodir/*
 %_datadir/gdb
-%_desktopdir/*
 %doc gdb/{MAINTAINERS,NEWS}.xz
 %exclude %_datadir/gdb/python
 
@@ -635,6 +632,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Mon Aug 29 2016 Andrey Cherepanov <cas@altlinux.org> 7.9-alt3
+- Do not distribute desktop file for console program
+
 * Thu Dec 10 2015 Andrey Cherepanov <cas@altlinux.org> 7.9-alt2
 - Fix configure by adding makeinfo to build requirements
 - Rebuild fixes redundant repl_strstr function in libgdb.a
