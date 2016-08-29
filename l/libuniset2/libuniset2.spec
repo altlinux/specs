@@ -13,8 +13,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.4
-Release: alt5
+Version: 2.5
+Release: alt4
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -26,7 +26,9 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 # Git: http://git.etersoft.ru/projects/asu/uniset.git
 Source: %name-%version.tar
 
-BuildRequires: libcommoncpp2-devel libev-devel libomniORB-devel libsigc++2-devel xsltproc
+# Automatically added by buildreq on Fri Aug 26 2016
+# optimized out: fontconfig libgpg-error libsasl2-3 libsqlite3-devel libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-devel python-module-omniidl python-modules python3
+BuildRequires: gcc-c++ libev-devel libomniORB-devel libpoco-devel libsigc++2-devel libxml2-devel xsltproc
 
 # for uniset2-codegen
 BuildPreReq: xsltproc
@@ -484,6 +486,51 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Mon Aug 29 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt4
+- (python): add supplier ID for setValue function
+
+* Fri Aug 26 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt3
+- update requires
+
+* Fri Aug 26 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt2
+- Fixed converting timeout_t to Poco::TimeSpan
+
+* Thu Aug 25 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt1.2
+- (UNetUDP): add debug information (getInfo)
+- minor fixes
+
+* Wed Aug 24 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt1.1
+- codegen: make readonly in-variables
+
+* Wed Aug 24 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt1
+- test build with libpoco
+
+* Sun Aug 21 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt9
+- build new version
+
+* Sun Aug 21 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt8.2
+- IONotifyController: add debug information (getInfo)
+
+* Sat Aug 20 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt8.1
+- miscoseconds --> nanoseconds
+- optimization
+- fixed bug in ModbusTCPMaster
+
+* Fri Aug 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt8
+- ModbusTCPCore: minor optimization
+
+* Fri Aug 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt7
+- minor fixes
+
+* Fri Aug 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt6.1
+- test build
+
+* Tue Aug 09 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt6
+- build new version (optimization, refactoring)
+
+* Mon Aug 08 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt5.1
+- test build
+
 * Wed Aug 03 2016 Pavel Vainerman <pv@altlinux.ru> 2.4-alt5
 - build new version
 
