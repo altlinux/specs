@@ -1,24 +1,25 @@
 %define _libexecdir %_prefix/libexec
+%define beta -beta2
 
 Name: ephoto
-Version: 0.1.1
-Release: alt0.2
+Version: 1.0
+Release: alt0.1
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
 License: GPLv3+
-URL: http://trac.enlightenment.org/e/wiki/Eve
-# VCS: git://git.enlightenment.fr/vcs/svn/ephoto.git
+URL: http://www.smhouston.us/%name/
 
-Source: %name-%version.tar
+# VCS: git://git.enlightenment.org/apps/ephoto.git
+Source: http://www.smhouston.us/stuff/%name-%version%beta.tar.xz
 
-BuildRequires: libelementary-devel libexif-devel
+BuildRequires: libelementary-devel >= 1.18.0
 
 %description
 Photo Viewer for Enlightenment desktop.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %autoreconf
@@ -34,14 +35,16 @@ Photo Viewer for Enlightenment desktop.
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/%{name}_ql
-%_libdir/%{name}_ql.so
-%exclude %_libdir/%{name}_ql.la
+%_libdir/%name/%{name}_thumbnail
+%_datadir/%name/
 %_desktopdir/%name.desktop
 %_datadir/pixmaps/%name.png
 %doc AUTHORS ChangeLog NEWS README TODO
 
 %changelog
+* Tue Aug 30 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt0.1
+- 1.0-beta2
+
 * Tue Feb 11 2014 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt0.2
 - updated to f3cff05b
 - built for E18
