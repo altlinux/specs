@@ -1,6 +1,6 @@
 Name: nfqfilter
 Version: 0.2
-Release: alt18.git20160818
+Release: alt19.git20160818
 Summary: Pattern-based packet filtering system
 Group: Networking/Other
 
@@ -57,6 +57,9 @@ install -m 0644 -D contrib/urls      %buildroot%_localstatedir/%name/urls
 %_localstatedir/%name
 
 %changelog
+* Mon Aug 29 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt19.git20160818
+- Rebuild with 1.7.5-alt1
+
 * Mon Aug 29 2016 Alexei Takaseev <taf@altlinux.org> 0.2-alt18.git20160818
 - Rebuild with 1.7.3-alt2
 
