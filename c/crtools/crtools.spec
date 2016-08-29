@@ -1,5 +1,5 @@
 Name: crtools
-Version: 2.1
+Version: 2.5
 #define pre 
 %define ver %version%{?pre:%pre}
 Release: alt1
@@ -67,12 +67,14 @@ export CFLAGS="%optflags"
 
 
 %install
-%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir SYSTEMDUNITDIR=%_unitdir
+%makeinstall_std PREFIX=%prefix LIBDIR=%_libdir LIBEXECDIR=%_libexecdir SYSTEMDUNITDIR=%_unitdir
 
 
 %files
 %doc README.md COPYING CREDITS
 %_sbindir/*
+%_sbindir/*
+%_libexecdir/criu/scripts/*
 %_man8dir/*
 
 
@@ -92,6 +94,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Mon Aug 29 2016 Denis Pynkin <dans@altlinux.org> 2.5-alt1
+- updated
+
 * Wed Apr 13 2016 Denis Pynkin <dans@altlinux.org> 2.1-alt1
 - upstream updates and fixes
 
