@@ -1,12 +1,12 @@
 %define rname kdeconnect-kde
 
-%define sover 0
+%define sover 1
 %define libkdeconnectcore libkdeconnectcore%sover
 %define libkdeconnectpluginkcm libkdeconnectpluginkcm%sover
 %define libkdeconnectinterfaces libkdeconnectinterfaces%sover
 
 Name: kde5-connect
-Version: 0.9
+Version: 1.0
 Release: alt1
 %K5init
 
@@ -120,5 +120,8 @@ KF5 library
 %_K5lib/libkdeconnectinterfaces.so.*
 
 %changelog
+* Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
+- new version
+
 * Fri Feb 05 2016 Sergey V Turchin <zerg@altlinux.org> 0.9-alt1
 - initial build
