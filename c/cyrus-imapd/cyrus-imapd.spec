@@ -11,7 +11,7 @@
 %def_without unit_tests
 
 Name: cyrus-imapd
-Version: 2.5.8
+Version: 2.5.9
 Release: alt1
 
 Summary: A high-performance mail store with IMAP and POP3 support
@@ -160,6 +160,10 @@ autoreconf -v -i
 
 # this is hack
 #echo '#define CYRUS_CVSDATE 20071211' > imap/xversion.h
+
+# set version since 2.5.9
+sed "s|^PACKAGE_VERSION=.*|PACKAGE_VERSION='%version'|" -i configure
+sed "s|^PACKAGE_STRING=.*|PACKAGE_STRING='cyrus-imapd %version'|" -i configure
 
 %add_optflags -lcrypto -lsasl2 -lssl
 
@@ -423,6 +427,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Mon Aug 29 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.5.9-alt1
+- 2.5.9
+
 * Tue Jun 14 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.5.8-alt1
 - 2.5.8
 
