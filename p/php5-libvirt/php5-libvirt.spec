@@ -20,6 +20,7 @@ BuildRequires: php5-devel = %php5_version
 BuildRequires: libvirt-devel >= 1.2.13
 BuildRequires: libxml2-devel
 BuildRequires: xsltproc
+BuildRequires: xml-utils
 Requires: php5-libs = %php5_version-%php5_release
 
 %description
