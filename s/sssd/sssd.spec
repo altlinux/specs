@@ -1,7 +1,7 @@
 %define libwbc_alternatives_version 0.12.0
 
 Name: sssd
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -29,6 +29,7 @@ Patch: %name-%version-%release.patch
 %define mcpath %sssdstatedir/mc
 %define pubconfpath %sssdstatedir/pubconf
 %define gpocachepath %sssdstatedir/gpo_cache
+%global secdbpath %sssdstatedir/secrets
 
 %define sssd_user _sssd
 
@@ -355,13 +356,23 @@ Requires: libwbclient-%name = %version-%release
 Development libraries for the SSSD libwbclient implementation.
 
 %package winbind-idmap
-Summary: SSSSD's idmap_sss Backend for Winbind
+Summary: SSSD's idmap_sss Backend for Winbind
 Group: System/Servers
 License: GPLv3+ and LGPLv3+
 
 %description winbind-idmap
 The idmap_sss module provides a way for Winbind to call SSSD to map UIDs/GIDs
 and SIDs.
+
+%package nfs-idmap
+Summary: SSSD plug-in for NFSv4 rpc.idmapd
+Group: System/Servers
+License: GPLv3+
+
+%description nfs-idmap
+The libnfsidmap sssd module provides a way for rpc.idmapd to call SSSD to map
+UIDs/GIDs to names and vice versa. It can be also used for mapping principal
+(user) name to IDs(UID or GID) or to obtain groups which user are member of.
 
 
 %prep
@@ -462,9 +473,11 @@ chown %sssd_user:%sssd_user %mcpath/*
 chown %sssd_user:%sssd_user %pubconfpath/kdcinfo* %pubconfpath/kpasswdinfo*
 chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %post_service %name
+%post_service sssd-secrets
 
 %preun
 %preun_service %name
+%preun_service sssd-secrets
 
 %files -f sssd.lang
 %doc COPYING
@@ -472,6 +485,8 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_sbindir/%name
 %_initdir/%name
 %_unitdir/%name.service
+%_unitdir/sssd-secrets.socket
+%_unitdir/sssd-secrets.service
 
 %dir %_libexecdir/%name
 %_libexecdir/%name/sssd_be
@@ -499,7 +514,7 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 
 # 3rd party application libraries
 %dir %_libdir/%name/modules
-/%_lib/libnfsidmap/sss.so
+
 
 %ldb_modulesdir/memberof.so
 %_bindir/sss_ssh_authorizedkeys
@@ -511,11 +526,12 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %dir %_localstatedir/cache/krb5rcache
 %attr(700,%sssd_user,%sssd_user) %dir %dbpath
 %attr(755,%sssd_user,%sssd_user) %dir %mcpath
+%attr(700,root,root) %dir %secdbpath
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/initgroups
 %attr(755,%sssd_user,%sssd_user) %dir %pipepath
-%attr(700,%sssd_user,%sssd_user) %dir %pipepath/private
+%attr(750,%sssd_user,root) %dir %pipepath/private
 %attr(755,%sssd_user,%sssd_user) %dir %gpocachepath
 %attr(755,%sssd_user,%sssd_user) %dir %pubconfpath
 %attr(770,root,%sssd_user) %dir %_var/log/%name
@@ -684,7 +700,12 @@ chown %sssd_user:%sssd_user  %_var/log/%name/sssd_*
 %_libdir/samba/idmap/sss.so
 %_man8dir/idmap_sss*
 
+%files nfs-idmap
+/%_lib/libnfsidmap/sss.so
 %changelog
+* Tue Aug 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.1-alt1
+- 1.14.1
+
 * Fri Jul 08 2016 Alexey Shabalin <shaba@altlinux.ru> 1.14.0-alt1
 - 1.14.0
 
