@@ -1,6 +1,6 @@
 Name: libpst
 Version: 0.6.67
-Release: alt4
+Release: alt5
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
@@ -14,11 +14,15 @@ Patch1: %name-0.6.67-no-bad-mboxes.patch
 # The enhanced fix for the underlying problem:
 Patch2: %name-0.6.67-mixed.items.patch
 
+Patch3: %name-0.6.67-known-fields.patch
+
 BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Tue Aug 04 2009
 BuildRequires: ImageMagick-tools boost-python-devel gcc-c++ libgd2-devel
 BuildRequires: libgsf-devel
+
+BuildPreReq: rpm-build-python
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -80,6 +84,7 @@ Python interface to libpst (for reading Outlook files)
 %prep
 %setup
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -120,6 +125,10 @@ install -m0644 xml/*.pdf -t %buildroot%pkgdocdir/format-documentation/
 %python_sitelibdir/*.so
 
 %changelog
+* Tue Aug 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.67-alt5
+- more known fields (in order to have less noise in the debugging log in:
+  grep -A 5 'Ignore bogus headers' *log) (thx Carl Byington)
+
 * Fri Aug 26 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.67-alt4
 - all items are saved in folders with mixed items
   (thx Carl Byington, RH#1369499) (ALT#32425).
