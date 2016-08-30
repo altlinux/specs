@@ -1,11 +1,11 @@
 Name: seafile
 Version: 5.1.4
-Release: alt2
+Release: alt3
 
 Summary: Full-fledged cloud storage platform
 
 Group: Networking/File transfer
-License: GPLv3
+License: GPLv2 with permissions for OpenSSL
 Url: https://github.com/haiwen/seafile
 
 Packager: Konstantin Artyushkin <akv@altlinux.org>
@@ -22,9 +22,10 @@ Source2: nginx.conf.example
 
 Requires: lib%name = %version-%release
 
+# manually removed: python-module-mwlib 
 # Automatically added by buildreq on Sun Nov 10 2013
 # optimized out: glib2-devel gnu-config libevent-devel libgio-devel libsearpc-devel mariadb-client mariadb-common pkg-config python-base python-devel python-module-distribute python-module-zope python-modules
-BuildRequires: intltool libssl-devel libuuid-devel python-module-mwlib python-module-paste python-module-peak
+BuildRequires: intltool libssl-devel libuuid-devel python-module-paste python-module-peak
 BuildRequires: zlib-devel libfuse-devel vala libjansson-devel libjson-glib-devel
 
 BuildRequires: libsearpc-devel >= 3.0.4
@@ -37,7 +38,9 @@ BuildRequires: libcurl-devel >= 7.17
 
 # server requires
 BuildRequires: libzdb-devel >= 2.12
-BuildRequires: libevhtp-devel >= 1.2.9
+
+# build with compat version
+BuildRequires: libevhtp-seafile-devel = 1.2.9
 
 Requires: ccnet >= %version
 
@@ -107,13 +110,16 @@ developing applications that use lib%name.
 
 %prep
 %setup
+cp %SOURCE1 .
 # remove buildroot from .pc file
 %__subst 's/(DESTDIR)//' lib/libseafile.pc.in
+# hack for build with compat libevhtp-seafile = 1.2.9
+%__subst 's/-levhtp/-levhtp-seafile/' server/Makefile.am
 
 %build
 %autoreconf
-# hack for build with libevhtp >= 1.2.11 (use pkgconfig!)
-export CPPFLAGS="$CPPFLAGS -I%_includedir/evhtp/"
+# hack for build with compat libevhtp-seafile = 1.2.9
+export CPPFLAGS="$CPPFLAGS -I%_includedir/libevhtp-seafile/"
 %configure --enable-client --enable-server \
 	--enable-python --enable-fuse --disable-static
 # FIXME: breakes build
@@ -121,7 +127,6 @@ export CPPFLAGS="$CPPFLAGS -I%_includedir/evhtp/"
 
 %install
 %makeinstall_std
-cp %SOURCE1 .
 install -D -m 644 %SOURCE2 %buildroot%_sysconfdir/nginx/sites-available.d/seafile.conf.example
 mkdir -p %buildroot%_datadir/seafile-server/scripts/
 cp -a scripts/upgrade %buildroot%_datadir/seafile-server/scripts/
@@ -161,6 +166,10 @@ cp -a scripts/upgrade %buildroot%_datadir/seafile-server/scripts/
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt3
+- build with compat libevhtp-seafile = 1.2.9
+- fix license in spec to GPLv2 with permissions for OpenSSL
+
 * Sat Aug 06 2016 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt2
 - fix build with libevhtp >= 1.2.11
 
