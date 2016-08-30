@@ -1,8 +1,8 @@
 %define rname kactivitymanagerd
 
 Name: kf5-kactivitymanagerd
-Version: 5.7.3
-Release: alt2
+Version: 5.7.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -51,6 +51,9 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-deve
 %_K5srvtyp/*.desktop
 
 %changelog
+* Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
+- new version
+
 * Thu Aug 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.3-alt2
 - fix startup of kactivitymanagerd
 - set default activity name

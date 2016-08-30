@@ -16,8 +16,8 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.7.3
-Release: alt2
+Version: 5.7.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -294,6 +294,9 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
+- new version
+
 * Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.3-alt2
 - add upstream fix against KDEBUG#365621
 
