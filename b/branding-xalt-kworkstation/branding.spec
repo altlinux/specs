@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 %define theme %name
@@ -106,6 +106,7 @@ Provides: design-graphics-%theme  branding-alt-%theme-graphics design-graphics-k
 Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme design-graphics-kdesktop
 Provides: gnome-session-splash = %version-%release
 PreReq(post,preun): alternatives >= 0.2
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
 
 %description graphics
 This package contains some graphics for ALT design.
@@ -497,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Aug 30 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt4
+- add conflicts for graphics subpackages (ALT#32452)
+
 * Wed Aug 24 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt3
 - update conflicts
 
