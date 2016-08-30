@@ -2,12 +2,15 @@
 
 Name: libleptonica
 Version: 1.73
-Release: alt1
+Release: alt2
+
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
+
 License: Leptonica license (BSD-like)
 Group: System/Libraries
 Url: http://www.leptonica.com
+
 BuildRequires: doxygen libjpeg-devel libtiff-devel libpng-devel libgif-devel libwebp-devel
 
 Packager: %packager
@@ -85,6 +88,8 @@ Doxygen документация в html формате по функциям б
 %patch2 -p2
 
 %build
+%configure
+
 doxygen Doxyfile
 cd src
 
@@ -107,6 +112,7 @@ install -pm644 lib/shared/liblept.so.%version %buildroot%_libdir/
 cp -af lib/shared/*.so %buildroot%_libdir/
 install -spm644 lib/nodebug/*.a %buildroot%_libdir/
 install -pm644 src/*.h %buildroot%_includedir/leptonica/
+install -m644 -D lept.pc %buildroot%_pkgconfigdir/lept.pc
 mv doc/html doc/html_reference
 mv doc/html_reference %buildroot%docdir
 
@@ -121,6 +127,7 @@ mv doc/html_reference %buildroot%docdir
 %files devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/lept.pc
 
 %files devel-static
 %_libdir/*.a
@@ -130,6 +137,9 @@ mv doc/html_reference %buildroot%docdir
 %docdir/html_reference/*
 
 %changelog
+* Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.73-alt2
+- pack lept.pc (ALT bug #32432)
+
 * Wed Feb 10 2016 Andrey Bergman <vkni@altlinux.org> 1.73-alt1
 - update to version 1.73
 
