@@ -2,7 +2,7 @@
 
 Name: jabber-vk4xmpp
 Version: 0.20160725
-Release: alt1
+Release: alt2
 
 Summary: VKontakte jabber transport
 
@@ -15,6 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Git: https://github.com/mrDoctorWho/vk4xmpp.git
 Source: %name-%version.tar
 Source1: %name.init
+Source2: %name.conf
 
 AutoReq: yes,noperl,nosymlinks
 
@@ -38,7 +39,7 @@ rm -rf %buildroot%_datadir/%name/{DEBIAN,init.d,systemd,README.md,Makefile}
 
 # create conf in normal place
 mkdir -p %buildroot%_sysconfdir/%name/
-cp Config_example.txt %buildroot%_sysconfdir/%name/vk4xmpp.conf
+cp %SOURCE2 %buildroot%_sysconfdir/%name/vk4xmpp.conf
 %__subst "s|users.db|/var/lib/%name/users.db|g" %buildroot%_sysconfdir/%name/vk4xmpp.conf
 # we set it via --config arg too
 ln -s %_sysconfdir/%name/vk4xmpp.conf %buildroot%_datadir/%name/Config.txt
@@ -70,6 +71,10 @@ install -D systemd/vk4xmpp.service %buildroot%_unitdir/%name
 %dir %attr (0770,%fuser,root) %_runtimedir/%name/
 
 %changelog
+* Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 0.20160725-alt2
+- add alt adopted conf file
+- fix config for ALT Linux
+
 * Mon Jul 25 2016 Vitaly Lipatov <lav@altlinux.ru> 0.20160725-alt1
 - update to 20160725
 
