@@ -1,5 +1,5 @@
 Name: ryu
-Version: 3.30
+Version: 4.5
 Release: alt1
 Summary: Component-based Software-defined Networking Framework
 Group: Development/Python
@@ -12,12 +12,12 @@ BuildArch: noarch
 BuildRequires: python-devel
 BuildRequires: python-module-setuptools
 BuildRequires: python-module-pbr >= 0.6
-BuildRequires: python-module-sphinx
+BuildRequires: python-module-sphinx python-module-sphinx_rtd_theme
 BuildRequires: python-module-oslosphinx
 BuildRequires: python-module-eventlet >= 0.15
 BuildRequires: python-module-msgpack >= 0.3.0
 BuildRequires: python-module-netaddr
-BuildRequires: python-module-oslo.config >= 1.6.0
+BuildRequires: python-module-oslo.config >= 1.15.0
 BuildRequires: python-module-routes
 BuildRequires: python-module-six >= 1.4.0
 BuildRequires: python-module-webob >= 1.2
@@ -108,6 +108,9 @@ install -m 644 debian/log.conf %buildroot%_logrotatedir/%name
 %doc html
 
 %changelog
+* Tue Aug 30 2016 Alexey Shabalin <shaba@altlinux.ru> 4.5-alt1
+- 4.5
+
 * Fri Apr 15 2016 Alexey Shabalin <shaba@altlinux.ru> 3.30-alt1
 - 3.30
 
