@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 4.90.0
-Release: alt4
+Release: alt5
 %K5init
 
 Group: Office
@@ -142,6 +142,9 @@ KF5 library
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt5
+- update from frameworks branch
+
 * Thu Aug 04 2016 Sergey V Turchin <zerg@altlinux.org> 4.90.0-alt4
 - update from frameworks branch
 
