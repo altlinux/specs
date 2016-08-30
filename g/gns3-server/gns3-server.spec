@@ -2,7 +2,7 @@
 %add_findreq_skiplist %python3_sitelibdir/gns3server/modules/docker/*
 
 Name: gns3-server
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -31,7 +31,6 @@ Requires: wireshark
 Requires: iouyap
 Requires: ubridge
 Requires: vpcs
-Obsoletes: gns3
 Conflicts: gns3
 
 %description
@@ -40,7 +39,6 @@ Clients like the GNS3 GUI controls the server using a HTTP REST API.
 
 %prep
 %setup
-sed "s/aiohttp==0.21.5/aiohttp>=0.21.5/" requirements.txt -i
 
 %build
 %python3_build
@@ -53,8 +51,10 @@ sed "s/aiohttp==0.21.5/aiohttp>=0.21.5/" requirements.txt -i
 %_bindir/*
 %python3_sitelibdir/gns3server
 %python3_sitelibdir/gns3_server-*.egg-info
-%python3_sitelibdir/utils
 
 %changelog
+* Tue Aug 30 2016 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
+- New version 1.5.2
+
 * Thu Aug 04 2016 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt1
 - Initial build for ALT Linux Sisyphus.
