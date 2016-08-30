@@ -12,7 +12,7 @@
 
 Name: cyrus-imapd
 Version: 2.5.9
-Release: alt1
+Release: alt2
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -59,7 +59,7 @@ BuildRequires: control flex gcc-c++ transfig libdb4-devel zlib-devel libwrap-dev
 BuildRequires: libsasl2-devel libssl-devel libnet-snmp-devel libnl-devel libsensors3-devel libpcre-devel
 
 # http (CalDAV, CardDAV e.t.c.)
-BuildRequires: libjansson-devel libical1-devel libxml2-devel libsqlite3-devel
+BuildRequires: libjansson-devel libical-devel libxml2-devel libsqlite3-devel
 
 BuildRequires: perl-devel perl-Pod-Parser perl-Term-ReadLine-Gnu perl-Net-Server perl-Unix-Syslog
 
@@ -427,6 +427,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Tue Aug 30 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.5.9-alt2
+- rebuilt with libical-devel (v2.0.1)
+
 * Mon Aug 29 2016 Sergey Y. Afonin <asy@altlinux.ru> 2.5.9-alt1
 - 2.5.9
 
