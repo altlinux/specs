@@ -1,6 +1,6 @@
 Name: libevhtp-seafile
 Version: 1.2.9
-Release: alt2
+Release: alt3
 
 Summary: Libevhtp was created as a replacement API for Libevent's current HTTP API (seafile compatible)
 License: BSD
@@ -45,17 +45,13 @@ developing applications that use %name.
 
 %prep
 %setup
-%__subst "s| lib)| \${LIB_DESTINATION})|g" CMakeLists.txt
-%__subst 's|"evhtp"|"evhtp-seafile"|g' CMakeLists.txt
 
 %build
-%cmake_insource -DEVHTP_BUILD_SHARED:STRING=ON
+%cmake_insource -DEVHTP_BUILD_SHARED:STRING=ON -DLIB_INSTALL_DIR:STRING=%_libdir
 
 %install
 %makeinstall_std
 
-# hack
-mv %buildroot%_libdir/%name.so %buildroot%_libdir/%name.so.%version
 mkdir %buildroot%_includedir/%name/
 mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
@@ -64,9 +60,13 @@ mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
 %files devel
 %_libdir/%name.so
+%dir %_includedir/%name/
 %_includedir/%name/*.h
 
 %changelog
+* Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.9-alt3
+- more clean build
+
 * Tue Aug 30 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.9-alt2
 - build obsoleted version for seafile compatibility
 
