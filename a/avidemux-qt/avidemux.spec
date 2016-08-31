@@ -4,8 +4,8 @@
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
-Version: 2.6.12
-Release: alt2
+Version: 2.6.13
+Release: alt1
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -30,8 +30,8 @@ Source4: avidemux_ru.ts
 %if_enabled ownffmpeg
 Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
 %endif
-Patch2: avidemux-2.6.10-alt-i18n-qm-path.patch
-Patch3: avidemux-2.6.0-alt-crash-retranslate.patch
+Patch2: alt-i18n-qm-path.patch
+Patch3: alt-crash-retranslate.patch
 Patch4: alt-flags.patch
 Patch5: alt-buildfix.patch
 #
@@ -117,7 +117,7 @@ grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 %build
 export QTDIR=%_qt5_prefix
 BUILDDIR=$PWD
-sh bootStrap.bash --with-core --with-cli --with-qt4 --enable-qt5 --without-gtk --with-plugins
+sh bootStrap.bash --with-core --with-cli --without-gtk --with-plugins
 #lrelease-qt5 avidemux/qt4/i18n/*.ts
 #for p in po/*.po ; do
 #    FLNG=`echo "$p" | sed -e 's|\..*||' -e 's|.*\/||'`
@@ -171,14 +171,17 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %_pixmapsdir/*
 #%_datadir/ADM_scripts
 %dir %_datadir/avidemux6
-%dir %_datadir/avidemux6/qt5
-%dir %_datadir/avidemux6/qt5/i18n
-%_datadir/avidemux6/help
+%dir %_datadir/avidemux6/*/
+%dir %_datadir/avidemux6/*/*
+#%_datadir/avidemux6/help
 
 # devel
 %exclude %_includedir/avidemux
 
 %changelog
+* Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.13-alt1
+- new version
+
 * Wed Mar 30 2016 Sergey V Turchin <zerg@altlinux.org> 2.6.12-alt2
 - fix build requires
 
