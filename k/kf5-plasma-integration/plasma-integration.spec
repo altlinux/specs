@@ -1,8 +1,8 @@
 %define rname plasma-integration
 
 Name: kf5-%rname
-Version: 5.7.1
-Release: alt2
+Version: 5.7.4
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,15 @@ Qt applications when running on a KDE Plasma workspace.
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme.so
 
 %changelog
+* Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
+- new version
+
+* Mon Aug 08 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.3-alt1
+- new version
+
+* Tue Jul 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.2-alt1
+- new version
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2
 - activate system tray icons by default
 
