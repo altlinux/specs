@@ -9,7 +9,7 @@
 %define bugfix 0
 Name: branding-%brand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.5
+Release: alt0.6
 BuildArch: noarch
 
 %define theme %name
@@ -37,7 +37,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 %define ProductName %Brand %major.%minor %Theme
 %define ProductName_ru %Brand_ru %major.%minor %Theme_ru
 
-%define variants altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop sisyphus-server-light
+%define variants alt-kdesktop alt-workstation alt-server altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light xalt-workstation
+
 
 Source: %name.tar
 
@@ -88,7 +89,7 @@ Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt brandi
 Provides: alterator-icons design-alterator design-alterator-%theme
 Obsoletes:  branding-alt-%theme-browser-qt  branding-altlinux-%theme-browser-qt 
 
-Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-browser-qt ";done )
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server 
 PreReq(post,preun): alternatives >= 0.2 alterator
 
@@ -104,6 +105,7 @@ Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_mino
 Provides: design-graphics-%theme  branding-alt-%theme-graphics design-graphics-kdesktop
 Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme design-graphics-kdesktop
 Provides: gnome-session-splash = %version-%release
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
 PreReq(post,preun): alternatives >= 0.2
 
 %description graphics
@@ -496,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Aug 31 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.6
+- update conflicts
+
 * Fri Jul 22 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt0.5
 - fix boot.jpg
 
