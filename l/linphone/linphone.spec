@@ -1,5 +1,5 @@
 Name: linphone
-Version: 3.10.1
+Version: 3.10.2
 Release: alt1
 License: GPLv2+
 Url: http://www.linphone.org/
@@ -150,6 +150,9 @@ This package contains development files for %name.
 
 
 %changelog
+* Wed Aug 31 2016 Alexei Takaseev <taf@altlinux.org> 3.10.2-alt1
+- 3.10.2
+
 * Wed Aug 24 2016 Alexei Takaseev <taf@altlinux.org> 3.10.1-alt1
 - 3.10.1
 
