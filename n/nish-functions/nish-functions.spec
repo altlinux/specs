@@ -1,5 +1,5 @@
 Name: nish-functions
-Version: 1.02
+Version: 2.01
 Release: alt1
 
 Summary: Shell functions collection featuring isolated namespace
@@ -32,6 +32,10 @@ No bash/zsh/whatever extension used. Runs on Linux and (losely) FreeBSD.
 %_libexecdir/nish/*
 
 %changelog
+* Wed Aug 31 2016 Fr. Br. George <george@altlinux.ru> 2.01-alt1
+- Actualize status
+- Mass changes
+
 * Wed Oct 17 2012 Fr. Br. George <george@altlinux.ru> 1.02-alt1
 - More accurate main file processing
 - ANSII and autobuild improvements
