@@ -1,8 +1,8 @@
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
 Name: kicad
-Version: 4.0.2
-Release: alt2
+Version: 4.0.4
+Release: alt1
 Epoch: 1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -22,7 +22,8 @@ BuildRequires: boost-asio-devel boost-asio-devel boost-context-devel boost-files
 BuildRequires: ImageMagick-tools
 BuildRequires: desktop-file-utils
 Requires: %name-data = %version
-Requires: %name-library %name-doc
+Requires: %name-library = %version
+Requires: %name-doc
 Requires: %name-i18n = %version
 %add_findreq_skiplist %_docdir/%name
 
@@ -50,8 +51,9 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 %package data
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-Group: Games/Strategy
+Group: Sciences/Computer science
 BuildArch: noarch
+Requires: icon-theme-hicolor
 
 %description data
 Kicad is an open source (GPL) software for the creation of electronic
@@ -86,8 +88,8 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DDEFAULT_INSTALL_PATH=/usr \
 	-DBUILD_GITHUB_PLUGIN=ON \
-	-DKICAD_SCRIPTING=OFF \
-	-DKICAD_SCRIPTING_MODULES=OFF \
+	-DKICAD_SCRIPTING=ON \
+	-DKICAD_SCRIPTING_MODULES=ON \
 	-DKICAD_SCRIPTING_WXPYTHON=OFF \
 	-DKICAD_SKIP_BOOST=ON \
 	-DKICAD_REPO_NAME=stable \
@@ -100,19 +102,17 @@ gost_landscape.kicad_wks или gost_portrait.kicad_wks в диалоговом 
 
 #fix line ending
 dos2unix %buildroot%_desktopdir/*.desktop
-dos2unix %buildroot%_datadir/mimelnk/application/*kicad*.desktop
+dos2unix %buildroot%_datadir/mimelnk/application/*.desktop
 
 #validate desktop files
 desktop-file-validate %buildroot%_desktopdir/*.desktop
-#desktop-file-validate %buildroot%_datadir/mimelnk/application/*kicad*.desktop
+#desktop-file-validate %buildroot%_datadir/mimelnk/application/*.desktop
 
 %files
 %_bindir/*
 %_desktopdir/*.desktop
 %_libexecdir/%name
-%dir %_datadir/mimelnk
-%dir %_datadir/mimelnk/application
-%_datadir/mimelnk/application/*kicad*.desktop
+%_datadir/mimelnk/application/*.desktop
 
 %files data
 %doc %_docdir/%name
@@ -122,6 +122,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/%name/
 
 %changelog
+* Wed Aug 31 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.4-alt1
+- New version 4.0.4
+
 * Thu Jul 21 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt2
 - Enable build github plugin
 - New packages kicad-data (fix arch-dep-package-has-big-usr-share)

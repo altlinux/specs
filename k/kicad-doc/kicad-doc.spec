@@ -1,39 +1,157 @@
-Summary: 	Documentation and tutorials for kicad
-Name: 		kicad-doc
-Version:	r647
-Release:	alt1
-Group: 		Documentation
-License: 	Free Documentation Licence
-Url:		https://code.launchpad.net/kicad
-#Url: 		http://bazaar.launchpad.net/~kicad-developers/kicad/doc
-Source:		~kicad-developers-%name-%version.tgz
-BuildArch:      noarch
-# Automatically added by buildreq on Fri Feb 13 2009
-BuildRequires: ccmake gcc-c++ cmake >= 2.8.4 cmake-modules glibc-pthread libstdc++-devel
+Summary: Documentation and tutorials for kicad
+Name: kicad-doc
+Version: 4.0.4
+Epoch: 1
+Release: alt1
+Group: Documentation
+License: GPLv3
+Url: https://github.com/KiCad/kicad-doc
+Source:	%name-%version.tar
+BuildArch: noarch
+BuildRequires(pre): cmake rpm-macros-cmake
+BuildRequires: dblatex po4a asciidoc-a2x source-highlight git
+Requires: kicad-data
 
 %description 
-KiCad is a open source (GPL) integrated package for schematic circuit capture and PCB layout.
-This is the documentation package for kicad. It contains documentation, tutorials and files localization.
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Enlish and Russian translation.
 
+%package ca
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description ca
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Canadian translation.
+
+%package de
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description de
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+German translation.
+
+%package es
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description es
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Spanish translation.
+
+%package it
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description it
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Italian translation.
+
+%package ja
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description ja
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Japan translation.
+
+%package nl
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description nl
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Netherlandish translation.
+
+%package pl
+Summary: Documentation and tutorials for kicad
+Group: Documentation
+BuildArch: noarch
+Requires: %name = %version-%release
+
+%description pl
+KiCad is a open source (GPL) integrated package for schematic circuit capture
+and PCB layout.
+This is the documentation package for kicad. It contains documentation,
+tutorials and files localization.
+Polish translation.
 
 %prep
-%setup -q -n ~kicad-developers/kicad/doc
-
+%setup
 
 %build
-cmake -DCMAKE_INSTALL_PREFIX=/usr
+%cmake  -DKICAD_STABLE_VERSION:BOOL=ON \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_FORMATS=html
+%make_build -C BUILD
 
 %install
-%make DESTDIR=%buildroot install
-
-%clean
-%__rm -rf %buildroot
+%makeinstall_std -C BUILD
 
 %files
-%_datadir/doc/*
-%_datadir/kicad/*
+%dir %_datadir/doc/kicad/help
+%_datadir/doc/kicad/help/en
+%_datadir/doc/kicad/help/ru
+
+%files ca
+%_datadir/doc/kicad/help/ca
+
+%files de
+%_datadir/doc/kicad/help/de
+
+%files es
+%_datadir/doc/kicad/help/es
+
+%files it
+%_datadir/doc/kicad/help/it
+
+%files ja
+%_datadir/doc/kicad/help/ja
+
+%files nl
+%_datadir/doc/kicad/help/nl
+
+%files pl
+%_datadir/doc/kicad/help/pl
 
 %changelog
+* Wed Aug 31 2016 Anton Midyukov <antohami@altlinux.org> 1:4.0.4-alt1
+- New version 4.0.4
+
 * Sat Nov 29 2014 barssc <barssc@altlinux.ru> r647-alt1
 - new version
 
