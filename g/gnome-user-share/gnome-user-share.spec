@@ -4,7 +4,7 @@
 %define modules_path %_sysconfdir/httpd2/modules
 
 Name: gnome-user-share
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Gnome user file sharing
@@ -20,7 +20,7 @@ Requires: apache2-mod_dnssd >= 0.6
 BuildRequires: gnome-common intltool yelp-tools desktop-file-utils
 BuildRequires: libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
 BuildRequires: libnautilus-devel libselinux-devel libgudev-devel
-BuildRequires: apache2 apache2-mod_dnssd
+BuildRequires: apache2 apache2-mod_dnssd systemd-devel
 
 %description
 gnome-user-share is a small package that binds together various free
@@ -58,12 +58,15 @@ mDNSResolver running.
 %_libdir/nautilus/extensions-3.0/libnautilus-share-extension.so
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.desktop.file-sharing.gschema.xml
-#%_sysconfdir/xdg/autostart/%name-*.desktop
+%_prefix/lib/systemd/user/%name-webdav.service
 %doc README NEWS
 
 %exclude %_libdir/nautilus/extensions-3.0/*.la
 
 %changelog
+* Wed Aug 31 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
+- 3.18.2
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.1-alt1
 - 3.18.1
 
