@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.5
-Release: alt4
+Release: alt5
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,9 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Thu Sep 01 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt5
+- up build
+
 * Mon Aug 29 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt4
 - (python): add supplier ID for setValue function
 
