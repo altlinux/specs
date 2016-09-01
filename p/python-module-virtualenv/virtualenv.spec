@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python-module-%modulename
-Version: 13.1.0
-Release: alt2
+Version: 15.0.3
+Release: alt1
 
 Summary: Virtual Python Environment builder
 License: MIT
@@ -29,7 +29,9 @@ BuildPreReq: python3-module-nose
 %endif
 
 # git://github.com/pypa/virtualenv.git
-Source: %name-%version.tar
+Source: %version.tar.gz
+Patch1: python3_sitelibdir.patch
+Patch2: allow_internal_symlinks.patch
 
 %setup_python_module %modulename
 
@@ -39,7 +41,7 @@ Tool to create isolated Python environments.
 With virtualenv it is became possible to keep separate set of python libraries
 for each of your project.
 
-Just exec "virtualenv /your/dir" and whole python enviroment (including 
+Just exec "virtualenv /your/dir" and whole python enviroment (including
 setuptools and easy_install) will be installed there. You could exec scripts
 in newly created environment by invoking /your/dir/bin/python
 
@@ -49,7 +51,7 @@ in newly created environment by invoking /your/dir/bin/python
 С Virtualenv вы можете создать независимые наборы библиотек для каждого
 вашего проекта. Опционально вы можете запретить использование системных библиотек.
 
-Просто выполните "virtuakenv /your/dir" и полное виртуальное окружение Python будет
+Просто выполните "virtualenv /your/dir" и полное виртуальное окружение Python будет
 создано в каталоге, который вы указали (setuptools  и easy_install будут также установлены
 и при вызове будут устанавливать новые библиотеки в ваше виртуальное окружение). Чтобы
 выполнить ваши скрипты в вновь созданном окружение запускайте их при помощи
@@ -67,63 +69,67 @@ Tool to create isolated Python environments.
 With virtualenv it is became possible to keep separate set of python libraries
 for each of your project.
 
-Just exec "virtualenv /your/dir" and whole python enviroment (including 
+Just exec "virtualenv /your/dir" and whole python enviroment (including
 setuptools and easy_install) will be installed there. You could exec scripts
 in newly created environment by invoking /your/dir/bin/python
 %endif
 
 %prep
-%setup
+%setup -n virtualenv-%version
+
 rm -f virtualenv_support/*.egg
-%if_with python3
-rm -rf ../python3
-cp -a . ../python3
-%endif
+%patch1 -p1
+%patch2 -p1
 
 %build
 export LC_ALL=en_US.UTF-8
-%python_build
+python bin/rebuild-script.py
+
+%python_build -b build2
+
 %if_with python3
-pushd ../python3
-%python3_build
-popd
+%python3_build -b build3
 %endif
 
 %install
 export LC_ALL=en_US.UTF-8
+
 %if_with python3
-pushd ../python3
+rm -rf build && ln -sf build3 build
 %python3_install
-popd
 mv %buildroot%_bindir/virtualenv %buildroot%_bindir/virtualenv3
 %endif
+
+rm -rf build && ln -sf build2 build
 %python_install
 
 %if_with check
 %check
 py.test
+
 %if_with python3
-pushd ../python3
 py.test-%_python3_version
-popd
 %endif
 %endif
 
 %files
 %_bindir/*
 %exclude %_bindir/virtualenv3
-%exclude %_bindir/virtualenv-3.*
 %python_sitelibdir/*
 %doc docs/*
 
 %if_with python3
 %files -n python3-module-%modulename
 %_bindir/virtualenv3
-%_bindir/virtualenv-3.*
 %python3_sitelibdir/*
+%doc docs/*
 %endif
 
 %changelog
+* Thu Sep 01 2016 Fr. Br. George <george@altlinux.ru> 15.0.3-alt1
+- Autobuild version bump to 15.0.3
+- Fix build/tests
+
 * Wed Aug 31 2016 Denis Medvedev <nbr@altlinux.org> 13.1.0-alt2
 - fixed sitelibs for python3
 
