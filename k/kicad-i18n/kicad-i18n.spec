@@ -1,6 +1,6 @@
-Summary: Translations for %basename
+Summary: Translations for kicad
 Name: kicad-i18n
-Version: 4.0.2
+Version: 4.0.4
 Release: alt1
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -12,7 +12,7 @@ BuildArch: noarch
 BuildRequires(pre): cmake rpm-macros-cmake
 
 %description
-Translations for %name
+Translations for kicad
 
 %prep
 %setup -n %name-%version
@@ -28,5 +28,8 @@ Translations for %name
 %files -f kicad.lang
 
 %changelog
+* Wed Aug 31 2016 Anton Midyukov <antohami@altlinux.org> 4.0.4-alt1
+- New version 4.0.4
+
 * Thu Jul 21 2016 Anton Midyukov <antohami@altlinux.org> 4.0.2-alt1
 - First build for ALT Linux Sisyphus.
