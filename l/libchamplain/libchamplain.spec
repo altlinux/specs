@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name champlain
 %define ver_major 0.12
 %define api_ver 0.12
@@ -7,22 +9,25 @@
 %def_disable memphis
 
 Name: lib%_name
-Version: %ver_major.13
-Release: alt1
+Version: %ver_major.14
+Release: alt0.1
 
 Summary: Map view library for Clutter
 License: LGPLv2+
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/%name
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %_name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.16
 %define cairo_ver 1.4
 %define gtk_ver 3.0.1
 %define clutter_ver 1.12
-%define soup_ver 2.34
+%define soup_ver 2.42
 %define gir_ver 0.10.3
 %define memphis_ver 0.2.1
 
@@ -192,6 +197,12 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Thu Sep 01 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.14-alt0.1
+- updated to LIBCHAMPLAIN_0_12_13-72-g6e3f915
+
+* Thu Sep 01 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.14-alt1
+- 0.12.14
+
 * Fri Feb 26 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.13-alt1
 - 0.12.13
 
