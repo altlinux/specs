@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 %define theme %name
@@ -38,7 +38,7 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 %define ProductName %Brand %major.%minor %Theme
 %define ProductName_ru %Brand_ru %major.%minor %Theme_ru
 
-%define variants alt-kdesktop alt-workstation alt-server altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
+%define variants alt-kdesktop alt-server alt-starterkit alt-workstation altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench altlinux-sisyphus sisyphus-server school-master school-server school-teacher school-lite school-junior altlinux-gnome-desktop sisyphus-server-light
 
 Source: %name.tar
 
@@ -498,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Sep 01 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt5
+- update conflicts
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt4
 - add conflicts for graphics subpackages (ALT#32452)
 
