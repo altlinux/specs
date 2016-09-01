@@ -1,18 +1,15 @@
 Name: converseen
-Version: 0.9.2
-Release: alt3
+Version: 0.9.5
+Release: alt1
 Summary: Converseen is a free cross-platform batch image processor.
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений.
 License: GPLv3
 Group: Graphics
 Url: http://converseen.fasterland.net/
 BuildRequires: desktop-file-utils
-# Automatically added by buildreq on Thu Aug 20 2015
-# optimized out: cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-webkit-devel libstdc++-devel pkg-config
-BuildRequires: ImageMagick-tools cmake gcc-c++ libImageMagick-devel libqt4-devel phonon-devel qt4-designer
+BuildRequires: ImageMagick-tools cmake gcc-c++ libImageMagick-devel qt5-base-devel qt5-phonon-devel qt5-designer qt5-tools-devel
 Packager: Anton Midyukov <antohami@altlinux.org>
-Source: %name-0.9.2.tar.bz2
-Patch1: converseen_fix_desktop-file.patch
+Source: %name-%version.tar
 
 %description
 Converseen is a free cross-platform batch image processor for Windows and Linux
@@ -32,7 +29,6 @@ Converseen — свободная кроссплатформенная прог�
 
 %prep
 %setup -n %name-%version
-%patch1
 
 %build
 cmake -DCMAKE_INSTALL_PREFIX=/usr .
@@ -49,7 +45,7 @@ done
 %files
 %doc COPYING
 %_bindir/%name
-%_datadir/%name/*
+%_datadir/%name
 %_datadir/kde4/services/ServiceMenus/converseen_import.desktop
 %_liconsdir/*
 %_niconsdir/*
@@ -59,6 +55,10 @@ done
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Sep 01 2016 Anton Midyukov <antohami@altlinux.org> 0.9.5-alt1
+- New version 0.9.5
+- Remove converseen_fix_desktop-file.patch.
+
 * Sun Apr 03 2016 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt3
 - Added loop to change the size of the icon
 - Added converseen_fix_desktop-file.patch.
