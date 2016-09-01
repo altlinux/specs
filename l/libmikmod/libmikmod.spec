@@ -1,6 +1,6 @@
 Name: libmikmod
-Version: 3.3.8
-Release: alt1.1
+Version: 3.3.10
+Release: alt1
 
 Summary: A portable sound library for Unix
 License: GPLv2 and LGPLv2+
@@ -71,6 +71,12 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Thu Sep 01 2016 Michael Shigorin <mike@altlinux.org> 3.3.10-alt1
+- 3.3.10
+
+* Wed Aug 17 2016 Michael Shigorin <mike@altlinux.org> 3.3.9-alt1
+- 3.3.9
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 3.3.8-alt1.1
 - NMU: added BR: texinfo
 
