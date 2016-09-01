@@ -1,8 +1,8 @@
 %def_disable privsep
 
 Name: wpa_supplicant
-Version: 2.4
-Release: alt3
+Version: 2.5
+Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -50,7 +50,7 @@ sed -e '' %{?_enable_privsep:-e 's,^.\+CONFIG_PRIVSEP=.\+,CONFIG_PRIVSEP=y,'} \
     < %name/defconfig > %name/.config
 
 %build
-make -C %name CONFIG_LIBNL32=1
+make -C %name
 make -C %name/doc/docbook man
 
 %install
@@ -122,6 +122,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu Sep 01 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5-alt1
+- 2.5 released
+
 * Thu May 07 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4-alt3
 - updated with upstream fixes for EAP-pwd missing payload length validation
 
