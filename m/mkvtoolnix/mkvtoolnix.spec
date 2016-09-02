@@ -12,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 8.2.0
+Version: 9.4.0
 Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
@@ -26,7 +26,7 @@ Provides: mkvmerge = %version-%release
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs symlinks
-BuildRequires: libcurl-devel libebml-devel >= 1.3.1 libmatroska-devel >= 1.4.2
+BuildRequires: libcurl-devel libebml-devel >= 1.3.4 libmatroska-devel >= 1.4.5
 
 %{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK3.1-devel}
 %{?_enable_qt:BuildRequires: qt5-base-devel}
@@ -151,6 +151,9 @@ install -m0755 -D src/tools/{base64tool,diracparser,ebml_validator,vc1parser} %b
 %endif
 
 %changelog
+* Fri Sep 02 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.4.0-alt1
+- 9.4.0 released
+
 * Thu Jul 23 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2.0-alt1
 - 8.2.0 released
 
