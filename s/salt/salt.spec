@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 2015.8.7
-Release: alt2
+Version: 2016.3.3
+Release: alt1
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -180,6 +180,8 @@ ln -s ../../opennode/cli/actions onode
 %_bindir/salt-ssh
 %_bindir/salt-cloud
 %_bindir/salt-unity
+%_bindir/salt-proxy
+%_bindir/spm
 
 %_man1dir/salt-master.1.*
 %_man1dir/salt-cp.1.*
@@ -189,6 +191,8 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-ssh.1.*
 %_man1dir/salt-cloud.1.*
 %_man1dir/salt-unity.1.*
+%_man1dir/salt-proxy.1.*
+%_man1dir/spm.1.*
 
 %files api
 %_bindir/salt-api
@@ -213,6 +217,9 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Fri Sep 02 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2016.3.3-alt1
+- New version (ALT 32464)
+
 * Thu Jun 16 2016 Ivan Zakharyaschev <imz@altlinux.org> 2015.8.7-alt2
 - %%python_req_hier -- for more detailed autoreqs (under jnpr.*),
   without the general UNMET python2.X(jnpr).
