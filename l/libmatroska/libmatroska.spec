@@ -1,6 +1,6 @@
 Name: libmatroska
-Version: 1.4.2
-Release: alt2
+Version: 1.4.5
+Release: alt1
 
 Summary: an extensible open standard Audio/Video container format
 License: LGPL
@@ -9,7 +9,7 @@ Url: http://www.matroska.org
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ libebml-devel >= 1.3.1
+BuildRequires: gcc-c++ libebml-devel >= 1.3.4
 
 %description
 Matroska is aiming to become the standard of Multimedia Container
@@ -67,6 +67,9 @@ HTML)
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Sep 02 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.5-alt1
+- 1.4.5 released
+
 * Wed Jul 15 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.2-alt2
 - rebuilt with gcc5
 
