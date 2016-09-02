@@ -1,5 +1,5 @@
 Name: minidlna
-Version: 1.1.4
+Version: 1.1.6
 Release: alt1
 
 Summary: DLNA AV Media Server
@@ -66,6 +66,9 @@ mkdir -p %buildroot%_cachedir/%name %buildroot%_runtimedir/%name
 %dir %attr(0770,root,_minidlna) %_runtimedir/%name
 
 %changelog
+* Fri Sep 02 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.6-alt1
+- 1.1.6 released
+
 * Fri Feb 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.4-alt1
 - 1.1.4 released
 
