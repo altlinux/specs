@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 BuildArch: noarch
 
 %define theme %name
@@ -55,15 +55,11 @@ Distro-specific packages with design and texts
 Group: System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
 License: GPL
-
 PreReq: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
-
 %define grub_normal white/black
 %define grub_high black/white
-
 %description bootloader
 Here you find the graphical boot logo. Suitable for both lilo and syslinux.
 
@@ -75,7 +71,6 @@ Group:  System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme plymouth(system-theme)
 Requires: plymouth-plugin-script
 PreReq: plymouth
-
 %description bootsplash
 This package contains graphics for boot process, displayed via Plymouth
 
@@ -88,11 +83,9 @@ Group: System/Configuration/Other
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
 Provides: alterator-icons design-alterator design-alterator-%theme
 Obsoletes:  branding-alt-%theme-browser-qt  branding-altlinux-%theme-browser-qt 
-
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-alterator ";done )
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server 
 PreReq(post,preun): alternatives >= 0.2 alterator
-
 %description alterator
 Design for QT and web alterator for %Brand %Theme
 
@@ -107,10 +100,8 @@ Obsoletes:  branding-alt-%theme-graphics design-graphics-%theme design-graphics-
 Provides: gnome-session-splash = %version-%release
 PreReq(post,preun): alternatives >= 0.2
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-graphics ";done )
-
 %description graphics
 This package contains some graphics for ALT design.
-
 
 %define provide_list altlinux fedora redhat system altlinux
 %define obsolete_list altlinux-release fedora-release redhat-release
@@ -118,7 +109,6 @@ This package contains some graphics for ALT design.
 
 %package release
 BuildArch: noarch
-
 Summary: %distribution %Theme release file
 License: GPL
 Group: System/Configuration/Other
@@ -126,7 +116,6 @@ Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "
 Obsoletes: %obsolete_list  branding-alt-%theme-release
 Conflicts: %conflicts_list
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-release ";done )
-
 %description release
 %distribution %version %Theme release file.
 
@@ -139,7 +128,6 @@ License: Distributable
 Group: Documentation
 Conflicts: alt-notes-children alt-notes-hpc alt-notes-junior alt-notes-junior-sj alt-notes-junior-sm alt-notes-school-server alt-notes-server-lite alt-notes-skif alt-notes-terminal 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-notes ";done )
-
 %description notes
 Distribution license and release notes
 
@@ -150,35 +138,29 @@ License: Distributable
 Group: Graphical desktop/KDE
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde4-settings ";done )
 PreReq: %name-graphics
-
 %description kde4-settings
 KDE4 settings for %Brand %version %Theme
 
 %package kde3-settings
-
 BuildArch: noarch
 Summary: KDE3 settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/KDE
 PreReq: %name-graphics
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-kde3-settings ";done )
-
 %description kde3-settings
 KDE3 settings for %Brand %version %Theme
 
 %package fvwm-settings
-
 BuildArch: noarch
 Summary: FVWM2 settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/FVWM based
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-fvwm-settings ";done )
-
 %description fvwm-settings
 FVWM2 settings for %Brand %version %Theme
 
 %package mate-settings
-
 BuildArch: noarch
 Summary: MATE settings for %Brand %version %Theme
 License: Distributable
@@ -189,7 +171,6 @@ Requires: dconf
 MATE settings for %Brand %version %Theme
 
 %package gnome-settings
-
 BuildArch: noarch
 Summary: GNOME settings for %Brand %version %Theme
 License: Distributable
@@ -201,42 +182,28 @@ Provides: metacity-theme-%brand-%theme = %version-%release
 Provides: metacity-theme
 Provides: gnome-menus = 2.30.4
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
-
 %description gnome-settings
 GNOME settings for %Brand %version %Theme
 
-
 %package slideshow
-
 BuildArch: noarch
 Summary: Slideshow for %Brand %version %Theme installer
 License: Distributable
 Group: System/Configuration/Other 
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-slideshow ";done )
-
 %description slideshow
 Slideshow for %Brand %version %Theme installer
 
 %package indexhtml
-
 BuildArch: noarch
 Summary: %name -- ALT Linux html welcome page
 License: distributable
 Group: System/Base
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
-
-Conflicts: indexhtml-sisyphus
-Conflicts: indexhtml-school_junior
-Conflicts: indexhtml-school_lite
-Conflicts: indexhtml-school_master
-Conflicts: indexhtml-school_terminal
-Conflicts: indexhtml-small_business
-Conflicts: indexhtml-school-server
-
-Requires: xdg-utils 
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-indexhtml ";done )
+Requires: xdg-utils
 Requires(post): indexhtml-common
-
 %description indexhtml
 ALT Linux index.html welcome page.
 
@@ -498,6 +465,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Sep 02 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt6
+- update conflicts for indexhtml
+
 * Thu Sep 01 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt5
 - update conflicts
 
