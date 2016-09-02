@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name gdata
 %define ver_major 0.17
 %define api_ver 0.0
@@ -9,22 +9,22 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.5
-Release: alt1
+Version: %ver_major.6
+Release: alt0.1
 
 Summary: Library for the GData protocol
 Group: System/Libraries
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/libgdata
 
-%if_enabled snapshot
-Source: %name-%version.tar
-%else
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
 %endif
 
-%define soup_ver 2.37.91
-%define goa_ver 3.7.90
+%define soup_ver 2.42
+%define goa_ver 3.8
 %define uhttpmock_ver 0.5.0
 
 BuildRequires: autoconf-archive gtk-doc intltool
@@ -99,8 +99,7 @@ GObject introspection devel data for the GData library.
 %find_lang %_name
 
 %check
-# network connection required for tests
-#%%make check
+#%make check
 
 %files -f %_name.lang
 %doc NEWS README AUTHORS
@@ -124,6 +123,9 @@ GObject introspection devel data for the GData library.
 %_girdir/GData-%api_ver.gir
 
 %changelog
+* Fri Sep 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17.6-alt0.1
+- updated to LIBGDATA_0_17_5-11-g2590c92
+
 * Thu Jun 30 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17.5-alt1
 - 0.17.5
 
