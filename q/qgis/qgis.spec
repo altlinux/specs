@@ -1,9 +1,9 @@
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 7.0.2
+%define grass_version 7.0.4
 
 Name:    qgis
-Version: 2.12.3
+Version: 2.16.1
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -17,10 +17,11 @@ Source: %name-%version.tar
 
 # Fix detection problem for GRASS libraries
 Patch1: %name-ignore-bundled-modules.patch
-Patch2: %name-2.10.1-sip.patch
+Patch2: %name-sip-flags.patch
 Patch3: %name-fix-unresolved-variable.patch
 # Need to build otb-python for otbAppication
 Patch4: %name-disable-otb-plugin.patch
+Patch5: %name-fix-typo-in-module-name.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -63,6 +64,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: python-module-qscintilla2-qt4-devel
 BuildRequires: libqscintilla2-qt4-devel
 BuildRequires: python-module-OWSLib
+BuildRequires: python-module-nose2
 BuildRequires: libqca2-devel
 BuildRequires: gzip
 
@@ -134,6 +136,7 @@ Please refer to %name-server-README for details!
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # Delete bundled libs
 rm -rf src/core/gps/qextserialport
@@ -146,6 +149,7 @@ gzip ChangeLog
 %build
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
 CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
+export LD_LIBRARY_PATH=`pwd`/output/%_lib
 cmake \
 	-DCMAKE_C_FLAGS_RELEASE:STRING="-DNDEBUG" \
 	-DCMAKE_CXX_FLAGS_RELEASE:STRING="-DNDEBUG" \
@@ -257,13 +261,16 @@ mkdir -p %buildroot%_datadir/doc/%name-server-%version
 cp src/server/admin.sld src/server/wms_metadata.xml altlinux/%name-server-README altlinux/%name-server-httpd.conf \
    %buildroot%_datadir/doc/%name-server-%version
 
+# Copy test utilities form tests to plugins/processing/tests
+cp tests/src/python/utilities.py %buildroot%_datadir/qgis/python/plugins/processing/tests/
+
 %find_lang %name --with-qt
 # Add missing localization
 echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 
 
 %files -f %name.lang
-%doc BUGS NEWS CODING COPYING Exception_to_GPL_for_Qt.txt PROVENANCE README.md ChangeLog.gz
+%doc BUGS NEWS COPYING Exception_to_GPL_for_Qt.txt PROVENANCE *.md ChangeLog.gz
 # QGIS shows these files in the GUI
 %_datadir/%name/doc
 %dir %_datadir/%name/i18n/
@@ -319,6 +326,9 @@ echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
 %_libexecdir/%name
 
 %changelog
+* Sun Aug 14 2016 Andrey Cherepanov <cas@altlinux.org> 2.16.1-alt1
+- New version
+
 * Sun Jan 31 2016 Andrey Cherepanov <cas@altlinux.org> 2.12.3-alt1
 - New version
 
