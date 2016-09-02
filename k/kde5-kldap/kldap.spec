@@ -1,7 +1,7 @@
 %define rname kldap
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init altplace
 
@@ -18,7 +18,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 BuildRequires: libldap-devel libsasl2-devel
-BuildRequires: kf5-kcompletion-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel
+BuildRequires: kde5-kmbox-devel kde5-kmime-devel
+BuildRequires: kf5-kcompletion-devel kf5-ki18n-devel kf5-kwidgetsaddons-devel kf5-kio-devel kf5-kdoctools kf5-kdoctools-devel-static
 
 %description
 %summary.
@@ -54,11 +55,12 @@ KF5 library
 
 %install
 %K5install
-#%find_lang %name --with-kde --all-name
+%find_lang %name --with-kde --all-name
 
-#files common -f %name.lang
-%files common
+%files common -f %name.lang
 #%doc COPYING*
+%config(noreplace) %_K5xdgconf/kldap.categories
+%_K5srv/ldap*.protocol
 
 %files devel
 %_K5inc/kldap_version.h
@@ -69,8 +71,15 @@ KF5 library
 
 %files -n libkf5ldap
 %_K5lib/libKF5Ldap.so.*
+%_K5plug/kf5/kio/ldap.so
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 

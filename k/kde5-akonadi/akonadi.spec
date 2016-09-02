@@ -1,7 +1,7 @@
 %define rname akonadi
 
 Name: kde5-%rname
-Version: 16.04.3
+Version: 16.08.0
 Release: alt1
 %K5init altplace
 
@@ -98,6 +98,7 @@ Provides: %name-database-mysql = %EVR
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: boost-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -241,6 +242,9 @@ done
 %_K5lib/libKF5AkonadiXml.so.*
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
 * Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkf5grantleetheme libkf5grantleetheme%sover
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init
 
@@ -81,6 +81,12 @@ KF5 library
 %_libdir/grantlee/5.?/*grantlee_*.so
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Thu Jun 30 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 

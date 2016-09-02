@@ -17,9 +17,10 @@
 %define libkpgp libkpgp%pim_sover
 %define libpimsettingexporterprivate libpimsettingexporterprivate%pim_sover
 %define libnotesharedprivate libnotesharedprivate%pim_sover
+%define libcomposereditorwebengineprivate libcomposereditorwebengineprivate%pim_sover
 
 Name: kde5-pim
-Version: 16.04.3
+Version: 16.08.0
 Release: alt1
 %K5init altplace
 
@@ -47,13 +48,14 @@ Patch2: alt-install-kalarm-helper.patch
 #BuildRequires: extra-cmake-modules gcc-c++ grantlee5-devel kde5-akonadi-calendar-devel kde5-akonadi-search-devel kde5-gpgmepp-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-ktnef-devel kde5-pimlibs-devel kde5-syndication-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdewebkit-devel kf5-kdnssd-devel kf5-kdoctools kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kross-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-kxmlrpcclient-devel kf5-libkgapi-devel kf5-solid-devel kf5-sonnet-devel libassuan-devel libgpgme-devel libldap-devel libsasl2-devel python-module-google qt5-quick1-devel qt5-speech-devel qt5-tools-devel-static qt5-x11extras-devel rpm-build-python3 rpm-build-ruby xsltproc zlib-devel-static
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: qt5-quick1-devel qt5-tools-devel-static qt5-x11extras-devel
+BuildRequires: qt5-quick1-devel qt5-tools-devel-static qt5-x11extras-devel qt5-webengine-devel qt5-phonon-devel
 #BuildRequires: qt5-speech-devel
 BuildRequires: desktop-file-utils xsltproc grantlee5-devel libassuan-devel libgpgme-devel libldap-devel libsasl2-devel zlib-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-search-devel kde5-gpgmepp-devel kde5-kalarmcal-devel kde5-kblog-devel kde5-kcalcore-devel
 BuildRequires: kde5-kcalutils-devel kde5-kcontacts-devel kde5-kholidays-devel kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kldap-devel
 BuildRequires: kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kontactinterface-devel kde5-kpimtextedit-devel kde5-ktnef-devel
-BuildRequires: kde5-pimlibs-devel kde5-syndication-devel
+BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
+BuildRequires: kde5-syndication-devel
 BuildRequires: kde5-libkdepim-devel kde5-pimcommon-devel kde5-libgravatar-devel kde5-mailimporter-devel kde5-libkleo-devel kde5-grantleetheme-devel
 BuildRequires: kde5-pim-apps-libs-devel kde5-messagelib-devel kde5-mailcommon-devel kde5-calendarsupport-devel kde5-kdgantt2-devel kde5-eventviews-devel
 BuildRequires: kde5-incidenceeditor-devel kde5-libksieve-devel
@@ -86,101 +88,108 @@ developing applications that use %name.
 
 %package -n %libakregatorinterfaces
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libakregatorinterfaces
-KF5 library
+%name library
 
 %package -n %libakregatorprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libakregatorprivate
-KF5 library
+%name library
 
 %package -n %libgrantleethemeeditor
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libgrantleethemeeditor
-KF5 library
+%name library
 
 %package -n %libincidenceeditorsngmobile
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libincidenceeditorsngmobile
-KF5 library
+%name library
 
 %package -n %libkaddressbookprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkaddressbookprivate
-KF5 library
+%name library
 
 %package -n %libkmailprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkmailprivate
-KF5 library
+%name library
 
 %package -n %libknotesprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libknotesprivate
-KF5 library
+%name library
 
 %package -n %libkontactprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkontactprivate
-KF5 library
+%name library
 
 %package -n %libkorganizer_core
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkorganizer_core
-KF5 library
+%name library
 
 %package -n %libkorganizer_interfaces
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkorganizer_interfaces
-KF5 library
+%name library
 
 %package -n %libkorganizerprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkorganizerprivate
-KF5 library
+%name library
 
 %package -n %libkpgp
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libkpgp
-KF5 library
+%name library
 
 %package -n %libpimsettingexporterprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libpimsettingexporterprivate
-KF5 library
+%name library
 
 %package -n %libnotesharedprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 %description -n %libnotesharedprivate
-KF5 library
+%name library
+
+%package -n %libcomposereditorwebengineprivate
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n %libcomposereditorwebengineprivate
+%name library
 
 %package akonadi
 Summary: KDE PIM storage framework
@@ -290,6 +299,7 @@ done
 %K5install_move data akonadi akregator composereditor doc importwizard kaddressbook kalarm kconf_update
 %K5install_move data kdepimwidgets kleopatra kmail2 knode knotes kontact korgac korganizer kwatchgnupg
 %K5install_move data libkleopatra libmessageviewer messagelist messageviewer pimsettingexporter sieve
+%K5install_move data composereditorwebengine
 
 desktop-file-install \
     --mode=0755 --dir %buildroot/%_K5xdgapp \
@@ -300,7 +310,7 @@ desktop-file-install \
 %files
 %files common
 %config(noreplace) %_K5xdgconf/*rc
-%config(noreplace) %_K5xdgconf/kdepim.categories
+%config(noreplace) %_K5xdgconf/*.categories
 %doc COPYING*
 %dir %_K5srv/kontact/
 %_K5icon/*/*/actions/*.*
@@ -308,6 +318,7 @@ desktop-file-install \
 %_K5srvtyp/*.desktop
 %_K5xdgmime/*.xml
 %_K5cfg/*.kcfg
+%_K5data/composereditorwebengine/
 
 %files akonadi
 %_K5bin/akonadi_*_agent
@@ -443,7 +454,7 @@ desktop-file-install \
 %files kmail
 %_K5bin/kmail
 %_K5plug/kmailpart.so
-%_K5plug/messageviewer_*.so
+#%_K5plug/messageviewer_*.so
 %_K5plug/kcm_kmail.so
 %_K5plug/kcm_kmailsummary.so
 %_K5plug/kontact_kmailplugin.so
@@ -599,8 +610,14 @@ desktop-file-install \
 %files -n %libnotesharedprivate
 %_K5lib/libnotesharedprivate.so.%pim_sover
 %_K5lib/libnotesharedprivate.so.*
+%files -n %libcomposereditorwebengineprivate
+%_K5lib/libcomposereditorwebengineprivate.so.%pim_sover
+%_K5lib/libcomposereditorwebengineprivate.so.*
 
 %changelog
+* Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
 * Wed Jul 13 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
 - new version
 
