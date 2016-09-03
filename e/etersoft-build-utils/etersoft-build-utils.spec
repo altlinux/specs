@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.4-alt1
+- fix OPTIND error with shift: -1: shift count
+- rpmgs: fix get #Source-* for Source0
+- rpmgs: improve for tags support
+- spec: add reset_subrelease
+- fix pkgrepl for packages in {}
+
 * Fri Aug 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.5.3-alt1
 - rpmbs: fix set branch name in common task
 - rpmbph: fix passed args
