@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.14
+Version: 0.2.15
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
+# error: File must begin with "/": %webserver_htdocsdir/maintenance/
 BuildRequires: rpm-macros-webserver-common
 
 Requires: nginx >= 1.8.1
@@ -37,6 +38,9 @@ mkdir -p %buildroot%_sysconfdir/nginx/httpconf-enabled.d/
 mkdir -p %buildroot%_sysconfdir/nginx/httpconf-available.d/
 install -m644 httpconf-available.d/* %buildroot%_sysconfdir/nginx/httpconf-available.d/
 
+mkdir -p %buildroot%_sysconfdir/nginx/sites-available.d/
+install -m644 sites-available.d/* %buildroot%_sysconfdir/nginx/sites-available.d/
+
 mkdir -p %buildroot%_sysconfdir/nginx/examples/
 install -m644 examples/* %buildroot%_sysconfdir/nginx/examples/
 
@@ -52,12 +56,21 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %dir %_sysconfdir/nginx/httpconf-available.d/
 %dir %_sysconfdir/nginx/httpconf-enabled.d/
 %config(noreplace) %_sysconfdir/nginx/httpconf-available.d/*
+%config(noreplace) %_sysconfdir/nginx/sites-available.d/
 %_sysconfdir/nginx/examples/
 %_datadir/%name/
 %dir %webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.15-alt1
+- log.conf: add some logs formats
+- add nosslonly.conf script
+- store-proxy: add X-Powered-By
+- add ip-server config for ignore ip based requests
+- add HSTS example
+- add stop-cms.conf against requests to a popular CMS urls
+
 * Thu Apr 07 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2.14-alt1
 - set required nginx version to 1.8.1
 - use default proxy_cache_key value
