@@ -7,11 +7,11 @@
 %def_disable upower
 # NetworkManager support
 %def_enable nm
-%def_disable check
+%def_enable check
 
 Name: telepathy-mission-control
-Version: 5.16.3
-Release: alt1.1
+Version: 5.16.4
+Release: alt1
 
 Summary: Telepathy mission control plugin library
 License: LGPL v2.1
@@ -20,9 +20,9 @@ Url: http://mission-control.sourceforge.net/
 
 Source: http://telepathy.freedesktop.org/releases/%name/%name-%version.tar.gz
 
-BuildRequires: gtk-doc libgio-devel >= 2.28.0 libdbus-glib-devel libtelepathy-glib-devel >= 0.22.0
+BuildRequires: gtk-doc libgio-devel >= 2.46.0 libdbus-glib-devel libtelepathy-glib-devel >= 0.22.0
 %{?_enable_upower:BuildRequires: libupower-devel}
-%{?_enable_nm:BuildRequires: NetworkManager-glib-devel}
+%{?_enable_nm:BuildRequires: libnm-devel}
 %{?_enable_gnome_keyring:BuildRequires: libgnome-keyring-devel}
 
 %if_enabled check
@@ -99,6 +99,9 @@ mkdir %buildroot%_libdir/mission-control-plugins.%plugin_abi_ver
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Sep 03 2016 Yuri N. Sedunov <aris@altlinux.org> 5.16.4-alt1
+- 5.16.4
+
 * Tue Feb 16 2016 Yuri N. Sedunov <aris@altlinux.org> 5.16.3-alt1.1
 - packaged %%_libdir/mission-control-plugins.0 (ALT #31378)
 
