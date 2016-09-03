@@ -1,5 +1,5 @@
 Name: etersoft-admin-essential
-Version: 0.4
+Version: 0.6
 Release: alt1
 
 Summary: Virtual package for packages required by Etersoft's vision
@@ -25,7 +25,7 @@ Summary: Virtual package for container's requires in Etersoft's vision
 Requires: strace
 
 # System
-Requires: openssh-blacklist
+Requires: openssh-blacklist openssh-server
 
 # Administration
 Requires: etckeeper apt-conf-etersoft-common
@@ -34,7 +34,7 @@ Requires: etckeeper apt-conf-etersoft-common
 Requires: tcpdump traceroute tcptraceroute bind-utils hostinfo net-tools netcat whois
 
 # File utils
-Requires: wget unzip
+Requires: wget unzip vim-console eepm erc
 
 # Monitoring
 Requires: nagios-nrpe monit
@@ -53,10 +53,10 @@ Summary: Virtual package for host system's requires in Etersoft's vision
 Requires: strace
 
 # System
-Requires: openssh-blacklist
+Requires: openssh-blacklist openssh-server
 
 # Hardware
-Requires: fdisk ntpdate smartmontools hdparm sysstat
+Requires: fdisk ntpdate smartmontools hdparm sysstat ptmax
 
 # Administration
 Requires: etckeeper apt-conf-etersoft-common apt-conf-etersoft-hold
@@ -65,7 +65,7 @@ Requires: etckeeper apt-conf-etersoft-common apt-conf-etersoft-hold
 Requires: tcpdump traceroute tcptraceroute bind-utils hostinfo net-tools netcat whois iftop nmap
 
 # File utils
-Requires: wget unzip
+Requires: wget unzip vim-console eepm erc
 
 # Monitoring
 Requires: nagios-nrpe monit hddtemp collectd collectd-sensors
@@ -104,6 +104,32 @@ OpenVZ based.
 %files container
 
 %changelog
+* Sat Sep 03 2016 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- add clone_vz.sh (eterbug #9281)
+- add some ddos script
+- add mail check script, add broken web hosts to access list
+- add hdd utils
+- add get_userpass_for_nginx
+- add starthttpd2
+- add dns utils
+- add nic_domains.sh for get domains info
+- commit check_git_activity.sh
+- improve gluster fixing scripts
+- add glusterupdate.sh
+- update rsync_all
+- add nginx_le.sh for letsencrypt using
+
+* Fri Jul 26 2013 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- add vz utils: load_svg, move_vz
+- add common scripts and ddos
+- add web url stat
+- add script for check hosted sites
+- add refresh_site_conf script replaced rewrite_httpd_conf.sh
+- improve to save aliases for sites
+- merge dir perms and owners code, add refresh_dirs.sh script
+- commit shareinet script
+- add load_avg_vz
+
 * Mon Mar 05 2012 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - add some utils
 - add admin scripts
