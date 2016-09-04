@@ -3,7 +3,7 @@
 %define api_ver 1.4
 
 Name: lib%rname
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -73,6 +73,9 @@ BuildArch: noarch
 %_docdir/%rname-%api_ver
 
 %changelog
+* Sun Sep 04 2016 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
+- 2.40.1
+
 * Mon Mar 28 2016 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
 - 2.40.0
 
