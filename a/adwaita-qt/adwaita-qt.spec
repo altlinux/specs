@@ -1,12 +1,11 @@
 Name: adwaita-qt
-Version: 0.4
+Version: 0.5
 Release: alt1
 Summary: Adwaita theme for Qt-based applications
 License: LGPLv2+
 Group: Graphical desktop/GNOME
 Url: https://github.com/MartinBriza/adwaita-qt
 Source0: adwaita-qt-%version.tar
-Patch0: qt-creator-menubar-fix.patch
 
 BuildRequires: cmake
 BuildRequires: qt4-devel
@@ -48,7 +47,6 @@ Adwaita theme variant for applications utilizing Qt5
 
 %prep
 %setup
-%patch0 -p1 -b .qt-creator-menubar-fix
 
 %build
 mkdir -p "%_target_platform-qt4"
@@ -85,5 +83,9 @@ popd
 %files
 
 %changelog
+* Sun Sep 04 2016 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
+- new version 0.5
+- remove qt-creator-menubar-fix.patch
+
 * Tue Aug 30 2016 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
 - Initial build for Alt Linux Sisyphus (Thanks Fedora Team).
