@@ -1,7 +1,7 @@
 %define ver_major 0.4
 
 Name: orc
-Version: %ver_major.25
+Version: %ver_major.26
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -133,6 +133,9 @@ This package contains documentation for Orc.
 %_datadir/gtk-doc/html/orc
 
 %changelog
+* Sun Sep 04 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.26-alt1
+- 0.4.26
+
 * Mon Mar 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.25-alt1
 - 0.4.25
 
