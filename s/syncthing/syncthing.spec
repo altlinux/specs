@@ -1,5 +1,5 @@
 Name: syncthing
-Version: 0.14.4
+Version: 0.14.5
 Release: alt1
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
@@ -22,7 +22,7 @@ Internet.
 
 %description -l ru_RU.UTF-8
 Syncthing призван заменить собой проприетарные программы синхронизации и
-облачные сервисы на открытый, надежный и децентрализованный сервис. Ваши данные
+облачные сервисы на открытый, надёжный и децентрализованный сервис. Ваши данные
 это ваши данные и вы должны иметь возможность выбрать, где им храниться,
 совместно с какой-то третьей стороной или нет, и как им передаваться через
 Интернет.
@@ -64,6 +64,10 @@ install -Dm 0644 etc/linux-systemd/user/%name.service           \
 %_libexecdir/systemd/user/%name.service
 
 %changelog
+* Sun Sep 04 2016 Anton Midyukov <antohami@altlinux.org> 0.14.5-alt1
+- new version 0.14.5
+- added cronbuild-update-source
+
 * Sun Aug 21 2016 Denis Smirnov <mithraen@altlinux.ru> 0.14.4-alt1
 - new version 0.14.4
 - disable auto update

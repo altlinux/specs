@@ -3,7 +3,7 @@
 #%%def_enable nautilus-syncthing-gtk
 
 Name: syncthing-gtk
-Version: 0.9.1
+Version: 0.9.2.1
 Release: alt1
 Summary: Syncthing Gtk-based graphical interface
 Summary(ru_RU.UTF-8): Основанный на GTK графический интерфейс для Syncthing
@@ -13,9 +13,10 @@ Url: https://github.com/syncthing/syncthing-gtk
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-BuildPreReq: python-devel python-module-setuptools
+BuildPreReq: python-devel python-module-setuptools desktop-file-utils
 Requires: syncthing >= 0.14
 Requires: librsvg-gir
+Requires: icon-theme-hicolor
 BuildArch: noarch
 
 %description
@@ -133,6 +134,9 @@ Syncthing, основанный на GTK и Python.
 %python_install
 rm -rf %buildroot%python_sitelibdir/syncthing_gtk/windows.*
 
+#fix categories desktop file
+desktop-file-edit --add-category=FileTransfer %buildroot%_desktopdir/%name.desktop
+
 %if_enabled mate-file-manager-syncthing-gtk
 install -Dm 0644 scripts/syncthing-plugin-caja.py \
   %buildroot%_datadir/caja-python/extensions/syncthing-gtk.py
@@ -170,9 +174,9 @@ done
 
 %if_enabled mate-file-manager-syncthing-gtk
 %files -n mate-file-manager-syncthing-gtk
-%dir %{_datadir}/caja-python/
-%dir %{_datadir}/caja-python/extensions/
-%{_datadir}/caja-python/extensions/syncthing-gtk.py
+%dir %_datadir/caja-python/
+%dir %_datadir/caja-python/extensions/
+%_datadir/caja-python/extensions/syncthing-gtk.py
 %endif
 
 %if_enabled nemo-syncthing-gtk
@@ -190,6 +194,10 @@ done
 %endif
 
 %changelog
+* Sun Sep 04 2016 Anton Midyukov <antohami@altlinux.org> 0.9.2.1-alt1
+- New version 0.9.2.1
+- fix categories desktop file
+
 * Mon Aug 22 2016 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
 - New version
 
