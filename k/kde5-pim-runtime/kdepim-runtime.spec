@@ -9,7 +9,7 @@
 
 Name: kde5-pim-runtime
 Version: 16.08.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -18,6 +18,8 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 #Requires: kde5-akonadi-contacts kde5-akonadi-notes
+Provides: kde5-pimlibs = %EVR
+Obsoletes: kde5-pimlibs < %EVR
 
 Source: %rname-%version.tar
 
@@ -49,6 +51,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
+Provides: kde5-pimlibs-common = %EVR
+Obsoletes: kde5-pimlibs-common < %EVR
 %description common
 %name common package
 
@@ -151,6 +155,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Mon Sep 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt2
+- obsolete kde5-pimlibs
+
 * Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 

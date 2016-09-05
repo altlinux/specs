@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 16.08.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -29,7 +29,6 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
-Conflicts: kde5-pimlibs
 %description common
 %name common package
 
@@ -61,9 +60,6 @@ KF5 library
 
 %files common -f %name.lang
 %doc COPYING*
-%_datadir/akonadi5/contact/
-%_K5data/akonadicontact/
-%_K5srvtyp/*.desktop
 
 %files devel
 %_K5inc/akonadi-contact_version.h
@@ -78,7 +74,14 @@ KF5 library
 %_K5plug/*akonadicontact*.so
 %_K5srv/akonadi/contact/
 %_K5srv/*akonadicontact*.desktop
+#
+%_datadir/akonadi5/contact/
+%_K5data/akonadicontact/
+%_K5srvtyp/*.desktop
 
 %changelog
+* Mon Sep 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt2
+- update conflicts
+
 * Mon Aug 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - initial build
