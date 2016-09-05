@@ -1,5 +1,5 @@
 Name: profile-sync-daemon
-Version: 6.22
+Version: 6.25
 Release: alt1
 Summary: Offload browser profiles to RAM for speed a wear reduction
 Summary(ru_RU.UTF-8): Выгружает профиль браузера в ОЗУ для ускорения его работы
@@ -9,6 +9,9 @@ Url: https://github.com/graysky2/profile-sync-daemon
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Source1: psd.service
+Source2: psd-resync.service
+Source3: psd-resync.timer
 Patch1: fix_distroname-alt.patch
 BuildArch: noarch
 
@@ -20,7 +23,7 @@ use of rsync to maintain back-up and synchronization between the two. One of
 the major design goals of psd is a completely transparent user experience.
 
 To automatically start psd, use the command:
-systemctl --user enable psd && systemctl --user start psd
+systemctl --user enable psd psd-resync.timer && systemctl --user start psd psd-resync.timer
 
 %description -l ru_RU.UTF-8
 Profile-sync-daemon (psd) представляет собой псевдо-демон, управляющий вашим
@@ -30,21 +33,24 @@ Profile-sync-daemon (psd) представляет собой псевдо-де�
 копирования и синхронизации. Поддерживается большинство современных браузеров.
 
 Для автоматического запуска psd, используйте команду:
-systemctl --user enable psd && systemctl --user start psd
+systemctl --user enable psd psd-resync.timer && systemctl --user start psd psd-resync.timer
 
 %prep
 %setup
-%patch1 -p2
+%patch1 -p1
 
 %build
 %make_build
 
 %install
 %makeinstall_std
+cp -r %SOURCE1 %buildroot%_libexecdir/systemd/user/
+cp -r %SOURCE2 %buildroot%_libexecdir/systemd/user/
+cp -r %SOURCE3 %buildroot%_libexecdir/systemd/user/
 
 %post
 echo 'To automatically start psd, use the command:'
-echo 'systemctl --user enable psd && systemctl --user start psd'
+echo 'systemctl --user enable psd psd-resync.timer && systemctl --user start psd psd-resync.timer'
 
 %files
 %doc README*
@@ -58,6 +64,10 @@ echo 'systemctl --user enable psd && systemctl --user start psd'
 %_libexecdir/systemd/user/psd*.*
 
 %changelog
+* Mon Sep 05 2016 Anton Midyukov <antohami@altlinux.org> 6.25-alt1
+- new version 6.25
+- fix unit files.
+
 * Mon Aug 22 2016 Anton Midyukov <antohami@altlinux.org> 6.22-alt1
 - new version 6.22
 - added the ability to build using Cronbuild
