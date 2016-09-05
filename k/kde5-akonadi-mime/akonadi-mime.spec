@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 16.08.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -29,7 +29,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
-Conflicts: kde5-pimlibs-common
+Provides: kde5-pimlibs-common = %EVR
+Obsoletes: kde5-pimlibs-common < %EVR
 %description common
 %name common package
 
@@ -75,5 +76,8 @@ KF5 library
 %_K5lib/libKF5AkonadiMime.so.*
 
 %changelog
+* Mon Sep 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt2
+- update conflicts
+
 * Mon Aug 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - initial build
