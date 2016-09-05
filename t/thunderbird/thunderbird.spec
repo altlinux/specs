@@ -1,14 +1,12 @@
 %def_with	enigmail
-%def_with	lightning
 %define 	r_name thunderbird
 
-%define enigmail_version  1.9.3
-%define lightning_version 4.7.2
+%define enigmail_version  1.9.5
 %define gdata_version     2.6
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.2.0
+Version:	45.3.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -81,6 +79,10 @@ Requires:	browser-plugins-npapi
 
 Provides:	%name-esr = %version-%release
 Obsoletes:	%name-esr < %version-%release
+Provides: 	%name-lightning = %version-%release
+Obsoletes:	%name-lightning < %version-%release
+Provides: 	%name-esr-lightning = %version-%release
+Obsoletes:	%name-esr-lightning < %version-%release
 
 # Protection against fraudulent DigiNotar certificates
 Requires:	libnss >= 3.13.1-alt1
@@ -100,6 +102,7 @@ Thunderbird is Mozilla's next generation e-mail client.
 Thunderbird makes emailing safer, faster and easier than
 ever before and can also scale to meet the most sophisticated
 organizational needs.
+The package contains Lightning - an integrated calendar for Thunderbird.
 
 %if_with enigmail
 %package enigmail
@@ -121,21 +124,6 @@ which allows users to access the authentication and encryption features
 provided by the popular GnuPG software.
 %endif
 
-%if_with lightning
-%package lightning
-%define lightning_ciddir %mozilla_arch_extdir/%tbird_cid/\{e2fda1a4-762b-4020-b5ad-a41df1933103\}
-Summary: An integrated calendar for Thunderbird
-Group: Office
-Url: https://www.mozilla.org/projects/calendar
-
-Provides:  %name-lightning = %lightning_version-%release
-Provides:  %name-esr-lightning = %version-%release
-Obsoletes: %name-esr-lightning < %version-%release
-Requires: %name = %version-%release
-
-%description lightning
-An integrated calendar for Thunderbird.
-
 %package google-calendar
 %define google_calendar_ciddir %mozilla_noarch_extdir/%tbird_cid/\{a62ef8ec-5fdc-40c2-873c-223b8a6925cc\}
 Summary: Provider for Google Calendar
@@ -144,7 +132,6 @@ Url: https://www.mozilla.org/projects/calendar
 
 Provides: %name-google-calendar = %gdata_version-%release
 Requires: %name = %version-%release
-Requires: %name-lightning = %version-%release
 
 Provides: gdata-provider = %gdata_version-%release
 Provides:  %name-esr-google-calendar = %version-%release
@@ -152,7 +139,6 @@ Obsoletes: %name-esr-google-calendar < %version-%release
 
 %description google-calendar
 Allows bidirectional access to Google Calendar
-%endif
 
 %package devel
 Summary:	Thunderbird development kit.
@@ -199,9 +185,7 @@ tar -xf %SOURCE2
 
 cp -f %SOURCE4 .mozconfig
 
-%if_with lightning
 echo 'ac_add_options --enable-calendar' >> .mozconfig
-%endif
 
 %ifnarch %{ix86} x86_64 armh
 echo "ac_add_options --disable-methodjit" >> .mozconfig
@@ -390,18 +374,9 @@ mv -f -- \
 	%buildroot/%enigmail_ciddir
 %endif
 
-%if_with lightning
-mkdir -p %buildroot/%lightning_ciddir
-unzip -q -u -d %buildroot/%lightning_ciddir -- \
-	$PWD/objdir/dist/xpi-stage/lightning*.xpi
-
 mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 	$PWD/objdir/dist/xpi-stage/gdata-provider*.xpi
-
-#rm -rf -- %buildroot/%tbird_prefix/extensions/calendar-timezones@mozilla.org
-#rm -f -- %buildroot/%lightning_ciddir/application.ini
-%endif
 
 # Add real RPATH
 (set +x
@@ -441,23 +416,15 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %if_with enigmail
 %exclude %enigmail_ciddir
 %endif
-%if_with lightning
-%exclude %lightning_ciddir
 %exclude %google_calendar_ciddir
-%endif
 
 %if_with enigmail
 %files enigmail
 %enigmail_ciddir
 %endif
 
-%if_with lightning
-%files lightning
-%lightning_ciddir
-
 %files google-calendar
 %google_calendar_ciddir
-%endif
 
 %files devel
 %tbird_idldir
@@ -468,6 +435,12 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Mon Sep 05 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt1
+- New version (45.3.0)
+- Enigmail 1.9.5
+- Remove separate package with Lightning because Lightning is part of
+  Thunderbird
+
 * Sat Jul 02 2016 Andrey Cherepanov <cas@altlinux.org> 45.2.0-alt1
 - New version (45.2.0)
 - Enigmail 1.9.3

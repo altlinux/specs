@@ -4,28 +4,35 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %tbird_noarch_extensionsdir/%cid_dict
 
+%define cid_lightning_dir  %tbird_noarch_extensionsdir/langpack-ru@lightning.mozilla.org
+
 Name:		thunderbird-ru
-Version:	45.2.0
+Version:	45.3.0
 Release:	alt1
-Summary:	Russian (RU) Language Pack for Thunderbird
+Summary:	Russian (RU) Language Pack for Thunderbird (with Lightning support)
 
 License:	GPL
 Group:		Networking/Mail
 URL:		http://www.mozilla-russia.org/products/thunderbird/
-Packager:	Alexey Gladkov <legion@altlinux.ru>
+Packager:	Andrey Cherepanov <cas@altlinux.org>
 BuildArch:	noarch
 
 Source0:	ru-%version.xpi
+Source1:        lightning-ru-%version.xpi
+Patch0:         fix-metadata-for-languagepack-in-install.rdf.patch
+
 
 Requires:	hunspell-ru
 Provides:	thunderbird-esr-ru = %version-%release
 Obsoletes:	thunderbird-esr-ru < %version-%release
+Provides:	thunderbird-lightning-ru = %version-%release
+Obsoletes:	thunderbird-lightning-ru < %version-%release
 
 BuildRequires(pre):	rpm-build-thunderbird 
 BuildRequires:		unzip
 
 %description
-The Mozilla Thunderbird in Russian.
+The Mozilla Thunderbird in Russian (with Lightning support).
 
 %prep
 %setup -c -n %name-%version/%cid
@@ -65,11 +72,23 @@ EOF
 ln -s %_datadir/myspell/ru_RU.aff %buildroot/%cid_dict_dir/dictionaries/ru.aff
 ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 
+# Lightning localization
+mkdir -p %buildroot/%cid_lightning_dir
+unzip -qq -d %buildroot/%cid_lightning_dir %SOURCE1
+cd %buildroot/%cid_lightning_dir
+patch -p2 < %PATCH0
+
 %files
 %cid_dir
 %cid_dict_dir
+%cid_lightning_dir
 
 %changelog
+* Tue Sep 06 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt1
+- New version
+- Merge with thunderbird-lightning-ru
+- Package update script
+
 * Sat Jul 02 2016 Andrey Cherepanov <cas@altlinux.org> 45.2.0-alt1
 - New version
 
