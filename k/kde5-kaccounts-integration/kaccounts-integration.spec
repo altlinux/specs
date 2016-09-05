@@ -3,8 +3,8 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 16.04.1
-Release: alt1
+Version: 16.04.3
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel
 BuildRequires: accounts-qt5-devel signon-devel
-BuildRequires: kde5-akonadi-devel kde5-pimlibs-devel
+BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel-static
@@ -93,6 +93,15 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %_K5srv/kded/accounts.desktop
 
 %changelog
+* Mon Sep 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt2
+- fix build requires
+
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
+* Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
