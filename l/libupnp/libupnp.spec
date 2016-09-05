@@ -1,6 +1,6 @@
 Name: libupnp
-Version: 1.6.19
-Release: alt2
+Version: 1.6.20
+Release: alt1
 
 Summary: Linux SDK for UPnP Devices
 License: BSD
@@ -79,6 +79,9 @@ to develop applications using libupnp.
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Sep 05 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.20-alt1
+- 1.6.20 released
+
 * Fri Jan 08 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.19-alt2
 - updated from git.83f3b34
 
