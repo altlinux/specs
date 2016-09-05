@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.2.18
-Release: alt8
+Release: alt9
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -28,6 +28,7 @@ Patch2: pve-firewall-alt.patch
 Patch3: pve-ha-manager-alt.patch
 Patch4: pve-container-alt.patch
 Patch5: qemu-server-alt.patch
+Patch6: pve-manager-alt-bps-to-bit.patch
 
 BuildRequires: glib2-devel libnetfilter_log-devel pve-doc-generator pve-storage librados2-perl libsystemd-daemon-devel
 BuildRequires: perl-AnyEvent-AIO perl-AnyEvent-HTTP perl-AptPkg perl-Crypt-SSLeay perl-File-ReadBackwards
@@ -239,7 +240,7 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %dir %_localstatedir/vz/images
 %dir %_localstatedir/vz/template/iso
 %dir %_localstatedir/vz/template/qemu
-%attr(0700,www-data,www-data) %_logdir/pveproxy
+%attr(0770,root,www-data) %_logdir/pveproxy
 %_man1dir/pveceph.1*
 %_man1dir/pveperf.1*
 %_man1dir/pvereport.1*
@@ -364,6 +365,9 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Sep 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.18-alt9
+- Network Device: replace rate limit MB/s to MBit/s
+
 * Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.18-alt8
 - 4.2-18
 - pve-container 1.0-73

@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: Proxmox VE base library
 Version: 4.0.72
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -40,6 +40,9 @@ cd src
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Sep 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.72-alt2
+- Network Device: replace rate limit MB/s to MBit/s
+
 * Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.72-alt1
 - 4.0-72
 
