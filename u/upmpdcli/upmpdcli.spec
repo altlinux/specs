@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 0.13.0
+Version: 1.1.1
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -9,7 +9,7 @@ Url: http://www.lesbonscomptes.com/upmpdcli
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ libmpdclient-devel libupnpp-devel
+BuildRequires: gcc-c++ libmpdclient-devel libupnpp-devel >= 0.14.1
 
 %description
 %name implements an UPnP Media Renderer, using MPD to perform
@@ -60,10 +60,16 @@ rm -rf %buildroot%_datadir/%name/web
 %_bindir/upmpdcli
 
 %_datadir/%name
+%exclude %_datadir/%name/Analog-Input
+%exclude %_datadir/%name/rdpl2stream
+%exclude %_datadir/%name/src_scripts
 %_man1dir/%name.1*
 
 %dir %attr(0770,root,_upmpd) %_cachedir/%name
 
 %changelog
+* Mon Sep 05 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.1-alt1
+- 1.1.1 released
+
 * Tue Jan 26 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.0-alt1
 - initial
