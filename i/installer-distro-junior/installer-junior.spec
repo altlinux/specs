@@ -1,6 +1,6 @@
 Name:    installer-distro-junior
-Version: 7.0
-Release: alt2
+Version: 8.0
+Release: alt1
 
 Summary: Installer common files
 License: GPL
@@ -103,6 +103,10 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Fri Sep 02 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt1
+- Enable bind and ahttpd services by default
+- Update Alterator expert/skip lists from installer-distro-centaurus
+
 * Thu Dec 05 2013 Andrey Cherepanov <cas@altlinux.org> 7.0-alt2
 - Use icon-theme-simple-school
 
