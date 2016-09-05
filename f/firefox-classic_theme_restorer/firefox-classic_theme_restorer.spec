@@ -3,7 +3,7 @@
 %define ciddir  %firefox_noarch_extensionsdir/%cid
 
 Name: firefox-classic_theme_restorer
-Version: 1.4.9
+Version: 1.5.6
 Release: alt1
 
 Summary: Classic Theme Restorer (Customize Australis) extension for Firefox
@@ -11,7 +11,7 @@ License: Mozilla Public License, version 2.0
 Group: Networking/WWW
 
 Url: https://addons.mozilla.org/en-US/firefox/addon/classicthemerestorer/
-Source: classic_theme_restorer_customize_australis-%version-fx.xpi
+Source: classic_theme_restorer-%version-fx.xpi
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
@@ -44,6 +44,9 @@ if [ "$1" = 0 ]; then [ ! -d "%ciddir" ] || rm -rf "%ciddir"; fi
 %ciddir
 
 %changelog
+* Mon Sep 05 2016 Mikhail Kolchin <mvk@altlinux.org> 1.5.6-alt1
+- 1.5.6
+
 * Sun Mar 20 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.9-alt1
 - Version 1.4.9-alt1
 
@@ -52,4 +55,3 @@ if [ "$1" = 0 ]; then [ ! -d "%ciddir" ] || rm -rf "%ciddir"; fi
 
 * Tue May 20 2014 Michael Shigorin <mike@altlinux.org> 1.1.9-alt1
 - built for ALT Linux
-
