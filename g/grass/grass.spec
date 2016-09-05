@@ -1,5 +1,5 @@
 Name:    grass
-Version: 7.0.2
+Version: 7.0.4
 Release: alt1
 
 %def_with mysql
@@ -20,10 +20,10 @@ Patch0: %name-pkgconf.patch
 Patch1: %name-use-simplejson.patch
 Patch2: %name-soname.patch
 
-%define grassfix 70
-#define grassdir grass%grassfix
+%define shortver 70
+#define grassdir grass%shortver
 %define grassdir grass-%version
-%define grassdatadir /var/lib/grass%grassfix/data
+%define grassdatadir /var/lib/grass%shortver/data
 
 # internal modules
 %add_python_req_skip srs wms_base wms_cap_parsers
@@ -130,10 +130,9 @@ This package contains development headers for GRASS.
 %install
 %makeinstall UNIX_BIN=%buildroot%_bindir PREFIX=%buildroot%_prefix install
 
-# Change GISBASE in startup script to point to systems %{_libdir}/%{name}-%{version}
-#TODO: Still necessary? Version-less?
-sed -i -e "1,\$s&^GISBASE.*&GISBASE=%_libdir/%grassdir&"  \
-	%buildroot%_bindir/%name%grassfix
+# Change GISBASE in startup script
+sed -i -e 's|%buildroot%_prefix|%_libdir|g' \
+        %buildroot%_bindir/%name%shortver
 
 # Sadly, parts of the following can't be done safely in prep,
 # hence they're done here
@@ -201,7 +200,7 @@ mv %buildroot%_datadir/locale/pt_br %buildroot%_datadir/locale/pt_BR
 #
 # The binary symlink may keeps us from creating the desktop file
 # And we will can just pack it
-ln -s %_bindir/%name%grassfix %buildroot%_bindir/%name
+ln -s %_bindir/%name%shortver %buildroot%_bindir/%name
 ln -s %_libdir/%grassdir %buildroot%_libdir/%name
 
 mkdir -p %buildroot%_libdir/pkgconfig
@@ -214,9 +213,9 @@ done
 
 # "Encoding" should be removed; Gone for releases after 6.4.3
 # http://trac.osgeo.org/grass/changeset/57941/grass
-desktop-file-install \
-        --set-icon=grass \
-        --dir=%buildroot%_desktopdir gui/icons/%name.desktop
+install -Dm 0644 \
+	gui/icons/%name.desktop \
+        %buildroot%_desktopdir/%name.desktop
 
 # Install AppData file
 mkdir -p %{buildroot}%{_datadir}/appdata
@@ -271,7 +270,7 @@ rm -rf %buildroot%_libdir/%grassdir/share %buildroot%_libdir/*.a
 
 %post
 [ ! -L %_lockdir/grass62/locks ] || rm -f %_lockdir/grass62/locks
-[ $1 -ne 1 ] || ln -s %_lockdir/grass%grassfix %_libdir/%grassdir/locks
+[ $1 -ne 1 ] || ln -s %_lockdir/grass%shortver %_libdir/%grassdir/locks
 
 %preun
 rm -f %_libdir/%grassdir/locks
@@ -303,6 +302,13 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Fri Sep 02 2016 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
+- New version
+- Fix gisbase path in startup script (ALT #31954)
+
+* Thu Feb 04 2016 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt2
+- Rebuild with new libproj
+
 * Fri Dec 11 2015 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
 - New version (https://grass.osgeo.org/news/50/15/GRASS-GIS-7-0-2-released/)
 
