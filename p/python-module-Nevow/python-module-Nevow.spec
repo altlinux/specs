@@ -1,4 +1,4 @@
-%define version 0.14.0
+%define version 0.14.2
 %define release alt1
 %setup_python_module Nevow
 
@@ -138,6 +138,9 @@ install -D -p -m 0644 doc/man/nevow-xmlgettext.1 %buildroot%_man1dir/nevow-xmlge
 %endif
 
 %changelog
+* Mon Sep 05 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
+- 0.14.2
+
 * Thu Jun 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
