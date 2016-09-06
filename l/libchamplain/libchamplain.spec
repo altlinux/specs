@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name champlain
 %define ver_major 0.12
@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: %ver_major.14
-Release: alt0.1
+Release: alt1
 
 Summary: Map view library for Clutter
 License: LGPLv2+
@@ -197,6 +197,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Wed Sep 07 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.14-alt1
+- 0.12.14
+
 * Thu Sep 01 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.14-alt0.1
 - updated to LIBCHAMPLAIN_0_12_13-72-g6e3f915
 
