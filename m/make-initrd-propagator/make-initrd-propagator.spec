@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -23,7 +23,7 @@ AutoReq: noshell, noshebang
 
 
 %description
-Make-initrd feature, able to make hybrid propagator/make-initrd initrd
+make-initrd feature to make hybrid propagator/make-initrd image
 
 %prep
 %setup
@@ -37,6 +37,11 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Tue Sep 06 2016 Michael Shigorin <mike@altlinux.org> 0.30-alt1
+- only mount rw slice when live_rw is specified explicitly
+  due to severe I/O penalty coming with it (closes: #32476)
+- slightly better package description
+
 * Mon May 30 2016 Michael Shigorin <mike@altlinux.org> 0.29-alt1
 - fix mount options (broke live_rw functionality)
 
