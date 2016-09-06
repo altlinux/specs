@@ -168,7 +168,7 @@
 # }}}
 
 Name: qemu
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -686,6 +686,10 @@ fi
 %_bindir/ivshmem-server
 
 %changelog
+* Tue Sep 06 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+- fixed CVE-2016-4439,CVE-2016-4441,CVE-2016-4952
+
 * Fri May 13 2016 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 - fixed CVE-2015-8558,CVE-2015-8619,CVE-2016-1981,CVE-2016-3710,CVE-2016-3712
