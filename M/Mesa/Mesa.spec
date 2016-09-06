@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 12.0.1
+Version: 12.0.2
 Release: alt1
 Epoch: 4
 License: MIT
@@ -21,7 +21,7 @@ BuildRequires: llvm-devel >= 3.4.2 llvm-devel-static >= 3.4.2
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
 BuildRequires: python-module-libxml2 libudev-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel libffi-devel libelf-devel
-BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libssl-devel
+BuildRequires: libva-devel libvdpau-devel libXvMC-devel xorg-dri3proto-devel xorg-presentproto-devel libxshmfence-devel libnettle-devel
 BuildRequires: python-module-mako python-module-argparse
 
 %description
@@ -385,6 +385,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Sep 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:12.0.2-alt1
+- 12.0.2
+
 * Mon Jul 11 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:12.0.1-alt1
 - 12.0.1
 
