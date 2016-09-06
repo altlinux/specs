@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.5
-Release: alt5
+Release: alt9
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,24 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Tue Sep 06 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt9
+- (UNetUDP): optimization use mutex
+- (unet-udp-tester): add new command line agruments
+- (IONotifyController): optimization use setLocalValue(), minor fixes
+- (MBTCPMaster): fixed bugs in error logs and minor fixes
+- (SMViewer): added display supplier
+- other minor fixes and optimizations
+
+* Fri Sep 02 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt8
+- add -D_GLIBCXX_USE_NANOSLEEP for old gcc version (<5.0)
+
+* Fri Sep 02 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt7
+- usleep --> std::this_thread::sleep_for(..);
+- clean up #include ...
+
+* Thu Sep 01 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt6
+- (python): add getObjectID() for python UInterface
+
 * Thu Sep 01 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt5
 - up build
 
