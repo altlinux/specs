@@ -1,7 +1,7 @@
 %define rname spectacle
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init altplace
 
@@ -70,6 +70,12 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkonsoleprivate libkonsoleprivate%sover
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init
 
@@ -15,7 +15,7 @@ License: GPLv2+ / LGPLv2+
 
 PreReq(post,preun): alternatives >= 0.2
 Provides: xvt, %_x11bindir/xvt
-Requires: fonts-bitmap-terminus
+Requires: fonts-bitmap-misc
 
 Source: %rname-%version.tar
 Patch10: alt-no-transparency.patch
@@ -109,13 +109,20 @@ __EOF__
 %_K5srv/ServiceMenus/konsole*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*
-%_K5xmlgui/*
+#%_K5xmlgui/*
 
 %files -n %libkonsoleprivate
 %_K5lib/libkonsoleprivate.so.*
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+- use Fixed font instead of Terminus by default
+
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 

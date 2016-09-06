@@ -4,7 +4,7 @@
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 16.04.3
+Version: 16.08.0
 Release: alt1
 %K5init altplace
 
@@ -36,7 +36,7 @@ Frontend to many archivers.
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-BuildArch: noarch
+#BuildArch: noarch
 Requires: kf5-filesystem
 %description common
 %name common package
@@ -64,21 +64,25 @@ KF5 library
 
 %install
 %K5install
+mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
+%dir %_K5plug/kf5/kfileitemaction/
+%_K5xdgmime/kerfuffle5.xml
 
 %files
 %config(noreplace) %_K5xdgconf/ark.*
 %_K5bin/ark
 %_K5plug/arkpart.so
 %_K5plug/kf5/kio_dnd/extracthere.so
+%_K5plug/kf5/kfileitemaction/*.so
 %_K5xmlgui/ark/
 %_K5xdgapp/*ark*.desktop
 %_K5srv/ark*.desktop
 %_K5cfg/*ark*.kcfg
-%_K5srv/ServiceMenus/ark_*.desktop
+#%_K5srv/ServiceMenus/ark_*.desktop
 %_K5icon/hicolor/*/apps/ark.*
 #
 %_K5plug/kerfuffle/
@@ -96,6 +100,9 @@ KF5 library
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
 - new version
 

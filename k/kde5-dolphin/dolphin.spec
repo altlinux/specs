@@ -5,7 +5,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 16.04.3
+Version: 16.08.0
 Release: alt1
 %K5init
 
@@ -123,6 +123,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
 - new version
 

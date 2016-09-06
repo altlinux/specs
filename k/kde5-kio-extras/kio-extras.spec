@@ -6,7 +6,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.0
 Release: alt1
 %K5init altplace
 
@@ -118,6 +118,12 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libmolletnetwork5.so.%molletnetwork_sover
 
 %changelog
+* Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
