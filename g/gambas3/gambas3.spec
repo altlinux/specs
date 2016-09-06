@@ -5,7 +5,7 @@
 %def_without   	jit
 
 Name:		gambas3
-Version:	3.9.0
+Version:	3.9.1
 Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
@@ -1106,6 +1106,8 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %_libdir/%name/gb.eval.component
 %_libdir/%name/gb.eval.so*
 %_libdir/%name/gb.eval.la
+#_bindir/gbh3
+#_bindir/gbh3.gambas
 %_bindir/gbr3
 %_bindir/gbx3
 %_datadir/pixmaps/%name.png
@@ -1561,6 +1563,9 @@ install -m 0644 -p main/mime/application-x-gambas3.xml %buildroot%_xdgmimedir/pa
 %appdir/control/gb.form.terminal/
 
 %changelog
+* Tue Sep 06 2016 Andrey Cherepanov <cas@altlinux.org> 3.9.1-alt1
+- New version (http://gambaswiki.org/wiki/doc/release/3.9.1)
+
 * Mon Aug 22 2016 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
 - New version (http://gambaswiki.org/wiki/doc/release/3.9.0)
 - New components: gb.qt5.ext, gb.form.terminal
