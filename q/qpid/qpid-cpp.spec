@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: qpid
-Version: 0.34
-Release: alt1
+Version: 1.35.0
+Release: alt0.rc
 Summary: Libraries for Qpid C++ client applications
 License: ASL 2.0
 Url: http://qpid.apache.org
@@ -12,7 +12,7 @@ Group: System/Servers
 
 %define _pkgdocdir %_docdir/%name-%version
 
-Source0: http://www.apache.org/dist/qpid/%version/%sname-%version.tar
+Source0: %name-%version.tar
 
 Source11: qpidd.service
 Source12: qpidd-primary.service
@@ -208,7 +208,7 @@ BuildArch: noarch
 Python bindings for qmfgen.
 
 %prep
-%setup -n %sname-%version
+%setup
 
 %build
 %cmake_insource \
@@ -294,11 +294,9 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %files client
 %_bindir/qpid-receive
 %_bindir/qpid-send
-%doc DESIGN
-%doc LICENSE
-%doc NOTICE
-%doc README.txt
-%doc RELEASE_NOTES
+%doc LICENSE.txt
+%doc NOTICE.txt
+%doc README.md
 %dir %_libdir/qpid
 %dir %_libdir/qpid/client
 %_libdir/qpid/client/*
@@ -328,13 +326,13 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %_libdir/qpid/daemon/amqp.so
 %attr(755, qpidd, qpidd) %_localstatedir/qpidd
 %attr(755, qpidd, qpidd) %_runtimedir/qpidd
-%doc %_man1dir/qpidd*
+%_man1dir/qpidd*
 
 %files server-ha
 %_initdir/qpidd-primary
 %_unitdir/qpidd-primary.service
 %_libdir/qpid/daemon/ha.so
-%doc README-HA.txt
+%doc docs/ha.txt
 
 %files client-rdma
 %_libdir/librdmawrap.so.*
@@ -364,6 +362,9 @@ mkdir -p %buildroot/%_localstatedir/qpidd
 %doc %_pkgdocdir
 
 %changelog
+* Tue Sep 06 2016 Alexey Shabalin <shaba@altlinux.ru> 1.35.0-alt0.rc
+- 1.35.0-rc
+
 * Wed Dec 30 2015 Alexey Shabalin <shaba@altlinux.ru> 0.34-alt1
 - 0.34
 
