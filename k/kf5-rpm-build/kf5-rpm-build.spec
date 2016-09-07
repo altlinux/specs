@@ -1,6 +1,6 @@
 
 Name: kf5-rpm-build
-Version: 5.5.2
+Version: 5.5.3
 Release: alt1
 
 Group: Development/KDE and QT
@@ -38,6 +38,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Wed Sep 07 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
+- fix removing metainfo appdata
+
 * Fri Sep 02 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.2-alt1
 - more clean from appdata
 
