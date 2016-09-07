@@ -1,5 +1,5 @@
 Name: xfce4-terminal
-Version: 0.6.91
+Version: 0.6.92
 Release: alt1
 
 Summary: Terminal emulator application for Xfce
@@ -67,6 +67,9 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' %buildroot%_mandir/*/man1/%na
 %_desktopdir/*
 
 %changelog
+* Wed Sep 07 2016 Mikhail Efremov <sem@altlinux.org> 0.6.92-alt1
+- Updated to 0.6.92.
+
 * Wed Aug 31 2016 Mikhail Efremov <sem@altlinux.org> 0.6.91-alt1
 - Updated to 0.6.91.
 
