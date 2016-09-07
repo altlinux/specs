@@ -3,14 +3,13 @@ Name: appliance-rescue-static
 Summary: Virtual package that requires useful static-linked utilites
 BuildArch: noarch
 Version: 4.0.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Base
 
 Requires: ash-static
 Requires: find-static
 Requires: cpio-static
-Requires: rpm-static
 Requires: lvm2-static
 
 %description
@@ -22,6 +21,9 @@ Recommended to install in all non-virtual servers
 %files
 
 %changelog
+* Wed Sep 07 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.1-alt3
+- Dropped R: rpm-static.
+
 * Sun Jun 16 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
 - add Url tag
 
