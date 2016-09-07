@@ -1,7 +1,7 @@
 %define rname ffmpegthumbs
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.08.0
 Release: alt1
 %K5init
 
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: libavcodec-devel libavutil-devel libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
+BuildRequires: libavcodec-devel libavutil-devel libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel libavfilter-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
@@ -41,6 +41,15 @@ Video thumbnail generator for KDE.
 %_K5srv/ffmpegthumbs.desktop
 
 %changelog
+* Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
+- new version
+
+* Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
+* Fri Jul 01 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Tue May 10 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
