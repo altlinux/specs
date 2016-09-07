@@ -17,7 +17,7 @@
 %def_enable introspection
 
 Name: libgtk+2
-Version: %ver_major.30
+Version: %ver_major.31
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
@@ -47,9 +47,9 @@ Patch1: gtk+-2.16.5-alt-stop-spam.patch
 Patch6: gtk+-2.10.6-fix-drop-gdk_colormap_change.patch
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=583273
-Patch10: gtk+-2.20-icon-padding.patch
+Patch10: gtk+-2.24.30-icon-padding.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=599618
-Patch12: gtk+-2.21.0-tooltip-positioning.patch
+Patch12: gtk+-2.24.30-tooltip-positioning.patch
 
 Patch20: gtk+-2.24.10-fixdso.patch
 
@@ -235,7 +235,8 @@ NOCONFIGURE=1 ./autogen.sh
     %{subst_enable xkb} \
     %{subst_enable man} \
     --with-xinput=yes \
-    %{?_enable_gtk_doc:--enable-gtk-doc}
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{subst_enable introspection}
 
 # SMP-incompatible build
 %make LIBTOOL_EXPORT_OPTIONS=-Wl,--version-script=compat.map,compat.lds
@@ -367,13 +368,18 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %files -n libgail-devel-doc
 %_datadir/gtk-doc/html/gail-libgail-util
 
+%if_enabled introspection
 %files gir
 %_libdir/girepository-1.0/*
 
 %files gir-devel
 %_datadir/gir-1.0/*
+%endif
 
 %changelog
+* Wed Sep 07 2016 Yuri N. Sedunov <aris@altlinux.org> 2.24.31-alt1
+- 2.24.31 (CVE-2013-7447)
+
 * Tue Mar 08 2016 Yuri N. Sedunov <aris@altlinux.org> 2.24.30-alt1
 - 2.24.30
 
