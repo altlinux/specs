@@ -1,18 +1,22 @@
 Name:           libserf
-Version:        1.3.8
+Version:        1.3.9
 Release:        alt1
 
 Summary:        High-Performance Asynchronous HTTP Client Library
 License:        ASL 2.0
-URL:            http://code.google.com/p/serf/
+URL:            http://serf.apache.org/
 Group:		System/Libraries
 
-Source0:        http://serf.googlecode.com/svn/src_releases/serf-%{version}.tar.bz2
-BuildRequires:  libapr1-devel, libaprutil1-devel
-BuildRequires:  libkrb5-devel, openssl-devel, zlib-devel
-BuildRequires:  scons, pkgconfig
-Patch1:         serf-1.3.8-testfix.patch
-Patch2:         serf-1.3.8-norpath.patch
+Source0:        https://archive.apache.org/dist/serf/serf-%{version}.tar.bz2
+Patch1:         libserf-norpath.patch
+
+BuildRequires:  libapr1-devel
+BuildRequires:  libaprutil1-devel
+BuildRequires:  libkrb5-devel
+BuildRequires:  openssl-devel
+BuildRequires:  zlib-devel
+BuildRequires:  scons
+BuildRequires:  pkgconfig
 
 %description
 The serf library is a C-based HTTP client library built upon the Apache
@@ -33,8 +37,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -qn serf-%version
-%patch1 -p1 -b .testfix
-%patch2 -p1 -b .norpath
+%patch1 -p1
 
 # Shared library versioning support in scons is worse than awful...
 # minimally, here fix the soname to match serf-1.2.x.  Minor version
@@ -53,7 +56,7 @@ scons \
 %install
 scons install --install-sandbox=%{buildroot}
 
-find %{buildroot} -name '*.*a' -delete -print
+find %buildroot%_libdir -name '*.a' -or -name '*.la' -delete -print
 
 %check
 # Use the libserf from $PWD
@@ -70,6 +73,10 @@ LD_LIBRARY_PATH=$PWD scons %{?_smp_mflags} check || true
 %_libdir/pkgconfig/serf*.pc
 
 %changelog
+* Wed Sep 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
+- New version
+- Change homepage URL
+
 * Fri Aug 21 2015 Andrey Cherepanov <cas@altlinux.org> 1.3.8-alt1
 - Inital build in Sisyphus (thanks Fedora)
 
