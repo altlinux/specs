@@ -73,7 +73,7 @@
 # }}}
 
 Name: libav
-Version: 11.6
+Version: 11.8
 Release: alt1
 Epoch: 1
 
@@ -563,6 +563,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Wed Sep 07 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.8-alt1
+- 11.8 released
+
 * Wed Mar 09 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:11.6-alt1
 - 11.6 released
 
