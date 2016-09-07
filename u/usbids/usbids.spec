@@ -1,5 +1,5 @@
 Name: usbids
-Version: 20160817
+Version: 20160907
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -28,6 +28,9 @@ install -pD -m644 %SOURCE0 %buildroot%_datadir/misc/usb.ids
 %_datadir/misc/usb.ids
 
 %changelog
+* Wed Sep 07 2016 Cronbuild Service <cronbuild@altlinux.org> 20160907-alt1
+- repocop cronbuild 20160907. At your service.
+
 * Wed Aug 17 2016 Cronbuild Service <cronbuild@altlinux.org> 20160817-alt1
 - repocop cronbuild 20160817. At your service.
 
