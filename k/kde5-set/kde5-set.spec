@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 5.4.2
+Version: 5.5.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,7 @@ Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5
+Requires: kde5-email-client
 #Requires: kde5-telepathy
 Requires: kf5-plasma-workspace-wallpapers
 Requires: kf5-kwrited
@@ -155,6 +156,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Thu Sep 08 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
+- require kde5-email-client for kde5-big
+
 * Tue Aug 02 2016 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - use digikam, kipi-plugins
 
