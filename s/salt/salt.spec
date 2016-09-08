@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 2016.3.3
-Release: alt2
+Release: alt4
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -10,7 +10,7 @@ Group: System/Configuration/Other
 Packager: Valentin Rosavitskiy <valintinr@altlinux.org>
 
 BuildRequires: python-module-setuptools perl-podlators python-module-nose libzeromq-devel python-module-zmq-devel python-module-Crypto python-module-msgpack python-module-yaml
-
+Requires: python-module-singledispatch python-module-backports_abc
 BuildArch: noarch
 
 %add_python_req_skip win32api win32event win32service win32serviceutil winerror pythoncom
@@ -217,6 +217,12 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2016.3.3-alt4
+- Add extra dependiens because master won't start
+
+* Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2016.3.3-alt3
+- Rebuild with last commits from develop branch
+
 * Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2016.3.3-alt2
 - Rebuild with new python-module-tornado
 - (previous version of tornado was without file locks.py)
