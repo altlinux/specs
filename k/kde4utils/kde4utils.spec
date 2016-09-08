@@ -9,7 +9,7 @@ Name: kde4utils
 %define minor 12
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -107,6 +107,7 @@ Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
 Provides: filelight-kde4 = %version-%release
 Obsoletes: filelight-kde4 < %version-%release
+Provides: filelight = %version-%release
 Conflicts: filelight
 %description filelight
 Filelight allows you to understand exactly where your diskspace is being used by
@@ -503,6 +504,9 @@ done
 
 
 %changelog
+* Thu Sep 08 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
+- provide filelight
+
 * Thu Jan 21 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 - remove captions from desktop-files Exec
