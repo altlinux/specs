@@ -1,29 +1,26 @@
 Name: ruby-fcgi
-Version: 0.8.8
-Release: alt1.2
+Version: 0.9.2.1
+Release: alt1
 
 Summary: FastCGI for ruby
 Group: Development/Ruby
 License: Ruby
-Url: http://rubyforge.org/projects/fcgi/
+Url: https://github.com/alphallc/ruby-fcgi-ng
 
-# Automatically added by buildreq on Wed Apr 02 2008 (-bi)
 BuildRequires: libfcgi-devel libruby-devel ruby-tool-setup
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 %description
-FastCGI is a language independent, scalable, open extension to CGI 
-that provides high performance without the limitations of server 
+FastCGI is a language independent, scalable, open extension to CGI
+that provides high performance without the limitations of server
 specific APIs.
 
-MoonWolf developed a library for FastCGI in 
-http://www.moonwolf.com/ruby/archive/. But now, he is MIA. 
+MoonWolf developed a library for FastCGI in
+http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 
 %prep
 %setup -q
-%patch -p1
 %update_setup_rb
 
 %build
@@ -34,11 +31,14 @@ http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 %ruby_install
 
 %files
+%doc README*
 %ruby_sitelibdir/*
 %ruby_sitearchdir/*
-%doc README README.signals
 
 %changelog
+* Thu Sep 22 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.2.1-alt1
+- New version 0.9.2.1
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.8.8-alt1.2
 - Rebuilt with ruby-2.0.0-alt1
 

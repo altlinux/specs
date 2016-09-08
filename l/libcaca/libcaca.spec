@@ -1,6 +1,6 @@
 Name: libcaca
 Version: 0.99
-Release: alt14.beta19.1
+Release: alt15.beta19.1
 
 Summary: Text mode graphics library
 Group: System/Libraries
@@ -131,6 +131,9 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %ruby_sitearchdir/caca.*
 
 %changelog
+* Fri Sep 09 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.99-alt15.beta19.1
+- Rebuilt with Ruby 2.3.1.
+
 * Wed Jun 15 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.99-alt14.beta19.1
 - Rebuilt with zlib support.
 

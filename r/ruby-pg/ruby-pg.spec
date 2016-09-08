@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: ruby-pg
-Version: 0.9.0
-Release: alt1.2
+Version: 0.19.0
+Release: alt1
 
 Summary: Ruby interface to PostgreSQL RDBMS
 Group: Development/Ruby
@@ -34,8 +34,8 @@ Documentation files for %name
 %prep
 %setup
 %patch -p1
-sed -i -r 's/([[:blank:]]rb_enc)(_alias\()/\1db\2/g' ext/pg.c
-mv ext/pg.c ext/pg.c.utf8 && uni2ascii -B ext/pg.c.utf8 > ext/pg.c
+#sed -i -r 's/([[:blank:]]rb_enc)(_alias\()/\1db\2/g' ext/pg.c
+#mv ext/pg.c ext/pg.c.utf8 && uni2ascii -B ext/pg.c.utf8 > ext/pg.c
 %update_setup_rb
 
 %build
@@ -47,7 +47,7 @@ mv ext/pg.c ext/pg.c.utf8 && uni2ascii -B ext/pg.c.utf8 > ext/pg.c
 %rdoc ext/pg.c
 
 %files
-%doc Contributors README LICENSE
+%doc Contributors.rdoc README.rdoc LICENSE
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
 
@@ -56,6 +56,9 @@ mv ext/pg.c ext/pg.c.utf8 && uni2ascii -B ext/pg.c.utf8 > ext/pg.c
 %ruby_ri_sitedir/PG*
 
 %changelog
+* Tue Sep 13 2016 Denis Medvedev <nbr@altlinux.org> 0.19.0-alt1
+- new version
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.9.0-alt1.2
 - Rebuilt with ruby-2.0.0-alt1
 

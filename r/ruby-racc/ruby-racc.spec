@@ -3,8 +3,8 @@
 %define pkgname racc
 
 Name: ruby-%pkgname
-Version: 1.4.6
-Release: alt2.2
+Version: 1.4.14
+Release: alt1
 # It has to be newer than old ruby-module-racc-runtime 1.8 to workaround apt bug
 Serial: 1
 
@@ -16,7 +16,6 @@ Url: http://rubyforge.org/projects/racc/
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Wed May 06 2009 (-bi)
 BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
 
 %description
@@ -65,6 +64,7 @@ Documentation files for %name.
 %_bindir/y2racc
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/racc/parser.rb
+%exclude %ruby_sitearchdir/racc/cparse.so
 
 %files runtime
 %dir %ruby_sitelibdir/racc
@@ -77,6 +77,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/Racc*
 
 %changelog
+* Tue Sep 13 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.4.14-alt1
+- New version
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 1:1.4.6-alt2.2
 - Rebuilt with ruby-2.0.0-alt1
 

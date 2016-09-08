@@ -9,16 +9,14 @@
 
 Name: ruby
 %define lname lib%name
-%define branch 2.0
-%define ver_teeny 0
-%define _pl p510
-Version: %branch.%ver_teeny
-Release: alt10
+%define branch 2.3.1
+Version: %branch
+Release: alt1
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
 URL: http://www.%name-lang.org/
-Source0: ftp://ftp.%name-lang.org/pub/%name/%branch/%name-%version%{?_pl:-%_pl}.tar
+Source0: %name-%version.tar
 Source1: update-ri-cache.rb
 Patch: %name-%version-%release.patch
 Requires: %lname = %version-%release
@@ -179,19 +177,19 @@ Requires: %name-stdlibs = %version
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
 
 
-%package doc-html
-Summary: Ruby HTML documentatin
-Group: Development/Documentation
-BuildArch: noarch
-AutoReq: no
-AutoProv: no
+#%package doc-html
+#Summary: Ruby HTML documentatin
+#Group: Development/Documentation
+#BuildArch: noarch
+#AutoReq: no
+#AutoProv: no
 
-%description doc-html
-Ruby is an interpreted scripting language for quick and easy object-oriented
-programming. It has many features for processing text files and performing system
-management tasks (as in Perl). It is simple, straight-forward, and extensible.
-
-This package contains Ruby documentation in HTML format.
+#%description doc-html
+#Ruby is an interpreted scripting language for quick and easy object-oriented
+#programming. It has many features for processing text files and performing system
+#management tasks (as in Perl). It is simple, straight-forward, and extensible.
+#
+#This package contains Ruby documentation in HTML format.
 
 
 %package doc-ri
@@ -213,13 +211,14 @@ This package contains Ruby documentation in ri format.
 %prep
 %setup -q %{?_pl:-n %name-%version-%_pl}
 %patch -p1
-sed -i -r '/^#[[:blank:]]*define[[:blank:]]+RUBY_API_VERSION_TEENY[[:blank:]]/s/(RUBY_API_VERSION_TEENY[[:blank:]]+).*$/\1%ver_teeny/' include/%name/version.h
-chmod a-x sample/{optparse,rss}/*
+#sed -i -r '/^#[[:blank:]]*define[[:blank:]]+RUBY_API_VERSION_TEENY[[:blank:]]/s/(RUBY_API_VERSION_TEENY[[:blank:]]+).*$/\1%ver_teeny/' include/%name/version.h
+#chmod a-x sample/{optparse,rss}/*
 # Broken 'require'
-rm -f lib/rss/xmlscanner.rb
+
+#rm -f lib/rss/xmlscanner.rb
 #sed -i "/^require[[:blank:]]\+'enumerator'/d" lib/rinda/tuplespace.rb
 # Remove unneeded shebang
-sed -i '/^#!/d' lib/minitest/spec.rb
+#sed -i '/^#!/d' lib/minitest/spec.rb
 # More strict shebang
 sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' {lib/{abbrev,set},ext/tk/lib/tkextlib/pkg_checker}.rb bin/*
 # Remove $ruby_version from libs path
@@ -252,7 +251,7 @@ sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' 
 echo "VENDOR_SPECIFIC=true" > %buildroot%vendordir/vendor-specific.rb
 install -p -m 0755 %{S:1} %buildroot%_bindir/update-ri-cache
 ln -s %lname-static.a %buildroot%_libdir/%lname.a
-mv %buildroot%_pkgconfigdir/%name{-%branch,}.pc
+mv %buildroot%_pkgconfigdir/%name{*,}.pc
 install -d -m 0755 %buildroot%_docdir/%name-%version
 install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%version/
 
@@ -284,10 +283,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc %_docdir/%name-%version/COPYING
 %doc %_docdir/%name-%version/LEGAL
 %doc %_docdir/%name-%version/NEWS
-%doc %_docdir/%name-%version/README
+%doc %_docdir/%name-%version/README.*
 %doc %_docdir/%name-%version/README.EXT
 %lang(ja) %doc %_docdir/%name-%version/*.ja
 %_bindir/%name
+#%_bindir/testrb
 %_man1dir/%name.*
 
 
@@ -328,9 +328,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/gem
 %_bindir/rake
 %_bindir/rdoc
-%exclude %_bindir/testrb
 %_man1dir/erb.*
-%_man1dir/rake.*
+#%_man1dir/rake.*
 
 
 %files -n irb
@@ -339,9 +338,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/irb.*
 
 
-%files doc-html
-%dir %_docdir/%name-%version
-%_docdir/%name-%version/html
+#%files doc-html
+#%dir %_docdir/%name-%version
+#%_docdir/%name-%version/html
 
 
 %files doc-ri
@@ -350,6 +349,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Sep 08 2016 Denis Medvedev <nbr@altlinux.org> 2.3.1-alt1
+- new version
+
 * Tue Jul 01 2014 Led <led@altlinux.ru> 2.0.0-alt10
 - p510 upstream patchlevel
 

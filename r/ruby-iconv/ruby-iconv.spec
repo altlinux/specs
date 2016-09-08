@@ -1,38 +1,41 @@
 %define bname iconv
 Name: ruby-%bname
-Version: 1.0
+Version: 1.0.4
 Release: alt1
 Summary: Ruby iconv module
 License: Ruby
-Group: Development/Ruby
-URL: http://www.ruby-lang.org/
-Source: %name-%version.tar
+Group:   Development/Ruby
+URL:     https://github.com/nurse/iconv
+Source:  %name-%version.tar
 Conflicts: rubu-stdlibs <= 1.9.3
 Requires: ruby-stdlibs
 
-BuildPreReq: rpm-build-ruby
-BuildRequires: ruby libruby-devel
+BuildPreReq: rpm-build-ruby ruby-tool-setup
+BuildRequires: ruby libruby-devel ruby-tool-rdoc
 
 %description
 This package contains deprecated Ruby iconv module.
 
-
 %prep
 %setup -q
-
+%update_setup_rb
 
 %build
-%make_build CFLAGS="%optflags" RUBY=%__ruby
-
+%ruby_config
+%ruby_build
 
 %install
-%makeinstall_std RUBY_ARCHDIR=%ruby_sitearchdir
-
+%ruby_install
+%rdoc lib/
 
 %files
+%ruby_sitelibdir/*
 %ruby_sitearchdir/*
-
+%ruby_ri_sitedir/*
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
+- new version 1.0.4
+
 * Fri Mar 21 2014 Led <led@altlinux.ru> 1.0-alt1
 - initial build

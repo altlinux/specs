@@ -9,7 +9,7 @@
 
 Name:    ruby-%pkgname
 Version: 1.2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Fast, simple event-processing library for Ruby programs
 Group:   Development/Ruby
@@ -21,7 +21,7 @@ Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:  %pkgname-%version.tar
 
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup ruby-tool-rdoc
+BuildRequires: libruby-devel ruby-tool-setup ruby-tool-rdoc
 BuildRequires: gcc-c++ libssl-devel net-tools /proc
 
 %description
@@ -83,6 +83,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/TestConnection/*
 
 %changelog
+* Sat Sep 10 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.0.1-alt2
+- Rebuild with Ruby 2.3.1
+
 * Fri Jun 03 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.0.1-alt1
 - New version
 

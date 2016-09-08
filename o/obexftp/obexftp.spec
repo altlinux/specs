@@ -1,7 +1,7 @@
-%def_disable perl
+%def_enable perl
 %def_enable python
 %def_enable ruby
-%def_enable tcl
+%def_disable tcl
 %def_disable static
 %def_disable swig
 
@@ -18,21 +18,30 @@
 %force_enable swig
 %endif
 
-Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer.
+Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer
 Name: obexftp
-Version: 0.23
-Release: alt6.git76127.1
+Version: 0.24.2
+Release: alt1
 
-License: GPL
+License: GPLv2
 Group: Communications
-URL: http://triq.net/gsm.html
+URL: https://sourceforge.net/projects/openobex/
 
-Source: http://triq.net/obex/%name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar
+
+# Patches from Fedora
+Patch0: %name-norpath.patch
+Patch1: %name-0.24-fix-absurd-install-path.patch
+
+# ALT Linux patches
+Patch2: %name-alt-fix-library-link.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: gcc-c++ libopenobex-devel libgsm-devel libbluez-devel libusb-compat-devel libfuse-devel autoconf-archive asciidoc xmlto
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++ libopenobex-devel libgsm-devel libbluez-devel
+BuildRequires: libusb-compat-devel libfuse-devel asciidoc xmlto
+BuildRequires: libexpat-devel
 
 BuildPreReq: chrpath
 
@@ -135,50 +144,19 @@ Ruby bindings for obexftp.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p2
 
 %build
-mkdir m4
-touch config.rpath
-libtoolize --copy --force
-%autoreconf -I m4
-
-%configure \
-    --enable-bluetooth \
-    --enable-builddocs \
-    --enable-swig \
-    --disable-rpath \
-    %{subst_enable tcl} \
-    %{subst_enable perl} \
-    %{subst_enable python} \
-    %{subst_enable ruby} \
-    --disable-fuse \
-    %{subst_enable static}
-%if_enabled swig
-rm -f swig/*/*_wrap.c
-%endif
-%make_build RUBY="ruby -rvendor-specific"
+%cmake
+%cmake_build all doc RUBY="ruby -rvendor-specific"
 
 %install
+%cmakeinstall_std
 
-%make_install noinstdir=`pwd`/docs DESTDIR="%buildroot" INSTALLDIRS=vendor install
-
-for i in obexmv obexls obexget obexput obexrm ; do
-	ln -s obexftp %buildroot%_bindir/$i
-done
-
-%if_enabled tcl
-mkdir -p %buildroot%_tcllibdir
-mv %buildroot%_libdir/obexftp.so* %buildroot%_tcllibdir/
-LD_LIBRARY_PATH=%buildroot%_libdir %tea_makeindex -C %buildroot%_tcldatadir/obexftp
-%endif
-
-%if_enabled python
-mv %buildroot%python_sitelibdir/obexftp/_*.so* %buildroot%python_sitelibdir
-%endif
-
-%if_enabled perl
-chrpath -d %buildroot%perl_vendor_autolib/OBEXFTP/OBEXFTP.so
+%if_enabled ruby
+mv %buildroot/usr/lib/ruby/{vendor,site}_ruby
 %endif
 
 %files
@@ -228,6 +206,12 @@ chrpath -d %buildroot%perl_vendor_autolib/OBEXFTP/OBEXFTP.so
 %endif
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 0.24.2-alt1
+- New version
+- Apply patches from Fedora
+- tcl support is deprecated
+- Enable Perl
+
 * Sun Dec 07 2014 Igor Vlasenko <viy@altlinux.ru> 0.23-alt6.git76127.1
 - disable perl subpackage not to hinder perl 5.20.1 update
 

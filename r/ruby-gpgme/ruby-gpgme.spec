@@ -3,19 +3,19 @@
 %define pkgname ruby-gpgme
 
 Name: %pkgname
-Version: 1.0.6
-Release: alt1.2
+Version: 2.0.12
+Release: alt1
 
 Summary: Ruby interface to GnuPG Made Easy
 Group: Development/Ruby
 License: LGPLv2.1+
-Url: http://rubyforge.org/projects/ruby-gpgme/
+Url: http://github.com/ueno/ruby-gpgme
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Sat Dec 27 2008 (-bi)
-BuildRequires: libgpgme-devel libruby-devel
+BuildRequires: libgpgme-devel libruby-devel rpm-build-ruby ruby-tool-setup
+BuildRequires: ruby-mini_portile2
+# from https://github.com/flavorjones/mini_portile
 
 %description
 Ruby interface to GnuPG Made Easy (GPGME).
@@ -30,10 +30,10 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 
 %build
-%ruby_configure
+ruby -rvendor-specific ext/gpgme/extconf.rb
+#ruby_configure
 %make_build
 
 %install
@@ -41,7 +41,7 @@ Documentation files for %name
 %rdoc *.c lib/
 
 %files
-%doc README
+%doc README* AUTHORS NEWS THANKS
 %ruby_sitelibdir/*
 %ruby_sitearchdir/*
 
@@ -50,6 +50,9 @@ Documentation files for %name
 %ruby_ri_sitedir/GPGME*
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.0.12-alt1
+- new version 2.0.12
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 1.0.6-alt1.2
 - Rebuilt with ruby-2.0.0-alt1
 

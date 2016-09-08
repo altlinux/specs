@@ -1,7 +1,7 @@
 %define pkgname unicorn
 
 Name: %pkgname
-Version: 4.8.3
+Version: 5.1.0
 Release: alt1
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
@@ -10,14 +10,14 @@ Url: http://unicorn.bogomips.org/
 
 Source: %pkgname-%version.tar.gz
 
-# Automatically added by buildreq on Tue Aug 09 2011
-# optimized out: ruby ruby-stdlibs ruby-tool-rdoc
-BuildRequires: libruby-devel ragel rubygems
+BuildRequires: libruby-devel ragel rubygems ruby-tool-setup
 
 %description
-Unicorn is an HTTP server for Rack applications designed to only serve fast clients on low-latency, high-bandwidth connections
-and take advantage of features in Unix/Unix-like kernels. Slow clients should only be served by placing a reverse proxy
-capable of fully buffering both the the request and response in between Unicorn and slow clients.
+Unicorn is an HTTP server for Rack applications designed to only serve
+fast clients on low-latency, high-bandwidth connections and take
+advantage of features in Unix/Unix-like kernels. Slow clients should
+only be served by placing a reverse proxy capable of fully buffering
+both the the request and response in between Unicorn and slow clients.
 
 %package doc
 Summary: Documentation files for %pkgname
@@ -29,6 +29,7 @@ Documentation files for %pkgname
 
 %prep
 %setup -n %pkgname-%version
+%update_setup_rb
 
 %build
 %make_build ext/unicorn_http/unicorn_http.c
@@ -52,6 +53,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 5.1.0-alt1
+- new version 5.1.0
+
 * Wed Nov 19 2014 Anton Gorlov <stalker@altlinux.ru> 4.8.3-alt1
 - update to  new version 
 

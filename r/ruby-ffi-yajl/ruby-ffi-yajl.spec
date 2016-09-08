@@ -1,7 +1,7 @@
 %define  pkgname ffi-yajl
  
 Name: 	 ruby-%pkgname
-Version: 2.2.2
+Version: 2.3.0
 Release: alt1
  
 Summary: ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
@@ -65,6 +65,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
+- new version 2.3.0
+
 * Tue Sep 22 2015 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt1
 - New version
 

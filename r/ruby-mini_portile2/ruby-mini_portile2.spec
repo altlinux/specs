@@ -1,13 +1,13 @@
-%define  pkgname chef-sugar
+%define  pkgname mini_portile2
  
 Name: 	 ruby-%pkgname
-Version: 3.1.0 
+Version: 2.1.0 
 Release: alt1
  
-Summary: Chef Sugar is a Gem & Chef Recipe that includes series of helpful sugar of the Chef core
+Summary: Simple autoconf builder for developers
 License: MIT/Ruby
 Group:   Development/Ruby
-Url:     https://github.com/sethvargo/chef-sugar
+Url:     https://github.com/flavorjones/mini_portile
  
 Packager:  Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
@@ -18,10 +18,10 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: ruby-tool-setup
  
 %description
-Chef Sugar is a Gem & Chef Recipe that includes series of helpful sugar
-of the Chef core and other resources to make a cleaner, more lean recipe
-DSL, enforce DRY principles, and make writing Chef recipes an awesome
-experience!
+It's intended primarily to make sure that you, as the developer of a
+library, can reproduce a user's dependencies and environment by
+specifying a specific version of an underlying dependency that you'd
+like to use.
 
 %package doc
 Summary: Documentation files for %name
@@ -57,5 +57,5 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
-* Fri May 22 2015 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+* Mon Sep 26 2016 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
 - Initial build for ALT Linux

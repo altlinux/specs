@@ -4,7 +4,7 @@
 
 Name: %pkgname
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: YAJL C Bindings for Ruby
 Group: Development/Ruby
@@ -53,6 +53,9 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
 
 %changelog
+* Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt2
+- Rebuild with Ruby 2.3.1
+
 * Thu Oct 01 2015 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
 - New version
 

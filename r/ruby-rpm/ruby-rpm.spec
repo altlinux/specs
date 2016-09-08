@@ -2,7 +2,7 @@
 
 Name: ruby-rpm
 Version: 1.2.3
-Release: alt9.2
+Release: alt9.3
 
 Summary: Ruby/RPM is an interface to access RPM database for Ruby
 Group: Development/Ruby
@@ -37,6 +37,9 @@ Ruby/RPM is an interface to access RPM database for Ruby.
 %ruby_sitelibdir/*
 
 %changelog
+* Mon Sep 26 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.3-alt9.3
+- Rebuild with Ruby 2.3.1
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 1.2.3-alt9.2
 - Rebuilt with ruby-2.0.0-alt1
 

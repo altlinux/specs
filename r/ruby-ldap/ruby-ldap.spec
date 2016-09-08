@@ -1,19 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: ruby-ldap
-Version: 0.9.11
-Release: alt2.3
+Version: 0.9.17
+Release: alt1
 
 Summary: Ruby LDAP library
 Group: Development/Ruby
 License: BSD
 Url: http://ruby-ldap.sourceforge.net/
 
-# Automatically added by buildreq on Thu Aug 14 2008 (-bi)
 BuildRequires: libldap-devel libruby-devel libssl-devel libsasl2-devel
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 %description
 Ruby/LDAP is an extension library for Ruby. It provides the interface
@@ -31,7 +29,6 @@ Documentation files for %name
 
 %prep
 %setup
-%patch -p1
 
 %build
 %ruby_configure
@@ -50,6 +47,9 @@ Documentation files for %name
 %ruby_ri_sitedir/LDAP*
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.17-alt1
+- new version 0.9.17
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.9.11-alt2.3
 - Rebuilt with ruby-2.0.0-alt1
 

@@ -1,7 +1,7 @@
 %define  pkgname oj
  
 Name: 	 ruby-%pkgname
-Version: 2.8.0 
+Version: 2.17.4
 Release: alt1
  
 Summary: A fast JSON parser and Object marshaller as a Ruby gem
@@ -56,5 +56,11 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 2.17.4-alt1
+- new version 2.17.4
+
+* Tue Jun 02 2015 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt0.M70P.1
+- Backport new version to p7 branch
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
 - Initial build for ALT Linux
