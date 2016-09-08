@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.5
-Release: alt9
+Release: alt11
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,14 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Thu Sep 08 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt11
+- DebugStream: added support format: level1,level2,-level3
+  for set or delete debug levels.
+- add support old version of libpoco (version < 1.7.4)
+
+* Wed Sep 07 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt10
+- fixed bug in millisecToPoco() function
+
 * Tue Sep 06 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt9
 - (UNetUDP): optimization use mutex
 - (unet-udp-tester): add new command line agruments
