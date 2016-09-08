@@ -37,7 +37,7 @@
 
 Name: NetworkManager
 Version: 1.4.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -673,6 +673,22 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Sep 05 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt2
+- Patches from upstream (closes: #32467):
+  + dbus: fix emitting D-Bus NetworkManager's old-style PropertiesChange
+    signal
+  + exported-object: fix source interface for PropertiesChanged D-Bus
+    signal
+  + device: don't let external changes cause a release of the slave
+  + platform: fix return value for error case in
+    do_change_link_request().
+  + platform: fix build.
+  + device: add hack to wait after changing MAC address.
+  + device: fix spelling in logging.
+  + platform: workaround kernel wrongly returning ENFILE when changing
+    MAC address.
+  + platform: split processing result from do_change_link().
+
 * Thu Aug 25 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 
