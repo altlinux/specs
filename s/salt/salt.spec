@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 2016.3.3
-Release: alt1
+Release: alt2
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -217,6 +217,10 @@ ln -s ../../opennode/cli/actions onode
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2016.3.3-alt2
+- Rebuild with new python-module-tornado
+- (previous version of tornado was without file locks.py)
+
 * Fri Sep 02 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 2016.3.3-alt1
 - New version (ALT 32464)
 
