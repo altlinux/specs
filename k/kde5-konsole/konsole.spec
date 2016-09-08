@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 16.08.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Terminals
@@ -116,6 +116,9 @@ __EOF__
 %_K5lib/libkonsoleprivate.so.%sover
 
 %changelog
+* Thu Sep 08 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt2
+- don't intense bold fonts by default
+
 * Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 - use Fixed font instead of Terminus by default
