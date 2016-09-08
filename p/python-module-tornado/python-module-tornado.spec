@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 4.2.1
+Version: 4.4.1
 Release: alt1.1.1
 Summary: Scalable, non-blocking web server and tools
 
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 4.4.1-alt1.1.1
+- (NMU) update version
+
 * Thu Mar 17 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.2.1-alt1.1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)
