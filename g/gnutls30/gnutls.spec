@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.4.14
+Version: 3.4.15
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -288,6 +288,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Fri Sep 09 2016 Mikhail Efremov <sem@altlinux.org> 3.4.15-alt1
+- Updated to 3.4.15.
+
 * Mon Jul 18 2016 Mikhail Efremov <sem@altlinux.org> 3.4.14-alt1
 - Add datefudge-faketime to BR.
 - Updated to 3.4.14.
