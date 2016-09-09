@@ -1,8 +1,8 @@
 %def_enable tests
 
 Name: libldb
-Version: 1.1.26
-Release: alt2
+Version: 1.1.27
+Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -114,6 +114,9 @@ make test
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Fri Sep 09 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.1.27-alt1
+- Update to new release for samba-4.5.0
+
 * Thu Jun 30 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.26-alt2
 - Move ldb-modules.sh from profile.d to bashrc.d to run everywhere
 

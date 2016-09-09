@@ -1,8 +1,8 @@
 %def_enable tests
 
 Name: libtalloc
-Version: 2.1.6
-Release: alt2
+Version: 2.1.8
+Release: alt1
 Epoch:   1
 
 Summary: The talloc library
@@ -89,6 +89,9 @@ make test
 
 
 %changelog
+* Thu Sep 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1:2.1.8-alt1
+- 2.1.8
+
 * Mon Mar 14 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.1.6-alt2
 - Build 2.1.6
 

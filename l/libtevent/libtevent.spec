@@ -1,7 +1,7 @@
 %def_enable tests
 
 Name: libtevent
-Version: 0.9.28
+Version: 0.9.29
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
@@ -73,6 +73,9 @@ make test
 %python_sitelibdir/tevent.py*
 
 %changelog
+* Thu Sep 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.9.29-alt1
+- New version for samba-4.5.0
+
 * Thu Mar 03 2016 Andrey Cherepanov <cas@altlinux.org> 0.9.28-alt1
 - New version
 

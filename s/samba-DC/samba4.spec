@@ -22,6 +22,7 @@
 %def_with docs
 
 %def_with dc
+%def_without ntvfs
 %def_with clustering_support
 %def_without testsuite
 
@@ -43,7 +44,7 @@
 %def_with libcephfs
 
 Name:    samba-DC
-Version: 4.4.5
+Version: 4.5.0
 Release: alt1
 
 Group:   System/Servers
@@ -524,6 +525,9 @@ libsamba_util private headers.
 %if_with profiling_data
 	--with-profiling-data \
 %endif
+%if_with ntvfs
+	--with-ntvfs-fileserver \
+%endif
 	%{subst_enable avahi}
 
 [ -n "$NPROCS" ] || NPROCS=%__nprocs; export JOBS=$NPROCS
@@ -591,7 +595,7 @@ subst 's,Type=notify,Type=forking,' %buildroot%_unitdir/*.service
 %if_with clustering_support
 install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
 install -m 0644 ctdb/config/ctdb.service %buildroot%_unitdir
-install -m 0644 ctdb/config/ctdb.sysconfig %buildroot%_sysconfdir/sysconfig/ctdb
+install -m 0644 ctdb/config/ctdbd.conf %buildroot%_sysconfdir/sysconfig/ctdb
 echo "d /var/run/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
 touch %buildroot%_sysconfdir/ctdb/nodes
 %endif
@@ -743,6 +747,7 @@ TDB_NO_FSYNC=1 %make_build test
 %files client
 %_bindir/cifsdd
 %_bindir/dbwrap_tool
+%_bindir/findsmb
 %_bindir/nmblookup
 %_bindir/oLschema2ldif
 %_bindir/regdiff
@@ -887,7 +892,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_libdir/libsamdb.so
 %_samba_libdir/libsmbconf.so
 %_samba_libdir/libtevent-util.so
-%_samba_libdir/libtevent-unix-util.so
 %_samba_libdir/libsamba-passdb.so
 %_samba_libdir/libsmbldap.so
 
@@ -924,7 +928,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_libdir/libsamdb.so.*
 %_samba_libdir/libsmbconf.so.*
 %_samba_libdir/libtevent-util.so.*
-%_samba_libdir/libtevent-unix-util.so.*
 %_samba_libdir/libsamba-passdb.so.*
 %_samba_libdir/libsmbldap.so.*
 %_samba_mod_libdir/auth
@@ -1046,7 +1049,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_samba_mod_libdir/process_model
 %_samba_mod_libdir/service
 %_samba_libdir/libdcerpc-server.so.*
+%if_with ntvfs
 %_samba_mod_libdir/libntvfs-samba4.so
+%endif
 %_samba_mod_libdir/libposix-eadb-samba4.so
 %else
 %doc README.dc-libs
@@ -1218,7 +1223,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/onnode
 %_bindir/ping_pong
 %_libexecdir/ctdb/ctdb_event_helper
+%_libexecdir/ctdb/ctdb_killtcp
 %_libexecdir/ctdb/ctdb_lock_helper
+%_libexecdir/ctdb/ctdb_lvs
+%_libexecdir/ctdb/ctdb_mutex_fcntl_helper
 %_libexecdir/ctdb/ctdb_natgw
 %_libexecdir/ctdb/ctdb_recovery_helper
 %_libexecdir/ctdb/smnotify
@@ -1228,6 +1236,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/onnode.1*
 %_man1dir/ltdbtool.1*
 %_man1dir/ping_pong.1*
+%_man1dir/ctdb_diagnostics.1*
 %_man1dir/ctdbd_wrapper.1*
 %_man5dir/ctdbd.conf.5*
 %_man7dir/ctdb.7*
@@ -1235,7 +1244,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/ctdb-statistics.7*
 
 %files ctdb-tests
-%_libdir/samba-dc/ctdb-tests
+%_libexecdir/ctdb/tests
 %_bindir/ctdb_run_tests
 %_bindir/ctdb_run_cluster_tests
 %_datadir/ctdb-tests
@@ -1247,6 +1256,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Sep 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.0-alt1
+- Update to new autumn release
+
 * Fri Jul 08 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.4.5-alt1
 - Update for security release with CVE-2016-2119
 
