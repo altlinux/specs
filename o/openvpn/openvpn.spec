@@ -3,6 +3,7 @@
 
 %def_with systemd
 %def_with plugins
+%def_with devel
 
 %def_with management
 %def_with pkcs11
@@ -13,7 +14,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.3.7
+Version: 2.3.12
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -37,14 +38,15 @@ Source6: %name.chroot.all
 Source7: %name-README.ALT.utf-8
 Source8: %name-server.conf
 Source9: %name-client.conf
+Source10: %name.tmpfiles
 
 # Because of /etc/syslog.d/ feature
 Conflicts: syslogd < 1.4.1-alt11
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Fri Jun 12 2015
-# optimized out: libcom_err-devel libgnutls-devel libkrb5-devel libp11-kit libssl-devel pkcs11-helper pkg-config
-BuildRequires: git-core glibc-devel-static iproute2 liblzo2-devel libpam-devel man net-tools pkcs11-helper-devel
+# Automatically added by buildreq on Sat Jun 25 2016
+# optimized out: libcom_err-devel libgpg-error libkrb5-devel libpkcs11-helper libssl-devel perl pkg-config python-base python-modules python3
+BuildRequires: cmake git-core glibc-devel-static iproute2 liblzo2-devel libpam-devel libpkcs11-helper-devel libsystemd-devel man net-tools
 
 %{?_with_systemd:BuildRequires: libsystemd-devel}
 %{?_with_pkcs11:BuildRequires: pkcs11-helper-devel}
@@ -91,16 +93,34 @@ Summary: OpenVPN documentation
 Summary(ru_RU.UTF-8): документация к OpenVPN
 Group: System/Servers
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description docs
 OpenVPN is a full-featured SSL VPN solution.
+
 This package contains OpenVPN documentation,
 sample configs and scripts.
 
 %description docs -l ru_RU.UTF-8
 OpenVPN - полнофункциональное решение для VPN на базе SSL.
+
 Данный пакет содержит документацию, примеры конфигурации и
 скриптов для OpenVPN.
+
+%if_with devel
+%package devel
+Summary: Headers for OpenVPN plugins
+Group: Development/C
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description devel
+OpenVPN is a full-featured SSL VPN solution.
+
+This package contains OpenVPN header file
+for third-party plugin development.
+%endif
+
 
 %define openvpn_root   %_localstatedir/%name
 %define openvpn_cache  %openvpn_root/cache
@@ -117,6 +137,12 @@ cp -- %SOURCE9 client.conf
 
 %build
 %autoreconf
+
+# Systemd password request utility:
+%if_with systemd
+export SYSTEMD_ASK_PASSWORD=/sbin/systemd-ask-password
+%endif
+
 %configure \
     --enable-iproute2 \
     --with-iproute-path=/sbin/ip \
@@ -130,7 +156,7 @@ cp -- %SOURCE9 client.conf
     %{?_with_multihome:--enable-multihome} \
     %{?_with_port_share:--enable-port-share} \
     %{?_with_x509_alt_username:--enable-x509-alt-username} \
-    %{?with_systemd:--enable-systemd} \
+    %{?_with_systemd:--enable-systemd} \
     %nil
 
 %make_build
@@ -170,6 +196,8 @@ rm -rf -- %buildroot%_datadir/doc/%name
 # Configuration
 install -m 0750 -d -- %buildroot%_sysconfdir/%name
 install -m 0750 -d -- %buildroot%_sysconfdir/%name/keys
+install -m 0750 -d -- %buildroot%_sysconfdir/%name/client
+install -m 0750 -d -- %buildroot%_sysconfdir/%name/server
 ln -s -- ../..%openvpn_root%_sysconfdir/%name/ccd  %buildroot%_sysconfdir/%name/ccd
 
 # Chroot environment
@@ -221,6 +249,11 @@ mkdir -p -- %buildroot%openvpn_root/dev
 mkdir -p -m700 -- %buildroot%_sysconfdir/syslog.d
 ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
+# PID directory for systemd units
+%if_with systemd
+  mkdir -p -- %buildroot%_sysconfdir/tmpfiles.d/
+  install -m 0644 -- %SOURCE10 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+%endif
 
 %pre
 # Add the "openvpn" user
@@ -245,14 +278,14 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %doc doc/management-notes.txt
 %endif
 
-%exclude %_includedir/openvpn-plugin.h
-
 %_sbindir/%name
 %_mandir/man?/*
 
 %attr(0750,root,%ovpn_group) %dir %_sysconfdir/%name
 %attr(0750,root,%ovpn_group) %dir %_sysconfdir/%name/keys
                                   %_sysconfdir/%name/ccd
+%attr(0750,root,%ovpn_group) %dir %_sysconfdir/%name/client
+%attr(0750,root,%ovpn_group) %dir %_sysconfdir/%name/server
 %attr(0750,root,%ovpn_group) %dir %openvpn_root
                              %dir %openvpn_root/etc
 %attr(0710,root,%ovpn_group) %dir %openvpn_root/dev
@@ -270,6 +303,7 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 %if_with systemd
 %_unitdir/%name-*.service
+%_sysconfdir/tmpfiles.d/%name.conf
 %endif
 
 %_sysconfdir/syslog.d/%name
@@ -291,7 +325,20 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %doc sample/sample-keys*
 %doc sample/sample-scripts*
 
+%if_with devel
+%files devel
+
+%_includedir/openvpn-plugin.h
+%endif
+
 %changelog
+* Fri Sep 09 2016 Nikolay A. Fetisov <naf@altlinux.ru> 2.3.12-alt1
+- New version
+- Creating PID directory for the systemd units (Closes: 31145)
+- Adding openvpn-devel subpackage with header file (Closes: 31085)
+- Adding /etc/openvpn/{client,server}/ dirs for systemd units
+- Enabling support for systemd-ask-password utility (Closes: 32204)
+
 * Fri Jun 12 2015 Nikolay A. Fetisov <naf@altlinux.ru> 2.3.7-alt1
 - New version 2.3.7
 
