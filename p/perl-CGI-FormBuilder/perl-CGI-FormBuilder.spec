@@ -2,7 +2,8 @@
 ## Used in ikiwiki
 
 Name: perl-CGI-FormBuilder
-Version: 3.0900
+Epoch:   1
+Version: 3.10
 Release: alt1
 
 Summary: Perl module for easily generation and processing stateful forms
@@ -51,6 +52,9 @@ The native HTML generated is valid XHTML 1.0 Transitional.
 %perl_vendor_privlib/CGI/FormBuilder*
 
 %changelog
+* Fri Sep 09 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1:3.10-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 3.0900-alt1
 - New version
 
