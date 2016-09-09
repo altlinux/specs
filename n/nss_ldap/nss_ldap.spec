@@ -4,7 +4,7 @@
 
 Name: nss_ldap
 Version: 265
-Release: alt4
+Release: alt5
 Packager: Anton Gorlov <stalker@altlinux.ru>
 
 Summary: NSS library for LDAP
@@ -22,6 +22,9 @@ Patch0: %name-226-configure.patch
 Patch1: %name-172-null.patch
 Patch2: %name-210-explode_rdn-alt.patch
 Patch5: nss-fixbuild.patch
+Patch6: %name-265-conf_notes.patch
+Patch7: %name-265-glibc-2.16.patch
+Patch8: %name-265-spelling-fix.patch
 
 Patch10: libdir.fix
 #Patch11: alt-saslauxprop.fix
@@ -52,6 +55,9 @@ Nss_ldap это библиотека, написанная на C, которая позволяет использовать сервера
 #%patch3 -p1
 #%patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %patch10 -p1
 ##patch11 -p1
@@ -124,6 +130,12 @@ rm -f $RPM_BUILD_ROOT%_sysconfdir/ldap.conf
 #
 
 %changelog
+* Thu Sep 08 2016 Lenar Shakirov <snejok@altlinux.ru> 265-alt5
+- fix build, patches from Ubuntu added:
+  * glibc-2.16.patch
+  * conf_notes.patch
+  * spelling-fix.patch
+
 * Tue Jun 25 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 265-alt4
 - fix build on arm
 
