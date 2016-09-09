@@ -1,5 +1,5 @@
 Name: curl
-Version: 7.50.1
+Version: 7.50.2
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -136,12 +136,15 @@ applications that utilize lib%name.
 %_includedir/*
 %_man3dir/*
 %_man1dir/curl-config.1*
-%doc docs/{THANKS,BUGS,CONTRIBUTE,INTERNALS,MANUAL,RESOURCES,TheArtOfHttpScripting,TODO,examples}
+%doc docs/{THANKS,BUGS,RESOURCES,TheArtOfHttpScripting,TODO,examples}
 
 %files -n lib%name-devel-static
 %_libdir/*.a
 
 %changelog
+* Fri Sep 09 2016 Anton Farygin <rider@altlinux.ru> 7.50.2-alt1
+- new version
+
 * Fri Aug 26 2016 Anton Farygin <rider@altlinux.ru> 7.50.1-alt1
 - new version
 
