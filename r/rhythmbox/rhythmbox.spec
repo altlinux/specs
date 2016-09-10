@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 3.4
 %define rev %nil
 %define gst_api_ver 1.0
@@ -12,7 +14,7 @@
 %def_enable soundcloud
 
 Name: rhythmbox
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -22,8 +24,11 @@ Url: http://www.gnome.org/projects/rhythmbox/
 
 %define pkgdocdir %_docdir/%name-%version
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 %define dbus_ver 0.35
 %define glib_ver 2.36.0
@@ -500,6 +505,9 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %exclude %_libdir/%name/sample-plugins/
 
 %changelog
+* Sat Sep 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Sun Aug 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
 - 3.4
 
