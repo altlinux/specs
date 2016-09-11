@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.0.5
+Version: 2.2.0
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -14,7 +14,6 @@ License: GPL
 Url: http://www.wireshark.org/
 
 Source: http://www.wireshark.org/download/src/%name-%version.tar
-Source1: http://www.wireshark.org/download/docs/wsug_html_chunked.zip
 Source2: %name.control
 Source3: %name.watch
 
@@ -24,7 +23,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
 BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python unzip xml-utils xsltproc liblua5-devel perl-Pod-Parser perl-devel
 BuildRequires: libgtk+3-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-base-devel qt5-tools
 
 %package base
 Summary: Wireshark base package
@@ -126,7 +125,6 @@ applications.
 
 %prep
 %setup
-unzip -qa %_sourcedir/wsug_html_chunked.zip
 %patch -p1
 
 %build
@@ -227,6 +225,7 @@ _EOF_
 %_bindir/reordercap
 %_man1dir/capinfos.*
 %_man1dir/randpkt.*
+%_man1dir/randpktdump.*
 %_man1dir/dftest.*
 %_man1dir/dumpcap.*
 %_man1dir/editcap.*
@@ -235,13 +234,17 @@ _EOF_
 %_man1dir/text2pcap.*
 %_man1dir/reordercap.*
 %_man4dir/wireshark-filter.*
+%_man4dir/extcap.*
 %_datadir/%name
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %dir %_libdir/%name/plugins/%version/
+%dir %_libdir/%name/extcap
+%_libdir/%name/extcap/*
 %_libdir/%name/plugins/%version/*
 %_libdir/lib%name.so.*
 %_libdir/libwsutil.so.*
+%_libdir/libwscodecs.so.*
 %_man1dir/wireshark.*
 %_miconsdir/wireshark.png
 %_niconsdir/wireshark.png
@@ -274,6 +277,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Fri Sep 09 2016 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
+- new version
+
 * Fri Aug 26 2016 Anton Farygin <rider@altlinux.ru> 2.0.5-alt1
 - new version
 
