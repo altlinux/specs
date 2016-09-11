@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable updatedb
 
 Name: shared-mime-info
-Version: 1.6
-Release: alt2
+Version: 1.7
+Release: alt1
 
 Summary: Shared MIME-Info Specification
 Group: System/Libraries
@@ -110,6 +110,9 @@ multipart,text,video,XMLnamespaces}
 %exclude %_datadir/locale
 
 %changelog
+* Sun Sep 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7
+
 * Fri Jul 01 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt2
 - updated to 1-6-39-g01fa61f
 - added -q option to update-mime-database (ALT #22431)
