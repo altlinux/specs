@@ -3,7 +3,7 @@
 %def_enable gtk_doc
 
 Name: grilo
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Content discovery framework
@@ -12,6 +12,7 @@ License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Grilo
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: grilo-0.3.2-alt-format.patch
 
 BuildRequires: gnome-common intltool >= 0.40.0
 BuildRequires: libgio-devel >= 2.44
@@ -19,10 +20,12 @@ BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
 BuildRequires: libsoup-devel >= 2.41.3 libsoup-gir-devel
 BuildRequires: liboauth-devel
-BuildRequires: vala-tools >= 0.27
+BuildRequires: vala-tools >= 0.27 libvala-devel
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: gobject-introspection-devel >= 0.9.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
+BuildRequires: gstreamer1.0-devel
+#BuildRequires: liblua5-devel >= 5.3.0
 
 %description
 Grilo is a framework that provides access to different sources of
@@ -87,6 +90,7 @@ Tools for the %name library
 
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
@@ -109,6 +113,10 @@ mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_majo
 
 # Remove files that will not be packaged
 rm -f %buildroot%_bindir/grilo-simple-playlist
+
+%check
+# grilo-plugins should be installed for check
+#%make check
 
 %files tools
 %doc AUTHORS COPYING NEWS README TODO
@@ -144,6 +152,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %endif
 
 %changelog
+* Sat Sep 10 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Fri Jun 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
