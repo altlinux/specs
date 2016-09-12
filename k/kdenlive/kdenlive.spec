@@ -1,7 +1,7 @@
 %define req_ver_mlt 0.9.0
 
 Name: kdenlive
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init no_altplace man
 
@@ -73,6 +73,9 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Mon Aug 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 
