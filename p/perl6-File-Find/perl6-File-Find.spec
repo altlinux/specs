@@ -1,6 +1,6 @@
 Name: perl6-File-Find
 Version: 0.1
-Release: alt2.d3e2be7
+Release: alt3.d3e2be7
 Summary: File::Find Perl 6 module
 
 Group: Development/Other
@@ -39,6 +39,9 @@ File::Find - Get a lazy list of a directory tree
 %doc LICENSE README.md
 
 %changelog
+* Mon Sep 12 2016 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt3.d3e2be7
+- rebuild
+
 * Tue Dec 29 2015 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt2.d3e2be7
 - commit d3e2be7
 - install with rpm-build-perl6
