@@ -9,7 +9,7 @@ Name: kde4utils
 %define minor 12
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -108,7 +108,7 @@ Requires: %name-common = %version-%release
 Provides: filelight-kde4 = %version-%release
 Obsoletes: filelight-kde4 < %version-%release
 Provides: filelight = %version-%release
-Conflicts: filelight
+Conflicts: filelight <= 1.0-alt12
 %description filelight
 Filelight allows you to understand exactly where your diskspace is being used by
 graphically representating your filesystem as a set of concentric
@@ -504,6 +504,9 @@ done
 
 
 %changelog
+* Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt3
+- fix conflict with kde5-filelight
+
 * Thu Sep 08 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt2
 - provide filelight
 
