@@ -3,8 +3,8 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.25.0
-Release: alt2
+Version: 5.26.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -126,6 +126,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt1
+- new version
+
 * Mon Aug 22 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt2
 - fix plasma packages install place
 
