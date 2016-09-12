@@ -1,6 +1,6 @@
 Name: dlm
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -15,6 +15,7 @@ Patch2: 0003-libdlm-udev-dir-now-under-usr-lib.patch
 Patch3: 0005-dlm_tool-fix-status-printing-in-libdlmcontrol.patch
 Patch4: 0008-dlm-clear-out-addrs-before-calling-into-corosync_cft.patch
 Patch5: 0010-dlm_controld-don-t-log-error-from-cpg_dispatch.patch
+Patch6: dlm-4.0.2-systemd-pkg.patch
 
 BuildRequires: libpacemaker-devel libsystemd-devel
 
@@ -46,6 +47,7 @@ developing applications that use %name.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %make
@@ -85,5 +87,8 @@ install -Dm 0644 init/dlm.sysconfig %buildroot/etc/sysconfig/dlm
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Sep 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.2-alt2
+- fixed build with latest systemd
+
 * Mon Mar 28 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.2-alt1
 - 4.0.2
