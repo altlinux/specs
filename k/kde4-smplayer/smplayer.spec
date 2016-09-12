@@ -2,12 +2,12 @@
 %def_enable mpv
 
 %define rname smplayer
-%define svn 8066
+%define svn 8142
 %define xde kde4
 %define XDE KDE4
 %define xapp kde4
 Name: %xde-%rname
-Version: 16.8.0.%svn
+Version: 16.9.0.%svn
 Release: alt1
 
 %define qt_bin_dir %_qt4dir/bin
@@ -18,9 +18,9 @@ Summary: A great MPlayer/MPV front-end
 Summary(ru_RU.UTF8): Мощный интерфейс для MPlayer/MPV
 Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV
 Group: Video
-#Url: http://smplayer.sourceforge.net
 #Url: http://www.smplayer.es/
-Url: http://www.smplayer.info/
+#Url: http://www.smplayer.info/
+Url: http://smplayer.sourceforge.net
 License: GPLv2
 
 Requires: %name-backend %name-common = %EVR
@@ -34,6 +34,7 @@ Patch4: alt-config-dir.patch
 Patch5: alt-youtube-browser.patch
 
 BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: libXext-devel zlib-devel
 
 %package common
 Summary: %name common package
@@ -162,6 +163,9 @@ done
 
 
 %changelog
+* Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.9.0.8142-alt1
+- new version
+
 * Thu Aug 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.8.0.8066-alt1
 - new version
 
