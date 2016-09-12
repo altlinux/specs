@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.5
-Release: alt12
+Release: alt14
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,16 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Mon Sep 12 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt14
+- up build
+
+* Sun Sep 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt13.1
+- (ModbusTCPMster): refactoring
+- (optimization): added the use of the qualifier 'noexcept'
+
+* Fri Sep 09 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt13
+- minor fixes in millisecToPoco() and microsecToPoco() functions
+
 * Thu Sep 08 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt12
 - up build
 
