@@ -3,7 +3,7 @@
 %def_enable python
 
 Name: gitg
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: git repository viewer targeting gtk+/GNOME
@@ -160,6 +160,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Sep 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
+- 3.20.3
+
 * Sat Aug 27 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 
