@@ -1,7 +1,7 @@
 ## SPEC file for innotop
 
 Name: innotop
-Version: 1.9.1
+Version: 1.11.1
 Release: alt1
 
 Summary: a 'top' clone for MySQL with special attention paid to InnoDB
@@ -14,6 +14,12 @@ URL: http://code.google.com/p/innotop
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+
+Patch1: %name-1.11.1-alt-version_check.patch
+Patch2: %name-1.11.1-alt-fix_host_regex.patch
+Patch3: %name-1.11.1-alt-fix_user_statistics.patch
+
 BuildArch: noarch
 
 AutoReqProv: perl, yes
@@ -35,6 +41,11 @@ servers at once with innotop.
 
 %prep
 %setup
+%patch0 -p1
+
+%patch1
+%patch2
+%patch3
 
 mv -f -- COPYING COPYING.GPL.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -61,6 +72,10 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Tue Sep 13 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.11.1-alt1
+- New version
+- Fix work on Perl 5.22.2
+
 * Sat Aug 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.9.1-alt1
 - New version
 
