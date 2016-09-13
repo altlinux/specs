@@ -1,11 +1,11 @@
 %define api_version 3.0
 %define rname gtkmm
-%define ver_major 3.20
+%define ver_major 3.22
 %def_disable atkmm
 %def_disable demos
 
 Name: libgtkmm3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
@@ -17,8 +17,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.
 
 Provides: %rname = %version
 
-%define gtk_ver 3.20.0
-%define glib_ver 2.48.0
+%define gtk_ver 3.22.0
+%define glib_ver 2.50.0
 %define pangomm_ver 2.40.0
 %define atkmm_ver 2.24.1
 %define cairo_ver 1.12.0
@@ -103,6 +103,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Thu Apr 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

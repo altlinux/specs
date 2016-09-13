@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define api_ver 2.4
-%define ver_major 2.54
+%define ver_major 2.56
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -10,13 +10,13 @@
 %def_with gssapi
 
 Name: libsoup
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
 License: LGPLv2+
-Url: https://live.gnome.org/LibSoup
+Url: https://wiki.gnome.org/Projects/libsoup
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -225,6 +225,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
+- 2.56.0
+
 * Tue Apr 26 2016 Yuri N. Sedunov <aris@altlinux.org> 2.54.1-alt1
 - 2.54.1
 

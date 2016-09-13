@@ -1,6 +1,8 @@
+%def_disable snapshot
+
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,9 +10,10 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable installed_tests
+%def_enable udev
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -18,8 +21,11 @@ License: %gpl2plus, %fdl
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
+%else
+Source: %_name-%version.tar
+%endif
 
 Obsoletes: %_name
 Provides: %_name = %version-%release
@@ -27,7 +33,7 @@ Provides: %_name = %version-%release
 BuildPreReq: rpm-build-licenses rpm-build-gnome
 
 # From configure.ac
-BuildPreReq: intltool >= 0.35
+BuildPreReq: intltool >= 0.40.6
 BuildPreReq: libgtk+3-devel >= 3.3.6
 BuildPreReq: libgio-devel >= 2.44.0
 BuildPreReq: yelp-tools itstool
@@ -35,8 +41,8 @@ BuildPreReq: gtk-doc >= 1.4
 BuildPreReq: gnome-common >= 2.8.0
 BuildPreReq: gsettings-desktop-schemas-devel >= 3.5.91
 BuildRequires: iso-codes-devel
-BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel
-BuildRequires: hwdatabase >= 0.3.31-alt1
+BuildRequires: xkeyboard-config-devel
+BuildRequires: libudev-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 
 %description
@@ -52,8 +58,7 @@ Summary: GNOME desktop core libraries
 Group: Graphical desktop/GNOME
 License: %lgpl2plus
 Requires: icon-theme-hicolor
-# use pnp.ids from hwdatabase package
-Requires: hwdatabase >= 0.3.31-alt1
+Requires: udev-hwdb
 
 %description -n lib%name
 Gnome 3 desktop libraries.
@@ -125,9 +130,8 @@ the functionality of the Gnome 3 desktop library.
     %{subst_enable static} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --with-gnome-distributor=%gnome_distributor \
-    --with-pnp-ids-path=%_datadir/misc/pnp.ids \
-    %{?_enable_installed_tests:--enable-installed-tests}
-
+    %{?_enable_installed_tests:--enable-installed-tests} \
+    %{subst_enable udev}
 %make_build
 
 %install
@@ -172,6 +176,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

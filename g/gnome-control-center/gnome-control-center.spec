@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 2.0
 
 %def_disable debug
@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Control Center
@@ -28,15 +28,15 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-3.8.3-alt-lfs.patch
 
 # From configure.ac
-%define gtk_ver 3.19.12
+%define gtk_ver 3.22.0
 %define glib_ver 2.44.0
-%define desktop_ver 3.19.93
+%define desktop_ver 3.21.90
 %define fontconfig_ver 1.0.0
-%define gsds_ver 3.16.1
-%define nm_ver 0.9.8
-%define goa_ver 3.7.91
+%define gsds_ver 3.21.4
+%define nm_ver 1.2
+%define goa_ver 3.21.5
 %define acc_ver 0.6.33
-%define sett_daemon_ver 3.20.0
+%define sett_daemon_ver 3.22.0
 %define cheese_ver 3.9.5
 %define bt_ver 3.18.2
 %define systemd_ver 40
@@ -60,8 +60,8 @@ Requires: gnome-online-accounts >= %goa_ver
 %{?_with_cheese:Requires: cheese >= %cheese_ver}
 BuildPreReq: rpm-build-gnome >= 0.9
 
-# From configure.in
-BuildPreReq: intltool >= 0.50 gnome-common desktop-file-utils
+# From configure.ac
+BuildPreReq: intltool gnome-common desktop-file-utils
 BuildPreReq: gtk-doc xsltproc libappstream-glib-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -82,8 +82,7 @@ BuildRequires: libpwquality-devel >= %pwq_ver  libkrb5-devel libsmbclient-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
-BuildRequires: libnm-gtk-devel >= %nm_ver
-BuildRequires: libmm-glib-devel
+BuildRequires: libnm-gtk-devel >= %nm_ver libmm-glib-devel libnma-devel
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: libaccountsservice-devel >= %acc_ver
 BuildRequires: libwacom-devel >= %wacom_ver
@@ -176,8 +175,13 @@ NOCONFIGURE=1 ./autogen.sh
 
 %files devel
 %_datadir/pkgconfig/gnome-keybindings.pc
+%_datadir/gettext/its/gnome-keybindings.its
+%_datadir/gettext/its/gnome-keybindings.loc
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

@@ -1,10 +1,10 @@
-%def_enable snapshot
-%define ver_major 3.20
+%def_disable snapshot
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-calculator
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GTK+3 based desktop calculator
 License: %gpl2plus
@@ -68,6 +68,9 @@ A single graphics driver for GTK included with this package.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sun Aug 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt2
 - use git snapshot with some *.ui that were missed in tarball
 

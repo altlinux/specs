@@ -1,6 +1,8 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.12
+%define ver_major 3.21
 %def_disable static
 %def_enable map
 %def_enable goa
@@ -14,16 +16,19 @@
 %define gst_api_ver 1.0
 
 Name: empathy
-Version: %ver_major.12
-Release: alt1
+Version: %ver_major.1
+Release: alt0.1
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
 Group: Networking/Instant messaging
 Url: https://live.gnome.org/Empathy
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 Conflicts: telepathy-haze-aim
 Obsoletes: libempathy libempathy-gtk python-module-empathy
@@ -32,7 +37,7 @@ Obsoletes: libempathy libempathy-gtk python-module-empathy
 %define glib_ver 2.37.6
 %define gtk_ver 3.9.4
 %define clutter_ver 1.1.2
-%define clutter_gst_ver 1.9.92
+%define clutter_gst_ver 3.0.18
 %define tp_glib_ver 0.23.2
 %define tp_logger_ver 0.8.0
 %define tp_gabble_ver 0.16.0
@@ -71,7 +76,7 @@ BuildPreReq: intltool >= %intltool_ver gnome-common itstool
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_ver
-BuildPreReq: libclutter-gst2.0-devel >= %clutter_gst_ver
+BuildPreReq: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
 BuildPreReq: libfolks-devel >= %folks_ver
 BuildPreReq: libenchant-devel >= %enchant_ver
@@ -186,6 +191,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %changelog
+* Thu Sep 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.1-alt0.1
+- updated to EMPATHY_3_12_12-34-gca6b43b
+
 * Fri May 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.12.12-alt1
 - 3.12.12
 

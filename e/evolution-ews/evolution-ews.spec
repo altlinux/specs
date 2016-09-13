@@ -1,7 +1,7 @@
-%define ver_major 3.20
+%define ver_major 3.22
 
 Name: evolution-ews
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Group: Networking/Mail
@@ -11,12 +11,12 @@ Url: https://wiki.gnome.org/Apps/Evolution
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define ver_base 3.20
+%define ver_base 3.22
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.20.5
+%define evolution_ver 3.22.0
 # from configure.ac
-%define eds_ver 3.20.5
+%define eds_ver 3.22.0
 %define glib_ver 2.40
 %define libmspack_ver 0.4
 %define soup_ver 2.42
@@ -79,6 +79,12 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/appdata/evolution-ews.metainfo.xml
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
+* Mon Sep 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.92-alt1
+- 3.21.92
+
 * Mon Aug 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.5-alt1
 - 3.20.5
 

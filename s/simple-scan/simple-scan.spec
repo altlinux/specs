@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %def_disable packagekit
 
 Name: simple-scan
@@ -14,7 +14,7 @@ Source: %url/%ver_major/%version/+download/simple-scan-%version.tar.xz
 
 Requires: sane xdg-utils gnome-icon-theme colord
 
-BuildRequires: autoconf-archive intltool yelp-tools libappstream-glib-devel
+BuildRequires: autoconf-archive yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel libgudev-devel libcolord-devel
 BuildRequires: libjpeg-devel libsane-devel zlib-devel
 BuildRequires: vala-tools
@@ -46,6 +46,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

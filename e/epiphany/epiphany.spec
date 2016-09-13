@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 3.10
 %define ua_ver %ver_major
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -24,7 +24,7 @@ Patch: %name-3.17.2-alt-lfs.patch
 Provides: webclient
 Obsoletes: %name-extensions
 
-%define webkit_ver 2.12.0
+%define webkit_ver 2.13.4
 %define gtk_ver 3.20.0
 %define libxml2_ver 2.6.12
 %define xslt_ver 1.1.7
@@ -111,6 +111,9 @@ rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 

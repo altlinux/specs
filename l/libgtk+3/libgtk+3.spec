@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk+
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 3.0
 %define binary_ver 3.0.0
 %define _libexecdir %_prefix/libexec
@@ -20,7 +20,7 @@
 %def_enable installed_tests
 
 Name: libgtk+3
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -38,10 +38,10 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 # https://bug740554.bugzilla-attachments.gnome.org/attachment.cgi?id=308706
 Patch1: gtk+-3.18.3-bgo740554.patch
 
-%define glib_ver 2.46.0
+%define glib_ver 2.49.3
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
-%define pango_ver 1.37.3
+%define pango_ver 1.38.0
 %define atk_ver 2.15.1
 %define atspi_ver 2.8.1
 %define pixbuf_ver 2.30.0
@@ -49,8 +49,8 @@ Patch1: gtk+-3.18.3-bgo740554.patch
 %define gtk_doc_ver 1.6
 %define colord_ver 0.1.9
 %define cups_ver 1.6
-%define wayland_ver 1.9.91
-%define wayland_protocols_ver 1.0
+%define wayland_ver 1.10.0
+%define wayland_protocols_ver 1.7
 %define epoxy_ver 1.0
 
 Provides: libgtk3-engine-adwaita = %version-%release
@@ -85,7 +85,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudprint:BuildRequires: librest-devel libjson-glib-devel}
 # for examples
-BuildRequires: libcanberra-gtk3-devel
+BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
 # for check
 BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor gnome-icon-theme-symbolic
 
@@ -415,6 +415,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.9-alt1
 - 3.20.9
 

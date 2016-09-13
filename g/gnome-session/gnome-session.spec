@@ -1,11 +1,11 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 %def_enable session_selector
 %def_disable consolekit
 
 Name: gnome-session
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -18,7 +18,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source1: gnome.svg
 
 Patch: %name-2.91.6-alt-autosave_session.patch
-Patch1: %name-3.8.2-alt-lfs.patch
+Patch1: %name-3.21.4-alt-lfs.patch
 
 # fedora patches:
 # Blacklist NV30: https://bugzilla.redhat.com/show_bug.cgi?id=745202
@@ -52,10 +52,11 @@ BuildPreReq: libgtk+3-devel >= %gtk_ver
 # BuildPreReq: libupower-devel >= %upower_ver
 BuildRequires: libgnome-desktop3-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
-BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
+BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel
+BuildRequires: libGL-devel libGLES-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
 BuildRequires: docbook-dtds docbook-style-xsl
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libsystemd-journal-devel libpolkit-devel}
+%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libpolkit-devel}
 %{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
 
 
@@ -88,7 +89,7 @@ This package permits to log into GNOME using Wayland.
 %prep
 %setup
 %patch
-%patch1 -p1 -b .lfs
+#%patch1 -p1 -b .lfs
 %patch11 -p1 -b .nv30
 
 [ ! -d m4 ] && mkdir m4
@@ -118,17 +119,17 @@ This package permits to log into GNOME using Wayland.
 %_bindir/%name-quit
 %_libexecdir/%name-binary
 %_libexecdir/%name-check-accelerated
-%_libexecdir/%name-check-accelerated-helper
+%_libexecdir/%name-check-accelerated-gl-helper
+%_libexecdir/%name-check-accelerated-gles-helper
 %_libexecdir/%name-failed
 %dir %_datadir/%name
 %_datadir/%name/hardware-compatibility
-%_datadir/%name/session-properties.ui
+
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
 %_datadir/%name/sessions/gnome-dummy.session
 %_datadir/xsessions/gnome.desktop
-#%_datadir/xsessions/gnome-xorg.desktop
-%_iconsdir/hicolor/*/apps/session-properties*
+%_datadir/xsessions/gnome-xorg.desktop
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
 %_man1dir/%name-inhibit.*
@@ -146,10 +147,13 @@ This package permits to log into GNOME using Wayland.
 %endif
 
 %files wayland
-%_datadir/wayland-sessions/gnome-wayland.desktop
-#%_datadir/%name/sessions/gnome-wayland.session
+%_datadir/wayland-sessions/gnome.desktop
+
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Jul 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

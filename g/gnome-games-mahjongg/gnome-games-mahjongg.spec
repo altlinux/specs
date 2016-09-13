@@ -2,7 +2,7 @@
 
 %define _name mahjongg
 %define __name gnome-%_name
-%define ver_major 3.20
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -53,6 +53,9 @@ version of the classic Eastern tile game, Mahjongg.
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

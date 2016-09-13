@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 0.3
+%define ver_major 0.4
 %define api_ver %ver_major
 %def_enable introspection
 %def_disable gtk_doc
 
 Name: libgepub
 Version: %ver_major
-Release: alt0.1
+Release: alt1
 
 Summary: Simple library to read epub files using glib
 Group: System/Libraries
@@ -102,6 +102,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Aug 31 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
+- 0.4
+
 * Thu Jun 23 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3-alt0.1
 - first build for Sisyphus (0.3-32-g1495f30)
 

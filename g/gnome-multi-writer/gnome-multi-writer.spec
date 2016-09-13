@@ -1,4 +1,7 @@
-%define ver_major 3.20
+%def_disable snapshot
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 3.22
 %define _name org.gnome.MultiWriter
 
 Name: gnome-multi-writer
@@ -10,19 +13,23 @@ Group: Archiving/Backup
 License: GPLv2+
 Url: https://wiki.gnome.org/Apps/MultiWriter
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: gnome-icon-theme-extras
 
 %define gtk_ver 3.12.0
-%define gusb_ver 0.2.4
+%define gusb_ver 0.2.7
 
-BuildRequires: intltool docbook-utils yelp-tools
+BuildRequires: gnome-common intltool docbook-utils yelp-tools
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgusb-devel >= %gusb_ver
 BuildRequires: libudisks2-devel libgudev-devel libcanberra-gtk3-devel
 BuildRequires: gobject-introspection-devel
+BuildRequires: libpolkit-devel
 
 %description
 GNOME MultiWriter can be used to write an ISO file to multiple
@@ -32,6 +39,7 @@ USB devices simultaneously.
 %setup
 
 %build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %autoreconf
 %configure
 %make_build
@@ -43,7 +51,7 @@ USB devices simultaneously.
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/%name-probe
+%_libexecdir/%name-probe
 %_desktopdir/%_name.desktop
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_datadir/polkit-1/actions/%_name.policy
@@ -52,7 +60,11 @@ USB devices simultaneously.
 %_datadir/appdata/%_name.appdata.xml
 %doc README.md AUTHORS NEWS
 
+
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

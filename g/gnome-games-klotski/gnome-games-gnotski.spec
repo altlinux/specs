@@ -2,11 +2,11 @@
 
 %define _name klotski
 %define __name gnome-%_name
-%define ver_major 3.20
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Derivative game from Klotski
@@ -26,7 +26,7 @@ Provides:  gnome-games-gnotski = %version-%release
 BuildRequires: gnome-common intltool yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libgee0.8-devel libgames-support-devel
+BuildRequires: libgee0.8-devel libgnome-games-support-devel
 BuildRequires: librsvg-devel vala-tools
 
 %description
@@ -59,6 +59,9 @@ from a game called "Klotski".
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sat May 07 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

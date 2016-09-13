@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.21
 %define xdg_name org.gnome.bijiben
 %define _libexecdir %_prefix/libexec
 %def_enable zeitgeist
@@ -62,6 +62,9 @@ desktop integration.
 %doc README AUTHORS NEWS
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.2-alt1
+- 3.21.2
+
 * Tue May 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

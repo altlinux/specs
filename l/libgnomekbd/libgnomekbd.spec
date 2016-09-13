@@ -1,18 +1,23 @@
-%define ver_major 3.6
+%def_disable snapshot
+
+%define ver_major 3.22
 %define api_ver 3.0
 %def_enable introspection
 
 Name: libgnomekbd
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.0.1
+Release: alt1
 
 Summary: GNOME keyboard shared library
 License: %lgpl2plus
 Group: Graphical desktop/GNOME
 URL: http://www.gnome.org/
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
 Source: %name-%version.tar
+%endif
 
 Obsoletes: gnome-kbd-indicator < 2.22.0
 Provides: gnome-kbd-indicator = %version-%release
@@ -25,12 +30,11 @@ Provides: %_bindir/gkbd-keyboard-display
 BuildPreReq: rpm-build-gnome >= 0.4
 BuildPreReq: rpm-build-licenses
 
-# from configure.in
+# from configure.ac
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libxklavier-devel >= %libxklavier_ver
-BuildPreReq: intltool >= 0.35.0
 BuildPreReq: libX11-devel libXt-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel libxklavier-gir-devel}
 
@@ -65,17 +69,17 @@ Requires: %name-gir = %version-%release
 GObject introspection devel data for the GNOME keyboard library
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
 %configure \
-	--disable-schemas-compile \
-	--disable-static
+	--disable-static \
+	--disable-schemas-compile
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
@@ -108,6 +112,9 @@ GObject introspection devel data for the GNOME keyboard library
 %endif
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0.1-alt1
+- 3.22.0.1
+
 * Sun Apr 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
 - updated to 3.6.0-23-g43cd1bd
 

@@ -1,11 +1,14 @@
+%def_disable snapshot
+
 %define _name gnome-autoar
 %define ver_major 0.1
-%define api_ver 0.1
+%define api_ver_base 0
+%define api_ver %api_ver_base.1
 %def_disable static
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -13,8 +16,11 @@ Group: System/Libraries
 License: LGPLv2+
 Url: https://gnome.org
 
-#Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
+%if_disabled snapshot
+Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
 Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.38
 %define gtk_ver 3.2
@@ -83,7 +89,6 @@ This package provides vala language bindings for %_name library
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS `pkg-config --libs gio-2.0` `pkg-config --libs gtk+-3.0`"
 %configure \
 	%{subst_enable static} \
 	--enable-gtk-doc
@@ -99,18 +104,18 @@ export CFLAGS="$CFLAGS `pkg-config --libs gio-2.0` `pkg-config --libs gtk+-3.0`"
 %find_lang %_name
 
 %files -f %_name.lang
-%_libdir/lib%_name.so.*
-%_libdir/lib%_name-gtk.so.*
+%_libdir/lib%_name-%api_ver_base.so.*
+%_libdir/lib%_name-gtk-%api_ver_base.so.*
 %_datadir/glib-2.0/schemas/org.gnome.desktop.archives.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.archives.enums.xml
 #%doc AUTHORS README
 
 %files devel
-%_includedir/%_name
-%_libdir/lib%_name.so
-%_libdir/lib%_name-gtk.so
-%_pkgconfigdir/%{_name}.pc
-%_pkgconfigdir/%{_name}-gtk.pc
+%_includedir/%_name-%api_ver_base/
+%_libdir/lib%_name-%api_ver_base.so
+%_libdir/lib%_name-gtk-%api_ver_base.so
+%_pkgconfigdir/%_name-%api_ver_base.pc
+%_pkgconfigdir/%_name-gtk-%api_ver_base.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -127,6 +132,9 @@ export CFLAGS="$CFLAGS `pkg-config --libs gio-2.0` `pkg-config --libs gtk+-3.0`"
 
 
 %changelog
+* Fri Sep 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
+- 0.1.1
+
 * Tue Feb 10 2015 Yuri N. Sedunov <aris@altlinux.org> 0.1-alt1
 - first build for Sisyphus
 

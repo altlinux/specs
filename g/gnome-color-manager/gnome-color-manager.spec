@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.20
+%define ver_major 3.22
 %def_enable clutter
 # tests require colord running and g-c-m installed
 %def_disable check
@@ -108,11 +108,14 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_iconsdir/hicolor/*x*/mimetypes/*.png
 %_iconsdir/hicolor/scalable/mimetypes/*.svg
 %_man1dir/*
-%_datadir/appdata/gcm-viewer.appdata.xml
+%_datadir/appdata/org.gnome.ColorProfileViewer.appdata.xml
 %doc --no-dereference COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

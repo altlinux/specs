@@ -1,12 +1,15 @@
+# since 3.21.90 (libmutter-clutter-1.0.so private library)
+%set_verify_elf_method unresolved=relaxed
+
 %def_disable snapshot
 
-%define ver_major 3.20
+%define ver_major 3.22
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
 %def_enable privatelib
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -33,12 +36,12 @@ Source: %name-%version.tar
 %define cairo_ver 1.10.0
 %define Xi_ver 1.6.0
 %define wayland_ver 1.7.0
+%define wayland_protocols_ver 1.7
 %define upower_ver 0.99.0
 %define libinput_ver 0.99.0
-%define gsds_ver 3.19.3
+%define gsds_ver 3.21.4
 
 BuildPreReq: rpm-build-gnome gnome-common
-BuildPreReq: intltool >= 0.34.90
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -49,12 +52,13 @@ BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel libXdamage-d
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
 BuildRequires: libxcb-devel
 BuildRequires: libclutter-devel >= %clutter_ver libcogl-devel >= %cogl_ver
-BuildRequires: libwayland-server-devel >= %wayland_ver wayland-protocols
+BuildRequires: libwayland-server-devel >= %wayland_ver wayland-protocols >= %wayland_protocols_ver
 BuildRequires: libgdk-pixbuf-devel libgbm-devel
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
 BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
 BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver libxkbfile-devel xkeyboard-config-devel
+BuildRequires: libwacom-devel
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel
 
@@ -115,13 +119,13 @@ environment.
 [ ! -d m4 ] && mkdir m4
 
 %build
+export ac_cv_path_CVT=%_bindir/cvt
 %autoreconf
 DATADIRNAME=share %configure \
 	--enable-introspection \
 	--disable-static \
 	--disable-schemas-compile \
 	--enable-compile-warnings=maximum
-
 %make_build
 
 %install
@@ -133,6 +137,11 @@ DATADIRNAME=share %configure \
 %_bindir/*
 %_libexecdir/%name-restart-helper
 %dir %_libdir/%name
+%_libdir/%name/lib%name-clutter-1.0.so
+%_libdir/%name/lib%name-cogl-pango.so
+%_libdir/%name/lib%name-cogl-path.so
+%_libdir/%name/lib%name-cogl.so
+%exclude %_libdir/%name/*.la
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/*.so
 %_desktopdir/%name.desktop
@@ -146,7 +155,7 @@ DATADIRNAME=share %configure \
 
 %files -n lib%name-devel
 #%doc doc/*.txt HACKING
-%_includedir/%name
+%_includedir/%name/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %endif
@@ -160,10 +169,13 @@ DATADIRNAME=share %configure \
 %files gnome
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.wayland.gschema.xml
-%_datadir/GConf/gsettings/mutter-schemas.convert
+%_datadir/GConf/gsettings/%name-schemas.convert
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.22.0-alt1
+- 3.22.0
+
 * Wed Jun 29 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.20.3-alt1
 - 3.20.3
 

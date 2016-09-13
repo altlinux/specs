@@ -1,11 +1,13 @@
+%def_disable snapshot
+
 %define _name pygobject
-%define major 3.20
+%define ver_major 3.22
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -14,8 +16,11 @@ License: LGPL
 Group: Development/Python
 Url: http://www.pygtk.org/
 
-#Source: %_name-%version.tar
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%major/%_name-%version.tar.xz
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 %setup_python_module pygobject3
 
@@ -199,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Apr 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

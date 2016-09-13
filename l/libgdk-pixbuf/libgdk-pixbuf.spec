@@ -1,7 +1,7 @@
 %define _name gdk-pixbuf
 %define api_ver 2.0
 %define binary_ver 2.10.0
-%define ver_major 2.34
+%define ver_major 2.36
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
@@ -159,7 +159,6 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 echo : >>%_name/abicheck.sh
 #%make check
 
-
 %files
 %_bindir/gdk-pixbuf-query-loaders
 %_libdir/libgdk_pixbuf-2.0.so.*
@@ -224,6 +223,9 @@ echo : >>%_name/abicheck.sh
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.36.0-alt1
+- 2.36.0
+
 * Thu Mar 24 2016 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
 - 2.34.0
 

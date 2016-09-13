@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 3.0
 %define xdg_name org.gnome.Nautilus
 
@@ -11,7 +11,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -25,27 +25,22 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-# http://bugzilla.gnome.org/show_bug.cgi?id=519743
-Patch17: %name-filetype-symlink-fix.patch
-
-# (fc) 2.22.2-2mdv auto-unmount ejected medias when mount points are in fstab (Mdv bug #39540)
-Patch35: %name-2.22.1-umountfstab.patch
-
 %define pkgconfig_ver 0.8
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
 
 # From configure.ac
-%define glib_ver 2.46.1
+%define glib_ver 2.49.1
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.19.12
+%define gtk_ver 3.21.6
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
 %define gir_ver 0.10.2
 %define notify_ver 0.7.0
 %define tracker_ver 0.18
+%define autoar_ver 0.1
 
 Requires(post): libcap-utils
 PreReq: lib%name = %version-%release
@@ -72,6 +67,7 @@ BuildPreReq: libxml2-devel >= %libxml2_ver
 BuildPreReq: intltool >= 0.40.1
 BuildPreReq: libexif-devel >= %exif_ver
 BuildPreReq: libnotify-devel >= %notify_ver
+BuildPreReq: libgnome-autoar-devel >= %autoar_ver
 BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
@@ -135,8 +131,6 @@ GObject introspection devel data for the nautilus-extension library
 
 %prep
 %setup
-%patch17 -p0 -b .symlink
-
 rm -f data/*.desktop
 
 %build
@@ -166,7 +160,8 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 %files -f %name.lang
 %_bindir/*
-#%_libexecdir/nautilus-convert-metadata
+%dir %_libdir/%name
+#%_libdir/%name/libgd.so
 %dir %_libdir/%name-%api_ver
 %dir %_libdir/%name-%api_ver/components
 %_desktopdir/*.desktop
@@ -174,13 +169,16 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
 %_datadir/gnome-shell/search-providers/nautilus-search-provider.ini
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
-#%_datadir/GConf/gsettings/nautilus.convert
 %_datadir/appdata/%xdg_name.appdata.xml
 # docs
 %doc --no-dereference COPYING
 %doc AUTHORS MAINTAINERS NEWS.bz2 README THANKS
 %_man1dir/*
+
+#%exclude %_libdir/%name/libgd.la
 
 %files -n lib%name
 %_libdir/libnautilus-extension.so.*
@@ -207,6 +205,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue Aug 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 

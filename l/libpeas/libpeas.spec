@@ -1,4 +1,4 @@
-%define ver_major 1.18
+%define ver_major 1.20
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -197,6 +197,9 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1.1
+- 1.20.0
+
 * Tue Mar 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.18.0-alt1.1
 - (NMU) rebuild with python3-3.5 & rpm-build-python3-0.1.10
   (for ABI dependence and new python3(*) reqs)

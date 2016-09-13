@@ -1,7 +1,7 @@
 %define xdg_name org.gnome.Totem
 %def_disable snapshot
 
-%define ver_major 3.20
+%define ver_major 3.22
 %define parser_ver 3.10.1
 %define gst_api_ver 1.0
 %define gst_ver 1.4.2
@@ -33,7 +33,7 @@
 %def_disable gromit
 
 Name: totem
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -46,7 +46,6 @@ Source: %name-%version.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %endif
-Patch: %name-3.20.1-alt-format.patch
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -276,7 +275,6 @@ used by other applications like filemanagers.
 
 %prep
 %setup
-%patch -b .format
 [ ! -d m4 ] && mkdir m4
 
 %build
@@ -350,6 +348,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/apple-trailers/
 %_libdir/%name/plugins/autoload-subtitles/
 %_libdir/%name/plugins/recent/
+%_libdir/%name/plugins/variable-rate/
 %_libdir/%name/plugins/vimeo/
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.pythonconsole.gschema.xml
@@ -408,6 +407,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Sat Sep 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

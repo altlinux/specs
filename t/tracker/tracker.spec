@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 1.10
 %define ver_api 1.0
 
 # since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
@@ -25,7 +25,7 @@
 %def_enable libflac
 %def_enable exempi
 %def_enable nautilus_extension
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable taglib
 %def_enable needle
 %def_enable libgif
@@ -135,6 +135,7 @@ BuildPreReq: libgee0.8-devel >= %gee_ver
 %{?_enable_libcue:BuildPreReq: libcue-devel}
 %{?_enable_libosinfo:BuildPreReq: libosinfo-devel >= %libosinfo_ver}
 %{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel}
+BuildRequires: systemd-devel
 
 %description
 Tracker is a powerful desktop-neutral first class object
@@ -309,7 +310,6 @@ rm -rf %buildroot%_datadir/tracker-tests
 
 %_datadir/dbus-1/services/*.service
 %_man1dir/tracker-miner-fs.*
-%_man5dir/tracker-miner-fs.cfg.*
 %{?_enable_rss:%_man1dir/%name-miner-rss.1.*}
 
 %dir %_datadir/%name
@@ -318,15 +318,17 @@ rm -rf %buildroot%_datadir/tracker-tests
 %_datadir/%name/miners/
 %_datadir/%name/ontologies/
 %_datadir/%name/extract-rules/
+%_prefix/lib/systemd/user/tracker-extract.service
+%_prefix/lib/systemd/user/tracker-miner-apps.service
+%_prefix/lib/systemd/user/tracker-miner-fs.service
+%_prefix/lib/systemd/user/tracker-miner-rss.service
+%_prefix/lib/systemd/user/tracker-miner-user-guides.service
+%_prefix/lib/systemd/user/tracker-store.service
+%_prefix/lib/systemd/user/tracker-writeback.service
 
 %_man1dir/tracker-extract.*
 %_man1dir/tracker-store.*
 %_man1dir/tracker-writeback.*
-%_man5dir/tracker-extract.cfg.*
-%_man5dir/tracker-store.cfg.*
-%_man5dir/tracker-writeback.cfg.*
-%_man5dir/tracker-db.cfg.*
-%_man5dir/tracker-fts.cfg.*
 
 %exclude %_datadir/bash-completion/completions/%name
 
@@ -392,6 +394,9 @@ rm -rf %buildroot%_datadir/tracker-tests
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

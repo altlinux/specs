@@ -1,8 +1,8 @@
-# enable compilation of wayland-scannner
+%def_disable snapshot
 %def_disable doc
 
 Name: wayland
-Version: 1.11.1
+Version: 1.12.0
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -10,9 +10,12 @@ Group: System/X11
 License: MIT
 Url: http://%name.freedesktop.org/
 
-# git://anongit.freedesktop.org/wayland/wayland
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: http://%name.freedesktop.org/releases/%name-%version.tar.xz
+%else
+# git://anongit.freedesktop.org/wayland/wayland
+Source: %name-%version.tar
+%endif
 
 BuildRequires: /proc doxygen libexpat-devel libffi-devel libxml2-devel xsltproc docbook-style-xsl
 %{?_enable_doc:BuildRequires: /proc graphviz xmlto}
@@ -145,6 +148,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Wed Sep 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Wed Sep 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.11.1-alt1
 - 1.11.1
 

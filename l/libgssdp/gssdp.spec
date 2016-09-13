@@ -1,12 +1,12 @@
 %define _name gssdp
-%define ver_major 0.14
+%define ver_major 1.0
 
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.16
+Version: %ver_major.0
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -102,6 +102,9 @@ GObject introspection devel data for the GSSDP library
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.16-alt1
 - 0.14.16
 

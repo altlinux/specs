@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.21
 %define _libexecdir /usr/libexec
 %def_without x11_support
 
@@ -13,8 +13,8 @@ Url: https://wiki.gnome.org/Apps/Gnote
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define gtk_ver 3.10
-%define gtkmm_ver 3.10
+%define gtk_ver 3.20
+%define gtkmm_ver 3.18
 %define glibmm_ver 2.32
 %define gtkspell_ver 3.0.0
 %define libsecret_ver 0.8
@@ -80,6 +80,9 @@ desktop-file-install \
 %doc README TODO NEWS AUTHORS
 
 %changelog
+* Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.1-alt1
+- 3.21.1
+
 * Sun May 15 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

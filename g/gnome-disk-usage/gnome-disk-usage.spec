@@ -2,11 +2,11 @@
 
 %define _name baobab
 %define __name org.gnome.baobab
-%define ver_major 3.20
+%define ver_major 3.22
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
 Name: gnome-disk-usage
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME disk usage analyser.
@@ -21,7 +21,7 @@ Provides: baobab = %version-%release
 %define gtk_ver 3.20.0
 %define vala_ver 0.23.3
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildRequires: rpm-build-gnome intltool yelp-tools itstool xmllint
+BuildRequires: rpm-build-gnome yelp-tools itstool xmllint libappstream-glib-devel
 BuildRequires: vala-tools >= %vala_ver gobject-introspection-devel libgtk+3-gir-devel
 
 %description
@@ -57,6 +57,9 @@ popd
 %_datadir/appdata/%__name.appdata.xml
 
 %changelog
+* Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

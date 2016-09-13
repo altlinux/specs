@@ -1,16 +1,18 @@
+%def_enable snapshot
+
 %define _name vte
-%define ver_major 0.44
+%define ver_major 0.46
 %define api_ver 2.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
 %def_enable introspection
 %def_enable gtk_doc
 %def_disable glade
-%def_disable pcre2
+%def_enable pcre2
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL
@@ -18,8 +20,11 @@ Group: Terminals
 
 Requires: lib%name = %version-%release
 
-#Source: %_name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
 
 %define gtk3_ver 3.8.0
 %define glib_ver 2.40.0
@@ -122,8 +127,7 @@ GObject introspection devel data for the %name library
 	--enable-shared \
 	%{subst_enable static} \
 	%{subst_enable introspection} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable pcre2}
+	%{?_enable_gtk_doc:--enable-gtk-doc}
 #	%{subst_enable glade}
 %make_build
 
@@ -183,6 +187,9 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
+- 0.46.0
+
 * Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.44.2-alt1
 - 0.44.2
 

@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.20
-%define ver_base 3.20
+%define ver_major 3.22
+%define ver_base 3.22
 %define gst_api_ver 1.0
 
 %def_disable static
@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -48,7 +48,7 @@ Provides: camel
 %define glib_ver 2.40.0
 %define gtk_ver 3.10
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.20.5
+%define eds_ver 3.22.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
 %define libsoup_ver 2.42.0
@@ -58,9 +58,10 @@ Provides: camel
 %define gdata_ver 0.10.0
 %define champlain_ver 0.12
 %define pst_ver 0.6.54
-%define webkit_ver 2.0.1
+%define webkit_ver 2.13.90
 %define geocode_ver 3.10.0
 %define gcr_ver 3.4
+%define autoar_ver 0.1.1
 
 Requires: %name-data = %version-%release
 Requires: evolution-data-server >= %eds_ver
@@ -81,12 +82,12 @@ BuildPreReq: libgweather-devel >= %gweather_ver
 BuildPreReq: libical-devel >= %ical_ver libicu-devel
 BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libpst-devel >= %pst_ver
-BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
+BuildPreReq: libwebkit2gtk-devel >= %webkit_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver libcryptui-devel
 %{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel libgeocode-glib-devel >= %geocode_ver}
 %{?_enable_tnef:BuildRequires: libytnef-devel}
-%{?_enable_autoar:BuildRequires: libgnome-autoar-devel}
+%{?_enable_autoar:BuildRequires: libgnome-autoar-devel >= %autoar_ver}
 
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
 BuildRequires: gcc-c++ flex libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
@@ -191,7 +192,6 @@ the functionality of the installed Evolution.
 %patch10 -b .ldaphack
 %patch27 -p1 -b .im-context-reset
 
-%__subst '/use diagnostics/d' addressbook/tools/csv2vcard.in
 subst 's,(Unstable),,' data/evolution.desktop*
 
 # Remove the welcome email from Novell
@@ -256,8 +256,8 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %files
 %_bindir/*
 %_libdir/%name/
-%_libexecdir/%name/csv2vcard
-%_libexecdir/%name/evolution-addressbook-export
+#%_libexecdir/%name/csv2vcard
+#%_libexecdir/%name/evolution-addressbook-export
 %_libexecdir/%name/evolution-alarm-notify
 %_libexecdir/%name/evolution-backup
 %_libexecdir/%name/killev
@@ -316,6 +316,12 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
+* Mon Sep 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.92-alt1
+- 3.21.92
+
 * Mon Aug 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.5-alt1
 - 3.20.5
 

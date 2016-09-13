@@ -1,8 +1,11 @@
-%define ver_major 0.23
+%set_verify_elf_method unresolved=relaxed
+%def_disable snapshot
+
+%define ver_major 0.24
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -10,19 +13,23 @@ Group: Graphics
 License: LGPL
 Url: https://wiki.gnome.org/Apps/Shotwell
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: dconf
 # for video-thumbnailer
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
-BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel libGConf-devel
+BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= 0.10.3
 BuildRequires: libgphoto2-devel libgudev-devel libjson-glib-devel
 BuildRequires: libraw-devel libgomp-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libunique3-devel libwebkit2gtk-devel
-BuildRequires: vala librest-devel libgee0.8-devel desktop-file-utils gnome-doc-utils
+BuildRequires: vala librest-devel libgee0.8-devel
+BuildRequires: desktop-file-utils gnome-doc-utils yelp-tools
 
 %description
 Shotwell is a digital photo organizer designed for the GNOME desktop
@@ -36,28 +43,38 @@ mode, and export them to share with others.
 %setup
 
 %build
-./configure --disable-icon-update --prefix=%_prefix --lib=%_lib
-%make_build
+%add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
+%autoreconf
+%configure \
+    --disable-static \
+    --disable-schemas-compile
+%make
 
 %install
 %makeinstall_std
+
 %find_lang --with-gnome --output=%name.lang %name %name-extras
 
 %files -f %name.lang
 %_bindir/%name
-%_libexecdir/%name-video-thumbnailer
-%_prefix/libexec/%name/%name-settings-migrator
-%_libdir/%name
+%dir %_libexecdir/%name
+%_libexecdir/%name/%name-video-thumbnailer
+%_libexecdir/%name/%name-settings-migrator
+%_libdir/lib%name-plugin-common.so.*
+%_libdir/%name/
 %_desktopdir/%{name}*
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
-%_datadir/%name
-%_datadir/GConf/gsettings/*
+%_datadir/%name/
 %_datadir/glib-2.0/schemas/*
 %_datadir/appdata/%name.appdata.xml
-%doc AUTHORS COPYING NEWS README THANKS MAINTAINERS
+%_man1dir/%name.1.*
+%doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Tue May 31 2016 Yuri N. Sedunov <aris@altlinux.org> 0.23.1-alt1
 - 0.23.1
 

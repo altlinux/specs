@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.20
+%define ver_major 2.22
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -151,6 +151,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.22.0-alt1
+- 2.22.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 2.20.0-alt1
 - 2.20.0
 
