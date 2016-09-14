@@ -1,13 +1,15 @@
 Name: xfce4-volumed-pulse
-Version: 0.2.0
-Release: alt2
+Version: 0.2.2
+Release: alt1
 
 Summary: Daemon to add additional functionality to the volume keys of the keyboard (for pulseaudio)
 License: %gpl3plus
 Group: Graphical desktop/XFce
 
 URL: http://xfce.org/
+# git://git.xfce.org/apps/xfce4-volumed-pulse
 Source: %name-%version.tar
+#Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -17,6 +19,8 @@ BuildPreReq: libxfconf-devel >= 4.8
 BuildRequires: glib2-devel libgtk+2-devel libpulseaudio-devel libkeybinder-devel libnotify4-devel
 
 Conflicts: xfce4-volumed
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 The %name adds additional functionality to the volume up/down
@@ -29,12 +33,13 @@ Fork of Xfce4-Volumed to use PulseAudio.
 
 %prep
 %setup
+#patch -p1
 
 %build
 %xfce4reconf
 %configure \
-	--with-libnotify \
-	--enable-debug=no
+	--enable-libnotify \
+	--enable-debug=minimum
 %make_build
 
 %install
@@ -46,6 +51,11 @@ Fork of Xfce4-Volumed to use PulseAudio.
 %_bindir/%name
 
 %changelog
+* Wed Sep 14 2016 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
+- Enable debug (minimum level).
+- Fix configure option.
+- Updated to 0.2.2.
+
 * Mon Jun 08 2015 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
 - Fork before gtk/dbus init.
 
