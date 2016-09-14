@@ -1,8 +1,8 @@
 %define rname kcoreaddons
 
 Name: kf5-%rname
-Version: 5.25.0
-Release: alt2
+Version: 5.26.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -67,6 +67,7 @@ KF5 library
 %files common -f %name.lang
 %doc COPYING.LIB README.md
 %_xdgmimedir/packages/kde5.xml
+%_K5data/licenses/
 
 %files devel
 %_K5bin/desktoptojson
@@ -80,6 +81,9 @@ KF5 library
 %_K5lib/libKF5CoreAddons.so.*
 
 %changelog
+* Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt1
+- new version
+
 * Thu Aug 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt2
 - don't try ~/.kde as kde4 home dir
 

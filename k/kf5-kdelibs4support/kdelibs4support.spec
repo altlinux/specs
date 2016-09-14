@@ -1,7 +1,7 @@
 %define rname kdelibs4support
 
 Name: kf5-%rname
-Version: 5.25.0
+Version: 5.26.0
 Release: alt1
 %K5init altplace
 
@@ -125,6 +125,9 @@ mv %buildroot/%_datadir/locale/* %buildroot/%_K5i18n/
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt1
+- new version
+
 * Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
 - new version
 

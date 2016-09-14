@@ -1,7 +1,7 @@
 %define rname kactivities
 
 Name: kf5-%rname
-Version: 5.25.0
+Version: 5.26.0
 Release: alt1
 %K5init altplace
 
@@ -94,6 +94,9 @@ sed -i 's|KACTIVITIES_LIB_VERSION_STRING|KACTIVITIES_VERSION_STRING|' src/lib/li
 %_K5qml/org/kde/activities/
 
 %changelog
+* Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt1
+- new version
+
 * Mon Aug 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
 - new version
 
