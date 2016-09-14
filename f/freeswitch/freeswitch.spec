@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.6.10
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -619,6 +619,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Sep 13 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.10-alt2
+- fixed unresolved symbols in mod_flite
+
 * Fri Aug 26 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.10-alt1
 - new version
 
