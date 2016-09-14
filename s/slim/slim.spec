@@ -1,6 +1,6 @@
 Name: slim
 Version: 1.3.6
-Release: alt1
+Release: alt2
 
 Summary: SLiM is a graphical, desktop-independent login manager for X11.
 
@@ -13,6 +13,8 @@ Source: %name-%version.tar.gz
 Source1: %name.init
 Source2: %name.pam
 Patch1: CMakeLists.txt.patch
+Patch2: slim-add-sessiondir.patch
+Patch3: slim_conf.patch
 
 BuildPreReq: cmake rpm-macros-cmake gcc-c++
 # Automatically added by buildreq on Tue Feb 02 2016
@@ -26,6 +28,8 @@ manager for X11.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
+%patch3 -p2
 
 %build
 %cmake_insource -DUSE_PAM=yes \
@@ -55,5 +59,9 @@ install -D -m 0755 -- %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 %config %_initdir/%name
 
 %changelog
+* Wed Sep 14 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.6-alt2
+- add slim-add-sessiondir.patch (Debian #740394)
+- fix slim.conf (closes: #32389)
+
 * Mon Apr 18 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.6-alt1
 - initial build
