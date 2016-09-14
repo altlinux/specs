@@ -1,6 +1,6 @@
 Name: dlm
-Version: 4.0.2
-Release: alt2
+Version: 4.0.5
+Release: alt1
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -8,14 +8,8 @@ URL: https://fedorahosted.org/cluster
 
 Requires: corosync2
 
-Source0: http://people.redhat.com/teigland/%name-%version.tar.gz
-Patch0: 0001-dlm_stonith-add-man-page.patch
-Patch1: 0002-dlm_stonith-install-man-page.patch
-Patch2: 0003-libdlm-udev-dir-now-under-usr-lib.patch
-Patch3: 0005-dlm_tool-fix-status-printing-in-libdlmcontrol.patch
-Patch4: 0008-dlm-clear-out-addrs-before-calling-into-corosync_cft.patch
-Patch5: 0010-dlm_controld-don-t-log-error-from-cpg_dispatch.patch
-Patch6: dlm-4.0.2-systemd-pkg.patch
+Source0: %name-%version.tar.gz
+Patch0: dlm-4.0.5-alt.patch
 
 BuildRequires: libpacemaker-devel libsystemd-devel
 
@@ -42,12 +36,6 @@ developing applications that use %name.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %build
 %make
@@ -87,6 +75,9 @@ install -Dm 0644 init/dlm.sysconfig %buildroot/etc/sysconfig/dlm
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Sep 14 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.5-alt1
+- 4.0.5
+
 * Mon Sep 12 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.2-alt2
 - fixed build with latest systemd
 
