@@ -2,7 +2,7 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.1.4
+Version: 0.1.4.1
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
@@ -49,6 +49,12 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 
 
 %changelog
+* Wed Sep 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.1.4.1-alt1
+- Tiny cleanup which is expected to have no noticeable effect:
+  + more reliable failing in the shell scripts
+    (set -o pipefail; set -eC).
+  + .prov: normalize paths before any analysis (and not in the middle).
+
 * Mon Sep 12 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.1.4-alt1
 - ruby.prov: added a new case: std arch-independent gems
   (those included in the ruby package itself).
