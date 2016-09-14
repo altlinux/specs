@@ -1,7 +1,10 @@
+%define _localstatedir %_var
+%def_without cluster_glue
+
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 3.9.5
-Release: alt3.git.7fac8c7e
+Version: 3.9.7
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -12,16 +15,22 @@ Obsoletes: heartbeat < 2.1.4
 Conflicts: heartbeat < 2.1.4
 
 
-BuildRequires: python-devel xsltproc libxslt-devel glib2-devel which docbook-style-xsl docbook-dtds libnet-devel libcluster-glue-devel
+BuildRequires: python-devel xsltproc libxslt-devel glib2-devel which docbook-style-xsl docbook-dtds libnet2-devel 
+%{?_with_cluster_glue:BuildRequires: libcluster-glue-devel}
 BuildRequires: perl-podlators perl-Socket6 perl-libwww perl-IO-Socket-INET6 perl-Net-Ping perl-MailTools
+BuildRequires: systemd-devel
 
 %add_findreq_skiplist */heartbeat/IPaddr2
 %add_findreq_skiplist */heartbeat/ManageRAID
 %add_findreq_skiplist */heartbeat/Xen
 %add_findreq_skiplist */heartbeat/eDir88
+%add_findreq_skiplist */heartbeat/clvm
 %add_findreq_skiplist */heartbeat/ids
+%add_findreq_skiplist */heartbeat/lxc
 %add_findreq_skiplist */heartbeat/oracle
 %add_findreq_skiplist */heartbeat/scsi2reservation
+%add_findreq_skiplist */cluster/named.sh
+%add_findreq_skiplist */cluster/nfsserver.sh
 %add_findreq_skiplist */cluster/oracledb.sh
 %add_findreq_skiplist */cluster/orainstance.sh
 %add_findreq_skiplist */cluster/vm.sh
@@ -92,6 +101,7 @@ virtual environment etc., depending on context) managed by libvirtd.
 %package lxc
 Group: System/Base
 Requires: %name = %version-%release
+Requires: lxc
 Summary: resource agent manages lxc
 BuildArch: noarch
 
@@ -175,12 +185,16 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 
 %prep
 %setup
+echo %version > .version
+cp .version .tarball-version
+mkdir -p m4
 
 %build
 %autoreconf
 %configure	\
 		--with-version=%version \
-		--localstatedir=%_var
+		--with-systemdsystemunitdir=%_unitdir \
+		--with-initdir=%_initdir
 
 %make_build
 
@@ -201,42 +215,36 @@ mkdir -p %buildroot%_var/run/resource-agents
 
 %files
 %doc AUTHORS COPYING COPYING.GPLv3 COPYING.LGPL ChangeLog doc/README.webapps
-%doc %_datadir/%name/ra-api-1.dtd
+%_datadir/%name/ra-api-1.dtd
 
 %_sbindir/*
 %dir %_datadir/%name
 %dir %_datadir/%name/ocft
-%dir %_datadir/%name/ocft/configs
-
-%_datadir/%name/*.*
-%_datadir/%name/ocft/README*
+%_datadir/%name/ocft/configs
 %_datadir/%name/ocft/caselib
-%config(noreplace) %_datadir/%name/ocft/configs/*
+%_datadir/%name/ocft/README*
+%_datadir/%name/ocft/helpers.sh
+%exclude %_datadir/%name/ocft/runocft
+%exclude %_datadir/%name/ocft/runocft.prereq
 
-%dir %_datadir/cluster
-%_datadir/cluster/relaxng
-%_datadir/cluster/utils
-%config(noreplace) %_datadir/cluster/*.*
-%config(noreplace) %_datadir/cluster/SAP*
-%config(noreplace) %_datadir/cluster/ocf-shellfuncs
-%config(noreplace) %_datadir/cluster/svclib_nfslock
+%_datadir/cluster
 
 %dir %_libexecdir/ocf
-%dir %_libexecdir/ocf/lib
-%dir %_libexecdir/ocf/lib/heartbeat
 %dir %_libexecdir/ocf/resource.d
-%dir %_libexecdir/ocf/resource.d/heartbeat
-%dir %_libexecdir/ocf/resource.d/redhat
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/*
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/.ocf*
-%config(noreplace) %_libexecdir/ocf/lib/heartbeat/*
+%dir %_libexecdir/ocf/lib
+
+%_libexecdir/ocf/lib/heartbeat
+%_libexecdir/ocf/resource.d/redhat
+%_libexecdir/ocf/resource.d/heartbeat
 
 %_includedir/heartbeat
 
 %_libexecdir/heartbeat
 %_man7dir/*
 %_man8dir/ocf-tester.8*
+%if_with cluster_glue
 %_man8dir/sfex_init.8*
+%endif
 %dir %attr (1755, root, root)	%_runtimedir/resource-agents
 
 # For compatability with pre-existing agents
@@ -294,73 +302,76 @@ mkdir -p %buildroot%_var/run/resource-agents
 %exclude %_man7dir/*_WinPopup.*
 
 %files CTDB
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/CTDB
+%_libexecdir/ocf/resource.d/heartbeat/CTDB
 %_man7dir/*_CTDB.*
 
 %files iSCSI
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/iSCSI*
+%_libexecdir/ocf/resource.d/heartbeat/iSCSI*
 %_man7dir/*_iSCSI*
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/iscsi
+%_libexecdir/ocf/resource.d/heartbeat/iscsi
 %_man7dir/*_iscsi*
-%config(noreplace) %_datadir/%name/ocft/configs/iscsi
+%_datadir/%name/ocft/configs/iscsi
 
 %files tomcat
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/tomcat
-%config(noreplace) %_datadir/cluster/tomcat*
+%_libexecdir/ocf/resource.d/heartbeat/tomcat
+%_datadir/cluster/tomcat*
 %_datadir/cluster/utils/tomcat*
 %_man7dir/*_tomcat.*
 
 %files fio
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/fio
+%_libexecdir/ocf/resource.d/heartbeat/fio
 %_man7dir/*_fio.*
 
 %files libvirt
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/VirtualDomain
+%_libexecdir/ocf/resource.d/heartbeat/VirtualDomain
 %_man7dir/*_VirtualDomain.*
 
 %files lxc
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/lxc
+%_libexecdir/ocf/resource.d/heartbeat/lxc
 
 %files nfs
 %_datadir/cluster/nfsclient.sh
 %_datadir/cluster/nfsexport.sh
 %_datadir/cluster/nfsserver.sh
 %_datadir/cluster/svclib_nfslock
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/exportfs
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/nfsserver
+%_libexecdir/ocf/resource.d/heartbeat/exportfs
+%_libexecdir/ocf/resource.d/heartbeat/nfsserver
 %_man7dir/*_exportfs.*
 %_man7dir/*_nfsserver.*
 
 %files xen
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/Xen
+%_libexecdir/ocf/resource.d/heartbeat/Xen
 %_man7dir/*_Xen.*
 
 #files drbd
-#config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/drbd
+#_libexecdir/ocf/resource.d/heartbeat/drbd
 #_datadir/cluster/drbd*
 #_man7dir/*_drbd.*
 
 %files lvm
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/LVM
+%_libexecdir/ocf/resource.d/heartbeat/LVM
 %_datadir/cluster/lvm*
 %_datadir/%name/ocft/configs/LVM
 %_man7dir/*_LVM.*
 
 %files WinPopup
-%config(noreplace) %_libexecdir/ocf/resource.d/heartbeat/WinPopup
+%_libexecdir/ocf/resource.d/heartbeat/WinPopup
 %_man7dir/*_WinPopup.*
-
 
 %files -n ldirectord
 %doc ldirectord/ldirectord.cf COPYING
 %config(noreplace) %_sysconfdir/logrotate.d/ldirectord
 %config(noreplace) %_sysconfdir/ha.d/resource.d/ldirectord
-%_sysconfdir/init.d/ldirectord
+%_initdir/ldirectord
+%_unitdir/ldirectord.service
 %_sbindir/ldirectord
 %_libexecdir/ocf/resource.d/heartbeat/ldirectord
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Sep 14 2016 Alexey Shabalin <shaba@altlinux.ru> 3.9.7-alt1
+- 3.9.7
+
 * Mon Nov 18 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 3.9.5-alt3.git.7fac8c7e
 - Rebuild from git
 
