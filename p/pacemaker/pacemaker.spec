@@ -1,7 +1,9 @@
+%define _localstatedir %_var
+
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 1.1.15
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -9,14 +11,22 @@ Group:   System/Servers
 Source:  %name-%version.tar
 Patch:   %name-%version-alt.patch
 
-BuildRequires: /proc glib2-devel libxml2-devel libxslt-devel libuuid-devel systemd-devel perl(Pod/Text.pm)
-BuildRequires: pkgconfig python-devel gcc-c++ bzlib-devel libpam-devel
+Provides: pcmk-cluster-manager
+Requires: corosync
+Requires: resource-agents
+Requires: lib%name = %version-%release
+Requires: %name-cli = %version-%release
+
+BuildRequires: /proc
+BuildRequires: glib2-devel libxml2-devel libxslt-devel libuuid-devel systemd-devel libdbus-devel  perl(Pod/Text.pm)
+BuildRequires: python-devel gcc-c++ bzlib-devel libpam-devel
 BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
 BuildRequires: bison flex help2man
 BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel
 #libopenipmi-devel libservicelog-devel
-BuildRequires: libcorosync2-devel libcluster-glue-devel
+BuildRequires: libcorosync-devel
+#libcluster-glue-devel
 BuildRequires: publican inkscape asciidoc
 
 %define gname haclient
@@ -67,6 +77,11 @@ License: GPLv2+ and LGPLv2+
 Summary: Pacemaker remote daemon for non-cluster nodes
 Group: System/Servers
 
+Provides: pcmk-cluster-manager
+Requires: resource-agents
+Requires: lib%name = %version-%release
+Requires: %name-cli = %version-%release
+
 %description remote
 Pacemaker is an advanced, scalable High-Availability cluster resource
 manager for Linux-HA (Heartbeat) and/or Corosync.
@@ -82,7 +97,7 @@ Group: Development/C
 Requires: lib%name = %version-%release
 Requires: libqb-devel libuuid-devel
 Requires: libxml2-devel libxslt-devel bzlib-devel glib2-devel
-Requires: libcorosync2-devel
+Requires: libcorosync-devel
 
 %description -n lib%name-devel
 Pacemaker is an advanced, scalable High-Availability cluster resource
@@ -120,6 +135,7 @@ manager for Linux-HA (Heartbeat) and/or Corosync.
 %autoreconf
 
 %configure \
+        --disable-static	\
         --with-profiling	\
         --with-gcov		\
         --with-acl		\
@@ -128,7 +144,9 @@ manager for Linux-HA (Heartbeat) and/or Corosync.
         --with-cs-quorum	\
         --enable-thread-safe	\
         --with-initdir=%_initdir	\
-        --localstatedir=%_var		\
+        --enable-systemd	\
+        --disable-upstart	\
+        --localstatedir=%_var	\
         --with-version=%version-%release
 
 subst 's|/usr/bin/help2man|/usr/bin/help2man --no-discard-stderr|g' tools/Makefile
@@ -145,6 +163,7 @@ install -D -m 755 pacemaker.init %buildroot%_initdir/pacemaker
 # Copy configuration for pacemaker_remote and use it in init script
 install -D -m 644 mcp/pacemaker.sysconfig %buildroot%_sysconfdir/sysconfig/pacemaker_remote
 subst 's|/etc/sysconfig/pacemaker|/etc/sysconfig/pacemaker_remote|' %buildroot%_initdir/pacemaker_remote
+install -D -m 755 pacemaker_remote.init %buildroot%_initdir/pacemaker_remote
 
 # Scripts that should be executable
 chmod a+x %buildroot%_datadir/pacemaker/tests/cts/CTSlab.py
@@ -195,6 +214,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker
 %_sbindir/pacemakerd
 %_initdir/pacemaker
+%_unitdir/pacemaker.service
 %_logrotatedir/%name
 %_datadir/pacemaker
 %_datadir/snmp/mibs/PCMK-MIB.txt
@@ -231,6 +251,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_sbindir/crm_error
 %_sbindir/crm_failcount
 %_sbindir/crm_mon
+%_unitdir/crm_mon.service
 %_sbindir/crm_standby
 %_sbindir/crmadmin
 %_sbindir/iso8601
@@ -265,6 +286,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %doc COPYING.LIB AUTHORS
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker_remote
 %_initdir/pacemaker_remote
+%_unitdir/pacemaker_remote.service
 %_sbindir/pacemaker_remoted
 %_man8dir/pacemaker_remoted.*
 
@@ -282,6 +304,10 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Sep 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.1.15-alt2
+- build with systemd support
+- update sysv init script
+
 * Mon Jun 27 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.15-alt1
 - New version
 
