@@ -1,5 +1,5 @@
 Name: pcsc-lite-acsccid
-Version: 1.1.0
+Version: 1.1.3
 Release: alt1
 
 Summary: PCSC Driver for ACS CCID Based Smart Card Readers
@@ -8,7 +8,7 @@ Group: System/Servers
 
 Url: http://acsccid.sourceforge.net/
 Source: %name-%version.tar
-Patch: %name-%version-alt-ACR38U-CCID-rule.patch
+Patch: %name-1.1.0-alt-ACR38U-CCID-rule.patch
 
 BuildRequires: libusb-devel libpcsclite-devel flex
 
@@ -27,7 +27,8 @@ pcsc-lite package.
 %patch -p1
 
 %build
-%configure --enable-composite-as-multislot
+%autoreconf
+%configure --enable-composite-as-multislot --enable-twinserial
 %make
 
 %install
@@ -42,6 +43,9 @@ sed 's:GROUP="pcscd":GROUP="scard":' <src/92_pcscd_acsccid.rules >%buildroot/lib
 %_libdir/pcsc/drivers/*
 
 %changelog
+* Thu Sep 15 2016 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
+- New version 1.1.3
+
 * Wed Sep 23 2015 Michael Shigorin <mike@altlinux.org> 1.1.0-alt1
 - 1.1.0
 - updated patch (is it still needed?)

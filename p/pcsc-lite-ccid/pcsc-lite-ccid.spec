@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: pcsc-lite-ccid
-Version: 1.4.20
+Version: 1.4.24
 Release: alt1
 
 Summary: USB CCID IFD Handler
@@ -12,10 +12,9 @@ Url: https://alioth.debian.org/projects/pcsclite/
 Requires: pcsc-lite
 
 Source: %name-%version.tar
+Source1: PCSC.tar
+Patch1: ccid-disable-examples-build.patch
 
-Patch1: pcsc-lite-ccid-alt-jacarta-support.patch
-
-# Automatically added by buildreq on Thu Sep 10 2009
 BuildRequires: flex libpcsclite-devel libusb-devel
 
 Provides: ccid = %version-%release
@@ -29,7 +28,10 @@ Devices) driver for PC/SC Lite.
 
 %prep
 %setup
-%patch1 -p2
+# Do not build examples requires contrib from external repository
+%patch1 -p1
+# Copy pcsc-lite
+tar xf %SOURCE1
 
 %build
 %autoreconf
@@ -50,6 +52,11 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Thu Sep 15 2016 Andrey Cherepanov <cas@altlinux.org> 1.4.24-alt1
+- New version 1.4.24
+- Drop obsoleted patch
+- Build from upstream Git repository
+
 * Mon Sep 21 2015 Michael Shigorin <mike@altlinux.org> 1.4.20-alt1
 - 1.4.20 (closes: #31292)
 
