@@ -5,10 +5,10 @@
 
 %def_enable qt5
 # enable/disable JACK version support
-%def_disable jack_version
+%def_enable jack_version
 
 Name: qjackctl
-Version: 0.4.2
+Version: 0.4.3
 %ifdef cvsbuild
 Release: alt0.cvs%cvsdate
 %else
@@ -56,7 +56,7 @@ JACK-клиентов.
 %setup -n %name
 %autoreconf
 %else
-%setup -q -n %name-%version%prerel
+%setup -n %name-%version%prerel
 %endif
 
 %build
@@ -66,12 +66,11 @@ export PATH=%_qt4dir/bin:$PATH
 %endif
 %configure \
 	--localedir=%_datadir/%name/locale \
-	%{?_enable_jack_version:--enable-jack-version} \
-	%{subst_enable qt5}
+	%{?_enable_jack_version:--enable-jack-version}
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang --with-qt %name
 
@@ -86,6 +85,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Thu Sep 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Tue May 31 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
