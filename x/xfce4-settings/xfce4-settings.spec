@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.12.0
-Release: alt2
+Version: 4.12.1
+Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -17,11 +17,13 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5 libxfce4ui-devel libexo-devel >= 0.6.0 libxfconf-devel libgarcon-devel >= 0.1.10
-BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libwnck-devel libxklavier-devel libupower-devel
+BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libwnck-devel libxklavier-devel libupower-devel >= 0.99.4-alt2
 
 Requires: libgarcon-settings-manager-menu
 
 Obsoletes: xfce4-mcs-manager xfce4-mcs-plugins
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 This package provides the settings manager applications
@@ -65,6 +67,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Thu Sep 15 2016 Mikhail Efremov <sem@altlinux.org> 4.12.1-alt1
+- Updated to 4.12.1.
+
 * Mon Aug 01 2016 Mikhail Efremov <sem@altlinux.org> 4.12.0-alt2
 - Fix segfault when upowerd is not running (closes: #32331).
 - Patch from upstream:
