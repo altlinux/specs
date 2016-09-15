@@ -2,7 +2,7 @@
 %def_without python3
 
 Name: libtdb
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 
 Summary: A trivial database system
@@ -135,6 +135,9 @@ make test
 %endif
 
 %changelog
+* Fri Sep 09 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.10-alt1
+- Update to release for samba-4.5.0
+
 * Tue Apr 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
 - 1.3.9
 

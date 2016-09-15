@@ -1,5 +1,9 @@
+%set_verify_elf_method unresolved=relaxed
+%add_findprov_skiplist /%_lib/*
+%add_debuginfo_skiplist /%_lib
+
 %define _localstatedir /var
-%define libwbc_alternatives_version 0.12
+%define libwbc_alternatives_version 0.13
 
 # internal libs
 %def_without talloc
@@ -34,7 +38,7 @@
 %def_with libcephfs
 
 Name: samba
-Version: 4.4.5
+Version: 4.5.0
 Release: alt1
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -645,7 +649,7 @@ subst 's,Type=notify,Type=forking,' %buildroot%_unitdir/*.service
 %if_with clustering_support
 install -m755 %SOURCE12 %buildroot%_initrddir/ctdb
 install -m 0644 ctdb/config/ctdb.service %buildroot%_unitdir
-install -m 0644 ctdb/config/ctdb.sysconfig %buildroot%_sysconfdir/sysconfig/ctdb
+install -m 0644 ctdb/config/ctdbd.conf %buildroot%_sysconfdir/sysconfig/ctdb
 echo "d /var/run/ctdb 755 root root" >> %buildroot%_tmpfilesdir/ctdb.conf
 touch %buildroot%_sysconfdir/ctdb/nodes
 %endif
@@ -765,6 +769,7 @@ TDB_NO_FSYNC=1 %make_build test
 %files client
 %_bindir/cifsdd
 %_bindir/dbwrap_tool
+%_bindir/findsmb
 %_bindir/nmblookup
 %_bindir/oLschema2ldif
 %_bindir/regdiff
@@ -863,7 +868,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/libsmbconf.so.*
 %_libdir/libsmbldap.so.*
 %_libdir/libtevent-util.so.*
-%_libdir/libtevent-unix-util.so.*
 %_libdir/libdcerpc.so.*
 
 %dir %_libdir/samba
@@ -1100,7 +1104,6 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/libsamdb.so
 %_libdir/libsmbconf.so
 %_libdir/libtevent-util.so
-%_libdir/libtevent-unix-util.so
 %_libdir/libsamba-passdb.so
 %_libdir/libsmbldap.so
 
@@ -1146,6 +1149,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libcluster-samba4.so
 %_libdir/samba/libdcerpc-samba4.so
 %_libdir/samba/libnon-posix-acls-samba4.so
+%_libdir/samba/libposix-eadb-samba4.so
 %_libdir/samba/libsamba-net-samba4.so
 %_libdir/samba/libsamba-python-samba4.so
 %_libdir/samba/libshares-samba4.so
@@ -1299,7 +1303,10 @@ TDB_NO_FSYNC=1 %make_build test
 %_bindir/onnode
 %_bindir/ping_pong
 %_libexecdir/ctdb/ctdb_event_helper
+%_libexecdir/ctdb/ctdb_killtcp
 %_libexecdir/ctdb/ctdb_lock_helper
+%_libexecdir/ctdb/ctdb_lvs
+%_libexecdir/ctdb/ctdb_mutex_fcntl_helper
 %_libexecdir/ctdb/ctdb_natgw
 %_libexecdir/ctdb/ctdb_recovery_helper
 %_libexecdir/ctdb/smnotify
@@ -1309,6 +1316,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_man1dir/onnode.1*
 %_man1dir/ltdbtool.1*
 %_man1dir/ping_pong.1*
+%_man1dir/ctdb_diagnostics.1*
 %_man1dir/ctdbd_wrapper.1*
 %_man5dir/ctdbd.conf.5*
 %_man7dir/ctdb.7*
@@ -1316,7 +1324,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_man7dir/ctdb-statistics.7*
 
 %files -n ctdb-tests
-%_libdir/ctdb-tests
+%_libexecdir/ctdb/tests
 %_bindir/ctdb_run_tests
 %_bindir/ctdb_run_cluster_tests
 %_datadir/ctdb-tests
@@ -1324,6 +1332,9 @@ TDB_NO_FSYNC=1 %make_build test
 %endif
 
 %changelog
+* Fri Sep 09 2016 Evgeny Sinelnikov <sin@altlinux.ru> 4.5.0-alt1
+- Update to autumn release
+
 * Sun Jul 10 2016 Andrey Cherepanov <cas@altlinux.org> 4.4.5-alt1
 - Update for security release with CVE-2016-2119
 
