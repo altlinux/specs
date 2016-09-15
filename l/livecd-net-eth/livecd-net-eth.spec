@@ -1,5 +1,5 @@
 Name: livecd-net-eth
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
@@ -30,6 +30,9 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Thu Sep 15 2016 Michael Shigorin <mike@altlinux.org> 0.4.2-alt1
+- increase DHCP timeout from 3 to 7 seconds (closes: #32397)
+
 * Mon Jun 01 2015 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
 - added the missing space (cosmetic fix)
 
