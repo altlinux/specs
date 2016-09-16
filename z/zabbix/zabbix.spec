@@ -10,7 +10,7 @@
 %endif
 
 Name: zabbix
-Version: 3.0.4
+Version: 3.2.0
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -470,6 +470,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Sep 16 2016 Alexei Takaseev <taf@altlinux.org> 1:3.2.0-alt1
+- 3.2.0
+
 * Tue Jul 26 2016 Alexei Takaseev <taf@altlinux.org> 1:3.0.4-alt1
 - 3.0.4
 
