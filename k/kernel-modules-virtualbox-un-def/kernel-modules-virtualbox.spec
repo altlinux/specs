@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	5.1.2
+%define module_version	5.1.6
 
 %define module_release	alt1
 
