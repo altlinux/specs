@@ -4,7 +4,7 @@
 %def_enable xa
 
 Name: Mesa
-Version: 12.0.2
+Version: 12.0.3
 Release: alt1
 Epoch: 4
 License: MIT
@@ -385,6 +385,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Fri Sep 16 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:12.0.3-alt1
+- 12.0.3
+
 * Tue Sep 06 2016 Valery Inozemtsev <shrek@altlinux.ru> 4:12.0.2-alt1
 - 12.0.2
 
