@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.2.18
-Release: alt9
+Version: 4.2.21
+Release: alt1
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -16,13 +16,13 @@ Source1: pve-container.tar.xz
 Source2: pve-firewall.tar.xz
 Source3: pve-ha-manager.tar.xz
 Source4: qemu-server.tar.xz
-Source5: pve-manager-altwww.patch
 Source6: basealt_logo.png
 
 Source10: 50-rbd.rules
 Source11: 60-ceph-partuuid-workaround.rules
 Source12: 95-ceph-osd.rules
 
+Patch0: pve-manager-www.patch
 Patch1: pve-manager-alt.patch
 Patch2: pve-firewall-alt.patch
 Patch3: pve-ha-manager-alt.patch
@@ -40,7 +40,7 @@ This package contains the Proxmox Virtual Environment management tools
 
 %package -n pve-container
 Summary: Proxmox VE Container management tool
-Version: 1.0.73
+Version: 1.0.74
 Group: Development/Perl
 Requires: pve-lxc dtach
 
@@ -49,7 +49,7 @@ Tool to manage Linux Containers on Proxmox VE
 
 %package -n pve-firewall
 Summary: Proxmox VE Firewall
-Version: 2.0.29
+Version: 2.0.30
 Group: System/Servers
 Requires: ipset iptables iptables-ipv6
 
@@ -58,7 +58,7 @@ This package contains the Proxmox VE Firewall
 
 %package -n pve-ha-manager
 Summary: Proxmox VE HA Manager
-Version: 1.0.33
+Version: 1.0.35
 Group: System/Servers
 
 %description -n pve-ha-manager
@@ -66,9 +66,9 @@ HA Manager Proxmox VE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.85
+Version: 4.0.88
 Group: System/Servers
-Requires: nc6 pve-qemu-system socat
+Requires: nc6 socat pve-qemu-system >= 2.6.1-alt5
 Provides: qemu-server = %version-%release
 Obsoletes: qemu-server < %version-%release
 
@@ -80,13 +80,13 @@ This package contains the Qemu Server tools used by Proxmox VE
 
 %prep
 %setup -q -c -n pve -a1 -a2 -a3 -a4
+%patch0 -p0 -b .altwww
 %patch1 -p0 -b .alt
 %patch2 -p0 -b .alt
 %patch3 -p0 -b .alt
 %patch4 -p0 -b .alt
 %patch5 -p0 -b .alt
-
-install -m0644 %SOURCE5 pve-manager/www/manager6/
+%patch6 -p0 -b .alt
 
 %build
 for d in pve-manager pve-firewall/src pve-ha-manager/src qemu-server; do
@@ -256,7 +256,6 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man8dir/spiceproxy.8*
 %dir %_datadir/doc/%name
 %_datadir/doc/%name/aplinfo.dat
-%_datadir/doc/%name/*.pubkey
 %_datadir/doc/%name/*.rules
 %_datadir/doc/%name/rrdcached.sysconfig
 
@@ -365,6 +364,13 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Sep 19 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.21-alt1
+- 4.2-21
+- pve-container 1.0-74
+- pve-firewall 2.0-30
+- pve-ha-manager 1.0-35
+- qemu-server 4.0-88
+
 * Mon Sep 05 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.18-alt9
 - Network Device: replace rate limit MB/s to MBit/s
 

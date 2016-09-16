@@ -1,7 +1,7 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
-Version: 4.0.44
-Release: alt1
+Version: 4.0.45
+Release: alt2
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -14,6 +14,9 @@ Source0: %name.tar.xz
 Source1: pve-access-control.tar.xz
 Patch0: %name.patch
 Patch1: pve-access-control.patch
+
+Source2: pve-firsttime
+Source3: pve-etcnet-to-deb
 
 BuildRequires: pve-common pve-doc-generator libcheck-devel librrd-devel glib2-devel libfuse-devel libcorosync2-devel libsqlite3-devel xmlto
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
@@ -52,6 +55,10 @@ cd data
 %make DESTDIR=%buildroot install
 cd ../pve-access-control
 %make DESTDIR=%buildroot install
+
+mkdir -p %buildroot%_datadir/doc/%name
+install -m644 %SOURCE2 %buildroot%_datadir/doc/%name/
+install -m644 %SOURCE3 %buildroot%_datadir/doc/%name/
 
 mkdir -p %buildroot%_sysconfdir/pve
 mkdir -p %buildroot%_localstatedir/%name
@@ -98,6 +105,7 @@ __EOF__
 %_man1dir/pvecm.1*
 %_man5dir/datacenter.cfg.5*
 %_man8dir/pmxcfs.8*
+%_datadir/doc/%name
 
 %files -n pve-access-control
 %_sysconfdir/bash_completion.d/pveum
@@ -115,6 +123,9 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Fri Sep 16 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.45-alt2
+- 4.0-45
+
 * Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.44-alt1
 - 4.0-44
 - pve-access-control 4.0-19

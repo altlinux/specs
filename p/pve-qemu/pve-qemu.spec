@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.6.1
-Release: alt2
+Release: alt5
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -189,79 +189,86 @@ Source5: qemu-kvm.sh
 Source8: qemu-guest-agent.rules
 Source9: qemu-guest-agent.service
 Source10: qemu-guest-agent.init
-Source11: OVMF-pure-efi.fd
+Source11: OVMF_CODE-pure-efi.fd
 Source12: OVMF_VARS-pure-efi.fd
 
 Patch0: qemu-2.6-alt.patch
 
-Patch10: 0001-fr-ca-keymap-corrections.patch
-Patch11: 0001-net-check-fragment-length-during-fragmentation.patch
-Patch12: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
-Patch13: 0002-Adjust-network-script-path-to-etc-kvm.patch
-Patch14: 0002-net-vmxnet3-check-for-device_active-before-write.patch
-Patch15: 0002-scsi-esp-fix-migration.patch
-Patch16: 0003-net-vmxnet-use-g_new-for-pkt-initialisation.patch
-Patch17: 0003-vnc-altgr-emulation.patch
-Patch18: 0004-net-vmxnet-check-IP-header-length.patch
-Patch19: 0004-qemu-img-return-success-on-info-without-snapshots.patch
-Patch20: 0005-net-vmxnet-initialise-local-tx-descriptor.patch
-Patch21: 0005-use-kvm-by-default.patch
-Patch22: 0006-virtio-balloon-fix-query.patch
-Patch23: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
-Patch24: 0008-qapi-modify-query-machines.patch
-Patch25: 0009-qapi-modify-spice-query.patch
-Patch26: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
-Patch27: 0011-introduce-new-vma-archive-format.patch
-Patch28: 0012-vma-add-verify-command.patch
-Patch29: 0013-vma-add-config-command-to-dump-the-config.patch
-Patch30: 0014-vma-restore-tolerate-a-size-difference-up-to-4M.patch
-Patch31: 0015-backup-modify-job-api.patch
-Patch32: 0016-backup-add-pve-monitor-commands.patch
-Patch33: 0017-backup-vma-add-dir-format.patch
-Patch34: 0018-backup-do-not-return-errors-in-dump-callback.patch
-Patch35: 0019-backup-vma-correctly-propagate-error.patch
-Patch36: 0020-backup-vma-remove-async-queue.patch
-Patch37: 0021-backup-vma-run-flush-inside-coroutine.patch
-Patch38: 0022-backup-do-not-use-bdrv_drain_all.patch
-Patch39: 0023-internal-snapshot-async.patch
-Patch40: 0024-backup-vma-allow-empty-backups.patch
-Patch41: 0025-backup-vma-add-BlockDriver-to-bdrv_open-in-extract_c.patch
-Patch42: 0026-glusterfs-daemonize.patch
-Patch43: 0027-gluster-possiblity-to-specify-a-secondary-server.patch
-Patch44: 0028-qmp-add-get_link_status.patch
-Patch45: 0029-smm_available-false.patch
-Patch46: 0030-use-whitespace-between-VERSION-and-PKGVERSION.patch
-Patch47: 0031-vma-add-firewall.patch
-Patch48: 0032-vma-writer-aio_set_fd_handler-update.patch
-Patch49: 0033-vma-bdrv_open-dropped-the-drv-parameter.patch
-Patch50: 0034-blockdev-bdrv_open-dropped-the-drv-parameter.patch
-Patch51: 0035-blockdev-backup_start-now-takes-a-BlockJobTxn.patch
-Patch52: 0036-savevm-async-migration-and-bdrv_open-update.patch
-Patch53: 0037-qapi-qmp_marshal_-renames-for-pve-monitor-commands.patch
-Patch54: 0038-qapi-qmp_mashal_-renames-for-async-snapshot.patch
-Patch55: 0039-qapi-qmp_mashal_-renames-for-get_link_status.patch
-Patch56: 0040-vnc-make-x509-imply-tls-again.patch
-Patch57: 0041-PVE-VNC-authentication.patch
-Patch58: 0042-vma-writer-don-t-bail-out-on-zero-length-files.patch
-Patch59: 0043-vma-better-driver-guessing-for-bdrv_open.patch
-Patch60: 0044-block-add-the-zeroinit-block-driver-filter.patch
-Patch61: 0045-vma-add-format-option-to-device-mapping.patch
-Patch62: 0046-pve-cleanup-includes-all-over-the-place.patch
-Patch63: 0047-zeroinit-bdrv_get_block_status-got-a-new-param.patch
-Patch64: 0048-BDRV_O_CACHE_WB-was-removed.patch
-Patch65: 0049-backup-bdrv_set_enable_write_cache-is-no-more.patch
-Patch66: 0050-fix-possible-unitialised-return-value.patch
-Patch67: 0051-net-NET_CLIENT_OPTIONS_KIND_MAX-changed.patch
-Patch68: 0052-vnc-refactor-to-QIOChannelSocket.patch
-Patch69: 0053-vma-use-BlockBackend-on-extract.patch
-Patch70: 0054-rbd-disable-rbd_cache_writethrough_until_flush-with-.patch
-Patch71: 0055-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
-Patch72: CVE-2016-6490-virtio-check-vring-descriptor-buffer-length.patch
-Patch73: 0006-virtio-recalculate-vq-inuse-after-migration.patch
-Patch74: 0007-virtio-decrement-vq-inuse-in-virtqueue_discard.patch
-Patch75: 0008-iscsi-pass-SCSI-status-back-for-SG_IO.patch
-Patch76: 0009-net-limit-allocation-in-nc_sendv_compat.patch
-Patch77: 0010-ui-fix-refresh-of-VNC-server-surface.patch
+Patch10: 0001-9pfs-forbid-illegal-path-names.patch
+Patch11: 0001-fr-ca-keymap-corrections.patch
+Patch12: 0001-net-check-fragment-length-during-fragmentation.patch
+Patch13: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
+Patch14: 0002-9pfs-forbid-.-and-.-in-file-names.patch
+Patch15: 0002-Adjust-network-script-path-to-etc-kvm.patch
+Patch16: 0002-net-vmxnet3-check-for-device_active-before-write.patch
+Patch17: 0002-scsi-esp-fix-migration.patch
+Patch18: 0003-9pfs-handle-walk-of-.-in-the-root-directory.patch
+Patch19: 0003-net-vmxnet-use-g_new-for-pkt-initialisation.patch
+Patch20: 0003-vnc-altgr-emulation.patch
+Patch21: 0004-net-vmxnet-check-IP-header-length.patch
+Patch22: 0004-qemu-img-return-success-on-info-without-snapshots.patch
+Patch23: 0005-net-vmxnet-initialise-local-tx-descriptor.patch
+Patch24: 0005-use-kvm-by-default.patch
+Patch25: 0006-virtio-balloon-fix-query.patch
+Patch26: 0006-virtio-recalculate-vq-inuse-after-migration.patch
+Patch27: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
+Patch28: 0007-virtio-decrement-vq-inuse-in-virtqueue_discard.patch
+Patch29: 0008-iscsi-pass-SCSI-status-back-for-SG_IO.patch
+Patch30: 0008-qapi-modify-query-machines.patch
+Patch31: 0009-net-limit-allocation-in-nc_sendv_compat.patch
+Patch32: 0009-qapi-modify-spice-query.patch
+Patch33: 0010-ui-fix-refresh-of-VNC-server-surface.patch
+Patch34: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
+Patch35: 0011-introduce-new-vma-archive-format.patch
+Patch36: 0012-vma-add-verify-command.patch
+Patch37: 0013-vma-add-config-command-to-dump-the-config.patch
+Patch38: 0014-vma-restore-tolerate-a-size-difference-up-to-4M.patch
+Patch39: 0015-backup-modify-job-api.patch
+Patch40: 0016-backup-add-pve-monitor-commands.patch
+Patch41: 0017-backup-vma-add-dir-format.patch
+Patch42: 0018-backup-do-not-return-errors-in-dump-callback.patch
+Patch43: 0019-backup-vma-correctly-propagate-error.patch
+Patch44: 0020-backup-vma-remove-async-queue.patch
+Patch45: 0021-backup-vma-run-flush-inside-coroutine.patch
+Patch46: 0022-backup-do-not-use-bdrv_drain_all.patch
+Patch47: 0023-internal-snapshot-async.patch
+Patch48: 0024-backup-vma-allow-empty-backups.patch
+Patch49: 0025-backup-vma-add-BlockDriver-to-bdrv_open-in-extract_c.patch
+Patch50: 0026-glusterfs-daemonize.patch
+Patch51: 0027-gluster-possiblity-to-specify-a-secondary-server.patch
+Patch52: 0028-qmp-add-get_link_status.patch
+Patch53: 0029-smm_available-false.patch
+Patch54: 0030-use-whitespace-between-VERSION-and-PKGVERSION.patch
+Patch55: 0031-vma-add-firewall.patch
+Patch56: 0032-vma-writer-aio_set_fd_handler-update.patch
+Patch57: 0033-vma-bdrv_open-dropped-the-drv-parameter.patch
+Patch58: 0034-blockdev-bdrv_open-dropped-the-drv-parameter.patch
+Patch59: 0035-blockdev-backup_start-now-takes-a-BlockJobTxn.patch
+Patch60: 0036-savevm-async-migration-and-bdrv_open-update.patch
+Patch61: 0037-qapi-qmp_marshal_-renames-for-pve-monitor-commands.patch
+Patch62: 0038-qapi-qmp_mashal_-renames-for-async-snapshot.patch
+Patch63: 0039-qapi-qmp_mashal_-renames-for-get_link_status.patch
+Patch64: 0040-vnc-make-x509-imply-tls-again.patch
+Patch65: 0041-PVE-VNC-authentication.patch
+Patch66: 0042-vma-writer-don-t-bail-out-on-zero-length-files.patch
+Patch67: 0043-vma-better-driver-guessing-for-bdrv_open.patch
+Patch68: 0044-block-add-the-zeroinit-block-driver-filter.patch
+Patch69: 0045-vma-add-format-option-to-device-mapping.patch
+Patch70: 0046-pve-cleanup-includes-all-over-the-place.patch
+Patch71: 0047-zeroinit-bdrv_get_block_status-got-a-new-param.patch
+Patch72: 0048-BDRV_O_CACHE_WB-was-removed.patch
+Patch73: 0049-backup-bdrv_set_enable_write_cache-is-no-more.patch
+Patch74: 0050-fix-possible-unitialised-return-value.patch
+Patch75: 0051-net-NET_CLIENT_OPTIONS_KIND_MAX-changed.patch
+Patch76: 0052-vnc-refactor-to-QIOChannelSocket.patch
+Patch77: 0053-vma-use-BlockBackend-on-extract.patch
+Patch78: 0054-rbd-disable-rbd_cache_writethrough_until_flush-with-.patch
+Patch79: 0055-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
+Patch80: 0056-qmp_snapshot_drive-add-aiocontext.patch
+Patch81: CVE-2016-6490-virtio-check-vring-descriptor-buffer-length.patch
+Patch82: CVE-2016-7155-scsi-check-page-count-while-initialising-descriptor-.patch
+Patch83: CVE-2016-7156-scsi-pvscsi-avoid-infinite-loop-while-building-SG-li.patch
+Patch84: CVE-2016-7157-scsi-mptconfig-fix-an-assert-expression.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -508,6 +515,13 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch75 -p1
 %patch76 -p1
 %patch77 -p1
+%patch78 -p1
+%patch79 -p1
+%patch80 -p1
+%patch81 -p1
+%patch82 -p1
+%patch83 -p1
+%patch84 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -644,7 +658,7 @@ done
 ln -r -s %buildroot%_datadir/seabios/{bios,bios-256k}.bin %buildroot%_datadir/%rname/
 ln -r -s %buildroot%_datadir/seabios/{acpi-dsdt,q35-acpi-dsdt}.aml %buildroot%_datadir/%rname/
 
-install -Dp -m 0644 %SOURCE11 %buildroot%_datadir/kvm/OVMF-pure-efi.fd
+install -Dp -m 0644 %SOURCE11 %buildroot%_datadir/kvm/OVMF_CODE-pure-efi.fd
 install -m 0644 %SOURCE12 %buildroot%_datadir/kvm/OVMF_VARS-pure-efi.fd
 
 mkdir -p %buildroot/lib/binfmt.d
@@ -765,6 +779,9 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Mon Sep 19 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt5
+- various CVE fixes
+
 * Thu Aug 25 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt2
 - added in some stable hotfixes
 
