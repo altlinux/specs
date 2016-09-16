@@ -1,6 +1,6 @@
-%define nm_version 1.3.91
-#define git_date .git20151102
-%define git_date %nil
+%define nm_version 1.4.1-alt1.git20160914
+%define git_date .git20160914
+#define git_date %nil
 
 %define _unpackaged_files_terminate_build 1
 
@@ -8,7 +8,7 @@
 %def_without team
 
 Name: NetworkManager-applet-gtk
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -212,6 +212,9 @@ make check
 %_datadir/gir-1.0/NMA-1.0.gir
 
 %changelog
+* Fri Sep 16 2016 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1.git20160914
+- Upstream git snapshot (nm-1-4 branch).
+
 * Thu Aug 25 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Fix handling of wired 802-1x security setting.
 - Updated to 1.4.0.

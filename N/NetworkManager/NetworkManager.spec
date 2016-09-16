@@ -1,5 +1,5 @@
-#define git_date .git20151102
-%define git_date %nil
+%define git_date .git20160914
+#define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -36,8 +36,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.4.0
-Release: alt2%git_date
+Version: 1.4.1
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -673,6 +673,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Sep 16 2016 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1.git20160914
+- keyfile/tests: Fix test without JSON library.
+- Fix dhcpcd pidfile name.
+- Upstream git snapshot (nm-1-4 branch).
+
 * Mon Sep 05 2016 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt2
 - Patches from upstream (closes: #32467):
   + dbus: fix emitting D-Bus NetworkManager's old-style PropertiesChange
