@@ -1,26 +1,27 @@
-Name:           inxi
-Version:        2.3.0
-Release:        alt1
-Summary:        A full featured system information script
-Summary(ru):    Скрипт вывода полной информации об оборудовании и системе
+Name: inxi
+Version: 2.3.1
+Release: alt1
 
-License:        GPLv3
-Group:		Monitoring
-URL:            https://github.com/smxi/inxi
-Source0:        %name-%version.tar
+Summary: A full featured system information script
+Summary(ru): Скрипт вывода полной информации об оборудовании и системе
 
-Packager:	Andrey Cherepanov <cas@altlinux.org>
+License: GPLv3
+Group: Monitoring
+URL: https://github.com/smxi/inxi
+Source0: %name-%version.tar
 
-BuildArch:      noarch
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Requires:       net-tools
-Requires:       pciutils
-Requires:       procps
-Requires:       lm_sensors
-Requires:       usbutils
-Requires:       hddtemp
+BuildArch: noarch
 
-AutoReq: 	no
+Requires: net-tools
+Requires: pciutils
+Requires: procps
+Requires: lm_sensors
+Requires: usbutils
+Requires: hddtemp
+
+AutoReq: no
 
 %description
 Inxi offers a wide range of built-in options, as well as a good number
@@ -49,6 +50,9 @@ install -p -D -m 644 %name.1.gz %buildroot/%_man1dir/%name.1.gz
 %_man1dir/%name.1*
 
 %changelog
+* Fri Sep 16 2016 Mikhail Kolchin <mvk@altlinux.org> 2.3.1-alt1
+- New version
+
 * Wed Apr 27 2016 Mikhail Kolchin <mvk@altlinux.org> 2.3.0-alt1
 - New version
 
