@@ -1,6 +1,6 @@
 Name: bonito2-open
 Version: 3.80.5
-Release: alt1.corbama4
+Release: alt1.corbama5
 
 Summary: Bonito is a graphical user interface to corpora mantained by Manatee
 License: LGPLv2+
@@ -45,6 +45,9 @@ install %SOURCE100 %buildroot/%_sysconfdir/httpd2/conf/sites-available/bonito2.c
 
 
 %changelog
+* Sat Sep 17 2016 Kirill Maslinsky <kirill@altlinux.org> 3.80.5-alt1.corbama5
+- Fix bug in concordance save template
+
 * Sat Jul 16 2016 Kirill Maslinsky <kirill@altlinux.org> 3.80.5-alt1.corbama4
 - More adaptive right-to-left handling
 - N'Ko translation of the interface; French translation updated
