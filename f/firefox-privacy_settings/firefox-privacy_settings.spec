@@ -1,7 +1,7 @@
 # SPEC file for Privacy Settings extension
 
 %define rname	privacy_settings
-%define version 0.2.2
+%define version 0.2.3
 %define release alt1
 %define cid 	jid1-CKHySAadH4nL6Q@jetpack
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -51,6 +51,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Sep 18 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.2.3-alt1
+- New version
+
 * Thu Jul 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.2.2-alt1
 - New version
 
