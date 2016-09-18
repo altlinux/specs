@@ -1,7 +1,7 @@
 ## SPEC file for Perl module File::Find::Object::Rule
 
 Name: perl-File-Find-Object-Rule
-Version: 0.0305
+Version: 0.0306
 Release: alt3
 
 Summary: alternative interface to File::Find::Object
@@ -43,8 +43,12 @@ specify the desired files and directories.
 %doc Changes README
 %perl_vendor_privlib/File/Find/Object/Rule*
 %_bindir/findorule
+%_man1dir/findorule*
 
 %changelog
+* Sun Sep 18 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.0306-alt3
+- New version
+
 * Mon Sep 08 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.0305-alt3
 - Rising release to override package from Autoimports/Sisyphus repository
 
