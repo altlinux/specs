@@ -6,7 +6,7 @@
 %def_with libgsf
 
 Name: gnome-commander
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -67,6 +67,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.4.9-alt1
+- 1.4.9
+
 * Tue Mar 15 2016 Yuri N. Sedunov <aris@altlinux.org> 1.4.8-alt1
 - 1.4.8
 
