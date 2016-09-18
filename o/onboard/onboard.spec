@@ -1,5 +1,5 @@
 Name:           onboard
-Version:        1.2.0
+Version:        1.3.0
 Release:        alt1
 
 Summary:        Simple on-screen Keyboard
@@ -15,6 +15,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  intltool
 BuildRequires:  libXi-devel
 BuildRequires:  libXtst-devel
+BuildRequires:  libxkbcommon-devel
 BuildRequires:  libcanberra-devel
 BuildRequires:  libdconf-devel
 BuildRequires:  libgtk+3-devel 
@@ -76,8 +77,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_man1dir/%{name}*.1*
 %_iconsdir/HighContrast/scalable/apps/onboard.svg
 %_iconsdir/hicolor/scalable/apps/onboard.svg
-%_iconsdir/hicolor/22x22/apps/onboard.png
+%_iconsdir/hicolor/*x*/apps/onboard.png
 %_datadir/sounds/freedesktop/stereo/onboard-key-feedback.oga
+%_datadir/dbus-1/services/*
 %python3_sitelibdir/Onboard/
 %python3_sitelibdir/%{name}*.egg-info
 
@@ -85,6 +87,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Sun Sep 18 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
+- New version
+
 * Thu Jul 07 2016 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
 - New version (use Python3)
 
