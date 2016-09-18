@@ -1,7 +1,7 @@
 # SPEC file for uBlock Origin extension
 
 %define rname	ublock_origin
-%define version 1.7.6
+%define version 1.9.6
 %define release alt1
 %define cid 	uBlock0@raymondhill.net
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -62,6 +62,9 @@ fi
 %ciddir
 
 %changelog
+* Sun Sep 18 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.9.6-alt1
+- New version
+
 * Thu Jul 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 1.7.6-alt1
 - New version
 
