@@ -25,7 +25,7 @@
 %def_disable gl_drm
 
 Name: efl
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
@@ -421,6 +421,9 @@ find %buildroot%_libdir -name "*.la" -delete
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - 1.18.0
 
