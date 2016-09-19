@@ -2,7 +2,7 @@
 
 Name: kf5-oxygen-icons
 Version: 5.26.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -74,6 +74,9 @@ done
 %_iconsdir/oxygen*/
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt2
+- don't increase main toolbar icons by default
+
 * Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt1
 - new version
 
