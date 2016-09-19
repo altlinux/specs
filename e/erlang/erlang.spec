@@ -22,8 +22,15 @@
 %def_enable docs
 %def_enable asm_optimize
 
-%def_enable strip_beam
+%def_disable strip_beam
 %def_disable pdf_opt
+
+%ifarch amd64
+%define x86_64 amd64
+%else
+%define x86_64 x86_64
+%endif
+
 
 %define subst_enable_to() %{expand:%%{?_enable_%1:--enable-%2}} %{expand:%%{?_disable_%1:--disable-%2}}
 %define subst_with_to() %{expand:%%{?_with_%1:--with-%2}} %{expand:%%{?_without_%1:--without-%2}}
@@ -35,7 +42,7 @@
 #----------------------------------------------------------------------
 %{?_enable_smp_io_thread:%set_disable port_tasks}
 
-%ifnarch %ix86 x86_64 amd64  arm sparc ppc ppc64
+%ifnarch %ix86 %x86_64 arm sparc ppc ppc64
 %set_without native
 %endif
 
@@ -43,13 +50,13 @@
 
 
 %define Name Erlang
-%define ver 18
+%define ver 19
 Name: erlang
 Epoch: 1
-%define subver 3.3
+%define subver 0.7
 Version: %ver.%subver
 %define plevel b
-Release: alt2
+Release: alt1
 Summary: A programming language developed by Ericsson
 License: %asl
 Group: Development/Erlang
@@ -62,7 +69,6 @@ Source6:	epmd.socket
 Source7:	epmd@.service
 Source8:	epmd@.socket
 
-Patch0: alt-erlang-systemd.patch
 
 Requires: %name-otp-modules = %version-%release
 Provides: erlang_mod(hipe_bifs) = %version
@@ -75,10 +81,7 @@ BuildRequires: rpm-build-%name
 BuildRequires: gcc-c++ flex libunixODBC-devel zlib-devel /proc symlinks
 #BuildRequires: wxGTK-contrib-stc-devel >= 2.8.4, wxGTK-devel >= 2.8.4
 #BuildRequires: wxGTK-contrib-stc >= 2.8.4, wxGTK >= 2.8.4
-BuildRequires: libwxGTK-contrib-stc
-BuildRequires: libwxGTK-contrib-stc-devel
-
-BuildRequires(pre): libwxGTK-devel libwxGTK wxGTK 
+BuildRequires: libwxGTK3.1-devel
 BuildRequires: libGLU-devel
 BuildRequires: libsystemd-devel
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
@@ -585,7 +588,6 @@ This package contains documentation for %Name/OTP in PDF format.
 %prep
 %setup -n otp_src_OTP-%ver.%subver
 chmod -R u+w ./
-%patch0 -p1
 
 #%if_with ssl
 #subst "s/\/usr\/local\/kerberos\/include/\/usr\/include\/krb5/g" erts/configure.in
@@ -640,7 +642,6 @@ export CXXFLAGS=$CFLAGS
 	%{subst_enable_to lock_counting lock-counting} \
 	%{subst_enable_to clock_gettime clock-gettime} \
 	--enable-systemd \
-	--with-wx-config=/usr/bin/wx-config \
 	--enable-dynamic-ssl-lib \
 	--enable-shared-zlib
 %make depend
@@ -789,7 +790,7 @@ symlinks -scdr %buildroot
 
 %add_findreq_skiplist %_otplibdir/megaco-*/examples/meas/*.sh.skel
 %add_findreq_skiplist %_otplibdir/*/contribs/ebin/* %_otplibdir/*/examples/ebin/* %_otplibdir/*/examples/*/ebin/*
-%add_erlang_req_modules_skiplist win32reg
+#%add_erlang_req_modules_skiplist win32reg
 
 
 # systemd-related stuff
@@ -818,7 +819,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_docdir/%name-%version/PR.template
 %_docdir/%name-%version/README.md
 %_bindir/*
-%{_unitdir}/*
 %exclude %_bindir/ct_run
 %dir %_otpdir
 %dir %_otpdir/doc
@@ -915,11 +915,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %dir %_otplibdir/ssl-*
 %dir %_otplibdir/stdlib-*
 %dir %_otplibdir/syntax_tools-*
-%dir %_otplibdir/test_server-*
+#%dir %_otplibdir/test_server-*
 %dir %_otplibdir/tools-*
-%_otplibdir/tools-*/priv
-%dir %_otplibdir/webtool-*
-%_otplibdir/webtool-*/priv
+#%_otplibdir/tools-*/priv
+#%dir %_otplibdir/webtool-*
+#%_otplibdir/webtool-*/priv
 %dir %_otplibdir/xmerl-*
 
 
@@ -970,7 +970,7 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/ssl-*/src
 %_otplibdir/stdlib-*/include
 %_otplibdir/stdlib-*/src
-%_otplibdir/test_server-*/include
+#%_otplibdir/test_server-*/include
 %_otplibdir/tools-*/include
 %_otplibdir/tools-*/src
 %_otplibdir/xmerl-*/include
@@ -1009,12 +1009,12 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/ssl-*/ebin
 %_otplibdir/stdlib-*/ebin
 %_otplibdir/syntax_tools-*/ebin
-%_otplibdir/test_server-*/ebin
+#%_otplibdir/test_server-*/ebin
 %_otplibdir/tools-*/ebin
-%_otplibdir/webtool-*/ebin
+#%_otplibdir/webtool-*/ebin
 %_otplibdir/xmerl-*/ebin
 # Windows
-%exclude %_otplibdir/stdlib-*/ebin/win32*
+#%exclude %_otplibdir/stdlib-*/ebin/win32*
 
 
 %files megaco-drivers
@@ -1129,7 +1129,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 %files examples
 %_otplibdir/*/examples
-%_otplibdir/*/contribs
 
 
 %files otp-full
@@ -1290,18 +1289,11 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
-* Mon Jun 13 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3.3-alt2
-- Added imz patch about architecture. Fixed packaging of systemd files.
-
-* Mon Jun 06 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3.3-alt1
-- 18.3.3.
- Build with wxGTK2, since wxGTK3.0 produces problems in demo.
-
-* Fri Apr 29 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3.2-alt1
-- 18.3.2
+* Tue Sep 20 2016 Denis Medvedev <nbr@altlinux.org> 1:19.0.7-alt1
+- new version
 
 * Thu Apr 07 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3-alt2
-- With wxGTK3.0
+- With wxGTK3.1
 
 * Mon Apr 04 2016 Denis Medvedev <nbr@altlinux.org> 1:18.3-alt1
 - New version OTP-18.3
