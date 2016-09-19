@@ -4,7 +4,7 @@
 %define libkerfuffle libkerfuffle%sover
 
 Name: kde5-%rname
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -100,6 +100,9 @@ mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -49,6 +49,9 @@ BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 %_K5srv/*shareplugin.desktop
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 

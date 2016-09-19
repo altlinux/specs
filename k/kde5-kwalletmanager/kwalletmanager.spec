@@ -1,7 +1,7 @@
 %define rname kwalletmanager
 
 Name: kde5-%rname
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -58,7 +58,6 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data doc
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -68,7 +67,7 @@ KF5 library
 %_K5bin/kwalletmanager5
 %_K5icon/*/*/apps/kwalletmanager.*
 %_K5icon/*/*/apps/kwalletmanager2.*
-%_datadir/kwalletmanager5/
+%_K5icon/*/*/actions/wallet-*.*
 %_K5libexecdir/kauth/kcm_kwallet_helper5
 %_K5plug/kcm_kwallet5.so
 %_K5dbus_sys_srv/org.kde.kcontrol.kcmkwallet5.service
@@ -79,6 +78,9 @@ KF5 library
 
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 
