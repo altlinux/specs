@@ -1,5 +1,5 @@
 %define _name org.gnome.FileRoller
-%define ver_major 3.20
+%define ver_major 3.22
 %def_disable packagekit
 %def_disable magic
 %def_enable libarchive
@@ -7,7 +7,7 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -19,16 +19,16 @@ Url: http://fileroller.sourceforge.net
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
-Patch2: %name-3.19.90-alt-tar.lzo_mime_type.patch
+# s/x-lzop-compressed-tar/x-tzo/
+Patch2: %name-3.21.91-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
 %define gtk_ver 3.12.0
-%define nautilus_ver 2.91.91
 %define libarchive_ver 3.0.0
 %define desktop_file_utils_ver 0.8
 
-Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip lzma-utils
+Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip lzma-utils xz
 # Requires: cdrecord # for .iso support
 Requires: dconf gnome-icon-theme
 
@@ -38,7 +38,6 @@ BuildPreReq: yelp-tools itstool
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libnautilus-devel >= %nautilus_ver
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: libjson-glib-devel libnotify-devel
@@ -97,7 +96,6 @@ rm -f data/%name.desktop{,.in}
 
 %build
 %configure \
-    --enable-nautilus-actions \
     --disable-schemas-compile \
     --disable-static \
     %{subst_enable magic} \
@@ -112,7 +110,6 @@ rm -f data/%name.desktop{,.in}
 
 %files -f %name.lang
 %_bindir/*
-%_libdir/nautilus/extensions-%nau_api_ver/*.so
 %dir %_libexecdir/%name
 %_libexecdir/%name/*.sh
 %_libexecdir/%name/rpm2cpio
@@ -129,9 +126,13 @@ rm -f data/%name.desktop{,.in}
 %doc AUTHORS NEWS README
 
 
-%exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
-
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
+* Wed Sep 14 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.91-alt1
+- 3.21.91
+
 * Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 
