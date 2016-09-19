@@ -1,6 +1,6 @@
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 4.2.8
+Version: 4.2.10
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -30,6 +30,9 @@ cp -a * %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Fri Sep 16 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.10-alt1
+- 4.2-10
+
 * Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.8-alt1
 - 4.2-8
 
