@@ -8,8 +8,8 @@
 %define libakonadi_singlefileresource libakonadi-singlefileresource%pim_sover
 
 Name: kde5-pim-runtime
-Version: 16.08.0
-Release: alt2
+Version: 16.08.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -155,6 +155,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Mon Sep 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt2
 - obsolete kde5-pimlibs
 

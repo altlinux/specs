@@ -20,7 +20,7 @@
 %define libcomposereditorwebengineprivate libcomposereditorwebengineprivate%pim_sover
 
 Name: kde5-pim
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -615,6 +615,9 @@ desktop-file-install \
 %_K5lib/libcomposereditorwebengineprivate.so.*
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 

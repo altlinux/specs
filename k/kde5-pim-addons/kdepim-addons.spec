@@ -7,7 +7,7 @@
 %define libadblocklibprivate libadblocklibprivate%sover
 
 Name: kde5-pim-addons
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -170,6 +170,9 @@ Requires: %name-common
 %_K5lib/libadblocklibprivate.so.*
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 

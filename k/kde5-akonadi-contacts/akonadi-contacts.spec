@@ -1,8 +1,8 @@
 %define rname akonadi-contacts
 
 Name: kde5-%rname
-Version: 16.08.0
-Release: alt2
+Version: 16.08.1
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -80,6 +80,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Mon Sep 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt2
 - update conflicts
 

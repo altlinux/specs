@@ -1,7 +1,7 @@
 %define rname akonadi
 
 Name: kde5-%rname
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -242,6 +242,9 @@ done
 %_K5lib/libKF5AkonadiXml.so.*
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Fri Aug 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 
