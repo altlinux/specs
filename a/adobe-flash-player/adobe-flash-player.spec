@@ -6,9 +6,9 @@
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
 %define ver_fake   11
-%define ver_ix86   11.2.202.632
-%define ver_x86_64 11.2.202.632
-Release: alt64
+%define ver_ix86   11.2.202.635
+%define ver_x86_64 11.2.202.635
+Release: alt65
 Serial: 3
 
 %define ver_real %ver_fake
@@ -23,13 +23,12 @@ Version: %ver_fake
 Group: Networking/WWW
 Summary: Adobe Flash Player
 URL: http://www.adobe.com/products/flashplayer/
-License: Commercial
+License: Adobe
 
 ExclusiveArch: %ix86 x86_64
 BuildRequires: rpm-macros-browser-plugins libXt libgtk+2-devel fontconfig desktop-file-utils
 
-Source: LICENSE
-Source2: adobe_flash_player_eula.desktop.in
+Source: adobe_flash_player_eula.desktop
 #
 Source10: flash_player-x86_64-%ver_x86_64.tar
 Source11: flash_player-x86-%ver_ix86.tar
@@ -39,10 +38,8 @@ Adobe Flash Player %version (Macromedia Flash)
 Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
 Partially Supported: Opera, Konqueror 3.x
 
-See the end user license in
-  %_docdir/%name-%version/LICENSE.txt
 See the distribution license in
-  http://www.adobe.com/licensing/distribution/license/
+ http://www.adobe.com/legal/licenses-terms.html
 
 %package -n %bin_name
 Version: %ver_real
@@ -58,10 +55,8 @@ Adobe Flash Player %version (Macromedia Flash)
 Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
 Partially Supported: Opera, Konqueror 3.x
 
-See the end user license in
-  %_docdir/%name-%version/LICENSE.txt
 See the distribution license in
-  http://www.adobe.com/licensing/distribution/license/
+  http://www.adobe.com/legal/licenses-terms.html
 
 %package fake
 Version: %ver_fake
@@ -80,7 +75,6 @@ tar xfv %SOURCE10
 %else
 tar xfv %SOURCE11
 %endif
-install -m 0644 %SOURCE0 LICENSE.txt
 
 
 %build
@@ -110,8 +104,7 @@ done
 
 # menu
 mkdir -p -m0755 %buildroot/%_desktopdir
-cat %SOURCE2 | sed 's|%%LICENSE_PATH%%|%{_docdir}/%{bin_name}-%{ver_real}/LICENSE.txt|' > adobe_flash_player_eula.desktop
-install -m0644 adobe_flash_player_eula.desktop %buildroot/%_desktopdir/
+install -m0644 %SOURCE0 %buildroot/%_desktopdir/
 
 %ifarch x86_64
 %if_disabled include_x86_64
@@ -127,17 +120,26 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
 #
 %ifarch x86_64
 %if_enabled include_x86_64
-%doc LICENSE*
 %browser_plugins_path/*
 %_desktopdir/adobe_flash_player_eula.desktop
 %endif
 %else
-%doc LICENSE*
 %browser_plugins_path/*
 %_desktopdir/adobe_flash_player_eula.desktop
 %endif
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 3:11-alt65
+- new version
+- security fixes:
+  CVE-2016-4271, CVE-2016-4272, CVE-2016-4274, CVE-2016-4275,
+  CVE-2016-4276, CVE-2016-4277, CVE-2016-4278, CVE-2016-4279,
+  CVE-2016-4280, CVE-2016-4281, CVE-2016-4282, CVE-2016-4283,
+  CVE-2016-4284, CVE-2016-4285, CVE-2016-4287, CVE-2016-6921,
+  CVE-2016-6922, CVE-2016-6923, CVE-2016-6924, CVE-2016-6925,
+  CVE-2016-6926, CVE-2016-6927, CVE-2016-6929, CVE-2016-6930,
+  CVE-2016-6931, CVE-2016-6932
+
 * Wed Jul 20 2016 Sergey V Turchin <zerg@altlinux.org> 3:11-alt64
 - new version
 - security fixes:
