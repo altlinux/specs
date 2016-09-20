@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Sub-Uplevel
 Name: perl-%dist
-Version: 0.25
+Version: 0.2600
 Release: alt1
 Epoch: 1
 
@@ -36,6 +37,9 @@ are avoided.
 	%perl_vendor_privlib/Sub/Uplevel.pm
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.2600-alt1
+- automated CPAN update
+
 * Mon Feb 02 2015 Igor Vlasenko <viy@altlinux.ru> 1:0.25-alt1
 - automated CPAN update
 
