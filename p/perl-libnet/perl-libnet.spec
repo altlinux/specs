@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libnet
 Name: perl-%dist
-Version: 3.09
+Version: 3.10
 Release: alt1
 Epoch: 1
 
@@ -58,6 +58,9 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.10-alt1
+- automated CPAN update
+
 * Mon Jul 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.09-alt1
 - automated CPAN update
 
