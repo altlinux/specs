@@ -1,6 +1,6 @@
 Name: bitstream-headers
 Version: 1.1
-Release: alt2
+Release: alt2.git16052016
 Summary: biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc.
 Group: Development/C
 
@@ -32,6 +32,9 @@ make PREFIX=%buildroot/usr install
 %_includedir/bitstream
 
 %changelog
+* Tue Sep 20 2016 Alexei Takaseev <taf@altlinux.org> 1.1-alt2.git16052016
+- update to git:138840794a5b9e0f4d5ef7e5db0f7680556dddb3
+
 * Fri Feb 19 2016 Alexei Takaseev <taf@altlinux.org> 1.1-alt2
 - aac: add enumerations
 - mp2v: add high progressive profile
