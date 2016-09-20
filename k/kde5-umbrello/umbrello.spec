@@ -1,7 +1,7 @@
 %define rname umbrello
 
 Name: kde5-%rname
-Version: 16.04.3
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -50,13 +50,15 @@ standard language.
 %_K5bin/*xmi*
 %_K5data/umbrello/
 %_K5icon/hicolor/*/apps/umbrello.*
-%_K5icon/hicolor/*/actions/umbrello_*.*
 %_K5icon/hicolor/*/mimetypes/application-x-uml.*
 %_K5xdgapp/org.kde.umbrello.desktop
 %_K5xmlgui/umbrello/
 
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Thu Jul 14 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
 - new version
 
