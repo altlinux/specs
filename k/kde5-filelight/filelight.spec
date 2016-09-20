@@ -1,7 +1,7 @@
 %define rname filelight
 
 Name: kde5-%rname
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -11,6 +11,9 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Provides: filelight = %version-%release
+%if "%(%__kf5_if_have_opt altplace yes no)" == "no"
+Conflicts: filelight
+%endif
 
 Source: %rname-%version.tar
 
@@ -71,6 +74,9 @@ KF5 library
 %_K5xmlgui/filelight*/
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 

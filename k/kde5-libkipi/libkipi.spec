@@ -1,7 +1,7 @@
 %define rname libkipi
 
 Name: kde5-%rname
-Version: 16.08.0
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -78,6 +78,9 @@ mkdir -p %buildroot/%_K5data/kipi/
 %_K5lib/libKF5Kipi.so.*
 
 %changelog
+* Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Tue Sep 06 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.0-alt1
 - new version
 
