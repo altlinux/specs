@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(IPC/Open3.pm) perl(Test/More.pm) perl(Test2/Event.pm)
 # END SourceDeps(oneline)
-%define module_version 0.002002
+%define module_version 0.002004
 %define module_name Test-Needs
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002002
-Release: alt2
+Version: 0.002004
+Release: alt1
 Summary: Skip tests when modules not available
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/H/HA/HAARG/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/H/HA/HAARG/Test-Needs-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -53,6 +53,9 @@ running after that point.
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.002004-alt1
+- automated CPAN update
+
 * Thu Jul 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.002002-alt2
 - to Sisyphus
 
