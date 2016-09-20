@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module WWW-Google-PageRank
 
 Name: perl-%module
-Version: 0.17
+Version: 0.19
 Release: alt1
 
 Summary: Perl module to query google pagerank of page
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/WWW/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/Y/YK/YKAR/WWW-Google-PageRank-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +34,9 @@ in Google.
 %perl_vendor_privlib/WWW
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Mon Jan 09 2012 Victor Forsiuk <force@altlinux.org> 0.17-alt1
 - 0.17
 
