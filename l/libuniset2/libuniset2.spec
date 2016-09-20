@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.5
-Release: alt14
+Release: alt15
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,21 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Tue Sep 20 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt15
+- up build
+
+* Tue Sep 20 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt14.4
+- UTCPStream: check POCO_INVALID_SOCKET
+
+* Mon Sep 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt14.3
+- UTCPStream: shudown and close (for disconnect)
+
+* Mon Sep 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt14.2
+- (ModbusTCPMaster): added disconnect() function
+
+* Mon Sep 19 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt14.1
+- (ModbusTCPMaster): added catch exceptions
+
 * Mon Sep 12 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt14
 - up build
 
