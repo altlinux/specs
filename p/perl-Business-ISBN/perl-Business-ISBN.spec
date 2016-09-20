@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Business-ISBN
 Name: perl-%dist
-Version: 2.09
+Version: 3.003
 Release: alt1
 
 Summary: work with International Standard Book Numbers
@@ -33,6 +34,9 @@ None.
 %perl_vendor_privlib/Business*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.003-alt1
+- automated CPAN update
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
 - automated CPAN update
 
