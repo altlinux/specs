@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators perl(Perl/OSType.pm) perl(Test/Exception.pm) perl(Test/Timer.pm)
 # END SourceDeps(oneline)
 %add_findreq_skiplist %perl_vendor_privlib/Gearman/Task.pm
 Name:           perl-Gearman
-Version:        1.12
-Release:        alt1_4
+Version:        1.130.004
+Release:        alt1
 Summary:        Distributed job system
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://danga.com/gearman/
-Source0:        http://search.cpan.org/CPAN/authors/id/D/DO/DORMANDO/Gearman-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/P/PA/PALIK/Gearman-%{version}.tar.gz
 BuildArch:      noarch
 
 
@@ -66,10 +67,13 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 make test
 
 %files
-%doc CHANGES HACKING TODO
+%doc CHANGES TODO
 %{perl_vendor_privlib}/Gearman
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.130.004-alt1
+- automated CPAN update
+
 * Mon Mar 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_4
 - update to new release by fcimport
 
