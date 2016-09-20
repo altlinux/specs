@@ -1,25 +1,24 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Compress-LZO
 Name: perl-%dist
-Version: 1.08
-Release: alt7.1.1
+Version: 1.09
+Release: alt1
 
 Summary: Perl interface to the LZO compression library
 License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: perl-Compress-LZO-1.08-alt-lzo2.patch
+Source: http://www.cpan.org/authors/id/P/PE/PEPL/Compress-LZO-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: liblzo2-devel perl-devel
+BuildRequires: liblzo2-devel perl-devel perl(Devel/CheckLib.pm)
 
 %description
 This module provides a Perl interface to LZO compression library.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -28,11 +27,14 @@ This module provides a Perl interface to LZO compression library.
 %perl_vendor_install
 
 %files
-%doc NEWS README
+%doc README*
 %perl_vendor_archlib/Compress
 %perl_vendor_autolib/Compress
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.08-alt7.1.1
 - rebuild with new perl 5.22.0
 
