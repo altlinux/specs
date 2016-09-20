@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Fetch
 Name: perl-%dist
-Version: 0.48
+Version: 0.52
 Release: alt1
 
 Summary: A generic file fetching mechanism
@@ -37,6 +37,9 @@ export PERL_CORE=1
 %perl_vendor_privlib/File
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- automated CPAN update
+
 * Sat Jan 25 2014 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - automated CPAN update
 
