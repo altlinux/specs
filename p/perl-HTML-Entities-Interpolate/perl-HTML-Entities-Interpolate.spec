@@ -1,15 +1,16 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Entities-Interpolate
-Version:        1.09
-Release:        alt1_2
+Version:        1.10
+Release:        alt1
 Summary:        Call HTML::Entities::encode_entities via a hash within a string
 License:        Artistic 2.0
 URL:            http://search.cpan.org/dist/HTML-Entities-Interpolate/
-Source0:        http://www.cpan.org/authors/id/R/RS/RSAVAGE/HTML-Entities-Interpolate-%{version}.tgz
+Source:        http://www.cpan.org/authors/id/R/RS/RSAVAGE/HTML-Entities-Interpolate-%{version}.tgz
 BuildArch:      noarch
 BuildRequires:  perl(Capture/Tiny.pm)
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -48,6 +49,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1_2
 - update to new release by fcimport
 
