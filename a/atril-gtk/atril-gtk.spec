@@ -11,7 +11,7 @@
 %def_disable epub
 
 Name:           %_name-gtk
-Version:        1.14.1
+Version:        1.16.0
 Release:        alt1
 Summary:        Document viewer
 
@@ -62,6 +62,8 @@ Conflicts: mate-document-viewer-libs
 %endif
 
 Conflicts: mate-document-viewer
+
+%define _unpackaged_files_terminate_build 1
 
 %description
 Atril is simple multi-page document viewer. It can display and print
@@ -266,6 +268,9 @@ rm -f %buildroot%{_datadir}/icons/hicolor/icon-theme.cache
 %endif
 
 %changelog
+* Tue Sep 20 2016 Mikhail Efremov <sem@altlinux.org> 1.16.0-alt1
+- Updated to 1.16.0.
+
 * Tue May 24 2016 Mikhail Efremov <sem@altlinux.org> 1.14.1-alt1
 - Updated to 1.14.1.
 
