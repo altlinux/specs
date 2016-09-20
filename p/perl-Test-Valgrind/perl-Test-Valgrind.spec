@@ -5,7 +5,7 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:		perl-Test-Valgrind
 Summary:	Generate suppressions, analyze and test any command with valgrind
-Version:	1.18
+Version:	1.19
 Release:	alt1
 Group:		Development/Perl
 License:	GPL+ or Artistic
@@ -99,6 +99,9 @@ fi
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
+- automated CPAN update
+
 * Fri Nov 27 2015 Igor Vlasenko <viy@altlinux.ru> 1.18-alt1
 - automated CPAN update
 
