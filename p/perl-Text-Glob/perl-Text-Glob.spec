@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Text-Glob
 Name: perl-%dist
-Version: 0.09
+Version: 0.10
 Release: alt1
 
 Summary: match globbing patterns against text
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RC/RCLAMP/Text-Glob-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ want to do full file globbing use the File::Glob module instead.
 %perl_vendor_privlib/Text
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Sun Apr 24 2011 Alexey Tourbin <at@altlinux.ru> 0.09-alt1
 - 0.08 -> 0.09
 
