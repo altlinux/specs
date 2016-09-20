@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-ScanDeps
 Name: perl-%dist
-Version: 1.21
+Version: 1.22
 Release: alt1
 
 Summary: Recursively scan Perl programs for dependencies
@@ -37,6 +37,9 @@ such projects, PAR and App::Packer.
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
 - automated CPAN update
 
