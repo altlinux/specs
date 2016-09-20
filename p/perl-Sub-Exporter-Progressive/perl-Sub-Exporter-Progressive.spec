@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Sub-Exporter-Progressive
-Version: 0.001011
+Version: 0.001012
 Release: alt1
 
 Summary: Sub::Exporter::Progressive - Only use Sub::Exporter if you need it
@@ -29,6 +30,9 @@ BuildRequires: perl-devel
 %doc Changes README 
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.001012-alt1
+- automated CPAN update
+
 * Tue Oct 29 2013 Igor Vlasenko <viy@altlinux.ru> 0.001011-alt1
 - automated CPAN update
 
