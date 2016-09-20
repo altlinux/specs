@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.14
+%define module_version 0.20
 %define module_name Dancer-Plugin-Database-Core
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(DBD/Sponge.pm) perl(DBI.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(base.pm)
@@ -7,14 +7,14 @@ BuildRequires: perl(DBD/Sponge.pm) perl(DBI.pm) perl(ExtUtils/MakeMaker.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.14
+Version: 0.20
 Release: alt1
 Summary: Shared core for D1 and D2 Database plugins
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source: http://www.cpan.org/authors/id/A/AM/AMBS/Dancer-Plugin-Database-Core-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BIGPRESH/Dancer-Plugin-Database-Core-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Wed Feb 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - automated CPAN update
 
