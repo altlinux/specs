@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist NEXT
 Name: perl-%dist
-Version: 0.65
+Version: 0.67
 Release: alt1
 
 Summary: A pseudo-class NEXT that allows method redispatch
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/NEXT-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +35,9 @@ as if the calling method had not originally been found.
 %perl_vendor_privlib/NEXT.pm
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
+- automated CPAN update
+
 * Sun Dec 19 2010 Alexey Tourbin <at@altlinux.ru> 0.65-alt1
 - 0.64 -> 0.65
 
