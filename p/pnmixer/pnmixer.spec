@@ -1,5 +1,5 @@
 Name: pnmixer
-Version: 0.6.1
+Version: 0.7
 Release: alt1
 
 %def_without	gtk3
@@ -19,6 +19,8 @@ BuildRequires: libgtk+2-devel
 BuildRequires: libgtk+3-devel
 %endif
 
+%define _unpackaged_files_terminate_build 1
+
 %description
 PNMixer is a simple mixer application designed to run in your system
 tray. It integrates nicely into desktop environments that don't have
@@ -27,8 +29,12 @@ In particular it's been used quite a lot with fbpanel and tint2, but
 should run fine in any system tray.
 
 PNMixer is designed to work on systems that use ALSA for sound
-management. Any other sound driver like OSS or FFADO, or sound server
-like PulseAudio or Jackd, are currently not supported (patches welcome).
+management.
+Any other sound driver like OSS or FFADO are currently not supported
+(patches welcome). There is no *official* PulseAudio support
+at the moment, but it seems that PNMixer behaves quite well anyway when
+PA is running.
+Feel free to try and to give some feedback.
 
 %prep
 %setup
@@ -38,7 +44,6 @@ like PulseAudio or Jackd, are currently not supported (patches welcome).
 %autoreconf
 %configure \
 	--with-libnotify \
-	--enable-minimal-flags \
 	%subst_with gtk3
 
 %make_build
@@ -59,8 +64,13 @@ mv %buildroot%_desktopdir/%name.desktop %buildroot%_sysconfdir/xdg/autostart/
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_bindir/%name
 %_datadir/%name/
+%_man1dir/*
 
 %changelog
+* Tue Sep 20 2016 Mikhail Efremov <sem@altlinux.org> 0.7-alt1
+- Updated description.
+- Updated to 0.7.
+
 * Mon Sep 28 2015 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
 - Updated description.
 - Drop old Fedora patches.
