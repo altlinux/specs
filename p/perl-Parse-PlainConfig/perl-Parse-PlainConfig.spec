@@ -4,7 +4,7 @@
 %define m_name Parse::PlainConfig
 
 Name: perl-%module
-Version: 3.02
+Version: 3.03
 Release: alt1
 
 Summary: Plain Config parser
@@ -36,6 +36,9 @@ Parse::PlainConfig provides OO objects which can parse and generate human-readab
 %perl_vendor_privlib/Parse*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.03-alt1
+- automated CPAN update
+
 * Fri May 27 2016 Igor Vlasenko <viy@altlinux.ru> 3.02-alt1
 - automated CPAN update
 
