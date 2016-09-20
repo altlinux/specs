@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 3.014
+%define module_version 3.015
 %define module_name Sereal
 Serial: 1
 # BEGIN SourceDeps(oneline):
@@ -8,7 +8,7 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Sereal/Decoder
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.014
+Version: 3.015
 Release: alt1
 Summary: Fast, compact, powerful binary (de-)serialization
 Group: Development/Perl
@@ -56,6 +56,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_privlib/S*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:3.015-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 1:3.014-alt1
 - automated CPAN update
 
