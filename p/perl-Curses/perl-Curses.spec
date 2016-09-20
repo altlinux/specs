@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Curses
 Name: perl-%dist
-Version: 1.34
+Version: 1.36
 Release: alt1
 
 Summary: Terminal screen handling and optimization
@@ -41,6 +41,9 @@ perl -Mblib -MCurses -e1
 %perl_vendor_autolib/Curses*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.36-alt1
+- automated CPAN update
+
 * Thu Apr 07 2016 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1
 - automated CPAN update
 
