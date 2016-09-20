@@ -1,14 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 1.45
+%define ver_major 1.46
 %define _name gjs
 %define api_ver 1.0
 
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -111,6 +111,9 @@ the functionality of the installed Gjs library package.
 
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.46.0-alt1
+- 1.46.0
+
 * Wed Jul 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1.45.4-alt1
 - 1.45.4
 
