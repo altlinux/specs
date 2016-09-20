@@ -5,8 +5,8 @@
 %define cid_dict_dir   %firefox_noarch_extensionsdir/%cid_dict
 
 Name:		firefox-esr-l10n
-Version:	45.3.0
-Release:	alt2
+Version:	45.4.0
+Release:	alt1
 Summary:	Language Pack for Firefox ESR
 
 License:	MPL/GPL/LGPL
@@ -402,6 +402,9 @@ for locale in %dictionaries; do
 done
 
 %changelog
+* Tue Sep 20 2016 Andrey Cherepanov <cas@altlinux.org> 45.4.0-alt1
+- New version
+
 * Sat Aug 13 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt2
 - Require firefox-esr to prevent work with ordinary firefox
 
