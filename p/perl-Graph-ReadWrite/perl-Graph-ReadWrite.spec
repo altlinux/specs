@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Graph-ReadWrite
-Version: 2.08
+Version: 2.09
 Release: alt1
 
 Summary: Graph::Reader::Dot - class for reading a Graph instance from Dot format
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Graph/
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.09-alt1
+- automated CPAN update
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 2.08-alt1
 - automated CPAN update
 
