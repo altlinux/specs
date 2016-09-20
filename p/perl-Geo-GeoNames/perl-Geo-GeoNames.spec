@@ -2,7 +2,7 @@
 %define module Geo-GeoNames
 
 Name: perl-%module
-Version: 1.09
+Version: 1.11
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -43,6 +43,9 @@ is found, a list of locations will be returned.
 %perl_vendor_privlib/Geo
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
