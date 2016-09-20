@@ -11,7 +11,7 @@
 
 Name:       %{repo}-io
 Version:    1.12.1
-Release: alt1
+Release: alt2
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -86,6 +86,7 @@ install -d %{buildroot}%{_bindir}
 ls -la bundles/%{version}/
 install -p -m 755 bundles/%{version}/dynbinary-client/docker-%{version} %{buildroot}%{_bindir}/docker
 install -p -m 755 bundles/%{version}/dynbinary-daemon/dockerd-%{version} %{buildroot}%{_bindir}/dockerd
+install -p -m 755 bundles/%{version}/dynbinary-daemon/docker-proxy-%{version} %{buildroot}%{_bindir}/docker-proxy
 
 # create symlinks on runc/containerd
 ln -s %_bindir/runc %{buildroot}%{_bindir}/docker-runc
@@ -157,6 +158,7 @@ exit 0
 %{_mandir}/man5/Dockerfile.5.*
 %{_bindir}/docker
 %{_bindir}/dockerd
+%{_bindir}/docker-proxy
 %{_bindir}/docker-runc
 %{_bindir}/docker-containerd
 %{_bindir}/docker-containerd-shim
@@ -178,6 +180,9 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Tue Sep 20 2016 Alexandr Boltris <alex@altlinux.org> 1.12.1-alt2
+- add docker-proxy. fixes #32489
+
 * Fri Aug 19 2016 Vladimir Didenko <cow@altlinux.org> 1.12.1-alt1
 - New version
 
