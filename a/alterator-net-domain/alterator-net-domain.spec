@@ -1,13 +1,13 @@
 %define _altdata_dir %_datadir/alterator
 
-Name: alterator-net-domain
-Version: 0.6
+Name:    alterator-net-domain
+Version: 0.6.1
 Release: alt1
-Source:%name-%version.tar
+Source:  %name-%version.tar
 
-Summary: alterator module to edit system network domain
+Summary: Alterator module to provision system network domain
 License: GPL
-Group: System/Configuration/Other
+Group:   System/Configuration/Other
 Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.0-alt2
 
@@ -20,7 +20,8 @@ BuildPreReq: alterator >= 4.7-alt5
 BuildArch: noarch
 
 %description
-alterator module to edit system network domain
+Alterator module to provision system network domain.
+Supported domain type: BIND, ALT-domain and Active Directory.
 
 %prep
 %setup -q
@@ -37,8 +38,12 @@ alterator module to edit system network domain
 %_alterator_backend3dir/*
 %dir %_libexecdir/alterator/hooks/net-domain.d
 
-
 %changelog
+* Tue Sep 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
+- Stop and disable any conflict services during Active Directory
+  provision
+- Extend description
+
 * Thu Aug 04 2016 Andrey Cherepanov <cas@altlinux.org> 0.6-alt1
 - Support provision Active Directory domain
 - Refactor module ui: choose domain type, make unavailable option
