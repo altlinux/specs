@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name gdata
 %define ver_major 0.17
 %define api_ver 0.0
@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: %ver_major.6
-Release: alt0.1
+Release: alt1
 
 Summary: Library for the GData protocol
 Group: System/Libraries
@@ -123,6 +123,9 @@ GObject introspection devel data for the GData library.
 %_girdir/GData-%api_ver.gir
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17.6-alt1
+- 0.17.6
+
 * Fri Sep 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17.6-alt0.1
 - updated to LIBGDATA_0_17_5-11-g2590c92
 
