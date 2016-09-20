@@ -1,13 +1,13 @@
-%define module_version 1.003005
+%define _unpackaged_files_terminate_build 1
+%define module_version 1.003007
 %define module_name JSON-MaybeXS
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Cpanel/JSON/XS.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(File/Temp.pm) perl(JSON/PP.pm) perl(Test/More.pm) perl(Test/Without/Module.pm) perl(base.pm) perl(if.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.003005
+Version: 1.003007
 Release: alt1
 Summary: use L<Cpanel::JSON::XS> with a fallback to L<JSON::PP>
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/J*
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.003007-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 1.003005-alt1
 - automated CPAN update
 
