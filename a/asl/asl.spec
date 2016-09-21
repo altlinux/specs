@@ -1,21 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/convert gcc-c++
 # END SourceDeps(oneline)
-%define fedora 23
+%define fedora 24
 # spec file for package asl
 # 
 # Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
-# Spec file for Fedora modified by Eric Smith <eric@brouhaha.com>
+# Spec file for Fedora modified by Eric Smith <brouhaha@fedoraproject.org>
 
-%global patchlevel bld97
+%global patchlevel bld110
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.26.%{patchlevel}
+Release:        alt2_0.27.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -24,7 +24,6 @@ Patch0:         asl-Makefile.def.patch
 Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
-Patch4:         asl-aarch64.patch
 BuildRequires: /usr/bin/latex texlive-latex-recommended
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
 BuildRequires:  texlive-latex-recommended
@@ -49,7 +48,6 @@ used in workstations and PCs in the target list.
 %patch1 -p0 -b .sysdefs
 %patch2 -p1 -b .install
 %patch3 -p1 -b .destdir
-%patch4 -p1 -b .aarch64
 
 %build
 # make seems to have problems with %{_smp_mflags}
@@ -93,6 +91,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.27.bld110
+- update to new release by fcimport
+
 * Tue Mar 29 2016 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.26.bld97
 - update to new release by fcimport
 
