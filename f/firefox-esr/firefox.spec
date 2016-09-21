@@ -13,7 +13,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox-esr
-Version:        45.3.0
+Version:        45.4.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -37,7 +37,6 @@ Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
 Patch200:       mozilla-bug-1205199.patch
-Patch201:       mozilla-bug-1220399-building-with-libproxy-support-fails.patch
 
 # Red Hat
 Patch300:       rhbz-1219542-s390-build.patch
@@ -134,7 +133,6 @@ tar -xf %SOURCE2
 %patch17 -p2
 
 %patch200 -p1
-%patch201 -p1
 
 %patch300 -p1
 %patch301 -p1
@@ -300,6 +298,9 @@ done
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
 %changelog
+* Tue Sep 20 2016 Andrey Cherepanov <cas@altlinux.org> 45.4.0-alt1
+- New ESR version
+
 * Tue Aug 02 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt1
 - New ESR version
 - Security fixes:
