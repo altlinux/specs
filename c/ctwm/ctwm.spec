@@ -3,7 +3,7 @@ Summary(ru_RU.KOI8-R): Основанный на twm оконный менеджер для X Window System
 Name: ctwm
 Version: 3.8.2
 Epoch: 1
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar.xz
 Url: http://ctwm.free.lp.se
@@ -17,6 +17,7 @@ Source3: %name.icon64x64.xpm
 
 Patch: ctwm-3.8-dirs.patch
 Patch1: ctwm-strlen.patch
+Patch2: ctwm-3.8.2-GetFont.patch
 License: BSD
 Group: Graphical desktop/Other
 
@@ -51,12 +52,13 @@ Ctwm -- оконный менеждер для X Windows System, основанный на одном из
 %setup
 %patch -p1
 %patch1 -p0
+%patch2 -p1
 cp Imakefile.local-template Imakefile.local
 sed -ri 's/(#define[[:space:]]+MAX_BUTTONS[[:space:]]+).*/\1 24/' twm.h
 
 %build
 xmkmf
-%make_build
+%make_build CDEBUGFLAGS="-g -Og"
 
 %install
 %make install DESTDIR=%buildroot
@@ -75,6 +77,9 @@ install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
 %_datadir/X11/%name/
 
 %changelog
+* Wed Sep 21 2016 Fr. Br. George <george@altlinux.ru> 1:3.8.2-alt2
+- Fix fonset usage
+
 * Mon Jul 14 2014 Fr. Br. George <george@altlinux.ru> 1:3.8.2-alt1
 - Autobuild version bump to 3.8.2
 - Clean up spec
