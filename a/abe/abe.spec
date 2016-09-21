@@ -1,12 +1,12 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libICE-devel libSM-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libXt-devel xorg-cf-files
 # END SourceDeps(oneline)
 Name:           abe
 Version:        1.1
-Release:        alt5_27
+Release:        alt5_28
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
-Group:          Games/Other
 License:        GPL+
 URL:            http://abe.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/abe/%{name}-%{version}.tar.gz
@@ -27,9 +27,12 @@ Patch3:         %{name}-1.1-aarch64.patch
 # Fix build failure with -Werror=format-security
 Patch4:         %{name}-1.1-format-security.patch
 
-BuildRequires:  libSDL-devel >= 1.2.3, libSDL_mixer-devel >= 1.2.3
-BuildRequires:  libXmu-devel libXi-devel
 BuildRequires:  desktop-file-utils
+BuildRequires:  gcc-common
+BuildRequires:  libXi-devel
+BuildRequires:  libXmu-devel
+BuildRequires:  libSDL-devel
+BuildRequires:  libSDL_mixer-devel
 
 Requires:       icon-theme-hicolor
 
@@ -101,6 +104,9 @@ touch --no-create %{icondir} >&/dev/null ||:
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_28
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_27
 - update to new release by fcimport
 
