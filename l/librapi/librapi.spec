@@ -1,13 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/pyrexc gcc-c++ pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(libsynce) python-devel
+BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name:           librapi
 Version:        0.15.2
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Library to connect to Pocket PC devices
 
 Group:          System/Libraries
@@ -19,8 +19,8 @@ Patch0:         librapi2-dso.patch
 BuildRequires:  libsynce-devel >= 0.15.1
 BuildRequires:  python-module-Pyrex
 BuildRequires:  libdbus-devel libdbus-glib-devel
-BuildRequires:  libudev-devel
-BuildRequires:  libtool
+BuildRequires: libsystemd-devel libudev-devel
+BuildRequires:  libtool-common
 
 # Provide an upgrade path from the monilithic synce package
 Provides:       synce = %{version}-%{release}
@@ -38,7 +38,7 @@ running on the computer using librapi.
 Summary: Development libraries and header files for librapi
 Group: Development/C
 Requires: %{name} = %{version}
-Requires: pkgconfig
+Requires: pkg-config
 
 %description devel
 This package contains the header files and link libraries for librapi
@@ -94,6 +94,9 @@ rm -f $RPM_BUILD_ROOT%{python_sitelibdir}/pyrapi2.{la,a}
 
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_11
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.15.2-alt2_10
 - update to new release by fcimport
 
