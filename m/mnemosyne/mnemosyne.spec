@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 Name:		mnemosyne
 Summary:	Flash-card learning tool
 Version:	2.3.6
-Release:	alt1_1
+Release:	alt1_2
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 Patch0:		mnemosyne-desktop.patch
@@ -67,6 +67,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.6-alt1_2
+- update to new release by fcimport
+
 * Sun May 08 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.6-alt1_1
 - update to new release by fcimport
 
