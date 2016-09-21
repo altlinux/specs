@@ -2,7 +2,7 @@
 
 Name: pve-%rname
 Version: 2.0.4
-Release: alt1
+Release: alt2
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL
@@ -24,6 +24,7 @@ Patch6: 0002-tools-set-configfile-after-load_config.patch
 Patch7: 0003-doc-add-rcfile-to-common-opts.patch
 
 Patch20: lxc-alt.patch
+Patch21: lxc-altlinux-lxc.patch
 
 BuildRequires: docbook2X libcap-devel libcgmanager-devel libdbus-devel libgnutls-devel libseccomp-devel libselinux-devel
 
@@ -49,6 +50,7 @@ an applications or a system.
 %patch7 -p1
 
 %patch20 -p1
+%patch21 -p1
 
 %build
 %autoreconf
@@ -77,7 +79,7 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %config(noreplace) %_sysconfdir/sysconfig/%rname
 %dir %_sysconfdir/%rname
 %config(noreplace) %_sysconfdir/%rname/default.conf
-%_sysconfdir/bash_completion.d/%rname
+#_sysconfdir/bash_completion.d/%rname
 %systemd_unitdir/*.service
 %_bindir/%rname-*
 %_sbindir/init.%rname
@@ -90,6 +92,9 @@ rm -fr %buildroot/usr/lib/%rname/%rname-apparmor-load
 %_man7dir/*.7*
 
 %changelog
+* Wed Sep 21 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0.4-alt2
+- added altlinux configs
+
 * Mon Aug 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.0.4-alt1
 - 2.0.4
 
