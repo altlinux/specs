@@ -7,8 +7,8 @@
 %define libsignon_qt5 libsignon-qt5%sover
 
 Name: signon
-Version: 8.57
-Release: alt6
+Version: 8.58
+Release: alt1
 
 Group: System/Servers
 Summary: Accounts framework for Linux and POSIX based platforms
@@ -107,7 +107,7 @@ export PATH=%_qt5_bindir:$PATH
 mkdir -p %buildroot/%_libdir/signon/extensions/
 
 %files common
-%doc README TODO NOTES
+%doc README* TODO NOTES
 %dir %_libdir/signon/
 %dir %_libdir/signon/extensions/
 
@@ -143,6 +143,9 @@ mkdir -p %buildroot/%_libdir/signon/extensions/
 %_libdir/libsignon-qt5.so.*
 
 %changelog
+* Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 8.58-alt1
+- update to 8.58 20151106
+
 * Fri Jan 22 2016 Sergey V Turchin <zerg@altlinux.org> 8.57-alt6
 - enable dbus p2p
 
