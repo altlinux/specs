@@ -1,7 +1,7 @@
 %define rname ktp-contact-runner
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ kde5-ktp-common-internals-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kpackage-devel kf5-krunner-devel kf5-kservice-devel kf5-kwallet-devel kf5-plasma-framework-devel libdb4-devel libtelepathy-qt5-devel-static python-module-google rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: kde5-ktp-common-internals-devel libtelepathy-qt5-devel-static
+BuildRequires: kde5-ktp-common-internals-devel telepathy-qt5-devel-static
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kpackage-devel
 BuildRequires: kf5-krunner-devel kf5-kservice-devel kf5-kwallet-devel kf5-plasma-framework-devel
 
@@ -73,6 +73,15 @@ KF5 library
 #%_K5lib/libktp-contact-runner.so.*
 
 %changelog
+* Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 

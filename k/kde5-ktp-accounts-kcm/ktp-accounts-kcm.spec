@@ -4,7 +4,7 @@
 %define libktpaccountskcminternal libktpaccountskcminternal%sover
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -22,7 +22,7 @@ Source: %rname-%version.tar
 #BuildRequires: accounts-qt5-devel extra-cmake-modules gcc-c++ intltool kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libdb4-devel libtelepathy-qt5-devel-static python-module-google rpm-build-python3 rpm-build-ruby signon-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: intltool accounts-qt5-devel libtelepathy-qt5-devel-static signon-devel
+BuildRequires: intltool accounts-qt5-devel telepathy-qt5-devel-static signon-devel
 BuildRequires: kde5-kaccounts-integration-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
@@ -89,6 +89,15 @@ KF5 library
 %_K5lib/libktpaccountskcminternal.so.*
 
 %changelog
+* Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 

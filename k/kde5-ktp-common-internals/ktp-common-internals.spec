@@ -8,7 +8,7 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -32,7 +32,7 @@ BuildRequires: kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-k
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kservice-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel
 BuildRequires: kf5-sonnet-devel
-BuildRequires: libtelepathy-qt5-devel-static telepathy-logger-qt5-devel
+BuildRequires: telepathy-qt5-devel-static telepathy-logger-qt5-devel
 BuildRequires: accounts-qt5-devel signon-devel kde5-kaccounts-integration-devel
 
 %description
@@ -93,7 +93,7 @@ Requires: %name-common >= %version-%release
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: kf5-filesystem
-Requires: libtelepathy-qt5-devel
+Requires: telepathy-qt5-devel
 Requires: libtelepathy-logger-devel telepathy-logger-qt5-devel
 %description devel
 The %name-devel package contains libraries and header files for
@@ -161,6 +161,15 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 

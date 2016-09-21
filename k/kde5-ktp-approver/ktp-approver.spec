@@ -1,7 +1,7 @@
 %define rname ktp-approver
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: dbus-tools extra-cmake-modules gcc-c++ kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-knotifications-devel kf5-kservice-devel libdb4-devel libtelepathy-qt5-devel-static python-module-google qt5-base-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
-BuildRequires: dbus-tools libtelepathy-qt5-devel-static
+BuildRequires: dbus-tools telepathy-qt5-devel-static
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-knotifications-devel kf5-kservice-devel
 
 %description
@@ -45,6 +45,15 @@ BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5
 %_K5srvtyp/*.desktop
 
 %changelog
+* Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
