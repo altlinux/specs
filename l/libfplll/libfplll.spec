@@ -1,16 +1,20 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libgmp-devel
+BuildRequires: gcc-c++ libfplll-devel libgmp-devel libqd-devel
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
+%global commit		b50fd91ba0aeea2067dc9d82e6c352dbe0210eb3
+%global shortcommit	%(c=%{commit}; echo ${c:0:7})
 Name:           libfplll
-Version:        4.0.4
-Release:        alt1_8
+Version:        4.0.5
+Release:        alt1_1
 Summary:        LLL-reduces euclidean lattices
 License:        LGPLv2+
 URL:            https://github.com/dstehle/fplll
-Source0:        http://perso.ens-lyon.fr/damien.stehle/fplll/%{name}-%{version}.tar.gz
-
+Source0:        https://github.com/dstehle/fplll/archive/%{commit}.tar.gz#/fplll-%{shortcommit}.tar.gz
+BuildRequires:	autoconf-common
+BuildRequires:	automake-common
+BuildRequires:	libtool-common
 BuildRequires:  libmpfr-devel
 Source44: import.info
 
@@ -48,7 +52,8 @@ the functionality of %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n fplll-%{commit}
+./autogen.sh
 
 %build
 %configure --disable-static LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
@@ -74,7 +79,7 @@ make check
 
 
 %files
-%doc AUTHORS NEWS README.html
+%doc AUTHORS NEWS README.md
 %doc COPYING
 %{_libdir}/*.so.*
 
@@ -82,12 +87,16 @@ make check
 %{_includedir}/fplll.h
 %{_includedir}/fplll/
 %{_libdir}/*.so
+%{_libdir}/pkgconfig/fplll.pc
 
 %files tools
 %{_bindir}/*
 
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.5-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.4-alt1_8
 - update to new release by fcimport
 
