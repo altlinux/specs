@@ -1,5 +1,5 @@
 Name: mcabber
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: console Jabber client
@@ -12,8 +12,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
 Source2: %name.watch
 
-# Automatically added by buildreq on Thu Sep 30 2010
-BuildRequires: libenchant-devel libgpgme-devel libloudmouth-devel libncursesw-devel libotr-devel
+BuildRequires: libenchant-devel libgpgme-devel libidn-devel libloudmouth-devel libncursesw-devel libotr-devel
 
 %description
 mcabber is a small Jabber console client for Linux, maintained by Mikael BERTHE.
@@ -54,6 +53,9 @@ for more information.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Sep 21 2016 Denis Smirnov <mithraen@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3
+
 * Sun Apr 03 2016 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt1
 - new version 1.0.2
 
