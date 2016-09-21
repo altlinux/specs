@@ -1,6 +1,6 @@
 Name: libpst
-Version: 0.6.67
-Release: alt5
+Version: 0.6.68
+Release: alt2
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
@@ -9,18 +9,14 @@ Group: System/Libraries
 Url: http://www.five-ten-sg.com/libpst
 Source0: %url/packages/%name-%version.tar
 Source100: libpst.watch
-# A quick fix:
-Patch1: %name-0.6.67-no-bad-mboxes.patch
-# The enhanced fix for the underlying problem:
-Patch2: %name-0.6.67-mixed.items.patch
-
-Patch3: %name-0.6.67-known-fields.patch
+Patch1: %name-%version-alt-known-fields.patch
 
 BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Tue Aug 04 2009
 BuildRequires: ImageMagick-tools boost-python-devel gcc-c++ libgd2-devel
 BuildRequires: libgsf-devel
+BuildRequires: xmlto doxygen graphviz
 
 BuildPreReq: rpm-build-python
 
@@ -83,15 +79,15 @@ Python interface to libpst (for reading Outlook files)
 
 %prep
 %setup
-%patch2 -p1
-%patch3 -p1
+%patch1 -p1
 
 %build
 %autoreconf
 %configure \
 	--enable-libpst-shared \
 	--disable-static
-%make
+%make_build -C xml/
+%make_build
 
 %install
 %makeinstall_std
@@ -125,6 +121,14 @@ install -m0644 xml/*.pdf -t %buildroot%pkgdocdir/format-documentation/
 %python_sitelibdir/*.so
 
 %changelog
+* Wed Sep 21 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.68-alt2
+- a further fix for empty headers instead of the authentic correct ones
+  for the very rare case when the first internet header is wrapped
+  (thx Carl from upstream, hg commit e4c414ff8fa2)
+
+* Tue Sep 20 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.68-alt1
+- rebased onto 0.6.68 ("To: " has become a "known" header in readpst, too).
+
 * Tue Aug 30 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.67-alt5
 - more known fields (in order to have less noise in the debugging log in:
   grep -A 5 'Ignore bogus headers' *log) (thx Carl Byington)
