@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ python-devel swig
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/swig gcc-c++ ilmbase-devel libGL-devel libGLU-devel python-devel rpm-build-python swig
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt2_22
+Release:	alt2_23
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -18,25 +18,29 @@ Patch1: imfinputfile-forward-declaration.diff
 # dropped boost/serialization/pfto.hpp
 # and BOOST_MAKE_PFTO_WRAPPER
 Patch2: aqsis-1.8.2-boost-1.59.patch
+# Fix code to be C++11 compatible
+# https://sourceforge.net/p/aqsis/bugs/433/
+Patch3: aqsis-1.8.2-gcc6.patch
 
 BuildRequires:  desktop-file-utils
 
 BuildRequires:  bison >= 1.35.0
-BuildRequires: boost-devel boost-devel-headers boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-multiprecision-devel boost-polygon-devel boost-program_options-devel boost-python-devel boost-python-headers boost-signals-devel boost-wave-devel
 BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flex >= 2.5.4
 BuildRequires:  libfltk-devel >= 1.1.0, libfltk-devel
 BuildRequires:  libjpeg-devel
-BuildRequires: libtiffxx-devel libtiff-devel
+BuildRequires: libtiff-devel libtiffxx-devel
 BuildRequires:  libpng-devel
-BuildRequires: xsltproc libxslt
-BuildRequires:  qt4-devel >= 4.6.2
+BuildRequires: libxslt xsltproc
+BuildRequires: libqt4-declarative libqt4-devel qt4-designer
 #BuildRequires:  tinyxml-devel
 BuildRequires:  openexr-devel
 BuildRequires:  python-module-sphinx
 BuildRequires:  zlib-devel >= 1.1.4
 
+Requires: libqt4-core libqt4-dbus libqt4-network libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-test libqt4-xml libqt4-xmlpatterns
 Requires: aqsis-core = %{version}
 Requires: aqsis-data = %{version}
 Source44: import.info
@@ -115,6 +119,7 @@ integration with third-party applications.
 
 %patch1 -p1 -b imfinputfile-forward-declaration
 %patch2 -p1
+%patch3 -p1
 
 %build
 ## Do not Enable pdiff=yes Because it will conflict with Printdiff :
@@ -229,6 +234,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_23
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt2_22
 - update to new release by fcimport
 
