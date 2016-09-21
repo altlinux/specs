@@ -1,34 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libdevil-devel
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ libSDL2-devel
 # END SourceDeps(oneline)
+%global extra_version -2
+
 Name:           cdogs-sdl
-Version:        0.5.8
-Release:        alt1_4
+Version:        0.6.2
+Release:        alt1_1
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
 # The game-engine is GPLv2+
-# The original game art is Redistributable, no modification permitted
-# This is slowly being replaced upstream by CC art
-License:        GPLv2+ and Redistributable, no modification permitted and CC-BY and CC-BY-SA and CC0
+# The game art is CC
+License:        GPLv2+ and CC-BY and CC-BY-SA and CC0
 URL:            http://cxong.github.io/cdogs-sdl/
-# This uses git-submodules and github's foo/bat/archive/tag.tar.gz feature
-# does not deal with this. To regenerate do:
-# git clone git clone https://github.com/cxong/cdogs-sdl.git
-# cd cdogs-sdl
-# git checkout %{version}
-# git submodule init
-# git submodule update --init --recursive
-# git submodule update --recursive
-# rm -rf `find -name .git`
-# cd ..
-# mv cdogs-sdl cdogs-sdl-%{version}
-# tar cvfJ cdogs-sdl-%{version}.tar.xz cdogs-sdl-%{version}
-Source0:        cdogs-sdl-%{version}.tar.xz
+Source0:        https://github.com/cxong/cdogs-sdl/archive/%{version}%{?extra_version}.tar.gz#/%{name}-%{version}%{?extra_version}.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
 Patch0:         cdogs-sdl-0.5.8-cmake.patch
-BuildRequires: ctest cmake libSDL_mixer-devel libSDL_image-devel ncurses-devel libphysfs-devel
+Patch1:         cdogs-sdl-0.6.2-system-enet.patch
+BuildRequires: ctest cmake libSDL2_mixer-devel libSDL2_image-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:  libphysfs-devel libenet-devel
 BuildRequires:  desktop-file-utils libicns-utils libappstream-glib
 Requires:       icon-theme-hicolor
 Obsoletes:      cdogs-data < 0.5
@@ -46,15 +37,22 @@ like to thank Ronny for releasing the C-Dogs sources to the public.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}%{?extra_version}
 %patch0 -p1
+%patch1 -p1
+# We use the system enet
+rm -r src/cdogs/enet
+# Misc. cleanups
 sed -i 's/\r//' doc/original_readme.txt
+rm graphics/make_bullet_spritesheet.sh
+chmod -x src/tinydir/tinydir.h
 
 
 %build
 %{fedora_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/
 make %{?_smp_mflags}
 icns2png -x build/macosx/cdogs-icon.icns
+
 
 %install
 %makeinstall_std
@@ -75,8 +73,8 @@ done
 
 
 %files
-%doc doc/AUTHORS doc/CREDITS doc/original_readme.txt
-%doc doc/COPYING.BSD doc/COPYING.GPL
+%doc doc/AUTHORS doc/CREDITS doc/original_readme.txt doc/README_DATA.md
+%doc doc/COPYING.BSD doc/COPYING.GPL doc/COPYING.MJSON.txt doc/COPYING.xgetopt.txt doc/COPYING.yajl.txt doc/LICENSE.nanopb.txt doc/license.rlutil.txt
 %{_bindir}/%{name}*
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -85,6 +83,9 @@ done
 
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 16 2016 Igor Vlasenko <viy@altlinux.ru> 0.5.8-alt1_4
 - update to new release by fcimport
 
