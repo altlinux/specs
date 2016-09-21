@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libvoikko
-Version:        3.7.1
-Release:        alt1_4
+Version:        3.8
+Release:        alt1_2
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -38,7 +38,7 @@ Hunspell.
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}
-Requires:       pkgconfig
+Requires:       pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -112,6 +112,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 3.8-alt1_2
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.7.1-alt1_4
 - update to new release by fcimport
 
