@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/pkg-config /usr/bin/swig gcc-c++ libhocr-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++ libhocr-devel python-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 %add_optflags %optflags_shared
@@ -16,7 +16,7 @@ BuildRequires: chrpath
 
 Name:		libhocr
 Version:	0.10.17
-Release:	alt2_22
+Release:	alt2_23
 Summary:	A Hebrew optical character recognition library
 
 Group:		System/Libraries
@@ -32,13 +32,13 @@ Patch1:		libhocr-no-scanner.patch
 # Upstream isn't responsive for years, so we maintain our own patches.
 Patch2:		format-security.patch
 
-BuildRequires:	libfftw3-devel, libhspell-devel libtiffxx-devel libtiff-devel
+BuildRequires:	libfftw3-devel, libhspell-devel libtiff-devel libtiffxx-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	swig, python-devel, gtk2-devel, gettext
+BuildRequires:	swig python-base python-dev gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel gettext gettext-tools gettext-tools-python
 # Fix #925761
 # Upstream use very old autoconf, breaks aarm64 builds
 # So we use autoreconf
-BuildRequires:	autoconf, automake, libtool
+BuildRequires:	autoconf-common, automake-common, libtool-common
 Source44: import.info
 
 %description
@@ -52,8 +52,9 @@ text, ready for your blog, word processor or any other use.
 Summary:	Development files for %{name}
 Group:		Development/C
 Requires:	%{name} = %{version}
+Requires: gtk-builder-convert gtk-demo
 # We ship *.pc files (requires the -devel of contained libs)
-Requires:	pkgconfig
+Requires:	pkg-config
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -67,7 +68,7 @@ Requires:	%{name} = %{version}
 Requires:	python(hocr) = %{version}
 # We use gtktextbuffer which uses gtkspell which have a runtime
 # check of the spellcheck backends... so here it is:
-Requires:	hspell
+Requires: hspell libhspell
 
 %description    gtk
 The %{name}-gtk package contains a GUI application that uses %{name}.
@@ -76,7 +77,7 @@ The %{name}-gtk package contains a GUI application that uses %{name}.
 Summary:	Python bindings for %{name}
 Group:		System/Libraries
 Requires:	%{name} = %{version}
-Requires:	python > 2.5
+Requires:	python-base > 2.5
 Provides:	python(hocr) = %{version}-%{release}
 
 %description    -n python-module-libhocr
@@ -176,6 +177,9 @@ done
 
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_23
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.10.17-alt2_22
 - update to new release by fcimport
 
