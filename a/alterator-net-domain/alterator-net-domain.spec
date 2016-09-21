@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name:    alterator-net-domain
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 Source:  %name-%version.tar
 
@@ -39,6 +39,9 @@ Supported domain type: BIND, ALT-domain and Active Directory.
 %dir %_libexecdir/alterator/hooks/net-domain.d
 
 %changelog
+* Wed Sep 21 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt1
+- Enable samba service during Active Directory provision
+
 * Tue Sep 20 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
 - Stop and disable any conflict services during Active Directory
   provision
