@@ -1,7 +1,7 @@
 Group: Engineering
 Name:           3dprinter-udev-rules
-Version:        0.1
-Release:        alt1_2
+Version:        0.2
+Release:        alt1_1
 Summary:        Rules for udev to give regular users access to operate 3D printers
 License:        CC0
 URL:            https://github.com/hroncok/%{name}
@@ -22,8 +22,8 @@ Normally, when you connect a RepRap like 3D printer to a Linux machine by an
 USB cable, you need to be in dialout or similar group to be able to control
 it via OctoPrint, Printrun, Cura or any other control software. Not any more.
 
-Install this package to grant all users read and write access to
-/dev/ttyUSB[0-9] and /dev/ttyACM[0-9].
+Install this rule to grant all users read and write access to collected
+devices based on the VID and PID.
 
 Disclaimer: Such device might not be a 3D printer, it my be an Arduino, it
 might be a modem and it might even be a blender. But normally you would
@@ -46,6 +46,9 @@ install -D -p -m 644 %{file_name} %{buildroot}%_udevrulesdir/%{file_name}
 %_udevrulesdir/%{file_name}
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_1
+- update to new release by fcimport
+
 * Thu Jul 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
