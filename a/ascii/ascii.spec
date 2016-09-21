@@ -1,9 +1,8 @@
 Name:           ascii
-Version:        3.8
-Release:        alt2_10
+Version:        3.15
+Release:        alt1_1
 URL:            http://www.catb.org/~esr/ascii/
-Source0:        http://www.catb.org/~esr/ascii/ascii-3.8.tar.gz
-Patch1:         ascii-3.8-makefile.patch
+Source0:        http://www.catb.org/~esr/ascii/ascii-3.15.tar.gz
 
 License:        GPLv2
 Group:          Text tools
@@ -20,7 +19,6 @@ with no arguments it displays a handy small ASCII chart.
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 make %{?_smp_mflags} ascii ascii.1 CFLAGS="${RPM_OPT_FLAGS}"
@@ -37,6 +35,9 @@ cp ascii.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 %doc README COPYING
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 3.15-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 3.8-alt2_10
 - update to new release by fcimport
 
