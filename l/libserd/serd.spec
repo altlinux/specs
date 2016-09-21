@@ -3,15 +3,11 @@ BuildRequires: waf
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname serd
-# %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name serd
-%define version 0.20.0
 %global maj 0
-%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{oldname}-%{version}}
 
 Name:           libserd
-Version:        0.20.0
-Release:        alt1_3
+Version:        0.22.0
+Release:        alt1_1
 Summary:        A lightweight C library for RDF syntax
 
 Group:          System/Libraries
@@ -20,9 +16,9 @@ URL:            http://drobilla.net/software/serd/
 Source0:        http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 
 BuildRequires:  doxygen
-BuildRequires:  graphviz
-BuildRequires:  glib2-devel
-BuildRequires:  python
+BuildRequires: graphviz libgraphviz
+BuildRequires: glib2-devel libgio libgio-devel
+BuildRequires:  python-base
 Source44: import.info
 Provides: serd = %{version}-%{release}
 
@@ -40,7 +36,7 @@ LV2 plugins as simple as possible for applications.
 %package devel
 Summary:        Development libraries and headers for %{oldname}
 Group:          Development/C
-Requires:       %{name} = %{version}
+Requires:       libserd = %{version}
 Provides: serd-devel = %{version}-%{release}
 
 %description devel
@@ -61,7 +57,7 @@ export CFLAGS="%{optflags}"
     --libdir=%{_libdir} \
     --mandir=%{_mandir} \
     --datadir=%{_datadir} \
-    --docdir=%{_docdir}/%{oldname} \
+    --docdir=%{_docdir} \
     --test \
     --docs 
 ./waf build -v %{?_smp_mflags}
@@ -69,14 +65,9 @@ export CFLAGS="%{optflags}"
 %install
 DESTDIR=%{buildroot} ./waf install
 chmod +x %{buildroot}%{_libdir}/lib%{oldname}-%{maj}.so.*
-install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 
 %files
-%dir %{_docdir}/%{oldname}/
-%{_docdir}/%{oldname}/AUTHORS
-%{_docdir}/%{oldname}/COPYING
-%{_docdir}/%{oldname}/NEWS
-%{_docdir}/%{oldname}/README
+%doc AUTHORS COPYING NEWS README
 %{_libdir}/lib%{oldname}-%{maj}.so.*
 %{_bindir}/serdi
 %{_mandir}/man1/serdi.1*
@@ -85,10 +76,12 @@ install -pm 644 AUTHORS COPYING NEWS README %{buildroot}%{_docdir}/%{oldname}
 %{_libdir}/lib%{oldname}-%{maj}*.so
 %{_libdir}/pkgconfig/%{oldname}*.pc
 %{_includedir}/%{oldname}-%{maj}/
-%{_docdir}/%{oldname}/%{oldname}-%{maj}/
-%{_mandir}/man3/*.3*
+%{_mandir}/man1/*.1*
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.22.0-alt1_1
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_3
 - update to new release by fcimport
 
