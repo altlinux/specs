@@ -1,14 +1,14 @@
 %add_optflags %optflags_shared
 Name:           libharu
 Version:        2.2.1
-Release:        alt1_7
+Release:        alt1_8
 Summary:        C library for generating PDF files
 Group:          System/Libraries
 License:        zlib with acknowledgement
 URL:            http://libharu.org
 Source0:        http://libharu.org/files/%{name}-%{version}.tar.gz
 Patch0:		libharu-2.2.1-png15.patch
-BuildRequires:	glibc-devel
+BuildRequires:	gcc-common
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 Source44: import.info
@@ -47,6 +47,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libhpdf.so
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_8
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_7
 - update to new release by fcimport
 
