@@ -14,7 +14,7 @@ BuildRequires: gcc-c++
 
 Name:       liblilv
 Version:    0.20.0
-Release:    alt1_5
+Release:    alt1_6
 Summary:    An LV2 Resource Description Framework Library
 
 Group:      System/Libraries
@@ -23,13 +23,13 @@ URL:        http://drobilla.net/software/lilv/
 Source0:    http://download.drobilla.net/%{oldname}-%{version}.tar.bz2
 Patch1:     lilv-0.16.0-gcc.patch
 BuildRequires:  doxygen
-BuildRequires:  graphviz
-BuildRequires:  sord-devel >= 0.12.0
-BuildRequires:  sratom-devel >= 0.4.4
+BuildRequires: graphviz libgraphviz
+BuildRequires:  libsord-devel >= 0.12.0
+BuildRequires:  libsratom-devel >= 0.4.4
 BuildRequires:  lv2-devel >= 1.8.0
 BuildRequires:  python-devel
 BuildRequires:  swig
-BuildRequires: python-module-numpy python-module-numpy-addons python-module-numpy-testing
+BuildRequires: libnumpy-devel python-module-numpy python-module-numpy-doc python-module-numpy-testing
 
 
 Source44: import.info
@@ -43,7 +43,7 @@ faster and have minimal dependencies.
 %package devel
 Summary:    Development libraries and headers for %{oldname}
 Group:      Development/C
-Requires:   %{name} = %{version}
+Requires:   liblilv = %{version}
 Provides: lilv-devel = %{version}-%{release}
 
 %description devel
@@ -55,7 +55,7 @@ This package contains the headers and development libraries for %{oldname}.
 %package -n python-module-lilv
 Summary:    Python bindings for %{oldname}
 Group:      Development/Python
-Requires:   %{name} = %{version}
+Requires:   liblilv = %{version}
 
 %description -n python-module-lilv 
 %{oldname} is a lightweight C library for Resource Description Syntax which 
@@ -111,6 +111,9 @@ chmod +x %{buildroot}%{_libdir}/lib%{oldname}-0.so.*
 %{python_sitelibdir}/_%{oldname}.so
 
 %changelog
+* Wed Sep 21 2016 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_6
+- update to new release by fcimport
+
 * Mon Feb 15 2016 Igor Vlasenko <viy@altlinux.ru> 0.20.0-alt1_5
 - update to new release by fcimport
 
