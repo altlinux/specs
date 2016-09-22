@@ -1,7 +1,7 @@
 %define rname parley
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -63,6 +63,9 @@ also known as flash cards.
 %_K5cfg/parley.kcfg
 
 %changelog
+* Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
