@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Pod-Perldoc
 Name: perl-%dist
-Version: 3.26
+Version: 3.27
 Release: alt1
 
 Summary: perldoc is program for reading Pod documentation
@@ -47,11 +48,16 @@ sed -i- 's/require Tk;/die;/' t/load.t
 %files
 %doc	Changes README
 	%_bindir/perldoc
+	%_man1dir/perldoc.*
 	%perl_vendor_privlib/Pod
 # XXX perl-pod has pod/perldoc.pod
 #%doc	%perl_vendor_privlib/perldoc.pod
+%exclude %perl_vendor_privlib/perldoc.pod
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 3.27-alt1
+- automated CPAN update
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 3.26-alt1
 - automated CPAN update
 
