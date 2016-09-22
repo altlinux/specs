@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist WWW-Mechanize
 Name: perl-%dist
-Version: 1.75
+Version: 1.79
 Release: alt1
 
 Summary: Handy web browsing in a Perl object
@@ -8,12 +9,12 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/E/ET/ETHER/WWW-Mechanize-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/O/OA/OALDERS/WWW-Mechanize-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Apr 23 2011
-BuildRequires: perl-HTML-Form perl-HTML-Tree perl-HTTP-Daemon perl-HTTP-Server-Simple perl-LWP-Protocol-https perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn
+BuildRequires: perl-HTML-Form perl-HTML-Tree perl-HTTP-Daemon perl-HTTP-Server-Simple perl-LWP-Protocol-https perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn perl(Test/Output.pm) perl(Test/RequiresInternet.pm)
 
 %description
 "WWW::Mechanize", or Mech for short, helps you automate interaction
@@ -36,7 +37,7 @@ which can be queried and revisited.
 %files
 %doc	Changes
 	%_bindir/mech-dump
-	#%_man1dir/mech-dump
+	%_man1dir/mech-dump*
 %dir	%perl_vendor_privlib/WWW
 	%perl_vendor_privlib/WWW/Mechanize.pm
 %dir	%perl_vendor_privlib/WWW/Mechanize
@@ -44,6 +45,9 @@ which can be queried and revisited.
 %doc	%perl_vendor_privlib/WWW/Mechanize/*.pod
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1.79-alt1
+- automated CPAN update
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.75-alt1
 - automated CPAN update
 
