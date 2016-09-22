@@ -8,7 +8,7 @@
 
 Name: fluidsynth
 Version: 1.1.6
-%define release alt2
+%define release alt3
 
 %ifdef cvs_date
 Release: %{release}cvs%cvs_date
@@ -17,7 +17,7 @@ Release: %release
 %endif
 
 Summary: Software real-time synthesizer
-Summary(ru_RU.KOI8-R): Программный синтезатор, работающий в режиме реального времени
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╫я▀п╧ я│п╦п╫я┌п╣п╥п╟я┌п╬я─, я─п╟п╠п╬я┌п╟я▌я┴п╦п╧ п╡ я─п╣п╤п╦п╪п╣ я─п╣п╟п╩я▄п╫п╬пЁп╬ п╡я─п╣п╪п╣п╫п╦
 Group: Sound
 URL: http://www.fluidsynth.org
 License: LGPL
@@ -65,18 +65,18 @@ FluidSynth reads and handles MIDI events from the MIDI input
 device. It is the software analogue of a MIDI synthesizer. FluidSynth
 can also play midifiles using a Soundfont.
 
-%description -l ru_RU.KOI8-R
-FluidSynth -- это программный синтезатор, работающий в режиме реального 
-времени и основанный на спецификациях Soundfont 2.
+%description -l ru_RU.UTF-8
+FluidSynth -- я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╧ я│п╦п╫я┌п╣п╥п╟я┌п╬я─, я─п╟п╠п╬я┌п╟я▌я┴п╦п╧ п╡ я─п╣п╤п╦п╪п╣ я─п╣п╟п╩я▄п╫п╬пЁп╬ 
+п╡я─п╣п╪п╣п╫п╦ п╦ п╬я│п╫п╬п╡п╟п╫п╫я▀п╧ п╫п╟ я│п©п╣я├п╦я└п╦п╨п╟я├п╦я▐я┘ Soundfont 2.
 
-FluidSynth считывает и обрабатывает MIDI-события из входного 
-MIDI-устройства. Иными словами, программа является программным аналогом 
-MIDI-синтезатора. FluidSynth также может воспроизводить MIDI-файлы, 
-используя Soundfont.
+FluidSynth я│я┤п╦я┌я▀п╡п╟п╣я┌ п╦ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ MIDI-я│п╬п╠я▀я┌п╦я▐ п╦п╥ п╡я┘п╬п╢п╫п╬пЁп╬ 
+MIDI-я┐я│я┌я─п╬п╧я│я┌п╡п╟. п≤п╫я▀п╪п╦ я│п╩п╬п╡п╟п╪п╦, п©я─п╬пЁя─п╟п╪п╪п╟ я▐п╡п╩я▐п╣я┌я│я▐ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╪ п╟п╫п╟п╩п╬пЁп╬п╪ 
+MIDI-я│п╦п╫я┌п╣п╥п╟я┌п╬я─п╟. FluidSynth я┌п╟п╨п╤п╣ п╪п╬п╤п╣я┌ п╡п╬я│п©я─п╬п╦п╥п╡п╬п╢п╦я┌я▄ MIDI-я└п╟п╧п╩я▀, 
+п╦я│п©п╬п╩я▄п╥я┐я▐ Soundfont.
 
 %package -n lib%name
 Summary: Shared libraries for %name
-Summary(ru_RU.KOI8-R): Разделяемые библиотеки для %name
+Summary(ru_RU.UTF-8): п═п╟п╥п╢п╣п╩я▐п╣п╪я▀п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ %name
 Group: System/Libraries
 Obsoletes: libiiwusynth
 Provides: libiiwusynth = %version-%release
@@ -96,20 +96,20 @@ can also play midifiles using a Soundfont.
 
 This package contains libraries for %name package
 
-%description -n lib%name -l ru_RU.KOI8-R
-FluidSynth -- это программный синтезатор, работающий в режиме реального
-времени и основанный на спецификациях Soundfont 2.
+%description -n lib%name -l ru_RU.UTF-8
+FluidSynth -- я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╧ я│п╦п╫я┌п╣п╥п╟я┌п╬я─, я─п╟п╠п╬я┌п╟я▌я┴п╦п╧ п╡ я─п╣п╤п╦п╪п╣ я─п╣п╟п╩я▄п╫п╬пЁп╬
+п╡я─п╣п╪п╣п╫п╦ п╦ п╬я│п╫п╬п╡п╟п╫п╫я▀п╧ п╫п╟ я│п©п╣я├п╦я└п╦п╨п╟я├п╦я▐я┘ Soundfont 2.
 
-FluidSynth считывает и обрабатывает MIDI-события из входного
-MIDI-устройства. Иными словами, программа является программным аналогом
-MIDI-синтезатора. FluidSynth также может воспроизводить MIDI-файлы,
-используя Soundfont.
+FluidSynth я│я┤п╦я┌я▀п╡п╟п╣я┌ п╦ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ MIDI-я│п╬п╠я▀я┌п╦я▐ п╦п╥ п╡я┘п╬п╢п╫п╬пЁп╬
+MIDI-я┐я│я┌я─п╬п╧я│я┌п╡п╟. п≤п╫я▀п╪п╦ я│п╩п╬п╡п╟п╪п╦, п©я─п╬пЁя─п╟п╪п╪п╟ я▐п╡п╩я▐п╣я┌я│я▐ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╪ п╟п╫п╟п╩п╬пЁп╬п╪
+MIDI-я│п╦п╫я┌п╣п╥п╟я┌п╬я─п╟. FluidSynth я┌п╟п╨п╤п╣ п╪п╬п╤п╣я┌ п╡п╬я│п©я─п╬п╦п╥п╡п╬п╢п╦я┌я▄ MIDI-я└п╟п╧п╩я▀,
+п╦я│п©п╬п╩я▄п╥я┐я▐ Soundfont.
 
-Этот пакет содержит разделяемые библиотеки, необходимые для работы %name
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я─п╟п╥п╢п╣п╩я▐п╣п╪я▀п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ я─п╟п╠п╬я┌я▀ %name
 
 %package -n lib%name-devel
 Summary: Development environment for %name
-Summary(ru_RU.KOI8-R): Среда разработки для %name
+Summary(ru_RU.UTF-8): п║я─п╣п╢п╟ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п╢п╩я▐ %name
 Group: Development/C
 Obsoletes: libiiwusynth-devel
 Provides: libiiwusynth-devel = %version-%release
@@ -130,21 +130,21 @@ can also play midifiles using a Soundfont.
 
 This package contains headers and development files for lib%name package
 
-%description -n lib%name-devel -l ru_RU.KOI8-R
-FluidSynth -- это программный синтезатор, работающий в режиме реального
-времени и основанный на спецификациях Soundfont 2.
+%description -n lib%name-devel -l ru_RU.UTF-8
+FluidSynth -- я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╧ я│п╦п╫я┌п╣п╥п╟я┌п╬я─, я─п╟п╠п╬я┌п╟я▌я┴п╦п╧ п╡ я─п╣п╤п╦п╪п╣ я─п╣п╟п╩я▄п╫п╬пЁп╬
+п╡я─п╣п╪п╣п╫п╦ п╦ п╬я│п╫п╬п╡п╟п╫п╫я▀п╧ п╫п╟ я│п©п╣я├п╦я└п╦п╨п╟я├п╦я▐я┘ Soundfont 2.
 
-FluidSynth считывает и обрабатывает MIDI-события из входного
-MIDI-устройства. Иными словами, программа является программным аналогом
-MIDI-синтезатора. FluidSynth также может воспроизводить MIDI-файлы,
-используя Soundfont.
+FluidSynth я│я┤п╦я┌я▀п╡п╟п╣я┌ п╦ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ MIDI-я│п╬п╠я▀я┌п╦я▐ п╦п╥ п╡я┘п╬п╢п╫п╬пЁп╬
+MIDI-я┐я│я┌я─п╬п╧я│я┌п╡п╟. п≤п╫я▀п╪п╦ я│п╩п╬п╡п╟п╪п╦, п©я─п╬пЁя─п╟п╪п╪п╟ я▐п╡п╩я▐п╣я┌я│я▐ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╪ п╟п╫п╟п╩п╬пЁп╬п╪
+MIDI-я│п╦п╫я┌п╣п╥п╟я┌п╬я─п╟. FluidSynth я┌п╟п╨п╤п╣ п╪п╬п╤п╣я┌ п╡п╬я│п©я─п╬п╦п╥п╡п╬п╢п╦я┌я▄ MIDI-я└п╟п╧п╩я▀,
+п╦я│п©п╬п╩я▄п╥я┐я▐ Soundfont.
 
-Этот пакет содержит файлы, необходимы для разработки с использованием 
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я└п╟п╧п╩я▀, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ 
 %name
 
 %package -n lib%name-devel-static
 Summary: Static %name library
-Summary(ru_RU.KOI8-R): Статические библиотеки для %name
+Summary(ru_RU.UTF-8): п║я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ %name
 Group: Development/C
 Obsoletes: libiiwusynth-devel-static
 Provides: libiiwusynth-devel-static = %version-%release
@@ -160,22 +160,22 @@ can also play midifiles using a Soundfont.
 
 This package contains static libraries for %name package
 
-%description -n lib%name-devel-static -l ru_RU.KOI8-R
-FluidSynth -- это программный синтезатор, работающий в режиме реального
-времени и основанный на спецификациях Soundfont 2.
+%description -n lib%name-devel-static -l ru_RU.UTF-8
+FluidSynth -- я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╧ я│п╦п╫я┌п╣п╥п╟я┌п╬я─, я─п╟п╠п╬я┌п╟я▌я┴п╦п╧ п╡ я─п╣п╤п╦п╪п╣ я─п╣п╟п╩я▄п╫п╬пЁп╬
+п╡я─п╣п╪п╣п╫п╦ п╦ п╬я│п╫п╬п╡п╟п╫п╫я▀п╧ п╫п╟ я│п©п╣я├п╦я└п╦п╨п╟я├п╦я▐я┘ Soundfont 2.
 
-FluidSynth считывает и обрабатывает MIDI-события из входного
-MIDI-устройства. Иными словами, программа является программным аналогом
-MIDI-синтезатора. FluidSynth также может воспроизводить MIDI-файлы,
-используя Soundfont.
+FluidSynth я│я┤п╦я┌я▀п╡п╟п╣я┌ п╦ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌ MIDI-я│п╬п╠я▀я┌п╦я▐ п╦п╥ п╡я┘п╬п╢п╫п╬пЁп╬
+MIDI-я┐я│я┌я─п╬п╧я│я┌п╡п╟. п≤п╫я▀п╪п╦ я│п╩п╬п╡п╟п╪п╦, п©я─п╬пЁя─п╟п╪п╪п╟ я▐п╡п╩я▐п╣я┌я│я▐ п©я─п╬пЁя─п╟п╪п╪п╫я▀п╪ п╟п╫п╟п╩п╬пЁп╬п╪
+MIDI-я│п╦п╫я┌п╣п╥п╟я┌п╬я─п╟. FluidSynth я┌п╟п╨п╤п╣ п╪п╬п╤п╣я┌ п╡п╬я│п©я─п╬п╦п╥п╡п╬п╢п╦я┌я▄ MIDI-я└п╟п╧п╩я▀,
+п╦я│п©п╬п╩я▄п╥я┐я▐ Soundfont.
 
-Этот пакет содержит статические библиотеки для %name
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ я│я┌п╟я┌п╦я┤п╣я│п╨п╦п╣ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ п╢п╩я▐ %name
 
 %prep
 %ifdef cvs_date
-%setup -q -n %name
+%setup -n %name
 %else
-%setup -q -n %name-%version
+%setup -n %name-%version
 %endif
 
 install -m755 %SOURCE1 ./autogen.sh
@@ -229,6 +229,10 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Thu Sep 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt3
+- rebuilt against libreadline.so.6
+- re-encoded spec to UTF-8
+
 * Wed Nov 06 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt2
 - fixed build
 
