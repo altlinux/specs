@@ -1,6 +1,6 @@
 Name: openssl10
-Version: 1.0.2h
-Release: alt2
+Version: 1.0.2i
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: BSD-style
@@ -42,8 +42,6 @@ Patch84: openssl-rh-trusted-first-doc.patch
 Patch87: openssl-rh-cc-reqs.patch
 Patch90: openssl-rh-enc-fail.patch
 Patch92: openssl-rh-system-cipherlist.patch
-
-Patch200: openssl-CVE-2016-2178.patch
 
 %define shlib_soversion 10
 %define openssldir /var/lib/ssl
@@ -218,7 +216,6 @@ on the command line.
 
 %prep
 %setup -n openssl-%version
-
 %patch01 -p1
 %patch02 -p1
 %patch03 -p1
@@ -240,7 +237,9 @@ on the command line.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+
 %patch24 -p1
+
 %patch25 -p1
 %patch27 -p1
 %patch30 -p1
@@ -248,8 +247,6 @@ on the command line.
 %patch87 -p1
 %patch90 -p1
 %patch92 -p1
-
-%patch200 -p1
 
 find -type f -name \*.orig -delete
 
@@ -464,6 +461,11 @@ fi
 %_man1dir/tsget.*
 
 %changelog
+* Thu Sep 22 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2i-alt1
+- Updated to 1.0.2i (fixes CVE-2016-2177, CVE-2016-2179,
+  CVE-2016-2180, CVE-2016-2181, CVE-2016-2182, CVE-2016-2183,
+  CVE-2016-6302, CVE-2016-6303, CVE-2016-6304, CVE-2016-6306).
+
 * Wed Jun 08 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.2h-alt2
 - Backported upstream fix for CVE-2016-2178.
 
