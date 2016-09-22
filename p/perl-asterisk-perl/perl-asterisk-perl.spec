@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-asterisk-perl
-Version: 1.03
+Version: 1.08
 Release: alt1
 
 Summary: Asterisk Perl Interface
@@ -29,7 +29,7 @@ BuildArch: noarch
 Source: %m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Sun Aug 29 2010 (-bb)
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Net/Telnet.pm)
 
 %description
 None.
@@ -47,6 +47,9 @@ None.
 %doc examples
 
 %changelog
+* Thu Sep 22 2016 Igor Vlasenko <viy@altlinux.ru> 1.08-alt1
+- automated CPAN update
+
 * Tue Dec 13 2011 Denis Smirnov <mithraen@altlinux.ru> 1.03-alt1
 - 1.03
 
