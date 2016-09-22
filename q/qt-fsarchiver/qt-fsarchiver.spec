@@ -5,8 +5,8 @@
 
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt-fsarchiver
-Version: 0.6.19
-Release: alt1.%subver
+Version: 0.6.19.%subver
+Release: alt2
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -19,6 +19,7 @@ Source3: %sname.desktop
 Patch: qt5-fsarchiver-0.6.19-alt-glibc-2.16.patch
 Patch1: qt5-fsarchiver_qmake_pro.patch
 Patch2: qt5-fsarchiver-0.6.20-cppcheck.patch
+Patch3: qt5-fsarchiver-sudo-0.6.19-21.patch
 
 License: GPLv2+
 Group: Archiving/Backup
@@ -102,6 +103,7 @@ fsarchiver  - системный инструментарий, позволяя�
 %patch2 -p2
 %patch -p1
 %patch1 -p1
+%patch3 -p1
 
 # cp %%SOURCE4 ./translations/%{sname}_ru.ts
 
@@ -155,6 +157,9 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Thu Sep 22 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19.21-alt2
+- Add qt5-fsarchiver-sudo-0.6.19-21.patch
+
 * Fri Jul 22 2016 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.19-alt1.21
 - Version 0.6.19-21
 
@@ -195,5 +200,7 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 
 * Wed Jun 29 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.12-alt1
 - Initial build for ALT Linux
+
+
 
 
