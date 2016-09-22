@@ -1,7 +1,7 @@
 %define rname ktp-desktop-applets
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.1
 Release: alt1
 %K5init altplace
 
@@ -76,6 +76,12 @@ KF5 library
 #%_K5lib/libktp-desktop-applets.so.*
 
 %changelog
+* Wed Sep 21 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Fri Jul 15 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.3-alt1
+- new version
+
 * Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
