@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(base.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    WebService-MusicBrainz
-%define upstream_version 0.93
+%define upstream_version 0.94
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt2_8
+Version:    0.94
+Release:    alt1
 
 Summary:    No summary found
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/WebService/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/B/BF/BFAIST/WebService-MusicBrainz-%{version}.tar.gz
 
 BuildRequires: perl(Class/Accessor.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -46,13 +47,16 @@ web service objects;
 %makeinstall_std
 
 %files
-%doc Changes META.yml README
+%doc Changes META.yml README*
 %perl_vendor_privlib/*
 
 
 
 
 %changelog
+* Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.93-alt2_8
 - update by mgaimport
 
