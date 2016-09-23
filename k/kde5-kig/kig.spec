@@ -1,7 +1,7 @@
 %define rname kig
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -36,7 +36,7 @@ Kig is a program for exploring geometric constructions.
 
 %install
 %K5install
-%K5install_move data kig
+%K5install_move data kig katepart
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -45,6 +45,7 @@ Kig is a program for exploring geometric constructions.
 %_K5bin/pykig.py
 %_K5plug/kigpart.so
 %_K5data/kig/
+%_K5data/katepart/syntax/*-kig.xml
 %_K5icon/*/*/apps/kig.*
 %_K5icon/*/*/mimetypes/application-x-kig.*
 %_K5xmlgui/kig/
@@ -52,6 +53,12 @@ Kig is a program for exploring geometric constructions.
 %_K5srv/kig_part.desktop
 
 %changelog
+* Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 

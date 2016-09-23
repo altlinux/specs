@@ -1,7 +1,7 @@
 %define rname kstars
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -47,18 +47,24 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 
 %files -f %name.lang
 %doc COPYING*
-%config(noreplace) %_K5xdgconf/kstars.knsrc
+#%config(noreplace) %_K5xdgconf/kstars.knsrc
 %_K5bin/kstars
 %_K5data/kstars/
 %_K5icon/*/*/apps/kstars.*
-%_K5icon/*/*/actions/kstars_*.*
+#%_K5icon/*/*/actions/kstars_*.*
 %_K5snd/KDE-KStars-*.*
 %_K5xdgapp/org.kde.kstars.desktop
-%_K5xmlgui/kstars/
+#%_K5xmlgui/kstars/
 %_K5notif/kstars.notifyrc
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 

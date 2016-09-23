@@ -3,7 +3,7 @@
 %def_enable python2
 %def_enable python3
 
-%define cantor_sover 6
+%define cantor_sover 16
 %define libcantorlibs libcantorlibs%cantor_sover
 %define cantor_pythonbackend_sover 0
 %define libcantor_pythonbackend libcantor_pythonbackend%cantor_pythonbackend_sover
@@ -11,7 +11,7 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 16.04.2
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -137,6 +137,9 @@ popd
 %_K5lib/libcantor_config.so.*
 
 %changelog
+* Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
 - new version
 
