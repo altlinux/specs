@@ -1,7 +1,7 @@
 %define rname libkmahjongg
 
 Name: kde5-%rname
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 %K5init
 
@@ -72,6 +72,12 @@ KF5 library
 %_K5lib/libKF5KMahjongglib.so.*
 
 %changelog
+* Fri Sep 23 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
+* Tue Jul 05 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
+- new version
+
 * Mon May 16 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
