@@ -1,7 +1,6 @@
-# Node: _localstatedir has other value (/var) in other distro
 Name: mlocate
 Version: 0.26
-Release: alt1
+Release: alt2
 
 Summary: An utility for finding files by name
 
@@ -15,10 +14,14 @@ Source: https://fedorahosted.org/releases/m/l/mlocate/mlocate-%version.tar
 Source1: updatedb.conf
 Source2: mlocate.cron
 
+# TODO
+#BuildPreReq: gnulib
+
+# for groupadd
+BuildPreReq: rpm-build-intro
+
 Conflicts: slocate
 #Obsoletes: slocate <= 2.7-30
-
-BuildRequires: rpm-build-intro
 
 %description
 mlocate is a locate/updatedb implementation.  It keeps a database of
@@ -30,6 +33,11 @@ trash the system caches as much as traditional locate implementations.
 
 %prep
 %setup
+# put to /var/lib instead /var
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382 also
+%__subst 's|$(localstatedir)|$(sharedstatedir)|g' Makefile.*
+#rm -rf gnulib
+#cp -as /usr/share/gnulib .
 
 %build
 %configure
@@ -43,7 +51,7 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/updatedb.conf
 install -p -m 755 %SOURCE2 %buildroot%_sysconfdir/cron.daily/mlocate.cron
 
 # for %%ghost
-touch %buildroot%_localstatedir/mlocate/mlocate.db
+touch %buildroot%_sharedstatedir/mlocate/mlocate.db
 
 %find_lang mlocate
 
@@ -55,6 +63,10 @@ if /bin/grep -q '^[^#]*DAILY_UPDATE' %_sysconfdir/updatedb.conf; then
     /bin/sed -i.rpmsave -e '/DAILY_UPDATE/s/^/#/' %_sysconfdir/updatedb.conf
 fi
 
+if [ ! -f %_sharedstatedir/mlocate/%name.db ]; then
+    echo 'Run "%_bindir/updatedb" if you want to make %name database immediately.'
+fi
+
 %files -f mlocate.lang
 %doc AUTHORS COPYING NEWS README
 %_sysconfdir/cron.daily/mlocate.cron
@@ -62,10 +74,13 @@ fi
 %attr(2711,root,slocate) %_bindir/locate
 %_bindir/updatedb
 %_mandir/man*/*
-%dir %attr(0750,root,slocate) %_localstatedir/mlocate
-%ghost %_localstatedir/mlocate/mlocate.db
+%dir %attr(0750,root,slocate) %_sharedstatedir/mlocate
+%ghost %_sharedstatedir/mlocate/mlocate.db
 
 %changelog
+* Fri Sep 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt2
+- use sharedstatedir instead localstatedir
+
 * Sun Aug 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt1
 - new version 0.26 (with rpmrb script)
 
