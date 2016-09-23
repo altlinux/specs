@@ -19,8 +19,8 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 2.9.90
-Release: alt2
+Version: 2.10.0
+Release: alt0.1
 %K5init
 
 Group: Archiving/Cd burning
@@ -36,6 +36,7 @@ Conflicts: k3b-mini < 1.0.5-alt7
 
 Source0: %rname-%version.tar
 Patch1: alt-permhalper.patch
+Patch2: alt-data-dir.patch
 
 # Automatically added by buildreq on Mon May 23 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ glibc-devel-static gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libavcodec-devel libavutil-devel libdbusmenu-qt52 libflac-devel libgpg-error libgst-plugins1.0 libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-common xml-utils
@@ -50,6 +51,7 @@ BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmut
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel-static
 BuildRequires: kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
+BuildRequires: kf5-knewstuff-devel
 
 %description
 K3b is a GUI frontend to the cd recording programs. 
@@ -115,6 +117,7 @@ KDE 4 library.
 %prep
 %setup -q -n %rname-%version
 #%patch1 -p1
+%patch2 -p1
 
 mv .gear/po .
 
@@ -142,6 +145,7 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 
 
 %files -f %name.lang
+%config(noreplace) %_K5xdgconf/k3btheme.knsrc
 %doc README.txt FAQ.txt PERMISSIONS.txt ChangeLog
 %_K5bin/%rname
 %_K5plug/%{rname}*.so
@@ -176,6 +180,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 2.10.0-alt0.1
+- update from master branch
+
 * Fri Jul 29 2016 Sergey V Turchin <zerg@altlinux.org> 2.9.90-alt2
 - update from KF5 branch
 
