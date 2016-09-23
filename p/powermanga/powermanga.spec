@@ -1,13 +1,13 @@
 Name: powermanga
-Version: 0.92
+Version: 0.93.1
 Release: alt1
 Summary: Shoot them up with 3d graphics
 
 License: %gpl3plus
 Group: Games/Arcade
 
-URL: http://linux.tlk.fr/games/Powermanga/
-Source: %name-%version.tar
+Url: http://linux.tlk.fr/games/Powermanga/
+Source: %name-%version.tgz
 
 Source100: %name.desktop
 
@@ -73,6 +73,9 @@ install -Dpm 644 %SOURCE202 %buildroot/%_liconsdir/%name.png
 %_datadir/games/%name
 
 %changelog
+* Sat Sep 24 2016 Fr. Br. George <george@altlinux.ru> 0.93.1-alt1
+- Autobuild version bump to 0.93.1
+
 * Fri Sep 19 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92-alt1
 - Version 0.92
 
