@@ -4,7 +4,7 @@
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
 Version: 3.9.7
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
 Group: System/Base
@@ -20,23 +20,11 @@ BuildRequires: python-devel xsltproc libxslt-devel glib2-devel which docbook-sty
 BuildRequires: perl-podlators perl-Socket6 perl-libwww perl-IO-Socket-INET6 perl-Net-Ping perl-MailTools
 BuildRequires: systemd-devel
 
-%add_findreq_skiplist */heartbeat/IPaddr2
-%add_findreq_skiplist */heartbeat/ManageRAID
-%add_findreq_skiplist */heartbeat/Xen
-%add_findreq_skiplist */heartbeat/eDir88
-%add_findreq_skiplist */heartbeat/clvm
-%add_findreq_skiplist */heartbeat/ids
-%add_findreq_skiplist */heartbeat/lxc
-%add_findreq_skiplist */heartbeat/oracle
-%add_findreq_skiplist */heartbeat/scsi2reservation
-%add_findreq_skiplist */cluster/named.sh
-%add_findreq_skiplist */cluster/nfsserver.sh
-%add_findreq_skiplist */cluster/oracledb.sh
-%add_findreq_skiplist */cluster/orainstance.sh
-%add_findreq_skiplist */cluster/vm.sh
-%add_findreq_skiplist */cluster/service.sh
-%add_findreq_skiplist */cluster/fs.sh
-%add_findreq_skiplist */cluster/clusterfs.sh
+%add_findreq_skiplist */ocf/lib/heartbeat/*
+%add_findreq_skiplist */ocf/resource.d/heartbeat/*
+%add_findreq_skiplist */ocf/resource.d/redhat/*
+%add_findreq_skiplist %_datadir/cluster/*
+%add_findreq_skiplist %_datadir/cluster/utils/*
 
 %description
 A set of scripts to interface with several services to operate in a
@@ -369,6 +357,9 @@ mkdir -p %buildroot%_var/run/resource-agents
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Fri Sep 23 2016 Alexey Shabalin <shaba@altlinux.ru> 3.9.7-alt2
+- update add_findreq_skiplist
+
 * Wed Sep 14 2016 Alexey Shabalin <shaba@altlinux.ru> 3.9.7-alt1
 - 3.9.7
 

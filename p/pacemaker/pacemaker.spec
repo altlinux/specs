@@ -3,7 +3,7 @@
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 1.1.15
-Release: alt2
+Release: alt3
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -31,6 +31,9 @@ BuildRequires: publican inkscape asciidoc
 
 %define gname haclient
 %define uname hacluster
+
+%add_findreq_skiplist */ocf/resource.d/.isolation/*
+%add_findreq_skiplist */ocf/resource.d/pacemaker/*
 
 %description
 Pacemaker is an advanced, scalable High-Availability cluster resource
@@ -179,7 +182,12 @@ find %buildroot -name '*.a' -type f -print0 | xargs -0 rm -f
 find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 
 # Do not package these either
-rm -rf %buildroot/%_libdir/service_crm.so %buildroot%_datadir/pacemaker/tests/cts
+rm -rf %buildroot%_libdir/service_crm.so %buildroot%_datadir/pacemaker/tests/cts
+rm -f %buildroot%_sbindir/fence_legacy
+rm -f %buildroot%_mandir/man8/fence_legacy.*
+find %buildroot -name 'o2cb*' -type f -print0 | xargs -0 rm -f
+# Don't ship fence_pcmk where it has no use
+rm -f %buildroot%_sbindir/fence_pcmk
 
 GCOV_BASE=%buildroot/%_var/lib/pacemaker/gcov
 mkdir -p $GCOV_BASE
@@ -190,7 +198,7 @@ find . -name '*.gcno' -type f | while read F ; do
 done
 
 
-%pre
+%pre cli
 groupadd -f -r %gname ||:
 getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "cluster user" %uname ||:
 
@@ -208,7 +216,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 
 %files
 %doc COPYING AUTHORS ChangeLog
-%exclude %_datadir/pacemaker/tests
+%doc %_datadir/pacemaker/alerts
 %exclude %_libexecdir/pacemaker/lrmd_test
 %exclude %_sbindir/pacemaker_remoted
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker
@@ -216,34 +224,28 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_initdir/pacemaker
 %_unitdir/pacemaker.service
 %_logrotatedir/%name
-%_datadir/pacemaker
-%_datadir/snmp/mibs/PCMK-MIB.txt
 %_libexecdir/pacemaker/*
 %_sbindir/crm_attribute
 %_sbindir/crm_master
 %_sbindir/crm_node
 %_sbindir/crm_verify
 %_sbindir/attrd_updater
-%_sbindir/fence_legacy
-%_sbindir/fence_pcmk
+#%_sbindir/fence_legacy
+#%_sbindir/fence_pcmk
 %_sbindir/crm_resource
 %_sbindir/stonith_admin
 %_man8dir/attrd_updater.*
 %_man8dir/crm_attribute.*
 %_man8dir/crm_node.*
 %_man8dir/crm_master.*
-%_man8dir/fence_pcmk.*
+#%_man8dir/fence_pcmk.*
 %_man8dir/pacemakerd.*
 %_man8dir/stonith_admin.*
-%dir %attr (750, %uname, %gname) %_var/lib/pacemaker
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cib
-%dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cores
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/pengine
-%dir %attr (750, %uname, %gname) %_var/lib/pacemaker/blackbox
-%dir /usr/lib/ocf
-%dir /usr/lib/ocf/resource.d
+/usr/lib/ocf/resource.d/pacemaker/controld
+/usr/lib/ocf/resource.d/pacemaker/remote
 /usr/lib/ocf/resource.d/.isolation
-/usr/lib/ocf/resource.d/pacemaker
 
 %files cli
 %_sbindir/cibadmin
@@ -264,10 +266,25 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %exclude %_man8dir/crm_attribute.*
 %exclude %_man8dir/crm_node.*
 %exclude %_man8dir/crm_master.*
-%exclude %_man8dir/fence_pcmk.*
+#%exclude %_man8dir/fence_pcmk.*
 %exclude %_man8dir/pacemakerd.*
 %exclude %_man8dir/pacemaker_remoted.*
 %exclude %_man8dir/stonith_admin.*
+
+%_datadir/pacemaker
+%_datadir/snmp/mibs/PCMK-MIB.txt
+%exclude %_datadir/pacemaker/tests
+%exclude %_datadir/pacemaker/alerts
+
+%dir /usr/lib/ocf
+%dir /usr/lib/ocf/resource.d
+/usr/lib/ocf/resource.d/pacemaker
+%exclude /usr/lib/ocf/resource.d/pacemaker/controld
+%exclude /usr/lib/ocf/resource.d/pacemaker/remote
+
+%dir %attr (750, %uname, %gname) %_var/lib/pacemaker
+%dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cores
+%dir %attr (750, %uname, %gname) %_var/lib/pacemaker/blackbox
 
 %files -n lib%name
 %doc COPYING.LIB AUTHORS
@@ -304,6 +321,10 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Sep 23 2016 Alexey Shabalin <shaba@altlinux.ru> 1.1.15-alt3
+- do not package fence files
+- add_findreq_skiplist for resource files
+
 * Wed Sep 14 2016 Alexey Shabalin <shaba@altlinux.ru> 1.1.15-alt2
 - build with systemd support
 - update sysv init script
