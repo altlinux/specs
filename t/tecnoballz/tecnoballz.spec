@@ -1,6 +1,6 @@
 Name: tecnoballz
-Version: 0.92
-Release: alt3
+Version: 0.93.1
+Release: alt1
 Summary: A Brick Busting game
 
 Group: Games/Arcade
@@ -10,12 +10,10 @@ Source0: http://linux.tlk.fr/games/TecnoballZ/download/%name-%version.tgz
 Source1: %name.xpm
 Source2: %name.desktop
 
-Patch: tecnoballz-0.92-alt-coord_x.patch
-
 BuildRequires: desktop-file-utils xorg-util-macros
 
 # Automatically added by buildreq on Tue Dec 02 2008
-BuildRequires: gcc-c++ imake libSDL-devel libSDL_image-devel libSDL_mixer-devel libX11-devel libmikmod-devel libsmpeg-devel libvorbis-devel xorg-cf-files
+BuildRequires: gcc-c++ imake libSDL-devel libSDL_image-devel libSDL_mixer-devel libX11-devel libmikmod-devel libsmpeg-devel libvorbis-devel xorg-cf-files tinyxml-devel
 
 %description
 TecnoballZ is a "breaking blocks" game that was first written for the
@@ -27,11 +25,10 @@ Area, a new edge is open. You can buy weapons and bonus between levels
 with the money earned during the game.
 
 %prep
-%setup -q
-%patch
+%setup
 
 # fix .am bug
-sed -i 's/supervisor.c /supervisor.cc /' src/Makefile.am
+##sed -i 's/supervisor.c /supervisor.cc /' src/Makefile.am
 
 #fix man encodig
 #iconv -f ASCII -t UTF-8 man/tecnoballz.1 > man/tecnoballz.1.conv && mv -f man/tecnoballz.1.conv man/tecnoballz.1
@@ -67,17 +64,23 @@ desktop-file-install --vendor "" \
 mkdir -p %buildroot%_niconsdir
 install -p -m 0644 %SOURCE1 %buildroot%_niconsdir/%name.xpm
 
+# TODO find_lang
+
 %files
 %attr(2711,root,games) %_gamesbindir/%name
 %_gamesdatadir/%name
-%_man6dir/%name.6*
-%_mandir/fr/man6/%name.6*
+%_man6dir/*
+#_mandir/fr/man6/%name.6*
 %_niconsdir/%name.xpm
 %_desktopdir/%name.desktop
 %doc AUTHORS CHANGES COPYING README
 %attr(664,root,games) %config(noreplace) %_localstatedir/games/%name.hi
 
 %changelog
+* Sat Sep 24 2016 Fr. Br. George <george@altlinux.ru> 0.93.1-alt1
+- Autobuild version bump to 0.93.1
+- Fix buildreq
+
 * Thu Oct 25 2012 Fr. Br. George <george@altlinux.ru> 0.92-alt3
 - Fix .am typo and remove inactual patches
 
