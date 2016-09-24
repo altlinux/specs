@@ -1,6 +1,6 @@
 %define oname RemoteBox
 Name: remotebox
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: Open Source VirtualBox Client with Remote Management
@@ -48,6 +48,9 @@ cp -a share/remotebox/* %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
+- new version 2.2 (with rpmrb script)
+
 * Thu Jul 28 2016 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt1
 - new version 2.1 (with rpmrb script)
 
