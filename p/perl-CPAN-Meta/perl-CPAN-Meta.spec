@@ -2,7 +2,7 @@
 %define dist CPAN-Meta
 Name: perl-%dist
 Version: 2.150010
-Release: alt1
+Release: alt2
 
 Summary: The distribution metadata for a CPAN dist
 License: GPL or Artistic
@@ -27,6 +27,16 @@ CPAN::Meta provides a simple class to represent this distribution
 metadata (or distmeta), along with some helpful methods for
 interrogating that data.
 
+%package -n perl-Parse-CPAN-Meta
+Summary: Parse::CPAN::Meta - Parse META.yml and META.json CPAN metadata files
+Group: Development/Perl
+# loaded with _can_load
+Requires: perl-JSON-PP
+
+%description -n perl-Parse-CPAN-Meta
+Parse::CPAN::Meta is a parser for META.json and META.yml files, 
+using JSON::PP and/or CPAN::Meta::YAML.
+
 %prep
 %setup -q -n %dist-%version
 
@@ -39,9 +49,14 @@ interrogating that data.
 %files
 %doc Changes README
 %perl_vendor_privlib/CPAN
+
+%files -n perl-Parse-CPAN-Meta
 %perl_vendor_privlib/Parse
 
 %changelog
+* Sat Sep 24 2016 Igor Vlasenko <viy@altlinux.ru> 2.150010-alt2
+- added perl-Parse-CPAN-Meta subpackage (closes: #32523)
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.150010-alt1
 - automated CPAN update
 
