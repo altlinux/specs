@@ -1,7 +1,7 @@
 %define pear_name Cache_Lite
 
 Name: pear-Cache_Lite
-Version: 1.7.16
+Version: 1.8.0
 Release: alt1
 
 Summary: Fast and Safe little cache system
@@ -46,6 +46,9 @@ fast and safe (because it uses file locking and/or anti-corruption tests).
 %pear_xmldir/%pear_name.xml
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 1.7.16-alt1
 - new version 1.7.16 (with rpmrb script)
 
