@@ -1,6 +1,6 @@
 %define major 0.9
 Name: podofo
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: PDF manipulation library and tools
@@ -13,7 +13,6 @@ Group: Office
 URL: http://sourceforge.net/projects/podofo/
 
 Source: http://prdownloads.sf.net/podofo/%name/%major/%name-%version.tar
-Patch: %name-64bit.patch
 
 BuildPrereq: rpm-macros-cmake zlib-devel libpng-devel
 
@@ -52,7 +51,6 @@ Development files for the PoDoFo library.
 
 %prep
 %setup
-%patch -p2
 %cmake -G "Unix Makefiles" \
 	-DCMAKE_INSTALL_PREFIX=%buildroot/%_prefix \
 	-DPODOFO_BUILD_SHARED:BOOL=TRUE \
@@ -77,6 +75,9 @@ Development files for the PoDoFo library.
 %_libdir/*.so
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt1
+- new version 0.9.4 (with rpmrb script)
+
 * Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - new version 0.9.3 (with rpmrb script)
 

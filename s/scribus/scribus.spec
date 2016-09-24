@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.4.5
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -168,6 +168,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.5-alt3
+- rebuild with new libpodofo 0.9.4
+
 * Sun Aug 23 2015 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.5-alt2
 - rebuild with new libpodofo 0.9.3
 - drop patching _datadir/CMake/Modules/FindFreetype.cmake

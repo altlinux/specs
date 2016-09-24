@@ -2,8 +2,8 @@
 
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 2.35.0
-Release: alt2
+Version: 2.68.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -92,6 +92,7 @@ TXT, PDF, LRS и FB2.
 
 %prep
 %setup -n %name
+%__subst "s|libdir = s.get_python_lib.*|libdir = '%buildroot%python_sitelibdir'|" setup/install.py
 # don't check for new upstream version
 #patch -p1
 #patch1 -p1
@@ -120,14 +121,15 @@ install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
 /etc/bash_completion.d/%name
 %_bindir/*
 %_libdir/%name/
-# FIXME: strange
-%ifnarch x86_64
 %python_sitelibdir/*
-%endif
 %_datadir/%name/
 %_datadir/appdata/*.appdata.xml
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.68.0-alt1
+- new version 2.68.0 (with rpmrb script)
+- build with podofo 0.9.4
+
 * Fri Feb 26 2016 Vitaly Lipatov <lav@altlinux.ru> 2.35.0-alt2
 - fix buildreqs
 - rebuild with libicu56
