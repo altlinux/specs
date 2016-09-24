@@ -1,8 +1,8 @@
 #set_verify_elf_method none
 
 Name:     tesseract
-Version: 3.04.00
-Release: alt1
+Version: 3.04.01
+Release: alt2
 
 Summary:  Raw Open source OCR Engine
 
@@ -12,7 +12,7 @@ Url:      https://github.com/tesseract-ocr
 
 Packager: Andrey Cherepanov <cas@altlinux.org> 
 
-# Source-url: https://github.com/tesseract-ocr/tesseract/archive/%version.tar.gz
+# Source-git: https://github.com/tesseract-ocr/tesseract.git
 Source:   %name-%version.tar
 
 BuildRequires: gcc-c++
@@ -29,6 +29,7 @@ Google.
 Summary:  Development files for tesseract
 Group:    Development/C
 Requires: %name
+Requires: libleptonica-devel >= 1.60
 
 %description devel
 The %{name}-devel package contains header file for
@@ -557,6 +558,13 @@ cp -v tessdata/*.traineddata %buildroot%_datadir/tessdata/
 
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 3.04.01-alt2
+- build with libleptonica
+
+* Thu Aug 25 2016 Vitaly Lipatov <lav@altlinux.ru> 3.04.01-alt1
+- new version 3.04.01 (with rpmrb script)
+- fix previous broken build
+
 * Sat Aug 15 2015 Vitaly Lipatov <lav@altlinux.ru> 3.04.00-alt1
 - new version 3.04.00 (with rpmrb script)
 
