@@ -4,14 +4,14 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: Sphinx extension for adding asyncio-specific markups
 
 License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/sphinxcontrib-asyncio
 #Url: https://github.com/aio-libs/sphinxcontrib-asyncio
-Packager: Anton Midyukov <antohami@altlinux.org>
+Packager: Python Development Team <python at packages.altlinux.org>
 
 Source: %name-%version.tar
 BuildArch: noarch
@@ -27,7 +27,6 @@ BuildPreReq: python-devel python-module-setuptools-tests
 %description
 Sphinx extension for adding asyncio-specific markups.
 
-%if_with python3
 %package -n python3-module-%oname
 Summary: Sphinx extension for adding asyncio-specific markups
 Group: Development/Python
@@ -37,7 +36,6 @@ Group: Development/Python
 %description -n python3-module-%oname
 Sphinx extension for adding asyncio-specific markups.
 Python 3 version.
-%endif
 
 %prep
 %setup
@@ -68,6 +66,7 @@ popd
 %doc LICENSE
 %doc README.*
 %python_sitelibdir/%mname/*
+%exclude %python_sitelibdir/%mname/__init__.py*
 %python_sitelibdir/*.egg-info
 
 %if_with python3
@@ -75,9 +74,13 @@ popd
 %doc LICENSE
 %doc README.*
 %python3_sitelibdir/%mname/*
+%exclude %python3_sitelibdir/%mname/__init__.py*
 %python3_sitelibdir/*.egg-info
 %endif
 
 %changelog
+* Sat Sep 24 2016 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt2
+- Fixed a conflict with the package python-module-sphinxcontrib.
+
 * Fri Aug 05 2016 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
 - Initial build for ALT Linux Sisyphus.
