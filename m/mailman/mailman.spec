@@ -2,8 +2,8 @@
 #	add systemd init support
 #       use xz for large archives in /usr/share/mailman/cron/nightly_gzip
 Name: mailman
-Version: 2.1.22
-Release: alt1
+Version: 2.1.23
+Release: alt0.1.20160915
 Epoch: 5
 Packager: Grigory Batalov <bga@altlinux.ru>
 
@@ -373,6 +373,11 @@ fi
 %doc doc
 
 %changelog
+* Sat Sep 24 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.23-alt0.1.20160915
+- LP shapshot 20160916.
+- Security fixes:
+  + CVE-2016-6893: Extend CSRF protection to user options page.
+
 * Mon May 02 2016 L.A. Kostis <lakostis@altlinux.ru> 5:2.1.22-alt1
 - Updated to 2.1.22.
 
