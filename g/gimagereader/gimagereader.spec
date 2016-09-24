@@ -1,8 +1,8 @@
-%def_with qt4
+%def_without qt4
 
 Name: gimagereader
-Version: 3.1.2
-Release: alt3
+Version: 3.1.91
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -17,13 +17,18 @@ Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%versi
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: cmake gcc-c++ libsane-devel tesseract-devel libgomp5-devel
+BuildRequires: cmake gcc-c++ ccmake git-core libgomp-devel libjson-glib-devel libsane-devel libxml++2-devel libleptonica-devel libpcre-devel libpixman-devel libexpat-devel
+
+# something wrong
+# Package 'xrandr', required by 'GDK', not found
+BuildPreReq: libdrm-devel libXdmcp-devel libXdamage-devel libXxf86vm-devel libXinerama-devel libXi-devel libXrandr-devel libXcursor-devel libXcomposite-devel wayland-protocols libxkbcommon-devel
 
 # need pkgconfig from 3.04 and above
 BuildRequires: tesseract-devel >= 3.04.00
 
 # gtk
-BuildRequires: libgtksourceviewmm3-devel libgtkspellmm3-devel libpoppler-glib-devel
+BuildRequires: libgtksourceviewmm3-devel libpoppler-glib-devel
+BuildRequires: libgtkspellmm3-devel >= 3.0.4
 
 %if_with qt4
 BuildRequires: libqt4-devel libqtspell-qt4-devel libpoppler-qt4-devel
@@ -175,6 +180,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 3.1.91-alt1
+- new version 3.1.91 (with rpmrb script)
+
 * Mon Aug 17 2015 Vitaly Lipatov <lav@altlinux.ru> 3.1.2-alt3
 - fix inter package requires
 
