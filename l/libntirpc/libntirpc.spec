@@ -1,8 +1,8 @@
 %define dev_version 1.4.0pre2
 
 Name: libntirpc
-Version: 1.4.0
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: New Transport Independent RPC Library
 
@@ -67,6 +67,9 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.1
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- new version 1.4.1 (with rpmrb script)
+
 * Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
 - cleanup install
 
