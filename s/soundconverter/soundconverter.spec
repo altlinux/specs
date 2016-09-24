@@ -1,5 +1,5 @@
 Name: soundconverter
-Version: 2.0.2
+Version: 2.1.6
 Release: alt1
 
 Summary: A simple sound converter application for GNOME
@@ -53,11 +53,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/%name
 %_libdir/%name
 %_datadir/%name
+%_datadir/appdata/*
 %_desktopdir/*%name.desktop
 %_iconsdir/hicolor/48x48/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sat Sep 24 2016 Anton Midyukov <antohami@altlinux.org> 2.1.6-alt1
+- 2.1.6
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
