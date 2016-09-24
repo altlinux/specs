@@ -1,5 +1,5 @@
 Name: nip2
-Version: 8.3.0
+Version: 8.4.0
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -70,6 +70,9 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Sat Sep 24 2016 Michael Shigorin <mike@altlinux.org> 8.4.0-alt1
+- new version (watch file uupdate)
+
 * Fri May 20 2016 Michael Shigorin <mike@altlinux.org> 8.3.0-alt1
 - new version (watch file uupdate)
 
