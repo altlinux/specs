@@ -1,5 +1,5 @@
 Name: tea
-Version: 41.0.0
+Version: 43.1.0
 Release: alt1
 
 Summary: Powerful text editor with many HTML editing and text processing functions
@@ -23,6 +23,7 @@ your Linux-distro).
 
 %prep
 %setup
+%__subst "s|.*Ягодная.*||" rlvn.qrc
 
 %build
 %qmake_qt4
@@ -59,6 +60,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 43.1.0-alt1
+- new version 43.1.0 (with rpmrb script)
+
 * Sat Aug 22 2015 Vitaly Lipatov <lav@altlinux.ru> 41.0.0-alt1
 - new version 41.0.0 (with rpmrb script)
 
