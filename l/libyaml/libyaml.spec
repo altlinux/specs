@@ -1,6 +1,6 @@
 %define abiversion 2
 Name: libyaml
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: A C library for parsing and emitting YAML
@@ -11,7 +11,8 @@ Url: http://pyyaml.org/wiki/LibYAML
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %name-%version.tar.bz2
+# Source-url: http://pyyaml.org/download/libyaml/yaml-%version.tar.gz
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Oct 02 2010
 BuildRequires: doxygen
@@ -58,6 +59,9 @@ top_srcdir=`pwd` top_builddir=`pwd` doxygen doc/doxygen.cfg
 %_pkgconfigdir/*
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 0.1.7-alt1
+- new version 0.1.7 (with rpmrb script)
+
 * Wed Apr 09 2014 Fr. Br. George <george@altlinux.ru> 0.1.6-alt1
 - Autobuild version bump to 0.1.6
 
