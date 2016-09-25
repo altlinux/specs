@@ -5,10 +5,10 @@ BuildRequires: perl-devel perl-podlators perl(DateTime/Format/SQLite.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(File/Slurp.pm)
 %define upstream_name    Tapper-Model
-%define upstream_version 5.0.1
+%define upstream_version 5.0.2
 
 Name:       perl-%{upstream_name}
-Version:    5.0.1
+Version:    5.0.2
 Release:    alt1
 
 Summary:    Tapper - Context sensitive connected DBIC schema
@@ -58,6 +58,9 @@ Context sensitive and connected DBIC schema for Tapper.
 %perl_vendor_privlib/*
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.2-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1
 - automated CPAN update
 
