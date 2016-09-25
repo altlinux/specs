@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Net-Interface
 
 Name: perl-%dist
-Version: 1.012
-Release: alt4.1.1
+Version: 1.016
+Release: alt1
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Perl extension to access network interfaces
@@ -10,7 +11,7 @@ License: %perl_license
 Group: Development/Perl
 
 Url: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MI/MIKER/Net-Interface-%{version}.tar.gz
 
 Patch100: Net-Interface-1.012-overflow.patch
 
@@ -40,6 +41,9 @@ network interfaces in a manner similar to ifconfig(8).
 %perl_vendor_autolib/Net*
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.016-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.012-alt4.1.1
 - rebuild with new perl 5.22.0
 
