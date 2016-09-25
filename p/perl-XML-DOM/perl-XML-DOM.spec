@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-DOM
 Name: perl-%dist
-Version: 1.45
+Version: 1.46
 Release: alt1
 
 Summary: A module for building DOM Level 1 compliant document structures
@@ -35,6 +35,9 @@ with a DOM Level 1 compliant interface.
 %perl_vendor_privlib/XML
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1
 - automated CPAN update
 
