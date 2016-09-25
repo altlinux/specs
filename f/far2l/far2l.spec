@@ -1,6 +1,6 @@
 Name: far2l
 Version: 2.0
-Release: alt1
+Release: alt1.4198cd5
 
 Summary: Linux port of FAR v2
 
@@ -11,7 +11,7 @@ Url: https://github.com/elfmz/far2l
 # Source-git: https://github.com/elfmz/far2l.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libwxGTK3.1-devel glib2-devel
+BuildRequires: cmake gcc-c++ libwxGTK3.1-devel glib2-devel
 
 %description
 Linux port of FAR v2
@@ -28,17 +28,17 @@ ANSICON
 
 %prep
 %setup
-%__subst "s|-mcmodel=medium||g" far2l/far2l.mk
 
 %build
+%cmake_insource
 %make_build
 # FIXME: NEW bad_elf_symbols detected during build on ALT Linux build system
-rm -rf Build/Plugins/farftp/
+rm -rf install/Plugins/{farftp,multiarc}/
 
 %install
 mkdir -p %buildroot%_bindir/
 mkdir -p %buildroot%_libexecdir/%name/
-cp -a Build/* %buildroot%_libexecdir/%name/
+cp -a install/* %buildroot%_libexecdir/%name/
 ln -s ../../%_libexecdir/%name/far2l %buildroot%_bindir/%name
 
 %files
@@ -46,5 +46,8 @@ ln -s ../../%_libexecdir/%name/far2l %buildroot%_bindir/%name
 %_libexecdir/%name/
 
 %changelog
+* Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1.4198cd5
+- new git build 4198cd5
+
 * Sat Aug 20 2016 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1
 - initial build for ALT Linux Sisyphus
