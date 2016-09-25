@@ -1,16 +1,14 @@
 %define user grmilter
 
 Name: milter-greylist
-Version: 4.5.9
-Release: alt2
+Version: 4.6.1
+Release: alt1
 Group: System/Servers
 License: 3-clause BSD license
 Summary: GreyList milter for milter-capable MTA
 Source0: ftp://ftp.espci.fr/pub/milter-greylist/%name-%version.tar
 Source1: %name.init.alt
 Patch0: %name.alt.patch
-# http://permalink.gmane.org/gmane.mail.sendmail.milter.greylist/3593
-Patch1: %name.postfix.patch
 Url: http://hcpnet.free.fr/milter-greylist/
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
@@ -31,6 +29,9 @@ Requires: sendmail-cf >= 8.11
 BuildRequires: sendmail-devel >= 8.11
 BuildRequires: flex
 BuildRequires: bison
+BuildRequires: chrpath
+# for DNSRBL support
+BuildRequires: bind-devel
 %{?_with_libspf2:BuildPreReq: libspf2-devel}
 %{?_with_libcurl:BuildPreReq: libcurl-devel}
 %{?_with_libGeoIP:BuildPreReq: libGeoIP-devel}
@@ -53,14 +54,16 @@ before the second attempt.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
+subst 's,_BSD_SOURCE,_DEFAULT_SOURCE,gi' configure.ac Makefile.in
+%autoreconf
 %configure \
 	--with-user=%user \
 	%{subst_enable postfix} \
 	%{subst_enable dnsrbl} \
 	%{subst_enable p0f} \
+	--with-libbind \
 	%{?_with_libspf2:--with-libspf2=%_libdir} \
 	%{?_with_libcurl:--with-libcurl=%_libdir} \
 	%{?_with_libGeoIP:--with-libGeoIP=%_libdir}
@@ -82,6 +85,7 @@ touch %buildroot%_localstatedir/milter-greylist/greylist.db
 touch %buildroot%_sysconfdir/sysconfig/%name
 
 make DESTDIR=%buildroot install
+chrpath -d %buildroot%_sbindir/%name
 
 %pre
 /usr/sbin/useradd -r -d /etc/mail -s /sbin/nologin \
@@ -140,6 +144,13 @@ fi
 %attr(0600,%user,root) %ghost %_localstatedir/milter-greylist/greylist.db
 
 %changelog
+* Sun Sep 25 2016 L.A. Kostis <lakostis@altlinux.ru> 4.6.1-alt1
+- Updated to 4.6.1.
+- Build fixes:
+  + removed obsoleted build flags.
+  + added bind-devel (for DNSRBL support).
+  + removed -postfix patch (fixed by upstream).
+
 * Thu Jan 01 2015 L.A. Kostis <lakostis@altlinux.ru> 4.5.9-alt2
 - .spec cleanup.
 
