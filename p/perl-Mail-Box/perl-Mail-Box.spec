@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
 Name: perl-%dist
-Version: 2.118
-Release: alt2
+Version: 2.120
+Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
 License: Artistic
@@ -38,6 +38,9 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.120-alt1
+- automated CPAN update
+
 * Mon Apr 11 2016 Igor Vlasenko <viy@altlinux.ru> 2.118-alt2
 - build w/o HTML-Format
 
