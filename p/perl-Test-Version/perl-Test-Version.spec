@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,7 +8,7 @@ BuildRequires: perl-devel perl-podlators
 %global debug_package %{nil}
 
 Name:		perl-Test-Version
-Version:	2.04
+Version:	2.05
 Release:	alt1
 Summary:	Check to see that versions in modules are sane
 License:	Artistic 2.0
@@ -97,6 +98,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1
+- automated CPAN update
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
 - automated CPAN update
 
