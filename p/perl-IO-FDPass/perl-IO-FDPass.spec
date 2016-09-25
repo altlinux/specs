@@ -1,6 +1,6 @@
 Name: perl-IO-FDPass
-Version: 1.1
-Release: alt1.1
+Version: 1.2
+Release: alt1
 
 Summary: pass a file descriptor over a socket
 Group: Development/Perl
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl(Canary/Stability.pm)
 %doc README Changes
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1.1
 - rebuild with new perl 5.22.0
 
