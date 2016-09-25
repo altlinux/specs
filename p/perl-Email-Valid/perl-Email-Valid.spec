@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Valid
 Name: perl-%dist
-Version: 1.200
+Version: 1.201
 Release: alt1
 
 Summary: Check validity of Internet email addresses 
@@ -36,6 +36,9 @@ and optionally, whether a mail host exists for the domain.
 %perl_vendor_privlib/Email
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.201-alt1
+- automated CPAN update
+
 * Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.200-alt1
 - automated CPAN update
 
