@@ -1,5 +1,5 @@
 Name: supertux2
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
@@ -9,14 +9,13 @@ Url: http://supertux.lethargik.org/
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
-Source: supertux-%version.tar.bz2
+Source: SuperTux-v%version-Source.tar.gz
 
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
 
 Patch: supertux-alt-desktop-file.patch
-Patch1: supertux-0.4.0-no-install-externals.patch
 
 Conflicts: supertux
 
@@ -24,7 +23,8 @@ Requires: %name-data = %version-%release
 
 # Automatically added by buildreq on Mon Oct 01 2012 (-bi)
 # WTF? vorbis-tools? really?
-BuildRequires: boost-devel-headers cmake gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel
+BuildPreReq: cmake rpm-macros-cmake
+BuildRequires: boost-devel boost-filesystem-devel gcc-c++ libSDL2_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel
 
 %description
 SuperTux is a jump'n run like game, with strong inspiration from the
@@ -52,23 +52,15 @@ on the way.
 This is package contains data files for supertux2.
 
 %prep
-%setup -n supertux-%version
+%setup -qn SuperTux-v%version-Source
 %patch
-%patch1 -p1
 
 %build
-cmake \
-        -D CMAKE_INSTALL_PREFIX=%_prefix \
-%if %_lib == lib64
-        -D LIB_SUFFIX=64 \
-%endif
-        -D CMAKE_CXX_FLAGS:STRING="%optflags" \
-        -D INSTALL_SUBDIR_BIN=bin \
-        -D INSTALL_SUBDIR_SHARE=share/supertux2 \
-        -D CMAKE_BUILD_TYPE="Release" \
-        -D CMAKE_SKIP_RPATH=YES . \
-        -DBUILD_SHARED_LIBS=OFF
-
+%cmake_insource \
+        -DINSTALL_SUBDIR_BIN=bin \
+        -DINSTALL_SUBDIR_SHARE=share/supertux2 \
+        -DCMAKE_BUILD_TYPE="Release" \
+        -DENABLE_BOOST_STATIC_LIBS=OFF
 %make_build
 
 %install
@@ -85,21 +77,25 @@ install -D -m 644 man/man6/%name.6 %buildroot/%_man6dir/%name.6
 rm -rf %buildroot/%_docdir/supertux2/
 
 %files -f %name.lang
-%doc docs/* LICENSE.txt NEWS.md README.md
 %_bindir/supertux2
 %_desktopdir/supertux2.desktop
+
+%files data
+%doc docs/* LICENSE.txt NEWS.md README.md
+%dir %_datadir/supertux2
+%_datadir/supertux2/*
+%_datadir/appdata/*
 %_miconsdir/*.png
 %_niconsdir/*.png
 %_liconsdir/*.png
 %_pixmapsdir/supertux.*
 %_man6dir/*
-
-%files data
-%dir %_datadir/supertux2
-%_datadir/supertux2/*
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Mon Sep 26 2016 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- 0.5.0 release
+
 * Thu Jul 07 2016 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - 0.4.0 release
 
