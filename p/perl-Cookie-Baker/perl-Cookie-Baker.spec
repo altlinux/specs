@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 0.06
+%define module_version 0.07
 %define module_name Cookie-Baker
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Cookie/Baker/XS.pm) perl(Exporter.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test/Time.pm) perl(URI/Escape.pm) perl(base.pm)
@@ -7,7 +7,7 @@ BuildRequires: perl(Cookie/Baker/XS.pm) perl(Exporter.pm) perl(Module/Build.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
+Version: 0.07
 Release: alt1
 Summary: Cookie string generator / parser
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/C*
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
