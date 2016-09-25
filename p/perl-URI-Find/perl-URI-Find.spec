@@ -1,5 +1,5 @@
 Name: perl-URI-Find
-Version: 20140709
+Version: 20160806
 Release: alt1
 
 Summary: URI::Find - Find URIs in arbitrary text
@@ -27,10 +27,14 @@ BuildArch: noarch
 
 %files
 %_bindir/urifind
+%_man1dir/urifind.*
 %perl_vendor_privlib/URI/Find*
 %doc TODO Changes README 
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 20160806-alt1
+- automated CPAN update
+
 * Fri Jul 25 2014 Igor Vlasenko <viy@altlinux.ru> 20140709-alt1
 - automated CPAN update
 
