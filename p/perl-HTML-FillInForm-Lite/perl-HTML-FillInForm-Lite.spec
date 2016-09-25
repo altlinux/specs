@@ -1,5 +1,5 @@
 Name: perl-HTML-FillInForm-Lite
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: HTML::FillInForm::Lite - Fills in HTML forms with data
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl-Module-Build-Tiny perl-CGI perl-autodie perl-Enco
 %doc Changes README.md
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
 - automated CPAN update
 
