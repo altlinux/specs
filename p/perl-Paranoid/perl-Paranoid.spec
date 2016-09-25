@@ -4,7 +4,7 @@
 %define m_name Paranoid
 
 Name: perl-%module
-Version: 2.03
+Version: 2.04
 Release: alt1
 
 Summary: More secure programming in Perl
@@ -38,6 +38,9 @@ mode.
 %perl_vendor_privlib/Paranoid*
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
 - automated CPAN update
 
