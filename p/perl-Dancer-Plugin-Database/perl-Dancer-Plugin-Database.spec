@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Dancer-Plugin-Database
-Version: 2.12
+Version: 2.13
 Release: alt1
 Summary: Dancer::Plugin::Database - easy database connections for Dancer applications
 
@@ -9,7 +9,7 @@ License: Perl
 Url: %CPAN Dancer-Plugin-Database
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AM/AMBS/Dancer-Plugin-Database-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BIGPRESH/Dancer-Plugin-Database-%{version}.tar.gz
 BuildRequires: perl-devel perl-DBI perl-Dancer perl(Dancer/Plugin/Database/Core.pm)
 
 %description
@@ -29,6 +29,9 @@ BuildRequires: perl-devel perl-DBI perl-Dancer perl(Dancer/Plugin/Database/Core.
 %doc Changes README 
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
+- automated CPAN update
+
 * Sat Mar 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
 - automated CPAN update
 
