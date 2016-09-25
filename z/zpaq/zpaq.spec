@@ -1,5 +1,5 @@
 Name: zpaq
-Version: 714
+Version: 715
 Release: alt1
 
 Summary: A journaling archiver optimized for backup
@@ -75,6 +75,9 @@ install -m0644 -D zpaq.1 %buildroot%_man1dir/zpaq.1
 %_includedir/*.h
 
 %changelog
+* Sun Sep 25 2016 Vitaly Lipatov <lav@altlinux.ru> 715-alt1
+- new version 715 (with rpmrb script)
+
 * Fri Jul 22 2016 Vitaly Lipatov <lav@altlinux.ru> 714-alt1
 - new version 714 (with rpmrb script)
 
