@@ -1,6 +1,6 @@
 Summary:       Multi-tenant cloud management system client tools
 Name:          rhc
-Version:       1.13.1
+Version:       1.38.6
 Release:       alt1
 Group:         System/Servers
 License:       ASL 2.0
@@ -89,6 +89,9 @@ cp autocomplete/rhc_bash %buildroot%_sysconfdir/bash_completion.d/rhc
 %endif
 
 %changelog
+* Sun Sep 25 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.38.6-alt1
+- update to last release
+
 * Tue Aug 13 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.13.1-alt1
 - Update for new release
 

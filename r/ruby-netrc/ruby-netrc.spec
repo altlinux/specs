@@ -1,12 +1,12 @@
-%define orig_name open4
+%define orig_name netrc
 
-Summary: Manage child processes and their IO handles easily
+Summary: Library to read and write netrc files
 Name: ruby-%orig_name
-Version: 1.3.3
+Version: 0.10.3
 Release: alt1
 Group: Development/Ruby
-License: BSD or Ruby
-URL: http://github.com/ahoward/open4
+License: MIT
+URL: https://github.com/geemus/netrc
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -45,24 +45,26 @@ Documentation for %name
 
 rm -f %buildroot%ruby_ri_sitedir/cache.ri
 rm -f %buildroot%ruby_ri_sitedir/created.rid
+rm -f %buildroot%_datadir/*.netrc
 
 %check
-#ruby_test_unit -Ilib -Itest/support test
+chmod 600 data/newlineless.netrc
+%ruby_test_unit -Ilib --ignore-name='test_encrypted_roundtrip' test
 
 %files
-%doc LICENSE
+%doc Readme.md LICENSE
 %ruby_sitelibdir/*
 
 %files doc
-%doc samples
+%doc changelog.txt
+%doc data
 %doc test
-%doc white_box
 %ruby_ri_sitedir/*
 
 %changelog
-* Sun Sep 25 2016 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.3-alt1
-- Update to latest release
+* Sun Sep 25 2016 Evgeny Sinelnikov <sin@altlinux.ru> 0.10.3-alt1
+- Update to last release
 
-* Sat Dec 08 2012 Evgeny Sinelnikov <sin@altlinux.ru> 1.3.0-alt1
+* Sat Dec 08 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.7.7-alt1
 - Initial build for Sisyphus
 

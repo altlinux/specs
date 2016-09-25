@@ -2,7 +2,7 @@
 
 Summary: HTTP accessing library for Ruby
 Name: ruby-%orig_name
-Version: 2.3.4.1
+Version: 2.8.2.4
 Release: alt1
 Group: Development/Ruby
 License: GPLv2 or Ruby License
@@ -32,6 +32,7 @@ Documentation for %name
 
 %prep
 %setup -n %name-%version
+%patch -p1
 %update_setup_rb
 
 %build
@@ -45,14 +46,20 @@ Documentation for %name
 %check
 
 %files
-%doc README.txt
+%doc README.md CHANGELOG.md
 %_bindir/httpclient
+%_bindir/jsonclient
 %ruby_sitelibdir/*
 
 %files doc
 %ruby_ri_sitedir/*
 
 %changelog
+* Sun Sep 25 2016 Evgeny Sinelnikov <sin@altlinux.ru> 2.8.2.4-alt1
+- Update to latest release
+ + Security CVE-2014-3566 critical to rhc:
+   https://blog.openshift.com/poodle-ssl-vulnerability/
+
 * Mon Aug 12 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.3.4.1-alt1
 - Initial build for Sisyphus
 
