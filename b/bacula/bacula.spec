@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt5
+Release: alt7
 
 License: AGPLv3
 Summary: Network based backup program
@@ -25,6 +25,9 @@ Source8: bacula-configs-default-%version.tar
 Source9: bacula-icons-%version.tar
 Source10: bacula.sysconfig
 Source11: tmpfiles.conf
+Source12: bacula-fd.service
+Source13: bacula-sd.service
+Source14: bacula-dir.service
 
 BuildRequires: dvd+rw-tools gcc-c++ groff-base libMySQL-devel libssl-devel libncurses-devel libsqlite3-devel libssl libacl-devel libcap-devel python-devel zlib-devel iputils bc postgresql-devel
 
@@ -283,13 +286,16 @@ popd
 
 %make_install DESTDIR="%buildroot" install
 
-mkdir -p %buildroot%_initdir
+mkdir -p %buildroot%_initdir %buildroot%_unitdir
 install -pm 755 %SOURCE1 %buildroot%_initdir/bacula-dir
+install -pm 644 %SOURCE14 %buildroot%_unitdir/bacula-dir.service
 install -pm 755 %SOURCE2 %buildroot%_initdir/bacula-fd
+install -pm 644 %SOURCE12 %buildroot%_unitdir/bacula-fd.service
 install -pm 755 %SOURCE3 %buildroot%_initdir/bacula-sd
+install -pm 644 %SOURCE13 %buildroot%_unitdir/bacula-sd.service
 
-mkdir -p %buildroot%_sysconfdir/tmpfiles.d/
-install -pm 0644 %SOURCE11 %buildroot%_sysconfdir/tmpfiles.d/bacula.conf
+mkdir -p %buildroot%_tmpfilesdir/
+install -pm 0644 %SOURCE11 %buildroot%_tmpfilesdir/bacula.conf
 
 install -pD -m644 %_sourcedir/bacula.sysconfig \
 	%buildroot%_sysconfdir/sysconfig/bacula
@@ -401,14 +407,13 @@ fi
 %_sbindir/groupadd -r -f tape
 gpasswd -a bacula tape >/dev/null 2>&1
 if [ -f /var/run/bacula/bacula-sd.9103.pid ]; then
-  mv /var/run/bacula/bacula-sd.9103.pid /var/run/bacula/bacula-sd.pid
+  mv /var/run/bacula/bacula-sd.9103.pid /var/run/bacula/bacula-sd.pid && chown bacula:bacula var/run/bacula/bacula-sd.pid
 fi
 
 %post storage
 %post_service bacula-sd
 
 %post director-sqlite3
-%force_update_alternatives
 %post_service bacula-dir
 if [ ! -s %_localstatedir/bacula/bacula.db ]; then
     %_datadir/bacula/scripts/make_sqlite3_tables
@@ -416,24 +421,22 @@ if [ ! -s %_localstatedir/bacula/bacula.db ]; then
 fi
 
 %post director-mysql
-%force_update_alternatives
 %post_service bacula-dir
 
 %post director-postgresql
-%force_update_alternatives
 %post_service bacula-dir
 
 %pre director-sqlite3
  if [ -f /var/run/bacula/bacula-dir.9101.pid ]; then
-  mv /var/run/bacula/bacula-dir.9101.pid /var/run/bacula/bacula-dir.pid
+  mv /var/run/bacula/bacula-dir.9101.pid /var/run/bacula/bacula-dir.pid && chown bacula:bacula var/run/bacula/bacula-dir.pid
  fi
 %pre director-mysql
  if [ -f /var/run/bacula/bacula-dir.9101.pid ]; then
-  mv /var/run/bacula/bacula-dir.9101.pid /var/run/bacula/bacula-dir.pid
+  mv /var/run/bacula/bacula-dir.9101.pid /var/run/bacula/bacula-dir.pid && chown bacula:bacula var/run/bacula/bacula-dir.pid
  fi
 %pre director-postgresql
  if [ -f /var/run/bacula/bacula-dir.9101.pid ]; then
-  mv /var/run/bacula/bacula-dir.9101.pid /var/run/bacula/bacula-dir.pid
+  mv /var/run/bacula/bacula-dir.9101.pid /var/run/bacula/bacula-dir.pid && chown bacula:bacula var/run/bacula/bacula-dir.pid
  fi
 
 %triggerun director-common -- bacula-director-common < 3.0.1-alt4
@@ -449,6 +452,9 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 
 %triggerpostun director-common -- bacula-director-common < 5.2.13-alt4
 test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || echo '@/etc/bacula/job/bacula.conf' >> /etc/bacula/bacula-dir.conf
+
+%triggerpostun common -- bacula-director-common < 5.2.13-alt6
+chown bacula:bacula %_localstatedir/bacula/*
 
 %preun director-sqlite3
 %preun_service bacula-dir
@@ -466,14 +472,14 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %preun_service bacula-sd
 
 %files common
-%attr (0770,root,bacula) %_localstatedir/bacula
+%attr (1770,root,bacula) %_localstatedir/bacula
 %attr (0775,root,bacula) %dir %_var/run/bacula
 %attr (0750,root,bacula) %dir %_sysconfdir/bacula
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/bacula-*-password.conf
 %dir %_datadir/bacula
 %dir %_datadir/bacula/scripts
 %dir %_docdir/bacula
-%_sysconfdir/tmpfiles.d/*
+%_tmpfilesdir/*
 %_man8dir/bacula.8.*
 %_sbindir/bsmtp
 %_man1dir/bsmtp.1.*
@@ -534,6 +540,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/bacula-fd.conf
 %_sbindir/bacula-fd
 %config %_initdir/bacula-fd
+%_unitdir/bacula-fd.service
 %_libdir/bpipe-fd.so
 %_man8dir/bacula-fd.8.*
 
@@ -543,6 +550,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %dir %attr (0750,root,bacula) %_sysconfdir/bacula/device
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/device/*.conf
 %config %_initdir/bacula-sd
+%_unitdir/bacula-sd.service
 %_sbindir/bacula-sd
 %_sbindir/bextract
 %_sbindir/bls
@@ -570,7 +578,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %dir %attr (0750,root,bacula) %_sysconfdir/bacula/pool
 %dir %attr (0750,root,bacula) %_sysconfdir/bacula/schedule
 %dir %attr (0750,root,bacula) %_sysconfdir/bacula/storage
-%dir %attr (0750,bacula,bacula) %_logdir/bacula/
+%dir %attr (1770,root,bacula) %_logdir/bacula/
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/bacula-dir.conf
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/client/*.conf
 %config(noreplace) %attr (0640,root,bacula) %_sysconfdir/bacula/fileset/*.conf
@@ -601,6 +609,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 
 %files director-mysql
 %_initdir/bacula-dir
+%_unitdir/bacula-dir.service
 %_altdir/bacula-dir.mysql
 %_libdir/libbaccats-mysql*.so
 %_datadir/%name/scripts/create_mysql_database
@@ -612,6 +621,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 
 %files director-postgresql
 %_initdir/bacula-dir
+%_unitdir/bacula-dir.service
 %_altdir/bacula-dir.pgsql
 %_libdir/libbaccats-postgresql*.so
 %_datadir/%name/scripts/create_postgresql_database
@@ -623,6 +633,7 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 
 %files director-sqlite3
 %_initdir/bacula-dir
+%_unitdir/bacula-dir.service
 %_altdir/bacula-dir.sqlite3
 %_libdir/libbaccats-sqlite3*.so
 %_datadir/%name/scripts/create_sqlite3_database
@@ -639,6 +650,19 @@ test $(grep -R '/etc/bacula/job/bacula.conf' /etc/bacula/bacula-dir.conf) || ech
 %files
 
 %changelog
+* Sun Sep 25 2016 Terechkov Evgenii <evg@altlinux.org> 5.2.13-alt7
+- Make catalog backup work like rhel7/centos7 to work around ALT #31692
+
+* Wed Sep 14 2016 Terechkov Evgenii <evg@altlinux.org> 5.2.13-alt6
+- add systemd unit for bacula-fd (ALT #28029)
+- add systemd unit for bacula-sd (ALT #28033)
+- add systemd unit for bacula-dir (ALT #28030, #28031, #28032)
+- change mode of %%_logdir/bacula to 1770 according to ALT Secure Packaging Policy (ALT #32509)
+- drop obsoleted alternatives calls
+- move tmpfiles config to %%_tmpfilesdir
+- change mode of %%_var/run/bacula to 1770 to enforce privilege separation under systemd
+- change mode of %%_localstatedir/bacula to 1770 to enforce privilege separation
+
 * Mon Mar 14 2016 Michael Shigorin <mike@altlinux.org> 5.2.13-alt5
 - fixed logfile path (closes: #31884)
 - fixed manpage paths
