@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -6,13 +7,13 @@ BuildRequires: perl-podlators
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION < 0.88) ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:           perl-Test-Portability-Files
-Version:        0.06
-Release:        alt1_7
+Version:        0.07
+Release:        alt1
 Summary:        Check file names portability
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Test-Portability-Files/
-Source0:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/A/AB/ABRAXXA/Test-Portability-Files-%{version}.tar.gz
 Patch1:         Test-Portability-Files-0.06-old-Test::More.patch
 BuildArch:      noarch
 # Build
@@ -60,6 +61,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- automated CPAN update
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_7
 - update to new release by fcimport
 
