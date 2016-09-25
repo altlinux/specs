@@ -1,22 +1,23 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(File/Find/Rule.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: perl(YAML/Syck.pm) perl(parent.pm)
 %define upstream_name    Tapper-TAP-Harness
-%define upstream_version 5.0.6
+%define upstream_version 5.0.7
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_2
+Version:    5.0.7
+Release:    alt1
 
 Summary:    Tapper - Tapper specific TAP handling
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source:    http://www.cpan.org/authors/id/T/TA/TAPPER/Tapper-TAP-Harness-%{version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -61,6 +62,9 @@ This package provides a Tapper-specific TAP handling.
 %perl_vendor_privlib/*
 
 %changelog
+* Sun Sep 25 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.7-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 5.0.6-alt1_2
 - update by mgaimport
 
