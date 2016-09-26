@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.3
-Release: alt1.git20150203.1.1
+Version: 0.1.5
+Release: alt1
 Summary: Use requests to talk HTTP via a UNIX domain socket
 License: ASLv2.0
 Group: Development/Python
@@ -131,6 +131,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 29 2016 Denis Pynkin <dans@altlinux.org> 0.1.5-alt1
+- (NMU) version update for pylxd module
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.1.3-alt1.git20150203.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
