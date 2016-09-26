@@ -1,9 +1,9 @@
 %define _name gtksourceviewmm
-%define ver_major 3.18
+%define ver_major 3.21
 %define api_ver 3.0
 
 Name: lib%{_name}3
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: gtksourceviewmm is a C++ wrapper for the gtksourceview widget library
@@ -80,6 +80,9 @@ Documentation for %_name.
 %pkgdocdir
 
 %changelog
+* Mon Sep 26 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.2-alt1
+- 3.21.2
+
 * Tue Sep 22 2015 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt1
 - 3.18.0
 
