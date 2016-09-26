@@ -10,7 +10,7 @@
 
 Name: kde5-%rname
 %define lname lib%name
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 %K5init
 
@@ -41,7 +41,8 @@ BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libt
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: sqlite3 zlib-devel
 BuildRequires: kde5-marble-devel
-BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel
+BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-kcalcore-devel
+BuildRequires: kde5-libkipi-devel kde5-libksane-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel
 BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel
 %if_enabled baloo
@@ -52,7 +53,7 @@ Source0: %rname-%version.tar
 Source1: po.tar
 Source2: doc.tar
 Source3: doc-translated.tar
-Patch1: alt-libraw-ix86.patch
+Patch1: alt-libraw-aarch64.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -169,7 +170,7 @@ done
 
 %install
 %K5install
-%K5install_move data kconf_update showfoto solid locale
+%K5install_move data kconf_update showfoto solid locale digikam/utils
 
 rm -f %buildroot/%_K5i18n/*/*/kipiplugin*
 rm -f %buildroot/%_K5i18n/*/*/lib*
@@ -187,10 +188,10 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5bin/showfoto
 %_K5bin/cleanup_digikamdb
 %_K5bin/digitaglinktree
-%_K5plug/%{rname}imageplugin_*.so
+#%_K5plug/%{rname}imageplugin_*.so
 %_K5xdgapp/*.desktop
-%_K5srv/%{rname}imageplugin_*.desktop
-%_K5srvtyp/*.desktop
+#%_K5srv/%{rname}imageplugin_*.desktop
+#%_K5srvtyp/*.desktop
 %_K5xmlgui/%rname/
 %_K5xmlgui/showfoto/
 %_K5notif/%rname.notifyrc
@@ -210,7 +211,7 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5icon/hicolor/*/actions/tag.*
 %_K5icon/hicolor/*/actions/overexposure.*
 %_K5icon/hicolor/*/actions/underexposure.*
-%_K5conf_up/*
+#%_K5conf_up/*
 
 %files devel
 %_K5link/*.so
@@ -226,6 +227,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Sep 26 2016 Sergey V Turchin <zerg@altlinux.org> 5.2.0-alt1
+- new version
+
 * Wed Aug 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
 - new version
 
