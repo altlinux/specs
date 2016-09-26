@@ -1,5 +1,5 @@
 Name: netdata
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -8,15 +8,15 @@ License: GPLv3+
 Group: File tools
 Url: http://netdata.firehol.org/
 
-# https://github.com/firehol/netdata/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-git: https://github.com/firehol/netdata.git
 Source: %name-%version.tar
 
 # manually removed: python-module-google python-module-mwlib python3-dev python3-module-yieldfrom python3-module-zope ruby ruby-stdlibs 
 # Automatically added by buildreq on Fri Aug 05 2016
 # optimized out: perl pkg-config python-base python-modules python3 python3-base
-BuildRequires: libuuid-devel zlib-devel
+BuildRequires: rpm-build-intro libuuid-devel zlib-devel
 
 %if_with nfacct
 BuildRequires: libmnl-devel
@@ -35,14 +35,6 @@ netdata tries to visualize the truth of now, in its greatest detail,
 so that you can get insights of what is happening now and what just
 happened, on your systems and applications.
 
-%package -n csed
-Summary: Color stream substitution filter
-Group: Editors
-Requires: lib%name = %version-%release
-
-%description -n csed
-Color stream substitution filter
-
 %prep
 %setup
 
@@ -58,9 +50,10 @@ Color stream substitution filter
 
 %install
 %makeinstall_std
+rm -rf %buildroot%_libexecdir/netdata/python.d/python_modules/pyyaml{2,3}
 
 mkdir -p %buildroot%_sysconfdir/%name/
-install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/netdata.conf
+install -m 644 -p system/netdata.conf %buildroot%_sysconfdir/%name/netdata.conf
 
 find %buildroot -name .keep | xargs rm
 
@@ -74,15 +67,20 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %files
 %attr(-,netdata,netdata) %dir %_localstatedir/cache/%name
 %attr(-,netdata,netdata) %dir %_localstatedir/log/%name
-%config(noreplace) %_sysconfdir/netdata.conf
 %dir %_sysconfdir/%name/
+%config(noreplace) %_sysconfdir/%name/netdata.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/*.conf
+%dir %_sysconfdir/%name/health.d/
+%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/health.d/*.conf
+%dir %_sysconfdir/%name/python.d/
+%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/%name/python.d/*.conf
 %_sbindir/%name
 %_unitdir/netdata.service
 %dir %_libexecdir/%name/
 %_libexecdir/%name/charts.d/
 %_libexecdir/%name/node.d/
 %_libexecdir/%name/plugins.d/
+%_libexecdir/%name/python.d/
 %dir %_datadir/%name
 
 # override defattr for web files
@@ -90,6 +88,9 @@ getent passwd netdata > /dev/null || useradd -r -g netdata -c netdata -s /sbin/n
 %_datadir/%name/web
 
 %changelog
+* Mon Sep 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0 (with rpmrb script)
+
 * Thu May 26 2016 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - initial build for ALT Linux Sisyphus
 
