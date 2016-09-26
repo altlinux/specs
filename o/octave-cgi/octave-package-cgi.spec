@@ -1,11 +1,11 @@
+%define octave_pkg_version 0.1.2
+%define octave_pkg_name cgi
+%define octave_descr_name cgi
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
-%define octave_pkg_version 0.1.1
-%define octave_pkg_name cgi
-%define octave_descr_name cgi
 Name: octave-%octave_pkg_name
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 Summary: cgi
 
@@ -21,6 +21,7 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
+Provides: octave(cgi) = %version
 Provides: octave(cgi) = %version
 # Depends: octave (>= 3.8.0)
 Requires: octave >= 3.8.0
@@ -51,6 +52,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1
+- regenerated from template by package builder
+
 * Thu Apr 14 2016 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt1
 - regenerated from template by package builder
 
