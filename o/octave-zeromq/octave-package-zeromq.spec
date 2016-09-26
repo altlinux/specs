@@ -1,12 +1,13 @@
+%def_with _octave_arch
+%define octave_pkg_version 1.2.1
+%define octave_pkg_name zeromq
+%define octave_descr_name zeromq
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.1.0
-%define octave_pkg_name zeromq
-%define octave_descr_name zeromq
 Name: octave-%octave_pkg_name
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 Summary: ZeroMQ Toolbox
 
@@ -22,6 +23,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
+Provides: octave(zeromq) = %version
+
 Provides: octave(zeromq) = %version
 
 # SystemRequirements: zmq
@@ -55,6 +58,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1
+- regenerated from template by package builder
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - initial import by package builder
 
