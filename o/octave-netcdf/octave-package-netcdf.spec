@@ -1,12 +1,13 @@
+%def_with _octave_arch
+%define octave_pkg_version 1.0.11
+%define octave_pkg_name netcdf
+%define octave_descr_name netcdf
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/octave /usr/bin/octave-config makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.0.9
-%define octave_pkg_name netcdf
-%define octave_descr_name netcdf
 Name: octave-%octave_pkg_name
-Version: 1.0.9
+Version: 1.0.11
 Release: alt1
 Summary: netcdf
 
@@ -22,6 +23,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
+Provides: octave(netcdf) = %version
+
 Provides: octave(netcdf) = %version
 
 # octave module BuildRequires: netcdf-devel [Fedora]
@@ -55,6 +58,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1
+- regenerated from template by package builder
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1
 - regenerated from template by package builder
 
