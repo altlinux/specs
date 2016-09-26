@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.2.23
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -9,7 +9,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm
-Requires: ceph gdisk parted hdparm
+Requires: ceph gdisk parted hdparm pve-docs
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -104,8 +104,6 @@ for d in pve-manager pve-firewall/src pve-ha-manager/src pve-container/src qemu-
     popd
 done
 
-mkdir -p %buildroot%_datadir/pve-docs
-
 install -m0644 %SOURCE6 %buildroot%_datadir/pve-manager/images/basealt_logo.png
 
 install -m0644 pve-firewall/debian/*.service %buildroot%systemd_unitdir/
@@ -190,7 +188,6 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_bindir/spiceproxy
 %_bindir/vzdump
 %dir %_datadir/cluster
-%dir %_datadir/pve-docs
 %attr(0755,root,root) %_datadir/cluster/pvevm
 %dir %perl_vendor_privlib/PVE
 %dir %perl_vendor_privlib/PVE/API2
@@ -366,6 +363,9 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Sep 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.23-alt4
+- requires pve-docs
+
 * Thu Sep 22 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.23-alt3
 - 4.2-23
 - pve-container 1.0-75
