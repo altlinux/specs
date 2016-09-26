@@ -1,4 +1,4 @@
-%define ver_major 1.1
+%define ver_major 1.3
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -6,7 +6,7 @@
 
 Name: iio-sensor-proxy
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: IIO sensors to input device proxy
 Group: System/Kernel and hardware
@@ -50,6 +50,7 @@ Developer documentation for %name.
 %prep
 %setup
 %patch -p1
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
@@ -76,6 +77,9 @@ Developer documentation for %name.
 
 
 %changelog
+* Mon Sep 26 2016 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+
 * Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt2
 - updated to 1.1-28-gae82958
 
