@@ -1,8 +1,9 @@
 %define _libexecdir /usr/libexec
+%define git_version fe6d859066244b97b24f09d46552afc2071e6f90
 
 Name: ceph
 Version: 0.94.9
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -138,6 +139,12 @@ export LIBS="$LIBS -lboost_system"
 		--with-gtk2 \
 		--with-ocf \
 		--with-tcmalloc
+
+cat << __EOF__ > src/.git_version
+%git_version
+v%version
+__EOF__
+
 %make_build
 
 %install
@@ -148,7 +155,9 @@ find %buildroot -type f -name "*.a" -exec rm -f {} ';'
 install -D src/init-ceph %buildroot%_initdir/ceph
 install -D ceph-radosgw.init %buildroot%_initdir/ceph-radosgw
 
-install -dm0755 %buildroot%_unitdir
+install -dm0755 %buildroot/lib/udev/rules.d/
+install -m0644 udev/*.rules %buildroot/lib/udev/rules.d/
+
 install -pDm0644 systemd/ceph-mds@.service %buildroot%_unitdir/ceph-mds@.service
 install -pDm0644 systemd/ceph-mon@.service %buildroot%_unitdir/ceph-mon@.service
 install -pDm0644 systemd/ceph-osd@.service %buildroot%_unitdir/ceph-osd@.service
@@ -262,6 +271,7 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_unitdir/ceph-*
 %_unitdir/ceph.target
 %_libexecdir/ceph/ceph-osd-prestart.sh
+/lib/udev/rules.d/*.rules
 
 %files fuse
 %_bindir/ceph-fuse
@@ -308,6 +318,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Mon Sep 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.94.9-alt2
+- fixed ceph --version
+- packed udev rules
+
 * Wed Aug 31 2016 Alexei Takaseev <taf@altlinux.org> 0.94.9-alt1
 - 0.94.9
 
