@@ -1,12 +1,13 @@
+%def_with _octave_arch
+%define octave_pkg_version 1.5.0
+%define octave_pkg_name interval
+%define octave_descr_name interval
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.4.1
-%define octave_pkg_name interval
-%define octave_descr_name interval
 Name: octave-%octave_pkg_name
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 Summary: Real-valued interval arithmetic
 
@@ -22,6 +23,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
+Provides: octave(interval) = %version
+
+
 Provides: octave(interval) = %version
 
 # SystemRequirements: mpfr (>= 3.1.0) [Debian] libmpfr4 (>= 3.1.0)
@@ -58,6 +62,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1
+- regenerated from template by package builder
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1
 - initial import by package builder
 
