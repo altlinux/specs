@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7
 BuildArch: noarch
 
 %define theme %name
@@ -33,8 +33,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
-%define status BETA
-%define status_ru БЕТА
+%define status %nil
+%define status_ru %nil
 %define ProductName %Brand %major.%minor %Theme
 %define ProductName_ru %Brand_ru %major.%minor %Theme_ru
 
@@ -465,6 +465,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Sep 27 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt7
+- update slideshow
+- set release status
+
 * Fri Sep 02 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt6
 - update conflicts for indexhtml
 
