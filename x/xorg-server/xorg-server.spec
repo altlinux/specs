@@ -22,7 +22,7 @@
 
 Name: xorg-server
 Version: 1.18.4
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -327,6 +327,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Sep 27 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.18.4-alt2
+- nvidia added to the list of drivers (closes: #24632)
+
 * Tue Jul 19 2016 Valery Inozemtsev <shrek@altlinux.ru> 2:1.18.4-alt1
 - 1.18.4
 
