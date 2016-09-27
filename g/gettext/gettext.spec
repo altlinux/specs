@@ -1,5 +1,5 @@
 Name: gettext
-Version: 0.19.6
+Version: 0.19.8.1
 Release: alt1
 
 %define libintl libintl3
@@ -9,13 +9,14 @@ License: GPLv3+ and LGPLv2.1+
 Group: System/Base
 Url: http://www.gnu.org/software/gettext/
 
-# ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.gz
+# ftp://ftp.gnu.org/gnu/gettext/gettext-%version.tar.xz
 Source: gettext-%version.tar
 Source1: msghack.py
 Source2: msghack.1
 Source3: gettext-po-mode-start.el
 
-Patch12: gettext-deb-msgfmt-default-little-endian.patch
+Patch1: 0001-po-mode-Fix-po-send-mail-behaviour-on-Emacs-25.patch
+Patch2: 0002-xgettext-Fix-crash-with-.po-file-input.patch
 
 Patch20: gettext-alt-autogen.patch
 Patch21: gettext-alt-gettextize-quiet.patch
@@ -24,8 +25,7 @@ Patch23: gettext-alt-tmp-autopoint.patch
 Patch24: gettext-alt-gcc.patch
 Patch25: gettext-alt-doc.patch
 Patch26: gettext-alt-urlview.patch
-Patch27: gettext-alt-texi2html.patch
-Patch28: gettext-gnulib-tests-hack.patch
+Patch27: gettext-gnulib-tests-hack.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -169,8 +169,8 @@ a formatted output library for C++.
 
 %prep
 %setup
-%patch12 -p1
-
+%patch1 -p1
+%patch2 -p1
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -179,7 +179,6 @@ a formatted output library for C++.
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
-%patch28 -p1
 
 # Comment out sys_lib_search_path_spec and sys_lib_dlsearch_path_spec.
 mkdir archive
@@ -296,7 +295,8 @@ mkdir -p %buildroot%_docdir
 %exclude %_man1dir/envsubst.*
 %exclude %_man1dir/msghack.*
 %_infodir/gettext.info*
-%_datadir/gettext
+%_datadir/gettext/
+%_datadir/gettext-*/
 %{?_with_java:%exclude %_datadir/gettext/libintl.jar}
 %_datadir/aclocal/*
 %_datadir/emacs/site-lisp/*.el*
@@ -332,6 +332,9 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Sep 27 2016 Dmitry V. Levin <ldv@altlinux.org> 0.19.8.1-alt1
+- 0.19.6 -> 0.19.8.1 (closes: #31007).
+
 * Tue Dec 08 2015 Dmitry V. Levin <ldv@altlinux.org> 0.19.6-alt1
 - Updated to 0.19.6.
 
