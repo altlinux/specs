@@ -1,11 +1,11 @@
+%define octave_pkg_version 2.4.0
+%define octave_pkg_name symbolic
+%define octave_descr_name symbolic
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/python makeinfo
 # END SourceDeps(oneline)
-%define octave_pkg_version 2.3.0
-%define octave_pkg_name symbolic
-%define octave_descr_name symbolic
 Name: octave-%octave_pkg_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Summary: Octave Symbolic Package using SymPy
 
@@ -23,11 +23,11 @@ BuildArch: noarch
 %endif
 Provides: octave(symbolic) = %version
 
-# SystemRequirements: python, sympy (>= 0.7.5)
-BuildRequires: python sympy >= 0.7.5
 
-# octave module BuildRequires: python, sympy (>= 0.7.5)
-BuildRequires: python sympy >= 0.7.5
+Provides: octave(symbolic) = %version
+
+# SystemRequirements: python, sympy (>= 0.7.6)
+BuildRequires: python sympy >= 0.7.6
 # Depends: octave (>= 3.8)
 Requires: octave >= 3.8
 
@@ -57,6 +57,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 2.4.0-alt1
+- regenerated from template by package builder
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1
 - initial import by package builder
 
