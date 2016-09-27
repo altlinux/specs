@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.7.4
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -26,8 +26,8 @@ Patch3: alt-def-apps-menu.patch
 #
 Patch5: alt-multimedia-player-chooser.patch
 Patch6: alt-def-panel.patch
-Patch7: alt-def-desktop.patch
-#
+Patch7: alt-def-desktop-containment.patch
+Patch8: alt-def-desktop-widgets.patch
 Patch10: alt-def-start-empty-session.patch
 Patch11: alt-def-key-numlock.patch
 Patch12: alt-def-layout-indicator.patch
@@ -106,9 +106,9 @@ KF5 library
 %patch3 -p1
 #
 %patch5 -p1
-%patch6 -p1
+%patch6 -p1 -b .defpanel
 %patch7 -p1
-#
+%patch8 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -198,6 +198,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Sep 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt2
+- set kicker main menu by default
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
 - new version
 
