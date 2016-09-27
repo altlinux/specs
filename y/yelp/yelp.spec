@@ -1,23 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.20
+%define ver_major 3.22
 %def_disable debug
 %def_enable lzma
 
 Name: yelp
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
 License: %gpl2plus
 Group: Graphical desktop/GNOME
-URL: https://live.gnome.org/yelp
+Url: http://yelp.io
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # From configure.ac
 %define gio_ver 2.38
-%define gtk_ver 3.13.3
+%define gtk_ver 3.14
 %define xslt_ver 1.1.4
 %define webkit_ver 2.8
 %define yelpxsl_ver 3.20.0
@@ -120,6 +120,9 @@ Yelp.
 %_datadir/gtk-doc/html/lib%name/
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Apr 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

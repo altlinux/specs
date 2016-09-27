@@ -1,12 +1,11 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 
 %def_with nautilus
-%def_without pcre2
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -18,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 %define glib_ver 2.40
 %define gtk_ver 3.12.0
-%define vte_ver 0.44.2
+%define vte_ver 0.46.0
 
 Provides: xvt
 
@@ -33,7 +32,7 @@ BuildPreReq: libvte3-devel >= %vte_ver
 BuildRequires: libvala-devel vala-tools
 BuildRequires: gsettings-desktop-schemas-devel gnome-doc-utils-xslt libgio-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
-%{?_with_pcre2:BuildRequires: libpcre2-devel}
+BuildRequires: libpcre2-devel
 %{?_with_nautilus:BuildRequires: libnautilus-devel}
 # for migration
 BuildRequires: libGConf-devel
@@ -65,8 +64,7 @@ Nautilus file manager.
 	--disable-static \
 	--disable-schemas-compile \
 	--disable-dependency-tracking \
-	%{?_with_nautilus:--with-nautilus-extension} \
-	%{subst_with pcre2}
+	%{?_with_nautilus:--with-nautilus-extension}
 %make_build
 
 %install
@@ -97,11 +95,14 @@ EOF
 %if_with nautilus
 %files nautilus
 %nautilus_extdir/libterminal-nautilus.so
-%_datadir/appdata/%xdg_name.Nautilus.appdata.xml
+%_datadir/appdata/%xdg_name.Nautilus.metainfo.xml
 %exclude %nautilus_extdir/libterminal-nautilus.la
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

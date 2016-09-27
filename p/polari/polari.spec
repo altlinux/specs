@@ -1,8 +1,8 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %define xdg_name org.gnome.Polari
 
 Name: polari
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Internet Relay Chat client for GNOME
@@ -33,12 +33,14 @@ Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
 
 %set_typelibdir %_libdir/%name/girepository-1.0
-%define gtk_ver 3.16
+%define gtk_ver 3.21.6
 
-BuildRequires: gtk-doc gnome-common intltool desktop-file-utils
+BuildRequires: gtk-doc gnome-common yelp-tools
+BuildRequires: desktop-file-utils libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver libtelepathy-glib-devel
 BuildRequires: libgjs gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: libtelepathy-glib-gir-devel
+BuildRequires: libsecret-gir-devel libsoup-gir-devel
+BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
 
 %description
 Polari is a simple IRC Client that is designed to integrate seamlessly
@@ -55,7 +57,7 @@ with GNOME 3 Desktop.
 %install
 %makeinstall_std
 
-%find_lang %name
+%find_lang --with-gnome --output=%name.lang %name %xdg_name
 
 %files -f %name.lang
 %_bindir/%name
@@ -74,6 +76,9 @@ with GNOME 3 Desktop.
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sat Aug 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 

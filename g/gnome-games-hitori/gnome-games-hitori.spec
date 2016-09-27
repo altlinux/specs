@@ -2,7 +2,7 @@
 
 %define _name hitori
 %define xdg_name org.gnome.Hitori
-%define ver_major 3.20
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -64,6 +64,9 @@ multiple solutions to a Hitori puzzle board.
 %_datadir/appdata/%xdg_name.appdata.xml
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

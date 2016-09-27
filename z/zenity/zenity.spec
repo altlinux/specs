@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %def_enable libnotify
 %def_enable webkitgtk
 
@@ -14,12 +14,9 @@ URL: https://wiki.gnome.org/Projects/Zenity
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 
-# from configure.ac
-%define intltool_ver 0.40.0
 %define gtk_ver 3.0.0
 
 BuildPreReq: gnome-common yelp-tools
-BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: glib2-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: perl-XML-Parser xsltproc
@@ -57,6 +54,9 @@ a cooler name.
 %doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Wed Mar 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

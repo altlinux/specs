@@ -5,7 +5,7 @@
 
 Name: gnome-todo
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Todo manager for GNOME
 Group: Graphical desktop/GNOME
@@ -88,6 +88,9 @@ GObject introspection devel data for the GNOME Todo.
 %_girdir/Gtd-%api_ver.gir
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt2
+- rebuilt against libedataserver-1.2.so.22
+
 * Tue May 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

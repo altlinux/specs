@@ -1,29 +1,34 @@
-%define ver_major 3.20
+%def_disable snapshot
+
+%define ver_major 3.22
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
 %def_enable systemd
-%def_disable wayland
+%def_enable wayland
 # tests require, as minimum, running colord
 %def_disable check
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
 Group: Graphical desktop/GNOME
+Url: http://www.gnome.org
 
-Url: http://gnome.org
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 # From configure.ac
 %define glib_ver 2.38
-%define gtk_ver 3.15.3
+%define gtk_ver 3.16
 %define gnome_desktop_ver 3.11.1
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
@@ -54,7 +59,7 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildPreReq: libpulseaudio-devel >= %pulse_ver libcanberra-gtk3-devel
+BuildPreReq: libpulseaudio-devel >= %pulse_ver libalsa-devel libcanberra-gtk3-devel
 BuildRequires: libdbus-devel libpolkit1-devel
 BuildRequires: xkeyboard-config-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
@@ -207,6 +212,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Wed Apr 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

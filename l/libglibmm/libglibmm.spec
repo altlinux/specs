@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define major 2.48
+%define major 2.50
 %define api_ver 2.4
 
 Name: libglibmm
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -19,11 +19,12 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.47.92
+%define glib_ver 2.50.0
+%define sigc_ver 2.10.0
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
 
-BuildRequires: gcc-c++ libgio-devel >= %glib_ver libsigc++2.0-devel
+BuildRequires: gcc-c++ libgio-devel >= %glib_ver libsigc++2.0-devel >= %sigc_ver
 BuildRequires: mm-common perl-XML-Parser doxygen xsltproc graphviz
 
 %description
@@ -60,10 +61,7 @@ This package contains all API documentation for glibmm.
 %setup -n %rname-%version
 
 %build
-%if_enabled snapshot
 mm-common-prepare --force --copy
-%endif
-
 %autoreconf
 %configure \
 	--disable-static \
@@ -98,6 +96,9 @@ mm-common-prepare --force --copy
 %_datadir/devhelp/books/%rname-%api_ver
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt1
+- 2.50.0
+
 * Thu Mar 31 2016 Yuri N. Sedunov <aris@altlinux.org> 2.48.1-alt1
 - 2.48.1
 

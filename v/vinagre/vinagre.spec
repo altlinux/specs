@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 3.0
 %define _libexecdir %_prefix/libexec
 
@@ -9,13 +9,13 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
-Summary: VNC client for the GNOME Desktop
+Summary: Remote desktop viewer for the GNOME Desktop
 License: GPLv2
 Group: Networking/Remote access
-URL: http://www.gnome.org/projects/vinagre
+URL: https://wiki.gnome.org/Apps/Vinagre
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -35,7 +35,9 @@ BuildRequires: yelp-tools itstool xmllint
 BuildRequires: gcc-c++
 
 %description
-This is vinagre, a VNC client for the GNOME Desktop.
+Vinagre is a remote desktop viewer for GNOME, that uses Virtual Network
+Computing (VNC) to remotely control another desktop. Additional
+protocols, such as RDP and SSH, are also supported.
 
 %prep
 %setup
@@ -76,6 +78,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Jun 27 2016 Alexey Shabalin <shaba@altlinux.ru> 3.20.2-alt2
 - rebuild with spice-gtk-0.32-alt1
 

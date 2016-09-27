@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.30
+%define ver_major 0.32
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_enable mediathek_plugin
@@ -20,7 +20,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -34,8 +34,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define libxml_ver 2.7
 %define vala_ver 0.24.0
 %define gi_ver 1.33.4
-%define gssdp_ver 0.13.0
-%define gupnp_ver 0.20.14
+%define gssdp_ver 1.0.0
+%define gupnp_ver 1.0.0
 %define gupnp_av_ver 0.12.8
 %define gupnp_dlna_ver 0.9.4
 %define gstreamer_ver 1.0
@@ -233,6 +233,9 @@ gettextize -q -f
 %_girdir/*.gir
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 0.32.0-alt1
+- 0.32.0
+
 * Tue May 31 2016 Yuri N. Sedunov <aris@altlinux.org> 0.30.3-alt1
 - 0.30.3
 

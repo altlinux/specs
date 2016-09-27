@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 # since 3.13.6
 # see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
 %set_verify_elf_method unresolved=relaxed
 
-%define ver_major 3.20
-%define ver_base 3.20
+%define ver_major 3.22
+%define ver_base 3.22
 %define ver_lib 1.2
 
 %def_disable debug
@@ -24,7 +24,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -51,6 +51,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define gdata_ver 0.15.1
 %define goa_ver 3.8.0
 %define vala_ver 0.13.1
+%define webkit_ver 2.13.0
 
 Requires: dconf
 
@@ -69,12 +70,15 @@ BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
-%{?_enable_google:BuildRequires: libwebkitgtk3-devel libjson-glib-devel}
+%{?_enable_google:BuildRequires: libwebkit2gtk-devel >= %webkit_ver libjson-glib-devel}
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel}
 %{?_with_sys_db4:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildPreReq: vala >= %vala_ver vala-tools >= %vala_ver}
+
+# /usr/libexec/evolution-data-server/csv2vcard uses perl(diagnostics.pm)
+BuildRequires: perl-devel
 
 %if_with openldap
 BuildRequires: libldap-devel
@@ -286,6 +290,18 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
+* Mon Sep 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.92-alt1
+- 3.21.92
+
+* Mon Aug 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.91-alt1
+- 3.21.91
+
+* Tue Aug 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.90-alt1
+- 3.21.90
+
 * Mon Aug 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.5-alt1
 - 3.20.5
 

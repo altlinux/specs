@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %def_enable python
 %def_enable zeitgeist
 %define gedit_pluginsdir %_libdir/gedit/plugins
@@ -6,7 +6,7 @@
 
 Name: gedit-plugins
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Plugins for GEdit
 License: GPL
@@ -19,7 +19,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
 %define gtksourceview_ver 3.18.0
-%define gedit_ver 3.20.0
+%define gedit_ver 3.22.0
 %define peas_ver 1.14
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -88,6 +88,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sun May 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt2
 - used %%_python3_path instead of %%_python3_compile_include
 

@@ -1,10 +1,10 @@
 %define _name org.gnome.Characters
-%define ver_major 3.20
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 %def_with included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Character map application for GNOME
@@ -33,7 +33,7 @@ Requires: typelib(IBus)
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 
-BuildRequires: intltool libappstream-glib-devel
+BuildRequires: libappstream-glib-devel
 BuildRequires: libgtk+3-devel libgjs-devel >= %gjs_ver
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 %{?_without_included_libunistring:BuildRequires: libunistring-devel >= %unistring_ver}
@@ -74,6 +74,9 @@ characters.
 %exclude %_libdir/%_name/libgc.la
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sun Apr 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

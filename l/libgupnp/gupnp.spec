@@ -1,11 +1,11 @@
 %define _name gupnp
-%define ver_major 0.20
+%define ver_major 1.0
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: libgupnp
-Version: %ver_major.18
+Version: %ver_major.0
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -109,6 +109,9 @@ GObject introspection devel data for the gUPnP library
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Jun 20 2016 Yuri N. Sedunov <aris@altlinux.org> 0.20.18-alt1
 - 0.20.18
 

@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 3.20
+%define ver_major 3.22
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
@@ -88,6 +88,7 @@ GObject introspection devel data for %name.
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.mouse.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.app-folders.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.background.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.desktop.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.datetime.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.default-applications.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.enums.xml
@@ -127,6 +128,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

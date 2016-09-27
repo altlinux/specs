@@ -1,9 +1,9 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.20
+%define ver_major 3.22
 
 Name: gnome-tweak-tool
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -22,7 +22,7 @@ BuildArch: noarch
 Requires: gnome-shell >= %ver_major
 
 BuildRequires: gnome-common intltool libgio-devel libgtk+3-devel >= 3.12.0
-BuildRequires: gsettings-desktop-schemas-devel >= 3.4.0
+BuildRequires: gsettings-desktop-schemas-devel >= 3.22.0
 BuildRequires: python-module-pygobject3-devel >= 3.2.1
 
 %description
@@ -70,6 +70,9 @@ Features:
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Fri Apr 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

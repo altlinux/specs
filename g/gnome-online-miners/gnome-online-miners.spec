@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %def_enable facebook
@@ -9,7 +9,7 @@
 %def_enable windows_live
 
 Name: gnome-online-miners
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of miners for online content
@@ -19,10 +19,10 @@ Url: https://git.gnome.org/browse/gnome-online-miners
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.35.1
-%define goa_ver 3.11.5
+%define glib_ver 2.36
+%define goa_ver 3.14.0
 %define grilo_ver 0.3
-%define gdata_ver 0.13.3
+%define gdata_ver 0.15.2
 %define zapojit_ver 0.0.2
 %define tracker_ver 0.17.1
 %define gfbgraph_ver 0.2.2
@@ -81,6 +81,9 @@ Flickr, Google, SkyDrive and ownCloud.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sat Sep 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Fri Sep 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

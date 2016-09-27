@@ -1,8 +1,9 @@
+%def_disable snapshot
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.48
+%define ver_major 2.50
 %define pcre_ver 8.13
 
-%def_disable snapshot
 %set_verify_elf_method strict
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
 
@@ -19,7 +20,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -77,6 +78,7 @@ BuildRequires: gnome-common gtk-doc indent
 BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel libffi-devel zlib-devel libelf-devel
 BuildRequires: rpm-build-python python-devel
 #BuildRequires: rpm-build-python3 python3-devel
+BuildRequires: libmount-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
@@ -245,7 +247,6 @@ NOCONFIGURE=1 ./autogen.sh
     %{subst_enable fam} \
     %{subst_enable systemtap} \
     %{?_enable_installed_tests:--enable-installed-tests}
-
 %make_build
 
 %install
@@ -353,6 +354,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 %files -n libgio
 %_bindir/gapplication
+%_bindir/gio
 %_bindir/gio-querymodules
 %_bindir/gsettings
 %_bindir/glib-compile-schemas
@@ -373,6 +375,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_man1dir/gresource.*
 %_man1dir/glib-compile-resources.1*
 %_man1dir/gdbus.*
+%_man1dir/gio.1.*
 %_man1dir/gio-querymodules.*
 %_datadir/bash-completion/completions/gapplication
 %_datadir/bash-completion/completions/gresource
@@ -410,6 +413,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt1
+- 2.50.0
+
 * Thu Aug 18 2016 Yuri N. Sedunov <aris@altlinux.org> 2.48.2-alt1
 - 2.48.2
 

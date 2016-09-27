@@ -1,4 +1,4 @@
-%define ver_major 1.28
+%define ver_major 1.30
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -25,9 +25,10 @@
 %def_enable systemd_login
 %def_enable udisks2
 %def_enable google
+%def_enable admin
 
 Name: gvfs
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -49,9 +50,8 @@ Patch6: gvfs-1.19.90-alt-1-logind-state.patch
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
 
-# From configure.in
-%define intltool_ver 0.35.0
-%define glib_ver 2.38
+# From configure.ac
+%define glib_ver 2.49.3
 %define libsoup_ver 2.42
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
@@ -73,8 +73,7 @@ Requires: dconf
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
-# From configure.in
-BuildPreReq: intltool >= %intltool_ver
+# From configure.ac
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libdbus-devel gtk-doc
@@ -105,6 +104,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_systemd_login:BuildPreReq: libsystemd-login-devel}
 %{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
 %{?_enable_google:BuildPreReq: libgdata-devel >= %gdata_ver}
+%{?_enable_admin:BuildRequires: libpolkit-devel libcap-devel}
 
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
@@ -185,6 +185,12 @@ Group: System/Libraries
 Requires: %name = %version-%release
 Requires: gnome-online-accounts
 
+%package backend-admin
+Summary: Admin backend for gvfs
+Group: System/Libraries
+Requires: %name = %version-%release
+Requires: polkit
+
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -199,6 +205,7 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %{?_enable_libmtp:Requires: gvfs-backend-mtp}
 %{?_enable_nfs:Requires: gvfs-backend-nfs}
 %{?_enable_google:Requires: gvfs-backend-google}
+%{?_enable_admin:Requires: gvfs-backend-admin}
 
 %package utils
 Summary: Command line applications for gvfs.
@@ -271,6 +278,9 @@ This package provides support for mounting NFS shares using gvfs.
 %description backend-google
 This package provides support for mounting google drive using gvfs.
 
+%description backend-admin
+This package provides admin backend for gvfs based on polkit.
+
 %description backends
 This virtual package contains the all backends for gvfs.
 
@@ -292,7 +302,7 @@ The %name-tests package provides programms for testing GVFS.
 
 %prep
 %setup
-%patch1 -p1 -b .archive-integration
+#%patch1 -p1 -b .archive-integration
 #%%patch3 -p1 -b .headers-install
 %patch4 -p1 -b .lfs
 %patch5 -b .tmpfiles
@@ -377,7 +387,7 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 %{?_enable_udisks2:%_datadir/%name/remote-volume-monitors/udisks2.monitor}
 
 %_datadir/%name/mounts
-%_datadir/applications/mount-archive.desktop
+#%_datadir/applications/mount-archive.desktop
 
 # in another packages
 %if_enabled samba
@@ -429,6 +439,11 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 %if_enabled google
     %exclude %_libexecdir/gvfsd-google
     %exclude %_datadir/%name/mounts/google.mount
+%endif
+
+%if_enabled admin
+    %exclude %_libexecdir/gvfsd-admin
+    %exclude %_datadir/%name/mounts/admin.mount
 %endif
 
 %files devel
@@ -516,6 +531,14 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 %_datadir/%name/mounts/google.mount
 %endif
 
+%if_enabled admin
+%files backend-admin
+%_libexecdir/gvfsd-admin
+%_datadir/%name/mounts/admin.mount
+%_datadir/polkit-1/actions/org.gtk.vfs.file-operations.policy
+%_datadir/polkit-1/rules.d/org.gtk.vfs.file-operations.rules
+%endif
+
 %files backends
 
 %files utils
@@ -534,7 +557,12 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
 %exclude %_libdir/gio/modules/*.la
 
+
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.0-alt1
+- 1.30.0
+- new admin backend
+
 * Thu Aug 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1.28.3-alt1
 - 1.28.3
 

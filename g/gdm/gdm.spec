@@ -1,4 +1,4 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -22,7 +22,7 @@
 %def_enable xsession
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -178,6 +178,9 @@ This package contains user documentation for Gdm.
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
 
+# fix security dir
+subst 's|\$(libdir)/security|%_pam_modules_dir|' pam_gdm/Makefile.am
+
 %build
 [ ! -d m4 ] && mkdir m4
 %autoreconf
@@ -243,7 +246,7 @@ xvfb-run %make check
 %_libexecdir/gdm-simple-chooser
 %_libexecdir/gdm-wayland-session
 %_libexecdir/gdm-x-session
-
+/%_lib/security/pam_gdm.so
 %doc AUTHORS ChangeLog NEWS README TODO
 %_unitdir/gdm.service
 
@@ -300,6 +303,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue Apr 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

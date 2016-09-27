@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define _name org.gnome.Photos
-%define ver_major 3.20
+%define xdg_name org.gnome.Photos
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.3
 
 Name: gnome-photos
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Photos - access, organize and share your photos on GNOME
@@ -15,8 +15,8 @@ Url: https://wiki.gnome.org/Apps/Photos
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.40
-%define gtk_ver 3.19.1
+%define glib_ver 2.44
+%define gtk_ver 3.20.0
 %define tracker_ver 0.18
 %define gdata_ver 0.15.2
 %define gegl_ver 0.3.5
@@ -66,17 +66,19 @@ rm -rf %buildroot/%_datadir/doc/%name
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%_name.desktop
-%_iconsdir/hicolor/*/apps/%name.*
-%_iconsdir/hicolor/scalable/apps/%name-symbolic.svg
-#%_iconsdir/HighContrast/*/apps/%name.*
-%_datadir/appdata/%_name.appdata.xml
-%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
-%_datadir/dbus-1/services/%_name.service
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*/apps/%xdg_name.*
+%_iconsdir/hicolor/scalable/apps/%xdg_name-symbolic.svg
+%_datadir/appdata/%xdg_name.appdata.xml
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
+%_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/org.gnome.photos.gschema.xml
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Sat Sep 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue Aug 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 

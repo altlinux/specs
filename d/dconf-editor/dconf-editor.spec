@@ -1,9 +1,11 @@
+%def_enable snapshot
+
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.20
+%define ver_major 3.22
 %define _name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: dconf confuguration editor
@@ -11,16 +13,23 @@ Group: Graphical desktop/GNOME
 License: GPLv3
 Url: https://wiki.gnome.org/Projects/dconf
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
-%define gtk_ver 3.19.7
-%define dconf_ver 0.24
+%define gtk_ver 3.21.6
+%define dconf_ver 0.26
+%define vala_ver 0.33.1
 
 Requires: dconf >= %dconf_ver
 
 BuildPreReq: libgtk+3-devel >= %gtk_ver libdconf-devel >= %dconf_ver
-BuildRequires: libxml2-devel rpm-build-gnome gnome-common vala-tools
+BuildPreReq: vala-tools >= %vala_ver
+BuildRequires: libxml2-devel rpm-build-gnome gnome-common
 BuildRequires: intltool libappstream-glib-devel yelp-tools
+%{?_enable_snapshot:BuildRequires: libdconf-vala}
 
 %description
 dconf is a low-level configuration system. Its main purpose is to
@@ -32,11 +41,11 @@ This package provides graphical dconf configuration editor.
 
 %prep
 %setup
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
 %configure
-
 %make_build
 
 %install
@@ -55,6 +64,9 @@ This package provides graphical dconf configuration editor.
 %doc README
 
 %changelog
+* Wed Sep 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Thu Jun 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 

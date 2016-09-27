@@ -1,5 +1,5 @@
 %define _name org.gnome.sound-juicer
-%define ver_major 3.20
+%define ver_major 3.22
 %define gst_api_ver 1.0
 
 Name: sound-juicer
@@ -17,15 +17,15 @@ Requires: iso-codes
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildPreReq: gcc-c++ gnome-common
-BuildRequires: intltool yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
 BuildRequires: libgio-devel >= 2.32
 BuildRequires: libbrasero-devel >= 3.0.0
-BuildRequires: libgtk+3-devel >= 3.19.7
+BuildRequires: libgtk+3-devel >= 3.21.3
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libcanberra-devel libcanberra-gtk3-devel
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gstreamer%gst_api_ver-utils
-BuildRequires: libmusicbrainz5-devel  >= 5.1.0 libdiscid-devel iso-codes-devel
+BuildRequires: libmusicbrainz5-devel >= 5.1.0 libdiscid-devel >= 0.4.0 iso-codes-devel
 
 %description
 GStreamer-based CD ripping tool. Saves audio CDs to audio formats,
@@ -33,10 +33,8 @@ supported by GStreamer.
 
 %prep
 %setup
-subst 's/0\.10/1.0/' configure
 
 %build
-#export LIBS="$LIBS `pkg-config --libs libmusicbrainz5 libdiscid`"
 %configure \
 	--disable-schemas-compile
 %make_build
@@ -63,6 +61,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue Mar 22 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

@@ -1,4 +1,5 @@
-%define ver_major 3.20
+%define ver_major 3.22
+%define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
 Version: %ver_major.0
@@ -59,18 +60,21 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 %files -f %name.lang
 %_bindir/gnome-power-statistics
-%_desktopdir/gnome-power-statistics.desktop
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
 %_man1dir/*.1.*
-%_datadir/appdata/gnome-power-statistics.appdata.xml
+%_datadir/appdata/%xdg_name.appdata.xml
 
 %doc --no-dereference COPYING
 %doc README NEWS AUTHORS
 
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0
 

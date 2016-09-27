@@ -1,9 +1,9 @@
 %define _name gspell
-%define ver_major 1.0
+%define ver_major 1.2
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A spell-checking library for GTK+ applications
@@ -15,7 +15,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 #Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 
-%define gtk_ver 3.19.11
+%define gtk_ver 3.20.0
 %define enchant_ver 1.6.0
 
 Requires: iso-codes
@@ -101,6 +101,9 @@ This package contains development documentation for Gspell library.
 %_datadir/gtk-doc/html/%_name-*/
 
 %changelog
+* Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Sat Jul 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 

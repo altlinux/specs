@@ -2,12 +2,12 @@
 
 %define xdg_name org.gnome.Documents
 %define xdg_name1 org.gnome.Books
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -36,6 +36,7 @@ Requires: typelib(GData)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(GdPrivate)
+Requires: typelib(Gepub)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeDesktop)
@@ -44,7 +45,6 @@ Requires: typelib(GObject)
 Requires: typelib(Gtk)
 Requires: typelib(LOKDocView)
 Requires: typelib(Pango)
-Requires: typelib(Soup)
 Requires: typelib(Tracker)
 Requires: typelib(TrackerControl)
 Requires: typelib(WebKit2)
@@ -63,8 +63,9 @@ Requires: typelib(Zpj)
 %define gdata_ver 0.17.2
 %define soup_ver 2.41.3
 %define gi_ver 1.31.6
+%define gepub_ver 0.4
 
-BuildRequires: intltool yelp-tools desktop-file-utils docbook-style-xsl
+BuildRequires: autoconf-archive intltool yelp-tools desktop-file-utils docbook-style-xsl
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnome-desktop3-devel libgdata-devel >= %gdata_ver
 BuildRequires: liboauth-devel libgnome-online-accounts-devel >= %goa_ver
@@ -75,7 +76,7 @@ BuildRequires: libzapojit-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk+3-gir-devel libgjs-devel libevince-gir-devel libgnome-desktop3-gir-devel
 BuildRequires: libgdata-gir-devel libgnome-online-accounts-gir-devel libtracker-gir-devel
-BuildRequires: libzapojit-gir-devel
+BuildRequires: libzapojit-gir-devel libgepub-gir-devel >= %gepub_ver
 BuildRequires: librsvg
 
 %description
@@ -166,6 +167,9 @@ GObject introspection devel data for the %name library.
 %_datadir/appdata/%xdg_name1.appdata.xml
 
 %changelog
+* Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Wed Aug 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

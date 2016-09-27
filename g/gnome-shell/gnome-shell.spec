@@ -2,12 +2,12 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 3.20
+%define ver_major 3.22
 %define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -33,7 +33,7 @@ AutoReqProv: nopython
 %define session_ver 3.16
 %define clutter_ver 1.21.5
 %define gjs_ver 1.40.0
-%define mutter_ver 3.20.3
+%define mutter_ver 3.22.0
 %define gtk_ver 3.16.0
 %define gio_ver 2.46.0
 %define gstreamer_ver 1.0
@@ -43,7 +43,7 @@ AutoReqProv: nopython
 %define polkit_ver 0.100
 %define bluetooth_ver 3.11.3
 %define folks_ver 0.5.2
-%define gi_ver 1.46
+%define gi_ver 1.49.1
 %define sn_ver 0.11
 %define gcr_ver 3.8
 %define atspi_ver 2.5.91
@@ -231,6 +231,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
 %_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
+%_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %_man1dir/*
 %doc README NEWS
@@ -240,6 +241,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sat Aug 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
 - 3.20.4
 

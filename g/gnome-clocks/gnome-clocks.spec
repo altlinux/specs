@@ -1,8 +1,8 @@
 %define xdg_name org.gnome.clocks
-%define ver_major 3.20
+%define ver_major 3.22
 
 Name: gnome-clocks
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clock application designed for GNOME 3
@@ -12,14 +12,15 @@ Url: https://wiki.gnome.org/Apps/Clocks
 
 Source: http://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define gweather_ver 3.19.8
+%define gweather_ver 3.20.0
 %define geocode_ver 3.18.0
 %define geoclue_ver 2.3.1
+%define gtk_ver 3.20.0
 
 Requires: geoclue2
 
-BuildRequires: intltool yelp-tools
-BuildRequires: libgio-devel libgtk+3-devel >= 3.9.11 libnotify-devel
+BuildRequires: yelp-tools
+BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libnotify-devel
 BuildRequires: libgsound-devel libgnome-desktop3-devel
 BuildRequires: vala-tools gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libgweather-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver
@@ -54,6 +55,9 @@ Clock application designed for GNOME 3
 %doc README NEWS
 
 %changelog
+* Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sat Sep 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

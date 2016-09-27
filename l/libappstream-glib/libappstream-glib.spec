@@ -1,13 +1,13 @@
 %define _name appstream-glib
-%define ver_major 0.5
+%define ver_major 0.6
 %define api_ver 1.0
 %define asb_ver 5
 %def_disable rpm
-%def_disable stemmer
+%def_enable stemmer
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.18
+Version: %ver_major.3
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -24,7 +24,7 @@ Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version
 Obsoletes: appdata-tools < 0.1.9
 Provides: appdata-tools = %version-%release
 
-BuildRequires: intltool glib2-devel >= %glib_ver libgtk+3-devel
+BuildRequires: autoconf-archive glib2-devel >= %glib_ver libgtk+3-devel
 BuildRequires: libarchive-devel libsoup-devel >= %soup_ver libgdk-pixbuf-devel
 BuildRequires: libpango-devel libsqlite3-devel
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
@@ -197,6 +197,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Fri Sep 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
+- 0.6.3
+
 * Thu Aug 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.18-alt1
 - 0.5.18
 

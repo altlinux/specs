@@ -1,8 +1,8 @@
-%define ver_major 3.20
+%define ver_major 3.22
 %define _name org.gnome.Vino
 
 Name: vino
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A remote desktop system for GNOME
@@ -20,6 +20,7 @@ BuildRequires: libXdamage-devel libXtst-devel libSM-devel xorg-cf-files xorg-inp
 BuildRequires: libavahi-glib-devel libgcrypt-devel libgnutls-devel libsecret-devel
 BuildRequires: libjpeg-devel libnotify-devel >= 0.7 zlib-devel
 BuildRequires: libtelepathy-glib-devel >= 0.11.6
+BuildRequires: systemd-devel
 
 %description
 Vino is a VNC server for GNOME. It allows remote users to
@@ -45,9 +46,13 @@ connect to a running GNOME session using VNC.
 %_datadir/telepathy/clients/Vino.client
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_datadir/glib-2.0/schemas/%_name.enums.xml
+%_prefix/lib/systemd/user/%name-server.service
 %doc AUTHORS NEWS README docs/TODO docs/remote-desktop.txt docs/debugging.txt
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue May 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 

@@ -1,5 +1,7 @@
+%def_disable snapshot
+
 %define _name libsigc++
-%define ver_major 2.8
+%define ver_major 2.10
 
 Name: %{_name}2
 Version: %ver_major.0
@@ -10,8 +12,11 @@ License: LGPLv2+
 Group: System/Libraries
 Url: http://libsigc.sourceforge.net/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
+%else
+Source: %_name-%version.tar
+%endif
 
 Provides: libsigc++2.0 = %version-%release
 Obsoletes: libsigc++2.0 < %version-%release
@@ -49,8 +54,10 @@ This package provides API documentation of libsigc++ library.
 %setup -n %_name-%version
 
 %build
+%if_enabled snapshot
 mm-common-prepare -f
 %autoreconf
+%endif
 %configure --disable-static
 %make_build DOCBOOK_STYLESHEET=/usr/share/xml/docbook/xsl-stylesheets/html/chunk.xsl
 
@@ -79,6 +86,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %doc %_datadir/devhelp/books/*
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Wed Mar 16 2016 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 

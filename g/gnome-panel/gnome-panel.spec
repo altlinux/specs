@@ -1,3 +1,5 @@
+%def_disable snapshot
+
 %define ver_major 3.20
 %define api_ver 3.0
 %define applet_api_ver 5.0
@@ -8,15 +10,18 @@
 
 Name: gnome-panel
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomePanel
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 # From configure.ac
 %define gtk_ver 3.20.0
@@ -193,6 +198,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt2
+- rebuilt against libedataserver-1.2.so.22
+
 * Fri Aug 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt1
 - 3.20.1
 

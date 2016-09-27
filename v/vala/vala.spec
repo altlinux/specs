@@ -2,15 +2,15 @@
 # and use those C sources during bootstrap phase. Next package rebuilds must be done
 # without bootstrap define.
 %def_with bootstrap
-%define api_ver 0.32
+%define api_ver 0.34
 
 Name: vala
-Version: 0.32.1
+Version: 0.34.0
 Release: alt1
 Group: Development/C
 Summary: Vala is a programming language which makes GNOME programming easy
 License: LGPL
-Url: http://live.gnome.org/Vala
+Url: https://wiki.gnome.org/Projects/Vala
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %name-%version.tar
@@ -185,6 +185,8 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_pkgconfigdir/*.pc
 %_libdir/*.so
 %_datadir/aclocal/*.m4
+%exclude %_pkgconfigdir/vapigen*.pc
+%exclude %_datadir/aclocal/vapigen.m4
 
 %files doc
 %_datadir/devhelp/books/%name-%api_ver
@@ -196,13 +198,17 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_bindir/vala-gen-introspect-%api_ver
 %_bindir/vapicheck
 %_bindir/vapicheck-%api_ver
-%_datadir/pkgconfig/vapigen*.pc
+%_pkgconfigdir/vapigen*.pc
+%_datadir/aclocal/vapigen.m4
 %_datadir/vala/Makefile.vapigen
 %_libdir/vala-%api_ver/gen-introspect-%api_ver
 %_man1dir/vala-gen-introspect*
 %_man1dir/vapigen*
 
 %changelog
+* Tue Sep 20 2016 Alexey Shabalin <shaba@altlinux.ru> 0.34.0-alt1
+- 0.34.0
+
 * Wed Jun 22 2016 Alexey Shabalin <shaba@altlinux.ru> 0.32.1-alt1
 - 0.32.1
 
