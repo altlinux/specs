@@ -1,10 +1,10 @@
 %define _name gxml
-%define ver_major 0.8
-%define api_ver 0.6
+%define ver_major 0.12
+%define api_ver 0.12
 %def_disable docs
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
@@ -71,6 +71,8 @@ This package contains development documentation for GXml library.
 
 %prep
 %setup -n %_name-%version
+# to avoid "/usr/lib/rpm/debugedit: canonicalization unexpectedly shrank by one character" bug
+find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 
 %build
 %autoreconf
@@ -87,7 +89,7 @@ This package contains development documentation for GXml library.
 
 %files -f %_name.lang
 %_libdir/%name-%api_ver.so.*
-%doc NEWS README
+%doc AUTHORS NEWS README
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -108,6 +110,12 @@ This package contains development documentation for GXml library.
 %endif
 
 %changelog
+* Tue Sep 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
+* Fri Jan 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Wed Jan 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 
