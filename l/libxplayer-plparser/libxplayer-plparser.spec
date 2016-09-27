@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Shared libraries of the Xplayer media player play list parser
@@ -106,5 +106,8 @@ GObject introspection devel data for the Xplayer playlist parser library
 %endif
 
 %changelog
+* Tue Sep 27 2016 Vladimir Didenko <cow@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Wed Mar 2 2016 Vladimir Didenko <cow@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
