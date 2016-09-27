@@ -19,7 +19,7 @@
 %def_enable python
 
 Name: xplayer
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: Xplayer is a generic media player.
@@ -28,7 +28,6 @@ License: %gpl2only
 URL: https://github.com/linuxmint/xplayer
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
@@ -72,6 +71,7 @@ BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 %{?_enable_introspection:BuildRequires: libxplayer-plparser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
+BuildRequires: libxapps-devel
 
 BuildRequires: desktop-file-utils db2latex-xsl yelp-tools gcc-c++
 BuildRequires: libX11-devel libXext-devel libXi-devel
@@ -203,8 +203,6 @@ used by other applications like filemanagers.
 
 %prep
 %setup
-%patch0 -p1
-[ ! -d m4 ] && mkdir m4
 
 %build
 export ac_cv_path_PYLINT=%_bindir/pylint.py3
@@ -311,6 +309,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Tue Sep 27 2016 Vladimir Didenko <cow@altlinux.org> 1.0.7-alt1
+- 1.0.7-4-g772ae2e
+
 * Thu Jun 23 2016 Vladimir Didenko <cow@altlinux.org> 1.0.6-alt1
 - New version
 
