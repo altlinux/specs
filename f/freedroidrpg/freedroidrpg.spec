@@ -1,5 +1,5 @@
 Name: freedroidrpg
-Version: 0.15
+Version: 0.16.1
 Release: alt1
 
 Summary: Isometric action game with RPG elements
@@ -41,44 +41,53 @@ This package contains media files for Freedroid RPG game
 %setup -q
 
 %build
-%configure --datadir=%_gamesdatadir --bindir=%_gamesbindir
+%configure --datadir=%_gamesdatadir --bindir=%_gamesbindir --enable-dev-tools
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
-%find_lang %name
+%find_lang %name %name-data %name-dialogs --output=%name.lang
 
 #install desktop file
 mkdir -p %buildroot%_desktopdir
 cp %SOURCE1 %buildroot%_desktopdir/
 
 #install icons
-
 install -D %SOURCE3 %buildroot%_miconsdir/%name.png
 install -D %SOURCE4 %buildroot%_niconsdir/%name.png
 install -D %SOURCE5 %buildroot%_liconsdir/%name.png
 
+#install appdata
+mv %buildroot%_gamesdatadir/appdata %buildroot%_datadir
+
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README INSTALL
 %_gamesbindir/freedroidRPG
-#_man6dir/*
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 
 %files data
+%doc AUTHORS ChangeLog NEWS README* INSTALL HELP_WANTED
 %_gamesdatadir/%name
+%_datadir/appdata/*
+%_man6dir/*
+%exclude %_gamesdatadir/icons
+%exclude %_gamesdatadir/applications
+%exclude %_datadir/doc/%name
 
 %files tools
 %_gamesbindir/croppy
-%_gamesbindir/pngtoico
+#%%_gamesbindir/pngtoico
 %_gamesbindir/explode_atlas
 %_gamesbindir/explodefont
 %_gamesbindir/gluefont
 %_gamesbindir/make_atlas
 
 %changelog
+* Sun Sep 25 2016 Anton Midyukov <antohami@altlinux.org> 0.16.1-alt1
+- Version 0.16.1 build for Sisyphus.
+
 * Sat Jan 07 2012 Roman Savochenko <rom_as@altlinux.ru> 0.15-alt1
 - Version 0.15 build for Sisyphus.
 
