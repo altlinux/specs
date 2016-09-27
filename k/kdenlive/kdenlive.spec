@@ -2,7 +2,7 @@
 
 Name: kdenlive
 Version: 16.08.1
-Release: alt1
+Release: alt2
 %K5init no_altplace man
 
 Summary: KDE Non Linear Video Editor
@@ -14,7 +14,7 @@ URL: http://kdenlive.org/
 
 Requires: mlt-utils >= %req_ver_mlt frei0r-plugins /usr/bin/avconv /usr/bin/avplay /usr/bin/avprobe
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
-Requires: icon-theme-breeze
+Requires: icon-theme-breeze kde5-runtime
 
 Source: %name-%version.tar
 Patch1: alt-prefer-vlc.patch
@@ -73,6 +73,9 @@ sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.des
 %_man1dir/kdenlive*
 
 %changelog
+* Tue Sep 27 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt2
+- fix requires (ALT#32534)
+
 * Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
 - new version
 
