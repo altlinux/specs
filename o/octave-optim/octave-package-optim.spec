@@ -1,13 +1,14 @@
+%def_with _octave_arch
+%define octave_pkg_version 1.5.1
+%define octave_pkg_name optim
+%define octave_descr_name optim
 Serial: 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave-config texinfo
+BuildRequires: /usr/bin/octave-config makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
-%define octave_pkg_version 1.5.0
-%define octave_pkg_name optim
-%define octave_descr_name Optim
 Name: octave-%octave_pkg_name
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: Optimization.
 
@@ -23,6 +24,7 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
+Provides: octave(optim) = %version
 Provides: octave(optim) = %version
 # Depends: octave (>= 3.6.0), struct (>= 1.0.12)
 Requires: octave >= 3.6.0 octave(struct) >= 1.0.12
@@ -53,6 +55,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5.1-alt1
+- regenerated from template by package builder
+
 * Wed Apr 13 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.5.0-alt1
 - initial import by package builder
 
