@@ -1,5 +1,5 @@
 Name: libnghttp2
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 
 Summary: HTTP/2.0 C Library
@@ -67,6 +67,9 @@ Requires: %name = %version-%release
 %exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Tue Sep 27 2016 Vladimir Lettiev <crux@altlinux.ru> 1.15.0-alt1
+- 1.15.0
+
 * Mon Sep 12 2016 Vladimir Lettiev <crux@altlinux.ru> 1.14.1-alt1
 - 1.14.1
 
