@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,7 @@ BuildArch: noarch
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: qt5-phonon-backend qt5-quickcontrols qt5-graphicaleffects qt5-imageformats qt5-translations
-Requires: kf5-kio kf5-kded kf5-kwayland-integration
+Requires: kf5-kio kf5-kded kf5-kinit kf5-kwayland-integration
 %description -n kde5-runtime
 %summary
 
@@ -56,7 +56,7 @@ Requires: kde5-audio-player
 Requires: kde5-network-manager
 Requires: kf5-kde-gtk-config kf5-baloo kf5-bluedevil kf5-kscreen kf5-ksshaskpass
 Requires: kf5-khotkeys kf5-kinfocenter kf5-kdeplasma-addons
-Requires: kde5-khelpcenter
+Requires: kde5-khelpcenter kde5-kolourpaint
 Requires: kf5-kmenuedit kf5-solid kf5-kdbusaddons kf5-kgamma kf5-plasma-integration
 Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
@@ -156,6 +156,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Tue Sep 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.1-alt1
+- update requires
+
 * Thu Sep 08 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.0-alt1
 - require kde5-email-client for kde5-big
 
