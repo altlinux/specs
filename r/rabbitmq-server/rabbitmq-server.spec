@@ -1,14 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define oname rabbitmq
 
+%add_findreq_skiplist */ocf/resource.d/rabbitmq/*
+
+# workaround for not find Provides in plugins/*.ez files
+%add_erlang_req_modules_skiplist app_utils credit_flow gen_server2 mirrored_supervisor pmon priority_queue ranch rand_compat supervisor2 time_compat
+%add_erlang_req_modules_skiplist rabbit_amqqueue rabbit_auth_backend_dummy rabbit_auth_backend_internal rabbit_backing_queue rabbit_basic
+%add_erlang_req_modules_skiplist rabbit_channel rabbit_control_misc rabbit_event rabbit_exchange_decorator rabbit_health_check rabbit_net
+%add_erlang_req_modules_skiplist rabbit_networking rabbit_nodes rabbit_queue_decorator rabbit_reader
+
+
+
 Name: rabbitmq-server
-Version: 3.5.4
-Release: alt2.2
+Version: 3.6.5
+Release: alt1
 License: MPLv1.1
 BuildArch: noarch
 Group: System/Servers
 Source: %name-%version.tar
-Source100: codegen.tar
 Source1: rabbitmq-server.init
 Source2: rabbitmq-script-wrapper
 Source3: rabbitmq-server.logrotate
@@ -17,7 +26,15 @@ Source5: include.mk
 Source6: rabbitmq-server.service
 Source7: rabbitmq-server.tmpfiles
 
-Patch: rabbitmq-probe-ephemeral-port.patch
+Patch1: rabbitmq-server-0001-Remove-excessive-sd_notify-code.patch
+Patch2: rabbitmq-server-0002-Add-systemd-notification-support.patch
+Patch3: rabbitmq-server-0003-Revert-Distinct-exit-codes-for-CLI-utilities.patch
+Patch4: rabbitmq-server-0004-Allow-guest-login-from-non-loopback-connections.patch
+Patch5: rabbitmq-server-0005-Avoid-RPC-roundtrips-in-list-commands.patch
+Patch6: rabbitmq-server-0006-rabbit_prelaunch-must-use-RABBITMQ_SERVER_ERL_ARGS.patch
+Patch101: rabbitmq-common-0001-Avoid-RPC-roundtrips-while-listing-items.patch
+Patch102: rabbitmq-common-0002-Use-proto_dist-from-command-line.patch
+
 
 URL: http://www.rabbitmq.com/
 Packager: Maxim Ivanov <redbaron@altlinux.org>
@@ -25,8 +42,17 @@ Packager: Maxim Ivanov <redbaron@altlinux.org>
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-devel erlang-otp-devel
 BuildRequires: python-module-simplejson python-modules-xml
-BuildRequires: xmlto zip unzip netcat
+BuildRequires: xmlto zip unzip netcat rsync
 Requires: erlang
+
+# workaround for not find Provides in plugins/*.ez files
+Provides: erlang_app(rabbit_common) = %version
+Provides: erlang_app(ranch) = %version
+
+# second workaround for not requires tsung
+Provides: erlang_mod(rabbit_binary_parser)  = %version
+Provides: erlang_mod(rabbit_command_assembler) = %version
+Provides: erlang_mod(rabbit_misc) = %version
 
 Summary: The RabbitMQ server
 
@@ -45,24 +71,37 @@ Erlang header files for %name
 
 %prep
 %setup -q
-mkdir -p codegen
-tar -xf %SOURCE100 -C codegen
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+
+cd deps/rabbit_common
+%patch101 -p1
+%patch102 -p1
+cd ../..
+
+# We have to remove it until common_test subpackage lands RHOS
+rm -f \
+    deps/amqp_client/src/rabbit_ct_client_helpers.erl \
+    deps/rabbit_common/src/rabbit_ct_broker_helpers.erl \
+    deps/rabbit_common/src/rabbit_ct_helpers.erl
 
 %build
 sed -i 's|@libexecdir@|%_libexecdir|g' %SOURCE2
 sed -i 's|@localstatedir@|%_localstatedir|g' %SOURCE2
-sed -i 's|@RABBITMQ_DIR@|%_erllibdir/%name|g' %SOURCE5
+#sed -i 's|@RABBITMQ_DIR@|%_erlanglibdir/rabbitmq_server-%version|g' %SOURCE5
 
 export VERSION=%version
 %make_build
 
 %install
-%make_install TARGET_DIR=%buildroot%_erllibdir/%name \
-        SBIN_DIR=%buildroot%_libexecdir/%oname \
-        MAN_DIR=%buildroot%_mandir \
-        DOC_INSTALL_DIR=%buildroot%_defaultdocdir/%name-%version \
-        install
+%makeinstall_std \
+        PREFIX=%_prefix \
+        install-bin install-man
+
 
 mkdir -p %buildroot%_localstatedir/%oname/mnesia
 mkdir -p %buildroot%_logdir/%oname
@@ -73,19 +112,26 @@ mkdir -p %buildroot%_logdir/%oname
 install -p -D -m 0755 %SOURCE1 %buildroot%_initrddir/%oname
 
 install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/rabbitmqctl
-install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%name
-install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%oname-plugins
+install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%{oname}-server
+install -p -D -m 0755 %SOURCE2 %buildroot%_sbindir/%{oname}-plugins
 install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%oname/%{oname}-env.conf
-install -p -D -m 0644 %SOURCE5 %buildroot%_datadir/%name/include.mk
+#install -p -D -m 0644 %SOURCE5 %buildroot%_datadir/%name/include.mk
 install -p -D -m 0644 %SOURCE6 %buildroot%_unitdir/%oname.service
 install -p -D -m 0644 %SOURCE7 %buildroot%_tmpfilesdir/%oname.conf
 install -d %buildroot%_runtimedir/%oname
 
-mkdir -p %buildroot%_sysconfdir/%oname/conf.d
-rm %buildroot%_erllibdir/%name/{LICENSE,LICENSE-MPL-RabbitMQ,INSTALL}
+# Make necessary symlinks
+mkdir -p %buildroot%_libexecdir/%oname
+for app in rabbitmq-defaults rabbitmq-env rabbitmq-plugins rabbitmq-server rabbitmqctl ; do
+    ln -r -s %buildroot%_erlanglibdir/rabbitmq_server-%version/sbin/${app} %buildroot%_libexecdir/%oname/${app}
+done
 
-mkdir -p %buildroot/%_erlanglibdir/%name/priv
+install -p -D -m 0755 scripts/rabbitmq-server.ocf %buildroot%_libexecdir/ocf/resource.d/rabbitmq/rabbitmq-server
+install -p -D -m 0755 scripts/rabbitmq-server-ha.ocf %buildroot%_libexecdir/ocf/resource.d/rabbitmq/rabbitmq-server-ha
+
+mkdir -p %buildroot%_sysconfdir/%oname/conf.d
+rm -f %buildroot%_erlanglibdir/rabbitmq_server-%version/{LICENSE,LICENSE-*,INSTALL}
 
 %pre
 %_sbindir/groupadd -r -f rabbitmq &>/dev/null
@@ -99,11 +145,14 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %preun_service %oname
 
 %files
+%doc LICENSE LICENSE-* docs/rabbitmq.config.example
 %_sbindir/*
 %_libexecdir/%oname
-%_erlanglibdir/%name
-%exclude %_erlanglibdir/%name/include
+%_erlanglibdir/rabbitmq_server-%version
+%_erldir/bin/*
+%exclude %_erlanglibdir/rabbitmq_server-%version/include
 %attr(0750, rabbitmq, rabbitmq) %dir %_localstatedir/%oname
+%attr(0750, rabbitmq, rabbitmq) %dir %_localstatedir/%oname/mnesia
 %attr(0750, rabbitmq, rabbitmq) %dir %_logdir/%oname
 %attr(0750, rabbitmq, rabbitmq) %dir %_runtimedir/%oname
 %config(noreplace) %_logrotatedir/*
@@ -113,13 +162,16 @@ mkdir -p %buildroot/%_erlanglibdir/%name/priv
 %_unitdir/%oname.service
 %_tmpfilesdir/%oname.conf
 %_initrddir/%oname
-%doc LICENSE LICENSE-MPL-RabbitMQ README INSTALL docs/rabbitmq.config.example
+%_libexecdir/ocf/resource.d/rabbitmq
 
 %files -n %name-devel
-%_erlanglibdir/%name/include
-%_datadir/%name
+%_erlanglibdir/rabbitmq_server-%version/include
+#%_datadir/%name
 
 %changelog
+* Wed Sep 28 2016 Alexey Shabalin <shaba@altlinux.ru> 3.6.5-alt1
+- 3.6.5
+
 * Fri Jun 10 2016 Denis Medvedev <nbr@altlinux.org> 3.5.4-alt2.2
 - Recompile with OTP-18.3.3
 
