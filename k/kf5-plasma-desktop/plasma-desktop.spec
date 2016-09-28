@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.7.4
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 Patch1: alt-def-font.patch
 Patch2: alt-menu-icon.patch
 Patch3: alt-def-apps-menu.patch
-#
+Patch4: alt-kicker-width.patch
 Patch5: alt-multimedia-player-chooser.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-def-desktop-containment.patch
@@ -104,7 +104,7 @@ KF5 library
 %patch1 -p1
 ###%patch2 -p1
 %patch3 -p1
-#
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1 -b .defpanel
 %patch7 -p1
@@ -198,6 +198,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Wed Sep 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt3
+- fix kicker menu width
+
 * Tue Sep 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt2
 - set kicker main menu by default
 
