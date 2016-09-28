@@ -1,6 +1,6 @@
 Name:    projectlibre
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
 
@@ -11,15 +11,19 @@ Url:     https://sourceforge.net/projects/projectlibre/
 
 Source:  %name-%version.tar
 Source1: %name.watch
+Patch1:  %name-1.6.2-mga-l10n-dialogs.patch
+Patch2:  %name-1.6.2-alt-fix-path-in-executable.patch
 
 Packager: Danil Mikhailov <danil@altlinux.org>
 
-#PreReq:
 Requires: java
 
 BuildArch: noarch
 BuildPreReq: rpm-build-compat
 BuildRequires: ant
+BuildRequires: java-1.7.0-openjdk-devel
+
+Requires: java-1.7.0-openjdk
 
 %define projectlibredir %_libexecdir/%name
 
@@ -41,6 +45,8 @@ added key features:
 
 %prep
 %setup
+%patch2 -p1
+%patch1 -p1
 # Replace hard-coded library path by default JRE path
 subst 's|/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar|%_libexecdir/jvm/jre/lib/rt.jar|' openproj_contrib/openproj_*.conf
 
@@ -50,17 +56,11 @@ ant
 
 %install
 install -Dm0755 openproj_build/resources/%name %buildroot/%_bindir/%name
-# Fix path to projectlibre dir
-subst 's|^OPENPROJ_HOME0=.*|OPENPROJ_HOME0="%projectlibredir"|' %buildroot/%_bindir/%name
-
 install -Dm0644 openproj_build/resources/%name.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm0644 openproj_build/resources/%name.png %buildroot%_pixmapsdir/%name.png
 
 mkdir -p %buildroot/%projectlibredir/
 cp -a openproj_build/dist/* %buildroot/%projectlibredir/
-
-%check
-#check that port listening
 
 %files
 %attr(755,root,root) %_bindir/projectlibre
@@ -70,6 +70,11 @@ cp -a openproj_build/dist/* %buildroot/%projectlibredir/
 %projectlibredir/*
 
 %changelog
+* Wed Sep 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt2
+- First check Java at default location (/usr/java/latest) (ALT #32386)
+- Require java-1.7.0-openjdk because bundled jar is linked with Java 1.7
+- Apply l10n patch from Mageia
+
 * Mon Dec 07 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
 - New version
 - Build from upstream Git repository
