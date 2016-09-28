@@ -1,7 +1,7 @@
 %define _name libevent
 Name: %{_name}2
-Version: 2.0.21
-Release: alt2
+Version: 2.0.22
+Release: alt1
 
 Summary: An asynchronous event notification library
 Group: System/Libraries
@@ -119,6 +119,9 @@ make verify
 %endif
 
 %changelog
+* Wed Sep 28 2016 Alexei Takaseev <taf@altlinux.org> 2.0.22-alt1
+- 2.0.22
+
 * Tue Nov 12 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.21-alt2
 - Update from branch patches-2.0
 
