@@ -1,13 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 3.20
+%define ver_major 3.21
 %define api_ver 1.0
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
 %define _libexecdir %_prefix/libexec
 
 Name: gpaste
-Version: %ver_major.4
+Version: %ver_major.91
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -25,12 +25,12 @@ Source1: pkg.m4
 
 Requires: lib%name = %version-%release
 
-%define gtk_ver 3.20
-%define gi_ver 1.48
+%define gtk_ver 3.22.0
+%define gi_ver 1.50.0
 %define vala_ver 0.32
 
-BuildRequires: intltool libappstream-glib-devel desktop-file-utils
-BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver libclutter-devel
+BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires: libdbus-devel libgtk+3-devel >= %gtk_ver libmutter-devel
 BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
 BuildRequires: vala-tools >= %vala_ver libvala-devel
@@ -98,8 +98,8 @@ in notification area.
 
 %prep
 %setup
-# pkg-config-0.27, automake 1.15 required
-subst 's/0\.27/0.25/
+# pkg-config-0.29, automake 1.15 required
+subst 's/0\.29/0.25/
        s/1\.15/1.14/' configure.ac
 cp %SOURCE1 m4/
 
@@ -163,6 +163,9 @@ cp %SOURCE1 m4/
 
 
 %changelog
+* Fri Sep 23 2016 Yuri N. Sedunov <aris@altlinux.org> 3.21.91-alt1
+- 3.21.91
+
 * Sat Jul 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
 - 3.20.4
 
