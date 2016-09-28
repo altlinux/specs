@@ -13,8 +13,8 @@
 %define nv_version 367
 %define nv_release 44
 %define nv_minor %nil
-%define pkg_rel alt169
-%define set_gl_nvidia_ver 0.17.0
+%define pkg_rel alt170
+%define set_gl_nvidia_ver 0.18.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -270,6 +270,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Wed Sep 28 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt170
+- fix check for xorg.conf
+
 * Mon Aug 29 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt169
 - new version
 
