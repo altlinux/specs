@@ -1,7 +1,8 @@
 %def_with python
 
 Name: libselinux
-Version: 2.4
+Epoch: 1
+Version: 2.3
 Release: alt1
 Summary: SELinux library
 License: Public Domain
@@ -118,6 +119,9 @@ fi
 
 
 %changelog
+* Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:2.3-alt1
+- downgraded due regression (closes: #32254)
+
 * Wed Feb 10 2016 Sergey V Turchin <zerg@altlinux.org> 2.4-alt1
 - new version
 
