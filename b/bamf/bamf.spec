@@ -1,8 +1,8 @@
-# TODO: add gtk2 support
+%define _libexecdir %_prefix/libexec
 %define ver_major 0.5
 
 Name: bamf
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: BAMF Application Matching Framework
@@ -16,13 +16,12 @@ Source: https://launchpad.net/%name/%ver_major/%version/+download/%name-%version
 Patch0: bamf-0.5.0-alt-configure.patch
 Patch1: bamf-0.5.0-alt-disable-werror.patch
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
 BuildRequires: libgtk+3-devel gtk-doc gnome-common
 BuildRequires: libdbus-glib-devel libwnck3-devel libgtop-devel
 BuildRequires: gobject-introspection-devel vala-tools
 BuildRequires: python-module-libxml2 python-module-libxslt
 BuildRequires: xvfb-run dbus-tools-gui
+BuildRequires: libstartup-notification-devel systemd-devel
 
 %description
 BAMF Application Matching Framework.
@@ -122,6 +121,11 @@ GObject introspection devel data for bamf3 library.
 %files -n bamfdaemon
 %_libexecdir/bamf/bamfdaemon
 %_datadir/dbus-1/services/org.ayatana.bamf.service
+%_prefix/lib/systemd/user/bamfdaemon.service
+
+# upstart stuff
+%exclude %_libexecdir/bamf/bamfdaemon-dbus-runner
+%exclude %_datadir/upstart/sessions/bamfdaemon.conf
 
 %files -n libbamf3
 %_libdir/libbamf3.so.*
@@ -144,6 +148,9 @@ GObject introspection devel data for bamf3 library.
 %_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Thu Sep 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
+- 0.5.3
+
 * Mon Sep 07 2015 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
