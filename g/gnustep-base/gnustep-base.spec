@@ -1,8 +1,9 @@
 %set_verify_elf_method unresolved=strict
+%define gnustep_ver 1.24
 
 Name: gnustep-base
 Version: 1.24.6
-Release: alt6.svn20140226
+Release: alt7.svn20140226
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -24,6 +25,7 @@ BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
 BuildPreReq: libicu-devel libcommoncpp2-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base gnustep-make-doc
+BuildRequires: tzdata ca-certificates
 
 %description
 The GNUstep Base Library is a powerful fast library of general-purpose,
@@ -117,16 +119,31 @@ for i in ChangeLog*; do
 	gzip $i
 done
 
+# Set symlinks to system timezones, localtime and ca-certificates
+cd %buildroot%_libdir/GNUstep/Libraries/gnustep-base/Versions/%gnustep_ver/Resources/NSTimeZones
+rm -rf zones
+cd %buildroot%_libdir/GNUstep/Libraries/gnustep-base/Versions/%gnustep_ver/Resources/GSTLS
+rm -rf ca-certificates.crt
+ln -s /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
+
 %post
 grep -q '^gdomap' /etc/services \
 || (echo "gdomap 538/tcp # GNUstep distributed objects" >> /etc/services \
 && echo "gdomap 538/udp # GNUstep distributed objects" >> /etc/services)
-
+t="%_libdir/GNUstep/Libraries/gnustep-base/Versions/%gnustep_ver/Resources/NSTimeZones/zones"
+if [ ! -d "$t" ];then
+    ln -s /usr/share/zoneinfo "$t"
+fi
 
 %postun
 mv -f /etc/services /etc/services.orig
 grep -v "^gdomap 538" /etc/services.orig > /etc/services
 rm -f /etc/services.orig
+t="%_libdir/GNUstep/Libraries/gnustep-base/Versions/%gnustep_ver/Resources/NSTimeZones/zones"
+if [ -L "$t" ];then
+    rm -f "$t"
+fi
+
 
 %files
 %_initdir/gdomap
@@ -152,6 +169,9 @@ rm -f /etc/services.orig
 %_infodir/*
  
 %changelog
+* Mon Sep 26 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.24.6-alt7.svn20140226
+- Set symlinks to system timezones and ca-certificates
+
 * Wed Feb 17 2016 Andrey Cherepanov <cas@altlinux.org> 1:1.24.6-alt6.svn20140226
 - Rebuild with libicu56
 

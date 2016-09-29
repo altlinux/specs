@@ -4,7 +4,7 @@
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
 Version:      3.1.5
-Release:      alt1.git
+Release:      alt2.git
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -217,6 +217,8 @@ SOGo backend for OpenChange
 %prep
 %setup -q -n SOGo-%version
 %patch -p1
+# Workaround for wrong beahaviour call of timeZoneWithAbbreviation with GMT or UTC
+subst 's/timeZoneWithAbbreviation/timeZoneWithName/g' $(grep -Rl timeZoneWithAbbreviation *)
 
 %build
 . /usr/share/GNUstep/Makefiles/GNUstep.sh
@@ -393,6 +395,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Sep 29 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.5-alt2.git
+- Fix timezone shift for calendar entries
+
 * Mon Aug 22 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.1.5-alt1.git
 - Latest fixes:
   + [eas] properly generate the BusyStatus for normal events
