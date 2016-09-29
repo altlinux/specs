@@ -3,7 +3,7 @@
 %define lngg Ukrainian
 
 Name: kde5-i18n-%lng
-Version: 16.04.1
+Version: 16.08.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -78,6 +78,9 @@ done
 #%lang(%lng) %_K5data/autocorrect/%{lng}_*.xml
 
 %changelog
+* Thu Sep 29 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
+- new version
+
 * Wed May 11 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
 - new version
 
