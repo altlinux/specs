@@ -1,11 +1,11 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_with devel
+%def_without devel
 
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     5
 %define postgresql_subminor  4
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -47,12 +47,11 @@ Requires: libpq%libpq_major >= %version-%release
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
 Conflicts: %prog_name > %version-%release
-Conflicts: %{prog_name}8.4
-Conflicts: %{prog_name}9.0
 Conflicts: %{prog_name}9.1
 Conflicts: %{prog_name}9.2
 Conflicts: %{prog_name}9.3
 Conflicts: %{prog_name}9.4
+Conflicts: %{prog_name}9.6
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel
@@ -783,6 +782,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Sep 29 2016 Alexei Takaseev <taf@altlinux.org> 9.5.4-alt2
+- Disable -devel
+
 * Wed Aug 10 2016 Alexei Takaseev <taf@altlinux.org> 9.5.4-alt1
 - 9.5.4
 

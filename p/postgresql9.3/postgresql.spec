@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     3
 %define postgresql_subminor  14
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -52,6 +52,7 @@ Conflicts: %{prog_name}9.1
 Conflicts: %{prog_name}9.2
 Conflicts: %{prog_name}9.4
 Conflicts: %{prog_name}9.5
+Conflicts: %{prog_name}9.6
 
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel
@@ -759,6 +760,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Sep 29 2016 Alexei Takaseev <taf@altlinux.org> 9.3.14-alt2
+- Add conflicts to 9.6
+
 * Wed Aug 10 2016 Alexei Takaseev <taf@altlinux.org> 9.3.14-alt1
 - 9.3.14
 
