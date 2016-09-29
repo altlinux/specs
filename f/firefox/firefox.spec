@@ -12,7 +12,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        48.0.2
+Version:        49.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -37,12 +37,10 @@ Patch17:        firefox-mediasource-crash.patch
 
 # Upstream
 Patch200:       mozilla-bug-256180.patch
-Patch201:       mozilla-bug-1272332.patch
 
 # Red Hat
 Patch301:       rhbz-1291190-appchooser-crash.patch
 Patch302:       rhbz-966424.patch
-Patch303:       rh-firefox-gtk3-20.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -138,11 +136,9 @@ tar -xf %SOURCE2
 %patch17 -p2
 
 %patch200 -p1
-%patch201 -p1
 
 %patch301 -p1
 %patch302 -p1
-%patch303 -p1
 
 cp -f %SOURCE4 .mozconfig
 
@@ -303,6 +299,11 @@ done
 %_rpmmacrosdir/firefox
 
 %changelog
+* Tue Sep 27 2016 Alexey Gladkov <legion@altlinux.ru> 49.0.1-alt1
+- New release (49.0.1).
+- Fixed:
+  + 2016-85 Security vulnerabilities fixed in Firefox 49 
+
 * Tue Sep 06 2016 Alexey Gladkov <legion@altlinux.ru> 48.0.2-alt1
 - New release (48.0.2).
 
