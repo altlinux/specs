@@ -2,7 +2,7 @@
 
 Name: freshplayerplugin
 Version: 0.3.5
-Release: alt1
+Release: alt2
 Summary: PPAPI-host NPAPI-plugin adapter
 License: MIT
 Group: System/Libraries
@@ -19,7 +19,7 @@ BuildRequires: cmake gcc-c++ libXcursor-devel libXrandr-devel libalsa-devel liba
 
 %{?!_without_check:%{?!_disable_check:BuildPreReq: ctest}}
 
-Requires: update-pepperflash
+Requires: ppapi-plugin-adobe-flash
 
 %description
 The main goal of this project is to get PPAPI (Pepper) Flash player
@@ -53,6 +53,10 @@ make -C BUILD check
 %config(noreplace) %_sysconfdir/freshwrapper.conf
 
 %changelog
+* Thu Sep 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.5-alt2
+- Replaced R: update-pepperflash with ppapi-plugin-adobe-flash
+  (ALT#32516).
+
 * Wed May 04 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.5-alt1
 - Updated to 0.3.5.
 

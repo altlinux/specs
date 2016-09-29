@@ -10,8 +10,8 @@ Name: adobe-flash-player-ppapi
 %define ver_fake   23
 %define ver_ix86   23.0.0.162
 %define ver_x86_64 23.0.0.162
-Release: alt2
-Serial: 3
+Release: alt3
+Epoch: 3
 
 %define ver_real %ver_fake
 %ifarch x86_64
@@ -51,8 +51,6 @@ Summary: Adobe Flash Player
 Requires: libcurl /usr/bin/xdg-open
 #Provides: flash-plugin = %version-%release
 #Obsoletes: flash-plugin <= %version
-Provides: update-pepperflash = 1.9
-Obsoletes: update-pepperflash < 1.9
 %description -n %bin_name
 Adobe Flash Player %version (Macromedia Flash)
 Fully Supported: Mozilla 1.0+, Netscape 7.x, Firefox 0.8+
@@ -135,6 +133,9 @@ echo "At this moment no x86 version of %name"
 %endif
 
 %changelog
+* Thu Sep 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:23-alt3
+- Revered previous change.
+
 * Mon Sep 26 2016 Sergey V Turchin <zerg@altlinux.org> 3:23-alt2
 - obsolete update-pepperflash
 
