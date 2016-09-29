@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     4
 %define postgresql_subminor  9
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -48,12 +48,11 @@ Requires: libpq%libpq_major >= %version-%release
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
 Conflicts: %prog_name > %version-%release
-Conflicts: %{prog_name}8.4
-Conflicts: %{prog_name}9.0
 Conflicts: %{prog_name}9.1
 Conflicts: %{prog_name}9.2
 Conflicts: %{prog_name}9.3
 Conflicts: %{prog_name}9.5
+Conflicts: %{prog_name}9.6
 # 1C
 Conflicts: %{prog_name}9.4-1C
 
@@ -787,6 +786,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Thu Sep 29 2016 Alexei Takaseev <taf@altlinux.org> 9.4.9-alt2
+- Add conflicts to 9.6
+
 * Wed Aug 10 2016 Alexei Takaseev <taf@altlinux.org> 9.4.9-alt1
 - 9.4.9
 
