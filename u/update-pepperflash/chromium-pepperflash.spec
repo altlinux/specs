@@ -1,60 +1,52 @@
-Name: 	  update-pepperflash
-Version:  1.5.4
-Release:  alt2
+Name: update-pepperflash
+Version: 1.6
+Release: alt1
 
-Summary:  Pepper Flash Player downloader
-License:  GPLv3+
-Group:    Networking/WWW
-Url: 	  http://altlinux.org/PepperFlash
+Summary: Pepper Flash Player legacy package
+License: GPLv3+
+Group: Networking/WWW
+Url: http://altlinux.org/PepperFlash
+BuildArch: noarch
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-Source1:  update-pepperflash
-
-BuildRequires: curl wget gzip xml-utils
-Requires: curl wget gzip xml-utils
+Source1: update-pepperflash
 
 %description
-This package will download Chrome from Google, and unpack it to make the
-included Pepper Flash Player available for use with Chromium.  The end
-user license agreement is available at Google.
+This package contains update-pepperflash program which currently does
+nothing, rely on ppapi-plugin-adobe-flash packeage.
 
 %package -n chromium-pepperflash
-Summary:  Pepper Flash Player - browser plugin for Chromium
+Summary: Pepper Flash Player - browser plugin for Chromium
 Group: Networking/WWW
 BuildArch: noarch
-Requires: %name = %version
+Requires: ppapi-plugin-adobe-flash
 Requires: chromium
 
 %description -n chromium-pepperflash
 Pepper Flash Player - browser plugin for Chromium (virtual package)
 
 %package -n firefox-pepperflash
-Summary:  Pepper Flash Player - browser plugin for Firefox
+Summary: Pepper Flash Player - browser plugin for Firefox
 Group: Networking/WWW
 BuildArch: noarch
-Requires: %name = %version
 Requires: /usr/bin/firefox
+Requires: ppapi-plugin-adobe-flash
 Requires: freshplayerplugin
 
 %description -n firefox-pepperflash
 Pepper Flash Player - browser plugin for Firefox (virtual package)
 
-
 %package -n palemoon-pepperflash
-Summary:  Pepper Flash Player - browser plugin for Pale Moon
+Summary: Pepper Flash Player - browser plugin for Pale Moon
 Group: Networking/WWW
 BuildArch: noarch
-Requires: %name = %version
 Requires: palemoon
+Requires: ppapi-plugin-adobe-flash
 Requires: freshplayerplugin
 
 %description -n palemoon-pepperflash
 Pepper Flash Player - browser plugin for Firefox (virtual package)
 
-
 %prep
-
 %install
 install -D -m 0755 %SOURCE1 %buildroot%_sbindir/update-pepperflash
 mkdir -p %buildroot%_libdir/pepper-plugins
@@ -65,13 +57,8 @@ mkdir -p %buildroot%_cachedir/pepperflash
 [ "$1" -eq "0" ] && %_sbindir/update-pepperflash --uninstall --quiet ||:
 exit 0
 
-%post
-%_sbindir/update-pepperflash --install --quiet ||:
-%_sbindir/update-pepperflash --status ||:
-
 %files
 %_sbindir/update-pepperflash
-%ghost %_libdir/pepper-plugins/libpepflashplayer.so
 %dir %_cachedir/pepperflash
 
 %files -n chromium-pepperflash
@@ -79,6 +66,11 @@ exit 0
 %files -n palemoon-pepperflash
 
 %changelog
+* Thu Sep 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6-alt1
+- Added R: ppapi-plugin-adobe-flash.
+- Removed all download code (ALT#32540).
+- Fixed uninstall mode (ALT#32517)
+
 * Mon Apr 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.5.4-alt2
 - Fixed the  Requires to the  palemoon
 
