@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt8
 BuildArch: noarch
 
 %define theme %name
@@ -465,6 +465,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Sep 29 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt8
+- fix default gtk2 tooltip colors
+
 * Tue Sep 27 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt7
 - update slideshow
 - set release status
