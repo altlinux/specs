@@ -1,28 +1,32 @@
-%define ver_major 0.95
+%def_disable snapshot
+
+%define ver_major 0.97
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
-%define gst_ver 1.6.0
-%define gtk_ver 3.10
+%define gst_ver 1.8.2
+%define gtk_ver 3.20
 %define gi_ver 1.32
 
 Name: pitivi
-Version: %ver_major
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
 Group: Video
 Url: http://www.pitivi.org/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
 
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_python3_compile_include %_libdir/%name/python
+%add_python3_path %_libdir/%name/python
 
 Requires: python3-module-gst%gst_api_ver >= %gst_ver
 Requires: gstreamer-editing-services
@@ -31,7 +35,9 @@ Requires: gst-plugins-base%gst_api_ver >= %gst_ver
 Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
+Requires: python3-module-canberra
 
+BuildRequires: git meson python3-module-nose
 BuildRequires: intltool yelp-tools rpm-build-gir libappstream-glib-devel libcairo-devel
 BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: python3-module-pycairo-devel
@@ -46,11 +52,12 @@ newbies and professionals alike.
 
 %prep
 %setup
+subst 's/\(nosetests\)/\13/' tests/meson.build
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
-%autoreconf -I m4 -I common/m4
-%configure --disable-static
+# python script since 0.97
+./configure --prefix=/usr \
+	--libdir=%_lib
 
 %install
 %makeinstall_std
@@ -58,17 +65,23 @@ newbies and professionals alike.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/%name
 %_libdir/%name/
 %_datadir/%name/
-%_datadir/mime/packages/%name.xml
+#%_datadir/mime/packages/%name.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
-%_man1dir/%name.1*
+#%_man1dir/%name.1*
 %_datadir/appdata/%name.appdata.xml
 %doc AUTHORS NEWS RELEASE
 
 %changelog
+* Mon Aug 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.97.1-alt1
+- 0.97.1
+
+* Thu Jun 30 2016 Yuri N. Sedunov <aris@altlinux.org> 0.96-alt1
+- 0.96
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.95-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
