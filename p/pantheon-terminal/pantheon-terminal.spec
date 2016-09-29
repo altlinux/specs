@@ -1,7 +1,8 @@
-%define ver_major 0.3
+%define ver_major 0.4
+%define xdg_name org.pantheon.terminal
 
 Name: pantheon-terminal
-Version: %ver_major.1.3
+Version: %ver_major
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -10,11 +11,10 @@ License: GPLv3
 
 Url: https://launchpad.net/pantheon-terminal
 
-Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tgz
+Source: https://launchpad.net/%name/%{ver_major}.x/%version/+download/%name-%version.tar.xz
 
-Packager: Igor Zubkov <icesik@altlinux.org>
-
-BuildRequires: cmake gcc-c++ libnotify-devel libvte3_2.90-devel libgranite-devel libpixman-devel
+BuildRequires: cmake gcc-c++ intltool libappstream-glib-devel libnotify-devel
+BuildRequires: libvte3-devel libgranite-devel libpixman-devel
 BuildRequires: libXdmcp-devel vala libgranite-vala
 
 %description
@@ -28,7 +28,9 @@ It's just a terminal, nothing more, nothing less.
 %setup
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING="Release"
+%cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
+	-DGSETTINGS_COMPILE:BOOL=OFF \
+	-DGSETTINGS_LOCALINSTALL:BOOL=OFF
 %cmake_build VERBOSE=1
 
 %install
@@ -40,11 +42,15 @@ It's just a terminal, nothing more, nothing less.
 %doc AUTHORS HACKING INSTALL README
 %_bindir/*
 %_datadir/%name/
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_desktopdir/open-%name-here.desktop
-%_datadir/glib-2.0/schemas/org.pantheon.terminal.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Thu Sep 29 2016 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
+- 0.4
+
 * Wed Sep 09 2015 Yuri N. Sedunov <aris@altlinux.org> 0.3.1.3-alt1
 - 0.3.1.3
 
