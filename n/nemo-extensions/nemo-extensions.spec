@@ -2,7 +2,7 @@
 
 Name: nemo-extensions
 Version: 3.0.1
-Release: alt1
+Release: alt2
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
@@ -35,6 +35,7 @@ BuildRequires: libclutter-gst3.0-devel
 BuildRequires: libgtksourceview3-gir-devel
 BuildRequires: libgtksourceview3-devel
 BuildRequires: perl(XML/Parser.pm)
+BuildRequires: libcogl-gir-devel
 
 %description
 Extensions for Nemo
@@ -43,7 +44,7 @@ Extensions for Nemo
 Summary:     File Roller extension for Nemo
 License:     %gpl2plus
 Group: Graphical desktop/GNOME
-Requires:    file-roller
+Requires:    /usr/bin/file-roller
 
 %description -n nemo-fileroller
 This package contains the file-roller extension for the Nemo.
@@ -170,12 +171,14 @@ popd
 %set_typelibdir %_libdir/nemo-preview
 %set_girdir %_datadir/nemo-preview
 pushd nemo-preview
+[ ! -d m4 ] && mkdir m4
 %autoreconf
 %configure
 %make
 popd
 
 pushd nemo-image-converter
+[ ! -d m4 ] && mkdir m4
 %autoreconf
 %configure
 %make
@@ -286,6 +289,10 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/applications/nemo-compare-preferences.desktop
 
 %changelog
+* Thu Sep 29 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt2
+- Fix build with gnome 3.22
+- Fix requires to file-roller
+
 * Fri Jun 24 2016 Vladimir Didenko <cow@altlinux.org> 3.0.1-alt1
 - 3.0.0-12-g4093c7b
 
