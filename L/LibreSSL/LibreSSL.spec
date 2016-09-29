@@ -1,8 +1,9 @@
 Name: LibreSSL
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 %define oname libressl
+%define libtls_abi 11
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -119,7 +120,7 @@ Group: Networking/Other
 License: BSD
 Obsoletes: netcat-openbsd
 Conflicts: netcat
-Provides: netcat
+Provides: nc
 Provides: netcat-ssl
 
 %description -n netcat-tls
@@ -200,7 +201,8 @@ popd
 %_libdir/libssl.so.*
 
 %files -n libtls
-%_libdir/libtls.so.*
+%_libdir/libtls.so.%libtls_abi
+%_libdir/libtls.so.%libtls_abi.*
 
 %files -n libtls-devel
 %_includedir/tls.h
@@ -217,6 +219,20 @@ popd
 %_man1dir/netcat.*
 
 %changelog
+* Thu Sep 29 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.3-alt1
+- 2.4.3
+- Bug fixes and reliability improvements:
+  + Reverted change that cleans up the EVP cipher context in
+    EVP_EncryptFinal() and EVP_DecryptFinal(). Some software relies on the
+    previous behaviour.
+  + Avoid unbounded memory growth in libssl, which can be triggered by a
+    TLS client repeatedly renegotiating and sending OCSP Status Request
+    TLS extensions.
+  + Avoid falling back to a weak digest for (EC)DH when using SNI with
+    libssl.
+- add `nc' providing
+- remove `netcat' providing
+
 * Wed Aug 03 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.2-alt1
 - 2.4.2
 - LibreSSL
