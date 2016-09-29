@@ -1,5 +1,13 @@
+%def_enable lvs
+%def_enable vrrp
+%def_enable snmp
+%def_enable sha1
+%def_enable routes
+%def_enable libiptc
+%def_enable libipset
+
 Name: keepalived
-Version: 1.2.23
+Version: 1.2.24
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -11,6 +19,11 @@ Source1: %name.init
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
+%{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
+%{?_enable_libipset:BuildRequires: libipset6-devel}
+BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)
+BuildRequires: libnfnetlink-devel
+%{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 
 %description
 The main goal of the keepalived project is to add a strong & robust keepalive
@@ -25,26 +38,34 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 
 %prep
 %setup -q
-autoreconf
 
 %build
-%configure --enable-lvs --with-kernel-dir=/usr/include
+%autoreconf
+%configure \
+        --with-kernel-dir=/usr/include \
+        %{subst_enable lvs} \
+        %{subst_enable vrrp} \
+        %{subst_enable sha1} \
+        %{subst_enable routes} \
+        %{subst_enable libiptc} \
+        %{subst_enable libipset} \
+        %{?_enable_snmp:--enable-snmp --enable-snmp-rfc}
+
 %make_build
 
 %install
-#makeinstall
-#install -pD -m644 %%SOURCE1 %%buildroot%%_menudir/%%name
-#%%find_lang %%name
-mkdir -p %buildroot/%_sbindir
-install -pD -m755 bin/genhash %buildroot/%_sbindir/genhash
-install -pD -m755 bin/keepalived %buildroot/%_sbindir/keepalived
+#makeinstall_std
+mkdir -p %buildroot{%_sbindir,%_initdir,%_unitdir,%_sysconfdir/%name,%_sysconfdir/sysconfig}
+install -pD -m755 bin/genhash %buildroot%_sbindir/genhash
+install -pD -m755 bin/keepalived %buildroot%_sbindir/keepalived
 mkdir -p %buildroot/%_mandir/man{1,5,8}
-install -pD -m644 doc/man/man1/genhash.1 %buildroot/%_mandir/man1/genhash.1
-install -pD -m644 doc/man/man5/keepalived.conf.5 %buildroot/%_mandir/man5/keepalived.conf.5
-install -pD -m644 doc/man/man8/keepalived.8 %buildroot/%_mandir/man8/keepalived.8
-mkdir -p %buildroot/etc/%name
-mkdir -p %buildroot/etc/rc.d/init.d
-install -pD -m755 %SOURCE1 %buildroot/etc/rc.d/init.d/%name
+install -pD -m644 doc/man/man1/genhash.1 %buildroot%_man1dir/genhash.1
+install -pD -m644 doc/man/man5/keepalived.conf.5 %buildroot%_man5dir/keepalived.conf.5
+install -pD -m644 doc/man/man8/keepalived.8 %buildroot%_man8dir/keepalived.8
+install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
+install -pD -m644 keepalived/%name.service %buildroot%_unitdir/%name.service
+install -pD -m644 keepalived/etc/init.d/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
+
 
 %preun
 %preun_service keepalived
@@ -53,40 +74,32 @@ install -pD -m755 %SOURCE1 %buildroot/etc/rc.d/init.d/%name
 %post_service keepalived
 
 %files
-%_sbindir/genhash
-%_sbindir/keepalived
-%_mandir/man1/genhash.*
-%_mandir/man5/keepalived.conf.*
-%_mandir/man8/keepalived.*
-/etc/rc.d/init.d/%name
-/etc/%name
+%_sbindir/*
+%_man1dir/genhash.*
+%_man5dir/keepalived.conf.*
+%_man8dir/keepalived.*
+%_initdir/%name
+%_unitdir/%name.service
+%dir %_sysconfdir/%name
+# %config(noreplace) %_sysconfdir/%name/*
+%config(noreplace) %_sysconfdir/sysconfig/%name
 
-%doc AUTHOR ChangeLog  README TODO doc/keepalived.conf.SYNOPSIS
-%doc doc/samples/keepalived.conf.vrrp.static_ipaddress
-%doc doc/samples/keepalived.conf.vrrp
-%doc doc/samples/root.pem
-%doc doc/samples/keepalived.conf.vrrp.routes
-%doc doc/samples/keepalived.conf.virtual_server_group
-%doc doc/samples/keepalived.conf.virtualhost
-%doc doc/samples/keepalived.conf.fwmark
-%doc doc/samples/keepalived.conf.sample
-%doc doc/samples/keepalived.conf.HTTP_GET.port
-%doc doc/samples/keepalived.conf.vrrp.scripts
-%doc doc/samples/keepalived.conf.misc_check
-%doc doc/samples/sample.misccheck.smbcheck.sh
-%doc doc/samples/keepalived.conf.status_code
-%doc doc/samples/keepalived.conf.vrrp.sync
-%doc doc/samples/keepalived.conf.SSL_GET
-%doc doc/samples/keepalived.conf.inhibit
-%doc doc/samples/dh1024.pem
-%doc doc/samples/keepalived.conf.vrrp.lvs_syncd
-%doc doc/samples/keepalived.conf.SMTP_CHECK
-%doc doc/samples/keepalived.conf.misc_check_arg
-%doc doc/samples/keepalived.conf.vrrp.localcheck
-%doc doc/samples/client.pem
-%doc doc/samples/keepalived.conf.track_interface
+%doc AUTHOR ChangeLog  README TODO
+%doc doc/keepalived.conf.SYNOPSIS
+%doc doc/*-MIB
+%doc doc/*.txt
+%doc doc/samples
 
 %changelog
+* Thu Sep 29 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt1
+- 1.2.24
+- update sysv init script:
+  + add LSB header
+  + add support options from /etc/sysconfig/keepalived
+- update BR: and configure options
+- add install systemd unit file
+- cleanup spec
+
 * Mon Jul 18 2016 Anton Farygin <rider@altlinux.ru> 1.2.23-alt1
 - new version
 
