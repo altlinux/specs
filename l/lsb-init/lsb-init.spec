@@ -1,7 +1,7 @@
 Name:         lsb-init
 Summary:      ALT Linux implementation of LSB compliant init functions
 Version:      4.0
-Release:      alt3
+Release:      alt4
 License:      GPL
 URL:          http://www.linuxbase.org
 Source:       %name-%version.tar
@@ -25,8 +25,8 @@ The package provides the ALT Linux implementation of LSB compliant
 init functions for the Linux Standard Base %version core support package.
 
 %prep
-%setup 
-%patch -p1
+%setup
+%patch -p1 -d lib/lsb
 
 %build
 
@@ -41,6 +41,13 @@ install -m 644 ./lib/lsb/* %buildroot/lib/lsb
 /lib/lsb
 
 %changelog
+* Thu Sep 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0-alt4
+- Do not remove log_daemon_msg
+  (This doesn't break anything and helps Debian-oriented init-scripts,
+  as all the other kept functions do.)
+- The implementation of log_end_msg, log_action_end_msg improved
+  so that it prints the ALT-style DONE/FAILED
+
 * Fri Apr 16 2010 Andriy Stepanov <stanv@altlinux.ru> 4.0-alt3
 - Fix build
 
