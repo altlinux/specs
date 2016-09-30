@@ -13,7 +13,7 @@
 %def_enable microhttpd
 %def_enable gnutls
 %def_enable libcurl
-%def_disable libidn
+%def_enable libidn
 %def_enable libiptc
 %def_enable polkit
 %def_enable efi
@@ -55,7 +55,7 @@ Name: systemd
 # so that older systemd from p7/t7 can be installed along with newer journalctl.)
 Epoch: 1
 Version: 231
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -163,7 +163,7 @@ BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl) >= 7.32.0}
-%{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
+%{?_enable_libidn:BuildRequires: pkgconfig(libidn) }
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_gnuefi:BuildRequires: gnu-efi}
 
@@ -177,6 +177,7 @@ Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
 Requires: util-linux >= 2.27.1
+Requires: libidn >= 1.33-alt2
 
 # Requires: selinux-policy >= 3.8.5
 Requires: libsystemd-shared = %EVR
@@ -697,6 +698,7 @@ intltoolize --force --automake
 	%{subst_enable selinux} \
 	%{subst_enable apparmor} \
 	%{subst_enable utmp} \
+	--without-kill-user-processes \
 	--disable-static
 
 %make_build GCC_COLORS="" V=1
@@ -962,10 +964,6 @@ install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
 %pre
 %_sbindir/groupadd -r -f systemd-journal >/dev/null 2>&1 ||:
-
-%_sbindir/groupadd -r -f systemd-bus-proxy >/dev/null 2>&1 ||:
-%_sbindir/useradd -g systemd-bus-proxy -c 'systemd Bus Proxy' \
-    -d /var/empty -s /dev/null -r -l -M systemd-bus-proxy >/dev/null 2>&1 ||:
 
 %post
 /sbin/systemctl daemon-reexec >/dev/null 2>&1 || :
@@ -1778,6 +1776,12 @@ fi
 /lib/udev/write_net_rules
 
 %changelog
+* Fri Sep 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1:231-alt3
+- build with libidn support
+- backport upstream patches for networkd
+- fix for the empty notify message
+- build with option --without-kill-user-processes
+
 * Fri Aug 05 2016 Alexey Shabalin <shaba@altlinux.ru> 1:231-alt2
 - build without libidn support (ALT #32362)
 
