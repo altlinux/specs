@@ -8,7 +8,7 @@
 
 Name: keepalived
 Version: 1.2.24
-Release: alt1
+Release: alt2
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
 License: GPL
@@ -16,6 +16,9 @@ Group: Networking/Other
 Url: http://www.keepalived.org/software/
 Source0: %url/%name-%version.tar
 Source1: %name.init
+
+Patch1: 0001-fix-dlopen-libipset.patch
+Patch2: 0002-update-systemd-unit-file.patch
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
@@ -38,6 +41,8 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -91,6 +96,10 @@ install -pD -m644 keepalived/etc/init.d/%name.sysconfig %buildroot%_sysconfdir/s
 %doc doc/samples
 
 %changelog
+* Fri Sep 30 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt2
+- fix dlopen libipset
+- update systemd unit file
+
 * Thu Sep 29 2016 Alexey Shabalin <shaba@altlinux.ru> 1.2.24-alt1
 - 1.2.24
 - update sysv init script:
