@@ -1,5 +1,5 @@
 Name: ca-certificates
-Version: 2016.05.25
+Version: 2016.09.28
 Release: alt1
 
 Summary: Common CA Certificates
@@ -13,13 +13,14 @@ Source1: alt.tar
 BuildRequires: openssl
 
 %description
-This package contains a bundle of X.509 certificates of public Certificate
-Authorities (CA).  This is useful for any applications to verify SSL/TLS
-connection.
+This package contains a bundle of X.509 certificates of public
+Certificate Authorities (CA).  This is useful for any applications to
+verify SSL/TLS connection.
+
 Note that certificate authorities whose certificates are included in
 this package are not in any way audited for trustworthiness and RFC3647
-compliance, and that full responsibility to assess them rests with
-the user.
+compliance, and that full responsibility to assess them rests with the
+user.
 
 %prep
 %setup -c -a1
@@ -51,6 +52,10 @@ ln -s %_datadir/%name/ca-bundle.crt %{buildroot}%_sysconfdir/pki/tls/certs
 %_datadir/%name
 
 %changelog
+* Fri Sep 30 2016 L.A. Kostis <lakostis@altlinux.ru> 2016.09.28-alt1
+- mozilla: updated to September 2016 CA batch root changes.
+  (#bmo 1296689).
+
 * Fri Jun 24 2016 L.A. Kostis <lakostis@altlinux.ru> 2016.05.25-alt1
 - mozilla: updated to May 2016 CA batch root changes.
   (#bmo 1275533).
