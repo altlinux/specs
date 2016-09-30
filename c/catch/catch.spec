@@ -1,5 +1,5 @@
 Name: catch
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1
 
 Summary: C++ Unit Test framework ("all in one header")
@@ -36,6 +36,9 @@ mv -f single_include/catch.hpp %buildroot%_includedir
 %_includedir/*.hpp
 
 %changelog
+* Fri Sep 30 2016 Pavel Vainerman <pv@altlinux.ru> 1.5.7-alt1
+- build new version
+
 * Mon Jul 18 2016 Pavel Vainerman <pv@altlinux.ru> 1.5.6-alt1
 - build new version
 
