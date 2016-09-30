@@ -1,14 +1,19 @@
+%define xdg_name org.gnome.accerciser
 
 Name: accerciser
-Version: 3.14.0
-Release: alt1.1
+Version: 3.22.0
+Release: alt1
 
 Summary: An interactive Python tool for querying accessibility information
-Url: http://live.gnome.org/Accerciser
-License: %bsd
-
 Group: Accessibility
-Packager: Michael Pozhidaev <msp@altlinux.ru>
+License: %bsd
+Url: https://wiki.gnome.org/action/show/Apps/Accerciser
+
+Source: %name-%version.tar
+
+BuildArch: noarch
+
+Requires: python3-module-%name = %version-%release
 
 # use python3
 AutoReqProv: nopython
@@ -16,17 +21,9 @@ AutoReqProv: nopython
 
 BuildRequires(pre): rpm-build-python3
 
-# Automatically added by buildreq on Sun Sep 28 2008
-BuildRequires: GConf docbook-dtds gnome-doc-utils-xslt perl-XML-Parser python3-devel libgio-devel libgtk+3-devel python3-module-pyatspi
-
-BuildRequires: rpm-build-licenses rpm-build-gnome gnome-doc-utils libGConf-devel
-BuildPreReq: intltool itstool python3-module-pygobject3-devel
+BuildRequires: rpm-build-licenses rpm-build-gnome libappstream-glib-devel
+BuildRequires: intltool yelp-tools libgtk+3-devel python3-module-pygobject3-devel
 BuildRequires: desktop-file-utils libat-spi2-core-devel
-
-BuildArch: noarch
-Source: %name-%version.tar
-
-Requires: python3-module-%name = %version-%release
 
 %description
 An interactive Python accessibility explorer.
@@ -49,7 +46,7 @@ This package contains Python module for accerciser.
 %setup
 
 %build
-%configure --without-pyreqs
+%configure
 %make_build
 
 %install
@@ -61,10 +58,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS README COPYING NEWS ChangeLog
+%doc AUTHORS README COPYING NEWS
 %_bindir/*
 %_datadir/%name
-%_datadir/applications/*
+%_desktopdir/%name.desktop
 %_man1dir/*
 %_datadir/glib-2.0/schemas/*
 %_datadir/icons/hicolor/16x16/apps/%name.png
@@ -72,12 +69,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/icons/hicolor/32x32/apps/%name.png
 %_datadir/icons/hicolor/48x48/apps/accerciser.png
 %_datadir/icons/hicolor/scalable/apps/accerciser.svg
-%_datadir/icons/HighContrast/scalable/apps/accerciser.svg
+%_datadir/icons/hicolor/symbolic/apps/accerciser-symbolic.svg
+%_datadir/appdata/%xdg_name.appdata.xml
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
 
 %changelog
+* Fri Sep 30 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.14.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
