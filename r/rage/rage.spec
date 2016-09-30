@@ -1,17 +1,25 @@
 Name: rage
-Version: 0.1.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: EFL Video Player
 License: BSD
 Group: Video
-
 Url: http://www.enlightenment.org/
-Source: http://download.enlightenment.org/releases/%name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: efl-libs-devel >= 1.11.0
-BuildRequires: libelementary-devel >= 1.11.0
+Source: http://download.enlightenment.org/releases/%name-%version.tar
+#Patch: %name-%version-%release.patch
+
+# default engine is GStreamer
+Requires: gst-plugins-base1.0
+Requires: gst-plugins-good1.0
+Requires: gst-plugins-bad1.0
+Requires: gst-plugins-ugly1.0
+Requires: gst-libav
+
+BuildRequires: efl-libs-devel >= 1.18.0
+BuildRequires: libelementary-devel >= 1.18.0
 
 %description
 Rage is a video and audio player written with Enlightenment
@@ -40,7 +48,7 @@ Here is a list of all the things it can do:
 * Fullscreen mode support with automatic "no blank" support
 * Playlist visual previews and controls
 * Subtitle file support
-* Supports Gstreamer 0.10, Gstreamer 1.x, Xine and VLC
+* Supports Gstreamer 1.x, Xine and VLC
   as media engines via Emotion modules
 * Selection of media back-end via command-line
 * Album art fetch and caching
@@ -53,6 +61,7 @@ Here is a list of all the things it can do:
 
 %prep
 %setup
+#%patch -p1
 
 %build
 %autoreconf
@@ -71,6 +80,9 @@ Here is a list of all the things it can do:
 %_iconsdir/%name.png
 
 %changelog
+* Fri Sep 30 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Mon Sep 22 2014 Michael Shigorin <mike@altlinux.org> 0.1.0-alt2
 - built for sisyphus (rebased upon ge1184db)
 
