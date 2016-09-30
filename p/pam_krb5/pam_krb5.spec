@@ -1,8 +1,9 @@
 Summary: A Pluggable Authentication Module for Kerberos 5.
 Name: pam_krb5
-Version: 3.13
-Release: alt1.1.qa1
-Source0: pam_krb5-%version.tar.bz2
+Version: 3.15
+Release: alt1
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 License: BSD or LGPLv2+
 Group: System/Base
 BuildPrereq: byacc, flex, libkrb5-devel, libpam-devel
@@ -16,7 +17,8 @@ creation, and optional TGT verification and conversion to Kerberos IV tickets.
 The included pam_krb5afs module also gets AFS tokens if so configured.
 
 %prep
-%setup -q -n pam_krb5-%version
+%setup -q -n %name-%version
+%patch -p1
 
 %build
 ./autogen
@@ -36,6 +38,9 @@ make install DESTDIR=%buildroot
 %doc README* LICENSE NEWS
 
 %changelog
+* Fri Sep 30 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.15-alt1
+- Update to latest 3.x release
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.13-alt1.1.qa1
 - NMU: rebuilt for debuginfo.
 
