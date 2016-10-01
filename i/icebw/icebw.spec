@@ -8,7 +8,7 @@
 %define oversion 10_0
 
 Name:    icebw
-Version: 12.1
+Version: 12.2
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -48,6 +48,9 @@ make install install \
 %_datadir/locale/uk/LC_MESSAGES/%oname.mo
 
 %changelog
+* Sat Oct 01 2016 Andrey Cherepanov <cas@altlinux.org> 12.2-alt1
+- new version 12.2
+
 * Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 12.1-alt1
 - new version 12.1
 
