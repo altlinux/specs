@@ -6,7 +6,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	45.3.0
+Version:	45.4.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -24,7 +24,6 @@ Source5:	thunderbird-default-prefs.js
 Patch6:		01_locale.patch
 Patch8:		thunderbird-timezoes.patch
 Patch9:		thunderbird-install-paths.patch
-patch10:	fix-missing-nsNetCID.h.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -179,7 +178,6 @@ tar -xf %SOURCE2
 %patch6 -p1
 #patch8 -p2
 %patch9 -p2
-%patch10 -p2
 
 #echo %version > mail/config/version.txt
 
@@ -435,6 +433,9 @@ unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
 %_sysconfdir/rpm/macros.d/%r_name
 
 %changelog
+* Sat Oct 01 2016 Andrey Cherepanov <cas@altlinux.org> 45.4.0-alt1
+- New version (45.4.0)
+
 * Mon Sep 05 2016 Andrey Cherepanov <cas@altlinux.org> 45.3.0-alt1
 - New version (45.3.0)
 - Enigmail 1.9.5
