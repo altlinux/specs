@@ -1,11 +1,11 @@
 %define realname childsplay_sp
-%define alphabet_ver 0.9.1
-%define old_alphabet_ver 0.9
+%define alphabet_ver 0.4.3
+%define alphabet_url http://download.savannah.gnu.org/releases/childsplay/language_packs
 
 
 Name: childsplay
-Version: 1.6
-Release: alt1.1
+Version: 2.6.5
+Release: alt1
 
 License: GPLv3+
 Group: Games/Educational
@@ -15,31 +15,26 @@ Summary: Suite of educational games for young children
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %name-%version.tar.gz
+Source: http://download.savannah.gnu.org/releases/childsplay/%name-%version.tar
+
 Source1: %name.desktop
-Source10: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_bg-%alphabet_ver.tgz
-Source11: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_ca-%alphabet_ver.tgz
-Source12: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_de-%alphabet_ver.tgz
-Source13: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_el-%old_alphabet_ver.tgz
-Source14: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_en_GB-%alphabet_ver.tgz
-Source15: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_es-%alphabet_ver.tgz
-Source16: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_fr-%alphabet_ver.tgz
-Source17: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_it-%alphabet_ver.tgz
-Source18: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_lt-%alphabet_ver.tgz
-Source19: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_nb-%alphabet_ver.tgz
-Source20: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_nl-%alphabet_ver.tgz
-Source21: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_pt-%alphabet_ver.tgz
-Source22: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_ro-%alphabet_ver.tgz
-Source23: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_ru-%alphabet_ver.tgz
-Source24: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_sl-%alphabet_ver.tgz
-Source25: http://downloads.sourceforge.net/schoolsplay/alphabet_sounds_sv-%alphabet_ver.tgz
+Source11: %alphabet_url/alphabet_sounds_ca-%alphabet_ver.tgz
+Source12: %alphabet_url/alphabet_sounds_de-%alphabet_ver.tgz
+Source15: %alphabet_url/alphabet_sounds_es-%alphabet_ver.tgz
+Source16: %alphabet_url/alphabet_sounds_fr-%alphabet_ver.tgz
+Source17: %alphabet_url/alphabet_sounds_it-%alphabet_ver.tgz
+Source20: %alphabet_url/alphabet_sounds_nl-%alphabet_ver.tgz
+Source21: %alphabet_url/alphabet_sounds_pt-%alphabet_ver.tgz
+Source23: %alphabet_url/alphabet_sounds_ru-%alphabet_ver.tgz
+Source24: %alphabet_url/alphabet_sounds_sl-%alphabet_ver.tgz
+Source25: %alphabet_url/alphabet_sounds_sv-%alphabet_ver.tgz
 
 BuildArch: noarch
 
 %add_python_lib_path %_datadir/%name/
 
-BuildRequires: python-devel >= 2.5 
-BuildRequires: python-module-pygtk-devel >= 2.0 
+BuildRequires: python-devel >= 2.6
+BuildRequires: python-module-pygtk-devel >= 2.0
 BuildRequires: python-module-numpy libnumpy-devel
 BuildRequires: python-modules-sqlite3
 BuildRequires: python-module-pygame-devel >= 1.7
@@ -49,6 +44,8 @@ BuildRequires: libSDL_ttf-devel >= 2.0
 BuildRequires: libSDL_mixer-devel >= 1.2
 BuildRequires: libogg-devel 
 BuildRequires: gettext-tools 
+
+Requires: python-module-SQLAlchemy
 
 Provides:      childsplay_sp = %version-%release
 Provides:      childsplay_plugins = %version-%release
@@ -64,18 +61,13 @@ available as childsplay-alphabet_sounds packages. For those you'll have to
 install the childsplay-alphabet_sounds package for the languages you intend to
 use. For example childsplay-alphabet_sounds_nl.
 Available alphabet sounds packages:
-childsplay-alphabet_sounds_bg
 childsplay-alphabet_sounds_ca
 childsplay-alphabet_sounds_de
-childsplay-alphabet_sounds_el
-childsplay-alphabet_sounds_en_GB
 childsplay-alphabet_sounds_es
 childsplay-alphabet_sounds_fr
-childsplay-alphabet_sounds_lt
-childsplay-alphabet_sounds_nb
+childsplay-alphabet_sounds_it
 childsplay-alphabet_sounds_nl
 childsplay-alphabet_sounds_pt
-childsplay-alphabet_sounds_ro
 childsplay-alphabet_sounds_ru
 childsplay-alphabet_sounds_sl
 childsplay-alphabet_sounds_sv
@@ -144,14 +136,6 @@ Requires:       %name = %version-%release
 %description alphabet_sounds_lt
 Lithuanian alphabet sounds for Childsplay
 
-# I do not know which language 'nb' is :/
-%package alphabet_sounds_nb
-Summary:        nb alphabet sounds for Childsplay
-Group: Games/Educational
-Requires:       %name = %version-%release
-%description alphabet_sounds_nb
-nb alphabet sounds for Childsplay
-
 %package alphabet_sounds_nl
 Summary:        Dutch alphabet sounds for Childsplay
 Group: Games/Educational
@@ -194,164 +178,124 @@ Requires:       %name = %version-%release
 %description alphabet_sounds_sv
 Swedish alphabet sounds for Childsplay
 
-
 %prep
-%setup -q -a 10 -a 11 -a 12 -a 13 -a 14 -a 15 -a 16 -a 17 -a 18 -a 19 -a 20 -a 21 -a 22 -a 23 -a 24 -a 25
-# setup.py is unusable
-rm -f setup.py
-# fixup the python scripts to call python directly and make them executable
-subst 's!/usr/bin/env python!%_bindir/python!' bin/%name
-# fix wrong end of line encoding
-sed -i -e 's|\r||g' doc/license.txt
-# lang lt miss subdir
-pushd  alphabet_sounds_lt-%alphabet_ver/AlphabetSounds
-mkdir lt
-mv *.* lt
-popd
+%setup -q -a 11 -a 12 -a 15 -a 16 -a 17 -a 20 -a 21 -a 23 -a 24 -a 25
+
+# due unknown Mail module
+rm -f SPDebugDialog.py
+%__subst "s|import SpDebugDialog||" SPMainCore.py
 
 # set pathes 
 echo "## Automated file please do not edit" > SPBasePaths.py
 echo "# This module holds all the paths needed for %name." >> SPBasePaths.py
 echo "DOCDIR = '%_datadir/doc/%name-%version'" >> SPBasePaths.py
-echo "PYTHONCPDIR = '%python_sitelibdir/%realname'" >> SPBasePaths.py
-echo "BASEDIR = '%_datadir/%realname'" >> SPBasePaths.py
-echo "SHARELIBDATADIR = '%_datadir/%realname'" >> SPBasePaths.py
-echo "ALPHABETDIR = '%_datadir/%realname/alphabetsounds'" >> SPBasePaths.py
+#echo "PYTHONCPDIR = '%python_sitelibdir/%realname'" >> SPBasePaths.py
+echo "BASEDIR = '%_datadir/%name'" >> SPBasePaths.py
+echo "SHARELIBDATADIR = '%_datadir/%name/lib'" >> SPBasePaths.py
+echo "ALPHABETDIR = '%_datadir/%name/alphabetsounds'" >> SPBasePaths.py
 echo "LOCALEDIR = '%_datadir/locale'" >> SPBasePaths.py
+echo "WWWDIR = 'www/backend'" >> SPBasePaths.py
+
 
 %install
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%python_sitelibdir/%realname/lib
-mkdir -p %buildroot%_datadir/locale
-mkdir -p %buildroot%_datadir/%realname
+mkdir -p %buildroot%_bindir/
+cat <<EOF >%buildroot%_bindir/%name
+#!/bin/sh
+cd %_datadir/%name/
+python childsplay.py
+EOF
+chmod a+x %buildroot%_bindir/%name
 
-cp -a bin/%name  %buildroot%_bindir
+mkdir -p %buildroot%_datadir/locale/
+mkdir -p %buildroot%_datadir/%name/
 
-cp -a lib/CPData %buildroot%_datadir/%realname
-cp -a lib/SPData %buildroot%_datadir/%realname
-cp -a alphabetsounds %buildroot%_datadir/%realname
-cp -a locale/* %buildroot%_datadir/locale
-
-cp -a *.py %buildroot%python_sitelibdir/%realname
-cp -a gui %buildroot%python_sitelibdir/%realname
-cp -a lib/*.py %buildroot%python_sitelibdir/%realname/lib
-cp -a ocempgui %buildroot%python_sitelibdir/%realname
+cp -a *.py lib SPWidgets %buildroot%_datadir/%name/
+cp sp_content.db %buildroot%_datadir/%name/lib/
+cp -a alphabetsounds %buildroot%_datadir/%name/
+cp -a locale/* %buildroot%_datadir/locale/
 
 #Alphabet sounds
-for sounds in bg ca de en_GB es fr it lt nb nl ro ru sl sv; do
-  cp -a alphabet_sounds_$sounds-%alphabet_ver/AlphabetSounds/$sounds %buildroot%_datadir/%realname/alphabetsounds
+for CN in ca de es fr it nl pt ru sl sv; do
+  subdir=$CN
+  test -d alphabet_sounds_$CN-%alphabet_ver/AlphabetSounds/$CN || subdir=
+  mkdir -p %buildroot%_datadir/%name/alphabetsounds/$CN/
+  cp -a alphabet_sounds_$CN-%alphabet_ver/AlphabetSounds/$subdir/* %buildroot%_datadir/%name/alphabetsounds/$CN/
 done
-for sounds in ca de es fr it nl ru sl; do
-  cp -a alphabet_sounds_$sounds-%alphabet_ver/FlashCardsSounds/$sounds %buildroot%_datadir/%realname/CPData/FlashcardsData/names
-done
-#el language has not been updated on 0.9.1 :(
-cp -a alphabet_sounds_el-%old_alphabet_ver/AlphabetSounds/el %buildroot%_datadir/%realname/alphabetsounds
 
 mkdir -p %buildroot%_desktopdir/
 install -m644 %SOURCE1 %buildroot%_desktopdir/
-mkdir -p %buildroot%_datadir/icons/hicolor/64x64/apps/
-install -m644 lib/SPData/menu/default/logo_cp_64x64.png %buildroot%_datadir/icons/hicolor/64x64/apps/%name.png
+#mkdir -p %buildroot%_datadir/icons/hicolor/64x64/apps/
+#install -m644 lib/SPData/menu/default/logo_cp_64x64.png %buildroot%_datadir/icons/hicolor/64x64/apps/%name.png
 
 %find_lang %name
 
 %files -f %name.lang
-%doc Changelog COPYING doc/* README
+%doc Changelog COPYING db.dev
 %_bindir/%name
-%dir %_datadir/%realname
-%_datadir/%realname/SPData
-%dir %_datadir/%realname/CPData
-%_datadir/%realname/CPData/*.*
-%_datadir/%realname/CPData/BilliardData
-%_datadir/%realname/CPData/FallinglettersData
-%_datadir/%realname/CPData/FindsoundData
-%_datadir/%realname/CPData/FishtankData
-%dir %_datadir/%realname/CPData/FlashcardsData
-%_datadir/%realname/CPData/FlashcardsData/cards
-%dir %_datadir/%realname/CPData/FlashcardsData/names
-%_datadir/%realname/CPData/FlashcardsData/sounds
-%_datadir/%realname/CPData/FlashcardsData/names/en
-%_datadir/%realname/CPData/LMemoryData
-%_datadir/%realname/CPData/MemoryData
-%_datadir/%realname/CPData/PackidData
-%_datadir/%realname/CPData/PongData
-%_datadir/%realname/CPData/PuzzleData
-%_datadir/%realname/CPData/SoundmemoryData
-%dir %_datadir/%realname/alphabetsounds
-%_datadir/%realname/alphabetsounds/en
+%_datadir/%name/
+%exclude %_datadir/%name/alphabetsounds/
+%_datadir/%name/alphabetsounds/en/
 %_desktopdir/%name.desktop
-%_datadir/icons/hicolor/*/apps/%name.png
-%_datadir/locale/*/LC_MESSAGES/childsplay_sp.mo
-%python_sitelibdir/%realname
-
-%files alphabet_sounds_bg
-%doc  alphabet_sounds_bg-%alphabet_ver/GPL-2
-%_datadir/%realname/alphabetsounds/bg
+#%_datadir/icons/hicolor/*/apps/%name.png
 
 %files alphabet_sounds_ca
 %doc  alphabet_sounds_ca-%alphabet_ver/copyright  alphabet_sounds_ca-%alphabet_ver/GPL-2
-%_datadir/%realname/CPData/FlashcardsData/names/ca
-%_datadir/%realname/alphabetsounds/ca
+%_datadir/%name/alphabetsounds/ca
 
 %files alphabet_sounds_de
 %doc  alphabet_sounds_de-%alphabet_ver/copyright  alphabet_sounds_de-%alphabet_ver/GPL-2
-%_datadir/%realname/CPData/FlashcardsData/names/de
-%_datadir/%realname/alphabetsounds/de
+%_datadir/%name/alphabetsounds/de
 
-%files alphabet_sounds_el
-%doc  alphabet_sounds_el-%old_alphabet_ver/copyright  alphabet_sounds_el-%old_alphabet_ver/GPL-2
-%_datadir/%realname/alphabetsounds/el
+#%files alphabet_sounds_el
+#%doc  alphabet_sounds_el-%alphabet_ver/copyright  alphabet_sounds_el-%alphabet_ver/GPL-2
+#%_datadir/%name/alphabetsounds/el
 
-%files alphabet_sounds_en_GB
-%doc  alphabet_sounds_en_GB-%alphabet_ver/copyright  alphabet_sounds_en_GB-%alphabet_ver/GPL-2
-%_datadir/%realname/alphabetsounds/en_GB
+#%files alphabet_sounds_en_GB
+#%doc  alphabet_sounds_en_GB-%alphabet_ver/copyright  alphabet_sounds_en_GB-%alphabet_ver/GPL-2
+#%_datadir/%name/alphabetsounds/en_GB
 
 %files alphabet_sounds_es
 %doc  alphabet_sounds_es-%alphabet_ver/copyright  alphabet_sounds_es-%alphabet_ver/GPL-2
-%_datadir/%realname/CPData/FlashcardsData/names/es
-%_datadir/%realname/alphabetsounds/es
+%_datadir/%name/alphabetsounds/es
 
 %files alphabet_sounds_fr
 %doc  alphabet_sounds_fr-%alphabet_ver/copyright  alphabet_sounds_fr-%alphabet_ver/GPL-2
-%_datadir/%realname/CPData/FlashcardsData/names/fr
-%_datadir/%realname/alphabetsounds/fr
+%_datadir/%name/alphabetsounds/fr
 
 %files alphabet_sounds_it
 %doc  alphabet_sounds_it-%alphabet_ver/copyright  alphabet_sounds_it-%alphabet_ver/GPL-2
-%_datadir/%realname/CPData/FlashcardsData/names/it
-%_datadir/%realname/alphabetsounds/it
+%_datadir/%name/alphabetsounds/it
 
-%files alphabet_sounds_lt
-%doc  alphabet_sounds_lt-%alphabet_ver/copyright  alphabet_sounds_lt-%alphabet_ver/GPL-2
-%_datadir/%realname/alphabetsounds/lt
-
-%files alphabet_sounds_nb
-%doc  alphabet_sounds_nb-%alphabet_ver/copyright  alphabet_sounds_nb-%alphabet_ver/GPL-2
-%_datadir/%realname/alphabetsounds/nb
+#%files alphabet_sounds_lt
+#%doc  alphabet_sounds_lt-%alphabet_ver/copyright  alphabet_sounds_lt-%alphabet_ver/GPL-2
+#%_datadir/%name/alphabetsounds/lt
 
 %files alphabet_sounds_nl
 %doc  alphabet_sounds_nl-%alphabet_ver/copyright  alphabet_sounds_nl-%alphabet_ver/GPL-2
-%_datadir/%realname/CPData/FlashcardsData/names/nl
-%_datadir/%realname/alphabetsounds/nl
+%_datadir/%name/alphabetsounds/nl
 
-%files alphabet_sounds_ro
-%doc  alphabet_sounds_ro-%alphabet_ver/copyright  alphabet_sounds_ro-%alphabet_ver/GPL-2
-%_datadir/%realname/alphabetsounds/ro
+%files alphabet_sounds_pt
+%doc  alphabet_sounds_pt-%alphabet_ver/copyright  alphabet_sounds_pt-%alphabet_ver/GPL-2
+%_datadir/%name/alphabetsounds/pt
 
 %files alphabet_sounds_ru
 %doc  alphabet_sounds_ru-%alphabet_ver/copyright  alphabet_sounds_ru-%alphabet_ver/GPL-2
-%_datadir/%realname/CPData/FlashcardsData/names/ru
-%_datadir/%realname/alphabetsounds/ru
+%_datadir/%name/alphabetsounds/ru
 
 %files alphabet_sounds_sl
-%_datadir/%realname/alphabetsounds/sl
-%_datadir/%realname/CPData/FlashcardsData/names/sl
+%doc  alphabet_sounds_sl-%alphabet_ver/copyright  alphabet_sounds_sl-%alphabet_ver/GPL-2
+%_datadir/%name/alphabetsounds/sl
 
 %files alphabet_sounds_sv
 %doc  alphabet_sounds_sv-%alphabet_ver/copyright  alphabet_sounds_sv-%alphabet_ver/GPL-2
-%_datadir/%realname/alphabetsounds/sv
+%_datadir/%name/alphabetsounds/sv
 
 
 %changelog
+* Sat Oct 01 2016 Vitaly Lipatov <lav@altlinux.ru> 2.6.5-alt1
+- new version (2.6.5) with rpmgs script
+- fix requires (ALT bug #26630)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6-alt1.1
 - Rebuild with Python-2.7
 
