@@ -27,7 +27,7 @@
 
 
 Name: glusterfs3
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: Cluster File System
@@ -517,6 +517,9 @@ rm -rf %buildroot/usr/lib/ocf/
 %preun_service glusterd
 
 %changelog
+* Sun Oct 02 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.4-alt1
+- new bugfix release (3.8.4) with rpmgs script
+
 * Fri Sep 02 2016 Vitaly Lipatov <lav@altlinux.ru> 3.8.3-alt1
 - new version (3.8.3) with rpmgs script
 
