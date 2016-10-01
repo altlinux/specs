@@ -6,7 +6,7 @@
 %define libname libopenjp2
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
@@ -87,6 +87,9 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 %exclude %_datadir/doc/html/
 
 %changelog
+* Sat Oct 01 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Sat Jul 09 2016 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
