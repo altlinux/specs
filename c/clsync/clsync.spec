@@ -4,7 +4,7 @@
 #
 Name: clsync
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Live sync tool based on inotify
 License: GPLv3+
@@ -53,7 +53,6 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 mkdir -p %buildroot%_sysconfdir/%name/rules
 mkdir -p %buildroot%_localstatedir/%name/from
 mkdir -p %buildroot%_localstatedir/%name/to
-mkdir -p %buildroot%_runtimedir/%name
 
 cat > %buildroot%_sysconfdir/%name/clsync.conf <<EOF
 # This configuration is a simple test
@@ -74,13 +73,18 @@ cat > %buildroot%_sysconfdir/%name/rules/default <<EOF
 +*.*
 EOF
 
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %_bindir/*
 %doc %_docdir/*
 %_man1dir/%name.1*
 %dir %_localstatedir/%name/from
 %dir %_localstatedir/%name/to
-%dir %_runtimedir/%name
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/rules
 %config(noreplace) %_sysconfdir/%name/clsync.conf
@@ -91,6 +95,10 @@ EOF
 %_includedir/%name/
 
 %changelog
+* Sat Oct 01 2016 Michael Shigorin <mike@altlinux.org> 0.4.2-alt2
+- improved initscript to actually stop the service
+- added post/preun service scriptlets
+
 * Sat Oct 01 2016 Michael Shigorin <mike@altlinux.org> 0.4.2-alt1
 - built for sisyphus @ #ossdevconf
 
