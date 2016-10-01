@@ -2,14 +2,14 @@
 #
 
 Name:     pgcenter
-Version:  0.2.0
+Version:  0.3.0
 Release:  alt1
 
 Summary: top-like PostgreSQL statistics viewer
 
 Group:    System/Servers
 License:  %bsdstyle
-URL:      https://pgcenter.apache.org/
+URL:      https://github.com/lesovsky/pgcenter
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 
 Source0: %name-%version.tar
@@ -46,7 +46,7 @@ statistics changes in time interval, eg. per second.
 %make_install install DESTDIR=%buildroot
 
 mkdir -p -- %buildroot%_man1dir
-cp doc/%name.1.gz  %buildroot%_man1dir
+cp doc/%name.1  %buildroot%_man1dir
 
 %files
 %doc README.md COPYRIGHT doc/Changelog
@@ -55,6 +55,9 @@ cp doc/%name.1.gz  %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Sat Oct 01 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.3.0-alt1
+- New version
+
 * Sat Feb 06 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.2.0-alt1
 - Initial build for ALT Linux Sisyphus
 
