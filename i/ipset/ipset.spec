@@ -3,7 +3,7 @@
 %define _prefix /
 Name: ipset
 Version: 6.29
-Release: alt2.git.caaa86
+Release: alt3.git.caaa86
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -37,13 +37,13 @@ Group: Development/C
 The lib%{name}6 package contains the dynamic libraries needed for 
 applications to use the %name framework.
 
-%package -n lib%{name}6-devel
+%package -n lib%{name}-devel
 Summary: Header files for lin%name
 License: LGPLv2+
 Group: Development/C
 Requires: lib%{name}6 = %version-%release
 
-%description -n lib%{name}6-devel
+%description -n lib%{name}-devel
 The lib%{name}6 package contains the header files needed for
 developing applications that need to use the %name framework libraries.
 
@@ -67,7 +67,7 @@ autoreconf -fisv
 %configure --without-kbuild --without-ksource
 %make_build LIBDIR=/%_lib/ BINDIR=/sbin/
 %install
-%makeinstall prefix=%buildroot/ exec_prefix=%buildroot/ sbindir=%buildroot/sbin libdir=%buildroot/%_lib
+%makeinstall prefix=%buildroot/ exec_prefix=%buildroot/ sbindir=%buildroot/sbin libdir=%buildroot/%_lib pkgconfigdir=%buildroot/%_pkgconfigdir
 mkdir -p $RPM_BUILD_ROOT/%_libdir
 pushd $RPM_BUILD_ROOT/%_libdir
 LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libipset.so.3.*.*\``
@@ -88,14 +88,19 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %files -n lib%{name}6
 %attr(755,root,root) /%{_lib}/libipset.so.3*
 
-%files -n lib%{name}6-devel
+%files -n lib%{name}-devel
 %_includedir/lib%name/*.h
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %files -n kernel-source-ipset
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Sun Oct 02 2016 Anton Farygin <rider@altlinux.ru> 6.29-alt3.git.caaa86
+- add pkgconfig files (closes: #32543)
+- devel package renamed
+
 * Tue Jul 26 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.29-alt2.git.caaa86
 - updated for kernel 4.7 support
 
