@@ -1,16 +1,20 @@
+%def_enable snapshot
 %define ver_major 0.9
 
 Name: nemiver
 Version: %ver_major.6
-Release: alt3
+Release: alt4
 
 Summary: A GNOME C/C++ Debugger
 Group: Development/Debuggers
 License: GPLv2+
 Url: https://wiki.gnome.org/Apps/Nemiver
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
 Source: %name-%version.tar
+%endif
 
 Requires: gdb
 
@@ -67,6 +71,9 @@ export ac_cv_path_GDB_PROG=%_bindir/gdb
 %_includedir/%name/
 
 %changelog
+* Sun Oct 02 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt4
+- updated to 0.9.6-57-gbe35424
+
 * Mon Jun 13 2016 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt3
 - fixed buildreqs
 
