@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define ver_major 1.26
 
 %def_enable x11_backend
@@ -17,15 +18,18 @@
 
 Name: clutter
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Clutter Core Library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://www.clutter-project.org/
 
-#Source: %name-%version.tar
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.44
 %define cogl_ver 1.21.2
@@ -44,7 +48,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildRequires: libGL-devel
 BuildRequires: pkgconfig(cogl-1.0) >= %cogl_ver pkgconfig(cairo-gobject) >= %cairo_ver pkgconfig(atk) >= %atk_ver pkgconfig(pangocairo) >= %pango_ver pkgconfig(cogl-pango-1.0) pkgconfig(json-glib-1.0) >= %json_glib_ver
 BuildRequires: gtk-doc >= %gtk_doc_ver
-BuildRequires: gobject-introspection-devel  gir(GL) = 1.0 gir(GObject) = 2.0 gir(cairo) = 1.0 gir(Cogl) = 1.0 gir(CoglPango) = 1.0 gir(Atk) = 1.0 gir(Json) = 1.0
+BuildRequires: gobject-introspection-devel gir(GL) = 1.0 gir(GObject) = 2.0 gir(cairo) = 1.0 libcogl-gir-devel gir(Atk) = 1.0 gir(Json) = 1.0
 %{?_enable_x11_backend:BuildRequires: pkgconfig(pangoft2) pkgconfig(x11) pkgconfig(xext) pkgconfig(xfixes) >= %xfixes_ver pkgconfig(xdamage) pkgconfig(xcomposite) >= %xcomposite_ver }
 %{?_enable_wayland_backend:BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(xkbcommon) pkgconfig(gdk-pixbuf-2.0)}
 %{?_enable_wayland_compositor:BuildRequires: pkgconfig(wayland-server)}
@@ -100,6 +104,7 @@ GObject introspection data for the clutter library
 Summary: GObject introspection devel data for the clutter library
 Group: System/Libraries
 BuildArch: noarch
+Requires: libcogl-gir-devel
 Requires: lib%name-gir = %version-%release lib%name-devel = %version-%release
 
 %description -n lib%name-gir-devel
@@ -182,6 +187,9 @@ gtkdocize
 
 
 %changelog
+* Sun Oct 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt2
+- updated to 1.26.0-26-g7ab085c
+
 * Mon Mar 21 2016 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 

@@ -6,7 +6,7 @@
 
 Name: libgweather
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -102,6 +102,8 @@ This package provides Vala language bindings for the %name library.
 
 %prep
 %setup
+subst 's|Asia/Rangoon|Asia/Yangon|
+       s|>Rangoon<|>Yangon<|' data/Locations.xml.in
 
 %build
 # for tm.tm_gmtoff
@@ -154,6 +156,9 @@ This package provides Vala language bindings for the %name library.
 
 
 %changelog
+* Sun Oct 02 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt2
+- changed Asia/Rangoon to Asia/Yangon according to tzdata-2016g
+
 * Mon Aug 29 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.3-alt1
 - 3.20.3
 

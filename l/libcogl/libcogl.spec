@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define oname cogl
 %define ver_major 1.22
@@ -28,7 +28,7 @@
 
 Name: libcogl
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 Group: System/Libraries
@@ -180,6 +180,9 @@ Contains developer documentation for %oname.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Oct 02 2016 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt2
+- updated to 1.22.2-4-ge20d81b
+
 * Fri Aug 26 2016 Yuri N. Sedunov <aris@altlinux.org> 1.22.2-alt1
 - 1.22.2
 
