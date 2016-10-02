@@ -1,6 +1,6 @@
 Name: xorg-drv-qxl
 Version: 0.1.4
-Release: alt1
+Release: alt3
 Epoch: 1
 Summary: QEMU QXL paravirt video
 License: GPL
@@ -15,10 +15,17 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
 BuildRequires: spice-protocol xorg-xf86dgaproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel libXext-devel
-BuildRequires: libudev-devel
+BuildRequires: libudev-devel pkgconfig(spice-server)
 
 %description
 Driver for QEMU QXL paravirt video
+
+%package -n xorg-drv-spiceqxl
+Summary: QXL video driver
+Group: System/X11
+
+%description -n xorg-drv-spiceqxl
+xorg-drv-spiceqxl is both QXL video driver and SPICE server, intended for use without QEMU
 
 %prep
 %setup -q
@@ -28,6 +35,7 @@ Driver for QEMU QXL paravirt video
 %autoreconf
 %configure \
 	--with-xorg-module-dir=%_x11modulesdir \
+	--enable-xspice \
 	--disable-static
 %make_build
 
@@ -35,9 +43,18 @@ Driver for QEMU QXL paravirt video
 %make DESTDIR=%buildroot install
 
 %files
-%_x11modulesdir/drivers/*.so
+%_x11modulesdir/drivers/qxl_drv.so
+
+%files -n xorg-drv-spiceqxl
+%_x11modulesdir/drivers/spiceqxl_drv.so
 
 %changelog
+* Sun Oct 02 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.4-alt3
+- disabled KMS composite support
+
+* Thu Jul 14 2016 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.4-alt2
+- spiceqxl module packaged
+
 * Fri Nov 27 2015 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.4-alt1
 - 0.1.4
 
