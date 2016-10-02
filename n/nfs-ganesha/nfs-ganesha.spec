@@ -66,11 +66,9 @@
 %def_with system_ntirpc
 %global use_system_ntirpc %{on_off_switch system_ntirpc}
 
-%define oversion 2.4-dev-26
-
 Name: nfs-ganesha
-Version: 2.4.0
-Release: alt0.dev26
+Version: 2.4.0.1
+Release: alt1
 
 Summary: NFS-Ganesha is a NFS Server running in user space
 
@@ -80,10 +78,10 @@ Url: https://github.com/nfs-ganesha/nfs-ganesha/wiki
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/nfs-ganesha/nfs-ganesha/archive/V%oversion.tar.gz
+# Source-url: https://github.com/nfs-ganesha/nfs-ganesha/archive/V%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: cmake
+BuildRequires: cmake gcc-c++
 BuildRequires: bison
 BuildRequires: flex
 BuildRequires: pkg-config
@@ -537,6 +535,9 @@ install -m 644 ChangeLog	%buildroot%_docdir/ganesha
 %endif
 
 %changelog
+* Sun Oct 02 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.0.1-alt1
+- new version 2.4.0.1 (with rpmrb script)
+
 * Sun Jul 24 2016 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt0.dev26
 - new version (2.4.0-dev26) with rpmgs script
 
