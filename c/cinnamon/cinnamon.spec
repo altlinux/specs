@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 3.0.7
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -68,6 +68,7 @@ BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libn
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libcinnamon-menus-gir-devel NetworkManager-glib-gir-devel
+BuildRequires: libclutter-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -198,6 +199,9 @@ install -D -p -m 0644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/applications/
 %endif
 
 %changelog
+* Mon Oct 3 2016 Vladimir Didenko <cow@altlinux.org> 3.0.7-alt2
+- fix build requires
+
 * Mon Jul 18 2016 Vladimir Didenko <cow@altlinux.org> 3.0.7-alt1
 - 3.0.7-1-g287dc1b
 
