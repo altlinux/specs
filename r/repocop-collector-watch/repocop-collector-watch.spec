@@ -1,7 +1,7 @@
 %define testname watch
 
 Name: repocop-collector-%testname
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,10 @@ if files_exist $REPOCOP_PKG_ROOT/*.watch; then
    mkdir -p $REPOCOP_TEST_STATEDIR/$REPOCOP_PKG_KEY
    cp $REPOCOP_PKG_ROOT/*.watch $REPOCOP_TEST_STATEDIR/$REPOCOP_PKG_KEY/
 fi
+if files_exist $REPOCOP_PKG_ROOT/watch; then
+   mkdir -p $REPOCOP_TEST_STATEDIR/$REPOCOP_PKG_KEY
+   cp $REPOCOP_PKG_ROOT/watch $REPOCOP_TEST_STATEDIR/$REPOCOP_PKG_KEY/${REPOCOP_PKG_NAME}.watch
+fi
 EOF
 
 %install
@@ -48,6 +52,9 @@ ln -s ../../common/purge-keydir $RPM_BUILD_ROOT%_datadir/repocop/srccollectors/%
 %_datadir/repocop/srccollectors/%testname
 
 %changelog
+* Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- support for bare watch
+
 * Sun Feb 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - support for multiple watch files
 
