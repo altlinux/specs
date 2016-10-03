@@ -1,6 +1,9 @@
+%def_with python
+%def_without ruby
+
 Name: xapian-bindings
 Version: 1.2.23
-Release: alt1
+Release: alt2
 
 Summary: Xapian search engine bindings
 License: GPL
@@ -15,6 +18,10 @@ Source100: xapian-bindings.watch
 # Automatically added by buildreq on Thu Dec 05 2013
 # optimized out: elfutils gnu-config libncurses-devel libstdc++-devel libtinfo-devel pam0_userpass python-base python-modules python-modules-compiler ruby ruby-stdlibs xz
 BuildRequires: gcc-c++ libruby-devel libxapian-devel python-devel
+BuildRequires: python-module-sphinx-devel python-module-sphinx
+
+%{?_with_python:BuildRequires: python-devel}
+%{?_with_ruby:BuildRequires: libruby-devel}
 
 BuildPreReq: libxapian-devel = %version
 
@@ -25,6 +32,7 @@ add advanced indexing and search facilities to applications.
 
 This package contains programming language bindings.
 
+%if_with python
 %package -n python-module-xapian
 Summary: Python bindings for Xapian search engine
 License: GPL
@@ -39,7 +47,9 @@ add advanced indexing and search facilities to applications.
 
 This package provides the files needed for developing Python scripts
 which use Xapian.
+%endif
 
+%if_with ruby
 %package -n ruby-xapian
 Summary: Ruby bindings for Xapian search engine
 License: GPL
@@ -53,12 +63,13 @@ add advanced indexing and search facilities to applications.
 
 This package provides the files needed for developing Ruby scripts
 which use Xapian.
+%endif
 
 %prep
 %setup
 
 %build
-%configure --with-python --with-ruby
+%configure %{subst_with python} %{subst_with ruby}
 %make_build
 # FIXME: maybe we should drop %version there as well and get rid of this
 
@@ -66,20 +77,27 @@ which use Xapian.
 %makeinstall_std
 rm -rf %buildroot%_defaultdocdir/%name/
 
+%if_with python
 %files -n python-module-xapian
 %doc README python/docs/*
 %python_sitelibdir/*
+%endif
 
+%if_with ruby
 %files -n ruby-xapian
 %doc README ruby/docs/*
 %ruby_sitearchdir/_xapian.so
 %ruby_sitelibdir/xapian.rb
+%endif
 
 # TODO:
 # - package other bindings (perl, tcl...)
 # - package docs/examples properly
 
 %changelog
+* Tue Sep 27 2016 Michael Shigorin <mike@altlinux.org> 1.2.23-alt2
+- rebuilt against ruby-2.3.1
+
 * Wed Mar 30 2016 Michael Shigorin <mike@altlinux.org> 1.2.23-alt1
 - new version (watch file uupdate)
 

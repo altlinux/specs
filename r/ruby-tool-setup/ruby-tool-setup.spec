@@ -2,7 +2,7 @@
 
 Name: ruby-tool-%pkgname
 Version: 3.4.1
-Release: alt5
+Release: alt6
 Summary: Generic installer for ruby scripts and libraries
 License: LGPLv2.1
 Group: Development/Ruby
@@ -12,8 +12,9 @@ Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
+Provides: ruby-%pkgname = %version-%release
+
 BuildRequires(pre): rpm-build-ruby
-# Automatically added by buildreq on Thu Apr 03 2008 (-bi)
 BuildRequires: ruby-module-etc ruby-module-fileutils ruby-module-stringio
 
 Source: %pkgname-%version.tar
@@ -55,6 +56,10 @@ Documentation files for %name
 %doc doc.* sample
 
 %changelog
+* Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 3.4.1-alt6
+- Apply patches from Debian (also use RbConfig instead of Config)
+- Provides ruby-setup
+
 * Mon Jun 29 2009 Alexey I. Froloff <raorn@altlinux.org> 3.4.1-alt5
 - Remove deps on test/unit module
 - Fix ext installation

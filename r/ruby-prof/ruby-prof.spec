@@ -3,18 +3,16 @@
 %define pkgname ruby-prof
 
 Name: %pkgname
-Version: 0.9.2
-Release: alt1.3
+Version: 0.16.2
+Release: alt1
 
 Summary: Fast code profiler for Ruby
 Group: Development/Ruby
 License: MIT/Ruby
-Url: http://rubyforge.org/projects/ruby-prof/
+Url: https://github.com/ruby-prof/ruby-prof
 
 Source: %pkgname-%version.tar
-Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Mon Nov 10 2008 (-bi)
 BuildRequires: libruby-devel ruby-tool-setup ruby-test-unit
 
 %description
@@ -30,7 +28,6 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
 %update_setup_rb
 
 %build
@@ -53,6 +50,9 @@ Documentation files for %name
 %ruby_ri_sitedir/RubyProf*
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 0.16.2-alt1
+- new version 0.16.2
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.9.2-alt1.3
 - Rebuilt with ruby-2.0.0-alt1
 

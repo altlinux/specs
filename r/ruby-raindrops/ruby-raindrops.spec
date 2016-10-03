@@ -1,28 +1,26 @@
 %define pkgname raindrops
 
 Name: ruby-%pkgname 
-Version: 0.7.0
-Release: alt2.2
+Version: 0.17.0
+Release: alt1
 
 Summary: real-time stats for preforking Rack servers
 Group: Development/Ruby 
 License: LGPL
 Url: http://raindrops.bogomips.org/
 
-Source: %pkgname-%version.tar.gz
+Source: %pkgname-%version.tar
 
-# Automatically added by buildreq on Wed Aug 10 2011
-# optimized out: ruby ruby-stdlibs ruby-tool-rdoc
 BuildRequires: libruby-devel ruby-tool-setup
 
 %description 
-Raindrops is a real time stats package to show statistics for Rack HTTP servers.
-It is designed for preforking servers such as Rainbows! and Unicorn, but should
-support any Rack HTTP server under Ruby and possibly Rubinius (untested) on
-platforms supporting POSIX shared memory and compiled with GCC (for atomic
-builtins).
-Raindrops includes a Struct-like Raindrops::Struct class that may be used
-standalone to create atomic counters shared across any number of forked processes
+Raindrops is a real time stats package to show statistics for Rack HTTP
+servers.  It is designed for preforking servers such as Rainbows! and
+Unicorn, but should support any Rack HTTP server under Ruby and possibly
+Rubinius (untested) on platforms supporting POSIX shared memory and
+compiled with GCC (for atomic builtins).  Raindrops includes a
+Struct-like Raindrops::Struct class that may be used standalone to
+create atomic counters shared across any number of forked processes
 under SMP.
 
 %package doc 
@@ -59,6 +57,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/Raindrops*
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 0.17.0-alt1
+- new version 0.17.0
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 0.7.0-alt2.2
 - Rebuilt with ruby-2.0.0-alt1
 

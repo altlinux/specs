@@ -1,18 +1,19 @@
 %define Name Nokogiri
 %define bname nokogiri
 Name: ruby-%bname
-Version: 1.6.6.2
+Version: 1.6.8
 Release: alt1
 Summary: Ruby libraries for %Name (HTML, XML, SAX, and Reader parser)
 Group: Development/Ruby
 License: MIT/Ruby
 URL: http://%bname.org
 Source: %bname-%version.tar
-Patch: %bname-%version-%release.patch
+Patch: fix-test.patch
+Patch1: ignore-gems.patch
 
 BuildPreReq: rpm-build-ruby
 BuildRequires: ruby ruby-stdlibs libruby-devel ruby-racc ruby-tool-setup %_bindir/rexical
-BuildRequires: libxml2-devel libxslt-devel java-devel
+BuildRequires: libxml2-devel libxslt-devel java-devel ruby-pkg-config
 #BuildRequires: db2latex-xsl xhtml1-dtds
 
 %description
@@ -45,7 +46,8 @@ Documentation for %Name.
 
 %prep
 %setup -q -n %bname-%version
-%patch -p1
+#patch -p1
+%patch1 -p1
 
 DisableTest()
 {
@@ -77,10 +79,8 @@ DisableTest css/test_nthiness last_of_type nth_last_of_type nth_of_type
 %rdoc lib/
 ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
-
 %check
-%ruby_vendor -Ilib:ext:test setup.rb test
-
+%ruby_test_unit -Ilib:ext:test test
 
 %files
 %ruby_sitelibdir/%bname
@@ -99,6 +99,9 @@ ls -d %buildroot%ruby_ri_sitedir/* | grep -v '/%Name$' | xargs rm -rf
 
 
 %changelog
+* Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.8-alt1
+- New version
+
 * Fri May 22 2015 Andrey Cherepanov <cas@altlinux.org> 1.6.6.2-alt1
 - 1.6.6.2
 - Rebuild with new version of libxml2

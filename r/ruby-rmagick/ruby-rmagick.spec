@@ -1,18 +1,16 @@
-%define origname RMagick
+%define origname rmagick
 
 Name: ruby-rmagick
-Version: 2.13.1
-Release: alt3.2
+Version: 2.16.0
+Release: alt1
 
 Summary: ImageMagick for Ruby
 Group: Development/Ruby
 License: MIT
-Url: http://rubyforge.org/projects/rmagick/
+Url: https://github.com/rmagick/rmagick
 
 Source: %origname-%version.tar
-Patch: %origname-%version-%release.patch
 
-# Automatically added by buildreq on Wed Aug 13 2008 (-bi)
 BuildRequires: libImageMagick-devel >= 6.6.9.6-alt1 libruby-devel ruby-tool-setup
 
 %description
@@ -28,11 +26,11 @@ ImageMagick for Ruby documentation.
 
 %prep
 %setup -n %origname-%version
-%patch -p1
 %update_setup_rb
 
 %build
-%ruby_config --disable-htmldoc
+#ruby_config --disable-htmldoc
+%ruby_config
 %ruby_build
 
 %install
@@ -40,7 +38,7 @@ ImageMagick for Ruby documentation.
 %rdoc lib/ ext/*/*.c
 
 %files
-%doc ChangeLog README*
+%doc README* *.md
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
 
@@ -49,6 +47,9 @@ ImageMagick for Ruby documentation.
 %ruby_ri_sitedir/Magick*
 
 %changelog
+* Sat Sep 24 2016 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt1
+- new version 2.16.0
+
 * Mon Apr 07 2014 Anton Farygin <rider@altlinux.ru> 2.13.1-alt3.2
 - Rebuild with new libImageMagick
 

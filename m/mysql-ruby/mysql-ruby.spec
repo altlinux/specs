@@ -3,8 +3,8 @@
 %define pkgname mysql-ruby
 
 Name: %pkgname
-Version: 2.8.2
-Release: alt2.2
+Version: 2.9.0
+Release: alt1
 
 Summary: MySQL Ruby Connector
 Group: Development/Ruby
@@ -12,21 +12,19 @@ License: MIT/Ruby
 Url: http://rubyforge.org/projects/mysql-ruby/
 
 Source: %pkgname-%version.tar
-Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Tue May 12 2009 (-bi)
-BuildRequires: libruby-devel libMySQL-devel
+BuildRequires: libruby-devel libMySQL-devel ruby-tool-setup
 
 %description
 This is MySQL Ruby Connector (libmysqlclient wrapper).
 
 %prep
 %setup -n %pkgname-%version
-%patch -p1
+%update_setup_rb
 
 %build
-%ruby_configure
-%make_build
+%ruby_config
+%ruby_build
 # Needs running mysqld
 #ruby test.rb 127.0.0.1 root '' test 3306
 ## + ruby test.rb 127.0.0.1 root '' test 3306
@@ -38,13 +36,18 @@ This is MySQL Ruby Connector (libmysqlclient wrapper).
 ## 115 tests, 397 assertions, 0 failures, 0 errors, 0 skips
 
 %install
-%makeinstall_std
+%ruby_install
 
 %files
-%doc README.html
+%doc README.txt extra/README* extra/*.css
 %ruby_sitearchdir/*
+%ruby_sitelibdir/*
 
 %changelog
+* Tue Sep 13 2016 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
+- New version
+- Use ALT-specific Ruby module build rules
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 2.8.2-alt2.2
 - Rebuilt with ruby-2.0.0-alt1
 

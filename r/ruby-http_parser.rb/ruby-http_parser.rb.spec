@@ -2,7 +2,7 @@
  
 Name: 	 ruby-%pkgname
 Version: 0.6.0 
-Release: alt1
+Release: alt2
  
 Summary: A simple callback-based HTTP request/response parser for writing http servers, clients and proxies
 License: MIT/Ruby
@@ -60,5 +60,8 @@ rm -f %buildroot%ruby_ri_sitedir/{Object/cdesc-Object.ri,cache.ri,created.rid}
 %ruby_ri_sitedir/*
  
 %changelog
+* Mon Sep 12 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt2
+- Rebuild with Ruby 2.3.1
+
 * Tue Apr 22 2014 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
 - Initial build for ALT Linux

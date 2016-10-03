@@ -2,11 +2,11 @@
 
 Name: rpm-build-ruby
 Epoch: 1
-Version: 0.1.4.1
+Version: 0.1.5
 Release: alt1
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
-Group: Development/Other
+Group: Development/Ruby
 Source: %name-%version.tar
 BuildArch: noarch
 Requires: ruby >= 1.9
@@ -15,8 +15,8 @@ AutoReq: yes,noruby
 Requires: ruby >= 1.9
 Requires: ruby-stdlibs >= 1.9
 Requires: %_bindir/rdoc
-Requires: %_bindir/testrb
 Requires: %_bindir/rake
+Requires: ruby-test-unit
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -25,10 +25,16 @@ These herlper scripts will look at ruby source files in your package, and will
 use this information to generate automatic Requires and Provides tags for the
 package.
 
+%package -n ruby-test-unit
+Summary: Utility testrb for testing Ruby packages
+Group: Development/Ruby
+Requires: rake
+
+%description -n ruby-test-unit
+Utility testrb for testing Ruby packages.
 
 %prep
 %setup -q
-
 
 %install
 install -d -m 0755 %buildroot{%_rpmlibdir,%_rpmmacrosdir}
@@ -36,19 +42,24 @@ install -p -m 0755 ruby.{req,prov}* %buildroot%_rpmlibdir/
 install -p -m 0644 rubyreq.rb %buildroot%_rpmlibdir/
 install -p -m 0644 ruby.macros %buildroot%_rpmmacrosdir/ruby
 install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
-
+install -D -m 0755 testrb %buildroot%_bindir/testrb
 
 %check
 ./test.sh
-
 
 %files
 %lang(ru) %doc README.ru
 %_rpmlibdir/ruby*
 %_rpmmacrosdir/*
 
+%files -n ruby-test-unit
+%_bindir/testrb
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 1:0.1.5-alt1
+- Create subpackage ruby-test-unit with only rewritten testrb utility.
+  Test::Unit module now is a part of Ruby.
+
 * Wed Sep 14 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.1.4.1-alt1
 - Tiny cleanup which is expected to have no noticeable effect:
   + more reliable failing in the shell scripts

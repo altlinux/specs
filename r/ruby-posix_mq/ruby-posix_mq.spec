@@ -1,8 +1,8 @@
 %define pkgname ruby-posix_mq
 
 Name: %pkgname
-Version: 1.0.0
-Release: alt2.2
+Version: 2.3.0
+Release: alt1
 
 Summary: POSIX Message Queues for Ruby.
 Group: Development/Ruby
@@ -11,8 +11,6 @@ Url: http://bogomips.org/ruby_posix_mq/
 
 Source: %pkgname-%version.tar
 
-# Automatically added by buildreq on Thu Aug 11 2011
-# optimized out: ruby ruby-stdlibs ruby-tool-rdoc
 BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
 
 %description
@@ -56,6 +54,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/POSIX_MQ*
 
 %changelog
+* Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
+- new version 2.3.0
+
 * Wed Mar 19 2014 Led <led@altlinux.ru> 1.0.0-alt2.2
 - Rebuilt with ruby-2.0.0-alt1
 
