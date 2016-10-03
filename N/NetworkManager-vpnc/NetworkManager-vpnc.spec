@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-vpnc
-Version: 1.2.2
+Version: 1.2.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -81,6 +81,7 @@ make check
 %config %_sysconfdir/dbus-1/system.d/nm-vpnc-service.conf
 %_libexecdir/NetworkManager/nm-vpnc-service
 %_libexecdir/NetworkManager/nm-vpnc-service-vpnc-helper
+%_libdir/NetworkManager/libnm-vpn-plugin-vpnc.so
 %if_with libnm_glib
 %config %_sysconfdir/NetworkManager/VPN/nm-vpnc-service.name
 %endif
@@ -92,12 +93,15 @@ make check
 %endif
 %_libexecdir/NetworkManager/nm-vpnc-auth-dialog
 %_datadir/gnome-vpn-properties/*
-%_libdir/NetworkManager/libnm-vpn-plugin-vpnc.so
+%_libdir/NetworkManager/libnm-vpn-plugin-vpnc-editor.so
 %_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Updated to 1.2.4.
+
 * Fri May 13 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 

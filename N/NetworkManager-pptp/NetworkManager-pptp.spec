@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-pptp
-Version: 1.2.2
+Version: 1.2.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -81,6 +81,7 @@ NetworkManager panel applet.
 %doc AUTHORS
 %config %_sysconfdir/dbus-1/system.d/nm-pptp-service.conf
 %_libexecdir/NetworkManager/nm-pptp-service
+%_libdir/NetworkManager/libnm-vpn-plugin-pptp.so
 %_libdir/pppd/%ppp_version/*.so
 %if_with libnm_glib
 %config %_sysconfdir/NetworkManager/VPN/nm-pptp-service.name
@@ -93,13 +94,16 @@ NetworkManager panel applet.
 %endif
 %_libexecdir/NetworkManager/nm-pptp-auth-dialog
 %_datadir/gnome-vpn-properties/*
-%_libdir/NetworkManager/libnm-vpn-plugin-pptp.so
+%_libdir/NetworkManager/libnm-vpn-plugin-pptp-editor.so
 %_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- Updated to 1.2.4.
+
 * Fri May 13 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 
