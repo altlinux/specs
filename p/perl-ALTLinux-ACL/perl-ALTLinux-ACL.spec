@@ -1,18 +1,18 @@
 %define module ALTLinux-ACL
 
 Name: perl-%module
-Version: 0.14
-Release: alt2
+Version: 0.15
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: %module - Perl extension for quering ALTLinux ACL files
 Group: Development/Perl
 License: GPL or Artistic
-Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
+Source: %module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
-BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM perl-IPC-Run3 perl(Data/Array2ArrayMap/Hash/XSTree.pm) perl(Pod/Text.pm)
+BuildRequires: perl-devel perl(Pod/Usage.pm) perl-IPC-Run3 perl(Data/Array2ArrayMap/Hash/XSTree.pm) perl(Pod/Text.pm)
 
 %description
 %summary
@@ -31,8 +31,12 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl-RPM perl-IPC-Run3 perl(Data/Ar
 #doc README
 %perl_vendor_privlib/ALT*
 %_bindir/*
+%_man1dir/*
 
 %changelog
+* Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- excluded changelog2ALTLinuxACLleader due to dependency on perl-RPM
+
 * Tue Nov 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2
 - NMU: added missing Pod dependencies
 
