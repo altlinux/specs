@@ -1,6 +1,6 @@
 Name: pve-storage
 Summary: Proxmox VE storage management library
-Version: 4.0.61
+Version: 4.0.63
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -9,14 +9,13 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
 
-Requires: nfs-utils open-iscsi clvm glusterfs3-client
+Requires: nfs-utils open-iscsi clvm glusterfs3-client smartmontools ceph gdisk parted hdparm
 
 Source: pve-storage.tar.xz
-Patch: pve-storage-path.patch
+Patch: pve-storage-alt.patch
 
 BuildRequires: pve-common pve-cluster pve-doc-generator pve-access-control xmlto
-BuildRequires: perl(File/chdir.pm)
-BuildRequires: perl(Net/DBus.pm)
+BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm)
 
 %description
 This package contains the storage management library used by Proxmox VE
@@ -41,6 +40,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Mon Oct 03 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.63-alt1
+- 4.0-63
+
 * Fri Sep 16 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.61-alt1
 - 4.0-61
 
