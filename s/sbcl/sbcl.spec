@@ -10,7 +10,7 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 1.3.8
+Version: 1.3.10
 Release: alt1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Development/Lisp
@@ -271,6 +271,9 @@ popd
 %endif
 
 %changelog
+* Mon Oct 03 2016 Ilya Mashkin <oddity@altlinux.ru> 1.3.10-alt1
+- 1.3.10
+
 * Fri Aug 12 2016 Ilya Mashkin <oddity@altlinux.ru> 1.3.8-alt1
 - 1.3.8
 
