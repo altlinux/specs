@@ -1,5 +1,5 @@
 Name: perl-RPM-uscan
-Version: 0.11.4.14.4
+Version: 0.12.2.14.4
 Release: alt1
 
 Summary: Perl library for querying debian watch files
@@ -12,7 +12,7 @@ URL: http://www.altlinux.org/Watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses 
-BuildRequires: rpm-build-perl perl-libwww perl-devel perl-LWP-Protocol-https perl-RPM perl-Dpkg
+BuildRequires: rpm-build-perl perl-libwww perl-devel perl-LWP-Protocol-https perl-RPM-Vercmp perl-Dpkg
 
 %description
 RPM::uscan is a perl library for querying debian watch files on RPM platform.
@@ -44,6 +44,9 @@ install -m 755 uscan-query %buildroot/%_bindir/
 %_bindir/uscan-query
 
 %changelog
+* Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.12.2.14.4-alt1
+- use RPM::Vercmp
+
 * Sat Aug 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.11.4.14.4-alt1
 - bugfix release
 
