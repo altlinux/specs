@@ -171,7 +171,7 @@
 
 Name: pve-%rname
 Version: 2.6.1
-Release: alt5
+Release: alt6
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -269,6 +269,10 @@ Patch81: CVE-2016-6490-virtio-check-vring-descriptor-buffer-length.patch
 Patch82: CVE-2016-7155-scsi-check-page-count-while-initialising-descriptor-.patch
 Patch83: CVE-2016-7156-scsi-pvscsi-avoid-infinite-loop-while-building-SG-li.patch
 Patch84: CVE-2016-7157-scsi-mptconfig-fix-an-assert-expression.patch
+Patch85: CVE-2016-7170-vmsvga-correct-bitmap-and-pixmap-size-checks.patch
+Patch86: CVE-2016-7421-scsi-pvscsi-limit-process-IO-loop-to-ring-size.patch
+Patch87: CVE-2016-7423-scsi-mptsas-use-g_new0-to-allocate-MPTSASRequest-obj.patch
+Patch88: x86-lapic-Load-LAPIC-state-at-post_load.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -522,6 +526,10 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch82 -p1
 %patch83 -p1
 %patch84 -p1
+%patch85 -p1
+%patch86 -p1
+%patch87 -p1
+%patch88 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -779,6 +787,12 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Mon Oct 03 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt6
+- various CVE fixes
+
+* Tue Sep 20 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt4.M80P.1
+- backport to p8 branch
+
 * Mon Sep 19 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.1-alt5
 - various CVE fixes
 
