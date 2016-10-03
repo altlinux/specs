@@ -1,14 +1,15 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for Proxmox Virtual Environment
-Version: 4.0.45
-Release: alt2
+Version: 4.0.46
+Release: alt3
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: bridge-utils openntpd ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch sqlite3 vixie-cron faketime tzdata
+Requires: bridge-utils openntpd ntpdate corosync2 fuse rrd-cached ksmtuned openvswitch
+Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
 Source0: %name.tar.xz
 Source1: pve-access-control.tar.xz
@@ -74,6 +75,13 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/%name
 DAEMON_OPTS=""
 __EOF__
 
+cat << __EOF__ > %buildroot%_datadir/doc/%name/rrdcached.sysconfig
+RRDCACHED_USER="root"
+OPTS="-j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/db/ -B"
+SOCKFILE="/var/run/rrdcached.sock"
+SOCKPERMS=0660
+__EOF__
+
 %post
 %post_service %name
 
@@ -123,6 +131,9 @@ __EOF__
 %_man1dir/pveum.1*
 
 %changelog
+* Mon Oct 03 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.46-alt3
+- 4.0-46
+
 * Fri Sep 16 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.0.45-alt2
 - 4.0-45
 

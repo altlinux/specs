@@ -1,15 +1,14 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 4.2.23
-Release: alt4
+Release: alt5
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64
-Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm
-Requires: ceph gdisk parted hdparm pve-docs
+Requires: cstream lzop pve-vncterm pve-novnc pve-spiceterm pve-docs
 
 Source0: pve-manager.tar.xz
 Source1: pve-container.tar.xz
@@ -17,10 +16,6 @@ Source2: pve-firewall.tar.xz
 Source3: pve-ha-manager.tar.xz
 Source4: qemu-server.tar.xz
 Source6: basealt_logo.png
-
-Source10: 50-rbd.rules
-Source11: 60-ceph-partuuid-workaround.rules
-Source12: 95-ceph-osd.rules
 
 Patch0: pve-manager-www.patch
 Patch1: pve-manager-alt.patch
@@ -67,7 +62,7 @@ HA Manager Proxmox VE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.88
+Version: 4.0.89
 Group: System/Servers
 Requires: nc6 socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -118,17 +113,6 @@ d /var/run/pveproxy 0700 www-data www-data -
 f /var/lock/pveproxy.lck 0644 www-data www-data
 f /var/lock/spiceproxy.lck 0644 www-data www-data
 __EOF__
-
-cat << __EOF__ > %buildroot%_datadir/doc/%name/rrdcached.sysconfig
-RRDCACHED_USER="root"
-OPTS="-j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/db/ -B"
-SOCKFILE="/var/run/rrdcached.sock"
-SOCKPERMS=0660
-__EOF__
-
-install -m0644 %SOURCE10 %buildroot%_datadir/doc/%name/
-install -m0644 %SOURCE11 %buildroot%_datadir/doc/%name/
-install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 
 %post
 %post_service pvedaemon
@@ -254,9 +238,6 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man8dir/pvestatd.8*
 %_man8dir/spiceproxy.8*
 %dir %_datadir/doc/%name
-%_datadir/doc/%name/aplinfo.dat
-%_datadir/doc/%name/*.rules
-%_datadir/doc/%name/rrdcached.sysconfig
 
 %files -n pve-container
 %_sysconfdir/bash_completion.d/pct
@@ -363,6 +344,9 @@ install -m0644 %SOURCE12 %buildroot%_datadir/doc/%name/
 %_man5dir/*m.conf.5*
 
 %changelog
+* Mon Oct 03 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.23-alt5
+- qemu-server 4.0-89
+
 * Mon Sep 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.23-alt4
 - requires pve-docs
 
