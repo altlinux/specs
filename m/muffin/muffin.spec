@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 3.0.5
-Release: alt1
+Release: alt2
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -28,6 +28,7 @@ BuildRequires: gtk-doc gnome-common intltool gnome-doc-utils
 BuildRequires: zenity
 BuildRequires: gobject-introspection-devel libclutter-gir-devel libgtk+3-gir-devel
 BuildRequires: libcinnamon-desktop-devel libcinnamon-desktop-gir-devel
+BuildRequires: libcogl-gir-devel
 
 %description
 Muffin is a window and compositing manager that displays and manages
@@ -156,6 +157,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Mon Oct 3 2016 Vladimir Didenko <cow@altlinux.org> 3.0.5-alt2
+- Fix build requires
+
 * Fri Jun 24 2016 Vladimir Didenko <cow@altlinux.org> 3.0.5-alt1
 - 3.0.5
 
