@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openvpn
-Version: 1.2.2
+Version: 1.2.4
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -80,6 +80,7 @@ make check
 %doc AUTHORS README
 %_libexecdir/NetworkManager/nm-openvpn-service
 %_libexecdir/NetworkManager/nm-openvpn-service-openvpn-helper
+%_libdir/NetworkManager/libnm-vpn-plugin-openvpn.so
 %config %_sysconfdir/dbus-1/system.d/nm-openvpn-service.conf
 %if_with libnm_glib
 %config %_sysconfdir/NetworkManager/VPN/nm-openvpn-service.name
@@ -92,12 +93,16 @@ make check
 %endif
 %_libexecdir/NetworkManager/nm-openvpn-auth-dialog
 %_datadir/gnome-vpn-properties/*
-%_libdir/NetworkManager/libnm-vpn-plugin-openvpn.so
+%_libdir/NetworkManager/libnm-vpn-plugin-openvpn-editor.so
 %_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.2.4-alt1
+- tests: Fix build with --as-needed.
+- Updated to 1.2.4.
+
 * Fri May 13 2016 Mikhail Efremov <sem@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 

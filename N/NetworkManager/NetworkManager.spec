@@ -1,5 +1,5 @@
-%define git_date .git20160914
-#define git_date %nil
+#define git_date .git20160914
+%define git_date %nil
 
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
@@ -36,7 +36,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -673,6 +673,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Oct 03 2016 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
+- etcnet-alt: Fix get_property().
+- Updated to 1.4.2.
+
 * Fri Sep 16 2016 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1.git20160914
 - keyfile/tests: Fix test without JSON library.
 - Fix dhcpcd pidfile name.
