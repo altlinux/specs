@@ -1,5 +1,5 @@
 Name: prometeus
-Version: 0.85
+Version: 0.86
 Release: alt1
 
 Summary: Site and site-utils for Sisyphus and ALT Linux Team
@@ -14,7 +14,7 @@ BuildArch: noarch
 
 Provides: perl(altbase.pm)
 Requires: perl-DBD-mysql
-BuildRequires: perl-DBI perl-libwww perl-upstreamwatch perl-XML-Simple perl-RPM perl-CGI
+BuildRequires: perl-DBI perl-libwww perl-XML-Simple perl-RPM perl-CGI
 # due to global vars in altbase.pm
 %set_perl_req_method relaxed
 
@@ -58,6 +58,9 @@ cp -R web scripts sql A.prometeus.conf prometeus.conf %buildroot%_datadir/%name
 %_datadir/%name/web/cgi-bin/adm/altbase.pm
 
 %changelog
+* Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.86-alt1
+- removed old upstreamwatch
+
 * Wed Jul 15 2009 Grigory Batalov <bga@altlinux.ru> 0.85-alt1
 - English and Portuguese (Brasilian) translations.
 
