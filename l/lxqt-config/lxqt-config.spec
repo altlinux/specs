@@ -1,6 +1,6 @@
 Name: lxqt-config
-Version: 0.10.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL
@@ -10,7 +10,7 @@ Url: http://lxqt.org
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
 BuildRequires: liblxqt-devel libqtxdg-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-libkscreen-devel qt5-svg-devel
@@ -31,7 +31,7 @@ Obsoletes: lxqt-config-randr < 0.8.0
 
 %build
 # FIXME: 0.10.0 fiddling with liblxqt-config-cursor.so (thx palinek)
-%cmake_insource -DCMAKE_SKIP_RPATH:BOOL=OFF -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF -DCMAKE_SKIP_RPATH:BOOL=OFF -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
 %make_build
 
 %install
@@ -46,6 +46,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Wed Mar 23 2016 Michael Shigorin <mike@altlinux.org> 0.10.0-alt2
 - rebuilt against KF5 5.6.0
 

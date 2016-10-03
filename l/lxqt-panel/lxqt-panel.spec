@@ -1,6 +1,6 @@
 Name: lxqt-panel
-Version: 0.10.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: Desktop panel
 License: LGPL
@@ -10,7 +10,7 @@ Url: http://lxqt.org
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel kf5-solid-devel
 BuildRequires: libqtxdg-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kguiaddons-devel
@@ -46,7 +46,8 @@ This package provides the development files for %name.
 %setup
 
 %build
-%cmake_insource
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
+	-DVOLUME_USE_PULSEAUDIO=OFF
 %make_build
 
 %install
@@ -63,6 +64,10 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- 0.11.0
+- disabled pulseaudio for build
+
 * Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt2
 - drop R: qt5-dbus (tosses dev tools into menu for no good reason)
 

@@ -1,5 +1,5 @@
 Name: lxqt-session
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Session manager
@@ -11,10 +11,11 @@ Source0: %name-%version.tar
 Source1: 08lxqt
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libqtxdg-devel xdg-utils
+BuildRequires: libqtxdg-devel xdg-utils xdg-user-dirs
+BuildRequires: libudev-devel
 
 Requires: lxqt-common
 Requires: xdg-utils
@@ -29,7 +30,7 @@ Obsoletes: razorqt-session < 0.7.0
 %setup
 
 %build
-%cmake_insource -DBUNDLE_XDG_UTILS=No
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF -DBUNDLE_XDG_UTILS=No
 %make_build
 
 %install
@@ -38,12 +39,14 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 
 %files
 %_bindir/*
-%_datadir/lxqt/*
 %_desktopdir/*.desktop
 %_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
 - 0.10.0
 

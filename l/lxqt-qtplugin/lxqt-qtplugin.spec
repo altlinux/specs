@@ -1,5 +1,5 @@
 Name: lxqt-qtplugin
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: LxQt platform integration plugin for Qt
@@ -32,6 +32,9 @@ BuildRequires: kf5-kwindowsystem-devel libdbusmenu-qt5-devel
 %doc AUTHORS
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
 - 0.10.0
 

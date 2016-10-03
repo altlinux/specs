@@ -1,5 +1,5 @@
 Name: lxqt-about
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: About dialog of LXDE-Qt
@@ -10,7 +10,7 @@ Url: http://lxqt.org
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
 BuildRequires: kf5-kwindowsystem-devel
 
@@ -21,7 +21,7 @@ BuildRequires: kf5-kwindowsystem-devel
 %setup
 
 %build
-%cmake_insource
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
 %make_build
 
 %install
@@ -30,10 +30,12 @@ BuildRequires: kf5-kwindowsystem-devel
 %files
 %_bindir/*
 %_desktopdir/*.desktop
-%_datadir/lxqt/translations/%name/
 %doc AUTHORS
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
 - 0.10.0
 

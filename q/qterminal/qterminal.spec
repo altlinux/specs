@@ -1,5 +1,5 @@
 Name: qterminal
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: QT-based multitab terminal emulator
@@ -10,8 +10,9 @@ Url: http://github.com/qterminal/qterminal
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++, cmake, qt4-devel
-BuildRequires: libqtermwidget-devel >= 0.6.0
+BuildRequires: gcc-c++ cmake git-core
+BuildRequires: qt5-base-devel
+BuildRequires: libqtermwidget-devel >= %version
 
 %description
 QT-based multitab terminal emulator based on QTermWidget.
@@ -33,17 +34,17 @@ at http://qterminal.sourceforge.net/
 %setup
 
 %build
-%cmake -DUSE_SYSTEM_QXT=0 -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget
-%make_build -C BUILD
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF \
+	-DUSE_SYSTEM_QXT=0 -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget
+%make_build
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std
 %find_lang %name
 
 %files -f %name.lang
 %doc AUTHORS COPYING NEWS README
 %_bindir/%name
-%_datadir/%name
 %_desktopdir/*.desktop
 %_pixmapsdir/%name.png
 
@@ -51,6 +52,9 @@ at http://qterminal.sourceforge.net/
 # - package system libqxt (lots of macros missing in rpm-macros-qt4)
 
 %changelog
+* Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Fri Nov 14 2014 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1
 - 0.6.0 (closes: #30468)
 - updated Url:
