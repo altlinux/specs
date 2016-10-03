@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.1.96
+Version: 1.1.97
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -90,6 +90,9 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 1.1.97-alt1
+- regular tweaks
+
 * Mon Sep 12 2016 Michael Shigorin <mike@altlinux.org> 1.1.96-alt1
 - starterkits-20160912
 
