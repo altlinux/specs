@@ -1,10 +1,11 @@
 %define inversion 2
-%define pyversion 3.7
-%define reldate 20160916
+%define pyversion 3.6
+%define reldate 20161001
 
 Name: python-sphinx-objects.inv
 Version: %inversion.%pyversion.%reldate
 Release: alt1
+Serial: 1
 Summary: Sphinx inventory version %inversion
 License: BSD
 Group: Development/Python
@@ -25,6 +26,9 @@ install -pDm644 %SOURCE0 %buildroot%_datadir/python-sphinx/objects.inv
 %_datadir/python-sphinx/
 
 %changelog
+* Mon Oct 03 2016 Cronbuild Service <cronbuild@altlinux.org> 1:2.3.6.20161001-alt1
+- repocop cronbuild 20161003. At your service.
+
 * Sat Sep 17 2016 Cronbuild Service <cronbuild@altlinux.org> 2.3.7.20160916-alt1
 - repocop cronbuild 20160917. At your service.
 
