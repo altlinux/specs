@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Cwd.pm) perl(Encode.pm) perl(Exporter.pm) perl
 # END SourceDeps(oneline)
 Name:           perl-Crypt-Eksblowfish
 Version:        0.009
-Release:        alt4_15
+Release:        alt5_15
 Summary:        Eksblowfish block cipher
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -20,6 +20,7 @@ BuildRequires:  perl(Test/Pod/Coverage.pm)
 
 
 Source44: import.info
+Patch33: Crypt-Eksblowfish-0.009-2y.patch
 
 %description
 An object of this type encapsulates a keyed instance of the Eksblowfish
@@ -27,6 +28,7 @@ block cipher, ready to encrypt and decrypt.
 
 %prep
 %setup -q -n Crypt-Eksblowfish-%{version}
+%patch33 -p1
 
 %build
 %{__perl} Build.PL --install_path bindoc=%_man1dir installdirs=vendor optimize="$RPM_OPT_FLAGS"
@@ -48,6 +50,10 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_archlib}/Crypt*
 
 %changelog
+* Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.009-alt5_15
+- support of the newer $2y$ prefix by Valery Inozemtsev
+  see https://rt.cpan.org/Public/Bug/Display.html?id=93688
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.009-alt4_15
 - update to new release by fcimport
 
