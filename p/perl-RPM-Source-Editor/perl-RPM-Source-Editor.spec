@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.878
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -17,7 +17,7 @@ Url: http://search.cpan.org/dist/%module
 # Recommends: rpm-build
 
 # Automatically added by buildreq on Wed Nov 06 2010
-BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl-RPM-Vercmp perl-RPM perl(Clone.pm) perl(Tie/Hash.pm)
+BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl(RPM/Vercmp.pm) perl(RPM/Header.pm) perl(Clone.pm) perl(Tie/Hash.pm)
 # for RPM::Source::Tools
 BuildRequires: perl(RPM/uscan.pm) perl-DistroMap perl(Pod/Strip.pm)
 
@@ -73,6 +73,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.878-alt2
+- use RPM::Header
+
 * Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.878-alt1
 - use RPM::Vercmp
 
