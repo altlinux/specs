@@ -5,7 +5,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 
 Name: perl-%module
 Version: 0.615
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -15,7 +15,7 @@ License: GPL or Artistic
 Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar.gz
 Url: http://search.cpan.org/dist/%module
 
-BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM-Source-Dependency-Analyzer perl-RPM-Vercmp perl-DistroMap
+BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM-Source-Dependency-Analyzer perl(RPM/Vercmp.pm) perl-DistroMap
 Requires: perl-RPM-Source-Editor > 0.856
 
 # for srpmbackport 
@@ -42,6 +42,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.615-alt2
+- indirect RPM deps
+
 * Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.615-alt1
 - use RPM::Vercmp
 
