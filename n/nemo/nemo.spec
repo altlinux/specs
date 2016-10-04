@@ -9,7 +9,7 @@
 
 Name: nemo
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -67,6 +67,7 @@ BuildPreReq: libnotify-devel >= %notify_ver
 BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
 BuildRequires: python3-module-polib python3-module-pygobject3
+BuildRequires: autoconf-archive
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
 %{?_enable_tracker:BuildPreReq: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
@@ -209,6 +210,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Oct 4 2016 Vladimir Didenko <cow@altlinux.org> 3.0.6-alt2
+- 3.0.6-48-gaff8272: fixes desktop redraw issue
+
 * Fri Jun 24 2016 Vladimir Didenko <cow@altlinux.org> 3.0.6-alt1
 - 3.0.6
 
