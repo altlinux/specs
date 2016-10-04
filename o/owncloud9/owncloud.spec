@@ -2,10 +2,10 @@
 
 Name: owncloud%major
 Version: 9.1.1
-Release: alt2
+Release: alt3
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
-%define installdir %webserver_webappsdir/owncloud
+%define installdir %webserver_webappsdir/%name
 
 Summary: Cloud platform
 Group: Networking/WWW
@@ -63,6 +63,9 @@ chown -R apache2:apache2 %installdir
 %dir %attr(0770,root,_webserver) %_localstatedir/%name
 
 %changelog
+* Tue Oct 04 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.1-alt3
+- Fix path to %installdir
+
 * Mon Oct 03 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 9.1.1-alt2
 - Fixed requires
 
