@@ -1,6 +1,6 @@
 Name:    projectlibre
 Version: 1.6.2
-Release: alt2
+Release: alt3
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
 
@@ -22,8 +22,6 @@ BuildArch: noarch
 BuildPreReq: rpm-build-compat
 BuildRequires: ant
 BuildRequires: java-1.7.0-openjdk-devel
-
-Requires: java-1.7.0-openjdk
 
 %define projectlibredir %_libexecdir/%name
 
@@ -70,6 +68,9 @@ cp -a openproj_build/dist/* %buildroot/%projectlibredir/
 %projectlibredir/*
 
 %changelog
+* Tue Oct 04 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt3
+- Remove strict requires on java-1.7.0-openjdk
+
 * Wed Sep 28 2016 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt2
 - First check Java at default location (/usr/java/latest) (ALT #32386)
 - Require java-1.7.0-openjdk because bundled jar is linked with Java 1.7
