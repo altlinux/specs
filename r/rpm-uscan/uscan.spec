@@ -2,7 +2,7 @@
 %define debian_ver 2.14.4
 Name: %destname
 Version: 0.17.%debian_ver
-Release: alt1
+Release: alt2
 
 Summary: Utility to check watch files
 Source: %name-%version.tar
@@ -13,7 +13,7 @@ URL: http://www.altlinux.org/Watch
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-licenses perl-devel perl-RPM-Vercmp perl(LWP/UserAgent.pm) perl(LWP/Protocol/https.pm)
+BuildRequires: rpm-build-licenses perl-devel perl(RPM/Vercmp.pm) perl(LWP/UserAgent.pm) perl(LWP/Protocol/https.pm)
 # for spawn function.
 BuildRequires: perl-Dpkg
 Requires: perl(LWP/Protocol/https.pm)
@@ -43,6 +43,9 @@ install -Dm644 scripts/uscan.1 %buildroot%_man1dir/%destname.1
 %_man1dir/*
 
 %changelog
+* Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.17.2.14.4-alt2
+- indirect dependencies
+
 * Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.17.2.14.4-alt1
 - use RPM::Vercmp
 
