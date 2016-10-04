@@ -13,8 +13,8 @@
 %define nv_version 367
 %define nv_release 44
 %define nv_minor %nil
-%define pkg_rel alt171
-%define set_gl_nvidia_ver 0.18.1
+%define pkg_rel alt172
+%define set_gl_nvidia_ver 0.19.1
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -270,6 +270,9 @@ fi
 /usr/lib/nvidia/alternate-install-present
 
 %changelog
+* Thu Sep 29 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt172
+- force nvidia libraries only for nvidia
+
 * Wed Sep 28 2016 Sergey V Turchin <zerg@altlinux.org> 367.44-alt171
 - fix check for xorg.conf
 
