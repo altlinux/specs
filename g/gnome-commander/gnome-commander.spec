@@ -1,12 +1,13 @@
-%define ver_major 1.4
+%define ver_major 1.6
 %def_with exiv2
 %def_with chm
 %def_with taglib
 %def_with poppler
 %def_with libgsf
+%def_with samba
 
 Name: gnome-commander
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -16,6 +17,7 @@ Url: http://www.freesoftware.fsf.org/gcmd/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
+Requires: dconf
 Requires: gnome-vfs gnome-vfs-module-sftp gnome-vfs-module-smb
 
 BuildRequires: flex gcc-c++
@@ -27,6 +29,7 @@ BuildRequires: libunique-devel python-devel
 %{?_with_taglib:BuildRequires: libtag-devel}
 %{?_with_poppler:BuildRequires: libpoppler-glib-devel}
 %{?_with_libgsf:BuildRequires: libgsf-devel}
+
 
 %description
 Gnome Commander is a file manager that just like the classical Norton Commander (TM)
@@ -43,7 +46,8 @@ and some extra features like FTP support.
 	%{subst_with libchm} \
 	%{subst_with taglib} \
 	%{subst_with poppler} \
-	%{subst_with libgsf}
+	%{subst_with libgsf} \
+	%{subst_with samba}
 %make_build
 
 %install
@@ -55,6 +59,8 @@ and some extra features like FTP support.
 %_bindir/*
 %_libdir/%name/
 %_datadir/applications/%name.desktop
+%_datadir/glib-2.0/schemas/org.gnome.gnome-commander.enums.xml
+%_datadir/glib-2.0/schemas/org.gnome.gnome-commander.gschema.xml
 %_datadir/pixmaps/%name.png
 %_datadir/pixmaps/%name/
 %_datadir/appdata/%name.appdata.xml
@@ -67,6 +73,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Tue Oct 04 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sun Sep 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.4.9-alt1
 - 1.4.9
 
