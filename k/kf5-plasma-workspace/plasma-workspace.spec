@@ -16,7 +16,7 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.7.4
+Version: 5.8.0
 Release: alt1
 %K5init altplace
 
@@ -41,7 +41,8 @@ Patch104: alt-def-digital-clock.patch
 Patch105: alt-lock-widgets.patch
 Patch106: alt-digital-clock-date.patch
 Patch107: alt-freespacenotifier.patch
-Patch108: alt-breeze-background.patch
+#Patch108: alt-breeze-background.patch
+Patch108: alt-def-background.patch
 Patch109: alt-def-start-empty-session.patch
 Patch110: alt-plasma-load.patch
 
@@ -267,13 +268,13 @@ done
 %_K5inc/kworkspace5/
 %_K5inc/plasma/
 %_K5inc/taskmanager/
-%_K5inc/legacytaskmanager/
+#%_K5inc/legacytaskmanager/
 %_K5link/lib*.so
 %_K5lib/cmake/KRunnerAppDBusInterface/
 %_K5lib/cmake/KSMServerDBusInterface/
 %_K5lib/cmake/LibKWorkspace/
 %_K5lib/cmake/LibTaskManager/
-%_K5lib/cmake/LibLegacyTaskManager/
+#%_K5lib/cmake/LibLegacyTaskManager/
 %_K5dbus_iface/*.xml
 %_K5data/kdevappwizard/templates/*
 
@@ -286,14 +287,17 @@ done
 %files -n %libtaskmanager
 %_K5lib/libtaskmanager.so.*
 %_K5lib/libtaskmanager.so.%taskmanager_sover
-%files -n %liblegacytaskmanager
-%_K5lib/liblegacytaskmanager.so.*
-%_K5lib/liblegacytaskmanager.so.%legacytaskmanager_sover
+#%files -n %liblegacytaskmanager
+#%_K5lib/liblegacytaskmanager.so.*
+#%_K5lib/liblegacytaskmanager.so.%legacytaskmanager_sover
 %files -n %libweather_ion
 %_K5lib/libweather_ion.so.*
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
 - new version
 

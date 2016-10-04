@@ -2,17 +2,17 @@
 
 %define kwin4_effect_builtins_sover 1
 %define libkwin4_effect_builtins libkwin4_effect_builtins%kwin4_effect_builtins_sover
-%define kwineffects_sover 8
+%define kwineffects_sover 9
 %define libkwineffects libkwineffects%kwineffects_sover
-%define kwinglutils_sover 8
+%define kwinglutils_sover 9
 %define libkwinglutils libkwinglutils%kwinglutils_sover
 %define kwin_sover 5
 %define libkwin libkwin%kwin_sover
-%define kwinxrenderutils_sover 8
+%define kwinxrenderutils_sover 9
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: kf5-%rname
-Version: 5.7.4
+Version: 5.8.0
 Release: alt1
 %K5init altplace
 
@@ -125,7 +125,7 @@ KF5 library
 %config(noreplace) %_K5xdgconf/*.knsrc
 %config(noreplace) %_K5xdgconf/*.categories
 %_K5bin/kwin*
-%_K5exec/kwin*
+%_K5exec/*kwin*
 %_K5lib/libkdeinit5_*.so
 %_K5plug/platforms/KWinQpaPlugin.so
 %_K5plug/kf5/org.kde.kidletime.platforms/KF5IdleTimeKWin*.so
@@ -173,6 +173,9 @@ KF5 library
 
 
 %changelog
+* Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
 - new version
 
