@@ -2,7 +2,7 @@
 
 Name: muffin
 Version: 3.0.5
-Release: alt2
+Release: alt3
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -54,7 +54,11 @@ Utilities for testing Metacity/Muffin themes.
 Summary: Shared libraries for %name
 Group: System/Libraries
 # manual dependencies
-Requires: typelib(Clutter) = 1.0 typelib(Gtk) = 3.0
+Requires: typelib(Gtk) = 3.0
+# Note: typelib(Cogl) and typelib(Clutter) now are also provided by
+# libmutter-gir package when we need libcogl-gir and libclutter-gir packages.
+# So we can't rely on automatic requires here.
+Requires: libcogl-gir libclutter-gir
 
 %description -n lib%name
 Shared libraries for Muffin and its plugins.
@@ -64,7 +68,11 @@ Summary: Development package for %name
 Group: Development/C
 Requires: lib%name = %version-%release
 # manual dependencies
-Requires: gir(Clutter) = 1.0 gir(Gtk) = 3.0
+Requires: gir(Gtk) = 3.0
+# Note: gir(Cogl) and gir(Clutter) now are also provided by
+# libmutter-gir-devel package when we need libcogl-gir-devel and
+# libclutter-gir-devel packages. So we can't rely on automatic requires here.
+Requires: libcogl-gir-devel libclutter-gir-devel
 
 %description -n lib%name-devel
 Header files and libraries for developing Muffin plugins.
@@ -157,6 +165,9 @@ GObject introspection devel data for the Muffin library
 
 
 %changelog
+* Tue Oct 4 2016 Vladimir Didenko <cow@altlinux.org> 3.0.5-alt3
+- Fix requires
+
 * Mon Oct 3 2016 Vladimir Didenko <cow@altlinux.org> 3.0.5-alt2
 - Fix build requires
 
