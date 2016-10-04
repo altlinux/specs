@@ -1,5 +1,5 @@
 Name: rust
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -25,7 +25,7 @@ Source6: liblibc.tar
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildPreReq: /proc
-BuildRequires: curl gcc-c++ python-devel rust
+BuildRequires: curl gcc-c++ python-devel rust cmake
 
 %description
 Rust is a systems programming language that runs blazingly fast, prevents
@@ -86,6 +86,9 @@ mv hoedown src/rt
 %_libdir/rustlib/etc/*
 
 %changelog
+* Mon Oct 03 2016 Vladimir Lettiev <crux@altlinux.ru> 1.11.0-alt1
+- 1.11.0
+
 * Mon Jul 11 2016 Vladimir Lettiev <crux@altlinux.ru> 1.10.0-alt1
 - 1.10.0
 
