@@ -1,8 +1,8 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.33
-Release: alt1
+Version: 0.34
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/modules/by-module/RPM/%module-%version.tar
 Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
-BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport
+BuildRequires: perl-devel perl-RPM-Source-Editor perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert perl-Source-Package perl-RPM-Source-BundleImport
 Requires: perl-RPM-Source-Editor > 0.853
 Conflicts: perl-RPM-Source-Convert < 0.48
 
@@ -36,6 +36,12 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt2
+- use RPM::Header 
+
+* Mon Oct 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
+- use RPM::Vercmp
+
 * Sat May 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - development release
 
