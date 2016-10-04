@@ -1,6 +1,6 @@
 %def_without bootstrap
 Name: rust-cargo
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 Summary: The Rust package manager
 
@@ -12,7 +12,7 @@ URL: http://crates.io
 Source: %name-%version.tar
 
 %ifarch x86_64 
-%define registry "github.com-88ac128001ac3a9a"
+%define registry "github.com-1ecc6299db9ec823"
 Source1: https://static.rust-lang.org/cargo-dist/2016-03-21/cargo-nightly-x86_64-unknown-linux-gnu.tar.gz
 %endif
 
@@ -78,6 +78,9 @@ rm -rf %_tmpdir/cargo
 %_man1dir/cargo*
 
 %changelog
+* Tue Oct 04 2016 Vladimir Lettiev <crux@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Mon Jul 11 2016 Vladimir Lettiev <crux@altlinux.ru> 0.11.0-alt1
 - 0.11.0
 
