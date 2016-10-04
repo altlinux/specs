@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 0.878
-Release: alt2
+Release: alt3
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -73,6 +73,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.878-alt3
+- use no RPM::Database
+
 * Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.878-alt2
 - use RPM::Header
 
