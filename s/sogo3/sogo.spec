@@ -3,8 +3,8 @@
 
 Summary:      SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:         sogo3
-Version:      3.1.5
-Release:      alt2.git
+Version:      3.2.0
+Release:      alt1
 
 License:      GPL
 URL:          http://www.inverse.ca/contributions/sogo.html
@@ -395,6 +395,16 @@ fi
 %preun_service sogo
 
 %changelog
+* Tue Oct 04 2016 Andrey Cherepanov <cas@altlinux.org> 3.2.0-alt1
+- New version 3.2.0 (https://sogo.nu/news/2016/article/sogo-v320-released.html)
+- New features:
+  * [web] added IMAP folder subscriptions management
+  * [web] keyboard shortcuts
+  * [eas] initial support for server-side mailbox search operations
+
+* Thu Sep 29 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.5-alt1.git.M80P.1
+- Backport new version to p8 branch
+
 * Thu Sep 29 2016 Andrey Cherepanov <cas@altlinux.org> 3.1.5-alt2.git
 - Fix timezone shift for calendar entries
 
