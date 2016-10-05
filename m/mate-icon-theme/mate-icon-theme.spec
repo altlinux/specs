@@ -1,16 +1,13 @@
 Group: Graphical desktop/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(icon-naming-utils)
-# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-icon-theme
-%define version 1.12.0
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit cdb0d70862035cd1b65c4deb495ea1016ea2d206}
@@ -76,6 +73,9 @@ make %{?_smp_mflags} V=1
 
 
 %changelog
+* Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- new fc release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
 - new version
 
