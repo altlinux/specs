@@ -9,7 +9,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-ssh
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -92,11 +92,14 @@ make check
 %_libexecdir/NetworkManager/nm-ssh-auth-dialog
 %_datadir/gnome-vpn-properties/*
 %_libdir/NetworkManager/libnm-vpn-plugin-ssh.so
-%_datadir/appdata/*.appdata.xml
+%_datadir/appdata/*.xml
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Oct 05 2016 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1
+- Updated to 1.2.1.
+
 * Thu Apr 28 2016 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
