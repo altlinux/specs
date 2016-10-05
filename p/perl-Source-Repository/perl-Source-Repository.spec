@@ -1,8 +1,8 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.34
-Release: alt2
+Version: 0.35
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
+- bugfix release thanks to Ruslan Hihin
+
 * Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.34-alt2
 - use RPM::Header 
 
