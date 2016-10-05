@@ -1,10 +1,11 @@
 Name:         lsb-init
 Summary:      ALT Linux implementation of LSB compliant init functions
 Version:      4.0
-Release:      alt4
+Release:      alt5
 License:      GPL
 URL:          http://www.linuxbase.org
 Source:       %name-%version.tar
+Source101:    test-initscript.sh
 Group:        System/Base
 Packager:     Igor Vlasenko <viy@altlinux.ru>
 
@@ -21,12 +22,13 @@ The Linux Standard Base (http://www.linuxbase.org/) is a standard core
 system that third-party applications written for Linux can depend
 upon.
 
-The package provides the ALT Linux implementation of LSB compliant 
+The package provides the ALT Linux implementation of LSB compliant
 init functions for the Linux Standard Base %version core support package.
 
 %prep
 %setup
 %patch -p1 -d lib/lsb
+install -m 755 %SOURCE101 -t ./
 
 %build
 
@@ -39,8 +41,13 @@ install -m 644 ./lib/lsb/* %buildroot/lib/lsb
 %doc ./lib/lsb/copyright
 %{_sysconfdir}/altlinux-lsb
 /lib/lsb
+%doc test-initscript.sh
 
 %changelog
+* Wed Oct 05 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0-alt5
+- status_of_proc should not print DONE/FAILED.
+- docs: test-initscript.sh (in a working system) added.
+
 * Thu Sep 29 2016 Ivan Zakharyaschev <imz@altlinux.org> 4.0-alt4
 - Do not remove log_daemon_msg
   (This doesn't break anything and helps Debian-oriented init-scripts,

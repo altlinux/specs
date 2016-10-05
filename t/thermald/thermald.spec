@@ -1,6 +1,6 @@
 Name: thermald
 Version: 1.5.3
-Release: alt1
+Release: alt2
 
 Summary: Thermal daemon for IA
 
@@ -52,23 +52,24 @@ install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 
 %files
 %_sbindir/%name
-%dir %_datadir/dbus-1/
-%dir %_datadir/dbus-1/system-services/
 %_datadir/dbus-1/system-services/org.freedesktop.%name.service
-%dir /lib/systemd
-%dir %_unitdir/
 %_unitdir/%name.service
 %_initdir/%name
 %exclude %_sysconfdir/init/%name.conf
 %dir %_sysconfdir/%name
 %_sysconfdir/%name/*
-%dir %_sysconfdir/dbus-1
-%dir %_sysconfdir/dbus-1/system.d
 %_sysconfdir/dbus-1/system.d/*
 %_man5dir/*
 %_man8dir/*
 
 %changelog
+* Wed Oct 05 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.5.3-alt2
+- Fixed the adaption of the Debian-style .init for ALT:
+  + .init: condrestart/condstop implemented in a simple way;
+  + .init: status cmd added;
+  + .init: do not print DONE when printing the usage.
+- (.spec) Do not own dbus and systemd dirs.
+
 * Fri May 27 2016 Anton Midyukov <antohami@altlinux.org> 1.5.3-alt1
 - New version.
 
