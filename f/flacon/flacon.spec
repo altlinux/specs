@@ -1,5 +1,5 @@
 Name: flacon
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: Audio File Encoder
@@ -59,6 +59,15 @@ popd
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Oct 05 2016 Nazarov Denis <nenderus@altlinux.org> 2.1.0-alt1
+- Version 2.1.0
+
+* Wed Feb 17 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt0.M70P.1
+- Build for branch p7
+
+* Sun Feb 14 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt0.M70T.1
+- Build for branch t7
+
 * Mon Feb 01 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1
 - Version 2.0.1
 
