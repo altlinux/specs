@@ -1,7 +1,7 @@
 %define ver_major 3.22
 
 Name: gnome-themes-standard
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
@@ -69,10 +69,14 @@ done
 %dir %_datadir/themes/Adwaita/gtk-2.0
 %_datadir/themes/Adwaita/gtk-2.0/gtkrc
 %_datadir/themes/Adwaita/gtk-2.0/apps.rc
+%_datadir/themes/Adwaita/gtk-2.0/hacks.rc
 %_datadir/themes/Adwaita/gtk-2.0/main.rc
 %_datadir/themes/Adwaita/gtk-2.0/assets/
 %dir %_datadir/themes/Adwaita/gtk-3.0
 %_datadir/themes/Adwaita/gtk-3.0/gtk.css
+%dir %_datadir/themes/Adwaita-dark/
+%_datadir/themes/Adwaita-dark/index.theme
+%_datadir/themes/Adwaita-dark/gtk-2.0/
 
 # Accessibility themes from ghome-temes(-default)
 %_datadir/themes/HighContrast/gtk-2.0/gtkrc
@@ -86,6 +90,9 @@ done
 %exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
 
 %changelog
+* Wed Oct 05 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Mon Oct 03 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
