@@ -2,18 +2,21 @@
 %define npmver 3.10.3
 # note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
+%define major 6.7
+
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
-%global nodejs_abi 6.4
+%global nodejs_abi %major
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%global v8_abi 5.0
+%global v8_abi 5.1
 
 # TODO: build with system libv8
 %def_without systemv8
 
 # supports only openssl >= 1.0.2
 # see https://github.com/nodejs/node/issues/2783
+%define openssl_version 1.0.2j
 %def_with systemssl
 
 %global libuv_abi 1.9.1
@@ -24,8 +27,8 @@
 %define oversion %version
 
 Name: node
-Version: 6.4.0
-Release: alt4
+Version: %major.0
+Release: alt6
 
 Summary: Evented I/O for V8 Javascript
 
@@ -47,7 +50,9 @@ BuildRequires: %libv8_package-devel >= %v8_abi-devel
 %endif
 
 %if_with systemssl
-BuildRequires: openssl-devel >= 1.0.2 openssl
+BuildRequires: openssl-devel >= %openssl_version openssl
+# for require strict library version
+Requires: openssl >= %openssl_version
 %endif
 
 %if_with systemuv
@@ -104,6 +109,8 @@ Node.js header and build tools
 Summary: Documentation files
 Group: Development/Other
 Requires: %name-devel = %version-%release
+
+BuildArch: noarch
 
 %description doc
 Documentation files for %name.
@@ -230,6 +237,12 @@ rm -rf %buildroot%_libexecdir/node_modules/npm/node_modules/request/node_modules
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 
 %changelog
+* Wed Oct 05 2016 Vitaly Lipatov <lav@altlinux.ru> 6.7.0-alt6
+- new version 6.7.0 (with rpmrb script)
+
+* Fri Sep 02 2016 Vitaly Lipatov <lav@altlinux.ru> 6.5.0-alt5
+- new version 6.5.0 (with rpmrb script)
+
 * Wed Aug 24 2016 Vitaly Lipatov <lav@altlinux.ru> 6.4.0-alt4
 - build 2016-08-15 Node.js v6.4.0 (Current) Release
 
