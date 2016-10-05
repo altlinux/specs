@@ -1,4 +1,4 @@
-%define ver_major 1.0
+%define ver_major 1.1
 %def_enable video
 
 Name: frogr
@@ -17,7 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gtk_ver 3.14.0
 
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: gnome-common intltool yelp-tools libappstream-glib-devel
+BuildRequires: gnome-common yelp-tools libappstream-glib-devel
 BuildRequires: libjson-glib-devel libsoup-devel libexif-devel libxml2-devel libgcrypt-devel
 %{?_enable_video:BuildRequires: gstreamer1.0-devel}
 
@@ -52,6 +52,9 @@ a flickr account from the desktop.
 %exclude %_datadir/pixmaps/%name.xpm
 
 %changelog
+* Wed Oct 05 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+
 * Wed Dec 30 2015 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - 1.0
 
