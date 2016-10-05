@@ -1,6 +1,6 @@
 Name: 	  laptop-mode-tools
-Version:  1.68.1
-Release:  alt2
+Version:  1.70
+Release:  alt1
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL
@@ -12,7 +12,7 @@ Source:   %name-%version.tar
 # VCS:    https://github.com/rickysarraf/laptop-mode-tools
 
 BuildArch: noarch
-%filter_from_requires /^\/lib\/udev\/hotplug\.functions/d
+%filter_from_requires /^\/lib\/udev\/hotplug\.functions/d;/^systemd$/d
 
 %description
 Laptop mode is a Linux kernel feature that allows your laptop to save
@@ -53,9 +53,14 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install ./i
 %_datadir/laptop-mode-tools/module-helpers/*
 %_libexecdir/pm-utils/sleep.d/*
 %_libexecdir/tmpfiles.d/laptop-mode.conf
+%_datadir/polkit-1/actions/org.linux.lmt.gui.policy
 %_man8dir/*
 
 %changelog
+* Wed Oct 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.70-alt1
+- New version 1.70
+- Remove systemd requirement
+
 * Sun Feb 14 2016 Andrey Cherepanov <cas@altlinux.org> 1.68.1-alt2
 - Bump release number to correct upgrade from Autoimports to Sisyphus
 
