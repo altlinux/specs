@@ -1,4 +1,4 @@
-%define ver_major 1.1
+%define ver_major 1.2
 %def_enable video
 
 Name: frogr
@@ -52,6 +52,9 @@ a flickr account from the desktop.
 %exclude %_datadir/pixmaps/%name.xpm
 
 %changelog
+* Wed Oct 05 2016 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
+- 1.2
+
 * Wed Oct 05 2016 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
 - 1.1
 
