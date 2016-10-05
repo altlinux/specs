@@ -1,7 +1,7 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize glib2-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libsoup-2.4) pkgconfig(libxml-2.0) python-devel
+BuildRequires: /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize glib2-devel libgio-devel pkgconfig(gtk+-2.0) pkgconfig(libxml-2.0) python-devel
 # END SourceDeps(oneline)
 # for --enable-python
 BuildRequires: python-module-pygobject-devel
@@ -9,21 +9,47 @@ BuildRequires: python-module-gudev
 BuildRequires: python-module-pygtk-devel
 
 %define _libexecdir %_prefix/libexec
+# %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name libmateweather
+%define version 1.16.0
+# Conditional for release and snapshot builds. Uncomment for release-builds.
+%global rel_build 1
+
+# This is needed, because src-url contains branched part of versioning-scheme.
+%global branch 1.16
+
+# Settings used for build from snapshots.
+%{!?rel_build:%global commit 06e062693b16189373584801b056079eafac0034}
+%{!?rel_build:%global commit_date 20160831}
+%{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
+%{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
+%{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
+%{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
+
 Name:          libmateweather
-Version:       1.12.1
+Version:       %{branch}.0
+%if 0%{?rel_build}
 Release:       alt1_1
+%else
+Release:       alt1_1
+%endif
 Summary:       Libraries to allow MATE Desktop to display weather information
 License:       GPLv2+ and LGPLv2+
 URL:           http://mate-desktop.org
-Source0:       http://pub.mate-desktop.org/releases/1.12/%{name}-%{version}.tar.xz
 
-BuildRequires: gtk2-devel
-BuildRequires: libsoup-devel
+# for downloading the tarball use 'spectool -g -R libmateweather.spec'
+# Source for release-builds.
+%{?rel_build:Source0:     http://pub.mate-desktop.org/releases/%{branch}/%{name}-%{version}.tar.xz}
+# Source for snapshot-builds.
+%{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
+
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libsoup-devel libsoup-gir-devel libsoup-gnome-devel libsoup-gnome-gir-devel
 BuildRequires: mate-common
 BuildRequires: python-module-pygtk-devel
 BuildRequires: python-module-pygobject-devel
 
-Requires:      %{name}-data = %{version}-%{release}
+Requires:      %{name}-data = %{version}
 Source44: import.info
 Patch33: libmateweather-1.12.1-gettext-not-xml.patch
 
@@ -34,7 +60,7 @@ Libraries to allow MATE Desktop to display weather information
 Group: System/Libraries
 Summary: Data files for the libmateweather
 BuildArch: noarch
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{version}
 
 %description data
 This package contains shared data needed for libmateweather.
@@ -42,22 +68,28 @@ This package contains shared data needed for libmateweather.
 %package devel
 Group: Development/C
 Summary:  Development files for libmateweather
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}
 
 %description devel
 Development files for libmateweather
 
 
 %prep
-%setup -q
-%patch33 -p1
+%setup -q%{!?rel_build:n %{name}-%{commit}}
 
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
+%patch33 -p1
 
 %build
 autoreconf -fisv
 %configure --enable-python --disable-static           \
            --disable-schemas-compile  \
-           --with-gtk=2.0             \
+           --with-gtk=3.0             \
            --enable-gtk-doc-html      \
            --enable-python
 
@@ -87,13 +119,16 @@ cat libmateweather-locations.lang >> %{name}.lang
 %{_datadir}/libmateweather/
 
 %files devel
-%doc %{_datadir}/gtk-doc/html/libmateweather/
+%%doc %{_datadir}/gtk-doc/html/libmateweather/
 %{_libdir}/libmateweather.so
 %{_includedir}/libmateweather/
 %{_libdir}/pkgconfig/mateweather.pc
 
 
 %changelog
+* Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- new fc release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new version
 
