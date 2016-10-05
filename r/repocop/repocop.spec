@@ -1,6 +1,6 @@
 Name: repocop
 Version: 0.70
-Release: alt4
+Release: alt5
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -19,7 +19,7 @@ Requires: fakeroot >= 1.9
 Requires: pax
 BuildRequires: perl-devel perldoc
 BuildRequires: perl(Data/Array2ArrayMap/Hash/XSTree.pm)
-BuildRequires: perl(RPM/Constants.pm) perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DBD-SQLite
+BuildRequires: perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-DBD-SQLite
 BuildRequires: perl-RPM-Source-Editor
 BuildRequires: perl-File-Lock-ParentLock
 BuildRequires: perl-HTML-Template-Pro
@@ -134,6 +134,9 @@ done
 %_datadir/repocop/html
 
 %changelog
+* Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.70-alt5
+- get rid of RPM::Constants
+
 * Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.70-alt4
 - use explicit RPM modules
 
