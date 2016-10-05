@@ -2,7 +2,7 @@
 
 Name: 	 solvespace
 Version: 2.1
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
@@ -14,7 +14,7 @@ Url: 	 http://solvespace.com/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0:  %name-%version.tar
 Source1:  libdxfrw.tar
-Patch1: disable-git-commit-check.patch
+Patch1:   use-explicit-git-hash.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -104,6 +104,9 @@ tar xf %SOURCE1
 %_includedir/slvs.h
 
 %changelog
+* Wed Oct 05 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.1-alt2
+- Use explicit commit hash
+
 * Tue Jul 12 2016 Andrey Cherepanov <cas@altlinux.org> 1:2.1-alt1
 - New version
 
