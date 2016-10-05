@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 5.8.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules python-module-google python3-dev qt5-base-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: gtk-engines-pixmap
+BuildRequires: gtk-engines-pixmap libgtk+3-devel pkg-config
 
 %description
 This is GTK2/3 port of default KDE Breeze style.
@@ -37,7 +37,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DWITH_GTK3_VERSION=`pkg-config --modversion gtk+-3.0` \
+    #
 
 %install
 %K5install
@@ -49,5 +51,8 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Wed Oct 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2
+- fix gtk3 theme
+
 * Wed Oct 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - initial build
