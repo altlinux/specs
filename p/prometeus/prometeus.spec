@@ -1,6 +1,6 @@
 Name: prometeus
-Version: 0.86
-Release: alt2
+Version: 0.87
+Release: alt1
 
 Summary: Site and site-utils for Sisyphus and ALT Linux Team
 License: GPL
@@ -58,6 +58,9 @@ cp -R web scripts sql A.prometeus.conf prometeus.conf %buildroot%_datadir/%name
 %_datadir/%name/web/cgi-bin/adm/altbase.pm
 
 %changelog
+* Wed Oct 05 2016 Igor Vlasenko <viy@altlinux.ru> 0.87-alt1
+- use portable subset of perl(RPM/Header.pm)
+
 * Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.86-alt2
 - use RPM::Header
 
