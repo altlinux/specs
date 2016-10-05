@@ -1,5 +1,5 @@
 Name: lxqt-globalkeys
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
@@ -10,7 +10,7 @@ Url: http://lxqt.org
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
 BuildRequires: kf5-kwindowsystem-devel libqt5-widgets
 
@@ -30,10 +30,9 @@ This package provides the development files for %name.
 
 %prep
 %setup
-sed -i 's/Qt5Widget/&s/' client/CMakeLists.txt
 
 %build
-%cmake_insource
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
 %make_build
 
 %install
@@ -42,7 +41,6 @@ sed -i 's/Qt5Widget/&s/' client/CMakeLists.txt
 %files
 %_bindir/*
 %_libdir/*.so.*
-%_datadir/lxqt/*
 %_desktopdir/*.desktop
 %doc AUTHORS
 
@@ -53,6 +51,9 @@ sed -i 's/Qt5Widget/&s/' client/CMakeLists.txt
 %_datadir/cmake/*/
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
 - 0.10.0
 

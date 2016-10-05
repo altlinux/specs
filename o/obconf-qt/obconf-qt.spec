@@ -1,6 +1,6 @@
 Name: obconf-qt
-Version: 0.9.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: Openbox configuration tool
 License: %gpl2plus
@@ -8,23 +8,22 @@ Group: Graphical desktop/Other
 
 Url: http://lxqt.org
 Source: %name-%version.tar
-Patch10: %name-%version-alt.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel libqt4-devel
-BuildRequires: libopenbox-devel libXdmcp-devel
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
+BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
+BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: libopenbox-devel libXdmcp-devel libpcre-devel
 
 %description
 %summary
 
 %prep
 %setup
-%patch10 -p1
 
 %build
-%cmake_insource
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
 %make_build
 
 %install
@@ -32,12 +31,15 @@ BuildRequires: libopenbox-devel libXdmcp-devel
 
 %files
 %_bindir/*
-%_datadir/%name
 %_desktopdir/*
 %_liconsdir/*
 %doc AUTHORS
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- 0.11.0
+  + built against Qt5
+
 * Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.9.0-alt2
 - rebuilt against current libraries
 

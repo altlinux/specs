@@ -1,5 +1,5 @@
 Name: lxqt-common
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Serial: 1
 
@@ -19,6 +19,7 @@ BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: rpm-build-xdg
 
 Requires: dbus-tools-gui
+Requires: lxqt-l10n
 
 Provides: razorqt = %version
 Obsoletes: razorqt < 0.7.0
@@ -41,6 +42,7 @@ sed -i 's,^Exec=.*$,Exec=LXQt,' xsession/lxqt.desktop.in
 %makeinstall_std
 
 %files
+%_man1dir/*
 %_bindir/*
 %_xdgconfigdir/*/*
 %_datadir/kdm/sessions/*.desktop
@@ -50,6 +52,10 @@ sed -i 's,^Exec=.*$,Exec=LXQt,' xsession/lxqt.desktop.in
 %_iconsdir/*/*/*/*
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 1:0.11.0-alt1
+- 0.11.0
+- R: lxqt-l10n for translations
+
 * Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 1:0.10.0-alt1
 - 0.10.0
 

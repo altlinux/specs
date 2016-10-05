@@ -1,5 +1,5 @@
 Name:    pcmanfm-qt
-Version: 0.10.0
+Version: 0.11.1
 Release: alt1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
@@ -10,10 +10,13 @@ Url:     http://lxqt.org
 Source0: %name-%version.tar
 Source1: %name.desktop
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel qt5-svg-devel
+BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: libXdmcp-devel
 BuildRequires: libfm-devel >= 1.2.0
+BuildRequires: libfm-qt-devel >= 0.11.0
+BuildRequires: liblxqt-devel
 BuildRequires: libmenu-cache-devel
 
 Requires: menu-cache
@@ -21,35 +24,16 @@ Requires: menu-cache
 %description
 PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 
-%package -n libfm-qt
-Summary: Shared library for %name
-Group: System/Libraries
-
-%description -n libfm-qt
-LibFM-Qt is a companion library providing components to build desktop
-file managers.
-
-%package -n libfm-qt-devel
-Summary: Development headers for libfm-qt
-Group: Development/C++
-
-%description -n libfm-qt-devel
-LibFM-Qt is a companion library providing components to build desktop
-file managers.
-
-This package provides the development files for libfm-qt.
-
 %prep
 %setup
 
 %build
-%cmake_insource
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
 %make_build
 
 %install
 %makeinstall_std
 %find_lang --with-qt %name
-%find_lang --with-qt libfm-qt
 install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files -f %name.lang
@@ -57,15 +41,11 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*.desktop
 %_man1dir/*
 
-%files -n libfm-qt -f libfm-qt.lang
-%_libdir/libfm-qt5.so.*
-
-%files -n libfm-qt-devel
-%_includedir/libfm-qt
-%_libdir/libfm-qt5.so
-%_pkgconfigdir/libfm-qt5.pc
-
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.11.1-alt1
+- 0.11.1
+  + libfm-qt is now a separate package
+
 * Mon Nov 02 2015 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
 - 0.10.0
 

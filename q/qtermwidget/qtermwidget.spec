@@ -1,5 +1,5 @@
 Name: qtermwidget
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: unicode-enabled, embeddable QT4 terminal widget
@@ -12,7 +12,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Mar 07 2012
 # optimized out: cmake-modules fontconfig libqt4-core libqt4-designer libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libstdc++-devel
-BuildRequires: cmake gcc-c++ phonon-devel qt4-designer
+BuildRequires: cmake gcc-c++ phonon-devel qt5-base-devel git-core
 
 %description
 QTermWidget is an opensource project based on KDE4 Konsole
@@ -69,11 +69,11 @@ This package contains the development headers for the library.
 %setup
 
 %build
-%cmake
-%make_build -C BUILD
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
+%make_build
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std
 
 %files
 
@@ -92,6 +92,9 @@ This package contains the development headers for the library.
 %_datadir/cmake/*/
 
 %changelog
+* Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Fri Nov 14 2014 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1
 - 0.6.0 (see also #30468)
 - updated Url:

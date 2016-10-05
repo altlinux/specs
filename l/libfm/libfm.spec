@@ -1,8 +1,8 @@
 %define soname 4
 
 Name: libfm
-Version: 1.2.3
-Release: alt3
+Version: 1.2.4
+Release: alt1
 
 Summary: Core library of PCManFM file manager
 License: GPL
@@ -20,7 +20,7 @@ BuildRequires: libexif-devel
 BuildRequires: libxslt-devel
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: libqt4-devel
+BuildRequires: qt5-base-devel
 BuildRequires: libqtxdg-devel
 
 %description
@@ -106,6 +106,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_man1dir/lxshortcut.1*
 
 %changelog
+* Tue Oct 04 2016 Michael Shigorin <mike@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Mon Mar 02 2015 Michael Shigorin <mike@altlinux.org> 1.2.3-alt3
 - added missing Requires: wm-common-freedesktop to %name%soname
   as per http://www.altlinux.org/Window_Manager_Policy

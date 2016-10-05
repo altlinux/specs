@@ -1,5 +1,5 @@
 Name: lximage-qt
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Image viewer and screenshot tool
@@ -10,10 +10,13 @@ Url: http://lxqt.org
 Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
+BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
+BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: libfm-devel libfm-qt-devel
-BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel glib2-devel
+BuildRequires: libmenu-cache-devel >= 0.4.0
+BuildRequires: glib2-devel libpcre-devel
 
 %description
 %summary
@@ -22,7 +25,7 @@ BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel glib2-devel
 %setup
 
 %build
-%cmake_insource
+%cmake_insource -DPULL_TRANSLATIONS=OFF -DUPDATE_TRANSLATIONS=OFF
 %make_build
 
 %install
@@ -30,12 +33,14 @@ BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel glib2-devel
 
 %files
 %_bindir/*
-%_datadir/%name/
 %_iconsdir/*/*/*/*
 %_desktopdir/*.desktop
 %doc AUTHORS
 
 %changelog
+* Mon Oct 03 2016 Michael Shigorin <mike@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Tue Nov 03 2015 Michael Shigorin <mike@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
