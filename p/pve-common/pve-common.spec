@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: Proxmox VE base library
 Version: 4.0.74
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -25,6 +25,8 @@ BuildRequires: perl(Clone.pm)
 BuildRequires: perl(File/Basename.pm)
 BuildRequires: perl(Linux/Inotify2.pm)
 BuildRequires: perl(JSON.pm)
+# alt regressive tests
+BuildRequires: perl(TAP/Harness.pm)
 
 %description
 This package contains the base library used by other Proxmox VE components.
@@ -36,10 +38,19 @@ This package contains the base library used by other Proxmox VE components.
 cd src
 %make DESTDIR=%buildroot install
 
+%check
+# upstream tests
+make -C test check
+# etcnet tests
+./runtests.pl
+
 %files
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu Oct 06 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.74-alt4
+- added regression tests
+
 * Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.74-alt3
 - OVS fixes for ovsbond
 
