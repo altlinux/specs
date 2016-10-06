@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.20
+%define ver_major 3.22
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -59,7 +59,7 @@ BuildRequires: libXext-devel libXrandr-devel
 BuildRequires: libupower-devel
 # since 3.18
 BuildRequires: libpolkit-devel libgnome-bluetooth-devel libxcb-devel
-BuildRequires: libibus-devel libxkbcommon-x11-devel
+BuildRequires: libibus-devel libxkbcommon-x11-devel libXi-devel
 BuildRequires: libxkbfile-devel xkeyboard-config-devel
 
 %description
@@ -129,6 +129,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Thu Oct 06 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Mon Jul 25 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.2-alt1
 - 3.20.2
 
