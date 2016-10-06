@@ -1,6 +1,6 @@
 Name: 	  laptop-mode-tools
 Version:  1.70
-Release:  alt2
+Release:  alt3
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL
@@ -13,7 +13,7 @@ Source:   %name-%version.tar
 Patch1:   support-condrestart-in-initscript.patch
 
 BuildArch: noarch
-%filter_from_requires /^\/lib\/udev\/hotplug\.functions/d;/^systemd$/d
+%filter_from_requires \,^/lib/udev/hotplug\.functions,d;\,^systemd$,d
 
 %description
 Laptop mode is a Linux kernel feature that allows your laptop to save
@@ -59,6 +59,9 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install ./i
 %_man8dir/*
 
 %changelog
+* Thu Oct  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.70-alt3
+- (.spec, non-visible) make %%filter_from_requires more readable
+
 * Thu Oct 06 2016 Andrey Cherepanov <cas@altlinux.org> 1.70-alt2
 - Fix project homepage (ALT #32576)
 - Support condrestart and condstop in initscript (ALT #32577)
