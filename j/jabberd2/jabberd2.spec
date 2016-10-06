@@ -14,14 +14,14 @@
 %def_enable pipe
 %def_enable anon
 %def_enable fs
-%def_disable websocket # TODO
+%def_enable websocket
 %def_disable oracle # libs not present in sisyphus
 %def_disable tests
 
-%define git c4e9b0d
-%define majver 2.3
-%define minver 3
-%define rel alt2
+%define git 0a0fe40
+%define majver 2.4
+%define minver 0
+%define rel alt1
 
 Name: jabberd2
 Version: %majver.%minver
@@ -34,13 +34,13 @@ Release: %rel.git.%git
 Summary: Jabber IM server 2nd version
 Group: System/Servers
 License: %gpl2plus
-Url: http://jabberd2.xiaoka.com/
+Url: http://jabberd2.org/
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 %ifndef git
-Source: http://ftp.xiaoka.com/jabberd2/releases/jabberd-%version.tar.bz2
+Source: https://github.com/jabberd2/jabberd2/releases/download/jabberd-%version/jabberd-%version.tar.gz
 %else
-Source: jabberd-%majver-%git.tar.bz2
+Source: jabberd-%majver-%git.tar
 %endif
 Source1: jabberd-alt-configdir.tar
 Source2: jabberd.cfg
@@ -53,9 +53,7 @@ Patch1: jabberd2-autoconf.patch
 Patch2: jabberd2-alt-ldapvcard-fix.patch
 Patch3: jabberd2-alt-ldapvcard-jpeg-fix.patch
 Patch4: jabberd2-alt-sysconf.patch
-Patch5: jabberd2-alt-websocket-fix.patch
-Patch6:	jabberd2-alt-systemddir.patch
-Patch7: jabberd2-alt-blowfish-no-asm.patch
+Patch5:	jabberd2-alt-systemddir.patch
 
 BuildRequires(pre): rpm-build-licenses jabber-common libidn-devel >= 0.3.0 libudns-devel
 # Automatically added by buildreq on Mon Oct 22 2007
@@ -98,6 +96,10 @@ BuildRequires: libldap-devel >= 2.1.0
 
 %if_enabled pam
 BuildRequires: libpam-devel
+%endif
+
+%if_enabled websocket
+BuildRequires: libhttp-parser-devel
 %endif
 
 %if_enabled tests
@@ -258,12 +260,8 @@ Oracle auth and storage module for Jabberd.
 %patch3 -p2
 #set db drivers by default
 %patch4 -p1
-#fix websocket
-%patch5 -p2
 #fix systemd dir location
-%patch6 -p2
-# fix crypt_blowfish
-%patch7 -p2
+%patch5 -p2
 
 %build
 %autoreconf
@@ -491,8 +489,16 @@ install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Thu Oct 06 2016 L.A. Kostis <lakostis@altlinux.ru> 2.4.0-alt1.git.0a0fe40
+- Updated to 2.4.0 GIT 0a0fe40 (closes #32451).
+- Enabled WebSocket over SSL (wss://).
+- Removed obsoleted patches (fixed by upstream):
+  + jabberd2-alt-blowfish-no-asm.patch
+  + jabberd2-alt-websocket-fix.patch
+
 * Fri Aug 28 2015 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt2.git.c4e9b0d
-- Fix crypt_blowfish compile on x86 (disable asm code due missing x86.S).
+- Fix crypt_blowfish compile on x86 (disable asm code
+  due missing x86.S).
 
 * Fri Aug 28 2015 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt1.git.c4e9b0d
 - GIT snapshot c4e9b0d (mostly for Logjam attack fix).
