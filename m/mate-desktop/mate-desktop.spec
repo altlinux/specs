@@ -1,16 +1,17 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libstartup-notification-1.0) pkgconfig(x11) pkgconfig(xrandr)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel libgtk+2-gir-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+%define fedora 24
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-desktop
-%define version 1.12.1
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit a6a0a5879533b0915901ab69703eaf327bbca846 }
@@ -23,11 +24,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/g
 Summary:        Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:           mate-desktop
 License:        GPLv2+ and LGPLv2+ and MIT
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
-Release:        alt2_1.1
+Release:        alt1_1
 %else
-Release:        alt2_1.1
+Release:        alt1_1
 %endif
 URL:            http://mate-desktop.org
 
@@ -37,25 +38,43 @@ URL:            http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
-Source1:        mate-fedora-f23.gschema.override
+# fedora specific settings
+Source2:        mate-fedora-f23.gschema.override
+Source3:        mate-fedora-f24.gschema.override
+Source4:        mate-fedora-f25.gschema.override
+Source5:        mate-rhel.gschema.override
+Source6:        mate-mimeapps.list
 
 BuildRequires:  libdconf-devel
 BuildRequires:  desktop-file-utils
+BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  libstartup-notification-devel
-BuildRequires:  libunique-devel
+BuildRequires:  libunique3-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  itstool
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  libcairo-gobject-devel
 
-Requires: lib%{name} = %{version}-%{release}
+Requires: lib%{name} = %{version}
 Requires: altlinux-freedesktop-menu-common
-Requires: pygtk2
+Requires: python-module-pygtk python-module-pygtk-demo
 Requires: xdg-user-dirs-gtk
 Requires: mate-control-center-filesystem
 Requires: mate-panel
 Requires: mate-notification-daemon
 Requires: mate-user-guide
 
+%if 0%{?fedora}
+# Need this to pull in the right imsettings in groupinstalls
+# See https://bugzilla.redhat.com/show_bug.cgi?id=1349743
+Requires:  imsettings-mate
+%endif
+
+%if 0%{?fedora}
+%endif
+
+%if 0%{?fedora}
 Obsoletes: libmate
 Obsoletes: libmate-devel
 Obsoletes: libmatecanvas
@@ -88,13 +107,15 @@ Obsoletes: mate-character-map
 Obsoletes: mate-character-map-devel 
 Obsoletes: libmatewnck
 Obsoletes: libmatewnck-devel
+%endif
+
+%if 0%{?fedora} || 0%{?rhel}
 Obsoletes: mate-dialogs
-#Obsoletes: mate-user-share
+%endif
 Source44: import.info
 Patch33: mate-desktop-1.12.1-alt-font-settings.patch
 Patch34: mate-desktop-1.12.1-alt-default_background_path.patch
 Requires:      altlinux-mime-defaults > 0.31
-
 
 %description
 The mate-desktop package contains an internal library
@@ -114,29 +135,33 @@ Shared libraries for libmate-desktop
 Group: Development/C
 Summary:    Libraries and headers for libmate-desktop
 License:    LGPLv2+
-Requires:   libmate-desktop = %{version}-%{release}
+Requires:   libmate-desktop = %{version}
 
 %description devel
 Libraries and header files for the MATE-internal private library
 libmatedesktop.
 
+
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
+%if 0%{?rel_build}
 # for releases
 %patch33 -p0
 %patch34 -p0
-
-%build
+#NOCONFIGURE=1 ./autogen.sh
+%else
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
+%endif
+
+%build
 %configure                                                 \
-     --enable-desktop-docs                                 \
+     --enable-gtk-doc                                      \
      --disable-schemas-compile                             \
-     --with-gtk=2.0                                        \
+     --with-gtk=3.0                                        \
      --with-x                                              \
      --disable-static                                      \
-     --enable-unique                                       \
      --enable-mpaste                                       \
      --with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"      \
      --enable-gtk-doc-html                                 \
@@ -161,20 +186,41 @@ desktop-file-install                                         \
         --dir=%{buildroot}%{_datadir}/applications           \
 %{buildroot}%{_datadir}/applications/mate-color-select.desktop
 
-#install -D -m 0644 %SOURCE1 %{buildroot}%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+%if 0%{?fedora} >= 23
+#install -D -m 0644 %SOURCE2 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
+%endif
+
+%if 0%{?fedora} >= 24
+#install -D -m 0644 %SOURCE3 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
+%endif
+
+%if 0%{?fedora} >= 25
+#install -D -m 0644 %SOURCE4 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
+%endif
+
+%if 0%{?rhel}
+install -D -m 0644 %SOURCE5 %{buildroot}%{_datadir}/glib-2.0/schemas/10_mate-rhel.gschema.override
+%endif
 
 mkdir -p %{buildroot}%{_datadir}/applications
-
-# remove needless gsettings convert file
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-desktop.convert
+install -m 644 %SOURCE6 %{buildroot}/%{_datadir}/applications/mate-mimeapps.list
 
 %find_lang %{name} --with-gnome --all-name
 
+# touching all ghosts; hack for rpm 4.0.4
+for rpm_404_ghost in %{_sysconfdir}/X11/xorg.conf.d/99-synaptics-mate.conf
+do
+    mkdir -p %buildroot`dirname "$rpm_404_ghost"`
+    touch %buildroot"$rpm_404_ghost"
+done
+
 mkdir -p %buildroot%{_datadir}/mate-about
 
+
+ 
 mkdir -p %buildroot%{_datadir}/X11/xorg.conf.d/
 ln -sf %{_datadir}/X11/xorg.conf.d/50-synaptics.conf %buildroot%{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
-
+ 
 %package synaptics
 Group: Graphical desktop/MATE
 Summary:    Synaptics touchpad support for mate-desktop
@@ -193,7 +239,6 @@ that is a hack around this problem.
 %{_datadir}/X11/xorg.conf.d/99-synaptics-mate.conf
 
 
-
 %files
 %doc AUTHORS COPYING COPYING.LIB NEWS README
 %{_bindir}/mate-about
@@ -202,9 +247,18 @@ that is a hack around this problem.
 %{_datadir}/applications/mate-about.desktop
 %{_datadir}/applications/mate-color-select.desktop
 %{_datadir}/mate-about
-#%{_datadir}/glib-2.0/schemas/mate-fedora.gschema.override
+%if 0%{?fedora}
+#%{_datadir}/glib-2.0/schemas/10_mate-fedora.gschema.override
+%endif
+%if 0%{?rhel}
+%{_datadir}/glib-2.0/schemas/10_mate-rhel.gschema.override
+%endif
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-symbolic.svg
+%{_datadir}/icons/hicolor/scalable/apps/mate.svg
+%if 0%{?fedora}
+%ghost %{_sysconfdir}/X11/xorg.conf.d/99-synaptics-mate.conf
+%endif
 %{_mandir}/man1/*
 
 %files -n libmate-desktop -f %{name}.lang
@@ -221,6 +275,9 @@ that is a hack around this problem.
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.12.1-alt2_1.1
 - (NMU) Rebuild for previously missed deps with rpm-4.0.4-alt100.93
   (mate-desktop-synaptics on /usr/share/X11/xorg.conf.d/50-synaptics.conf).

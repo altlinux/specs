@@ -1,19 +1,19 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xsltproc libXext-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrender)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xsltproc libXext-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(ice) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xau) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires(pre): browser-plugins-npapi-devel
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
-%define fedora 23
+%define fedora 24
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-session-manager
-%define version 1.12.1
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit af58c2ecd98fe68360635f0e566b81e4b8c7be4d}
@@ -26,7 +26,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 Name:           mate-session
 Summary:        MATE Desktop session manager
 License:        GPLv2+
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
 Release:        alt1_1
 %else
@@ -42,16 +42,15 @@ URL:            http://mate-desktop.org
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  gtk2-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libSM-devel
 BuildRequires:  mate-common
-BuildRequires:  mate-desktop-devel
 BuildRequires:  libpangox-compat-devel
-BuildRequires:  systemd-devel
+BuildRequires: libsystemd-devel libudev-devel
 BuildRequires:  xmlto
 BuildRequires:  libXtst-devel
 BuildRequires:  xorg-xtrans-devel
-BuildRequires:  tcp_wrappers-devel
+BuildRequires:  libwrap-devel
 
 # Needed for mate-settings-daemon
 Requires: mate-control-center
@@ -59,7 +58,8 @@ Requires: mate-control-center
 Requires: mate-polkit
 # and we want good defaults
 Requires: polkit
-Requires: icon-theme-hicolor
+# for gsettings shemas
+Requires: libmate-desktop
 Source44: import.info
 Patch33: mate-session-manager-cflags.patch
 Provides: mate-session-manager = %version-%release
@@ -88,7 +88,6 @@ NOCONFIGURE=1 ./autogen.sh
 %configure                    \
     --disable-static          \
     --enable-ipv6             \
-    --with-gtk=2.0            \
     --with-default-wm=marco   \
     --with-systemd            \
     --disable-upower          \
@@ -105,9 +104,6 @@ desktop-file-install                               \
         --delete-original                          \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-session-properties.desktop
-
-# remove needless gsettings convert file
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-session.convert
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -168,7 +164,7 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-session-properties.svg
 %{_datadir}/glib-2.0/schemas/org.mate.session.gschema.xml
 %{_datadir}/xsessions/mate.desktop
-%if 0%{?fedora} > 22
+%if 0%{?fedora} > 22 || 0%{?rhel}
 %{_docdir}/mate-session-manager/dbus/mate-session.html
 %endif
 
@@ -181,6 +177,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new fc release
 

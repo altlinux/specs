@@ -1,17 +1,17 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(appindicator-0.1) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(freetype2) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmarco-private) pkgconfig(libmate-menu) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(librsvg-2.0) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(mate-settings-daemon) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(xcursor) pkgconfig(xi) xorg-kbproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database imake libX11-devel libXt-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(libxklavier) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(xcursor) pkgconfig(xi) xorg-cf-files xorg-kbproto-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-control-center
-%define version 1.12.1
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 922d0e0219b1bedcece8624e4b5fd7e15e7a9bd5}
@@ -22,11 +22,11 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-control-center
-Version:       %{branch}.1
+Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_2
+Release:       alt1_1
 %else
-#Release:       0.6%{?git_rel}%{?dist}
+Release:       alt1_1
 %endif
 Summary:       MATE Desktop control-center
 License:       LGPLv2+ and GPLv2+
@@ -38,12 +38,74 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
+#font-preview
+Patch6:        mate-control-center_fv-import-SushiFontLoader-and-SushiFontWidget.patch
+Patch7:        mate-control-center_fv-thumbnailer-use-SushiFontLoader.patch
+Patch8:        mate-control-center_fv-port-to-SushiFontWidget-and-GtkApplication-1.13.patch
+Patch9:        mate-control-center_fv-remove-ftstream-vfs.patch
+Patch10:       mate-control-center_fv-import-GdMainToolbar.patch
+Patch11:       mate-control-center_fv-use-new-style-interface-1.13.patch
+Patch12:       mate-control-center_fv-add-FontViewModel.patch
+Patch13:       mate-control-center_fv-thumbnailer-respect-the-passed-in-size-argument.patch
+Patch14:       mate-control-center_fv-first-pass-at-integrating-an-overview-mode.patch
+Patch15:       mate-control-center_fv-thumbnailer-port-to-cairo-rendering.patch
+Patch16:       mate-control-center_fv-add-an-application-menu.patch
+Patch17:       mate-control-center_fv-adjust-desktop-file.patch
+Patch18:       mate-control-center_fv-make-sure-rendered-text-is-black-on-white.patch
+Patch19:       mate-control-center_fv-font-widget-sync-from-Sushi.patch
+Patch20:       mate-control-center_fv-font-model-fallback-icon-if-we-fail-thumbnailing-the-font-file.patch
+Patch21:       mate-control-center_fv-Safely-init-FontConfig-once-for-the-whole-app.patch
+Patch22:       mate-control-center_fv-do-not-recreate-different-SushiFontWidget-every-time.patch
+Patch23:       mate-control-center_fv-font-widget-another-sync-from-Sushi.patch
+Patch24:       mate-control-center_fv-main-toolbar-sync-with-Documents.patch
+Patch25:       mate-control-center_fv-font-model-install-file-monitors-on-fontconfig-font-directories.patch
+Patch26:       mate-control-center_fv-refresh-Install-button-appearance-when-model-changes.patch
+Patch27:       mate-control-center_fv-font-model-add-API-to-get-an-iter-from-a-FT_Face.patch
+Patch28:       mate-control-center_fv-match-the-font-face-when-getting-an-iter-to-update-the-button.patch
+Patch29:       mate-control-center_fv-font-model-set-a-fallback-icon-if-we-fail-to-read-the-thumbnail.patch
+Patch30:       mate-control-center_fv-main-toolbar-another-sync-with-Documents.patch
+Patch31:       mate-control-center_fv-do-not-hardcode-fonts-hone-dir-as-target-install-directory.patch
+Patch32:       mate-control-center_fv-font-model-do-not-use-sync-g_file_query_info.patch
+Patch33:       mate-control-center_fv-font-model-use-g_io_scheduler_push_job-to-refactor-thumbnailing-code.patch
+Patch34:       mate-control-center_fv-font-model-use-g_utf8_collation_key-to-sort-the-model.patch
+Patch35:       mate-control-center_fv-font-widget-one-more-sync-from-Sushi.patch
+Patch36:       mate-control-center_fv-font-model-cache-the-fallback-icon-in-the-private-struct.patch
+Patch37:       mate-control-center_fv-font-model-cache-tree-iters-when-setting-values-on-the-model.patch
+Patch38:       mate-control-center_fv-font-model-use-a-single-IO-scheduler-job-to-load-thumbnail-images.patch
+Patch39:       mate-control-center_fv-font-model-load-font-names-asynchronously.patch
+Patch40:       mate-control-center_fv-set-an-empty-title-on-the-info-dialog.patch
+Patch41:       mate-control-center_fv-font-model-cancel-previous-loading-when-refreshing-font-list.patch
+Patch42:       mate-control-center_fv-font-model-actually-cancel-the-thread-when-rebuilding-font-list.patch
+Patch43:       mate-control-center_fv-font-model-emit-config-changed-when-reloading-the-font-list.patch
+Patch44:       mate-control-center_fv-font-view-show-an-error-dialog-when-unable-to-load-a-font.patch
+Patch45:       mate-control-center_fv-next-sync-from-Sushi.patch
+Patch46:       mate-control-center_fv-do-not-crash-when-opening-a-non-existing-file.patch
+Patch47:       mate-control-center_fv-font-view-return-early-if-we-have-a-model-already.patch
+Patch48:       mate-control-center_fv-thumnailer-do-not-paint-a-white-background-under-thumbnails.patch
+Patch49:       mate-control-center_fv-do-not-call-g_type_init.patch
+Patch50:       mate-control-center_fv-font-widget-next-2-sync-from-sushi.patch
+Patch51:       mate-control-center_fv-font-widget-next-3-sync-from-sushi.patch
+Patch52:       mate-control-center_fv-font-model-drop-gtk_icon_info_free.patch
+Patch53:       mate-control-center_fv-font-view-add-a-title-to-the-info-dialog.patch
+Patch54:       mate-control-center_fv-fix-an-uninitialized-variable.patch
+Patch55:       mate-control-center_fv-deprecated-gtk_misc_set_alignment-and-margin-left-right-1.13.patch
+Patch56:       mate-control-center_fv-replace-deprecated-method-with-main-context-invocation.patch
+Patch57:       mate-control-center_fv-ported-thumbnailing-io-scheduler-job-to-g_task_run_in_thread.patch
+Patch58:       mate-control-center_fv-replace-io-scheduler-with-g_task_run_in_thread-in-load_font-infos.patch
+Patch59:       mate-control-center_fv-sushi-font-loader-sync-from-sushi.patch
+Patch60:       mate-control-center_fv-gd-toolbar-sync-to-latest-libgd-suitable-for-mate.patch
+Patch61:       mate-control-center_add-style-class-font-viewer-at-top-level.patch
+
+# not used
+#Patch9:        mate-control-center_fv-fix-ununsed-variables-GCC-warnings.patch
+#Patch12:       mate-control-center_fv-fix-deprecated-gtk_scrolled_window_add_with_viewport.patch
+
 BuildRequires: libdconf-devel
 BuildRequires: desktop-file-utils
-BuildRequires: gtk2-devel
-BuildRequires: libcanberra-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
 BuildRequires: libmatekbd-devel
-BuildRequires: librsvg-devel
+BuildRequires: librsvg-devel librsvg-gir-devel
 BuildRequires: libSM-devel
 BuildRequires: libXScrnSaver-devel
 BuildRequires: libXxf86misc-devel
@@ -52,17 +114,17 @@ BuildRequires: mate-desktop-devel
 BuildRequires: mate-menus-devel
 BuildRequires: mate-settings-daemon-devel
 BuildRequires: mate-window-manager-devel
-BuildRequires: libunique-devel
+BuildRequires: libunique3-devel
 
 Requires: gsettings-desktop-schemas
 # rhbz (#1234438)
 Requires: mate-settings-daemon
 # keyring support
 Requires: gnome-keyring
-Provides: %{name}-filesystem%{?_isa} = %{version}-%{release}
+Provides: %{name}-filesystem%{?_isa} = %{version}
 Source44: import.info
-Patch33: gnome-control-center-2.22.1-alt-background-location.patch
-Patch34: gnome-control-center-2.28.0-passwd.patch
+Patch62: gnome-control-center-2.22.1-alt-background-location.patch
+Patch63: gnome-control-center-2.28.0-passwd.patch
 
 
 %description 
@@ -84,7 +146,7 @@ utilities.
 %package devel
 Group: Development/C
 Summary:      Development files for mate-settings-daemon
-Requires:       %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description devel
 Development files for mate-control-center
@@ -93,22 +155,82 @@ Development files for mate-control-center
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
+%patch6 -p1 -b .import-SushiFontLoader-and-SushiFontWidget
+%patch7 -p1 -b .thumbnailer-use-SushiFontLoader
+%patch8 -p1 -b .port-to-SushiFontWidget-and-GtkApplication
+%patch9 -p1 -b .remove-ftstream-vfs
+%patch10 -p1 -b .import-GdMainToolbar
+%patch11 -p1 -b .use-new-style-interface
+%patch12 -p1 -b .add-FontViewModel
+%patch13 -p1 -b .thumbnailer-respect
+%patch14 -p1 -b .first-pass-at-integrating-an-overview-mode
+%patch15 -p1 -b .thumbnailer-port-to-cairo-rendering
+%patch16 -p1 -b .add-an-application-menu
+%patch17 -p1 -b .adjust-desktop-file
+%patch18 -p1 -b .make-sure-rendered-text-is-black-on-white.patch
+%patch19 -p1 -b .font-widget-sync-from-Sushi.patch
+%patch20 -p1 -b .font-model-fallback-icon-if-we-fail-thumbnailing-the-font-file.patch
+%patch21 -p1 -b .Safely-init-FontConfig-once-for-the-whole-app.patch
+%patch22 -p1 -b .do-not-recreate-different-SushiFontWidget-every-time.patch
+%patch23 -p1 -b .font-widget-another-sync-from-Sushi.patch
+%patch24 -p1 -b .main-toolbar-sync-with-Documents.patch
+%patch25 -p1 -b .font-model-install-file-monitors-on-fontconfig-font-directories.patch
+%patch26 -p1 -b .refresh-Install-button-appearance-when-model-changes.patch
+%patch27 -p1 -b .font-model-add-API-to-get-an-iter-from-a-FT_Face.patch
+%patch28 -p1 -b .match-the-font-face-when-getting-an-iter-to-update-the-button.patch
+%patch29 -p1 -b .font-model-set-a-fallback-icon-if-we-fail-to-read-the-thumbnail.patch
+%patch30 -p1 -b .main-toolbar-another-sync-with-Documents.patch
+%patch31 -p1 -b .do-not-hardcode-fonts-hone-dir-as-target-install-directory
+%patch32 -p1 -b .font-model-do-not-use-sync-g_file_query_info
+%patch33 -p1 -b .font-model-use-g_io_scheduler_push_job-to-refactor-thumbnailing-code
+%patch34 -p1 -b .font-model-use-g_utf8_collation_key-to-sort-the-model
+%patch35 -p1 -b .font-widget-one-more-sync-from-Sushi
+%patch36 -p1 -b .font-model-cache-the-fallback-icon-in-the-private-struct
+%patch37 -p1 -b .font-model-cache-tree-iters-when-setting-values-on-the-model
+%patch38 -p1 -b .font-model-use-a-single-IO-scheduler-job-to-load-thumbnail-images
+%patch39 -p1 -b .font-model-load-font-names-asynchronously
+%patch40 -p1 -b .set-an-empty-title-on-the-info-dialog
+%patch41 -p1 -b .font-model-cancel-previous-loading-when-refreshing-font-list
+%patch42 -p1 -b .font-model-actually-cancel-the-thread-when-rebuilding-font-list
+%patch43 -p1 -b .font-model-emit-config-changed-when-reloading-the-font-list
+%patch44 -p1 -b .font-view-show-an-error-dialog-when-unable-to-load-a-font
+%patch45 -p1 -b .next-sync-from-Sushi
+%patch46 -p1 -b .do-not-crash-when-opening-a-non-existing-file
+%patch47 -p1 -b .font-view-return-early-if-we-have-a-model-already
+%patch48 -p1 -b .thumnailer-do-not-paint-a-white-background-under-thumbnails
+%patch49 -p1 -b .do-not-call-g_type_init
+%patch50 -p1 -b .font-widget-next-2-sync-from-sushi
+%patch51 -p1 -b .font-widget-next-3-sync-from-sushi
+%patch52 -p1 -b .font-model-drop-gtk_icon_info_free
+%patch53 -p1 -b .font-view-add-a-title-to-the-info-dialog
+%patch54 -p1 -b .fix-an-uninitialized-variable
+%patch55 -p1 -b .deprecated-gtk_misc_set_alignment-and-margin-left-right
+%patch56 -p1 -b .replace-deprecated-method-with-main-context-invocation
+%patch57 -p1 -b .ported-thumbnailing-io-scheduler-job-to-g_task_run_in_thread
+%patch58 -p1 -b .replace-io-scheduler-with-g_task_run_in_thread-in-load_font-infos
+%patch59 -p1 -b .sushi-font-loader-sync-from-sushi
+%patch60 -p1 -b .gd-toolbar-sync-to-latest-libgd-suitable-for-mate
+%patch61 -p1 -b .add-style-class-font-viewer
+# end fontviewer
+
+autoreconf -fi
+
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
 %else # 0%{?rel_build}
-# for snapshots
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
-%patch33 -p1
-%patch34 -p1
+%patch62 -p1
+%patch63 -p1
 
 %build
 autoreconf -fisv
 %configure                           \
            --disable-static          \
            --disable-schemas-compile \
-           --disable-update-mimedb
+           --disable-update-mimedb   \
+           --with-gtk=3.0
 
 # remove unused-direct-shlib-dependency
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
@@ -129,12 +251,6 @@ desktop-file-install                                \
 
 # delete mime cache
 rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
-
-# mate-preferences-categories.menu is back in mate-menus
-rm -f  %{buildroot}%{_sysconfdir}/xdg/menus/mate-preferences-categories.menu
-
-# remove needless gsettings convert file
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -174,6 +290,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-control-center.convert
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.16.0-alt1_1
+- update to mate 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.12.1-alt1_2
 - new version
 

@@ -1,17 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/update-mime-database libICE-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(pango) pkgconfig(unique-3.0) pkgconfig(xext) pkgconfig(xrender) xorg-xproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/update-mime-database libICE-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(pango) pkgconfig(unique-1.0) pkgconfig(xext) pkgconfig(xrender) xorg-xproto-devel
 # END SourceDeps(oneline)
-BuildRequires: chrpath
 %define _libexecdir %_prefix/libexec
 %define oldname caja
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name caja
-%define version 1.12.4
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -23,7 +22,7 @@ BuildRequires: chrpath
 
 Name:        mate-file-manager
 Summary:     File manager for MATE
-Version:     %{branch}.4
+Version:     %{branch}.0
 %if 0%{?rel_build}
 Release:     alt1_1
 %else
@@ -39,7 +38,8 @@ URL:         http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-Patch0:         caja_add-xfce-to-desktop-file.patch
+Patch0:      caja_add-xfce-to-desktop-file.patch
+Patch1:      caja_0033-do-not-show-property-browser-in-menu.patch
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
@@ -54,9 +54,9 @@ BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 BuildRequires:  libpangox-compat-devel
 BuildRequires:  libstartup-notification-devel
-BuildRequires:  libunique-devel
+BuildRequires:  libunique3-devel
 
-Requires:   gamin
+Requires: libgamin libgamin-fam
 Requires:   filesystem
 Requires:   altlinux-freedesktop-menu-common
 Requires:   gvfs
@@ -122,19 +122,25 @@ for developing caja extensions.
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
+# disable startup notification
+sed -i s/StartupNotify=true/StartupNotify=false/g data/caja.desktop.in.in
+sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-browser.desktop.in.in
+sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-computer.desktop.in.in
+sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-folder-handler.desktop.in.in
+sed -i s/StartupNotify=true/StartupNotify=false/g data/caja-home.desktop.in.in
+
 %patch0 -p1 -b .add-xfce-to-desktop-file
+%patch1 -p1 -b .0033
 
 %if 0%{?rel_build}
 %patch33 -p1
 %patch35 -p1
 #NOCONFIGURE=1 ./autogen.sh
 %else # 0%{?rel_build}
-# for snapshots
 # needed for git snapshots
 NOCONFIGURE=1 ./autogen.sh
 %endif # 0%{?rel_build}
 %patch34 -p1
-
 
 %build
 %configure \
@@ -142,7 +148,7 @@ NOCONFIGURE=1 ./autogen.sh
         --enable-unique \
         --disable-schemas-compile \
         --with-x \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --disable-update-mimedb
 
 #drop unneeded direct library deps with --as-needed
@@ -167,9 +173,6 @@ desktop-file-install                              \
     --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
 $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
-# remove needless gsettings convert file
-rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/caja.convert
-
 # Avoid prelink to mess with caja - rhbz (#1228874)
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/prelink.conf.d
 cat << EOF > ${RPM_BUILD_ROOT}%{_sysconfdir}/prelink.conf.d/caja.conf
@@ -183,10 +186,6 @@ cat << EOF > ${RPM_BUILD_ROOT}%{_sysconfdir}/prelink.conf.d/caja.conf
 EOF
 
 %find_lang %{oldname}
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
-	chrpath -d $i ||:
-done
 
 
 %files
@@ -221,6 +220,9 @@ done
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.4-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
