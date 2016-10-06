@@ -1,6 +1,6 @@
 
 Name: kde5-set
-Version: 5.5.2
+Version: 5.5.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -50,6 +50,8 @@ Group: Graphical desktop/KDE
 Provides: kde5-normal = %EVR kde5-default = %EVR
 Obsoletes: kde5-normal < %EVR kde5-default < %EVR
 #Requires: pam0_kwallet5
+Requires: gtk3-theme-breeze
+Requires: gtk2-theme-breeze
 Requires: kde5-small
 Requires: kde5-video-player
 Requires: kde5-audio-player
@@ -156,6 +158,9 @@ KDE image scanning support applications.
 %files -n kde5-scanning
 
 %changelog
+* Thu Oct 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.3-alt1
+- update requires
+
 * Wed Oct 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.5.2-alt1
 - update requires
 
