@@ -103,7 +103,7 @@
 %define with_loader_nvram "%_datadir/OVMF/OVMF_CODE.fd:%_datadir/OVMF/OVMF_VARS.fd:%_datadir/AAVMF/AAVMF_CODE.fd:%_datadir/AAVMF/AAVMF_VARS.fd"
 
 Name: libvirt
-Version: 2.1.0
+Version: 2.3.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -1053,6 +1053,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Oct 07 2016 Alexey Shabalin <shaba@altlinux.ru> 2.3.0-alt1
+- 2.3.0
+
 * Tue Aug 23 2016 Alexey Shabalin <shaba@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 - build with sanlock
