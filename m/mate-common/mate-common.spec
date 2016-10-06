@@ -2,30 +2,29 @@ Group: Development/Tools
 %define _libexecdir %_prefix/libexec
 Name:           mate-common
 Summary:        mate common build files
-Version:        1.12.0
+Version:        1.16.0
 Release:        alt1_1
 License:        GPLv3+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.11/mate-common-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.16/mate-common-%{version}.tar.xz
 BuildArch:      noarch
-BuildRequires:  automake autoconf
-Requires:       automake 
-Requires:       autoconf 
-Requires:       gettext 
+BuildRequires:  automake-common autoconf-common
+Requires:       automake-common 
+Requires:       autoconf-common 
+Requires: gettext gettext-tools gettext-tools-python 
 Requires:       intltool 
-Requires:       libtool 
-Requires:       gtk-doc 
+Requires:       libtool-common 
+Requires: libgio 
+Requires: gtk-doc gtk-doc-mkpdf 
 Requires:       itstool 
 Requires:       yelp-tools
 Source44: import.info
-Patch33: mate-common-1.3.0-alt-fix-libtool-not-found.patch
 
 %description
 binaries for building all MATE desktop sub components
 
 %prep
 %setup -q
-%patch33 -p1
 
 %build
 %configure
@@ -44,6 +43,9 @@ make %{?_smp_mflags} V=1
 %{_mandir}/man1/*
 
 %changelog
+* Thu Oct 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
 - new fc release
 
