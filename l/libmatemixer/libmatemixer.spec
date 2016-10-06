@@ -1,16 +1,16 @@
 Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(alsa) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name libmatemixer
-%define version 1.12.1
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit ee0a62c8759040d84055425954de1f860bac8652}
@@ -22,7 +22,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(alsa) pkgco
 
 Name:        libmatemixer
 Summary:     Mixer library for MATE desktop
-Version:     %{branch}.1
+Version:     %{branch}.0
 %if 0%{?rel_build}
 Release:     alt1_1
 %else
@@ -51,7 +51,7 @@ available in the PulseAudio, ALSA and OSS sound systems.
 %package devel
 Group: Graphical desktop/MATE
 Summary:  Development libraries for libmatemixer
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}
 
 %description devel
 Development libraries for libmatemixer
@@ -101,6 +101,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Oct 06 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- new fc release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new version
 
