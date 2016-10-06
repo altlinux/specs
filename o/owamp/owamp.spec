@@ -1,7 +1,7 @@
 Name: owamp
 Summary: one-way delay tester
 Version: 3.5.0
-Release: alt1
+Release: alt2
 License: Apache License v2.0
 Group: Networking/Other
 URL: http://e2epi.internet2.edu/owamp/
@@ -33,6 +33,10 @@ Summary: one-way delay tester client
 Group: Networking/Other
 # Needed for owping_conn_opts of owping(1), owfetch(1), owup(1); powstream(1):
 Requires: I2util-tools
+# Running ntpds (with "synchronized" configuration) are needed for reasonable operation
+# on both ends: owamp-server and owamp-client.
+# TODO: It also prefers STA_NANO (which our ntpds seem not to be setting...)
+Requires: ntp-server
 %description client
 owamp command line utilities for performing owamp measurements with an owamp
 server.
@@ -44,6 +48,10 @@ Group: Networking/Other
 Requires: I2util-tools
 # Requires the Debian shell command/function: log_daemon_msg:
 Requires: lsb-init >= 4.0-alt4
+# Running ntpds (with "synchronized" configuration) are needed for reasonable operation
+# on both ends: owamp-server and owamp-client.
+# TODO: It also prefers STA_NANO (which our ntpds seem not to be setting...)
+Requires: ntp-server
 %description server
 owamp server
 
@@ -165,6 +173,11 @@ fi
 #%{_includedir}/owamp/*
 
 %changelog
+* Thu Oct  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt2
+- Running ntpds (with "synchronized" configuration) are needed for
+  reasonable operation on both ends: owamp-server and owamp-client.
+  TODO: OWAMP also prefers STA_NANO (which our ntpds seem not to be setting...)
+
 * Fri Sep 23 2016 Ivan Zakharyaschev <imz@altlinux.org> 3.5.0-alt1
 - Initial build for ALT Sisyphus
 - RFC3550 jitter calculations for owping
