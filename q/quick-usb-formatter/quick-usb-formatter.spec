@@ -2,7 +2,7 @@
 
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: A small KDE4 application to format usb sticks and devices
@@ -51,6 +51,9 @@ mv %buildroot/%_kde4_bindir/* %buildroot/%_bindir/
 
 
 %changelog
+* Thu Oct 06 2016 Sergey V Turchin <zerg@altlinux.org> 0.6-alt3
+- update code from master branch
+
 * Fri Jun 10 2016 Anton Farygin <rider@altlinux.ru> 0.6-alt2
 - adapted for dostfstools-4.0
 
