@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 5.8.0
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Provides: kde5-breeze-dark-gtk = %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-conf-update.patch
 
 # Automatically added by buildreq on Wed Oct 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libqt5-core libstdc++-devel perl python-base python-modules python3 python3-base rpm-build-python3
@@ -35,6 +36,7 @@ Provides: gtk3-theme-breeze = %version-%release
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -51,6 +53,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Thu Oct 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt3
+- fix update GTK settings
+
 * Wed Oct 05 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2
 - fix gtk3 theme
 
