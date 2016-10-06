@@ -1,15 +1,16 @@
 Name: 	  laptop-mode-tools
 Version:  1.70
-Release:  alt1
+Release:  alt2
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL
 Group:    System/Base
-URL:      http://www.samwel.tk/laptop_mode
+URL:      http://rickysarraf.github.io/laptop-mode-tools/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
 # VCS:    https://github.com/rickysarraf/laptop-mode-tools
+Patch1:   support-condrestart-in-initscript.patch
 
 BuildArch: noarch
 %filter_from_requires /^\/lib\/udev\/hotplug\.functions/d;/^systemd$/d
@@ -25,6 +26,7 @@ various other power savings.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install ./install.sh
@@ -57,6 +59,10 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install ./i
 %_man8dir/*
 
 %changelog
+* Thu Oct 06 2016 Andrey Cherepanov <cas@altlinux.org> 1.70-alt2
+- Fix project homepage (ALT #32576)
+- Support condrestart and condstop in initscript (ALT #32577)
+
 * Wed Oct 05 2016 Andrey Cherepanov <cas@altlinux.org> 1.70-alt1
 - New version 1.70
 - Remove systemd requirement
