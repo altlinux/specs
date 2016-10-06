@@ -1,6 +1,6 @@
 Name: 	  laptop-mode-tools
 Version:  1.70
-Release:  alt3
+Release:  alt4
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL
@@ -51,14 +51,16 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install ./i
 %_sysconfdir/apm/event.d/*
 %_sysconfdir/power/scripts.d/*
 %_sysconfdir/power/event.d/*
-%_datadir/laptop-mode-tools/modules/*
-%_datadir/laptop-mode-tools/module-helpers/*
+%_datadir/laptop-mode-tools
 %_libexecdir/pm-utils/sleep.d/*
 %_libexecdir/tmpfiles.d/laptop-mode.conf
 %_datadir/polkit-1/actions/org.linux.lmt.gui.policy
 %_man8dir/*
 
 %changelog
+* Thu Oct  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.70-alt4
+- (.spec) do own %_datadir/laptop-mode-tools
+
 * Thu Oct  6 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.70-alt3
 - (.spec, non-visible) make %%filter_from_requires more readable
 
