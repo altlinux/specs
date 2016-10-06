@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt8
+Release: alt9
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,10 @@ fi ||:
 
 
 %changelog
+* Thu Oct 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.32-alt9
+- non-user-visible source code maintenance: reindent .scm where
+  spaces and tabs were mixed (no tabs left) for editability.
+
 * Tue Jun 28 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.32-alt8
 - Optimization: do not call the token backend that many times for
   generating a page (but only a few times).
