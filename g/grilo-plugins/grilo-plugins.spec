@@ -1,12 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 0.3
 
-%def_disable lua_factory
+%def_enable lua_factory
 
 Name: grilo-plugins
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -43,7 +43,7 @@ BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
-%{?_enable_lua_factory: BuildRequires: liblua-devel >= 5.3}
+%{?_enable_lua_factory:BuildRequires: lua5.3-devel >= 5.3}
 
 Requires: grilo-tools
 Requires: tracker
@@ -89,8 +89,16 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %files -f %name.lang
 %doc AUTHORS COPYING NEWS README
 %_libdir/grilo-%ver_major/*.so*
+%if_enabled lua_factory
+%dir %_datadir/%name/
+%_datadir/%name/grl-lua-factory/
+%endif
 
 %changelog
+* Thu Oct 06 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt2
+- updated to 0.3.3-8-gcaf6541
+- enbabled lua support
+
 * Sat Sep 10 2016 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
