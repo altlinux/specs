@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt8
+Release: alt9
 BuildArch: noarch
 
 %define theme %name
@@ -465,6 +465,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Oct 06 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt9
+- set Breeze GTK2/3 theme by default
+
 * Thu Sep 29 2016 Sergey V Turchin <zerg at altlinux dot org> 8.0.0-alt8
 - fix default gtk2 tooltip colors
 
