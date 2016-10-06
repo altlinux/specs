@@ -1,6 +1,6 @@
 Name: alsa-utils
-Version: 1.1.1
-Release: alt1.1
+Version: 1.1.2
+Release: alt1
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -95,6 +95,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Thu Oct 06 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.2-alt1
+- 1.1.2
+
 * Thu Jun 23 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.1-alt1.1
 - dropped alsa-bat subpackage: upstream renamed bat(1)
   which conflicted with existing bacula binary to alsabat(1)

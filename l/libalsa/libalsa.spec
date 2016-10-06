@@ -1,5 +1,5 @@
 Name: libalsa
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Epoch: 1
 
@@ -161,6 +161,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Thu Oct 06 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.2-alt1
+- 1.1.2
+
 * Mon Jun 20 2016 Michael Shigorin <mike@altlinux.org> 1:1.1.1-alt1
 - 1.1.1
 
