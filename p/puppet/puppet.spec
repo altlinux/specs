@@ -1,20 +1,36 @@
+%define confdir ext/redhat
 
 Name:    puppet
-Version: 2.7.21
-Release: alt2
+Version: 4.7.0
+Release: alt1
 
-Summary: System administration - Automated
+Summary: A network tool for managing many disparate systems
 Group:   System/Servers
-License: MIT
-Url:     https://puppetlabs.com/
+License: ASL 2.0
+URL:     https://puppetlabs.com/
 
 BuildArch: noarch
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source:  %name-%version.tar
+Patch:   %name-%version-%release.patch
+Source1: client.init
+Source2: server.init
+Source3: puppet.service
+Source4: puppetmaster.service
+Source5: puppet-nm-dispatcher
 
-#AutoReq: yes,noruby
-BuildRequires: rpm-build-ruby ruby-facter
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: ruby-em-http-request
+BuildRequires: ruby-eventmachine
+BuildRequires: ruby-facter
+BuildRequires: ruby-hashie
+BuildRequires: ruby-heredoc_unindent
+BuildRequires: ruby-hiera
+BuildRequires: ruby-pathspec
+BuildRequires: ruby-plist
+BuildRequires: ruby-rgen
+BuildRequires: ruby-safe_yaml
+BuildRequires: ruby-spec_helper
 
 %description
 Puppet lets you centrally manage every important aspect of your
@@ -23,17 +39,9 @@ all the separate elements normally aggregated in different files,
 like users, cron jobs, and hosts, along with obviously discrete
 elements like packages, services, and files.
 
-%package http_server-mongrel
-Summary: Mongrel HTTP server for Puppet
-Group: System/Servers
-PreReq: %name = %version-%release
-
-%description http_server-mongrel
-Mongrel HTTP server for Puppet.
-
-%package server
-Summary: Server for the puppet system management tool
-Group: System/Servers
+%package  server
+Summary:  Server for the puppet system management tool
+Group:    System/Servers
 Requires: %name = %version-%release
 
 %description server
@@ -41,105 +49,162 @@ Provides the central puppet server daemon which provides manifests
 to clients.  The server can also function as a certificate authority
 and file server.
 
-You may need to install appropriate %name-http_server-XXX.
-
 %prep
 %setup
 %patch -p1
+chmod +x ext/regexp_nodes/regexp_nodes.rb
+# remove vendor copy of libraries and support non-Linux platforms
+subst 's/require /#require /' \
+       lib/puppet/util/windows.rb
+#       lib/puppet/vendor/require_vendored.rb \
+
+rm -rf \
+       lib/puppet/util/windows \
+       lib/puppet/vendor/safe_yaml/spec \
+       lib/puppet/module_tool/skeleton/templates/generator/spec
+
+# remove deprecated classes to prevent unmets
+rm -rf ext/puppetlisten \
+       lib/puppet/util/rdoc*
+
+# Unbundle
+rm -r lib/puppet/vendor/*{pathspec,rgen}*
 
 %build
-# MacOS X crap
-rm -f lib/puppet/provider/service/launchd.rb \
-      lib/puppet/provider/macauthorization/macauthorization.rb \
-      lib/puppet/provider/package/appdmg.rb \
-      lib/puppet/provider/package/pkgdmg.rb \
-      lib/puppet/provider/nameservice/directoryservice.rb \
-      lib/puppet/provider/group/directoryservice.rb \
-      lib/puppet/provider/user/directoryservice.rb \
-      lib/puppet/provider/computer/computer.rb
-# Only used by (non-packaged) puppetdoc
-rm -rf lib/puppet/util/rdoc*
 
 %install
-mkdir -p %buildroot{%_sysconfdir/{logrotate.d,sysconfig,puppet/manifests},%_localstatedir/puppet,%_logdir/puppet,%_var/run/puppet,%_initdir}
+%ruby_vendor install.rb \
+	     --destdir=%buildroot \
+	     --configdir=/etc/puppet \
+	     --codedir=/etc/puppet/code \
+	     --vardir=%_localstatedir/puppet \
+	     --rundir=%_runtimedir/puppet \
+	     --logdir=%_logdir/puppet \
+	     --no-rdoc \
+	     --no-tests
 
-%ruby_vendor install.rb --destdir=%buildroot
-install -p -m644 conf/altlinux/*.conf %buildroot%_sysconfdir/puppet
-install -p -m755 conf/altlinux/puppetd.init %buildroot%_initdir/puppetd
-install -p -m755 conf/altlinux/puppetmasterd.init %buildroot%_initdir/puppetmasterd
-install -p -m644 conf/altlinux/puppet.sysconfig %buildroot%_sysconfdir/sysconfig/puppet
-install -p -m644 conf/altlinux/puppetmaster.sysconfig %buildroot%_sysconfdir/sysconfig/puppetmaster
-install -p -m644 conf/altlinux/logrotate %buildroot%_sysconfdir/logrotate.d/puppet
+# SysVInit files
+install -Dp -m0644 %confdir/client.sysconfig %buildroot%_sysconfdir/sysconfig/puppet
+install -Dp -m0755 %SOURCE1 %buildroot%_initrddir/puppet
+install -Dp -m0644 %confdir/server.sysconfig %buildroot%_sysconfdir/sysconfig/puppetmaster
+install -Dp -m0755 %SOURCE2 %buildroot%_initrddir/puppetmaster
+# Systemd files
+install -Dp -m0644 %SOURCE3 %buildroot%_unitdir/puppet.service
+ln -s %_unitdir/puppet.service %buildroot%_unitdir/puppetagent.service
+install -Dp -m0644 %SOURCE4 %buildroot%_unitdir/puppetmaster.service
 
-rm -rf %buildroot/usr/lib/ruby/site_ruby/puppet/util/windows*
-rm -rf %buildroot/usr/lib/ruby/site_ruby/puppet/module_tool/skeleton/templates/generator/spec
+install -Dp -m0644 %confdir/logrotate %buildroot%_sysconfdir/logrotate.d/puppet
+install -Dp -m0644 conf/fileserver.conf %buildroot%_sysconfdir/puppet/fileserver.conf
+
+# Install the ext/ directory to %%_datadir/%%name
+install -d %buildroot%_datadir/%name
+cp -a ext/ %buildroot%_datadir/%name
+
+# Install emacs mode files
+emacsdir=%buildroot%_datadir/emacs/site-lisp
+install -Dp -m0644 ext/emacs/puppet-mode.el $emacsdir/puppet-mode.el
+install -Dp -m0644 ext/emacs/puppet-mode-init.el \
+    $emacsdir/site-start.d/puppet-mode-init.el
+
+# Install vim syntax files
+vimdir=%buildroot%_datadir/vim/vimfiles
+install -Dp -m0644 ext/vim/ftdetect/puppet.vim $vimdir/ftdetect/puppet.vim
+install -Dp -m0644 ext/vim/syntax/puppet.vim $vimdir/syntax/puppet.vim
+
+# Setup tmpfiles.d config
+mkdir -p %buildroot%_sysconfdir/tmpfiles.d
+echo "D /var/run/%name 0755 _%name %name -" > \
+    %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+
+# Create puppet modules directory for puppet module tool
+mkdir -p %buildroot%_sysconfdir/%name/modules
+
+# Create service directory
+mkdir -p %buildroot{%_localstatedir,%_logdir,%_var/run}/puppet
+
+# Install NetworkManager dispatcher
+install -Dpv %SOURCE5 \
+    %buildroot%_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
+
+# emacs and vim bits are installed elsewhere
+rm -rf %buildroot%_datadir/%name/ext/{emacs,vim}
+# remove misc packaging artifacts in source not applicable to rpm
+rm -rf %buildroot%_datadir/%name/ext/{gentoo,freebsd,solaris,suse,windows,osx,ips,debian}
+rm -rf %buildroot%_datadir/%name/ext/{redhat,systemd}
+rm -f %buildroot%_datadir/%name/ext/{build_defaults.yaml,project_data.yaml}
+# remove obsoleted checks
+rm -rf %buildroot%_datadir/%name/ext/nagios
+
+# Add missing directories
+install -d %buildroot%_localstatedir/puppet/ssl/private_keys
 
 %pre
 %_sbindir/groupadd -r -f puppet
 %_sbindir/useradd -r -n -g puppet -d %_localstatedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
 
 %post
-%post_service puppetd
+%post_service puppet
 
 %preun
-%preun_service puppetd
+%preun_service puppet
 
 %post server
-%post_service puppetmasterd
+%post_service puppetmaster
 
 %preun server
-%preun_service puppetmasterd
+%preun_service puppetmaster
 
 %files
-%config %_initdir/puppetd
+%_initdir/puppet
+%_unitdir/puppet.service
+%_unitdir/puppetagent.service
+%config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
 %dir %_sysconfdir/puppet
 %config(noreplace) %_sysconfdir/puppet/puppet.conf
 %config(noreplace) %_sysconfdir/puppet/auth.conf
 %config(noreplace) %_sysconfdir/sysconfig/puppet
 %config(noreplace) %_sysconfdir/logrotate.d/puppet
-%_bindir/pi
 %_bindir/puppet
-%_bindir/puppetdoc
-%_bindir/ralsh
-%_bindir/filebucket
-%_sbindir/puppetd
-%_sbindir/puppetqd
+%_bindir/extlookup2hiera
 %ruby_sitelibdir/*
-%exclude %ruby_sitelibdir/puppet/network/http/mongrel*
-%exclude %ruby_sitelibdir/puppet/network/http_server/*
-%_man8dir/pi.8*
-%_man8dir/puppet.8*
+%_datadir/%name
+%_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
+%_man8dir/*
 %_man5dir/puppet.conf.5*
-%_man8dir/ralsh.8*
-%_man8dir/filebucket.8*
-%_man8dir/puppetd.8*
-%_man8dir/puppetqd.8*
-%_man8dir/puppetdoc.8*
-%_man8dir/puppet-*.8*
-
+%_datadir/emacs
+%_datadir/vim
 %attr(1770,_puppet,puppet) %dir %_localstatedir/puppet
-%attr(1770,root,puppet) %dir %_logdir/puppet
-%attr(1770,root,puppet) %dir %_var/run/puppet
-
-%files http_server-mongrel
-%ruby_sitelibdir/puppet/network/http/mongrel*
-%ruby_sitelibdir/puppet/network/http_server/mongrel.rb 
+%_localstatedir/puppet/*
+%attr(1770,_puppet,puppet) %dir %_localstatedir/puppet/ssl/private_keys
+%attr(1770,_puppet,puppet) %dir %_logdir/puppet
+%attr(1770,_puppet,puppet) %dir %_var/run/puppet
 
 %files server
-%config %_initdir/puppetmasterd
-%dir %_sysconfdir/puppet
+%_initdir/puppetmaster
+%_unitdir/puppetmaster.service
 %config(noreplace) %_sysconfdir/puppet/fileserver.conf
 %config(noreplace) %_sysconfdir/sysconfig/puppetmaster
-%_sbindir/puppetrun
-%_sbindir/puppetmasterd
-%_sbindir/puppetca
-%_man8dir/puppetrun.8*
-%_man8dir/puppetmasterd.8*
-%_man8dir/puppetca.8*
-%attr(1770,root,puppet) %dir %_logdir/puppet
-%attr(1770,root,puppet) %dir %_var/run/puppet
 
 %changelog
+* Thu Oct 06 2016 Andrey Cherepanov <cas@altlinux.org> 4.7.0-alt1
+- new version 4.7.0
+
+* Mon Dec 28 2015 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt1
+- New version
+- Package missing directories (ALT #30148)
+
+* Sat Apr 25 2015 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version
+
+* Tue Jan 13 2015 Andrey Cherepanov <cas@altlinux.org> 3.7.3-alt1
+- New version
+
+* Thu May 15 2014 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- New version
+- Rename services to puppet, puppetmaster
+- Add NetworkManager dispatcher script to pickup changes to
+  /etc/resolv.conf and such
+
 * Fri Jul 26 2013 Andrey Cherepanov <cas@altlinux.org> 2.7.21-alt2
 - Set correct pid file name for services (ALT #29114)
 - Set correct user name _puppet in configuration of puppetmasterd
