@@ -2,7 +2,7 @@
 
 Name: custodia
 Version: 0.1.0
-Release: alt1
+Release: alt2
 Summary:  A service to manage, retrieve and store secrets for other processes
 
 Group: System/Configuration/Other
@@ -24,6 +24,8 @@ BuildPreReq: rpm-build-python
 BuildRequires: python-devel python-module-setuptools
 
 Requires: python-module-%name = %version-%release
+
+%define _unpackaged_files_terminate_build 1
 
 %setup_python_module %name
 
@@ -47,10 +49,14 @@ Group: Development/Python
 
 %install
 %python_install
+# Mive binary to %_sbindir.
+# It more convenient place for it and
+# FreeIPA expects to find it there.
+mv %buildroot%_bindir %buildroot%_sbindir
 
 %files
 %_defaultdocdir/%name/
-%_bindir/*
+%_sbindir/*
 %_man7dir/*
 
 %files -n python-module-%name
@@ -59,6 +65,9 @@ Group: Development/Python
 %exclude %python_sitelibdir/tests/
 
 %changelog
+* Thu Oct 06 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt2
+- Mive binary to %%_sbindir.
+
 * Wed May 11 2016 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt1
 - Allow tox to use locally installed packages (patch from upstream).
 - Initial build.
