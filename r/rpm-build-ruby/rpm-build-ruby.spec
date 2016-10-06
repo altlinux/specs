@@ -3,7 +3,7 @@
 Name: rpm-build-ruby
 Epoch: 1
 Version: 0.1.5
-Release: alt1
+Release: alt2
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Ruby
@@ -56,6 +56,9 @@ install -D -m 0755 testrb %buildroot%_bindir/testrb
 %_bindir/testrb
 
 %changelog
+* Thu Oct 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 1:0.1.5-alt2
+- Set to catch any errors and notice them: %%_ruby_req_method strict.
+
 * Fri Sep 23 2016 Andrey Cherepanov <cas@altlinux.org> 1:0.1.5-alt1
 - Create subpackage ruby-test-unit with only rewritten testrb utility.
   Test::Unit module now is a part of Ruby.
