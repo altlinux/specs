@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-acme
-Version: 0.8.1
+Version: 0.9.1
 Release: alt1
 
 Summary: Python library for the ACME protocol
@@ -14,7 +14,8 @@ Url: https://pypi.python.org/pypi/acme
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://pypi.python.org/packages/source/a/%modulename/%modulename-%version.tar.gz
+## Source-url: https://pypi.python.org/packages/source/a/%modulename/%modulename-%version.tar.gz
+# Source-url: https://pypi.python.org/packages/7a/ef/4ad0ecc0ee8b01ddad42c13d1380d483a848198fc1eb31f4ee727427b293/acme-0.9.1.tar.gz
 Source: %modulename-%version.tar
 
 BuildRequires: python-devel
@@ -26,6 +27,8 @@ BuildRequires: python-module-OpenSSL >= 0.13
 #BuildRequires: python-requests
 #BuildRequires: python-pyrfc3339
 #BuildRequires: python-werkzeug
+
+Requires: python-module-cryptography >= 0.8
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -85,7 +88,7 @@ Python libraries implementing the Automatic Certificate Management Environment
 %package -n python3-module-acme
 Group: Development/Python
 Summary: %summary
-#Requires: python3-cryptography
+Requires: python3-module-cryptography >= 0.8
 #Requires: python3-ndg_httpsclient
 #Requires: python3-pyasn1
 #Requires: python3-pyOpenSSL
@@ -158,6 +161,9 @@ grep -q python %buildroot%_bindir/jws
 #%doc docs/_build/html
 
 %changelog
+* Fri Oct 07 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version (0.9.1) with rpmgs script
+
 * Thu Aug 18 2016 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt1
 - new version 0.8.1
 
