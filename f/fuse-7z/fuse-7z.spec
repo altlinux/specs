@@ -2,16 +2,17 @@
 
 Name: fuse-7z
 Version: 0.2
-Release: alt2
+Release: alt3
 
 Summary: A FUSE filesystem that uses the 7-zip library to interacts with all kind of archives
 
 Group: System/Kernel and hardware
 License: GPL v3
-Url: http://gitorious.org/fuse-7z
+Url: https://github.com/exmakhina/fuse-7z
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://github.com/exmakhina/fuse-7z.git
 Source: %name-%version.tar
 Patch: fuse-7z-0.1-alt-link.patch
 
@@ -44,7 +45,7 @@ waf
 
 cat <<EOF >wrapper/fuse-7z
 #!/bin/sh
-LD_LIBRARY_PATH=%_libdir/p7zip exec %_libexecdir/%name/fuse-7z \$*
+LD_LIBRARY_PATH=%_libdir/p7zip exec %_libexecdir/%name/fuse-7z "\$@"
 EOF
 
 %install
@@ -59,6 +60,9 @@ install -D wrapper/fuse-7z %buildroot%_bindir/fuse-7z
 %_libexecdir/%name/
 
 %changelog
+* Fri Oct 07 2016 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt3
+- update Url, fix shell wrapper (against speces in name)
+
 * Mon Sep 22 2014 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt2
 - fast hack for fix wchar_t to utf8 convert
 
