@@ -1,6 +1,6 @@
 Name: gitum
-Version: 0.8.4
-Release: alt2
+Version: 0.8.5
+Release: alt1
 
 Summary: Git Upstream Manager
 License: GPLv2
@@ -49,6 +49,10 @@ and ready for a submission in the same time.
 %_bindir/%name
 
 %changelog
+* Fri Oct 07 2016 Konstantin Artyushkin <akv@altlinux.org> 0.8.5-alt1
+- added stdout_as_string=False to git.show()
+- log patch name when rebasing
+
 * Fri Mar 04 2016 Konstantin Artyushkin <akv@altlinux.org> 0.8.4-alt2
 - made --remote arg positional for push and pull commands
 
