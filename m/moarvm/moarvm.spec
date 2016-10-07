@@ -1,5 +1,5 @@
 Name: moarvm
-Version: 2016.04
+Version: 2016.09
 Release: alt1
 Summary: 6model-based VM for NQP and Rakudo Perl 6
 
@@ -71,12 +71,16 @@ perl Configure.pl --prefix=%_prefix --libdir=%_libdir \
 
 %files -n lib%name-devel
 %_includedir/moar
-%exclude %_includedir/libtommath
 %exclude %_includedir/libatomic_ops
-%exclude %_includedir/libuv
 %_datadir/pkgconfig/moar.pc
 
 %changelog
+* Fri Oct 07 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.09-alt1
+- 2016.09
+
+* Mon Sep 12 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.08-alt1
+- 2016.08
+
 * Fri Apr 22 2016 Vladimir Lettiev <crux@altlinux.ru> 2016.04-alt1
 - 2016.04
 - switch to system libuv

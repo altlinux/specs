@@ -1,5 +1,5 @@
 Name: rpm-build-perl6
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: RPM macroses for Rakudo Perl 6
@@ -36,6 +36,9 @@ perl6 -c %buildroot%_rpmlibdir/perl6-installer
 %config %_rpmmacrosdir/perl6
 
 %changelog
+* Tue Sep 13 2016 Vladimir Lettiev <crux@altlinux.ru> 0.2-alt1
+- new release
+
 * Tue Dec 29 2015 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt1
 - initial release
 
