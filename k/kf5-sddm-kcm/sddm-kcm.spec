@@ -1,7 +1,7 @@
 %define rname sddm-kcm
 
 Name: kf5-%rname
-Version: 5.7.4
+Version: 5.8.0
 Release: alt1
 %K5init altplace
 
@@ -80,6 +80,9 @@ KF5 library
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
 - new version
 

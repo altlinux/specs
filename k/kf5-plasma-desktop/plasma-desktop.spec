@@ -7,8 +7,8 @@
 
 
 Name: kf5-%rname
-Version: 5.7.4
-Release: alt4
+Version: 5.8.0
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -198,6 +198,9 @@ KF5 library
 %_K5lib/libkfontinstui.so.%kfontinstui_sover
 
 %changelog
+* Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
 * Wed Sep 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt4
 - fix kicker menu width
 

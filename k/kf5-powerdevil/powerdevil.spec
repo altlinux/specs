@@ -8,7 +8,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: kf5-%rname
-Version: 5.7.4
+Version: 5.8.0
 Release: alt1
 %K5init altplace
 
@@ -94,6 +94,7 @@ done
 
 %install
 %K5install
+%K5install_move exec org_kde_powerdevil
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -102,8 +103,11 @@ done
 %files
 %config %_K5conf_dbus_sysd/*.conf
 %_K5libexecdir/kauth/*
+%_K5exec/*powerdevil*
+%_K5plug/kf5/powerdevil/
 %_K5plug/*.so
-%_K5plug/kf5/kded/*.so
+%_K5start/powerdevil.desktop
+#%_K5plug/kf5/kded/*.so
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*.notifyrc
@@ -128,6 +132,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
 - new version
 

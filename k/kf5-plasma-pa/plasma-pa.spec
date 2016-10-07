@@ -4,7 +4,7 @@
 %define libqpulseaudioprivate libqpulseaudioprivate%sover
 
 Name: kf5-%rname
-Version: 5.7.4
+Version: 5.8.0
 Release: alt1
 %K5init altplace
 
@@ -24,6 +24,7 @@ Patch1: alt-lib-sover.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-declarative-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libGConf-devel libcanberra-devel glib2-devel
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdeclarative-devel
 BuildRequires: kf5-kglobalaccel-devel kf5-ki18n-devel kf5-kpackage-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-plasma-framework-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel kf5-kdoctools-devel-static
@@ -89,6 +90,9 @@ KF5 library
 %_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
+- new version
+
 * Tue Aug 30 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.4-alt1
 - new version
 
