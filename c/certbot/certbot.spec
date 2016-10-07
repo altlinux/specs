@@ -1,5 +1,5 @@
 Name: certbot
-Version: 0.8.1
+Version: 0.9.1
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -146,6 +146,9 @@ ln -s %name %buildroot%_bindir/letsencrypt
 #%doc docs/_build/html
 
 %changelog
+* Fri Oct 07 2016 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version 0.9.1 (with rpmrb script)
+
 * Thu Aug 18 2016 Vitaly Lipatov <lav@altlinux.ru> 0.8.1-alt1
 - rename to certbot, build version 0.8.1
 
