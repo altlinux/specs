@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: alterator-trust
-Version: 0.6.2.1
+Version: 0.6.2.2
 Release: alt1
 
 Summary: alterator module for setting one-way trust relationships
@@ -50,6 +50,9 @@ touch %buildroot%_localstatedir/%name/{id_dsa{,.pub},known_hosts{,.old}}
 %ghost %verify(not md5 size mtime) %config(missingok,noreplace) %_localstatedir/%name/known_hosts.old
 
 %changelog
+* Fri Oct 07 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.2.2-alt1
+- Fix URL replace with CSRF preventing token
+
 * Wed Aug 19 2009 Alexey I. Froloff <raorn@altlinux.org> 0.6.2.1-alt1
 - Fix class for text entry field
 
