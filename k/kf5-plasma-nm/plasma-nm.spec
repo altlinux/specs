@@ -3,7 +3,7 @@
 
 Name: kf5-%rname
 Version: 5.8.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -214,6 +214,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5srv/plasmanetworkmanagement_sshui.desktop
 
 %changelog
+* Mon Oct 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2
+- rebuild with new openconnect
+
 * Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 
