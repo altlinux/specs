@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: alterator-ca
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: Office Server CA Manager
@@ -53,6 +53,10 @@ install -p -m755 hook/ca %buildroot%_libexecdir/alterator/hooks/trust.d
 %dir %_localstatedir/alterator-ca/out
 
 %changelog
+* Fri Oct 07 2016 Andrey Cherepanov <cas@altlinux.org> 0.5.5-alt1
+- Fix URL replace with CSRF preventing token (ALT #32428)
+- Fix indentation of form fields
+
 * Tue Nov 24 2009 Alexey I. Froloff <raorn@altlinux.org> 0.5.4-alt1
 - Updated for workflow=none (inger)
 
