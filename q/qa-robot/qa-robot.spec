@@ -1,5 +1,5 @@
 Name: qa-robot
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Simple notification system
@@ -12,6 +12,8 @@ BuildArch: noarch
 
 # for `grep -o'
 Requires: grep >= 2.5
+# for packages and unexpanded_macros
+Requires: perl(RPM/Header.pm), perl(RPM/Vercmp.pm)
 
 # Automatically added by buildreq on Mon Nov 15 2010 (-bi)
 BuildRequires: perl-Lingua-EN-Inflect perl-Text-CSV_XS perl-devel perl-podlators
@@ -34,6 +36,9 @@ and (possibly) updated entries.  See qa-robot(1) for details.
 %_man1dir/*.*
 
 %changelog
+* Fri Oct 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1
+- rpm 404 -> 413 migration: use portable subset of perl-RPM
+
 * Tue Dec 17 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.6-alt1
 - rpmsodiff:
   + Return 1 if packages differ (RH#1004450).
