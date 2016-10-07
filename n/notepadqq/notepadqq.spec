@@ -1,16 +1,12 @@
-%define codemirror_ver 5.3.0
-
 Summary:	A Linux clone of Notepad++
 Name:		notepadqq
-Version:	0.51.0
+Version:	0.53.0
 Release:	alt1
 License:	GPLv3
 Group:		Editors
 URL:		http://notepadqq.altervista.org/wp/
-Source0:	https://github.com/notepadqq/notepadqq/archive/%{name}-%{version}.tar.gz
-Source1:	https://github.com/notepadqq/CodeMirror/archive/CodeMirror-%{codemirror_ver}.tar.gz
-
-Patch:		%name-alt-no-qtchooser.patch
+Source0:	%name-%version.tar
+Source1:	codemirror.tar
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
@@ -26,18 +22,15 @@ Requires:       qt5-translations
 Notepadqq is a Notepad++-like editor for the Linux desktop.
 
 %prep
-%setup -q -a 1
-%patch -p2
-
-# (tpg) install CodeMirror
-mv -f CodeMirror-%{codemirror_ver}/* src/editor/libs/codemirror
+%setup -q
+tar xf %SOURCE1
 mkdir -p src/editor/libs/codemirror/mode/m4
 
 # (tpg) fix libdir
 sed -i -e "s/lib/%{_lib}/g" src/ui/ui.pro
 
 %build
-%qmake_qt5 PREFIX=%_prefix *.pro
+%configure --qmake=qmake-qt5 --lrelease=lrelease-qt5
 %make_build
 
 %install
@@ -55,6 +48,9 @@ ln -sf %_libdir/notepadqq/notepadqq-bin %buildroot%_bindir/notepadqq-bin
 %_datadir/notepadqq
 
 %changelog
+* Fri Oct 07 2016 Andrey Cherepanov <cas@altlinux.org> 0.53.0-alt1
+- New vesion
+
 * Sun May 29 2016 Andrey Cherepanov <cas@altlinux.org> 0.51.0-alt1
 - New version
 
