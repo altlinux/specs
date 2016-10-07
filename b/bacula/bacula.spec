@@ -3,12 +3,12 @@
 %def_enable bat
 %def_disable bwx
 %def_enable tray
-%def_disable readline
+%def_enable readline
 %def_disable debug
 
 Name: bacula
 Version: 5.2.13
-Release: alt7
+Release: alt8
 
 License: AGPLv3
 Summary: Network based backup program
@@ -46,6 +46,10 @@ BuildRequires: imake libICE-devel libX11-devel libqwt-devel xorg-cf-files
 %if_enabled tray
 # tray buildrequires
 BuildRequires: libgnomeui-devel
+%endif
+
+%if_enabled readline
+BuildRequires: libreadline-devel
 %endif
 
 Provides: bacula-updatedb = %version-%release
@@ -242,7 +246,9 @@ mv ../%name-icons-%version icons
 
 sed -i 's|qmake|qmake-qt4|g' autoconf/configure.in
 sed -i 's|-lreadline -lhistory -ltermcap|-lreadline -lhistory|g' autoconf/configure.in
-
+%if_enabled readline
+sed -i 's|readline\.h|readline/readline.h|;s|history\.h|readline/history.h|' src/console/console.c
+%endif
 
 %build
 export MTX=%_sbindir/mtx
@@ -650,6 +656,9 @@ chown bacula:bacula %_localstatedir/bacula/*
 %files
 
 %changelog
+* Fri Oct  7 2016 Terechkov Evgenii <evg@altlinux.org> 5.2.13-alt8
+- Build with readline by default
+
 * Sun Sep 25 2016 Terechkov Evgenii <evg@altlinux.org> 5.2.13-alt7
 - Make catalog backup work like rhel7/centos7 to work around ALT #31692
 
