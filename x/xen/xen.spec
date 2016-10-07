@@ -16,7 +16,7 @@ Version: 4.7.0
 %define pre %nil
 # Hypervisor ABI
 %define hv_abi 4.7
-Release: alt1
+Release: alt2
 Group: Emulators
 License: GPLv2+, LGPLv2+, BSD
 %define qemu_ver %version%pre
@@ -595,6 +595,9 @@ mv %buildroot%_docdir/%name-%version/licenses/stubdom/polarssl-x86_32 %buildroot
 
 
 %changelog
+* Fri Oct 07 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt2
+- Upstream updates
+
 * Mon Sep 26 2016 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 4.7.0-alt1
 - 4.7.0 release
 
