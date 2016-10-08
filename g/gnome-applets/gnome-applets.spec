@@ -1,5 +1,9 @@
-%define ver_major 3.20
+%def_disable snapshot
+
+%define ver_major 3.22
 %define panel_api_ver 5.0
+%define xdg_name org.gnome.gnome-applets
+
 %def_enable frequency_selector
 %def_disable mini_commander
 %def_enable battstat
@@ -14,17 +18,22 @@ Release: alt1
 Summary: Small applications for the GNOME panel
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org
+Url: https://wiki.gnome.org/Projects/GnomeApplets
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+%else
+Source: %name-%version.tar
+%endif
+
 Source1: 01-cpufreq.pkla
-Patch: %name-2.9.90-alt-modemlights.patch
+Patch: %name-3.22.0-alt-modem-lights.patch
+Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 
 # From configure.ac
-%define gtk_ver 3.16.0
+%define gtk_ver 3.20.0
 %define glib_ver 2.44.0
-%define gnome_panel_ver 3.20.0
+%define gnome_panel_ver 3.22.0
 %define libgtop_ver 2.11.92
 %define libgail_ver 3.0
 %define libxklavier_ver 4.0
@@ -329,15 +338,16 @@ PreReq: %name-common = %version-%release
 This package provides timer-applet for gnome-panel that allows user
 to start a timer and receive a notification when it is finished.
 
+%define gnome_appletsdir %_libdir/%name
 %define _libexecdir %gnome_appletsdir
 
 %prep
 %setup
 %patch -p1
+%patch1
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS `pkg-config --cflags dbus-glib-1`"
 %configure \
     %{?_enable_mini_commander:--enable-mini-commander} \
     %{?_disable_battstat:--disable-battstat} \
@@ -362,21 +372,19 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %dir %_datadir/%name/ui
 
 %files accessx-status -f accessx-status.lang
-%gnome_appletsdir/accessx-status*
+%gnome_appletsdir/libaccessx-status-applet.so
 %_datadir/%name/ui/accessx-status-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.AccessxStatusApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.AccessxStatusAppletFactory.service
+%_datadir/gnome-panel/applets/org.gnome.applets.AccessxStatusApplet.panel-applet
 %_datadir/%name/accessx-status-applet/
 %_iconsdir/hicolor/48x48/apps/ax-applet.png
 
 %if_enabled battstat
 %files battstat -f battstat.lang
-%gnome_appletsdir/battstat-applet-2
+%gnome_appletsdir/libbattery-status-applet.so
 %_datadir/%name/builder/battstat_applet.ui
 %_datadir/%name/ui/battstat-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.BattstatApplet.panel-applet
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.battstat.gschema.xml
-%_datadir/dbus-1/services/org.gnome.panel.applet.BattstatAppletFactory.service
+%_datadir/gnome-panel/applets/org.gnome.applets.BattstatApplet.panel-applet
+%_datadir/glib-2.0/schemas/%xdg_name.battstat.gschema.xml
 %config %_sysconfdir/sound/events/battstat_applet.soundlist
 %endif
 
@@ -384,58 +392,51 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %if_enabled frequency_selector
 %attr(4711,root,root) %_bindir/cpufreq-selector
 %endif
-%gnome_appletsdir/cpufreq-applet
+%gnome_appletsdir/libcpu-frequency-applet.so
 %_datadir/%name/cpufreq-applet/
 %_datadir/%name/ui/cpufreq-applet-menu.xml
 %_datadir/%name/builder/cpufreq-preferences.ui
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.CPUFreqApplet.panel-applet
+%_datadir/gnome-panel/applets/org.gnome.applets.CPUFreqApplet.panel-applet
 %_datadir/polkit-1/actions/org.gnome.cpufreqselector.policy
 %_datadir/dbus-1/system-services/org.gnome.CPUFreqSelector.service
-%_datadir/dbus-1/services/org.gnome.panel.applet.CPUFreqAppletFactory.service
 %_iconsdir/hicolor/*/apps/gnome-cpu-frequency-applet.png
 %_iconsdir/hicolor/scalable/apps/gnome-cpu-frequency-applet.svg
 %config %_sysconfdir/dbus-1/system.d/org.gnome.CPUFreqSelector.conf
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.cpufreq.enums.xml
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.cpufreq.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.cpufreq.enums.xml
+%_datadir/glib-2.0/schemas/%xdg_name.cpufreq.gschema.xml
 
 %files cpufreq-usermode
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %files charpick -f char-palette.lang
-%gnome_appletsdir/charpick*
+%gnome_appletsdir/libcharacter-picker-applet.so
 %_datadir/%name/ui/charpick-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.CharpickerApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.CharpickerAppletFactory.service
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.charpick.gschema.xml
+%_datadir/gnome-panel/applets/org.gnome.applets.CharpickerApplet.panel-applet
+%_datadir/glib-2.0/schemas/%xdg_name.charpick.gschema.xml
 
 %files drivemount -f drivemount.lang
-%gnome_appletsdir/drivemount*
+%gnome_appletsdir/libdrive-mount-applet.so
 %_datadir/%name/ui/drivemount-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.DriveMountApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.DriveMountAppletFactory.service
+%_datadir/gnome-panel/applets/org.gnome.applets.DriveMountApplet.panel-applet
 
 %files geyes -f geyes.lang
-%gnome_appletsdir/geyes*
+%gnome_appletsdir/libgeyes-applet.so
 %_datadir/%name/ui/geyes-applet-menu.xml
-%_datadir/%name/geyes
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.GeyesApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.GeyesAppletFactory.service
+%_datadir/%name/geyes/
+%_datadir/gnome-panel/applets/org.gnome.applets.GeyesApplet.panel-applet
 %_iconsdir/hicolor/*/apps/gnome-eyes-applet.png
 %_iconsdir/hicolor/scalable/apps/gnome-eyes-applet.svg
-%config %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.geyes.gschema.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.geyes.gschema.xml
 
 %files gweather -f gweather.lang
-%gnome_appletsdir/gweather*
+%gnome_appletsdir/libgweather-applet.so
 %_datadir/%name/ui/gweather-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.GWeatherApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.GWeatherAppletFactory.service
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.gweather.gschema.xml
+%_datadir/gnome-panel/applets/org.gnome.applets.GWeatherApplet.panel-applet
+%_datadir/glib-2.0/schemas/%xdg_name.gweather.gschema.xml
 
 %if_enabled mini_commander
 %files mini-commander -f command-line.lang
-%gnome_appletsdir/mini_commander*
-%gnome_appletsdir/mc-install*
-%_datadir/%name/ui/mini-commander-applet-menu.xml
+%gnome_appletsdir/libcommand-applet.so
 %_datadir/%name/builder/mini-commander.ui
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.MiniCommanderApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.MiniCommanderAppletFactory.service
@@ -444,109 +445,97 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 
 %if_enabled modemlights
 %files modemlights
-%gnome_appletsdir/modem_applet
+%gnome_appletsdir/libmodem-lights-applet.so
 %_datadir/%name/builder/modemlights.ui
 %_datadir/%name/ui/modem-applet-menu.xml
-%_datadir/dbus-1/services/org.gnome.panel.applet.ModemAppletFactory.service
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.ModemApplet.panel-applet
+#%_datadir/dbus-1/services/org.gnome.panel.applet.ModemAppletFactory.service
+%_datadir/gnome-panel/applets/org.gnome.applets.ModemApplet.panel-applet
 %_iconsdir/hicolor/*x*/apps/gnome-modem-monitor-applet.png
 %_iconsdir/hicolor/scalable/apps/gnome-modem-monitor-applet.svg
 %endif
 
 %files multiload -f multiload.lang
-%gnome_appletsdir/multiload*
+%gnome_appletsdir/libmultiload-applet.so
 %_datadir/%name/ui/multiload-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.MultiLoadApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.MultiLoadAppletFactory.service
-#%_datadir/pixmaps/*cpu*
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.multiload.gschema.xml
+%_datadir/gnome-panel/applets/org.gnome.applets.MultiLoadApplet.panel-applet
+%_datadir/glib-2.0/schemas/%xdg_name.multiload.gschema.xml
 
 %files stickynotes -f stickynotes_applet.lang
-%gnome_appletsdir/stickynotes*
-%_datadir/%name/builder/stickynotes-*.ui
-%_datadir/%name/ui/stickynotes-*.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.StickyNotesApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.StickyNotesAppletFactory.service
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.stickynotes.gschema.xml
+%gnome_appletsdir/libsticky-notes-applet.so
+%_datadir/gnome-panel/applets/org.gnome.applets.StickyNotesApplet.panel-applet
+%_datadir/glib-2.0/schemas/%xdg_name.stickynotes.gschema.xml
 %_iconsdir/hicolor/*/apps/gnome-sticky-notes-applet.png
 %_datadir/%name/icons/hicolor/*/apps/stickynotes-*.png
 %_iconsdir/hicolor/scalable/apps/gnome-sticky-notes-applet.svg
 
 %files trash -f trashapplet.lang
-%gnome_appletsdir/trashapplet
-%_datadir/%name/ui/trashapplet-menu.xml
-%_datadir/%name/builder/trashapplet-empty-progress.ui
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.TrashApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.TrashAppletFactory.service
+%gnome_appletsdir/libtrash-applet.so
+%_datadir/gnome-panel/applets/org.gnome.applets.TrashApplet.panel-applet
 
 %files windowpicker -f windowpicker.lang
-%gnome_appletsdir/%panel_api_ver/libwindow-picker-applet.so
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.window-picker-applet.gschema.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.WindowPicker.panel-applet
+%gnome_appletsdir/libwindow-picker-applet.so
+%_datadir/glib-2.0/schemas/%xdg_name.window-picker-applet.gschema.xml
+%_datadir/gnome-panel/applets/org.gnome.applets.WindowPicker.panel-applet
 
 %files netspeed -f netspeed_applet.lang
-%_libdir/%name/netspeed_applet2
-%_datadir/dbus-1/services/org.gnome.panel.applet.NetspeedAppletFactory.service
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.netspeed.gschema.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.panel.Netspeed.panel-applet
+%gnome_appletsdir/libnet-speed-applet.so
+%_datadir/glib-2.0/schemas/%xdg_name.netspeed.gschema.xml
+%_datadir/gnome-panel/applets/org.gnome.panel.Netspeed.panel-applet
 %_datadir/%name/ui/netspeed-*.xml
 %_iconsdir/hicolor/*x*/*/netspeed*.png
 %_iconsdir/hicolor/scalable/*/netspeed*.svg
 
 %files brightness -f brightness.lang
-%_libdir/%name/gnome-brightness-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.BrightnessAppletFactory.service
+%_libdir/%name/libbrightness-applet.so
 %_datadir/%name/icons/hicolor/*/*/gpm-brightness*
 %_datadir/%name/ui/brightness-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.BrightnessApplet.panel-applet
+%_datadir/gnome-panel/applets/org.gnome.BrightnessApplet.panel-applet
 %_iconsdir/hicolor/*/*/gnome-brightness*
 
 %files inhibit -f inhibit.lang
-%_libdir/%name/gnome-inhibit-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.InhibitAppletFactory.service
+%_libdir/%name/libinhibit-applet.so
 %_datadir/%name/icons/hicolor/*/*/gpm-inhibit*
 %_datadir/%name/icons/hicolor/*/*/gpm-uninhibit*
 %_datadir/%name/ui/inhibit-applet-menu.xml
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.InhibitApplet.panel-applet
+%_datadir/gnome-panel/applets/org.gnome.InhibitApplet.panel-applet
 %_iconsdir/hicolor/*/*/gnome-inhibit*
 
 %files tracker-search-bar -f tracker-search-bar.lang
-%_libdir/%name/tracker-search-bar
-%_datadir/%name/ui/tracker-search-bar*.xml
-%_datadir/%name/ui/tracker-search-bar.ui
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.panel.SearchBar.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.SearchBarFactory.service
+%_libdir/%name/libtracker-search-bar-applet.so
+%_datadir/gnome-panel/applets/org.gnome.panel.SearchBar.panel-applet
 
 %if_enabled command
 %files command
-%gnome_appletsdir/command-applet
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.CommandApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.CommandAppletFactory.service
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.command.gschema.xml
+%gnome_appletsdir/libcommand-applet.so
+%_datadir/gnome-panel/applets/org.gnome.applets.CommandApplet.panel-applet
+%_datadir/glib-2.0/schemas/%xdg_name.command.gschema.xml
 %endif
 
 %if_enabled timer
 %files timer
-%gnome_appletsdir/timer-applet
-%_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.TimerApplet.panel-applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.TimerAppletFactory.service
-%_datadir/glib-2.0/schemas/org.gnome.gnome-applets.timer.gschema.xml
+%gnome_appletsdir/libtimer-applet.so
+%_datadir/gnome-panel/applets/org.gnome.applets.TimerApplet.panel-applet
+#%_datadir/dbus-1/services/org.gnome.panel.applet.TimerAppletFactory.service
+%_datadir/glib-2.0/schemas/%xdg_name.timer.gschema.xml
 %endif
 
 #exclude invest-applet files
-%exclude %_bindir/invest-chart
-%exclude %_libdir/%name/invest-applet
-%exclude %python3_sitelibdir_noarch/*
-%exclude %_datadir/dbus-1/services/org.gnome.panel.applet.InvestAppletFactory.service
-%exclude %_datadir/%name/invest-applet
+%exclude %gnome_appletsdir/libinvest-applet.so
+%exclude %_datadir/%name/invest-applet/
 %exclude %_datadir/%name/builder/financialchart.ui
 %exclude %_datadir/%name/builder/prefs-dialog.ui
 %exclude %_datadir/%name/ui/invest-applet-menu.xml
-%exclude %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.InvestApplet.panel-applet
+%exclude %_datadir/gnome-panel/applets/org.gnome.applets.InvestApplet.panel-applet
+%exclude %_datadir/glib-2.0/schemas/org.gnome.gnome-applets.invest.gschema.xml
 %exclude %_datadir/help/*/invest-applet/
 %exclude %_iconsdir/hicolor/*/*/invest-applet*
 
+%exclude %gnome_appletsdir/*.la
+
 %changelog
+* Sat Oct 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sat Apr 16 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.0-alt1
 - 3.20.0, new -timer and -command applets/subpackages
 

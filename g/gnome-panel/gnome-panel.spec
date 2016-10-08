@@ -1,16 +1,16 @@
 %def_disable snapshot
 
-%define ver_major 3.20
+%define ver_major 3.22
 %define api_ver 3.0
 %define applet_api_ver 5.0
 %def_disable static
 %def_disable gtk_doc
-%def_enable introspection
+%def_disable introspection
 %def_enable eds
 
 Name: gnome-panel
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPLv2+ and LGPLv2+ and GFDL+
@@ -132,7 +132,7 @@ Requires: lib%name-gir = %version-%release
 GObject introspection devel data for the GNOME Panel shared library.
 
 
-%define gnome_appletsdir %_libdir/%name/%applet_api_ver
+%define gnome_appletsdir %_libdir/%name
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %gnome_appletsdir
 
@@ -198,6 +198,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sat Oct 08 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.1-alt2
 - rebuilt against libedataserver-1.2.so.22
 
