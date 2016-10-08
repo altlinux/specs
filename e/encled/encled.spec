@@ -1,7 +1,7 @@
 Summary: utility to change location / fault LED for enclosure
 Name: encled
-Version: 2015
-Release: alt2
+Version: 2016
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://github.com/amarao/sdled
@@ -34,6 +34,9 @@ install -p -m 644 -D encled.8 %buildroot%_man8dir/encled.8
 %doc README
 
 %changelog
+* Sat Oct  8 2016 Terechkov Evgenii <evg@altlinux.org> 2016-alt1
+- git-5527aff
+
 * Sun Aug 30 2015 Terechkov Evgenii <evg@altlinux.org> 2015-alt2
 - git-8833f2b
 - man page added
