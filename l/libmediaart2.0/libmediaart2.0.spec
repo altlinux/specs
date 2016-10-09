@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name libmediaart
 %define ver_major 1.9
 %define api_ver 2.0
@@ -6,14 +8,21 @@
 
 Name: %_name%api_ver
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Library for handling media art (2.0 API)
 Group: System/Libraries
 License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/Tracker
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/%name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
+
+Obsoletes: %_name < %version
+Provides: %_name = %version-%release
 
 BuildRequires: gcc-c++ libgio-devel >= 2.38 libgdk-pixbuf-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
@@ -29,6 +38,8 @@ media art caches.
 Summary: Development files for LibMediaArt
 Group: Development/C++
 Requires: %name = %version-%release
+Obsoletes: %_name-devel < %version
+Provides: %_name-devel = %version-%release
 
 %description devel
 This package contains libraries and header files needed for
@@ -38,6 +49,8 @@ development using LibMediaArt library.
 Summary: GObject introspection data for the LibMediaArt library
 Group: System/Libraries
 Requires: %name = %version-%release
+Obsoletes: %_name-gir < %version
+Provides: %_name-gir = %version-%release
 
 %description gir
 GObject introspection data for the LibMediaArt library
@@ -48,6 +61,8 @@ Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %version-%release
 Requires: %name-devel = %version-%release
+Obsoletes: %_name-gir-devel < %version
+Provides: %_name-gir-devel = %version-%release
 
 %description gir-devel
 GObject introspection devel data for the LibMediaArt library
@@ -57,12 +72,15 @@ Summary: Development documentation for LibMediaArt
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name < %version-%release
+Obsoletes: %_name-devel-doc < %version
+Provides: %_name-devel-doc = %version-%release
 
 %description devel-doc
 This package contains development documentation for LibMediaArt library.
 
 %prep
 %setup -n %_name-%version
+%{?_enable_snapshot:touch ChangeLog}
 
 %build
 %autoreconf
@@ -100,6 +118,10 @@ This package contains development documentation for LibMediaArt library.
 %endif
 
 %changelog
+* Sun Oct 09 2016 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt2
+- updated to 1.9.0-8-g52eb649
+- obsoletes/provides old libmediaart-1.0 (ALT #32594)
+
 * Sat Jan 24 2015 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
