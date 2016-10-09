@@ -1,13 +1,13 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 0.9.1
-Release: alt1
+Version: 1.3.2
+Release: alt1.git1584579
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
 Group: Security/Networking
 License: BSD
-Url: http://www.hohnstaedt.de/xca.html
+Url: http://xca.ovh/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -28,6 +28,7 @@ presented.
 %patch -p1
 
 %build
+./bootstrap
 prefix="%_prefix" \
 CFLAGS="%optflags" \
 CXXFLAGS="%optflags" \
@@ -37,17 +38,25 @@ CXXFLAGS="%optflags" \
 %install
 mkdir -p %buildroot{%_bindir,%_datadir/xca,%_desktopdir,%_man1dir}
 
-%make_install install destdir=%buildroot STRIP=: mandir=..%_mandir
+%make_install install \
+    destdir=%buildroot prefix=/usr STRIP=: \
+    mandir=%_mandir docdir=%_docdir/%name-%version datarootdir=%_datadir
 
 %files
 %doc AUTHORS doc/*.html
 %_bindir/*
 %_datadir/xca
 %_desktopdir/xca*
-%_man1dir/xca.1*
+%_man1dir/xca*.1*
 %_xdgmimedir/packages/xca.xml
+%_pixmapsdir/xca*.xpm
 
 %changelog
+* Sun Oct 09 2016 Pavel Nakonechnyi <zorg@altlinux.ru> 1.3.2-alt1.git1584579
+- updated to revision 1584579 from http://gitweb.hohnstaedt.de/?p=xca.git
+- closes: #32305
+- closes: #32301
+
 * Thu Feb 16 2012 Mykola Grechukh <gns@altlinux.ru> 0.9.1-alt1
 - new version
 
