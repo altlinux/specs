@@ -3,7 +3,7 @@
 %define module %orepo-%obranch-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -48,6 +48,9 @@ done
 /usr/share/distromap/*
 
 %changelog
+* Sun Oct 09 2016 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- added group mappings for Hihin Ruslan's trinity build
+
 * Tue Sep 27 2016 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - tde basic support
 
