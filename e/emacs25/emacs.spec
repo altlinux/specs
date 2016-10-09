@@ -2,17 +2,17 @@
 
 %set_compress_method skip
 
-%define emacs_version 24.5
+%define emacs_version 25.1
 %define erc_version %emacs_version
 
 %define gnus_version 5.13
 %define shortname emacs
-%define tramp_version 2.2.11
+%define tramp_version 2.2.13.25.1
 %define speedbar_version 1.0
 %define nxml_version 0.2.20041004
 %define cedet_version 2.0
 
-%define cedet_release alt4
+%define cedet_release alt5
 
 # subpackages to build;
 %def_enable nox
@@ -21,9 +21,9 @@
 %def_enable gtk3
 %def_enable motif
 
-Name: emacs24
-Version: 24.5
-Release: alt16
+Name: emacs25
+Version: 25.1
+Release: alt3
 
 Group: Editors
 Summary: GNU Emacs text editor
@@ -180,13 +180,15 @@ Provides: %_libexecdir/%shortname
 Obsoletes: %name
 Obsoletes: %shortname-common
 Provides: %shortname-common = %emacs_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs21-common
 Obsoletes: emacs22-common
 Obsoletes: emacs23-common
+Obsoletes: emacs24-common
 Provides: emacs21-common = %emacs_version-%release
 Provides: emacs22-common = %emacs_version-%release
 Provides: emacs23-common = %emacs_version-%release
+Provides: emacs24-common = %emacs_version-%release
 # Common is useless without an Emacs binary:
 Requires: %name = %emacs_version-%release
 # speedbar now separate package
@@ -202,13 +204,13 @@ Conflicts: etcskel < 2.0.2-alt1
 Conflicts: emacs-prog-modes < 0.1-alt7
 # ispell-uk 0.5 is broken, and can cause hang in flyspell mode
 Conflicts: ispell-uk < 0.6-alt1
-# emacs24 have ses inside
+# emacs25 have ses inside
 Obsoletes: %shortname-ses <= 1.0-alt2.031130
 Provides: %shortname-ses = %emacs_version-%release
-# emacs24 conflicts with old emacs-w3 (with url package inside)
+# emacs25 conflicts with old emacs-w3 (with url package inside)
 Conflicts: %shortname-w3 <= 4.0-alt0.8.pre.47
 Provides: %shortname-url = %emacs_version-%release
-# gnuserv seems needed to be build with emacs24
+# gnuserv seems needed to be build with emacs25
 Conflicts: %shortname-gnuserv <= 3.12.7-alt1
 
 # otherwise we have heavy useless dependency on python
@@ -236,13 +238,15 @@ Requires: %name-common = %emacs_version-%release
 Requires: %name-gnus-el = %gnus_version-%release
 Obsoletes: %shortname-el
 Provides: %shortname-el = %emacs_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs21-el
 Obsoletes: emacs22-el
 Obsoletes: emacs23-el
+Obsoletes: emacs24-el
 Provides: emacs21-el = %emacs_version-%release
 Provides: emacs22-el = %emacs_version-%release
 Provides: emacs23-el = %emacs_version-%release
+Provides: emacs24-el = %emacs_version-%release
 
 %description el
 Emacs-el contains the Emacs Lisp sources for many of the programs
@@ -262,13 +266,15 @@ BuildArch: noarch
 Requires: %name-common = %emacs_version-%release
 Obsoletes: %shortname-leim
 Provides: %shortname-leim = %emacs_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs21-leim
 Obsoletes: emacs22-leim
 Obsoletes: emacs23-leim
+Obsoletes: emacs24-leim
 Provides: emacs21-leim = %emacs_version-%release
 Provides: emacs22-leim = %emacs_version-%release
 Provides: emacs23-leim = %emacs_version-%release
+Provides: emacs24-leim = %emacs_version-%release
 
 %description leim
 The Lisp code for input methods for various international scripts for GNU Emacs.
@@ -282,13 +288,15 @@ BuildArch: noarch
 Requires: %name-leim = %emacs_version-%release
 Obsoletes: %shortname-leim-el
 Provides: %shortname-leim-el = %emacs_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs21-leim-el
 Obsoletes: emacs22-leim-el
 Obsoletes: emacs23-leim-el
+Obsoletes: emacs24-leim-el
 Provides: emacs21-leim-el = %emacs_version-%release
 Provides: emacs22-leim-el = %emacs_version-%release
 Provides: emacs23-leim-el = %emacs_version-%release
+Provides: emacs24-leim-el = %emacs_version-%release
 
 %description leim-el
 Emacs-leim-el contains the Emacs Lisp sources for the Emacs Lisp code
@@ -310,13 +318,15 @@ Provides: emacsen
 Provides: %shortname = %emacs_version-%release
 Obsoletes: %shortname-nox
 Provides: %shortname-nox = %emacs_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs21-nox
 Obsoletes: emacs22-nox
 Obsoletes: emacs23-nox
+Obsoletes: emacs24-nox
 Provides: emacs21-nox = %emacs_version-%release
 Provides: emacs22-nox = %emacs_version-%release
 Provides: emacs23-nox = %emacs_version-%release
+Provides: emacs24-nox = %emacs_version-%release
 # 0.2.0 for new alternatives format
 PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
@@ -341,12 +351,14 @@ BuildArch: noarch
 PreReq: %name-common = %emacs_version-%release
 Requires: emacs-X11-program
 Conflicts: app-defaults < 0.2.1-alt1
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: %shortname-X11
 Obsoletes: emacs22-X11
 Obsoletes: emacs23-X11
+Obsoletes: emacs24-X11
 Provides: emacs22-X11 = %emacs_version-%release
 Provides: emacs23-X11 = %emacs_version-%release
+Provides: emacs24-X11 = %emacs_version-%release
 
 %description X11
 This package includes things you need to run the Emacs editor in X Window
@@ -368,13 +380,15 @@ Provides: emacsen
 Provides: emacs-X11-program
 Provides: %shortname = %emacs_version-%release
 Provides: %shortname-X11 = %emacs_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs21-X11
 Obsoletes: emacs22-X11-athena
 Obsoletes: emacs23-X11-athena
+Obsoletes: emacs24-X11-athena
 Provides: emacs21-X11 = %emacs_version-%release
 Provides: emacs22-X11-athena = %emacs_version-%release
 Provides: emacs23-X11-athena = %emacs_version-%release
+Provides: emacs24-X11-athena = %emacs_version-%release
 # 0.2.0 for new alternatives format
 PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
@@ -409,11 +423,13 @@ Provides: %shortname-X11 = %emacs_version-%release
 # 0.2.0 for new alternatives format
 PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-X11-motif
 Obsoletes: emacs23-X11-motif
+Obsoletes: emacs24-X11-motif
 Provides: emacs22-X11-motif = %emacs_version-%release
 Provides: emacs23-X11-motif = %emacs_version-%release
+Provides: emacs24-X11-motif = %emacs_version-%release
 
 %description X11-motif
 Emacs-X11-motif includes the GNU Emacs text editor program for use with the X
@@ -445,11 +461,13 @@ Provides: %shortname-X11 = %emacs_version-%release
 # 0.2.0 for new alternatives format
 PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-X11-gtk
 Obsoletes: emacs23-X11-gtk
+Obsoletes: emacs24-X11-gtk
 Provides: emacs22-X11-gtk = %emacs_version-%release
 Provides: emacs23-X11-gtk = %emacs_version-%release
+Provides: emacs24-X11-gtk = %emacs_version-%release
 
 %description X11-gtk
 Emacs-X11-gtk includes the GNU Emacs text editor program for use with the X
@@ -481,7 +499,8 @@ Provides: %shortname-X11 = %emacs_version-%release
 # 0.2.0 for new alternatives format
 PreReq: alternatives >= 0.2.0
 Provides: /usr/bin/emacs
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
+Obsoletes: emacs24-X11-gtk3
 Provides: emacs24-X11-gtk3 = %emacs_version-%release
 
 %description X11-gtk3
@@ -507,8 +526,10 @@ Group: Editors
 BuildArch: noarch
 Obsoletes: emacs22-info
 Obsoletes: emacs23-info
+Obsoletes: emacs24-info
 Provides: emacs22-info = %emacs_version-%release
 Provides: emacs23-info = %emacs_version-%release
+Provides: emacs24-info = %emacs_version-%release
 Requires: %name-common = %emacs_version-%release
 
 %description info
@@ -526,11 +547,13 @@ Requires: %name-common = %emacs_version-%release
 # obsoletes old elisp-manual
 Obsoletes: %shortname-elisp-manual <= 2.8-alt1
 Provides: %shortname-elisp-manual = %emacs_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-elisp-manual
 Obsoletes: emacs23-elisp-manual
+Obsoletes: emacs24-elisp-manual
 Provides: emacs22-elisp-manual = %emacs_version-%release
 Provides: emacs23-elisp-manual = %emacs_version-%release
+Provides: emacs24-elisp-manual = %emacs_version-%release
 
 %description elisp-manual
 This package contain full description of Emacs Lisp language
@@ -548,11 +571,13 @@ Provides: gnus
 # obsoletes old gnus
 Obsoletes: %shortname-gnus <= 5.10.6
 Provides: %shortname-gnus = %gnus_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-gnus
 Obsoletes: emacs23-gnus
+Obsoletes: emacs24-gnus
 Provides: emacs22-gnus = %gnus_version-%release
 Provides: emacs23-gnus = %gnus_version-%release
+Provides: emacs24-gnus = %gnus_version-%release
 
 %description gnus
 Gnus is a program for Emacs which enable read news and mail from Emacs.
@@ -571,11 +596,13 @@ Requires: %name-gnus = %gnus_version-%release
 # obsoletes old gnus
 Obsoletes: %shortname-gnus-el <= 5.10.6
 Provides: %shortname-gnus-el = %gnus_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-gnus-el
 Obsoletes: emacs23-gnus-el
+Obsoletes: emacs24-gnus-el
 Provides: emacs22-gnus-el = %gnus_version-%release
 Provides: emacs23-gnus-el = %gnus_version-%release
+Provides: emacs24-gnus-el = %gnus_version-%release
 
 %description gnus-el
 %name-gnus-el contains the Emacs Lisp sources for the bytecode
@@ -597,11 +624,13 @@ Provides: %shortname-speedbar = %speedbar_version-%release
 Conflicts: %shortname-cedet <= 1.0-alt0.7.beta3b
 Obsoletes: %shortname-cedet-speedbar <= 0.15beta2-alt0.8.beta3b
 Provides: %shortname-cedet-speedbar = %speedbar_version-%release
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-speedbar
 Obsoletes: emacs23-speedbar
+Obsoletes: emacs24-speedbar
 Provides: emacs22-speedbar = %speedbar_version-%release
 Provides: emacs23-speedbar = %speedbar_version-%release
+Provides: emacs24-speedbar = %speedbar_version-%release
 
 %description speedbar
 Speedbar - Everything browser for Emacs.
@@ -617,11 +646,13 @@ Requires: %name-common = %emacs_version-%release
 Provides: %shortname-erc = %erc_version-%release
 # obsoletes old emacs-erc
 Obsoletes: %shortname-erc <= 5.0.4-alt1
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-erc
 Obsoletes: emacs23-erc
+Obsoletes: emacs24-erc
 Provides: emacs22-erc = %erc_version-%release
 Provides: emacs23-erc = %erc_version-%release
+Provides: emacs24-erc = %erc_version-%release
 
 %description erc
 ERC is an IRC client for Emacs.
@@ -637,8 +668,10 @@ Requires: %name-common = %emacs_version-%release
 Requires: %name-erc = %erc_version-%release
 Obsoletes: emacs22-erc-el
 Obsoletes: emacs23-erc-el
+Obsoletes: emacs24-erc-el
 Provides: emacs22-erc-el = %emacs_version-%release
 Provides: emacs23-erc-el = %emacs_version-%release
+Provides: emacs24-erc-el = %emacs_version-%release
 
 %description erc-el
 %name-erc-el contains the Emacs Lisp sources for the bytecode
@@ -657,11 +690,13 @@ BuildArch: noarch
 Requires: %name-common = %emacs_version-%release
 Provides: %shortname-tramp = %tramp_version-%release
 Obsoletes: %shortname-tramp < %tramp_version
-# emacs24 obsoletes emacs21, emacs22 and emacs23
+# emacs25 obsoletes emacs21, emacs22, emacs23 and emacs24
 Obsoletes: emacs22-tramp
 Obsoletes: emacs23-tramp
+Obsoletes: emacs24-tramp
 Provides: emacs22-tramp = %tramp_version-%release
 Provides: emacs23-tramp = %tramp_version-%release
+Provides: emacs24-tramp = %tramp_version-%release
 
 %description tramp
 TRAMP stands for `Transparent Remote (file) Access, Multiple
@@ -683,8 +718,10 @@ Requires: %name-common = %emacs_version-%release
 Requires: %name-tramp = %tramp_version-%release
 Obsoletes: emacs22-tramp-el
 Obsoletes: emacs23-tramp-el
+Obsoletes: emacs24-tramp-el
 Provides: emacs22-tramp-el = %emacs_version-%release
 Provides: emacs23-tramp-el = %emacs_version-%release
+Provides: emacs24-tramp-el = %emacs_version-%release
 
 %description tramp-el
 %name-tramp-el contains the Emacs Lisp sources for the bytecode
@@ -705,8 +742,10 @@ Obsoletes: %shortname-nxml-mode < %nxml_version
 Provides: %shortname-nxml-mode = %nxml_version-%release
 Obsoletes: emacs22-nxml-mode
 Obsoletes: emacs23-nxml-mode
+Obsoletes: emacs24-nxml-mode
 Provides: emacs22-nxml-mode = %emacs_version-%release
 Provides: emacs23-nxml-mode = %emacs_version-%release
+Provides: emacs24-nxml-mode = %emacs_version-%release
 
 %description nxml-mode
 This is a new major mode for GNU Emacs for editing XML documents. It
@@ -724,8 +763,10 @@ Requires: %name-common = %emacs_version-%release
 Requires: %name-nxml-mode = %nxml_version-%release
 Obsoletes: emacs22-nxml-mode-el
 Obsoletes: emacs23-nxml-mode-el
+Obsoletes: emacs24-nxml-mode-el
 Provides: emacs22-nxml-mode-el = %emacs_version-%release
 Provides: emacs23-nxml-mode-el = %emacs_version-%release
+Provides: emacs24-nxml-mode-el = %emacs_version-%release
 
 %description nxml-mode-el
 %name-nxml-mode-el contains the Emacs Lisp sources for the bytecode
@@ -747,8 +788,10 @@ Obsoletes: %shortname-cedet < %cedet_version-%cedet_release
 Provides: %shortname-cedet = %cedet_version-%cedet_release
 Obsoletes: emacs22-cedet
 Obsoletes: emacs23-cedet
+Obsoletes: emacs24-cedet
 Provides: emacs22-cedet = %emacs_version-%release
 Provides: emacs23-cedet = %emacs_version-%release
+Provides: emacs24-cedet = %emacs_version-%release
 
 %description cedet
 CEDET - Collection of Emacs Development Enviromnent Tools
@@ -773,8 +816,10 @@ Requires: %name-common = %emacs_version
 Requires: %name-cedet = %cedet_version-%cedet_release
 Obsoletes: emacs22-cedet-el
 Obsoletes: emacs23-cedet-el
+Obsoletes: emacs24-cedet-el
 Provides: emacs22-cedet-el = %emacs_version-%release
 Provides: emacs23-cedet-el = %emacs_version-%release
+Provides: emacs24-cedet-el = %emacs_version-%release
 
 %description cedet-el
 %name-cedet-el contains the Emacs Lisp sources for the bytecode
@@ -856,12 +901,12 @@ export EMACSLOADPATH="$(pwd)"/lisp
 %define _configure_script ../configure
 %if_enabled nox
 pushd build-nox
-%configure --sharedstatedir=/var --without-all --with-pop --with-x=no --with-gpm --with-gnutls --with-selinux --with-xml2 --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --without-all --with-pop --with-x=no --with-gpm --with-gnutls --with-selinux --with-xml2 --with-wide-int
 popd
 %endif
 %if_enabled athena
 pushd build-athena
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=athena --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int
 popd
 %endif
 %if_enabled gtk
@@ -873,7 +918,7 @@ popd
 # export CFLAGS="%optflags -I%_prefix/X11R6/include"
 # export LDFLAGS="-Wl,-L%_prefix/X11R6/%_lib"
 pushd build-motif
-%configure --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int --enable-link-time-optimization
+%configure --sharedstatedir=/var --with-pop --with-x-toolkit=motif --with-png --with-jpeg --with-xpm --with-gif --with-tiff --enable-font-backend --with-freetype --with-xft --with-dbus --without-rsvg --with-wide-int
 popd
 %endif
 %if_enabled gtk3
@@ -1096,7 +1141,7 @@ popd # "$RPM_BUILD_ROOT"
 # Create file lists #
 #####################
 # INFO
-%define common_infos ada-mode.info.gz,auth.info.gz,autotype.info.gz,bovine.info.gz,calc.info.gz,ccmode.info.gz,cl.info.gz,dbus.info.gz,dired-x.info.gz,ebrowse.info.gz,ediff.info.gz,edt.info.gz,efaq.info.gz,emacs-gnutls.info.gz,emacs.info.gz,epa.info.gz,ert.info.gz,eshell.info.gz,eudc.info.gz,eww.info.gz,flymake.info.gz,forms.info.gz,htmlfontify.info.gz,idlwave.info.gz,ido.info.gz,mairix-el.info.gz,mh-e.info.gz,newsticker.info.gz,octave-mode.info.gz,org.info.gz,pcl-cvs.info.gz,pgg.info.gz,rcirc.info.gz,reftex.info.gz,remember.info.gz,sasl.info.gz,sc.info.gz,ses.info.gz,smtpmail.info.gz,srecode.info.gz,todo-mode.info.gz,url.info.gz,vip.info.gz,viper.info.gz,widget.info.gz,wisent.info.gz,woman.info.gz
+%define common_infos ada-mode.info.gz,auth.info.gz,autotype.info.gz,bovine.info.gz,calc.info.gz,ccmode.info.gz,cl.info.gz,dbus.info.gz,dired-x.info.gz,ebrowse.info.gz,ediff.info.gz,edt.info.gz,efaq.info.gz,emacs-gnutls.info.gz,emacs.info.gz,epa.info.gz,ert.info.gz,eshell.info.gz,eudc.info.gz,eww.info.gz,flymake.info.gz,forms.info.gz,htmlfontify.info.gz,idlwave.info.gz,ido.info.gz,mairix-el.info.gz,mh-e.info.gz,newsticker.info.gz,octave-mode.info.gz,org.info.gz,pcl-cvs.info.gz,pgg.info.gz,rcirc.info.gz,reftex.info.gz,remember.info.gz,sasl.info.gz,sc.info.gz,ses.info.gz,smtpmail.info.gz,srecode.info.gz,todo-mode.info.gz,url.info.gz,vhdl-mode.info.gz,vip.info.gz,viper.info.gz,widget.info.gz,wisent.info.gz,woman.info.gz
 %define gnus_infos emacs-mime,gnus,message,sieve
 %define gnus_infos_pattern gnus\\|emacs-mime\\|message\\|sieve
 %define speedbar_infos_pattern speedbar
@@ -1164,14 +1209,14 @@ printf '%%s\n' %_infodir/{%common_infos}'' > info.ls
 # Prepare the trick for linking etc/ into docs:
 ln -s $(relative %_emacs_datadir/%emacs_version/etc %_docdir/%name-%emacs_version/etc) etc/
 
-# Substitute emacs24-common with emacs-common for buildreq
+# Substitute emacs25-common with emacs-common for buildreq
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 echo %shortname-common > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-common
-# Substitute emacs24-leim with emacs-leim for buildreq
+# Substitute emacs25-leim with emacs-leim for buildreq
 echo %shortname-leim > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-leim
-# Substitute emacs24-gnus with emacs-gnus for buildreq
+# Substitute emacs25-gnus with emacs-gnus for buildreq
 echo %shortname-gnus > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-gnus
-# Substitute emacs24-X11.* with emacs-X11 for buildreq
+# Substitute emacs25-X11.* with emacs-X11 for buildreq
 echo %shortname-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-X11
 %if_enabled athena
 echo %shortname-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-X11-athena
@@ -1186,7 +1231,7 @@ echo %shortname-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%na
 echo %shortname-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-X11-gtk3
 %endif
 %if_enabled nox
-# Substitute emacs24-nox with emacs-nox for buildreq
+# Substitute emacs25-nox with emacs-nox for buildreq
 echo %shortname-nox > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-nox
 %endif
 
@@ -1503,6 +1548,24 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Thu Sep 22 2016 Terechkov Evgenii <evg@altlinux.org> 25.1-alt3
+- Fix updating alternatives
+
+* Wed Sep 21 2016 Terechkov Evgenii <evg@altlinux.org> 25.1-alt2
+- Disable LTO to avoid build-time segfault (see https://debbugs.gnu.org/cgi/bugreport.cgi?bug=22522)
+
+* Mon Sep 19 2016 Terechkov Evgenii <evg@altlinux.org> 25.1-alt1
+- 25.1
+
+* Thu Jul 14 2016 Terechkov Evgenii <evg@altlinux.org> 25.0.95-alt1
+- 25.0.95
+
+* Thu May 26 2016 Terechkov Evgenii <evg@altlinux.org> 25.0.94-alt1
+- 25.0.94
+
+* Sun Apr 24 2016 Terechkov Evgenii <evg@altlinux.org> 25.0.93-alt1
+- 25.0.93
+
 * Thu Apr  7 2016 Terechkov Evgenii <evg@altlinux.org> 24.5-alt16
 - Rebuild with libgnutls30
 
