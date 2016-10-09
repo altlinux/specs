@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.75
+Version: 1.76
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -50,7 +50,7 @@ Type=Application
 
 Exec=%name-gui
 Icon=%name
-
+ 
 Name=CppCheck
 Comment=Static analysis of C/C++ code
 GenericName=Code analyzer
@@ -59,7 +59,7 @@ Categories=Development;Qt;
 @@@
 
 for i in 16 24 32 48 64; do
-	convert gui/icon.png ${i}.png
+	convert gui/cppcheck-gui.png ${i}.png
 done
 
 %build
@@ -93,11 +93,12 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 mkdir -p "%buildroot%_datadir/%name/lang"
 for N in gui/*.qm; do install -D $N %buildroot%_datadir/%name/lang/`basename $N`; done
 
-install -D %name.desktop %buildroot%_desktopdir/%name.desktop
+# install -D gui/%name.desktop %buildroot%_desktopdir/%name.desktop
+install -D gui/%name-gui.desktop %buildroot%_desktopdir/%name.desktop
 for i in 64 48 32 24 16; do
 	install -D $i.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
 done
-install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %files
 %doc readme.txt man/*.html
@@ -117,6 +118,9 @@ install -D gui/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Oct 09 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.76-alt1
+- Version 1.76
+
 * Sat Aug 13 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.75-alt1
 - Version 1.75
 
