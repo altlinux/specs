@@ -1,7 +1,7 @@
 Name: pve-docs
 Summary: Proxmox VE Documentation
-Version: 4.3.2
-Release: alt1
+Version: 4.3.5
+Release: alt2
 License: GPLv3
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: asciidoc-a2x source-highlight xmlto
+BuildRequires: asciidoc-a2x source-highlight xmlto inkscape mailcap perl(JSON.pm)
 
 %description
 Proxmox VE Documentation files
@@ -49,6 +49,12 @@ install -m644 api-viewer/index.html %buildroot%_datadir/%name/api-viewer/
 %_datadir/pve-doc-generator
 
 %changelog
+* Sun Oct 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.5-alt2
+- pve-doc-generator: fixed build man pages
+
+* Fri Oct 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.5-alt1
+- 4.3-5
+
 * Tue Oct 04 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.2-alt1
 - 4.3-2
 

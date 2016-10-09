@@ -1,7 +1,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 4.2.23
-Release: alt5
+Version: 4.3.3
+Release: alt6
 License: GPLv3
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -36,16 +36,16 @@ This package contains the Proxmox Virtual Environment management tools
 
 %package -n pve-container
 Summary: Proxmox VE Container management tool
-Version: 1.0.75
+Version: 1.0.78
 Group: Development/Perl
-Requires: pve-lxc dtach
+Requires: pve-lxc dtach perl-Crypt-Eksblowfish >= 0.009-alt5_15
 
 %description -n pve-container
 Tool to manage Linux Containers on Proxmox VE
 
 %package -n pve-firewall
 Summary: Proxmox VE Firewall
-Version: 2.0.30
+Version: 2.0.31
 Group: System/Servers
 Requires: ipset iptables iptables-ipv6
 
@@ -62,7 +62,7 @@ HA Manager Proxmox VE
 
 %package -n pve-qemu-server
 Summary: Qemu Server Tools
-Version: 4.0.89
+Version: 4.0.91
 Group: System/Servers
 Requires: nc6 socat pve-qemu-system >= 2.6.1-alt4
 Provides: qemu-server = %version-%release
@@ -147,9 +147,9 @@ __EOF__
 %config(noreplace) %_sysconfdir/vz/vznet.conf
 %config(noreplace) %_sysconfdir/vzdump.conf
 #systemd_unitdir/pvebanner.service
+#systemd_unitdir/pvenetcommit.service
 %systemd_unitdir/pvedaemon.service
 %systemd_unitdir/pve-manager.service
-%systemd_unitdir/pvenetcommit.service
 %systemd_unitdir/pveproxy.service
 %systemd_unitdir/pvestatd.service
 %systemd_unitdir/spiceproxy.service
@@ -344,8 +344,14 @@ __EOF__
 %_man5dir/*m.conf.5*
 
 %changelog
+* Sun Oct 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.3.3-alt6
+- 4.3-3
+- qemu-server 4.0-91
+- pve-firewall 2.0-31
+
 * Mon Oct 03 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.23-alt5
 - qemu-server 4.0-89
+- pve-container 1.0-78
 
 * Mon Sep 26 2016 Valery Inozemtsev <shrek@altlinux.ru> 4.2.23-alt4
 - requires pve-docs
