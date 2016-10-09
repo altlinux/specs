@@ -1,85 +1,78 @@
 Name: nano
-Version: 2.2.4
-Release: alt1.qa1.1
+Version: 2.7.0
+Release: alt1
 
-Summary: Pico editor clone with enhancements
+Summary: a user-friendly editor, a Pico clone with enhancements
 License: %gpl3plus/%fdl v1.2+
 Group: Editors
-Url: http://www.nano-editor.org/
-Packager: Artem Zolochevskiy <azol@altlinux.ru>
+Url: https://nano-editor.org/
+Packager: Artem Zolochevskiy <azol@altlinux.org>
 
-Source0: %url/dist/v2.2/%name-%version.tar.gz
-Source1: %name.desktop
-
-# Gets from Debian package:
-# debian.org/debian/pool/main/n/nano/nano_1.9.99pre2-1.diff.gz
-# and converted from xpm to png
-Source2: %name-16x16.png
-Source3: %name-32x32.png
-Source4: %name-48x48.png
-
-Source5: nanorc
-
-# You can find this sources here:
-# http://gentoo-wiki.com/TIP_Nano_Context_Highlighting
-Source6: xorg.nanorc
+# git clone --branch v2.7.0 git://git.savannah.gnu.org/nano.git
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
+# Automatically added by buildreq on Sun Oct 09 2016
+# optimized out: groff-base libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore pkg-config python-base xz
+BuildRequires: groff-extra groff-ps libmagic-devel libncursesw-devel makeinfo
+# explicitly added
 BuildRequires: desktop-file-utils
 
-# Automatically added by buildreq on Thu Dec 31 2009
-BuildRequires: groff-extra groff-ps libncursesw-devel
-# explicitly added texinfo for info files
-BuildRequires: texinfo
-
 %description
-GNU nano is a small and friendly text editor.  It aims to emulate the
-Pico text editor while also offering a few enhancements.
+GNU nano is a small and friendly text editor. It aims to emulate the
+Pico text editor while also offering several enhancements.
 
 %prep
 %setup
 
 %build
+./autogen.sh
 %configure
 %make_build
 
 %install
 %makeinstall_std
 
-# install .desktop file
-desktop-file-install --dir %buildroot%_desktopdir %SOURCE1
+# install config file
+install -d %buildroot%_sysconfdir
+sed 's/^# include "/include "/' doc/nanorc.sample > %buildroot%_sysconfdir/nanorc
+
+#install doc files to package
+install -pm644 AUTHORS IMPROVEMENTS NEWS README THANKS TODO %buildroot%_docdir/%name
+xz %buildroot%_docdir/%name/NEWS
+install -Dpm644 doc/nanorc.sample %buildroot%_docdir/%name/examples/nanorc.sample
+mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
 
 # install icons
-install -pD -m 644 %SOURCE2 %buildroot%_miconsdir/%name.png
-install -pD -m 644 %SOURCE3 %buildroot%_niconsdir/%name.png
-install -pD -m 644 %SOURCE4 %buildroot%_liconsdir/%name.png
+install -Dpm644 %name-16x16.png %buildroot%_miconsdir/%name.png
+install -Dpm644 %name-32x32.png %buildroot%_niconsdir/%name.png
+install -Dpm644 %name-48x48.png %buildroot%_liconsdir/%name.png
 
-# install config file
-install -pD -m 644 %SOURCE5 %buildroot%_sysconfdir/nanorc
+# install .desktop file
+desktop-file-install --dir %buildroot%_desktopdir %name.desktop
 
-# additional files for syntax highlighting
-install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/xorg.nanorc
-
-# find *.mo files and mans for nano
-%find_lang --with-man %name
-
-# find mans for nanorc only
-%find_lang --without-mo --append --with-man nanorc --output %name.lang
+# list of language specific files
+%find_lang --with-man --all-name %name
 
 %files -f %name.lang
-%doc ABOUT-NLS AUTHORS BUGS NEWS README README.SVN THANKS TODO UPGRADE
-%doc doc/faq.html doc/nanorc.sample
-%_bindir/%name
-%_bindir/r%name
+%doc %_docdir/%name-%version
+%_bindir/*
 %_datadir/%name/
-%_infodir/%name.info.*
-%_desktopdir/%name.desktop
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_infodir/*
+%_man1dir/*
+%_man5dir/*
+%_miconsdir/*
+%_niconsdir/*
+%_liconsdir/*
+%_desktopdir/*
 %config(noreplace) %_sysconfdir/nanorc
 
 %changelog
+* Sun Oct 09 2016 Artem Zolochevskiy <azol@altlinux.ru> 2.7.0-alt1
+- New upstream release.
+- Removed third-party syntax highlighting (xorg).
+- Minimalistic system-wide settings: include color syntaxes only
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.2.4-alt1.qa1.1
 - NMU: added BR: texinfo
 
