@@ -1,5 +1,5 @@
 Name: repocop-report-qa-robot
-Version: 0.40
+Version: 0.41
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ install -m755 bin/* $RPM_BUILD_ROOT%_datadir/repocop-report-email/bin/
 %_datadir/repocop-report-email
 
 %changelog
+* Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
+- use non-modified copy of qa-robot 0.3.9
+
 * Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.40-alt1
 - use formatting routines
 - use non-modified copy of qa-robot 0.3.8
