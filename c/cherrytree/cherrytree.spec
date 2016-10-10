@@ -1,6 +1,6 @@
 Name: cherrytree
-Version: 0.36.3
-Release: alt3
+Version: 0.37.5
+Release: alt1
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8):  Записная книжка иерархической структуры для заметок
@@ -73,6 +73,9 @@ rm -rf %buildroot%python_sitelibdir_noarch/
 
 
 %changelog
+* Mon Oct 10 2016 Konstantin Artyushkin <akv@altlinux.org> 0.37.5-alt1
+- new version
+
 * Fri Mar 25 2016 Konstantin Artyushkin <akv@altlinux.org> 0.36.3-alt3
 - fix spellcheck requares
 
