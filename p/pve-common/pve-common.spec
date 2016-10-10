@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: Proxmox VE base library
 Version: 4.0.74
-Release: alt6
+Release: alt7
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -48,6 +48,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.74-alt7
+- OVS_OPTIONS uniquify
+
 * Fri Oct 07 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.74-alt6
 - OVS bugfixes
 
