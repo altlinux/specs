@@ -1,88 +1,52 @@
-%def_enable shared
-%def_enable static
-# FIXME script require bash 4
-%def_disable sysvinit
-%def_disable systemd
-%def_with selinux
+%define _libexecdir %_prefix/libexec
 
 Name: zfs
-%define lname lib%name
-Version: 0.6.3
-Release: alt12
+Version: 0.6.5.8
+Release: alt1
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
-URL: http://zfsonlinux.org
-Source: http://archive.zfsonlinux.org/downloads/zfsonlinux/%name/%name-%version.tar
-Patch: %name-%version-%release.patch
+URL: http://zfsonlinux.org/
 Conflicts: fuse-zfs
+Requires: spl-utils
 
-BuildRequires: zlib-devel libuuid-devel %{?_with_selinux:libselinux-devel} rpm-build-kernel
+Source0: %name-%version.tar.gz
+Patch: zfs-0.6.5.8-conf-alt.patch
+
+BuildRequires: libblkid-devel libuuid-devel zlib-devel rpm-build-kernel
 
 %description
-ZFS is an advanced file system and volume manager which was originally developed
-for Solaris and is now maintained by the Illumos community.
-ZFS on Linux, which is also known as ZoL, is currently feature complete.
-It includes fully functional and stable SPA, DMU, ZVOL, and ZPL layers.
+This package contains the ZFS command line utilities
 
+%package utils
+Summary: Native OpenZFS management utilities for Linux
+Group: System/Kernel and hardware
 
-%if_enabled shared
-%package -n %lname
+%description utils
+This package provides the zpool and zfs commands that are used to
+manage OpenZFS filesystems.
+
+%package zed
+Summary: OpenZFS Event Daemon
+Group: System/Kernel and hardware
+
+%description zed
+This package adds OpenZFS to the system initramfs with a hook
+for the initramfs-tools infrastructure.
+
+%package -n lib%name
 Summary: ZFS shared libraries
 Group: System/Libraries
 
-%description -n %lname
-ZFS is an advanced file system and volume manager which was originally developed
-for Solaris and is now maintained by the Illumos community.
-ZFS on Linux, which is also known as ZoL, is currently feature complete.
-It includes fully functional and stable SPA, DMU, ZVOL, and ZPL layers.
+%description -n lib%name
 This package contains ZFS shared libraries.
-%endif
 
-
-%package -n %lname-devel
+%package -n lib%name-devel
 Summary: ZFS development files
 Group: Development/C
-Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
 
-%description -n %lname-devel
-ZFS is an advanced file system and volume manager which was originally developed
-for Solaris and is now maintained by the Illumos community.
-ZFS on Linux, which is also known as ZoL, is currently feature complete.
-It includes fully functional and stable SPA, DMU, ZVOL, and ZPL layers.
-This package contains ZFS evelopment files.
-
-
-%if_enabled static
-%package -n %lname-devel-static
-Summary: ZFS static libraries
-Group: Development/C
-Requires: %lname-devel = %version-%release
-
-%description -n %lname-devel-static
-ZFS is an advanced file system and volume manager which was originally developed
-for Solaris and is now maintained by the Illumos community.
-ZFS on Linux, which is also known as ZoL, is currently feature complete.
-It includes fully functional and stable SPA, DMU, ZVOL, and ZPL layers.
-This package contains ZFS static libraries.
-%endif
-
-
-%package utils
-Summary: Utilities for doing and managing mounts of the Linux ZFS filesystem
-Group: System/Kernel and hardware
-%{?_enable_shared:Requires: %lname = %version-%release}
-# FIXME init script require bash >= 4
-%{?_enable_sysvinit:BuildRequires: bash >= 4}
-
-%description utils
-ZFS is an advanced file system and volume manager which was originally developed
-for Solaris and is now maintained by the Illumos community.
-ZFS on Linux, which is also known as ZoL, is currently feature complete.
-It includes fully functional and stable SPA, DMU, ZVOL, and ZPL layers.
-This package contains utilities for doing and managing mounts of the Linux ZFS
-filesystem.
-
+%description -n lib%name-devel
+This package contains ZFS development files.
 
 %package -n kernel-source-%name
 Summary: ZFS modules sources for Linux kernel
@@ -90,24 +54,14 @@ Group: Development/Kernel
 BuildArch: noarch
 Provides: kernel-src-%name = %version-%release
 Requires: kernel-source-spl = %version
-Requires: kernel-source-spl >= 0.6.3-alt2
 
 %description -n kernel-source-%name
-ZFS is an advanced file system and volume manager which was originally developed
-for Solaris and is now maintained by the Illumos community.
-ZFS on Linux, which is also known as ZoL, is currently feature complete.
-It includes fully functional and stable SPA, DMU, ZVOL, and ZPL layers.
 This package contains ZFS modules sources for Linux kernel.
-
 
 %prep
 %setup -q
 %patch -p1
-sed -i '/^AC_OUTPUT/itest "x$ZFS_CONFIG" != "xkernel" || ac_config_files="module/Makefile module/avl/Makefile module/nvpair/Makefile module/unicode/Makefile module/zcommon/Makefile module/zfs/Makefile module/zpios/Makefile"\n' configure.ac
-
-
-%build
-./autogen.sh
+sed -i 's|datarootdir|libdir|' lib/libzfs/Makefile.am
 
 tar -C .. \
 	--exclude .gitignore \
@@ -118,72 +72,111 @@ tar -C .. \
 	%name-%version/include \
 	%name-%version/{AUTHORS,COPYRIGHT,DISCLAIMER,META,OPENSOLARIS.LICENSE,configure,%name{.release,_config.h}.in}
 
+%build
+%autoreconf
 %configure \
+	--libexecdir=%_libexecdir \
 	--with-config=user \
-	%{subst_enable shared} \
-	%{subst_enable static} \
-	%{subst_enable sysvinit} \
-	%{subst_enable systemd} \
-	%{subst_with selinux} \
+	--with-udevdir=/lib/udev \
+	--with-udevruledir=%_udevrulesdir \
+	--enable-systemd \
 	--with-systemdunitdir=%_unitdir \
 	--with-systemdpresetdir=%_unitdir-preset \
-	--with-udevdir=/lib/udev \
-	--with-dracutdir=/lib/dracut \
-	--with-gnu-ld
+	--disable-sysvinit \
+	--with-blkid \
+	--with-gnu-ld \
+	--disable-static
 %make_build
 
-
 %install
-install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
-%makeinstall_std DEFAULT_INIT_DIR=%_initddir modulesloaddir=/lib/modules-load.d
+install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
+%make DESTDIR=%buildroot pkgdatadir=%_datadir/doc/%name-utils-%version/examples modulesloaddir=%_sysconfdir/modules-load.d install
 
+install -m0644 COPYRIGHT OPENSOLARIS.LICENSE %buildroot%_datadir/doc/%name-utils-%version/
 
-%if_enabled shared
-%files -n %lname
-%_libdir/*.so.*
-%endif
+mkdir -p %buildroot%_sysconfdir/modprobe.d
+cat << __EOF__ > %buildroot%_sysconfdir/modprobe.d/zfs.conf
+#options zfs zfs_autoimport_disable=0
+__EOF__
 
+%post utils
+if [ $1 -eq 1 ] ; then
+	/sbin/systemctl preset \
+		zfs-import-cache.service \
+		zfs-import-scan.service \
+		zfs-mount.service \
+		zfs-share.service \
+		>/dev/null 2>&1 || :
+fi
 
-%files -n %lname-devel
-%_includedir/*
-%{?_enable_shared:%_libdir/*.so}
+%preun utils
+if [ $1 -eq 0 ] ; then
+	/sbin/systemctl disable \
+		zfs-import-cache.service \
+		zfs-import-scan.service \
+		zfs-mount.service \
+		zfs-share.service \
+		>/dev/null 2>&1 || :
+fi
 
+%post zed
+if [ $1 -eq 1 ] ; then
+	/sbin/systemctl preset \
+		zfs-zed.service \
+		>/dev/null 2>&1 || :
+fi
 
-%if_enabled static
-%files -n %lname-devel-static
-%_libdir/*.a
-%endif
-
+%preun zed
+if [ $1 -eq 0 ] ; then
+	/sbin/systemctl disable \
+		zfs-zed.service \
+		>/dev/null 2>&1 || :
+fi
 
 %files utils
-%doc AUTHORS COPYRIGHT DISCLAIMER META OPENSOLARIS.LICENSE README*
-/sbin/*
-%_bindir/*
-%_sbindir/*
-%_man1dir/*
-%_man5dir/*
-%_man8dir/*
-%_sysconfdir/%name
-%_datadir/%name
-%_libexecdir/%name
-/lib/udev/rules.d/*
+%_datadir/doc/%name-utils-%version
+%dir %_sysconfdir/%name
+%exclude %_unitdir/zfs-zed.service
+%config(noreplace) %_sysconfdir/modprobe.d/zfs.conf
+%_sysconfdir/modules-load.d/%name.conf
+%_unitdir/*.service
+%_unitdir/%name.target
+%_unitdir-preset/50-zfs.preset
 /lib/udev/*_id
-%{?_enable_sysvinit:%_initddir/*}
-%if_enabled systemd
-%_unitdir/*
-%exclude %_unitdir-preset
-%exclude /lib/modules-load.d
-%endif
-%exclude /lib/dracut
-%exclude %_datadir/%name/zpios*
-%exclude %_datadir/%name/smb.sh
+%_udevrulesdir/*.rules
+/sbin/mount.zfs
+%exclude %_sbindir/zed
+%_sbindir/*
+%_bindir/*
+%_man1dir/*.1*
+%_man5dir/*.5*
+%_man8dir/*.8*
+%exclude %_man8dir/zed.8*
 
+%files zed
+%dir %_sysconfdir/%name/zed.d
+%_sysconfdir/%name/zed.d/zed.rc
+%_sysconfdir/%name/zed.d/zed-functions.sh
+%_unitdir/zfs-zed.service
+%_sbindir/zed
+%_libexecdir/zfs
+%_man8dir/zed.8*
+
+%files -n lib%name
+%_libdir/*.so.*
+
+%files -n lib%name-devel
+%_includedir/*
+%_pkgconfigdir/*.pc
+%_libdir/*.so
 
 %files -n kernel-source-%name
 %_usrsrc/kernel
 
-
 %changelog
+* Mon Oct 10 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt1
+- 0.6.5.8
+
 * Wed Aug 27 2014 Led <led@altlinux.ru> 0.6.3-alt12
 - upstream updates and fixes
 

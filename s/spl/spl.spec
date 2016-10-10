@@ -1,39 +1,25 @@
 Name: spl
-Version: 0.6.3
-Release: alt9
+Version: 0.6.5.8
+Release: alt1
 Summary: Solaris Porting Layer (SPL)
 License: GPLv2+
 Group: System/Kernel and hardware
 URL: http://zfsonlinux.org
-Source: http://archive.zfsonlinux.org/downloads/zfsonlinux/%name/%name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.gz
+Patch: spl-0.6.5.8-conf-alt.patch
 
 BuildRequires: rpm-build-kernel
 
 %description
-The Solaris Porting Layer (SPL) is a Linux kernel module which provides many of
-the Solaris kernel APIs. This shim layer makes it possible to run Solaris kernel
-code in the Linux kernel with relatively minimal modification. This can be
-particularly useful when you want to track upstream Solaris development closely
-and don't want the overhead of maintaining a large patch which converts Solaris
-primitives to Linux primitives.
-
+Solaris Porting Layer utilities for Linux
 
 %package utils
-Summary: SPL modules sources for Linux kernel
+Summary: Solaris Porting Layer (SPL)
 Group: System/Kernel and hardware
 Provides: splat = %version-%release
 
 %description utils
-The Solaris Porting Layer (SPL) is a Linux kernel module which provides many of
-the Solaris kernel APIs. This shim layer makes it possible to run Solaris kernel
-code in the Linux kernel with relatively minimal modification. This can be
-particularly useful when you want to track upstream Solaris development closely
-and don't want the overhead of maintaining a large patch which converts Solaris
-primitives to Linux primitives.
-This package contains splat - Solaris Porting LAyer Tests. This utility uses the
-splat.ko kernel module to test the spl.ko kernel module.
-
+Solaris Porting Layer utilities for Linux
 
 %package -n kernel-source-%name
 Summary: SPL modules sources for Linux kernel
@@ -42,23 +28,11 @@ BuildArch: noarch
 Provides: kernel-src-%name = %version-%release
 
 %description -n kernel-source-%name
-The Solaris Porting Layer (SPL) is a Linux kernel module which provides many of
-the Solaris kernel APIs. This shim layer makes it possible to run Solaris kernel
-code in the Linux kernel with relatively minimal modification. This can be
-particularly useful when you want to track upstream Solaris development closely
-and don't want the overhead of maintaining a large patch which converts Solaris
-primitives to Linux primitives.
 This package contains SPL modules sources for Linux kernel.
-
 
 %prep
 %setup -q
 %patch -p1
-sed -i '/^AC_OUTPUT/itest "x$SPL_CONFIG" != "xkernel" || ac_config_files="module/Makefile module/spl/Makefile module/splat/Makefile"\n' configure.ac
-
-
-%build
-./autogen.sh
 
 tar -C .. \
 	--exclude .gitignore \
@@ -69,26 +43,31 @@ tar -C .. \
 	%name-%version/include \
 	%name-%version/{AUTHORS,COPYING,DISCLAIMER,META,configure,%name{.release,_config.h}.in}
 
-%configure --with-config=user --with-gnu-ld
+%build
+%autoreconf
+%configure \
+	--with-config=user \
+	--with-gnu-ld
 %make_build
 
-
 %install
-install -pD -m 0644 {,%kernel_srcdir/}%name-%version.tar.xz
-%makeinstall_std
+install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
+%make DESTDIR=%buildroot install
 
 
 %files utils
-%doc AUTHORS DISCLAIMER META README*
+%doc AUTHORS DISCLAIMER META
 %_sbindir/*
-%_man1dir/*
-%_man5dir/*
+%_man1dir/*.1*
+%_man5dir/*.5*
 
 %files -n kernel-source-%name
 %_usrsrc/kernel
 
-
 %changelog
+* Mon Oct 10 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt1
+- 0.6.5.8
+
 * Wed Aug 27 2014 Led <led@altlinux.ru> 0.6.3-alt9
 - upstream fixes
 
