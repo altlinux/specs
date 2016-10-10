@@ -1,12 +1,12 @@
 %def_with libproxy
-%def_without stoken
+%def_with stoken
 %def_without liboath
 # openssl or gnutls
 %def_with openssl
 %def_without gnutls
 
 Name: openconnect
-Version: 6.00
+Version: 7.06
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -15,7 +15,6 @@ License: LGPLv2.1+
 Url: http://www.infradead.org/openconnect.html
 
 Source: %name-%version.tar
-Patch0: openconnect-snapshot.patch
 
 Requires: lib%name = %version-%release
 BuildRequires: pkgconfig(libxml-2.0)
@@ -53,7 +52,6 @@ developing applications that use %name.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %autoreconf
@@ -85,6 +83,10 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Fri Oct 07 2016 Vladimir Didenko <cow@altlinux.ru> 7.06-alt1
+- 7.06 (closes: #32583)
+- build with stoken
+
 * Wed Jul 30 2014 Alexey Shabalin <shaba@altlinux.ru> 6.00-alt1
 - 6.00
 
