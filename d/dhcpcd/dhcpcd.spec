@@ -3,7 +3,7 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 6.11.3
+Version: 6.11.5
 Release: alt1
 
 Summary: DHCP Client
@@ -46,6 +46,9 @@ which it is running. It also tries to renew the lease time according to RFC2131.
         --with-hook=lookup-hostname \
         --enable-ipv4 \
         --enable-ipv6 \
+		--enable-dhcp6 \
+		--enable-auth \
+		--enable-ipv4ll \
         --without-udev
 %make_build
 
@@ -76,6 +79,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Mon Oct 10 2016 Mikhail Efremov <sem@altlinux.org> 1:6.11.5-alt1
+- Updated to 6.11.5.
+
 * Mon Aug 22 2016 Mikhail Efremov <sem@altlinux.org> 1:6.11.3-alt1
 - Updated to 6.11.3.
 
