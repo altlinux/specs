@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.22
 %define ver_base 3.22
@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -176,6 +176,7 @@ This package contains documentation needed to develop Evolution plugins.
 %package tests
 Summary: Tests for the Evolution
 Group: Development/Other
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description tests
@@ -316,6 +317,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
