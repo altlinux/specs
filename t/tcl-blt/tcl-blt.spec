@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: 2.5
-Release: alt1
+Release: alt2
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 Copyright: MIT
@@ -98,6 +98,9 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_tcldatadir/%teaname%major/demos
 
 %changelog
+* Mon Oct 10 2016 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt2
+- fix legend entry dimensions
+
 * Sun May 15 2016 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt1
 - tcl-blt-2.5 from http://pdqi.com/w/pw/pdqi/Wize/Blt
 
