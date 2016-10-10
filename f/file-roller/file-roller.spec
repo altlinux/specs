@@ -7,11 +7,11 @@
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An archive manager for GNOME
-Summary (ru_RU.UTF-8): Архиватор для GNOME 2
+Summary (ru_RU.UTF-8): Архиватор для GNOME
 Group: File tools
 License: %gpl2plus
 Url: http://fileroller.sourceforge.net
@@ -19,8 +19,8 @@ Url: http://fileroller.sourceforge.net
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.28.2-alt-7z.patch
 Patch1: %name-3.3.90-alt-zip_command.patch
-# s/x-lzop-compressed-tar/x-tzo/
-Patch2: %name-3.21.91-alt-tar.lzo_mime_type.patch
+# find ./ -type f -print0| xargs -r0 subst "s/x-lzop-compressed-tar/x-tzo/" --
+Patch2: %name-3.22.1-alt-tar.lzo_mime_type.patch
 
 # From configure.in
 %define glib_ver 2.36.0
@@ -127,6 +127,9 @@ rm -f data/%name.desktop{,.in}
 
 
 %changelog
+* Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
