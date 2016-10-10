@@ -1,6 +1,6 @@
 Name: ccache
-Version: 3.0.1
-Release: alt1.1
+Version: 3.3.2
+Release: alt1
 
 Summary: Compiler cache
 License: GPLv3+
@@ -48,6 +48,10 @@ EOF
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %changelog
+* Fri Oct 07 2016 Evgeny Sinelnikov <sin@altlinux.ru> 3.3.2-alt1
+- Update to latest release
+- Enabled -Werror compiler flag during merge with v3.3.2
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.1
 - Disabled -Werror compiler flag
 
