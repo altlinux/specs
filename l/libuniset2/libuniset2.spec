@@ -14,7 +14,7 @@
 
 Name: libuniset2
 Version: 2.5
-Release: alt17
+Release: alt19
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL
@@ -486,6 +486,14 @@ mv -f %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/%oname
 # ..
 
 %changelog
+* Tue Oct 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt19
+- Calibration: fixed bug in getValue(), refactoring
+- correction after verification static analyzer
+- LogServer: fixed bug "connection refuse"
+
+* Sat Oct 08 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt18
+- LogServer: fixed bug "do not close connection"
+
 * Fri Sep 30 2016 Pavel Vainerman <pv@altlinux.ru> 2.5-alt17
 - ModbusMultiMaster: add new check connection strategy
 - LogServer: minor fixes
