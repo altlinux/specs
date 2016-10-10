@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 # since 3.13.6
 # see https://git.gnome.org/browse/evolution-data-server/commit/?id=a2790163af4d3f375a778055d0e2699207dfd050
 %set_verify_elf_method unresolved=relaxed
@@ -24,7 +24,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Evolution Data Server
@@ -290,6 +290,9 @@ ln -s camel-lock-helper-1.2 %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
