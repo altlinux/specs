@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: epiphany
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
@@ -104,6 +104,7 @@ rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %_datadir/%name
 %_datadir/dbus-1/services/*
 %config %_datadir/glib-2.0/schemas/org.gnome.epiphany.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.epiphany.host.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.Epiphany.enums.xml
 %_datadir/GConf/gsettings/epiphany.convert
 %_man1dir/*
@@ -111,6 +112,9 @@ rm -rf build-aux aclocal.m4 /m4/libtool.m4 m4/lt*.m4
 %_datadir/appdata/epiphany.appdata.xml
 
 %changelog
+* Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

@@ -2,6 +2,7 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 %define api_ver 4.0
+%define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
 %define gtk_ver 3.0
 
 %define oname webkit
@@ -14,7 +15,7 @@
 %def_enable wayland
 
 Name: libwebkitgtk4
-Version: 2.14.0
+Version: 2.14.1
 Release: alt1
 
 Summary: Web browser engine
@@ -136,7 +137,8 @@ JavaScriptCore engine.
 Summary: JavaScriptCore shell for WebKit GTK+
 Group: Development/GNOME and GTK+
 Requires: libjavascriptcoregtk4 = %version-%release
-Conflicts: jsc
+# since 2.14.1 jsc moved to %pkglibexecdir
+#Conflicts: jsc
 
 %description -n jsc4
 jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
@@ -228,19 +230,19 @@ rm -rf Source/ThirdParty/qunit/
 
 %files -n libwebkit2gtk -f WebKit2GTK-%api_ver.lang
 %_libdir/libwebkit2gtk-%api_ver.so.*
-%dir %_libexecdir/webkit2gtk-%api_ver
-%_libexecdir/webkit2gtk-%api_ver/WebKitNetworkProcess
-%_libexecdir/webkit2gtk-%api_ver/WebKitPluginProcess
-%_libexecdir/webkit2gtk-%api_ver/WebKitPluginProcess2
-%_libexecdir/webkit2gtk-%api_ver/WebKitWebProcess
-%_libexecdir/webkit2gtk-%api_ver/WebKitDatabaseProcess
+%dir %pkglibexecdir
+%pkglibexecdir/WebKitNetworkProcess
+%pkglibexecdir/WebKitPluginProcess
+%pkglibexecdir/WebKitPluginProcess2
+%pkglibexecdir/WebKitWebProcess
+%pkglibexecdir/WebKitDatabaseProcess
 %dir %_libdir/webkit2gtk-%api_ver
 %dir %_libdir/webkit2gtk-%api_ver/injected-bundle
 %_libdir/webkit2gtk-%api_ver/injected-bundle/libwebkit2gtkinjectedbundle.so
 %doc NEWS
 
 %files -n libwebkit2gtk-devel
-%_bindir/MiniBrowser
+%pkglibexecdir/MiniBrowser
 %_libdir/libwebkit2gtk-%api_ver.so
 %dir %_includedir/webkitgtk-%api_ver
 %_includedir/webkitgtk-%api_ver/webkit2
@@ -255,10 +257,6 @@ rm -rf Source/ThirdParty/qunit/
 
 %files -n libjavascriptcoregtk4
 %_libdir/libjavascriptcoregtk-%api_ver.so.*
-#%ifarch x86_64
-#%dir %_libdir/javascriptcoregtk-%api_ver
-#%_libdir/javascriptcoregtk-%api_ver/libllvmForJSC.so
-#%endif
 
 %files -n libjavascriptcoregtk4-devel
 %_includedir/webkitgtk-%api_ver/JavaScriptCore
@@ -266,7 +264,7 @@ rm -rf Source/ThirdParty/qunit/
 %_pkgconfigdir/javascriptcoregtk-%api_ver.pc
 
 %files -n jsc4
-%_bindir/jsc*
+%pkglibexecdir/jsc*
 
 %files -n libwebkit2gtk-gir
 %_typelibdir/WebKit2-%api_ver.typelib
@@ -284,6 +282,9 @@ rm -rf Source/ThirdParty/qunit/
 
 
 %changelog
+* Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 2.14.1-alt1
+- 2.14.1
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 2.14.0-alt1
 - 2.14.0
 
