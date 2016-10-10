@@ -1,6 +1,6 @@
 Name: perl6-Shell-Command
 Version: 0.1
-Release: alt2.1a7eafc
+Release: alt3.1a7eafc
 Summary: Shell::Command Perl 6 module 
 
 Group: Development/Other
@@ -42,6 +42,9 @@ AutoProv: noperl
 %doc README LICENSE
 
 %changelog
+* Mon Sep 12 2016 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt3.1a7eafc
+- rebuild
+
 * Tue Dec 29 2015 Vladimir Lettiev <crux@altlinux.ru> 0.1-alt2.1a7eafc
 - commit 1a7eafc
 - add rpm-build-perl6 macroses
