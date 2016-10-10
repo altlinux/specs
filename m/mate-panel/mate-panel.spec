@@ -1,18 +1,18 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize libX11-devel libXau-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(cairo) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libwnck-3.0) pkgconfig(pango) pkgconfig(xrandr) python-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize libX11-devel libXau-devel libgio-devel libgtk+2-gir-devel pkgconfig(cairo) pkgconfig(dconf) pkgconfig(gdk-pixbuf-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(ice) pkgconfig(libwnck-1.0) pkgconfig(pango) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 BuildRequires: libXi-devel
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-panel
-%define version 1.12.2
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 838555a41dc08a870b408628f529b66e2c8c4054}
@@ -23,7 +23,7 @@ BuildRequires: libXi-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-panel
-Version:        %{branch}.2
+Version:        %{branch}.0
 %if 0%{?rel_build}
 Release:        alt1_1
 %else
@@ -42,23 +42,25 @@ URL:            http://mate-desktop.org
 
 Source1:        mate-panel_fedora.layout
 
+# fixes https://github.com/mate-desktop/mate-panel/issues/305
+Patch1:         mate-panel_0023-panel-Remove-popup-menu-for-items-in-applications-me.patch
+
 Requires:       %{name}-libs%{?_isa} = %{version}
 # needed as nothing else requires it
-Requires:       mate-session-manager
+Requires:       mate-session
 #for fish
-Requires:       fortune-mod
-Requires:       icon-theme-hicolor
+Requires:       fortune
 # rhbz (#1007219)
 Requires:       mate-file-manager-schemas
 
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gobject-introspection-devel
-BuildRequires:  gtk2-devel
-BuildRequires:  libcanberra-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
 BuildRequires:  libmateweather-devel
-BuildRequires:  libwnck-devel
-BuildRequires:  librsvg-devel
+BuildRequires: libwnck libwnck3-devel libwnck3-gir-devel
+BuildRequires: librsvg-devel librsvg-gir-devel
 BuildRequires:  libSM-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
@@ -93,6 +95,8 @@ Development files for mate-panel
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
 
+%patch1 -p1 -b .0023
+
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
 %else # 0%{?rel_build}
@@ -109,7 +113,7 @@ autoreconf -fisv
            --disable-schemas-compile              \
            --with-x                               \
            --libexecdir=%{_libexecdir}/mate-panel \
-           --with-gtk=2.0                         \
+           --with-gtk=3.0                         \
            --enable-introspection                 \
            --enable-gtk-doc
 
@@ -130,9 +134,6 @@ desktop-file-install \
 %{buildroot}%{_datadir}/applications/mate-panel.desktop
 
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/mate-panel/layouts/fedora.layout
-
-# remove needless gsettings convert file
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-panel.convert
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -167,6 +168,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-panel.convert
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.16.0-alt1_1
+- update to mate 1.16
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.12.2-alt1_1
 - new fc release
 

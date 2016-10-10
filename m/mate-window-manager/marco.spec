@@ -1,19 +1,18 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize imake libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(pangoxft) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xrender) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize imake libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(pangoxft) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xrender) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 %define oldname marco
-%define fedora 23
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name marco
-%define version 1.12.1
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 62a708d461e08275d6b85985f5fa13fa8fbc85f7}
@@ -24,11 +23,11 @@ BuildRequires: libcanberra-gtk2-devel
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-window-manager
-Version:       %{branch}.1
+Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_3
+Release:       alt1_1
 %else
-Release:       alt1_3
+Release:       alt1_1
 %endif
 Summary:       MATE Desktop window manager
 License:       LGPLv2+ and GPLv2+
@@ -51,17 +50,14 @@ Source5:       window.png
 Patch0:        marco_add-pixbuf-inline-icons_1.9.x.patch
 
 BuildRequires: desktop-file-utils
-BuildRequires: gtk2-devel
-BuildRequires: libcanberra-devel
-# needed for f23
-%if 0%{?fedora} > 22
-BuildRequires: libcanberra-gtk2
-%endif
-BuildRequires: libgtop2-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
+BuildRequires: libgtop-devel libgtop-gir-devel
 BuildRequires: libSM-devel
-BuildRequireS: libsoup-devel
+BuildRequireS: libsoup-devel libsoup-gir-devel libsoup-gnome-devel libsoup-gnome-gir-devel
 BuildRequires: libXdamage-devel
 BuildRequires: mate-common
+BuildRequires: mate-desktop-devel
 BuildRequires: zenity
 BuildRequires: libstartup-notification-devel
 BuildRequires: yelp-tools
@@ -142,7 +138,7 @@ NOCONFIGURE=1 ./autogen.sh
 %autoreconf -fisv
 %configure --disable-static           \
            --disable-schemas-compile  \
-           --with-gtk=2.0             \
+           --with-gtk=3.0             \
            --with-x
 
 # fix rpmlint unused-direct-shlib-dependency warning
@@ -160,9 +156,6 @@ desktop-file-install                                \
         --delete-original                           \
         --dir=%{buildroot}%{_datadir}/applications  \
 %{buildroot}%{_datadir}/applications/marco.desktop
-
-# remove needless gsettings convert file
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -190,11 +183,10 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 %{_mandir}/man1/*
 
 %files -n libmarco-private -f %{oldname}.lang
-%{_libdir}/libmarco-private.so.0*
+%{_libdir}/libmarco-private.so.1*
 %{_datadir}/glib-2.0/schemas/org.mate.marco.gschema.xml
 
 %files devel
-%{_bindir}/marco-theme-viewer
 %{_bindir}/marco-window-demo
 %{_includedir}/marco-1
 %{_libdir}/libmarco-private.so
@@ -204,6 +196,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/marco.convert
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_3
 - new fc release
 

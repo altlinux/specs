@@ -1,17 +1,17 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-introspection-1.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(polkit-agent-1) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
 # END SourceDeps(oneline)
 BuildRequires: libgtk+2-gir-devel libgtk+3-gir-devel libpolkit-gir-devel
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-polkit
-%define version 1.12.0
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 8e0c8e17e0138afa7757a1bdf8edd6f2c7b47a14}
@@ -38,9 +38,9 @@ URL:		http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
-BuildRequires:	libgtk+3-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:	mate-common
-BuildRequires:	libpolkit-devel
+BuildRequires: libpolkit-devel libpolkit-gir-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	libdbus-glib-devel
 # needed for gobject-introspection support somehow,
@@ -57,11 +57,12 @@ Integrates polkit with the MATE Desktop environment
 
 %package devel
 Group: Development/C
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}
 Summary:	Integrates polkit with the MATE Desktop environment
 
 %description devel
 Development libraries for mate-polkit
+
 
 %prep
 %setup -q%{!?rel_build:n %{name}-%{commit}}
@@ -82,9 +83,7 @@ NOCONFIGURE=1 ./autogen.sh
         --enable-accountsservice \
         --enable-gtk-doc-html
 
-
 make %{?_smp_mflags} V=1
-
 
 %install
 %{makeinstall_std}
@@ -112,6 +111,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
 - new version
 

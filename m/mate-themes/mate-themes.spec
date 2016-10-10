@@ -5,18 +5,18 @@ BuildRequires: /usr/bin/glib-gettextize
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-themes
-%define version 3.20.7
+%define version 3.22.3
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 3.20
+%global branch 3.22
 
-%global rel_ver 3.20.7
+%global rel_ver 3.22.3
 
 # Settings used for build from snapshots.
-%{!?rel_build:%global commit 5fec16803c5ff06fa31b7cab47c6d51a99f1acc7}
-%{!?rel_build:%global commit_date 20151005}
+%{!?rel_build:%global commit 59b3286ac467f19e9bce39783e71836ced239b7b}
+%{!?rel_build:%global commit_date 20160526}
 %{!?rel_build:%global shortcommit %(c=%{commit};echo ${c:0:7})}
 %{!?rel_build:%global git_ver git%{commit_date}-%{shortcommit}}
 %{!?rel_build:%global git_rel .git%{commit_date}.%{shortcommit}}
@@ -41,8 +41,8 @@ BuildArch:      noarch
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{name}/snapshot/%{name}-%{commit}.tar.xz#/%{git_tar}}
 
 BuildRequires:  mate-common
-BuildRequires: libgail-devel libgtk+2-devel
-BuildRequires:  libgdk-pixbuf-devel
+BuildRequires: gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel libgtk+2-gir-devel
+BuildRequires: libgdk-pixbuf-devel libgdk-pixbuf-gir-devel
 
 Requires:       mate-icon-theme
 Requires:       libgtk-engines-default
@@ -109,6 +109,9 @@ fi
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.22.3-alt1_1
+- update to mate 1.16
+
 * Thu May 19 2016 Igor Vlasenko <viy@altlinux.ru> 3.20.7-alt1_1
 - converted for ALT Linux by srpmconvert tools
 

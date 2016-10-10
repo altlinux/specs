@@ -1,18 +1,17 @@
 Group: System/Servers
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(dconf) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatekbd) pkgconfig(libmatekbdui) pkgconfig(libmatemixer) pkgconfig(libnotify) pkgconfig(libpulse) pkgconfig(libxklavier) pkgconfig(mate-desktop-2.0) pkgconfig(nss) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ imake libXt-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libxklavier) pkgconfig(polkit-gobject-1) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel libXi-devel
 %define _libexecdir %_prefix/libexec
-%define fedora 22
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-settings-daemon
-%define version 1.12.1
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 83fe1f587f5c6328b10a899a880275d79bf88921}
@@ -23,7 +22,7 @@ BuildRequires: libXext-devel libXi-devel
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:           mate-settings-daemon
-Version:        %{branch}.1
+Version:        %{branch}.0
 %if 0%{?rel_build}
 Release:        alt1_1
 %else
@@ -42,26 +41,21 @@ URL:            http://mate-desktop.org
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libdconf-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  gtk2-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libmatemixer-devel
-BuildRequires:  libcanberra-devel
-# needed for f23
-%if 0%{?fedora} > 22
-BuildRequires: libcanberra-gtk2
-%endif
+BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
 BuildRequires:  libmatekbd-devel
-BuildRequires:  libnotify-devel
+BuildRequires: libnotify-devel libnotify-gir-devel
 BuildRequires:  libSM-devel
 BuildRequires:  libXxf86misc-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-polkit-devel
-BuildRequires:  nss-devel
+BuildRequires: libnss-devel libnss-devel-static
 BuildRequires:  libpulseaudio-devel
 
-Requires:       libmatekbd%{?_isa} >= 0:1.6.1-1
+Requires: libmatekbd
 # needed for xrandr capplet
-Requires:       mate-control-center-filesystem
 Source44: import.info
 Requires: dconf
 
@@ -73,7 +67,7 @@ under it.
 %package devel
 Group: Development/C
 Summary:        Development files for mate-settings-daemon
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}
 
 %description devel
 This package contains the daemon which is responsible for setting the
@@ -99,7 +93,7 @@ NOCONFIGURE=1 ./autogen.sh
    --enable-polkit                     \
    --with-x                            \
    --with-nssdb                        \
-   --with-gtk=2.0
+   --with-gtk=3.0
 
 make %{?_smp_mflags} V=1
 
@@ -107,9 +101,6 @@ make %{?_smp_mflags} V=1
 %{makeinstall_std}
 
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
-
-# remove needless gsettings convert file
-rm -f %{buildroot}%{_datadir}/MateConf/gsettings/mate-settings-daemon.convert
 
 desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
 
@@ -145,6 +136,9 @@ desktop-file-validate %{buildroot}%{_sysconfdir}/xdg/autostart/mate-settings-dae
 
 
 %changelog
+* Mon Oct 10 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new version
 

@@ -1,26 +1,24 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/glib-gettextize pkgconfig(gio-2.0) pkgconfig(glib-2.0) python-devel
 # END SourceDeps(oneline)
 Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
 Name:           mate-menus
-Version:        1.12.0
-Release:        alt2_3
+Version:        1.16.0
+Release:        alt1_1
 Summary:        Displays menus for MATE Desktop
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.12/%{name}-%{version}.tar.xz
-
-Patch0:         mate-menus_add-categories.patch
+Source0:        http://pub.mate-desktop.org/releases/1.16/%{name}-%{version}.tar.xz
 
 BuildRequires:  chrpath
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
-BuildRequires:  python-devel
+BuildRequires: python-base python-dev
 
-Requires:		libmate-menus = %{version}-%{release}
+Requires:		libmate-menus = %{version}
 
 # we don't want to provide private python extension libs
 %{echo 
@@ -38,7 +36,6 @@ Displays menus for MATE Desktop
 %package -n libmate-menus
 Group: System/Libraries
 Summary: Shared libraries for mate-menus
-#Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description -n libmate-menus
 Shared libraries for mate-menus
@@ -46,7 +43,7 @@ Shared libraries for mate-menus
 %package preferences-category-menu
 Group: System/Libraries
 Summary: Categories for the preferences menu
-Requires:	libmate-menus = %{version}-%{release}
+Requires:	libmate-menus = %{version}
 
 %description preferences-category-menu
 Categories for the preferences menu
@@ -54,7 +51,7 @@ Categories for the preferences menu
 %package devel
 Group: Development/C
 Summary: Development files for mate-menus
-Requires:	libmate-menus = %{version}-%{release}
+Requires:	libmate-menus = %{version}
 
 %description devel
 Development files for mate-menus
@@ -62,16 +59,11 @@ Development files for mate-menus
 %prep
 %setup -q
 
-%patch0 -p1 -b .add-categories
-
 # fedora specific
 # fix for usage of multimedia-menus, games-menu and wine-menu packages
 sed -i -e '/<!-- End Other -->/ a\  <MergeFile>applications-merged/multimedia-categories.menu</MergeFile>' layout/mate-applications.menu
 sed -i -e '/<MergeFile>applications-merged\/multimedia-categories.menu<\/MergeFile>/ a\  <MergeFile>applications-merged/games-categories.menu</MergeFile>' layout/mate-applications.menu
 sed -i -e '/<MergeFile>applications-merged\/games-categories.menu<\/MergeFile>/ a\  <MergeFile>applications-merged/wine.menu</MergeFile>' layout/mate-applications.menu
-
-# for the patch
-NOCONFIGURE=1 ./autogen.sh
 %patch33 -p0
 %patch34 -p1
 
@@ -114,6 +106,9 @@ chrpath --delete $RPM_BUILD_ROOT%{python_sitelibdir}/matemenu.so
 
 
 %changelog
+* Thu Oct 06 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Mon Mar 28 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt2_3
 - libmate-menus no more requires mate-menus (closes: #31928)
 
