@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.3.7
+Version:  1.3.8
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,9 @@ gzip %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Tue Oct 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.3.8-alt1
+- apt-repo test: do not confuse "remote" package names with local dirs/files
+
 * Wed Jun 08 2016 Andrey Cherepanov <cas@altlinux.org> 1.3.7-alt1
 - Support https://www.altlinux.org/Autoimports sources
 
