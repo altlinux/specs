@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.36
+Version: 0.37
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Tue Oct 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
+- more mirror paths
+
 * Thu Oct 06 2016 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
 - proper diagnostics at start
 
