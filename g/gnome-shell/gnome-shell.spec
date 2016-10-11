@@ -7,7 +7,7 @@
 %def_enable gnome_bluetooth
 
 Name: gnome-shell
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -16,7 +16,7 @@ License: GPLv2+
 Url: https://wiki.gnome.org/Projects/GnomeShell
 
 %if_disabled snapshot
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -33,7 +33,7 @@ AutoReqProv: nopython
 %define session_ver 3.16
 %define clutter_ver 1.21.5
 %define gjs_ver 1.40.0
-%define mutter_ver 3.22.0
+%define mutter_ver 3.22.1
 %define gtk_ver 3.16.0
 %define gio_ver 2.46.0
 %define gstreamer_ver 1.0
@@ -54,7 +54,7 @@ AutoReqProv: nopython
 %define caribou_ver 0.4.8
 
 Requires: %name-data = %version-%release
-Requires: mutter-gnome >= %mutter_ver
+Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
 Requires: gnome-session >= %session_ver
 Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 Requires: at-spi2-atk ca-certificates polkit caribou
@@ -241,6 +241,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 

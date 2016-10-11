@@ -9,7 +9,7 @@
 %def_enable privatelib
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -18,14 +18,23 @@ Group: Graphical desktop/GNOME
 License: GPLv2+
 Url: http://ftp.gnome.org/pub/gnome/sources/%name
 
-Requires: lib%name = %epoch:%version-%release
-Requires: zenity
-
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
+
+%set_typelibdir %_libdir/%name
+%set_girdir %_libdir/%name
+
+# since 3.22 mutter forks Cogl and Clutter libraries into libmutter
+#%%filter_from_provides /[typelib\|gir]([Cally\|Clutter\|Cogl].*/d
+#%%filter_from_requires /[typelib\|gir]([Cally\|Clutter\|Cogl].*/d
+
+#https://lists.altlinux.org/pipermail/sisyphus-incominger/2016-October/444041.html
+
+Requires: lib%name = %EVR
+Requires: zenity
 
 %define gtk_ver 3.20.0
 %define gi_ver 0.9.5
@@ -62,8 +71,6 @@ BuildRequires: libwacom-devel
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel
 
-%set_typelibdir %_libdir/%name
-%set_girdir %_libdir/%name
 
 %description
 mutter is a minimal X window manager aimed at nontechnical users and is
@@ -173,6 +180,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome-control-center/keybindings/*.xml
 
 %changelog
+* Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.22.1-alt1
+- 3.22.1
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 1:3.22.0-alt1
 - 3.22.0
 
