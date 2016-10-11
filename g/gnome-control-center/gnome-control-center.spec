@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
@@ -11,7 +11,7 @@
 %def_with bluetooth
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Control Center
@@ -19,7 +19,7 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
-# par example: git archive --format=tar --prefix=gnome-control-center-3.2.2/ --output=gnome-control-center-3.2.2.tar HEAD
+# par example: git-archive-all.sh --format tar --prefix gnome-control-center-3.2.2/ gnome-control-center-3.2.2.tar
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
@@ -179,6 +179,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gettext/its/gnome-keybindings.loc
 
 %changelog
+* Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
