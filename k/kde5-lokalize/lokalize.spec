@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 16.08.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Development/Tools
@@ -20,7 +20,7 @@ Patch1: alt-find-hunspell.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kross-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libhunspell-devel python-module-google qt5-script-devel rpm-build-python3 ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-script-devel
-BuildRequires: libhunspell-devel
+BuildRequires: libhunspell-devel desktop-file-utils
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel-static
@@ -44,6 +44,11 @@ Lokalize is the localization tool for KDE and other open source software.
 %K5install_move data lokalize
 %find_lang %name --with-kde --all-name
 
+# fix menu file
+desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
+    --remove-category=Office \
+    %buildroot/%_K5xdgapp/org.kde.lokalize.desktop
+
 %files -f %name.lang
 %doc COPYING*
 %_K5bin/lokalize
@@ -55,6 +60,9 @@ Lokalize is the localization tool for KDE and other open source software.
 %_K5notif/lokalize*
 
 %changelog
+* Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt2
+- fix menu item
+
 * Mon Sep 19 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
 - new version
 
