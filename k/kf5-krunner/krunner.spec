@@ -1,7 +1,7 @@
 %define rname krunner
 
 Name: kf5-%rname
-Version: 5.26.0
+Version: 5.27.0
 Release: alt1
 %K5init altplace
 
@@ -81,6 +81,9 @@ KF5 library
 %_K5qml/org/kde/runnermodel/
 
 %changelog
+* Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1
+- new version
+
 * Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt1
 - new version
 

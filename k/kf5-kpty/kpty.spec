@@ -1,7 +1,9 @@
 %define rname kpty
 
+%define helperpath %_libexecdir/utempter/utempter
+
 Name: kf5-%rname
-Version: 5.26.0
+Version: 5.27.0
 Release: alt1
 %K5init altplace
 
@@ -16,7 +18,8 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils libcloog-isl4 libqt5-core libqt5-test libstdc++-devel python-base ruby ruby-stdlibs
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel kf5-ki18n-devel libutempter-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel kf5-ki18n-devel libutempter-devel qt5-base-devel
+BuildRequires: libutempter-devel
+BuildRequires: extra-cmake-modules gcc-c++ kf5-kcoreaddons-devel kf5-ki18n-devel qt5-base-devel
 
 %description
 This library provides primitives to interface with pseudo terminal devices
@@ -42,6 +45,7 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: KF5 library
 Requires: %name-common = %version-%release
+Requires: utempter
 %description -n libkf5pty
 KF5 library
 
@@ -50,7 +54,9 @@ KF5 library
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DUTEMPTER_EXECUTABLE=%helperpath \
+    #
 
 %install
 %K5install
@@ -71,6 +77,9 @@ KF5 library
 %_K5lib/libKF5Pty.so.*
 
 %changelog
+* Tue Oct 11 2016 Sergey V Turchin <zerg@altlinux.org> 5.27.0-alt1
+- new version
+
 * Mon Sep 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.26.0-alt1
 - new version
 
