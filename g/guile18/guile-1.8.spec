@@ -6,7 +6,7 @@
 Summary: A GNU implementation of Scheme for application extensibility
 Name: %{iname}18
 Version: %sversion.7
-Release: alt3
+Release: alt4
 Serial: 1
 Url: http://www.gnu.org/software/guile/
 
@@ -26,6 +26,7 @@ Patch: guile18-snarf-check-and-output-texi.scm.patch
 
 Patch2: guile-1.8.7-testsuite.patch
 Patch3: guile-1.8.7-testsuite2.patch
+Patch4: guile-1.8.7-mkdir-umask.patch
 
 # Automatically added by buildreq on Wed Feb 07 2007
 BuildRequires: gcc-c++ glibc-devel-static libgmp-devel libltdl-devel libncurses-devel libreadline-devel sendmail-common 
@@ -76,6 +77,7 @@ Install this package if you need to statically link your program with guile.
 
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %__subst -p 's/^libguile_la_LDFLAGS = .*/& $(GUILE_CFLAGS)/' libguile/Makefile*
 
@@ -126,6 +128,9 @@ make check
 %_libdir/lib*.a
 
 %changelog
+* Tue Oct 11 2016 Mikhail Efremov <sem@altlinux.org> 1:1.8.7-alt4
+- Remove 'umask' calls from 'mkdir'.
+
 * Thu Apr 07 2016 Mikhail Efremov <sem@altlinux.org> 1:1.8.7-alt3
 - Don't specify extension for manpages.
 - tests: Update srfi-14.test.
