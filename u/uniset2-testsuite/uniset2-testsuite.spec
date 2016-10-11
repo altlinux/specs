@@ -2,7 +2,7 @@
 
 Name: uniset2-testsuite
 Version: 2.3
-Release: alt6
+Release: alt10
 Summary: UniSet test suite
 Group: Development/Python
 License: LGPL
@@ -12,9 +12,9 @@ Source: %name-%version.tar
 # optimized out: pkg-config python-base python-devel python-modules
 BuildRequires: python-module-distribute
 
-BuildRequires: python-module-uniset2 >= 2.0-alt6.M70P.7.Build1
+BuildRequires: python-module-uniset2 >= 2.5-alt6
 
-Requires: python-module-uniset2 >= 2.0-alt6.M70P.7.Build1
+Requires: python-module-uniset2 >= 2.5-alt6
 
 %if_enabled doc
 BuildRequires: doxygen
@@ -101,6 +101,18 @@ ln -s %python_sitelibdir/%name/%name-conv.py %buildroot/%_bindir/uniset2-testsui
 %endif
 
 %changelog
+* Tue Oct 11 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt10
+- fixed bug 'change directory' for 'outlink'
+
+* Thu Sep 01 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt9
+- added support --supplier-name 
+
+* Fri Jul 29 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt8
+- fixed bug in 2.3-alt7 
+
+* Fri Jul 29 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt7
+- add supported list of tests for --test-name prop=test1,prop2=test2,...
+
 * Thu Jul 14 2016 Pavel Vainerman <pv@altlinux.ru> 2.3-alt6
 - fixed trace call format (build only 'fail trace path')
 
