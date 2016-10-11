@@ -9,7 +9,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -26,8 +26,8 @@ Obsoletes: %oldname < 2.14.2-alt1
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_python3_compile_include %_libdir/%name/plugins
-# required dogtail and behave use puthon2
+%add_python3_path %_libdir/%name/plugins
+# required dogtail and behave use python2
 #%{?_enable_installed_tests:%_libexecdir/%name/installed-tests}
 BuildPreReq: rpm-build-python3 python3-devel
 
@@ -165,6 +165,9 @@ the functionality of the EOG GUI.
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.5-alt1
+- 3.20.5
+
 * Sun Aug 21 2016 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
 - 3.20.4 (CVE-2016-6855)
 

@@ -5,7 +5,7 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: EOG plugins
@@ -20,7 +20,7 @@ Requires: eog >= %ver_major libpeas-python3-loader
 # use python3
 AutoReqProv: nopython
 %define __python %nil
-%add_python3_compile_include %_libdir/%_name/plugins
+%add_python3_path %_libdir/%_name/plugins
 BuildPreReq: rpm-build-python3 python3-devel
 Requires: libpeas-python3-loader
 
@@ -103,6 +103,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Tue Oct 11 2016 Yuri N. Sedunov <aris@altlinux.org> 3.16.5-alt1
+- 3.16.5
+
 * Mon May 09 2016 Yuri N. Sedunov <aris@altlinux.org> 3.16.4-alt1
 - 3.16.4
 
