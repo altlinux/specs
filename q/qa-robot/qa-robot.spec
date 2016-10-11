@@ -1,5 +1,5 @@
 Name: qa-robot
-Version: 0.3.7
+Version: 0.3.9
 Release: alt1
 
 Summary: Simple notification system
@@ -36,6 +36,12 @@ and (possibly) updated entries.  See qa-robot(1) for details.
 %_man1dir/*.*
 
 %changelog
+* Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1
+- fix for mutt 1.5 (thanks to glebfm@)
+
+* Mon Oct 10 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.8-alt1
+- proper workdir definition
+
 * Fri Oct 07 2016 Igor Vlasenko <viy@altlinux.ru> 0.3.7-alt1
 - rpm 404 -> 413 migration: use portable subset of perl-RPM
 
