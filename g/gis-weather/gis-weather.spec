@@ -1,6 +1,6 @@
 Name:		gis-weather
 Version:	0.8.0
-Release:	alt1.1
+Release:	alt1.2
 License:	GPLv3
 Summary:	Customizable weather widget
 Url:		http://sourceforge.net/projects/gis-weather
@@ -20,7 +20,13 @@ BuildRequires: dos2unix python3 rpm-build-gir
 
 Requires: python3-module-pygobject3 python3-module-pycairo
 
-%add_python3_compile_include %_datadir/%name
+%add_python3_path %_datadir/%name
+# This is not realy needed here (when there are no subpackages), because
+# all of the deps get self-satisfied internally in python3.req.py
+# (but in future that feature may be turned off):
+%allow_python3_import_path %_datadir/%name
+# More precise deps:
+%python3_req_hier
 # libaptindicator is not package in ALT Linux
 %add_typelib_req_skiplist typelib(AppIndicator3)
 
@@ -61,6 +67,10 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Tue Oct 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.2
+- rebuild with rpm-build-python3-0.1.10.10-alt1 (more deps are found)
+- %%python3_req_hier for more precise deps.
+
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
   (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
