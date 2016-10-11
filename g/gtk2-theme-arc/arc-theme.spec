@@ -1,6 +1,6 @@
 Name: gtk2-theme-arc
-Version: 20160331
-Release: alt1.git20160331
+Version: 20161005
+Release: alt1.git20161005
 Summary: Arc GTK theme
 
 Group: Graphical desktop/GNOME
@@ -53,6 +53,9 @@ Requires: libgtk-engine-murrine
 %_datadir/themes/Arc-Darker/*
 
 %changelog
+* Tue Oct 11 2016 Konstantin Artyushkin <akv@altlinux.org> 20161005-alt1.git20161005
+- new version
+
 * Mon Apr 04 2016 Konstantin Artyushkin <akv@altlinux.org> 20160331-alt1.git20160331
 - new version
 
