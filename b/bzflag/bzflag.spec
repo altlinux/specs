@@ -5,8 +5,8 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.6
-Release: alt4
+Version: 2.4.8
+Release: alt1
 
 Summary: A multiplayer 3D tank battle game
 License: LGPLv2.1
@@ -16,14 +16,14 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 Url: http://www.bzflag.org
 Source: %name-%version.tar
 
-Source2:  bzflag_ru_utf8.po
+# Source2:  bzflag_ru_utf8.po
 Source10: %name.16.png
 Source11: %name.32.png
 Source12: %name.48.png
 Source13: %name.menu
 Source14: bzfs.init
 
-Patch: bzflag_ru_po.patch
+# Patch: bzflag_ru_po.patch
 # PATCH-MISSING-TAG -- See http://wiki.opensuse.org/openSUSE:Packaging_Patches_guidelines
 Patch1:         %name-1.10.4-ncursespollution.patch
 
@@ -66,7 +66,7 @@ This package contains BZFlags standalone game server.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 %patch1 -p1
 
 # iconv %SOURCE2 -f utf8 -t koi8-r | catdoc -d us-ascii -s koi8-r | tr wW vV | sed \
@@ -87,43 +87,43 @@ This package contains BZFlags standalone game server.
 #-e 's/щ/s^h\`/g' \
 #-e 's/Щ/S^h\`/g' \
 
+#################################
+# cat %SOURCE2 | LC_ALL=ru_RU.utf8 sed \
+# -e '!s!ь!\`!g' \
+# -e 's/ъ/\\"/g' \
+# -e 's/ё/yo/g' \
+# -e 's/щ/$/g' \
+# -e 's/Щ/$/g' \
+# -e 's/Ё/Yo/g' \
+# -e 's/в/v/g' \
+# -e 's/В/V/g' \
+# -e 's/Х/H/g' \
+# -e 's/х/h/g' \
+# -e 's/ж/zh/g' \
+# -e 's/Ж/Zh/g' \
+# -e 's/ц/c/g' \
+# -e 's/Ц/C/g' \
+# -e 's/ч/ch/g' \
+# -e 's/Ч/Ch/g' \
+# -e 's/ш/sh/g' \
+# -e 's/Ш/Sh/g' \
+# -e 's/ю/yu/g' \
+# -e 's/Ю/Yu/g' \
+# -e 's/я/ya/g' \
+# -e 's/Я/Ya/g' \
+# -e 's/ой/oj/g' \
+# -e 's/ый/ij/g' \
+# -e 's/ий/ij/g' \
+# -e 's/ай/аj/g' \
+# -e 's/уй/uj/g' \
+# -e 's/ей/ej/g' \
+# > data/l10n/bzflag_ru.po_tmp
+# 
+# iconv -c data/l10n/bzflag_ru.po_tmp -f utf8 -t koi8-u | catdoc -d us-ascii -s koi8-u > data/l10n/bzflag_ru.po
+# rm data/l10n/bzflag_ru.po_tmp
 
-cat %SOURCE2 | LC_ALL=ru_RU.utf8 sed \
--e '!s!ь!\`!g' \
--e 's/ъ/\\"/g' \
--e 's/ё/yo/g' \
--e 's/щ/$/g' \
--e 's/Щ/$/g' \
--e 's/Ё/Yo/g' \
--e 's/в/v/g' \
--e 's/В/V/g' \
--e 's/Х/H/g' \
--e 's/х/h/g' \
--e 's/ж/zh/g' \
--e 's/Ж/Zh/g' \
--e 's/ц/c/g' \
--e 's/Ц/C/g' \
--e 's/ч/ch/g' \
--e 's/Ч/Ch/g' \
--e 's/ш/sh/g' \
--e 's/Ш/Sh/g' \
--e 's/ю/yu/g' \
--e 's/Ю/Yu/g' \
--e 's/я/ya/g' \
--e 's/Я/Ya/g' \
--e 's/ой/oj/g' \
--e 's/ый/ij/g' \
--e 's/ий/ij/g' \
--e 's/ай/аj/g' \
--e 's/уй/uj/g' \
--e 's/ей/ej/g' \
-> data/l10n/bzflag_ru.po_tmp
-
-iconv -c data/l10n/bzflag_ru.po_tmp -f utf8 -t koi8-u | catdoc -d us-ascii -s koi8-u > data/l10n/bzflag_ru.po
-rm data/l10n/bzflag_ru.po_tmp
-
-subst 's/DZHo/Joy/g;s/dzho/joy/g;s/Dzho/Joy/g;s/DZH/J/g;s/dzh/j/g;s/Dzh/J/g'  data/l10n/bzflag_ru.po
-
+# subst 's/DZHo/Joy/g;s/dzho/joy/g;s/Dzho/Joy/g;s/DZH/J/g;s/dzh/j/g;s/Dzh/J/g'  data/l10n/bzflag_ru.po
+##########################################
 
 %build
 %autoreconf
@@ -206,6 +206,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Tue Oct 11 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.8-alt1
+- Version 2.4.8 (Release)
+
 * Sun Jul 31 2016 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.6-alt4
 - Version 2.4.6 (Release)
 
