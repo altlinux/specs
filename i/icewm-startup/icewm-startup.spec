@@ -3,7 +3,7 @@
 %def_without desklaunch
 Name: icewm-startup
 Version: 0.16
-Release: alt3
+Release: alt4
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -40,6 +40,19 @@ which allows one to configure IceWM default autostart via installing correspondi
 Имеющиеся модули позволяют при старте icewm обновлять локальное меню пользователя
 (если у него оно есть), запускать ivman, gkrellm, xxkb, mount-tray, WiFi manager,
 запускать рабочий стол (idesk, kdesktop) и т. д.
+
+%package apt-indicator
+Group: Graphical desktop/Icewm
+Summary: apt-indicator autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск apt-indicator при старте IceWM
+Requires: %name apt-indicator
+AutoReq: no
+
+%description apt-indicator
+apt-indicator plug-in for simple pluggable IceWM autostart manager.
+%description -l ru_RU.UTF-8 apt-indicator
+запуск apt-indicator при старте IceWM
+(Требует менеджер автозапуска программ IceWM).
 
 %package delay
 Group: Graphical desktop/Icewm
@@ -376,10 +389,11 @@ tmem=`free -m | awk '/Mem/{print $2}'`
 sleep $delay
 EOF
 
-echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/001-gkrellm
+echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/gkrellm
 echo 'kdesktop&'> %buildroot/%icewmconfdir/startup.d/kdesktop
 echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
 echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
+echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
 
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/020-idesk
 #!/bin/sh
@@ -391,7 +405,7 @@ fi
 EOF
 
 install -pD -m 644 %SOURCE1 %buildroot/%icewmconfdir/XXkb.conf
-cat <<EOF > %buildroot/%icewmconfdir/startup.d/001-xxkb
+cat <<EOF > %buildroot/%icewmconfdir/startup.d/060-xxkb
 #!/bin/sh
 # it is not wise to run non-configured xxkb, so we look 
 # whether it is configured.
@@ -404,7 +418,7 @@ if [ -e ~/.xxkbrc ] || [ -e /etc/X11/app-defaults/XXkb ]; then
 fi
 EOF
 
-cp %buildroot/%icewmconfdir/startup.d/001-xxkb %buildroot/%icewmconfdir/startup.d/060-xxkb-tray
+cp %buildroot/%icewmconfdir/startup.d/060-xxkb %buildroot/%icewmconfdir/startup.d/060-xxkb-tray
 
 %if_with desklaunch
 cat <<EOF > %buildroot/%icewmconfdir/startup.d/desklaunch
@@ -514,6 +528,9 @@ fi
 %config %icewmconfdir/shutdown
 #%_man1dir/*
 
+%files apt-indicator
+%config %icewmconfdir/startup.d/apt-indicator
+
 %files delay
 %config %icewmconfdir/startup.d/010-delay
 
@@ -523,7 +540,7 @@ fi
 %endif #desklaunch
 
 %files gkrellm
-%config %icewmconfdir/startup.d/001-gkrellm
+%config %icewmconfdir/startup.d/gkrellm
 
 %files idesk
 %config %icewmconfdir/startup.d/020-idesk
@@ -546,7 +563,7 @@ fi
 %endif #xtdesktop
 
 %files xxkb
-%config %icewmconfdir/startup.d/001-xxkb
+%config %icewmconfdir/startup.d/060-xxkb
 
 %files xxkb-tray
 %config %icewmconfdir/startup.d/060-xxkb-tray
@@ -565,6 +582,9 @@ fi
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
 %changelog
+* Tue Oct 11 2016 Igor Vlasenko <viy@altlinux.ru> 0.16-alt4
+- added apt-indicator
+
 * Mon Nov 16 2015 Igor Vlasenko <viy@altlinux.ru> 0.16-alt3
 - updated description
 
