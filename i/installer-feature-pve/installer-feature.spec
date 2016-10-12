@@ -1,0 +1,31 @@
+Name: installer-feature-pve
+Version: 0.1
+Release: alt1
+
+Summary: Prevonfigures PVE cluster node
+License: GPL
+Group: System/Configuration/Other
+Url: http://www.altlinux.org/Installer/beans
+BuildArch: noarch
+Source: %name-%version.tar
+
+%description
+Prevonfigures PVE cluster node
+See https://www.altlinux.org/PVE
+
+%prep
+%setup
+
+%install
+%define hookdir %_datadir/install2/postinstall.d
+mkdir -p %buildroot%hookdir
+install -pm755 *.sh %buildroot%hookdir/
+
+%files
+%hookdir/*
+
+%changelog
+* Wed Oct 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1-alt1
+- initial version
+
+
