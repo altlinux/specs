@@ -22,7 +22,7 @@
 %def_enable xsession
 
 Name: gdm
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -32,8 +32,6 @@ Group: Graphical desktop/GNOME
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
-# while we have no new Mesa and Xorg
-Patch: gdm-3.18.0-alt-disable_wayland.patch
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
@@ -170,7 +168,6 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup
-#%%patch -b .disable_wayland
 %patch2 -p1 -b .Xsession
 %patch7 -p1 -b .Init
 %patch11 -p1 -b .lfs
@@ -246,7 +243,7 @@ xvfb-run %make check
 %_libexecdir/gdm-simple-chooser
 %_libexecdir/gdm-wayland-session
 %_libexecdir/gdm-x-session
-/%_lib/security/pam_gdm.so
+%_pam_modules_dir/pam_gdm.so
 %doc AUTHORS ChangeLog NEWS README TODO
 %_unitdir/gdm.service
 
@@ -303,6 +300,9 @@ xvfb-run %make check
 %exclude %_sysconfdir/pam.d/gdm-pin
 
 %changelog
+* Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
