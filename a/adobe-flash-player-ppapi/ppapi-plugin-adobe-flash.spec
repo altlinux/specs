@@ -8,9 +8,9 @@
 Name: adobe-flash-player-ppapi
 %define bin_name ppapi-plugin-adobe-flash
 %define ver_fake   23
-%define ver_ix86   23.0.0.162
-%define ver_x86_64 23.0.0.162
-Release: alt3
+%define ver_ix86   23.0.0.185
+%define ver_x86_64 23.0.0.185
+Release: alt4
 Epoch: 3
 
 %define ver_real %ver_fake
@@ -133,6 +133,13 @@ echo "At this moment no x86 version of %name"
 %endif
 
 %changelog
+* Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 3:23-alt4
+- new version
+- security fixes:
+  CVE-2016-4273, CVE-2016-4286, CVE-2016-6981, CVE-2016-6982,
+  CVE-2016-6983, CVE-2016-6984, CVE-2016-6985, CVE-2016-6986,
+  CVE-2016-6987, CVE-2016-6989, CVE-2016-6990, CVE-2016-6992
+
 * Thu Sep 29 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:23-alt3
 - Revered previous change.
 
