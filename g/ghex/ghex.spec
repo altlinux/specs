@@ -5,7 +5,7 @@
 %define libname gtkhex-3
 
 Name: ghex
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Binary editor for GNOME
@@ -82,6 +82,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%libname.pc
 
 %changelog
+* Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.3-alt1
+- 3.18.3
+
 * Mon Jun 13 2016 Yuri N. Sedunov <aris@altlinux.org> 3.18.2-alt1
 - 3.18.2
 - new libgtkhex{,-devel} subpackages
