@@ -1,5 +1,5 @@
 Name: installer-feature-pve
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Prevonfigures PVE cluster node
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Oct 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.2-alt1
+- it was The Real Killer Feature! Fixed
+
 * Wed Oct 12 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.1-alt1
 - initial version
 
