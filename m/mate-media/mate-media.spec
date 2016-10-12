@@ -1,25 +1,24 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize libgio-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) pkgconfig(libmatemixer) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(unique-1.0) pkgconfig(unique-3.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize libgio-devel pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(unique-1.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-media
-Version:        1.12.1
+Version:        1.16.0
 Release:        alt1_1
 Summary:        MATE media programs
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.12/%{name}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.16/%{name}-%{version}.tar.xz
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  gtk2-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  libmatemixer-devel
 BuildRequires:  libxml2-devel
-BuildRequires:  libcanberra-devel
+BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-common
-BuildRequires:  libpulseaudio-devel
-BuildRequires:  libunique-devel
+BuildRequires:  libunique3-devel
 Source44: import.info
 Patch33: mate-media-1.10.0-alt-gst-mixer.patch
 
@@ -36,7 +35,7 @@ including a volume control.
 %configure \
         --disable-static \
         --disable-schemas-compile \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --enable-pulseaudio
 
 make %{?_smp_mflags} V=1
@@ -66,6 +65,9 @@ desktop-file-install                                                    \
 
 
 %changelog
+* Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new version
 
