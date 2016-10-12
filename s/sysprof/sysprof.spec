@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 3.22
@@ -5,10 +6,10 @@
 %define xdg_name org.gnome.Sysprof2
 %define _libexecdir %_prefix/libexec
 
-%def_enable sysprofd
+%def_with sysprofd
 
 Name: sysprof
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -16,7 +17,11 @@ Group: Development/Tools
 License: GPLv2+
 Url: http://sysprof.com
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.21.3
@@ -24,7 +29,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildRequires: gcc-c++ glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: yelp-tools gobject-introspection-devel
-%{?_enable_sysprofd:BuildRequires: systemd-devel libpolkit-devel}
+%{?_with_sysprofd:BuildRequires: systemd-devel libpolkit-devel}
 
 %description
 The Sysprof profiler is a statistical profiler based on hardware
@@ -48,7 +53,8 @@ developing applications that use GtkGHex library.
 %configure \
 	--disable-static \
 	--disable-schemas-compile \
-	%{subst_enable sysprofd}
+	%{subst_with sysprofd} \
+	--enable-compile-warnings=yes
 %make_build
 
 %install
@@ -81,6 +87,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-ui-%api_ver.pc
 
 %changelog
+* Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1 (3.22.1-1-g4b95b38)
+
 * Tue Sep 20 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
