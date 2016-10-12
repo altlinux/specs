@@ -1,18 +1,18 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize imake libXt-devel libgio-devel libgtk+2-gir-devel libgtk+3-gir-devel pkgconfig(gmodule-2.0) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-cf-files xorg-xproto-devel
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize imake libXt-devel libgio-devel libgtk+2-gir-devel pkgconfig(gmodule-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-cf-files
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname eom
-%define fedora 23
+%define fedora 24
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name eom
-%define version 1.12.2
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 7ba7e03f4d5e2ecd3c77f9d9394521b7608ca05f}
@@ -23,7 +23,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-image-viewer
-Version:       %{branch}.2
+Version:       %{branch}.0
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -39,21 +39,19 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
+BuildRequires: mate-common
 BuildRequires: zlib-devel
-BuildRequires: libcairo-gobject-devel
-BuildRequires: gtk2-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libxml2-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: mate-desktop-devel
 BuildRequires: libexif-devel
 BuildRequires: libexempi-devel
-BuildRequires: gobject-introspection-devel
-BuildRequires: libxml2-devel
-BuildRequires: librsvg-devel
-BuildRequires: mate-desktop-devel
+BuildRequires: librsvg-devel librsvg-gir-devel
 BuildRequires: liblcms2-devel
-BuildRequires: python-module-pygtk-devel
 BuildRequires: libdbus-glib-devel
-BuildRequires: libjpeg-devel
 BuildRequires: desktop-file-utils
-BuildRequires: mate-common
 
 #fix rhbz (#1008249)
 Requires:      libmate-desktop
@@ -94,8 +92,8 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure \
-   --with-gtk=2.0 \
-   --enable-python \
+   --with-gtk=3.0 \
+   --disable-python \
    --with-x \
    --disable-schemas-compile \
    --enable-introspection=yes
@@ -113,9 +111,6 @@ $RPM_BUILD_ROOT%{_datadir}/applications/eom.desktop
 find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 
 %find_lang %{oldname} --with-gnome --all-name
-
-# remove needless gsettings convert file
-rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/eom.convert
 
 
 %files -f %{oldname}.lang
@@ -143,6 +138,9 @@ rm -f  $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/eom.convert
 
 
 %changelog
+* Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.2-alt1_1
 - new fc release
 
