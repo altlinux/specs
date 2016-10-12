@@ -1,18 +1,18 @@
 Group: Archiving/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(json-glib-1.0) pkgconfig(libcaja-extension)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-compile-resources /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(glib-2.0) pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
 BuildRequires: libmagic-devel libSM-devel
 %define _libexecdir %_prefix/libexec
 %define oldname engrampa
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name engrampa
-%define version 1.12.0
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit f4611c3411c44e792f729a0780c31b0aa55fe004}
@@ -25,9 +25,9 @@ BuildRequires: libmagic-devel libSM-devel
 Name:          mate-file-archiver
 Version:       %{branch}.0
 %if 0%{?rel_build}
-Release:       alt1_2
+Release:       alt1_1
 %else
-Release:       alt1_2
+Release:       alt1_1
 %endif
 Summary:       MATE Desktop file archiver
 License:       GPLv2+ and LGPLv2+
@@ -39,16 +39,12 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-# https://github.com/mate-desktop/engrampa/commit/4f65bde
-Patch0:         engrampa_fix-for-p7zip.patch
-
 BuildRequires:  mate-common
 BuildRequires:  desktop-file-utils
 BuildRequires:  libmagic-devel
-BuildRequires:  gtk2-devel
-BuildRequires:  libjson-glib-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libjson-glib libjson-glib-devel libjson-glib-gir-devel
 BuildRequires:  mate-file-manager-devel
-BuildRequires:  mate-desktop-devel
 BuildRequires:  libSM-devel
 Source44: import.info
 
@@ -60,8 +56,6 @@ such as zip, xv, bzip2, cab, rar and other compress formats.
 
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
-
-%patch0 -p1 -b .p7zip
 
 %if 0%{?rel_build}
 #NOCONFIGURE=1 ./autogen.sh
@@ -75,7 +69,6 @@ NOCONFIGURE=1 ./autogen.sh
 %configure                 \
    --disable-schemas-compile \
    --disable-static        \
-   --with-gtk=2.0          \
    --enable-caja-actions   \
    --enable-magic          \
    --disable-packagekit
@@ -92,9 +85,6 @@ desktop-file-install                                \
 %{buildroot}%{_datadir}/applications/engrampa.desktop
 
 find %{buildroot} -name "*.la" -exec rm -f {} ';'
-
-# remove needless gsettings convert file to avoid slow session start
-rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/engrampa.convert
 
 %find_lang %{oldname} --with-gnome --all-name
 
@@ -116,6 +106,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/engrampa.convert
 
 
 %changelog
+* Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.0-alt1_1
+- update to mate 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_2
 - new version
 
