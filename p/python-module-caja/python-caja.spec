@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc pkgconfig(libcaja-extension)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/xsltproc
 # END SourceDeps(oneline)
 %py_provides caja
 %define _libexecdir %_prefix/libexec
 %define oldname python-caja
 Name:           python-module-caja
-Version:        1.12.0
+Version:        1.16.0
 Release:        alt1_1
 Epoch:          1
 Summary:        Python bindings for Caja
@@ -14,11 +14,11 @@ Summary:        Python bindings for Caja
 Group:          Development/C
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.10/%{oldname}-%{version}.tar.xz
+Source0:        http://pub.mate-desktop.org/releases/1.16/%{oldname}-%{version}.tar.xz
 
 BuildRequires:  python-devel
 BuildRequires:  mate-file-manager-devel
-BuildRequires:  python-module-pygobject3-devel
+BuildRequires:  python-module-pygobject3-common-devel
 BuildRequires:  mate-common
 Source44: import.info
 
@@ -29,7 +29,7 @@ Python bindings for Caja
 %package -n python-module-caja-devel
 Summary:        Python bindings for Caja
 Group:          Development/C
-Requires:       python-module-caja = %{epoch}:%{version}-%{release}
+Requires:       python-module-caja = %{epoch}:%{version}
 
 %description -n python-module-caja-devel
 Python bindings for Caja
@@ -73,6 +73,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 
 
 %changelog
+* Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.16.0-alt1_1
+- update to mate 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1:1.12.0-alt1_1
 - new version
 
