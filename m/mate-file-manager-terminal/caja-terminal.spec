@@ -1,8 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: python-devel
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 %define oldname caja-terminal
 # package include only on python file
@@ -10,22 +8,20 @@ BuildRequires: mate-common
 %global debug_package %{nil}
 
 Name:           mate-file-manager-terminal
-Version:        0.9
+Version:        0.9.1
 Release:        alt1_1
 Summary:        Terminal embedded in Caja
-
 Group:          Shells
 License:        GPLv3+
 URL:            https://github.com/yselkowitz/%{oldname}
-# upstream is located at github, but links from tag releases doesn't match copied link in
-# web-browser, in result fedora-rewiew-tool will fail.
-# so i decided to release on fedorapeople to have a valid download link
 Source0:        https://github.com/yselkowitz/caja-terminal/archive/%{oldname}-%{version}.tar.gz
-Source44: import.info
-BuildArch: noarch
 
+BuildRequires: gettext gettext-tools gettext-tools-python python-devel
 
 # needed for run caja-terminal
+Requires: python-module-pygtk python-module-pygtk-demo python-module-caja libvte python-module-vte python-module-pyxdg
+Source44: import.info
+BuildArch: noarch
 
 %description
 Caja Terminal is a terminal embedded in Caja, the MATE file browser.
@@ -57,6 +53,9 @@ bash install.sh --package $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 12 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.1-alt1_1
+- update to mate 1.16
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_1
 - new version
 
