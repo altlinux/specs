@@ -2,7 +2,7 @@
 %global qt_module qtscript
 
 Name: qt5-script
-Version: 5.6.1
+Version: 5.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -89,6 +89,9 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_docdir/*
 
 %changelog
+* Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
+- new version
+
 * Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - new version
 

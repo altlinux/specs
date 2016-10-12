@@ -23,8 +23,8 @@
 %define minor  5
 %define bugfix 0
 Name: qt5-base
-Version: 5.6.1
-Release: alt3
+Version: 5.6.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -41,16 +41,9 @@ Patch3: qtbase-opensource-src-5.6.0-arm.patch
 Patch4: qtbase-opensource-src-5.6.0-moc_WORDSIZE.patch
 Patch11: QTBUG-35459.patch
 # upstream
-Patch51: 0001-xcb-Properly-interpret-data.l-0-field-of-XdndStatus-.patch
-Patch52: 0011-XCB-Auto-detect-xcb-glx-also-with-xcb-qt.patch
-Patch53: 0032-xcb-Fix-drop-of-text-uri-list-and-text-html.patch
-Patch54: 0033-xcb-Fix-dropping-URL-on-Firefox-window.patch
-Patch55: 0148-xcb-Disable-GLX-pbuffers-with-Chromium-in-VMs.patch
-Patch56: 0155-xcb-Fix-transient-parent-and-Qt-Window-flag.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
-Patch101: xcb-Send-also-text-plain-when-a-text-uri-list-is-dropped.patch
-Patch102: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
+Patch101: libqt5-do-not-use-shm-if-display-name-doesnt-look-local.patch
 # ALT
 Patch1000: alt-sql-ibase-firebird.patch
 Patch1001: alt-enable-ft-lcdfilter.patch
@@ -342,17 +335,10 @@ EGL integration library for the Qt%major toolkit
 %patch3 -p1
 %patch4 -p1
 %patch11 -p1 -b .QTBUG
-%patch51 -p1
-%patch52 -p1
-%patch53 -p1
-%patch54 -p1
-%patch55 -p1
-%patch56 -p1
 %patch100 -p1
 %patch101 -p1
-%patch102 -p1
 %patch1000 -p1 -b .ibase
-%patch1001 -p1 -b .lcd
+#%patch1001 -p1 -b .lcd
 %patch1002 -p1 -b .plugin-file
 %patch1003 -p1 -b .ca-bundle
 %patch1004 -p1 -b .timezone
@@ -405,7 +391,6 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -shared \
     -pkg-config \
     -largefile \
-    -no-nis \
     -accessibility \
     -dbus-linked \
     -fontconfig \
@@ -494,7 +479,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.6.1
+Version: 5.6.2
 __EOF__
 
 # rpm macros
@@ -747,6 +732,9 @@ ln -s `relative %buildroot/%_qt5_headerdir %buildroot/%_qt5_prefix/include` %bui
 
 
 %changelog
+* Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
+- new version
+
 * Thu Jul 28 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt3
 - update SuSE patches
 

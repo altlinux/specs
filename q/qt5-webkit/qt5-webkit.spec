@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: qt5-webkit
-Version: 5.6.1
+Version: 5.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -91,6 +91,9 @@ Requires: %name-common = %EVR
 %patch11 -p1
 syncqt.pl-qt5 Source -version %version -private
 
+# fix version
+sed -i 's|@VERSION@|%version|' .qmake.conf
+
 # remove rpath
 find ./ -type f -name \*.pr\* | \
 while read f; do
@@ -156,6 +159,9 @@ export LDFLAGS="$LDFLAGS -Wl,--reduce-memory-overheads -Wl,--no-keep-memory"
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
+- new version
+
 * Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - new version
 
