@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: gnome-builder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Builder - Develop software for GNOME
@@ -32,6 +32,7 @@ Source: %name-%version.tar
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.30
+%define sysprof_ver 3.22.1
 
 # use python3
 AutoReqProv: nopython
@@ -56,7 +57,7 @@ BuildRequires: rpm-build-python3 python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libgtksourceview3-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
-%{?_enable_sysprof_plugin:BuildRequires: sysprof-devel}
+%{?_enable_sysprof_plugin:BuildRequires: sysprof-devel >= %sysprof_ver}
 
 %description
 Builder attempts to be an IDE for writing software for GNOME. It does not
@@ -191,6 +192,9 @@ This package provides noarch data needed for Gnome Builder to work.
 
 
 %changelog
+* Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
