@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Power management tools
@@ -72,6 +72,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
 - 3.22.0
 
