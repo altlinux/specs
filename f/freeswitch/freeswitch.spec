@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.6.10
-Release: alt2
+Version: 1.6.11
+Release: alt1
 Epoch: 1
 
 Summary: FreeSWITCH open source telephony platform
@@ -34,7 +34,7 @@ BuildRequires: libmemcached-devel libopus-devel libv8-3.24-devel libbroadvoice-d
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libsilk-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
 
 %ifarch %ix86 x86_64
-BuildRequires: libsangoma-devel nasm
+BuildRequires: libsangoma-devel yasm
 %endif
 
 %description
@@ -619,6 +619,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Wed Oct 12 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.11-alt1
+- new version
+
 * Tue Sep 13 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.10-alt2
 - fixed unresolved symbols in mod_flite
 
