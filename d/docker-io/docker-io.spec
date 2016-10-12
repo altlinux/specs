@@ -10,8 +10,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       %{repo}-io
-Version:    1.12.1
-Release: alt2
+Version:    1.12.2
+Release: alt1
 Summary: Automates deployment of containerized applications
 License: ASL 2.0
 Group: System/Configuration/Other
@@ -180,6 +180,9 @@ exit 0
 %{gopath}/src/%{import_path}/
 
 %changelog
+* Wed Oct 12 2016 Vladimir Didenko <cow@altlinux.org> 1.12.2-alt1
+- New version
+
 * Tue Sep 20 2016 Alexandr Boltris <alex@altlinux.org> 1.12.1-alt2
 - add docker-proxy. fixes #32489
 

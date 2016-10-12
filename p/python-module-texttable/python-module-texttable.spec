@@ -2,8 +2,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.8.4
-Release: alt1.1.1
+Version: 0.8.5
+Release: alt1
 
 Summary: Module for creating simple ASCII tables
 
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Wed Oct 12 2016 Vladimir Didenko <cow@altlinux.ru> 0.8.5-alt1
+- 0.8.5
+
 * Fri Apr 08 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.4-alt1.1.1
 - (NMU) Rebuild with python3-3.5.1-alt3 to get rid of the meaningless __pycache__/ dep
   (it is meaningless because arbitrary packages package that dir).
