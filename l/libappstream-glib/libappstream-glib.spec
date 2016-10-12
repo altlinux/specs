@@ -7,7 +7,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -116,6 +116,7 @@ GObject introspection devel data for the AppStream builder library.
 %package tests
 Summary: Tests for the %_name package
 Group: Development/Other
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description tests
@@ -197,6 +198,9 @@ the functionality of the installed %_name library.
 #%_datadir/gtk-doc/html/appstream-builder/
 
 %changelog
+* Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
+- 0.6.4
+
 * Fri Sep 09 2016 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
 - 0.6.3
 
