@@ -11,7 +11,7 @@
 %def_enable libraw
 
 Name: gthumb
-Version: %ver_major.4
+Version: %ver_major.4.1
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -167,6 +167,9 @@ This package contains headers needed to build extensions for gThumb.
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Oct 12 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.4.1-alt1
+- 3.4.4.1
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
 - 3.4.4
 
