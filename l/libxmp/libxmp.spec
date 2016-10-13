@@ -1,5 +1,5 @@
 Name: libxmp
-Version: 4.4.0
+Version: 4.4.1
 Release: alt1
 
 Summary: Module Player library for MOD, S3M, IT and others
@@ -61,6 +61,9 @@ mv "$b/%_docdir/%name/libxmp.3" "$b/%_man3dir/"
 %_docdir/%name/
 
 %changelog
+* Thu Oct 13 2016 Michael Shigorin <mike@altlinux.org> 4.4.1-alt1
+- new version (watch file uupdate)
+
 * Tue Jul 26 2016 Michael Shigorin <mike@altlinux.org> 4.4.0-alt1
 - new version (watch file uupdate)
 
