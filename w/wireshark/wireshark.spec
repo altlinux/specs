@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -277,6 +277,9 @@ _EOF_
 %_libdir/libwiretap.so
 
 %changelog
+* Thu Oct 13 2016 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
+- new version
+
 * Fri Sep 09 2016 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
 - new version
 
