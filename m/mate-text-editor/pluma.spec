@@ -1,18 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtksourceview-3.0) pkgconfig(libxml-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtksourceview-2.0) pkgconfig(libxml-2.0) pkgconfig(pygtk-2.0) pkgconfig(x11) python-module-pygobject-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname pluma
-%define fedora 23
+%define fedora 24
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name pluma
-%define version 1.12.2
+%define version 1.16.0
 %add_python_req_skip pluma
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit c1ca209172a8b3a0751ac0a1e2dbec33c1894290}
@@ -24,7 +24,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/g
 
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
-Version:  %{branch}.2
+Version:  %{branch}.0
 %if 0%{?rel_build}
 Release:  alt1_1
 %else
@@ -40,23 +40,25 @@ URL:      http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
+# disable non working python plugins for gtk3
+Patch0:        pluma_diasable-python-plugins-1.5.patch
+
 BuildRequires: desktop-file-utils
 BuildRequires: libenchant-devel
-BuildRequires: libsoup-devel
-BuildRequires: gtk2-devel
-BuildRequires: libgtksourceview-devel
+BuildRequires: libsoup-devel libsoup-gir-devel libsoup-gnome-devel libsoup-gnome-gir-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libgtksourceview3-devel libgtksourceview3-gir-devel
 BuildRequires: iso-codes-devel
 BuildRequires: libSM-devel
 BuildRequires: mate-common
-BuildRequires: python-module-pygobject-devel
+BuildRequires: python-module-pygobject3-common-devel
 BuildRequires: python-module-pygtksourceview-devel
 BuildRequires: python-devel
-BuildRequires: rarian-compat
+BuildRequires: librarian
 BuildRequires: yelp-tools
-BuildRequires: mate-desktop-devel
 
 Requires: %{name}-data = %{version}
-Requires: pygtk2
+Requires: python-module-pygtk python-module-pygtk-demo
 Requires: python-module-pygobject
 Requires: python-module-pygtksourceview
 # needed to get a gsettings schema, #959607
@@ -103,8 +105,13 @@ Obsoletes: mate-text-editor-devel < %{version}-%{release}
 %description devel
 Development files for mate-text-editor
 
+
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
+
+%patch0 -p1 -b .diasable-python-plugins
+
+NOCONFIGURE=1 ./autogen.sh
 
 %if 0%{?rel_build}
 # for releases
@@ -118,15 +125,14 @@ NOCONFIGURE=1 ./autogen.sh
 find ./*/* -type f -exec chmod 644 {} \;
 find ./*/*/* -type f -exec chmod 644 {} \;
 
-
 %build
 %configure \
         --disable-static          \
         --enable-gtk-doc-html     \
         --enable-gvfs-metadata    \
-        --enable-python           \
+        --disable-python           \
         --disable-schemas-compile \
-        --with-gtk=2.0
+        --with-gtk=3.0
 
 make %{?_smp_mflags} V=1
 
@@ -166,6 +172,7 @@ fi
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.plugins.filebrowser.gschema.xml
 %{_datadir}/glib-2.0/schemas/org.mate.pluma.plugins.time.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.pluma.plugins.spell.gschema.xml
 
 %files data -f %{oldname}.lang
 %doc README COPYING AUTHORS
@@ -179,6 +186,9 @@ fi
 
 
 %changelog
+* Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- update to 1.16
+
 * Tue Apr 05 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.2-alt1_1
 - new fc release
 
