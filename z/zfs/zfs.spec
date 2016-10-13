@@ -2,7 +2,7 @@
 
 Name: zfs
 Version: 0.6.5.8
-Release: alt1
+Release: alt2
 Summary: ZFS on Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -75,6 +75,7 @@ tar -C .. \
 %build
 %autoreconf
 %configure \
+	--sbindir=/sbin \
 	--libexecdir=%_libexecdir \
 	--with-config=user \
 	--with-udevdir=/lib/udev \
@@ -92,8 +93,16 @@ tar -C .. \
 install -pD -m0644 %name-%version.tar.xz %kernel_srcdir/%name-%version.tar.xz
 %make DESTDIR=%buildroot pkgdatadir=%_datadir/doc/%name-utils-%version/examples modulesloaddir=%_sysconfdir/modules-load.d install
 
+mkdir -p %buildroot/%_lib
+for f in %buildroot%_libdir/lib*.so; do
+	t=$(readlink "$f")
+	ln -sf ../../%_lib/"$t" "$f"
+done
+mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
+
 install -m0644 COPYRIGHT OPENSOLARIS.LICENSE %buildroot%_datadir/doc/%name-utils-%version/
 
+touch %buildroot%_sysconfdir/%name/zpool.cache
 mkdir -p %buildroot%_sysconfdir/modprobe.d
 cat << __EOF__ > %buildroot%_sysconfdir/modprobe.d/zfs.conf
 #options zfs zfs_autoimport_disable=0
@@ -136,6 +145,7 @@ fi
 %files utils
 %_datadir/doc/%name-utils-%version
 %dir %_sysconfdir/%name
+%ghost %_sysconfdir/%name/zpool.cache
 %exclude %_unitdir/zfs-zed.service
 %config(noreplace) %_sysconfdir/modprobe.d/zfs.conf
 %_sysconfdir/modules-load.d/%name.conf
@@ -144,9 +154,8 @@ fi
 %_unitdir-preset/50-zfs.preset
 /lib/udev/*_id
 %_udevrulesdir/*.rules
-/sbin/mount.zfs
-%exclude %_sbindir/zed
-%_sbindir/*
+%exclude /sbin/zed
+/sbin/*
 %_bindir/*
 %_man1dir/*.1*
 %_man5dir/*.5*
@@ -158,12 +167,12 @@ fi
 %_sysconfdir/%name/zed.d/zed.rc
 %_sysconfdir/%name/zed.d/zed-functions.sh
 %_unitdir/zfs-zed.service
-%_sbindir/zed
+/sbin/zed
 %_libexecdir/zfs
 %_man8dir/zed.8*
 
 %files -n lib%name
-%_libdir/*.so.*
+/%_lib/*.so.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -174,6 +183,12 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Thu Oct 13 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt2
+- moved libraries to /%_lib
+
+* Tue Oct 11 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt0.M80P.1
+- backport to p8 branch
+
 * Mon Oct 10 2016 Valery Inozemtsev <shrek@altlinux.ru> 0.6.5.8-alt1
 - 0.6.5.8
 
