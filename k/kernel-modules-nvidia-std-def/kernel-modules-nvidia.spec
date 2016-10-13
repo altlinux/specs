@@ -7,8 +7,8 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define module_version	367.44
-%define module_release	alt2
+%define module_version	367.57
+%define module_release	alt1
 %define flavour		std-def
 
 %setup_kernel_module %flavour
@@ -250,6 +250,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Oct 13 2016 Sergey V Turchin <zerg at altlinux dot org> 367.57-alt1..
+- new release (367.57)
 
 * Wed Sep 28 2016 Sergey V Turchin <zerg at altlinux dot org> 367.44-alt2..
 - new releases (304.132,340.98)
