@@ -1,47 +1,28 @@
 Name:           rsibreak
-Version:        0.12.3
+Version:        0.12.4
 Release:        alt1
 Summary:        A small utility which bothers you at certain intervals
 Group:          Graphical desktop/KDE
 License:        GPLv2+
-URL:            http://www.rsibreak.org
-Source0:        %{name}-%{version}.tar.bz2
-Packager:	Dmitry M. Maslennikov <rlz at altlinux dot org>
+URL:            https://projects.kde.org/projects/unmaintained/rsibreak
+Source0:        %name-%version.tar
+Packager:	Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel
-BuildRequires: kf5-kauth-devel
-BuildRequires: kf5-kbookmarks-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kdeclarative-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-kservice-devel
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-purpose-devel
-BuildRequires: kf5-solid-devel
-BuildRequires: libkf5quickaddons
-
 BuildRequires: kf5-kcrash-devel
 BuildRequires: kf5-kdbusaddons-devel
+BuildRequires: kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel
 BuildRequires: kf5-kidletime-devel
 BuildRequires: kf5-knotifications-devel
 BuildRequires: kf5-knotifyconfig-devel
 BuildRequires: kf5-ktextwidgets-devel
 BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: kf5-sonnet-devel
-
+BuildRequires: kf5-kxmlgui-devel
 BuildRequires: kf5-kdoctools-devel-static
 BuildRequires: kf5-kdoctools
 
@@ -74,6 +55,12 @@ This can help people to prevent Repetive Strain Injury.
 %_datadir/icons/hicolor/*/actions/*.png
 
 %changelog
+* Thu Oct 13 2016 Andrey Cherepanov <cas@altlinux.org> 0.12.4-alt1
+- New version 0.12.4
+- Build from upstream Git repository
+- Fix homepage and maintainer
+- Clean up KF5 requirements
+
 * Tue Jun 14 2016 Andrey Cherepanov <cas@altlinux.org> 0.12.3-alt1
 - New version
 - Build with KF5
