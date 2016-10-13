@@ -2,8 +2,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.29.5
-Release: alt2
+Version: 0.29.6
+Release: alt1
 
 BuildArch: noarch
 
@@ -22,6 +22,7 @@ Requires: nss-ldap
 Requires: libnss-myhostname
 Requires: avahi-daemon
 Requires: settime-rfc867
+Requires: bind-utils
 
 Conflicts: alterator-fbi < 5.9-alt2
 Conflicts: alterator-lookout < 1.6-alt6
@@ -68,6 +69,13 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-ad
 
 %changelog
+* Fri Oct 14 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.6-alt1
+- Support offline login and set more usable parameters for pam_winbind
+- Register machine in domain DNS during Active Directory join
+- Show real error from system-auth if it exists
+- Fix domain name detection in resolvconf
+- Add bind-utils for troubleshooting
+
 * Mon Aug 01 2016 Andrey Cherepanov <cas@altlinux.org> 0.29.5-alt2
 - Add metapackage task-auth-ad to setup authentication in Active
   Directory domain
