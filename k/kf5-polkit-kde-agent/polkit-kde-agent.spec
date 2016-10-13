@@ -2,13 +2,15 @@
 
 Name: kf5-%rname
 Version: 5.8.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 PolicyKit authentication agent
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: polkit
 
 Source: %rname-%version.tar
 
@@ -66,6 +68,9 @@ KF5 library
 %_K5notif/policykit1-kde.notifyrc
 
 %changelog
+* Thu Oct 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2
+- fix requires
+
 * Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 
