@@ -1,7 +1,7 @@
 %define soversion 10
 
 Name: libmirage
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: A CD-ROM image access library
@@ -98,6 +98,9 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.5-alt1
+- Version 3.0.5
+
 * Mon Jan 11 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.4-alt1
 - Version 3.0.4
 

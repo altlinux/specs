@@ -1,5 +1,5 @@
 Name: cdemu-client
-Version: 3.0.1
+Version: 3.0.4
 Release: alt1
 
 Summary: A simple command-line client to control CDEmu daemon
@@ -16,7 +16,7 @@ BuildRequires: cmake
 BuildRequires: intltool
 BuildRequires: rpm-build-gir
 
-Requires: cdemu-daemon >= 3.0.1
+Requires: cdemu-daemon >= 3.0.5
 
 %description
 This is cdemu-client, a simple command-line client for controlling CDEmu daemon.
@@ -56,6 +56,9 @@ popd
 %_sysconfdir/bash_completion.d/cdemu-bash-completion.sh
 
 %changelog
+* Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.4-alt1
+- Version 3.0.4
+
 * Mon Jan 11 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.1-alt1
 - Version 3.0.1
 

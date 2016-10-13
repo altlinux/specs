@@ -1,5 +1,5 @@
 %define module_name     vhba
-%define module_version  20140928
+%define module_version  20161009
 %define module_release alt1
 
 %define flavour         std-pae
@@ -60,6 +60,9 @@ cp -a %module_name.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 20161009-alt1
+- Version 20161009
 
 * Tue Oct 07 2014 Nazarov Denis <nenderus@altlinux.org> 20140928-alt1
 - Version 20140928
