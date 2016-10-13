@@ -4,8 +4,8 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 %define module RPM-Source-Convert
 
 Name: perl-%module
-Version: 0.615
-Release: alt2
+Version: 0.616
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -42,6 +42,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 0.616-alt1
+- bugfix release
+
 * Tue Oct 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.615-alt2
 - indirect RPM deps
 
