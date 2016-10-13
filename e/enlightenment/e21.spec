@@ -19,7 +19,7 @@
 %def_with pam_helper
 
 Name: enlightenment
-Version: %ver_major.2
+Version: %ver_major.3
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -133,7 +133,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` `pkg-config --cflags uuid` -
 	--enable-shared \
 	--enable-pam \
 	%{subst_enable wayland} \
-	%{subst_enable xwayland} \
+	%{?_enable_xwayland:--enable-xwayland --with-Xwayland=%_bindir/Xwayland} \
 	%{?_enable_wl_drm:--enable-wl-drm} \
 	%{?_enable_wl_x11:--enable-wl-x11} \
 	%{?_disable_install_sysactions:--disable-install-sysactions} \
@@ -208,6 +208,9 @@ ln -sf %name.menu %buildroot/%_xdgmenusdir/e-applications.menu
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Oct 13 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.3-alt1
+- 0.21.3
+
 * Mon Aug 22 2016 Yuri N. Sedunov <aris@altlinux.org> 1:0.21.2-alt1
 - 0.21.2
 
