@@ -1,16 +1,16 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(x11) pkgconfig(xext) zlib-devel pkgconfig(libcanberra-gtk)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ imake libICE-devel libSM-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(xext) xorg-cf-files zlib-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-utils
-%define version 1.12.0
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit d3538696e2b4e4372e9f526a0a4e2e4be08fc832}
@@ -40,23 +40,23 @@ URL:            http://mate-desktop.org
 BuildRequires:  desktop-file-utils
 BuildRequires: e2fsprogs-devel libe2fs-devel
 BuildRequires:  hardlink
-BuildRequires:  libcanberra-devel
-BuildRequires:  libgtop2-devel
+BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
+BuildRequires: libgtop-devel libgtop-gir-devel
 BuildRequires:  libX11-devel
 BuildRequires:  libXmu-devel
 BuildRequires:  mate-common
 BuildRequires:  mate-desktop-devel
 BuildRequires:  mate-panel-devel
 BuildRequires:  libGL-devel
-BuildRequires:  popt-devel
+BuildRequires:  libpopt-devel
 BuildRequires:  consolehelper
 BuildRequires:  yelp-tools
 
-Requires: mate-dictionary = %{version}-%{release}
-Requires: mate-screenshot = %{version}-%{release}
-Requires: mate-search-tool = %{version}-%{release}
-Requires: mate-system-log = %{version}-%{release}
-Requires: mate-disk-usage-analyzer = %{version}-%{release}
+Requires: mate-dictionary = %{version}
+Requires: mate-screenshot = %{version}
+Requires: mate-search-tool = %{version}
+Requires: mate-system-log = %{version}
+Requires: mate-disk-usage-analyzer = %{version}
 Source44: import.info
 Obsoletes: Obsoletes: mate-utils-libs < 1.5.0-alt2_1
 Conflicts: mate-utils-libs < 1.5.0-alt2_1
@@ -79,7 +79,7 @@ Summary: Development files for mate-utils
 # short-lived mate-dictionary-devel subpkg
 Obsoletes: mate-dictionary-devel < 1.6.0-8
 #Provides:  mate-dictionary-devel = %{version}-%{release}
-Requires:  mate-dictionary%{?_isa} = %{version}-%{release}
+Requires:  mate-dictionary%{?_isa} = %{version}
 %description devel
 The mate-utils-devel package contains header files and other resources
 needed to develop programs using the libraries contained in mate-utils.
@@ -87,7 +87,7 @@ needed to develop programs using the libraries contained in mate-utils.
 %package -n mate-system-log
 Group: File tools
 Summary: A log file viewer for the MATE desktop
-Requires: %{name}-common = %{version}-%{release}
+Requires: %{name}-common = %{version}
 Requires: consolehelper
 # rhbz (#1016935)
 Requires: libmate-desktop
@@ -97,21 +97,21 @@ An application that lets you view various system log files.
 %package -n mate-screenshot
 Group: File tools
 Summary: A utility to take a screen-shot of the desktop
-Requires: %{name}-common = %{version}-%{release}
+Requires: %{name}-common = %{version}
 %description -n mate-screenshot
 An application that let you take a screen-shot of your desktop.
 
 %package -n mate-dictionary
 Group: File tools
 Summary: A dictionary for MATE Desktop
-Requires: %{name}-common = %{version}-%{release}
+Requires: %{name}-common = %{version}
 %description -n mate-dictionary
 The mate-dictionary package contains a dictionary application for MATE Desktop.
 
 %package -n mate-search-tool
 Group: File tools
 Summary: A file searching tool for MATE Desktop
-Requires: %{name}-common = %{version}-%{release}
+Requires: %{name}-common = %{version}
 Requires: libmate-desktop
 %description -n mate-search-tool
 An application to search for files on your computer.
@@ -119,7 +119,7 @@ An application to search for files on your computer.
 %package -n mate-disk-usage-analyzer
 Group: File tools
 Summary: A disk usage analyzing tool for MATE Desktop
-Requires: %{name}-common = %{version}-%{release}
+Requires: %{name}-common = %{version}
 %description -n mate-disk-usage-analyzer
 An application to help analyze disk usage.
 
@@ -143,7 +143,7 @@ NOCONFIGURE=1 ./autogen.sh
     --enable-gtk-doc-html       \
     --enable-ipv6=yes           \
     --enable-maintainer-flags=no  \
-    --with-gtk=2.0              \
+    --with-gtk=3.0              \
     --with-x
 
 make %{?_smp_mflags} V=1
@@ -258,6 +258,9 @@ desktop-file-install                          \
 
 
 %changelog
+* Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- new fc release
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1_1
 - new version
 
