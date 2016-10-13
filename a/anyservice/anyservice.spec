@@ -1,6 +1,6 @@
 Name: anyservice
-Version: 0.4
-Release: alt2
+Version: 0.6
+Release: alt1
 
 Summary: Anyservice - scripts for making systemd like service from any programs
 
@@ -48,6 +48,14 @@ cp %name.sh %buildroot/%_bindir/%name
 %dir /var/log/%name/
 
 %changelog
+* Thu Oct 13 2016 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- replace $MYMONIT with monit (add monit to requires)
+
+* Fri Sep 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- implement reload (supports ExecReload too)
+- more correct options handling
+- add --quiet support for list
+
 * Tue Aug 23 2016 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt2
 - fix EnvironmentFile using
 
