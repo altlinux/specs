@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.2.3
-Release: alt2.1
+Release: alt3
 
 Summary: making C extensions for Ruby a bit easier
 Group: Development/Ruby
@@ -55,6 +55,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Mkrf*
 
 %changelog
+* Mon Sep 26 2016 Denis Medvedev <nbr@altlinux.org> 0.2.3-alt3
+- Config  changed to RbConfig
+
 * Sat Dec 08 2012 Led <led@altlinux.ru> 0.2.3-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 - fixed BuildRequires
