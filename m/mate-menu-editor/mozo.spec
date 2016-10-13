@@ -1,50 +1,46 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache pkgconfig(libmate-menu) pkgconfig(pygobject-3.0)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname mozo
-%define fedora 22
+%define fedora 24
+%global branch 1.16
+
 Name:           mate-menu-editor
-Version:        1.12.0
-Release:        alt2_1
+Version:        %{branch}.0
+Release:        alt1_1
 Summary:        MATE Desktop menu editor
 License:        LGPLv2+
 URL:            http://mate-desktop.org
-# source is from gtk3 branch at http://git.mate-desktop.org/mozo/?h=gtk3
-Source0:        https://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-gtk3-%{version}.tar.xz
-
-# rhbz (#1202674)
-# https://github.com/infirit/mozo/commit/acf2f98
-Patch0:         mozo_Use-Gtk-selection-mode.patch
+Source0:        http://pub.mate-desktop.org/releases/%{branch}/%{oldname}-%{version}.tar.xz
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  mate-common 
 BuildRequires:  mate-menus-devel
-BuildRequires:  python-module-pygobject3-devel
+BuildRequires:  python-module-pygobject3-common-devel
 BuildRequires:  python-devel
 
 Requires:       mate-menus
 
-Provides: mozo = %version-%release
-Obsoletes: mozo = 1.12.0-alt1
-Conflicts: mozo = 1.12.0-alt1
+%if 0%{?fedora} && 0%{?fedora} > 20
+%endif
 
 BuildArch:  noarch
-Patch33: mozo-gtk3-1.12.0-alt-xfce.patch
+#alt32083
+Provides: mozo = %version-%release
+Obsoletes: mozo = 1.12.0-alt1
+Conflicts: mate-menu-editor = 1.12.0-alt1
 Source44: import.info
 
 %description
 MATE Desktop menu editor
 
 %prep
-%setup -n %{oldname}-%{version} -qn %{oldname}-gtk3-%{version}
-%patch33 -p1
-#NOCONFIGURE=1 ./autogen.sh
+%setup -n %{oldname}-%{version} -q
 
-# disable for gtk3
-# %patch0 -p1 -b .selection-mode
+#NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure
@@ -72,6 +68,9 @@ desktop-file-install                                  \
 
 
 %changelog
+* Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- new fc release
+
 * Tue May 10 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt2_1
 - added conflict with mozo
 
