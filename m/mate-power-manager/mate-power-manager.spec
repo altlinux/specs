@@ -1,17 +1,17 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/docbook2man /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libgio-devel pkgconfig(cairo) pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gnome-keyring-1) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatepanelapplet-4.0) pkgconfig(libnotify) pkgconfig(mate-desktop-2.0) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(upower-glib) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender) pkgconfig(libcanberra-gtk)
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/docbook2man pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-x11-2.0) pkgconfig(gtk+-2.0) pkgconfig(unique-1.0) pkgconfig(x11) pkgconfig(xext) pkgconfig(xproto) pkgconfig(xrandr) pkgconfig(xrender)
 # END SourceDeps(oneline)
 %filter_from_requires /^hal$/d
 %define _libexecdir %_prefix/libexec
 # %%name or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name mate-power-manager
-%define version 1.12.1
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 3a68372f379644cc50d4cd9bb6f012653eddb683}
@@ -22,7 +22,7 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/docbook2man /usr/bin/glib-
 %{!?rel_build:%global git_tar %{name}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-power-manager
-Version:       %{branch}.1
+Version:       %{branch}.0
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -41,19 +41,18 @@ URL:           http://pub.mate-desktop.org
 BuildRequires: libcairo-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: desktop-file-utils
-BuildRequires: libcanberra-devel
-BuildRequires: glib2-devel
-BuildRequires: gtk2-devel
-BuildRequires: libgnome-keyring-devel
-BuildRequires: libnotify-devel
+BuildRequires: libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk2-devel libcanberra-gtk3-devel
+BuildRequires: glib2-devel libgio libgio-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libgnome-keyring-devel libgnome-keyring-gir-devel
+BuildRequires: libnotify-devel libnotify-gir-devel
 BuildRequires: mate-common
-BuildRequires: mate-control-center-devel
 BuildRequires: mate-panel-devel
 BuildRequires: libGL-devel
 BuildRequires: libpangox-compat-devel
-BuildRequires: popt-devel
-BuildRequires: libunique-devel
-BuildRequires: libupower-devel
+BuildRequires: libpopt-devel
+BuildRequires: libunique3-devel
+BuildRequires: libupower-devel libupower-gir-devel
 BuildRequires: xmlto
 Source44: import.info
 Requires: upower
@@ -77,8 +76,7 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure --disable-static --enable-applets \
      --enable-docbook-docs \
-     --enable-unique \
-     --with-gtk=2.0 \
+     --with-gtk=3.0 \
      --disable-schemas-compile
 
 make %{?_smp_mflags} V=1
@@ -118,6 +116,9 @@ rm -f  %{buildroot}%{_datadir}/MateConf/gsettings/mate-power-manager.convert
 
 
 %changelog
+* Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- update to 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1_1
 - new version
 
