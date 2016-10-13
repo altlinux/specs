@@ -1,5 +1,5 @@
 Name: kernel-source-vhba
-Version: 20140928
+Version: 20161009
 Release: alt1
 
 Summary: Source for VHBA module
@@ -9,7 +9,7 @@ Group: Development/Kernel
 URL: http://cdemu.sourceforge.net/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
-Source0: vhba-module-%version.tar.bz2
+Source0: http://downloads.sourceforge.net/cdemu/vhba-module-%version.tar.bz2
 Source1: 60-vhba.rules
 
 BuildArch: noarch
@@ -46,6 +46,12 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 20161009-alt1
+- Version 20161009
+
+* Fri Oct 10 2014 Nazarov Denis <nenderus@altlinux.org> 20140928-alt0.M70T.1
+- Build for branch t7
+
 * Tue Oct 07 2014 Nazarov Denis <nenderus@altlinux.org> 20140928-alt1
 - Version 20140928
 
