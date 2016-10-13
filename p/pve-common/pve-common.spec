@@ -1,7 +1,7 @@
 Name: pve-common
 Summary: Proxmox VE base library
 Version: 4.0.74
-Release: alt9
+Release: alt10
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -48,6 +48,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu Oct 13 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.74-alt10
+- vlan fixes
+
 * Wed Oct 12 2016 Igor Vlasenko <viy@altlinux.ru> 4.0.74-alt9
 - skip ovpn interfaces
 
