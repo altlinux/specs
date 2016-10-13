@@ -1,10 +1,11 @@
 Name:		gis-weather
-Version:	0.8.0
-Release:	alt1.2
+Version:	0.8.1
+Release:	alt1
 License:	GPLv3
 Summary:	Customizable weather widget
 Url:		http://sourceforge.net/projects/gis-weather
 Group:		Accessibility
+Packager:       Motsyo Gennadi <drool@altlinux.ru>
 Source:		%name-%version.tar.gz
 Source1:	gis-weather
 Source2:	gis-weather.desktop
@@ -28,7 +29,7 @@ Requires: python3-module-pygobject3 python3-module-pycairo
 # More precise deps:
 %python3_req_hier
 # libaptindicator is not package in ALT Linux
-%add_typelib_req_skiplist typelib(AppIndicator3)
+# #%add_typelib_req_skiplist typelib(AppIndicator3)
 
 %description
 Customizable weather widget.
@@ -54,7 +55,7 @@ dos2unix ./dialogs/settings_dialog.py
 
 %install
 install -Dm 0755 %SOURCE1 %buildroot%_bindir/%name
-install -Dm 0644 %SOURCE2 %buildroot%_datadir/applications/%name.desktop
+install -Dm 0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 install -dm 0755 %buildroot%_datadir/%name
 echo rpm > %buildroot%_datadir/%name/package
 cp -a {dialogs,gis-weather.py,icon.png,i18n,services,themes,utils} %buildroot%_datadir/%name/
@@ -67,6 +68,9 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Thu Oct 12 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.1-alt1
+- 0.8.1 (thx Motsyo Gennadi <drool@>)
+
 * Tue Oct 11 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.8.0-alt1.2
 - rebuild with rpm-build-python3-0.1.10.10-alt1 (more deps are found)
 - %%python3_req_hier for more precise deps.
