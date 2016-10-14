@@ -1,20 +1,21 @@
 Group: Publishing
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgio-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(ddjvuapi) pkgconfig(gail) pkgconfig(gail-3.0) pkgconfig(gio-2.0) pkgconfig(gmodule-2.0) pkgconfig(gobject-introspection-1.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-unix-print-3.0) pkgconfig(gtk+-x11-2.0) pkgconfig(gtk+-x11-3.0) pkgconfig(libcaja-extension) pkgconfig(libgxps) pkgconfig(libsecret-1) pkgconfig(libspectre) pkgconfig(libxml-2.0) pkgconfig(mate-desktop-2.0) pkgconfig(poppler-glib) pkgconfig(sm) pkgconfig(webkit-1.0) pkgconfig(webkit2gtk-4.0) pkgconfig(x11) pkgconfig(zlib) t1lib-devel zlib-devel
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize gcc-c++ libICE-devel libgio-devel pkgconfig(cairo) pkgconfig(cairo-pdf) pkgconfig(cairo-ps) pkgconfig(gail) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(gtk+-x11-2.0) pkgconfig(sm) pkgconfig(webkit-1.0) pkgconfig(x11) t1lib-devel zlib-devel
 # END SourceDeps(oneline)
+BuildRequires: pkgconfig(libxml-2.0)
 ## important!!! # https://bugzilla.altlinux.org/show_bug.cgi?id=28634
 Requires: mate-desktop
 %define _libexecdir %_prefix/libexec
 %define oldname atril
-%define fedora 22
+%define fedora 24
 # %%oldname or %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name atril
-%define version 1.12.2
+%define version 1.16.0
 # Conditional for release and snapshot builds. Uncomment for release-builds.
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 # Settings used for build from snapshots.
 %{!?rel_build:%global commit 5bba3723566489763aafaad3669c77f60a23d2e0}
@@ -25,7 +26,7 @@ Requires: mate-desktop
 %{!?rel_build:%global git_tar %{oldname}-%{version}-%{git_ver}.tar.xz}
 
 Name:          mate-document-viewer
-Version:       %{branch}.2
+Version:       %{branch}.0
 %if 0%{?rel_build}
 Release:       alt1_1
 %else
@@ -41,33 +42,42 @@ URL:           http://mate-desktop.org
 # Source for snapshot-builds.
 %{!?rel_build:Source0:    http://git.mate-desktop.org/%{oldname}/snapshot/%{oldname}-%{commit}.tar.xz#/%{git_tar}}
 
-BuildRequires:  gtk2-devel
-BuildRequires:  libpoppler-glib-devel
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libpoppler-gir-devel libpoppler-glib-devel
 BuildRequires:  libXt-devel
-BuildRequires:  libsecret-devel
-BuildRequires:  libglade2-devel
-BuildRequires: libtiffxx-devel libtiff-devel
+BuildRequires: libsecret-devel libsecret-gir-devel
+BuildRequires:  libglade-devel
+BuildRequires: libtiff-devel libtiffxx-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libspectre-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  mate-desktop-devel
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  mate-common
 BuildRequires:  libcairo-gobject-devel
 BuildRequires:  yelp-tools
 
 # for the xps back-end
-BuildRequires:  libgxps-devel
+BuildRequires: libgxps-devel libgxps-gir-devel
 # for the caja properties page
 BuildRequires:  mate-file-manager-devel
 # for the dvi back-end
+#BuildRequires:  kpathsea-devel
+%if 0%{?fedora} >= 24
 BuildRequires:  libkpathsea-devel
+%else
+BuildRequires:  libkpathsea-devel
+%endif
 # for the djvu back-end
 BuildRequires:  libdjvu-devel
 # for epub back-end
-BuildRequires:  webkitgtk-devel
+%if 0%{?fedora}
+BuildRequires: libwebkit2gtk-devel libwebkit2gtk-gir-devel
+%endif
+%if 0%{?rhel}
+BuildRequires: libjavascriptcoregtk3-devel libjavascriptcoregtk3-gir-devel libwebkitgtk3-devel libwebkitgtk3-gir-devel libwebkitgtk3-jsc
+%endif
 
-Requires:       mate-document-viewer-libs = %{version}-%{release}
+Requires:       mate-document-viewer-libs = %{version}
 #  fix (#974791)
 Requires:       libmate-desktop
 Requires:       mathjax
@@ -106,7 +116,7 @@ This package contains shared libraries needed for mate-document-viewer.
 %package devel
 Group: Development/C
 Summary: Support for developing back-ends for the mate-document-viewer
-Requires: mate-document-viewer-libs = %{version}-%{release}
+Requires: mate-document-viewer-libs = %{version}
 %if 0%{?fedora} && 0%{?fedora} <= 24
 Provides: mate-document-viewer-devel%{?_isa} = %{version}-%{release}
 Provides: mate-document-viewer-devel = %{version}-%{release}
@@ -152,7 +162,7 @@ This package contains a backend to let atril display xps files.
 %package caja
 Group: Graphical desktop/MATE
 Summary: Mate-document-viewer extension for caja
-Requires: mate-document-viewer = %{version}-%{release}
+Requires: mate-document-viewer = %{version}
 Requires: mate-file-manager
 %if 0%{?fedora} && 0%{?fedora} <= 24
 Provides: mate-document-viewer-caja%{?_isa} = %{version}-%{release}
@@ -168,7 +178,7 @@ It adds an additional tab called "Document" to the file properties dialog.
 %package thumbnailer
 Group: Publishing
 Summary: Atril thumbnailer extension for caja
-Requires: mate-document-viewer = %{version}-%{release}
+Requires: mate-document-viewer = %{version}
 Requires: mate-file-manager
 BuildArch: noarch
 
@@ -180,11 +190,17 @@ caja file manager.
 %prep
 %setup -n %{oldname}-%{version} -q%{!?rel_build:n %{oldname}-%{commit}}
 
+%if 0%{?rel_build}
+#NOCONFIGURE=1 ./autogen.sh
+%else # 0%{?rel_build}
+# needed for git snapshots
+NOCONFIGURE=1 ./autogen.sh
+%endif # 0%{?rel_build}
 %patch33 -p0
 %patch34 -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+autoreconf -fisv
 %configure \
         --disable-static \
         --disable-schemas-compile \
@@ -195,7 +211,7 @@ NOCONFIGURE=1 ./autogen.sh
         --enable-t1lib=no \
         --enable-pixbuf \
         --enable-xps \
-        --with-gtk=2.0 \
+        --with-gtk=3.0 \
         --enable-epub
 
 # remove unused-direct-shlib-dependency
@@ -210,10 +226,6 @@ make %{?_smp_mflags} V=1
 %find_lang %{oldname} --with-gnome --all-name
 
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -fv {} ';'
-
-# remove of gsetting,convert file, no need for this in fedora
-# because MATE starts with gsetting in fedora.
-rm -fv $RPM_BUILD_ROOT%{_datadir}/MateConf/gsettings/atril.convert
 
 
 %check
@@ -302,6 +314,9 @@ fi
 
 
 %changelog
+* Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_1
+- update to 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.2-alt1_1
 - new version
 
