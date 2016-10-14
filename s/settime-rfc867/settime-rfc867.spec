@@ -1,6 +1,6 @@
 Name: settime-rfc867 
 Version: 0.4
-Release: alt2
+Release: alt3
 
 Summary: Set ditetime from hardcoded ldap server
 License: GPL
@@ -11,6 +11,7 @@ Source: %name.init
 Source1: %name.sysconfig
 Source2: %name.service
 
+Requires: netcat
 
 %description
 Set ditetime from hardcoded ldap server via rfc867
@@ -27,6 +28,9 @@ install -pD -m0644 %SOURCE2 %buildroot%_unitdir/%name.service
 %config(noreplace) /etc/sysconfig/%name
 
 %changelog
+* Fri Oct 14 2016 Andrey Cherepanov <cas@altlinux.org> 0.4-alt3
+- add requirement of netcat
+
 * Fri May 24 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt2
 - waiting online added
 
