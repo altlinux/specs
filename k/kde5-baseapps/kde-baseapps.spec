@@ -13,7 +13,7 @@
 
 Name: kde5-baseapps
 Version: 4.97.0
-Release: alt13
+Release: alt14
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -174,9 +174,10 @@ if [ -d %buildroot/%_K5data/konqueror ] ; then
     cp -arl %buildroot/%_K5data/konqueror/* %buildroot/%_datadir/konqueror/
     rm -rf %buildroot/%_K5data/konqueror/
 fi
-%K5install_move data akregator doc dolphinpart domtreeviewer fsview kcmcss kcontrol khtml konqsidebartng kwebkitpart templates konqueror
+%K5install_move data akregator doc dolphinpart domtreeviewer fsview kcmcss kcontrol khtml kwebkitpart templates konqueror
+#konqsidebartng
 
-mv %buildroot/%_includedir/konqsidebarplugin.h %buildroot/%_K5inc/
+#mv %buildroot/%_includedir/konqsidebarplugin.h %buildroot/%_K5inc/
 
 # install alternatives
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
@@ -222,7 +223,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files -n kde5-konqueror
 %config /%_sysconfdir/alternatives/packages.d/kde5-konqueror
 %config(noreplace) %_K5xdgconf/translaterc
-%config(noreplace) %_K5xdgconf/konqsidebartngrc
+#%config(noreplace) %_K5xdgconf/konqsidebartngrc
 %_K5bin/konqueror
 %_K5bin/kfmclient
 %_K5bin/fsview
@@ -236,7 +237,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5data/kcmcss/
 %_K5data/dolphinpart/
 %_K5data/domtreeviewer/
-%_K5data/konqsidebartng/
+#%_K5data/konqsidebartng/
 %_K5data/akregator/pics/*
 %_K5data/kcontrol/pics/*
 %_K5cfg/konqueror.kcfg
@@ -254,16 +255,16 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5srv/fsview_part.desktop
 %_K5srv/*konq*.desktop
 %_K5srv/kcmperformance.desktop
-%_K5srv/kcmhistory.desktop
+#%_K5srv/kcmhistory.desktop
 %_K5srv/filebehavior.desktop
 %_K5srv/webarchivethumbnail.desktop
 %_K5srvtyp/konq*.desktop
 #%_K5dbus_iface/org.kde.FavIcon.xml
 %_K5dbus_iface/org.kde.?onqueror.*.xml
-%_K5xdgapp/Home.desktop
+#%_K5xdgapp/Home.desktop
 %_K5xdgapp/kfmclient*.desktop
 %_K5xdgapp/konqbrowser.desktop
-%_K5xdgapp/konquerorsu.desktop
+#%_K5xdgapp/konquerorsu.desktop
 %_K5xmlgui/konqueror/
 %_K5plug/akregatorkonqfeedicon.so
 %_K5plug/autorefresh.so
@@ -274,9 +275,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5plug/kcm_konq.so
 %_K5plug/kcm_konqhtml.so
 %_K5plug/kcm_performance.so
-%_K5plug/kcm_history.so
-%_K5plug/konq_sidebar.so
-%_K5plug/konqsidebar_*.so
+#%_K5plug/kcm_history.so
+#%_K5plug/konq_sidebar.so
+#%_K5plug/konqsidebar_*.so
 %_K5plug/kded_konqy_preloader.so
 #%_K5plug/kf5/kded/favicons.so
 %_K5plug/khtmlsettingsplugin.so
@@ -304,7 +305,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files -n kde5-keditbookmarks
 %_K5bin/kbookmarkmerger
 %_K5bin/keditbookmarks
-%_K5lib/libkdeinit5_keditbookmarks.so
+#%_K5lib/libkdeinit5_keditbookmarks.so
 %_K5plug/kcm_bookmarks.so
 %_K5data/kbookmark/
 %_K5xdgapp/org.kde.keditbookmarks.desktop
@@ -348,11 +349,14 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %files -n %libkbookmarkmodel_private
 %_K5lib/libkbookmarkmodel_private.so.%kbookmarkmodel_private_sover
 %_K5lib/libkbookmarkmodel_private.so.*
-%files -n %libkonqsidebarplugin
-%_K5lib/libkonqsidebarplugin.so.%konqsidebarplugin_sover
-%_K5lib/libkonqsidebarplugin.so.*
+#%files -n %libkonqsidebarplugin
+#%_K5lib/libkonqsidebarplugin.so.%konqsidebarplugin_sover
+#%_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt14
+- update from master branch
+
 * Wed Aug 10 2016 Sergey V Turchin <zerg@altlinux.org> 4.97.0-alt13
 - update from frameworks branch
 
