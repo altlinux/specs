@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name:    alterator-net-domain
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 Source:  %name-%version.tar
 
@@ -39,6 +39,11 @@ Supported domain type: BIND, ALT-domain and Active Directory.
 %dir %_libexecdir/alterator/hooks/net-domain.d
 
 %changelog
+* Thu Oct 13 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.3-alt1
+- Set Active Directory domain in resolvconf and run hooks for it
+- [Active Directory] Set dns forwarders and password of Administrator
+- Localize Active Directory service status
+
 * Wed Sep 21 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt1
 - Enable samba service during Active Directory provision
 

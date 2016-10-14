@@ -1,5 +1,5 @@
 Name:    installer-distro-junior
-Version: 8.0
+Version: 8.1
 Release: alt1
 
 Summary: Installer common files
@@ -103,6 +103,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu Oct 13 2016 Andrey Cherepanov <cas@altlinux.org> 8.1-alt1
+- Remove auth, sslkey, xkb from expert modules
+
 * Fri Sep 02 2016 Andrey Cherepanov <cas@altlinux.org> 8.0-alt1
 - Enable bind and ahttpd services by default
 - Update Alterator expert/skip lists from installer-distro-centaurus
