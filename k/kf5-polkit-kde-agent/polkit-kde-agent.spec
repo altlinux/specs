@@ -1,8 +1,8 @@
 %define rname polkit-kde-agent
 
 Name: kf5-%rname
-Version: 5.8.0
-Release: alt2
+Version: 5.8.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -68,6 +68,9 @@ KF5 library
 %_K5notif/policykit1-kde.notifyrc
 
 %changelog
+* Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
+- new version
+
 * Thu Oct 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2
 - fix requires
 

@@ -16,7 +16,7 @@
 %def_disable qalculate
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.8.1
 Release: alt1
 %K5init altplace
 
@@ -150,7 +150,7 @@ KF5 library
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
-%patch110 -p1
+%patch110 -p1 -b .load
 
 %build
 %K5build \
@@ -295,6 +295,12 @@ done
 %_K5lib/libweather_ion.so.%weather_ion_sover
 
 %changelog
+* Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
+- new version
+
+* Thu Oct 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2
+- fix plasma shell startup
+
 * Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 
