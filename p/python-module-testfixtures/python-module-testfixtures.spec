@@ -1,7 +1,7 @@
 %define  modulename testfixtures
 
 Name:    python-module-%modulename
-Version: 4.10.1
+Version: 4.11.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -38,6 +38,9 @@ when writing unit tests or doc tests.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Oct 14 2016 Andrey Cherepanov <cas@altlinux.org> 4.11.0-alt1
+- new version 4.11.0
+
 * Wed Sep 07 2016 Andrey Cherepanov <cas@altlinux.org> 4.10.1-alt1
 - new version 4.10.1
 
