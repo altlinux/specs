@@ -49,7 +49,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:             pki-core
 Version:          10.2.6
-Release:          alt1_16jpp8
+Release:          alt2_16jpp8
 Summary:          Certificate System - PKI Core Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -220,6 +220,10 @@ Patch46:          pki-core-Fix-to-determine-supported-javadoc-options.patch
 ## pki-core-10.2.6-16
 Patch47:          pki-core-Modify-dnsdomainname-test-in-pkispawn.patch
 Patch48:          pki-core-Build-with-Tomcat-8.0.32.patch
+
+
+# alt
+Patch333: pki-core-alt-local-urllib3.patch
 
 %global saveFileContext() \
 if [ -s /etc/selinux/config ]; then \
@@ -747,6 +751,9 @@ This package is a part of the PKI Core used by the Certificate System.
 %patch47 -p1
 %patch48 -p1
 
+
+%patch333 -p1
+
 %build
 
 # ugly hacks for ALTLinux; fix me
@@ -1083,6 +1090,9 @@ echo >> /var/log/pki/pki-server-upgrade-%{version}.log 2>&1
 %endif # %{with server}
 
 %changelog
+* Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt2_16jpp8
+- added sem@ patch
+
 * Fri Apr 29 2016 Igor Vlasenko <viy@altlinux.ru> 10.2.6-alt1_16jpp8
 - new version
 - TODO: %{_datadir}/pki/tks/* not packaged
