@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/sbin/httpd /usr/sbin/httpd2 imake libX11-devel libXt-devel libgio-devel pkgconfig(glib-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libcanberra-gtk3) xorg-cf-files
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define fedora 21
@@ -7,12 +7,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-co
 %global rel_build 1
 
 # This is needed, because src-url contains branched part of versioning-scheme.
-%global branch 1.12
+%global branch 1.16
 
 Summary:         Mate user file sharing
 Name:            mate-user-share
 Version:         %{branch}.0
-Release:         alt2_0
+Release:         alt1_0
 License:         GPLv2+
 Group:           System/Libraries
 URL:             http://mate-desktop.org
@@ -88,6 +88,7 @@ The program also allows to share files using ObexFTP over Bluetooth.
 # disable bluetooth support for bluez5
 %configure \
     --with-httpd=/usr/sbin/httpd2 \
+    --with-gtk=3.0 \
     --disable-static \
     --disable-bluetooth \
     --disable-schemas-compile
@@ -138,6 +139,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}/%{_sysconfdir}/xdg/autostart/mate-user-s
 
 
 %changelog
+* Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.16.0-alt1_0
+- new version
+
 * Tue Apr 12 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt2_0
 - added --with-httpd=/usr/sbin/httpd2 (closes: #31965)
 
