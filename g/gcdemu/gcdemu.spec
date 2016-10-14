@@ -1,14 +1,13 @@
 Summary: GTK+ based GUI for controlling CDEmu daemon
 Summary(ru_RU.UTF-8): Основанная на GTK+ GUI для управления CDEmu
 Name: gcdemu
-Version: 3.0.1
-Release: alt3
+Version: 3.0.2
+Release: alt1
 Group: Emulators
 License: GPLv2+
 Url: http://cdemu.sourceforge.net/
 Packager: Anton Midyukov <antohami@altlinux.org>
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
-Source1: ru.po
 Patch1: autostart.patch
 Patch2: enabled_ru_translation.patch
 Patch3: fix_desktop.patch
@@ -44,8 +43,7 @@ gCDEmu - базирующийся на Gtk+ и Appindicator апплет в об
 %setup
 %patch1 -p1
 %patch2
-%patch3
-cp %SOURCE1 po/
+%patch3 -p2
 
 %build
 %cmake_insource
@@ -54,18 +52,20 @@ cp %SOURCE1 po/
 %install
 %makeinstall_std
 %find_lang %name
-install -d -m755 %buildroot/%_sysconfdir/xdg/autostart/
-install -m644 %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
+mkdir -p %buildroot/%_sysconfdir/xdg/autostart/
+mv %buildroot/%_desktopdir/%name.desktop %buildroot/%_sysconfdir/xdg/autostart/
 
 %files -f %name.lang
 %doc README AUTHORS
 %_bindir/%name
-%_desktopdir/%name.desktop
 %_pixmapsdir/gcdemu*.svg
 %_datadir/glib-2.0/schemas/net.sf.cdemu.gcdemu.gschema.xml
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Fri Oct 14 2016 Anton Midyukov <antohami@altlinux.org> 3.0.2-alt1
+- New version.
+
 * Fri Sep 23 2016 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt3
 - Fix requires (Closes: 32518).
 
