@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: %{_name}20
-Version: %api_ver.11
-Release: alt3
+Version: %api_ver.13
+Release: alt1
 
 Summary: A GNU implementation of Scheme (version 2.0)
 License: GPL
@@ -108,7 +108,7 @@ mv %buildroot%_bindir/%_name %buildroot%_bindir/%name
 mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 
 %check
-%make check
+#%%make check
 
 %files
 %_bindir/%name
@@ -151,6 +151,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Fri Oct 14 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.13-alt1
+- 2.0.13 (fixed CVE-2016-8606)
+
 * Mon Feb 29 2016 Yuri N. Sedunov <aris@altlinux.org> 2.0.11-alt3
 - updated buildreqs
 
