@@ -2,15 +2,15 @@
 %def_enable introspection
 
 Name: libnotify
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
-Summary: Desktop notification library
-License: LGPLv2.1+
-Group: Graphical desktop/GNOME
-URL: http://live.gnome.org/libnotify
-# git://git.gnome.org/libnotify
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+Summary: Desktop notification library
+Group: System/Libraries
+License: LGPLv2.1+
+Url: http://live.gnome.org/libnotify
+
+# git://git.gnome.org/libnotify
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -20,14 +20,13 @@ Obsoletes: %{name}4
 BuildRequires: gtk-doc libgio-devel libgtk+3-devel xmlto
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 
-
 %description
 The library that allows applications post notifications on the desktop
 in accordance to the proposed Desktop Notification Specification.
 
 %package devel
 Summary: Development files for %name
-Group: Development/GNOME and GTK+
+Group: Development/C
 Requires: %name = %version-%release
 Provides: %{name}4-devel = %version-%release
 Obsoletes: %{name}4-devel
@@ -38,13 +37,14 @@ notification library.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/GNOME and GTK+
+Group: Development/Documentation
 BuildArch: noarch
+Conflicts: %name-devel < %version
 Provides: %{name}4-devel-doc = %version-%release
 Obsoletes: %{name}4-devel-doc
 
 %description devel-doc
-API documentation for %name in gtk-doc format
+API documentation for %name in gtk-doc format.
 
 %package gir
 Summary: GObject introspection data for libnotify
@@ -54,18 +54,19 @@ Provides: %{name}4-gir = %version-%release
 Obsoletes: %{name}4-gir
 
 %description gir
-GObject introspection data for the desktop notification library
+GObject introspection data for the desktop notification library.
 
 %package gir-devel
 Summary: GObject introspection devel data for libnotify
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
+Requires: %name-devel = %version-%release
 Requires: %name-gir = %version-%release
 Provides: %{name}4-gir-devel = %version-%release
 Obsoletes: %{name}4-gir-devel
 
 %description gir-devel
-GObject introspection devel data for the desktop notification library
+GObject introspection devel data for the desktop notification library.
 
 %package -n notify-send
 Summary: A program to send desktop notifications
@@ -77,10 +78,10 @@ notify-send sends desktop notifications via a notification daemon from
 the command line.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
-mkdir -p m4
+[ ! -d m4 ] && mkdir m4
 
 %build
 %autoreconf
@@ -94,14 +95,14 @@ mkdir -p m4
 %make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
+%doc NEWS
 
 %files -n notify-send
 %_bindir/notify-send
-
 
 %files devel
 %_libdir/*.so
@@ -113,13 +114,16 @@ mkdir -p m4
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_typelibdir/Notify-%ver_major.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_girdir/Notify-%ver_major.gir
 %endif
 
 %changelog
+* Fri Oct 14 2016 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
+- 0.7.7
+
 * Tue Sep 03 2013 Alexey Shabalin <shaba@altlinux.ru> 0.7.6-alt1
 - 0.7.6
 
