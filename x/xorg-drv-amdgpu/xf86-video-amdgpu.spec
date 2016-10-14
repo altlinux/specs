@@ -1,6 +1,6 @@
 %define uname xf86-video-amdgpu
 Name: xorg-drv-amdgpu
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 Summary: AMD GPU video driver for the Xorg X server
 License: MIT/X11
@@ -41,6 +41,9 @@ BuildRequires: libGL-devel libgbm-devel xorg-resourceproto-devel xorg-scrnsaverp
 %_man4dir/*
 
 %changelog
+* Thu Oct 13 2016 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
+- Autobuild version bump to 1.1.2
+
 * Mon Apr 18 2016 Fr. Br. George <george@altlinux.ru> 1.1.0-alt1
 - Initial build for ALT
 
