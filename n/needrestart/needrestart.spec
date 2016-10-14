@@ -1,5 +1,5 @@
 Name: needrestart
-Version: 2.8
+Version: 2.9
 Release: alt1
 
 Summary: Restart daemons after library updates
@@ -47,6 +47,12 @@ install -pDm 644 man/%name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS README* NEWS INSTALL* ChangeLog
 
 %changelog
+* Fri Oct 14 2016 Terechkov Evgenii <evg@altlinux.org> 2.9-alt1
+- 2.9
+
+* Sat Jun 11 2016 Terechkov Evgenii <evg@altlinux.org> 2.8-alt2
+- v2.8-4-ge9c29f4
+
 * Fri May 20 2016 Terechkov Evgenii <evg@altlinux.org> 2.8-alt1
 - 2.8
 
