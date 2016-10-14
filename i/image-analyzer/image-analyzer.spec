@@ -1,5 +1,5 @@
 Name: image-analyzer
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 Summary: Simple Gtk+ application that displays tree structure of disc image
 Summary(ru_RU.UTF-8): Простое GTK+ приложение для просмотра структуры образа диска
@@ -10,6 +10,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: http://downloads.sourceforge.net/cdemu/%name-%version.tar.bz2
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake intltool gcc-c++ libmirage-devel >= 3.0.0 libxml2-devel pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-3.0) desktop-file-utils
+Buildarch: noarch
 
 %description
 Image Analyzer is a simple Gtk+ application that displays tree structure of disc
@@ -44,5 +45,8 @@ libMirage, тем не менее он может также использов�
 %_pixmapsdir/*.svg
 
 %changelog
+* Fri Oct 14 2016 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
+- New version.
+
 * Tue Sep 06 2016 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
 - Initial build for ALT Linux Sisyphus.
