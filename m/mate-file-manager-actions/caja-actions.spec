@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/pkg-config
+BuildRequires: /usr/bin/desktop-file-validate /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/db2html
 %define _libexecdir %_prefix/libexec
@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/db2html
 Summary:	Caja extension for customizing the context menu
 Name:		mate-file-manager-actions
 Version:	1.8.1
-Release:	alt1_1
+Release:	alt1_3
 Group:		Graphical desktop/MATE
 License:	GPLv2+ and LGPLv2+
 
@@ -20,14 +20,14 @@ Source0:	http://raveit65.fedorapeople.org/Mate/SOURCE/%{oldname}-%{version}.tar.
 BuildRequires:	mate-file-manager-devel
 BuildRequires:	libuuid-devel
 BuildRequires:	libSM-devel
-BuildRequires:	libunique-devel
+BuildRequires:	libunique3-devel
 BuildRequires:	mate-common
 BuildRequires:	libxml2-devel
 BuildRequires:	yelp-tools
-BuildRequires:	libgtop2-devel
+BuildRequires: libgtop-devel libgtop-gir-devel
 BuildRequires:	dblatex
 
-Requires:       mate-file-manager-actions-doc = %{version}-%{release}
+Requires:       mate-file-manager-actions-doc = %{version}
 Source44: import.info
 
 
@@ -47,7 +47,7 @@ This package contains the documentation for %{oldname}
 %package	devel
 Summary:	Development tools for the caja-actions
 Group:		Development/C
-Requires:	mate-file-manager-actions = %{version}-%{release}
+Requires:	mate-file-manager-actions = %{version}
 
 %description	devel
 This package contains headers and shared libraries needed for development
@@ -59,7 +59,7 @@ with caja-actions.
 
 %build
 %configure \
-	--with-gtk=2 \
+	--with-gtk=3 \
     --enable-gtk-doc \
     --enable-html-manuals \
     --enable-pdf-manuals \
@@ -117,6 +117,9 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/cact.desktop
 
 
 %changelog
+* Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_3
+- update to 1.16
+
 * Wed Feb 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1
 - new version
 
