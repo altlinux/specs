@@ -1,18 +1,24 @@
 Group: File tools
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-export-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libxml-2.0)
+BuildRequires: /usr/bin/desktop-file-install libgio-devel pkgconfig(glib-2.0) pkgconfig(gmodule-export-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
-BuildRequires: mate-common
 %define _libexecdir %_prefix/libexec
 Name:		mate-calc
 Version:	1.8.0
-Release:	alt1_4
+Release:	alt1_6
 Summary:	MATE Desktop calculator
 License:	GPLv2+
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.8/%{name}-%{version}.tar.xz
-Source44: import.info
 
+BuildRequires: gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:	libxml2-devel
+BuildRequires:	mate-common
+BuildRequires:	bison
+BuildRequires:	flex
+BuildRequires:	mate-desktop-devel
+BuildRequires:	desktop-file-utils
+Source44: import.info
 
 
 %description
@@ -25,7 +31,7 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 
 %build
 %configure --disable-schemas-compile \
-           --with-gtk=2.0
+           --with-gtk=3.0
 
 make %{?_smp_mflags} V=1
 
@@ -53,6 +59,9 @@ desktop-file-install									\
 
 
 %changelog
+* Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_6
+- update to 1.16
+
 * Fri Oct 30 2015 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_4
 - new version
 
