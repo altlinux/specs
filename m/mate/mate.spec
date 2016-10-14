@@ -1,4 +1,4 @@
-%define ver_major 1.10
+%define ver_major 1.12
 
 Name: mate
 Version: %ver_major.0
@@ -201,7 +201,6 @@ Requires: mate-file-manager-open-terminal
 Requires: mate-file-manager-image-converter
 Requires: mate-file-manager-extensions
 Requires: mate-file-manager-wallpaper
-Requires: mate-netspeed
 Requires: python-module-caja
 Requires: mate-backgrounds
 
@@ -394,6 +393,9 @@ itself).
 #%files a11y
 
 %changelog
+* Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1
+- mate-netspeed is merged with mate-applets
+
 * Wed Nov 18 2015 Igor Vlasenko <viy@altlinux.ru> 1.10.0-alt1
 - exale is not the best choice for a music player
 
