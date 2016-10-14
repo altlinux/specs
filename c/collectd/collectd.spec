@@ -29,8 +29,8 @@
 %def_disable static
 
 Name: collectd
-Version: 5.5.0
-Release: alt1.3
+Version: 5.5.2
+Release: alt1
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -836,6 +836,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Fri Oct 14 2016 Anton Farygin <rider@altlinux.ru> 5.5.2-alt1
+- new version
+
 * Sat Feb 27 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.5.0-alt1.3
 - fix configfile path in systemd unit (closes: #31652)
 
