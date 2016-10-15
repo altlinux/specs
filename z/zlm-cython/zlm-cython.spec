@@ -6,7 +6,7 @@
 
 Name: zlm-cython
 Version: 0.1
-Release: alt2
+Release: alt3
 Summary: Zabbix Loadable Module which embedding Python interpreter in Zabbix server proxy or an agent
 
 Group: Development/Python
@@ -15,7 +15,7 @@ Url: https://github.com/vulogov/zlm-cython
 Source0: %name-%version.tar
 Patch0: %name-alt.patch
 
-BuildRequires: python-dev python-module-Cython zabbix-source libxml2-devel libelf-devel libcurl-devel libnet-snmp-devel
+BuildRequires: python-devel python-module-Cython zabbix-source libxml2-devel libelf-devel libcurl-devel libnet-snmp-devel
 
 # we need /etc/zabbix:
 Requires: zabbix-common
@@ -64,6 +64,9 @@ echo "LoadModule=zlm_python.so" > %buildroot%z_dir/zabbix_agentd.conf.d/%name.co
 %doc ROADMAP.md README.md doc/*.pdf
 
 %changelog
+* Sun Oct 16 2016 Terechkov Evgenii <evg@altlinux.org> 0.1-alt3
+- Rebuild with zabbix-3.2
+
 * Mon Feb 29 2016 Terechkov Evgenii <evg@altlinux.org> 0.1-alt2
 - git-20160229 (with experimental fix for https://github.com/vulogov/zlm-cython/issues/4)
 
