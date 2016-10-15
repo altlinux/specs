@@ -1,7 +1,7 @@
 %global qt_module qtquickcontrols2
 
 Name: qt5-quickcontrols2
-Version: 5.6.1
+Version: 5.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -101,5 +101,8 @@ syncqt.pl-qt5 -version %version -private
 %_qt5_libdatadir/libQt*.a
 
 %changelog
+* Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
+- new version
+
 * Tue Jul 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - initial build

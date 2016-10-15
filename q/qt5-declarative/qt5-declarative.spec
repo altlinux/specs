@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-declarative
-Version: 5.6.1
+Version: 5.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -14,15 +14,8 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-opensource-src-%version.tar
 # FC
-Patch1: 0007-Revert-Remove-this-piece-of-code.patch
-Patch2: 0010-Fix-crash-for-unknown-QQmlListModel-roles-in-debug-b.patch
-Patch3: 0011-Avoid-Canvas-crashes-with-qtquickcompiler.patch
-Patch4: 0016-Fix-crash-with-SignalTransition.patch
-Patch5: 0024-Revert-removal-of-Fixed-MouseArea-threshold-with-pre.patch
-Patch6: 0027-Fix-crash-when-using-with-statement-with-an-expressi.patch
 Patch10: qtdeclarative-opensource-src-5.5.0-no_sse2.patch
-Patch11: Check-for-NULL-from-glGetString.patch
-Patch12: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
+Patch11: qtdeclarative-QQuickShaderEffectSource_deadlock.patch
 
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-xmlpatterns-devel
 %if_disabled bootstrap
@@ -101,15 +94,8 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-opensource-src-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 syncqt.pl-qt5 -version %version -private
 
 %build
@@ -190,6 +176,9 @@ syncqt.pl-qt5 -version %version -private
 #%_pkgconfigdir/Qt?QmlDevTools.pc
 
 %changelog
+* Wed Oct 12 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1
+- new version
+
 * Mon Jun 27 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.1-alt1
 - new version
 
