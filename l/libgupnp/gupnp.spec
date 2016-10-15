@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: libgupnp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -109,6 +109,9 @@ GObject introspection devel data for the gUPnP library
 
 
 %changelog
+* Sat Oct 15 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 

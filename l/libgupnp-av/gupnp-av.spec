@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libgupnp-av
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -19,7 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 BuildRequires: glib2-devel >= 2.14 gtk-doc
 BuildRequires: libxml2-devel
 BuildRequires: vala-tools rpm-build-vala libvala-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgssdp-gir-devel}
+%{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
 
 %description
 gUPnP is an object-oriented open source framework for creating UPnP
@@ -119,6 +119,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Sat Oct 15 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.10-alt1
+- 0.12.10
+
 * Mon Oct 10 2016 Yuri N. Sedunov <aris@altlinux.org> 0.12.9-alt1
 - 0.12.9
 - updated buildreqs
