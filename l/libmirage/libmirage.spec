@@ -2,7 +2,7 @@
 
 Name: libmirage
 Version: 3.0.5
-Release: alt1
+Release: alt2
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -37,6 +37,8 @@ file, which is based on GObjects.
 %package -n %name%soversion
 Summary: A CD-ROM image access library
 Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 
 %description -n %name%soversion
 This is libMirage library, a CD-ROM image access library, and part of the 
@@ -98,6 +100,9 @@ popd
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Oct 15 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.5-alt2
+- Add provides/obsoletes on libmirage (ALT #32614)
+
 * Thu Oct 13 2016 Nazarov Denis <nenderus@altlinux.org> 3.0.5-alt1
 - Version 3.0.5
 
