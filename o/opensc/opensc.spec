@@ -1,29 +1,23 @@
 %def_disable static
 
 Name: opensc
-Version: 0.12.2
-Release: alt2.1
+Version: 0.16.0
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
-Url: http://www.opensc-project.org/
+Url: https://github.com/OpenSC/OpenSC/wiki
 License: LGPL
 
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
-Patch1: opensc-0.12.2-alt-automake-1.11.4.patch
-Patch2: opensc-0.12.2-alt-DSO.patch
 
-BuildRequires: browser-plugins-npapi-devel
-
-# Automatically added by buildreq on Sun Feb 07 2010
-BuildRequires: db2latex-xsl docbook-dtds docbook-style-xsl libXt-devel libassuan0-devel libltdl7-devel libpcsclite-devel libreadline-devel libssl-devel xsltproc zlib-devel
+BuildRequires: db2latex-xsl docbook-dtds docbook-style-xsl libXt-devel libassuan-devel libltdl7-devel libpcsclite-devel libreadline-devel libssl-devel xsltproc zlib-devel
 
 %package -n lib%name
 Group: System/Libraries
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
-Requires: browser-plugins-npapi
 
 %package -n lib%name-devel
 Group: Development/Other
@@ -70,8 +64,6 @@ OpenSC module for PAM.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
 
 %build
 %autoreconf
@@ -82,10 +74,7 @@ PCSC_SONAME="$(objdump -p "%_libdir/libpcsclite.so"| awk '/SONAME/ {print $2}')"
     --enable-shared \
     --enable-pcsc \
     --with-pcsc-provider="%_libdir/$PCSC_SONAME" \
-    --enable-nsplugin \
-    --with-plugindir=%browser_plugins_path \
     --with-xsl-stylesheetsdir=/usr/share/xml/docbook/xsl-stylesheets \
-    --with-pcsc-provider=libpcsclite.so.1 \
     --disable-assert
 
 %make_build
@@ -96,33 +85,12 @@ PCSC_SONAME="$(objdump -p "%_libdir/libpcsclite.so"| awk '/SONAME/ {print $2}')"
 mkdir -p %buildroot/%_sysconfdir/
 install -p -m644 etc/opensc.conf %buildroot/%_sysconfdir/opensc.conf
 
-pushd %buildroot/%_libdir
-ln -s pkcs11/opensc-pkcs11.so .
-ln -s pkcs11/pkcs11-spy.so .
-ln -s pkcs11/onepin-opensc-pkcs11.so .
-popd
-
 %files
-# %doc doc/nonpersistent/ChangeLog 
-#%doc doc/nonpersistent/wiki.out
-#%doc doc/html.out/tools.html
-%doc NEWS README
+%doc NEWS README.md
 
 %config(noreplace) %_sysconfdir/opensc.conf
-%_bindir/opensc-tool
-%_bindir/pkcs15-init
-#%_bindir/rutoken-tool
-#%_bindir/cardos-info
-%_bindir/cardos-tool
-%_bindir/pkcs15-tool
-%_bindir/eidenv
-%_bindir/opensc-explorer
-%_bindir/netkey-tool
-%_bindir/cryptoflex-tool
-%_bindir/pkcs11-tool
-%_bindir/piv-tool
-%_bindir/pkcs15-crypt
-%_bindir/westcos-tool
+%config %_sysconfdir/bash_completion.d/*
+%_bindir/*
 %doc %_mandir/*/*
 
 %files -n lib%name
@@ -136,27 +104,10 @@ popd
 %_libdir/pkcs11/onepin-opensc-pkcs11.so
 %dir %_datadir/opensc
 %_datadir/opensc/*.profile
-#%browser_plugins_path/opensc-signer.so
-#%_libdir/opensc-signer.so*
 
 %files -n lib%name-devel
-#%doc doc/html.out/api.html
-#%_libdir/pkgconfig/libopensc.pc
-#%_libdir/pkgconfig/libpkcs15init.pc
-#%_libdir/pkgconfig/libscconf.pc
-#%_bindir/opensc-config
 %_libdir/libopensc.so
-#%_libdir/libpkcs11.so
-#%_libdir/libpkcs15init.so
-#%_libdir/libscconf.so
-#%_libdir/libscldap.so
-#%_libdir/libscrandom.a
-#%_libdir/libscam.a
-#%_libdir/libopensc.la
-#%_libdir/libpkcs15init.la
-#%_libdir/libscconf.la
-#%_libdir/libscldap.la
-#%_includedir/opensc
+%_libdir/libsmm-local.so
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -166,10 +117,13 @@ popd
 %_libdir/libscldap.a
 %endif
 
-#%files -n pam_opensc
-#/lib/security/pam_opensc.so
-
 %changelog
+* Thu Oct 13 2016 Dmitry Derjavin <dd@altlinux.org> 0.16.0-alt2
+- Reqs and configure params cleanup.
+
+* Wed Oct 12 2016 Dmitry Derjavin <dd@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.2-alt2.1
 - Fixed build
 
