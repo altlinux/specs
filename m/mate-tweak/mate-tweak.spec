@@ -1,5 +1,5 @@
 Name: mate-tweak
-Version: 3.5.10
+Version: 16.10.5
 Release: alt1
 
 Summary: Mate desktop configuration tool
@@ -56,5 +56,8 @@ Settings that can be handled via MATE Tweak:
 %exclude %_man1dir/metacity*
 
 %changelog
+* Sat Oct 15 2016 Anton Midyukov <antohami@altlinux.org> 16.10.5-alt1
+- new version 16.10.5
+
 * Sat Jun 04 2016 Anton Midyukov <antohami@altlinux.org> 3.5.10-alt1
 - Initial build for ALT Linux Sisyphus.
