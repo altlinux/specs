@@ -1,13 +1,13 @@
 Summary: Lua bindings to GObject libraries
 Name: lgi
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 License: MIT/X11
 Group: System/Libraries
 Url: http://github.com/pavouk/lgi
 Source0: %name-%version.tar
 
-BuildRequires: liblua5-devel gobject-introspection-devel
+BuildRequires: lua5.3-devel gobject-introspection-devel
 
 %description
 Dynamic Lua binding to any library which is introspectable using
@@ -23,16 +23,19 @@ releases), use Lua-Gnome.
 %build
 make
 %install
-%makeinstall_std PREFIX=%_prefix LUA_LIBDIR=%_libdir/lua5 LUA_SHAREDIR=%_datadir/lua5
+%makeinstall_std PREFIX=%_prefix LUA_LIBDIR=%_libdir/lua/5.3 LUA_SHAREDIR=%_datadir/lua/5.3
 
 %files
-%_libdir/lua5/%name
-%_datadir/lua5/%name.lua
-%_datadir/lua5/%name
+%_libdir/lua/5.3//%name
+%_datadir/lua/5.3/%name.lua
+%_datadir/lua/5.3/%name
 
 %doc README.md docs samples
 
 %changelog
+* Sun Oct 16 2016 Terechkov Evgenii <evg@altlinux.org> 0.9.1-alt1
+- 0.9.1 (build with lua5.3)
+
 * Thu Mar 26 2015 Terechkov Evgenii <evg@altlinux.org> 0.9.0-alt1
 - 0.9.0 (ALT #30858)
 

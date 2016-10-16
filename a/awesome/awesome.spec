@@ -1,6 +1,6 @@
 Name: awesome
 Version: 3.5.9
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -14,18 +14,18 @@ Patch0:%name-%version-alt.patch
 Summary: A window manager initialy based on a dwm code rewriting
 
 BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf
-BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5-devel
+BuildRequires: imlib2-devel libdbus-devel libev-devel lua5.3-devel
 BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
 BuildRequires: libxdg-basedir-devel libstartup-notification-devel
 BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
-BuildRequires: lua libpango-gir
+BuildRequires: lua5.3 libpango-gir
 
 BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
 BuildPreReq: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
 
 Requires: libstartup-notification >= 0.10-alt1
 Requires: design-graphics
-Requires: lgi >= 0.6.1
+Requires: lgi >= 0.9.1
 Requires: libpango-gir
 Requires: libcairo-gobject
 
@@ -90,6 +90,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Mon Oct 17 2016 Terechkov Evgenii <evg@altlinux.org> 3.5.9-alt2
+- Rebuild with lua5.3
+
 * Mon Mar 21 2016 Terechkov Evgenii <evg@altlinux.org> 3.5.9-alt1
 - 3.5.9 (Mighty Ravendark)
 
