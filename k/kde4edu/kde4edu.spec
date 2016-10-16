@@ -13,7 +13,7 @@ Name: kde4edu
 %define minor 12
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -1122,6 +1122,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Oct 18 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt4
+- rebuild with new openbabel
+
 * Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.3-alt3
 - fix to build with new luajit
 
