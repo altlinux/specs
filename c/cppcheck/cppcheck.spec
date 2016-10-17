@@ -3,7 +3,7 @@
 
 Name: cppcheck
 Version: 1.76
-Release: alt1
+Release: alt1.1
 
 Summary: A tool for static C/C++ code analysis
 
@@ -118,6 +118,9 @@ install -D gui/%name-gui.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Oct 18 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.76-alt1.1
+- Version 1.76.1
+
 * Sun Oct 09 2016 Hihin Ruslan <ruslandh@altlinux.ru> 1.76-alt1
 - Version 1.76
 
