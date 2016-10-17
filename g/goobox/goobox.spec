@@ -3,7 +3,7 @@
 %def_enable libcoverart
 
 Name: goobox
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: CD player and ripper for GNOME
@@ -34,6 +34,7 @@ Goobox is a CD player and ripper well integrated with the GNOME environment.
 subst 's|1\.0\.0beta1|1.0.0|' configure*
 
 %build
+%autoreconf
 %configure \
 	--disable-schemas-compile \
 	%{subst_enable libcoverart}
@@ -56,6 +57,9 @@ subst 's|1\.0\.0beta1|1.0.0|' configure*
 
 
 %changelog
+* Mon Oct 17 2016 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Wed Sep 23 2015 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
