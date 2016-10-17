@@ -1,4 +1,4 @@
-# 5.2.1.1
+# 5.2.3.1
 %def_without forky
 %def_without python
 %def_with parallelism
@@ -7,12 +7,12 @@
 
 Name: LibreOffice
 Version: 5.2
-%define urelease 1.1
+%define urelease 3.1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt4
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -46,21 +46,25 @@ Source300:	libreoffice.unused
 ## FC patches
 Patch1: FC-openoffice.org-2.4.0.ooo86080.unopkg.bodge.patch
 Patch2: FC-openoffice.org-3.1.0.oooXXXXX.solenv.allowmissing.patch
-Patch3: FC-0001-Resolves-rhbz-1351224-wayland-grab-related-crashes.patch
-Patch4: FC-0001-Resolves-rhbz-1352965-gtk3-infinite-clipboard-recurs.patch
-Patch5: FC-0001-Related-rhbz-1351369-gtk3-clipboards-have-to-live-to.patch
-Patch6: FC-0001-gtk3-style-combobox-never-becomes-sensitive-if-it-st.patch
-Patch7: FC-0001-Resolves-tdf-91533-rhbz-1364335-Tooltips-are-truncat.patch
-Patch8: FC-0001-Resolves-tdf-101165-crash-on-deselecting-all-filters.patch
-Patch9: FC-installfix.patch
-Patch10: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
-Patch11: FC-0001-disable-firebird-unit-test.patch
-Patch12: FC-0001-never-run-autogen.sh.patch
-Patch13: FC-0001-disable-libe-book-support.patch
-Patch14: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
-Patch15: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
-Patch16: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
-Patch17: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
+Patch3: FC-installfix.patch
+Patch4: FC-0001-Resolves-rhbz-1035092-no-shortcut-key-for-Italian-To.patch
+Patch5: FC-0001-never-run-autogen.sh.patch
+Patch6: FC-0001-add-X-TryExec-entries-to-desktop-files.patch
+Patch7: FC-0001-Resolves-rhbz-1326304-cannot-detect-loss-of-wayland-.patch
+Patch8: FC-0001-don-t-autocapitalize-words-that-follow-a-field-mark.patch
+Patch9: FC-0001-a11y-crash-on-deleting-certain-frame-in-certain-docu.patch
+Patch10: FC-0001-Resolves-rhbz-1351224-wayland-grab-related-crashes.patch
+Patch11: FC-0001-Resolves-rhbz-1352965-gtk3-infinite-clipboard-recurs.patch
+Patch12: FC-0001-Related-rhbz-1351369-gtk3-clipboards-have-to-live-to.patch
+Patch13: FC-0001-add-xdg-email-as-the-default-email-route.patch
+Patch14: FC-0001-Related-rhbz-1362451-avoid-recursive-ownerchanged-ha.patch
+Patch15: FC-0001-only-date-autofilter-menus-need-the-space-for-the-tr.patch
+Patch16: FC-0001-rhbz-1353069-don-t-record-undo-information-in-the-cl.patch
+Patch17: FC-0001-Switch-from-orcus-0.11-to-orcus-0.12.patch
+Patch18: FC-0001-Declare-font-border-protection-orcus-interface-metho.patch
+Patch19: FC-0001-Add-odf-strikeout-to-orcus-interface.patch
+Patch20: FC-0001-Reform-orcus-interface-to-set-border-width.patch
+Patch21: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -199,8 +203,8 @@ echo Direct build
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#patch4 -p1
-#patch5 -p1
+%patch4 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -213,6 +217,10 @@ echo Direct build
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
 
 ## Long-term FC patches applying
 
@@ -472,6 +480,9 @@ mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 %_girdir/LOKDocView-*.gir
 
 %changelog
+* Mon Oct 17 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt4
+- Update to 5.2.3.1
+
 * Wed Aug 24 2016 Fr. Br. George <george@altlinux.ru> 5.2-alt3
 - Update to 5.2.1.1
 
