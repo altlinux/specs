@@ -1,5 +1,5 @@
 %global import_path github.com/tools/godep
-%global commit 51f9ea00dbeeb75cf76e928772d57b0a1d093ba5
+%global commit 3c0ccb9a2415fbda40b982b622735906bcd1760f
 %global abbrev %(c=%{commit}; echo ${c:0:8})
 
 %global __find_debuginfo_files %nil
@@ -10,7 +10,7 @@
 %brp_strip_none %_bindir/* %go_tooldir/*
 
 Name:		godep
-Version:	63
+Version:	74
 Release:	alt1
 Summary:	Utility to track dependencies
 
@@ -55,5 +55,8 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Oct 18 2016 Alexey Gladkov <legion@altlinux.ru> 74-alt1
+- New shapshot.
+
 * Thu May 05 2016 Alexey Gladkov <legion@altlinux.ru> 63-alt1
 - First build for ALTLinux.
