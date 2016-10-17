@@ -1,4 +1,4 @@
-%define ver_major 1.12
+%define ver_major 1.15
 
 Name: mate
 Version: %ver_major.0
@@ -393,6 +393,9 @@ itself).
 #%files a11y
 
 %changelog
+* Mon Oct 17 2016 Igor Vlasenko <viy@altlinux.ru> 1.15.0-alt1
+- updated to mate 1.16
+
 * Fri Oct 14 2016 Igor Vlasenko <viy@altlinux.ru> 1.12.0-alt1
 - mate-netspeed is merged with mate-applets
 
