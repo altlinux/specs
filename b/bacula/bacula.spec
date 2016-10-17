@@ -8,7 +8,7 @@
 
 Name: bacula
 Version: 5.2.13
-Release: alt8
+Release: alt9
 
 License: AGPLv3
 Summary: Network based backup program
@@ -656,6 +656,9 @@ chown bacula:bacula %_localstatedir/bacula/*
 %files
 
 %changelog
+* Mon Oct 17 2016 Terechkov Evgenii <evg@altlinux.org> 5.2.13-alt9
+- Fix mode of %%_var/run/bacula
+
 * Fri Oct  7 2016 Terechkov Evgenii <evg@altlinux.org> 5.2.13-alt8
 - Build with readline by default
 
