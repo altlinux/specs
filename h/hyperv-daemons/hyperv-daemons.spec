@@ -1,8 +1,8 @@
-%define kernel_base_version 4.5
+%define kernel_base_version 4.8
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: hyperv-daemons
-Version: %kernel_base_version.2
+Version: %kernel_base_version
 Release: alt1
 Summary:  HyperV daemons suite
 License: GPLv2
@@ -192,6 +192,9 @@ fi
 %_udevrulesdir/hypervfcopyd.rules
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 4.8-alt1
+- build from kernel-source-4.8
+
 * Fri Apr 22 2016 Alexey Shabalin <shaba@altlinux.ru> 4.5.2-alt1
 - build from kernel-source-4.5
 
