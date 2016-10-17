@@ -170,7 +170,7 @@
 # }}}
 
 Name: pve-%rname
-Version: 2.6.2
+Version: 2.7.0
 Release: alt2
 
 Summary: QEMU CPU Emulator
@@ -197,74 +197,66 @@ Patch0: qemu-2.6-alt.patch
 Patch10: 0001-fr-ca-keymap-corrections.patch
 Patch11: 0001-Revert-target-i386-disable-LINT0-after-reset.patch
 Patch12: 0002-Adjust-network-script-path-to-etc-kvm.patch
-Patch13: 0002-net-vmxnet3-check-for-device_active-before-write.patch
-Patch14: 0002-scsi-esp-fix-migration.patch
+Patch13: 0002-net-vmxnet-initialise-local-tx-descriptor.patch
+Patch14: 0003-net-limit-allocation-in-nc_sendv_compat.patch
 Patch15: 0003-vnc-altgr-emulation.patch
 Patch16: 0004-qemu-img-return-success-on-info-without-snapshots.patch
-Patch17: 0005-net-vmxnet-initialise-local-tx-descriptor.patch
+Patch17: 0004-qmp-fix-object-add-assert-without-props.patch
 Patch18: 0005-use-kvm-by-default.patch
 Patch19: 0006-virtio-balloon-fix-query.patch
 Patch20: 0007-set-the-CPU-model-to-kvm64-32-instead-of-qemu64-32.patch
 Patch21: 0008-qapi-modify-query-machines.patch
-Patch22: 0009-net-limit-allocation-in-nc_sendv_compat.patch
-Patch23: 0009-qapi-modify-spice-query.patch
-Patch24: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
-Patch25: 0011-introduce-new-vma-archive-format.patch
-Patch26: 0012-vma-add-verify-command.patch
-Patch27: 0013-vma-add-config-command-to-dump-the-config.patch
-Patch28: 0014-vma-restore-tolerate-a-size-difference-up-to-4M.patch
-Patch29: 0015-backup-modify-job-api.patch
-Patch30: 0016-backup-add-pve-monitor-commands.patch
-Patch31: 0017-backup-vma-add-dir-format.patch
-Patch32: 0018-backup-do-not-return-errors-in-dump-callback.patch
-Patch33: 0019-backup-vma-correctly-propagate-error.patch
-Patch34: 0020-backup-vma-remove-async-queue.patch
-Patch35: 0021-backup-vma-run-flush-inside-coroutine.patch
-Patch36: 0022-backup-do-not-use-bdrv_drain_all.patch
-Patch37: 0023-internal-snapshot-async.patch
-Patch38: 0024-backup-vma-allow-empty-backups.patch
-Patch39: 0025-backup-vma-add-BlockDriver-to-bdrv_open-in-extract_c.patch
-Patch40: 0026-glusterfs-daemonize.patch
-Patch41: 0027-gluster-possiblity-to-specify-a-secondary-server.patch
-Patch42: 0028-qmp-add-get_link_status.patch
-Patch43: 0029-smm_available-false.patch
-Patch44: 0030-use-whitespace-between-VERSION-and-PKGVERSION.patch
-Patch45: 0031-vma-add-firewall.patch
-Patch46: 0032-vma-writer-aio_set_fd_handler-update.patch
-Patch47: 0033-vma-bdrv_open-dropped-the-drv-parameter.patch
-Patch48: 0034-blockdev-bdrv_open-dropped-the-drv-parameter.patch
-Patch49: 0035-blockdev-backup_start-now-takes-a-BlockJobTxn.patch
-Patch50: 0036-savevm-async-migration-and-bdrv_open-update.patch
-Patch51: 0037-qapi-qmp_marshal_-renames-for-pve-monitor-commands.patch
-Patch52: 0038-qapi-qmp_mashal_-renames-for-async-snapshot.patch
-Patch53: 0039-qapi-qmp_mashal_-renames-for-get_link_status.patch
-Patch54: 0040-vnc-make-x509-imply-tls-again.patch
-Patch55: 0041-PVE-VNC-authentication.patch
-Patch56: 0042-vma-writer-don-t-bail-out-on-zero-length-files.patch
-Patch57: 0043-vma-better-driver-guessing-for-bdrv_open.patch
-Patch58: 0044-block-add-the-zeroinit-block-driver-filter.patch
-Patch59: 0045-vma-add-format-option-to-device-mapping.patch
-Patch60: 0046-pve-cleanup-includes-all-over-the-place.patch
-Patch61: 0047-zeroinit-bdrv_get_block_status-got-a-new-param.patch
-Patch62: 0048-BDRV_O_CACHE_WB-was-removed.patch
-Patch63: 0049-backup-bdrv_set_enable_write_cache-is-no-more.patch
-Patch64: 0050-fix-possible-unitialised-return-value.patch
-Patch65: 0051-net-NET_CLIENT_OPTIONS_KIND_MAX-changed.patch
-Patch66: 0052-vnc-refactor-to-QIOChannelSocket.patch
-Patch67: 0053-vma-use-BlockBackend-on-extract.patch
-Patch68: 0054-rbd-disable-rbd_cache_writethrough_until_flush-with-.patch
-Patch69: 0055-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
-Patch70: 0056-qmp_snapshot_drive-add-aiocontext.patch
-Patch71: CVE-2016-6490-virtio-check-vring-descriptor-buffer-length.patch
-Patch72: CVE-2016-7156-scsi-pvscsi-avoid-infinite-loop-while-building-SG-li.patch
-Patch73: CVE-2016-7161-hw-net-Fix-a-heap-overflow-in-xlnx.xps-ethernetlite.patch
-Patch74: CVE-2016-7170-vmsvga-correct-bitmap-and-pixmap-size-checks.patch
-Patch75: CVE-2016-7422-virtio-add-check-for-descriptor-s-mapped-address.patch
-Patch76: CVE-2016-7466-usb-xhci-fix-memory-leak-in-usb_xhci_exit.patch
-Patch77: CVE-2016-7907-net-imx-limit-buffer-descriptor-count.patch
-Patch78: CVE-2016-7908-net-mcf-limit-buffer-descriptor-count.patch
-Patch79: CVE-2016-7909-net-pcnet-check-rx-tx-descriptor-ring-length.patch
-Patch80: x86-lapic-Load-LAPIC-state-at-post_load.patch
+Patch22: 0009-qapi-modify-spice-query.patch
+Patch23: 0010-ui-spice-default-to-pve-certs-unless-otherwise-speci.patch
+Patch24: 0011-introduce-new-vma-archive-format.patch
+Patch25: 0012-vma-add-verify-command.patch
+Patch26: 0013-vma-add-config-command-to-dump-the-config.patch
+Patch27: 0014-backup-modify-job-api.patch
+Patch28: 0015-backup-add-pve-monitor-commands.patch
+Patch29: 0016-backup-vma-add-dir-format.patch
+Patch30: 0017-backup-do-not-return-errors-in-dump-callback.patch
+Patch31: 0018-backup-vma-correctly-propagate-error.patch
+Patch32: 0019-backup-vma-remove-async-queue.patch
+Patch33: 0020-backup-vma-run-flush-inside-coroutine.patch
+Patch34: 0021-backup-do-not-use-bdrv_drain_all.patch
+Patch35: 0022-internal-snapshot-async.patch
+Patch36: 0023-backup-vma-allow-empty-backups.patch
+Patch37: 0024-qmp-add-get_link_status.patch
+Patch38: 0025-smm_available-false.patch
+Patch39: 0026-use-whitespace-between-VERSION-and-PKGVERSION.patch
+Patch40: 0027-vma-add-firewall.patch
+Patch41: 0028-savevm-async-migration-and-bdrv_open-update.patch
+Patch42: 0029-vnc-make-x509-imply-tls-again.patch
+Patch43: 0030-PVE-VNC-authentication.patch
+Patch44: 0031-vma-writer-don-t-bail-out-on-zero-length-files.patch
+Patch45: 0032-vma-better-driver-guessing-for-bdrv_open.patch
+Patch46: 0033-block-add-the-zeroinit-block-driver-filter.patch
+Patch47: 0034-vma-add-format-option-to-device-mapping.patch
+Patch48: 0035-fix-possible-unitialised-return-value.patch
+Patch49: 0036-vnc-refactor-to-QIOChannelSocket.patch
+Patch50: 0037-vma-use-BlockBackend-on-extract.patch
+Patch51: 0038-vma-byte-based-write-calls.patch
+Patch52: 0039-rbd-disable-rbd_cache_writethrough_until_flush-with-.patch
+Patch53: 0040-enable-cache-unsafe-for-vma-extract_content-and-qmp_.patch
+Patch54: 0041-savevm-async-updates.patch
+Patch55: 0042-qmp_snapshot_drive-add-aiocontext.patch
+Patch56: CVE-2016-7155-scsi-check-page-count-while-initialising-descriptor-.patch
+Patch57: CVE-2016-7156-scsi-pvscsi-avoid-infinite-loop-while-building-SG-li.patch
+Patch58: CVE-2016-7157-scsi-mptconfig-fix-an-assert-expression.patch
+Patch59: CVE-2016-7170-vmsvga-correct-bitmap-and-pixmap-size-checks.patch
+Patch60: CVE-2016-7421-scsi-pvscsi-limit-process-IO-loop-to-ring-size.patch
+Patch61: CVE-2016-7422-virtio-add-check-for-descriptor-s-mapped-address.patch
+Patch62: CVE-2016-7423-scsi-mptsas-use-g_new0-to-allocate-MPTSASRequest-obj.patch
+Patch63: CVE-2016-7466-usb-xhci-fix-memory-leak-in-usb_xhci_exit.patch
+Patch64: CVE-2016-7907-net-imx-limit-buffer-descriptor-count.patch
+Patch65: CVE-2016-7908-net-mcf-limit-buffer-descriptor-count.patch
+Patch66: CVE-2016-7909-net-pcnet-check-rx-tx-descriptor-ring-length.patch
+Patch67: CVE-2016-7994-virtio-gpu-fix-memory-leak-in-virtio_gpu_resource_cr.patch
+Patch68: CVE-2016-7995-usb-ehci-fix-memory-leak-in-ehci_process_itd.patch
+Patch69: CVE-2016-8576-xhci-limit-the-number-of-link-trbs-we-are-willing-to.patch
+Patch70: CVE-2016-8577-9pfs-fix-potential-host-memory-leak-in-v9fs_read.patch
+Patch71: CVE-2016-8578-9pfs-allocate-space-for-guest-originated-empty-strin.patch
+Patch72: x86-lapic-Load-LAPIC-state-at-post_load.patch
 
 %set_verify_elf_method fhs=relaxed
 
@@ -506,14 +498,6 @@ This package provides client and server tools for QEMU's ivshmem device.
 %patch70 -p1
 %patch71 -p1
 %patch72 -p1
-%patch73 -p1
-%patch74 -p1
-%patch75 -p1
-%patch76 -p1
-%patch77 -p1
-%patch78 -p1
-%patch79 -p1
-%patch80 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -771,6 +755,12 @@ fi
 #_bindir/ivshmem-server
 
 %changelog
+* Mon Oct 17 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.7.0-alt2
+- 2.7.0-2
+
+* Sun Oct 09 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.2-alt1.M80P.1
+- backport to p8 branch
+
 * Fri Oct 07 2016 Valery Inozemtsev <shrek@altlinux.ru> 2.6.2-alt2
 - 2.6.2-2
 
