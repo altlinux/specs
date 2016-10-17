@@ -1,6 +1,6 @@
 Name: connector
 Version: 1.3.24
-Release: alt2
+Release: alt3
 
 Summary: Remote desktop chooser
 License: GPL
@@ -38,6 +38,9 @@ install -p *.py %buildroot%basedir/
 %basedir/*.py
 
 %changelog
+* Mon Oct 17 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.3.24-alt3
+- Update categories in .desktop
+
 * Tue Sep 13 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 1.3.24-alt2
 - Fixed command open webbrowser
 
