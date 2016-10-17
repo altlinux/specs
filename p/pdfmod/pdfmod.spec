@@ -1,10 +1,10 @@
 Name:           pdfmod
 Version:        0.9.1
-Release:        alt5
+Release:        alt6
 
 Summary:        PDF Modifier
 License:        GPL-2.0+
-Group:          Publishing
+Group:          File tools
 
 Url:            https://wiki.gnome.org/Apps/PdfMod
 Source0:        %name-%version.tar.gz
@@ -51,6 +51,9 @@ echo "</configuration>" >> %_sysconfdir/mono/config
 %_datadir/applications/%name.desktop
 
 %changelog
+* Mon Oct 17 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.9.1-alt6
+- Update categories in .desktop and group in .spec
+
 * Tue Sep 13 2016 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.9.1-alt5
 - Fix OnHelp - fix path to glib.dll for mono
 
