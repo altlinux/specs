@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -12,7 +12,7 @@ Requires: console-vt-tools fdisk /sbin/addpart grep
 Requires: aufs2-util sysvinit-utils net-tools
 Requires: sed procps psmisc findutils nfs-utils
 Requires: make-initrd
-Requires: e2fsprogs
+Requires: e2fsprogs time
 Requires: udev-rules udev-extras
 
 # For new put-file utility
@@ -37,6 +37,16 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Mon Oct 17 2016 Michael Shigorin <mike@altlinux.org> 0.31-alt1
+- improve RW slice operation (closes: #32476, #32562):
+  only create/use it when there's enough space (1Gb or more), and
+  it's been either
+  + explicitly asked for (BIOS mode), or
+  + fast enough (UEFI mode; otherwise the filesystem
+    will be marked "alt-slow-storage")
+- add mkfs/mount options for faster operation
+- extend debug support
+
 * Tue Sep 06 2016 Michael Shigorin <mike@altlinux.org> 0.30-alt1
 - only mount rw slice when live_rw is specified explicitly
   due to severe I/O penalty coming with it (closes: #32476)
