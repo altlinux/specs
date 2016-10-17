@@ -10,10 +10,9 @@
 %define lighttpd_spool %_spooldir/%name
 
 %define docdir %_docdir/%name-%version-doc
-%define svnrev 2961
 
 Name: lighttpd
-Version: 1.4.39
+Version: 1.4.42
 Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
@@ -202,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Mon Oct 17 2016 Alexei Takaseev <taf@altlinux.org> 1.4.42-alt1
+- 1.4.42
+
 * Wed Jan 06 2016 Alexei Takaseev <taf@altlinux.org> 1.4.39-alt1
 - 1.4.39
 
