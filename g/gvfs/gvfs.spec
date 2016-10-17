@@ -28,7 +28,7 @@
 %def_enable admin
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -293,6 +293,7 @@ Bash completion for gvfs.
 %package tests
 Summary: GVFS test programms
 Group: Development/GNOME and GTK+
+BuildArch: noarch
 Requires: %name-backends = %version-%release fuse-%name
 
 %description tests
@@ -559,6 +560,9 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name-mount 2>/dev/null ||:
 
 
 %changelog
+* Mon Oct 17 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.1.1-alt1
+- 1.30.1.1
+
 * Mon Sep 19 2016 Yuri N. Sedunov <aris@altlinux.org> 1.30.0-alt1
 - 1.30.0
 - new admin backend
