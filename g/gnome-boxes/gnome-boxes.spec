@@ -1,11 +1,9 @@
 %define _libexecdir %_prefix/libexec
 %def_disable ovirt
-%def_enable usbredir
-%def_enable smartcard
 
 Name: gnome-boxes
-Version: 3.20.2
-Release: alt2
+Version: 3.22.1
+Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Group: Emulators
@@ -81,8 +79,6 @@ echo %version > .tarball-version
 %autoreconf
 intltoolize -f
 %configure \
-	%{subst_enable usbredir} \
-	%{subst_enable smartcard} \
 	--enable-vala
 
 %make_build
@@ -104,6 +100,9 @@ intltoolize -f
 %_datadir/appdata/*.xml
 
 %changelog
+* Mon Oct 17 2016 Alexey Shabalin <shaba@altlinux.ru> 3.22.1-alt1
+- 3.22.1
+
 * Mon Jun 27 2016 Alexey Shabalin <shaba@altlinux.ru> 3.20.2-alt2
 - rebuild with spice-gtk-0.32-alt1
 
