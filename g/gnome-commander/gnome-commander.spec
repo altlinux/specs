@@ -7,7 +7,7 @@
 %def_with samba
 
 Name: gnome-commander
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
@@ -73,6 +73,9 @@ and some extra features like FTP support.
 
 
 %changelog
+* Tue Oct 18 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Tue Oct 04 2016 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
