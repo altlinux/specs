@@ -8,8 +8,8 @@ BuildRequires: /usr/bin/flock /usr/bin/gunzip /usr/bin/less /usr/bin/renice /usr
 
 Summary: An easy to use but powerfull iptables stateful firewall
 Name: firehol
-Version: 2.0.0
-Release: alt2
+Version: 2.0.1
+Release: alt1
 License: GPL
 Group: System/Configuration/Networking
 Source0: %name-%version.tar
@@ -128,6 +128,10 @@ fi
 %doc doc/*
 
 %changelog
+* Tue Oct 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1
+- new version
+- still w/o fireqos due to bash4 bashisms
+
 * Sat Nov 08 2014 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2
 - clean def_without fireqos
 
