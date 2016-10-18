@@ -4,7 +4,7 @@
 %def_without python3
 
 Name: python-module-%mname
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: Python package for talking to YubiKeys
 
@@ -101,6 +101,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 18 2016 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
+- Updated to 1.3.2.
+
 * Tue Dec 29 2015 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt1
 - Initial build.
 
