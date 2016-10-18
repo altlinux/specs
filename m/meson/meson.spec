@@ -2,7 +2,7 @@
 %def_without tests
 
 Name: meson
-Version: 0.33.0
+Version: 0.35.1
 Release: alt1
 
 Summary: High productivity build system
@@ -11,7 +11,7 @@ License: ASL 2.0
 Url: http://mesonbuild.com/
 
 Source: https://github.com/mesonbuild/meson/archive/%version/%name-%version.tar.gz
-Patch: %name-0.32.0-alt-typelibdir.patch
+Source1: %name.macros
 
 BuildArch: noarch
 
@@ -47,14 +47,13 @@ reports, Valgrind, CCache and the like.
 
 %prep
 %setup
-%patch
 
 %build
 %python3_build
 
 %install
 %python3_install
-install -Dpm 0644 data/macros.%name %buildroot%_rpmmacrosdir/%name
+install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 for f in %buildroot%_bindir/*.py; do
   mv ${f} ${f%%.py}
 done
@@ -78,6 +77,12 @@ done
 
 
 %changelog
+* Tue Oct 18 2016 Yuri N. Sedunov <aris@altlinux.org> 0.35.1-alt1
+- 0.35.1
+
+* Sun Sep 11 2016 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
+- 0.34.0
+
 * Mon Aug 08 2016 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
 - 0.33.0
 
