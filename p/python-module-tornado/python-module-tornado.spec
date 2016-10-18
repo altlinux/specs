@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%module_name
-Version: 4.4.1
-Release: alt1.1.1
+Version: 4.4.2
+Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache
@@ -27,6 +27,10 @@ Requires: python-module-simplejson
 Requires: ca-certificates
 # required by tornado/netutil.py for Python2 version.
 Requires: python-module-backports.ssl_match_hostname
+# required by tornado/gen.py
+Requires: python-module-singledispatch
+# required by tornado/gen.py
+Requires: python-module-backports_abc
 
 %description
 Tornado is an open source version of the scalable, non-blocking web
@@ -101,6 +105,10 @@ popd
 %endif
 
 %changelog
+* Tue Oct 18 2016 Vladimir Didenko <cow@altlinux.org> 4.4.2-alt1
+- update version
+- update requires for Python 2 version
+
 * Thu Sep 08 2016 Valentin Rosavitskiy <valintinr@altlinux.org> 4.4.1-alt1.1.1
 - (NMU) update version
 
@@ -134,4 +142,3 @@ popd
 
 * Wed Nov 23 2011 Alexey Shabalin <shaba@altlinux.ru> 2.1.1-alt1
 - initial build for ALT Linux Sisyphus
-
