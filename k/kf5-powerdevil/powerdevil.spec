@@ -8,8 +8,8 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: kf5-%rname
-Version: 5.8.0
-Release: alt2
+Version: 5.8.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -134,6 +134,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
+- new version
+
 * Mon Oct 10 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt2
 - fix autostart
 

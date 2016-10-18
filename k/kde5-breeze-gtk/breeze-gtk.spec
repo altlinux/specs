@@ -1,8 +1,8 @@
 %define rname breeze-gtk
 
 Name: kde5-%rname
-Version: 5.8.0
-Release: alt3
+Version: 5.8.1
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -53,6 +53,9 @@ Provides: gtk3-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
+- new version
+
 * Thu Oct 06 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt3
 - fix update GTK settings
 

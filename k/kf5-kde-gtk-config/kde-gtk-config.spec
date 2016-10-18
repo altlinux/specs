@@ -1,7 +1,7 @@
 %define rname kde-gtk-config
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.8.1
 Release: alt1
 %K5init altplace
 
@@ -75,6 +75,9 @@ KF5 library
 %_K5icon/*/*/apps/kde-gtk-config.*
 
 %changelog
+* Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
+- new version
+
 * Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 

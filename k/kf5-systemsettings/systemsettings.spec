@@ -4,7 +4,7 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: kf5-%rname
-Version: 5.8.0
+Version: 5.8.1
 Release: alt1
 %K5init altplace
 
@@ -101,6 +101,9 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5lib/libsystemsettingsview.so.%systemsettingsview_sover
 
 %changelog
+* Fri Oct 14 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.1-alt1
+- new version
+
 * Tue Oct 04 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.0-alt1
 - new version
 
