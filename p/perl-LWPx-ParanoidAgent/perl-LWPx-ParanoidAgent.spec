@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-LWPx-ParanoidAgent
-Version: 1.10
+Version: 1.12
 Release: alt1
 
 Summary: subclass of LWP::UserAgent that protects you from harm
@@ -68,6 +68,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/LWPx/
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
+- automated CPAN update
+
 * Wed Nov 13 2013 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 
