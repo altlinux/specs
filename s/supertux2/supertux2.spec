@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPLv3
@@ -16,8 +16,6 @@ Source2: supertux-32x32.png
 Source3: supertux-48x48.png
 
 Patch: supertux-alt-desktop-file.patch
-
-Conflicts: supertux
 
 Requires: %name-data = %version-%release
 
@@ -67,9 +65,9 @@ This is package contains data files for supertux2.
 %makeinstall_std
 %find_lang %name
 
-install -m644 %SOURCE1 -D %buildroot/%_miconsdir/supertux.png
-install -m644 %SOURCE2 -D %buildroot/%_niconsdir/supertux.png
-install -m644 %SOURCE3 -D %buildroot/%_liconsdir/supertux.png
+install -m644 %SOURCE1 -D %buildroot/%_miconsdir/%name.png
+install -m644 %SOURCE2 -D %buildroot/%_niconsdir/%name.png
+install -m644 %SOURCE3 -D %buildroot/%_liconsdir/%name.png
 
 # install game man file
 install -D -m 644 man/man6/%name.6 %buildroot/%_man6dir/%name.6
@@ -79,20 +77,22 @@ rm -rf %buildroot/%_docdir/supertux2/
 %files -f %name.lang
 %_bindir/supertux2
 %_desktopdir/supertux2.desktop
+%doc docs/* LICENSE.txt NEWS.md README.md
 
 %files data
-%doc docs/* LICENSE.txt NEWS.md README.md
-%dir %_datadir/supertux2
-%_datadir/supertux2/*
+%_datadir/supertux2
 %_datadir/appdata/*
 %_miconsdir/*.png
 %_niconsdir/*.png
 %_liconsdir/*.png
-%_pixmapsdir/supertux.*
+%exclude %_pixmapsdir/supertux.*
 %_man6dir/*
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Wed Oct 19 2016 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt2
+- remove conflict with supertux
+
 * Mon Sep 26 2016 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
 - 0.5.0 release
 
