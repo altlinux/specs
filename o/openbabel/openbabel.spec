@@ -1,6 +1,6 @@
 Name: openbabel
-Version: 2.3.2
-Release: alt2
+Version: 2.4.1
+Release: alt1
 
 Summary: Chemistry software file format converter
 License: GPL
@@ -9,8 +9,6 @@ Group: Sciences/Chemistry
 Url: http://openbabel.sourceforge.net
 Source0: http://dl.sf.net/%name/%name-%version.tar.gz
 Source1: %name.watch
-Patch1: alt-gcc5.patch
-
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Apr 13 2014
@@ -78,22 +76,15 @@ Python bindings for Open Babel.
 
 %prep
 %setup
-%patch1 -p1
 echo PYTHON_BINDINGS:BOOL=ON >CMakeCache.txt
 
 %build
 %add_optflags -I%_includedir/eigen2
 %cmake_insource
 %make_build VERBOSE=1
-gzip -9nf ChangeLog
 
 %install
 %makeinstall_std
-
-# FIXME: 2.3.2 kludge, argh
-mkdir -p %buildroot%python_sitelibdir
-mv %buildroot%_libdir/{_openbabel.so,*.py*} \
-   %buildroot%python_sitelibdir/
 
 %if_enabled static
 %else
@@ -102,7 +93,7 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 %endif
 
 %files
-%doc AUTHORS ChangeLog* README THANKS 
+%doc AUTHORS README* THANKS 
 %doc doc/FAQ* doc/README* doc/dioxin.*
 %_bindir/*
 %_man1dir/*
@@ -132,6 +123,9 @@ rm -f %buildroot%_libdir/%name/{%version/,}*.{a,la}
 # - BR: eigen3 (FTBFS as of 20140413)
 
 %changelog
+* Sun Oct 16 2016 Michael Shigorin <mike@altlinux.org> 2.4.1-alt1
+- new version (watch file uupdate)
+
 * Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 2.3.2-alt2
 - fix to build with gcc5
 

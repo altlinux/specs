@@ -11,7 +11,7 @@
 
 Name: gnome-chemistry-utils
 Version: %ver_major.14
-Release: alt5
+Release: alt6
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -133,6 +133,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Mon Oct 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.14-alt6
+- rebuilt against libopenbabel.so.5
+
 * Sun Aug 21 2016 Yuri N. Sedunov <aris@altlinux.org> 0.14.14-alt5
 - rebuilt for new gnumeric-1.12.32
 

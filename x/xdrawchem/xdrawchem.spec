@@ -1,9 +1,9 @@
 Name: xdrawchem
 Version: 1.9.9
-Release: alt3.qa3.1
+Release: alt3.qa3.2
 
 Summary: XDrawChem is a two-dimensional molecule drawing program
-Summary(ru_RU.KOI8-R): XDrawChem - программа двумерного рисования молекул
+Summary(ru_RU.UTF-8): XDrawChem - п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╡я┐п╪п╣я─п╫п╬пЁп╬ я─п╦я│п╬п╡п╟п╫п╦я▐ п╪п╬п╩п╣п╨я┐п╩
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -32,12 +32,12 @@ drawing programs such as ChemDraw (TM, CambridgeSoft). It can read
 and write MDL Molfiles and CML files to allow sharing between
 XDrawChem and other chemistry applications.
 
-%description -l ru_RU.KOI8-R
-XDrawChem - это программа двумерного рисования молекул для операционных
-систем класса Unix. По функциональности она аналогична другим программам
-рисования молекул, таким как ChemDraw (TM, CambridgeSoft). Она может
-считывать и записывать файлы MDL Molfiles и CML, что позволяет
-использовать XDrawChem вместе с другими приложениями для химии.
+%description -l ru_RU.UTF-8
+XDrawChem - я█я┌п╬ п©я─п╬пЁя─п╟п╪п╪п╟ п╢п╡я┐п╪п╣я─п╫п╬пЁп╬ я─п╦я│п╬п╡п╟п╫п╦я▐ п╪п╬п╩п╣п╨я┐п╩ п╢п╩я▐ п╬п©п╣я─п╟я├п╦п╬п╫п╫я▀я┘
+я│п╦я│я┌п╣п╪ п╨п╩п╟я│я│п╟ Unix. п÷п╬ я└я┐п╫п╨я├п╦п╬п╫п╟п╩я▄п╫п╬я│я┌п╦ п╬п╫п╟ п╟п╫п╟п╩п╬пЁп╦я┤п╫п╟ п╢я─я┐пЁп╦п╪ п©я─п╬пЁя─п╟п╪п╪п╟п╪
+я─п╦я│п╬п╡п╟п╫п╦я▐ п╪п╬п╩п╣п╨я┐п╩, я┌п╟п╨п╦п╪ п╨п╟п╨ ChemDraw (TM, CambridgeSoft). п·п╫п╟ п╪п╬п╤п╣я┌
+я│я┤п╦я┌я▀п╡п╟я┌я▄ п╦ п╥п╟п©п╦я│я▀п╡п╟я┌я▄ я└п╟п╧п╩я▀ MDL Molfiles п╦ CML, я┤я┌п╬ п©п╬п╥п╡п╬п╩я▐п╣я┌
+п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ XDrawChem п╡п╪п╣я│я┌п╣ я│ п╢я─я┐пЁп╦п╪п╦ п©я─п╦п╩п╬п╤п╣п╫п╦я▐п╪п╦ п╢п╩я▐ я┘п╦п╪п╦п╦.
 
 %prep
 %setup
@@ -64,6 +64,11 @@ install -pD -m 644 %SOURCE2 %buildroot/%_niconsdir/xdrawchem.png
 %_niconsdir/xdrawchem.png
 
 %changelog
+* Tue Oct 18 2016 Michael Shigorin <mike@altlinux.org> 1.9.9-alt3.qa3.2
+- NMU:
+  + rebuilt against current openbabel
+  + changed description encoding to UTF-8
+
 * Mon Feb 01 2016 Sergey V Turchin <zerg@altlinux.org> 1.9.9-alt3.qa3.1
 - NMU: rebuild with new openbabel
 
