@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-Module-Build perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
-Version:        0.3800
+Version:        0.3900
 Release:        alt1
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
@@ -64,6 +64,9 @@ perl Build.PL --install_path bindoc=%_man1dir installdirs=vendor
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.3900-alt1
+- automated CPAN update
+
 * Thu May 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.3800-alt1
 - automated CPAN update
 
