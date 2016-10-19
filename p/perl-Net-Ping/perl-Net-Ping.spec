@@ -1,6 +1,6 @@
 %define dist Net-Ping
 Name: perl-%dist
-Version: 2.41
+Version: 2.52
 Release: alt1
 
 Summary: Check a remote host for reachability
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SM/SMPETERS/Net-Ping-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/R/RU/RURBAN/Net-Ping-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ grep -FZl '1..0 # Skip: network dependent test' t/*.t |xargs -r0 rm -v
 %perl_vendor_privlib/Net
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.52-alt1
+- automated CPAN update
+
 * Thu Sep 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.41-alt1
 - automated CPAN update
 
