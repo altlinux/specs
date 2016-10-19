@@ -1,5 +1,5 @@
 Name: freeswitch
-Version: 1.6.11
+Version: 1.6.12
 Release: alt1
 Epoch: 1
 
@@ -619,6 +619,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Wed Oct 19 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.12-alt1
+- new version
+
 * Wed Oct 12 2016 Anton Farygin <rider@altlinux.ru> 1:1.6.11-alt1
 - new version
 
