@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Log-Dispatch-FileRotate
 
 Name: perl-%dist
-Version: 1.19
-Release: alt1.1
+Version: 1.22
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,12 +12,12 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/modules/by-module/Log/%dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MS/MSCHOUT/Log-Dispatch-FileRotate-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Dec 29 2008
-BuildRequires: perl-Date-Manip perl-Log-Log4perl perl-devel
+BuildRequires: perl-Date-Manip perl-Log-Log4perl perl-devel perl(Path/Tiny.pm)
 
 %description
 This module provides a simple object for logging to files under the
@@ -36,6 +37,9 @@ different constraints.
 %perl_vendor_privlib/Log/
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
