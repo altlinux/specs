@@ -16,7 +16,7 @@
 %def_enable test
 
 Name: perl-MP3-Tag
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: Module for reading tags of MP3 audio files
@@ -57,6 +57,9 @@ obtained by parsing CDDB files, .inf file and the filename).
 
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
