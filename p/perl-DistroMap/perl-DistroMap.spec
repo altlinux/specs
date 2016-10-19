@@ -1,7 +1,7 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.26
+Version: 0.27
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm) perl(Pod/Text.pm)
 %_man1dir/distro*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1
+- stable release
+
 * Mon Jul 04 2016 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - stable release
 
