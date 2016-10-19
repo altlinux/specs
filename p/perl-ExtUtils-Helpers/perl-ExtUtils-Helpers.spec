@@ -1,18 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl-podlators 
 # END SourceDeps(oneline)
 # Test suite needs patching if we have Test::More < 0.88
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION) < 0.88 ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:		perl-ExtUtils-Helpers
-Version:	0.022
-Release:	alt1_10
+Version:	0.026
+Release:	alt1
 Summary:	Various portability utilities for module builders
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-Helpers
-Source0:	http://cpan.metacpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
 Patch3:		ExtUtils-Helpers-0.021-old-Test::More.patch
 BuildArch:	noarch
 # Build
@@ -73,8 +74,13 @@ make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 %files
 %doc Changes LICENSE README
 %{perl_vendor_privlib}/ExtUtils/
+#perl(ExtUtils/PL2Bat.pm)
+%exclude %{perl_vendor_privlib}/ExtUtils/Helpers/Windows.pm
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
+- automated CPAN update
+
 * Tue Jul 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.022-alt1_10
 - update to new release by fcimport
 
