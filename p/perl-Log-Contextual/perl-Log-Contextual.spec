@@ -3,13 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Log-Contextual
-Version:        0.006005
-Release:        alt2_5
+Version:        0.007000
+Release:        alt1
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Log-Contextual/
-Source0:        http://www.cpan.org/authors/id/F/FR/FREW/Log-Contextual-%{version}.tar.gz
+Source:        http://www.cpan.org/authors/id/F/FR/FREW/Log-Contextual-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
@@ -72,6 +72,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.007000-alt1
+- automated CPAN update
+
 * Mon Sep 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.006005-alt2_5
 - to Sisyphus
 
