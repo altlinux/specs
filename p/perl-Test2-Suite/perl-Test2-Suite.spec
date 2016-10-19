@@ -1,4 +1,4 @@
-%define module_version 0.000058
+%define module_version 0.000060
 %define module_name Test2-Suite
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Importer.pm) perl(List/Util.pm) perl(Scalar/Util.pm) perl(Test2.pm) perl(Unicode/GCString.pm) perl(overload.pm) perl(utf8.pm)
@@ -8,14 +8,14 @@ BuildRequires: perl(B.pm) perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(Importe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.000058
-Release: alt2
+Version: 0.000060
+Release: alt1
 Summary: Distribution with a rich set of tools built upon the Test2 framework.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/E/EX/EXODIST/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/EX/EXODIST/Test2-Suite-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -36,6 +36,9 @@ you.
 %perl_vendor_privlib/T*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.000060-alt1
+- automated CPAN update
+
 * Mon Sep 26 2016 Igor Vlasenko <viy@altlinux.ru> 0.000058-alt2
 - to Sisyphus
 
