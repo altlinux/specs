@@ -1,8 +1,8 @@
 Name: settime-rfc867 
 Version: 0.4
-Release: alt3
+Release: alt4
 
-Summary: Set ditetime from hardcoded ldap server
+Summary: Set datetime from hardcoded ldap server
 License: GPL
 Group: System/Configuration/Hardware
 BuildArch: noarch
@@ -14,13 +14,12 @@ Source2: %name.service
 Requires: netcat
 
 %description
-Set ditetime from hardcoded ldap server via rfc867
+Set datetime from hardcoded ldap server via rfc867.
 
 %install
 install -D -m755 %SOURCE0 %buildroot%_initdir/%name
 install -D -m755 %SOURCE1 %buildroot/etc/sysconfig/%name
 install -pD -m0644 %SOURCE2 %buildroot%_unitdir/%name.service
-
 
 %files
 %_initdir/%name
@@ -28,6 +27,9 @@ install -pD -m0644 %SOURCE2 %buildroot%_unitdir/%name.service
 %config(noreplace) /etc/sysconfig/%name
 
 %changelog
+* Wed Oct 19 2016 Andrey Cherepanov <cas@altlinux.org> 0.4-alt4
+- Fix typos in summary and description (ALT #32632)
+
 * Fri Oct 14 2016 Andrey Cherepanov <cas@altlinux.org> 0.4-alt3
 - add requirement of netcat
 
