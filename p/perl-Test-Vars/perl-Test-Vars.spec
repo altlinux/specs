@@ -4,13 +4,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-Module-Build perl-devel perl-podlators perl(Module/Build/Tiny.pm)
 # END SourceDeps(oneline)
 Name:		perl-Test-Vars
-Version:	0.010
+Version:	0.011
 Release:	alt1
 Summary:	Detects unused variables
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Test-Vars/
-Source:	http://www.cpan.org/authors/id/G/GF/GFUJI/Test-Vars-%{version}.tar.gz
+Source:	http://www.cpan.org/authors/id/D/DR/DROLSKY/Test-Vars-%{version}.tar.gz
 BuildArch:	noarch
 # ===================================================================
 # Build requirements
@@ -89,6 +89,9 @@ perl Build.PL --install_path bindoc=%_man1dir --installdirs=vendor
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.011-alt1
+- automated CPAN update
+
 * Sun Jul 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
 - automated CPAN update
 
