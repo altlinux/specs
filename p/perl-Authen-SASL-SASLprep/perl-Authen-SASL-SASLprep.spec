@@ -1,4 +1,4 @@
-%define module_version 1.011
+%define module_version 1.100
 %define module_name Authen-SASL-SASLprep
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Unicode/Stringprep.pm) perl(Unicode/Stringprep/Mapping.pm) perl(Unicode/Stringprep/Prohibited.pm)
@@ -7,14 +7,14 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Module/Build.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.011
+Version: 1.100
 Release: alt1
 Summary: A Stringprep Profile for User Names and Passwords (RFC 4013)
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/C/CF/CFAERBER/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/C/CF/CFAERBER/Authen-SASL-SASLprep-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/A*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.100-alt1
+- automated CPAN update
+
 * Wed Oct 14 2015 Igor Vlasenko <viy@altlinux.ru> 1.011-alt1
 - regenerated from template by package builder
 
