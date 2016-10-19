@@ -1,20 +1,20 @@
-%define module_version 0.27
+%define _unpackaged_files_terminate_build 1
+%define module_version 0.29
 %define module_name IPC-System-Options
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Capture/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(IPC/Run.pm) perl(Log/Any/IfLOG.pm) perl(Pod/Coverage/TrustPod.pm) perl(Proc/ChildError.pm) perl(String/ShellQuote.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(strict.pm) perl(warnings.pm)
+BuildRequires: perl(Capture/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(IPC/Run.pm) perl(Log/Any/IfLOG.pm) perl(Pod/Coverage/TrustPod.pm) perl(Proc/ChildError.pm) perl(String/ShellQuote.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(strict.pm) perl(warnings.pm) perl(Test/Exception.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.27
-Release: alt2
+Version: 0.29
+Release: alt1
 Summary: Perl's system() and backtick/qx replacement/wrapper, with options
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/IPC-System-Options
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PERLANCAR/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PERLANCAR/IPC-System-Options-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,6 +34,9 @@ From summary: %summary
 %perl_vendor_privlib/I*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- automated CPAN update
+
 * Thu Jul 28 2016 Igor Vlasenko <viy@altlinux.ru> 0.27-alt2
 - to Sisyphus
 
