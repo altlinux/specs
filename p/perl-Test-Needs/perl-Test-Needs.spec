@@ -2,12 +2,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(IPC/Open3.pm) perl(Test/More.pm) perl(Test2/Event.pm)
 # END SourceDeps(oneline)
-%define module_version 0.002004
+%define module_version 0.002005
 %define module_name Test-Needs
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002004
+Version: 0.002005
 Release: alt1
 Summary: Skip tests when modules not available
 Group: Development/Perl
@@ -53,6 +53,9 @@ running after that point.
 %perl_vendor_privlib/T*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.002005-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.002004-alt1
 - automated CPAN update
 
