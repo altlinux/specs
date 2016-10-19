@@ -1,6 +1,6 @@
 Name: manatee-open
-Version: 2.130.6
-Release: alt1
+Version: 2.139.3
+Release: alt3
 
 Summary: Manatee is a corpus management tool
 License: LGPLv2+
@@ -8,6 +8,7 @@ Group: System/Libraries
 Url: http://nlp.fi.muni.cz/trac/noske/wiki/Downloads
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 BuildRequires: antlr3-tool finlib-devel gcc-c++ java-devel antlr3-C-devel libpcre-devel perl-devel python-module-distribute ruby libicu-devel libltdl7-devel
+ExclusiveArch: x86_64
 
 
 Source: %name-%version.tar
@@ -38,6 +39,15 @@ indexing library called Finlib.
 %doc doc/*
 
 %changelog
+* Wed Oct 26 2016 Kirill Maslinsky <kirill@altlinux.org> 2.139.3-alt3
+- build only for x86_64 (i586 unsupported upstream)
+
+* Wed Oct 19 2016 Kirill Maslinsky <kirill@altlinux.org> 2.139.3-alt2
+- fix build
+
+* Wed Oct 19 2016 Kirill Maslinsky <kirill@altlinux.org> 2.139.3-alt1
+- 2.139.3
+
 * Sat Dec 05 2015 Kirill Maslinsky <kirill@altlinux.org> 2.130.6-alt1
 - 2.130.6
 

@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: finlib
-Version: 2.33.1
-Release: alt2
+Version: 2.35.2
+Release: alt1
 
 Summary: Fast indexing library
 License: LGPLv2+
@@ -63,6 +63,9 @@ autoreconf -iv
 %endif
 
 %changelog
+* Tue Oct 18 2016 Kirill Maslinsky <kirill@altlinux.org> 2.35.2-alt1
+- 2.35.2
+
 * Mon Feb 15 2016 Kirill Maslinsky <kirill@altlinux.org> 2.33.1-alt2
 - rebuilt with libicu 5.6
 
