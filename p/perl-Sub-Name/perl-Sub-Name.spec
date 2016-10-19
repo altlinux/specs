@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sub-Name
 Name: perl-%dist
-Version: 0.19
+Version: 0.21
 Release: alt1
 Epoch: 1
 
@@ -34,6 +34,9 @@ Assigns a new name to referenced sub.
 %perl_vendor_autolib/Sub
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.21-alt1
+- automated CPAN update
+
 * Tue Sep 20 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.19-alt1
 - automated CPAN update
 
