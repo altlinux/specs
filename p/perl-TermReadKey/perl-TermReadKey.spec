@@ -1,5 +1,5 @@
 %def_without test
-%define module_version 2.33
+%define module_version 2.37
 %define module_name TermReadKey
 # BEGIN SourceDeps(oneline):
 BuildRequires: libsowing-devel perl(AutoLoader.pm) perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(Test/More.pm)
@@ -8,14 +8,14 @@ BuildRequires: libsowing-devel perl(AutoLoader.pm) perl(Config.pm) perl(DynaLoad
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.33
-Release: alt1.1
+Version: 2.37
+Release: alt1
 Summary: unknown
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/J/JS/JSTOWE/%{module_name}-%{module_version}.tar.gz
+Source: http://www.cpan.org/authors/id/J/JS/JSTOWE/TermReadKey-%{version}.tar.gz
 Provides: perl-Term-ReadKey = %version
 Obsoletes: perl-Term-ReadKey < 2.31
 
@@ -223,6 +223,9 @@ This call does nothing under Windows.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 2.37-alt1
+- automated CPAN update
+
 * Wed Nov 25 2015 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1.1
 - rebuild with new perl 5.22.0
 
