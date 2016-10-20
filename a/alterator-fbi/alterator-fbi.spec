@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.32
-Release: alt9
+Release: alt10
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -134,6 +134,9 @@ fi ||:
 
 
 %changelog
+* Thu Oct 20 2016 Anton V. Boyarshinov <boyarsh@altlinux.org> 5.32-alt10
+- some debug prints removed
+
 * Thu Oct 06 2016 Ivan Zakharyaschev <imz@altlinux.org> 5.32-alt9
 - non-user-visible source code maintenance: reindent .scm where
   spaces and tabs were mixed (no tabs left) for editability.
