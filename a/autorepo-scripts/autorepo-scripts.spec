@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.48
+Version: 0.49
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ License: GPL2+
 #Url: 
 Source: %name-%version.tar
 
-Requires: /usr/bin/relative /usr/bin/parentlock
+Requires: /usr/bin/relative /usr/bin/parentlock /usr/bin/parallel
 # for mail
 %filter_from_requires /^mutt/d
 Requires: perl(Date/Format.pm) qa-robot /usr/bin/mutt
@@ -79,6 +79,9 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Thu Oct 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
+- support for parallel build
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - new version
 
