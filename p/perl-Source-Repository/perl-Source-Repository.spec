@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.372
+Version: 0.373
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ Conflicts: perl-RPM-Source-Convert < 0.48
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Oct 20 2016 Igor Vlasenko <viy@altlinux.ru> 0.373-alt1
+- mirror finder for bundle import
+
 * Mon Oct 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.372-alt1
 - added susemass
 
